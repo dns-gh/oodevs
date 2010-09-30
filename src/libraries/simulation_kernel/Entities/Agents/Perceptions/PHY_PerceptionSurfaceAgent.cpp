@@ -12,6 +12,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/protocol.h"
+#include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_PerceptionSurfaceAgent )
 
@@ -55,12 +56,10 @@ PHY_PerceptionSurfaceAgent::~PHY_PerceptionSurfaceAgent()
 void PHY_PerceptionSurfaceAgent::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int nID;
-
     file >> nID;
     assert( PHY_SensorType::FindSensorType( nID ) );
     pSensorType_ = PHY_SensorType::FindSensorType( nID )->GetTypeAgent();
     assert( pSensorType_ );
-
     file >> vOrigin_
          >> rHeight_
          >> sectors_;

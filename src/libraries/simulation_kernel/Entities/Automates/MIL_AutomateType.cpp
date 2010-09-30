@@ -22,6 +22,7 @@
 #include "Entities/Specialisations/REFUGIE/MIL_AutomateTypeREFUGIE.h"
 #include "Entities/Agents/Units/Humans/MIL_AutomateTypeInjuredHuman.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
+#include "MT_Tools/MT_Logger.h"
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
@@ -53,7 +54,6 @@ struct MIL_AutomateType::LoadingWrapper
 void MIL_AutomateType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing automate types" );
-
     automateTypeAllocators_[ "Automate SGTIA"                  ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate INF"                    ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate ASA"                    ] = &MIL_AutomateTypeASA    ::Create;

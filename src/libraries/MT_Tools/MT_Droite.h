@@ -25,8 +25,6 @@ enum E_CollisionState;
 // =============================================================================
 class MT_Droite
 {
-//    MT_BOOSTPOOLING_MEMBERS( MT_Droite )
-
 public:
     //! @name Types
     //@{
@@ -70,6 +68,14 @@ typedef T_DroiteVector::iterator                 IT_DroiteVector;
 typedef T_DroiteVector::const_iterator           CIT_DroiteVector;
 typedef T_DroiteVector::reverse_iterator         RIT_DroiteVector;
 typedef T_DroiteVector::const_reverse_iterator   CRIT_DroiteVector;
+
+inline bool MT_IsPointBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, const MT_Vector2D& vPoint )
+{
+    const MT_Droite::E_Side nLeftSide  = leftDroite .GetSide( vPoint );
+    const MT_Droite::E_Side nRightSide = rightDroite.GetSide( vPoint );
+    return    ( nLeftSide  == MT_Droite::eOnPositiveSide || nLeftSide == MT_Droite::eOnBoundary )
+           && ( nRightSide == MT_Droite::eOnNegativeSide || nRightSide == MT_Droite::eOnBoundary );
+}
 
 #include "MT_Droite.inl"
 

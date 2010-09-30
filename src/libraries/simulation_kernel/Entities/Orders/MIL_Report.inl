@@ -12,6 +12,7 @@
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------

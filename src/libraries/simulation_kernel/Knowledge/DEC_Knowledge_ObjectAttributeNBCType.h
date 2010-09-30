@@ -13,7 +13,9 @@
 #define __DEC_Knowledge_ObjectAttributeNBCType_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
+#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
+#include <boost/serialization/split_member.hpp>
 
 class NBCTypeAttribute;
 class MIL_NBCType;
@@ -39,8 +41,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Register / serialization

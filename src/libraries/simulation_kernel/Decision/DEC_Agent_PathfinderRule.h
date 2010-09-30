@@ -20,6 +20,8 @@
 #define __DEC_Agent_PathfinderRule_h_
 
 #include <pathfind/TerrainRule_ABC.h>
+#include "MT_Tools/MT_Tools_Types.h"
+#include "MT_Tools/MT_Vector2D.h"
 
 class MIL_Fuseau;
 class DEC_Agent_Path;

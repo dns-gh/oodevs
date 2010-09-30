@@ -7,8 +7,11 @@
 //
 // *****************************************************************************
 
+#include <boost/function.hpp>
+#include <boost/bind.hpp>
+
 // -----------------------------------------------------------------------------
-// Name: template< typename T > void DEC_Decision_ABC::Callback
+// Name: DEC_Decision_ABC::Callback
 // Created: LDC 2009-06-29
 // -----------------------------------------------------------------------------
 template< typename T >
@@ -28,9 +31,8 @@ void DEC_Decision_ABC::SetVariable( const std::string& name, T value )
     GetBrain()[ name ] = value;
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: template< typename T > void DEC_Decision_ABC::SetVariable
+// Name: DEC_Decision_ABC::SetVariable
 // Created: LDC 2009-07-31
 // -----------------------------------------------------------------------------
 template< typename T >
@@ -40,7 +42,7 @@ void DEC_Decision_ABC::SetScriptVariable( const T& source, T& dest )
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > T DEC_Decision_ABC::GetVariable
+// Name: DEC_Decision_ABC::GetVariable
 // Created: LDC 2009-07-31
 // -----------------------------------------------------------------------------
 template< typename T >
@@ -56,7 +58,7 @@ T DEC_Decision_ABC::GetVariable( const std::string& name )
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > T DEC_Decision_ABC::GetScalarVariable
+// Name: DEC_Decision_ABC::GetScalarVariable
 // Created: LDC 2009-07-31
 // -----------------------------------------------------------------------------
 template< typename T >

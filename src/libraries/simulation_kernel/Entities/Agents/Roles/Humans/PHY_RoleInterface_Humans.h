@@ -13,6 +13,8 @@
 #define __PHY_RoleInterface_Humans_h_
 
 #include "MT_Tools/Role_ABC.h"
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/vector.hpp>
 
 namespace client
 {
@@ -83,7 +85,7 @@ private:
     virtual void SendLogisticFullState() const = 0;
 
     friend class boost::serialization::access;
-    template< typename Archive > void serialize( Archive& ar, const uint )
+    template< typename Archive > void serialize( Archive& ar, const unsigned int )
     {
         ar & boost::serialization::base_object< tools::Role_ABC >( *this );
     }

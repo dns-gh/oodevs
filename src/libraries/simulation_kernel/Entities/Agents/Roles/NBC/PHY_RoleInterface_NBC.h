@@ -13,6 +13,8 @@
 #define __PHY_RoleInterface_NBC_h_
 
 #include "MT_Tools/Role_ABC.h"
+#include "MT_Tools/MT_Tools_Types.h"
+#include <boost/serialization/access.hpp>
 
 namespace client
 {
@@ -23,7 +25,6 @@ class MIL_ToxicEffectManipulator;
 
 namespace nbc
 {
-
 // =============================================================================
 // @class  PHY_RoleInterface_NBC
 // Created: JVT 2004-08-03
@@ -75,7 +76,7 @@ private:
 //    virtual void SendFullState   ( client::UnitAttributes& msg ) const = 0;
 
     friend class ::boost::serialization::access;
-    template< typename Archive > void serialize( Archive& ar, const uint )
+    template< typename Archive > void serialize( Archive& ar, const unsigned int )
     {
         ar & ::boost::serialization::base_object< ::tools::Role_ABC >( *this );
     }

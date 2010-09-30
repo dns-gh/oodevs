@@ -17,9 +17,8 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MIL_ObjectLoader.h"
 #include "Entities/Objects/CapacityFactory.h"
-
+#include "MT_Tools/MT_Logger.h"
 #include "tools/MIL_Tools.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( NBCPropagationCapacity )
@@ -72,7 +71,7 @@ NBCPropagationCapacity::~NBCPropagationCapacity()
 // Created: RFT 2008-05-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void NBCPropagationCapacity::serialize( Archive& file, const uint )
+void NBCPropagationCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }
@@ -107,7 +106,6 @@ void NBCPropagationCapacity::Instanciate( MIL_Object_ABC& object ) const
     object.UpdateLocalisation( GetLocalisation( vOrigin ) );
     pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: NBCPropagationCapacity::Update
@@ -154,11 +152,10 @@ void NBCPropagationCapacity::Update( MIL_Object_ABC& object, float time )
 // Name: NBCPropagationCapacity::UpdateShape
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-void NBCPropagationCapacity::UpdateShape( MIL_Object_ABC& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed )
+void NBCPropagationCapacity::UpdateShape( MIL_Object_ABC& object, const MT_Vector2D& vNormalizedWind, const MT_Vector2D& vPerpendicularToWind, MT_Float windSpeed )
 {
     NBCTypeAttribute& attr = object.GetAttribute< NBCTypeAttribute >();
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
-
     MT_Float seq = windSpeed / attr.GetLength();
     for( int i = 0 ; i <= seq; i ++ )
     {
@@ -173,11 +170,10 @@ void NBCPropagationCapacity::UpdateShape( MIL_Object_ABC& object , MT_Vector2D v
 // Name: NBCPropagationCapacity::UpdateState
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-bool NBCPropagationCapacity::UpdateState( MIL_Object_ABC& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed )
+bool NBCPropagationCapacity::UpdateState( MIL_Object_ABC& object, const MT_Vector2D& vNormalizedWind, const MT_Vector2D& vPerpendicularToWind, MT_Float windSpeed )
 {
     NBCTypeAttribute& attr = object.GetAttribute< NBCTypeAttribute >();
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
-
     MT_Float seq = windSpeed / attr.GetLength();
     for( int i = 0 ; i <= seq; i ++ )
     {
@@ -228,7 +224,6 @@ void NBCPropagationCapacity::Propagate( const MT_Vector2D& vOrigin, MIL_Object_A
 {
     NBCTypeAttribute& attr = object.GetAttribute< NBCTypeAttribute >();
     TER_Localisation location( GetLocalisation( vOrigin ) );
-
     if( !pManager_->IsFlagged( location , attr.GetLength() , attr.GetWidth() ) )
     {
         MIL_NBCBuilder builder( object, location );
@@ -240,7 +235,7 @@ void NBCPropagationCapacity::Propagate( const MT_Vector2D& vOrigin, MIL_Object_A
         {
             MT_LOG_ERROR_MSG( e.what() );
         }
-        pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
+        pManager_->Flag( vOrigin, attr.GetLength(), attr.GetWidth() );
         //Definir peut etre ici une concentration initiale
     }
 }

@@ -15,6 +15,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_BreakdownType::T_BreakdownMap PHY_BreakdownType::breakdowns_;
@@ -53,7 +54,6 @@ PHY_BreakdownType::E_Type PHY_BreakdownType::ConvertType( const std::string& str
 void PHY_BreakdownType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing breakdown types" );
-
     MT_Float rTimeVal;
     std::string timeVal;
     LoadingWrapper loader;

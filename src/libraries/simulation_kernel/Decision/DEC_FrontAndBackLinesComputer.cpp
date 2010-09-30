@@ -14,6 +14,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Orders/MIL_Fuseau.h"
+#include "Entities/Orders/MIL_AutomateOrderManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_FrontAndBackLinesComputer constructor

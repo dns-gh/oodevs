@@ -13,6 +13,7 @@
 #define __PHY_BreakdownType_h_
 
 #include "MT_Tools/MT_GaussianRandom.h"
+#include "MT_Tools/MT_Stl.h"
 
 namespace xml
 {

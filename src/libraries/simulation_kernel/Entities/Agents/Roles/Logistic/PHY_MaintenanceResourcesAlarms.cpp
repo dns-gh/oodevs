@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceResourcesAlarms.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_MaintenanceResourcesAlarms::T_LevelSet PHY_MaintenanceResourcesAlarms::repairerResourcesLevels_;
@@ -29,7 +30,6 @@ struct PHY_MaintenanceResourcesAlarms::LoadingWrapper
 void PHY_MaintenanceResourcesAlarms::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing maintenance resources alarms" );
-
     LoadingWrapper loader;
     xis >> xml::start( "maintenance" )
             >> xml::start( "resource-availability-alerts" )

@@ -10,13 +10,10 @@
 //*****************************************************************************
 
 #include "MT_Tools_pch.h"
-
 #include "MT_Polyline.h"
-
 #include "MT_Line.h"
+#include "MT_Droite.h"
 #include "MT_Circle.h"
-
-//MT_BOOSTPOOLING_FUNCTIONS( MT_Polyline )
 
 //-----------------------------------------------------------------------------
 // Name: MT_Polyline constructor
@@ -24,7 +21,7 @@
 //-----------------------------------------------------------------------------
 MT_Polyline::MT_Polyline()
 {
-
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -32,10 +29,10 @@ MT_Polyline::MT_Polyline()
 // Created: NLD 2003-07-25
 //-----------------------------------------------------------------------------
 MT_Polyline::MT_Polyline( const T_PointVector& points )
-: points_( points )
+    : points_( points )
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Polyline destructor
@@ -43,7 +40,7 @@ MT_Polyline::MT_Polyline( const T_PointVector& points )
 //-----------------------------------------------------------------------------
 MT_Polyline::~MT_Polyline()
 {
-
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -55,7 +52,6 @@ MT_Polyline& MT_Polyline::operator=( const T_PointVector& points )
     points_ = points;
     return *this;
 }
-
 
 //=============================================================================
 // OPERATIONS
@@ -217,7 +213,6 @@ bool MT_Polyline::Intersect2D( const MT_Droite& droite, T_PointSet& collisions )
     }
     return false;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MT_Polyline::Magnitude

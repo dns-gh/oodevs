@@ -16,6 +16,7 @@ class MIL_Automate;
 class MIL_AgentPion;
 class MIL_Mission_ABC;
 class TER_Localisation;
+class MT_Vector2D;
 
 // =============================================================================
 // Created: NLD 2004-03-31

@@ -9,9 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_FragOrderType.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
-MIL_FragOrderType::T_MissionIDMap   MIL_FragOrderType::missionIDs_;
+MIL_FragOrderType::T_MissionIDMap MIL_FragOrderType::missionIDs_;
 MIL_FragOrderType::T_MissionNameMap MIL_FragOrderType::missionNames_;
 
 struct MIL_FragOrderType::LoadingWrapper
@@ -29,9 +30,7 @@ struct MIL_FragOrderType::LoadingWrapper
 void MIL_FragOrderType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing frag orders types" );
-
     LoadingWrapper loader;
-
     xis >> xml::start( "missions" )
             >> xml::start( "fragorders" )
                 >> xml::list( "fragorder", loader, &LoadingWrapper::ReadFragorder )

@@ -12,6 +12,8 @@
 
 #include "MT_Tools/Role_ABC.h"
 
+class MT_Vector2D;
+
 // =============================================================================
 /** @class  PHY_RoleInterface_TerrainAnalysis
     @brief  PHY_RoleInterface_TerrainAnalysis

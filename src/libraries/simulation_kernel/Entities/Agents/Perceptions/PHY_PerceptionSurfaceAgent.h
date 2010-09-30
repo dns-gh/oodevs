@@ -7,6 +7,7 @@
 
 #include "MIL.h"
 #include "MT_Tools/MT_Sector.h"
+#include "MT_Tools/MT_Vector2DTypes.h"
 
 namespace MsgsSimToClient
 {

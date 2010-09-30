@@ -9,9 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Population_PathClass.h"
+#include "MT_Tools/MT_ScipioException.h"
 #include <xeumeuleu/xml.hpp>
-
-
 
 DEC_Population_PathClass::T_Rules DEC_Population_PathClass::rules_;
 
@@ -30,7 +29,6 @@ struct DEC_Population_PathClass::LoadingWrapper
 void DEC_Population_PathClass::Initialize( xml::xistream& xis )
 {
     LoadingWrapper loader;
-
     xis >> xml::start( "population-rules" )
             >> xml::list( "rule", loader, &LoadingWrapper::ReadPopulationRule )
         >> xml::end;

@@ -11,25 +11,27 @@
 #define __DEC_KnowledgeFunctions_h_
 
 #include "Knowledge/DEC_Knowledge_Def.h"
+#include "MT_Tools/MT_Tools_Types.h"
 
 class DEC_Decision_ABC;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 class TER_Localisation;
+class MT_Vector2D;
 
 namespace directia
 {
-    namespace brain
-    {
-        class Brain;
-    }
-    namespace tools
-    {
-        namespace binders
-        {
-            class ScriptRef;
-        }
-    }
+namespace brain
+{
+    class Brain;
+}
+namespace tools
+{
+namespace binders
+{
+    class ScriptRef;
+}
+}
 }
 
 // =============================================================================

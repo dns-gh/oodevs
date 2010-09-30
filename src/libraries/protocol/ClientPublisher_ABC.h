@@ -67,7 +67,6 @@ namespace MsgsClientToAuthentication
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  ClientPublisher_ABC
     @brief  ClientPublisher_ABC

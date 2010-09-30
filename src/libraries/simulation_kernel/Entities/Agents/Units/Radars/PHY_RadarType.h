@@ -12,6 +12,9 @@
 #ifndef __PHY_RadarType_h_
 #define __PHY_RadarType_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
+#include "MT_Tools/MT_Stl.h"
+
 namespace xml
 {
     class xistream;

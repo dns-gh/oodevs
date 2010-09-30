@@ -12,10 +12,11 @@
 #ifndef __PHY_RoleAction_Loading_h_
 #define __PHY_RoleAction_Loading_h_
 
-#include "MT_Tools/Role_ABC.h"
-#include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "MT_Tools/Role_ABC.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
+#include "MT_Tools/MT_Tools_Types.h"
 
 class MIL_Agent_ABC;
 

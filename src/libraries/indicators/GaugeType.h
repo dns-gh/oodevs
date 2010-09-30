@@ -10,7 +10,9 @@
 #ifndef __GaugeType_h_
 #define __GaugeType_h_
 
+#pragma warning( push, 0 )
 #include <qstring.h>
+#pragma warning( pop )
 
 namespace kernel
 {

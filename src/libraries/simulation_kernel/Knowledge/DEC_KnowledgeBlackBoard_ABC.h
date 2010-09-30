@@ -15,6 +15,7 @@
 #include "DEC_Knowledge_Def.h"
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_KnowledgeResolver_ABC.h"
+#include <boost/serialization/list.hpp>
 
 class DEC_KnowledgeSource_ABC;
 

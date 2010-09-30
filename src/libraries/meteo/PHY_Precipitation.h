@@ -12,11 +12,12 @@
 #ifndef __PHY_Precipitation_h_
 #define __PHY_Precipitation_h_
 
-#include <boost/noncopyable.hpp>
-#include <map>
 #include "ENT/ENT_Enums_Gen.h"
 #include "protocol/ClientSenders.h"
 #include "MT_Tools/MT_Tools_Types.h"
+#include "MT_Tools/MT_Stl.h"
+#include <boost/noncopyable.hpp>
+#include <map>
 
 namespace weather
 {

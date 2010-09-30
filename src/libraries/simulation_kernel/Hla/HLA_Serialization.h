@@ -27,6 +27,7 @@ namespace hla
 }
 
 class TER_Localisation;
+class MT_Vector2D;
 
 // =============================================================================
 /** @brief  HLA serialization helpers

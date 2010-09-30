@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Tiredness.h"
 #include "protocol/protocol.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_Tiredness::T_TirednessMap PHY_Tiredness::tirednesses_;
@@ -35,9 +36,7 @@ struct PHY_Tiredness::LoadingWrapper
 void PHY_Tiredness::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing tirenesses" );
-
     LoadingWrapper loader;
-
     xis >> xml::start( "humans-factors" )
             >> xml::start( "tiredness-factor" )
                 >> xml::list( "modifier", loader, &LoadingWrapper::ReadTiredness )

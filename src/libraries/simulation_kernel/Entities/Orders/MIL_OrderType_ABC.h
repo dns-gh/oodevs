@@ -10,8 +10,6 @@
 #ifndef __MIL_OrderType_ABC_h_
 #define __MIL_OrderType_ABC_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace Common
 {
     class MsgMissionParameters;

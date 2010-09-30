@@ -48,7 +48,7 @@ DetectorAttribute::~DetectorAttribute()
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DetectorAttribute::serialize( Archive& /*file*/, const uint )
+void DetectorAttribute::serialize( Archive& /*file*/, const unsigned int )
 {
     //TODO
 }

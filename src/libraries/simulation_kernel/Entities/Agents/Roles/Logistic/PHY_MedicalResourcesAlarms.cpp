@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MedicalResourcesAlarms.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_MedicalResourcesAlarms::T_LevelSet PHY_MedicalResourcesAlarms::evacuationResourcesLevels_;
@@ -30,9 +31,7 @@ struct PHY_MedicalResourcesAlarms::LoadingWrapper
 void PHY_MedicalResourcesAlarms::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing medical resources alarms" );
-
     LoadingWrapper loader;
-
     xis >> xml::start( "health" )
             >> xml::start( "resource-availability-alerts" )
                 >> xml::list( "resource-availability-alert", loader, &LoadingWrapper::ReadResourceLevel )

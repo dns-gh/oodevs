@@ -10,6 +10,7 @@
 #ifndef __MIL_AgentType_ABC_h_
 #define __MIL_AgentType_ABC_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {
@@ -25,10 +26,10 @@ class TerrainData;
 
 namespace directia
 {
-    namespace brain
-    {
-        class Brain;
-    }
+namespace brain
+{
+    class Brain;
+}
 }
 
 // =============================================================================

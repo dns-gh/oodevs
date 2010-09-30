@@ -15,6 +15,7 @@
 #include "MIL_ObjectManipulator_ABC.h"
 #include "protocol/protocol.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
+#include "MT_Tools/MT_ScipioException.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFactory constructor

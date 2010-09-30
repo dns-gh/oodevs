@@ -14,6 +14,7 @@
 
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
+#include "MT_Tools/MT_Vector2DTypes.h"
 
 namespace xml
 {

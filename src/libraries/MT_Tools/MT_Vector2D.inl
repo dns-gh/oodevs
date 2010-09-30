@@ -9,15 +9,14 @@
 //
 //*****************************************************************************
 
-#include "MT_Droite.h"
 #include <cmath>
 
 // -----------------------------------------------------------------------------
-//  Name  :  MT_Vector2D constructor
+// Name : MT_Vector2D constructor
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
 inline
-MT_Vector2D::MT_Vector2D( )
+MT_Vector2D::MT_Vector2D()
     : rX_( 0 )
     , rY_( 0 )
 {
@@ -25,7 +24,7 @@ MT_Vector2D::MT_Vector2D( )
 }
 
 //-----------------------------------------------------------------------------
-//  Name  :  MT_Vector2D constructor
+// Name : MT_Vector2D constructor
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
 inline
@@ -36,9 +35,8 @@ MT_Vector2D::MT_Vector2D( MT_Float rX, MT_Float rY )
     // NOTHING
 }
 
-
 //-----------------------------------------------------------------------------
-//  Name  :  MT_Vector2D constructor
+// Name : MT_Vector2D constructor
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
 inline
@@ -49,9 +47,8 @@ MT_Vector2D::MT_Vector2D( const MT_Vector2D& v )
     // NOTHING
 }
 
-
 //-----------------------------------------------------------------------------
-//  Name  :  MT_Vector2D destructor
+// Name : MT_Vector2D destructor
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
 inline
@@ -61,24 +58,24 @@ MT_Vector2D::~MT_Vector2D()
 }
 
 //-----------------------------------------------------------------------------
-//  Name  :  MT_Vector2D::SquareMagnitude
+// Name : MT_Vector2D::SquareMagnitude
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
 inline
 MT_Float MT_Vector2D::SquareMagnitude() const
-{ 
+{
     return rX_ * rX_ + rY_ * rY_; 
 }
 
 //-----------------------------------------------------------------------------
-//  Name  :  MT_Vector2D::Magnitude
+// Name : MT_Vector2D::Magnitude
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
 inline
 MT_Float MT_Vector2D::Magnitude() const
-{ 
+{
     return (MT_Float)sqrt( SquareMagnitude() );
 }
 
@@ -94,7 +91,7 @@ MT_Float MT_Vector2D::SquareDistance( const MT_Vector2D& vPosDest ) const
 }
 
 //-----------------------------------------------------------------------------
-//  Name  :  MT_Vector2D::Distance
+// Name : MT_Vector2D::Distance
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
@@ -103,7 +100,6 @@ MT_Float MT_Vector2D::Distance( const MT_Vector2D& vPosDest ) const
 {
     return (MT_Float)sqrt( SquareDistance( vPosDest ) );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Vector2D::IsZero
@@ -116,10 +112,8 @@ bool MT_Vector2D::IsZero() const
     return rX_ == 0. && rY_ == 0.;
 }
 
-
-
 //-----------------------------------------------------------------------------
-//  Name  :  MT_Vector2D::Normalized
+// Name : MT_Vector2D::Normalized
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
@@ -132,7 +126,6 @@ MT_Vector2D MT_Vector2D::Normalized( ) const
     else
         return (*this);
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Vector2D::Normalize
@@ -150,7 +143,7 @@ MT_Vector2D& MT_Vector2D::Normalize()
 }
 
 //-----------------------------------------------------------------------------
-//  Name  :  operator *
+// Name : operator *
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
@@ -161,7 +154,7 @@ MT_Vector2D operator* ( MT_Float rScalar, const MT_Vector2D& v )
 }
 
 //-----------------------------------------------------------------------------
-//  Name  :  operator *
+// Name : operator *
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
@@ -172,7 +165,7 @@ MT_Vector2D operator* ( const MT_Vector2D& v, MT_Float rScalar )
 }
 
 //-----------------------------------------------------------------------------
-//  Name  :  operator +
+// Name : operator +
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
@@ -184,18 +177,18 @@ MT_Vector2D operator+ ( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 
 
 //-----------------------------------------------------------------------------
-//  Name  :  operator -
+// Name : operator -
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
 inline
 MT_Vector2D operator- ( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 {
-  return MT_Vector2D( v1.rX_ - v2.rX_, v1.rY_ - v2.rY_ );
+    return MT_Vector2D( v1.rX_ - v2.rX_, v1.rY_ - v2.rY_ );
 }
 
 //-----------------------------------------------------------------------------
-//  Name  :  operator <
+// Name : operator <
 //  Warning: Attention operator< sert par defaut aux map et donc pas de distance 
 //    pour l'operation < en math
 // Created: FBD 02-03-01
@@ -209,7 +202,7 @@ bool operator <( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 }
 
 //-----------------------------------------------------------------------------
-//  Name  :  operator *
+// Name : operator *
 // Created: FBD 02-03-01
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
@@ -220,7 +213,7 @@ MT_Float operator* ( const MT_Vector2D& v1, const MT_Vector2D& v2)
 }
 
 //-----------------------------------------------------------------------------
-//  Name  :  DotProduct
+// Name : DotProduct
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
 inline
@@ -288,8 +281,6 @@ bool MT_Vector2D::operator!=( const MT_Vector2D& v ) const
     return !MT_IsZero( rX_ - v.rX_ ) || !MT_IsZero( rY_ - v.rY_ );
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Name: MT_Vector2D::Rotated
 // Created: JVT 02-12-13
@@ -302,7 +293,6 @@ MT_Vector2D MT_Vector2D::Rotated( MT_Float rad ) const
 
     return MT_Vector2D( rX_ * rCos + rY_ * rSin, rY_ * rCos - rX_ * rSin);
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Vector2D::Rotate
@@ -320,7 +310,6 @@ MT_Vector2D& MT_Vector2D::Rotate( MT_Float rad )
 
     return *this;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Vector2D::Rotate90ClockWise
@@ -345,7 +334,6 @@ MT_Vector2D MT_Vector2D::Rotated90ClockWise() const
     return MT_Vector2D( *this ).Rotate90ClockWise();
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MT_Vector2D::Rotate90ClockWise
 // Created: NLD 2003-10-09
@@ -358,7 +346,6 @@ MT_Vector2D& MT_Vector2D::Rotate90()
     rY_    = rTmp; 
     return *this;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MT_Vector2D MT_Vector2D::Rotated90
@@ -380,18 +367,4 @@ MT_Vector2D& MT_Vector2D::Rotate180()
     rX_ = -rX_;
     rY_ = -rY_;
     return *this;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MT_Vector2D::ToStdVector
-// Created: MGD 2009-10-31
-//-----------------------------------------------------------------------------
-inline
-std::vector< MT_Float > MT_Vector2D::ToStdVector() const
-{
-    std::vector< MT_Float >position;
-    position.push_back( rX_);
-    position.push_back( rY_);
-    position.push_back( 0. );
-    return position;
 }

@@ -17,11 +17,10 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
-
+#include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <qstring.h>
 #pragma warning( pop )
-#include <xeumeuleu/xml.hpp>
 
 using namespace weather;
 

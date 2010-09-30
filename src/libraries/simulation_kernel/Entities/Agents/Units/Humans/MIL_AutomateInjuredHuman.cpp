@@ -46,7 +46,7 @@ void load_construct_data( Archive& archive, MIL_AutomateInjuredHuman* automat, c
 // Created: RFT 2004-12-21
 // -----------------------------------------------------------------------------
 MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman(     const MIL_AutomateTypeInjuredHuman& type
-                                                        , uint nID, MIL_Formation& parent
+                                                        , unsigned int nID, MIL_Formation& parent
                                                         , xml::xistream& xis
                                                         , DEC_DataBase& database
                                                         , unsigned int gcPause
@@ -61,7 +61,7 @@ MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman(     const MIL_AutomateTypeIn
 // Created: RFT 2007-03-29
 // -----------------------------------------------------------------------------
 MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman(     const MIL_AutomateTypeInjuredHuman& type
-                                                        , uint nID, MIL_Automate& parent
+                                                        , unsigned int nID, MIL_Automate& parent
                                                         , xml::xistream& xis
                                                         , DEC_DataBase& database
                                                         , unsigned int gcPause
@@ -98,7 +98,7 @@ MIL_AutomateInjuredHuman::~MIL_AutomateInjuredHuman()
 // Name: MIL_AgentInjuredHumanPion::load
 // Created: RFT 2005-03-24
 // -----------------------------------------------------------------------------
-void MIL_AutomateInjuredHuman::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_AutomateInjuredHuman::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Automate >( *this );
 }
@@ -107,7 +107,7 @@ void MIL_AutomateInjuredHuman::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_AgentInjuredHumanPion::save
 // Created: RFT 2005-03-24
 // -----------------------------------------------------------------------------
-void MIL_AutomateInjuredHuman::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_AutomateInjuredHuman::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< const MIL_Automate >( *this );
 }
@@ -146,7 +146,7 @@ void MIL_AutomateInjuredHuman::Clean()
 // Name: MIL_AutomateInjuredHuman::GetAutomateInjuredHuman
 // Created: RFT 2005-01-17
 // -----------------------------------------------------------------------------
-MIL_AutomateInjuredHuman* MIL_AutomateInjuredHuman::GetAutomateInjuredHuman( uint nID ) const
+MIL_AutomateInjuredHuman* MIL_AutomateInjuredHuman::GetAutomateInjuredHuman( unsigned int nID ) const
 {
     MIL_Automate* pAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nID );
     if( !pAutomate || !pAutomate->GetType().IsInjuredHuman() )

@@ -28,6 +28,7 @@ class PHY_AmmoDotationClass;
 class PHY_Protection;
 class PHY_DotationLogisticType;
 class PHY_FireResults_ABC;
+class MT_Vector2D;
 
 // =============================================================================
 // @class  PHY_DotationCategory

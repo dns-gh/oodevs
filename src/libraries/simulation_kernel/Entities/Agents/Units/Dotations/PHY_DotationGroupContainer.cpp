@@ -17,8 +17,7 @@
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
-
-BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationGroupContainer )
+#include <boost/serialization/split_free.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer constructor
@@ -55,83 +54,92 @@ PHY_DotationGroupContainer::~PHY_DotationGroupContainer()
 
 namespace boost
 {
-    namespace serialization
+namespace serialization
+{
+    template< typename Archive >
+    inline
+    void serialize( Archive& file, PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int nVersion )
     {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
+        split_free( file, map, nVersion );
+    }
 
-        template< typename Archive >
-        void save( Archive& file, const PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int )
+    template< typename Archive >
+    void save( Archive& file, const PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int )
+    {
+        unsigned size = map.size();
+        file << size;
+        for( PHY_DotationGroupContainer::CIT_DotationGroupMap it = map.begin(); it != map.end(); ++it )
         {
-            unsigned size = map.size();
-            file << size;
-            for ( PHY_DotationGroupContainer::CIT_DotationGroupMap it = map.begin(); it != map.end(); ++it )
-            {
-                unsigned id = it->first->GetID();
-                file << id
-                     << it->second;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int )
-        {
-            unsigned int nNbr;
-            file >> nNbr;
-            while ( nNbr-- )
-            {
-                unsigned int nID;
-
-                file >> nID;
-                file >> map[ PHY_DotationType::FindDotationType( nID ) ];
-            }
-        }
-
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int nVersion )
-        {
-            split_free( file, set, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int )
-        {
-            unsigned size = set.size();
-            file << size;
-            for ( PHY_DotationGroupContainer::CIT_DotationSet it = set.begin(); it != set.end(); ++it )
-                file << *it;
-        }
-
-        template< typename Archive >
-        void load( Archive& file, PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int )
-        {
-            unsigned int nNbr;
-            file >> nNbr;
-            while ( nNbr-- )
-            {
-                PHY_Dotation* pDotation;
-                file >> pDotation;
-                set.insert( pDotation );
-            }
+            unsigned id = it->first->GetID();
+            file << id
+                 << it->second;
         }
     }
+
+    template< typename Archive >
+    void load( Archive& file, PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int )
+    {
+        unsigned int n;
+        file >> n;
+        while( --n )
+        {
+            unsigned int id;
+            file >> id;
+            file >> map[ PHY_DotationType::FindDotationType( id ) ];
+        }
+    }
+
+    template< typename Archive >
+    inline
+    void serialize( Archive& file, PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int nVersion )
+    {
+        split_free( file, set, nVersion );
+    }
+
+    template< typename Archive >
+    void save( Archive& file, const PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int )
+    {
+        unsigned size = set.size();
+        file << size;
+        for ( PHY_DotationGroupContainer::CIT_DotationSet it = set.begin(); it != set.end(); ++it )
+            file << *it;
+    }
+
+    template< typename Archive >
+    void load( Archive& file, PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int )
+    {
+        unsigned int n;
+        file >> n;
+        while ( n-- )
+        {
+            PHY_Dotation* pDotation;
+            file >> pDotation;
+            set.insert( pDotation );
+        }
+    }
+}
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::serialize
-// Created: JVT 2005-03-31
+// Created: MCO 2010-09-30
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_DotationGroupContainer::serialize( Archive& file, const unsigned int )
+void PHY_DotationGroupContainer::serialize( MIL_CheckPointOutArchive& ar, unsigned int )
 {
-    file & pRoleDotation_
-         & dotationGroups_
-         & dotationsChanged_;
+    ar << pRoleDotation_
+         << dotationGroups_
+         << dotationsChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::serialize
+// Created: MCO 2010-09-30
+// -----------------------------------------------------------------------------
+void PHY_DotationGroupContainer::serialize( MIL_CheckPointInArchive& ar, unsigned int )
+{
+    ar >> pRoleDotation_
+         >> dotationGroups_
+         >> dotationsChanged_;
 }
 
 // -----------------------------------------------------------------------------
@@ -305,9 +313,9 @@ const PHY_DotationCategory* PHY_DotationGroupContainer::GetIlluminationDotations
 // Name: PHY_DotationGroupContainer::GetilluminatingRange
 // Created: GGE 2010-06-23
 // -----------------------------------------------------------------------------
-float PHY_DotationGroupContainer::GetIlluminatingRange( ) const
+float PHY_DotationGroupContainer::GetIlluminatingRange() const
 {
-    float rangeMax = 0.0;
+    float rangeMax = 0;
     for( T_DotationGroupMap::const_iterator it = dotationGroups_.begin(); it != dotationGroups_.end(); it++ )
     {
         float range = it->second->GetIlluminatingRange( );

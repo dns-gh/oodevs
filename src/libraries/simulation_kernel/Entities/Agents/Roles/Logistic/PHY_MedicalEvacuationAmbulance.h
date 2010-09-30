@@ -13,6 +13,7 @@
 #define __PHY_MedicalEvacuationAmbulance_h_
 
 #include <boost/serialization/export.hpp>
+#include "MT_Tools/MT_Tools_Types.h"
 
 class PHY_ComposantePion;
 class PHY_MedicalEvacuationConsign;
@@ -84,7 +85,6 @@ private:
     T_ConsignVector             consigns_;
     E_State                     nState_;
     int                         nTimer_;
-
     MT_Float                    rNbrHumanHandled_;
     //@}
 };

@@ -10,8 +10,6 @@
 #ifndef __MIL_MissionParameterVisitor_ABC_h_
 #define __MIL_MissionParameterVisitor_ABC_h_
 
-#include <boost/noncopyable.hpp>
-
 // =============================================================================
 /** @class  MIL_MissionParameterVisitor_ABC
     @brief  MIL Mission parameter visitor definition

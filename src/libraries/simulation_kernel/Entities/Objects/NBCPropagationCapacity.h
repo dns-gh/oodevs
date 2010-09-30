@@ -11,10 +11,12 @@
 #define __NBCPropagationCapacity_h_
 
 #include "PropagationCapacity_ABC.h"
+#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 class MIL_PropagationManager;
 class TER_Localisation;
+class MT_Vector2D;
 
 class NBCPropagationCapacity : public PropagationCapacity_ABC
 {
@@ -28,7 +30,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Register( MIL_Object_ABC& /*object*/ );
     //@}
 
@@ -46,8 +48,8 @@ private:
 
     //! @name Update
     //@{
-    void UpdateShape( MIL_Object_ABC& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed );
-    bool UpdateState( MIL_Object_ABC& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed );
+    void UpdateShape( MIL_Object_ABC& object, const MT_Vector2D& vNormalizedWind, const MT_Vector2D& vPerpendicularToWind, MT_Float windSpeed );
+    bool UpdateState( MIL_Object_ABC& object, const MT_Vector2D& vNormalizedWind, const MT_Vector2D& vPerpendicularToWind, MT_Float windSpeed );
     void Propagate( const MT_Vector2D& vOrigin, MIL_Object_ABC& object );
     //@}
 

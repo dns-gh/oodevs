@@ -16,10 +16,11 @@
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_HumanProtection::T_HumanProtectionMap   PHY_HumanProtection::protections_;
-uint                                        PHY_HumanProtection::nNextID_;
+unsigned int                                        PHY_HumanProtection::nNextID_;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_HumanProtection::Initialize
@@ -28,7 +29,6 @@ uint                                        PHY_HumanProtection::nNextID_;
 void PHY_HumanProtection::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing human protections" );
-
     xis >> xml::start( "protections" )
             >> xml::list( "protection" , &ReadProtection )
         >> xml::end;
@@ -42,11 +42,9 @@ void PHY_HumanProtection::ReadProtection( xml::xistream& xis )
 {
     std::string strProtection;
     xis >> xml::attribute( "name", strProtection );
-
     const PHY_HumanProtection*& pProtection = protections_[ strProtection ];
     if( pProtection )
         xis.error( "Protection " + strProtection + " already defined" );
-
      pProtection = new PHY_HumanProtection( strProtection, xis );
 }
 
@@ -58,11 +56,9 @@ void PHY_HumanProtection::ReadHumanProtection( xml::xistream& xis )
 {
     std::string strInjury;
     xis >> xml::attribute( "name", strInjury );
-
     if( MIL_MedicalTreatmentType::Find( strInjury ) == 0 )
         xis.error( "The injury, which name is " + strInjury + " , isn't the name of a medical treatment" );
     protectionDescription_.injuryName_ = strInjury;
-
     xis >> xml::start( "types" )
             >> xml::list( "type", *this, &PHY_HumanProtection::ReadType )
         >> xml::end

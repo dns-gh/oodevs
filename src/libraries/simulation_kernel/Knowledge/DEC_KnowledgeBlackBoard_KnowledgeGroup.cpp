@@ -505,7 +505,7 @@ boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_KnowledgeGroup:
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeUrban
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeUrban( uint nID ) const
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeUrban( unsigned int nID ) const
 {
     return pKnowledgeGroup_->GetArmy().GetKnowledge().GetKnowledgeUrbanFromID( nID );
 }

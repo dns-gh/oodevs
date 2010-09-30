@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_LimaFunction.h"
+#include "MT_Tools/MT_Logger.h"
 
 MIL_LimaFunction::T_LimaFunctionMap MIL_LimaFunction::limaFunctions_;
 
@@ -30,7 +31,6 @@ const MIL_LimaFunction MIL_LimaFunction::LIA_ ( Common::MsgLimaOrder_Function_li
 void MIL_LimaFunction::Initialize()
 {
     MT_LOG_INFO_MSG( "Initializing lima functions" );
-
     limaFunctions_[ LD_  .GetAsnID() ] = &LD_;
     limaFunctions_[ LCA_ .GetAsnID() ] = &LCA_;
     limaFunctions_[ LC_  .GetAsnID() ] = &LC_;

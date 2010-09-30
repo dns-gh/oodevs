@@ -55,7 +55,7 @@ bool MIL_AutomateTypeInjuredHuman::IsInjuredHuman() const
 // Name: MIL_AutomateTypeInjuredHuman::InstanciateAutomate
 // Created: RFT 2004-12-27
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateTypeInjuredHuman::InstanciateAutomate( uint nID
+MIL_Automate& MIL_AutomateTypeInjuredHuman::InstanciateAutomate( unsigned int nID
                                                                 , MIL_Formation& parent
                                                                 , xml::xistream& xis
                                                                 , DEC_DataBase& database
@@ -69,7 +69,7 @@ MIL_Automate& MIL_AutomateTypeInjuredHuman::InstanciateAutomate( uint nID
 // Name: MIL_AutomateTypeInjuredHuman::InstanciateAutomate
 // Created: RFT 2004-12-27
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateTypeInjuredHuman::InstanciateAutomate( uint nID
+MIL_Automate& MIL_AutomateTypeInjuredHuman::InstanciateAutomate( unsigned int nID
                                                                 , MIL_Automate& parent
                                                                 , xml::xistream& xis
                                                                 , DEC_DataBase& database

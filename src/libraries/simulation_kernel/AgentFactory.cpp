@@ -18,7 +18,10 @@
 #include "tools/MIL_Tools.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/Decision/DEC_DataBase.h"
+#include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/map.hpp>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )
@@ -28,11 +31,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
 AgentFactory::AgentFactory( MIL_IDManager& idManager, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
-    : idManager_( idManager )
+    : idManager_          ( idManager )
     , algorithmsFactories_( new AlgorithmsFactories() )
-    , database_( database )
-    , gcPause_ (gcPause )
-    , gcMult_  ( gcMult )
+    , database_           ( database )
+    , gcPause_            ( gcPause )
+    , gcMult_             ( gcMult )
 {
     // NOTHING
 }
@@ -55,16 +58,12 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     MIL_AgentPion* pPion = tools::Resolver< MIL_AgentPion >::Find( xis.attribute< unsigned long >( "id" ) );
     if( pPion )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
-
     pPion = type.InstanciatePion( automate, *algorithmsFactories_, xis );
-
     type.RegisterRoles( *pPion , database_, gcPause_, gcMult_ );
-
     std::string strPosition;
     xis >> xml::attribute( "position", strPosition );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
-
     Initialize( *pPion, vPosTmp );
     tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
     pPion->ReadOverloading( xis );

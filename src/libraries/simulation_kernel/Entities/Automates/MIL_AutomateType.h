@@ -34,16 +34,14 @@ class MIL_AgentType_ABC;
 class MIL_Automate;
 class MIL_Formation;
 
-
 // =============================================================================
 // @class  MIL_AutomateType
 // Created: JVT 2004-08-03
 // ============================================================================
 class MIL_AutomateType : private boost::noncopyable
 {
-
 public:
-    MIL_AutomateType( const std::string& strName, xml::xistream& xis );
+             MIL_AutomateType( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AutomateType();
 
     //! @name Manager

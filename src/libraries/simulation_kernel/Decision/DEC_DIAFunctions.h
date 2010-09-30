@@ -12,11 +12,14 @@
 #ifndef __DEC_DIAFunctions_h_
 #define __DEC_DIAFunctions_h_
 
+#include <boost/shared_ptr.hpp>
+
 class MIL_Mission_ABC;
 class DEC_Gen_Object;
 class DEC_Knowledge_Object;
 class DEC_Path_ABC;
 class TER_Localisation;
+class MT_Vector2D;
 
 //=============================================================================
 // Created: NLD 2002-12-24

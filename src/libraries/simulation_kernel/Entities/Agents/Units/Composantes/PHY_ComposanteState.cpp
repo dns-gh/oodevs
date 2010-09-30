@@ -11,6 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ComposanteState.h"
+#include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_Stl.h"
 
 const PHY_ComposanteState PHY_ComposanteState::undamaged_                  ( "Disponible"             , eUndamaged                  , true  , false ); // bUsable, bDamaged
 const PHY_ComposanteState PHY_ComposanteState::repairableWithEvacuation_   ( "ReparableAvecEvacuation", eRepairableWithEvacuation   , true  , true  );

@@ -11,6 +11,7 @@
 #define __PHY_RoleHLA_Communications_h_
 
 #include "PHY_RoleInterface_Communications.h"
+#include "MT_Tools/MT_Tools_Types.h"
 #include <string>
 
 // =============================================================================

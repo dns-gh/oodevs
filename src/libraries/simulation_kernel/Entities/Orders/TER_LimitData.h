@@ -10,6 +10,8 @@
 #ifndef __TER_LimitData_h_
 #define __TER_LimitData_h_
 
+#include "MT_Tools/MT_Vector2DTypes.h"
+
 class TER_DynamicData;
 class MIL_Fuseau;
 
@@ -20,7 +22,7 @@ class MIL_Fuseau;
 class TER_LimitData : private boost::noncopyable
 {
 public:
-     TER_LimitData( const T_PointVector& points );
+             TER_LimitData( const T_PointVector& points );
     virtual ~TER_LimitData();
 
     //! @name Accessors

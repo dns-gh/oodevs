@@ -10,15 +10,18 @@
 #ifndef __MovementHandler_ABC_H__
 #define __MovementHandler_ABC_H__
 
-namespace location {
+class MT_Vector2D;
 
+namespace location
+{
 // =============================================================================
 /** @class  MovementHandler_ABC
     @brief  MovementHandler_ABC
 */
 // Created: MGD 2010-04-21
 // =============================================================================
-class MovementHandler_ABC {
+class MovementHandler_ABC
+{
 public:
              MovementHandler_ABC() {}
     virtual ~MovementHandler_ABC() {}
@@ -26,6 +29,6 @@ public:
     virtual void NotifyHasMove( const MT_Vector2D& newPos ) = 0;
 };
 
-} // namespace component
+}
 
 #endif /* __MovementHandler_ABC_H__ */

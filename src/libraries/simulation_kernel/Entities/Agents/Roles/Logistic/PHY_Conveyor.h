@@ -12,12 +12,14 @@
 #ifndef __PHY_Conveyor_h_
 #define __PHY_Conveyor_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 class PHY_ComposantePion;
 class MIL_AgentPion;
 class PHY_DotationCategory;
 class PHY_SupplyConsign_ABC;
+class MT_Vector2D;
 
 // =============================================================================
 // @class  PHY_Conveyor

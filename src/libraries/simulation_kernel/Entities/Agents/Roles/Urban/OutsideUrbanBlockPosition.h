@@ -10,8 +10,8 @@
 #ifndef __OutsideUrbanBlockPosition_h_
 #define __OutsideUrbanBlockPosition_h_
 
-#include <geometry/Types.h>
 #include "UrbanBlockPosition_ABC.h"
+#include <geometry/Types.h>
 
 // =============================================================================
 /** @class  OutsideUrbanBlockPosition

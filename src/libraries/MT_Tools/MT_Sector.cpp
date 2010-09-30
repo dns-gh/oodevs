@@ -10,10 +10,7 @@
 // *****************************************************************************
 
 #include "MT_Tools_pch.h"
-
 #include "MT_Sector.h"
-
-//MT_BOOSTPOOLING_FUNCTIONS( MT_Sector )
 
 // -----------------------------------------------------------------------------
 // Name: MT_Sector constructor

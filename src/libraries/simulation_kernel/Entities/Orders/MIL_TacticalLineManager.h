@@ -11,6 +11,7 @@
 #define __MIL_TacticalLineManager_h_
 
 #include "MIL.h"
+#include "MT_Tools/MT_Vector2DTypes.h"
 
 class MIL_Formation;
 class MIL_Automate;
@@ -27,7 +28,7 @@ class MIL_TacticalLineManager
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_TacticalLineManager();
+             MIL_TacticalLineManager();
     virtual ~MIL_TacticalLineManager();
     //@}
 
@@ -51,6 +52,7 @@ private:
     MIL_TacticalLineManager& operator=( const MIL_TacticalLineManager& ); //!< Assignment operator
     //@}
 
+private:
     //! @name Types
     //@{
     typedef std::map< T_PointVector, TER_LimitData* > T_LimitDataMap;

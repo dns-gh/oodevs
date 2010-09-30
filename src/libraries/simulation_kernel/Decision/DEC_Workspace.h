@@ -6,6 +6,7 @@
 #define __DEC_Workspace_h_
 
 #include "MIL.h"
+#include "MT_Tools/MT_Stl.h"
 
 namespace xml
 {
@@ -20,10 +21,10 @@ class MIL_Config;
 
 namespace directia
 {
-    namespace brain
-    {
-        class Brain;
-    }
+namespace brain
+{
+    class Brain;
+}
 }
 
 

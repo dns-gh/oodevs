@@ -79,7 +79,7 @@ MIL_AgentInjuredHumanPion::~MIL_AgentInjuredHumanPion()
 // Name: MIL_AgentInjuredHumanPion::load
 // Created: RPD 2009-11-10
 // -----------------------------------------------------------------------------
-void MIL_AgentInjuredHumanPion::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_AgentInjuredHumanPion::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_AgentPion >( *this );
 }
@@ -88,7 +88,7 @@ void MIL_AgentInjuredHumanPion::load( MIL_CheckPointInArchive& file, const uint 
 // Name: MIL_AgentInjuredHumanPion::save
 // Created: RPD 2009-11-10
 // -----------------------------------------------------------------------------
-void MIL_AgentInjuredHumanPion::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_AgentInjuredHumanPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_AgentPion >( *this );
 }

@@ -12,6 +12,7 @@
 
 #pragma warning( disable : 4290 )
 #pragma warning( disable : 4702 )
+#pragma warning( disable : 4355 ) // 'this' : used in base member initializer list
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>

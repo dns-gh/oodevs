@@ -11,9 +11,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ProfilerMgr.h"
-#include "Entities/Populations/MIL_Population.h"
 #include "MIL_AgentServer.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Orders/MIL_AutomateOrderManager.h"
+#include "MT_Tools/MT_Logger.h"
 #include <direct.h>
 
 //-----------------------------------------------------------------------------
@@ -26,7 +28,7 @@ MIL_ProfilerMgr::MIL_ProfilerMgr( bool bEnabled )
     if( bEnabled_ )
         MT_LOG_INFO_MSG( "Profiling mode enabled at startup time : dec functions profiled" )
     else
-        MT_LOG_INFO_MSG( "Profiling mode not enabled at startup time : dec functions won't be profiled" )
+        MT_LOG_INFO_MSG( "Profiling mode not enabled at startup time : dec functions won't be profiled" );
     _mkdir( "./Profiling/");
     decFunctionsFile_  .open( "./Profiling/DecFunctions.txt"  , std::ios_base::out | std::ios_base::trunc );
     decisionUpdateFile_.open( "./Profiling/DecisionUpdate.txt", std::ios_base::out | std::ios_base::trunc );
@@ -38,7 +40,7 @@ MIL_ProfilerMgr::MIL_ProfilerMgr( bool bEnabled )
 //-----------------------------------------------------------------------------
 MIL_ProfilerMgr::~MIL_ProfilerMgr()
 {
-    decFunctionsFile_  .close();
+    decFunctionsFile_.close();
     decisionUpdateFile_.close();
 }
 

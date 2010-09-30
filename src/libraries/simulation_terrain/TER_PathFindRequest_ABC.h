@@ -20,6 +20,7 @@
 #define __TER_PathFindRequest_ABC_h_
 
 class TerrainPathfinder;
+
 // =============================================================================
 /** @class  TER_PathFindRequest_ABC
     @brief  Pathfind request definition
@@ -33,8 +34,8 @@ public:
     //@{
     //! @name
     //@{
-             TER_PathFindRequest_ABC() {};
-    virtual ~TER_PathFindRequest_ABC() {};
+             TER_PathFindRequest_ABC() {}
+    virtual ~TER_PathFindRequest_ABC() {}
     //@}
 
     //! @name Operations

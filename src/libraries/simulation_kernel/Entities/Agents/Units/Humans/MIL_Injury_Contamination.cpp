@@ -74,7 +74,7 @@ MIL_Injury_Contamination::~MIL_Injury_Contamination( )
 // Name: PHY_Human::load
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void MIL_Injury_Contamination::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_Injury_Contamination::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> agentConcentration_
          >> const_cast< std::string& >( NBCAgent_ )
@@ -86,7 +86,7 @@ void MIL_Injury_Contamination::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_Injury_Fire::save
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void MIL_Injury_Contamination::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_Injury_Contamination::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << agentConcentration_
          << NBCAgent_

@@ -63,13 +63,14 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
-#include "hla/HLA_UpdateFunctor.h"
 #include "tools/MIL_Tools.h"
 #include "tools/MIL_IDManager.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include <xeumeuleu/xml.hpp>
+#include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
+#include <hla/HLA_UpdateFunctor.h>
+#include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 
@@ -94,13 +95,13 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
-    : MIL_Agent_ABC            ( type.GetName() )
-    , pType_                   ( &type )
-    , bIsPC_                   ( false )
-    , pAutomate_               ( &automate )
-    , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
-    , orderManager_            ( *new MIL_PionOrderManager( *this ) )
-    , algorithmFactories_      ( algorithmFactories )
+    : MIL_Agent_ABC        ( type.GetName() )
+    , pType_               ( &type )
+    , bIsPC_               ( false )
+    , pAutomate_           ( &automate )
+    , pKnowledgeBlackBoard_(  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
+    , orderManager_        ( *new MIL_PionOrderManager( *this ) )
+    , algorithmFactories_  ( algorithmFactories )
 {
     automate.RegisterPion( *this );
 }
@@ -110,13 +111,13 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
 // Created: LDC 2010-02-22
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories )
-    : MIL_Agent_ABC            ( type.GetName() )
-    , pType_                   ( &type )
-    , bIsPC_                   ( false )
-    , pAutomate_               ( 0 )
-    , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
-    , orderManager_            ( *new MIL_PionOrderManager( *this ) )
-    , algorithmFactories_      ( algorithmFactories )
+    : MIL_Agent_ABC        ( type.GetName() )
+    , pType_               ( &type )
+    , bIsPC_               ( false )
+    , pAutomate_           ( 0 )
+    , pKnowledgeBlackBoard_(  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
+    , orderManager_        ( *new MIL_PionOrderManager( *this ) )
+    , algorithmFactories_  ( algorithmFactories )
 {
     // NOTHING
 }
@@ -170,7 +171,6 @@ void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned 
 void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
-
     file >> const_cast< bool& >( bIsPC_ )
          >> pAutomate_
       // >> actions_ // actions non sauvegardées
@@ -527,13 +527,12 @@ MIL_KnowledgeGroup& MIL_AgentPion::GetKnowledgeGroup() const
 {
     if( GetRole< PHY_RolePion_Communications >().CanEmit() )
     {
-        if( pAutomate_ == 0 )
+        if( ! pAutomate_ )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Automate is undefined for agent id %d ", GetID() ) );
-
         return pAutomate_->GetKnowledgeGroup();
-    } else {
-        return GetRole< PHY_RolePion_Communications >().GetKnowledgeGroup();
     }
+    else
+        return GetRole< PHY_RolePion_Communications >().GetKnowledgeGroup();
 }
 
 // -----------------------------------------------------------------------------

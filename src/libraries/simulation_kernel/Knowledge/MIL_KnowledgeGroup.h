@@ -193,7 +193,7 @@ private:
     //! @name Member data
     //@{
     const MIL_KnowledgeGroupType* type_;
-    uint                    id_;
+    unsigned int                    id_;
     MIL_Army_ABC*           army_;
     MIL_KnowledgeGroup*     parent_; // LTO
     DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;

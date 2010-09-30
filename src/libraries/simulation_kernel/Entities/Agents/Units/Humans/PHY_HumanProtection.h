@@ -12,9 +12,9 @@
 #ifndef __PHY_HumanProtection_h_
 #define __PHY_HumanProtection_h_
 
-#include "MT_Tools/MT_GaussianRandom.h"
 #include "MIL_Random.h"
-#include <boost/noncopyable.hpp>
+#include "MT_Tools/MT_GaussianRandom.h"
+#include "MT_Tools/MT_Stl.h"
 
 namespace xml
 {
@@ -29,7 +29,6 @@ class PHY_ComposanteState;
 // =============================================================================
 class PHY_HumanProtection : private boost::noncopyable
 {
-
 private:
     //! @name Types
     //@{

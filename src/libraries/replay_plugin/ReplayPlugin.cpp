@@ -178,7 +178,7 @@ void ReplayPlugin::Pause()
 void ReplayPlugin::Resume()
 {
     ::replay::ControlResumeAck asn;
-    asn().set_error_code( running_ ? MsgsSimToClient::ControlAck_ErrorCode_error_not_paused :  MsgsSimToClient::ControlAck_ErrorCode_no_error );
+    asn().set_error_code( running_ ? MsgsSimToClient::ControlAck_ErrorCode_error_not_paused : MsgsSimToClient::ControlAck_ErrorCode_no_error );
     asn.Send( clients_ );
     running_ = true;
 }

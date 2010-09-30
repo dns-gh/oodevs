@@ -23,7 +23,8 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include <geometry/Types.h>
+#include "hla/HLA_Object_ABC.h"
+#include "hla/HLA_UpdateFunctor.h"
 #include <urban/ColorRGBA.h>
 #include <urban/Architecture.h>
 #include <urban/ColorAttribute.h>
@@ -32,11 +33,9 @@
 #include <urban/TerrainObject_ABC.h>
 #include <urban/StaticModel.h>
 #include <urban/MaterialCompositionType.h>
+#include <geometry/Types.h>
+#include <boost/serialization/vector.hpp>
 #include <boost/bind.hpp>
-
-// HLA
-#include "hla/HLA_Object_ABC.h"
-#include "hla/HLA_UpdateFunctor.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UrbanObjectWrapper )
 

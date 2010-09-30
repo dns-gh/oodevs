@@ -31,12 +31,12 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "tools/MIL_IDManager.h"
+#include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include <boost/ref.hpp>
 #include <xeumeuleu/xml.hpp>
-#include <boost/serialization/export.hpp>
+#include <boost/serialization/split_free.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/bind.hpp>
 
 MIL_IDManager MIL_KnowledgeGroup::idManager_;
 

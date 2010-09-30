@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Population_Path_Channeler.h"
 #include "DEC_Population_PathClass.h"
+#include <limits>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Population_Path_Channeler constructor

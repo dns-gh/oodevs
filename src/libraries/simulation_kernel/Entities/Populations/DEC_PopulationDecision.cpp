@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_PopulationDecision.h"
-
 #include "MIL_PopulationType.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
@@ -21,14 +19,13 @@
 #include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_CrashHandler.h"
-
 #include "Decision/DEC_PopulationFunctions.h"
 #include "Decision/DEC_ActionFunctions.h"
 #include "Decision/DEC_MiscFunctions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPion.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
-
+#include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationDecision )
 

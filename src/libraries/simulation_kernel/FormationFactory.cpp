@@ -11,8 +11,8 @@
 #include "simulation_kernel/FormationFactory.h"
 #include "simulation_kernel/Entities/MIL_Formation.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
-
 #include <xeumeuleu/xml.hpp>
+#include <boost/serialization/map.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( FormationFactory )
 

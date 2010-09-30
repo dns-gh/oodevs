@@ -13,6 +13,7 @@
 #define __MIL_Effect_IndirectFire_h_
 
 #include "MIL_Effect_ABC.h"
+#include "MT_Tools/MT_Vector2D.h"
 
 class PHY_DotationCategory_IndirectFire_ABC;
 class PHY_WeaponDataType_IndirectFire;

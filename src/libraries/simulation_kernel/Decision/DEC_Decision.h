@@ -42,7 +42,6 @@ namespace directia
 template <class T >
 class DEC_Decision : public DEC_Decision_ABC
 {
-
 public:
     //! @name Constructor
     //@{
@@ -129,7 +128,7 @@ public:
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive& ar, const uint )
+    template< typename Archive > void serialize( Archive& ar, const unsigned int )
     {
         ar & boost::serialization::base_object< DEC_Decision_ABC >( *this );
     }
@@ -150,9 +149,9 @@ protected:
     void StopMission( const std::string& strBehavior );
 
     virtual void EndCleanStateAfterCrash  () = 0;
-	void RegisterReportFunctions( directia::brain::Brain& brain );
     virtual void RegisterUserFunctions( directia::brain::Brain& brain ) = 0;
-	virtual void RegisterUserArchetypeFunctions ( directia::brain::Brain& brain ) = 0;
+    virtual void RegisterUserArchetypeFunctions ( directia::brain::Brain& brain ) = 0;
+    void RegisterReportFunctions( directia::brain::Brain& brain );
 
     template< typename FunctionType >
     void RegisterFunction( const std::string& strFunctionName, FunctionType function )
@@ -176,7 +175,7 @@ protected:
     boost::shared_ptr< MIL_Mission_ABC > pMission_;
     std::string                     diaType_;
     DEC_DataBase&                   database_;
-	unsigned int                    gcPause_;
+    unsigned int                    gcPause_;
     unsigned int                    gcMult_;
     //@}
 

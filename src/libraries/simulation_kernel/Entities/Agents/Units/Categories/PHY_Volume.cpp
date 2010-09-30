@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_Volume.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_Volume::T_VolumeMap PHY_Volume::volumes_;
@@ -31,10 +32,7 @@ struct PHY_Volume::LoadingWrapper
 void PHY_Volume::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing volumes" );
-
     LoadingWrapper loader;
-
-    // Initialisation des composantes
     xis >> xml::start( "volumes" )
             >> xml::list( "volume", loader, &LoadingWrapper::ReadVolume )
         >> xml::end;
@@ -48,11 +46,9 @@ void PHY_Volume::ReadVolume( xml::xistream& xis )
 {
     std::string strVolume;
     xis >> xml::attribute( "name", strVolume );
-
     const PHY_Volume*& pVolume = volumes_[ strVolume ];
     if( pVolume )
         xis.error( "Volume '" + strVolume + "' already registered" );
-
     pVolume = new PHY_Volume( strVolume );
 }
 

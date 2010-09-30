@@ -13,6 +13,7 @@
 #define __DEC_Knowledge_ObjectCollision_h_
 
 #include "DEC_Knowledge_ABC.h"
+#include "MT_Tools/MT_Vector2D.h"
 
 class MIL_Object_ABC;
 class MIL_Agent_ABC;

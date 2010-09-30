@@ -34,8 +34,9 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "tools/MIL_IDManager.h"
+#include "MT_Tools/MT_Logger.h"
 #include <hla/hla_lib.h>
-#include <windows.h> // For ::Sleep()
+#include <windows.h>
 
 using namespace hla;
 

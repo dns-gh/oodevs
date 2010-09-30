@@ -17,6 +17,7 @@
 #include "Decision/DEC_Population_PathSection.h"
 #include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_PathFind_Manager.h"
+#include "MT_Tools/MT_Logger.h"
 #include "MIL_AgentServer.h"
 
 //-----------------------------------------------------------------------------

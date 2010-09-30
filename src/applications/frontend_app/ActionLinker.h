@@ -10,8 +10,6 @@
 #ifndef __ActionLinker_h_
 #define __ActionLinker_h_
 
-#include <qstring.h>
-
 class Panel_ABC;
 
 // =============================================================================

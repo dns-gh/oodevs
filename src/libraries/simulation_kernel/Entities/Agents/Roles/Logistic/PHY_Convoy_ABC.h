@@ -13,6 +13,7 @@
 #define __PHY_Convoy_ABC_h_
 
 #include "MT_Tools/MT_InterpolatedFunction.h"
+#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml

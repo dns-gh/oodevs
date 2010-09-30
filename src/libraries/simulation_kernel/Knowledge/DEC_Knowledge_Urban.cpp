@@ -79,10 +79,10 @@ DEC_Knowledge_Urban::~DEC_Knowledge_Urban()
 // Name: DEC_Knowledge_Urban::load
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         >> const_cast< uint& >( nID_ )
+         >> const_cast< unsigned int& >( nID_ )
          >> nTimeLastUpdate_;
 
     unsigned long urbanId;
@@ -102,7 +102,7 @@ void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const uint )
 // Name: DEC_Knowledge_Urban::save
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Urban::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_Urban::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned long urbanId = object_->GetId();
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )

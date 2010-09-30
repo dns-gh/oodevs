@@ -18,6 +18,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/protocol.h"
@@ -121,7 +122,7 @@ MIL_LimaOrder* MIL_PionOrderManager::FindLima( const MIL_LimaFunction& function 
 // Name: MIL_PionOrderManager::FindLima
 // Created: LMT 2010-04-01
 // -----------------------------------------------------------------------------
-MIL_LimaOrder* MIL_PionOrderManager::FindLima( uint nID ) const
+MIL_LimaOrder* MIL_PionOrderManager::FindLima( unsigned int nID ) const
 {
     MIL_LimaOrder* lima = MIL_OrderManager_ABC::FindLima( nID );
     if( !lima )

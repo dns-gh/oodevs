@@ -13,6 +13,7 @@
 #define __PHY_UnitType_h_
 
 #include "Dotations/PHY_DotationCapacities.h"
+#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {

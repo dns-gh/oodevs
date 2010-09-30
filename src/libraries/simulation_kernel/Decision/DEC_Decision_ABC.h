@@ -10,10 +10,9 @@
 #ifndef __DEC_Decision_ABC_h_
 #define __DEC_Decision_ABC_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/Role_ABC.h"
 #include <directia/brain/Brain.h>
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
 
 class DEC_AutomateDecision;
 class DEC_Knowledge_Agent;
@@ -22,13 +21,14 @@ class MIL_AgentPion;
 class MIL_Automate;
 class MIL_Mission_ABC;
 class PHY_Action_ABC;
+class MT_Vector2D;
 
 namespace directia
 {
-    namespace brain
-    {
-        class Brain;
-    }
+namespace brain
+{
+    class Brain;
+}
 }
 
 // =============================================================================
@@ -139,7 +139,7 @@ public:
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive& ar, const uint )
+    template< typename Archive > void serialize( Archive& ar, const unsigned int )
     {
         ar & boost::serialization::base_object< tools::Role_ABC >( *this );
     }

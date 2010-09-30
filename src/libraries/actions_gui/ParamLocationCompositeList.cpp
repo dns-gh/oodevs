@@ -55,7 +55,9 @@ namespace
     class ChoiceVisitor : public kernel::ChoicesVisitor_ABC
     {
     public:
-        ChoiceVisitor( kernel::OrderParameter& parameter ) : parameter_( parameter ) {}
+        ChoiceVisitor( kernel::OrderParameter& parameter )
+            : parameter_( parameter )
+        {}
         virtual ~ChoiceVisitor() {}
         virtual void Visit( const std::string& type )
         {

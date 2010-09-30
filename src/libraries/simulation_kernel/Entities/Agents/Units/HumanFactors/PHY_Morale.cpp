@@ -12,6 +12,8 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Morale.h"
 #include "protocol/protocol.h"
+#include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_Stl.h"
 
 PHY_Morale::T_MoraleMap PHY_Morale::morales_;
 
@@ -71,7 +73,6 @@ PHY_Morale::~PHY_Morale()
 const PHY_Morale* PHY_Morale::Find( Common::EnumUnitMorale nAsnID )
 {
     CIT_MoraleMap it = std::find_if( morales_.begin(), morales_.end(), std::compose1( std::bind2nd( std::equal_to< Common::EnumUnitMorale >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Morale::GetAsnID ), std::select2nd< T_MoraleMap::value_type >() ) ) );
-
     return it == morales_.end() ? 0 : it->second;
 }
 
@@ -82,7 +83,6 @@ const PHY_Morale* PHY_Morale::Find( Common::EnumUnitMorale nAsnID )
 const PHY_Morale* PHY_Morale::Find( unsigned int nID )
 {
     CIT_MoraleMap it = std::find_if( morales_.begin(), morales_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_Morale::GetID ), std::select2nd< T_MoraleMap::value_type >() ) ) );
-
     return it == morales_.end() ? 0 : it->second;
 }
 

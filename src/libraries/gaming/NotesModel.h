@@ -10,7 +10,6 @@
 #ifndef __NotesModel_h_
 #define __NotesModel_h_
 
-#include <qstring.h>
 #include "tools/Resolver.h"
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
@@ -38,8 +37,7 @@ namespace MsgsMessengerToClient
 // Created: HBD 2010-01-14
 // =============================================================================
 class NotesModel : public tools::Resolver< Note, unsigned int >
-    , public tools::Observer_ABC
-
+                 , public tools::Observer_ABC
 {
 public:
     //! @name Constructors/Destructor
