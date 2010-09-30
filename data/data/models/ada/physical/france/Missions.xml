@@ -1848,7 +1848,7 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_AttendreSePoster" id="342" name="Attendre Se Poster"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Poursuivre" id="343" name="Poursuivre"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Interrompre" id="344" name="Interrompre"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ChangerAmbiance" id="345" name="Changer Ambiance">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerAmbiance" id="345" name="Changer Ambiance">
       <parameter dia-name="orderConduiteChangerAmbiance_" name="Order conduite changer ambiance" optional="false" type="Enumeration">
         <value id="0" name="surete"/>
         <value id="1" name="vitesse"/>
