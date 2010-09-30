@@ -103,8 +103,8 @@ function Start()
                 </xsl:text>
                 <xsl:for-each select='action[@name="Unit Creation"]'>
                 <xsl:text>        
-                local entity = model.orbat:FindAgent( </xsl:text><xsl:value-of select="@id"/><xsl:text> )
-                entity:Teleport( coord:UtmPosition( "29TNF2072470458" ) )
+                --local entity = model.orbat:FindAgent( </xsl:text><xsl:value-of select="@id"/><xsl:text> )
+                --entity:Teleport( coord:UtmPosition( "29TNF2072470458" ) )
                 -- entity:UnrecoverAll()</xsl:text>
                 <xsl:value-of select='./parameter[@name="UnitType"]/@value'/>
                 <xsl:text>", "</xsl:text>
