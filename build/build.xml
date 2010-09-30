@@ -938,11 +938,11 @@
     </target>
 
     <target name="package.debug" description="create a zip with all PDB files">
+        <copy todir="${out.dir}/pdb" flatten="true">
+            <fileset dir="${out.dir}/release" includes="**/*.pdb"/>
+        </copy>
         <zip destfile="${dist.dir}/SWORD_debug_${version.major}.zip">
-            <mappedresources>
-                <fileset dir="${out.dir}/release" includes="**/*.pdb"/>
-                <flattenmapper/>
-            </mappedresources>
+            <fileset dir="${out.dir}/pdb" includes="*.pdb"/>
         </zip>
     </target>
 
