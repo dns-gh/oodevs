@@ -369,8 +369,10 @@ actions::Action_ABC* ActionFactory::CreateStubFragOrder( xml::xistream& xis ) co
 actions::Action_ABC* ActionFactory::CreateMagicAction( xml::xistream& xis, bool readonly ) const
 {
     const std::string id = xis.attribute< std::string >( "id" );
+    std::string name;
+    xis >> xml::optional >> xml::attribute( "name", name );
     std::auto_ptr< actions::MagicAction > action;
-    action.reset( new actions::MagicAction( xis, controller_, magicActions_.Get( id ), "" ) );
+    action.reset( new actions::MagicAction( xis, controller_, magicActions_.Get( id ), name.c_str() ) );
     action->Attach( *new ActionTiming( xis, controller_, simulation_ ) );
     action->Attach( *new ActionTasker( 0, readonly ) );
     action->Polish();
@@ -390,6 +392,8 @@ actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis, b
 {
     const unsigned long targetid = xis.attribute< unsigned long >( "target" );
     const std::string id = xis.attribute< std::string >( "id" );
+    std::string name;
+    xis >> xml::optional >> xml::attribute( "name", name );
 
     std::auto_ptr< actions::UnitMagicAction > action;
     const kernel::Entity_ABC* target = entities_.FindAgent( targetid );
@@ -400,7 +404,7 @@ actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis, b
     if( !target )
         throw TargetNotFound( targetid );
 
-    action.reset( new actions::UnitMagicAction( xis, controller_, magicActions_.Get( id ), *target, "" ) );
+    action.reset( new actions::UnitMagicAction( xis, controller_, magicActions_.Get( id ), *target, name.c_str() ) );
     action->Attach( *new ActionTiming( xis, controller_, simulation_ ) );
     action->Attach( *new ActionTasker( target, readonly ) );
     action->Polish();
