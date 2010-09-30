@@ -8,27 +8,26 @@
 dofile "resources/scripts/commands.lua"
 dofile "resources/scripts/events.lua"
 
+local createdAgents = {}
+
 function Start()
 
     local eventTable =
     {
         {
-            events:Once(),
-            {},
-            function()
-                sim:Pause()
-            end
-        },
-
-        {
             events.sim:ClientConnected(),
             {},
             function( client, profile )
                 if profile ~= "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>" then Deactivate() return end
-                ResetOptions( { client = client } )
-                SetDock( { client = client, hide = docks.ALL } )
-                SetDock( { show = { "orbat" } } )
-                SetDock( { show = { "clock" } } )
+                ChangeState( "waitstep" )
+            end
+        },
+        
+        {
+            events.sim:TickEnded(),
+            { "waitstep" },
+            function()
+                sim:Pause()
                 ChangeState( "creations" )
             end
         },
@@ -62,7 +61,8 @@ function Start()
         ),
 
         {
-            events.client:UserChose(), {},
+            events.client:UserChose(),
+            { "autoormandialog" },
             function( dialog, answer )
                 if dialog == "selectMode_choice" then
                     if answer == "Automatique" then
@@ -86,38 +86,46 @@ function Start()
                 ChangeState( "initDialog" )
             end
         ),
+
         AtState( "initDialog",
             function()
                 Dialog( { id      = "init_choice",
-                          message = "Test de validation </xsl:text><xsl:value-of select="$profilename"/><xsl:text>. Reinitialiser l'exercice",
-                          buttons = { "Reinitialisation" } } )
-            end
-        ),
-
-        {
-            events.client:UserChose(), {},
-            function( dialog, answer )
-                if dialog == "init_choice" then
-                    if answer == "Reinitialisation" then
-                        ChangeState( "init" )
-                    end
-                end
-            end
-        },
-
-        AtState( "init",
-            function()
-                -- TODO REINITIALISATION
+                          message = "Test de validation </xsl:text><xsl:value-of select="$profilename"/><xsl:text>. OK pour deconnecter et reinitialiser",
+                          buttons = {} } )
             end
         ),
 
         {
             events.sim:ClientLeft(),
-            { },
+            { "initDialog" },
             function( client )
+                ClearDisplay()
+                </xsl:text>
+                <xsl:for-each select='action[@name="Unit Creation"]'>
+                <xsl:text>        
+                local entity = model.orbat:FindAgent( </xsl:text><xsl:value-of select="@id"/><xsl:text> )
+                entity:Teleport( coord:UtmPosition( "29TNF2072470458" ) )
+                -- entity:UnrecoverAll()</xsl:text>
+                <xsl:value-of select='./parameter[@name="UnitType"]/@value'/>
+                <xsl:text>", "</xsl:text>
+                <xsl:value-of select='@target'/>
+                <xsl:text>" )</xsl:text>
+                </xsl:for-each>
+                
+                
+                <xsl:variable name="orbat" select="document('../out/Poseidon VA/orbat.xml')"/>
+                <xsl:for-each select="$orbat//side/tactical/formation/automat/unit">
+                <xsl:text>
+                local entity = model.orbat:FindAgent( </xsl:text><xsl:value-of select="@id"/><xsl:text> )
+                entity:Teleport( coord:UtmPosition( "</xsl:text><xsl:value-of select="@position"/><xsl:text>" ) )
+                entity:RecoverAll()
+                </xsl:text>
+                </xsl:for-each>
+                <xsl:text>
                 plugin:Reset()
             end
-        }
+        },
+        
     }
     DeclareEvents( eventTable )
 

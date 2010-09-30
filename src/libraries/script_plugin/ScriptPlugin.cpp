@@ -21,6 +21,7 @@
 #include "ClientCommands.h"
 #include "ScriptCommands.h"
 #include "ExtensionFactory.h"
+#include "ModelFacade.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/CompositeRegistrable.h"
@@ -68,6 +69,7 @@ ScriptPlugin::ScriptPlugin( Model_ABC& model, const kernel::StaticModel& staticM
     registrables_.Add( new SimulationCommands( publisher, *converter_ ) );
     registrables_.Add( new ClientCommands( clients, resolver ) );
     registrables_.Add( new ScriptCommands( *controller_ ) );
+    registrables_.Add( new ModelFacade( model_ ) );
     dispatcher.RegisterMessage( *this, &ScriptPlugin::OnReceiveClientToMessenger );
 }
 
