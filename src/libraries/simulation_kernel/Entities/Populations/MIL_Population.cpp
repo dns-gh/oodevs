@@ -90,6 +90,9 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     nPeopleCount_ = pConcentration->GetNbrAliveHumans();
 
     pArmy_->RegisterPopulation( *this );
+    
+    vBarycenter.reset( new MT_Vector2D() );
+    UpdateBarycenter();
 }
 
 // -----------------------------------------------------------------------------
@@ -111,6 +114,9 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
     , bBlinded_               ( false )
 {
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
+
+    vBarycenter.reset( new MT_Vector2D() );
+    UpdateBarycenter();
 }
 
 // =============================================================================
@@ -181,6 +187,8 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
         RegisterRole( *pRole );
         RegisterRole( *new DEC_Representations() );
     }
+
+    UpdateBarycenter();
 }
 
 // -----------------------------------------------------------------------------
@@ -635,6 +643,15 @@ MT_Vector2D MIL_Population::GetSafetyPosition( const MIL_AgentPion& agent, MT_Fl
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::GetBarycenter
+// Created: MGD 2010-09-28
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > MIL_Population::GetBarycenter() const
+{
+    return vBarycenter;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetAttitude
 // Created: NLD 2005-12-02
 // -----------------------------------------------------------------------------
@@ -695,6 +712,8 @@ void MIL_Population::Move( const MT_Vector2D& destination )
 
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
         (**itFlow).Move( destination );
+    
+    UpdateBarycenter();
 }
 
 // -----------------------------------------------------------------------------
@@ -1288,4 +1307,26 @@ void MIL_Population::SetBlinded( bool blinded )
 bool MIL_Population::IsBlinded() const
 {
     return bBlinded_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::UpdateBarycenter
+// Created: MGD 2010-09-28
+// -----------------------------------------------------------------------------
+void MIL_Population::UpdateBarycenter()
+{
+    MT_Vector2D currentBarycenter;
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        currentBarycenter += (**itConcentration).GetPosition();
+
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        currentBarycenter += (**itFlow).GetPosition();
+
+    unsigned int elements = concentrations_.size() + flows_.size();
+    if( elements > 0 )
+    {
+        currentBarycenter = currentBarycenter / elements;
+        vBarycenter->rX_ = currentBarycenter.rX_;
+        vBarycenter->rY_ = currentBarycenter.rY_;
+    }
 }

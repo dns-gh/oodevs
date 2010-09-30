@@ -146,6 +146,10 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
     brain[ "DEC__StartTirSurPion" ] =
         boost::function< unsigned int( float, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, unsigned int >, boost::ref( GetPopulation() ), _1, _2 ) );
 
+    // Self
+    brain[ "DEC_GetPosition" ] = 
+        boost::function< boost::shared_ptr< MT_Vector2D >() >( boost::bind( &DEC_PopulationFunctions::GetBarycenter, boost::cref( GetPopulation() ) ) );
+
     // Knowledge agents
     brain[ "DEC_ConnaissanceAgent_RoePopulation" ] =
         boost::function< int ( int ) > ( boost::bind(&DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation, _1 ) );
@@ -201,6 +205,8 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
         boost::function< void ( int, int, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionAutomate< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3, _4 ) );
     brain[ "DEC_RC_TirPion" ] =
         boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportTirPion< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) );
+    brain[ "DEC_RC_String" ] =
+        boost::function< void ( int, int, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportString< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) );
 
     // Effects
     brain[ "DEC_Population_RalentissementPion_ChangeVitesse" ] =

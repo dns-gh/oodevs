@@ -92,6 +92,7 @@ public:
     MT_Float    GetDistanceTo    ( const TER_Localisation& loc           ) const;
     MT_Vector2D GetSecuringPoint ( const MIL_Agent_ABC&    securingAgent ) const;
     MT_Vector2D GetSafetyPosition( const MIL_AgentPion&    agent        , MT_Float rMinDistance ) const;
+    boost::shared_ptr< MT_Vector2D > GetBarycenter() const;
     //@}
 
     //! @name Effects on pions
@@ -204,6 +205,7 @@ private:
     //! @name Helpers
     //@{
     void GetClosestPointAndDistance( const TER_Localisation& loc, MT_Vector2D& closestPoint, MT_Float& rMinDistance ) const;
+    void UpdateBarycenter();
     //@}
 
 private:
@@ -233,6 +235,8 @@ private:
 
           DEC_PopulationKnowledge*   pKnowledge_;
           MIL_PopulationOrderManager orderManager_;
+
+          boost::shared_ptr< MT_Vector2D > vBarycenter;
 
           // Pion effects
           bool                       bPionMaxSpeedOverloaded_;

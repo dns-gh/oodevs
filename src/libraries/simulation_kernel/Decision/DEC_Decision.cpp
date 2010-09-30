@@ -959,7 +959,7 @@ bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, b
     if( !pArchetypeBrain.get() )
     {
         std::string plugins;
-        if(brainFile == "BMAutomat.bms" || brainFile == "BMPion.bms")
+        if(brainFile == "BMAutomat.bms" || brainFile == "BMPion.bms" || brainFile == "BMCrowd.bms")
         {
             plugins = std::string( "plugins={" )
                 + PLUGIN( "masalife_brain" )

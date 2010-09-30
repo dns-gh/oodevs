@@ -200,3 +200,12 @@ void DEC_PopulationFunctions::SetMission( DEC_Decision_ABC* object, boost::share
 {
     object->SetMission( mission );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetBarycenter
+// Created: MGD 2010-09-28
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_PopulationFunctions::GetBarycenter( const MIL_Population& callerPopulation )
+{
+    return callerPopulation.GetBarycenter();
+}

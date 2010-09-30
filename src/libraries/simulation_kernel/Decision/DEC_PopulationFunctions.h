@@ -28,6 +28,9 @@ public:
     // Test / debug
     static void DecisionalState( const MIL_Population& callerPopulation, const std::string& key, const std::string& value );
 
+    // State
+    static boost::shared_ptr< MT_Vector2D > GetBarycenter( const MIL_Population& callerPopulation );
+
     // Effects
     static void SetAttitude( MIL_Population& callerPopulation, unsigned int attitudeId );
     static unsigned int GetAttitude( const MIL_Population& callerPopulation );
