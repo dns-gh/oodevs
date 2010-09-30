@@ -138,5 +138,5 @@ void ReplayPage::ConfigureSession( const QString& exercise, const QString& sessi
         action.SetOption( "session/config/simulation/debug/@networklogger"     , true );
         action.SetOption( "session/config/simulation/debug/@networkloggerport" , 20000 );
     }
+    action.Commit();
 }
-

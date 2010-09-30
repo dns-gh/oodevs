@@ -217,4 +217,5 @@ void GameConfigPanel::Commit( const std::string& exercise, const std::string& se
         action.SetOption( "session/config/gaming/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09:
                                     boost::lexical_cast< std::string >( frontend::DispatcherPort( exerciseNumber ) ) );
     }
+    action.Commit();
 }

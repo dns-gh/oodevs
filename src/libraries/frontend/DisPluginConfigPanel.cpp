@@ -97,5 +97,6 @@ void DisPluginConfigPanel::Commit( const std::string& exercise, const std::strin
         action.SetOption( "session/config/dispatcher/plugins/dis/@exercise", exercise_->value() );
         if( tic_->isChecked() )
            action.SetOption( "session/config/dispatcher/plugins/tic/@enable", true );
+        action.Commit();
     }
 }

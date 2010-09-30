@@ -135,5 +135,6 @@ void CheckpointConfigPanel::Commit( const std::string& exercise, const std::stri
         action.SetOption( "session/config/simulation/checkpoint/@frequency", QString( "%1s" ).arg( QTime().secsTo( frequency_->time() ) ).ascii() );
         action.SetOption( "session/config/simulation/checkpoint/@keep", keep_->value() );
         action.SetOption( "session/config/simulation/checkpoint/@usecrc", true );
+        action.Commit();
     }
 }

@@ -243,7 +243,6 @@ void ScenarioLauncherPage::OnStart()
         progressPage_->Attach( process );
         progressPage_->show();
     }
-
     if( target != "gaming" )
     {
         const QStringList resources = GetResources( config_, exercise_ );
@@ -268,6 +267,7 @@ void ScenarioLauncherPage::CreateSession( const QString& exercise, const QString
         // force the networklogger to be used
         action.SetOption( "session/config/simulation/debug/@networklogger", true );
         action.SetOption( "session/config/simulation/debug/@networkloggerport", 20000 );
+        action.Commit();
     }
     {
         BOOST_FOREACH( const T_Plugins::value_type& plugin, plugins_ )

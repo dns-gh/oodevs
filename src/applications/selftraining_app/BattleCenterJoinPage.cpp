@@ -103,6 +103,7 @@ void BattleCenterJoinPage::OnJoin()
         frontend::CreateSession action( config_, exercise_.ascii(), MULTIPLAYER_SESSION );
         action.SetDefaultValues();
         action.SetOption( "session/config/gaming/network/@server", QString( "%1:%2" ).arg( host_->text() ).arg( exerciseLister_.GetPort( exercise_ ) ) );
+        action.Commit();
     }
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::JoinExercise( config_, exercise_, MULTIPLAYER_SESSION.c_str(), profile_.GetLogin(), true ) );
     boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );

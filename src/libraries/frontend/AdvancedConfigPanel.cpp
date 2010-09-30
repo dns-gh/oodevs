@@ -134,4 +134,5 @@ void AdvancedConfigPanel::Commit( const std::string& exercise, const std::string
         action.SetOption( "session/config/gaming/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09:
                                     boost::lexical_cast< std::string >( frontend::DispatcherPort( exerciseNumber_->value() ) ) );
     }
+    action.Commit();
 }

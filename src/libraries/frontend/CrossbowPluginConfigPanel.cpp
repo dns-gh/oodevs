@@ -82,5 +82,6 @@ void CrossbowPluginConfigPanel::Commit( const std::string& exercise, const std::
         action.SetOption( "session/config/dispatcher/plugins/crossbow/@geodatabase", geodatabase_->text() );
         action.SetOption( "session/config/dispatcher/plugins/crossbow/@geodatabase-population", population_->text() );
         action.SetOption( "session/config/dispatcher/plugins/crossbow/@geodatabase-shared", shared_->text() );
+        action.Commit();
     }
 }

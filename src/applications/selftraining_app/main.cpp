@@ -28,7 +28,14 @@ int main( int argc, char* argv[] )
     QApplication::setStyle( "windows" );
     QApplication::setDesktopSettingsAware( false );
     Application app( argc, argv );
-    app.exec();
+    try
+    {
+        app.exec();
+    }
+    catch( std::exception& e )
+    {
+        QMessageBox::critical( 0, tools::translate( "Application", "Unhandled error" ), e.what() );
+    }
     return 0;
 }
 

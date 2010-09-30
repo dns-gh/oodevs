@@ -143,13 +143,12 @@ void TimelinePluginConfigPanel::Commit( const std::string& exercise, const std::
         action.SetOption( "session/config/dispatcher/plugins/timeline/scenario/@id", scenarioId_->text() );
         action.SetOption( "session/config/dispatcher/plugins/timeline/scenario/actor/@id", actorId_->text() );
         action.SetOption( "session/config/dispatcher/plugins/timeline/scenario/actor/@name", actorName_->text() );
-      
         const bfs::path exerciseDir = bfs::path( config_.GetExerciseDir( exercise ), bfs::native );
         const bfs::path orderDir = bfs::path( orderFile_, bfs::native );
-        
         if( exerciseDir.string() == std::string( orderDir.string(), 0, exerciseDir.string().size() ) )
             action.SetOption( "session/config/dispatcher/plugins/timeline/orders/@file", std::string( orderFile_, exerciseDir.string().size() + 1, orderFile_.size() - exerciseDir.string().size() - 1 ) );
         else
             action.SetOption( "session/config/dispatcher/plugins/timeline/orders/@file", orderFile_ );
+        action.Commit();
     }
 }

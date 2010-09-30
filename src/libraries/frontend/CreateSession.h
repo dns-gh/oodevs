@@ -42,6 +42,8 @@ public:
     template< typename T >
     T GetOption( const std::string& path ) const;
     void SetDefaultValues();
+
+    void Commit();
     //@}
 
 private:

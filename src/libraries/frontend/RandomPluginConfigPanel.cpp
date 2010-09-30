@@ -197,6 +197,7 @@ void RandomPluginConfigPanel::Commit( const std::string& exercise, const std::st
         action.SetOption( stream.str() + "/@deviation"   , rDeviations_[ i ] );
         action.SetOption( stream.str() + "/@mean"        , rMeans_[ i ] );
     }
+    action.Commit();
 }
 
 // -----------------------------------------------------------------------------

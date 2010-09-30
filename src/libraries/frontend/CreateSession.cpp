@@ -44,6 +44,15 @@ CreateSession::CreateSession( const tools::GeneralConfig& config, const std::str
 // -----------------------------------------------------------------------------
 CreateSession::~CreateSession()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreateSession::Commit
+// Created: MCO 2010-09-30
+// -----------------------------------------------------------------------------
+void CreateSession::Commit()
+{
     setter_->Commit();
 }
 
@@ -63,8 +72,8 @@ void CreateSession::SetDefaultValues()
         {
             setter_->SetValue( "session/meta/date", bpt::to_iso_string( bpt::second_clock::local_time() ) );
         }
-        setter_->SetValue( "session/meta/name"     , session_ );
-        setter_->SetValue( "session/meta/comment"  , "" );
+        setter_->SetValue( "session/meta/name"   , session_ );
+        setter_->SetValue( "session/meta/comment", "" );
     }
     {
         setter_->SetValue( "session/config/simulation/checkpoint/@frequency"       , "100000h" );

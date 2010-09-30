@@ -69,9 +69,8 @@ void HlaPluginConfigPanel::Commit( const std::string& exercise, const std::strin
     if( box_->isChecked() )
     {
         frontend::CreateSession action( config_, exercise, session );
-        {
-            action.SetOption( "session/config/dispatcher/plugins/hla/@federation", federation_->text() );
-            action.SetOption( "session/config/dispatcher/plugins/hla/@name", name_->text() );
-        }
+        action.SetOption( "session/config/dispatcher/plugins/hla/@federation", federation_->text() );
+        action.SetOption( "session/config/dispatcher/plugins/hla/@name", name_->text() );
+        action.Commit();
     }
 }
