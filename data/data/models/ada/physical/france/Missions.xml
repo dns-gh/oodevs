@@ -957,7 +957,7 @@
       <parameter dia-name="position" name="Position de deploiement du tireur" optional="false" type="Point"/>
       <parameter dia-name="munition" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="interventionType" name="Intervention type" optional="false" type="Numeric"/>
-      <parameter dia-name="allie" max-occurs="unbounded" min-occurs="1" name="Illuminateur allie" optional="false" type="Agent"/>
+      <parameter dia-name="allie" max-occurs="unbounded" min-occurs="1" name="Illuminateur allie" optional="true" type="Agent"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Surveiller" dia-type="T_Mission_Pion_SurveillerBU" id="2070" name="MELEE Surveiller">
       <parameter dia-name="objectives" name="Objectif a surveiller" optional="false" type="UrbanBlock"/>
@@ -1046,7 +1046,7 @@
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Harceler" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Harceler" id="2097" name="MELEE Harceler">
       <parameter dia-name="harassPosition" name="Zone a harceler" optional="false" type="Polygon"/>
       <parameter dia-name="observationPosition" name="Position d'observation" optional="false" type="Point"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="GenObject"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObject"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Relever" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Relever" id="2105" name="MELEE Relever">
       <parameter dia-name="objective" name="unite a relever" optional="false" type="Agent"/>
