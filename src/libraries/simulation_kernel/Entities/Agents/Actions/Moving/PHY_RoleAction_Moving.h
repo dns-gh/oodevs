@@ -17,6 +17,7 @@
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class PHY_RoleInterface_Location;
 class MIL_AgentPion;

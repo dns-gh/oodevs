@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentServer.h"
 #include "SpawnCapacity.h"
 #include "ChildObjectAttribute.h"
@@ -19,7 +18,7 @@
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "MIL_Singletons.h"
-
+#include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
@@ -73,7 +72,7 @@ SpawnCapacity::~SpawnCapacity()
 // Created: SLG 2010-02-17
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void SpawnCapacity::serialize( Archive& file, const uint )
+void SpawnCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
         & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )

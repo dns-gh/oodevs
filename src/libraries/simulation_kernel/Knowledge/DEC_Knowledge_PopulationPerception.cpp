@@ -17,6 +17,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
+#include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationPerception )
 

@@ -11,7 +11,7 @@
 #define __MIL_Injury_ABC_h_
 
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
-#include <boost/noncopyable.hpp>
+#include "MT_Tools/MT_Tools_Types.h"
 
 class PHY_ComposantePion;
 class PHY_InjuredHuman;
@@ -28,7 +28,7 @@ public:
 public:
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint ) {}
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
 
     //! @name Get

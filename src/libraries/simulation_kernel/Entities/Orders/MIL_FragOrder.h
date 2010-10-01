@@ -10,8 +10,6 @@
 #ifndef __MIL_FragOrder_h_
 #define __MIL_FragOrder_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace MsgsClientToSim
 {
     class MsgFragOrder;

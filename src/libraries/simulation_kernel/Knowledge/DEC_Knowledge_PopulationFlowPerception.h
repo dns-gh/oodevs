@@ -13,6 +13,7 @@
 #define __DEC_Knowledge_PopulationFlowPerception_h_
 
 #include "MIL.h"
+#include "MT_Tools/MT_Vector2DTypes.h"
 
 class DEC_Knowledge_PopulationPerception;
 class MIL_PopulationFlow;

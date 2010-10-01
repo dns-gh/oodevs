@@ -12,9 +12,7 @@
 #include "TER_Polygon.h"
 #include "TER_Polygon.inl"
 #include "MT_Tools/MT_Polyline.h"
-
-
-//MT_BOOSTPOOLING_FUNCTIONS( TER_Polygon )
+#include "MT_Tools/MT_Droite.h"
 
 TER_Polygon* TER_Polygon::empty_polygon = 0;
 

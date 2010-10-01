@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_RolePion_Decision.h"
-
 #include "ENT/ENT_Enums_Gen.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
@@ -25,7 +23,6 @@
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
-
 #include "Decision/DEC_AgentFunctions.h"
 #include "Decision/DEC_KnowledgeAgentFunctions.h"
 #include "Decision/DEC_KnowledgeObjectFunctions.h"
@@ -44,7 +41,6 @@
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_CommunicationFunctions.h"
-
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendCollectionComposantes.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendHaulerComposantes.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionConstructObject.h"
@@ -75,11 +71,10 @@
 #include "Entities/Agents/Actions/Emergency/PHY_ActionTriggerActivity.h"
 #include "Entities/Agents/Actions/Emergency/PHY_ActionTriggerActivityInArea.h"
 #include "Entities/Agents/Actions/Emergency/PHY_ActionUnloadActivity.h"
-
-
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
-
+#include "MT_Tools/MT_ScipioException.h"
+#include <boost/serialization/vector.hpp>
 #include <directia/tools/binders/ScriptRef.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_RolePion_Decision )
@@ -311,12 +306,11 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
 // Name: DEC_RolePion_Decision::RegisterUserFunctions
 // Created: LDC 2009-04-09
 // -----------------------------------------------------------------------------
-
 void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain )
 {
     directia::tools::binders::ScriptRef initQueryFunction = brain[ "InitQueryReturn" ];
 
-// Missions
+    // Missions
     brain[ "DEC_CreerMissionPion" ] =
         boost::function< boost::shared_ptr< MIL_Mission_ABC >( const std::string& ) >( boost::bind( &DEC_OrdersFunctions::CreatePionMissionBM, boost::ref( GetPion().GetAutomate() ), this, _1 ) );
     brain[ "DEC_CreerMissionPionVersPion" ]=

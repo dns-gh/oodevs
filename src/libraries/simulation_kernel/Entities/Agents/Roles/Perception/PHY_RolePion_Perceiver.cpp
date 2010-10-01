@@ -57,6 +57,7 @@
 #include "UrbanModel.h"
 #include <urban/model.h>
 #include <urban/TerrainObject_ABC.h>
+#include <boost/serialization/map.hpp>
 
 using namespace detection;
 

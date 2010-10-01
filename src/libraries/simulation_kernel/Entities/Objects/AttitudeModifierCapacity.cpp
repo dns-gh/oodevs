@@ -14,6 +14,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
 

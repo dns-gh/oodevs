@@ -13,6 +13,7 @@
 #define __PHY_RoePopulation_h_
 
 #include "protocol/protocol.h"
+#include "MT_Tools/MT_Stl.h"
 
 namespace MsgsSimToClient
 {

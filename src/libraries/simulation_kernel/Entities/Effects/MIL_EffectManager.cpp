@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_EffectManager.h"
 #include "MIL_Effect_ABC.h"
-
+#include "MT_Tools/MT_ScipioException.h"
 
 namespace
 {

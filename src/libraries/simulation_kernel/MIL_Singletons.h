@@ -14,7 +14,6 @@ class MIL_Time_ABC;
 class MIL_EntityManager_ABC;
 class HLA_Federate;
 class MIL_ProfilerMgr;
-class MIL_EffectManager;
 
 // =============================================================================
 /** @class  MIL_Singletons

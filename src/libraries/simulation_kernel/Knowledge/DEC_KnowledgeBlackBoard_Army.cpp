@@ -420,7 +420,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Army::GetKnowl
 // Name: DEC_KnowledgeBlackBoard_Army::GetKnowledgeUrbanFromID
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_Army::GetKnowledgeUrbanFromID( uint nID ) const
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_Army::GetKnowledgeUrbanFromID( unsigned int nID ) const
 {
     assert( pKnowledgeUrbanContainer_ );
     return pKnowledgeUrbanContainer_->GetKnowledgeUrbanFromID( nID );
@@ -522,7 +522,7 @@ boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_Army::ResolveKn
 // Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeUrban
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeUrban( uint /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeUrban( unsigned int /*nID*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Urban >();
 }

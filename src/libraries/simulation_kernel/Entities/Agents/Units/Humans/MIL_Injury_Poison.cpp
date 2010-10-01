@@ -17,7 +17,6 @@
 #include "Entities/Objects/NBCTypeAttribute.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
-#include <boost/noncopyable.hpp>
 
 //BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Poison )
 
@@ -77,7 +76,7 @@ MIL_Injury_Poison::~MIL_Injury_Poison( )
 // Name: PHY_Human::load
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void MIL_Injury_Poison::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_Injury_Poison::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> agentConcentration_
          >> injuryID_
@@ -90,7 +89,7 @@ void MIL_Injury_Poison::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_Injury_Fire::save
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void MIL_Injury_Poison::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_Injury_Poison::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << agentConcentration_
          << injuryID_

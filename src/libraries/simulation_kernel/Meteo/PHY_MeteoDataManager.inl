@@ -2,6 +2,8 @@
 // Created: JVT 02-10-21
 //*****************************************************************************
 
+#include "MT_Tools/MT_ScipioException.h"
+
 //-----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager::GetRawVisionData
 // Created: JVT 02-11-20

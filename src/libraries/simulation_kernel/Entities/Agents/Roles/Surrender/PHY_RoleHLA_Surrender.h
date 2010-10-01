@@ -16,7 +16,6 @@
 
 namespace surrender
 {
-
 // =============================================================================
 // @class  PHY_RoleHLA_Surrender
 // Created: JVT 2004-08-03
@@ -47,8 +46,6 @@ public:
     void ChangeStatus( const std::vector< std::string >& statuses );
     //@}
 
-
-
     //! @name Operations
     //@{
     virtual void NotifySurrendered      () {};
@@ -58,7 +55,6 @@ public:
     virtual void Clean     () {};
     virtual bool HasChanged() const { return true; };
     //@}
-
 
     //! @name Network
     //@{
@@ -70,17 +66,17 @@ private:
     //! @name Serialization
     //@{
     friend class boost::serialization::access;
-    template< typename Archive > void serialize( Archive& ar, const uint )
+    template< typename Archive > void serialize( Archive& ar, const unsigned int )
     {
-        ar & boost::serialization::base_object< surrender::PHY_RoleInterface_Surrender >( *this );
-        ar & bPrisoner_;
+        ar & boost::serialization::base_object< surrender::PHY_RoleInterface_Surrender >( *this )
+           & bPrisoner_;
     }
     //@}
 
     bool bPrisoner_;
 };
 
-} // namespace surrender
+}
 
 BOOST_CLASS_EXPORT_KEY( surrender::PHY_RoleHLA_Surrender )
 

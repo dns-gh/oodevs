@@ -13,12 +13,14 @@
 #define __DEC_Knowledge_PopulationCollision_h_
 
 #include "DEC_Knowledge_ABC.h"
+#include "MT_Tools/MT_Tools_Types.h"
 
 class MIL_Population;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
 class MIL_Agent_ABC;
 class DEC_Knowledge_Population;
+class MT_Vector2D;
 
 // =============================================================================
 // Created: NLD 2004-03-11

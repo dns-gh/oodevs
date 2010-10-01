@@ -6,10 +6,7 @@
 #include "MT_Tools_pch.h"
 #include "MT_Vector2D.h"
 #include "MT_Vector2DTypes.h"
-
 #include "MT_Droite.h"
-
-//MT_BOOSTPOOLING_FUNCTIONS( MT_Vector2D )
 
 // -----------------------------------------------------------------------------
 // Name: MT_Vector2D::MT_ComputeBarycenter
@@ -39,17 +36,4 @@ MT_Vector2D MT_ComputeBarycenter( const T_PointVector& points )
     vBarycenter /= nNbrPoints;
     return vBarycenter;
 
-}
-
-// -----------------------------------------------------------------------------
-// Name: MT_IsPointBetweenTwoLines
-// Created: NLD 2003-08-21
-// -----------------------------------------------------------------------------
-bool MT_IsPointBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, const MT_Vector2D& vPoint )
-{
-    MT_Droite::E_Side nLeftSide  = leftDroite .GetSide( vPoint );
-    MT_Droite::E_Side nRightSide = rightDroite.GetSide( vPoint );
-
-    return      ( nLeftSide  == MT_Droite::eOnPositiveSide || nLeftSide == MT_Droite::eOnBoundary )
-            &&  ( nRightSide == MT_Droite::eOnNegativeSide || nRightSide == MT_Droite::eOnBoundary );
 }

@@ -73,7 +73,7 @@ MIL_Injury_Wound::~MIL_Injury_Wound( )
 // Name: PHY_Human::load
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void MIL_Injury_Wound::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_Injury_Wound::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> injuryID_
          >> injuryCategory_
@@ -84,7 +84,7 @@ void MIL_Injury_Wound::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_Injury_Fire::save
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void MIL_Injury_Wound::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_Injury_Wound::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << injuryID_
          << injuryCategory_

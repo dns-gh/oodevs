@@ -13,6 +13,7 @@
 #define __PHY_RawVisionDataIterator_h_
 
 #include "PHY_RawVisionData.h"
+#include "MT_Tools/MT_Vector3D.h"
 
 //*****************************************************************************
 // Created: JVT 03-06-05
@@ -106,5 +107,6 @@ protected:
     bool                             bIsInEnv_;
 };
 
-#    include "PHY_RawVisionDataIterator.inl"
+#include "PHY_RawVisionDataIterator.inl"
+
 #endif // __PHY_RawVisionDataIterator_h_

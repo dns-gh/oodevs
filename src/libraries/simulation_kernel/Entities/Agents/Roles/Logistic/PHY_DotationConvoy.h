@@ -20,6 +20,7 @@ namespace xml
 }
 
 class PHY_SupplyDotationConsign;
+class MT_Vector2D;
 
 // =============================================================================
 // @class  PHY_DotationConvoy

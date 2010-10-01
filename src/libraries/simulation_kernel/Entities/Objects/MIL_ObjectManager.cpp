@@ -18,7 +18,6 @@
 #include "MIL_ObjectLoader.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "MIL_Singletons.h"
-#include "hla/HLA_Federate.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
@@ -26,10 +25,13 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Network/NET_Publisher_ABC.h"
-#include <protocol/ClientSenders.h>
+#include "MT_Tools/MT_ScipioException.h"
+#include "protocol/ClientSenders.h"
 #include <urban/TerrainObject_ABC.h>
+#include <hla/HLA_Federate.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/export.hpp>
+#include <boost/serialization/map.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectManager )
 

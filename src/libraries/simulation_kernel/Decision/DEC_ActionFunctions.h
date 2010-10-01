@@ -17,6 +17,7 @@ class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class MIL_AgentPion;
 class PHY_Action_ABC;
+class MT_Vector2D;
 
 // =============================================================================
 // Created: JVT 04-05-18

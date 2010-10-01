@@ -14,7 +14,7 @@
 
 #include "Decision/DEC_Decision.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
+#include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 
 namespace client
@@ -23,11 +23,6 @@ namespace client
 }
 
 class MIL_Mission_ABC;
-class DEC_Decision_ABC;
-
-enum E_ForceRatioState;
-enum E_RulesOfEngagementState;
-enum E_CloseCombatState;
 
 // =============================================================================
 // @class  DEC_AutomateDecision
@@ -46,8 +41,8 @@ public:
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, DEC_AutomateDecision* role, const unsigned int /*version*/ );
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -63,7 +58,7 @@ public:
 
     //! @name Notifications
     //@{
-    void NotifyCloseCombatStateChanged      ( E_CloseCombatState       nState );
+    void NotifyCloseCombatStateChanged( E_CloseCombatState nState );
     //@}
 
     //! @name Network
@@ -115,7 +110,7 @@ public:
 protected:
     //! @name Tools
     //@{
-    virtual void      EndCleanStateAfterCrash      ();
+    virtual void EndCleanStateAfterCrash();
 
     virtual void RegisterUserFunctions( directia::brain::Brain& brain );
     virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& brain );
@@ -127,7 +122,6 @@ private:
     virtual void RegisterSelf( directia::brain::Brain& brain );
     //@}
 
-private:
     //! @name Functions
     //@{
     bool IsPionNeutralized( DEC_Decision_ABC* );

@@ -14,10 +14,7 @@
 #include "MIL_ToxicEffectManipulator.h"
 #include "UpdatableAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
-
-class MIL_CheckPointInArchive;
-class MIL_CheckPointOutArchive;
-class MIL_NbcAgentType;
+#include <boost/serialization/split_member.hpp>
 
 namespace hla
 {
@@ -29,6 +26,9 @@ namespace xml
     class xistream;
 }
 
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
+class MIL_NbcAgentType;
 class HLA_UpdateFunctor;
 
 // =============================================================================

@@ -13,6 +13,7 @@
 #include "PHY_LauncherType.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_LauncherType::T_LauncherTypeMap PHY_LauncherType::launcherTypes_;
@@ -32,9 +33,7 @@ struct PHY_LauncherType::LoadingWrapper
 void PHY_LauncherType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing launcher types" );
-
     LoadingWrapper loader;
-
     xis >> xml::start( "launchers" )
             >> xml::list( "launcher", loader, &LoadingWrapper::ReadLauncher )
         >> xml::end;

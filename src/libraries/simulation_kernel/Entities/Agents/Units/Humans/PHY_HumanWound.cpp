@@ -14,6 +14,7 @@
 #include "protocol/protocol.h"
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_HumanWound::T_HumanWoundMap PHY_HumanWound::humanWounds_;
@@ -26,7 +27,6 @@ unsigned int     PHY_HumanWound::nMentalDiseaseHealingTime_ = 0;
 unsigned int     PHY_HumanWound::nMentalDiseaseRestingTime_ = 0;
 MT_Float PHY_HumanWound::rMentalDiseaseFactor_      = 0;
 
-//
 const PHY_HumanWound PHY_HumanWound::notWounded_( "NonBlesse", eNotWounded, Common::non_blesse             );
 const PHY_HumanWound PHY_HumanWound::woundedU3_ ( "U3"       , eWoundedU3 , Common::blesse_urgence_3       );
 const PHY_HumanWound PHY_HumanWound::woundedU2_ ( "U2"       , eWoundedU2 , Common::blesse_urgence_2       );

@@ -12,6 +12,8 @@
 #ifndef __DEC_AgentFunctions_h_
 #define __DEC_AgentFunctions_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
+
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
@@ -20,6 +22,7 @@ class MIL_Mission_ABC;
 class MIL_Object_ABC;
 class PHY_DotationCategory;
 class TER_Localisation;
+class MT_Vector2D;
 
 // =============================================================================
 // Created: NLD 2004-03-31

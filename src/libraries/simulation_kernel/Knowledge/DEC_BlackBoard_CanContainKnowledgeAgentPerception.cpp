@@ -14,6 +14,8 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_AgentPerception.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "MT_Tools/MT_ScipioException.h"
+#include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeAgentPerception )
 

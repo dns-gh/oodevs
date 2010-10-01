@@ -10,8 +10,11 @@
 #ifndef __DEC_FrontAndBackLinesComputer_h_
 #define __DEC_FrontAndBackLinesComputer_h_
 
+#include "MT_Tools/MT_Droite.h"
+
 class MIL_AgentPion;
 class MIL_Automate;
+class MT_Vector2D;
 
 // =============================================================================
 // Created: NLD 2003-08-20

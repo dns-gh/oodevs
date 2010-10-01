@@ -11,6 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationAttitude.h"
+#include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_Stl.h"
 
 MIL_PopulationAttitude::T_AttitudeMap MIL_PopulationAttitude::attitudes_;
 

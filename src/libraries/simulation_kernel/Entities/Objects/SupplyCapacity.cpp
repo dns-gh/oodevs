@@ -25,9 +25,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( SupplyCapacity )
 // Name: SupplyCapacity constructor
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
-SupplyCapacity::SupplyCapacity( xml::xistream& xis )
+SupplyCapacity::SupplyCapacity( xml::xistream& /*xis*/ )
 {
-    UNREFERENCED_PARAMETER( xis );
     // NOTHING
 }
 
@@ -44,9 +43,8 @@ SupplyCapacity::SupplyCapacity()
 // Name: SupplyCapacity constructor
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
-SupplyCapacity::SupplyCapacity( const SupplyCapacity& from )
+SupplyCapacity::SupplyCapacity( const SupplyCapacity& /*from*/ )
 {
-    UNREFERENCED_PARAMETER( from );
     // NOTHING
 }
 

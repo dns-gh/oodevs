@@ -9,9 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_MedicalTreatmentType.h"
-#include <xeumeuleu/xml.hpp>
+#include "MT_Tools/MT_Logger.h"
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
+#include <xeumeuleu/xml.hpp>
 
 MIL_MedicalTreatmentType::T_MedicalTreatmentTypeMap MIL_MedicalTreatmentType::types_;
 

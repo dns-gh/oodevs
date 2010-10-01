@@ -10,27 +10,27 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Illumination.h"
-
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include <boost/serialization/set.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Illumination )
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Illumination* role, const unsigned int /*version*/ )
 {
-  MIL_Entity_ABC* const owner = &role->owner_;
-  archive << owner;
+    MIL_Entity_ABC* const owner = &role->owner_;
+    archive << owner;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Illumination* role, const unsigned int /*version*/ )
 {
-  MIL_Entity_ABC* owner;
-  archive >> owner;
-  ::new( role )PHY_RolePion_Illumination( *owner );
+    MIL_Entity_ABC* owner;
+    archive >> owner;
+    ::new( role )PHY_RolePion_Illumination( *owner );
 }
 
 // -----------------------------------------------------------------------------

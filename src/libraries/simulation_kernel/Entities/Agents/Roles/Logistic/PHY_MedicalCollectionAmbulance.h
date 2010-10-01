@@ -12,6 +12,7 @@
 #ifndef __PHY_MedicalCollectionAmbulance_h_
 #define __PHY_MedicalCollectionAmbulance_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 class PHY_ComposantePion;

@@ -13,6 +13,7 @@
 #define __DEC_Knowledge_PopulationFlowPart_h_
 
 #include "MIL.h"
+#include "MT_Tools/MT_Vector2DTypes.h"
 
 namespace MsgsSimToClient
 {

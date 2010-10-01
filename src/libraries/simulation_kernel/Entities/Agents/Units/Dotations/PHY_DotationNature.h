@@ -12,6 +12,8 @@
 #ifndef __PHY_DotationNature_h_
 #define __PHY_DotationNature_h_
 
+#include "MT_Tools/MT_Stl.h"
+
 namespace xml
 {
     class xistream;

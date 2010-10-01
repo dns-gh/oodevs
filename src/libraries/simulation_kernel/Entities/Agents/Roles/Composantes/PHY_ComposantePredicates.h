@@ -15,7 +15,6 @@
 #include "MIL.h"
 #include "OnComponentFunctor_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include <boost/noncopyable.hpp>
 
 class PHY_ComposantePion;
 class PHY_ComposanteTypePion;

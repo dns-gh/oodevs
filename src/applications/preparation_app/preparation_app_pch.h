@@ -9,6 +9,7 @@
 
 #pragma warning( disable : 4231 )
 #pragma warning( disable : 4355 ) // 'this' : used in base member initializer list
+#pragma warning( disable : 4355 ) // 'this' : used in base member initializer list
 
 #ifndef __preparation_app_pch_h_
 #define __preparation_app_pch_h_

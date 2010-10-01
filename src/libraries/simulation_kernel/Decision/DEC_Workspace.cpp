@@ -31,20 +31,18 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
 #include "tools/InputBinaryStream.h"
+#include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/algorithm/string.hpp>
-
-
 #include <sys/stat.h>
-
 
 namespace
 {
-    static const std::string strUnits( "units" );
-    static const std::string strAutomats( "automats" );
-    static const std::string strPopulation( "populations" );
+    const std::string strUnits( "units" );
+    const std::string strAutomats( "automats" );
+    const std::string strPopulation( "populations" );
 }
 
 //-----------------------------------------------------------------------------
@@ -58,7 +56,6 @@ DEC_Workspace::DEC_Workspace( MIL_Config& config )
     modelTypes_[strUnits] = &pionModels_;
     modelTypes_[strAutomats] = &automateModels_;
     modelTypes_[strPopulation] = &populationModels_;
-
     InitializeConfig( config );
     InitializeObjectNames( config );
     InitializeDIA   ( config );

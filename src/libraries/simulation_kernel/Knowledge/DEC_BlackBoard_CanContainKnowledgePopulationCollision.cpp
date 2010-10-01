@@ -14,6 +14,7 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "MT_Tools/MT_ScipioException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgePopulationCollision )
 

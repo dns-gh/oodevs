@@ -10,6 +10,8 @@
 #ifndef __PHY_DotationCategory_IndirectFire_ABC_h_
 #define __PHY_DotationCategory_IndirectFire_ABC_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
+
 namespace xml
 {
     class xistream;
@@ -21,6 +23,7 @@ class MIL_EntityManager_ABC;
 class PHY_DotationCategory;
 class PHY_FireResults_ABC;
 class PHY_IndirectFireDotationClass;
+class MT_Vector2D;
 
 // =============================================================================
 // @class  PHY_DotationCategory_IndirectFire_ABC

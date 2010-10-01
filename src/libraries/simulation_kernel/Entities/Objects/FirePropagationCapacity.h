@@ -20,6 +20,7 @@ namespace xml
 class MIL_PropagationManager;
 class FireAttribute;
 class TER_Localisation;
+class MT_Vector2D;
 
 // =============================================================================
 /** @class  FirePropagationCapacity

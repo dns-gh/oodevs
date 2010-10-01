@@ -12,10 +12,11 @@
 #ifndef __PHY_RoleAction_Transport_h_
 #define __PHY_RoleAction_Transport_h_
 
-#include "MT_Tools/Role_ABC.h"
+#include "TransportNotificationHandler_ABC.h"
 #include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
-#include "TransportNotificationHandler_ABC.h"
+#include "MT_Tools/Role_ABC.h"
+#include "MT_Tools/MT_Tools_Types.h"
 
 namespace client
 {
@@ -29,7 +30,6 @@ class MIL_ToxicEffectManipulator;
 
 namespace transport
 {
-
 // =============================================================================
 // @class  PHY_RoleAction_Transport
 // Created: JVT 2004-08-03
@@ -48,17 +48,21 @@ public:
     struct sTransportData
     {
         sTransportData();
-        sTransportData( const sTransportData& rhs );
         sTransportData( MT_Float rTotalWeight, bool bTransportOnlyLoadable );
 
-        template< typename Archive > void serialize( Archive&, const unsigned int );
+        bool     bTransportOnlyLoadable_;
+        MT_Float rTotalWeight_;
+        MT_Float rRemainingWeight_;
+        MT_Float rTransportedWeight_;
 
-        const bool     bTransportOnlyLoadable_;
-        const MT_Float rTotalWeight_;
-              MT_Float rRemainingWeight_;
-              MT_Float rTransportedWeight_;
-      private:
-        sTransportData& operator=( const sTransportData& rhs );
+        template< class Archive >
+        void serialize( Archive & ar, unsigned int /*version*/ )
+        {
+            ar & bTransportOnlyLoadable_
+                & rTotalWeight_
+                & rRemainingWeight_
+                & rTransportedWeight_;
+        }
     };
 
     typedef std::map< MIL_Agent_ABC*, sTransportData > T_TransportedPionMap;
@@ -149,9 +153,9 @@ private:
     //! @name Helpers
     //@{
     bool HasChanged() const;
-    void     ComputeLoadingTime  ( MT_Float& rLoadingTime, MT_Float& rWeightToLoad ) const;
+    void ComputeLoadingTime( MT_Float& rLoadingTime, MT_Float& rWeightToLoad ) const;
     MT_Float ComputeUnloadingTime() const;
-    MT_Float DoLoad  ( const MT_Float rWeightToLoad   );
+    MT_Float DoLoad( const MT_Float rWeightToLoad );
     MT_Float DoUnload( const MT_Float rWeightToUnload );
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Transport* role, const unsigned int /*version*/ );
@@ -173,6 +177,5 @@ private:
 } // namespace transport
 
 BOOST_CLASS_EXPORT_KEY( transport::PHY_RoleAction_Transport )
-BOOST_CLASS_EXPORT_KEY( transport::PHY_RoleAction_Transport::sTransportData )
 
 #endif // __PHY_RoleAction_Transport_h_

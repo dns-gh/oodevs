@@ -13,7 +13,7 @@
 #define __MIL_NBCType_h_
 
 #include "MIL_Random.h"
-#include <boost/noncopyable.hpp>
+#include "MT_Tools/MT_Stl.h"
 
 namespace xml
 {
@@ -41,7 +41,7 @@ public:
     static void Initialize( xml::xistream& xis );
     static void Terminate();
     static const MIL_NBCType* Find( const std::string& strName );
-    static const MIL_NBCType* Find( uint nID );
+    static const MIL_NBCType* Find( unsigned int nID );
     //@}
 
 private:

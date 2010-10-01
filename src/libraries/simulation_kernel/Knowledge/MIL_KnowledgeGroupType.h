@@ -10,6 +10,7 @@
 #ifndef __MIL_KnowledgeGroupType_h_
 #define __MIL_KnowledgeGroupType_h_
 
+#include "MT_Tools/MT_Stl.h"
 #include <map>
 
 namespace xml

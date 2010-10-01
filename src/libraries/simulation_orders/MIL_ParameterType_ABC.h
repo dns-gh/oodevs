@@ -10,6 +10,7 @@
 #ifndef __MIL_ParameterType_ABC_h_
 #define __MIL_ParameterType_ABC_h_
 
+#include "MT_Tools/MT_Stl.h"
 #include <boost/noncopyable.hpp>
 
 namespace Common

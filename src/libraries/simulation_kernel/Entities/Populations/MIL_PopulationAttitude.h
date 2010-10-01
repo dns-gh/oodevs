@@ -12,6 +12,7 @@
 #ifndef __MIL_PopulationAttitude_h_
 #define __MIL_PopulationAttitude_h_
 
+#include "MT_Tools/MT_Stl.h"
 #include "protocol/protocol.h"
 
 // =============================================================================

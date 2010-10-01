@@ -13,6 +13,10 @@
 #include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "DEC_Knowledge_ObjectCollision.h"
+#include "DEC_Knowledge_ObjectAttributeConstruction.h"
+#include "DEC_Knowledge_ObjectAttributeBypass.h"
+#include "DEC_Knowledge_ObjectAttributeObstacle.h"
+#include "DEC_Knowledge_ObjectAttributeInteractionHeight.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -26,11 +30,9 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "DEC_Knowledge_ObjectAttributeConstruction.h"
-#include "DEC_Knowledge_ObjectAttributeBypass.h"
-#include "DEC_Knowledge_ObjectAttributeObstacle.h"
-#include "DEC_Knowledge_ObjectAttributeInteractionHeight.h"
 #include "protocol/ClientSenders.h"
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/set.hpp>
 #include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Object )
@@ -218,7 +220,7 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
     // On stocke les types selon leur nom
     unsigned int size = reconByAgentTypes_.size();
     file << size;
-    for ( CIT_AgentTypeSet it = reconByAgentTypes_.begin(); it != reconByAgentTypes_.end(); ++it )
+    for( CIT_AgentTypeSet it = reconByAgentTypes_.begin(); it != reconByAgentTypes_.end(); ++it )
     {
         unsigned int id = (*it)->GetID();
         file << id;

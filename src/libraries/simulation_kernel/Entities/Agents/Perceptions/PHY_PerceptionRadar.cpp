@@ -14,8 +14,8 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
-
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
+#include "MT_Tools/MT_ScipioException.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadar constructor

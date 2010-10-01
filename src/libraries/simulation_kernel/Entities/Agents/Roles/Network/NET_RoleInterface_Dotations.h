@@ -13,6 +13,7 @@
 #define __NET_RoleInterface_Dotations_h_
 
 #include "MT_Tools/Role_ABC.h"
+#include <boost/serialization/access.hpp>
 
 // =============================================================================
 // @class  NET_RoleInterface_Dotations
@@ -35,7 +36,7 @@ private:
     //! @name Serialization
     //@{
     friend class boost::serialization::access;
-    template< typename Archive > void serialize( Archive& ar, const uint )
+    template< typename Archive > void serialize( Archive& ar, const unsigned int )
     {
         ar & boost::serialization::base_object< tools::Role_ABC >( *this );
     }

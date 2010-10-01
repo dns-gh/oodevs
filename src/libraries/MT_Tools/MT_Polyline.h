@@ -13,18 +13,16 @@
 #define __MT_Polyline_h_
 
 #include "MT_Tools_Types.h"
-
 #include "Mt_Vector2DTypes.h"
 
 class MT_Line;
+class MT_Droite;
 
 //=============================================================================
 // Created: NLD 2003-07-25
 //=============================================================================
 class MT_Polyline
 {
-//    MT_BOOSTPOOLING_MEMBERS( MT_Polyline )
-
 public:
      MT_Polyline();
      MT_Polyline( const T_PointVector& points );

@@ -11,6 +11,7 @@
 #define __UrbanBlockPosition_ABC_h_
 
 #include "UrbanLocationComputer_ABC.h"
+#include "MT_Tools/MT_Tools_Types.h"
 
 class MIL_Agent_ABC;
 class PHY_DotationCategory;

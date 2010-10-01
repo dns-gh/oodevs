@@ -17,7 +17,8 @@
 #include "DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
+#include <boost/serialization/utility.hpp>
+#include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_ObjectInteraction )
 

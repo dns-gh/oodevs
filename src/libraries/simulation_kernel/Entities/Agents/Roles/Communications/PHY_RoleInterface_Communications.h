@@ -13,6 +13,7 @@
 #define __PHY_RoleInterface_Communications_h_
 
 #include "MT_Tools/Role_ABC.h"
+#include <boost/serialization/access.hpp>
 
 namespace client
 {
@@ -22,7 +23,6 @@ namespace client
 class MIL_Object_ABC;
 class DEC_Knowledge_ObjectPerception;
 class DEC_Knowledge_ObjectCollision;
-
 
 // =============================================================================
 // @class  PHY_RoleInterface_Communications
@@ -63,7 +63,6 @@ public:
     virtual void Clean() = 0;
     //@}
 
-
     //! @name Network
     //@{
     virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
@@ -74,7 +73,7 @@ private:
     //! @name Serialization
     //@{
     friend class boost::serialization::access;
-    template< typename Archive > void serialize( Archive& ar, const uint )
+    template< typename Archive > void serialize( Archive& ar, const unsigned int )
     {
         ar & boost::serialization::base_object< tools::Role_ABC >( *this );
     }

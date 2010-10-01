@@ -69,7 +69,7 @@ void BurnCapacity::InitializeData( xml::xistream& xis )
 // Created: RFT 2008-05-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void BurnCapacity::serialize( Archive& file, const uint )
+void BurnCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }

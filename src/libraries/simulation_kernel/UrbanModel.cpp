@@ -11,6 +11,8 @@
 #include "UrbanModel.h"
 #include "tools/MIL_Config.h"
 #include "MT_Tools/MT_FormatString.h"
+#include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_Vector2D.h"
 #include <urban/Model.h>
 #include <urban/ObjectVisitor_ABC.h>
 #include <urban/TerrainObject_ABC.h>
@@ -55,7 +57,6 @@ void UrbanModel::ReadUrbanModel( const MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "----  Loading UrbanModel    ----" );
     MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
-
     std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().string();
     try
     {

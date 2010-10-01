@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Population.h"
+#include <string>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleHLA_Population )
 
@@ -17,7 +18,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleHLA_Population )
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
 PHY_RoleHLA_Population::PHY_RoleHLA_Population()
-    : bInvulnerable_              ( false )
+    : bInvulnerable_( false )
 {
     // NOTHING
 }

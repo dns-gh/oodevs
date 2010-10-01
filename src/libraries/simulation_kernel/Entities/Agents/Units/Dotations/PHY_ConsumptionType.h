@@ -12,7 +12,7 @@
 #ifndef __PHY_ConsumptionType_h_
 #define __PHY_ConsumptionType_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
+#include "MT_Tools/MT_Stl.h"
 
 // =============================================================================
 // @class  PHY_ConsumptionType

@@ -14,6 +14,7 @@
 
 class MIL_ToxicEffectManipulator;
 class NBCAttribute;
+class MT_Vector2D;
 
 // =============================================================================
 /** @class  PropagationAttribute_ABC

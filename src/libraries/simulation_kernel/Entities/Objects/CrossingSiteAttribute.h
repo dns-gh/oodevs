@@ -12,6 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 namespace Common

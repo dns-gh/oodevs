@@ -12,6 +12,7 @@
 #include "MIL_LimaFunction.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
+#include "MT_Tools/MT_Line.h"
 #include "protocol/protocol.h"
 
 unsigned int MIL_LimaOrder::nNextID_ = 0;
@@ -62,7 +63,6 @@ bool MIL_LimaOrder::Intersect2D( const MT_Line& line, MT_Vector2D& vPos ) const 
     {
         const MT_Vector2D* pCurPoint = &*itPoint;
         MT_Line lineLima( *pLastPoint, *pCurPoint );
-
         if( lineLima.Intersect2D( line, vPos ) == eDoIntersect )
             return true;
         pLastPoint = pCurPoint;

@@ -10,8 +10,6 @@
 #ifndef __Human_ABC_h_
 #define __Human_ABC_h_
 
-#include <boost/noncopyable.hpp>
-
 class MIL_AutomateLOG;
 class MIL_ToxicEffectManipulator;
 class PHY_HumanRank;

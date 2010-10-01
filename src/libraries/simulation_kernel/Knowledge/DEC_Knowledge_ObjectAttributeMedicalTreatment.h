@@ -14,6 +14,7 @@
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
+#include <boost/serialization/split_member.hpp>
 
 class MedicalTreatmentAttribute;
 class MIL_MedicalTreatmentType;

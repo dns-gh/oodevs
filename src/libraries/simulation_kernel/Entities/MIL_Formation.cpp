@@ -17,8 +17,10 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
-#include <boost/bind.hpp>
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/serialization/map.hpp>
+#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation constructor

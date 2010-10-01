@@ -10,9 +10,13 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_WeaponDataType_DirectFire.h"
 #include "PHY_WeaponType.h"
+#include "AlgorithmsFactories.h"
+#include "OnComponentComputer_ABC.h"
+#include "OnComponentFunctorComputerFactory_ABC.h"
+#include "OnComponentFunctor_ABC.h"
+#include "UrbanModel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
@@ -47,14 +51,8 @@
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_kernel/UrbanModel.h"
-#include "AlgorithmsFactories.h"
-#include "OnComponentComputer_ABC.h"
-#include "OnComponentFunctorComputerFactory_ABC.h"
-#include "OnComponentFunctor_ABC.h"
-#include "UrbanModel.h"
 #include "tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/noncopyable.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_DirectFire constructor
@@ -167,10 +165,9 @@ MT_Float PHY_WeaponDataType_DirectFire::GetMinDistanceForPH( MT_Float rPH, const
 // Created: NLD 2004-10-05
 // Modified: JVT 2004-11-03
 // -----------------------------------------------------------------------------
-inline
-MT_Float PHY_WeaponDataType_DirectFire::GetPH( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_Volume& targetVolume, MT_Vector3D firerPosition, MT_Vector3D targetPosition ) const
+MT_Float PHY_WeaponDataType_DirectFire::GetPH( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_Volume& targetVolume, const MT_Vector3D& /*firerPosition*/, const MT_Vector3D& /*targetPosition*/ ) const
 {
-    const PHY_RoleInterface_Posture&      firerPosture  = firer .GetRole< PHY_RoleInterface_Posture      >();
+    const PHY_RoleInterface_Posture& firerPosture  = firer .GetRole< PHY_RoleInterface_Posture >();
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
     MT_Float rDistance = firer.Distance( target );
     assert( phs_.size() > targetVolume.GetID() );
@@ -192,7 +189,6 @@ MT_Float PHY_WeaponDataType_DirectFire::GetPH( const MIL_Agent_ABC& firer, const
 // Name: PHY_WeaponDataType_DirectFire::GetPH
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-inline
 MT_Float PHY_WeaponDataType_DirectFire::GetPH( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, const PHY_Volume& targetVolume, MT_Float rDistance ) const
 {
     assert( phs_.size() > targetVolume.GetID() );
@@ -365,7 +361,7 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_Agent_ABC& t
 // Name: PHY_WeaponDataType_DirectFire::Fire
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_PopulationElement_ABC& target, uint nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const
+void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const
 {
     const PHY_RoePopulation& roe  = firer.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
     const MT_Float           rPH  = target.GetPopulation().GetType().GetDamagePH( roe );

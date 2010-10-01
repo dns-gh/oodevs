@@ -14,9 +14,10 @@
 
 #include "ENT/ENT_Enums_Gen.h"
 #include "MT_Tools/MT_Tools_Types.h"
+#include "MT_Tools/MT_Stl.h"
 #include "protocol/Protocol.h"
-#include <map>
 #include <boost/noncopyable.hpp>
+#include <map>
 
 namespace weather
 {

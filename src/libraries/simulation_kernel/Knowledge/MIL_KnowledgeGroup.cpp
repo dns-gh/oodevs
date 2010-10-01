@@ -31,12 +31,12 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "tools/MIL_IDManager.h"
+#include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include <boost/ref.hpp>
 #include <xeumeuleu/xml.hpp>
-#include <boost/serialization/export.hpp>
+#include <boost/serialization/split_free.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/bind.hpp>
 
 MIL_IDManager MIL_KnowledgeGroup::idManager_;
 
@@ -527,9 +527,7 @@ void MIL_KnowledgeGroup::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGr
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UnregisterKnowledgeGroup( const MIL_KnowledgeGroup& knowledgeGroup )
 {
-    IT_KnowledgeGroupVector it = std::find( knowledgeGroups_.begin(), knowledgeGroups_.end(), &knowledgeGroup );
-    assert( it != knowledgeGroups_.end() );
-    knowledgeGroups_.erase( it );
+    knowledgeGroups_.erase( std::remove( knowledgeGroups_.begin(), knowledgeGroups_.end(), &knowledgeGroup ), knowledgeGroups_.end() );
 }
  
 // -----------------------------------------------------------------------------
@@ -548,9 +546,7 @@ void MIL_KnowledgeGroup::RegisterAutomate( MIL_Automate& automate )
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UnregisterAutomate( MIL_Automate& automate )
 {
-    IT_AutomateVector it = std::find( automates_.begin(), automates_.end(), &automate );
-    assert( it != automates_.end() );
-    automates_.erase( it );
+    automates_.erase( std::remove( automates_.begin(), automates_.end(), &automate ), automates_.end() );
 }
 
 // -----------------------------------------------------------------------------

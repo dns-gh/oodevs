@@ -41,7 +41,8 @@ DEC_KnowledgeSource_ABC::DEC_KnowledgeSource_ABC()
 // -----------------------------------------------------------------------------
 DEC_KnowledgeSource_ABC::~DEC_KnowledgeSource_ABC()
 {
-    pBlackBoard_->RemoveFromScheduler( *this );
+    if( pBlackBoard_ )
+        pBlackBoard_->RemoveFromScheduler( *this );
 }
 
 // -----------------------------------------------------------------------------

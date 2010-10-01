@@ -23,6 +23,8 @@
 #include "simulation_kernel/HealComputerFactory_ABC.h"
 #include "simulation_kernel/HumansChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "MT_Tools/MT_ScipioException.h"
+#include <boost/serialization/set.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( human::PHY_RolePion_Humans )
 
@@ -413,15 +415,12 @@ bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MIL_AutomateLOG& destinationTC2 )
 {
-
-
     PHY_MedicalHumanState* pMedicalHumanState = destinationTC2.MedicalHandleHumanEvacuatedByThirdParty( pion_, human );
     if( !pMedicalHumanState )
     {
         human.SetMedicalState( 0 );
         return;
     }
-
     if( ! medicalHumanStates_.insert( pMedicalHumanState ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     human.SetMedicalState( pMedicalHumanState );
@@ -433,16 +432,12 @@ void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MI
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
 {
-
-
     MIL_AutomateLOG* pTC2 = pion_.GetAutomate().GetTC2();
     if( !pTC2 || nEvacuationMode_ == eEvacuationMode_Manual )
     {
         human.SetMedicalState( 0 );
         return;
     }
-
-
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
     const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nCurrentTick > ( nTickRcMedicalQuerySent_ + 1 ) || nTickRcMedicalQuerySent_ == 0 )

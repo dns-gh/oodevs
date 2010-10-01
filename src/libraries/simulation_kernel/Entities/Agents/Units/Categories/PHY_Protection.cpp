@@ -14,6 +14,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "tools/xmlcodecs.h"
 #include "MIL_Random.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_Protection::T_ProtectionMap PHY_Protection::protections_;
@@ -45,7 +46,6 @@ struct PHY_Protection::LoadingWrapper
 void PHY_Protection::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing protections" );
-
     LoadingWrapper loader;
     xis >> xml::start( "protections" )
             >> xml::list( "protection", loader, &LoadingWrapper::ReadProtection )
@@ -60,11 +60,9 @@ void PHY_Protection::ReadProtection( xml::xistream& xis )
 {
     std::string strProtection;
     xis >> xml::attribute( "name", strProtection );
-
     const PHY_Protection*& pProtection = protections_[ strProtection ];
     if( pProtection )
         xis.error( "Protection " + strProtection + " already defined" );
-
      pProtection = new PHY_Protection( strProtection, xis );
 }
 

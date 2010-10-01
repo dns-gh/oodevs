@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_SupplyResourcesAlarms.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_SupplyResourcesAlarms::T_LevelSet PHY_SupplyResourcesAlarms::convoyTransporterResourcesLevels_;
@@ -29,7 +30,6 @@ void PHY_SupplyResourcesAlarms::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing supply resources alarms" );
     LoadingWrapper loader;
-
     xis >> xml::start( "supply" )
             >> xml::start( "resource-availability-alerts" )
                 >> xml::list( "resource-availability-alert", loader, &LoadingWrapper::ReadResourceAvailabilityAlert )

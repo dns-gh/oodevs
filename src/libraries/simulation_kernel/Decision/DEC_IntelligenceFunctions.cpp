@@ -13,7 +13,7 @@
 #include "Entities/Orders/MIL_IntelligenceOrdersVisitor_ABC.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Automates/MIL_Automate.h"
-
+#include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include <boost/bind.hpp>
 
 namespace

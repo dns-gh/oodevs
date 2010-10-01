@@ -14,8 +14,7 @@
 
 #include "MIL.h"
 #include "Entities/MIL_Entity_ABC.h"
-#include "Entities/Orders/MIL_AutomateOrderManager.h"
-#include "tools/Resolver.h"
+#include <tools/Resolver.h>
 
 namespace Common
 {
@@ -53,9 +52,9 @@ class MIL_KnowledgeGroup;
 class MIL_AutomateLOG;
 class MIL_Object_ABC;
 class MIL_AgentTypePion;
+class MIL_AutomateOrderManager;
 class PHY_SupplyDotationState;
 class PHY_DotationCategory;
-class DEC_KnowledgeBlackBoard_Automate;
 
 // =============================================================================
 // @class  MIL_Automate
@@ -81,9 +80,12 @@ public:
     //@}
 
 public:
-             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& formation, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
-             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Automate&  parent   , xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+    //! @name Constructors/Destructor
+    //@{
+             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Formation& formation, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Automate&  parent   , xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~MIL_Automate();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -138,10 +140,17 @@ public:
     virtual void UpdateState     ();
     virtual void Clean           ();
 
-    template< typename T > void ApplyOnHierarchy( T& functor );
+    template< typename T > void ApplyOnHierarchy( T& functor )
+    {
+        functor(*this);
+        for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+            (**it).ApplyOnHierarchy( functor );
+        for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+            functor( **it );
+    }
 
-    bool IsPerceived ( const DEC_Knowledge_Agent&  knowledge ) const;
-    bool IsPerceived ( const DEC_Knowledge_Object& knowledge ) const;
+    bool IsPerceived( const DEC_Knowledge_Agent&  knowledge ) const;
+    bool IsPerceived( const DEC_Knowledge_Object& knowledge ) const;
     //@}
 
     //! @name Prisoners
@@ -166,18 +175,18 @@ public:
     virtual void SendFullState                    () const;
             void SendKnowledge                    () const;
 
-            void OnReceiveMsgOrder                ( const Common::MsgAutomatOrder&                   msg );
-            void OnReceiveMsgFragOrder            ( const MsgsClientToSim::MsgFragOrder&             msg );
-            void OnReceiveMsgSetAutomateMode      ( const MsgsClientToSim::MsgSetAutomatMode&        msg );
-            void OnReceiveMsgUnitCreationRequest  ( const MsgsClientToSim::MsgUnitCreationRequest&   msg );
-            void OnReceiveMsgUnitCreationRequest  ( const MsgsClientToSim::MsgUnitMagicAction&       msg );
-            void OnReceiveMsgUnitMagicAction      ( const MsgsClientToSim::MsgUnitMagicAction&       msg, const tools::Resolver< MIL_Army_ABC >& armies );
-            void OnReceiveMsgMagicActionMoveTo    ( const MsgsClientToSim::MsgUnitMagicAction&       msg );
-            void OnReceiveMsgChangeKnowledgeGroup ( const MsgsClientToSim::MsgUnitMagicAction&       msg, const tools::Resolver< MIL_Army_ABC >& armies );
-            void OnReceiveMsgChangeSuperior       ( const MsgsClientToSim::MsgUnitMagicAction&       msg, const tools::Resolver< MIL_Formation >& formations );
-    virtual void OnReceiveMsgChangeLogisticLinks  ( const MsgsClientToSim::MsgUnitMagicAction&       msg );
-    virtual void OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionParameters&              msg );
-    virtual void OnReceiveMsgLogSupplyPushFlow    ( const Common::MsgMissionParameters&              msg );
+            void OnReceiveMsgOrder                ( const Common::MsgAutomatOrder&                 msg );
+            void OnReceiveMsgFragOrder            ( const MsgsClientToSim::MsgFragOrder&           msg );
+            void OnReceiveMsgSetAutomateMode      ( const MsgsClientToSim::MsgSetAutomatMode&      msg );
+            void OnReceiveMsgUnitCreationRequest  ( const MsgsClientToSim::MsgUnitCreationRequest& msg );
+            void OnReceiveMsgUnitCreationRequest  ( const MsgsClientToSim::MsgUnitMagicAction&     msg );
+            void OnReceiveMsgUnitMagicAction      ( const MsgsClientToSim::MsgUnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
+            void OnReceiveMsgMagicActionMoveTo    ( const MsgsClientToSim::MsgUnitMagicAction&     msg );
+            void OnReceiveMsgChangeKnowledgeGroup ( const MsgsClientToSim::MsgUnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
+            void OnReceiveMsgChangeSuperior       ( const MsgsClientToSim::MsgUnitMagicAction&     msg, const tools::Resolver< MIL_Formation >& formations );
+    virtual void OnReceiveMsgChangeLogisticLinks  ( const MsgsClientToSim::MsgUnitMagicAction&     msg );
+    virtual void OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionParameters&            msg );
+    virtual void OnReceiveMsgLogSupplyPushFlow    ( const Common::MsgMissionParameters&            msg );
     //@}
 
     //! @name Misc
@@ -243,12 +252,12 @@ private:
           MIL_Automate*     pParentAutomate_;
           bool              bEngaged_;
 
-    MIL_KnowledgeGroup*      pKnowledgeGroup_;
-    MIL_AutomateOrderManager orderManager_;
-    MIL_AgentPion*           pPionPC_;
-    T_PionVector             pions_; // Including pion PC
-    T_PionVector             recycledPions_; // Dynamic pions
-    T_AutomateVector         automates_;
+    MIL_KnowledgeGroup*       pKnowledgeGroup_;
+    MIL_AutomateOrderManager* pOrderManager_;
+    MIL_AgentPion*            pPionPC_;
+    T_PionVector              pions_; // Including pion PC
+    T_PionVector              recycledPions_; // Dynamic pions
+    T_AutomateVector          automates_;
 
     bool                     bAutomateModeChanged_;
 
@@ -272,8 +281,4 @@ private:
 
 BOOST_CLASS_EXPORT_KEY( MIL_Automate )
 
-#include "MIL_Automate.inl"
-
 #endif // __MIL_Automate_h_
-
-

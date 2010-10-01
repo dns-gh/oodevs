@@ -13,6 +13,7 @@
 class MIL_Automate;
 class MIL_Fuseau;
 class TER_Localisation;
+class MT_Vector2D;
 
 // =============================================================================
 /** @class  DEC_IntelligenceFunctions

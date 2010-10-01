@@ -14,7 +14,7 @@
 
 #include "MT_Tools/Role_ABC.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
-#include <boost/shared_ptr.hpp>
+#include <boost/serialization/access.hpp>
 
 namespace client
 {
@@ -80,11 +80,12 @@ public:
 //    virtual void SendFullState( client::UnitAttributes& asnMsg ) const = 0;
 
     virtual void Serialize( HLA_UpdateFunctor& functor ) const = 0;
+
 private:
     //! @name Serialization
     //@{
     friend class boost::serialization::access;
-    template< typename Archive > void serialize( Archive& ar, const uint )
+    template< typename Archive > void serialize( Archive& ar, const unsigned int )
     {
         ar & boost::serialization::base_object< tools::Role_ABC >( *this );
     }

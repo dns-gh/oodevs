@@ -45,7 +45,7 @@ public:
 
     //! @name CheckPoint
     //@{
-    template< typename Archive > void serialize( Archive& file, const uint );
+    template< typename Archive > void serialize( Archive& file, const unsigned int );
     //@}
 
 private:
@@ -61,7 +61,7 @@ private:
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void AgentFactory_ABC::serialize( Archive& file, const uint )
+void AgentFactory_ABC::serialize( Archive& file, const unsigned int )
 {
     file & elements_;
 }

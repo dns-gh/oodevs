@@ -21,9 +21,10 @@
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "tools/MIL_Tools.h"
 #include "Network/NET_ASN_Tools.h"
+#include "tools/MIL_Tools.h"
 #include "protocol/ClientSenders.h"
+#include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationFlow )
 
@@ -409,7 +410,7 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
     {
         asnMsg().mutable_portions_flux()->clear_elem();
         asnMsg().clear_portions_flux();
-//        for( uint i = 0; i < asnMsg().portions_flux.n; ++i )
+//        for( unsigned int i = 0; i < asnMsg().portions_flux.n; ++i )
 //            ASN_Delete::Delete( asnMsg().portions_flux.elem[ i ].forme );
 //        if( asnMsg().portions_flux.n > 0 )
 //            delete [] asnMsg().portions_flux.elem;

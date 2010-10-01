@@ -12,7 +12,6 @@
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationAttitude.h"
 #include "DEC_PopulationKnowledge.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"

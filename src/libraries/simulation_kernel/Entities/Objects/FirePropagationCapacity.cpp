@@ -15,6 +15,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MIL_ObjectLoader.h"
 #include "Entities/Objects/CapacityFactory.h"
+#include "MT_Tools/MT_Logger.h"
 #include "tools/MIL_Tools.h"
 #include "MIL_ObjectBuilder_ABC.h"
 #include "BurnCapacity.h"

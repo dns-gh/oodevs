@@ -42,8 +42,8 @@ public:
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const DEC_PopulationDecision* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, DEC_PopulationDecision* role, const unsigned int /*version*/ );
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations

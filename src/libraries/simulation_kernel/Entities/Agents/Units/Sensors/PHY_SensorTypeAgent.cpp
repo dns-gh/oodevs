@@ -32,11 +32,9 @@
 #include "Simulation_kernel/UrbanType.h"
 #include "tools/MIL_Tools.h"
 #include "tools/Resolver.h"
-
 #include "AlgorithmsFactories.h"
 #include "DetectionComputerFactory_ABC.h"
 #include "PerceptionDistanceComputer_ABC.h"
-
 #include <geometry/Types.h>
 #include <urban/Architecture.h>
 #include <urban/TerrainObject_ABC.h>
@@ -44,8 +42,6 @@
 #include <urban/StaticModel.h>
 #include <urban/MaterialCompositionType.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
-
-#include <boost/noncopyable.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace

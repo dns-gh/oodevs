@@ -12,11 +12,13 @@
 #ifndef __PHY_Morale_h_
 #define __PHY_Morale_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
+#include "MT_Tools/MT_Stl.h"
+
 namespace Common
 {
     enum EnumUnitMorale;
 }
-
 
 // =============================================================================
 // @class  PHY_Morale

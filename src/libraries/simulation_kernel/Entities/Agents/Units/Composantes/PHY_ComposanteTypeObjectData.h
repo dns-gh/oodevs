@@ -12,6 +12,8 @@
 #ifndef __PHY_ComposanteTypeObjectData_h_
 #define __PHY_ComposanteTypeObjectData_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
+
 namespace xml
 {
     class xistream;

@@ -11,6 +11,7 @@
 #define __DEC_Representations_h_
 
 #include "MT_Tools/Role_ABC.h"
+#include <boost/serialization/access.hpp>
 
 class MIL_FragOrder;
 class DEC_PathPoint;
@@ -55,7 +56,7 @@ private:
     //! @name Serialization
     //@{
     friend class boost::serialization::access;
-    template< typename Archive > void serialize( Archive& ar, const uint )
+    template< typename Archive > void serialize( Archive& ar, const unsigned int )
     {
         ar & boost::serialization::base_object< tools::Role_ABC >( *this );
     }
@@ -63,7 +64,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< boost::shared_ptr< MIL_FragOrder > >          T_OrdersRepresentationVector;
+    typedef std::vector< boost::shared_ptr< MIL_FragOrder > > T_OrdersRepresentationVector;
     typedef T_OrdersRepresentationVector::iterator IT_OrdersRepresentationVector;
     typedef std::vector< boost::shared_ptr< DEC_PathPoint > > T_PointsRepresentationVector;
     typedef T_PointsRepresentationVector::iterator IT_PointsRepresentationVector;

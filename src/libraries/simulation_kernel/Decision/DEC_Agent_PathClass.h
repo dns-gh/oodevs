@@ -10,6 +10,7 @@
 #ifndef __DEC_PathClass_h_
 #define __DEC_PathClass_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
 #include <pathfind/TerrainData.h>
 
 namespace xml
