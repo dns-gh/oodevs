@@ -79,7 +79,7 @@
     </message>
     <message>
         <source>Generate a data package (.otpack) easily exportable</source>
-        <translation>Génére un paquetage de données (.otpak) facilement exportable</translation>
+        <translation>Génère un paquetage de données (.otpak) facilement exportable</translation>
     </message>
 </context>
 <context>
@@ -157,7 +157,7 @@
     </message>
     <message>
         <source>Select a package</source>
-        <translation>Sélectionnez un paquetage</translation>
+        <translation>Sélectionner un paquetage</translation>
     </message>
     <message>
         <source>Overwrite File?</source>
@@ -165,7 +165,7 @@
     </message>
     <message>
         <source>A file called %1 already exists. Do you want to overwrite it?</source>
-        <translation>Un fichier appelé %1 existe déjà. Voulez-vous l&apos;écraser ?</translation>
+        <translation>Le fichier appelé %1 existe déjà. Voulez-vous l&apos;écraser ?</translation>
     </message>
     <message>
         <source>Package has not been created.</source>
@@ -358,7 +358,7 @@ Le paquetage sera installé dans: %1</translation>
     <name>StartAnalysisPanel</name>
     <message>
         <source>Choose the exercise to analyse:</source>
-        <translation>Choissez l&apos;exercice à analyser:</translation>
+        <translation>Choisissez l&apos;exercice à analyser:</translation>
     </message>
     <message>
         <source>Choose the session to analyse:</source>
@@ -432,7 +432,7 @@ Description: %3</translation>
     <name>TerrainCreationPanel</name>
     <message>
         <source>New terrain name:</source>
-        <translation>Nouveau nom de terrain:</translation>
+        <translation>Nom du nouveau terrain:</translation>
     </message>
     <message>
         <source>Enter terrain name</source>

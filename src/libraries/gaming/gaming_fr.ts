@@ -916,7 +916,7 @@
     </message>
     <message>
         <source>Flow - </source>
-        <translation>Flux </translation>
+        <translation>Flux - </translation>
     </message>
     <message>
         <source>Domination:</source>

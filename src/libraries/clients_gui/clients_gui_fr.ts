@@ -236,11 +236,11 @@
     <name>HighlightColorModifier</name>
     <message>
         <source>Highlight</source>
-        <translation>Mettre en surbrillance</translation>
+        <translation>Mettre en évidence</translation>
     </message>
     <message>
         <source>Remove highlight</source>
-        <translation>Supprimer la surbrillance</translation>
+        <translation>Supprimer la mise en évidence</translation>
     </message>
 </context>
 <context>

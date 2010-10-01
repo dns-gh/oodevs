@@ -120,7 +120,7 @@
     </message>
     <message>
         <source>Status</source>
-        <translation>Status</translation>
+        <translation>Statut</translation>
     </message>
 </context>
 <context>
@@ -264,7 +264,7 @@
     </message>
     <message>
         <source>Gaming</source>
-        <translation>Gaming</translation>
+        <translation>Jeu</translation>
     </message>
     <message>
         <source>sword@masagroup.net</source>
@@ -316,7 +316,7 @@
     </message>
     <message>
         <source>Experience:</source>
-        <translation>Experience:</translation>
+        <translation>Expérience:</translation>
     </message>
     <message>
         <source>Human factors</source>
@@ -430,7 +430,7 @@
     </message>
     <message>
         <source>New date and time: </source>
-        <translation>Nouvelle datet et heure: </translation>
+        <translation>Nouvelles date et heure: </translation>
     </message>
     <message>
         <source>Ok</source>
@@ -709,7 +709,7 @@ Reason: %3
     </message>
     <message>
         <source>Time (Tick)</source>
-        <translation>Temps (ticks)</translation>
+        <translation>Temps (Ticks)</translation>
     </message>
 </context>
 <context>
@@ -775,7 +775,7 @@ Reason: %3
     </message>
     <message>
         <source>Export score data...</source>
-        <translation>Export les données du score...</translation>
+        <translation>Exporter les données du score...</translation>
     </message>
     <message>
         <source>Create report...</source>
@@ -1378,7 +1378,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Intelligences</source>
-        <translation>Renseignement</translation>
+        <translation>Renseignements</translation>
     </message>
     <message>
         <source>Creation</source>
@@ -2052,7 +2052,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Fire temperature:</source>
-        <translation>Temperature du feu:</translation>
+        <translation>Température du feu:</translation>
     </message>
     <message>
         <source>Development dotation:</source>
@@ -2258,7 +2258,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Fire temperature:</source>
-        <translation>Temperature du feu:</translation>
+        <translation>Température du feu:</translation>
     </message>
     <message>
         <source>Decisionnal</source>

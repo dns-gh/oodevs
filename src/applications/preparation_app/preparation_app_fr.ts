@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>Preparation</source>
-        <translation>Preparation</translation>
+        <translation>Préparation</translation>
     </message>
 </context>
 <context>
@@ -659,7 +659,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Select creation mode: </source>
-        <translation>Sélectionner le mode de création: </translation>
+        <translation>Sélectionnez le mode de création: </translation>
     </message>
     <message>
         <source>clear existing profiles</source>
@@ -667,7 +667,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>add new profiles to existing</source>
-        <translation>ajouter les nouveaux profils au profils existants</translation>
+        <translation>ajouter les nouveaux profils aux profils existants</translation>
     </message>
     <message>
         <source>Select creation permissions: </source>
@@ -898,7 +898,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Symbol</source>
-        <translation>Symbôle</translation>
+        <translation>Symbole</translation>
     </message>
 </context>
 <context>

@@ -3,11 +3,11 @@
     <name>Application</name>
     <message>
         <source>Close Simulations</source>
-        <translation>Arréter les exercices en cours</translation>
+        <translation>Arrêter les exercices en cours</translation>
     </message>
     <message>
         <source>Running Simulation(s) detected. Close ?</source>
-        <translation>Une ou plusieurs simulation(s) déjà lancées. Voulez-vous les fermer ? </translation>
+        <translation>Une ou plusieurs simulation(s) sont déjà lancées. Voulez-vous les fermer ? </translation>
     </message>
     <message>
         <source>Close GUI</source>
@@ -198,7 +198,7 @@
     </message>
     <message>
         <source>Select a package</source>
-        <translation>Sélectionner un paquetage</translation>
+        <translation>Sélectionnez un paquetage</translation>
     </message>
     <message>
         <source>Overwrite File?</source>
@@ -206,7 +206,7 @@
     </message>
     <message>
         <source>A file called %1 already exists. Do you want to overwrite it?</source>
-        <translation>Un fichier appelé %1 existe déjà. Voulez-vous l&apos;écraser ?</translation>
+        <translation>Le fichier appelé %1 existe déjà. Voulez-vous l&apos;écraser ?</translation>
     </message>
 </context>
 <context>
@@ -518,11 +518,11 @@
     <name>ScenarioPage</name>
     <message>
         <source>Join multiplayer training session</source>
-        <translation>Rejoindre une session d&apos;entraînement multi-joueur</translation>
+        <translation>Rejoindre une session d&apos;entraînement multijoueur</translation>
     </message>
     <message>
         <source>Start multiplayer training session</source>
-        <translation>Démarrer une session d&apos;entraînement multi-joueur</translation>
+        <translation>Démarrer une session d&apos;entraînement multijoueur</translation>
     </message>
 </context>
 <context>
@@ -533,7 +533,7 @@
     </message>
     <message>
         <source>Multiplayer</source>
-        <translation>Multi-joueur</translation>
+        <translation>Multijoueur</translation>
     </message>
     <message>
         <source>Start or join a multiplayer training session</source>
