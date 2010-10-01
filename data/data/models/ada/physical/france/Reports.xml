@@ -228,7 +228,7 @@
   <report id="168" message="premier coup parti"/>
   <report id="169" message="tir execute"/>
   <report id="170" message="tir hors de portee"/>
-  <report id="171" message="tir impossible plus de munitions ou munition interdite"/>
+  <report id="171" message="tir impossible plus de munitions"/>
   <report id="172" message="tir annule"/>
   <report id="173" message="changement de position"/>
   <report id="174" message="debut installation"/>
