@@ -105,15 +105,15 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     </message>
     <message>
         <source>Geodatabase export:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Export de base de données géographiques</translation>
     </message>
     <message>
         <source>Geodatabase population export:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Export de population de base de données géographiques</translation>
     </message>
     <message>
         <source>Geodatabase order import:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Import d'ordre de base de donnée géographique</translation>
     </message>
 </context>
 <context>

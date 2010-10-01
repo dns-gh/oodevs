@@ -206,7 +206,7 @@
     </message>
     <message>
         <source>System</source>
-        <translation>System</translation>
+        <translation>Système</translation>
     </message>
     <message>
         <source>Time</source>
