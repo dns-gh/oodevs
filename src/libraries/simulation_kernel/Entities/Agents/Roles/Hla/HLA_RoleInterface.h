@@ -12,7 +12,8 @@
 
 #include "MT_Tools/Role_ABC.h"
 
-namespace hla {
+namespace hla
+{
     class AttributeIdentifier;
     class Deserializer;
     class ObjectIdentifier;
@@ -45,7 +46,7 @@ public:
     //! @name Operations
     //@{
     virtual void Deserialize( const hla::AttributeIdentifier& attributeID, const hla::Deserializer& deserializer ) = 0;
-    virtual void Serialize  ( hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const = 0;
+    virtual void Serialize( hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const = 0;
 
     void Destroy();
     //@}

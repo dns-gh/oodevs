@@ -16,8 +16,6 @@
 #include "hla/HLA_UpdateFunctor.h"
 #include <hla/ObjectIdentifier.h>
 
-using namespace hla;
-
 // -----------------------------------------------------------------------------
 // Name: HLA_RoleLocalPion constructor
 // Created: AGE 2004-11-10
@@ -42,7 +40,7 @@ HLA_RoleLocalPion::~HLA_RoleLocalPion()
 // Name: HLA_RoleLocalPion::Serialize
 // Created: AGE 2004-11-10
 // -----------------------------------------------------------------------------
-void HLA_RoleLocalPion::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) const
+void HLA_RoleLocalPion::Serialize( hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const
 {
     assert( pAgent_ );
     HLA_UpdateFunctor updateFunctor( functor, bUpdateAll );
@@ -56,7 +54,7 @@ void HLA_RoleLocalPion::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll )
 // Name: HLA_RoleLocalPion::Deserialize
 // Created: AGE 2004-11-10
 // -----------------------------------------------------------------------------
-void HLA_RoleLocalPion::Deserialize( const AttributeIdentifier&, const Deserializer& )
+void HLA_RoleLocalPion::Deserialize( const hla::AttributeIdentifier&, const hla::Deserializer& )
 {
     throw std::exception( "local units should not be deserialized" );
 }
@@ -65,18 +63,18 @@ void HLA_RoleLocalPion::Deserialize( const AttributeIdentifier&, const Deseriali
 // Name: HLA_RoleLocalPion::SetId
 // Created: AGE 2004-11-24
 // -----------------------------------------------------------------------------
-void HLA_RoleLocalPion::SetId( const ObjectIdentifier& objectId )
+void HLA_RoleLocalPion::SetId( const hla::ObjectIdentifier& objectId )
 {
     if( pObjectId_ )
         throw std::exception( "object id already set" );
-    pObjectId_ = new ObjectIdentifier( objectId );
+    pObjectId_ = new hla::ObjectIdentifier( objectId );
 }
 
 // -----------------------------------------------------------------------------
 // Name: HLA_RoleLocalPion::GetId
 // Created: AGE 2004-11-24
 // -----------------------------------------------------------------------------
-ObjectIdentifier HLA_RoleLocalPion::GetId() const
+hla::ObjectIdentifier HLA_RoleLocalPion::GetId() const
 {
     if( ! pObjectId_ )
         throw std::exception( "object id not set" );

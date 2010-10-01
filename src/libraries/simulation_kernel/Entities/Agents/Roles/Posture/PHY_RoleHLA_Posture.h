@@ -12,11 +12,11 @@
 
 #include "PHY_RoleInterface_Posture.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
-#include "hla/Deserializer.h"
 
 namespace hla
 {
     class AttributeIdentifier;
+    class Deserializer;
 }
 
 namespace detection

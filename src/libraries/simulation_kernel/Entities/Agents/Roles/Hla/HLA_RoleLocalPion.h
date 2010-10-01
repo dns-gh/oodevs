@@ -48,7 +48,7 @@ public:
 private:
     //! @name Member data
     //@{
-    hla::ObjectIdentifier*  pObjectId_;
+    hla::ObjectIdentifier* pObjectId_;
     //@}
 };
 

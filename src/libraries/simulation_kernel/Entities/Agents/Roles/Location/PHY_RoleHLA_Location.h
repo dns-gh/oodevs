@@ -11,11 +11,11 @@
 #define __PHY_RoleHLA_Location_h_
 
 #include "PHY_RoleInterface_Location.h"
-#include "hla/Deserializer.h"
 
 namespace hla
 {
     class AttributeIdentifier;
+    class Deserializer;
 }
 
 class MIL_AgentHLA;

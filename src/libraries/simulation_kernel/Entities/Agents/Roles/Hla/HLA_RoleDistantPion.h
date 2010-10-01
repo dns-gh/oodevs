@@ -26,7 +26,7 @@ class HLA_RoleDistantPion : public HLA_RoleInterface
 public:
     //! @name Constructors/Destructor
     //@{
-            HLA_RoleDistantPion( MIL_AgentHLA& pion, const hla::ObjectIdentifier& objectId );
+             HLA_RoleDistantPion( MIL_AgentHLA& pion, const hla::ObjectIdentifier& objectId );
     virtual ~HLA_RoleDistantPion();
     //@}
 

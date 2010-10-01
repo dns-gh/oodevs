@@ -11,13 +11,11 @@
 #include "PHY_RoleHLA_Location.h"
 #include "tools/MIL_Tools.h"
 #include "hla/HLA_Serialization.h"
-#include "hla/AttributeIdentifier.h"
 #include "Entities/Agents/MIL_AgentHLA.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "simulation_terrain/TER_World.h"
-
-using namespace hla;
-
+#include <hla/AttributeIdentifier.h>
+#include <hla/Deserializer.h>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Location constructor
@@ -69,12 +67,11 @@ void PHY_RoleHLA_Location::NotifyTerrainPutOutsideObject( MIL_Object_ABC& object
     object.NotifyAgentPutOutside( pion_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Location::Deserialize
 // Created: AGE 2004-11-10
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Location::Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer )
+void PHY_RoleHLA_Location::Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer )
 {
     if( attributeID == "position" )
     {

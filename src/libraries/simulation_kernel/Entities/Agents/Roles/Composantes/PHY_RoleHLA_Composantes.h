@@ -6,21 +6,10 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-08 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Composantes/PHY_RoleHLA_Composantes.h $
-// $Author: Age $
-// $Modtime: 13/12/04 10:34 $
-// $Revision: 8 $
-// $Workfile: PHY_RoleHLA_Composantes.h $
-//
-// *****************************************************************************
-
 #ifndef __PHY_RoleHLA_Composantes_h_
 #define __PHY_RoleHLA_Composantes_h_
 
 #include "PHY_RoleInterface_Composantes.h"
-#include "hla/Deserializer.h"
 #include "protocol/ClientSenders.h"
 #include "Decision/DEC_Decision_ABC.h"
 
@@ -32,6 +21,7 @@ class MIL_Object_ABC;
 namespace hla
 {
     class AttributeIdentifier;
+    class Deserializer;
 }
 
 // =============================================================================

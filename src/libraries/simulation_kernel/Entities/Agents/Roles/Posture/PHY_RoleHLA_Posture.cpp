@@ -11,12 +11,9 @@
 #include "PHY_RoleHLA_Posture.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-
 #include "simulation_kernel/DetectionComputer_ABC.h"
-
 #include <hla/AttributeIdentifier.h>
-
-using namespace hla;
+#include <hla/Deserializer.h>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Posture constructor
@@ -100,7 +97,7 @@ void PHY_RoleHLA_Posture::SetTimingFactor( MT_Float )
 // Name: PHY_RoleHLA_Posture::Deserialize
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Posture::Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer )
+void PHY_RoleHLA_Posture::Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer )
 {
     if( attributeID == "posture" )
     {

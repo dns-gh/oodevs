@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-08 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Composantes/PHY_RoleHLA_Composantes.cpp $
-// $Author: Age $
-// $Modtime: 21/02/05 10:02 $
-// $Revision: 12 $
-// $Workfile: PHY_RoleHLA_Composantes.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Composantes.h"
@@ -30,8 +21,7 @@
 #include "hla/HLA_InteractionManager_ABC.h"
 #include "hla/HLA_Neutralization.h"
 #include <hla/AttributeIdentifier.h>
-
-using namespace hla;
+#include <hla/Deserializer.h>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Composantes constructor
@@ -129,7 +119,7 @@ const PHY_Composante_ABC* PHY_RoleHLA_Composantes::GetMajorComposante() const
 // Name: PHY_RoleHLA_Composantes::Deserialize
 // Created: AGE 2004-11-10
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Composantes::Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer )
+void PHY_RoleHLA_Composantes::Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer )
 {
     if( attributeID == "composantes" )
     {

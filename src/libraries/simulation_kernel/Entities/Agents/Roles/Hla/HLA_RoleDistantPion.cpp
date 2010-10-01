@@ -13,6 +13,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleHLA_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleHLA_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleHLA_Posture.h"
+#include <hla/Deserializer.h>
 
 using namespace hla;
 
@@ -22,7 +23,7 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 HLA_RoleDistantPion::HLA_RoleDistantPion( MIL_AgentHLA& pion, const ObjectIdentifier& objectId )
     : HLA_RoleInterface( pion)
-    , pion_ ( pion )
+    , pion_    ( pion )
     , objectId_( objectId )
 {
     // NOTHING
@@ -50,7 +51,7 @@ void HLA_RoleDistantPion::Serialize( UpdateFunctor_ABC&, bool ) const
 // Name: HLA_RoleDistantPion::Deserialize
 // Created: AGE 2004-11-10
 // -----------------------------------------------------------------------------
-void HLA_RoleDistantPion::Deserialize( const AttributeIdentifier& attributeID, const Deserializer& deserializer )
+void HLA_RoleDistantPion::Deserialize( const hla::AttributeIdentifier& attributeID, const hla::Deserializer& deserializer )
 {
     pion_.Deserialize( attributeID, deserializer );
     pion_.GetRole< PHY_RoleHLA_Location    >().Deserialize( attributeID, deserializer );
