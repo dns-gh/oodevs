@@ -278,7 +278,7 @@ void PHY_RolePion_HumanFactors::Execute( firing::WeaponReloadingComputer_ABC& al
 // Name: PHY_RolePion_HumanFactors::ModifyPH
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_HumanFactors::ModifyPH( MT_Float rPH ) const
+double PHY_RolePion_HumanFactors::ModifyPH( double rPH ) const
 {
     return rPH * pExperience_->GetCoefPhModificator() * pTiredness_->GetCoefPhModificator();
 }

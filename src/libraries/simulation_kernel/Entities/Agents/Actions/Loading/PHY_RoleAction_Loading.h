@@ -16,7 +16,6 @@
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 #include "MT_Tools/Role_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 class MIL_Agent_ABC;
 
@@ -96,8 +95,8 @@ public:
     //! @name Accessors
     //@{
     bool     IsLoaded        () const;
-    MT_Float GetLoadingTime  () const;
-    MT_Float GetUnloadingTime() const;
+    double GetLoadingTime  () const;
+    double GetUnloadingTime() const;
     //@}
 
 private:
@@ -123,8 +122,8 @@ private:
 private:
     //! @name Tools
     //@{
-    MT_Float ComputeLoadingTime  () const;
-    MT_Float ComputeUnloadingTime() const;
+    double ComputeLoadingTime  () const;
+    double ComputeUnloadingTime() const;
 
     void SetLoadedState  ();
     void SetUnloadedState();

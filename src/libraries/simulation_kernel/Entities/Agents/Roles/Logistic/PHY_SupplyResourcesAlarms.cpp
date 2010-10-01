@@ -43,7 +43,7 @@ void PHY_SupplyResourcesAlarms::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_SupplyResourcesAlarms::ReadResourceAvailabilityAlert( xml::xistream& xis )
 {
-    MT_Float rRatio;
+    double rRatio;
     xis >> xml::attribute( "availability-threshold", rRatio );
     if( rRatio < 0 || rRatio > 100 )
         xis.error( "resource-availabilty-alert: availability-threshold not in [0..100]" );
@@ -64,7 +64,7 @@ void PHY_SupplyResourcesAlarms::Terminate()
 // Name: PHY_SupplyResourcesAlarms::IsLevelReached
 // Created: NLD 2006-08-02
 // -----------------------------------------------------------------------------
-bool PHY_SupplyResourcesAlarms::IsLevelReached( const T_LevelSet& levels, MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+bool PHY_SupplyResourcesAlarms::IsLevelReached( const T_LevelSet& levels, double rPreviousRatio, double rCurrentRatio )
 {
     for( CIT_LevelSet it = levels.begin(); it != levels.end(); ++it )
     {
@@ -78,7 +78,7 @@ bool PHY_SupplyResourcesAlarms::IsLevelReached( const T_LevelSet& levels, MT_Flo
 // Name: PHY_SupplyResourcesAlarms::IsRepairerResourcesLevelReached
 // Created: NLD 2006-08-02
 // -----------------------------------------------------------------------------
-bool PHY_SupplyResourcesAlarms::IsConvoyTransporterResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+bool PHY_SupplyResourcesAlarms::IsConvoyTransporterResourcesLevelReached( double rPreviousRatio, double rCurrentRatio )
 {
     return IsLevelReached( convoyTransporterResourcesLevels_, rPreviousRatio, rCurrentRatio );
 }

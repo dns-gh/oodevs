@@ -32,11 +32,11 @@ public:
 
     //! @name
     //@{
-    virtual void Construct ( MT_Float rDeltaPercentage );
-    virtual void Destroy   ( MT_Float rDeltaPercentage );
-    virtual void Mine      ( MT_Float rDeltaPercentage );
-    virtual void Demine    ( MT_Float rDeltaPercentage );
-    virtual void Bypass    ( MT_Float rDeltaPercentage );
+    virtual void Construct ( double rDeltaPercentage );
+    virtual void Destroy   ( double rDeltaPercentage );
+    virtual void Mine      ( double rDeltaPercentage );
+    virtual void Demine    ( double rDeltaPercentage );
+    virtual void Bypass    ( double rDeltaPercentage );
     virtual void Activate  ();
 
     virtual void Construct();
@@ -74,13 +74,13 @@ public:
 
     //! @name
     //@{
-    virtual MT_Float GetSizeCoef() const;
+    virtual double GetSizeCoef() const;
     //@}
 
     //! @name
     //@{
     virtual bool HasMobilityInfluence      () const;
-    virtual MT_Float ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed ) const;
+    virtual double ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed ) const;
     //@}
 
 private:

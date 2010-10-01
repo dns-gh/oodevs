@@ -1162,7 +1162,7 @@ double MIL_AgentPion::GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > p
     // Fight score
     const MT_Vector3D sourcePosition( position->rX_, position->rY_, 0.);
     const MT_Vector3D targetPosition  ( pTargetKnowledge->GetPosition().rX_, pTargetKnowledge->GetPosition().rY_, pTargetKnowledge->GetAltitude() );
-    const MT_Float rDistBtwSourceAndTarget = sourcePosition.Distance( targetPosition );
+    const double rDistBtwSourceAndTarget = sourcePosition.Distance( targetPosition );
 
     rDangerosity = GetRole< PHY_RoleInterface_Composantes >().GetDangerosity( *pTargetMajorComposante, rDistBtwSourceAndTarget );
 

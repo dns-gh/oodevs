@@ -172,14 +172,14 @@ void PHY_RolePion_NBC::Decontaminate()
 // Name: PHY_RolePion_NBC::Decontaminate
 // Created: NLD 2004-04-30
 // -----------------------------------------------------------------------------
-void PHY_RolePion_NBC::Decontaminate( MT_Float rRatioAgentsWorking )
+void PHY_RolePion_NBC::Decontaminate( double rRatioAgentsWorking )
 {
     if( rContaminationState_ == 0. )
     {
         assert( nbcAgentTypesContaminating_.empty() );
         return;
     }
-    MT_Float rNewContaminationState = rContaminationState_ - ( pion_.GetType().GetUnitType().GetCoefDecontaminationPerTimeStep() * rRatioAgentsWorking );
+    double rNewContaminationState = rContaminationState_ - ( pion_.GetType().GetUnitType().GetCoefDecontaminationPerTimeStep() * rRatioAgentsWorking );
     rNewContaminationState = std::max( rNewContaminationState, 0. );
     if( static_cast< unsigned int >( rNewContaminationState * 100. ) != ( rContaminationState_ * 100. ) )
         bHasChanged_ = true;
@@ -317,7 +317,7 @@ void PHY_RolePion_NBC::ContaminateOtherUnits()
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
     TER_World::GetWorld().GetAgentManager().GetListWithinCircle( pion_.Get< PHY_RoleInterface_Location >().GetPosition() ,
          MIL_NbcAgentType::GetContaminationDistance() , perceivableAgents );
-    MT_Float minQuantity = MIL_NbcAgentType::GetMinContaminationQuantity();
+    double minQuantity = MIL_NbcAgentType::GetMinContaminationQuantity();
     for( TER_Agent_ABC::CIT_AgentPtrVector it  = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
@@ -350,7 +350,7 @@ std::vector< const MIL_NbcAgentType* > PHY_RolePion_NBC::GetContaminating() cons
 // Name: PHY_RolePion_NBC::GetContaminationQuantity
 // Created: HBD 2010-06-08
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_NBC::GetContaminationQuantity() const
+double PHY_RolePion_NBC::GetContaminationQuantity() const
 {
     return rContaminationQuantity_;
 }

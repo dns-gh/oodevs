@@ -272,7 +272,7 @@ void MIL_Population::Secure( const MIL_AgentPion& securer )
 // Name: MIL_Population::Exterminate
 // Created: SBO 2005-12-22
 // -----------------------------------------------------------------------------
-void MIL_Population::Exterminate( const MIL_AgentPion& exterminator, MT_Float rSurface )
+void MIL_Population::Exterminate( const MIL_AgentPion& exterminator, double rSurface )
 {
     MIL_PopulationElement_ABC* pElement;
     while( rSurface > 0. )
@@ -446,7 +446,7 @@ bool MIL_Population::IsInZone( const TER_Localisation& loc ) const
 MT_Vector2D MIL_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
 {
     MT_Vector2D closestPoint;
-    MT_Float    rMinDistance = std::numeric_limits< MT_Float >::max();
+    double    rMinDistance = std::numeric_limits< double >::max();
 
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
     {
@@ -457,7 +457,7 @@ MT_Vector2D MIL_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
 
         if( !(**itConcentration).GetLocation().ComputeNearestPoint( refPos, nearestPointTmp ) )
             continue;
-        MT_Float rDistance = refPos.Distance( nearestPointTmp );
+        double rDistance = refPos.Distance( nearestPointTmp );
         if( rDistance < rMinDistance )
         {
             rMinDistance = rDistance;
@@ -474,7 +474,7 @@ MT_Vector2D MIL_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
 
         if( !(**itFlow).GetLocation().ComputeNearestPoint( refPos, nearestPointTmp ) )
             continue;
-        MT_Float rDistance = refPos.Distance( nearestPointTmp );
+        double rDistance = refPos.Distance( nearestPointTmp );
         if( rDistance < rMinDistance )
         {
             rMinDistance = rDistance;
@@ -492,7 +492,7 @@ MIL_PopulationElement_ABC* MIL_Population::GetClosestAliveElement( const MIL_Age
 {
     const MT_Vector2D& position = reference.GetRole< PHY_RoleInterface_Location >().GetPosition();
     MIL_PopulationElement_ABC* pResult = 0;
-    MT_Float rMinDistance = 0.0f;
+    double rMinDistance = 0.0f;
     ComputeClosestAliveElement( position, pResult, rMinDistance );
     return pResult;
 }
@@ -501,10 +501,10 @@ MIL_PopulationElement_ABC* MIL_Population::GetClosestAliveElement( const MIL_Age
 // Name: MIL_Population::GetClosestElement
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
-void MIL_Population::ComputeClosestAliveElement( const MT_Vector2D& position, MIL_PopulationElement_ABC*& pClosestElement, MT_Float& rMinDistance ) const
+void MIL_Population::ComputeClosestAliveElement( const MT_Vector2D& position, MIL_PopulationElement_ABC*& pClosestElement, double& rMinDistance ) const
 {
     pClosestElement = 0;
-    rMinDistance = std::numeric_limits< MT_Float >::max();
+    rMinDistance = std::numeric_limits< double >::max();
 
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
     {
@@ -515,7 +515,7 @@ void MIL_Population::ComputeClosestAliveElement( const MT_Vector2D& position, MI
 
         if( !(**itConcentration).GetLocation().ComputeNearestPoint( position, nearestPoint ) )
             continue;
-        MT_Float rDistance = position.Distance( nearestPoint );
+        double rDistance = position.Distance( nearestPoint );
         if( rDistance < rMinDistance )
         {
             rMinDistance    = rDistance;
@@ -532,7 +532,7 @@ void MIL_Population::ComputeClosestAliveElement( const MT_Vector2D& position, MI
 
         if( !(**itFlow).GetLocation().ComputeNearestPoint( position, nearestPoint ) )
             continue;
-        MT_Float rDistance = position.Distance( nearestPoint );
+        double rDistance = position.Distance( nearestPoint );
         if( rDistance < rMinDistance )
         {
             rMinDistance    = rDistance;
@@ -545,9 +545,9 @@ void MIL_Population::ComputeClosestAliveElement( const MT_Vector2D& position, MI
 // Name: MIL_Population::GetClosestPointAndDistance
 // Created: SBO 2005-12-13
 // -----------------------------------------------------------------------------
-void MIL_Population::GetClosestPointAndDistance( const TER_Localisation& loc, MT_Vector2D& closestPoint, MT_Float& rMinDistance ) const
+void MIL_Population::GetClosestPointAndDistance( const TER_Localisation& loc, MT_Vector2D& closestPoint, double& rMinDistance ) const
 {
-    rMinDistance = std::numeric_limits< MT_Float >::max();
+    rMinDistance = std::numeric_limits< double >::max();
 
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
     {
@@ -555,7 +555,7 @@ void MIL_Population::GetClosestPointAndDistance( const TER_Localisation& loc, MT
             continue;
 
         MT_Vector2D nearestPointTmp;
-        MT_Float    rDistance;
+        double    rDistance;
         if( !(**itConcentration).GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance ) )
             continue;
 
@@ -572,7 +572,7 @@ void MIL_Population::GetClosestPointAndDistance( const TER_Localisation& loc, MT
             continue;
 
         MT_Vector2D nearestPointTmp;
-        MT_Float    rDistance;
+        double    rDistance;
         if( !(**itFlow).GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance ) )
             continue;
         if( rDistance < rMinDistance )
@@ -590,7 +590,7 @@ void MIL_Population::GetClosestPointAndDistance( const TER_Localisation& loc, MT
 MT_Vector2D MIL_Population::GetClosestPoint( const TER_Localisation& loc ) const
 {
     MT_Vector2D closestPoint;
-    MT_Float    rMinDistance;
+    double    rMinDistance;
     GetClosestPointAndDistance( loc, closestPoint, rMinDistance );
     return closestPoint;
 }
@@ -599,10 +599,10 @@ MT_Vector2D MIL_Population::GetClosestPoint( const TER_Localisation& loc ) const
 // Name: MIL_Population::GetDistanceTo
 // Created: SBO 2005-12-13
 // -----------------------------------------------------------------------------
-MT_Float MIL_Population::GetDistanceTo( const TER_Localisation& loc ) const
+double MIL_Population::GetDistanceTo( const TER_Localisation& loc ) const
 {
     MT_Vector2D closestPoint;
-    MT_Float    rMinDistance;
+    double    rMinDistance;
     GetClosestPointAndDistance( loc, closestPoint, rMinDistance );
     return rMinDistance;
 }
@@ -623,13 +623,13 @@ MT_Vector2D MIL_Population::GetSecuringPoint( const MIL_Agent_ABC& securingAgent
 // Name: MIL_Population::GetSafetyPosition
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-MT_Vector2D MIL_Population::GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance ) const
+MT_Vector2D MIL_Population::GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const
 {
     MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( agent );
     if( !pClosestElement )
         return MT_Vector2D();
     MT_Vector2D safetyPoint;
-    MT_Float rSeed = 0.0f;
+    double rSeed = 0.0f;
     int nIteration = 1;
     while( rSeed < MT_PI )
     {
@@ -721,7 +721,7 @@ void MIL_Population::Move( const MT_Vector2D& destination )
 // Name: MIL_Population::FireOnPions
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-void MIL_Population::FireOnPions( MT_Float rIntensity, PHY_FireResults_Population& fireResult )
+void MIL_Population::FireOnPions( double rIntensity, PHY_FireResults_Population& fireResult )
 {
     if( !IsBlinded() )
     {
@@ -737,7 +737,7 @@ void MIL_Population::FireOnPions( MT_Float rIntensity, PHY_FireResults_Populatio
 // Name: MIL_Population::FireOnPion
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
-void MIL_Population::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult )
+void MIL_Population::FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult )
 {
     MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( target );
 
@@ -749,7 +749,7 @@ void MIL_Population::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& target, PHY
 // Name: MIL_Population::GetDangerosity
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
-MT_Float MIL_Population::GetDangerosity( const MIL_AgentPion& target ) const
+double MIL_Population::GetDangerosity( const MIL_AgentPion& target ) const
 {
     MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( target );
     if( pClosestElement )
@@ -822,7 +822,7 @@ MIL_PopulationConcentration& MIL_Population::GetConcentration( const MT_Vector2D
 // Name: MIL_Population::GetMaxSpeed
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-MT_Float MIL_Population::GetMaxSpeed() const
+double MIL_Population::GetMaxSpeed() const
 {
     assert( pType_ );
     return pType_->GetMaxSpeed();
@@ -832,7 +832,7 @@ MT_Float MIL_Population::GetMaxSpeed() const
 // Name: MIL_Population::GetDefaultFlowDensity
 // Created: NLD 2005-10-04
 // -----------------------------------------------------------------------------
-MT_Float MIL_Population::GetDefaultFlowDensity() const
+double MIL_Population::GetDefaultFlowDensity() const
 {
     assert( pType_ );
     return pType_->GetDefaultFlowDensity();
@@ -845,7 +845,7 @@ MT_Float MIL_Population::GetDefaultFlowDensity() const
 // Name: MIL_Population::GetPionReloadingTimeFactor
 // Created: NLD 2005-11-02
 // -----------------------------------------------------------------------------
-MT_Float MIL_Population::GetPionReloadingTimeFactor( MT_Float rDensity ) const
+double MIL_Population::GetPionReloadingTimeFactor( double rDensity ) const
 {
     assert( pType_ );
     return pType_->GetPionReloadingTimeFactor( rDensity );
@@ -855,7 +855,7 @@ MT_Float MIL_Population::GetPionReloadingTimeFactor( MT_Float rDensity ) const
 // Name: MIL_Population::GetPionMaxSpeed
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------
-MT_Float MIL_Population::GetPionMaxSpeed( const MIL_PopulationAttitude& attitude, MT_Float rDensity, const PHY_Volume& pionVolume ) const
+double MIL_Population::GetPionMaxSpeed( const MIL_PopulationAttitude& attitude, double rDensity, const PHY_Volume& pionVolume ) const
 {
     assert( pType_ );
     if( bPionMaxSpeedOverloaded_ )
@@ -1266,7 +1266,7 @@ const MIL_Army& MIL_Population::GetArmy() const
 // Name: MIL_Population::SetPionMaxSpeed
 // Created: NLD 2005-10-24
 // -----------------------------------------------------------------------------
-void MIL_Population::SetPionMaxSpeed( MT_Float rSpeed )
+void MIL_Population::SetPionMaxSpeed( double rSpeed )
 {
     assert( rSpeed >= 0. );
     bPionMaxSpeedOverloaded_ = true;

@@ -24,8 +24,6 @@ namespace xml
 // =============================================================================
 class MIL_AgentInjuredHumanPion : public MIL_AgentPion
 {
-    MT_COPYNOTALLOWED( MIL_AgentInjuredHumanPion )
-
 public:
     //! @name Constructors/Destructor
     //@{

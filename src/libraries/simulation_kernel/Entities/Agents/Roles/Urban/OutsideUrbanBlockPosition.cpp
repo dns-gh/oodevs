@@ -79,7 +79,7 @@ float OutsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_A
 // Name: OutsideUrbanBlockPosition::ComputeUrbanProtection
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-MT_Float OutsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCategory& /*dotationCategory*/ ) const
+double OutsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCategory& /*dotationCategory*/ ) const
 {
     return 0.;
 }

@@ -584,7 +584,7 @@ void DEC_Knowledge_Object::SendStateToNewClient()
 // Name: DEC_Knowledge_Object::GetMaxInteractionHeight
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Object::GetMaxInteractionHeight() const
+double DEC_Knowledge_Object::GetMaxInteractionHeight() const
 {
     const DEC_Knowledge_ObjectAttributeInteractionHeight* height = Retrieve< DEC_Knowledge_ObjectAttributeInteractionHeight >();
     if( height )
@@ -712,7 +712,7 @@ const MIL_ObjectType_ABC& DEC_Knowledge_Object::GetType() const
 // Name: DEC_Knowledge_Object::GetRelevance
 // Created: NLD 2004-03-22
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Object::GetRelevance() const
+double DEC_Knowledge_Object::GetRelevance() const
 {
     return rRelevance_;
 }

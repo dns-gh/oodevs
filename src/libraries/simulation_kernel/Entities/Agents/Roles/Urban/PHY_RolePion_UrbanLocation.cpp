@@ -204,7 +204,7 @@ float PHY_RolePion_UrbanLocation::ComputeRatioPionInside( const geometry::Polygo
 // Name: PHY_RolePion_UrbanLocation::ComputeUrbanProtection
 // Created: SLG 2010-04-12
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_UrbanLocation::ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const
+double PHY_RolePion_UrbanLocation::ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const
 {
     return delegate_->ComputeUrbanProtection( dotationCategory );
 }

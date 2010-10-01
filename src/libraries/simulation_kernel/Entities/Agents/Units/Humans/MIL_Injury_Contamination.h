@@ -49,7 +49,7 @@ public:
     //@{
     float SetLifeExpectancy() const;
     bool  IsInjured( const PHY_ComposantePion& pComposante );
-    void  SetInjury( unsigned int rNbrAliveHumans , MT_Float rDensity );
+    void  SetInjury( unsigned int rNbrAliveHumans , double rDensity );
     void  Injure( PHY_InjuredHuman& injuredHuman );
     void  SetInjuryCategory( MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory );
     bool  CanInjuryBeDeadly();

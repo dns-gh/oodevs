@@ -62,9 +62,9 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
         if( !pDotationCategory )
             continue;
 
-        MT_Float rTotalValue = number;
+        double rTotalValue = number;
 
-        typedef std::vector< std::pair< PHY_DotationStock*, MT_Float > > T_PionStockVector;
+        typedef std::vector< std::pair< PHY_DotationStock*, double > > T_PionStockVector;
         typedef T_PionStockVector::iterator                              IT_PionStockVector;
         typedef T_PionStockVector::const_iterator                        CIT_PionStockVector;
 
@@ -104,7 +104,7 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
         for( IT_PionStockVector it = pionStocks.begin(); it != pionStocks.end() && rTotalValue > 0.; ++it )
         {
             const PHY_DotationStock& stock = *it->first;
-            const MT_Float rAffectedValue = std::min( rTotalValue, std::max( 0., stock.GetCapacity() - stock.GetValue() ) );
+            const double rAffectedValue = std::min( rTotalValue, std::max( 0., stock.GetCapacity() - stock.GetValue() ) );
             rTotalValue -= rAffectedValue;
             it->second += rAffectedValue;
         }
@@ -112,7 +112,7 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
         // Overhead
         if( rTotalValue > 0. )
         {
-            const MT_Float rAffectedValue = rTotalValue / pionStocks.size();
+            const double rAffectedValue = rTotalValue / pionStocks.size();
             for( IT_PionStockVector it = pionStocks.begin(); it != pionStocks.end(); ++it )
                 it->second += rAffectedValue;
         }

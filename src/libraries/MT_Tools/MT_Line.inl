@@ -39,11 +39,11 @@ MT_Vector2D MT_Line::GetCenter() const
 // Created: FBD 02-08-21
 //-----------------------------------------------------------------------------
 inline
-bool MT_Line::IsInside( const MT_Vector2D& vPos, MT_Float rSize ) const
+bool MT_Line::IsInside( const MT_Vector2D& vPos, double rSize ) const
 {
     MT_Vector2D vPosNear = ClosestPointOnLine( vPos );
-    MT_Float rDist = vPos.SquareDistance( vPosNear );
-    MT_Float rDist2 = ( rSize * rSize );
+    double rDist = vPos.SquareDistance( vPosNear );
+    double rDist2 = ( rSize * rSize );
     return( rDist <= rDist2 );
 }
 
@@ -52,7 +52,7 @@ bool MT_Line::IsInside( const MT_Vector2D& vPos, MT_Float rSize ) const
 // Created: FBD 02-08-21
 //-----------------------------------------------------------------------------
 inline
-bool MT_Line::IsInside( const MT_Vector2D& vPos, MT_Float rSize, MT_Vector2D& vPosNear ) const
+bool MT_Line::IsInside( const MT_Vector2D& vPos, double rSize, MT_Vector2D& vPosNear ) const
 {
     vPosNear = ClosestPointOnLine( vPos );
     return( vPos.SquareDistance( vPosNear ) < ( rSize * rSize ) );
@@ -65,14 +65,14 @@ bool MT_Line::IsInside( const MT_Vector2D& vPos, MT_Float rSize, MT_Vector2D& vP
 inline
 MT_Vector2D MT_Line::ClosestPointOnLine( const MT_Vector2D& vPoint ) const
 {
-    const MT_Float rLenDeltaSqr = pPosStart_->SquareDistance( *pPosEnd_ );
+    const double rLenDeltaSqr = pPosStart_->SquareDistance( *pPosEnd_ );
     if( MT_IsZero( rLenDeltaSqr ) )
         return *pPosStart_;
 
     const MT_Vector2D vDeltaPoint = vPoint - *pPosStart_;
     const MT_Vector2D vDelta = *pPosEnd_ - *pPosStart_;
 
-    const MT_Float rDot = DotProduct( vDelta, vDeltaPoint );
+    const double rDot = DotProduct( vDelta, vDeltaPoint );
     if ( rDot <= 0.f ) 
         return *pPosStart_;
 
@@ -114,7 +114,7 @@ MT_Vector2D MT_Line::ProjectPointOnLine( const MT_Vector2D& vPoint ) const
     MT_Vector2D vAB( *pPosEnd_ - *pPosStart_ );
     MT_Vector2D vAC( vPoint    - *pPosStart_ );
 
-    MT_Float r = DotProduct( vAC, vAB ) / vAB.SquareMagnitude();
+    double r = DotProduct( vAC, vAB ) / vAB.SquareMagnitude();
 
     return *pPosStart_ + vAB * r;
 }
@@ -124,7 +124,7 @@ MT_Vector2D MT_Line::ProjectPointOnLine( const MT_Vector2D& vPoint ) const
 // Created: NLD 2003-10-17
 // -----------------------------------------------------------------------------
 inline
-MT_Float MT_Line::ProjectPointOnLine( const MT_Vector2D& vPoint, MT_Vector2D& vResult ) const
+double MT_Line::ProjectPointOnLine( const MT_Vector2D& vPoint, MT_Vector2D& vResult ) const
 {
     if( *pPosEnd_ == *pPosStart_ )
     {
@@ -135,7 +135,7 @@ MT_Float MT_Line::ProjectPointOnLine( const MT_Vector2D& vPoint, MT_Vector2D& vR
     MT_Vector2D vAB( *pPosEnd_ - *pPosStart_ );
     MT_Vector2D vAC( vPoint    - *pPosStart_ );
 
-    MT_Float r = DotProduct( vAC, vAB ) / vAB.SquareMagnitude();
+    double r = DotProduct( vAC, vAB ) / vAB.SquareMagnitude();
 
     vResult = *pPosStart_ + vAB * r;
     
@@ -147,7 +147,7 @@ MT_Float MT_Line::ProjectPointOnLine( const MT_Vector2D& vPoint, MT_Vector2D& vR
 // Created: NLD 2003-10-17
 // -----------------------------------------------------------------------------
 inline
-MT_Float MT_Line::Magnitude() const
+double MT_Line::Magnitude() const
 {
     return ( *pPosEnd_ - *pPosStart_ ).Magnitude();
 }

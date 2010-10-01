@@ -81,7 +81,7 @@ T                   DotProduct( const MT_V3D<T>& v1, const MT_V3D<T>& v2);
 #include "MT_Vector3D.inl"
 
 // Scipio types
-typedef MT_V3D<MT_Float>        MT_Vector3D;
+typedef MT_V3D<double>        MT_Vector3D;
 
 typedef std::vector< MT_Vector3D >                T_Point3DVector;
 typedef const T_Point3DVector                     CT_Point3DVector;

@@ -59,7 +59,7 @@ public:
 
     virtual bool IsInvulnerable        () const;
 
-    MT_Float GetCollidingPopulationDensity() const;
+    double GetCollidingPopulationDensity() const;
     //@}
 
 

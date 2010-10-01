@@ -1516,7 +1516,7 @@ const bool MIL_EntityManager::HasInfiniteDotations() const
 // Name: MIL_EntityManager::GetKnowledgesTime
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-MT_Float MIL_EntityManager::GetKnowledgesTime() const
+double MIL_EntityManager::GetKnowledgesTime() const
 {
     return rKnowledgesTime_;
 }
@@ -1525,7 +1525,7 @@ MT_Float MIL_EntityManager::GetKnowledgesTime() const
 // Name: MIL_EntityManager::GetDecisionsTime
 // Created: NLD 2006-05-03
 // -----------------------------------------------------------------------------
-MT_Float MIL_EntityManager::GetDecisionsTime() const
+double MIL_EntityManager::GetDecisionsTime() const
 {
     return rAutomatesDecisionTime_ + rPionsDecisionTime_ + rPopulationsDecisionTime_;
 }
@@ -1534,7 +1534,7 @@ MT_Float MIL_EntityManager::GetDecisionsTime() const
 // Name: MIL_EntityManager::GetAutomatesDecisionTime
 // Created: NLD 2006-05-03
 // -----------------------------------------------------------------------------
-MT_Float MIL_EntityManager::GetAutomatesDecisionTime() const
+double MIL_EntityManager::GetAutomatesDecisionTime() const
 {
     return rAutomatesDecisionTime_;
 }
@@ -1543,7 +1543,7 @@ MT_Float MIL_EntityManager::GetAutomatesDecisionTime() const
 // Name: MIL_EntityManager::GetPionsDecisionTime
 // Created: NLD 2006-05-03
 // -----------------------------------------------------------------------------
-MT_Float MIL_EntityManager::GetPionsDecisionTime() const
+double MIL_EntityManager::GetPionsDecisionTime() const
 {
     return rPionsDecisionTime_;
 }
@@ -1552,7 +1552,7 @@ MT_Float MIL_EntityManager::GetPionsDecisionTime() const
 // Name: MIL_EntityManager::GetPopulationsDecisionTime
 // Created: NLD 2006-05-03
 // -----------------------------------------------------------------------------
-MT_Float MIL_EntityManager::GetPopulationsDecisionTime() const
+double MIL_EntityManager::GetPopulationsDecisionTime() const
 {
     return rPopulationsDecisionTime_;
 }
@@ -1561,7 +1561,7 @@ MT_Float MIL_EntityManager::GetPopulationsDecisionTime() const
 // Name: MIL_EntityManager::GetActionsTime
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-MT_Float MIL_EntityManager::GetActionsTime() const
+double MIL_EntityManager::GetActionsTime() const
 {
     return rActionsTime_;
 }
@@ -1570,7 +1570,7 @@ MT_Float MIL_EntityManager::GetActionsTime() const
 // Name: MIL_EntityManager::GetEffectsTime
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-MT_Float MIL_EntityManager::GetEffectsTime() const
+double MIL_EntityManager::GetEffectsTime() const
 {
     return rEffectsTime_;
 }
@@ -1579,7 +1579,7 @@ MT_Float MIL_EntityManager::GetEffectsTime() const
 // Name: MIL_EntityManager::GetStatesTime
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-MT_Float MIL_EntityManager::GetStatesTime() const
+double MIL_EntityManager::GetStatesTime() const
 {
     return rStatesTime_;
 }

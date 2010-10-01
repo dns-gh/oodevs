@@ -10,7 +10,6 @@
 #ifndef __PHY_ResourceNetworkType_h_
 #define __PHY_ResourceNetworkType_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Stl.h"
 
 namespace xml

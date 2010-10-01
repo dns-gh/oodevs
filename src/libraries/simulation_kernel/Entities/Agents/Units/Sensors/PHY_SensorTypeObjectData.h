@@ -36,27 +36,27 @@ public:
 
     //! @name Tools
     //@{
-    MT_Float GetMaxDistance() const;
+    double GetMaxDistance() const;
     //@}
 
     //! @name Operations
     //@{
-    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_Object_ABC&   target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Object& target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_Object_ABC&   target, double rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Object& target, double rSensorHeight ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< MT_Float > T_FactorVector;
+    typedef std::vector< double > T_FactorVector;
     //@}
 
 private:
     //! @name Tools
     //@{
     template< typename C > static void InitializeFactors( const C& container, const std::string& strTagName, T_FactorVector& factors, xml::xistream& xis );
-    MT_Float GetPopulationFactor        ( MT_Float rDensity ) const;
-    MT_Float GetSourceFactor            ( const MIL_Agent_ABC& source ) const;
+    double GetPopulationFactor        ( double rDensity ) const;
+    double GetSourceFactor            ( const MIL_Agent_ABC& source ) const;
     void     InitializePopulationFactors( xml::xistream& xis );
     //@}
     //! @name Hepers
@@ -66,12 +66,12 @@ private:
     //@}
 
 private:
-    MT_Float       rDD_;
+    double       rDD_;
     T_FactorVector postureSourceFactors_;
 
     // Population
-    MT_Float rPopulationDensity_;
-    MT_Float rPopulationFactor_;
+    double rPopulationDensity_;
+    double rPopulationFactor_;
 };
 
 #endif // __PHY_SensorTypeObjectData_h_

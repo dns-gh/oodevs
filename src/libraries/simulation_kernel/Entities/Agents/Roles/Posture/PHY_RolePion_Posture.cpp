@@ -28,7 +28,7 @@ using namespace posture;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Posture )
 
-static const MT_Float rDeltaPercentageForNetwork = 0.05; //$$$ DEGUEU
+static const double rDeltaPercentageForNetwork = 0.05; //$$$ DEGUEU
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RolePion_Posture* role, const unsigned int /*version*/ )
@@ -132,7 +132,7 @@ void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const unsigned 
 // Name: PHY_RolePion_Posture::ChangePostureCompletionPercentage
 // Created: NLD 2005-07-27
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::ChangePostureCompletionPercentage( const MT_Float rNewPercentage )
+void PHY_RolePion_Posture::ChangePostureCompletionPercentage( const double rNewPercentage )
 {
     if( rPostureCompletionPercentage_ == rNewPercentage )
         return;
@@ -216,7 +216,7 @@ void PHY_RolePion_Posture::Install()
     bInstallationSetUpInProgress_ = true;
     if( rInstallationState_ >= 1. )
         return;
-    const MT_Float rTime = pion_.GetType().GetUnitType().GetInstallationTime();
+    const double rTime = pion_.GetType().GetUnitType().GetInstallationTime();
     if( rTime == 0 )
         rInstallationState_ = 1.;
     else
@@ -236,7 +236,7 @@ void PHY_RolePion_Posture::Uninstall()
 {
     if( rInstallationState_ <= 0. || bInstallationSetUpInProgress_ )
         return;
-    const MT_Float rTime = pion_.GetType().GetUnitType().GetUninstallationTime();
+    const double rTime = pion_.GetType().GetUnitType().GetUninstallationTime();
     if( rTime == 0 )
         rInstallationState_ = 0.;
     else
@@ -322,7 +322,7 @@ const PHY_Posture& PHY_RolePion_Posture::GetCurrentPosture() const
 // Name: PHY_RolePion_Posture::GetPostureCompletionPercentage
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Posture::GetPostureCompletionPercentage() const
+double PHY_RolePion_Posture::GetPostureCompletionPercentage() const
 {
     return rPostureCompletionPercentage_;
 }
@@ -380,7 +380,7 @@ void PHY_RolePion_Posture::Clean()
 // Name: PHY_RolePion_Posture::SetStealthFactor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::SetStealthFactor( MT_Float rValue )
+void PHY_RolePion_Posture::SetStealthFactor( double rValue )
 {
     assert( rValue >= 0. && rValue <= 1. );
     if( rValue != rStealthFactor_ )
@@ -394,7 +394,7 @@ void PHY_RolePion_Posture::SetStealthFactor( MT_Float rValue )
 // Name: PHY_RolePion_Posture::SetTimingFactor
 // Created: JVT 2005-05-11
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::SetTimingFactor( MT_Float rFactor )
+void PHY_RolePion_Posture::SetTimingFactor( double rFactor )
 {
     assert( rFactor > 0. );
     rTimingFactor_ = rFactor == 0. ? 1. : std::abs( rFactor );
@@ -404,7 +404,7 @@ void PHY_RolePion_Posture::SetTimingFactor( MT_Float rFactor )
 // Name: PHY_RolePion_Posture::SetElongationFactor
 // Created: JVT 2004-11-03
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::SetElongationFactor( MT_Float rFactor )
+void PHY_RolePion_Posture::SetElongationFactor( double rFactor )
 {
     assert( rFactor > 0. );
     if( rFactor > 0. )
@@ -415,7 +415,7 @@ void PHY_RolePion_Posture::SetElongationFactor( MT_Float rFactor )
 // Name: PHY_RolePion_Posture::GetElongationFactor
 // Created: JVT 2004-11-03
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Posture::GetElongationFactor() const
+double PHY_RolePion_Posture::GetElongationFactor() const
 {
     return rElongationFactor_;//@TODO REMOVE
 }

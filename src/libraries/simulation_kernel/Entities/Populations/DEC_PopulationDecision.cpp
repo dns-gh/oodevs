@@ -207,7 +207,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
 
     // Effects
     brain[ "DEC_Population_RalentissementPion_ChangeVitesse" ] =
-        boost::function< void ( MT_Float ) >(boost::bind( &MIL_Population::SetPionMaxSpeed, boost::ref( GetPopulation() ), _1) );
+        boost::function< void ( double ) >(boost::bind( &MIL_Population::SetPionMaxSpeed, boost::ref( GetPopulation() ), _1) );
     brain[ "DEC_Population_RalentissementPion_VitesseParDefaut" ] =
         boost::bind( &MIL_Population::ResetPionMaxSpeed,  boost::ref( GetPopulation() ) );
     brain[ "DEC_Population_ChangerAttitude" ] =
@@ -217,7 +217,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
 
     // Etats decisionnel
     brain[ "DEC_Population_ChangeEtatDomination" ] =
-        boost::function<void (MT_Float)>(boost::bind(&DEC_PopulationFunctions::NotifyDominationStateChanged, boost::ref( GetPopulation() ), _1 ) );
+        boost::function<void (double)>(boost::bind(&DEC_PopulationFunctions::NotifyDominationStateChanged, boost::ref( GetPopulation() ), _1 ) );
     brain[ "DEC_Population_Morts" ] =
         boost::function<unsigned int()>( boost::bind(&MIL_Population::GetNbrDeadHumans, boost::ref(GetPopulation()) ) );
 
@@ -439,7 +439,7 @@ void DEC_PopulationDecision::SendChangedState( client::CrowdUpdate& msg )
 // Name: DEC_PopulationDecision::GetDominationState
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
-MT_Float DEC_PopulationDecision::GetDominationState() const
+double DEC_PopulationDecision::GetDominationState() const
 {
     return rDominationState_;
 }
@@ -458,7 +458,7 @@ MIL_Population& DEC_PopulationDecision::GetPopulation() const
 // Name: DEC_PopulationDecision::NotifyDominationStateChanged
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::NotifyDominationStateChanged( MT_Float rValue )
+void DEC_PopulationDecision::NotifyDominationStateChanged( double rValue )
 {
     assert( rValue >= 0. && rValue <= 1. );
     if( rDominationState_ == rValue )
@@ -466,7 +466,7 @@ void DEC_PopulationDecision::NotifyDominationStateChanged( MT_Float rValue )
 
     rDominationState_ = rValue;
 
-    static const MT_Float rDeltaPercentageForNetwork = 0.05;
+    static const double rDeltaPercentageForNetwork = 0.05;
     if( fabs( rLastDominationState_ - rDominationState_ ) > rDeltaPercentageForNetwork || rDominationState_ == 0. || rDominationState_ == 1. )
     {
         bStateHasChanged_ = true;

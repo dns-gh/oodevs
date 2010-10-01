@@ -12,8 +12,6 @@
 #ifndef __DEC_PopulationFunctions_h_
 #define __DEC_PopulationFunctions_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 class DEC_Decision_ABC;
 class MIL_Population;
 class MIL_Mission_ABC;
@@ -51,7 +49,7 @@ public:
     static int IsEnemy( const MIL_Population& callerPopulation, int knowledgeId );
 
     // Etat decisionnel
-    static void NotifyDominationStateChanged( MIL_Population& callerPopulation, MT_Float dominationState );
+    static void NotifyDominationStateChanged( MIL_Population& callerPopulation, double dominationState );
     static std::string  GetSzName( MIL_Population& callerPopulation );
     //@}
 

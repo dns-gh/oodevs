@@ -72,8 +72,8 @@ public:
           DEC_PopulationDecision&     GetDecision          ();
     const MIL_PopulationOrderManager& GetOrderManager      () const;
           MIL_PopulationOrderManager& GetOrderManager      ();
-          MT_Float                    GetMaxSpeed          () const;
-          MT_Float                    GetDefaultFlowDensity() const;
+          double                    GetMaxSpeed          () const;
+          double                    GetDefaultFlowDensity() const;
     const MIL_PopulationAttitude&     GetDefaultAttitude   () const;
     const MIL_PopulationAttitude&     GetAttitude          () const;
     const MIL_Army&                   GetArmy              () const;
@@ -89,26 +89,26 @@ public:
     bool        IsInZone         ( const TER_Localisation& loc           ) const;
     MT_Vector2D GetClosestPoint  ( const MT_Vector2D&      refPos        ) const;
     MT_Vector2D GetClosestPoint  ( const TER_Localisation& loc           ) const;
-    MT_Float    GetDistanceTo    ( const TER_Localisation& loc           ) const;
+    double    GetDistanceTo    ( const TER_Localisation& loc           ) const;
     MT_Vector2D GetSecuringPoint ( const MIL_Agent_ABC&    securingAgent ) const;
-    MT_Vector2D GetSafetyPosition( const MIL_AgentPion&    agent        , MT_Float rMinDistance ) const;
+    MT_Vector2D GetSafetyPosition( const MIL_AgentPion&    agent        , double rMinDistance ) const;
     boost::shared_ptr< MT_Vector2D > GetBarycenter() const;
     //@}
 
     //! @name Effects on pions
     //@{
-    MT_Float GetPionMaxSpeed  ( const MIL_PopulationAttitude& attitude, MT_Float rDensity, const PHY_Volume& pionVolume ) const;
-    void     SetPionMaxSpeed  ( MT_Float rSpeed );
+    double GetPionMaxSpeed  ( const MIL_PopulationAttitude& attitude, double rDensity, const PHY_Volume& pionVolume ) const;
+    void     SetPionMaxSpeed  ( double rSpeed );
     void     ResetPionMaxSpeed();
 
-    MT_Float GetPionReloadingTimeFactor( MT_Float rDensity ) const;
+    double GetPionReloadingTimeFactor( double rDensity ) const;
     //@}
 
     //! @name Effects from pions
     //@{
     void NotifyAttackedBy( const MIL_Agent_ABC&    attacker );
     void Secure          ( const MIL_AgentPion&    securer  );
-    void Exterminate     ( const MIL_AgentPion&    exterminator, MT_Float rSurface );
+    void Exterminate     ( const MIL_AgentPion&    exterminator, double rSurface );
     void NotifyChanneled ( const TER_Localisation& localisation );
     //@}
 
@@ -124,15 +124,15 @@ public:
     //! @name Actions
     //@{
     void     Move          ( const MT_Vector2D& destination );
-    void     FireOnPions   ( MT_Float rIntensity, PHY_FireResults_Population& fireResult );
-    void     FireOnPion    ( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
-    MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
+    void     FireOnPions   ( double rIntensity, PHY_FireResults_Population& fireResult );
+    void     FireOnPion    ( double rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
+    double GetDangerosity( const MIL_AgentPion& target ) const;
     void     SetAttitude   ( const MIL_PopulationAttitude& attitude );
     void     SetBlinded    ( bool blinded );
     bool     IsBlinded     () const;
 
     MIL_PopulationElement_ABC* GetClosestAliveElement    ( const MIL_Agent_ABC& reference ) const;
-    void                       ComputeClosestAliveElement( const MT_Vector2D& position, MIL_PopulationElement_ABC*& pClosestElement, MT_Float& rMinDistance ) const;
+    void                       ComputeClosestAliveElement( const MT_Vector2D& position, MIL_PopulationElement_ABC*& pClosestElement, double& rMinDistance ) const;
     //@}
 
     //! @name Tools
@@ -204,7 +204,7 @@ private:
 
     //! @name Helpers
     //@{
-    void GetClosestPointAndDistance( const TER_Localisation& loc, MT_Vector2D& closestPoint, MT_Float& rMinDistance ) const;
+    void GetClosestPointAndDistance( const TER_Localisation& loc, MT_Vector2D& closestPoint, double& rMinDistance ) const;
     void UpdateBarycenter();
     //@}
 
@@ -240,7 +240,7 @@ private:
 
           // Pion effects
           bool                       bPionMaxSpeedOverloaded_;
-          MT_Float                   rOverloadedPionMaxSpeed_;
+          double                   rOverloadedPionMaxSpeed_;
           bool                       bBlinded_;
 
           // Misc

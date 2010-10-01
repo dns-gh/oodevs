@@ -150,7 +150,7 @@ bool DEC_Knowledge_ObjectAttributeCrossingSite::IsBanksToFitOut() const
 // Name: DEC_Knowledge_ObjectAttributeCrossingSite::GetWidth
 // Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_ObjectAttributeCrossingSite::GetWidth() const
+double DEC_Knowledge_ObjectAttributeCrossingSite::GetWidth() const
 {
     return rWidth_;
 }

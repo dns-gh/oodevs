@@ -68,7 +68,7 @@ private:
     //@{
     TER_Localisation            avoid_;
     MIL_DynamicPathDataHandler  handler_;
-    MT_Float                    distance_;
+    double                    distance_;
     //@}
 };
 

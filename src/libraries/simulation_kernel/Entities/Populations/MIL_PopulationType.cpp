@@ -23,8 +23,8 @@
 #include <xeumeuleu/xml.hpp>
 
 MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
-MT_Float                            MIL_PopulationType::rEffectReloadingTimeDensity_ = 0.;
-MT_Float                            MIL_PopulationType::rEffectReloadingTimeFactor_  = 0.;
+double                            MIL_PopulationType::rEffectReloadingTimeDensity_ = 0.;
+double                            MIL_PopulationType::rEffectReloadingTimeFactor_  = 0.;
 
 struct MIL_PopulationType::LoadingWrapper
 {
@@ -178,8 +178,8 @@ void MIL_PopulationType::ReadSlowingEffect( xml::xistream& xis )
 void MIL_PopulationType::ReadSlowingUnitEffect( xml::xistream& xis, T_VolumeSlowDownData& volumeSlowDownData )
 {
     std::string strVolume;
-    MT_Float    rPopulationDensity = 0.;
-    MT_Float    rMaxSpeed          = 0.;
+    double    rPopulationDensity = 0.;
+    double    rMaxSpeed          = 0.;
 
     xis >> xml::attribute( "unit-size", strVolume )
         >> xml::attribute( "population-density", rPopulationDensity )
@@ -259,7 +259,7 @@ MIL_Population& MIL_PopulationType::InstanciatePopulation( xml::xistream& xis, M
 // Name: MIL_PopulationType::GetPionMaxSpeed
 // Created: NLD 2005-10-20
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationType::GetPionMaxSpeed( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const
+double MIL_PopulationType::GetPionMaxSpeed( const MIL_PopulationAttitude& populationAttitude, double rPopulationDensity, const PHY_Volume& pionVolume ) const
 {
     assert( slowDownData_.size() > populationAttitude.GetID() );
     const T_VolumeSlowDownData& volumeSlowDownData = slowDownData_[ populationAttitude.GetID() ];
@@ -268,7 +268,7 @@ MT_Float MIL_PopulationType::GetPionMaxSpeed( const MIL_PopulationAttitude& popu
     const sSlowDownData& slowDownData = volumeSlowDownData[ pionVolume.GetID() ];
 
     if( rPopulationDensity == 0. || slowDownData.rPopulationDensity_ == 0. )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
 
     return ( slowDownData.rMaxSpeed_ * slowDownData.rPopulationDensity_ ) / rPopulationDensity;
 }
@@ -277,7 +277,7 @@ MT_Float MIL_PopulationType::GetPionMaxSpeed( const MIL_PopulationAttitude& popu
 // Name: MIL_PopulationType::GetPionReloadingTimeFactor
 // Created: NLD 2005-11-02
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationType::GetPionReloadingTimeFactor( MT_Float rPopulationDensity ) const
+double MIL_PopulationType::GetPionReloadingTimeFactor( double rPopulationDensity ) const
 {
     if( rEffectReloadingTimeDensity_ == 0. )
         return 1.;
@@ -289,7 +289,7 @@ MT_Float MIL_PopulationType::GetPionReloadingTimeFactor( MT_Float rPopulationDen
 // Name: MIL_PopulationType::GetDamageSurface
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationType::GetDamageSurface( const PHY_RoePopulation& roeFirer ) const
+double MIL_PopulationType::GetDamageSurface( const PHY_RoePopulation& roeFirer ) const
 {
     assert( damageData_.size() > roeFirer.GetID() );
     return damageData_[ roeFirer.GetID() ].rAttritionSurface_;
@@ -299,7 +299,7 @@ MT_Float MIL_PopulationType::GetDamageSurface( const PHY_RoePopulation& roeFirer
 // Name: MIL_PopulationType::GetDamagePH
 // Created: SBO 2006-01-25
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationType::GetDamagePH( const PHY_RoePopulation& roeFirer ) const
+double MIL_PopulationType::GetDamagePH( const PHY_RoePopulation& roeFirer ) const
 {
     assert( damageData_.size() > roeFirer.GetID() );
     return damageData_[ roeFirer.GetID() ].rPH_;
@@ -319,7 +319,7 @@ const DEC_Model_ABC& MIL_PopulationType::GetModel() const
 // Name: MIL_PopulationType::GetConcentrationDensity
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationType::GetConcentrationDensity() const
+double MIL_PopulationType::GetConcentrationDensity() const
 {
     return rConcentrationDensity_;
 }
@@ -328,7 +328,7 @@ MT_Float MIL_PopulationType::GetConcentrationDensity() const
 // Name: MIL_PopulationType::GetDefaultFlowDensity
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationType::GetDefaultFlowDensity() const
+double MIL_PopulationType::GetDefaultFlowDensity() const
 {
     return rDefaultFlowDensity_;
 }
@@ -355,7 +355,7 @@ unsigned int MIL_PopulationType::GetID() const
 // Name: MIL_PopulationType::GetMaxSpeed
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationType::GetMaxSpeed() const
+double MIL_PopulationType::GetMaxSpeed() const
 {
     return rMaxSpeed_;
 }
@@ -373,7 +373,7 @@ const PHY_AttritionData& MIL_PopulationType::GetAttritionData( const MIL_Populat
 // Name: MIL_PopulationType::GetPH
 // Created: NLD 2005-11-04
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationType::GetPH( const MIL_PopulationAttitude& attitude, MT_Float rDensity ) const
+double MIL_PopulationType::GetPH( const MIL_PopulationAttitude& attitude, double rDensity ) const
 {
     return attritionData_.GetPH( attitude, rDensity );
 }

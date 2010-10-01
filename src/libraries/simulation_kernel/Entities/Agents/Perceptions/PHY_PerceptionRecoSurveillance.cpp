@@ -28,9 +28,9 @@
 
 namespace
 {
-    MT_Float rForestSurveillanceTime_ = std::numeric_limits< MT_Float >::max();
-    MT_Float rUrbanSurveillanceTime_  = std::numeric_limits< MT_Float >::max();
-    MT_Float rEmptySurveillanceTime_  = std::numeric_limits< MT_Float >::max();
+    double rForestSurveillanceTime_ = std::numeric_limits< double >::max();
+    double rUrbanSurveillanceTime_  = std::numeric_limits< double >::max();
+    double rEmptySurveillanceTime_  = std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------

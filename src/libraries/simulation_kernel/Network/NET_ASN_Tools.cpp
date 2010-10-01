@@ -305,7 +305,7 @@ void NET_ASN_Tools::WriteDirection( const MT_Vector2D& vDir, MsgHeading& asnDir 
 {
     static const MT_Vector2D vNorth( 0, 1 );
     assert( !vDir.IsZero() );
-    MT_Float rAngle = Angle( vNorth, vDir ); // Trigo ...[-PI, PI]
+    double rAngle = Angle( vNorth, vDir ); // Trigo ...[-PI, PI]
     if( rAngle < 0 )
         rAngle += (2 * MT_PI); // Trigo ...[0, 2PI]
     rAngle = (2 * MT_PI) - rAngle; // Clockwise [0, 2PI]

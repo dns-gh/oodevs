@@ -10,7 +10,9 @@
 #ifndef __Application_ABC_h_
 #define __Application_ABC_h_
 
+#pragma warning( push, 0 )
 #include <qapplication.h>
+#pragma warning( pop )
 
 // =============================================================================
 /** @class  Application_ABC

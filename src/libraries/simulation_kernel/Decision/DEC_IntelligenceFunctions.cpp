@@ -196,7 +196,7 @@ namespace
 
         void operator()( const MIL_IntelligenceOrder& intelligence )
         {
-            const MT_Float distance = intelligence.SquareDistance( origin_ );
+            const double distance = intelligence.SquareDistance( origin_ );
             if( distance < distance_ )
             {
                 closest_ = &intelligence;
@@ -206,7 +206,7 @@ namespace
 
         MT_Vector2D origin_;
         const MIL_IntelligenceOrder* closest_;
-        MT_Float distance_;
+        double distance_;
     };
 
     template< typename Filter >

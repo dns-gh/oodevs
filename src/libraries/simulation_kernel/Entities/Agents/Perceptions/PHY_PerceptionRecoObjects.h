@@ -21,7 +21,7 @@ class DEC_Decision_ABC;
 class PHY_PerceptionRecoObjectsReco : public PHY_PerceptionLocalisation
 {
 public:
-    PHY_PerceptionRecoObjectsReco( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rGrowthSpeed, DEC_Decision_ABC& callerAgent );
+    PHY_PerceptionRecoObjectsReco( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rGrowthSpeed, DEC_Decision_ABC& callerAgent );
 
     bool IsInside        ( const TER_Localisation& )                 const;
     void GetObjectsInside( TER_Object_ABC::T_ObjectVector& ) const;
@@ -35,8 +35,8 @@ private:
     const MT_Vector2D      vCenter_;
     const TER_Localisation localisation_;
           TER_Localisation circle_;
-    MT_Float               rCurrentSize_;
-    const MT_Float         rGrowthSpeed_;
+    double               rCurrentSize_;
+    const double         rGrowthSpeed_;
     DEC_Decision_ABC&      callerAgent_;
     bool                   bMaxSizeDone_;
 };
@@ -55,7 +55,7 @@ public:
 
     //! @name Add/Remove Points
     //@{
-    int   AddLocalisation        ( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rSpeed, DEC_Decision_ABC& callerAgent );
+    int   AddLocalisation        ( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rSpeed, DEC_Decision_ABC& callerAgent );
     void  RemoveLocalisation     ( int id );
 
     bool  HasLocalisationToHandle() const;

@@ -11,7 +11,6 @@
 #define __PHY_Meteo_h_
 
 #include "clients_kernel/Entity_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <geometry/Types.h>
 #include <boost/noncopyable.hpp>
@@ -56,7 +55,7 @@ class PHY_Meteo : public kernel::Entity_ABC
 public:
     struct sWindData
     {
-        MT_Float    rWindSpeed_;
+        double    rWindSpeed_;
         MT_Vector2D vWindDirection_;
     };
 
@@ -110,7 +109,7 @@ protected:
     //@{
     int                      nPlancherCouvertureNuageuse_;
     int                      nPlafondCouvertureNuageuse_;
-    MT_Float                 rDensiteCouvertureNuageuse_;
+    double                 rDensiteCouvertureNuageuse_;
     sWindData                wind_;
     const PHY_Lighting*      pLighting_;
     const PHY_Precipitation* pPrecipitation_;

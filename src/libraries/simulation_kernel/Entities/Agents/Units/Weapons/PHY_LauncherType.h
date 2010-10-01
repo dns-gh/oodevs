@@ -12,7 +12,6 @@
 #ifndef __PHY_LauncherType_h_
 #define __PHY_LauncherType_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Stl.h"
 
 namespace xml
@@ -40,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const;
-    MT_Float GetPHModificator( const PHY_Posture&               firerPosture, const PHY_Posture&               targetPosture ) const;
+    double GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const;
+    double GetPHModificator( const PHY_Posture&               firerPosture, const PHY_Posture&               targetPosture ) const;
     //@}
 
     //! @name Accessors
@@ -57,7 +56,7 @@ private:
     typedef std::map< std::string, const PHY_LauncherType*, sCaseInsensitiveLess > T_LauncherTypeMap;
     typedef T_LauncherTypeMap::const_iterator                                       CIT_LauncherTypeMap;
 
-    typedef std::vector< MT_Float >                     T_PhModificatorValueVector;
+    typedef std::vector< double >                     T_PhModificatorValueVector;
     typedef std::vector< T_PhModificatorValueVector >   T_PhModificatorsVector;
     typedef T_PhModificatorsVector::const_iterator      CIT_PhModificatorsVector;
     //@}
@@ -70,7 +69,7 @@ private:
     //@{
     void InitializeForIndirectFire( xml::xistream& xis );
     void InitializeForDirectFire  ( xml::xistream& xis );
-    void RegisterPHModificator    ( const PHY_Posture& postureSource, const PHY_Posture& postureTarget, MT_Float rModificatorValue );
+    void RegisterPHModificator    ( const PHY_Posture& postureSource, const PHY_Posture& postureTarget, double rModificatorValue );
     //@}
     //! @name Helpers
     //@{

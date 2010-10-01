@@ -148,7 +148,7 @@ void PHY_SupplyStockState::GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& con
 // Name: PHY_SupplyStockState::RemoveConvoyedMerchandise
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
-void PHY_SupplyStockState::RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations )
+void PHY_SupplyStockState::RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations )
 {
     IT_RequestMap it = requests_.find( &dotationCategory );
     if( it == requests_.end() )
@@ -162,7 +162,7 @@ void PHY_SupplyStockState::RemoveConvoyedMerchandise( const PHY_DotationCategory
 // Name: PHY_SupplyStockState::AddConvoyedMerchandise
 // Created: NLD 2005-12-15
 // -----------------------------------------------------------------------------
-void PHY_SupplyStockState::AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations )
+void PHY_SupplyStockState::AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations )
 {
     IT_RequestMap it = requests_.find( &dotationCategory );
     if( it == requests_.end() )

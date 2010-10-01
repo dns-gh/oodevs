@@ -11,7 +11,6 @@
 #define __DEC_Knowledge_ObjectAttributeInteractionHeight_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 class InteractionHeightAttribute;
@@ -34,7 +33,7 @@ public:
 
     //! @name Accessors
     //@{
-    MT_Float Get() const;
+    double Get() const;
     //@}
 
     //! @name CheckPoints
@@ -61,7 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MT_Float height_;
+    double height_;
     //@}
 };
 

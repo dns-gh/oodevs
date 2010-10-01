@@ -40,7 +40,7 @@ float DEC_KnowledgePopulationFunctions::GetDangerosity( const MIL_AgentPion& cal
     if( pKnowledge )
     {
         // For DIA, the dangerosity value is 1 <= dangerosity <= 2
-        const MT_Float rDangerosity = pKnowledge->GetDangerosity( caller );
+        const double rDangerosity = pKnowledge->GetDangerosity( caller );
         return (float)( rDangerosity + 1. ) ;
     }
     return 0.f;

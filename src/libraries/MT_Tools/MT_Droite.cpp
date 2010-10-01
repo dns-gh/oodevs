@@ -42,7 +42,7 @@ MT_Droite::MT_Droite( const MT_Vector2D& vPointInLine1, const MT_Vector2D& vPoin
 // Name: MT_Droite constructor
 // Created: JVT 04-03-17
 //-----------------------------------------------------------------------------
-MT_Droite::MT_Droite( MT_Float rX1, MT_Float rY1, MT_Float rX2, MT_Float rY2 )
+MT_Droite::MT_Droite( double rX1, double rY1, double rX2, double rY2 )
     : rA_( rY2 - rY1 )
     , rB_( rX1 - rX2 )
     , rC_( rX2 * rY1 - rX1 * rY2 )
@@ -95,7 +95,7 @@ MT_Droite::~MT_Droite()
 // -----------------------------------------------------------------------------
 MT_Droite::E_Side MT_Droite::GetSide( const MT_Vector2D& vPoint ) const
 {
-    MT_Float rResult = vPoint.rX_ * rA_ + vPoint.rY_ * rB_ + rC_;
+    double rResult = vPoint.rX_ * rA_ + vPoint.rY_ * rB_ + rC_;
     if( MT_IsZero( rResult ) )
         return eOnBoundary;
 
@@ -123,8 +123,8 @@ E_CollisionState MT_Droite::Intersect2D( const MT_Line& segment, MT_Vector2D& vP
     vPosIntersect.Reset();
 
     // Test if segment intersect with the line
-    const MT_Float r3 = segment.GetPosStart().rX_ * rA_ + segment.GetPosStart().rY_ * rB_ + rC_;
-    const MT_Float r4 = segment.GetPosEnd  ().rX_ * rA_ + segment.GetPosEnd  ().rY_ * rB_ + rC_;
+    const double r3 = segment.GetPosStart().rX_ * rA_ + segment.GetPosStart().rY_ * rB_ + rC_;
+    const double r4 = segment.GetPosEnd  ().rX_ * rA_ + segment.GetPosEnd  ().rY_ * rB_ + rC_;
 
     /// Check signs of r3 and r4.
     // If both point 3 and point 4 lie on same side of line 1, the line segments do not intersect
@@ -133,11 +133,11 @@ E_CollisionState MT_Droite::Intersect2D( const MT_Line& segment, MT_Vector2D& vP
 
     // Compute intersection
     // Compute rA2, rB2, rC2 : equation of segment
-    const MT_Float rA2 = segment.GetPosEnd  ().rY_ - segment.GetPosStart().rY_;
-    const MT_Float rB2 = segment.GetPosStart().rX_ - segment.GetPosEnd  ().rX_;
-    const MT_Float rC2 = segment.GetPosEnd  ().rX_ * segment.GetPosStart().rY_ - segment.GetPosStart().rX_ * segment.GetPosEnd().rY_;
+    const double rA2 = segment.GetPosEnd  ().rY_ - segment.GetPosStart().rY_;
+    const double rB2 = segment.GetPosStart().rX_ - segment.GetPosEnd  ().rX_;
+    const double rC2 = segment.GetPosEnd  ().rX_ * segment.GetPosStart().rY_ - segment.GetPosStart().rX_ * segment.GetPosEnd().rY_;
 
-    const MT_Float rDenom = rA_ * rB2 - rA2 * rB_;
+    const double rDenom = rA_ * rB2 - rA2 * rB_;
     if( MT_IsZero( rDenom ) )
         return eCollinear;
 
@@ -157,7 +157,7 @@ E_CollisionState MT_Droite::Intersect2D( const MT_Droite& droite, MT_Vector2D& v
 {
     vPosIntersect.Reset();
 
-    const MT_Float rDenom = rA_ * droite.rB_ - droite.rA_ * rB_;
+    const double rDenom = rA_ * droite.rB_ - droite.rA_ * rB_;
     if( MT_IsZero( rDenom ) )
         return eCollinear;
 

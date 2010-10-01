@@ -283,7 +283,7 @@ const PHY_ConsumptionType& PHY_ComposantePion::GetConsumptionMode( const MIL_Obj
 // Name: PHY_ComposantePion::ApplyFire
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, MT_Float urbanProtection, PHY_FireDamages_Agent& fireDamages )
+void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, double urbanProtection, PHY_FireDamages_Agent& fireDamages )
 {
     //$$$ FACTORISER AVEC REINITIALIZESTATE()
     assert( pRole_ );
@@ -334,7 +334,7 @@ void PHY_ComposantePion::ApplyPopulationFire( const MIL_PopulationType& populati
 void PHY_ComposantePion::ApplyDirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages )
 {
     assert( pType_ );
-    MT_Float urbanProtection = pRole_->GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().ComputeUrbanProtection( dotationCategory );
+    double urbanProtection = pRole_->GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().ComputeUrbanProtection( dotationCategory );
     ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), urbanProtection, fireDamages );
 }
 
@@ -382,13 +382,13 @@ void PHY_ComposantePion::ApplyNewComposanteState( const PHY_ComposanteState& pNe
 // Name: PHY_ComposantePion::ApplyIndirectFire
 // Created: NLD 2005-08-04
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages, MT_Float ratio )
+void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages, double ratio )
 {
     assert( pType_ );
     assert( dotationCategory.GetIndirectFireData() );
     if( dotationCategory.GetIndirectFireData()->HasHit( pRole_->GetPion(), ratio ) )
     {
-        MT_Float urbanProtection = pRole_->GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().ComputeUrbanProtection( dotationCategory );
+        double urbanProtection = pRole_->GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().ComputeUrbanProtection( dotationCategory );
         ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), urbanProtection, fireDamages );
     }
 }
@@ -987,7 +987,7 @@ const PHY_ComposanteTypePion& PHY_ComposantePion::GetType() const
 // -----------------------------------------------------------------------------
 float PHY_ComposantePion::GetIdentificationMaxRange() const
 {
-    MT_Float distance = numeric_limits< MT_Float >::max();
+    double distance = numeric_limits< double >::max();
     for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
         distance = std::min( distance, (*itSensor)->GetType().GetTypeAgent()->IdentificationDistance() );
     return static_cast< float >( distance );
@@ -999,7 +999,7 @@ float PHY_ComposantePion::GetIdentificationMaxRange() const
 // -----------------------------------------------------------------------------
 float PHY_ComposantePion::GetReconnoissanceMaxRange() const
 {
-    MT_Float distance = numeric_limits< MT_Float >::max();
+    double distance = numeric_limits< double >::max();
     for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
         distance = std::min( distance, (*itSensor)->GetType().GetTypeAgent()->ReconnoissanceDistance() );
     return static_cast< float >( distance );

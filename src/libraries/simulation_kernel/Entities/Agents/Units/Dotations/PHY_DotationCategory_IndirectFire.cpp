@@ -95,7 +95,7 @@ PHY_DotationCategory_IndirectFire::~PHY_DotationCategory_IndirectFire()
 // Name: PHY_DotationCategory_IndirectFire::ApplyEffect
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const
+void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const
 {
     MT_Vector2D vFireDirection        = ( vTargetPosition - vSourcePosition ).Normalize();
     MT_Vector2D vRotatedFireDirection = vFireDirection;
@@ -180,7 +180,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
 
     // Populations
     {
-        const MT_Float  rAttritionRadius = std::min( vTargetPosition.Distance( vTargetPosition + vFireDirection ),
+        const double  rAttritionRadius = std::min( vTargetPosition.Distance( vTargetPosition + vFireDirection ),
                                                      vTargetPosition.Distance( vTargetPosition + vRotatedFireDirection ) );
         const MT_Circle attritionCircle( vTargetPosition, rAttritionRadius );
         bool bRCSent = false;
@@ -217,7 +217,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
 // Name: PHY_DotationCategory_IndirectFire::ApplyEffect
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, MT_Float /*rInterventionTypeFired*/, PHY_FireResults_ABC& fireResult ) const
+void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, double /*rInterventionTypeFired*/, PHY_FireResults_ABC& fireResult ) const
 {
     // Agents
     bool bRCSent = false;
@@ -254,11 +254,11 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
 // Name: PHY_DotationCategory_IndirectFire::HasHit
 // Created: NLD 2005-08-04
 // -----------------------------------------------------------------------------
-bool PHY_DotationCategory_IndirectFire::HasHit( const MIL_Agent_ABC& target, MT_Float ratio ) const
+bool PHY_DotationCategory_IndirectFire::HasHit( const MIL_Agent_ABC& target, double ratio ) const
 {
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
 
-    const MT_Float rPH =   phs_[ targetPosture.GetCurrentPosture().GetID() ] *        targetPosture.GetPostureCompletionPercentage()
+    const double rPH =   phs_[ targetPosture.GetCurrentPosture().GetID() ] *        targetPosture.GetPostureCompletionPercentage()
                          + phs_[ targetPosture.GetLastPosture   ().GetID() ] * ( 1. - targetPosture.GetPostureCompletionPercentage() );
 
     return ( 1. - MIL_Random::rand_io( MIL_Random::eFire ) ) <= (rPH * ratio ) ;

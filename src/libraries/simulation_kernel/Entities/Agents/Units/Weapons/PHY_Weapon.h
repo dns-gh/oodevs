@@ -12,8 +12,6 @@
 #ifndef __PHY_Weapon_h_
 #define __PHY_Weapon_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 class PHY_WeaponType;
 class PHY_Composante_ABC;
 class MIL_Agent_ABC;
@@ -50,12 +48,12 @@ public:
     bool     DirectFire               ( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH );
     bool     DirectFire               ( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, PHY_FireResults_ABC& fireResult );
     void     ThrowSmoke               ( MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo, PHY_FireResults_ABC& fireResult ) const;
-    MT_Float GetDangerosity           ( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const;
-    MT_Float GetDangerosity           ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, MT_Float rDistBtwFirerAndTarget ) const;
-    MT_Float GetMaxRangeToFireOn      ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
-    MT_Float GetMinRangeToFireOn      ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
-    MT_Float GetMaxRangeToIndirectFire() const;
-    MT_Float GetMinRangeToIndirectFire() const;
+    double GetDangerosity           ( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const;
+    double GetDangerosity           ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwFirerAndTarget ) const;
+    double GetMaxRangeToFireOn      ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
+    double GetMinRangeToFireOn      ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
+    double GetMaxRangeToIndirectFire() const;
+    double GetMinRangeToIndirectFire() const;
     //@}
 
 private:
@@ -70,7 +68,7 @@ private:
     const bool            bMajor_;
 
     unsigned int        nNbrAmmoFiredFromLoader_;
-    MT_Float    rNextTimeStepToFire_;
+    double    rNextTimeStepToFire_;
 };
 
 #endif // __PHY_Weapon_h_

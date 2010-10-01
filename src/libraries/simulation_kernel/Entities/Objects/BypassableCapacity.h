@@ -11,7 +11,6 @@
 #define __BypassableCapacity_h_
 
 #include "ObjectCapacity_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {
@@ -43,7 +42,7 @@ public:
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
-    void Bypass( MIL_Object_ABC& object, MT_Float rDeltaPercentage );
+    void Bypass( MIL_Object_ABC& object, double rDeltaPercentage );
     //@}
 
 private:

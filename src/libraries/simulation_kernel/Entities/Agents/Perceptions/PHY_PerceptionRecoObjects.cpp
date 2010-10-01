@@ -24,7 +24,7 @@
 // Name: PHY_PerceptionRecoObjectsReco constructor
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoObjectsReco::PHY_PerceptionRecoObjectsReco( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rGrowthSpeed, DEC_Decision_ABC& callerAgent )
+PHY_PerceptionRecoObjectsReco::PHY_PerceptionRecoObjectsReco( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rGrowthSpeed, DEC_Decision_ABC& callerAgent )
     : vCenter_            ( vCenter )
     , localisation_       ( localisation )
     , rCurrentSize_       ( 0. )
@@ -108,7 +108,7 @@ PHY_PerceptionRecoObjects::~PHY_PerceptionRecoObjects()
 // Name: PHY_PerceptionRecoObjects::AddLocalisation
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-int PHY_PerceptionRecoObjects::AddLocalisation( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rSpeed, DEC_Decision_ABC& callerAgent )
+int PHY_PerceptionRecoObjects::AddLocalisation( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rSpeed, DEC_Decision_ABC& callerAgent )
 {
     PHY_PerceptionRecoObjectsReco* pNewReco = new PHY_PerceptionRecoObjectsReco( localisation, vCenter, rSpeed, callerAgent );
     return Add( pNewReco );

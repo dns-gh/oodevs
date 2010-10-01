@@ -75,7 +75,7 @@ void PHY_Experience::Terminate()
 // Name: PHY_Experience constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Experience::PHY_Experience( const std::string& strName, E_ExperienceType nType, Common::EnumUnitExperience nAsnID, MT_Float rDIAWeight )
+PHY_Experience::PHY_Experience( const std::string& strName, E_ExperienceType nType, Common::EnumUnitExperience nAsnID, double rDIAWeight )
     : strName_                       ( strName )
     , nType_                         ( nType   )
     , nAsnID_                        ( nAsnID  )
@@ -178,7 +178,7 @@ Common::EnumUnitExperience PHY_Experience::GetAsnID() const
 // Name: PHY_Experience::GetCoefMaxSpeedModificator
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-MT_Float PHY_Experience::GetCoefMaxSpeedModificator() const
+double PHY_Experience::GetCoefMaxSpeedModificator() const
 {
     return rCoefMaxSpeedModificator_;
 }
@@ -187,7 +187,7 @@ MT_Float PHY_Experience::GetCoefMaxSpeedModificator() const
 // Name: PHY_Experience::GetCoefReloadingTimeModificator
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-MT_Float PHY_Experience::GetCoefReloadingTimeModificator() const
+double PHY_Experience::GetCoefReloadingTimeModificator() const
 {
     return rCoefReloadingTimeModificator_;
 }
@@ -196,7 +196,7 @@ MT_Float PHY_Experience::GetCoefReloadingTimeModificator() const
 // Name: PHY_Experience::GetCoefPhModificator
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-MT_Float PHY_Experience::GetCoefPhModificator() const
+double PHY_Experience::GetCoefPhModificator() const
 {
     return rCoefPhModificator_;
 }
@@ -205,7 +205,7 @@ MT_Float PHY_Experience::GetCoefPhModificator() const
 // Name: PHY_Experience::GetCoefPostureTimeModificator
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-MT_Float PHY_Experience::GetCoefPostureTimeModificator() const
+double PHY_Experience::GetCoefPostureTimeModificator() const
 {
     return rCoefPostureTimeModificator_;
 }
@@ -214,7 +214,7 @@ MT_Float PHY_Experience::GetCoefPostureTimeModificator() const
 // Name: PHY_Experience::GetCoefSensorDistanceModificator
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-MT_Float PHY_Experience::GetCoefSensorDistanceModificator() const
+double PHY_Experience::GetCoefSensorDistanceModificator() const
 {
     return rCoefSensorDistanceModificator_;
 }
@@ -250,7 +250,7 @@ unsigned int PHY_Experience::GetID() const
 // Name: PHY_Experience::GetWeight
 // Created: NLD 2004-12-01
 // -----------------------------------------------------------------------------
-MT_Float PHY_Experience::GetWeight() const
+double PHY_Experience::GetWeight() const
 {
     return rDIAWeight_;
 }

@@ -512,14 +512,14 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
     if( !HasChanged() && !bExternalMustChange_ )
         return;
 
-    MT_Float     rMajorOpStateValue    = 0.;
+    double     rMajorOpStateValue    = 0.;
     unsigned int nMajorOpStateNbr      = 0;
-    MT_Float     rNonMajorOpStateValue = 0.;
+    double     rNonMajorOpStateValue = 0.;
     unsigned int nNonMajorOpStateNbr   = 0;
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         const PHY_ComposantePion& composante   = **it;
-        const MT_Float            rCompOpState = composante.GetOperationalState();
+        const double            rCompOpState = composante.GetOperationalState();
 
         if( composante.IsMajor() )
         {
@@ -533,7 +533,7 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
         }
     }
 
-    MT_Float rNewOpState = 0.;
+    double rNewOpState = 0.;
 
     // Etat ops
     if( nMajorOpStateNbr == 0 ) // Pas de composantes majeures explicites
@@ -756,7 +756,7 @@ void PHY_RolePion_Composantes::NotifyComposanteRepaired()
 const PHY_Volume* PHY_RolePion_Composantes::GetSignificantVolume( const PHY_SensorTypeAgent& sensorType ) const
 {
     const PHY_Volume* pSignificantVolume = 0;
-    MT_Float rSignificantVolumeFactor    = 0.;
+    double rSignificantVolumeFactor    = 0.;
     for( CIT_ComposanteTypeMap it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
     {
         const PHY_Volume&                  compTypeVolume = it->first->GetVolume();
@@ -765,7 +765,7 @@ const PHY_Volume* PHY_RolePion_Composantes::GetSignificantVolume( const PHY_Sens
         if( !compProp.HasUsableComposantes() )
             continue;
 
-        MT_Float rVolumeFactor = sensorType.GetFactor( compTypeVolume );
+        double rVolumeFactor = sensorType.GetFactor( compTypeVolume );
         if( rVolumeFactor > rSignificantVolumeFactor )
         {
             pSignificantVolume       = &compTypeVolume;
@@ -813,7 +813,7 @@ void PHY_RolePion_Composantes::BuildKnowledgeComposantes( T_KnowledgeComposanteV
 // Name: PHY_RolePion_Composantes::DamageTransported
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::DamageTransported( MT_Float rWeightToDamage, const PHY_ComposanteState& newState, bool bTransportOnlyLoadable ) const
+void PHY_RolePion_Composantes::DamageTransported( double rWeightToDamage, const PHY_ComposanteState& newState, bool bTransportOnlyLoadable ) const
 {
     assert( newState.IsDamaged() );
     PHY_ComposantePion::T_ComposantePionVector composantes = composantes_;
@@ -914,7 +914,7 @@ void PHY_RolePion_Composantes::ApplyUrbanObjectCrumbling( const MIL_Object_ABC& 
 // Name: PHY_RolePion_Composantes::ApplyIndirectFire
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult, MT_Float ratio )
+void PHY_RolePion_Composantes::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult, double ratio )
 {
     PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
@@ -1248,12 +1248,12 @@ double PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_AgentCompos
 // Name: PHY_RolePion_Composantes::GetMaxRangeToFireOn
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetMaxRangeToFireOn( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const
+double PHY_RolePion_Composantes::GetMaxRangeToFireOn( const DEC_Knowledge_Agent& target, double rWantedPH ) const
 {
     // Get back the most dangerous composante type of the target (from our point of view ...)
     const DEC_Knowledge_AgentComposante* pTargetComposante = target.GetMajorComposante();
 
-    MT_Float rRange = 0;
+    double rRange = 0;
     if( pTargetComposante )
         for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
             rRange = std::max( rRange, (**it).GetMaxRangeToFireOn( *pTargetComposante, rWantedPH ) );
@@ -1264,12 +1264,12 @@ MT_Float PHY_RolePion_Composantes::GetMaxRangeToFireOn( const DEC_Knowledge_Agen
 // Name: PHY_RolePion_Composantes::GetOnlyLoadableMaxRangeToFireOn
 // Created: JVT 2005-01-03
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetOnlyLoadableMaxRangeToFireOn( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const
+double PHY_RolePion_Composantes::GetOnlyLoadableMaxRangeToFireOn( const DEC_Knowledge_Agent& target, double rWantedPH ) const
 {
     // Get the most dangerous composante type of the target (from our point of view ...)
     const DEC_Knowledge_AgentComposante* pTargetComposante = target.GetMajorComposante();
 
-    MT_Float rRange = 0;
+    double rRange = 0;
     if( pTargetComposante )
         for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
             rRange = std::max( rRange, (**it).GetOnlyLoadableMaxRangeToFireOn( *pTargetComposante, rWantedPH ) );
@@ -1296,12 +1296,12 @@ double PHY_RolePion_Composantes::GetMinRangeToFireOn( const DEC_Knowledge_Agent&
 // Name: PHY_RolePion_Composantes::GetMaxRangeToFireOnActualPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const
+double PHY_RolePion_Composantes::GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, double rWantedPH ) const
 {
     // Get back the most dangerous composante type of the target (from our point of view ...)
     const DEC_Knowledge_AgentComposante* pTargetComposante = target.GetMajorComposante();
 
-    MT_Float rRange = 0;
+    double rRange = 0;
     if( pTargetComposante )
         for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
             rRange = std::max( rRange, (**it).GetMaxRangeToFireOnWithPosture( *pTargetComposante, target.GetAgentKnown(), rWantedPH ) );
@@ -1312,12 +1312,12 @@ MT_Float PHY_RolePion_Composantes::GetMaxRangeToFireOnActualPosture( const DEC_K
 // Name: PHY_RolePion_Composantes::GetMinRangeToFireOnActualPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const
+double PHY_RolePion_Composantes::GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, double rWantedPH ) const
 {
     // Get The most dangerous composante type of the target
     const DEC_Knowledge_AgentComposante* pTargetComposante = target.GetMajorComposante();
 
-    MT_Float rRange = std::numeric_limits< MT_Float >::max();
+    double rRange = std::numeric_limits< double >::max();
     if( pTargetComposante )
         for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
             rRange = std::min( rRange, (**it).GetMinRangeToFireOnWithPosture( *pTargetComposante, target.GetAgentKnown(), rWantedPH ) );
@@ -1328,9 +1328,9 @@ MT_Float PHY_RolePion_Composantes::GetMinRangeToFireOnActualPosture( const DEC_K
 // Name: PHY_RolePion_Composantes::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
+double PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
-    MT_Float rRange = -1.;
+    double rRange = -1.;
 
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         rRange = std::max( rRange, (*it)->GetMaxRangeToIndirectFire( dotationCategory, bCheckDotationsAvailability ) );
@@ -1341,9 +1341,9 @@ MT_Float PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_Dotation
 // Name: PHY_RolePion_Composantes::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
+double PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
-    MT_Float rRange = std::numeric_limits< MT_Float >::max();
+    double rRange = std::numeric_limits< double >::max();
 
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         rRange = std::min( rRange, (*it)->GetMinRangeToIndirectFire( dotationCategory, bCheckDotationsAvailability ) );
@@ -1553,13 +1553,13 @@ const PHY_ComposantePion* PHY_RolePion_Composantes::GetMajorComposante() const
 // Name: PHY_RolePion_Composantes::GetMajorComponentWeight
 // Created: RPD 2009-11-23
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetMajorComponentWeight() const
+double PHY_RolePion_Composantes::GetMajorComponentWeight() const
 {
-    MT_Float weight ( 0 );
+    double weight ( 0 );
     const PHY_ComposantePion* majorComponent = GetMajorComposante();
     if( majorComponent )
     {
-        weight = ( MT_Float ) majorComponent->GetWeight();
+        weight = ( double ) majorComponent->GetWeight();
     }
     return weight;
 }
@@ -1569,7 +1569,7 @@ MT_Float PHY_RolePion_Composantes::GetMajorComponentWeight() const
 // Name: PHY_RolePion_Composantes::GetOperationalState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetOperationalState() const
+double PHY_RolePion_Composantes::GetOperationalState() const
 {
     return rOperationalState_;
 }
@@ -1578,7 +1578,7 @@ MT_Float PHY_RolePion_Composantes::GetOperationalState() const
 // Name: PHY_RolePion_Composantes::GetMajorOperationalState
 // Created: NLD 2005-11-25
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetMajorOperationalState() const
+double PHY_RolePion_Composantes::GetMajorOperationalState() const
 {
     return rMajorOperationalState_;
 }

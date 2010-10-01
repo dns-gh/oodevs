@@ -16,7 +16,7 @@
 // Name: PHY_Sensor constructor
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
-PHY_Sensor::PHY_Sensor( const PHY_SensorType& type, MT_Float rHeight )
+PHY_Sensor::PHY_Sensor( const PHY_SensorType& type, double rHeight )
     : type_   ( type )
     , rHeight_( rHeight )
 {
@@ -36,7 +36,7 @@ PHY_Sensor::~PHY_Sensor()
 // Name: PHY_Sensor::GetHeight
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-MT_Float PHY_Sensor::GetHeight() const
+double PHY_Sensor::GetHeight() const
 {
     return rHeight_;
 }

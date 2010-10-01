@@ -71,17 +71,17 @@ public:
 
     //! @name Operations
     //@{
-    void Update( MT_Float percentage );
+    void Update( double percentage );
     //@}
 
     //! @name Accessors
     //@{
-    unsigned int GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const;
-    unsigned int GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const;
-    MT_Float GetState() const;
+    unsigned int GetDotationNeededForConstruction( double rDeltaPercentage ) const;
+    unsigned int GetDotationRecoveredWhenDestroying( double rDeltaPercentage ) const;
+    double GetState() const;
     unsigned int GetCurrentDotations() const;
     unsigned int GetDotationType() const;
-    void Set( MT_Float percentage );
+    void Set( double percentage );
     //@}
 
     //! @name Copy
@@ -95,7 +95,7 @@ private:
     const PHY_DotationCategory* dotation_;
     unsigned int nFullNbrDotation_;
     unsigned int nCurrentNbrDotation_;
-    MT_Float rMiningPercentage_;
+    double rMiningPercentage_;
     unsigned int nMinesActivityTime_;
     unsigned int nDeathTimeStep_;
     //@}

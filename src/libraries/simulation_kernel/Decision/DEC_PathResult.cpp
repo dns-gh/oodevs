@@ -47,12 +47,12 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest 
     CIT_PathPointList itEnd   = resultList_.begin();
     ++itEnd;
     MT_Vector2D result( (*itStart)->GetPos() );
-    MT_Float rDistance = std::numeric_limits< MT_Float >::max();
+    double rDistance = std::numeric_limits< double >::max();
     for( itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd )
     {
         MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
         MT_Vector2D vClosest = vLine.ClosestPointOnLine( posToTest );
-        MT_Float rCurrentDistance = vClosest.SquareDistance( posToTest );
+        double rCurrentDistance = vClosest.SquareDistance( posToTest );
         if( rCurrentDistance < rDistance )
         {
             rDistance = rCurrentDistance;
@@ -72,7 +72,7 @@ DEC_PathResult::CIT_PathPointList DEC_PathResult::GetCurrentKeyOnPath( const MT_
 {
     if( resultList_.empty() )
         return resultList_.end();
-    static const MT_Float rWeldValue = TER_World::GetWorld().GetWeldValue();
+    static const double rWeldValue = TER_World::GetWorld().GetWeldValue();
     if( resultList_.size() == 1 )
     {
         if( vPos.Distance( resultList_.front()->GetPos() ) <= rWeldValue )
@@ -94,7 +94,7 @@ DEC_PathResult::CIT_PathPointList DEC_PathResult::GetCurrentKeyOnPath( const MT_
 // Name: DEC_PathResult::InternalGetFuturePosition
 // Created: JVT 03-09-25
 //-----------------------------------------------------------------------------
-MT_Vector2D DEC_PathResult::InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, MT_Float rDist, bool bBoundOnPath ) const
+MT_Vector2D DEC_PathResult::InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, double rDist, bool bBoundOnPath ) const
 {
     assert( itCurrentPos != resultList_.end() );
 
@@ -112,7 +112,7 @@ MT_Vector2D DEC_PathResult::InternalGetFuturePosition( const CIT_PathPointList& 
             return vEndPos;
         return vEndPos + ( vEndPos - vStartPos ).Normalize() * rDist; // on suit la direction générale du déplacement
     }
-    MT_Float rLength = vCurrentPos.Distance( (*itNextPos)->GetPos() );
+    double rLength = vCurrentPos.Distance( (*itNextPos)->GetPos() );
     if( rLength >= rDist )
         return vCurrentPos + ( (*itNextPos)->GetPos() - vCurrentPos ).Normalize() * rDist;
     // parcours sur le segment suivant
@@ -123,7 +123,7 @@ MT_Vector2D DEC_PathResult::InternalGetFuturePosition( const CIT_PathPointList& 
 // Name: DEC_PathResult::GetFuturePosition
 // Created: JVT 03-09-25
 //-----------------------------------------------------------------------------
-MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, MT_Float rDist, bool bBoundOnPath ) const
+MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const
 {
     CIT_PathPointList itCurrentPathPoint = GetCurrentKeyOnPath( vStartPos );
     if( itCurrentPathPoint == resultList_.end() )
@@ -136,7 +136,7 @@ MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, MT_
         const MT_Vector2D& vEndPos   = resultList_.back ()->GetPos();
         return vEndPos == vStartPos ? vEndPos : vStartPos + ( vEndPos - vStartPos ).Normalize() * rDist;
     }
-    MT_Float rLength = vStartPos.Distance( (*itNextPathPoint)->GetPos() );
+    double rLength = vStartPos.Distance( (*itNextPathPoint)->GetPos() );
     if( rLength >= rDist )
         return vStartPos + ( (*itNextPathPoint)->GetPos() - vStartPos ).Normalize() * rDist;
     // parcours sur les points
@@ -147,9 +147,9 @@ MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, MT_
 // Name: DEC_PathResult::ComputeFutureObjectCollision
 // Created: NLD 2003-10-08
 // -----------------------------------------------------------------------------
-bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const
+bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const
 {
-    rDistance = std::numeric_limits< MT_Float >::max();
+    rDistance = std::numeric_limits< double >::max();
     pObject.reset();
     E_State nPathState = GetState();
     if( nPathState != eValid && nPathState != ePartial )
@@ -160,7 +160,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
         return false;
     CIT_PathPointList itNextPathPoint = itCurrentPathPoint;
     ++itNextPathPoint;
-    std::multimap< MT_Float, boost::shared_ptr< DEC_Knowledge_Object > > objectsOnPathMap;
+    std::multimap< double, boost::shared_ptr< DEC_Knowledge_Object > > objectsOnPathMap;
     // Determination de tous les objets connus avec lesquels il va y avoir collision dans le déplacement en cours
     for( CIT_KnowledgeObjectVector itKnowledge = objectsToTest.begin(); itKnowledge != objectsToTest.end(); ++itKnowledge )
     {
@@ -175,7 +175,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
             {
                 assert( !collisions.empty() );
                 //$$$ Distance fausse (distance en ligne droite)
-                const MT_Float rColDist = vStartPos.Distance( *collisions.begin() );
+                const double rColDist = vStartPos.Distance( *collisions.begin() );
                 objectsOnPathMap.insert( std::make_pair( rColDist, pKnowledge ) );
                 break;
             }

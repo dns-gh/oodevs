@@ -6,8 +6,6 @@
 #ifndef __MT_Triangle_h_
 #define __MT_Triangle_h_
 
-#include "MT_Tools_Types.h"
-
 #include "MT_Vector2DTypes.h"
 #include "MT_Line.h"
 
@@ -19,8 +17,8 @@ class MT_Triangle
     MT_COPYNOTALLOWED( MT_Triangle )
 
 public:
-    explicit MT_Triangle();
-    MT_Triangle( const MT_Vector2D& vPos1, const MT_Vector2D& vPos2, const MT_Vector2D& vPos3 );
+             MT_Triangle();
+             MT_Triangle( const MT_Vector2D& vPos1, const MT_Vector2D& vPos2, const MT_Vector2D& vPos3 );
     virtual ~MT_Triangle();
 
     //-------------------------------------------------------------------------
@@ -31,7 +29,7 @@ public:
     const MT_Vector2D& GetPos2  () const;
     const MT_Vector2D& GetPos3  () const;
     MT_Vector2D        GetCenter() const;
-    MT_Float           GetArea  () const;
+    double             GetArea  () const;
     //@}
 
     //-------------------------------------------------------------------------
@@ -42,7 +40,7 @@ public:
     bool Intersect2D          ( const MT_Line& line ) const;
     bool Intersect2D          ( const MT_Line& line, T_PointSet& collisions ) const;
     bool Intersect2D          ( const MT_Line& line, T_PointVector& collisions ) const;
-    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const;
+    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const;
     //@}
 
 private:
@@ -50,19 +48,6 @@ private:
     const MT_Vector2D* pPos2_;
     const MT_Vector2D* pPos3_;
 };
-
-
-typedef std::vector< MT_Triangle >           T_TriangleVector;
-typedef const T_TriangleVector               CT_TriangleVector;
-typedef T_TriangleVector::iterator           IT_TriangleVector;
-typedef T_TriangleVector::const_iterator     CIT_TriangleVector;
-
-
-typedef std::vector< MT_Triangle* >             T_TrianglePtrVector;
-typedef const T_TrianglePtrVector               CT_TrianglePtrVector;
-typedef T_TrianglePtrVector::iterator           IT_TrianglePtrVector;
-typedef T_TrianglePtrVector::const_iterator     CIT_TrianglePtrVector;
-
 
 #ifndef  _DEBUG
 #   undef   INLINE

@@ -228,13 +228,13 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_PopulationFlow
         return PHY_PerceptionLevel::notSeen_;
 
     const PHY_PerceptionSurfaceAgent* pBestSurface = 0;
-          MT_Float                    rBestCost    = std::numeric_limits< MT_Float >::min();
+          double                    rBestCost    = std::numeric_limits< double >::min();
 
     const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
     for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
     {
         const PHY_PerceptionSurfaceAgent& surface = itSurface->second;
-        const MT_Float                    rCost   = surface.ComputePerceptionAccuracy( perceiver_, flow );
+        const double                    rCost   = surface.ComputePerceptionAccuracy( perceiver_, flow );
         if( rCost > rBestCost )
         {
             rBestCost    = rCost;

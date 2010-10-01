@@ -60,8 +60,8 @@ public:
     virtual const MT_Vector2D& GetPosition() const;
     virtual const MT_Vector2D& GetDirection() const;
     virtual const TER_Localisation& GetLocation() const;
-    MT_Float GetSpeed() const;
-    virtual MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance, MT_Float rSeed ) const;
+    double GetSpeed() const;
+    virtual MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const;
     //@}
 
     //! @name Concentration management
@@ -96,21 +96,21 @@ private:
 
     //! @name
     //@{
-    virtual MT_Float GetMaxSpeed() const;
-    virtual MT_Float GetSpeedWithReinforcement( const TerrainData& environment ) const;
-    virtual MT_Float GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
+    virtual double GetMaxSpeed() const;
+    virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const;
+    virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
     //@}
 
     //! @name  Position operations
     //@{
-    virtual void ApplyMove ( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float rWalkedDistance );
-    void UpdateTailPosition( const MT_Float rWalkedDistance );
+    virtual void ApplyMove ( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
+    void UpdateTailPosition( const double rWalkedDistance );
     const MT_Vector2D& GetHeadPosition() const;
     const MT_Vector2D& GetTailPosition() const;
     void SetHeadPosition( const MT_Vector2D& position );
     void SetTailPosition( const MT_Vector2D& position );
     void SetDirection( const MT_Vector2D& direction );
-    void SetSpeed( const MT_Float rSpeed );
+    void SetSpeed( const double rSpeed );
     void UpdateLocation();
     //@}
 
@@ -164,7 +164,7 @@ private:
     boost::shared_ptr< DEC_Population_Path > pTailPath_;
     bool  bHeadMoveFinished_;
     MT_Vector2D direction_;
-    MT_Float rSpeed_;
+    double rSpeed_;
     T_PointList flowShape_; // begin() == head ...
     TER_Localisation location_; // For terrain
     // Network

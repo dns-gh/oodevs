@@ -102,7 +102,7 @@ void PHY_UnitType::ReadStock( xml::xistream& xis )
 
     assert( stockLogisticThresholdRatios_.size() > pType->GetID() );
 
-    MT_Float rThreshold = 0.;
+    double rThreshold = 0.;
     xis >> xml::attribute( "threshold", rThreshold );
     if( rThreshold < 0 || rThreshold > 100 )
         xis.error( "stock: thresolh not in [0..100]" );
@@ -239,7 +239,7 @@ void PHY_UnitType::ReadPosture( xml::xistream& xis )
     const PHY_Posture& posture = *it->second;
 
     assert( postureTimes_.size() > posture.GetID() );
-    MT_Float rTime;
+    double rTime;
     tools::ReadTimeAttribute( xis, "setup-time", rTime );
     postureTimes_[ posture.GetID() ] = (unsigned int)MIL_Tools::ConvertSecondsToSim( rTime );
 }
@@ -302,7 +302,7 @@ void PHY_UnitType::ReadDrill( xml::xistream& xis )
 // Name: PHY_UnitType::GetPostureTime
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-MT_Float PHY_UnitType::GetPostureTime( const PHY_Posture& posture ) const
+double PHY_UnitType::GetPostureTime( const PHY_Posture& posture ) const
 {
     assert( postureTimes_.size() > posture.GetID() );
     return postureTimes_[ posture.GetID() ];
@@ -312,7 +312,7 @@ MT_Float PHY_UnitType::GetPostureTime( const PHY_Posture& posture ) const
 // Name: PHY_UnitType::GetStockLogisticThresholdRatio
 // Created: NLD 2006-01-03
 // -----------------------------------------------------------------------------
-MT_Float PHY_UnitType::GetStockLogisticThresholdRatio( const PHY_DotationLogisticType& type ) const
+double PHY_UnitType::GetStockLogisticThresholdRatio( const PHY_DotationLogisticType& type ) const
 {
     assert( stockLogisticThresholdRatios_.size() > type.GetID() );
     return stockLogisticThresholdRatios_[ type.GetID() ];
@@ -360,7 +360,7 @@ const PHY_UnitType::T_CommanderRepartitionMap& PHY_UnitType::GetCommanderReparti
 // Name: PHY_UnitType::GetCoupDeSondeLength
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-MT_Float PHY_UnitType::GetCoupDeSondeLength() const
+double PHY_UnitType::GetCoupDeSondeLength() const
 {
     return rCoupDeSondeLength_;
 }
@@ -369,7 +369,7 @@ MT_Float PHY_UnitType::GetCoupDeSondeLength() const
 // Name: PHY_UnitType::GetCoupDeSondeWidth
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-MT_Float PHY_UnitType::GetCoupDeSondeWidth() const
+double PHY_UnitType::GetCoupDeSondeWidth() const
 {
     return rCoupDeSondeWidth_;
 }
@@ -378,7 +378,7 @@ MT_Float PHY_UnitType::GetCoupDeSondeWidth() const
 // Name: PHY_UnitType::GetCoefDecontaminationPerTimeStep
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_UnitType::GetCoefDecontaminationPerTimeStep() const
+double PHY_UnitType::GetCoefDecontaminationPerTimeStep() const
 {
     return rCoefDecontaminationPerTimeStep_;
 }
@@ -405,7 +405,7 @@ bool PHY_UnitType::IsAutonomous() const
 // Name: PHY_UnitType::GetInstallationTime
 // Created: NLD 2006-08-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_UnitType::GetInstallationTime() const
+double PHY_UnitType::GetInstallationTime() const
 {
     return rInstallationTime_;
 }
@@ -414,7 +414,7 @@ MT_Float PHY_UnitType::GetInstallationTime() const
 // Name: PHY_UnitType::GetUninstallationTime
 // Created: NLD 2006-08-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_UnitType::GetUninstallationTime() const
+double PHY_UnitType::GetUninstallationTime() const
 {
     return rUninstallationTime_;
 }

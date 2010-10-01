@@ -10,12 +10,9 @@
 //*****************************************************************************
 
 #include "MT_Tools_pch.h"
-
 #include "MT_InterpolatedFunction.h"
-
 #include "MT_LinearInterpolation.h"
 #include "MT_ConstantInterpolation.h"
-
 #include "MT_Polynome.h"
 
 #ifdef DISPLAYPOLY

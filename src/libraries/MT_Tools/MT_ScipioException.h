@@ -12,7 +12,7 @@
 #ifndef __MT_ScipioException_h_
 #define __MT_ScipioException_h_
 
-#include "MT_Tools_Types.h"
+#include <string>
 
 //*****************************************************************************
 // Created: JVT 03-02-04
@@ -31,9 +31,6 @@ public:
                          unsigned int nLine,
                          const std::string& strMessage );
 
-    MT_ScipioException( const MT_ScipioException& );
-    MT_ScipioException& operator = ( const MT_ScipioException& );
-
     virtual ~MT_ScipioException();
 
     //-------------------------------------------------------------------------
@@ -44,7 +41,7 @@ public:
     const std::string& GetFile       () const;
     const std::string& GetMsg        () const;
     const std::string& GetDescription() const;
-    unsigned int               GetLine       () const;
+    unsigned int       GetLine       () const;
 
     void               SendToLogger() const;
     //@}
@@ -52,7 +49,7 @@ public:
 private:
     std::string strContext_;
     std::string strFile_;
-    unsigned int        nLine_;
+    unsigned int nLine_;
     std::string strMessage_;
     std::string strDescription_;
 };

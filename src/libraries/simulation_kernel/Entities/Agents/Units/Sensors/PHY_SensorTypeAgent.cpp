@@ -63,7 +63,7 @@ namespace
             if( it != container_.end() )
             {
                 assert( static_cast< int >( factors.size() ) > it->second->GetID() );
-                MT_Float& rFactor = factors[ it->second->GetID() ];
+                double& rFactor = factors[ it->second->GetID() ];
 
                 xis >> xml::attribute( "value", rFactor );
                 if( rFactor < 0 || rFactor > 1 )
@@ -95,7 +95,7 @@ namespace
                 if( !it->second->CanModifyDetection() )
                     return;
                 assert( factors.size() > it->second->GetID() );
-                MT_Float& rFactor = factors[ it->second->GetID() ];
+                double& rFactor = factors[ it->second->GetID() ];
 
                 xis >> xml::attribute( "value", rFactor );
                 if( rFactor < 0 || rFactor > 1 )
@@ -282,11 +282,11 @@ void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis )
 {
     std::string terrainType;
     xis >> xml::attribute( "type", terrainType );
-    MT_Float rFactor;
+    double rFactor;
     xis >> xml::attribute( "value", rFactor );
     if( rFactor < 0 || rFactor > 1 )
         xis.error( "terrain-modifier: value not in [0..1]" );
-    environmentFactors_.insert( std::pair< unsigned, MT_Float >( environmentAssociation[ terrainType ], rFactor ) );
+    environmentFactors_.insert( std::pair< unsigned, double >( environmentAssociation[ terrainType ], rFactor ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -325,7 +325,7 @@ void PHY_SensorTypeAgent::InitializeUrbanBlockFactors( xml::xistream& xis )
 void PHY_SensorTypeAgent::ReadUrbanBlockModifier( xml::xistream& xis, unsigned int& visionUrbanBlockMaterial )
 {
     assert( urbanBlockFactors_.size() > visionUrbanBlockMaterial );  // $$$$ _RC_ ABL 2007-07-27: use exception instead
-    MT_Float& rFactor = urbanBlockFactors_[ visionUrbanBlockMaterial ];
+    double& rFactor = urbanBlockFactors_[ visionUrbanBlockMaterial ];
     std::string materialType;
     xis >> xml::attribute( "type", materialType )
         >> xml::attribute( "value", rFactor );
@@ -339,7 +339,7 @@ void PHY_SensorTypeAgent::ReadUrbanBlockModifier( xml::xistream& xis, unsigned i
 // Created: NLD 2005-10-28
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_SensorTypeAgent::GetPopulationFactor( MT_Float rDensity ) const
+double PHY_SensorTypeAgent::GetPopulationFactor( double rDensity ) const
 {
     if( rDensity == 0. || rPopulationDensity_ == 0. )
         return 1.;
@@ -350,7 +350,7 @@ MT_Float PHY_SensorTypeAgent::GetPopulationFactor( MT_Float rDensity ) const
 // Name: PHY_SensorTypeAgent::GetSourceFactor
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_Agent_ABC& source ) const
+double PHY_SensorTypeAgent::GetSourceFactor( const MIL_Agent_ABC& source ) const
 {
     // Posture
     const PHY_RoleInterface_Posture& sourcePosture = source.GetRole< PHY_RoleInterface_Posture >();
@@ -361,7 +361,7 @@ MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_Agent_ABC& source ) con
     assert( postureSourceFactors_.size() > nOldPostureIdx );
     assert( postureSourceFactors_.size() > nCurPostureIdx );
 
-    MT_Float rModificator =   postureSourceFactors_[ nOldPostureIdx ] + sourcePosture.GetPostureCompletionPercentage()
+    double rModificator =   postureSourceFactors_[ nOldPostureIdx ] + sourcePosture.GetPostureCompletionPercentage()
                           * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
 
 
@@ -370,7 +370,7 @@ MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_Agent_ABC& source ) con
     rModificator *= tempSource.Execute( *computer ).GetFactor();
 
     // Population
-    const MT_Float rPopulationDensity = source.GetRole< PHY_RoleInterface_Population >().GetCollidingPopulationDensity();
+    const double rPopulationDensity = source.GetRole< PHY_RoleInterface_Population >().GetCollidingPopulationDensity();
     rModificator *= GetPopulationFactor( rPopulationDensity );
 
     return rModificator;
@@ -380,7 +380,7 @@ MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_Agent_ABC& source ) con
 // Name: PHY_SensorTypeAgent::GetTargetFactor
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-MT_Float PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) const
+double PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) const
 {
     // LTO begin
     if( isLimitedToSensors_ && ContainsSensorFromLimitedList( target ) == false )
@@ -401,7 +401,7 @@ MT_Float PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) con
 // Name: PHY_SensorTypeAgent::GetTargetFactor
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-MT_Float PHY_SensorTypeAgent::GetTargetFactor( const DEC_Knowledge_Agent& target ) const
+double PHY_SensorTypeAgent::GetTargetFactor( const DEC_Knowledge_Agent& target ) const
 {
     // LTO begin
     if( isLimitedToSensors_ && ContainsSensorFromLimitedList( target.GetAgentKnown() ) == false )
@@ -460,15 +460,18 @@ bool PHY_SensorTypeAgent::ContainsSensorFromLimitedList( const MIL_Agent_ABC& ta
 // Name: PHY_SensorTypeAgent::ComputeEnvironementFactor
 // Created: JVT 03-04-28
 //-----------------------------------------------------------------------------
-inline
-MT_Float PHY_SensorTypeAgent::ComputeEnvironementFactor( PHY_RawVisionData::envBits nEnv ) const
+double PHY_SensorTypeAgent::ComputeEnvironementFactor( PHY_RawVisionData::envBits nEnv ) const
 {
-    MT_Float res = nEnv & PHY_RawVisionData::eVisionEmpty ? environmentFactors_.find( 0 )->second : 1.;
-
+    double res = nEnv & PHY_RawVisionData::eVisionEmpty ? environmentFactors_.find( 0 )->second : 1.;
     for( unsigned int mask = 1, idx = 1; idx < PHY_RawVisionData::eNbrVisionObjects; mask <<= 1, ++idx )
         if( mask & nEnv )
             res *= environmentFactors_.find( mask )->second;
     return res;
+}
+
+namespace
+{
+    const double epsilon = 1e-8;
 }
 
 //-----------------------------------------------------------------------------
@@ -476,26 +479,22 @@ MT_Float PHY_SensorTypeAgent::ComputeEnvironementFactor( PHY_RawVisionData::envB
 // Created: JVT 02-11-20
 // Last modified: JVT 04-02-12
 //-----------------------------------------------------------------------------
-MT_Float PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator& env, MT_Float rDistanceModificator, MT_Float rVisionNRJ, bool bIsAroundBU ) const
+double PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator& env, double rDistanceModificator, double rVisionNRJ, bool bIsAroundBU ) const
 {
     assert( rVisionNRJ <= rDetectionDist_ );
     assert( rVisionNRJ > 0 );
-
-    // Prise en compte de l'éclairement
     rDistanceModificator *= lightingFactors_[ env.GetLighting().GetID() ];
-    // Prise en compte des précipitations
     rDistanceModificator *= precipitationFactors_ [ env.GetPrecipitation().GetID() ];
-    // Prise en compte des objets
     if( !bIsAroundBU )
         rDistanceModificator *= ComputeEnvironementFactor( env.GetCurrentEnv() );
-    return rDistanceModificator <= MT_Epsilon ? -1. : rVisionNRJ - env.Length() / rDistanceModificator ;
+    return rDistanceModificator <= epsilon ? -1. : rVisionNRJ - env.Length() / rDistanceModificator ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::ComputeUrbanExtinction
 // Created: SLG 2010-03-02
 // -----------------------------------------------------------------------------
-bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, MT_Float& rVisionNRJ ) const
+bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ ) const
 {
     bool bIsAroundBU = false;
 
@@ -537,8 +536,8 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
                     else
                         intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
 
-                    MT_Float rDistanceModificator = urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
-                    if( rDistanceModificator <= MT_Epsilon )
+                    double rDistanceModificator = urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
+                    if( rDistanceModificator <= epsilon )
                         rVisionNRJ = -1 ;
                     else
                         rVisionNRJ += intersectionDistance * ( 1 - 1 / rDistanceModificator );
@@ -556,7 +555,7 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
 // Last modified: JVT 03-01-27
 //-----------------------------------------------------------------------------
 inline
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::InterpretExtinction( MT_Float rExtinction ) const
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::InterpretExtinction( double rExtinction ) const
 {
     if( rExtinction >= rDetectionDist_ - rIdentificationDist_ )
         return PHY_PerceptionLevel::identified_;
@@ -571,7 +570,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::InterpretExtinction( MT_Float rE
 // Name: PHY_SensorTypeAgent::IdentificationDistance
 // Created: DDA 10-03-24
 //-----------------------------------------------------------------------------
-const MT_Float PHY_SensorTypeAgent::IdentificationDistance() const
+const double PHY_SensorTypeAgent::IdentificationDistance() const
 {
     return rIdentificationDist_;
 }
@@ -580,7 +579,7 @@ const MT_Float PHY_SensorTypeAgent::IdentificationDistance() const
 // Name: PHY_SensorTypeAgent::ReconnoissanceDistance
 // Created: GGE & PSN 10-04-20
 //-----------------------------------------------------------------------------
-const MT_Float PHY_SensorTypeAgent::ReconnoissanceDistance() const
+const double PHY_SensorTypeAgent::ReconnoissanceDistance() const
 {
     return rRecognitionDist_;
 }
@@ -589,7 +588,7 @@ const MT_Float PHY_SensorTypeAgent::ReconnoissanceDistance() const
 // Name: PHY_SensorTypeAgent::RayTrace
 // Created: LMT 2010-07-02
 // -----------------------------------------------------------------------------
-const MT_Float PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const MT_Vector2D& vTarget  ) const
+const double PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const MT_Vector2D& vTarget  ) const
 {
     if( vSource.Distance( vTarget ) > GetMaxDistance() )
         return 0.;
@@ -597,12 +596,12 @@ const MT_Float PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const
     const MT_Vector3D vSource3D( vSource.rX_, vSource.rY_, 0 );
     const MT_Vector3D vTarget3D( vTarget.rX_, vTarget.rY_, 0 );
 
-    MT_Float rVisionNRJ = rDetectionDist_;
+    double rVisionNRJ = rDetectionDist_;
     bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ );
 
     PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
     if( rVisionNRJ > 0 )
-        rVisionNRJ = it.End() ? std::numeric_limits< MT_Float >::max() : ComputeExtinction( it, 1, rVisionNRJ, bIsAroundBU );
+        rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, 1, rVisionNRJ, bIsAroundBU );
 
     while ( rVisionNRJ > 0 && !(++it).End() )
         rVisionNRJ = ComputeExtinction( it, 1, rVisionNRJ, bIsAroundBU );
@@ -614,7 +613,7 @@ const MT_Float PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const
 // Name: PHY_SensorTypeAgent::RayTrace
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource, MT_Float rSourceAltitude, const MT_Vector2D& vTarget, MT_Float rTargetAltitude, MT_Float rDistanceMaxModificator ) const
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource, double rSourceAltitude, const MT_Vector2D& vTarget, double rTargetAltitude, double rDistanceMaxModificator ) const
 {
     if( vSource.Distance( vTarget ) > GetMaxDistance() * rDistanceMaxModificator )
         return PHY_PerceptionLevel::notSeen_;
@@ -622,12 +621,12 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSo
     const MT_Vector3D vSource3D( vSource.rX_, vSource.rY_, rSourceAltitude );
     const MT_Vector3D vTarget3D( vTarget.rX_, vTarget.rY_, rTargetAltitude );
 
-    MT_Float rVisionNRJ = rDetectionDist_;
+    double rVisionNRJ = rDetectionDist_;
     bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ );
 
     PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
     if( rVisionNRJ > 0 )
-        rVisionNRJ = it.End() ? std::numeric_limits< MT_Float >::max() : ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ, bIsAroundBU );
+        rVisionNRJ = it.End() ? std::numeric_limits< double >::max() : ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ, bIsAroundBU );
 
     while ( rVisionNRJ > 0 && !(++it).End() )
         rVisionNRJ = ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ, bIsAroundBU );
@@ -639,13 +638,13 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSo
 // Name: PHY_SensorTypeAgent::ComputePerception
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const MT_Vector2D& vTargetPos, MT_Float rSensorHeight ) const
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const MT_Vector2D& vTargetPos, double rSensorHeight ) const
 {
-    const MT_Float rDistanceMaxModificator = GetSourceFactor( source );
+    const double rDistanceMaxModificator = GetSourceFactor( source );
 
     const MT_Vector2D& vSourcePos      = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const MT_Float     rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
-    const MT_Float     rTargetAltitude = MIL_Tools::GetAltitude( vTargetPos ) + 2;
+    const double     rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
+    const double     rTargetAltitude = MIL_Tools::GetAltitude( vTargetPos ) + 2;
 
     return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
 }
@@ -655,7 +654,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
 // Created: NLD 2004-08-30
 // Modified: JVT 2004-09-28
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const MIL_Agent_ABC& target, MT_Float rSensorHeight ) const
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const MIL_Agent_ABC& target, double rSensorHeight ) const
 {
     const MT_Vector2D& vTargetPos = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
 
@@ -666,13 +665,13 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     if( !pSignificantVolume )
         return PHY_PerceptionLevel::notSeen_;
 
-    MT_Float rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
+    double rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
              rDistanceMaxModificator *= GetTargetFactor( target );
              rDistanceMaxModificator *= GetSourceFactor( source );
 
     const MT_Vector2D& vSourcePos      = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const MT_Float     rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
-    const MT_Float     rTargetAltitude = target.GetRole< PHY_RoleInterface_Location >().GetAltitude() + 2;
+    const double     rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
+    const double     rTargetAltitude = target.GetRole< PHY_RoleInterface_Location >().GetAltitude() + 2;
 
     return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
 }
@@ -682,7 +681,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
 // Created: NLD 2004-09-07
 // Modified: JVT 2004-09-28
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const DEC_Knowledge_Agent& target, MT_Float rSensorHeight ) const
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const DEC_Knowledge_Agent& target, double rSensorHeight ) const
 {
     const MT_Vector2D& vTargetPos = target.GetPosition();
 
@@ -693,13 +692,13 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     if( !pSignificantVolume )
         return PHY_PerceptionLevel::notSeen_;
 
-    MT_Float rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
+    double rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
              rDistanceMaxModificator *= GetTargetFactor( target );
              rDistanceMaxModificator *= GetSourceFactor( source );
 
     const MT_Vector2D& vSourcePos      = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const MT_Float     rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
-    const MT_Float     rTargetAltitude = target.GetAltitude() + 2;
+    const double     rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
+    const double     rTargetAltitude = target.GetAltitude() + 2;
 
     return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
 }
@@ -708,9 +707,9 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
 // Name: PHY_SensorTypeAgent::ComputePerception
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const MIL_PopulationConcentration& target, MT_Float /*rSensorHeight*/ ) const
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const MIL_PopulationConcentration& target, double /*rSensorHeight*/ ) const
 {
-    const MT_Float     rDistanceMaxModificator = GetSourceFactor( source );
+    const double     rDistanceMaxModificator = GetSourceFactor( source );
     const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
 
     if( rDistanceMaxModificator == 0. || !target.Intersect2DWithCircle( vSourcePos, rDetectionDist_ * rDistanceMaxModificator ) )
@@ -722,9 +721,9 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
 // Name: PHY_SensorTypeAgent::ComputePerceptionAccuracy
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-MT_Float PHY_SensorTypeAgent::ComputePerceptionAccuracy( const MIL_Agent_ABC& source, const MIL_PopulationFlow& /*target*/, MT_Float /*rSensorHeight*/ ) const
+double PHY_SensorTypeAgent::ComputePerceptionAccuracy( const MIL_Agent_ABC& source, const MIL_PopulationFlow& /*target*/, double /*rSensorHeight*/ ) const
 {
-    const MT_Float rDistanceMaxModificator = GetSourceFactor( source );
+    const double rDistanceMaxModificator = GetSourceFactor( source );
     return rDetectionDist_ * rDistanceMaxModificator;
 }
 
@@ -732,9 +731,9 @@ MT_Float PHY_SensorTypeAgent::ComputePerceptionAccuracy( const MIL_Agent_ABC& so
 // Name: PHY_SensorTypeAgent::ComputePerception
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const MIL_PopulationFlow& target, MT_Float /*rSensorHeight*/, T_PointVector& shape ) const
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const MIL_PopulationFlow& target, double /*rSensorHeight*/, T_PointVector& shape ) const
 {
-    const MT_Float     rDistanceMaxModificator = GetSourceFactor( source );
+    const double     rDistanceMaxModificator = GetSourceFactor( source );
     const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
 
     if( rDistanceMaxModificator == 0. )
@@ -749,17 +748,17 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
 // Name: PHY_SensorTypeAgent::ComputePerception
 // Created: MGD 2009-11-25
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& perceiver, const urban::TerrainObject_ABC& target, MT_Float rSensorHeight ) const
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& perceiver, const urban::TerrainObject_ABC& target, double rSensorHeight ) const
 {
     geometry::Point2f barycenter = target.GetFootprint()->Barycenter();
     const MT_Vector2D vTargetPos( barycenter.X(), barycenter.Y() );
 
-    MT_Float rDistanceMaxModificator  = GetFactor( *PHY_Volume::FindVolume( 0 ) );//@TODO MGD find a rule
+    double rDistanceMaxModificator  = GetFactor( *PHY_Volume::FindVolume( 0 ) );//@TODO MGD find a rule
     rDistanceMaxModificator *= GetSourceFactor( perceiver );
 
     const MT_Vector2D& vSourcePos      = perceiver.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const MT_Float     rSourceAltitude = perceiver.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
-    const MT_Float     rTargetAltitude = MIL_Tools::GetAltitude( vTargetPos );//@TODO MGD Add height notion
+    const double     rSourceAltitude = perceiver.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
+    const double     rTargetAltitude = MIL_Tools::GetAltitude( vTargetPos );//@TODO MGD Add height notion
 
     return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
 }
@@ -768,7 +767,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
 // Name: PHY_SensorTypeAgent::ComputeIdentificationDist
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-const MT_Float PHY_SensorTypeAgent::ComputeIdentificationDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
+const double PHY_SensorTypeAgent::ComputeIdentificationDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
 {
     return rIdentificationDist_ * ComputeDistanceModificator( perceiver, target );
 }
@@ -777,7 +776,7 @@ const MT_Float PHY_SensorTypeAgent::ComputeIdentificationDist( const MIL_Agent_A
 // Name: PHY_SensorTypeAgent::ComputeRecognitionDist
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-const MT_Float PHY_SensorTypeAgent::ComputeRecognitionDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
+const double PHY_SensorTypeAgent::ComputeRecognitionDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
 {
     return rRecognitionDist_ * ComputeDistanceModificator( perceiver, target );
 }
@@ -786,7 +785,7 @@ const MT_Float PHY_SensorTypeAgent::ComputeRecognitionDist( const MIL_Agent_ABC&
 // Name: PHY_SensorTypeAgent::ComputeDetectionDist
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-const MT_Float PHY_SensorTypeAgent::ComputeDetectionDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
+const double PHY_SensorTypeAgent::ComputeDetectionDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
 {
     return rDetectionDist_ * ComputeDistanceModificator( perceiver, target );
 }
@@ -795,9 +794,9 @@ const MT_Float PHY_SensorTypeAgent::ComputeDetectionDist( const MIL_Agent_ABC& p
 // Name: PHY_SensorTypeAgent::ComputeDistanceModificator
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-const MT_Float PHY_SensorTypeAgent::ComputeDistanceModificator( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
+const double PHY_SensorTypeAgent::ComputeDistanceModificator( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const
 {
-    MT_Float rDistanceMaxModificator = 1.;
+    double rDistanceMaxModificator = 1.;
     if( const PHY_Volume* pSignificantVolume = target.GetRole< PHY_RoleInterface_Composantes >().GetSignificantVolume( *this ) )
         rDistanceMaxModificator  = GetFactor( *pSignificantVolume );
     rDistanceMaxModificator *= GetTargetFactor( target );
@@ -809,7 +808,7 @@ const MT_Float PHY_SensorTypeAgent::ComputeDistanceModificator( const MIL_Agent_
 // Name: PHY_SensorTypeAgent::GetSquareProximityDistance
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-MT_Float PHY_SensorTypeAgent::GetSquareProximityDistance() const
+double PHY_SensorTypeAgent::GetSquareProximityDistance() const
 {
     return rSquareProximityDist_;
 }
@@ -818,7 +817,7 @@ MT_Float PHY_SensorTypeAgent::GetSquareProximityDistance() const
 // Name: PHY_SensorTypeAgent::GetMaxDistance
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-MT_Float PHY_SensorTypeAgent::GetMaxDistance() const
+double PHY_SensorTypeAgent::GetMaxDistance() const
 {
     return rDetectionDist_;
 }
@@ -827,7 +826,7 @@ MT_Float PHY_SensorTypeAgent::GetMaxDistance() const
 // Name: PHY_SensorTypeAgent::GetAngle
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-MT_Float PHY_SensorTypeAgent::GetAngle() const
+double PHY_SensorTypeAgent::GetAngle() const
 {
     return rAngle_;
 }
@@ -845,7 +844,7 @@ const PHY_SensorType& PHY_SensorTypeAgent::GetType() const
 // Name: PHY_SensorTypeAgent::GetFactor
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-MT_Float PHY_SensorTypeAgent::GetFactor( const PHY_Volume& volume ) const
+double PHY_SensorTypeAgent::GetFactor( const PHY_Volume& volume ) const
 {
     assert( volumeFactors_.size() > volume.GetID() );
     return volumeFactors_[ volume.GetID() ];
@@ -855,7 +854,7 @@ MT_Float PHY_SensorTypeAgent::GetFactor( const PHY_Volume& volume ) const
 // Name: PHY_SensorTypeAgent::GetUrbanFactor
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-MT_Float PHY_SensorTypeAgent::GetUrbanBlockFactor( const urban::TerrainObject_ABC& block ) const
+double PHY_SensorTypeAgent::GetUrbanBlockFactor( const urban::TerrainObject_ABC& block ) const
 {
     const urban::Architecture* architecture = block.Retrieve< urban::Architecture >();
     if( architecture )
@@ -876,7 +875,7 @@ bool PHY_SensorTypeAgent::CanScan() const
 // Name: PHY_SensorTypeAgent::CanDetectFirer
 // Created: SLG 2010-05-20
 // -----------------------------------------------------------------------------
-bool PHY_SensorTypeAgent::CanDetectFirer( MT_Float distance ) const
+bool PHY_SensorTypeAgent::CanDetectFirer( double distance ) const
 {
     return distance < rRecognitionFirerDist_;
 }

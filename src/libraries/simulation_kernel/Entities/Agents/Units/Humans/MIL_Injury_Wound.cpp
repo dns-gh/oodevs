@@ -188,7 +188,7 @@ bool MIL_Injury_Wound::IsInjured( const PHY_ComposantePion& /*pComposante*/ )
 // Name: MIL_Injury_Wound::SetInjury
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-void MIL_Injury_Wound::SetInjury( unsigned int /*nNbrAliveHumans*/ , MT_Float /*rDensity*/ )
+void MIL_Injury_Wound::SetInjury( unsigned int /*nNbrAliveHumans*/ , double /*rDensity*/ )
 {
     // NOTHING YET!!
 }

@@ -26,7 +26,7 @@ const MT_Vector2D& MT_Ellipse::GetCenter() const
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
 inline
-MT_Float MT_Ellipse::GetMajorAxeLength() const
+double MT_Ellipse::GetMajorAxeLength() const
 {
     return rMajorAxeLength_;
 }

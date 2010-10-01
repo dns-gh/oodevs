@@ -61,7 +61,7 @@ const PHY_Posture& PHY_RoleHLA_Posture::GetCurrentPosture() const
 // Name: PHY_RoleHLA_Posture::GetPostureCompletionPercentage
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleHLA_Posture::GetPostureCompletionPercentage() const
+double PHY_RoleHLA_Posture::GetPostureCompletionPercentage() const
 {
     return 1;
 }
@@ -88,7 +88,7 @@ void PHY_RoleHLA_Posture::UnsetPosturePostePrepareGenie()
 // Name: PHY_RoleHLA_Posture::SetTimingFactor
 // Created: JVT 2005-05-11
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Posture::SetTimingFactor( MT_Float )
+void PHY_RoleHLA_Posture::SetTimingFactor( double )
 {
     // NOTHING
 }

@@ -60,7 +60,7 @@ public:
     const MIL_PopulationAttitude& GetAttitude() const;
     const T_PointVector& GetShape() const;
     const MT_Vector2D& GetDirection() const;
-    MT_Float GetSpeed() const;
+    double GetSpeed() const;
     //@}
 
     //! @name Network operations

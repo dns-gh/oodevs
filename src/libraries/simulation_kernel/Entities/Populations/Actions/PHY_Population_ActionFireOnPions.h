@@ -40,7 +40,7 @@ public:
 private:
     MIL_Population&            population_;
     PHY_FireResults_Population fireResults_;
-    const MT_Float             rIntensity_;
+    const double             rIntensity_;
 };
 
 #endif // __PHY_Population_ActionFireOnPions_h_

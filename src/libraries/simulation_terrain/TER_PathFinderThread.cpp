@@ -178,7 +178,7 @@ namespace
     class NodeCircleFinder
     {
     public:
-        NodeCircleFinder( TER_NodeFunctor_ABC& functor, const MT_Vector2D& vCenter, MT_Float rRadius )
+        NodeCircleFinder( TER_NodeFunctor_ABC& functor, const MT_Vector2D& vCenter, double rRadius )
             : functor_      ( functor )
             , center_       ( vCenter )
             , rSquareRadius_( rRadius * rRadius )
@@ -196,7 +196,7 @@ namespace
         NodeCircleFinder& operator=( const NodeCircleFinder& );
         TER_NodeFunctor_ABC& functor_;
         MT_Vector2D center_;
-        MT_Float rSquareRadius_;
+        double rSquareRadius_;
     };
 }
 
@@ -204,7 +204,7 @@ namespace
 // Name: TER_PathFinderThread::ApplyOnNodesWithinCircle
 // Created: AGE 2005-02-23
 // -----------------------------------------------------------------------------
-void TER_PathFinderThread::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, TER_NodeFunctor_ABC& bestNodeFunction ) const
+void TER_PathFinderThread::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, TER_NodeFunctor_ABC& bestNodeFunction ) const
 {
     NodeCircleFinder finder( bestNodeFunction, vCenter, rRadius );
     pPathfinder_->ApplyOnNodesInCircle( MakePoint( vCenter ), static_cast< float >( rRadius ), finder );
@@ -219,7 +219,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindCrossr
     std::vector< pathfind::Node< TerrainData >* > result = pPathfinder_->FindCrossroadsWithinCircle( MakePoint( vCenter ), rRadius );
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
     for( std::vector< pathfind::Node< TerrainData >* >::const_iterator it = result.begin(); it != result.end(); ++it )
-        points.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( static_cast< MT_Float >( (*it)->X() ), static_cast< MT_Float >( (*it)->Y() ) ) ) );
+        points.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( static_cast< double >( (*it)->X() ), static_cast< double >( (*it)->Y() ) ) ) );
     return points;
 }
 

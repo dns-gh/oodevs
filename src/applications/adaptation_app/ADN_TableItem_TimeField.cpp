@@ -6,20 +6,10 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-09-13 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_TableItem_TimeField.h"
 #include "moc_ADN_TableItem_TimeField.cpp"
-
 #include "ADN_TimeField.h"
 #include "ADN_Connector_String.h"
 #include <qvalidator.h>

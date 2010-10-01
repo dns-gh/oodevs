@@ -257,7 +257,7 @@ void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 // Name: MIL_PopulationFlow::GetSpeedWithReinforcement
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*environment*/, const MIL_Object_ABC& object ) const
+double MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*environment*/, const MIL_Object_ABC& object ) const
 {
     if( !CanObjectInteractWith( object ) )
         return GetMaxSpeed();
@@ -296,7 +296,7 @@ void MIL_PopulationFlow::NotifyMovingOnPathPoint( const DEC_PathPoint& point )
 // Name: MIL_PopulationFlow::UpdateTailPosition
 // Created: NLD 2005-10-04
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::UpdateTailPosition( const MT_Float rWalkedDistance )
+void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
 {
     bFlowShapeUpdated_ = true;
     /////// $$ A NETTOYER
@@ -305,8 +305,8 @@ void MIL_PopulationFlow::UpdateTailPosition( const MT_Float rWalkedDistance )
     ++itNext;
     MT_Vector2D vNext = *itNext;
     MT_Vector2D vDir  = vNext - vCur;
-    MT_Float rDist = rWalkedDistance;
-    MT_Float rDirLength = vDir.Magnitude();
+    double rDist = rWalkedDistance;
+    double rDirLength = vDir.Magnitude();
     if( rDirLength )
         vDir /= rDirLength;
     while( 1 )
@@ -371,7 +371,7 @@ bool MIL_PopulationFlow::ManageSplit()
     }
     // this flow => from tail position to split position
     // new  flow => from split position to head position
-    const MT_Float rDensityBeforeSplit = GetDensity();
+    const double rDensityBeforeSplit = GetDensity();
     MIL_PopulationFlow& newFlow = GetPopulation().CreateFlow( *this, *itSplit );
     flowShape_.erase( ++itSplit, flowShape_.end() );
     flowShape_.insert( flowShape_.end(), flowShape_.back() ); // split position is a way point
@@ -381,7 +381,7 @@ bool MIL_PopulationFlow::ManageSplit()
     DetachFromDestConcentration();
     pHeadPath_ = pTailPath_; ///$$$ Degueu : destruction de pHeadPath ... (newFlow.pHeadPath_ = pHeadPath_)
     pTailPath_.reset();
-    const MT_Float rNbrHumans = GetLocation().GetArea() * rDensityBeforeSplit;
+    const double rNbrHumans = GetLocation().GetArea() * rDensityBeforeSplit;
     newFlow.PushHumans( PullHumans( GetNbrHumans() - rNbrHumans ) );
     UpdateDensity();
     return true;
@@ -436,20 +436,20 @@ bool MIL_PopulationFlow::ManageObjectSplit()
 // Name: MIL_PopulationFlow::ApplyMove
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float /*rSpeed*/, MT_Float /*rWalkedDistance*/ )
+void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double /*rSpeed*/, double /*rWalkedDistance*/ )
 {
     if( ManageSplit() )
         return;
     if( ManageObjectSplit() )
         return;
-    const MT_Float rWalkedDistance = GetPopulation().GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
+    const double rWalkedDistance = GetPopulation().GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
     //$$ TMP
-    MT_Float rNbrHumans = 0.;
+    double rNbrHumans = 0.;
     if( pSourceConcentration_ )
         rNbrHumans = rWalkedDistance * pSourceConcentration_->GetPullingFlowsDensity();
     else
     {
-        const MT_Float rArea = GetLocation().GetArea();
+        const double rArea = GetLocation().GetArea();
         if( rArea )
             rNbrHumans = rWalkedDistance * ( GetNbrHumans() / rArea );
         else
@@ -520,7 +520,7 @@ void MIL_PopulationFlow::NotifyCollision( MIL_Agent_ABC& agent )
 // Name: MIL_PopulationFlow::GetMaxSpeed
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationFlow::GetMaxSpeed() const
+double MIL_PopulationFlow::GetMaxSpeed() const
 {
     return GetPopulation().GetMaxSpeed();
 }
@@ -538,7 +538,7 @@ void MIL_PopulationFlow::SendRC( int nReportID ) const
 // Name: MIL_PopulationFlow::GetSafetyPosition
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-MT_Vector2D MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance, MT_Float /*rSeed*/ ) const
+MT_Vector2D MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double /*rSeed*/ ) const
 {
     const MT_Vector2D& agentPosition = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
     MT_Vector2D nearestPointOnFlow;
@@ -671,7 +671,7 @@ void MIL_PopulationFlow::save( MIL_CheckPointOutArchive& file, const unsigned in
 // Name: MIL_PopulationFlow::GetSpeedWithReinforcement
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*environment*/ ) const
+double MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*environment*/ ) const
 {
     return GetMaxSpeed();
 }
@@ -832,7 +832,7 @@ void MIL_PopulationFlow::SetDirection( const MT_Vector2D& direction )
 // Name: MIL_PopulationFlow::SetSpeed
 // Created: NLD 2005-10-20
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::SetSpeed( const MT_Float rSpeed )
+void MIL_PopulationFlow::SetSpeed( const double rSpeed )
 {
     if( rSpeed_ == rSpeed )
         return;
@@ -879,7 +879,7 @@ const TER_Localisation& MIL_PopulationFlow::GetLocation() const
 // Name: MIL_PopulationFlow::GetSpeed
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationFlow::GetSpeed() const
+double MIL_PopulationFlow::GetSpeed() const
 {
     return rSpeed_;
 }

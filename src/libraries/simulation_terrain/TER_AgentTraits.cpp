@@ -24,7 +24,7 @@
 // Name: TER_AgentTraits::CompareOnX
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-int TER_AgentTraits::CompareOnX( MT_Float rValue, const T_Value& pAgent ) const
+int TER_AgentTraits::CompareOnX( double rValue, const T_Value& pAgent ) const
 {
     return Compare( pAgent->GetPosition().rX_ - rValue );
 }
@@ -33,7 +33,7 @@ int TER_AgentTraits::CompareOnX( MT_Float rValue, const T_Value& pAgent ) const
 // Name: TER_AgentTraits::CompareOnY
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-int TER_AgentTraits::CompareOnY( MT_Float rValue, const T_Value& pAgent ) const
+int TER_AgentTraits::CompareOnY( double rValue, const T_Value& pAgent ) const
 {
     return Compare( pAgent->GetPosition().rY_ - rValue );
 }
@@ -42,9 +42,9 @@ int TER_AgentTraits::CompareOnY( MT_Float rValue, const T_Value& pAgent ) const
 // Name: TER_AgentTraits::Compare
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-int TER_AgentTraits::Compare( MT_Float rDelta ) const
+int TER_AgentTraits::Compare( double rDelta ) const
 {
-    static const MT_Float rPrecision = 0.;
+    static const double rPrecision = 0.;
     if( rDelta < -rPrecision )
         return -1;
     else if( rDelta > rPrecision )

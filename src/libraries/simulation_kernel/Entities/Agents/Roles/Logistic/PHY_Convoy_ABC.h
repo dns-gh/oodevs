@@ -13,7 +13,6 @@
 #define __PHY_Convoy_ABC_h_
 
 #include "MT_Tools/MT_InterpolatedFunction.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -56,7 +55,7 @@ public:
     //! @name Operations
     //@{
     bool ReserveTransporters();
-    MT_Float ModifySpeed( MT_Float rSpeed ) const;
+    double ModifySpeed( double rSpeed ) const;
     //@}
 
     //! @name Accessors
@@ -98,28 +97,28 @@ private:
     static void InitializeConvoyUnitType( xml::xistream& xis );
     static void InitializeConvoyMission ( xml::xistream& xis );
 
-    static void InitializeInterpolatedTime ( xml::xistream& xis, const std::string& strTagName, MT_InterpolatedFunction< MT_Float >& data );
+    static void InitializeInterpolatedTime ( xml::xistream& xis, const std::string& strTagName, MT_InterpolatedFunction< double >& data );
     static void InitializeSpeedModificators( xml::xistream& xis );
     //@}
 
     //! @name Helpers
     //@{
     struct LoadingWrapper;
-    static void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& data, std::pair< unsigned int, MT_Float >& upperBound );
-    static void ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, MT_Float >& upperBound );
+    static void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< double >& data, std::pair< unsigned int, double >& upperBound );
+    static void ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, double >& upperBound );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, MT_Float > T_MerchandiseToConvoyMap;
+    typedef std::map< const PHY_DotationCategory*, double > T_MerchandiseToConvoyMap;
     typedef T_MerchandiseToConvoyMap::iterator               IT_MerchandiseToConvoyMap;
     //@}
 
 protected:
-    static MT_InterpolatedFunction< MT_Float > formingTime_;
-    static MT_InterpolatedFunction< MT_Float > loadingTime_;
-    static MT_InterpolatedFunction< MT_Float > unloadingTime_;
-    static MT_InterpolatedFunction< MT_Float > coefSpeedModificator_;
+    static MT_InterpolatedFunction< double > formingTime_;
+    static MT_InterpolatedFunction< double > loadingTime_;
+    static MT_InterpolatedFunction< double > unloadingTime_;
+    static MT_InterpolatedFunction< double > coefSpeedModificator_;
     static const MIL_AgentTypePion* pConvoyAgentType_;
     static const MIL_MissionType_ABC* pConvoyMissionType_;
 };

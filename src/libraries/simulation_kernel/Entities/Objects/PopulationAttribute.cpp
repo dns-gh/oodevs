@@ -27,7 +27,7 @@ PopulationAttribute::PopulationAttribute()
 // Created: LDC 2009-04-01
 // -----------------------------------------------------------------------------
 PopulationAttribute::PopulationAttribute( xml::xistream& xis )
-    : density_( xis.attribute< MT_Float >( "density" ) )
+    : density_( xis.attribute< double >( "density" ) )
 {
     // NOTHING
 }
@@ -75,7 +75,7 @@ PopulationAttribute& PopulationAttribute::operator=( const PopulationAttribute& 
 // Name: PopulationAttribute::GetDensity
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-MT_Float PopulationAttribute::GetDensity() const
+double PopulationAttribute::GetDensity() const
 {
     return density_;
 }
@@ -93,7 +93,7 @@ void PopulationAttribute::Reset()
 // Name: PopulationAttribute::SetDensity
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-void PopulationAttribute::SetDensity( MT_Float rDensity )
+void PopulationAttribute::SetDensity( double rDensity )
 {
     density_ = rDensity;
 }

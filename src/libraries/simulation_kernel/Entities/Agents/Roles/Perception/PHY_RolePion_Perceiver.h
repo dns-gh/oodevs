@@ -53,11 +53,11 @@ class PHY_RolePion_Perceiver : public PHY_RoleInterface_Perceiver
 public:
     //! @name Types
     //@{
-    typedef std::pair< const PHY_SensorTypeAgent* , MT_Float /*height*/ >    T_SurfaceAgentKeyPair;
+    typedef std::pair< const PHY_SensorTypeAgent* , double /*height*/ >    T_SurfaceAgentKeyPair;
     typedef std::map< T_SurfaceAgentKeyPair, PHY_PerceptionSurfaceAgent >    T_SurfaceAgentMap;
     typedef T_SurfaceAgentMap::const_iterator                              CIT_SurfaceAgentMap;
 
-    typedef std::pair< const PHY_SensorTypeObject* , MT_Float /*height*/ >     T_SurfaceObjectKeyPair;
+    typedef std::pair< const PHY_SensorTypeObject* , double /*height*/ >     T_SurfaceObjectKeyPair;
     typedef std::map< T_SurfaceObjectKeyPair, PHY_PerceptionSurfaceObject >    T_SurfaceObjectMap;
     typedef T_SurfaceObjectMap::const_iterator                               CIT_SurfaceObjectMap;
 
@@ -129,7 +129,7 @@ public:
     void  DisableRecoAlat                ();
     void  EnableCoupDeSonde              ();
     void  DisableCoupDeSonde             ();
-    int   EnableRecoPoint                ( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DEC_Decision_ABC& callerAgent );
+    int   EnableRecoPoint                ( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent );
     void  DisableRecoPoint               ( int );
     int   EnableRecoLocalisation         ( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent );
     int   EnableRecoLocalisation         ( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent );
@@ -139,7 +139,7 @@ public:
     void  DisableRecoLocalisation        ( int );
     int   EnableSurveillanceLocalisation ( const TER_Localisation& localisation );
     void  DisableSurveillanceLocalisation( int );
-    int   EnableRecoObjects              ( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rSpeed, DEC_Decision_ABC& callerAgent );
+    int   EnableRecoObjects              ( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rSpeed, DEC_Decision_ABC& callerAgent );
     void  DisableRecoObjects             ( int );
 
     // Radars
@@ -169,7 +169,7 @@ public:
     //@{
     const MIL_KnowledgeGroup& GetKnowledgeGroup            () const;
           MIL_Agent_ABC&      GetPion                      () const;
-          MT_Float            GetMaxAgentPerceptionDistance() const;
+          double            GetMaxAgentPerceptionDistance() const;
           void                GetMainPerceptionDirection   ( MT_Vector2D& vDirection ) const;
 
     bool IsPeriphericalVisionEnabled() const;
@@ -214,7 +214,7 @@ private:
     void UpdatePeriphericalVisionState ();
     void ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const;
 
-    MT_Float GetMaxObjectPerceptionDistance() const;
+    double GetMaxObjectPerceptionDistance() const;
 
     void EnsurePerceptionRecoLocalisation();
     //@}
@@ -236,8 +236,8 @@ private:
     T_RadarsPerClassMap radars_;
     T_SurfaceAgentMap   surfacesAgent_;
     T_SurfaceObjectMap  surfacesObject_;
-    MT_Float            rMaxAgentPerceptionDistance_;
-    MT_Float            rMaxObjectPerceptionDistance_;
+    double            rMaxAgentPerceptionDistance_;
+    double            rMaxObjectPerceptionDistance_;
 
     PHY_PerceptionView*             pPerceptionView_;
     PHY_PerceptionCoupDeSonde*      pPerceptionCoupDeSonde_;

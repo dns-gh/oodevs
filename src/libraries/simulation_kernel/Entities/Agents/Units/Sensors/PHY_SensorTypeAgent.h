@@ -48,39 +48,39 @@ public:
 
     //! @name Accessors
     //@{
-          MT_Float        GetSquareProximityDistance() const;
-          MT_Float        GetMaxDistance            () const;
-          MT_Float        GetAngle                  () const;
-          MT_Float        GetFactor                 ( const PHY_Volume& volume ) const;
-          MT_Float GetUrbanBlockFactor( const urban::TerrainObject_ABC& target ) const;
+          double        GetSquareProximityDistance() const;
+          double        GetMaxDistance            () const;
+          double        GetAngle                  () const;
+          double        GetFactor                 ( const PHY_Volume& volume ) const;
+          double GetUrbanBlockFactor( const urban::TerrainObject_ABC& target ) const;
           bool            CanScan                   () const;
-          bool            CanDetectFirer            ( MT_Float distance ) const;
+          bool            CanDetectFirer            ( double distance ) const;
     const PHY_SensorType& GetType                   () const;
           unsigned int    GetDelay                  () const;
     //@}
 
     //! @name Operations
     //@{
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MT_Vector2D&                 target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC&               target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Agent&         target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MIL_PopulationConcentration& target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight, T_PointVector& shape ) const;
-          MT_Float             ComputePerceptionAccuracy( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const urban::TerrainObject_ABC& target, MT_Float rSensorHeight ) const;
-    const MT_Float               IdentificationDistance   () const;
-    const MT_Float               ReconnoissanceDistance   () const;
-    const MT_Float             ComputeIdentificationDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
-    const MT_Float             ComputeRecognitionDist   ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
-    const MT_Float             ComputeDetectionDist     ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
-    const MT_Float             RayTrace                 ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget     ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MT_Vector2D&                 target, double rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC&               target, double rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Agent&         target, double rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MIL_PopulationConcentration& target, double rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow&          target, double rSensorHeight, T_PointVector& shape ) const;
+          double             ComputePerceptionAccuracy( const MIL_Agent_ABC& perceiver, const MIL_PopulationFlow&          target, double rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception        ( const MIL_Agent_ABC& perceiver, const urban::TerrainObject_ABC& target, double rSensorHeight ) const;
+    const double               IdentificationDistance   () const;
+    const double               ReconnoissanceDistance   () const;
+    const double             ComputeIdentificationDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
+    const double             ComputeRecognitionDist   ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
+    const double             ComputeDetectionDist     ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
+    const double             RayTrace                 ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget     ) const;
     //@}
 
 public:
     //! @name Types
     //@{
-    typedef std::vector< MT_Float > T_FactorVector;
-    typedef std::map< unsigned, MT_Float > T_FactorMap;
+    typedef std::vector< double > T_FactorVector;
+    typedef std::map< unsigned, double > T_FactorMap;
     //@}
 
 private:
@@ -99,21 +99,21 @@ private:
     PHY_RawVisionData::E_VisionObject ConvertObjectIdxToEnvironnement( unsigned int val );
     unsigned int                              ConvertEnvironementToObjectIdx ( PHY_RawVisionData::E_VisionObject obj );
 
-    const PHY_PerceptionLevel& RayTrace                 ( const MT_Vector2D& vSource, MT_Float rSourceAltitude, const MT_Vector2D& vTarget, MT_Float rTargetAltitude, MT_Float rDistanceMaxModificator ) const;
-    MT_Float                   ComputeEnvironementFactor( PHY_RawVisionData::envBits nEnv ) const;
-    MT_Float                   ComputeExtinction        ( const PHY_RawVisionDataIterator& env, MT_Float rDistanceModificator, MT_Float rInitialCoef, bool bIsAroundBU ) const;
-    bool                       ComputeUrbanExtinction   ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, MT_Float& rVisionNRJ ) const;
-    bool                       ComputeGlobalUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, MT_Float& rVisionNRJ ) const;
-    const MT_Float             ComputeDistanceModificator( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
-    const PHY_PerceptionLevel& InterpretExtinction     ( MT_Float rExtinction ) const;
+    const PHY_PerceptionLevel& RayTrace                 ( const MT_Vector2D& vSource, double rSourceAltitude, const MT_Vector2D& vTarget, double rTargetAltitude, double rDistanceMaxModificator ) const;
+    double                   ComputeEnvironementFactor( PHY_RawVisionData::envBits nEnv ) const;
+    double                   ComputeExtinction        ( const PHY_RawVisionDataIterator& env, double rDistanceModificator, double rInitialCoef, bool bIsAroundBU ) const;
+    bool                       ComputeUrbanExtinction   ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ ) const;
+    bool                       ComputeGlobalUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ ) const;
+    const double             ComputeDistanceModificator( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
+    const PHY_PerceptionLevel& InterpretExtinction     ( double rExtinction ) const;
 
-    MT_Float GetSourceFactor    ( const MIL_Agent_ABC&       source ) const;
-    MT_Float GetTargetFactor    ( const MIL_Agent_ABC&       target ) const;
-    MT_Float GetTargetFactor    ( const DEC_Knowledge_Agent& target ) const;
+    double GetSourceFactor    ( const MIL_Agent_ABC&       source ) const;
+    double GetTargetFactor    ( const MIL_Agent_ABC&       target ) const;
+    double GetTargetFactor    ( const DEC_Knowledge_Agent& target ) const;
 
     bool ContainsSensorFromLimitedList( const MIL_Agent_ABC& target ) const; // LTO
 
-    MT_Float GetPopulationFactor( MT_Float rDensity ) const;
+    double GetPopulationFactor( double rDensity ) const;
     //@}
 
     //! @name Helpers
@@ -127,15 +127,15 @@ private:
 private:
     const PHY_SensorType& type_;
 
-    MT_Float rAngle_;
+    double rAngle_;
     bool     bScanningAllowed_;
-    MT_Float rRecognitionFirerDist_;
+    double rRecognitionFirerDist_;
 
     // Distances
-    MT_Float rSquareProximityDist_;
-    MT_Float rIdentificationDist_;
-    MT_Float rRecognitionDist_;
-    MT_Float rDetectionDist_;
+    double rSquareProximityDist_;
+    double rIdentificationDist_;
+    double rRecognitionDist_;
+    double rDetectionDist_;
 
     // Modificateurs
     T_FactorVector volumeFactors_;
@@ -147,8 +147,8 @@ private:
     T_FactorVector urbanBlockFactors_;
 
     // Population
-    MT_Float rPopulationDensity_;
-    MT_Float rPopulationFactor_;
+    double rPopulationDensity_;
+    double rPopulationFactor_;
 
     // Limitation aux autres capteurs
     // LTO begin

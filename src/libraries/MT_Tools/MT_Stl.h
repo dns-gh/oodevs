@@ -1,17 +1,16 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: FBD 02-11-15 $
-// $Archive: /MVW_v10/Build/SDK/MT_Tools/Src/MT_Tools_Types.h $
-// $Author: Nld $
-// $Modtime: 19/08/04 16:34 $
-// $Revision: 17 $
-// $Workfile: MT_Tools_Types.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __MT_Stl_h_
 #define __MT_Stl_h_
 
+#include <string>
 #include <functional>
 #undef Yield
 

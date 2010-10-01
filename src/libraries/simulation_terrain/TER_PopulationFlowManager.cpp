@@ -54,10 +54,10 @@ bool TER_PopulationFlowManager::Remove( TER_PopulationFlow_ABC& flow, const TER_
 // Name: TER_PopulationFlowManager::GetListWithinCircle
 // Created: NLD 2005-10-10
 // -----------------------------------------------------------------------------
-void TER_PopulationFlowManager::GetListWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_PopulationFlowVector& flows ) const
+void TER_PopulationFlowManager::GetListWithinCircle( const MT_Vector2D& vCenter, double rRadius, T_PopulationFlowVector& flows ) const
 {
     flows.reserve( 10 );
-    pathfind::PointIntersecter< MT_Float > intersecter( geometry::Point2< MT_Float >( vCenter.rX_, vCenter.rY_ ), rRadius );
+    pathfind::PointIntersecter< double > intersecter( geometry::Point2< double >( vCenter.rX_, vCenter.rY_ ), rRadius );
     T_PopulationFlows::View view = flows_.CreateView( intersecter );
     while( view.HasMoreElements() )
     {
@@ -73,8 +73,8 @@ void TER_PopulationFlowManager::GetListWithinCircle( const MT_Vector2D& vCenter,
 // -----------------------------------------------------------------------------
 void TER_PopulationFlowManager::GetListIntersectingLine( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_PopulationFlowVector& flows ) const
 {
-    pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2< MT_Float >( vStart.rX_, vStart.rY_ ),
-                                                          geometry::Point2< MT_Float >( vEnd.rX_  , vEnd.rY_   ) );
+    pathfind::SegmentIntersecter< double > intersecter( geometry::Point2< double >( vStart.rX_, vStart.rY_ ),
+                                                          geometry::Point2< double >( vEnd.rX_  , vEnd.rY_   ) );
     T_PopulationFlows::View view = flows_.CreateView( intersecter );
     while( view.HasMoreElements() )
     {
@@ -91,8 +91,8 @@ void TER_PopulationFlowManager::GetListIntersectingLine( const MT_Vector2D& vSta
 void TER_PopulationFlowManager::GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationFlowVector& flows ) const
 {
     const MT_Rect& boundingBox = localisation.GetBoundingBox();
-    pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( boundingBox.GetLeft(), boundingBox.GetBottom() )
-        , geometry::Point2<MT_Float>( boundingBox.GetRight(), boundingBox.GetTop() ) );
+    pathfind::SegmentIntersecter< double > intersecter( geometry::Point2<double>( boundingBox.GetLeft(), boundingBox.GetBottom() )
+        , geometry::Point2<double>( boundingBox.GetRight(), boundingBox.GetTop() ) );
     T_PopulationFlows::View view = flows_.CreateView( intersecter );
     while( view.HasMoreElements() )
     {

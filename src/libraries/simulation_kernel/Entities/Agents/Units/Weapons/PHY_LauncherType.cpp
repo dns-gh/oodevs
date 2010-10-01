@@ -143,7 +143,7 @@ void PHY_LauncherType::ReadModifier( xml::xistream& xis, const PHY_Posture& post
     if( !postureTarget.CanModifyPH() )
         return;
 
-    MT_Float rModificatorValue;
+    double rModificatorValue;
     xis >> xml::attribute( "value", rModificatorValue );
 
     if( rModificatorValue < 0 || rModificatorValue > 1 )
@@ -156,7 +156,7 @@ void PHY_LauncherType::ReadModifier( xml::xistream& xis, const PHY_Posture& post
 // Name: PHY_LauncherType::RegisterPHModificator
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_LauncherType::RegisterPHModificator( const PHY_Posture& postureSource, const PHY_Posture& postureTarget, MT_Float rModificatorValue )
+void PHY_LauncherType::RegisterPHModificator( const PHY_Posture& postureSource, const PHY_Posture& postureTarget, double rModificatorValue )
 {
     assert( rModificatorValue >= 0. && rModificatorValue <= 1. );
     assert( phModificators_.size() > postureSource.GetID() );
@@ -175,18 +175,18 @@ void PHY_LauncherType::RegisterPHModificator( const PHY_Posture& postureSource, 
 // Name: PHY_LauncherType::GetPHModificator
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_LauncherType::GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const
+double PHY_LauncherType::GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const
 {
     const unsigned int     nFirerCurrentPosture      = firerPosture.GetCurrentPosture              ().GetID();
     const unsigned int     nFirerLastPosture         = firerPosture.GetLastPosture                 ().GetID();
-    const MT_Float rFirerPostureCompletion   = firerPosture.GetPostureCompletionPercentage ();
+    const double rFirerPostureCompletion   = firerPosture.GetPostureCompletionPercentage ();
     const unsigned int     nTargetCurrentPosture     = targetPosture.GetCurrentPosture             ().GetID();
     const unsigned int     nTargetLastPosture        = targetPosture.GetLastPosture                ().GetID();
-    const MT_Float rTargetPostureCompletion  = targetPosture.GetPostureCompletionPercentage();
+    const double rTargetPostureCompletion  = targetPosture.GetPostureCompletionPercentage();
 
     const T_PhModificatorValueVector& firerCurrentModificator = phModificators_[ nFirerCurrentPosture ];
     const T_PhModificatorValueVector& firerLastModificator    = phModificators_[ nFirerLastPosture ];
-    const MT_Float rInverseFirerPostureCompletion             = 1.f - rFirerPostureCompletion;
+    const double rInverseFirerPostureCompletion             = 1.f - rFirerPostureCompletion;
 
     return           rTargetPostureCompletion   * ( rFirerPostureCompletion * firerCurrentModificator[ nTargetCurrentPosture ] + rInverseFirerPostureCompletion * firerLastModificator[ nTargetCurrentPosture ] )
            + ( 1.f - rTargetPostureCompletion ) * ( rFirerPostureCompletion * firerCurrentModificator[ nTargetLastPosture ]    + rInverseFirerPostureCompletion * firerLastModificator[ nTargetLastPosture ] );
@@ -196,7 +196,7 @@ MT_Float PHY_LauncherType::GetPHModificator( const PHY_RoleInterface_Posture& fi
 // Name: PHY_LauncherType::GetPHModificator
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_LauncherType::GetPHModificator( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture ) const
+double PHY_LauncherType::GetPHModificator( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture ) const
 {
     return phModificators_[ firerPosture.GetID() ][ targetPosture.GetID() ];
 }

@@ -20,7 +20,7 @@
 #include "tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
 
-MT_Float PHY_PerceptionFlyingShell::rRadius_ = 0;
+double PHY_PerceptionFlyingShell::rRadius_ = 0;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionFlyingShell::Initialize

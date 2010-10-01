@@ -27,7 +27,7 @@ PHY_PerceptionSurfaceObject::PHY_PerceptionSurfaceObject()
 // Name: PHY_PerceptionSurfaceObject constructor
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-PHY_PerceptionSurfaceObject::PHY_PerceptionSurfaceObject( const PHY_SensorTypeObject& sensorType, const MT_Vector2D& vOrigin, MT_Float rHeight )
+PHY_PerceptionSurfaceObject::PHY_PerceptionSurfaceObject( const PHY_SensorTypeObject& sensorType, const MT_Vector2D& vOrigin, double rHeight )
     : vOrigin_    ( vOrigin    )
     , pSensorType_( &sensorType )
     , rHeight_    ( rHeight    )

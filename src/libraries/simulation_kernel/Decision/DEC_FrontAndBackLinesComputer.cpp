@@ -66,7 +66,7 @@ void DEC_FrontAndBackLinesComputer::Compute()
     // Vecteur perpendiculaire direction globale du fuseau
     MT_Vector2D vDirPerpendicularFuseau( fuseauGlobalDirLine.GetPosEnd() - fuseauGlobalDirLine.GetPosStart() );
     vDirPerpendicularFuseau.Normalize();
-    MT_Float rTmp = vDirPerpendicularFuseau.rX_;
+    double rTmp = vDirPerpendicularFuseau.rX_;
     vDirPerpendicularFuseau.rX_ = vDirPerpendicularFuseau.rY_;
     vDirPerpendicularFuseau.rY_ = -rTmp;
     TER_DistanceLess cmp ( fuseauGlobalDirLine.GetPosStart() );
@@ -101,10 +101,10 @@ void DEC_FrontAndBackLinesComputer::Compute()
 // Name: DEC_FrontAndBackLinesComputer::GetDistanceFromFrontLine
 // Created: NLD 2003-09-29
 // -----------------------------------------------------------------------------
-MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromFrontLine( const MT_Vector2D& vPoint )
+double DEC_FrontAndBackLinesComputer::ComputeDistanceFromFrontLine( const MT_Vector2D& vPoint )
 {
     Compute();
-    const MT_Float rDistFromFrontLine = frontLineDroite_.GetDistanceToPoint( vPoint );
+    const double rDistFromFrontLine = frontLineDroite_.GetDistanceToPoint( vPoint );
     const MT_Droite::E_Side nFrontLineSide = frontLineDroite_.GetSide( vPoint );
     // Front line behind
     if( nFrontLineSide == MT_Droite::eOnNegativeSide )
@@ -117,10 +117,10 @@ MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromFrontLine( const MT_V
 // Name: DEC_FrontAndBackLinesComputer::GetDistanceFromBackLine
 // Created: NLD 2003-09-29
 // -----------------------------------------------------------------------------
-MT_Float DEC_FrontAndBackLinesComputer::ComputeDistanceFromBackLine( const MT_Vector2D& vPoint )
+double DEC_FrontAndBackLinesComputer::ComputeDistanceFromBackLine( const MT_Vector2D& vPoint )
 {
     Compute();
-    const MT_Float rDistFromBackLine = backLineDroite_.GetDistanceToPoint( vPoint );
+    const double rDistFromBackLine = backLineDroite_.GetDistanceToPoint( vPoint );
     const MT_Droite::E_Side nBackLineSide = backLineDroite_.GetSide( vPoint );
     // Back line behind
     if( nBackLineSide == MT_Droite::eOnNegativeSide )

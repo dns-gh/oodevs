@@ -17,7 +17,7 @@
 // Name: MT_Rect constructor
 // Created: FBD 02-11-07
 //-----------------------------------------------------------------------------
-MT_Rect::MT_Rect( MT_Float rPosX1, MT_Float rPosY1, MT_Float rPosX2, MT_Float rPosY2 )
+MT_Rect::MT_Rect( double rPosX1, double rPosY1, double rPosX2, double rPosY2 )
     : rPosX1_        ( rPosX2 > rPosX1 ? rPosX1 : rPosX2 )
     , rPosY1_        ( rPosY2 > rPosY1 ? rPosY1 : rPosY2 )
     , rPosX2_        ( rPosX2 > rPosX1 ? rPosX2 : rPosX1 )
@@ -188,7 +188,7 @@ bool MT_Rect::Intersect2D( const MT_Vector2D& vPosSrc, const MT_Vector2D& vPosDe
 // Name: MT_Rect::Intersect2D
 // Created: FBD 02-11-21
 //-----------------------------------------------------------------------------
-bool MT_Rect::Intersect2D( const MT_Line& orientedLine, T_PointSet& collisionSet, MT_Float rPrecision ) const
+bool MT_Rect::Intersect2D( const MT_Line& orientedLine, T_PointSet& collisionSet, double rPrecision ) const
 {
     //$$$$ TMP a refaire - NE MARCHE QUE POUR UN RECTANGLE 'DROIT'
     collisionSet.clear();
@@ -285,9 +285,9 @@ bool MT_Rect::Intersect2D( const MT_Line& orientedLine, T_PointSet& collisionSet
 // Name: MT_Rect::Intersect2DWithCircle
 // Created: NLD 2002-12-20
 //-----------------------------------------------------------------------------
-bool MT_Rect::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const
+bool MT_Rect::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const
 {
-    MT_Float rSquareRadius = rRadius * rRadius;
+    double rSquareRadius = rRadius * rRadius;
 
     if( rHeight_ == 0 && rWidth_ == 0 )
         return vCircleCenter.SquareDistance( pointUpLeft_ ) <= rSquareRadius;

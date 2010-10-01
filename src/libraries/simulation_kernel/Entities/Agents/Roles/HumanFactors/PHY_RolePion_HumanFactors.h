@@ -94,7 +94,7 @@ public:
 
      //! @name Operations
      //@{
-    MT_Float ModifyPH                    ( MT_Float rPH       ) const;
+    double ModifyPH                    ( double rPH       ) const;
      //@}
 
     //! @name Network

@@ -9,8 +9,6 @@
 //
 //*****************************************************************************
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 #ifndef __DEC_PerceptionFunctions_h_
 #define __DEC_PerceptionFunctions_h_
 
@@ -40,14 +38,14 @@ public:
     static bool HasNoDelayedPeceptions( const MIL_Agent_ABC& callerAgent );
     static void EnableCoupDeSonde( MIL_Agent_ABC& callerAgent );
     static void DisableCoupDeSonde( MIL_Agent_ABC& callerAgent );
-    static int EnableObjectRecognitionLocalisation( DEC_Decision_ABC& callerAgent, const TER_Localisation* pLocalisation, const MT_Vector2D* pCenter, MT_Float rGrowthSpeed );
+    static int EnableObjectRecognitionLocalisation( DEC_Decision_ABC& callerAgent, const TER_Localisation* pLocalisation, const MT_Vector2D* pCenter, double rGrowthSpeed );
     static void DisableObjectRecognitionLocalisation( MIL_Agent_ABC& callerAgent, int id );
     static int EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation );
     static int EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation, float rGrowthSpeed );
     static int EnableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock );
     static void DisableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, int id );
     static void DisableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, int id );
-    static int EnableRecognitionPoint( DEC_Decision_ABC& callerAgent, MT_Vector2D* pCenter, MT_Float rSize, MT_Float rGrowthSpeed );
+    static int EnableRecognitionPoint( DEC_Decision_ABC& callerAgent, MT_Vector2D* pCenter, double rSize, double rGrowthSpeed );
     static void DisableRecognitionPoint( MIL_Agent_ABC& callerAgent, int id );
     static void EnableRadar( MIL_Agent_ABC& callerAgent, int nRadarClass );
     static void DisableRadar( MIL_Agent_ABC& callerAgent, int nRadarClass );

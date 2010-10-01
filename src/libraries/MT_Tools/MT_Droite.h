@@ -39,7 +39,7 @@ public:
 public:
      MT_Droite();
      MT_Droite( const MT_Vector2D& vPointInLine1, const MT_Vector2D& vPointInLine2 );
-     MT_Droite( MT_Float rX1, MT_Float rY1, MT_Float rX2, MT_Float rY2 );
+     MT_Droite( double rX1, double rY1, double rX2, double rY2 );
      MT_Droite( const MT_Droite& );
     virtual ~MT_Droite();
 
@@ -48,26 +48,19 @@ public:
     //! @name Operations
     //@{
     E_Side           GetSide           ( const MT_Vector2D& vPoint ) const;
-    E_Side           GetSide           ( MT_Float rX, MT_Float rY )  const;
+    E_Side           GetSide           ( double rX, double rY )  const;
     bool             IsInside          ( const MT_Vector2D& vPoint ) const;
     E_CollisionState Intersect2D       ( const MT_Line& segment , MT_Vector2D& vPosIntersect ) const;
     E_CollisionState Intersect2D       ( const MT_Droite& droite, MT_Vector2D& vPosIntersect ) const;
-    MT_Float         GetDistanceToPoint( const MT_Vector2D& vPoint ) const;
+    double         GetDistanceToPoint( const MT_Vector2D& vPoint ) const;
     //@}
 
 private:
     // Line equation : rA_ x + rB_ y + rC = 0
-    MT_Float rA_;
-    MT_Float rB_;
-    MT_Float rC_;
+    double rA_;
+    double rB_;
+    double rC_;
 };
-
-typedef std::vector< MT_Droite >                 T_DroiteVector;
-typedef const T_DroiteVector                     CT_DroiteVector;
-typedef T_DroiteVector::iterator                 IT_DroiteVector;
-typedef T_DroiteVector::const_iterator           CIT_DroiteVector;
-typedef T_DroiteVector::reverse_iterator         RIT_DroiteVector;
-typedef T_DroiteVector::const_reverse_iterator   CRIT_DroiteVector;
 
 inline bool MT_IsPointBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, const MT_Vector2D& vPoint )
 {

@@ -27,7 +27,7 @@ MT_Circle::MT_Circle()
 // Name: MT_Circle constructor
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
-MT_Circle::MT_Circle(const MT_Vector2D& c,MT_Float r)
+MT_Circle::MT_Circle(const MT_Vector2D& c,double r)
 : c_(c)
 , r_(r)
 {
@@ -49,7 +49,7 @@ MT_Circle::MT_Circle(const MT_Vector2D& a,const MT_Vector2D& b)
 // Name: MT_Circle constructor
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
-MT_Circle::MT_Circle(MT_Float x,MT_Float y,MT_Float r)
+MT_Circle::MT_Circle(double x,double y,double r)
 : c_(MT_Vector2D(x,y))
 ,  r_(r)
 {
@@ -84,7 +84,7 @@ MT_Circle::~MT_Circle()
 T_PointVector MT_Circle::Intersection( const MT_Line& line) const
 {
     T_PointVector res;
-    MT_Float a, b, c, mu, i ;
+    double a, b, c, mu, i ;
     MT_Vector2D p1=line.GetPosStart();
     MT_Vector2D p2=line.GetPosEnd();
 
@@ -115,7 +115,7 @@ T_PointVector MT_Circle::Intersection( const MT_Line& line) const
     }
     else if( i > 0.0 )
     {
-        MT_Float  ts=sqrt( square(b) - 4*a*c );
+        double  ts=sqrt( square(b) - 4*a*c );
 
         // first intersection
         mu = (-b + ts) / (2*a);
@@ -138,11 +138,11 @@ T_PointVector MT_Circle::Intersection( const MT_Vector2D& p1,const MT_Vector2D& 
 {
     T_PointVector vect=Intersection(MT_Line(p1,p2));
     T_PointVector res;
-    MT_Float      d=p2.SquareDistance(p1);
+    double      d=p2.SquareDistance(p1);
     for (CIT_PointVector cit=vect.begin();cit!=vect.end();cit++)
     {
-        MT_Float rDist1 = p1.SquareDistance(*cit);
-        MT_Float rDist2 = p2.SquareDistance(*cit);
+        double rDist1 = p1.SquareDistance(*cit);
+        double rDist2 = p2.SquareDistance(*cit);
 
         if( rDist1 <= d && rDist2 <= d)
             res.push_back( *cit );
@@ -158,9 +158,9 @@ T_PointVector MT_Circle::Intersection( const MT_Vector2D& p1,const MT_Vector2D& 
 // Name: MT_Circle::IntersectionArea
 // Created: SBO 2006-01-19
 // -----------------------------------------------------------------------------
-MT_Float MT_Circle::IntersectionArea( const MT_Circle& c ) const
+double MT_Circle::IntersectionArea( const MT_Circle& c ) const
 {
-    MT_Float d = c_.Distance( c.Center() );
+    double d = c_.Distance( c.Center() );
 
     if( d == 0 || d < r_ || d < c.Radius() )
     {
@@ -170,19 +170,19 @@ MT_Float MT_Circle::IntersectionArea( const MT_Circle& c ) const
             return MT_PI * r_ * r_;
     }
 
-    MT_Float d1 = ( d * d - c.Radius() * c.Radius() + r_ * r_ ) / ( 2. * d );
-    MT_Float r1 = r_;
-    MT_Float r2 = c.Radius();
+    double d1 = ( d * d - c.Radius() * c.Radius() + r_ * r_ ) / ( 2. * d );
+    double r1 = r_;
+    double r2 = c.Radius();
     if( d1 < 0 )
     {
         d1 = ( d * d - r_ * r_ + c.Radius() * c.Radius() ) / ( 2. * d );
         r2 = r_;
         r1 = c.Radius();
     }
-    MT_Float d2 = d - d1;
+    double d2 = d - d1;
 
-    MT_Float area1 = r1 * r1 * acos( d1 / r1 ) - d1 * sqrt( r1 * r1 - d1 * d1 );
-    MT_Float area2 = r2 * r2 * acos( d2 / r2 ) - d2 * sqrt( r2 * r2 - d2 * d2 );
+    double area1 = r1 * r1 * acos( d1 / r1 ) - d1 * sqrt( r1 * r1 - d1 * d1 );
+    double area2 = r2 * r2 * acos( d2 / r2 ) - d2 * sqrt( r2 * r2 - d2 * d2 );
 
     return area1 + area2;
 }

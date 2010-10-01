@@ -10,7 +10,6 @@
 #ifndef __PHY_MedicalResourcesAlarms_h_
 #define __PHY_MedicalResourcesAlarms_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {
@@ -31,15 +30,15 @@ public:
 
     //! @name Operations
     //@{
-    static bool IsEvacuationResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio );
-    static bool IsCollectionResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio );
-    static bool IsDoctorResourcesLevelReached    ( MT_Float rPreviousRatio, MT_Float rCurrentRatio );
+    static bool IsEvacuationResourcesLevelReached( double rPreviousRatio, double rCurrentRatio );
+    static bool IsCollectionResourcesLevelReached( double rPreviousRatio, double rCurrentRatio );
+    static bool IsDoctorResourcesLevelReached    ( double rPreviousRatio, double rCurrentRatio );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::set< MT_Float >       T_LevelSet;
+    typedef std::set< double >       T_LevelSet;
     typedef T_LevelSet::const_iterator CIT_LevelSet;
     //@}
     //! @name Helpers
@@ -54,7 +53,7 @@ private:
 
     //! @name Tools
     //@{
-    static bool IsLevelReached( const T_LevelSet& levels, MT_Float rPreviousRatio, MT_Float rCurrentRatio );
+    static bool IsLevelReached( const T_LevelSet& levels, double rPreviousRatio, double rCurrentRatio );
     //@}
 
 private:

@@ -197,7 +197,7 @@ void PHY_DotationStockContainer::ReadStock( xml::xistream& xis )
 // Name: PHY_DotationStockContainer::AddReservation
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationStockContainer::AddReservation( const PHY_DotationCategory& category, MT_Float rNbr )
+double PHY_DotationStockContainer::AddReservation( const PHY_DotationCategory& category, double rNbr )
 {
     CIT_StockMap it = stocks_.find( &category );
     assert( it != stocks_.end() );
@@ -208,7 +208,7 @@ MT_Float PHY_DotationStockContainer::AddReservation( const PHY_DotationCategory&
 // Name: PHY_DotationStockContainer::RemoveReservation
 // Created: NLD 2005-02-11
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::RemoveReservation( const PHY_DotationCategory& category, MT_Float rNbr )
+void PHY_DotationStockContainer::RemoveReservation( const PHY_DotationCategory& category, double rNbr )
 {
     CIT_StockMap it = stocks_.find( &category );
     assert( it != stocks_.end() );
@@ -219,7 +219,7 @@ void PHY_DotationStockContainer::RemoveReservation( const PHY_DotationCategory& 
 // Name: PHY_DotationStockContainer::GetValue
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationStockContainer::GetValue( const PHY_DotationCategory& category ) const
+double PHY_DotationStockContainer::GetValue( const PHY_DotationCategory& category ) const
 {
     CIT_StockMap it = stocks_.find( &category );
     if( it == stocks_.end() )
@@ -245,12 +245,12 @@ PHY_DotationStock* PHY_DotationStockContainer::GetStock( const PHY_DotationCateg
 // -----------------------------------------------------------------------------
 PHY_DotationStock* PHY_DotationStockContainer::AddStock( const PHY_DotationCategory& category, xml::xistream& xis)
 {
-    MT_Float rValue;
+    double rValue;
     xis >> xml::attribute( "quantity", rValue );
     if( rValue < 0 )
         xis.error( "stock: quantity < 0" );
 
-    const MT_Float rThresholdRatio = pRoleSupply_->GetPion().GetType().GetUnitType().GetStockLogisticThresholdRatio( category.GetLogisticType() );
+    const double rThresholdRatio = pRoleSupply_->GetPion().GetType().GetUnitType().GetStockLogisticThresholdRatio( category.GetLogisticType() );
 
     PHY_DotationStock*& pStock = stocks_[ &category ];
     if( !pStock )
@@ -284,12 +284,12 @@ void PHY_DotationStockContainer::Resupply()
 // Name: PHY_DotationStockContainer::Resupply
 // Created: SBO 2005-12-12
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::Resupply( const PHY_DotationCategory& category, MT_Float rNbr )
+void PHY_DotationStockContainer::Resupply( const PHY_DotationCategory& category, double rNbr )
 {
     PHY_DotationStock*& pStock = stocks_[ &category ];
     if( !pStock )
     {
-        const MT_Float rThresholdRatio = pRoleSupply_->GetPion().GetType().GetUnitType().GetStockLogisticThresholdRatio( category.GetLogisticType() );
+        const double rThresholdRatio = pRoleSupply_->GetPion().GetType().GetUnitType().GetStockLogisticThresholdRatio( category.GetLogisticType() );
         pStock = new PHY_DotationStock( *this, category, rThresholdRatio, rNbr, bInfiniteDotations_ );
     }
     else
@@ -300,8 +300,8 @@ namespace
 {
     struct T_StockData
     {
-        MT_Float rVolume_;
-        MT_Float rWeight_;
+        double rVolume_;
+        double rWeight_;
     };
     typedef std::map < const PHY_DotationNature*, T_StockData > T_NatureStockData;
     typedef T_NatureStockData::const_iterator                   CIT_NatureStockData;
@@ -317,8 +317,8 @@ namespace
                 {
                     T_StockData& stockData = stockCapacities_[ pStockTransporterNature ];
 
-                    MT_Float rWeight = 0.;
-                    MT_Float rVolume = 0.;
+                    double rWeight = 0.;
+                    double rVolume = 0.;
                     composante.GetType().GetStockTransporterCapacity( rWeight, rVolume );
 
                     stockData.rVolume_ += rVolume;
@@ -430,7 +430,7 @@ void PHY_DotationStockContainer::SendFullState( client::LogSupplyState& asn ) co
 // Name: PHY_DotationStockContainer::NotifyDotationChanged
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::NotifyDotationChanged( const PHY_DotationStock& dotationStock, MT_Float rDelta )
+void PHY_DotationStockContainer::NotifyDotationChanged( const PHY_DotationStock& dotationStock, double rDelta )
 {
     stocksChanged_.insert( &dotationStock );
     if( rDelta > 0 )

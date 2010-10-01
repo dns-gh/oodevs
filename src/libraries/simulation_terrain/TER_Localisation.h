@@ -56,7 +56,7 @@ public:
              TER_Localisation( const TER_Localisation& );
              TER_Localisation( E_LocationType, const T_PointVector& );
              TER_Localisation( const TER_Polygon&  );
-             TER_Localisation( const MT_Vector2D& vPos, MT_Float rRadius );
+             TER_Localisation( const MT_Vector2D& vPos, double rRadius );
     virtual ~TER_Localisation();
     //@}
 
@@ -102,13 +102,13 @@ public:
     //-------------------------------------------------------------------------
     //@{
     const MT_Rect& GetBoundingBox               () const;
-    MT_Float       GetArea                      () const;
-    MT_Float       GetLength                    () const;
-    MT_Float       GetIntersectionAreaWithCircle( const MT_Circle& circle ) const;
+    double       GetArea                      () const;
+    double       GetLength                    () const;
+    double       GetIntersectionAreaWithCircle( const MT_Circle& circle ) const;
 
-    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const; // NB : return true if the circle is inside
-    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius, T_PointVector& shape ) const; // NB : return true if the circle is inside
-    bool IsInside             ( const MT_Vector2D& vPos, MT_Float rPrecision = rPrecision_ ) const;
+    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const; // NB : return true if the circle is inside
+    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, T_PointVector& shape ) const; // NB : return true if the circle is inside
+    bool IsInside             ( const MT_Vector2D& vPos, double rPrecision = rPrecision_ ) const;
     bool IsOnBorder           ( const MT_Vector2D& vPos ) const;
     bool IsIntersecting       ( const TER_Localisation& localisation ) const;
     bool IsIntersecting       ( const TER_Polygon& polygon ) const;
@@ -116,14 +116,14 @@ public:
     bool Intersect2D          ( const MT_Line& line ) const;
 
     bool ComputeNearestPoint            ( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const; // Calcule la position de la localisation la plus proche de vSrc
-    bool ComputeNearestPoint            ( const TER_Localisation& localisation, MT_Vector2D& vResult, MT_Float& rMinDistance ) const;
+    bool ComputeNearestPoint            ( const TER_Localisation& localisation, MT_Vector2D& vResult, double& rMinDistance ) const;
     void GetPointsClippedByPolygon      ( const TER_Polygon& polygon, T_PointVector& clippedPointVector ) const;
     void GetPointsClippedByLocalisation ( const TER_Localisation& localisation, T_PointVector& clippedPointVector ) const;
     void GetPointsClippedBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, const MT_Vector2D& vDroitesIntersection, T_PointVector& clippedPointVector ) const;
     void GetPointsClippedBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, T_PointVector& clippedPointVector ) const;
 
     void Split    ( unsigned int nNbrParts, T_LocalisationPtrVector& locVector ) const;
-    void Scale    ( MT_Float rDist );
+    void Scale    ( double rDist );
     void Convexify();
 
     MT_Vector2D ComputeBarycenter() const;
@@ -138,7 +138,7 @@ public:
 
     // Circle <---- $$$ C'est de la grosse merde en plastique, vraiment
           bool         WasACircle     () const;
-          MT_Float     GetCircleRadius() const;
+          double     GetCircleRadius() const;
     const MT_Vector2D& GetCircleCenter() const;
     //@}
 
@@ -186,10 +186,10 @@ protected:
     // Circle
     bool         bWasCircle_;
     MT_Vector2D  vCircleCenter_;
-    MT_Float     rCircleRadius_;
+    double     rCircleRadius_;
 
 private:
-    static const MT_Float rPrecision_;
+    static const double rPrecision_;
 };
 
 #include "TER_Localisation.inl"

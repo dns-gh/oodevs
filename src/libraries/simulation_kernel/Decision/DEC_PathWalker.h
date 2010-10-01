@@ -71,8 +71,8 @@ public:
 
     //! @name Tools
     //@{
-    bool        ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
-    MT_Vector2D ExtrapolatePosition         ( const MT_Vector2D& position, const MT_Float rSpeed, const MT_Float rTime, const bool bBoundOnPath ) const;
+    bool        ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
+    MT_Vector2D ExtrapolatePosition         ( const MT_Vector2D& position, const double rSpeed, const double rTime, const bool bBoundOnPath ) const;
     bool        IsMovingOn                  ( const DEC_Path_ABC& path ) const;
     //@}
 
@@ -132,8 +132,8 @@ private:
 
     //! @name Tools
     //@{
-    bool TryToMoveToNextStep        ( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, MT_Float& rTimeRemaining, bool bFirstMove );
-    bool TryToMoveTo                ( const DEC_PathResult& path, const MT_Vector2D& vNewPosTmp, MT_Float& rTimeRemaining );
+    bool TryToMoveToNextStep        ( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining, bool bFirstMove );
+    bool TryToMoveTo                ( const DEC_PathResult& path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining );
     void ComputeObjectsCollision    ( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet );
     void ComputeCurrentSpeed        ();
     void InitializeEnvironment      ( const DEC_PathResult& path );
@@ -152,8 +152,8 @@ private:
     MIL_Effect_Move effectMove_;
     MT_Vector2D     vNewPos_;
     MT_Vector2D     vNewDir_;
-    MT_Float        rCurrentSpeed_;
-    MT_Float        rWalkedDistance_;
+    double        rCurrentSpeed_;
+    double        rWalkedDistance_;
 
     bool            bForcePathCheck_;
     bool            bHasMoved_;

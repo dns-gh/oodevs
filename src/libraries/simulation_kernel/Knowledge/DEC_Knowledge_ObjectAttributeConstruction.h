@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectAttributeConstruction_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 class ConstructionAttribute;
@@ -60,7 +59,7 @@ private:
     //! @name Data members
     //@{
     const ConstructionAttribute* attr_;
-    MT_Float rConstructionPercentage_;
+    double rConstructionPercentage_;
     unsigned int nNbrDotation_;
     unsigned int nDotationType_;
     //@}

@@ -42,7 +42,7 @@ DEC_Gen_Object::E_DemolitionTargetType DEC_Gen_Object::GetObstacleType() const
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_Gen_Object::GetDensity() const
+double DEC_Gen_Object::GetDensity() const
 {
     return rDensity_;
 }

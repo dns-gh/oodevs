@@ -154,7 +154,7 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
 // Name: PHY_RolePionLOG_Supply::GetStockAvailablity
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePionLOG_Supply::GetStockAvailablity( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const
+double PHY_RolePionLOG_Supply::GetStockAvailablity( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const
 {
 
 
@@ -167,7 +167,7 @@ MT_Float PHY_RolePionLOG_Supply::GetStockAvailablity( const PHY_DotationCategory
 // Name: PHY_RolePionLOG_Supply::AddStockReservation
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePionLOG_Supply::AddStockReservation( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue )
+double PHY_RolePionLOG_Supply::AddStockReservation( const PHY_DotationCategory& dotationCategory, double rRequestedValue )
 {
     assert( pStocks_ );
     return pStocks_->AddReservation( dotationCategory, rRequestedValue );
@@ -177,7 +177,7 @@ MT_Float PHY_RolePionLOG_Supply::AddStockReservation( const PHY_DotationCategory
 // Name: PHY_RolePionLOG_Supply::RemoveStockReservation
 // Created: NLD 2005-02-11
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::RemoveStockReservation( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue )
+void PHY_RolePionLOG_Supply::RemoveStockReservation( const PHY_DotationCategory& dotationCategory, double rRequestedValue )
 {
     assert( pStocks_ );
     return pStocks_->RemoveReservation( dotationCategory, rRequestedValue );
@@ -243,7 +243,7 @@ public:
 // Name: PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio() const
+double PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio() const
 {
     unsigned int nNbrTotal                  = 0;
     unsigned int nNbrAvailableAllowedToWork = 0;
@@ -263,7 +263,7 @@ MT_Float PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio() const
     }
     if( nNbrTotal == 0 )
         return 1.;
-    return (MT_Float)nNbrAvailableAllowedToWork / (MT_Float)nNbrTotal;
+    return (double)nNbrAvailableAllowedToWork / (double)nNbrTotal;
 }
 
 // -----------------------------------------------------------------------------
@@ -272,7 +272,7 @@ MT_Float PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio() const
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::StartUsingForLogistic( PHY_ComposantePion& composante )
 {
-    MT_Float rTransporterRatio = GetConvoyTransportersAvailabilityRatio();
+    double rTransporterRatio = GetConvoyTransportersAvailabilityRatio();
 
     bHasChanged_ = true;
     composante.StartUsingForLogistic();
@@ -331,7 +331,7 @@ void PHY_RolePionLOG_Supply::ResupplyStocks()
 // Name: PHY_RolePionLOG_Supply::ResupplyStocks
 // Created: SBO 2005-12-12
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::ResupplyStocks( const PHY_DotationCategory& category, MT_Float rNbr )
+void PHY_RolePionLOG_Supply::ResupplyStocks( const PHY_DotationCategory& category, double rNbr )
 {
     assert( pStocks_ );
     pStocks_->Resupply( category, rNbr );
@@ -345,7 +345,7 @@ void PHY_RolePionLOG_Supply::ResupplyStocks( const PHY_DotationCategory& categor
 // Name: PHY_RolePionLOG_Supply::GetStockValue
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePionLOG_Supply::GetStockValue( const PHY_DotationCategory& category ) const
+double PHY_RolePionLOG_Supply::GetStockValue( const PHY_DotationCategory& category ) const
 {
     assert( pStocks_ );
     return pStocks_->GetValue( category );

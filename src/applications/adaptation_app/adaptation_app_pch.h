@@ -9,10 +9,10 @@
 //
 //*****************************************************************************
 
-#pragma warning( disable : 4231 )
-
 #ifndef __ADN_APPLICATION_PCH_H_
 #define __ADN_APPLICATION_PCH_H_
+
+#pragma warning( disable : 4231 4355 )
 
 #pragma warning( push, 0 )
 #include <qaction.h>
@@ -94,7 +94,6 @@
 #include <qwizard.h>
 #pragma warning( pop )
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Logger.h"
 
 #include <xeumeuleu/xml.hpp>

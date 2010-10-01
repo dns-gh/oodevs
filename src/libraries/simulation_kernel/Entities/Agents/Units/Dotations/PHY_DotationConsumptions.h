@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationConsumptions_h_
 #define __PHY_DotationConsumptions_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 namespace xml
 {
     class xistream;
@@ -32,7 +30,7 @@ class PHY_DotationConsumptions : private boost::noncopyable
 public:
     //! @name types
     //@{
-    typedef std::map< const PHY_DotationCategory*, MT_Float > T_ConsumptionValue;
+    typedef std::map< const PHY_DotationCategory*, double > T_ConsumptionValue;
     typedef T_ConsumptionValue::const_iterator                CIT_ConsumptionValue;
     //@}
 

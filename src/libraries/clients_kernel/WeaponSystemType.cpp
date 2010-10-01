@@ -46,8 +46,7 @@ WeaponSystemType::~WeaponSystemType()
 // -----------------------------------------------------------------------------
 void WeaponSystemType::ReadDirectFire( xml::xistream& xis )
 {
-    xis >> xml::optional
-        >> xml::start( "direct-fire" )
+    xis >> xml::optional >> xml::start( "direct-fire" )
             >> xml::list( "hit-probabilities", *this, &WeaponSystemType::ReadDirectFireHitProbabilities )
         >> xml::end;
 }
@@ -60,8 +59,7 @@ void WeaponSystemType::ReadDirectFireHitProbabilities( xml::xistream& xis )
 {
     std::string targetType;
     xis >> xml::attribute( "target", targetType );
-
-    MT_InterpolatedFunction< MT_Float >* phFunction = 0;
+    MT_InterpolatedFunction< double >* phFunction = 0;
     tools::Iterator< const kernel::VolumeType& > it = volumes_.CreateIterator();
     while( it.HasMoreElements() )
     {
@@ -72,7 +70,6 @@ void WeaponSystemType::ReadDirectFireHitProbabilities( xml::xistream& xis )
             break;
         }
     }
-
     xis >> xml::list( "hit-probability", *this, &WeaponSystemType::ReadDirectFireHitProbability, phFunction );
 }
 
@@ -80,7 +77,7 @@ void WeaponSystemType::ReadDirectFireHitProbabilities( xml::xistream& xis )
 // Name: WeaponSystemType::ReadDirectFireHitProbability
 // Created: SBO 2008-08-14
 // -----------------------------------------------------------------------------
-void WeaponSystemType::ReadDirectFireHitProbability( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >* phFunction )
+void WeaponSystemType::ReadDirectFireHitProbability( xml::xistream& xis, MT_InterpolatedFunction< double >* phFunction )
 {
     unsigned int distance = 0;
     float percentage = 0;
@@ -137,7 +134,7 @@ unsigned int WeaponSystemType::GetMinRange() const
 // Name: WeaponSystemType::GetEfficientRange
 // Created: JSR 2010-06-07
 // -----------------------------------------------------------------------------
-unsigned int WeaponSystemType::GetEfficientRange( unsigned int volumeId, MT_Float ph ) const
+unsigned int WeaponSystemType::GetEfficientRange( unsigned int volumeId, double ph ) const
 {
     T_HitProbabilities::const_iterator it = phs_.find( volumeId );
     if( it != phs_.end() )

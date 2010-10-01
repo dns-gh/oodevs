@@ -140,7 +140,7 @@ const MIL_AgentType_ABC* DEC_Knowledge_AgentPerceptionDataRecognition::GetAgentT
 // Name: DEC_Knowledge_AgentPerceptionDataRecognition::GetOperationalState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_AgentPerceptionDataRecognition::GetOperationalState() const
+double DEC_Knowledge_AgentPerceptionDataRecognition::GetOperationalState() const
 {
     return rOperationalState_;
 }
@@ -149,7 +149,7 @@ MT_Float DEC_Knowledge_AgentPerceptionDataRecognition::GetOperationalState() con
 // Name: DEC_Knowledge_AgentPerceptionDataRecognition::GetMajorOperationalState
 // Created: NLD 2005-11-30
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_AgentPerceptionDataRecognition::GetMajorOperationalState() const
+double DEC_Knowledge_AgentPerceptionDataRecognition::GetMajorOperationalState() const
 {
     return rMajorOperationalState_;
 }

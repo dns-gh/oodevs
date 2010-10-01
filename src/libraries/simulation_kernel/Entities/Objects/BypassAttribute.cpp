@@ -116,7 +116,7 @@ void BypassAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribu
 // Name: BypassAttribute::Update
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void BypassAttribute::Update( MT_Float progress )
+void BypassAttribute::Update( double progress )
 {
     rBypass_ += progress;
     NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
@@ -136,7 +136,7 @@ BypassAttribute& BypassAttribute::operator=( const BypassAttribute& rhs )
 // Name: BypassAttribute::GetState
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-MT_Float BypassAttribute::GetState() const
+double BypassAttribute::GetState() const
 {
     return rBypass_;
 }

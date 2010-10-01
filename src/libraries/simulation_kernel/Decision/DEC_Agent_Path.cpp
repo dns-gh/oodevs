@@ -200,7 +200,7 @@ void DEC_Agent_Path::Initialize( const T_PointVector& points )
 // Name: DEC_Agent_Path::GetUnitMaxSlope
 // Created: RPD 2009-11-23
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_Path::GetUnitMajorWeight() const
+double DEC_Agent_Path::GetUnitMajorWeight() const
 {
     return queryMaker_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
 }
@@ -319,7 +319,7 @@ DEC_Agent_Path::IT_PathPointList DEC_Agent_Path::GetPreviousPathPointOnDifferent
 // -----------------------------------------------------------------------------
 void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent )
 {
-    MT_Float rDistanceLeft = spottedPathPoint->GetTypePoint() == DEC_Rep_PathPoint::eTypePointLima ?
+    double rDistanceLeft = spottedPathPoint->GetTypePoint() == DEC_Rep_PathPoint::eTypePointLima ?
                              queryMaker_.GetType().GetDistanceAvantLima() :
                              queryMaker_.GetType().GetDistanceAvantPoint( spottedPathPoint->GetTypeTerrain() );
 
@@ -344,7 +344,7 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
         // calcul de la distance "mangée" par le parcours de ce segment
         const MT_Vector2D& vPreviousPos = (*itPrev)->GetPos();
               MT_Vector2D  vTmp         = vPreviousPos - vCurrentPos;
-        const MT_Float     vTmpMag      = vTmp.Magnitude();
+        const double     vTmpMag      = vTmp.Magnitude();
 
         rDistanceLeft -= vTmpMag;
         if( rDistanceLeft == 0. )
@@ -376,9 +376,9 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
 // Name: DEC_Agent_Path::InsertPointAvant
 // Created: JVT 02-12-04
 //----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPointAvant )
+void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, double& rDistSinceLastPointAvant )
 {
-    static const MT_Float rDist = 2000.;
+    static const double rDist = 2000.;
     if( rDistSinceLastPointAvant > rDist )
     {
         InsertPointAvant( spottedPathPoint, itCurrent );
@@ -390,9 +390,9 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
 // Name: DEC_Agent_Path::InsertPoint
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------
-bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint )
+bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, double& rDistSinceLastPoint )
 {
-    static MT_Float rDist = 500.;
+    static double rDist = 500.;
     if( rDistSinceLastPoint > rDist )
     {
         resultList_.insert( itCurrent, spottedPathPoint );
@@ -406,7 +406,7 @@ bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< DEC_PathPoint > spottedPath
 // Name: DEC_Agent_Path::Shit
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint, MT_Float& rDistSinceLastPointAvant )
+void DEC_Agent_Path::InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, double& rDistSinceLastPoint, double& rDistSinceLastPointAvant )
 {
     if( InsertPoint( spottedPathPoint, itCurrent, rDistSinceLastPoint ) )
         InsertPointAvant( spottedPathPoint, itCurrent, rDistSinceLastPointAvant );
@@ -418,8 +418,8 @@ void DEC_Agent_Path::InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint 
 //-----------------------------------------------------------------------------
 void DEC_Agent_Path::InsertPointAvants()
 {
-    MT_Float rDistSinceLastPointAvant = std::numeric_limits< MT_Float >::max();
-    MT_Float rDistSinceLastPoint      = std::numeric_limits< MT_Float >::max();
+    double rDistSinceLastPointAvant = std::numeric_limits< double >::max();
+    double rDistSinceLastPoint      = std::numeric_limits< double >::max();
 
     TerrainData nObjectTypesBefore;
 
@@ -431,9 +431,9 @@ void DEC_Agent_Path::InsertPointAvants()
 
         if( pPrevPoint )
         {
-            if( rDistSinceLastPointAvant != std::numeric_limits< MT_Float >::max() )
+            if( rDistSinceLastPointAvant != std::numeric_limits< double >::max() )
                 rDistSinceLastPointAvant += pPrevPoint->GetPos().Distance( current.GetPos() );
-            if( rDistSinceLastPoint != std::numeric_limits< MT_Float >::max() )
+            if( rDistSinceLastPoint != std::numeric_limits< double >::max() )
                 rDistSinceLastPoint += pPrevPoint->GetPos().Distance( current.GetPos() );
         }
 

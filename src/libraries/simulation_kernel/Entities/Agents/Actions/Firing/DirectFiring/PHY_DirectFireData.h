@@ -55,7 +55,7 @@ public:
     //@}
 
 public:
-     PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType, E_FiringMode nFiringMode = eFiringModeNormal, MT_Float rPercentageComposantesToUse = 1., const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
+     PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType, E_FiringMode nFiringMode = eFiringModeNormal, double rPercentageComposantesToUse = 1., const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
     virtual ~PHY_DirectFireData();
 
     //! @name Operations
@@ -103,7 +103,7 @@ private:
         //@{
         void        AddWeapon      ( PHY_Weapon& weapon );
         void        RemoveWeapon   ( PHY_Weapon& weapon );
-        bool        GetBestWeapon  ( MT_Float& rBestScore, const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pBestWeapon ) const;
+        bool        GetBestWeapon  ( double& rBestScore, const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pBestWeapon ) const;
         bool        GetRandomWeapon( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pRandomWeapon ) const;
         PHY_Weapon* GetUnusedWeapon() const;
         //@}
@@ -122,7 +122,7 @@ private:
     const PHY_AmmoDotationClass* pAmmoDotationClass_;
     const E_ComposanteFiringType nComposanteFiringType_;
     const E_FiringMode           nFiringMode_;
-    const MT_Float               rPercentageComposantesToUse_;
+    const double               rPercentageComposantesToUse_;
           T_ComposanteWeaponsMap composantesWeapons_;
           bool                   bHasWeaponsReady_;
           bool                   bHasWeaponsNotReady_;

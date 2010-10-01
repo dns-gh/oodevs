@@ -73,7 +73,7 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
 // Name: DEC_Population_Path::GetCostOutsideOfChanneling
 // Created: NLD 2007-03-07
 // -----------------------------------------------------------------------------
-MT_Float DEC_Population_Path::GetCostOutsideOfChanneling() const
+double DEC_Population_Path::GetCostOutsideOfChanneling() const
 {
     return pathClass_.GetCostOutsideOfChanneling();
 }

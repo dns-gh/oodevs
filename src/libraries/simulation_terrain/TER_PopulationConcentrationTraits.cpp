@@ -16,11 +16,11 @@
 
 namespace
 {
-    pathfind::SegmentIntersecter< MT_Float > Intersector( const MT_Rect& boundingBox )
+    pathfind::SegmentIntersecter< double > Intersector( const MT_Rect& boundingBox )
     {
-        return pathfind::SegmentIntersecter< MT_Float >(
-            geometry::Point2< MT_Float >( boundingBox.GetLeft(), boundingBox.GetBottom() ),
-            geometry::Point2< MT_Float >( boundingBox.GetRight(), boundingBox.GetTop() ) );
+        return pathfind::SegmentIntersecter< double >(
+            geometry::Point2< double >( boundingBox.GetLeft(), boundingBox.GetBottom() ),
+            geometry::Point2< double >( boundingBox.GetRight(), boundingBox.GetTop() ) );
     };
 }
 
@@ -28,7 +28,7 @@ namespace
 // Name: TER_PopulationConcentrationTraits::CompareOnX
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-int TER_PopulationConcentrationTraits::CompareOnX( MT_Float rValue, const T_Value& pConcentration ) const
+int TER_PopulationConcentrationTraits::CompareOnX( double rValue, const T_Value& pConcentration ) const
 {
     return Intersector( pConcentration->GetLocation().GetBoundingBox() ).CompareOnX( rValue );
 }
@@ -37,7 +37,7 @@ int TER_PopulationConcentrationTraits::CompareOnX( MT_Float rValue, const T_Valu
 // Name: TER_PopulationConcentrationTraits::CompareOnY
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-int TER_PopulationConcentrationTraits::CompareOnY( MT_Float rValue, const T_Value& pConcentration ) const
+int TER_PopulationConcentrationTraits::CompareOnY( double rValue, const T_Value& pConcentration ) const
 {
     return Intersector( pConcentration->GetLocation().GetBoundingBox() ).CompareOnY( rValue );
 }

@@ -88,24 +88,24 @@ public:
 
     //! @name Accessors
     //@{
-    MT_Float GetMaxSpeed           () const;
-    MT_Float GetMaxSpeed           ( const TerrainData& data ) const;
-    MT_Float GetMaxSpeed           ( const MIL_Object_ABC& object ) const;
-    MT_Float GetSensorRotationAngle() const;
-    MT_Float GetWeight             () const;
-    MT_Float GetMaxSlope           () const;
+    double GetMaxSpeed           () const;
+    double GetMaxSpeed           ( const TerrainData& data ) const;
+    double GetMaxSpeed           ( const MIL_Object_ABC& object ) const;
+    double GetSensorRotationAngle() const;
+    double GetWeight             () const;
+    double GetMaxSlope           () const;
     //@}
 
     //! @name Load/unload - Transport
     //@{
     bool     CanTransportHumans             () const;
-    MT_Float GetNbrHumansLoadedPerTimeStep  () const;
-    MT_Float GetNbrHumansUnloadedPerTimeStep() const;
+    double GetNbrHumansLoadedPerTimeStep  () const;
+    double GetNbrHumansUnloadedPerTimeStep() const;
 
     bool     CanTransportPion                           () const;
-    MT_Float GetPionTransporterWeightCapacity           () const;
-    MT_Float GetPionTransporterWeightLoadedPerTimeStep  () const;
-    MT_Float GetPionTransporterWeightUnloadedPerTimeStep() const;
+    double GetPionTransporterWeightCapacity           () const;
+    double GetPionTransporterWeightLoadedPerTimeStep  () const;
+    double GetPionTransporterWeightUnloadedPerTimeStep() const;
     //@}
 
     //! @name Objects
@@ -116,22 +116,22 @@ public:
     bool CanDemine   ( const MIL_ObjectType_ABC& objectType ) const;
     bool CanBypass   ( const MIL_ObjectType_ABC& objectType, bool bObjectIsMined ) const;
 
-    MT_Float GetConstructionTime( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef ) const;
-    MT_Float GetDestructionTime ( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef ) const;
-    MT_Float GetMiningTime      ( const MIL_ObjectType_ABC& objectType ) const;
-    MT_Float GetDeminingTime    ( const MIL_ObjectType_ABC& objectType ) const;
-    MT_Float GetBypassTime      ( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef, bool bObjectIsMined ) const;
+    double GetConstructionTime( const MIL_ObjectType_ABC& objectType, double rSizeCoef ) const;
+    double GetDestructionTime ( const MIL_ObjectType_ABC& objectType, double rSizeCoef ) const;
+    double GetMiningTime      ( const MIL_ObjectType_ABC& objectType ) const;
+    double GetDeminingTime    ( const MIL_ObjectType_ABC& objectType ) const;
+    double GetBypassTime      ( const MIL_ObjectType_ABC& objectType, double rSizeCoef, bool bObjectIsMined ) const;
     //@}
 
     //! @name Operations
     //@{
-    virtual MT_Float GetDangerosity                ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rDistBtwSourceAndTarget ) const;
-    virtual MT_Float GetMaxRangeToFireOn           ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH               ) const;
-    virtual MT_Float GetMinRangeToFireOn           ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH               ) const;
-    virtual MT_Float GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
-    virtual MT_Float GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
-            MT_Float GetMaxRangeToIndirectFire     ( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
-            MT_Float GetMinRangeToIndirectFire     ( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
+    virtual double GetDangerosity                ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwSourceAndTarget ) const;
+    virtual double GetMaxRangeToFireOn           ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH               ) const;
+    virtual double GetMinRangeToFireOn           ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH               ) const;
+    virtual double GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
+    virtual double GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
+            double GetMaxRangeToIndirectFire     ( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
+            double GetMinRangeToIndirectFire     ( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     virtual double   GetAttritionIndexComposante   ( int idMaterial ) const;
     virtual double   GetMaxRangeToFire             ( const MIL_Agent_ABC&  pion, double rWantedPH ) const;
     //@}
@@ -147,9 +147,9 @@ public:
     bool     CanRepair              () const;
     bool     CanHaul                () const;
     bool     CanHaul                ( const PHY_ComposanteTypePion& type ) const;
-    MT_Float GetHaulerWeightCapacity() const;
-    MT_Float GetHaulerLoadingTime   () const;
-    MT_Float GetHaulerUnloadingTime () const;
+    double GetHaulerWeightCapacity() const;
+    double GetHaulerLoadingTime   () const;
+    double GetHaulerUnloadingTime () const;
 
     const PHY_BreakdownType& GetRandomBreakdownType   () const;
     const PHY_BreakdownType& GetAttritionBreakdownType() const;
@@ -166,11 +166,11 @@ public:
     bool     CanDiagnoseHumans                           () const;
     bool     CanSortHumans                               () const;
     unsigned int     GetAmbulanceCollectionCapacity              () const;
-    MT_Float GetNbrHumansLoadedForCollectionPerTimeStep  () const;
-    MT_Float GetNbrHumansUnloadedForCollectionPerTimeStep() const;
+    double GetNbrHumansLoadedForCollectionPerTimeStep  () const;
+    double GetNbrHumansUnloadedForCollectionPerTimeStep() const;
     unsigned int     GetAmbulanceEvacuationCapacity              () const;
-    MT_Float GetNbrHumansLoadedForEvacuationPerTimeStep  () const;
-    MT_Float GetNbrHumansUnloadedForEvacuationPerTimeStep() const;
+    double GetNbrHumansLoadedForEvacuationPerTimeStep  () const;
+    double GetNbrHumansUnloadedForEvacuationPerTimeStep() const;
     unsigned int     GetHealingTime                              ( const Human_ABC& human ) const;
     unsigned int     Heal                                        (       Human_ABC& human ) const;
     //@}
@@ -178,7 +178,7 @@ public:
     //! @name Logistic - supply
     //@{
           bool                 CanTransportStock               ( const PHY_DotationCategory& dotationCategory ) const;  // Indépendamment du fait que la composante peut faire partie d'un convoi
-          void                 GetStockTransporterCapacity     ( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
+          void                 GetStockTransporterCapacity     ( double& rWeightMax, double& rVolumeMax ) const;
           unsigned int                 GetStockTransporterLoadingTime  () const;
           unsigned int                 GetStockTransporterUnloadingTime() const;
     const PHY_DotationNature*  GetStockTransporterNature       () const;
@@ -207,7 +207,7 @@ private:
     typedef std::map< const PHY_WeaponType*, bool > T_WeaponTypeMap;
     typedef T_WeaponTypeMap::const_iterator         CIT_WeaponTypeMap;
 
-    typedef std::map< const PHY_SensorType*, MT_Float > T_SensorTypeMap;
+    typedef std::map< const PHY_SensorType*, double > T_SensorTypeMap;
     typedef T_SensorTypeMap::const_iterator             CIT_SensorTypeMap;
 
     typedef std::set< const PHY_RadarType* > T_RadarTypeSet;
@@ -241,10 +241,10 @@ private:
     friend struct sSummarizer;
     struct sBreakdownTypeProbability
     {
-        sBreakdownTypeProbability( const PHY_BreakdownType& breakdown, MT_Float rProbabilityBound );
+        sBreakdownTypeProbability( const PHY_BreakdownType& breakdown, double rProbabilityBound );
 
         const PHY_BreakdownType* pBreakdownType_;
-              MT_Float           rProbabilityBound_;
+              double           rProbabilityBound_;
     };
     typedef std::vector< sBreakdownTypeProbability >         T_BreakdownTypeProbabilityVector;
     typedef T_BreakdownTypeProbabilityVector::const_iterator CIT_BreakdownTypeProbabilityVector;
@@ -313,34 +313,34 @@ private:
 private:
     const MIL_Time_ABC&          time_;
     const PHY_Speeds             speeds_;
-          MT_Float               rMaxSlope_;
+          double               rMaxSlope_;
     const PHY_DotationCapacities dotationCapacities_;
           T_WeaponTypeMap        weaponTypes_;
           T_SensorTypeMap        sensorTypes_;
           T_RadarTypeSet         radarTypes_;
-          MT_Float               rSensorRotationAngle_;
+          double               rSensorRotationAngle_;
           T_ObjectDataVector     objectData_;
           T_ConsumptionVector    consumptions_;
 
     // Humans
-    MT_Float rNbrHumansLoadedPerTimeStep_;
-    MT_Float rNbrHumansUnloadedPerTimeStep_;
+    double rNbrHumansLoadedPerTimeStep_;
+    double rNbrHumansUnloadedPerTimeStep_;
 
     // Transport
-    MT_Float rPionTransporterWeightCapacity_;
-    MT_Float rPionTransporterWeightLoadedPerTimeStep_;
-    MT_Float rPionTransporterWeightUnloadedPerTimeStep_;
+    double rPionTransporterWeightCapacity_;
+    double rPionTransporterWeightLoadedPerTimeStep_;
+    double rPionTransporterWeightUnloadedPerTimeStep_;
 
-    MT_Float  rWeight_;
+    double  rWeight_;
 
     // Logistic : Breakdowns
     T_BreakdownTypeProbabilityVector randomBreakdownTypeProbabilities_;
     T_BreakdownTypeProbabilityVector attritionBreakdownTypeProbabilities_;
 
     // Logistic : maintenance
-    MT_Float            rHaulerWeightCapacity_;
-    MT_Float            rHaulerLoadingTime_;
-    MT_Float            rHaulerUnloadingTime_;
+    double            rHaulerWeightCapacity_;
+    double            rHaulerLoadingTime_;
+    double            rHaulerUnloadingTime_;
     T_NTICapabilitySet  ntiCapabilities_;
 
     // Logistic : medical $$$$$A SPLITTER
@@ -348,14 +348,14 @@ private:
     bool                    bCanCollectMentalDiseases_;
     bool                    bCanCollectContaminated_;
     unsigned int                    nAmbulanceCollectionCapacity_;
-    MT_Float                rNbrHumansLoadedForCollectionPerTimeStep_;
-    MT_Float                rNbrHumansUnloadedForCollectionPerTimeStep_;
+    double                rNbrHumansLoadedForCollectionPerTimeStep_;
+    double                rNbrHumansUnloadedForCollectionPerTimeStep_;
     T_WoundCapabilityVector woundEvacuationCapabilities_;
     bool                    bCanEvacuateMentalDiseases_;
     bool                    bCanEvacuateContaminated_;
     unsigned int                    nAmbulanceEvacuationCapacity_;
-    MT_Float                rNbrHumansLoadedForEvacuationPerTimeStep_;
-    MT_Float                rNbrHumansUnloadedForEvacuationPerTimeStep_;
+    double                rNbrHumansLoadedForEvacuationPerTimeStep_;
+    double                rNbrHumansUnloadedForEvacuationPerTimeStep_;
     T_WoundCapabilityVector woundHealingCapabilities_;
     bool                    bCanHealWounds_;
     bool                    bCanHealMentalDiseases_;
@@ -365,8 +365,8 @@ private:
 
     // Logistic : supply
     const PHY_DotationNature* pStockTransporterNature_;
-          MT_Float            rStockTransporterWeightCapacity_;
-          MT_Float            rStockTransporterVolumeCapacity_;
+          double            rStockTransporterWeightCapacity_;
+          double            rStockTransporterVolumeCapacity_;
 
     // Human Protections
     T_ListOfHumanProtection humanProtections_;

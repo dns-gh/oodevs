@@ -60,7 +60,7 @@ public:
     void     RegisterPushingFlow   ( MIL_PopulationFlow& flow );
     void     UnregisterPushingFlow ( MIL_PopulationFlow& flow );
 
-    MT_Float GetPullingFlowsDensity() const;
+    double GetPullingFlowsDensity() const;
     void     SetPullingFlowsDensity( const MIL_Object_ABC& splittingObject );
     //@}
 
@@ -72,7 +72,7 @@ public:
 
     virtual const TER_Localisation& GetLocation      () const;
     virtual       MT_Vector2D       GetSecuringPoint ( const MIL_Agent_ABC& securingAgent ) const;
-    virtual       MT_Vector2D       GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance, MT_Float rSeed ) const;
+    virtual       MT_Vector2D       GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const;
     //@}
 
     //! @name Network
@@ -124,7 +124,7 @@ private:
     T_FlowSet               pushingFlows_;
 
     const MIL_Object_ABC* pSplittingObject_;
-    MT_Float                  rPullingFlowsDensity_;
+    double                  rPullingFlowsDensity_;
 
     static MIL_IDManager idManager_;
 

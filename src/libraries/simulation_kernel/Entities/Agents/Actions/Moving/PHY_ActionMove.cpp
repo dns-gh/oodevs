@@ -116,7 +116,7 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
 {
     T_KnowledgeObjectVector knowledges;
 
-    const MT_Float rHeight = pion_.GetRole< PHY_RoleInterface_Location >().GetHeight();
+    const double rHeight = pion_.GetRole< PHY_RoleInterface_Location >().GetHeight();
 
     MIL_DangerousObjectFilter filter;
     pion_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
@@ -139,7 +139,7 @@ void PHY_ActionMove::AvoidObstacles()
 
     boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
 
-    MT_Float rDistanceCollision = 0.;
+    double rDistanceCollision = 0.;
 
     if( !role_.ComputeFutureObjectCollision( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), objectsToAvoid_, rDistanceCollision, pObjectColliding ) )
         return;

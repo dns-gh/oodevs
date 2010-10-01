@@ -50,8 +50,8 @@ class MIL_AutomateLOG : public MIL_Automate
 public:
     struct sDotationQuota
     {
-        MT_Float rQuota_;
-        MT_Float rQuotaThreshold_;
+        double rQuota_;
+        double rQuotaThreshold_;
     };
 
 public:
@@ -105,10 +105,10 @@ public:
     //@{
     void                     SupplyHandleRequest                ( PHY_SupplyDotationState& supplyDotationState );
     void                     SupplyHandleRequest                ( PHY_SupplyStockState&    supplyStockState    );
-    PHY_RoleInterface_Supply* SupplyGetStockPion                ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const;
+    PHY_RoleInterface_Supply* SupplyGetStockPion                ( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
     bool                     SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory ) const;
-    MT_Float                 SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const;
-    bool                     SupplyReturnStock                  ( const PHY_DotationCategory& dotationCategory, MT_Float rReturnedValue  ) const;
+    double                 SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
+    bool                     SupplyReturnStock                  ( const PHY_DotationCategory& dotationCategory, double rReturnedValue  ) const;
 
     void                     NotifyStockSupplyNeeded            ( const PHY_DotationCategory& dotationCategory );
     void                     NotifyStockSupplied                ( const PHY_SupplyStockState& supplyState );
@@ -117,8 +117,8 @@ public:
 
     //! @name Quotas
     //@{
-    MT_Float GetQuota    ( const PHY_DotationCategory& dotationCategory ) const;
-    void     ConsumeQuota( const PHY_DotationCategory& dotationCategory, MT_Float rQuotaConsumed );
+    double GetQuota    ( const PHY_DotationCategory& dotationCategory ) const;
+    void     ConsumeQuota( const PHY_DotationCategory& dotationCategory, double rQuotaConsumed );
     //@}
 
     //! @name Network

@@ -62,8 +62,8 @@ public:
     bool HasAttritions           () const;
 
     const PHY_AttritionData&                     GetAttritionData           ( const PHY_Protection& protectionTarget ) const;
-          MT_Float                               GetAttritionScore          ( const PHY_Protection& protectionTarget ) const;
-    const MT_Float                               GetUrbanAttritionModifer   ( unsigned materialId ) const;
+          double                               GetAttritionScore          ( const PHY_Protection& protectionTarget ) const;
+    const double                               GetUrbanAttritionModifer   ( unsigned materialId ) const;
     const PHY_DotationCategory_IndirectFire_ABC* GetIndirectFireData        () const;
 
     void ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
@@ -72,8 +72,8 @@ public:
 
     //! @name Packaging
     //@{
-    MT_Float GetWeight() const;
-    MT_Float GetVolume() const;
+    double GetWeight() const;
+    double GetVolume() const;
     //@}
 
     //! @name Operators
@@ -88,7 +88,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< PHY_AttritionData > T_AttritionVector;
-    typedef std::vector< MT_Float > T_UrbanAttritionVector;
+    typedef std::vector< double > T_UrbanAttritionVector;
     typedef std::map< int, double > T_UrbanMaterialAttritionMap;
     typedef T_UrbanMaterialAttritionMap::const_iterator CIT_UrbanMaterialAttritionMap;
     //@}
@@ -123,8 +123,8 @@ private:
     unsigned int        nMosID_;
 
     // Packaging
-    MT_Float rWeight_;
-    MT_Float rVolume_;
+    double rWeight_;
+    double rVolume_;
 
     T_AttritionVector                      attritions_;
     T_UrbanAttritionVector                 urbanAttritionFactors_;

@@ -22,13 +22,13 @@ class PHY_PerceptionRecoPointReco : public PHY_PerceptionLocalisation
 {
 public:
     const MT_Vector2D vCenter_;
-    MT_Float          rCurrentSize_;
-    const MT_Float    rFinalSize_;
-    const MT_Float    rGrowthSpeed_;
+    double          rCurrentSize_;
+    const double    rFinalSize_;
+    const double    rGrowthSpeed_;
     DEC_Decision_ABC& callerAgent_;
     bool              bProcessed_;
 
-    PHY_PerceptionRecoPointReco( const MT_Vector2D& vCenter, MT_Float rSize, MT_Float rGrowthSpeed, DEC_Decision_ABC& callerAgent )
+    PHY_PerceptionRecoPointReco( const MT_Vector2D& vCenter, double rSize, double rGrowthSpeed, DEC_Decision_ABC& callerAgent )
         : vCenter_      ( vCenter )
         , rCurrentSize_ ( 0.f )
         , rFinalSize_   ( rSize )
@@ -58,7 +58,7 @@ public:
 
     //! @name Add/Remove Points
     //@{
-    int  AddPoint   ( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DEC_Decision_ABC& callerAgent );
+    int  AddPoint   ( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent );
     void RemovePoint( int id );
 
     bool HasPointToHandle() const;

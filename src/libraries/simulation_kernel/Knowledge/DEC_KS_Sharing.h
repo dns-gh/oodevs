@@ -40,7 +40,7 @@ public:
     virtual void Talk   ( int currentTimeStep );
 
     void ShareFromSource( const MIL_KnowledgeGroup& source, unsigned int nShareTimeStep );
-    void ShareFromSource( const MIL_KnowledgeGroup& source, unsigned int nShareTimeStep, const MT_Vector2D& vSharedCircleCenter, MT_Float rSharedCircleRadius );
+    void ShareFromSource( const MIL_KnowledgeGroup& source, unsigned int nShareTimeStep, const MT_Vector2D& vSharedCircleCenter, double rSharedCircleRadius );
     //@}
 
     //! @name CheckPoints
@@ -55,11 +55,11 @@ public:
     {
         sShareSource();
         sShareSource( const MIL_KnowledgeGroup& shareSource );
-        sShareSource( const MIL_KnowledgeGroup& shareSource, const MT_Vector2D& vSharedCircleCenter, MT_Float rSharedCircleRadius );
+        sShareSource( const MIL_KnowledgeGroup& shareSource, const MT_Vector2D& vSharedCircleCenter, double rSharedCircleRadius );
 
         const MIL_KnowledgeGroup* pShareSource_;
               MT_Vector2D         vSharedCircleCenter_;
-              MT_Float            rSharedCircleRadius_;
+              double            rSharedCircleRadius_;
     };
 
     typedef std::multimap< unsigned int /*nShareTimeStep*/, sShareSource > T_ShareSourceMMap;

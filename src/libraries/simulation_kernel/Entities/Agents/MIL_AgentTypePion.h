@@ -68,9 +68,9 @@ public:
     //@{
     virtual const PHY_UnitType&               GetUnitType                      () const;
     const DEC_Model_ABC&                      GetModel                         () const;
-          MT_Float                            GetDistanceAvantPoint            ( const TerrainData& nType ) const;
-          MT_Float                            GetDistanceAvantLima             () const;
-          MT_Float                            GetRapForIncreasePerTimeStepValue() const;
+          double                            GetDistanceAvantPoint            ( const TerrainData& nType ) const;
+          double                            GetDistanceAvantLima             () const;
+          double                            GetRapForIncreasePerTimeStepValue() const;
     //@}
 
     //! @name Operators
@@ -99,7 +99,7 @@ private:
     typedef std::map< std::string, T_PionTypeAllocator, sCaseInsensitiveLess > T_PionTypeAllocatorMap;
     typedef T_PionTypeAllocatorMap::const_iterator                             CIT_PionTypeAllocatorMap;
 
-    typedef std::map< TerrainData, MT_Float >             T_DistanceAvantPointMap;
+    typedef std::map< TerrainData, double >             T_DistanceAvantPointMap;
     typedef T_DistanceAvantPointMap::const_iterator     CIT_DistanceAvantPointMap;
     //@}
 
@@ -123,8 +123,8 @@ private:
     const DEC_Model_ABC*    pModel_;
     const PHY_UnitType*     pUnitType_;
     T_DistanceAvantPointMap distancesAvantPoints_;
-    MT_Float                rDistanceAvantLimas_;
-    MT_Float                rRapForIncreasePerTimeStepValue_;
+    double                rDistanceAvantLimas_;
+    double                rRapForIncreasePerTimeStepValue_;
 
 private:
     static T_PionTypeAllocatorMap  pionTypeAllocators_;

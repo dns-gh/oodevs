@@ -54,7 +54,7 @@ void DEC_PathSection_ABC::Cancel()
 // Created: AGE 2005-02-28
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_PathSection_ABC::GetLength() const
+double DEC_PathSection_ABC::GetLength() const
 {
     return startPoint_.Distance( endPoint_ );
 }

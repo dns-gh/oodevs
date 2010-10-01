@@ -71,7 +71,7 @@ void MT_Polyline::Translate( const MT_Vector2D& vTranslation )
 // Name: MT_Polyline::Intersect2DWithCircle
 // Created: NLD 2003-07-25
 //-----------------------------------------------------------------------------
-bool MT_Polyline::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const
+bool MT_Polyline::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const
 {
     CIT_PointVector itFirstPoint = points_.begin();
     const MT_Vector2D* pPos1 = &*itFirstPoint;
@@ -91,7 +91,7 @@ bool MT_Polyline::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Fl
 // Name: MT_Polyline::Intersect2DWithCircle
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-bool MT_Polyline::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius, T_PointVector& shape ) const
+bool MT_Polyline::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, T_PointVector& shape ) const
 {
     shape.clear();
 
@@ -156,7 +156,7 @@ bool MT_Polyline::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Fl
 // Name: MT_Polyline::IsInside
 // Created: NLD 2003-07-25
 //-----------------------------------------------------------------------------
-bool MT_Polyline::IsInside( const MT_Vector2D& vPos, MT_Float rPrecision ) const
+bool MT_Polyline::IsInside( const MT_Vector2D& vPos, double rPrecision ) const
 {
     CIT_PointVector itFirstPoint = points_.begin();
     const MT_Vector2D* pPos1 = &*itFirstPoint;
@@ -177,7 +177,7 @@ bool MT_Polyline::IsInside( const MT_Vector2D& vPos, MT_Float rPrecision ) const
 // Name: MT_Polyline::Intersect2D
 // Created: NLD 2003-07-25
 //-----------------------------------------------------------------------------
-bool MT_Polyline::Intersect2D( const MT_Line& orientedLine, T_PointSet& collisions, MT_Float rPrecision ) const
+bool MT_Polyline::Intersect2D( const MT_Line& orientedLine, T_PointSet& collisions, double rPrecision ) const
 {
     return orientedLine.Intersect2D( points_, collisions, rPrecision );
 }
@@ -187,7 +187,7 @@ bool MT_Polyline::Intersect2D( const MT_Line& orientedLine, T_PointSet& collisio
 // Name: MT_Polyline::Intersect2D
 // Created: NLD 2003-07-25
 //-----------------------------------------------------------------------------
-bool MT_Polyline::Intersect2D( const MT_Line& line, MT_Float rPrecision ) const
+bool MT_Polyline::Intersect2D( const MT_Line& line, double rPrecision ) const
 {
     return line.Intersect2D( points_, rPrecision );
 }
@@ -218,14 +218,14 @@ bool MT_Polyline::Intersect2D( const MT_Droite& droite, T_PointSet& collisions )
 // Name: MT_Polyline::Magnitude
 // Created: NLD 2003-09-01
 // -----------------------------------------------------------------------------
-MT_Float MT_Polyline::Magnitude() const
+double MT_Polyline::Magnitude() const
 {
     if( points_.empty() )
         return 0.;
 
     CIT_PointVector itFirstPoint = points_.begin();
     const MT_Vector2D* pPos1 = &*itFirstPoint;
-    MT_Float rMagnitude = 0.;
+    double rMagnitude = 0.;
     for( CIT_PointVector itPoint = ++itFirstPoint; itPoint != points_.end(); ++itPoint )
     {
         const MT_Vector2D* pPos2 = &*itPoint;
@@ -240,7 +240,7 @@ MT_Float MT_Polyline::Magnitude() const
 // Name: MT_Polyline::GetPointAt
 // Created: NLD 2003-09-01
 // -----------------------------------------------------------------------------
-MT_Vector2D MT_Polyline::GetPointAt( MT_Float rDist ) const
+MT_Vector2D MT_Polyline::GetPointAt( double rDist ) const
 {
     assert( points_.size() > 1 );
 
@@ -252,7 +252,7 @@ MT_Vector2D MT_Polyline::GetPointAt( MT_Float rDist ) const
     MT_Vector2D vNext = *itNext;
     MT_Vector2D vDir = vNext - vCur;
 
-    MT_Float rDirLength = vDir.Magnitude();
+    double rDirLength = vDir.Magnitude();
     if( rDirLength )
         vDir /= rDirLength;
 

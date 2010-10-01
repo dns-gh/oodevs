@@ -288,7 +288,7 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationCollisi
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationFlow::UpdateRelevance()
 {
-    MT_Float rMaxLifeTime = pPopulationKnowledge_->GetKnowledgeGroup().GetType().GetKnowledgePopulationMaxLifeTime();
+    double rMaxLifeTime = pPopulationKnowledge_->GetKnowledgeGroup().GetType().GetKnowledgePopulationMaxLifeTime();
     if( pFlowKnown_ && pFlowKnown_->GetPopulation().HasDoneMagicMove() )
         rMaxLifeTime = 0.;
     for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it )

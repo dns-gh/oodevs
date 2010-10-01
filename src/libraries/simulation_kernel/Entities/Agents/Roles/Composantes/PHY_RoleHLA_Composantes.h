@@ -44,7 +44,7 @@ public:
     virtual const PHY_Volume*          GetSignificantVolume       ( const PHY_SensorTypeAgent& sensorType ) const;
     virtual       void                 GetVisibleVolumes          ( T_ComposanteVolumeSet& volumes         ) const;
     virtual       void                 BuildKnowledgeComposantes  ( T_KnowledgeComposanteVector& knowledge ) const;
-    virtual       MT_Float             GetMajorComponentWeight    () const { return 0; };
+    virtual       double             GetMajorComponentWeight    () const { return 0; };
     virtual const PHY_Composante_ABC*  GetMajorComposante         () const;
 
     void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
@@ -58,7 +58,7 @@ public:
     virtual void Neutralize                 ();
     virtual void ApplyPopulationFire        ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result );
     virtual void ApplyDirectFire            ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
-    virtual void ApplyIndirectFire          ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result, MT_Float );
+    virtual void ApplyIndirectFire          ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result, double );
     virtual void ApplyDirectFireOnMajorComposantes( const PHY_DotationCategory& /*dotationCategory*/, PHY_FireResults_ABC& /*fireResult*/ ) {}
     virtual void ApplyExplosion             ( const AttritionCapacity& objectType        , PHY_FireResults_ABC& result );
     virtual void ApplyContamination         ( const MIL_ToxicEffectManipulator& /*contamination*/ ) {};
@@ -66,13 +66,13 @@ public:
     virtual void ApplyUrbanObjectCrumbling  ( const MIL_Object_ABC& /*object*/ ) {};
 
     virtual double    GetDangerosity                     ( const DEC_Knowledge_AgentComposante& /*compTarget*/, float /*rDistBtwSourceAndTarget*/ ) const {return 0; }; 
-    virtual MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
-    virtual MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
-    virtual MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
-    virtual MT_Float GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
-    virtual MT_Float GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
-    virtual MT_Float GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bCheckDotationsAvailability*/ ) const {return 0; };
-    virtual MT_Float GetMinRangeToIndirectFire       ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bCheckDotationsAvailability*/ ) const {return 0; };
+    virtual double GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; };
+    virtual double GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; };
+    virtual double GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; };
+    virtual double GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; };
+    virtual double GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; };
+    virtual double GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bCheckDotationsAvailability*/ ) const {return 0; };
+    virtual double GetMinRangeToIndirectFire       ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bCheckDotationsAvailability*/ ) const {return 0; };
     virtual double GetMaxRangeToFire                 ( const MIL_Agent_ABC& /*pion*/, double /*rWantedPH*/ ) const { return 0; };
     virtual void ApplyInjury                ( MIL_Injury_ABC& injury );
     //@}
@@ -80,8 +80,8 @@ public:
     //! @name Accessors
     //@{
     virtual bool     IsNeutralized           () const;
-    virtual MT_Float GetOperationalState     () const;
-    virtual MT_Float GetMajorOperationalState() const;
+    virtual double GetOperationalState     () const;
+    virtual double GetMajorOperationalState() const;
     //@}
 
     //! @name Modifiers
@@ -138,7 +138,7 @@ public:
 
     //! @name Load / unload / transport
     //@{
-    virtual void DamageTransported( MT_Float /*rWeight*/, const PHY_ComposanteState& /*state*/, bool /*bTransportOnlyLoadable*/ ) const {}
+    virtual void DamageTransported( double /*rWeight*/, const PHY_ComposanteState& /*state*/, bool /*bTransportOnlyLoadable*/ ) const {}
     //@}
 
     //! @name Notifications (internal)

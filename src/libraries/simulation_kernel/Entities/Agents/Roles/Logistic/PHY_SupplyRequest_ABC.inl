@@ -87,15 +87,15 @@ const PHY_DotationCategory& PHY_SupplyRequest_ABC< T >::GetDotationCategory() co
 // Created: NLD 2005-01-28
 // -----------------------------------------------------------------------------
 template< typename T > 
-MT_Float PHY_SupplyRequest_ABC< T >::Supply() const
+double PHY_SupplyRequest_ABC< T >::Supply() const
 {
-          MT_Float rRemainingValue = rTotalConvoyedValue_;
-    const MT_Float rTmp            = rTotalConvoyedValue_ / rTotalRequestedValue_;
+          double rRemainingValue = rTotalConvoyedValue_;
+    const double rTmp            = rTotalConvoyedValue_ / rTotalRequestedValue_;
     for( CIT_RequestVector itRequest = requests_.begin(); itRequest != requests_.end(); ++itRequest )
     {
         const sIndividualRequest& request = *itRequest;
 
-        const MT_Float rValue = request.rRequestedValue_ * rTmp;
+        const double rValue = request.rRequestedValue_ * rTmp;
         rRemainingValue -= request.pRequest_->Supply( rValue );
     }        
     return rRemainingValue;
@@ -155,9 +155,9 @@ bool PHY_SupplyRequest_ABC< T >::HasReachedSupplyThreshold() const
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
 template< typename T > 
-void PHY_SupplyRequest_ABC< T >::RemoveConvoyedMerchandise( MT_Float rNbr )
+void PHY_SupplyRequest_ABC< T >::RemoveConvoyedMerchandise( double rNbr )
 {
-    const MT_Float rTmp = std::min( rTotalConvoyedValue_, rNbr );   
+    const double rTmp = std::min( rTotalConvoyedValue_, rNbr );   
     rTotalConvoyedValue_ -= rTmp;
 }
 
@@ -166,7 +166,7 @@ void PHY_SupplyRequest_ABC< T >::RemoveConvoyedMerchandise( MT_Float rNbr )
 // Created: NLD 2005-12-15
 // -----------------------------------------------------------------------------
 template< typename T > 
-void PHY_SupplyRequest_ABC< T >::AddConvoyedMerchandise( MT_Float rNbr )
+void PHY_SupplyRequest_ABC< T >::AddConvoyedMerchandise( double rNbr )
 {
     rTotalConvoyedValue_ += rNbr;
     assert( rTotalConvoyedValue_ <= rTotalReservedValue_ );
@@ -195,7 +195,7 @@ template< typename T >
 void PHY_SupplyRequest_ABC< T >::CancelMerchandiseOverheadReservation() 
 {
     assert( pStockPion_ );
-    MT_Float rNbr = rTotalReservedValue_ - rTotalConvoyedValue_;
+    double rNbr = rTotalReservedValue_ - rTotalConvoyedValue_;
     assert( rNbr >= 0. );
     if( rNbr > 0. )
         pStockPion_->RemoveStockReservation( GetDotationCategory(), rNbr );
@@ -237,7 +237,7 @@ MIL_AutomateLOG* PHY_SupplyRequest_ABC< T >::GetSupplyingAutomate() const
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
 template< typename T >
-MT_Float PHY_SupplyRequest_ABC< T >::GetTotalConvoyedValue() const
+double PHY_SupplyRequest_ABC< T >::GetTotalConvoyedValue() const
 {
     return rTotalConvoyedValue_;
 }
@@ -247,7 +247,7 @@ MT_Float PHY_SupplyRequest_ABC< T >::GetTotalConvoyedValue() const
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
 template< typename T > 
-MT_Float PHY_SupplyRequest_ABC< T >::GetTotalRequestedValue() const
+double PHY_SupplyRequest_ABC< T >::GetTotalRequestedValue() const
 {
     return rTotalRequestedValue_;
 }
@@ -257,7 +257,7 @@ MT_Float PHY_SupplyRequest_ABC< T >::GetTotalRequestedValue() const
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
 template< typename T > 
-MT_Float PHY_SupplyRequest_ABC< T >::GetTotalReservedValue() const
+double PHY_SupplyRequest_ABC< T >::GetTotalReservedValue() const
 {
     return rTotalReservedValue_;
 }

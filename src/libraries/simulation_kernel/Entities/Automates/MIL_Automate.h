@@ -192,7 +192,7 @@ public:
     //! @name Misc
     //@{
     bool     GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const;
-    MT_Float GetAlivePionsMaxSpeed  () const;
+    double GetAlivePionsMaxSpeed  () const;
     //@}
 
     //! @name Dynamic pions

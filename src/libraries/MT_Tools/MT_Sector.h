@@ -12,7 +12,6 @@
 #ifndef __MT_Sector_h_
 #define __MT_Sector_h_
 
-#include "MT_Tools_Types.h"
 #include "MT_Vector2D.h"
 
 // =============================================================================
@@ -22,8 +21,8 @@
 class MT_Sector
 {
 public:
-     MT_Sector( const MT_Vector2D& vOrigin_, const MT_Vector2D& vDirection, MT_Float rAngle );
-     MT_Sector();
+             MT_Sector( const MT_Vector2D& vOrigin_, const MT_Vector2D& vDirection, double rAngle );
+             MT_Sector();
     virtual ~MT_Sector();
 
     //! @name CheckPoints
@@ -33,7 +32,7 @@ public:
 
     //! @name Operators
     //@{
-    bool IsInCone  ( const MT_Vector2D& vPos, MT_Float rRadius ) const;
+    bool IsInCone  ( const MT_Vector2D& vPos, double rRadius ) const;
     bool IsInSector( const MT_Vector2D& vPos ) const;
     //@}
 
@@ -41,23 +40,23 @@ public:
     //@{
     const MT_Vector2D& GetDirection() const;
     const MT_Vector2D& GetOrigin   () const;
-          MT_Float     GetAngle    () const;
+          double     GetAngle    () const;
     //@}
 
 private:
     MT_Vector2D vOrigin_;
     MT_Vector2D vDirection_;
-    MT_Float    rSemiAngle_;
+    double    rSemiAngle_;
 
     // Equation de la droite séparant le premier demi-plan
-    MT_Float rA1_;
-    MT_Float rB1_;
-    MT_Float rC1_;
+    double rA1_;
+    double rB1_;
+    double rC1_;
 
     // Equation de la droite séparant de deuxième demi-plan
-    MT_Float rA2_;
-    MT_Float rB2_;
-    MT_Float rC2_;
+    double rA2_;
+    double rB2_;
+    double rC2_;
 };
 
 #include "MT_Sector.inl"

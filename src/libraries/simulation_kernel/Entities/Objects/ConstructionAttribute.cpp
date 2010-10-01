@@ -79,7 +79,7 @@ ConstructionAttribute::~ConstructionAttribute()
 void ConstructionAttribute::Load( xml::xistream& xis )
 {
     assert( dotation_ );
-    const MT_Float completion = xis.attribute< MT_Float >( "completion", 1.f );
+    const double completion = xis.attribute< double >( "completion", 1.f );
     if( completion > 0. && completion <= 1. )
         rConstructionPercentage_ = completion;
     nCurrentNbrDotation_ = unsigned int( rConstructionPercentage_ * nFullNbrDotation_ );
@@ -205,7 +205,7 @@ void ConstructionAttribute::OnUpdate( const Common::MsgMissionParameter_Value& a
 // Name: ConstructionAttribute::Set
 // Created: JCR 2008-08-12
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::Set( MT_Float percentage )
+void ConstructionAttribute::Set( double percentage )
 {
     rConstructionPercentage_ = std::max( 0., std::min( 1., percentage ) );
     nCurrentNbrDotation_ = (unsigned int)( rConstructionPercentage_ * nFullNbrDotation_ );
@@ -216,7 +216,7 @@ void ConstructionAttribute::Set( MT_Float percentage )
 // Name: ConstructionAttribute::UpdateConstruction
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::Build( MT_Float rDeltaPercentage )
+void ConstructionAttribute::Build( double rDeltaPercentage )
 {
     Set( rConstructionPercentage_ + rDeltaPercentage );
 }
@@ -261,9 +261,9 @@ unsigned int ConstructionAttribute::GetDotationType() const
 // Name: ConstructionAttribute::GetDotationNeededForConstruction
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-unsigned int ConstructionAttribute::GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const
+unsigned int ConstructionAttribute::GetDotationNeededForConstruction( double rDeltaPercentage ) const
 {
-    const MT_Float rNewPercentage = std::max( 0., std::min( 1., rConstructionPercentage_ + rDeltaPercentage ) );
+    const double rNewPercentage = std::max( 0., std::min( 1., rConstructionPercentage_ + rDeltaPercentage ) );
     return (unsigned int)( rNewPercentage * nFullNbrDotation_ ) - nCurrentNbrDotation_;
 }
 
@@ -271,9 +271,9 @@ unsigned int ConstructionAttribute::GetDotationNeededForConstruction( MT_Float r
 // Name: ConstructionAttribute::GetDotationRecoveredWhenDestroying
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-unsigned int ConstructionAttribute::GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const
+unsigned int ConstructionAttribute::GetDotationRecoveredWhenDestroying( double rDeltaPercentage ) const
 {
-    const MT_Float rNewPercentage = std::max( 0., std::min( 1., rConstructionPercentage_ - rDeltaPercentage ) );
+    const double rNewPercentage = std::max( 0., std::min( 1., rConstructionPercentage_ - rDeltaPercentage ) );
     return nCurrentNbrDotation_ - (unsigned int)( rNewPercentage * nFullNbrDotation_ );
 }
 
@@ -281,7 +281,7 @@ unsigned int ConstructionAttribute::GetDotationRecoveredWhenDestroying( MT_Float
 // Name: ConstructionAttribute::GetPercentage
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-MT_Float ConstructionAttribute::GetState() const
+double ConstructionAttribute::GetState() const
 {
     return rConstructionPercentage_;
 }

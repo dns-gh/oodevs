@@ -217,7 +217,7 @@ void MIL_AutomateType::InitializeModel( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_AutomateType::InitializeRapFor( xml::xistream& xis )
 {
-    MT_Float rTimeTmp;
+    double rTimeTmp;
     if( tools::ReadTimeAttribute( xis, "force-ratio-feedback-time", rTimeTmp ) )
     {
         rTimeTmp                         = MIL_Tools::ConvertSecondsToSim( rTimeTmp );
@@ -328,7 +328,7 @@ const MIL_AutomateType* MIL_AutomateType::FindAutomateType( unsigned int nID )
 // Name: MIL_AutomateType::GetRapForIncreasePerTimeStepValue
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
-MT_Float MIL_AutomateType::GetRapForIncreasePerTimeStepValue() const
+double MIL_AutomateType::GetRapForIncreasePerTimeStepValue() const
 {
     return rRapForIncreasePerTimeStepValue_;
 }

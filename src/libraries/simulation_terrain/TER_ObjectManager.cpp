@@ -38,7 +38,7 @@ TER_ObjectManager::~TER_ObjectManager()
 void TER_ObjectManager::GetListAt( const MT_Vector2D& vPos, T_ObjectVector& objects ) const
 {
     objects.reserve( 10 );
-    pathfind::PointIntersecter< MT_Float > intersecter( geometry::Point2< MT_Float >( vPos.rX_, vPos.rY_ ) );
+    pathfind::PointIntersecter< double > intersecter( geometry::Point2< double >( vPos.rX_, vPos.rY_ ) );
     T_Objects::View view = objects_.CreateView( intersecter );
     while( view.HasMoreElements() )
     {
@@ -52,10 +52,10 @@ void TER_ObjectManager::GetListAt( const MT_Vector2D& vPos, T_ObjectVector& obje
 // Name: TER_ObjectManager::GetListWithinCircle
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-void TER_ObjectManager::GetListWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_ObjectVector& objects ) const
+void TER_ObjectManager::GetListWithinCircle( const MT_Vector2D& vCenter, double rRadius, T_ObjectVector& objects ) const
 {
     objects.reserve( 10 );
-    pathfind::PointIntersecter< MT_Float > intersecter( geometry::Point2< MT_Float >( vCenter.rX_, vCenter.rY_ ), rRadius );
+    pathfind::PointIntersecter< double > intersecter( geometry::Point2< double >( vCenter.rX_, vCenter.rY_ ), rRadius );
     T_Objects::View view = objects_.CreateView( intersecter );
     while( view.HasMoreElements() )
     {
@@ -69,10 +69,10 @@ void TER_ObjectManager::GetListWithinCircle( const MT_Vector2D& vCenter, MT_Floa
 // Name: TER_ObjectManager::GetListWithinCircle
 // Created: SLG 2010-06-15
 // -----------------------------------------------------------------------------
-void TER_ObjectManager::GetListWithinCircle2( const MT_Vector2D& vCenter, MT_Float rRadius, std::vector< const TER_Object_ABC* >& objects ) const
+void TER_ObjectManager::GetListWithinCircle2( const MT_Vector2D& vCenter, double rRadius, std::vector< const TER_Object_ABC* >& objects ) const
 {
     objects.reserve( 10 );
-    pathfind::PointIntersecter< MT_Float > intersecter( geometry::Point2< MT_Float >( vCenter.rX_, vCenter.rY_ ), rRadius );
+    pathfind::PointIntersecter< double > intersecter( geometry::Point2< double >( vCenter.rX_, vCenter.rY_ ), rRadius );
     T_Objects::View view = objects_.CreateView( intersecter );
     while( view.HasMoreElements() )
     {
@@ -89,8 +89,8 @@ void TER_ObjectManager::GetListWithinCircle2( const MT_Vector2D& vCenter, MT_Flo
 void TER_ObjectManager::GetListWithinLocalisation( const TER_Localisation& localisation, T_ObjectVector& objects ) const
 {
     const MT_Rect& boundingBox = localisation.GetBoundingBox();
-    pathfind::SegmentIntersecter< MT_Float > intersecter( geometry::Point2<MT_Float>( boundingBox.GetLeft(), boundingBox.GetBottom() )
-                                                        , geometry::Point2<MT_Float>( boundingBox.GetRight(), boundingBox.GetTop() ) );
+    pathfind::SegmentIntersecter< double > intersecter( geometry::Point2<double>( boundingBox.GetLeft(), boundingBox.GetBottom() )
+                                                        , geometry::Point2<double>( boundingBox.GetRight(), boundingBox.GetTop() ) );
 
     T_Objects::View view = objects_.CreateView( intersecter );
     while( view.HasMoreElements() )

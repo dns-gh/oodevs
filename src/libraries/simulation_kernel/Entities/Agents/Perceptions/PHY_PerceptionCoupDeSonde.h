@@ -31,8 +31,8 @@ public:
     //@}
 
 private:
-    const MT_Float rLength_;
-    const MT_Float rWidth_;
+    const double rLength_;
+    const double rWidth_;
 };
 
 #endif // __PHY_PerceptionCoupDeSonde_h_

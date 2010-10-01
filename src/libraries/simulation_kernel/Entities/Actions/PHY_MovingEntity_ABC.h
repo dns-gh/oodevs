@@ -54,9 +54,9 @@ public:
 
     //! @name
     //@{
-    virtual MT_Float GetMaxSpeed              () const = 0;
-    virtual MT_Float GetSpeedWithReinforcement( const TerrainData& environment ) const = 0;
-    virtual MT_Float GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const = 0;
+    virtual double GetMaxSpeed              () const = 0;
+    virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const = 0;
+    virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const = 0;
     //@}
 
     //! @name
@@ -64,7 +64,7 @@ public:
     virtual const MT_Vector2D& GetPosition () const = 0;
     virtual const MT_Vector2D& GetDirection() const = 0;
 
-    virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, MT_Float rSpeed, MT_Float rWalkedDistance ) = 0;
+    virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance ) = 0;
     //@}
 
     //! @name Notifications
@@ -88,7 +88,7 @@ public:
     //! @name Tools
     //@{
     bool IsMovingOn                  ( const DEC_Path_ABC& path ) const;
-    bool ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
+    bool ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
     //@}
 
     //! @name Serialization
@@ -106,7 +106,7 @@ protected:
 
     //! @name Tools
     //@{
-    MT_Vector2D ExtrapolatePosition( const MT_Vector2D& position, const MT_Float rSpeed, const MT_Float rTime, const bool bBoundOnPath ) const;
+    MT_Vector2D ExtrapolatePosition( const MT_Vector2D& position, const double rSpeed, const double rTime, const bool bBoundOnPath ) const;
     //@}
 
 private:

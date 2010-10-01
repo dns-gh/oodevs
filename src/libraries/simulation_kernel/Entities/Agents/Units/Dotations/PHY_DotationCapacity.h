@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationCapacity_h_
 #define __PHY_DotationCapacity_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 namespace xml
 {
     class xistream;
@@ -34,14 +32,14 @@ public:
     //! @name Accessors
     //@{
     const PHY_DotationCategory& GetCategory       () const;
-          MT_Float              GetCapacity       () const;
-          MT_Float              GetSupplyThreshold() const;
+          double              GetCapacity       () const;
+          double              GetSupplyThreshold() const;
     //@}
 
 private:
     const PHY_DotationCategory& category_;
-    MT_Float                    rCapacity_;
-    MT_Float                    rSupplyThreshold_;
+    double                    rCapacity_;
+    double                    rSupplyThreshold_;
 };
 
 #endif // __PHY_DotationCapacity_h_

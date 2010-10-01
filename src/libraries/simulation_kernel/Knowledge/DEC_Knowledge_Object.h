@@ -84,7 +84,7 @@ public:
     //! @name Relevance management
     //@{
     void UpdateRelevance();
-    MT_Float GetRelevance() const;
+    double GetRelevance() const;
     //@}
 
     //! @name Network operations
@@ -106,7 +106,7 @@ public:
     const TER_Localisation& GetLocalisation() const;
     const TER_Localisation& GetAvoidanceLocalisation() const;
     const MIL_Army_ABC& GetArmy() const;
-    MT_Float GetMaxInteractionHeight() const;
+    double GetMaxInteractionHeight() const;
     E_Tristate IsAnEnemy ( const MIL_Army_ABC& army ) const;
     E_Tristate IsAFriend ( const MIL_Army_ABC& army ) const;
     //@}
@@ -212,7 +212,7 @@ private:
     T_PerceptionSourceSet previousPerceptionPerAutomateSet_;
     T_PerceptionAgentSourceMap perceptionLevelPerAgentMap_;
     unsigned int nTimeLastUpdate_;
-    MT_Float rRelevance_;
+    double rRelevance_;
     bool bValid_;
     T_AgentTypeSet reconByAgentTypes_;
     static MIL_IDManager idManager_;

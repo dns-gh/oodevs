@@ -163,7 +163,7 @@ private:
     bool HasUsableCollectionAmbulance( const Human_ABC& human ) const;
     bool HasUsableDoctorForSorting() const;
 
-    MT_Float GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate ) const;
+    double GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate ) const;
     void ExecuteOnComponentsAndLendedComponents( ComposanteUsePredicate_ABC& predicate, PHY_Composante_ABC::T_ComposanteUseMap& result ) const;
     //@}
 

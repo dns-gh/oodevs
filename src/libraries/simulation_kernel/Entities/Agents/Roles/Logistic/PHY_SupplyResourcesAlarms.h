@@ -10,7 +10,6 @@
 #ifndef __PHY_SupplyResourcesAlarms_h_
 #define __PHY_SupplyResourcesAlarms_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {
@@ -31,13 +30,13 @@ public:
 
     //! @name Operations
     //@{
-    static bool IsConvoyTransporterResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio );
+    static bool IsConvoyTransporterResourcesLevelReached( double rPreviousRatio, double rCurrentRatio );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::set< MT_Float >       T_LevelSet;
+    typedef std::set< double >       T_LevelSet;
     typedef T_LevelSet::const_iterator CIT_LevelSet;
     //@}
 
@@ -47,7 +46,7 @@ private:
 
     //! @name Tools
     //@{
-    static bool IsLevelReached( const T_LevelSet& levels, MT_Float rPreviousRatio, MT_Float rCurrentRatio );
+    static bool IsLevelReached( const T_LevelSet& levels, double rPreviousRatio, double rCurrentRatio );
     //@}
     //! @name Helpers
     //@{

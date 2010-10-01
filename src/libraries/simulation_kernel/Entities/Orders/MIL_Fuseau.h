@@ -49,12 +49,12 @@ public:
 
     bool     ComputeFurthestExtremityPoint      ( MT_Vector2D& vResult ) const;
     bool     ComputeClosestExtremityPoint       ( MT_Vector2D& vResult ) const;
-    bool     ComputePointBeforeLima             ( const MIL_LimaOrder& lima, MT_Float rDistBefore, MT_Vector2D&   vResult ) const;
-    bool     ComputePointsBeforeLima            ( const MIL_LimaOrder& lima, MT_Float rDistBefore, unsigned int nNbPoints, T_PointVector& results ) const;
+    bool     ComputePointBeforeLima             ( const MIL_LimaOrder& lima, double rDistBefore, MT_Vector2D&   vResult ) const;
+    bool     ComputePointsBeforeLima            ( const MIL_LimaOrder& lima, double rDistBefore, unsigned int nNbPoints, T_PointVector& results ) const;
     void     ComputeNearestEntryPoint           ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
     void     ComputeEntryPoint                  ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
-    MT_Float ComputeAverageDistanceFromLima     ( const MIL_LimaOrder& lima     , const MT_Vector2D& refPoint ) const;
-    MT_Float ComputeAverageDistanceFromObjective( const DEC_Objective& objective, const MT_Vector2D& refPoint ) const;
+    double ComputeAverageDistanceFromLima     ( const MIL_LimaOrder& lima     , const MT_Vector2D& refPoint ) const;
+    double ComputeAverageDistanceFromObjective( const DEC_Objective& objective, const MT_Vector2D& refPoint ) const;
 
     float ComputeOpenTerrainRatio  () const;
     float ComputeClosedTerrainRatio() const;
@@ -66,8 +66,8 @@ public:
 
     //! @name Pathfind
     //@{
-    MT_Float Distance( const MT_Vector2D& p, bool bLimitsOnly = false ) const;
-    MT_Float GetCost ( const MT_Vector2D&, const MT_Vector2D& to, MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut, MT_Float rComfortDistanceIn, MT_Float rCostPerMeterIn ) const;
+    double Distance( const MT_Vector2D& p, bool bLimitsOnly = false ) const;
+    double GetCost ( const MT_Vector2D&, const MT_Vector2D& to, double rMaxDistanceOut, double rCostPerMeterOut, double rComfortDistanceIn, double rCostPerMeterIn ) const;
     //@}
 
     //! @name Accessors

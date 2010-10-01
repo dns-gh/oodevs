@@ -10,8 +10,6 @@
 #ifndef __HumansComposante_ABC_h_
 #define __HumansComposante_ABC_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 class Human_ABC;
 class PHY_HumanRank;
 class PHY_HumanWound;
@@ -55,7 +53,7 @@ public:
     virtual unsigned int HealHumans        ( const PHY_HumanRank& rank, unsigned int nNbrToChange ) = 0;
     virtual void HealAllHumans     () = 0;
 
-    virtual MT_Float GetOperationalState() const = 0;
+    virtual double GetOperationalState() const = 0;
     virtual bool     IsViable           () const = 0;
     //@}
 

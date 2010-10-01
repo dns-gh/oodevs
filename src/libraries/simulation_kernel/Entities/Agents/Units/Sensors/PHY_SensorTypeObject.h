@@ -12,8 +12,6 @@
 #ifndef __PHY_SensorTypeObject_h_
 #define __PHY_SensorTypeObject_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 namespace xml
 {
     class xistream;
@@ -38,14 +36,14 @@ public:
 
     //! @name Accessors
     //@{
-          MT_Float        GetMaxDistance() const;
+          double        GetMaxDistance() const;
     const PHY_SensorType& GetType()        const;
     //@}
 
     //! @name Operations
     //@{
-    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_Object_ABC&   target, MT_Float rSensorHeight ) const;
-    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Object& target, MT_Float rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_Object_ABC&   target, double rSensorHeight ) const;
+    const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Object& target, double rSensorHeight ) const;
     //@}
 
     //! @name Helpers
@@ -63,7 +61,7 @@ private:
 private:
     const PHY_SensorType& type_;
     T_ObjectDataVector    objectData_;
-    MT_Float              rMaxDistance_;
+    double              rMaxDistance_;
 };
 
 #endif // __PHY_SensorTypeObject_h_

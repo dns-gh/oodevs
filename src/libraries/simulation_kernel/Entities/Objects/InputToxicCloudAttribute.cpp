@@ -362,7 +362,7 @@ namespace
     class AssessQuantity
     {
     public:
-        explicit AssessQuantity( MT_Float& quantity ) : n_( 0 ), quantity_ ( quantity ) {}
+        explicit AssessQuantity( double& quantity ) : n_( 0 ), quantity_ ( quantity ) {}
 
         bool operator()( const InputToxicCloudAttribute::T_Quantity& quantity )
         {
@@ -370,7 +370,7 @@ namespace
             return false;
         }
     private:
-        MT_Float& quantity_;
+        double& quantity_;
         unsigned int n_;
     };
 }
@@ -381,7 +381,7 @@ namespace
 // -----------------------------------------------------------------------------
 MIL_ToxicEffectManipulator InputToxicCloudAttribute::GetContaminationEffect( const NBCAttribute& nbc, const MT_Vector2D& position ) const
 {
-    MT_Float quantity = 0.;
+    double quantity = 0.;
     Intersecter intersecter( position );
     AssessQuantity functor( quantity );
     quantities_->Apply( intersecter, functor );

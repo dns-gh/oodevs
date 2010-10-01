@@ -100,7 +100,7 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
             >> xml::attribute( "variance", varianceString )
         >> xml::end;
 
-    MT_Float timeVal, variance;
+    double timeVal, variance;
     if( ! tools::DecodeTime( timeString, timeVal ) || timeVal < 0 )
         xis.error( "average-time not defined or < 0" );
     if( ! tools::DecodeTime( varianceString, variance ) )
@@ -155,7 +155,7 @@ void PHY_Protection::ReadAttrition( xml::xistream& xis )
 
     T_HumanEffect& data = attritionEffectsOnHumans_[ pComposanteState->GetID() ];
 
-    MT_Float rTmp;
+    double rTmp;
     xis >> xml::attribute( "injured-percentage", rTmp );
     if( rTmp < 0 || rTmp > 100 )
         xis.error( "injured-percentage not in [0..100]" );
@@ -198,7 +198,7 @@ bool PHY_Protection::CanRandomlyBreaksDownNeva() const
 // Name: PHY_Protection::GetHumanDeadRatio
 // Created: NLD 2006-07-26
 // -----------------------------------------------------------------------------
-MT_Float PHY_Protection::GetHumanDeadRatio( const PHY_ComposanteState& composanteState ) const
+double PHY_Protection::GetHumanDeadRatio( const PHY_ComposanteState& composanteState ) const
 {
     assert( attritionEffectsOnHumans_.size() > composanteState.GetID() );
     return attritionEffectsOnHumans_[ composanteState.GetID() ].rDeadRatio_;
@@ -208,7 +208,7 @@ MT_Float PHY_Protection::GetHumanDeadRatio( const PHY_ComposanteState& composant
 // Name: PHY_Protection::GetHumanWoundedRatio
 // Created: NLD 2006-07-26
 // -----------------------------------------------------------------------------
-MT_Float PHY_Protection::GetHumanWoundedRatio( const PHY_ComposanteState& composanteState ) const
+double PHY_Protection::GetHumanWoundedRatio( const PHY_ComposanteState& composanteState ) const
 {
     assert( attritionEffectsOnHumans_.size() > composanteState.GetID() );
     return attritionEffectsOnHumans_[ composanteState.GetID() ].rWoundedRatio_;

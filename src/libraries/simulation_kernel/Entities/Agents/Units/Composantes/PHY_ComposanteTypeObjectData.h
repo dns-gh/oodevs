@@ -12,8 +12,6 @@
 #ifndef __PHY_ComposanteTypeObjectData_h_
 #define __PHY_ComposanteTypeObjectData_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 namespace xml
 {
     class xistream;
@@ -41,28 +39,28 @@ public:
     bool CanDemine   () const;
     bool CanBypass   ( bool bObjectIsMined ) const;
 
-    MT_Float GetConstructionTime( MT_Float rSizeCoef ) const;
-    MT_Float GetDestructionTime ( MT_Float rSizeCoef ) const;
-    MT_Float GetMiningTime      () const;
-    MT_Float GetDeminingTime    () const;
-    MT_Float GetBypassTime      ( MT_Float rSizeCoef, bool bObjectIsMined ) const;
-    MT_Float GetMaxSpeed        ( const MIL_Object_ABC& object ) const;
+    double GetConstructionTime( double rSizeCoef ) const;
+    double GetDestructionTime ( double rSizeCoef ) const;
+    double GetMiningTime      () const;
+    double GetDeminingTime    () const;
+    double GetBypassTime      ( double rSizeCoef, bool bObjectIsMined ) const;
+    double GetMaxSpeed        ( const MIL_Object_ABC& object ) const;
 
     const PHY_ConsumptionType* GetConsumptionMode() const;
     //@}
 
 private:
-    MT_Float rTimeBaseConstruction_;
-    MT_Float rTimeBaseDestruction_;
-    MT_Float rTimeConstructionCoef_;
-    MT_Float rTimeDestructionCoef_;
+    double rTimeBaseConstruction_;
+    double rTimeBaseDestruction_;
+    double rTimeConstructionCoef_;
+    double rTimeDestructionCoef_;
 
-    MT_Float rTimeMining_;
-    MT_Float rTimeDemining_;
+    double rTimeMining_;
+    double rTimeDemining_;
 
-    MT_Float rCoefTimeBypass_;
-    MT_Float rSpeedWithinWhenNotBypassed_;
-    MT_Float rSpeedWithinWhenBypassed_;
+    double rCoefTimeBypass_;
+    double rSpeedWithinWhenNotBypassed_;
+    double rSpeedWithinWhenBypassed_;
 
     const PHY_ConsumptionType* pConsumptionMode_;
 };

@@ -44,7 +44,7 @@ PHY_PerceptionAlat::~PHY_PerceptionAlat()
 void PHY_PerceptionAlat::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
 {
     const PHY_RoleInterface_Location& perceiverRoleLocation = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >();
-    const MT_Float               rDetectionSemiHeight  = perceiver_.GetMaxAgentPerceptionDistance() / 2.;
+    const double               rDetectionSemiHeight  = perceiver_.GetMaxAgentPerceptionDistance() / 2.;
     const PHY_RawVisionData&     rawVisionData         = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData();
 
     // Recherche des pions dans la localisation

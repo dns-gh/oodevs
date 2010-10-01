@@ -49,9 +49,9 @@ public:
     //@{
     const std::string&                         GetName                () const;
           unsigned int                                 GetID                  () const;
-          MT_Float                             GetConcentrationDensity() const;
-          MT_Float                             GetDefaultFlowDensity  () const;
-          MT_Float                             GetMaxSpeed            () const;
+          double                             GetConcentrationDensity() const;
+          double                             GetDefaultFlowDensity  () const;
+          double                             GetMaxSpeed            () const;
 
     const DEC_Model_ABC&                       GetModel               () const;
     //@}
@@ -63,14 +63,14 @@ public:
 
     //! @name Effects
     //@{
-          MT_Float           GetPionMaxSpeed           ( const MIL_PopulationAttitude& populationAttitude, MT_Float rPopulationDensity, const PHY_Volume& pionVolume ) const;
-          MT_Float           GetPionReloadingTimeFactor( MT_Float rPopulationDensity ) const;
+          double           GetPionMaxSpeed           ( const MIL_PopulationAttitude& populationAttitude, double rPopulationDensity, const PHY_Volume& pionVolume ) const;
+          double           GetPionReloadingTimeFactor( double rPopulationDensity ) const;
 
     const PHY_AttritionData& GetAttritionData          ( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const;
-          MT_Float           GetPH                     ( const MIL_PopulationAttitude& attitude, MT_Float rDensity ) const;
+          double           GetPH                     ( const MIL_PopulationAttitude& attitude, double rDensity ) const;
 
-          MT_Float           GetDamageSurface          ( const PHY_RoePopulation& roeFirer ) const;
-          MT_Float           GetDamagePH               ( const PHY_RoePopulation& roeFirer ) const;
+          double           GetDamageSurface          ( const PHY_RoePopulation& roeFirer ) const;
+          double           GetDamagePH               ( const PHY_RoePopulation& roeFirer ) const;
     //@}
 
 protected:
@@ -99,17 +99,17 @@ private:
     //@{
     struct sSlowDownData
     {
-        sSlowDownData( MT_Float rPopulationDensity, MT_Float rMaxSpeed ) : rPopulationDensity_( rPopulationDensity ), rMaxSpeed_( rMaxSpeed ) {}
-        MT_Float rPopulationDensity_;
-        MT_Float rMaxSpeed_;
+        sSlowDownData( double rPopulationDensity, double rMaxSpeed ) : rPopulationDensity_( rPopulationDensity ), rMaxSpeed_( rMaxSpeed ) {}
+        double rPopulationDensity_;
+        double rMaxSpeed_;
     };
     typedef std::vector< sSlowDownData >        T_VolumeSlowDownData;
     typedef std::vector< T_VolumeSlowDownData > T_AttitudeSlowDownData;
     struct sDamageData
     {
-        sDamageData( MT_Float rAttritionSurface, MT_Float rPH ) : rAttritionSurface_( rAttritionSurface ), rPH_( rPH ) {}
-        MT_Float rAttritionSurface_;
-        MT_Float rPH_;
+        sDamageData( double rAttritionSurface, double rPH ) : rAttritionSurface_( rAttritionSurface ), rPH_( rPH ) {}
+        double rAttritionSurface_;
+        double rPH_;
     };
     typedef std::vector< sDamageData >          T_DamageData;
     //@}
@@ -126,9 +126,9 @@ private:
 private:
     const std::string                          strName_;
           unsigned int                                 nID_;
-          MT_Float                             rConcentrationDensity_;
-          MT_Float                             rDefaultFlowDensity_;
-          MT_Float                             rMaxSpeed_;
+          double                             rConcentrationDensity_;
+          double                             rDefaultFlowDensity_;
+          double                             rMaxSpeed_;
           T_AttitudeSlowDownData               slowDownData_;
           MIL_PopulationPionAttritionData      attritionData_;
           T_DamageData                         damageData_;
@@ -137,8 +137,8 @@ private:
 
 private:
     static T_PopulationMap populations_;
-    static MT_Float        rEffectReloadingTimeDensity_;
-    static MT_Float        rEffectReloadingTimeFactor_;
+    static double        rEffectReloadingTimeDensity_;
+    static double        rEffectReloadingTimeFactor_;
 };
 
 #endif // __MIL_PopulationType_h_

@@ -59,7 +59,7 @@ public:
     unsigned int HealHumans        ( const PHY_HumanRank& rank, unsigned int nNbrToChange );
     void HealAllHumans     ();
 
-    MT_Float GetOperationalState() const;
+    double GetOperationalState() const;
     bool     IsViable           () const;
     //@}
 

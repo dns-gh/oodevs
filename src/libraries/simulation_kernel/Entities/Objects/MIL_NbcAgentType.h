@@ -51,16 +51,16 @@ public:
     bool                   IsGasPoisonous          () const;
     const PHY_HumanWound&  GetGasRandomWound       () const;
     unsigned int                   GetGasLifeTime          () const;
-    MT_Float               GetGasPropagationAngle  () const;
+    double               GetGasPropagationAngle  () const;
     bool                   CanBeVaporized          () const;
     //@}
 
     //! @name Accessors
     //@{
-    static MT_Float GetCoefMaxSpeedModificator     ();
-    static MT_Float GetCoefReloadingTimeModificator();
-    static MT_Float GetContaminationDistance       ();
-    static MT_Float GetMinContaminationQuantity    ();
+    static double GetCoefMaxSpeedModificator     ();
+    static double GetCoefReloadingTimeModificator();
+    static double GetContaminationDistance       ();
+    static double GetMinContaminationQuantity    ();
     //@}
 
 private:
@@ -69,7 +69,7 @@ private:
     typedef std::map< std::string, const MIL_NbcAgentType*, sCaseInsensitiveLess > T_NbcAgentTypeMap;
     typedef T_NbcAgentTypeMap::const_iterator                                      CIT_NbcAgentTypeMap;
 
-    typedef std::vector< MT_Float >                T_HumanPoisonousVector;
+    typedef std::vector< double >                T_HumanPoisonousVector;
     typedef T_HumanPoisonousVector::const_iterator CIT_HumanPoisonousVector;
     //@}
 
@@ -105,14 +105,14 @@ private:
           bool                   bGasPoisonous_;
           bool                   bGasContaminating_;
           unsigned int                   nGasLifeTime_;
-          MT_Float               rGasPropagationAngle_;
+          double               rGasPropagationAngle_;
 
 private:
     static T_NbcAgentTypeMap nbcAgentTypes_;
-    static MT_Float          rCoefMaxSpeedModificator_;
-    static MT_Float          rCoefReloadingTimeModificator_;
-    static MT_Float          rContaminationDistance_;
-    static MT_Float          rContaminationQuantityGiven_;
+    static double          rCoefMaxSpeedModificator_;
+    static double          rCoefReloadingTimeModificator_;
+    static double          rContaminationDistance_;
+    static double          rContaminationQuantityGiven_;
 };
 
 #include "MIL_NbcAgentType.inl"

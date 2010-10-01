@@ -151,7 +151,7 @@ bool MIL_PopulationConcentration::Update()
 void MIL_PopulationConcentration::UpdateLocation()
 {
     assert( GetPopulation().GetType().GetConcentrationDensity() );
-    MT_Float rSurface = MT_Float( GetNbrAliveHumans() ) / GetPopulation().GetType().GetConcentrationDensity();
+    double rSurface = double( GetNbrAliveHumans() ) / GetPopulation().GetType().GetConcentrationDensity();
     location_.Reset( TER_Localisation( position_, std::sqrt( rSurface / MT_PI ) ) );
     UpdatePatch();
 }
@@ -202,7 +202,7 @@ void MIL_PopulationConcentration::Move( const MT_Vector2D& destination )
 // -----------------------------------------------------------------------------
 bool MIL_PopulationConcentration::IsNearPosition( const MT_Vector2D& position ) const
 {
-    static MT_Float rPrecision = 100.;
+    static double rPrecision = 100.;
     return position_.Distance( position ) <= rPrecision;
 }
 
@@ -221,7 +221,7 @@ void MIL_PopulationConcentration::RegisterPushingFlow( MIL_PopulationFlow& flow 
 // Name: MIL_PopulationConcentration::GetSafetyPosition
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-MT_Vector2D MIL_PopulationConcentration::GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance, MT_Float rSeed ) const
+MT_Vector2D MIL_PopulationConcentration::GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const
 {
     const MT_Vector2D& agentPosition = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
     MT_Vector2D evadeDirection = ( agentPosition - position_ ).Normalize().Rotate( rSeed );
@@ -238,7 +238,7 @@ MT_Vector2D MIL_PopulationConcentration::GetSafetyPosition( const MIL_AgentPion&
 // Name: MIL_PopulationConcentration::GetPullingFlowsDensity
 // Created: NLD 2005-12-11
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationConcentration::GetPullingFlowsDensity() const
+double MIL_PopulationConcentration::GetPullingFlowsDensity() const
 {
     if( pSplittingObject_ )
         return pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity();

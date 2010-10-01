@@ -12,8 +12,6 @@
 #ifndef __DEC_AgentFunctions_h_
 #define __DEC_AgentFunctions_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
@@ -38,8 +36,8 @@ public:
     static bool IsAutomateEngaged( const MIL_Agent_ABC& callerAgent );
     static bool IsTransported( const MIL_Agent_ABC& callerAgent );
     static bool IsNeutralized( const MIL_Agent_ABC& callerAgent );
-    static MT_Float GetOperationalState( const MIL_Agent_ABC& callerAgent );
-    static MT_Float GetMajorOperationalState( const MIL_Agent_ABC& callerAgent );
+    static double GetOperationalState( const MIL_Agent_ABC& callerAgent );
+    static double GetMajorOperationalState( const MIL_Agent_ABC& callerAgent );
     static boost::shared_ptr< MT_Vector2D > GetPosition( const MIL_Agent_ABC& callerAgent );
     static boost::shared_ptr< MT_Vector2D > GetAgentPositionPtr( DEC_Decision_ABC* brain );
     static const MT_Vector2D* GetDirection( const MIL_Agent_ABC& callerAgent );
@@ -64,8 +62,8 @@ public:
     // Embarquement / débarquement
     static bool IsLoaded( const MIL_Agent_ABC& callerAgent );
     static bool HasLoadable( const MIL_Agent_ABC& callerAgent );
-    static MT_Float GetLoadingTime( const MIL_Agent_ABC& callerAgent );
-    static MT_Float GetUnloadingTime( const MIL_Agent_ABC& callerAgent );
+    static double GetLoadingTime( const MIL_Agent_ABC& callerAgent );
+    static double GetUnloadingTime( const MIL_Agent_ABC& callerAgent );
     static bool AreHumanTransportersReady( const MIL_Agent_ABC& callerAgent );
     static void DisableHumanTransportersNow( MIL_Agent_ABC& callerAgent );
     static void RecoverHumanTransportersNow( MIL_Agent_ABC& callerAgent );
@@ -85,8 +83,8 @@ public:
 
     // Etats du pion
     static bool IsFlying( const MIL_Agent_ABC& callerAgent );
-    static void SetFlyingHeight( MIL_Agent_ABC& callerAgent, MT_Float height );
-    static void SetElongationFactor( MIL_Agent_ABC& callerAgent, MT_Float factor );
+    static void SetFlyingHeight( MIL_Agent_ABC& callerAgent, double height );
+    static void SetElongationFactor( MIL_Agent_ABC& callerAgent, double factor );
     static float TimeLeftForMoving( const MIL_Agent_ABC& callerAgent );
     static float TimeToMoveDistance( const MIL_Agent_ABC& callerAgent, float distance );
     static void Suicide( MIL_Agent_ABC& callerAgent );

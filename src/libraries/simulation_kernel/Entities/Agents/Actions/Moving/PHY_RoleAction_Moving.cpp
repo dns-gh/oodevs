@@ -95,7 +95,7 @@ void PHY_RoleAction_Moving::serialize( Archive& file, const unsigned int )
 // Name: PHY_RoleAction_Moving::ApplyMaxSpeedModificators
 // Created: NLD 2004-11-04
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleAction_Moving::ApplyMaxSpeedModificators( double rSpeed ) const
+double PHY_RoleAction_Moving::ApplyMaxSpeedModificators( double rSpeed ) const
 {
     rSpeed *= rMaxSpeedModificator_;
     return rSpeed;

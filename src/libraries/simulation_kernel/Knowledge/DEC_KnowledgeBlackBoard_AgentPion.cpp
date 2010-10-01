@@ -309,10 +309,10 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetAgentsAttacking( T_ConstKnowledgeAgen
 // Name: DEC_KnowledgeBlackBoard_AgentPion::GetRapForLocalValue
 // Created: NLD 2004-04-08
 // -----------------------------------------------------------------------------
-MT_Float DEC_KnowledgeBlackBoard_AgentPion::GetRapForLocalValue() const
+double DEC_KnowledgeBlackBoard_AgentPion::GetRapForLocalValue() const
 {
     assert( pKnowledgeRapForLocal_ );
-    MT_Float rapForLocal = pKnowledgeRapForLocal_->GetValue();
+    double rapForLocal = pKnowledgeRapForLocal_->GetValue();
     const PHY_Morale& morale =  pPion_->GetRole< PHY_RoleInterface_HumanFactors >().GetMorale();
     if( &morale == &PHY_Morale::fanatique_ )
              return 5.0; // $$$$ _RC_ SLG 2010-05-28: Facteur moral max

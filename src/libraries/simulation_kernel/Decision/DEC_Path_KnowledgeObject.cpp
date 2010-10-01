@@ -22,7 +22,7 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& p
     , rCostOut_             ( 0 )
     , rObstructionThreshold_( pathClass.GetThreshold() )
 {
-    const MT_Float rCost = pathClass.GetObjectCost( knowledge.GetType() );
+    const double rCost = pathClass.GetObjectCost( knowledge.GetType() );
     if( rCost > 0 )
         rCostIn_  = rCost;
     else
@@ -68,7 +68,7 @@ DEC_Path_KnowledgeObject& DEC_Path_KnowledgeObject::operator=( const DEC_Path_Kn
 // Name: DEC_Path_KnowledgeObject::ComputeCost
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------
-MT_Float DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData&, const TerrainData& ) const
+double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData&, const TerrainData& ) const
 {
     const MT_Line line( from, to );
     if( localisation_.Intersect2D( line ) || localisation_.IsInside( to ) )
@@ -77,5 +77,5 @@ MT_Float DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const M
             return -1;  //$$$$ SLG in order to block the unit if there is an object
         return rCostIn_;
     }
-    return std::numeric_limits< MT_Float >::min();
+    return std::numeric_limits< double >::min();
 }

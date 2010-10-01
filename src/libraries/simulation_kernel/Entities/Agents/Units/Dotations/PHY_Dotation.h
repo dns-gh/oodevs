@@ -48,25 +48,25 @@ public:
     //@{
     void     AddCapacity        ( const PHY_DotationCapacity& capacity );
     void     RemoveCapacity     ( const PHY_DotationCapacity& capacity );
-    MT_Float GetCapacity        () const;
+    double GetCapacity        () const;
 
-    MT_Float AddConsumptionReservation    ( MT_Float rNbr );
+    double AddConsumptionReservation    ( double rNbr );
     void     CancelConsumptionReservation ();
     void     ConsumeConsumptionReservation();
 
-    MT_Float AddFireReservation    ( MT_Float rNbr );
+    double AddFireReservation    ( double rNbr );
     void     ConsumeFireReservation();
 
-    MT_Float GetValue() const;
-    MT_Float Consume ( MT_Float rValue );
+    double GetValue() const;
+    double Consume ( double rValue );
 
     void     ReadValue( xml::xistream& xis );
-    void     Resupply ( MT_Float rFactor = 1. );
+    void     Resupply ( double rFactor = 1. );
 
     bool     HasReachedSupplyThreshold() const;
     bool     NeedSupply               () const;
-    MT_Float Supply                   ( MT_Float rValue );
-    void     ChangeValueUsingTC2      ( MT_Float rCapacityFactor, MIL_AutomateLOG& tc2 );
+    double Supply                   ( double rValue );
+    void     ChangeValueUsingTC2      ( double rCapacityFactor, MIL_AutomateLOG& tc2 );
 
     void NotifyCaptured(); //$$$ a renommer et abstraire
     void NotifyReleased();
@@ -80,20 +80,20 @@ public:
 private:
     //! @name Tools
     //@{
-    void SetValue( MT_Float rValue );
+    void SetValue( double rValue );
     //@}
 
 private:
     //! @name Member data
     //@{
-    static const MT_Float maxCapacity_;
+    static const double maxCapacity_;
     const PHY_DotationCategory* pCategory_;
     PHY_DotationGroup* pGroup_;
-    MT_Float rValue_;
-    MT_Float rCapacity_;
-    MT_Float rConsumptionReservation_;
-    MT_Float rFireReservation_;
-    MT_Float rSupplyThreshold_;
+    double rValue_;
+    double rCapacity_;
+    double rConsumptionReservation_;
+    double rFireReservation_;
+    double rSupplyThreshold_;
     bool bDotationBlocked_; // Prisoner
     bool bInfiniteDotations_;
     //@}

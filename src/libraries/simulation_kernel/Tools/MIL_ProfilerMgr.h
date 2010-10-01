@@ -43,9 +43,9 @@ public:
     double GetLastTickDuration();
     double GetAverageTickDuration();
 
-    void NotifyDecisionUpdated( const MIL_AgentPion& pion, MT_Float rTime );
-    void NotifyDecisionUpdated( const MIL_Automate& automate, MT_Float rTime );
-    void NotifyDecisionUpdated( const MIL_Population& population, MT_Float rTime );
+    void NotifyDecisionUpdated( const MIL_AgentPion& pion, double rTime );
+    void NotifyDecisionUpdated( const MIL_Automate& automate, double rTime );
+    void NotifyDecisionUpdated( const MIL_Population& population, double rTime );
     //@}
 
 private:
@@ -55,7 +55,7 @@ private:
     {
         unsigned int nAgentID_;
         std::string strFunction_;
-        MT_Float rTime_;
+        double rTime_;
     };
 
     typedef std::vector< sDecFunctionProfiling >           T_DecFunctionProfilingVector;

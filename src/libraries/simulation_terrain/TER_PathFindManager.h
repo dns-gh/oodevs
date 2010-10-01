@@ -56,7 +56,7 @@ public:
     static TER_PathFindManager& GetPathFindManager();
     TER_PathFinderThread& CreatePathFinderThread( tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, bool bUseSameThread = false );
 
-    template< typename Functor > void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, Functor& bestNodeFunction ) const;
+    template< typename Functor > void ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, Functor& bestNodeFunction ) const;
 
     void AddDynamicData   ( TER_DynamicData& data );
     void RemoveDynamicData( TER_DynamicData& data );
@@ -92,7 +92,7 @@ private:
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
 template < typename Functor >
-void TER_PathFindManager::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, Functor& bestNodeFunction ) const
+void TER_PathFindManager::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double rRadius, Functor& bestNodeFunction ) const
 {
     if( threads_.empty() )
         return;

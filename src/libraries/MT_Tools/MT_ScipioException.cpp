@@ -41,34 +41,6 @@ MT_ScipioException::MT_ScipioException( const std::string& strContext, const std
 }
 
 //-----------------------------------------------------------------------------
-// Name: MT_ScipioException constructor
-// Created: JVT 03-02-04
-//-----------------------------------------------------------------------------
-MT_ScipioException::MT_ScipioException( const MT_ScipioException& rhs )
-    : strContext_    ( rhs.strContext_ )
-    , strFile_       ( rhs.strFile_ )
-    , nLine_         ( rhs.nLine_ )
-    , strMessage_    ( rhs.strMessage_ )
-    , strDescription_( rhs.strDescription_ )
-{
-    // NOTHING
-}
-
-//-----------------------------------------------------------------------------
-// Name: MT_ScipioException::operator =
-// Created: JVT 03-02-04
-//-----------------------------------------------------------------------------
-MT_ScipioException& MT_ScipioException::operator = ( const MT_ScipioException& rhs )
-{
-    strContext_     = rhs.strContext_;
-    strFile_        = rhs.strFile_;
-    nLine_          = rhs.nLine_;
-    strMessage_     = rhs.strMessage_;
-    strDescription_ = rhs.strDescription_;
-    return *this;
-}
-
-//-----------------------------------------------------------------------------
 // Name: MT_ScipioException destructor
 // Created: JVT 03-02-04
 //-----------------------------------------------------------------------------

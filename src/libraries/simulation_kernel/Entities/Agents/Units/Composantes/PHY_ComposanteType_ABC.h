@@ -13,7 +13,6 @@
 #define __PHY_ComposanteType_ABC_h_
 
 #include "protocol/protocol.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {
@@ -44,9 +43,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual MT_Float GetDangerosity     ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& target, MT_Float rDistBtwSourceAndTarget ) const = 0;
-    virtual MT_Float GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const = 0;
-    virtual MT_Float GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const = 0;
+    virtual double GetDangerosity     ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& target, double rDistBtwSourceAndTarget ) const = 0;
+    virtual double GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const = 0;
+    virtual double GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const = 0;
     //@}
 
 private:

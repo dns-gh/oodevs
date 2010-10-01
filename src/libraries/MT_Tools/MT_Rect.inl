@@ -9,6 +9,7 @@
 //
 //*****************************************************************************
 
+#include <cmath>
 
 //-----------------------------------------------------------------------------
 // Name: MT_Rect::GetPointUpLeft
@@ -55,7 +56,7 @@ const MT_Vector2D& MT_Rect::GetPointDownLeft() const
 // Created: FBD 02-07-05
 //-----------------------------------------------------------------------------
 inline
-MT_Float MT_Rect::GetTop() const
+double MT_Rect::GetTop() const
 {
     return rPosY2_;
 }
@@ -65,7 +66,7 @@ MT_Float MT_Rect::GetTop() const
 // Created: FBD 02-07-05
 //-----------------------------------------------------------------------------
 inline
-MT_Float MT_Rect::GetBottom() const
+double MT_Rect::GetBottom() const
 {
     return rPosY1_;
 }
@@ -76,7 +77,7 @@ MT_Float MT_Rect::GetBottom() const
 // Created: FBD 02-07-05
 //-----------------------------------------------------------------------------
 inline
-MT_Float MT_Rect::GetLeft() const
+double MT_Rect::GetLeft() const
 {
     return rPosX1_;
 }
@@ -87,7 +88,7 @@ MT_Float MT_Rect::GetLeft() const
 // Created: FBD 02-07-05
 //-----------------------------------------------------------------------------
 inline
-MT_Float MT_Rect::GetRight() const
+double MT_Rect::GetRight() const
 {
     return rPosX2_;
 }
@@ -98,7 +99,7 @@ MT_Float MT_Rect::GetRight() const
 // Created: FBD 02-11-07
 //-----------------------------------------------------------------------------
 inline
-MT_Float MT_Rect::GetWidth() const
+double MT_Rect::GetWidth() const
 {
     return rWidth_;
 }
@@ -109,7 +110,7 @@ MT_Float MT_Rect::GetWidth() const
 // Created: FBD 02-11-07
 //-----------------------------------------------------------------------------
 inline
-MT_Float MT_Rect::GetHeight() const
+double MT_Rect::GetHeight() const
 {
     return rHeight_;
 }
@@ -167,22 +168,22 @@ bool MT_Rect::IsInside( const MT_Vector2D& point ) const
 // Created: NLD 2003-01-27
 //-----------------------------------------------------------------------------
 inline
-bool MT_Rect::IsInside( const MT_Vector2D& point, MT_Float rPrecision ) const
+bool MT_Rect::IsInside( const MT_Vector2D& point, double rPrecision ) const
 {
-    MT_Float rTmpX = point.rX_ - rPosX1_;
-    if( rTmpX < 0 && MT_flabs( rTmpX ) >= rPrecision )
+    double rTmpX = point.rX_ - rPosX1_;
+    if( rTmpX < 0 && fabs( rTmpX ) >= rPrecision )
         return false;
 
     rTmpX = rPosX2_ - point.rX_;
-    if( rTmpX < 0 && MT_flabs( rTmpX ) >= rPrecision )
+    if( rTmpX < 0 && fabs( rTmpX ) >= rPrecision )
         return false;
 
-    MT_Float rTmpY = point.rY_ - rPosY1_;
-    if( rTmpY < 0 && MT_flabs( rTmpY ) >= rPrecision )
+    double rTmpY = point.rY_ - rPosY1_;
+    if( rTmpY < 0 && fabs( rTmpY ) >= rPrecision )
         return false;
 
     rTmpY = rPosY2_ - point.rY_;
-    if( rTmpY < 0 && MT_flabs( rTmpY ) >= rPrecision )
+    if( rTmpY < 0 && fabs( rTmpY ) >= rPrecision )
         return false;
 
     return true;

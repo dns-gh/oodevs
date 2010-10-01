@@ -132,7 +132,7 @@ MIL_Agent_ABC& PHY_RolePion_Location::GetAgent() const
 // Name: PHY_RolePion_Location::GetAltitude
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Location::GetAltitude() const
+double PHY_RolePion_Location::GetAltitude() const
 {
     return MIL_Tools::GetAltitude( *pvPosition_ ) + rHeight_;
 }
@@ -145,7 +145,7 @@ MT_Float PHY_RolePion_Location::GetAltitude() const
 // Name: PHY_RolePion_Location::SetHeight
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Location::SetHeight( MT_Float rHeight )
+void PHY_RolePion_Location::SetHeight( double rHeight )
 {
     if( rHeight == rHeight_ )
         return;
@@ -192,7 +192,7 @@ void PHY_RolePion_Location::SetDirection( const MT_Vector2D& vDirection )
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
 inline
-void PHY_RolePion_Location::SetCurrentSpeed( MT_Float rSpeed )
+void PHY_RolePion_Location::SetCurrentSpeed( double rSpeed )
 {
     if( rCurrentSpeed_ == rSpeed )
         return;
@@ -204,7 +204,7 @@ void PHY_RolePion_Location::SetCurrentSpeed( MT_Float rSpeed )
 // Name: PHY_RolePion_Location::Move
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Location::Move( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed )
+void PHY_RolePion_Location::Move( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, double rNewSpeed )
 {
     SetCurrentSpeed( rNewSpeed     );
     SetPosition    ( vNewPosition  );
@@ -390,7 +390,7 @@ void PHY_RolePion_Location::Serialize( HLA_UpdateFunctor& functor ) const
 // Name: PHY_RolePion_Location::GetHeight
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Location::GetHeight() const
+double PHY_RolePion_Location::GetHeight() const
 {
     return rHeight_;
 }
@@ -426,7 +426,7 @@ const MT_Vector2D& PHY_RolePion_Location::GetDirection() const
 // Name: PHY_RolePion_Location::GetCurrentSpeed
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Location::GetCurrentSpeed() const
+double PHY_RolePion_Location::GetCurrentSpeed() const
 {
     return rCurrentSpeed_;
 }

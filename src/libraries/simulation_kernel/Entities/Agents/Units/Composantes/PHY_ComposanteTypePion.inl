@@ -53,7 +53,7 @@ const PHY_DotationCapacities& PHY_ComposanteTypePion::GetDotationCapacities() co
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetMaxSpeed( const TerrainData& data ) const
+double PHY_ComposanteTypePion::GetMaxSpeed( const TerrainData& data ) const
 {
     return speeds_.GetMaxSpeed( data );
 }
@@ -63,7 +63,7 @@ MT_Float PHY_ComposanteTypePion::GetMaxSpeed( const TerrainData& data ) const
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetMaxSpeed() const
+double PHY_ComposanteTypePion::GetMaxSpeed() const
 {
     return speeds_.GetMaxSpeed();
 }
@@ -83,7 +83,7 @@ bool PHY_ComposanteTypePion::CanTransportHumans() const
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetNbrHumansLoadedPerTimeStep() const
+double PHY_ComposanteTypePion::GetNbrHumansLoadedPerTimeStep() const
 {
     return rNbrHumansLoadedPerTimeStep_;
 }
@@ -93,7 +93,7 @@ MT_Float PHY_ComposanteTypePion::GetNbrHumansLoadedPerTimeStep() const
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetNbrHumansUnloadedPerTimeStep() const
+double PHY_ComposanteTypePion::GetNbrHumansUnloadedPerTimeStep() const
 {
     return rNbrHumansUnloadedPerTimeStep_;
 }
@@ -113,7 +113,7 @@ bool PHY_ComposanteTypePion::CanTransportPion() const
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetPionTransporterWeightCapacity() const
+double PHY_ComposanteTypePion::GetPionTransporterWeightCapacity() const
 {
     return rPionTransporterWeightCapacity_;
 }
@@ -123,7 +123,7 @@ MT_Float PHY_ComposanteTypePion::GetPionTransporterWeightCapacity() const
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetPionTransporterWeightLoadedPerTimeStep() const
+double PHY_ComposanteTypePion::GetPionTransporterWeightLoadedPerTimeStep() const
 {
     return rPionTransporterWeightLoadedPerTimeStep_;
 }
@@ -133,7 +133,7 @@ MT_Float PHY_ComposanteTypePion::GetPionTransporterWeightLoadedPerTimeStep() con
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetPionTransporterWeightUnloadedPerTimeStep() const
+double PHY_ComposanteTypePion::GetPionTransporterWeightUnloadedPerTimeStep() const
 {
     return rPionTransporterWeightUnloadedPerTimeStep_;
 }
@@ -143,7 +143,7 @@ MT_Float PHY_ComposanteTypePion::GetPionTransporterWeightUnloadedPerTimeStep() c
 // Created: JVT 2004-10-20
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetSensorRotationAngle() const
+double PHY_ComposanteTypePion::GetSensorRotationAngle() const
 {
     return rSensorRotationAngle_;
 }
@@ -153,7 +153,7 @@ MT_Float PHY_ComposanteTypePion::GetSensorRotationAngle() const
 // Created: NLD 2004-11-18
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetWeight() const
+double PHY_ComposanteTypePion::GetWeight() const
 {
     return rWeight_;
 }
@@ -163,7 +163,7 @@ MT_Float PHY_ComposanteTypePion::GetWeight() const
 // Created: AGE 2005-04-13
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetMaxSlope() const
+double PHY_ComposanteTypePion::GetMaxSlope() const
 {
     return rMaxSlope_;
 }
@@ -260,7 +260,7 @@ bool PHY_ComposanteTypePion::CanHaul() const
 // Created: NLD 2005-03-29
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetHaulerWeightCapacity() const
+double PHY_ComposanteTypePion::GetHaulerWeightCapacity() const
 {
     return rHaulerWeightCapacity_;
 }
@@ -270,7 +270,7 @@ MT_Float PHY_ComposanteTypePion::GetHaulerWeightCapacity() const
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetHaulerLoadingTime() const
+double PHY_ComposanteTypePion::GetHaulerLoadingTime() const
 {
     return rHaulerLoadingTime_;
 }
@@ -280,7 +280,7 @@ MT_Float PHY_ComposanteTypePion::GetHaulerLoadingTime() const
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetHaulerUnloadingTime() const
+double PHY_ComposanteTypePion::GetHaulerUnloadingTime() const
 {
     return rHaulerUnloadingTime_;
 }
@@ -344,7 +344,7 @@ unsigned int PHY_ComposanteTypePion::GetAmbulanceCollectionCapacity() const
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetNbrHumansLoadedForCollectionPerTimeStep() const
+double PHY_ComposanteTypePion::GetNbrHumansLoadedForCollectionPerTimeStep() const
 {
     return rNbrHumansLoadedForCollectionPerTimeStep_;
 }
@@ -354,7 +354,7 @@ MT_Float PHY_ComposanteTypePion::GetNbrHumansLoadedForCollectionPerTimeStep() co
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetNbrHumansUnloadedForCollectionPerTimeStep() const
+double PHY_ComposanteTypePion::GetNbrHumansUnloadedForCollectionPerTimeStep() const
 {
     return rNbrHumansUnloadedForCollectionPerTimeStep_;
 }
@@ -374,7 +374,7 @@ unsigned int PHY_ComposanteTypePion::GetAmbulanceEvacuationCapacity() const
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetNbrHumansLoadedForEvacuationPerTimeStep() const
+double PHY_ComposanteTypePion::GetNbrHumansLoadedForEvacuationPerTimeStep() const
 {
     return rNbrHumansLoadedForEvacuationPerTimeStep_;
 }
@@ -384,7 +384,7 @@ MT_Float PHY_ComposanteTypePion::GetNbrHumansLoadedForEvacuationPerTimeStep() co
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_ComposanteTypePion::GetNbrHumansUnloadedForEvacuationPerTimeStep() const
+double PHY_ComposanteTypePion::GetNbrHumansUnloadedForEvacuationPerTimeStep() const
 {
     return rNbrHumansUnloadedForEvacuationPerTimeStep_;
 }
@@ -394,7 +394,7 @@ MT_Float PHY_ComposanteTypePion::GetNbrHumansUnloadedForEvacuationPerTimeStep() 
 // Created: NLD 2005-07-18
 // -----------------------------------------------------------------------------
 inline
-void PHY_ComposanteTypePion::GetStockTransporterCapacity( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const
+void PHY_ComposanteTypePion::GetStockTransporterCapacity( double& rWeightMax, double& rVolumeMax ) const
 {
     rWeightMax = rStockTransporterWeightCapacity_;
     rVolumeMax = rStockTransporterVolumeCapacity_;
@@ -415,7 +415,7 @@ const PHY_DotationNature* PHY_ComposanteTypePion::GetStockTransporterNature() co
 // Created: JVT 2005-04-26
 // -----------------------------------------------------------------------------
 inline
-PHY_ComposanteTypePion::sBreakdownTypeProbability::sBreakdownTypeProbability( const PHY_BreakdownType& breakdownType, MT_Float rProbabilityBound )
+PHY_ComposanteTypePion::sBreakdownTypeProbability::sBreakdownTypeProbability( const PHY_BreakdownType& breakdownType, double rProbabilityBound )
     : pBreakdownType_   ( &breakdownType )
     , rProbabilityBound_( rProbabilityBound ) 
 {

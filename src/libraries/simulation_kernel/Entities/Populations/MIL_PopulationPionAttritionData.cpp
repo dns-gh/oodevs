@@ -124,7 +124,7 @@ const PHY_AttritionData& MIL_PopulationPionAttritionData::GetAttritionData( cons
 // Name: MIL_PopulationPionAttritionData::GetPH
 // Created: NLD 2005-11-04
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationPionAttritionData::GetPH( const MIL_PopulationAttitude& attitude, MT_Float rDensity ) const
+double MIL_PopulationPionAttritionData::GetPH( const MIL_PopulationAttitude& attitude, double rDensity ) const
 {
     assert( attitudeAttritionData_.size() > attitude.GetID() );
 

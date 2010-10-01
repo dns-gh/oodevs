@@ -86,10 +86,10 @@ public:
 
     //! @name Dotations management
     //@{
-    MT_Float SupplyDotation     ( const PHY_DotationCategory& category, MT_Float rNbr );
+    double SupplyDotation     ( const PHY_DotationCategory& category, double rNbr );
     void     ResupplyDotations  ();
-    void     ResupplyDotations  ( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor );
-    void     ResupplyDotations  ( const PHY_DotationType&      type             , MT_Float rFactor );
+    void     ResupplyDotations  ( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor );
+    void     ResupplyDotations  ( const PHY_DotationType&      type             , double rFactor );
     //@}
 
     //! @name Consumption management
@@ -97,12 +97,12 @@ public:
                   bool                 SetConsumptionMode      ( const PHY_ConsumptionType& mode );
     virtual const PHY_ConsumptionType& GetConsumptionMode      () const;
                   void                 RollbackConsumptionMode ();
-                  MT_Float             GetMaxTimeForConsumption( const PHY_ConsumptionType& mode ) const;
+                  double             GetMaxTimeForConsumption( const PHY_ConsumptionType& mode ) const;
     //@}
 
     //! @name Fire dotations
     //@{
-    virtual double AddFireReservation( const PHY_DotationCategory& category, MT_Float rNbr );
+    virtual double AddFireReservation( const PHY_DotationCategory& category, double rNbr );
     virtual double GetDotationNumber( const PHY_DotationCategory& category ) const;
     virtual const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const;
     virtual float GetIlluminatingRange( ) const;
@@ -122,13 +122,13 @@ public:
     //@{
     void NotifySupplyNeeded          ( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const; // Logistic
     void FillSupplyRequest           ( PHY_SupplyDotationRequestContainer& supplyRequest ) const;
-    void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, MT_Float rCapacityFactor ) const;
+    void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const;
     //@}
 
 public:
     //! @name Types
     //@{
-    typedef std::map< const PHY_Dotation*, MT_Float /*rValueReserved*/ > T_DotationReservedMap;
+    typedef std::map< const PHY_Dotation*, double /*rValueReserved*/ > T_DotationReservedMap;
     typedef T_DotationReservedMap::const_iterator                        CIT_DotationReservedMap;
     //@}
 

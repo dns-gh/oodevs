@@ -125,14 +125,14 @@ void PHY_Conveyor::serialize( Archive& file, const unsigned int )
 // Name: PHY_Conveyor::Convoy
 // Created: NLD 2005-07-19
 // -----------------------------------------------------------------------------
-MT_Float PHY_Conveyor::Convoy( PHY_SupplyConsign_ABC& consign, const PHY_DotationCategory& dotationCategory, const MT_Float rNbrToConvoy )
+double PHY_Conveyor::Convoy( PHY_SupplyConsign_ABC& consign, const PHY_DotationCategory& dotationCategory, const double rNbrToConvoy )
 {
     assert( pConveyorComp_ );
     if( !pConveyorComp_->GetType().CanTransportStock( dotationCategory ) )
         return 0.;
 
-    MT_Float rVolumeToConvoy = rNbrToConvoy * dotationCategory.GetVolume();
-    MT_Float rWeightToConvoy = rNbrToConvoy * dotationCategory.GetWeight();
+    double rVolumeToConvoy = rNbrToConvoy * dotationCategory.GetVolume();
+    double rWeightToConvoy = rNbrToConvoy * dotationCategory.GetWeight();
 
     if( rVolumeToConvoy > rVolumeCapacity_ )
     {
@@ -154,7 +154,7 @@ MT_Float PHY_Conveyor::Convoy( PHY_SupplyConsign_ABC& consign, const PHY_Dotatio
 
     assert( rWeightToConvoy / dotationCategory.GetWeight() == rVolumeToConvoy / dotationCategory.GetVolume() );
 
-    const MT_Float rNbrConvoyed = std::min( rNbrToConvoy, std::max( rWeightToConvoy / dotationCategory.GetWeight(), rVolumeToConvoy / dotationCategory.GetVolume() ) );
+    const double rNbrConvoyed = std::min( rNbrToConvoy, std::max( rWeightToConvoy / dotationCategory.GetWeight(), rVolumeToConvoy / dotationCategory.GetVolume() ) );
     dotationsConvoyed_[ &dotationCategory ] += rNbrConvoyed;
     consign.AddConvoyedMerchandise( dotationCategory, rNbrConvoyed );
     return rNbrConvoyed;

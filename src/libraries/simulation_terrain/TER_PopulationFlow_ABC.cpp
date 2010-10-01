@@ -64,7 +64,7 @@ void TER_PopulationFlow_ABC::RemoveFromPatch()
 // Name: TER_PopulationFlow_ABC::Intersect2DWithCircle
 // Created: NLD 2005-10-10
 // -----------------------------------------------------------------------------
-bool TER_PopulationFlow_ABC::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const
+bool TER_PopulationFlow_ABC::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const
 {
     return GetLocation().Intersect2DWithCircle( vCircleCenter, rRadius );
 }
@@ -73,7 +73,7 @@ bool TER_PopulationFlow_ABC::Intersect2DWithCircle( const MT_Vector2D& vCircleCe
 // Name: TER_PopulationFlow_ABC::Intersect2DWithCircle
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-bool TER_PopulationFlow_ABC::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius, T_PointVector& shape ) const
+bool TER_PopulationFlow_ABC::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, T_PointVector& shape ) const
 {
     return GetLocation().Intersect2DWithCircle( vCircleCenter, rRadius, shape );
 }

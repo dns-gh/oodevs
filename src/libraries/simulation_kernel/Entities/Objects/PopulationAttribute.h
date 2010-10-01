@@ -11,7 +11,6 @@
 #define __PopulationAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {
@@ -38,9 +37,9 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float GetDensity() const;
+    double GetDensity() const;
     void  Reset();
-    void  SetDensity( MT_Float rDensity );
+    void  SetDensity( double rDensity );
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
@@ -63,7 +62,7 @@ private:
 private:
     //! @name
     //@{
-    MT_Float density_;
+    double density_;
     //@}
 };
 

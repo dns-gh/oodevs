@@ -93,7 +93,7 @@ void PHY_SupplyDotationConsign::GetMerchandiseToConvoy( T_MerchandiseToConvoyMap
 // Name: PHY_SupplyDotationConsign::RemoveConvoyedMerchandise
 // Created: NLD 2005-12-15
 // -----------------------------------------------------------------------------
-void PHY_SupplyDotationConsign::RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations )
+void PHY_SupplyDotationConsign::RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations )
 {
     assert( pSupplyState_ );
     pSupplyState_->RemoveConvoyedMerchandise( dotationCategory, rNbrDotations );
@@ -103,7 +103,7 @@ void PHY_SupplyDotationConsign::RemoveConvoyedMerchandise( const PHY_DotationCat
 // Name: PHY_SupplyDotationConsign::AddConvoyedMerchandise
 // Created: NLD 2005-12-15
 // -----------------------------------------------------------------------------
-void PHY_SupplyDotationConsign::AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations )
+void PHY_SupplyDotationConsign::AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations )
 {
     assert( pSupplyState_ );
     pSupplyState_->AddConvoyedMerchandise( dotationCategory, rNbrDotations );

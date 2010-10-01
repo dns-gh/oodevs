@@ -52,12 +52,12 @@ public:
     //@{
     typedef PHY_RoleInterface_Perceiver RoleInterface;
 
-    typedef std::pair< const PHY_SensorTypeAgent*, MT_Float /*height*/ >  T_SurfaceAgentKeyPair;
+    typedef std::pair< const PHY_SensorTypeAgent*, double /*height*/ >  T_SurfaceAgentKeyPair;
     typedef std::map< T_SurfaceAgentKeyPair, PHY_PerceptionSurfaceAgent > T_SurfaceAgentMap;
     typedef T_SurfaceAgentMap::const_iterator                           CIT_SurfaceAgentMap;
     typedef T_SurfaceAgentMap::const_iterator                            IT_SurfaceAgentMap;
 
-    typedef std::pair< const PHY_SensorTypeObject* , MT_Float /*height*/ >  T_SurfaceObjectKeyPair;
+    typedef std::pair< const PHY_SensorTypeObject* , double /*height*/ >  T_SurfaceObjectKeyPair;
     typedef std::map< T_SurfaceObjectKeyPair, PHY_PerceptionSurfaceObject > T_SurfaceObjectMap;
     typedef T_SurfaceObjectMap::const_iterator                            CIT_SurfaceObjectMap;
 
@@ -117,7 +117,7 @@ public:
     virtual void DisableRecoAlat() = 0;
     virtual void EnableCoupDeSonde() = 0;
     virtual void DisableCoupDeSonde() = 0;
-    virtual int EnableRecoPoint( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DEC_Decision_ABC& callerAgent ) = 0;
+    virtual int EnableRecoPoint( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent ) = 0;
     virtual void DisableRecoPoint( int ) = 0;
     virtual int EnableRecoLocalisation( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent ) = 0;
     virtual int EnableRecoLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent ) = 0;
@@ -127,7 +127,7 @@ public:
     virtual void DisableRecoLocalisation( int ) = 0;
     virtual int EnableSurveillanceLocalisation( const TER_Localisation& localisation ) = 0;
     virtual void DisableSurveillanceLocalisation( int ) = 0;
-    virtual int EnableRecoObjects( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rSpeed, DEC_Decision_ABC& callerAgent ) = 0;
+    virtual int EnableRecoObjects( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rSpeed, DEC_Decision_ABC& callerAgent ) = 0;
     virtual void DisableRecoObjects( int ) = 0;
 
     // Radars
@@ -157,7 +157,7 @@ public:
     //@{
     virtual const MIL_KnowledgeGroup& GetKnowledgeGroup() const = 0;
     virtual MIL_Agent_ABC& GetPion() const = 0;
-    virtual MT_Float GetMaxAgentPerceptionDistance() const = 0;
+    virtual double GetMaxAgentPerceptionDistance() const = 0;
     virtual void GetMainPerceptionDirection( MT_Vector2D& vDirection ) const = 0;
 
     virtual bool IsPeriphericalVisionEnabled() const = 0;

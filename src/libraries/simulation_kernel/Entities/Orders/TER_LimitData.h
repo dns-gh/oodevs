@@ -38,9 +38,9 @@ public:
 
     //! @name Geometry - $$$ A GICLER
     //@{
-    MT_Float GetLength() const;
+    double GetLength() const;
 
-    MT_Float Distance( const MT_Vector2D& p ) const;
+    double Distance( const MT_Vector2D& p ) const;
     //@}
 
 private:
@@ -50,11 +50,11 @@ private:
     {
     public:
         DistanceData( const MT_Vector2D& from, const MT_Vector2D& to );
-        MT_Float SquareDistance( const MT_Vector2D& p ) const;
+        double SquareDistance( const MT_Vector2D& p ) const;
     private:
         MT_Vector2D origin_;
         MT_Vector2D direction_;
-        MT_Float    rSquareLength_;
+        double    rSquareLength_;
     };
     typedef std::vector< DistanceData >     T_DistancesData;
     typedef T_DistancesData::const_iterator CIT_DistancesData;
@@ -64,7 +64,7 @@ private:
     //! @name Tools
     //@{
     void     InitializeDistancesData();
-    MT_Float SquareDistance         ( const MT_Vector2D& p ) const;
+    double SquareDistance         ( const MT_Vector2D& p ) const;
     //@}
 
 private:

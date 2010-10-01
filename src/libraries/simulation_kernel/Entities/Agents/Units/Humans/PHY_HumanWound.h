@@ -73,7 +73,7 @@ public:
     const std::string&   GetName          () const;
     unsigned int                 GetID            () const;
     Common::EnumHumanWound GetAsnID         () const;
-    MT_Float             GetWoundedFactor () const;
+    double             GetWoundedFactor () const;
     unsigned int                 GetLifeExpectancy() const;
     unsigned int                 GetHealingTime   () const;
     unsigned int                 GetRestingTime   () const;
@@ -90,7 +90,7 @@ public:
     //! @name Helpers
     //@{
     struct LoadingWrapper;
-    static void ReadInjury( xml::xistream& xis, MT_Float& rFactorSum );
+    static void ReadInjury( xml::xistream& xis, double& rFactorSum );
     //@}
 
 private:
@@ -106,7 +106,7 @@ private:
         eKilled
     };
 
-    typedef std::vector< MT_Float >       T_FloatVector;
+    typedef std::vector< double >       T_FloatVector;
     typedef T_FloatVector::const_iterator CIT_FloatVector;
     //@}
 
@@ -124,7 +124,7 @@ private:
     const std::string           strName_;
     const E_Wound               nWound_;
     const Common::EnumHumanWound  nAsnID_;
-          MT_Float              rWoundedFactor_;
+          double              rWoundedFactor_;
           unsigned int                  nLifeExpectancy_;
           unsigned int                  nHealingTime_;
           unsigned int                  nRestingTime_;
@@ -138,7 +138,7 @@ private:
     static unsigned int            nContaminatedRestingTime_;
     static unsigned int            nMentalDiseaseHealingTime_;
     static unsigned int               nMentalDiseaseRestingTime_;
-    static MT_Float        rMentalDiseaseFactor_;
+    static double        rMentalDiseaseFactor_;
 };
 
 #endif // __PHY_HumanWound_h_

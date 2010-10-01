@@ -105,12 +105,12 @@ void DEC_Knowledge_PopulationCollision::PublishKnowledges( DEC_Knowledge_Populat
 // Name: DEC_Knowledge_PopulationCollision::GetPionMaxSpeed
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_PopulationCollision::GetPionMaxSpeed() const
+double DEC_Knowledge_PopulationCollision::GetPionMaxSpeed() const
 {
     assert( pAgentColliding_ );
     T_ComposanteVolumeSet volumes_;
     pAgentColliding_->GetRole< PHY_RolePion_Composantes >().GetVisibleVolumes( volumes_ );
-    MT_Float rMaxSpeed = std::numeric_limits< MT_Float >::max();
+    double rMaxSpeed = std::numeric_limits< double >::max();
     for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
     {
         const MIL_PopulationFlow& flow = **it;
@@ -130,11 +130,11 @@ MT_Float DEC_Knowledge_PopulationCollision::GetPionMaxSpeed() const
 // Name: DEC_Knowledge_PopulationCollision::GetPionReloadingTimeFactor
 // Created: NLD 2005-11-02
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_PopulationCollision::GetPionReloadingTimeFactor() const
+double DEC_Knowledge_PopulationCollision::GetPionReloadingTimeFactor() const
 {
     assert( pAgentColliding_ );
     T_ComposanteVolumeSet volumes_;
-    MT_Float rFactor = 1.;
+    double rFactor = 1.;
     for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
         rFactor = std::max( rFactor, (**it).GetPionReloadingTimeFactor() );
     for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -146,9 +146,9 @@ MT_Float DEC_Knowledge_PopulationCollision::GetPionReloadingTimeFactor() const
 // Name: DEC_Knowledge_PopulationCollision::GetMaxPopulationDensity
 // Created: NLD 2005-10-27
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_PopulationCollision::GetMaxPopulationDensity() const
+double DEC_Knowledge_PopulationCollision::GetMaxPopulationDensity() const
 {
-    MT_Float rMaxDensity = 0.;
+    double rMaxDensity = 0.;
     for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
         rMaxDensity = std::max( rMaxDensity, (**it).GetDensity() );
     for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )

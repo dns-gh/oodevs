@@ -12,7 +12,6 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -66,10 +65,10 @@ public:
     //@{
     void Equip();
     bool IsEquipped() const;
-    MT_Float GetMaxWeight() const;
-    MT_Float GetWidth() const;
-    MT_Float GetLength() const;
-    MT_Float GetFlow() const;
+    double GetMaxWeight() const;
+    double GetWidth() const;
+    double GetLength() const;
+    double GetFlow() const;
     //@}
 
     //! @name Copy
@@ -87,10 +86,10 @@ private:
     //! @name
     //@{
     bool bEquipped_;
-    MT_Float rWeightSupported_;
-    MT_Float rWidth_;
-    MT_Float rLength_;
-    MT_Float rFlow_;
+    double rWeightSupported_;
+    double rWidth_;
+    double rLength_;
+    double rFlow_;
     //@}
 };
 

@@ -68,15 +68,15 @@ public:
     const MIL_Fuseau&                         GetFuseau                   () const;
     const MIL_Fuseau&                         GetAutomataFuseau           () const;
     const PHY_Speeds&                         GetUnitSpeeds               () const;
-          MT_Float                            GetUnitMaxSlope             () const;
+          double                            GetUnitMaxSlope             () const;
     const MT_Vector2D&                        GetDirDanger                () const;
     const T_PathKnowledgeObjectByTypesVector& GetPathKnowledgeObjects     () const;
-          MT_Float                            GetCostOutsideOfAllObjects  () const;
+          double                            GetCostOutsideOfAllObjects  () const;
     const T_PathKnowledgeAgentVector&         GetPathKnowledgeAgents      () const;
     const T_PathKnowledgePopulationVector&    GetPathKnowledgePopulations () const;
     const DEC_PathType&                       GetPathType                 () const;
     const DEC_Agent_PathClass&                GetPathClass                () const;
-          MT_Float                            GetUnitMajorWeight          () const;
+          double                            GetUnitMajorWeight          () const;
     //@}
 
     //! @name Tools
@@ -108,9 +108,9 @@ private:
     void InsertLimas      ();
 
     void InsertPointAvant        ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent );
-    void InsertPointAvant        ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPointAvant );
-    bool InsertPoint             ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint );
-    void InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint, MT_Float& rDistSinceLastPointAvant );
+    void InsertPointAvant        ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, double& rDistSinceLastPointAvant );
+    bool InsertPoint             ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, double& rDistSinceLastPoint );
+    void InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, double& rDistSinceLastPoint, double& rDistSinceLastPointAvant );
     void InsertLima              ( const MIL_LimaOrder& lima );
 
     IT_PathPointList GetPreviousPathPointOnDifferentLocation( IT_PathPointList );
@@ -129,10 +129,10 @@ private:
           MIL_Fuseau                         automateFuseau_;
           MT_Vector2D                        vDirDanger_;
           PHY_Speeds                         unitSpeeds_;
-          MT_Float                           rMaxSlope_;
+          double                           rMaxSlope_;
           T_PathKnowledgeAgentVector         pathKnowledgeAgents_;
           T_PathKnowledgeObjectByTypesVector pathKnowledgeObjects_;
-          MT_Float                           rCostOutsideOfAllObjects_;
+          double                           rCostOutsideOfAllObjects_;
           T_PathKnowledgePopulationVector    pathKnowledgePopulations_;
           MT_Profiler                        profiler_;
           bool bDecPointsInserted_;

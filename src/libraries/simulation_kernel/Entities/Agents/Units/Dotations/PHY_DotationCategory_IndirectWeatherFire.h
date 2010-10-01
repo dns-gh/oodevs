@@ -36,12 +36,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual void ApplyEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
+    virtual void ApplyEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
     //@}
 
 private:
-    MT_Float rDeploymentDuration_;
-    MT_Float rLifeDuration_;
+    double rDeploymentDuration_;
+    double rLifeDuration_;
 };
 
 #endif // __PHY_DotationCategory_IndirectWeatherFire_h_

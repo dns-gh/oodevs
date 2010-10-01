@@ -12,7 +12,7 @@
 // Created: NLD 2007-02-09
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_Path_KnowledgeObject::GetCostOut() const
+double DEC_Path_KnowledgeObject::GetCostOut() const
 {
     return rCostOut_;
 }

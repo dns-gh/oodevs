@@ -226,7 +226,7 @@ void PHY_DotationGroupContainer::RemoveCapacity( const PHY_DotationCapacity& cap
 // Name: PHY_DotationGroupContainer::GetCapacity
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationGroupContainer::GetCapacity( const PHY_DotationCategory& category ) const
+double PHY_DotationGroupContainer::GetCapacity( const PHY_DotationCategory& category ) const
 {
     const PHY_DotationGroup* pGroup = GetDotationGroup( category.GetType() );
     return pGroup ? pGroup->GetCapacity( category ) : 0.;
@@ -236,7 +236,7 @@ MT_Float PHY_DotationGroupContainer::GetCapacity( const PHY_DotationCategory& ca
 // Name: PHY_DotationGroupContainer::GetValue
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationGroupContainer::GetValue( const PHY_DotationCategory& category ) const
+double PHY_DotationGroupContainer::GetValue( const PHY_DotationCategory& category ) const
 {
     const PHY_DotationGroup* pGroup = GetDotationGroup( category.GetType() );
     return pGroup ? pGroup->GetValue( category ) : 0.;
@@ -246,7 +246,7 @@ MT_Float PHY_DotationGroupContainer::GetValue( const PHY_DotationCategory& categ
 // Name: PHY_DotationGroupContainer::Consume
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationGroupContainer::Consume( const PHY_DotationCategory& category, MT_Float rNbr )
+double PHY_DotationGroupContainer::Consume( const PHY_DotationCategory& category, double rNbr )
 {
     PHY_DotationGroup* pGroup = GetDotationGroup( category.GetType() );
     return pGroup ? pGroup->Consume( category, rNbr ) : 0.;
@@ -256,7 +256,7 @@ MT_Float PHY_DotationGroupContainer::Consume( const PHY_DotationCategory& catego
 // Name: PHY_DotationGroupContainer::Supply
 // Created: NLD 2005-05-11
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationGroupContainer::Supply( const PHY_DotationCategory& category, MT_Float rNbr )
+double PHY_DotationGroupContainer::Supply( const PHY_DotationCategory& category, double rNbr )
 {
     PHY_DotationGroup* pGroup = GetDotationGroup( category.GetType() );
     return pGroup ? pGroup->Supply( category, rNbr ) : 0.;
@@ -276,7 +276,7 @@ void PHY_DotationGroupContainer::Resupply()
 // Name: PHY_DotationGroupContainer::Resupply
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::Resupply( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor )
+void PHY_DotationGroupContainer::Resupply( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor )
 {
     PHY_DotationGroup* pDotationGroup = GetDotationGroup( *PHY_DotationType::munition_ );
     if( pDotationGroup )
@@ -287,7 +287,7 @@ void PHY_DotationGroupContainer::Resupply( const PHY_AmmoDotationClass& ammoDota
 // Name: PHY_DotationGroupContainer::Resupply
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::Resupply( const PHY_DotationType& type, MT_Float rFactor )
+void PHY_DotationGroupContainer::Resupply( const PHY_DotationType& type, double rFactor )
 {
     PHY_DotationGroup* pDotationGroup = GetDotationGroup( type );
     if( pDotationGroup )
@@ -329,7 +329,7 @@ float PHY_DotationGroupContainer::GetIlluminatingRange() const
 // Name: PHY_DotationGroupContainer::AddConsumptionReservation
 // Created: NLD 2004-09-30
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationGroupContainer::AddConsumptionReservation( const PHY_DotationCategory& category, MT_Float rNbr )
+double PHY_DotationGroupContainer::AddConsumptionReservation( const PHY_DotationCategory& category, double rNbr )
 {
     PHY_DotationGroup* pGroup = GetDotationGroup( category.GetType() );
     return pGroup ? pGroup->AddConsumptionReservation( category, rNbr ) : 0.;
@@ -359,7 +359,7 @@ void PHY_DotationGroupContainer::ConsumeConsumptionReservations()
 // Name: PHY_DotationGroupContainer::AddFireReservation
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationGroupContainer::AddFireReservation( const PHY_DotationCategory& category, MT_Float rNbr )
+double PHY_DotationGroupContainer::AddFireReservation( const PHY_DotationCategory& category, double rNbr )
 {
     PHY_DotationGroup* pGroup = GetDotationGroup( category.GetType() );
     return pGroup ? pGroup->AddFireReservation( category, rNbr ) : 0.;
@@ -399,7 +399,7 @@ void PHY_DotationGroupContainer::FillSupplyRequest( PHY_SupplyDotationRequestCon
 // Name: PHY_DotationGroupContainer::ChangeDotationsValueUsingTC2
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, MT_Float rCapacityFactor, MIL_AutomateLOG& tc2 ) const
+void PHY_DotationGroupContainer::ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor, MIL_AutomateLOG& tc2 ) const
 {
     CIT_DotationGroupMap it = dotationGroups_.find( &dotationType );
     if( it == dotationGroups_.end() )

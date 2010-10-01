@@ -74,7 +74,7 @@ bool TER_Object_ABC::Intersect2D( const MT_Line& orientedLine, T_PointSet& colli
 // Name: TER_Object_ABC::Intersect2DWithCircle
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-bool TER_Object_ABC::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const
+bool TER_Object_ABC::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const
 {
     return location_.Intersect2DWithCircle( vCircleCenter, rRadius );
 }

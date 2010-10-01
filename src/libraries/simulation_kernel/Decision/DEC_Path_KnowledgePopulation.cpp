@@ -68,16 +68,16 @@ void DEC_Path_KnowledgePopulation::AddElement( const MIL_PopulationElement_ABC& 
 // Name: DEC_Path_KnowledgePopulation::ComputeCost
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
-MT_Float DEC_Path_KnowledgePopulation::ComputeCost( const MT_Vector2D& /*from*/, const MT_Vector2D& to, const TerrainData& /*nToTerrainType*/, const TerrainData& /*nLinkTerrainType*/ ) const
+double DEC_Path_KnowledgePopulation::ComputeCost( const MT_Vector2D& /*from*/, const MT_Vector2D& to, const TerrainData& /*nToTerrainType*/, const TerrainData& /*nLinkTerrainType*/ ) const
 {
-    const MT_Float rMaxRange = pPathClass_->GetPopulationSecurityRange();
+    const double rMaxRange = pPathClass_->GetPopulationSecurityRange();
     const sPopulationElement* pClosestElement = 0;
-    const MT_Float rDistance = ComputeClosestElementInRange( to, rMaxRange, pClosestElement );
+    const double rDistance = ComputeClosestElementInRange( to, rMaxRange, pClosestElement );
     if( bAvoidPolicy_ ) // avoiding policy (non-terrorist)
     {
         if( !pClosestElement )
             return 0.f;
-        const MT_Float rElementCost = pPathClass_->GetPopulationAttitudeCost( *pClosestElement->pAttitude_ ) * pClosestElement->rDensity_;
+        const double rElementCost = pPathClass_->GetPopulationAttitudeCost( *pClosestElement->pAttitude_ ) * pClosestElement->rDensity_;
         return rElementCost * ( rMaxRange - rDistance ) / rMaxRange;
     }
     else // "loving" policy (terrorist)
@@ -92,16 +92,16 @@ MT_Float DEC_Path_KnowledgePopulation::ComputeCost( const MT_Vector2D& /*from*/,
 // Name: DEC_Path_KnowledgePopulation::ComputeClosestElementInRange
 // Created: SBO 2006-02-24
 // -----------------------------------------------------------------------------
-MT_Float DEC_Path_KnowledgePopulation::ComputeClosestElementInRange( const MT_Vector2D& position, MT_Float rMaxRange, sPopulationElement const*& pResult ) const
+double DEC_Path_KnowledgePopulation::ComputeClosestElementInRange( const MT_Vector2D& position, double rMaxRange, sPopulationElement const*& pResult ) const
 {
     pResult = 0;
-    MT_Float rMinDistance = std::numeric_limits< MT_Float >::max();
+    double rMinDistance = std::numeric_limits< double >::max();
     for( CIT_PopulationElements it = elements_.begin(); it != elements_.end(); ++it )
     {
         MT_Vector2D nearestPoint;
         if( !it->location_.ComputeNearestPoint( position, nearestPoint ) )
             continue;
-        MT_Float rDistance = position.Distance( nearestPoint );
+        double rDistance = position.Distance( nearestPoint );
         if( rDistance < rMaxRange && rDistance < rMinDistance )
         {
             rMinDistance = rDistance;

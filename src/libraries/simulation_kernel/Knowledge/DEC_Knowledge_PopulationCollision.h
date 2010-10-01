@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_PopulationCollision_h_
 
 #include "DEC_Knowledge_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 class MIL_Population;
 class MIL_PopulationFlow;
@@ -51,9 +50,9 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float GetMaxPopulationDensity() const;
-    MT_Float GetPionMaxSpeed() const;
-    MT_Float GetPionReloadingTimeFactor() const;
+    double GetMaxPopulationDensity() const;
+    double GetPionMaxSpeed() const;
+    double GetPionReloadingTimeFactor() const;
     const MT_Vector2D& GetPosition() const;
     //@}
 

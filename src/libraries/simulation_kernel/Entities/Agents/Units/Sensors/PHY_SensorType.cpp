@@ -121,7 +121,7 @@ PHY_SensorType::~PHY_SensorType()
 // Name: PHY_SensorType::InstanciateSensor
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
-PHY_Sensor& PHY_SensorType::InstanciateSensor( MT_Float rHeight ) const
+PHY_Sensor& PHY_SensorType::InstanciateSensor( double rHeight ) const
 {
     return *new PHY_Sensor( *this, rHeight );
 }

@@ -12,7 +12,6 @@
 #ifndef __PHY_DotationStockContainer_h_
 #define __PHY_DotationStockContainer_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 namespace client
@@ -64,22 +63,22 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float AddReservation( const PHY_DotationCategory& category, MT_Float rNbr );
-    void RemoveReservation( const PHY_DotationCategory& category, MT_Float rNbr );
+    double AddReservation( const PHY_DotationCategory& category, double rNbr );
+    void RemoveReservation( const PHY_DotationCategory& category, double rNbr );
     void Resupply();
-    void Resupply( const PHY_DotationCategory& category, MT_Float rNbr );
+    void Resupply( const PHY_DotationCategory& category, double rNbr );
     //@}
 
     //! @name Accessors
     //@{
-    MT_Float GetValue( const PHY_DotationCategory& category ) const;
+    double GetValue( const PHY_DotationCategory& category ) const;
     PHY_DotationStock* GetStock( const PHY_DotationCategory& category ) const;
     PHY_DotationStock* AddStock( const PHY_DotationCategory& category );
     //@}
 
     //! @name Network
     //@{
-    void NotifyDotationChanged( const PHY_DotationStock& dotationStock, MT_Float rDelta );
+    void NotifyDotationChanged( const PHY_DotationStock& dotationStock, double rDelta );
     bool HasChanged() const;
     void SendChangedState( client::LogSupplyState& asn ) const;
     void SendFullState( client::LogSupplyState& asn ) const;

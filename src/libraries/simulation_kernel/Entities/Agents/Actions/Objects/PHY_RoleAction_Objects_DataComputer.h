@@ -39,8 +39,8 @@ public:
     void ConsumeDotations( const PHY_DotationCategory& category, unsigned int nNbr );
     void RecoverDotations( const PHY_DotationCategory& category, unsigned int nNbr );
 
-    MT_Float ComputeDeltaPercentage();
-    MT_Float ComputeWorkTime();
+    double ComputeDeltaPercentage();
+    double ComputeWorkTime();
 
     void operator()( PHY_ComposantePion& composante );
     //@}

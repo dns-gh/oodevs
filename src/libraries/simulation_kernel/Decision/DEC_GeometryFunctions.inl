@@ -65,7 +65,7 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
 // Created: JVT 2004-11-03
 // -----------------------------------------------------------------------------
 template< typename T >
-std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const MT_Float rAverageArea )
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const double rAverageArea )
 {
     assert( pLocalisation );
 
@@ -86,7 +86,7 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
 // Created: JVT 2004-11-04
 // -----------------------------------------------------------------------------
 template< typename T >
-std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitLocalisationInSections( const T& caller, const MT_Float rSectionLength )
+std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitLocalisationInSections( const T& caller, const double rSectionLength )
 {
     const MT_Line& globalDirection = caller.GetOrderManager().GetFuseau().GetGlobalDirection();
     MT_Vector2D vDirection( globalDirection.GetPosEnd() - globalDirection.GetPosStart() );
@@ -150,7 +150,7 @@ namespace
     // =============================================================================
     struct sBestNodeForObstacle
     {
-        sBestNodeForObstacle( const MIL_Fuseau& fuseau, const TerrainHeuristicCapacity& heuristic, const MT_Vector2D& vCenter, MT_Float rRadius )
+        sBestNodeForObstacle( const MIL_Fuseau& fuseau, const TerrainHeuristicCapacity& heuristic, const MT_Vector2D& vCenter, double rRadius )
             : fuseau_      ( fuseau )
             , heuristic_   ( heuristic )
             , center_      ( vCenter )
@@ -161,7 +161,7 @@ namespace
         }
         void Visit( const MT_Vector2D& pos, const TerrainData& nPassability )
         {
-            const MT_Float rTestNodeSquareDistance = center_.SquareDistance( pos );
+            const double rTestNodeSquareDistance = center_.SquareDistance( pos );
             if( rTestNodeSquareDistance > rSquareRadius_ || !fuseau_.IsInside( pos ) )
                 return;
             
@@ -185,7 +185,7 @@ namespace
         const MIL_Fuseau&         fuseau_;
         const TerrainHeuristicCapacity& heuristic_;    
         const MT_Vector2D&        center_;
-        MT_Float                  rSquareRadius_;
+        double                  rSquareRadius_;
         MT_Vector2D               bestPos_;
         int                       nLastScore_;
     };
@@ -197,7 +197,7 @@ namespace
 // Modified RPD 2009-08-06
 // -----------------------------------------------------------------------------
 template< typename T >
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeObstaclePosition( const T& caller, MT_Vector2D* pCenter, const std::string& type, MT_Float rRadius )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeObstaclePosition( const T& caller, MT_Vector2D* pCenter, const std::string& type, double rRadius )
 {
     assert( pCenter );
     boost::shared_ptr< MT_Vector2D > pResultPos ( new MT_Vector2D( *pCenter ) );
@@ -248,7 +248,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputePointBeforeLima( 
 // Modified RPD 2009-08-06
 // -----------------------------------------------------------------------------
 template< typename T >
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau( const T& caller, unsigned int limaID, MT_Float rDistBeforeLima, const MIL_Fuseau* pFuseau )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau( const T& caller, unsigned int limaID, double rDistBeforeLima, const MIL_Fuseau* pFuseau )
 {
     MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( limaID );
 
@@ -326,7 +326,7 @@ float DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives( const T& cal
             pNextObjective = *it;
     }
 
-    MT_Float rDistanceFromScheduled = std::numeric_limits< MT_Float >::max();
+    double rDistanceFromScheduled = std::numeric_limits< double >::max();
     unsigned int     nSchedule              = 0;
     if( pNextObjective )
     {

@@ -118,11 +118,11 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
     while( firerWeapons.GetUnusedFirerWeapon( pUnusedFirer, pUnusedFirerWeapon ) && nNbrWeaponsUsed < compTargets.size() )
     {
         PHY_Composante_ABC* pBestCompTarget = 0;
-        MT_Float rBestScore = 0.;
+        double rBestScore = 0.;
         for( PHY_Composante_ABC::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
         {
             PHY_Composante_ABC& compTarget = **itCompTarget;
-            const MT_Float rCurrentScore = pUnusedFirerWeapon->GetDangerosity( pion_, target, compTarget.GetType(), true ); // 'true' is for 'use ph'
+            const double rCurrentScore = pUnusedFirerWeapon->GetDangerosity( pion_, target, compTarget.GetType(), true ); // 'true' is for 'use ph'
             if( rCurrentScore > rBestScore )
             {
                 rBestScore = rCurrentScore;
@@ -142,7 +142,7 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
 // Name: PHY_RoleAction_DirectFiring::FirePion
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass /* =0 */  )
+int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, PHY_DirectFireData::E_FiringMode nFiringMode, double rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass /* =0 */  )
 {
     MIL_Agent_ABC* pTarget = pEnemy && pEnemy->IsValid() ? &pEnemy->GetAgentKnown() : 0;
     if( !pTarget )

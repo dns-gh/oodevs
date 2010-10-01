@@ -169,7 +169,7 @@ bool TER_World::IsValidPosition( const MT_Vector2D& pos ) const
 // Name: TER_World::GetWidth
 // Created: NLD 2005-04-11
 // -----------------------------------------------------------------------------
-MT_Float TER_World::GetWidth() const
+double TER_World::GetWidth() const
 {
     return pCoordinateManager_->GetWidth();
 }
@@ -178,7 +178,7 @@ MT_Float TER_World::GetWidth() const
 // Name: TER_World::GetHeight
 // Created: NLD 2005-04-11
 // -----------------------------------------------------------------------------
-MT_Float TER_World::GetHeight() const
+double TER_World::GetHeight() const
 {
     return pCoordinateManager_->GetHeight();
 }

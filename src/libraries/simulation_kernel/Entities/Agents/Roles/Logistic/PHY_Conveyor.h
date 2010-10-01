@@ -12,7 +12,6 @@
 #ifndef __PHY_Conveyor_h_
 #define __PHY_Conveyor_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 class PHY_ComposantePion;
@@ -37,7 +36,7 @@ public:
 
     //! @name Dotations
     //@{
-    MT_Float Convoy                 ( PHY_SupplyConsign_ABC& consign, const PHY_DotationCategory& dotationCategory, const MT_Float rNbrToConvoy ); // Return the nb convoyed
+    double Convoy                 ( PHY_SupplyConsign_ABC& consign, const PHY_DotationCategory& dotationCategory, const double rNbrToConvoy ); // Return the nb convoyed
     bool     IsFull                 () const;
     void     NotifyConveyorDestroyed( PHY_SupplyConsign_ABC& consign );
     void     EmptyOut               ();
@@ -67,7 +66,7 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, MT_Float /*rNbr*/ > T_DotationMap;
+    typedef std::map< const PHY_DotationCategory*, double /*rNbr*/ > T_DotationMap;
     typedef T_DotationMap::iterator                                    IT_DotationMap;
     typedef T_DotationMap::const_iterator                              CIT_DotationMap;
     //@}
@@ -77,8 +76,8 @@ private:
     //@{
     PHY_ComposantePion*  pConveyorComp_;
     MIL_AgentPion*       pConveyorPion_;
-    MT_Float             rWeightCapacity_;
-    MT_Float             rVolumeCapacity_;
+    double             rWeightCapacity_;
+    double             rVolumeCapacity_;
     T_DotationMap        dotationsConvoyed_;
 
     MIL_AgentPion*       pLentTo_;

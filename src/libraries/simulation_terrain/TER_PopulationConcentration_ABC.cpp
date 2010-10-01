@@ -64,7 +64,7 @@ void TER_PopulationConcentration_ABC::RemoveFromPatch()
 // Name: TER_PopulationConcentration_ABC::Intersect2DWithCircle
 // Created: NLD 2005-10-07
 // -----------------------------------------------------------------------------
-bool TER_PopulationConcentration_ABC::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const
+bool TER_PopulationConcentration_ABC::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const
 {
     return GetLocation().Intersect2DWithCircle( vCircleCenter, rRadius );
 }

@@ -106,15 +106,15 @@ PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& 
     , class_                ( radarClass )
     , time_                 ( time )
     , rRadius_              ( 0. )
-    , rMinHeight_           ( -std::numeric_limits< MT_Float >::max() )
-    , rMaxHeight_           (  std::numeric_limits< MT_Float >::max() )
+    , rMinHeight_           ( -std::numeric_limits< double >::max() )
+    , rMaxHeight_           (  std::numeric_limits< double >::max() )
     , detectableActivities_ ( PHY_ConsumptionType::GetConsumptionTypes().size(), false )
-    , rDetectionTime_       ( std::numeric_limits< MT_Float >::max() )
-    , rRecognitionTime_     ( std::numeric_limits< MT_Float >::max() )
-    , rIdentificationTime_  ( std::numeric_limits< MT_Float >::max() )
-    , rPcDetectionTime_     ( std::numeric_limits< MT_Float >::max() )
-    , rPcRecognitionTime_   ( std::numeric_limits< MT_Float >::max() )
-    , rPcIdentificationTime_( std::numeric_limits< MT_Float >::max() )
+    , rDetectionTime_       ( std::numeric_limits< double >::max() )
+    , rRecognitionTime_     ( std::numeric_limits< double >::max() )
+    , rIdentificationTime_  ( std::numeric_limits< double >::max() )
+    , rPcDetectionTime_     ( std::numeric_limits< double >::max() )
+    , rPcRecognitionTime_   ( std::numeric_limits< double >::max() )
+    , rPcIdentificationTime_( std::numeric_limits< double >::max() )
 {
     InitializeRange           ( xis );
     InitializeActivities      ( xis );
@@ -144,9 +144,9 @@ void PHY_RadarType::InitializeRange( xml::xistream& xis )
         xis.error( "radar: action-range < 0" );
     rRadius_ = MIL_Tools::ConvertMeterToSim( rRadius_ );
 
-    if( rMinHeight_ != -std::numeric_limits< MT_Float >::max() && rMinHeight_ < 0 )
+    if( rMinHeight_ != -std::numeric_limits< double >::max() && rMinHeight_ < 0 )
         xis.error( "radar: min-height < 0" );
-    if( rMaxHeight_ != std::numeric_limits< MT_Float >::max() && rMaxHeight_ < rMinHeight_ )
+    if( rMaxHeight_ != std::numeric_limits< double >::max() && rMaxHeight_ < rMinHeight_ )
         xis.error( "radar: max-height < min-height" );
 }
 
@@ -209,9 +209,9 @@ void PHY_RadarType::InitializeAcquisitionTimes( xml::xistream& xis )
 
     if( !bIsTime )
     {
-        rPcDetectionTime_       = rDetectionTime_       = std::numeric_limits< MT_Float >::max();
+        rPcDetectionTime_       = rDetectionTime_       = std::numeric_limits< double >::max();
         rPcRecognitionTime_     = rRecognitionTime_     = 0;
-        rPcIdentificationTime_  = rIdentificationTime_  = std::numeric_limits< MT_Float >::max();
+        rPcIdentificationTime_  = rIdentificationTime_  = std::numeric_limits< double >::max();
         return;
     }
 }
@@ -307,7 +307,7 @@ bool PHY_RadarType::CanAcquire( const MIL_Agent_ABC& perceiver, const MIL_Agent_
     if( !detectableActivities_[ target.GetRole< dotation::PHY_RoleInterface_Dotations >().GetConsumptionMode().GetID() ] )
         return false;
 
-    const MT_Float rTargetHeight = target.GetRole< PHY_RoleInterface_Location >().GetHeight();
+    const double rTargetHeight = target.GetRole< PHY_RoleInterface_Location >().GetHeight();
     if( rTargetHeight > rMaxHeight_ || rTargetHeight < rMinHeight_ )
         return false;
 
@@ -381,7 +381,7 @@ const PHY_RadarClass& PHY_RadarType::GetClass() const
 // Name: PHY_RadarType::GetRadius
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_RadarType::GetRadius() const
+double PHY_RadarType::GetRadius() const
 {
     return rRadius_;
 }

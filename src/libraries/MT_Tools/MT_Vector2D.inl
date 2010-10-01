@@ -28,7 +28,7 @@ MT_Vector2D::MT_Vector2D()
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
 inline
-MT_Vector2D::MT_Vector2D( MT_Float rX, MT_Float rY )
+MT_Vector2D::MT_Vector2D( double rX, double rY )
     : rX_( rX )
     , rY_( rY )
 {
@@ -63,7 +63,7 @@ MT_Vector2D::~MT_Vector2D()
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
 inline
-MT_Float MT_Vector2D::SquareMagnitude() const
+double MT_Vector2D::SquareMagnitude() const
 {
     return rX_ * rX_ + rY_ * rY_; 
 }
@@ -74,9 +74,9 @@ MT_Float MT_Vector2D::SquareMagnitude() const
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
 inline
-MT_Float MT_Vector2D::Magnitude() const
+double MT_Vector2D::Magnitude() const
 {
-    return (MT_Float)sqrt( SquareMagnitude() );
+    return (double)sqrt( SquareMagnitude() );
 }
 
 //-----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ MT_Float MT_Vector2D::Magnitude() const
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
 inline
-MT_Float MT_Vector2D::SquareDistance( const MT_Vector2D& vPosDest ) const
+double MT_Vector2D::SquareDistance( const MT_Vector2D& vPosDest ) const
 {
     return( (vPosDest.rX_ - rX_) * (vPosDest.rX_ - rX_) + (vPosDest.rY_ - rY_) * (vPosDest.rY_ - rY_) );
 }
@@ -96,9 +96,9 @@ MT_Float MT_Vector2D::SquareDistance( const MT_Vector2D& vPosDest ) const
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
 inline
-MT_Float MT_Vector2D::Distance( const MT_Vector2D& vPosDest ) const
+double MT_Vector2D::Distance( const MT_Vector2D& vPosDest ) const
 {
-    return (MT_Float)sqrt( SquareDistance( vPosDest ) );
+    return (double)sqrt( SquareDistance( vPosDest ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ bool MT_Vector2D::IsZero() const
 inline
 MT_Vector2D MT_Vector2D::Normalized( ) const
 { 
-    MT_Float rTmp = Magnitude();
+    double rTmp = Magnitude();
     if( rTmp )
         return (*this) / rTmp;
     else
@@ -135,7 +135,7 @@ MT_Vector2D MT_Vector2D::Normalized( ) const
 inline
 MT_Vector2D& MT_Vector2D::Normalize()
 {
-    MT_Float rTmp = Magnitude();
+    double rTmp = Magnitude();
     if( rTmp )
         return operator /= ( rTmp );
     else        
@@ -148,7 +148,7 @@ MT_Vector2D& MT_Vector2D::Normalize()
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
 inline
-MT_Vector2D operator* ( MT_Float rScalar, const MT_Vector2D& v )
+MT_Vector2D operator* ( double rScalar, const MT_Vector2D& v )
 {
     return MT_Vector2D( rScalar * v.rX_, rScalar * v.rY_ );
 }
@@ -159,7 +159,7 @@ MT_Vector2D operator* ( MT_Float rScalar, const MT_Vector2D& v )
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
 inline
-MT_Vector2D operator* ( const MT_Vector2D& v, MT_Float rScalar )
+MT_Vector2D operator* ( const MT_Vector2D& v, double rScalar )
 {
     return MT_Vector2D( rScalar * v.rX_, rScalar * v.rY_ );
 }
@@ -207,7 +207,7 @@ bool operator <( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 // Last modified: AGN 03-06-12
 //-----------------------------------------------------------------------------
 inline
-MT_Float operator* ( const MT_Vector2D& v1, const MT_Vector2D& v2)
+double operator* ( const MT_Vector2D& v1, const MT_Vector2D& v2)
 {
     return v1.rX_ * v2.rX_ + v1.rY_ * v2.rY_;
 }
@@ -217,7 +217,7 @@ MT_Float operator* ( const MT_Vector2D& v1, const MT_Vector2D& v2)
 // Created: FBD 02-03-01
 //-----------------------------------------------------------------------------
 inline
-MT_Float DotProduct( const MT_Vector2D& v1, const MT_Vector2D& v2 )
+double DotProduct( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 {
     return v1.rX_ * v2.rX_ + v1.rY_ * v2.rY_;
 }
@@ -227,12 +227,12 @@ MT_Float DotProduct( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 // Created: NLD 2004-06-07
 // -----------------------------------------------------------------------------
 inline
-MT_Float Angle( const MT_Vector2D& v1, const MT_Vector2D& v2)
+double Angle( const MT_Vector2D& v1, const MT_Vector2D& v2)
 {
-    MT_Float rCosAngle = v1.rX_ * v2.rX_ + v1.rY_ * v2.rY_;
-    MT_Float rSinAngle = v1.rX_ * v2.rY_ - v1.rY_ * v2.rX_;
+    double rCosAngle = v1.rX_ * v2.rX_ + v1.rY_ * v2.rY_;
+    double rSinAngle = v1.rX_ * v2.rY_ - v1.rY_ * v2.rX_;
     
-    MT_Float rTmp = v1.Magnitude() * v2.Magnitude();
+    double rTmp = v1.Magnitude() * v2.Magnitude();
     if( rTmp == 0. )
         return 0.;
     
@@ -243,7 +243,7 @@ MT_Float Angle( const MT_Vector2D& v1, const MT_Vector2D& v2)
     else if( rCosAngle < -1. )
         rCosAngle = -1;
 
-    MT_Float rAngle = acos( rCosAngle );
+    double rAngle = acos( rCosAngle );
     if( rSinAngle >= 0. )
         return rAngle;
     else
@@ -286,10 +286,10 @@ bool MT_Vector2D::operator!=( const MT_Vector2D& v ) const
 // Created: JVT 02-12-13
 //-----------------------------------------------------------------------------
 inline
-MT_Vector2D MT_Vector2D::Rotated( MT_Float rad ) const
+MT_Vector2D MT_Vector2D::Rotated( double rad ) const
 {
-    MT_Float rSin = sin( rad );
-    MT_Float rCos = cos( rad );
+    double rSin = sin( rad );
+    double rCos = cos( rad );
 
     return MT_Vector2D( rX_ * rCos + rY_ * rSin, rY_ * rCos - rX_ * rSin);
 }
@@ -299,11 +299,11 @@ MT_Vector2D MT_Vector2D::Rotated( MT_Float rad ) const
 // Created: JVT 02-12-13
 //-----------------------------------------------------------------------------
 inline
-MT_Vector2D& MT_Vector2D::Rotate( MT_Float rad )
+MT_Vector2D& MT_Vector2D::Rotate( double rad )
 {
-    MT_Float rSin = sin( rad );
-    MT_Float rCos = cos( rad );
-    MT_Float xmem = rX_;
+    double rSin = sin( rad );
+    double rCos = cos( rad );
+    double xmem = rX_;
 
     rX_ = rX_ * rCos + rY_ * rSin;
     rY_ = rY_ * rCos - xmem * rSin;
@@ -318,7 +318,7 @@ MT_Vector2D& MT_Vector2D::Rotate( MT_Float rad )
 inline
 MT_Vector2D& MT_Vector2D::Rotate90ClockWise()
 {
-    MT_Float rTmp = rX_;
+    double rTmp = rX_;
     rX_    = rY_;
     rY_    = -rTmp; 
     return *this;
@@ -341,7 +341,7 @@ MT_Vector2D MT_Vector2D::Rotated90ClockWise() const
 inline
 MT_Vector2D& MT_Vector2D::Rotate90()
 {
-    const MT_Float rTmp = rX_;
+    const double rTmp = rX_;
     rX_    = -rY_;
     rY_    = rTmp; 
     return *this;

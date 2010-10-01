@@ -126,7 +126,7 @@ Common::EnumNatureLevel MIL_IntelligenceOrder::GetLevel() const
 // Name: MIL_IntelligenceOrder::SquareDistance
 // Created: SBO 2007-12-06
 // -----------------------------------------------------------------------------
-MT_Float MIL_IntelligenceOrder::SquareDistance( const MT_Vector2D& point ) const
+double MIL_IntelligenceOrder::SquareDistance( const MT_Vector2D& point ) const
 {
     MT_Vector2D pos;
     MIL_Tools::ConvertCoordMosToSim( position_, pos );

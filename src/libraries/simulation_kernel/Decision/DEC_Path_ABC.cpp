@@ -64,9 +64,9 @@ void DEC_Path_ABC::Cancel()
 // Name: DEC_Path_ABC::GetLength
 // Created: AGE 2005-02-28
 // -----------------------------------------------------------------------------
-MT_Float DEC_Path_ABC::GetLength() const
+double DEC_Path_ABC::GetLength() const
 {
-    MT_Float rLength = 0.;
+    double rLength = 0.;
     for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
         rLength += (**itPathSection).GetLength();
     return rLength;

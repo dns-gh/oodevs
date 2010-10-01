@@ -105,8 +105,8 @@ public:
     virtual int GetPorteeAction();
     virtual void SetPorteeAction( int );
     virtual float GetNiveauAlerteRavitaillement();
-    virtual boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const MT_Float time, bool bBoundOnPath ) const;
-    virtual boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const MT_Float time, bool bBoundOnPath ) const;
+    virtual boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const double time, bool bBoundOnPath ) const;
+    virtual boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const double time, bool bBoundOnPath ) const;
 
     virtual void ClearListeEnisTirAutorise();
     virtual void ClearListePionsCoordination();
@@ -121,7 +121,7 @@ public:
     virtual bool IsPC() const;
     virtual bool IsTransported() const;
     virtual bool IsFlying() const;
-    virtual MT_Float GetMajorOperationalState() const;
+    virtual double GetMajorOperationalState() const;
     virtual bool IsAutomateEngaged() const;
     virtual bool IsDead() const;
     //@}

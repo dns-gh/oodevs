@@ -21,8 +21,6 @@
 // =============================================================================
 class MIL_Random
 {
-    MT_COPYNOTALLOWED( MIL_Random )
-
 public:
     enum ERandomContexts
     {
@@ -59,6 +57,13 @@ private:
     //@{
              MIL_Random( int nSeed, const bool* bGaussian, const double* rDeviation, const double* rMean );
     virtual ~MIL_Random();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    MIL_Random( const MIL_Random& );            //!< Copy constructor
+    MIL_Random& operator=( const MIL_Random& ); //!< Assignment operator
     //@}
 
 private:

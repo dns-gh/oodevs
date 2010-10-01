@@ -74,7 +74,7 @@ void PHY_WeaponDataType_IndirectFire::ThrowSmoke( MIL_Agent_ABC& firer, const MT
 // Name: PHY_WeaponDataType_IndirectFire::GetAverageSpeed
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponDataType_IndirectFire::GetAverageSpeed() const
+double PHY_WeaponDataType_IndirectFire::GetAverageSpeed() const
 {
     return rAverageSpeed_;
 }
@@ -83,7 +83,7 @@ MT_Float PHY_WeaponDataType_IndirectFire::GetAverageSpeed() const
 // Name: PHY_WeaponDataType_IndirectFire::GetMinRange
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponDataType_IndirectFire::GetMinRange() const
+double PHY_WeaponDataType_IndirectFire::GetMinRange() const
 {
     return rMinRange_;
 }
@@ -92,7 +92,7 @@ MT_Float PHY_WeaponDataType_IndirectFire::GetMinRange() const
 // Name: PHY_WeaponDataType_IndirectFire::GetMaxRange
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponDataType_IndirectFire::GetMaxRange() const
+double PHY_WeaponDataType_IndirectFire::GetMaxRange() const
 {
     return rMaxRange_;
 }

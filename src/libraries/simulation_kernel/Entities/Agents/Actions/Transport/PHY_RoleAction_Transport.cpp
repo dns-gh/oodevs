@@ -68,7 +68,7 @@ PHY_RoleAction_Transport::sTransportData::sTransportData()
 // Name: PHY_RoleAction_Transport::sTransportData::sTransportData
 // Created: NLD 2005-04-18
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Transport::sTransportData::sTransportData( MT_Float rTotalWeight, bool bTransportOnlyLoadable )
+PHY_RoleAction_Transport::sTransportData::sTransportData( double rTotalWeight, bool bTransportOnlyLoadable )
     : bTransportOnlyLoadable_( bTransportOnlyLoadable )
     , rTotalWeight_          ( rTotalWeight )
     , rRemainingWeight_      ( rTotalWeight )
@@ -139,8 +139,8 @@ int PHY_RoleAction_Transport::Load()
         if( comp->WeightLoadedPerTimeStep() == 0. )
             return eErrorNoCarriers;
 
-        const MT_Float rWeightToLoad = std::min( comp->WeightLoadedPerTimeStep(), comp->WeightCapacity() - rWeightTransported_ );
-        const MT_Float rWeightLoaded = DoLoad( rWeightToLoad );
+        const double rWeightToLoad = std::min( comp->WeightLoadedPerTimeStep(), comp->WeightCapacity() - rWeightTransported_ );
+        const double rWeightLoaded = DoLoad( rWeightToLoad );
         rWeightTransported_ += rWeightLoaded;
         if( rWeightLoaded == 0 || rWeightTransported_ >= comp->WeightCapacity() )
         {
@@ -156,9 +156,9 @@ int PHY_RoleAction_Transport::Load()
 // Name: PHY_RoleAction_Transport::DoLoad
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleAction_Transport::DoLoad( const MT_Float rWeightToLoad )
+double PHY_RoleAction_Transport::DoLoad( const double rWeightToLoad )
 {
-    MT_Float rWeightLoaded = 0.;
+    double rWeightLoaded = 0.;
     bool bTransportedByAnother = false;
 
     for( IT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end() && rWeightLoaded < rWeightToLoad; ++it )
@@ -174,7 +174,7 @@ MT_Float PHY_RoleAction_Transport::DoLoad( const MT_Float rWeightToLoad )
         if( it->second.rTransportedWeight_ <= 0. && bTransportedByAnother /* TODO && pion.CanBeTransported() */ ) // Filer position embarquement si bTransportOnlyLoadable_  + transporteur
             continue; // LoadForTransport fails when the 'pion' is already transported by another unit
 
-        const MT_Float rTmpWeight = std::min( rWeightToLoad - rWeightLoaded, it->second.rRemainingWeight_ );
+        const double rTmpWeight = std::min( rWeightToLoad - rWeightLoaded, it->second.rRemainingWeight_ );
         it->second.rTransportedWeight_ += rTmpWeight;
         it->second.rRemainingWeight_   -= rTmpWeight;
         rWeightLoaded                  += rTmpWeight;
@@ -204,7 +204,7 @@ int PHY_RoleAction_Transport::Unload()
         if( comp->WeightUnloadedPerTimeStep() == 0. )
             return eErrorNoCarriers;
 
-        const MT_Float rWeightUnloaded = DoUnload( comp->WeightUnloadedPerTimeStep() );
+        const double rWeightUnloaded = DoUnload( comp->WeightUnloadedPerTimeStep() );
         rWeightTransported_ -= rWeightUnloaded;
         if( rWeightUnloaded == 0. || rWeightTransported_ <= 0. )
         {
@@ -221,9 +221,9 @@ int PHY_RoleAction_Transport::Unload()
 // Name: PHY_RoleAction_Transport::DoUnload
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleAction_Transport::DoUnload( const MT_Float rWeightToUnload )
+double PHY_RoleAction_Transport::DoUnload( const double rWeightToUnload )
 {
-    MT_Float rWeightUnloaded = 0.;
+    double rWeightUnloaded = 0.;
     for( IT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end() && rWeightUnloaded < rWeightToUnload ; )
     {
         if( it->second.rTransportedWeight_ <= 0. )
@@ -232,7 +232,7 @@ MT_Float PHY_RoleAction_Transport::DoUnload( const MT_Float rWeightToUnload )
             continue;
         }
 
-        const MT_Float rTmpWeight = std::min( rWeightToUnload - rWeightUnloaded, it->second.rTransportedWeight_ );
+        const double rTmpWeight = std::min( rWeightToUnload - rWeightUnloaded, it->second.rTransportedWeight_ );
         it->second.rTransportedWeight_ -= rTmpWeight;
         rWeightUnloaded                += rTmpWeight;
         if( it->second.rTransportedWeight_ <= 0. && it->second.rRemainingWeight_ <= 0. )
@@ -261,7 +261,7 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
     if( !composante.GetState().IsDamaged() )
         return;
 
-    MT_Float rWeightDamaged = std::min( composante.GetPionTransporterWeightCapacity(), rWeightTransported_ );
+    double rWeightDamaged = std::min( composante.GetPionTransporterWeightCapacity(), rWeightTransported_ );
     if( rWeightDamaged == 0 )
         return;
 
@@ -269,7 +269,7 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
     {
         if( it->second.rTransportedWeight_ )
         {
-            const MT_Float rTmpWeight = std::min( rWeightDamaged, it->second.rTransportedWeight_ );
+            const double rTmpWeight = std::min( rWeightDamaged, it->second.rTransportedWeight_ );
             rWeightDamaged -= rTmpWeight;
             (*it->first).Apply(&TransportNotificationHandler_ABC::DamageTransported, it->second.rTransportedWeight_,composante.GetState(), it->second.bTransportOnlyLoadable_ );
 
@@ -287,7 +287,7 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Transport::ApplyContamination  ( const MIL_ToxicEffectManipulator& contamination )
 {
-    MT_Float rWeightDamaged = rWeightTransported_;
+    double rWeightDamaged = rWeightTransported_;
     for( CIT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end() && rWeightDamaged > 0; ++it )
     {
         if( it->second.rTransportedWeight_ )

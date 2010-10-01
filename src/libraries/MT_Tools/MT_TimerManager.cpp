@@ -51,7 +51,7 @@ void MT_TimerManager::Unregister( MT_Timer_ABC& timer )
 
 namespace
 {
-    int64 GetSystemTime()
+    long long int GetSystemTime()
     {
         FILETIME ft;
         GetSystemTimeAsFileTime( &ft );
@@ -65,7 +65,7 @@ namespace
 //-----------------------------------------------------------------------------
 void MT_TimerManager::Update() const
 {
-    const int64 current = GetSystemTime();
+    const long long int current = GetSystemTime();
     for( CIT_Timers it = timers_.begin(); it != timers_.end(); ++it )
         (*it)->Process( current );
 }

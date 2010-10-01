@@ -150,7 +150,7 @@ namespace
     class sObjectKnowledgesInCircleFilteredInserter
     {
     public:
-        sObjectKnowledgesInCircleFilteredInserter( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, MT_Float rRadius )
+        sObjectKnowledgesInCircleFilteredInserter( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius )
             : pContainer_( &container )
             , filter_    ( filter )
             , pCenter_   ( &center )
@@ -168,11 +168,11 @@ namespace
               T_KnowledgeObjectDiaIDVector* pContainer_;
         const MIL_ObjectFilter&             filter_;
         const MT_Vector2D*                  pCenter_;
-              MT_Float                      rRadius_;
+              double                      rRadius_;
     };
 }
 
-void DEC_KnowledgeBlackBoard_Army::GetObjectsInCircle( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, MT_Float rRadius )
+void DEC_KnowledgeBlackBoard_Army::GetObjectsInCircle( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius )
 {
     sObjectKnowledgesInCircleFilteredInserter functor( container, filter, center, rRadius );
 
@@ -235,7 +235,7 @@ namespace
     class sObjectKnowledgesFilteredHeightInserter
     {
     public:
-        sObjectKnowledgesFilteredHeightInserter( T_KnowledgeObjectVector& container, MT_Float rHeight, const MIL_ObjectFilter& filter )
+        sObjectKnowledgesFilteredHeightInserter( T_KnowledgeObjectVector& container, double rHeight, const MIL_ObjectFilter& filter )
             : pContainer_( &container )
             , rHeight_   ( rHeight )
             , filter_    ( filter )
@@ -250,12 +250,12 @@ namespace
 
     private:
               T_KnowledgeObjectVector*  pContainer_;
-        const MT_Float                  rHeight_;
+        const double                  rHeight_;
         const MIL_ObjectFilter&         filter_;
     };
 }
 
-void DEC_KnowledgeBlackBoard_Army::GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, MT_Float rHeight, const MIL_ObjectFilter& filter ) const
+void DEC_KnowledgeBlackBoard_Army::GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight, const MIL_ObjectFilter& filter ) const
 {
     sObjectKnowledgesFilteredHeightInserter functor( container, rHeight, filter );
 
@@ -307,7 +307,7 @@ namespace
     {
     public:
         sClosestObjectInserter( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter )
-            : rClosestDist_( std::numeric_limits< MT_Float >::max() )
+            : rClosestDist_( std::numeric_limits< double >::max() )
             , pPos_        ( vPos )
             , filter_      ( filter )
         {
@@ -318,7 +318,7 @@ namespace
             if( !filter_.Test( knowledge->GetType() ) )
                 return;
 
-            const MT_Float rDist = knowledge->GetLocalisation().ComputeBarycenter().Distance( pPos_ );
+            const double rDist = knowledge->GetLocalisation().ComputeBarycenter().Distance( pPos_ );
             if( rDist > rClosestDist_ )
                 return;
             rClosestDist_ = rDist;
@@ -329,7 +329,7 @@ namespace
         boost::shared_ptr< DEC_Knowledge_Object > pResult_;
 
     private:
-              MT_Float          rClosestDist_;
+              double          rClosestDist_;
         const MT_Vector2D&      pPos_;
         const MIL_ObjectFilter& filter_;
     };
@@ -355,7 +355,7 @@ namespace
     public:
         sClosestObjectFriendInserter( const MT_Vector2D& vPos, const MIL_Army_ABC& army, const MIL_ObjectFilter& filter )
             : pArmy_       ( &army )
-            , rClosestDist_( std::numeric_limits< MT_Float >::max() )
+            , rClosestDist_( std::numeric_limits< double >::max() )
             , pos_         ( vPos )
             , filter_      ( filter )
         {
@@ -369,7 +369,7 @@ namespace
             if( pArmy_->IsAFriend( knowledge->GetArmy() ) != eTristate_True )
                 return;
 
-            const MT_Float rDist = knowledge->GetLocalisation().ComputeBarycenter().Distance( pos_ );
+            const double rDist = knowledge->GetLocalisation().ComputeBarycenter().Distance( pos_ );
             if( rDist > rClosestDist_ )
                 return;
             rClosestDist_ = rDist;
@@ -380,7 +380,7 @@ namespace
         boost::shared_ptr< DEC_Knowledge_Object > pResult_;
 
     private:
-              MT_Float          rClosestDist_;
+              double          rClosestDist_;
         const MIL_Army_ABC*     pArmy_;
         const MT_Vector2D&      pos_;
         const MIL_ObjectFilter& filter_;

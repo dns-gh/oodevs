@@ -12,10 +12,10 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleInterface_Composantes.h"
 
-MT_Float PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_             = 0.;
-MT_Float PHY_RoleInterface_Composantes::rOpStateWeightMajorComposante_                = 0.;
-MT_Float PHY_RoleInterface_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = 0.;
-MT_Float PHY_RoleInterface_Composantes::rMaxDangerosityDegradationByOpState_          = 0.;
+double PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_             = 0.;
+double PHY_RoleInterface_Composantes::rOpStateWeightMajorComposante_                = 0.;
+double PHY_RoleInterface_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = 0.;
+double PHY_RoleInterface_Composantes::rMaxDangerosityDegradationByOpState_          = 0.;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Composantes constructor

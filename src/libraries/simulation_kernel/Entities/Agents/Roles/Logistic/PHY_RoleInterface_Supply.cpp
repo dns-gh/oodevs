@@ -106,7 +106,7 @@ PHY_DotationStock* PHY_RoleInterface_Supply::GetStock( const PHY_DotationCategor
 // Name: PHY_RoleInterface_Supply::GetStockAvailablity
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleInterface_Supply::GetStockAvailablity( const PHY_DotationCategory& /*dotationCategory*/, MT_Float /*rRequestedValue*/ ) const
+double PHY_RoleInterface_Supply::GetStockAvailablity( const PHY_DotationCategory& /*dotationCategory*/, double /*rRequestedValue*/ ) const
 {
     return 0.;
 }
@@ -115,7 +115,7 @@ MT_Float PHY_RoleInterface_Supply::GetStockAvailablity( const PHY_DotationCatego
 // Name: PHY_RoleInterface_Supply::AddStockReservation
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleInterface_Supply::AddStockReservation( const PHY_DotationCategory& /*dotationCategory*/, MT_Float /*rRequestedValue*/ )
+double PHY_RoleInterface_Supply::AddStockReservation( const PHY_DotationCategory& /*dotationCategory*/, double /*rRequestedValue*/ )
 {
     return 0.;
 }
@@ -124,7 +124,7 @@ MT_Float PHY_RoleInterface_Supply::AddStockReservation( const PHY_DotationCatego
 // Name: PHY_RoleInterface_Supply::RemoveStockReservation
 // Created: NLD 2005-02-11
 // -----------------------------------------------------------------------------
-void PHY_RoleInterface_Supply::RemoveStockReservation( const PHY_DotationCategory& /*dotationCategory*/, MT_Float /*rRequestedValue*/ )
+void PHY_RoleInterface_Supply::RemoveStockReservation( const PHY_DotationCategory& /*dotationCategory*/, double /*rRequestedValue*/ )
 {
     // NOTHING
 }
@@ -178,7 +178,7 @@ void PHY_RoleInterface_Supply::ResupplyStocks()
 // Name: PHY_RoleInterface_Supply::ResupplyStocks
 // Created: SBO 2005-12-12
 // -----------------------------------------------------------------------------
-void PHY_RoleInterface_Supply::ResupplyStocks( const PHY_DotationCategory& /*category*/, MT_Float /*rNbr*/ )
+void PHY_RoleInterface_Supply::ResupplyStocks( const PHY_DotationCategory& /*category*/, double /*rNbr*/ )
 {
     // NOTHING
 }

@@ -38,15 +38,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void ApplyEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
-    virtual void ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
-    virtual bool HasHit     ( const MIL_Agent_ABC& target, MT_Float ratio ) const;
+    virtual void ApplyEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
+    virtual void ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
+    virtual bool HasHit     ( const MIL_Agent_ABC& target, double ratio ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< MT_Float >       T_PhVector;
+    typedef std::vector< double >       T_PhVector;
     typedef T_PhVector::const_iterator  CIT_PhVector;
     //@}
 
@@ -58,7 +58,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MT_Float   rNeutralizationCoef_;
+    double   rNeutralizationCoef_;
     T_PhVector phs_;
     //@}
 };

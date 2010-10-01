@@ -50,7 +50,7 @@ const weather::PHY_Precipitation& PHY_RawVisionDataIterator::GetPrecipitation() 
 // Created: JVT 03-04-02
 //-----------------------------------------------------------------------------
 inline
-MT_Float PHY_RawVisionDataIterator::Length() const
+double PHY_RawVisionDataIterator::Length() const
 {
     return rLenght_;
 }
@@ -70,7 +70,7 @@ bool PHY_RawVisionDataIterator::End() const
 // Created: JVT 03-03-29
 //-----------------------------------------------------------------------------
 inline
-void PHY_RawVisionDataIterator::ToRealSpace( MT_Float& rX, MT_Float& rY ) const
+void PHY_RawVisionDataIterator::ToRealSpace( double& rX, double& rY ) const
 {
     if ( bNegX_ ) rX = -rX;
     if ( bNegY_ ) rY = -rY;
@@ -105,7 +105,7 @@ void PHY_RawVisionDataIterator::OffsetToRealSpace( int& dX, int& dY ) const
 // Created: JVT 03-03-29
 //-----------------------------------------------------------------------------
 inline
-void PHY_RawVisionDataIterator::ToAlgorithmSpace( MT_Float& rX, MT_Float& rY ) const
+void PHY_RawVisionDataIterator::ToAlgorithmSpace( double& rX, double& rY ) const
 {
     if ( bSwap_ ) std::swap( rX, rY );
     if ( bNegX_ ) rX = -rX;

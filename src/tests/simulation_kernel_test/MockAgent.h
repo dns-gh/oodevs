@@ -10,7 +10,6 @@
 #ifndef __MockAgent_h_
 #define __MockAgent_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
 
 // =============================================================================

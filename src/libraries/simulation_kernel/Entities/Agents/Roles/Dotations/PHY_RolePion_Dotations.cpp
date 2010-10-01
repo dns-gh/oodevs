@@ -321,16 +321,16 @@ public:
             pConsumptions->AddConsumptionValues( consumptions_ );
     }
 
-    MT_Float GetNbrTicksForConsumption( const PHY_DotationGroupContainer& dotations ) const
+    double GetNbrTicksForConsumption( const PHY_DotationGroupContainer& dotations ) const
     {
-        MT_Float rNbrTicks = std::numeric_limits< MT_Float >::max();
+        double rNbrTicks = std::numeric_limits< double >::max();
 
         for ( PHY_DotationConsumptions::CIT_ConsumptionValue it = consumptions_.begin(); it != consumptions_.end(); ++it )
         {
             assert( it->first );
             assert( it->second > 0. );
 
-            const MT_Float rCurrentDotationValue = dotations.GetValue( *it->first );
+            const double rCurrentDotationValue = dotations.GetValue( *it->first );
 
             rNbrTicks = std::min( rNbrTicks, rCurrentDotationValue / it->second );
         }
@@ -348,7 +348,7 @@ private:
 // Name: PHY_RolePion_Dotations::PHY_RolePion_Dotations::GetMaxTimeForConsumption
 // Created: JVT 2005-02-07
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Dotations::GetMaxTimeForConsumption( const PHY_ConsumptionType& mode ) const
+double PHY_RolePion_Dotations::GetMaxTimeForConsumption( const PHY_ConsumptionType& mode ) const
 {
     assert( pDotations_ );
     sConsumptionTimeExpectancy func( mode );
@@ -376,7 +376,7 @@ const PHY_ConsumptionType& PHY_RolePion_Dotations::GetConsumptionMode() const
 // Name: PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, MT_Float rCapacityFactor ) const
+void PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const
 {
 
 
@@ -464,7 +464,7 @@ void PHY_RolePion_Dotations::NotifyConsumeDotation( const PHY_DotationCategory& 
 // Name: PHY_RolePion_Dotations::SupplyDotation
 // Created: NLD 2005-05-11
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Dotations::SupplyDotation( const PHY_DotationCategory& category, MT_Float rNbr )
+double PHY_RolePion_Dotations::SupplyDotation( const PHY_DotationCategory& category, double rNbr )
 {
     assert( pDotations_ );
     return pDotations_->Supply( category, rNbr );
@@ -484,7 +484,7 @@ void PHY_RolePion_Dotations::ResupplyDotations()
 // Name: PHY_RolePion_Dotations::ResupplyDotations
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::ResupplyDotations( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor )
+void PHY_RolePion_Dotations::ResupplyDotations( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor )
 {
     assert( pDotations_ );
     pDotations_->Resupply( ammoDotationClass, rFactor );
@@ -494,7 +494,7 @@ void PHY_RolePion_Dotations::ResupplyDotations( const PHY_AmmoDotationClass& amm
 // Name: PHY_RolePion_Dotations::ResupplyDotations
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::ResupplyDotations( const PHY_DotationType& type, MT_Float rFactor )
+void PHY_RolePion_Dotations::ResupplyDotations( const PHY_DotationType& type, double rFactor )
 {
     assert( pDotations_ );
     pDotations_->Resupply( type, rFactor );
@@ -504,7 +504,7 @@ void PHY_RolePion_Dotations::ResupplyDotations( const PHY_DotationType& type, MT
 // Name: PHY_RolePion_Dotations::AddFireReservation
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Dotations::AddFireReservation( const PHY_DotationCategory& category, MT_Float rNbr )
+double PHY_RolePion_Dotations::AddFireReservation( const PHY_DotationCategory& category, double rNbr )
 {
     assert( pDotations_ );
     return pDotations_->AddFireReservation( category, rNbr );
@@ -514,7 +514,7 @@ MT_Float PHY_RolePion_Dotations::AddFireReservation( const PHY_DotationCategory&
 // Name: PHY_RolePion_Dotations::GetDotationNumber
 // Created: LDC 2010-01-08
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Dotations::GetDotationNumber( const PHY_DotationCategory& category ) const
+double PHY_RolePion_Dotations::GetDotationNumber( const PHY_DotationCategory& category ) const
 {
     return pDotations_->GetValue( category );
 }

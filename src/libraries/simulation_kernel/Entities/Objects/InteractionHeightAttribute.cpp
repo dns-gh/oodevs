@@ -109,7 +109,7 @@ void InteractionHeightAttribute::WriteODB( xml::xostream& xos ) const
 // Name: InteractionHeightAttribute::Get
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-MT_Float InteractionHeightAttribute::Get() const
+double InteractionHeightAttribute::Get() const
 {
     return height_;
 }

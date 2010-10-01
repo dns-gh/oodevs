@@ -28,8 +28,8 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float ComputeDistanceFromFrontLine( const MT_Vector2D& vPoint );
-    MT_Float ComputeDistanceFromBackLine ( const MT_Vector2D& vPoint );
+    double ComputeDistanceFromFrontLine( const MT_Vector2D& vPoint );
+    double ComputeDistanceFromBackLine ( const MT_Vector2D& vPoint );
     void UsedByDIA();
     void ReleasedByDIA();
     //@}

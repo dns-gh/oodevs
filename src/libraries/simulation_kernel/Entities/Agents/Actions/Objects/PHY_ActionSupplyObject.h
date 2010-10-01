@@ -26,8 +26,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_ActionSupplyObject : public PHY_DecisionCallbackAction_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionSupplyObject )
-
 public:
     typedef MIL_AgentPion ActorType;
 

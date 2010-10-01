@@ -12,8 +12,6 @@
 #ifndef __PHY_WeaponDataType_IndirectFire_h_
 #define __PHY_WeaponDataType_IndirectFire_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 namespace xml
 {
     class xistream;
@@ -41,9 +39,9 @@ public:
 
     //! @name Accessors
     //@{
-    MT_Float GetAverageSpeed() const;
-    MT_Float GetMinRange() const;
-    MT_Float GetMaxRange() const;
+    double GetAverageSpeed() const;
+    double GetMinRange() const;
+    double GetMaxRange() const;
     //@}
 
     //! @name Operations
@@ -56,9 +54,9 @@ private:
     //! @name Member data
     //@{
     const PHY_WeaponType& weaponType_;
-    MT_Float rAverageSpeed_;
-    MT_Float rMinRange_;
-    MT_Float rMaxRange_;
+    double rAverageSpeed_;
+    double rMinRange_;
+    double rMaxRange_;
     //@}
 };
 

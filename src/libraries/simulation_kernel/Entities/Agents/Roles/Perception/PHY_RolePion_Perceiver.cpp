@@ -335,7 +335,7 @@ void PHY_RolePion_Perceiver::DisableSurveillanceLocalisation( int id )
 // Name: PHY_RolePion_Perceiver::EnableRecoPoint
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-int PHY_RolePion_Perceiver::EnableRecoPoint( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DEC_Decision_ABC& callerAgent )
+int PHY_RolePion_Perceiver::EnableRecoPoint( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent )
 {
     if( !pPerceptionRecoPoint_ )
     {
@@ -366,7 +366,7 @@ void PHY_RolePion_Perceiver::DisableRecoPoint( int id )
 // Name: PHY_RolePion_Perceiver::EnableRecoObjects
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-int PHY_RolePion_Perceiver::EnableRecoObjects( const TER_Localisation& localisation, const MT_Vector2D& vCenter, MT_Float rSpeed, DEC_Decision_ABC& callerAgent )
+int PHY_RolePion_Perceiver::EnableRecoObjects( const TER_Localisation& localisation, const MT_Vector2D& vCenter, double rSpeed, DEC_Decision_ABC& callerAgent )
 {
     if( !pPerceptionRecoObjects_ )
     {
@@ -611,7 +611,7 @@ void PHY_RolePion_Perceiver::DisableFlyingShellDetection( int id )
 // Name: PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
+double PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 {
     std::auto_ptr< PerceptionDistanceComputer_ABC > computer( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
     return rMaxAgentPerceptionDistance_ * pion_.Execute( *computer ).GetFactor();
@@ -622,7 +622,7 @@ MT_Float PHY_RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 // Created: NLD 2004-11-30
 // -----------------------------------------------------------------------------
 inline
-MT_Float PHY_RolePion_Perceiver::GetMaxObjectPerceptionDistance() const
+double PHY_RolePion_Perceiver::GetMaxObjectPerceptionDistance() const
 {
     std::auto_ptr< PerceptionDistanceComputer_ABC > computer( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
     return rMaxObjectPerceptionDistance_ * pion_.Execute( *computer ).GetFactor();
@@ -645,7 +645,7 @@ class sPerceptionRotation : public OnComponentFunctor_ABC
 {
 public:
     sPerceptionRotation()
-        : rAngle_ ( std::numeric_limits< MT_Float >::max() )
+        : rAngle_ ( std::numeric_limits< double >::max() )
     {
         // NOTHING
     }
@@ -655,20 +655,20 @@ public:
         rAngle_ = std::min( rAngle_, composante.GetType().GetSensorRotationAngle() );
     }
 
-    MT_Float GetAngle() const
+    double GetAngle() const
     {
-        return rAngle_ == std::numeric_limits< MT_Float >::max() ? 0. : rAngle_;
+        return rAngle_ == std::numeric_limits< double >::max() ? 0. : rAngle_;
     }
 
 private:
-    MT_Float rAngle_;
+    double rAngle_;
 };
 
 // -----------------------------------------------------------------------------
 struct sPerceptionDataSensors : private boost::noncopyable
 {
 public:
-    sPerceptionDataSensors( PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject, const MT_Vector2D& vOrigin, const MT_Vector2D& vDirection, MT_Float& rMaxAgentPerceptionDistance, MT_Float& rMaxObjectPerceptionDistance )
+    sPerceptionDataSensors( PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject, const MT_Vector2D& vOrigin, const MT_Vector2D& vDirection, double& rMaxAgentPerceptionDistance, double& rMaxObjectPerceptionDistance )
         : surfacesAgent_               ( surfacesAgent )
         , surfacesObject_              ( surfacesObject )
         , vOrigin_                     ( vOrigin )
@@ -705,8 +705,8 @@ private:
     PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject_;
     const MT_Vector2D&                          vOrigin_;
     const MT_Vector2D&                          vDirection_;
-    MT_Float&                                   rMaxAgentPerceptionDistance_;
-    MT_Float&                                   rMaxObjectPerceptionDistance_;
+    double&                                   rMaxAgentPerceptionDistance_;
+    double&                                   rMaxObjectPerceptionDistance_;
 };
 
 // -----------------------------------------------------------------------------
@@ -714,8 +714,8 @@ class sPerceptionDataComposantes : public OnComponentFunctor_ABC
 {
 public:
     sPerceptionDataComposantes( PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject,
-                                const MT_Vector2D& position, const MT_Vector2D& direction, const MT_Vector2D& vMainPerceptionDirection, MT_Float rDirectionRotation,
-                                MT_Float& rMaxAgentPerceptionDistance, MT_Float& rMaxObjectPerceptionDistance )
+                                const MT_Vector2D& position, const MT_Vector2D& direction, const MT_Vector2D& vMainPerceptionDirection, double rDirectionRotation,
+                                double& rMaxAgentPerceptionDistance, double& rMaxObjectPerceptionDistance )
         : surfacesAgent_               ( surfacesAgent )
         , surfacesObject_              ( surfacesObject )
         , position_                    ( position )
@@ -749,10 +749,10 @@ private:
     const MT_Vector2D&                          position_;
     const MT_Vector2D&                          direction_;
     const MT_Vector2D&                          vMainPerceptionDirection_;
-    MT_Float&                                   rMaxAgentPerceptionDistance_;
-    MT_Float&                                   rMaxObjectPerceptionDistance_;
+    double&                                   rMaxAgentPerceptionDistance_;
+    double&                                   rMaxObjectPerceptionDistance_;
     int                                         nRotationIdx_;
-    const MT_Float                              rRotationAngle_;
+    const double                              rRotationAngle_;
 };
 
 

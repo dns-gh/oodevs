@@ -16,7 +16,7 @@
 // Name: MT_Sector constructor
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-MT_Sector::MT_Sector( const MT_Vector2D& vOrigin_, const MT_Vector2D& vDirection, MT_Float rAngle )
+MT_Sector::MT_Sector( const MT_Vector2D& vOrigin_, const MT_Vector2D& vDirection, double rAngle )
     : vOrigin_   ( vOrigin_ )
     , vDirection_( vDirection )
     , rSemiAngle_( rAngle / 2. )
@@ -29,8 +29,8 @@ MT_Sector::MT_Sector( const MT_Vector2D& vOrigin_, const MT_Vector2D& vDirection
     {
         rSemiAngle_ = rSemiAngle_ > 0 ? rSemiAngle_ : -rSemiAngle_;
 
-        MT_Float COS = cos( rSemiAngle_ );
-        MT_Float SIN = sin( rSemiAngle_ );
+        double COS = cos( rSemiAngle_ );
+        double SIN = sin( rSemiAngle_ );
 
         rA1_ = vDirection.rY_ * COS + vDirection.rX_ * SIN;
         rB1_ = vDirection.rY_ * SIN - vDirection.rX_ * COS;

@@ -52,12 +52,12 @@ public:
     unsigned int GetTimeLastUpdate() const;
     const MT_Vector2D& GetPosition () const;
     const MT_Vector2D& GetDirection() const;
-    MT_Float GetSpeed() const;
-    MT_Float GetAltitude() const;
+    double GetSpeed() const;
+    double GetAltitude() const;
     const T_ComposanteVolumeSet& GetVisionVolumes() const;
     const PHY_Posture& GetLastPosture() const;
     const PHY_Posture& GetCurrentPosture() const;
-    MT_Float GetPostureCompletionPercentage() const;
+    double GetPostureCompletionPercentage() const;
     const MIL_Army_ABC* GetArmySurrenderedTo() const;
     bool IsPrisoner() const;
     bool IsRefugeeManaged() const;
@@ -70,8 +70,8 @@ private:
     unsigned int nTimeLastUpdate_;
     MT_Vector2D vPosition_;
     MT_Vector2D vDirection_;
-    MT_Float rAltitude_;
-    MT_Float rSpeed_;
+    double rAltitude_;
+    double rSpeed_;
     bool bDead_;
     const MIL_Army_ABC* pArmySurrenderedTo_;
     bool bPrisoner_;
@@ -80,7 +80,7 @@ private:
     T_ComposanteVolumeSet visionVolumes_;
     const PHY_Posture* pLastPosture_;
     const PHY_Posture* pCurrentPosture_;
-    MT_Float rPostureCompletionPercentage_;
+    double rPostureCompletionPercentage_;
     //@}
 };
 

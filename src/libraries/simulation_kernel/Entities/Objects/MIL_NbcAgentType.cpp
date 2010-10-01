@@ -20,10 +20,10 @@
 #include <numeric>
 
 MIL_NbcAgentType::T_NbcAgentTypeMap MIL_NbcAgentType::nbcAgentTypes_;
-MT_Float                            MIL_NbcAgentType::rCoefMaxSpeedModificator_      = 1.;
-MT_Float                            MIL_NbcAgentType::rCoefReloadingTimeModificator_ = 1.;
-MT_Float                            MIL_NbcAgentType::rContaminationDistance_        = 100.;
-MT_Float                            MIL_NbcAgentType::rContaminationQuantityGiven_    = 0.5;
+double                            MIL_NbcAgentType::rCoefMaxSpeedModificator_      = 1.;
+double                            MIL_NbcAgentType::rCoefReloadingTimeModificator_ = 1.;
+double                            MIL_NbcAgentType::rContaminationDistance_        = 100.;
+double                            MIL_NbcAgentType::rContaminationQuantityGiven_    = 0.5;
 
 struct MIL_NbcAgentType::LoadingWrapper
 {
@@ -189,7 +189,7 @@ bool MIL_NbcAgentType::ReadPoisonousData( xml::xistream& xis, T_HumanPoisonousVe
         return false;
     xis >> xml::list( "effect", *this, &MIL_NbcAgentType::ReadEffect, data );
 
-    const MT_Float total = std::accumulate( data.begin(), data.end(), 0. );
+    const double total = std::accumulate( data.begin(), data.end(), 0. );
     if( std::fabs( 1. - total ) > 0.01 )
         xis.error( "Sum of poisonous percentage is out of bound for NBC Agent type" );
     return true;
@@ -206,7 +206,7 @@ void MIL_NbcAgentType::ReadEffect( xml::xistream& xis, T_HumanPoisonousVector& d
     PHY_HumanWound::CIT_HumanWoundMap it = PHY_HumanWound::GetHumanWounds().find( wound );
     if( it != PHY_HumanWound::GetHumanWounds().end() )
     {
-        MT_Float percentage;
+        double percentage;
         xis >> xml::attribute( "percentage", percentage );
         if( percentage < 0.f || percentage > 1.f )
             xis.error( "Poisonous percentage is out of bound for NBC Agent type" );
@@ -220,9 +220,9 @@ void MIL_NbcAgentType::ReadEffect( xml::xistream& xis, T_HumanPoisonousVector& d
 // -----------------------------------------------------------------------------
 const PHY_HumanWound& MIL_NbcAgentType::GetRandomWound( const T_HumanPoisonousVector& data ) const
 {
-    const MT_Float rRand = MIL_Random::rand_ii( MIL_Random::eWounds );
+    const double rRand = MIL_Random::rand_ii( MIL_Random::eWounds );
 
-    MT_Float rSumCoefs = 0.;
+    double rSumCoefs = 0.;
     const PHY_HumanWound::T_HumanWoundMap& humanWounds = PHY_HumanWound::GetHumanWounds();
     for( PHY_HumanWound::CIT_HumanWoundMap itWound = humanWounds.begin(); itWound != humanWounds.end(); ++itWound )
     {

@@ -225,8 +225,8 @@ bool DEC_AutomateFunctions::CanPionDestroyObject( const MIL_Automate& callerAuto
 float DEC_AutomateFunctions::PionTimeToMoveDistance( const DEC_Decision_ABC* pion, float distance )
 {
     assert( pion );
-    const MT_Float rDistance = MIL_Tools::ConvertMeterToSim( distance );
-    const MT_Float rMaxSpeed = pion->GetPion().GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeedWithReinforcement();
+    const double rDistance = MIL_Tools::ConvertMeterToSim( distance );
+    const double rMaxSpeed = pion->GetPion().GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeedWithReinforcement();
     return rMaxSpeed != 0. ? float( MIL_Tools::ConvertSimToMinutes( rDistance / rMaxSpeed ) ) : std::numeric_limits< float >::max();
 }
 

@@ -76,7 +76,7 @@ void PHY_Tiredness::Terminate()
 // Name: PHY_Tiredness constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Tiredness::PHY_Tiredness( const std::string& strName, E_TirednessType nType, Common::EnumUnitTiredness nAsnID, MT_Float rDIAWeight )
+PHY_Tiredness::PHY_Tiredness( const std::string& strName, E_TirednessType nType, Common::EnumUnitTiredness nAsnID, double rDIAWeight )
     : strName_                       ( strName )
     , nType_                         ( nType   )
     , nAsnID_                        ( nAsnID  )
@@ -179,7 +179,7 @@ Common::EnumUnitTiredness PHY_Tiredness::GetAsnID() const
 // Name: PHY_Tiredness::GetCoefMaxSpeedModificator
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-MT_Float PHY_Tiredness::GetCoefMaxSpeedModificator() const
+double PHY_Tiredness::GetCoefMaxSpeedModificator() const
 {
     return rCoefMaxSpeedModificator_;
 }
@@ -188,7 +188,7 @@ MT_Float PHY_Tiredness::GetCoefMaxSpeedModificator() const
 // Name: PHY_Tiredness::GetCoefReloadingTimeModificator
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-MT_Float PHY_Tiredness::GetCoefReloadingTimeModificator() const
+double PHY_Tiredness::GetCoefReloadingTimeModificator() const
 {
     return rCoefReloadingTimeModificator_;
 }
@@ -197,7 +197,7 @@ MT_Float PHY_Tiredness::GetCoefReloadingTimeModificator() const
 // Name: PHY_Tiredness::GetCoefPhModificator
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-MT_Float PHY_Tiredness::GetCoefPhModificator() const
+double PHY_Tiredness::GetCoefPhModificator() const
 {
     return rCoefPhModificator_;
 }
@@ -206,7 +206,7 @@ MT_Float PHY_Tiredness::GetCoefPhModificator() const
 // Name: PHY_Tiredness::GetCoefPostureTimeModificator
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-MT_Float PHY_Tiredness::GetCoefPostureTimeModificator() const
+double PHY_Tiredness::GetCoefPostureTimeModificator() const
 {
     return rCoefPostureTimeModificator_;
 }
@@ -215,7 +215,7 @@ MT_Float PHY_Tiredness::GetCoefPostureTimeModificator() const
 // Name: PHY_Tiredness::GetCoefSensorDistanceModificator
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-MT_Float PHY_Tiredness::GetCoefSensorDistanceModificator() const
+double PHY_Tiredness::GetCoefSensorDistanceModificator() const
 {
     return rCoefSensorDistanceModificator_;
 }
@@ -251,7 +251,7 @@ unsigned int PHY_Tiredness::GetID() const
 // Name: PHY_Tiredness::GetWeight
 // Created: NLD 2004-12-01
 // -----------------------------------------------------------------------------
-MT_Float PHY_Tiredness::GetWeight() const
+double PHY_Tiredness::GetWeight() const
 {
     return rDIAWeight_;
 }

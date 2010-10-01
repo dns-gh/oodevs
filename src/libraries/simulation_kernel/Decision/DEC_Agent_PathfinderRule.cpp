@@ -35,7 +35,7 @@ void DEC_Agent_PathfinderRule::InitializeFuseauData( const MT_Vector2D& from, co
     if( !path_.GetAutomataFuseau().IsNull() ) // I have a higher fuseau
         rMaximumFuseauDistance_ = std::max( rMaximumFuseauDistance_, path_.GetPathClass().GetMaximumFuseauDistanceWithAutomata() );
     if( !pFuseau_->IsInside( to ) ) // our destination is outside
-        rMaximumFuseauDistance_ = std::numeric_limits< MT_Float >::max();
+        rMaximumFuseauDistance_ = std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
@@ -103,9 +103,9 @@ DEC_Agent_PathfinderRule::~DEC_Agent_PathfinderRule()
 // Name: DEC_Agent_PathfinderRule::GetTerrainCost
 // Created: AGE 2005-03-25
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathfinderRule::GetTerrainCost( const TerrainData& data ) const
+double DEC_Agent_PathfinderRule::GetTerrainCost( const TerrainData& data ) const
 {
-    MT_Float rDynamicCost = 0;
+    double rDynamicCost = 0;
     if( rAvoidedTerrainCost_ > 0 && avoidedTerrain_.ContainsOne( data ) )
         rDynamicCost += rAvoidedTerrainCost_;
 
@@ -118,12 +118,12 @@ MT_Float DEC_Agent_PathfinderRule::GetTerrainCost( const TerrainData& data ) con
 // Name: DEC_Agent_PathfinderRule::GetDangerDirectionCost
 // Created: NLD 2006-01-31
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathfinderRule::GetDangerDirectionCost( const MT_Vector2D& to ) const
+double DEC_Agent_PathfinderRule::GetDangerDirectionCost( const MT_Vector2D& to ) const
 {
     // direction dangereuse
     if( !dangerDirection_.IsZero() )
     {
-        const MT_Float dp = DotProduct( to - dangerPoint_, dangerDirection_ );
+        const double dp = DotProduct( to - dangerPoint_, dangerDirection_ );
         if( dp > 0 ) // we are beyond our danger point
             return ( rDangerDirectionBaseCost_ + dp * rDangerDirectionLinearCost_ );
     }
@@ -134,7 +134,7 @@ MT_Float DEC_Agent_PathfinderRule::GetDangerDirectionCost( const MT_Vector2D& to
 // Name: DEC_Agent_PathfinderRule::GetUrbanBlockCost
 // Created: RPD 2009-11-20
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
+double DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
     return MIL_AgentServer::GetWorkspace().GetUrbanModel().GetUrbanBlockCost( path_.GetUnitMajorWeight(), from, to );
 }
@@ -143,10 +143,10 @@ MT_Float DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, c
 // Name: DEC_Agent_PathfinderRule::GetObjectsCost
 // Created: NLD 2006-01-31
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
+double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
 {
     // default cost : outside all objects
-    MT_Float rObjectCost = path_.GetCostOutsideOfAllObjects();
+    double rObjectCost = path_.GetCostOutsideOfAllObjects();
     const DEC_Agent_Path::T_PathKnowledgeObjectByTypesVector& knowledgesByTypes = path_.GetPathKnowledgeObjects();
     for( DEC_Agent_Path::CIT_PathKnowledgeObjectByTypesVector itType = knowledgesByTypes.begin(); itType != knowledgesByTypes.end(); ++itType )
     {
@@ -154,8 +154,8 @@ MT_Float DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, cons
         const DEC_Agent_Path::T_PathKnowledgeObjectVector& knowledges = *itType;
         for( DEC_Agent_Path::CIT_PathKnowledgeObjectVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
         {
-            MT_Float rCurrentObjectCost = itKnowledge->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
-            if( rCurrentObjectCost != std::numeric_limits< MT_Float >::min()  )
+            double rCurrentObjectCost = itKnowledge->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
+            if( rCurrentObjectCost != std::numeric_limits< double >::min()  )
             {
                 if( !bInsideObjectType )
                 {
@@ -176,13 +176,13 @@ MT_Float DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, cons
 // Created: NLD 2006-01-31
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
+double DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
 {
     assert( ( !path_.GetPathClass().AvoidEnemies() && path_.GetPathKnowledgeAgents().empty() ) || path_.GetPathClass().AvoidEnemies() );
-    MT_Float rEnemyCost = 0.;
+    double rEnemyCost = 0.;
     for( DEC_Agent_Path::CIT_PathKnowledgeAgentVector it = path_.GetPathKnowledgeAgents().begin(); it != path_.GetPathKnowledgeAgents().end(); ++it )
     {
-        MT_Float rCurrentEnemyCost = it->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
+        double rCurrentEnemyCost = it->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
         if( rCurrentEnemyCost < 0. ) // Impossible move (for example destroyed bridge)
             return rCurrentEnemyCost;
         rEnemyCost += rCurrentEnemyCost;
@@ -196,13 +196,13 @@ MT_Float DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, cons
 // Name: DEC_Agent_PathfinderRule::GetPopulationsCost
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathfinderRule::GetPopulationsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
+double DEC_Agent_PathfinderRule::GetPopulationsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
 {
     assert( ( !path_.GetPathClass().HandlePopulations() && path_.GetPathKnowledgePopulations().empty() ) || path_.GetPathClass().HandlePopulations() );
-    MT_Float rCost = 0.;
+    double rCost = 0.;
     for( DEC_Agent_Path::CIT_PathKnowledgePopulationVector it = path_.GetPathKnowledgePopulations().begin(); it != path_.GetPathKnowledgePopulations().end(); ++it )
     {
-        MT_Float rCurrentCost = it->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
+        double rCurrentCost = it->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
         if( rCurrentCost < 0. ) // Impossible move
             return rCurrentCost;
         rCost += rCurrentCost;
@@ -216,7 +216,7 @@ MT_Float DEC_Agent_PathfinderRule::GetPopulationsCost( const MT_Vector2D& from, 
 // Name: DEC_Agent_PathfinderRule::GetAltitudeCost
 // Created: NLD 2006-01-31
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathfinderRule::GetAltitudeCost( MT_Float rAltitudeTo ) const
+double DEC_Agent_PathfinderRule::GetAltitudeCost( double rAltitudeTo ) const
 {
     if( rAltitudeCostPerMeter_ > 0 )
         return ( rMaxAltitude_ - rAltitudeTo ) * rAltitudeCostPerMeter_;
@@ -254,38 +254,38 @@ namespace
 // Name: DEC_Agent_PathfinderRule::GetCost
 // Created: AGE 2005-03-08
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType )
+double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType )
 {
     if( ! world_.IsValidPosition( to ) )
         return IMPOSSIBLE_DESTINATION( "Out of world" );
 
     // speed
-    const MT_Float rSpeed = path_.GetUnitSpeeds().GetMaxSpeed( nLinkTerrainType );
+    const double rSpeed = path_.GetUnitSpeeds().GetMaxSpeed( nLinkTerrainType );
     if( rSpeed <= 0. )
         return IMPOSSIBLE_WAY( "Speeds on terrain" );
 
     if( ! path_.GetUnitSpeeds().IsPassable( nToTerrainType ) )
         return IMPOSSIBLE_DESTINATION( "Terrain type" );
 
-    const MT_Float rDistance     = from.Distance( to );
-    const MT_Float rAltitudeFrom = altitudeData_.GetAltitude( from );
-    const MT_Float rAltitudeTo   = altitudeData_.GetAltitude( to );
+    const double rDistance     = from.Distance( to );
+    const double rAltitudeFrom = altitudeData_.GetAltitude( from );
+    const double rAltitudeTo   = altitudeData_.GetAltitude( to );
     {
-        const MT_Float rDelta          = rAltitudeTo - rAltitudeFrom;
-        const MT_Float rGroundDistance = sqrt( rDelta * rDelta + rDistance * rDistance );
-        const MT_Float rSlope          = rGroundDistance > 0 ? rDelta / rGroundDistance : 0;
+        const double rDelta          = rAltitudeTo - rAltitudeFrom;
+        const double rGroundDistance = sqrt( rDelta * rDelta + rDistance * rDistance );
+        const double rSlope          = rGroundDistance > 0 ? rDelta / rGroundDistance : 0;
         if( rSlope > rMaxSlope_ )
             return IMPOSSIBLE_WAY( "Slope" );
     }
 
     // Cost computation taken various dynamic terrain items into account
-    MT_Float rDynamicCost = 0.;
+    double rDynamicCost = 0.;
 
     // Altitude
     rDynamicCost += GetAltitudeCost( rAltitudeTo );
 
     // Fuseaux
-    const MT_Float rFuseauxCost = GetFuseauxCost( from, to );
+    const double rFuseauxCost = GetFuseauxCost( from, to );
     if( rFuseauxCost < 0. )
         return -1.;
     rDynamicCost += rFuseauxCost;
@@ -297,30 +297,30 @@ MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Ve
     rDynamicCost += GetDangerDirectionCost( to );
 
     //urban blocks
-    const MT_Float rUrbanBlockCost = GetUrbanBlockCost( from, to );
+    const double rUrbanBlockCost = GetUrbanBlockCost( from, to );
     if( rUrbanBlockCost < 0. )
         return -1.;
     rDynamicCost += rUrbanBlockCost;
 
     // objects
-    const MT_Float rObjectsCost = GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType );
+    const double rObjectsCost = GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType );
     if( rObjectsCost < 0 )
         return IMPOSSIBLE_WAY( "Objects" );
     rDynamicCost += rObjectsCost;
 
     // enemies
-    const MT_Float rEnemiesCost = GetEnemiesCost( from, to, nToTerrainType, nLinkTerrainType );
+    const double rEnemiesCost = GetEnemiesCost( from, to, nToTerrainType, nLinkTerrainType );
     if( rEnemiesCost < 0 )
         return IMPOSSIBLE_WAY( "Enemies" );
     rDynamicCost += rEnemiesCost;
 
     // populations
-    const MT_Float rPopulationsCost = GetPopulationsCost( from, to, nToTerrainType, nLinkTerrainType );
+    const double rPopulationsCost = GetPopulationsCost( from, to, nToTerrainType, nLinkTerrainType );
     if( rPopulationsCost < 0 )
         return IMPOSSIBLE_WAY( "Populations" );
     rDynamicCost += rPopulationsCost;
 
-    const MT_Float rBaseCost = bShort_ ? rDistance : ( rDistance / rSpeed );
+    const double rBaseCost = bShort_ ? rDistance : ( rDistance / rSpeed );
     return rBaseCost * ( 1 + rDynamicCost );
 }
 
@@ -329,19 +329,19 @@ MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Ve
 // Name: DEC_Agent_PathfinderRule::GetFuseauxCost
 // Created: NLD 2006-01-31
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathfinderRule::GetFuseauxCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
+double DEC_Agent_PathfinderRule::GetFuseauxCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
-    MT_Float rCost = 0.;
+    double rCost = 0.;
     // Vérification si le link est dans le fuseau de l'agent
     {
-        const MT_Float rFuseauCost = pFuseau_ ? pFuseau_->GetCost( from, to, rMaximumFuseauDistance_, rFuseauCostPerMeterOut_, rComfortFuseauDistance_, rFuseauCostPerMeterIn_ ) : 0;
+        const double rFuseauCost = pFuseau_ ? pFuseau_->GetCost( from, to, rMaximumFuseauDistance_, rFuseauCostPerMeterOut_, rComfortFuseauDistance_, rFuseauCostPerMeterIn_ ) : 0;
         if( rFuseauCost < 0 )
             return IMPOSSIBLE_WAY( "Fuseau agent" );
         rCost += rFuseauCost;
     }
     // $$$$ AGE 2005-06-24: Going out of the automate fuseau is a no-no. Avoid precision issues
     {
-        const MT_Float rAutomateFuseauCost = pAutomateFuseau_ ? pAutomateFuseau_->GetCost( from, to, rMaximumAutomataFuseauDistance_, rAutomataFuseauCostPerMeterOut_, 0, 0 ) : 0;
+        const double rAutomateFuseauCost = pAutomateFuseau_ ? pAutomateFuseau_->GetCost( from, to, rMaximumAutomataFuseauDistance_, rAutomataFuseauCostPerMeterOut_, 0, 0 ) : 0;
         if( rAutomateFuseauCost < 0 )
             return IMPOSSIBLE_WAY( "Fuseau automate" );
         rCost += rAutomateFuseauCost;

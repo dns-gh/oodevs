@@ -69,7 +69,7 @@ private:
     T_PerceptionIdMap ids_;
 
 private:
-    static MT_Float rRadius_;
+    static double rRadius_;
 };
 
 #endif // __PHY_PerceptionFlyingShell_h_

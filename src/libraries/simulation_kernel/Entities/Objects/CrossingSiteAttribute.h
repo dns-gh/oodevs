@@ -12,7 +12,6 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 namespace Common
@@ -72,9 +71,9 @@ public:
 
     //! @name Accessors
     //@{
-    MT_Float GetWidth() const;
-    MT_Float GetDepth() const;
-    MT_Float GetSpeed() const;
+    double GetWidth() const;
+    double GetDepth() const;
+    double GetSpeed() const;
     bool IsBanksToFitOut() const;
     //@}
 
@@ -92,9 +91,9 @@ private:
 private:
     //! @name
     //@{
-    MT_Float rWidth_;
-    MT_Float rDepth_;
-    MT_Float rCurrentSpeed_;  // Vitesse du courant
+    double rWidth_;
+    double rDepth_;
+    double rCurrentSpeed_;  // Vitesse du courant
     bool bBanksToFitOut_; // Berges a amenager
     //@}
 };

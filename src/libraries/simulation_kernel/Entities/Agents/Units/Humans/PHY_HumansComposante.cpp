@@ -141,10 +141,10 @@ unsigned int PHY_HumansComposante::WoundHumans( const PHY_HumanRank& rank, unsig
 
 namespace
 {
-    MT_Float round( MT_Float rValue )
+    double round( double rValue )
     {
-        MT_Float rIntegralPart;
-        MT_Float rFractionalPart = modf( rValue, &rIntegralPart );
+        double rIntegralPart;
+        double rFractionalPart = modf( rValue, &rIntegralPart );
         if( rFractionalPart >= 0.5 )
             return rIntegralPart + 1.;
         return rIntegralPart;
@@ -328,7 +328,7 @@ bool PHY_HumansComposante::HasWoundedHumansToEvacuate() const
 // Name: PHY_HumansComposante::GetOperationalState
 // Created: NLD 2006-02-09
 // -----------------------------------------------------------------------------
-MT_Float PHY_HumansComposante::GetOperationalState() const
+double PHY_HumansComposante::GetOperationalState() const
 {
     if( humans_.empty() )
         return 1.;

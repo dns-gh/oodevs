@@ -115,12 +115,12 @@ void PHY_RoleAction_Loading::SetUnloadedState()
 // Name: PHY_RoleAction_Loading::ComputeTimes
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleAction_Loading::ComputeLoadingTime() const
+double PHY_RoleAction_Loading::ComputeLoadingTime() const
 {
     std::auto_ptr< HumanLoadingTimeComputer_ABC > loadingTimeComputer = pion_.GetAlgorithms().loadingComputerFactory_->CreateHumanLoadingTimeComputer();
     pion_.Execute( *loadingTimeComputer );
     if( loadingTimeComputer->GetHumansLoadedPerTimeStep() == 0. )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
     return loadingTimeComputer->GetHumansCount() / loadingTimeComputer->GetHumansLoadedPerTimeStep();
 }
 
@@ -128,12 +128,12 @@ MT_Float PHY_RoleAction_Loading::ComputeLoadingTime() const
 // Name: PHY_RoleAction_Loading::ComputeUnloadingTime
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleAction_Loading::ComputeUnloadingTime() const
+double PHY_RoleAction_Loading::ComputeUnloadingTime() const
 {
     std::auto_ptr< HumanLoadingTimeComputer_ABC > loadingTimeComputer = pion_.GetAlgorithms().loadingComputerFactory_->CreateHumanLoadingTimeComputer();
     pion_.Execute( *loadingTimeComputer );
     if( loadingTimeComputer->GetHumansUnloadedPerTimeStep() == 0. )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
     return loadingTimeComputer->GetHumansCount() / loadingTimeComputer->GetHumansUnloadedPerTimeStep();
 }
 
@@ -150,8 +150,8 @@ int PHY_RoleAction_Loading::Load()
 
     if( nState_ == eNothing )
     {
-        const MT_Float rLoadingTime = ComputeLoadingTime();
-        if( rLoadingTime == std::numeric_limits< MT_Float >::max() )
+        const double rLoadingTime = ComputeLoadingTime();
+        if( rLoadingTime == std::numeric_limits< double >::max() )
             return eErrorNoCarriers;
         else if( rLoadingTime == 0. )
             return eErrorNoCarried;
@@ -185,8 +185,8 @@ int PHY_RoleAction_Loading::Unload()
 
     if( nState_ == eNothing )
     {
-        const MT_Float rUnloadingTime = ComputeUnloadingTime();
-        if( rUnloadingTime == std::numeric_limits< MT_Float >::max() )
+        const double rUnloadingTime = ComputeUnloadingTime();
+        if( rUnloadingTime == std::numeric_limits< double >::max() )
             return eErrorNoCarriers;
         else if( rUnloadingTime == 0. )
             return eErrorNoCarried;
@@ -261,7 +261,7 @@ void PHY_RoleAction_Loading::ForceUnloadedState()
 // Name: PHY_RoleAction_Loading::GetLoadingTime
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleAction_Loading::GetLoadingTime() const
+double PHY_RoleAction_Loading::GetLoadingTime() const
 {
     return ComputeLoadingTime();
 }
@@ -270,7 +270,7 @@ MT_Float PHY_RoleAction_Loading::GetLoadingTime() const
 // Name: PHY_RoleAction_Loading::GetUnloadingTime
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleAction_Loading::GetUnloadingTime() const
+double PHY_RoleAction_Loading::GetUnloadingTime() const
 {
     return ComputeUnloadingTime();
 }

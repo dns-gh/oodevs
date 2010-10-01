@@ -238,8 +238,8 @@ void DEC_Knowledge_PopulationConcentration::UpdateRelevance()
     if( pConcentrationKnown_ && pConcentrationKnown_->GetPopulation().HasDoneMagicMove() )
         ChangeRelevance( 0. );
     // Degradation : effacement au bout de X minutes
-    const MT_Float rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / pPopulationKnowledge_->GetKnowledgeGroup().GetType().GetKnowledgePopulationMaxLifeTime();
-    const MT_Float rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
+    const double rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / pPopulationKnowledge_->GetKnowledgeGroup().GetType().GetKnowledgePopulationMaxLifeTime();
+    const double rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
     ChangeRelevance( rRelevance );
     nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     // L'objet réel va être détruit
@@ -371,11 +371,11 @@ bool DEC_Knowledge_PopulationConcentration::Clean()
 // Name: DEC_Knowledge_PopulationConcentration::ChangeRelevance
 // Created: NLD 2005-08-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationConcentration::ChangeRelevance( MT_Float rNewRelevance )
+void DEC_Knowledge_PopulationConcentration::ChangeRelevance( double rNewRelevance )
 {
     if( rRelevance_ == rNewRelevance )
         return;
-    static const MT_Float rDeltaForNetwork = 0.05;
+    static const double rDeltaForNetwork = 0.05;
     if( fabs( rLastRelevanceSent_ - rNewRelevance ) > rDeltaForNetwork || rNewRelevance == 0. || rNewRelevance == 1. )
         bRelevanceUpdated_ = true;
     rRelevance_ = rNewRelevance;

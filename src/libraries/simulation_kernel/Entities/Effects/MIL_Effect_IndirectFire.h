@@ -29,8 +29,8 @@ class TER_Localisation;
 class MIL_Effect_IndirectFire : public MIL_Effect_ABC
 {
 public:
-             MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, unsigned int nTargetKnowledgeID, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire );
-             MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire );
+             MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, unsigned int nTargetKnowledgeID, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, double rInterventionTypeToFire );
+             MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, double rInterventionTypeToFire );
     virtual ~MIL_Effect_IndirectFire();
 
     //! @name Accessors
@@ -68,7 +68,7 @@ private:
 private:
     unsigned int nNbrRefs_;
     const MIL_Agent_ABC& firer_;
-    const MT_Float rInterventionTypeToFire_;
+    const double rInterventionTypeToFire_;
     const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory_;
     const MT_Vector2D vSourcePosition_;
     MT_Vector2D vTargetPosition_;
@@ -77,7 +77,7 @@ private:
     bool bIsFlying_;
     bool bFired_;
     bool bArrived_;
-    MT_Float rImpactTimeStep_;
+    double rImpactTimeStep_;
     PHY_FireResults_Pion* pFireResult_;
 };
 

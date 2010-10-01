@@ -50,8 +50,8 @@ public:
     //@{
             CIT_PathPointList GetCurrentKeyOnPath         ( const MT_Vector2D& vPos ) const;
             MT_Vector2D       GetPointOnPathCloseTo       ( const MT_Vector2D& posToTest ) const;
-            MT_Vector2D       GetFuturePosition           ( const MT_Vector2D& vStartPos, MT_Float rDist, bool bBoundOnPath ) const;
-            bool              ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
+            MT_Vector2D       GetFuturePosition           ( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const;
+            bool              ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
     virtual void              InsertDecPoints             () = 0;
     //@}
 
@@ -65,7 +65,7 @@ private:
     //@{
     virtual void NotifySectionEnded();
     virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
-    MT_Vector2D InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, MT_Float rDist, bool bBoundOnPath ) const;
+    MT_Vector2D InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, double rDist, bool bBoundOnPath ) const;
     //@}
 
 protected:

@@ -66,9 +66,9 @@ public:
     virtual bool                CanContainStock              ( const PHY_DotationCategory& dotationCategory ) const;
     virtual PHY_DotationStock*  AddStock                     ( const PHY_DotationCategory& dotationCategory ) const;
     virtual PHY_DotationStock*  GetStock                     ( const PHY_DotationCategory& dotationCategory ) const;
-    virtual MT_Float            GetStockAvailablity          ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const;
-    virtual MT_Float            AddStockReservation          ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue );
-    virtual void                RemoveStockReservation       ( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue );
+    virtual double            GetStockAvailablity          ( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
+    virtual double            AddStockReservation          ( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
+    virtual void                RemoveStockReservation       ( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
     virtual PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const;
 
     virtual void StartUsingForLogistic( PHY_ComposantePion& composante );
@@ -83,7 +83,7 @@ public:
     virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const;
     virtual void FillSupplyRequest ( PHY_SupplyStockRequestContainer& supplyRequest ) const;
     virtual void ResupplyStocks    ();
-    virtual void ResupplyStocks    ( const PHY_DotationCategory& category, MT_Float rNbr );
+    virtual void ResupplyStocks    ( const PHY_DotationCategory& category, double rNbr );
     //@}
 
     //! @name Network
@@ -95,8 +95,8 @@ public:
 private:
     //! @name Tools
     //@{
-    MT_Float GetStockValue( const PHY_DotationCategory& category ) const;
-    MT_Float GetConvoyTransportersAvailabilityRatio() const;
+    double GetStockValue( const PHY_DotationCategory& category ) const;
+    double GetConvoyTransportersAvailabilityRatio() const;
     //@}
 
 private:

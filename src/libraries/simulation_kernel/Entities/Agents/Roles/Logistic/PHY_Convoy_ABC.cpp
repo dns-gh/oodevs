@@ -27,20 +27,20 @@
 
 struct PHY_Convoy_ABC::LoadingWrapper
 {
-    void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& data, std::pair< unsigned int, MT_Float >& upperBound )
+    void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< double >& data, std::pair< unsigned int, double >& upperBound )
     {
         PHY_Convoy_ABC::ReadInterpolatedTime( xis, data, upperBound );
     }
-    void ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, MT_Float >& upperBound )
+    void ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, double >& upperBound )
     {
         PHY_Convoy_ABC::ReadSpeedModifier( xis, upperBound );
     }
 };
 
-      MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::formingTime_;
-      MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::loadingTime_;
-      MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::unloadingTime_;
-      MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::coefSpeedModificator_;
+      MT_InterpolatedFunction< double > PHY_Convoy_ABC::formingTime_;
+      MT_InterpolatedFunction< double > PHY_Convoy_ABC::loadingTime_;
+      MT_InterpolatedFunction< double > PHY_Convoy_ABC::unloadingTime_;
+      MT_InterpolatedFunction< double > PHY_Convoy_ABC::coefSpeedModificator_;
 const MIL_AgentTypePion*                  PHY_Convoy_ABC::pConvoyAgentType_   = 0;
 const MIL_MissionType_ABC*                PHY_Convoy_ABC::pConvoyMissionType_ = 0;
 
@@ -101,12 +101,12 @@ void PHY_Convoy_ABC::InitializeConvoyMission( xml::xistream& xis )
 // Name: PHY_Convoy_ABC::InitializeInterpolatedTime
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
-void PHY_Convoy_ABC::InitializeInterpolatedTime( xml::xistream& xis, const std::string& strTagName, MT_InterpolatedFunction< MT_Float >& data )
+void PHY_Convoy_ABC::InitializeInterpolatedTime( xml::xistream& xis, const std::string& strTagName, MT_InterpolatedFunction< double >& data )
 {
     data.AddNewPoint( 0., 0. );
     LoadingWrapper loader;
 
-    std::pair< unsigned int, MT_Float > upperBound( 0, 0.f );
+    std::pair< unsigned int, double > upperBound( 0, 0.f );
     xis >> xml::start( strTagName )
             >> xml::list( "unit-time", loader, &LoadingWrapper::ReadInterpolatedTime, data, upperBound )
         >> xml::end;
@@ -118,10 +118,10 @@ void PHY_Convoy_ABC::InitializeInterpolatedTime( xml::xistream& xis, const std::
 // Name: PHY_Convoy_ABC::ReadTime
 // Created: ABL 2007-07-24
 // -----------------------------------------------------------------------------
-void PHY_Convoy_ABC::ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& data, std::pair< unsigned int, MT_Float >& upperBound )
+void PHY_Convoy_ABC::ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< double >& data, std::pair< unsigned int, double >& upperBound )
 {
     unsigned int     nNbrCamions;
-    MT_Float rTime;
+    double rTime;
 
     xis >> xml::attribute( "truck-count", nNbrCamions );
     if( nNbrCamions <= 0 )
@@ -150,7 +150,7 @@ void PHY_Convoy_ABC::InitializeSpeedModificators( xml::xistream& xis )
     coefSpeedModificator_.AddNewPoint( 0., 0. );
     LoadingWrapper loader;
 
-    std::pair< unsigned int, MT_Float > upperBound( 0, 0.f );
+    std::pair< unsigned int, double > upperBound( 0, 0.f );
 
     xis >> xml::start( "speed-modifiers" )
             >> xml::list( "speed-modifier", loader, &LoadingWrapper::ReadSpeedModifier, upperBound )
@@ -163,10 +163,10 @@ void PHY_Convoy_ABC::InitializeSpeedModificators( xml::xistream& xis )
 // Name: PHY_Convoy_ABC::ReadSpeedModifier
 // Created: ABL 2007-07-24
 // -----------------------------------------------------------------------------
-void PHY_Convoy_ABC::ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, MT_Float >& upperBound )
+void PHY_Convoy_ABC::ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, double >& upperBound )
 {
     unsigned int     nNbrCamions;
-    MT_Float rValue;
+    double rValue;
 
     xis >> xml::attribute( "truck-count", nNbrCamions )
         >> xml::attribute( "value", rValue );
@@ -287,7 +287,7 @@ bool PHY_Convoy_ABC::ReserveTransporters()
             if( conveyor.IsFull() )
                 continue;
 
-            const MT_Float rNbrConvoyed = conveyor.Convoy( *pConsign_, dotationCategory, itMerchandise->second );
+            const double rNbrConvoyed = conveyor.Convoy( *pConsign_, dotationCategory, itMerchandise->second );
             if( rNbrConvoyed > 0. )
                 itMerchandise->second -= rNbrConvoyed;
         }
@@ -302,7 +302,7 @@ bool PHY_Convoy_ABC::ReserveTransporters()
             PHY_Conveyor* pConveyor = new PHY_Conveyor( *pConveyorComp, *pConveyorPion );
             if( ! conveyors_.insert( std::make_pair( pConveyorComp, pConveyor ) ).second )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
-            const MT_Float rNbrConvoyed = pConveyor->Convoy( *pConsign_, dotationCategory, itMerchandise->second );
+            const double rNbrConvoyed = pConveyor->Convoy( *pConsign_, dotationCategory, itMerchandise->second );
             if( rNbrConvoyed > 0. )
                 itMerchandise->second -= rNbrConvoyed;
         }
@@ -370,7 +370,7 @@ unsigned int PHY_Convoy_ABC::GetUnloadingTime() const
 // Name: PHY_Convoy_ABC::ModifySpeed
 // Created: NLD 2007-02-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_Convoy_ABC::ModifySpeed( MT_Float rSpeed ) const
+double PHY_Convoy_ABC::ModifySpeed( double rSpeed ) const
 {
     if( conveyors_.empty() )
         return rSpeed;

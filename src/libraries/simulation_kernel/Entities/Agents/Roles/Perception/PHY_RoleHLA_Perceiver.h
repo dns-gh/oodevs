@@ -75,7 +75,7 @@ public:
     virtual void  DisableRecoAlat                () {}
     virtual void  EnableCoupDeSonde              () {}
     virtual void  DisableCoupDeSonde             () {}
-    virtual int   EnableRecoPoint                ( const MT_Vector2D& /*center*/, MT_Float /*rSize*/, MT_Float /*rSpeed*/, DEC_Decision_ABC& /*callerAgent*/ ) { return 0;}
+    virtual int   EnableRecoPoint                ( const MT_Vector2D& /*center*/, double /*rSize*/, double /*rSpeed*/, DEC_Decision_ABC& /*callerAgent*/ ) { return 0;}
     virtual void  DisableRecoPoint               ( int ) {}
     virtual int   EnableRecoLocalisation         ( const TER_Localisation& /*localisation*/, float /*rRadius*/, DEC_Decision_ABC& /*callerAgent*/ ) { return 0; }
     virtual int   EnableRecoLocalisation         ( const TER_Localisation& /*localisation*/, DEC_Decision_ABC& /*callerAgent*/ ) { return 0; }
@@ -85,7 +85,7 @@ public:
     virtual void  DisableRecoLocalisation        ( int ) {}
     virtual int   EnableSurveillanceLocalisation ( const TER_Localisation& /*localisation*/ ) { return 0; }
     virtual void  DisableSurveillanceLocalisation( int ) {}
-    virtual int   EnableRecoObjects              ( const TER_Localisation& /*localisation*/, const MT_Vector2D& /*vCenter*/, MT_Float /*rSpeed*/, DEC_Decision_ABC& /*callerAgent*/ ) { return 0; }
+    virtual int   EnableRecoObjects              ( const TER_Localisation& /*localisation*/, const MT_Vector2D& /*vCenter*/, double /*rSpeed*/, DEC_Decision_ABC& /*callerAgent*/ ) { return 0; }
     virtual void  DisableRecoObjects             ( int ) {}
 
     // Radars
@@ -115,7 +115,7 @@ public:
     //@{
     virtual const MIL_KnowledgeGroup& GetKnowledgeGroup            () const { return pPion_->GetKnowledgeGroup(); }
     virtual MIL_AgentPion&      GetPion                      () const { return *pPion_; }
-    virtual MT_Float            GetMaxAgentPerceptionDistance() const { return 0; }
+    virtual double            GetMaxAgentPerceptionDistance() const { return 0; }
     virtual void                GetMainPerceptionDirection   ( MT_Vector2D& /*vDirection*/ ) const {}
 
     virtual bool IsPeriphericalVisionEnabled() const { return false; }

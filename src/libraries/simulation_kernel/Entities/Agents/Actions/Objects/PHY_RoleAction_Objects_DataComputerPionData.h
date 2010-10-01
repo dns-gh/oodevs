@@ -13,7 +13,6 @@
 #define __PHY_RoleAction_Objects_DataComputerPionData_h_
 
 #include "Operation.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 class MIL_Object_ABC;
 class MIL_Agent_ABC;
@@ -37,8 +36,8 @@ public:
     //! @name Operations
     //@{
     void operator() ( const PHY_ComposantePion& composante );
-    void RemoveSlowComposantes( MT_Float rMinOperationTime );
-    MT_Float GetMinOperationTime() const;
+    void RemoveSlowComposantes( double rMinOperationTime );
+    double GetMinOperationTime() const;
 
     void ReserveConsumptions();
     void RollbackConsumptionsReservations();
@@ -46,13 +45,13 @@ public:
     unsigned int GetDotationValue( const PHY_DotationCategory& category ) const;
     void ConsumeDotations( const PHY_DotationCategory& category, unsigned int nNbr );
     unsigned int RecoverDotations( const PHY_DotationCategory& category, unsigned int nNbr );
-    void GetTotalOperationTime( MT_Float& rOperationTime, unsigned int& nNbrComposantes ) const;
+    void GetTotalOperationTime( double& rOperationTime, unsigned int& nNbrComposantes ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< std::pair< const PHY_ComposantePion*, MT_Float > > T_ComposanteDataVector;
+    typedef std::vector< std::pair< const PHY_ComposantePion*, double > > T_ComposanteDataVector;
     typedef T_ComposanteDataVector::iterator                               IT_ComposanteDataVector;
     typedef T_ComposanteDataVector::const_iterator                        CIT_ComposanteDataVector;
     //@}

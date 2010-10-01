@@ -71,13 +71,13 @@ private:
 
     //! @name Helpers
     //@{
-    void ControlTarget( MIL_Agent_ABC* agent, const MIL_Army_ABC& army, MT_Float phCoef, T_TargetVector& targets ) const;
-    MT_Float GetUnitDensityFirePercentage( const PHY_Volume& volume ) const;
+    void ControlTarget( MIL_Agent_ABC* agent, const MIL_Army_ABC& army, double phCoef, T_TargetVector& targets ) const;
+    double GetUnitDensityFirePercentage( const PHY_Volume& volume ) const;
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< MT_Float > T_FirePercentageVector;
+    typedef std::vector< double > T_FirePercentageVector;
     //@}
 
 private:

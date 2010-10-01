@@ -196,7 +196,7 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
 // Name: InsideUrbanBlockPosition::ComputeUrbanProtection
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-MT_Float InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const
+double InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const
 {
     const urban::Architecture* architecture = urbanObject_->Retrieve< urban::Architecture >();
     if( architecture )

@@ -19,8 +19,6 @@
 #ifndef __TER_ObjectTraits_h_
 #define __TER_ObjectTraits_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 class TER_Object_ABC;
 
 // =============================================================================
@@ -40,8 +38,8 @@ public:
 
     //! @name Operations
     //@{
-    int CompareOnX( MT_Float rValue, const T_Value& pObject ) const;
-    int CompareOnY( MT_Float rValue, const T_Value& pObject ) const;
+    int CompareOnX( double rValue, const T_Value& pObject ) const;
+    int CompareOnY( double rValue, const T_Value& pObject ) const;
     //@}
 };
 

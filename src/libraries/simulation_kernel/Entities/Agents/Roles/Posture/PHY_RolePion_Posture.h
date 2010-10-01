@@ -75,7 +75,7 @@ public:
     virtual void UnsetPosturePostePrepareGenie();
     void EnableDiscreteMode();
     void DisableDiscreteMode();
-    void SetTimingFactor( MT_Float rFactor ); //$$$ A GICLER
+    void SetTimingFactor( double rFactor ); //$$$ A GICLER
     //@}
 
     //! @name Installation
@@ -87,20 +87,20 @@ public:
 
     //! @name Perception
     //@{
-    void SetStealthFactor( MT_Float rValue );
+    void SetStealthFactor( double rValue );
     //@}
 
     //! @name Elongation
     //@{
-    void SetElongationFactor( MT_Float );
-    MT_Float GetElongationFactor() const;
+    void SetElongationFactor( double );
+    double GetElongationFactor() const;
     //@}
 
     //! @name Accessors
     //@{
     virtual const PHY_Posture& GetLastPosture() const;
     virtual const PHY_Posture& GetCurrentPosture() const;
-    virtual MT_Float GetPostureCompletionPercentage() const;
+    virtual double GetPostureCompletionPercentage() const;
     bool IsStealth() const;
     //@}
 
@@ -121,7 +121,7 @@ private:
     //@{
     bool HasChanged() const;
     void ChangePosture( const PHY_Posture& newPosture );
-    void ChangePostureCompletionPercentage( const MT_Float rNewPercentage );
+    void ChangePostureCompletionPercentage( const double rNewPercentage );
     void Uninstall();
     //@}
 
@@ -131,14 +131,14 @@ private:
     MIL_Agent_ABC& pion_;
     const PHY_Posture* pCurrentPosture_;
     const PHY_Posture* pLastPosture_;
-    MT_Float rPostureCompletionPercentage_;
-    MT_Float rElongationFactor_;
-    MT_Float rTimingFactor_;
+    double rPostureCompletionPercentage_;
+    double rElongationFactor_;
+    double rTimingFactor_;
     bool bDiscreteModeEnabled_;
-    MT_Float rStealthFactor_;
+    double rStealthFactor_;
     bool bIsStealth_;
     // Installation
-    MT_Float rInstallationState_;
+    double rInstallationState_;
     bool bInstallationSetUpInProgress_;
     // Network
     bool bInstallationStateHasChanged_;
@@ -146,8 +146,8 @@ private:
     bool bPercentageCrossed50_;
     bool bStealthFactorHasChanged_;
     bool bPercentageHasChanged_;
-    mutable MT_Float rLastPostureCompletionPercentageSent_;
-    mutable MT_Float rLastInstallationStateSent_;
+    mutable double rLastPostureCompletionPercentageSent_;
+    mutable double rLastInstallationStateSent_;
     //@}
 
 private:

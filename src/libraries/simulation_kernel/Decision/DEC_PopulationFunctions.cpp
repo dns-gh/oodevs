@@ -169,7 +169,7 @@ int DEC_PopulationFunctions::IsEnemy(const MIL_Population& callerPopulation, int
 // Name: DEC_PopulationFunctions::NotifyDominationStateChanged
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::NotifyDominationStateChanged( MIL_Population& callerPopulation, MT_Float dominationState)
+void DEC_PopulationFunctions::NotifyDominationStateChanged( MIL_Population& callerPopulation, double dominationState)
 {
     callerPopulation.GetDecision().NotifyDominationStateChanged( dominationState );
 }

@@ -37,23 +37,23 @@ public:
     /** @name Units converters */
     //-------------------------------------------------------------------------
     //@{
-    static MT_Float ConvertMeterSquareToSim( MT_Float );
-    static float ConvertSimToMeterSquare( MT_Float );
-    static MT_Float ConvertMeterToSim( MT_Float );
-    static float ConvertSimToMeter( MT_Float );
+    static double ConvertMeterSquareToSim( double );
+    static float ConvertSimToMeterSquare( double );
+    static double ConvertMeterToSim( double );
+    static float ConvertSimToMeter( double );
     static void ConvertCoordMosToSim( const std::string& strMosPos, MT_Vector2D& vSimPos );
     static void ConvertCoordMosToSim( const Common::MsgCoordLatLong& asnCoordUTM, MT_Vector2D& vSimPos );
     static std::string ConvertCoordSimToMos( const MT_Vector2D& vSimPos );
     static void ConvertCoordSimToMos( const MT_Vector2D& vSimPos, Common::MsgCoordLatLong& asnCoordUTM );
 
-    static MT_Float ConvertSpeedMosToSim( MT_Float ); // km/h         -> pixel/DeltaT
-    static MT_Float ConvertSpeedSimToMos( MT_Float ); // pixel/DeltaT -> km/h
-    static MT_Float ConvertSecondsToSim( MT_Float ); // s            -> DeltaT
-    static MT_Float ConvertMinutesToSim( MT_Float ); // min          -> DeltaT
-    static MT_Float ConvertHoursToSim( MT_Float ); // h            -> DeltaT
-    static MT_Float ConvertSimToMinutes( MT_Float ); // DeltaT       -> min
+    static double ConvertSpeedMosToSim( double ); // km/h         -> pixel/DeltaT
+    static double ConvertSpeedSimToMos( double ); // pixel/DeltaT -> km/h
+    static double ConvertSecondsToSim( double ); // s            -> DeltaT
+    static double ConvertMinutesToSim( double ); // min          -> DeltaT
+    static double ConvertHoursToSim( double ); // h            -> DeltaT
+    static double ConvertSimToMinutes( double ); // DeltaT       -> min
 
-    static MT_Float GetAltitude( const MT_Vector2D& );
+    static double GetAltitude( const MT_Vector2D& );
     static const weather::PHY_Meteo::sWindData& GetWind( const MT_Vector2D& );
     //@}
 

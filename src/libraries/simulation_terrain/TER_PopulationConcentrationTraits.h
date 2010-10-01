@@ -10,8 +10,6 @@
 #ifndef __TER_PopulationConcentrationTraits_h_
 #define __TER_PopulationConcentrationTraits_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 class TER_PopulationConcentration_ABC;
 
 // =============================================================================
@@ -28,8 +26,8 @@ public:
 
     //! @name Operations
     //@{
-    int CompareOnX( MT_Float rValue, const T_Value& pConcentration ) const;
-    int CompareOnY( MT_Float rValue, const T_Value& pConcentration ) const;
+    int CompareOnX( double rValue, const T_Value& pConcentration ) const;
+    int CompareOnY( double rValue, const T_Value& pConcentration ) const;
     //@}
 };
 

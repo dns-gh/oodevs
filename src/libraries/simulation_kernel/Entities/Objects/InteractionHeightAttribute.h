@@ -11,7 +11,6 @@
 #define __InteractionHeightAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -63,13 +62,13 @@ public:
 
     //! @name Accessors
     //@{
-    MT_Float Get() const;
+    double Get() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    MT_Float height_;
+    double height_;
     //@}
 };
 

@@ -66,7 +66,7 @@ const PHY_IndirectFireDotationClass& PHY_DotationCategory_IndirectFire_ABC::GetI
 // Name: PHY_DotationCategory_IndirectFire_ABC::ConvertToInterventionType
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationCategory_IndirectFire_ABC::ConvertToInterventionType( unsigned int nNbr ) const
+double PHY_DotationCategory_IndirectFire_ABC::ConvertToInterventionType( unsigned int nNbr ) const
 {
     return static_cast< float >( nNbr ) / static_cast< float >( nInterventionType_ );
 }
@@ -75,7 +75,7 @@ MT_Float PHY_DotationCategory_IndirectFire_ABC::ConvertToInterventionType( unsig
 // Name: PHY_DotationCategory_IndirectFire_ABC::ConvertToNbrAmmo
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationCategory_IndirectFire_ABC::ConvertToNbrAmmo( MT_Float rNbrIT ) const
+double PHY_DotationCategory_IndirectFire_ABC::ConvertToNbrAmmo( double rNbrIT ) const
 {
     return nInterventionType_ * rNbrIT;
 }
@@ -84,7 +84,7 @@ MT_Float PHY_DotationCategory_IndirectFire_ABC::ConvertToNbrAmmo( MT_Float rNbrI
 // Name: PHY_DotationCategory_IndirectFire_ABC::HasHit
 // Created: NLD 2005-08-04
 // -----------------------------------------------------------------------------
-bool PHY_DotationCategory_IndirectFire_ABC::HasHit( const MIL_Agent_ABC& /*target*/, MT_Float ) const
+bool PHY_DotationCategory_IndirectFire_ABC::HasHit( const MIL_Agent_ABC& /*target*/, double ) const
 {
     return true;
 }
@@ -93,7 +93,7 @@ bool PHY_DotationCategory_IndirectFire_ABC::HasHit( const MIL_Agent_ABC& /*targe
 // Name: PHY_DotationCategory_IndirectFire_ABC::ApplyEffect
 // Created: MGD 2010-02-16
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectFire_ABC::ApplyEffect( const MIL_Agent_ABC& /*firer*/, MIL_Agent_ABC& /*target*/, MT_Float /*rInterventionTypeFired*/, PHY_FireResults_ABC& /*fireResult*/ ) const
+void PHY_DotationCategory_IndirectFire_ABC::ApplyEffect( const MIL_Agent_ABC& /*firer*/, MIL_Agent_ABC& /*target*/, double /*rInterventionTypeFired*/, PHY_FireResults_ABC& /*fireResult*/ ) const
 {
     // NOTHING
 }

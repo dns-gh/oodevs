@@ -17,7 +17,7 @@
 // Created: JVT 04-02-26
 // Last modified: JVT 04-03-25
 //-----------------------------------------------------------------------------
-MT_Ellipse::MT_Ellipse( const MT_Vector2D& vOrigin, MT_Float rMajorAxeLength, MT_Float rMinorAxeLength, MT_Float rTheta )
+MT_Ellipse::MT_Ellipse( const MT_Vector2D& vOrigin, double rMajorAxeLength, double rMinorAxeLength, double rTheta )
     : rMajorAxeLength_( rMajorAxeLength )
     , rMinorAxeLength_( rMinorAxeLength )
     , rTheta_         ( rTheta )
@@ -37,8 +37,8 @@ MT_Ellipse::MT_Ellipse( const MT_Vector2D& vOrigin, MT_Float rMajorAxeLength, MT
 
     assert( rA_ >= rC_ );
 
-    MT_Float xc = sqrt( rA_ - rC_ );
-    MT_Float yc = sin( rTheta_ ) * xc;
+    double xc = sqrt( rA_ - rC_ );
+    double yc = sin( rTheta_ ) * xc;
     xc *= cos( rTheta_ );
 
     rA_ -= xc * xc;
@@ -72,8 +72,8 @@ MT_Ellipse::MT_Ellipse( const MT_Vector2D& vOrigin, const MT_Vector2D& vMajorAxi
 
     assert( rA_ >= rC_ );
 
-    MT_Float xc = sqrt( rA_ - rC_ );
-    MT_Float yc = sin( rTheta_ ) * xc;
+    double xc = sqrt( rA_ - rC_ );
+    double yc = sin( rTheta_ ) * xc;
     xc *= cos( rTheta_ );
 
     rA_ -= xc * xc;
@@ -144,7 +144,7 @@ MT_Rect MT_Ellipse::GetBoundingBox() const
 bool MT_Ellipse::IsInside( MT_Vector2D vPoint ) const
 {
     vPoint -= vCenter_; // translation du repère pour centrer l'ellipse
-    const MT_Float rValue = ( rA_ * vPoint.rX_ * vPoint.rX_
+    const double rValue = ( rA_ * vPoint.rX_ * vPoint.rX_
                             + rB_ * vPoint.rY_ * vPoint.rY_
                             + rC_ * vPoint.rX_ * vPoint.rY_
                             + rF_ );

@@ -20,18 +20,15 @@ MT_Vector2D MT_Circle::Center() const
     return c_;
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Name: MT_Circle::Radius
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
 inline
-MT_Float MT_Circle::Radius() const
+double MT_Circle::Radius() const
 {
     return r_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Circle::IsTrivial
@@ -40,92 +37,88 @@ MT_Float MT_Circle::Radius() const
 inline
 bool MT_Circle::IsTrivial() const
 {
-    return (r_==0);
+    return r_==0;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Circle::Inside
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
 inline
-bool MT_Circle::Inside(const MT_Vector2D& p) const
+bool MT_Circle::Inside( const MT_Vector2D& p ) const
 {
-    return c_.SquareDistance(p)<=(r_*r_);
+    return c_.SquareDistance( p ) <= r_ * r_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Circle::Outside
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
 inline
-bool MT_Circle::Outside(const MT_Vector2D& p) const
+bool MT_Circle::Outside( const MT_Vector2D& p ) const
 {
-    return c_.SquareDistance(p)>=(r_*r_);
+    return c_.SquareDistance( p ) >= r_ * r_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Circle::Contains
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
 inline
-bool MT_Circle::Contains(const MT_Vector2D& p) const
+bool MT_Circle::Contains( const MT_Vector2D& p ) const
 {
-    return c_.SquareDistance(p)==(r_*r_);
+    return c_.SquareDistance( p ) == r_ * r_;
 }
 
-
 //-----------------------------------------------------------------------------
-// Name: MT_Circle::operator =
+// Name: MT_Circle::operator=
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
 inline
-MT_Circle&  MT_Circle::operator =( const MT_Circle& c)
+MT_Circle&  MT_Circle::operator=( const MT_Circle& c )
 {
-    c_=c.c_;
-    r_=c.r_;
+    c_ = c.c_;
+    r_ = c.r_;
     return *this;
 }
 
 //-----------------------------------------------------------------------------
-// Name: MT_Circle::operator =
+// Name: MT_Circle::operator=
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
 inline
-MT_Circle   MT_Circle::operator -( const MT_Vector2D& v )
+MT_Circle MT_Circle::operator-( const MT_Vector2D& v ) const
 {
-    return MT_Circle(c_-v,r_);
+    return MT_Circle( c_ - v, r_ );
 }
 
 //-----------------------------------------------------------------------------
-// Name: MT_Circle::operator =
+// Name: MT_Circle::operator=
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
 inline
-MT_Circle   MT_Circle::operator +( const MT_Vector2D& v )
+MT_Circle MT_Circle::operator+( const MT_Vector2D& v ) const
 {
-    return MT_Circle(c_+v,r_);
+    return MT_Circle( c_ + v, r_ );
 }
 
 //-----------------------------------------------------------------------------
-// Name: MT_Circle::operator =
+// Name: MT_Circle::operator=
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
 inline
-MT_Circle&  MT_Circle::operator +=( const MT_Vector2D& v )
+MT_Circle&  MT_Circle::operator+=( const MT_Vector2D& v )
 {
     c_+=v;
     return *this;
 }
 
 //-----------------------------------------------------------------------------
-// Name: MT_Circle::operator =
+// Name: MT_Circle::operator=
 // Created: JDY 03-03-06
 //-----------------------------------------------------------------------------
 inline
-MT_Circle&  MT_Circle::operator -=( const MT_Vector2D& v )
+MT_Circle&  MT_Circle::operator-=( const MT_Vector2D& v )
 {
     c_-=v;
     return *this;

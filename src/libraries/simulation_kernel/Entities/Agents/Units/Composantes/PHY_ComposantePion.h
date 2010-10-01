@@ -124,7 +124,7 @@ public:
     bool CouldBePartOfConvoy() const; // Type : don't check the state $$$$ a renommer
     bool CanBePartOfConvoy() const; // $$$$ a renommer
     bool CanTransportStock( const PHY_DotationCategory& dotationCategory ) const; // Indépendamment du fait que la composante peut faire partie d'un convoi
-    void GetStockTransporterCapacity( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
+    void GetStockTransporterCapacity( double& rWeightMax, double& rVolumeMax ) const;
     //@}
 
     //! @name Humans
@@ -140,7 +140,7 @@ public:
     //@{
     void ApplyPopulationFire            ( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireDamages_Agent& fireDamages );
     void ApplyDirectFire                ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages );
-    void ApplyIndirectFire              ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages, MT_Float ratio );
+    void ApplyIndirectFire              ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages, double ratio );
     void ApplyExplosion                 ( const AttritionCapacity& capacity                                                         , PHY_FireDamages_Agent& fireDamages );
     void ApplyContamination             ( const MIL_ToxicEffectManipulator& contamination );
     void ApplyPoisonous                 ( const MIL_ToxicEffectManipulator& contamination );
@@ -153,8 +153,8 @@ public:
     double GetOnlyLoadableMaxRangeToFireOn  ( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH              ) const;
     double GetMaxRangeToFireOn              ( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH              ) const;
     double GetMinRangeToFireOn              ( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH              ) const;
-    double GetMaxRangeToFireOnWithPosture   ( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
-    double GetMinRangeToFireOnWithPosture   ( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
+    double GetMaxRangeToFireOnWithPosture   ( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, double rWantedPH ) const;
+    double GetMinRangeToFireOnWithPosture   ( const DEC_Knowledge_AgentComposante& compTarget, const MIL_Agent_ABC& target, double rWantedPH ) const;
     double GetMaxRangeToIndirectFire        ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     double GetMinRangeToIndirectFire        ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     double GetMaxRangeToFire                ( const MIL_Agent_ABC& pion, double rWantedPH ) const;
@@ -198,11 +198,11 @@ public:
     bool CanDemine( const MIL_ObjectType_ABC& objectType ) const;
     bool CanBypass( const MIL_ObjectType_ABC& objectType, bool bObjectIsMined ) const;
 
-    MT_Float GetConstructionTime( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef ) const;
-    MT_Float GetDestructionTime( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef ) const;
-    MT_Float GetMiningTime( const MIL_ObjectType_ABC& objectType ) const;
-    MT_Float GetDeminingTime( const MIL_ObjectType_ABC& objectType ) const;
-    MT_Float GetBypassTime( const MIL_ObjectType_ABC& objectType, MT_Float rSizeCoef, bool bObjectIsMined ) const;
+    double GetConstructionTime( const MIL_ObjectType_ABC& objectType, double rSizeCoef ) const;
+    double GetDestructionTime( const MIL_ObjectType_ABC& objectType, double rSizeCoef ) const;
+    double GetMiningTime( const MIL_ObjectType_ABC& objectType ) const;
+    double GetDeminingTime( const MIL_ObjectType_ABC& objectType ) const;
+    double GetBypassTime( const MIL_ObjectType_ABC& objectType, double rSizeCoef, bool bObjectIsMined ) const;
     //@}
 
     //! @name Load / unload / transport
@@ -212,9 +212,9 @@ public:
 
     bool CanBeTransported() const;
     bool CanTransportPion() const;
-    MT_Float GetPionTransporterWeightCapacity() const;
-    MT_Float GetPionTransporterWeightLoadedPerTimeStep() const;
-    MT_Float GetPionTransporterWeightUnloadedPerTimeStep() const;
+    double GetPionTransporterWeightCapacity() const;
+    double GetPionTransporterWeightLoadedPerTimeStep() const;
+    double GetPionTransporterWeightUnloadedPerTimeStep() const;
     //@}
 
     //! @name PHY_RoleInterface_ActiveProtection
@@ -232,7 +232,7 @@ public:
 
     void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
 
-    MT_Float GetOperationalState() const;
+    double GetOperationalState() const;
     void ReinitializeState( const PHY_ComposanteState& state );
     void Repair();
     //@}
@@ -253,7 +253,7 @@ private:
 private:
     //! @name Tools
     //@{
-    void ApplyFire              ( const PHY_AttritionData& attritionData, MT_Float urbanProtection, PHY_FireDamages_Agent& fireDamages );
+    void ApplyFire              ( const PHY_AttritionData& attritionData, double urbanProtection, PHY_FireDamages_Agent& fireDamages );
     void ApplyNewComposanteState( const PHY_ComposanteState& pNewState, const PHY_ComposanteState& oldState );
     bool CanBeUsed              () const;
     bool CanBeUsedForMove       () const;
@@ -287,7 +287,7 @@ private:
 public:
     //! @name Member data
     //@{
-    static MT_Float rOpStateWeightHumans_;
+    static double rOpStateWeightHumans_;
     //@}
 };
 

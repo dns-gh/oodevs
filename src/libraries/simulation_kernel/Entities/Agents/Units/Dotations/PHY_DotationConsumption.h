@@ -12,8 +12,6 @@
 #ifndef __PHY_DotationConsumption_h_
 #define __PHY_DotationConsumption_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 namespace xml
 {
     class xistream;
@@ -33,12 +31,12 @@ public:
 
     //! @name Accessors
     //@{
-    MT_Float GetConsumption() const;
+    double GetConsumption() const;
     //@}
 
 private:
     const PHY_DotationCategory& category_;
-    MT_Float rConsumption_;
+    double rConsumption_;
 };
 
 #endif // __PHY_DotationConsumption_h_

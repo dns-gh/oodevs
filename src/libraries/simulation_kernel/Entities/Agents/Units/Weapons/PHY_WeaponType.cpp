@@ -211,7 +211,7 @@ PHY_Weapon& PHY_WeaponType::InstanciateWeapon( bool bMajor ) const
 // Name: PHY_WeaponType::GetPHModificator
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const
+double PHY_WeaponType::GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const
 {
     assert( pLauncherType_ );
     return pLauncherType_->GetPHModificator( firerPosture, targetPosture );
@@ -221,7 +221,7 @@ MT_Float PHY_WeaponType::GetPHModificator( const PHY_RoleInterface_Posture& fire
 // Name: PHY_WeaponType::GetPHModificator
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetPHModificator( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture ) const
+double PHY_WeaponType::GetPHModificator( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture ) const
 {
     assert( pLauncherType_ );
     return pLauncherType_->GetPHModificator( firerPosture, targetPosture );
@@ -271,7 +271,7 @@ void PHY_WeaponType::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vSourc
 // Name: PHY_WeaponType::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const
+double PHY_WeaponType::GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const
 {
     assert( pDotationCategory_ );
 
@@ -288,7 +288,7 @@ MT_Float PHY_WeaponType::GetDangerosity( const MIL_AgentPion& firer, const MIL_A
 // Name: PHY_WeaponType::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rDistBtwFirerAndTarget ) const
+double PHY_WeaponType::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget ) const
 {
     assert( pDotationCategory_ );
 
@@ -305,7 +305,7 @@ MT_Float PHY_WeaponType::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_C
 // Name: PHY_WeaponType::GetMaxRangeToFireOn
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
+double PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
     assert( pDotationCategory_ );
 
@@ -322,7 +322,7 @@ MT_Float PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const 
 // Name: PHY_WeaponType::GetMinRangeToFireOn
 // Created: JVT 2004-12-17
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
+double PHY_WeaponType::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
     assert( pDotationCategory_ );
 
@@ -331,7 +331,7 @@ MT_Float PHY_WeaponType::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const 
     localFirer.Execute( *dotationComputer );
 
     if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
     return pDirectFireData_->GetMinRangeToFireOn( targetComposanteType, rWantedPH );
 }
 
@@ -339,7 +339,7 @@ MT_Float PHY_WeaponType::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const 
 // Name: PHY_WeaponType::GetMaxRangeToFire
 // Created: DDA 2010-05-03
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMaxRangeToFire( const MIL_Agent_ABC& pion, MT_Float rWantedPH ) const
+double PHY_WeaponType::GetMaxRangeToFire( const MIL_Agent_ABC& pion, double rWantedPH ) const
 {
     assert( pDotationCategory_ );
 
@@ -348,7 +348,7 @@ MT_Float PHY_WeaponType::GetMaxRangeToFire( const MIL_Agent_ABC& pion, MT_Float 
     localFirer.Execute( *dotationComputer );
 
     if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
     return pDirectFireData_->GetMaxRangeToFire( rWantedPH );
 }
 
@@ -356,7 +356,7 @@ MT_Float PHY_WeaponType::GetMaxRangeToFire( const MIL_Agent_ABC& pion, MT_Float 
 // Name: PHY_WeaponType::GetMaxRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
+double PHY_WeaponType::GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
     assert( pDotationCategory_ );
 
@@ -373,7 +373,7 @@ MT_Float PHY_WeaponType::GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& fi
 // Name: PHY_WeaponType::GetMinRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
+double PHY_WeaponType::GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
     assert( pDotationCategory_ );
 
@@ -390,7 +390,7 @@ MT_Float PHY_WeaponType::GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& fi
 // Name: PHY_WeaponType::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const
+double PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const
 {
     if( !pIndirectFireData_ )
         return -1.;
@@ -409,17 +409,17 @@ MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, 
 // Name: PHY_WeaponType::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const
+double PHY_WeaponType::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const
 {
     if( !pIndirectFireData_ )
-      return std::numeric_limits< MT_Float >::max();
+      return std::numeric_limits< double >::max();
 
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer.GetAlgorithms().dotationComputerFactory_->Create() );
     MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );
     localFirer.Execute( *dotationComputer );
 
     if( bCheckDotationsAvailability && !dotationComputer->HasDotation( *pDotationCategory_ ) )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
 
     return pIndirectFireData_->GetMinRange();
 }
@@ -428,7 +428,7 @@ MT_Float PHY_WeaponType::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, 
 // Name: PHY_WeaponType::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire() const
+double PHY_WeaponType::GetMaxRangeToIndirectFire() const
 {
     assert( pDotationCategory_ );
     return pIndirectFireData_ ? pIndirectFireData_->GetMaxRange() : -1.;
@@ -438,10 +438,10 @@ MT_Float PHY_WeaponType::GetMaxRangeToIndirectFire() const
 // Name: PHY_WeaponType::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetMinRangeToIndirectFire() const
+double PHY_WeaponType::GetMinRangeToIndirectFire() const
 {
     assert( pDotationCategory_ );
-    return pIndirectFireData_ ? pIndirectFireData_->GetMinRange() : std::numeric_limits< MT_Float >::max();
+    return pIndirectFireData_ ? pIndirectFireData_->GetMinRange() : std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
@@ -488,7 +488,7 @@ unsigned int PHY_WeaponType::GetNbrAmmoPerBurst() const
 // Name: PHY_WeaponType::GetBurstDuration
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetBurstDuration() const
+double PHY_WeaponType::GetBurstDuration() const
 {
     return rBurstDuration_;
 }
@@ -497,7 +497,7 @@ MT_Float PHY_WeaponType::GetBurstDuration() const
 // Name: PHY_WeaponType::GetReloadingDuration
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-MT_Float PHY_WeaponType::GetReloadingDuration() const
+double PHY_WeaponType::GetReloadingDuration() const
 {
     return rReloadingDuration_;
 }

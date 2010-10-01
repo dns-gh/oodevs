@@ -65,8 +65,8 @@ public:
     //! @name Accessors
     //@{
     unsigned int GetTimeLastUpdate() const;
-    MT_Float GetOperationalState() const;
-    MT_Float GetMajorOperationalState() const;
+    double GetOperationalState() const;
+    double GetMajorOperationalState() const;
     const T_KnowledgeComposanteVector& GetComposantes() const;
     const MIL_Army_ABC* GetArmy() const;
     const PHY_NatureAtlas& GetNatureAtlas() const;
@@ -85,8 +85,8 @@ private:
     //! @name Member data
     //@{
     unsigned int nTimeLastUpdate_;
-    MT_Float rOperationalState_;
-    MT_Float rMajorOperationalState_;
+    double rOperationalState_;
+    double rMajorOperationalState_;
     T_KnowledgeComposanteVector composantes_;
     const MIL_Army_ABC* pArmy_;
     bool bIsPC_;

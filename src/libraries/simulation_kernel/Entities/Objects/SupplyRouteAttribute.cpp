@@ -224,7 +224,7 @@ bool SupplyRouteAttribute::IsEquipped() const
 // Name: SupplyRouteAttribute::GetMaxWeight
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
-MT_Float SupplyRouteAttribute::GetMaxWeight() const
+double SupplyRouteAttribute::GetMaxWeight() const
 {
     return rWeightSupported_;
 }
@@ -233,7 +233,7 @@ MT_Float SupplyRouteAttribute::GetMaxWeight() const
 // Name: SupplyRouteAttribute::GetWidth
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
-MT_Float SupplyRouteAttribute::GetWidth() const
+double SupplyRouteAttribute::GetWidth() const
 {
     return rWidth_;
 }
@@ -242,7 +242,7 @@ MT_Float SupplyRouteAttribute::GetWidth() const
 // Name: SupplyRouteAttribute::GetLength
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
-MT_Float SupplyRouteAttribute::GetLength() const
+double SupplyRouteAttribute::GetLength() const
 {
     return rLength_;
 }
@@ -251,7 +251,7 @@ MT_Float SupplyRouteAttribute::GetLength() const
 // Name: SupplyRouteAttribute::GetFlow
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
-MT_Float SupplyRouteAttribute::GetFlow() const
+double SupplyRouteAttribute::GetFlow() const
 {
     return rFlow_;
 }

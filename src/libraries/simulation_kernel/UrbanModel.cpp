@@ -135,7 +135,7 @@ const urban::TerrainObject_ABC* UrbanModel::FindUrbanObject( unsigned id ) const
 // Name: UrbanModel::FindUrbanBlock
 // Created: RPD 2009-11-23
 // -----------------------------------------------------------------------------
-MT_Float UrbanModel::GetUrbanBlockCost( MT_Float weight, const MT_Vector2D& start, const MT_Vector2D& end ) const
+double UrbanModel::GetUrbanBlockCost( double weight, const MT_Vector2D& start, const MT_Vector2D& end ) const
 {
     const geometry::Point2f from( static_cast< float >( start.rX_ ), static_cast< float >( start.rY_ ) );
     const geometry::Point2f to( static_cast< float >( end.rX_ ), static_cast< float >( end.rY_ ) );

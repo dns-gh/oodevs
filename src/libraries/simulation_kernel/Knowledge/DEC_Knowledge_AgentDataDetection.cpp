@@ -30,8 +30,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentDataDetection )
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentDataDetection::DEC_Knowledge_AgentDataDetection()
     : nTimeLastUpdate_             ( 0 )
-    , rSpeed_                      ( std::numeric_limits< MT_Float >::max() )
-    , rAltitude_                   ( std::numeric_limits< MT_Float >::max() )
+    , rSpeed_                      ( std::numeric_limits< double >::max() )
+    , rAltitude_                   ( std::numeric_limits< double >::max() )
     , pArmySurrenderedTo_          ( 0 )
     , bPrisoner_                   ( false )
     , bRefugeeManaged_             ( false )
@@ -168,7 +168,7 @@ void DEC_Knowledge_AgentDataDetection::DoUpdate( const T& data )
         vDirection_ = vNewDirection;
         bDirectionUpdated_ = true;
     }
-    const MT_Float rNewSpeed = data.GetSpeed();
+    const double rNewSpeed = data.GetSpeed();
     if( rSpeed_ != rNewSpeed )
     {
         rSpeed_ = rNewSpeed;
@@ -325,18 +325,18 @@ bool DEC_Knowledge_AgentDataDetection::IsRefugeeManaged() const
 // Name: DEC_Knowledge_AgentDataDetection::GetSpeed
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_AgentDataDetection::GetSpeed() const
+double DEC_Knowledge_AgentDataDetection::GetSpeed() const
 {
-    return rSpeed_ == std::numeric_limits< MT_Float >::max() ? 0. : rSpeed_;
+    return rSpeed_ == std::numeric_limits< double >::max() ? 0. : rSpeed_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataDetection::GetAltitude
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_AgentDataDetection::GetAltitude() const
+double DEC_Knowledge_AgentDataDetection::GetAltitude() const
 {
-    return rAltitude_ == std::numeric_limits< MT_Float >::max() ? 0. : rAltitude_;
+    return rAltitude_ == std::numeric_limits< double >::max() ? 0. : rAltitude_;
 }
 
 // -----------------------------------------------------------------------------
@@ -381,7 +381,7 @@ const PHY_Posture& DEC_Knowledge_AgentDataDetection::GetCurrentPosture() const
 // Name: DEC_Knowledge_AgentDataDetection::GetPostureCompletionPercentage
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_AgentDataDetection::GetPostureCompletionPercentage() const
+double DEC_Knowledge_AgentDataDetection::GetPostureCompletionPercentage() const
 {
     return rPostureCompletionPercentage_;
 }

@@ -25,7 +25,7 @@ TER_World& TER_World::GetWorld()
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
 inline
-MT_Float TER_World::GetWeldValue() const
+double TER_World::GetWeldValue() const
 {
     return pCoordinateManager_->GetWeldValue();
 }

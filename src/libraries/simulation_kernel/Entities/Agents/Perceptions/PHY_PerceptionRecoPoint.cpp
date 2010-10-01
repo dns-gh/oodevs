@@ -50,7 +50,7 @@ PHY_PerceptionRecoPoint::~PHY_PerceptionRecoPoint()
 // Name: PHY_PerceptionRecoPoint::AddPoint
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-int PHY_PerceptionRecoPoint::AddPoint( const MT_Vector2D& center, MT_Float rSize, MT_Float rSpeed, DEC_Decision_ABC& callerAgent )
+int PHY_PerceptionRecoPoint::AddPoint( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent )
 {
     PHY_PerceptionRecoPointReco* pNewReco = new PHY_PerceptionRecoPointReco( center, rSize, rSpeed, callerAgent );
     return Add( pNewReco );

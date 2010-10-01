@@ -77,24 +77,24 @@ PHY_AttritionData::~PHY_AttritionData()
 // Name: PHY_AttritionData::ComputeComposanteState
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-const PHY_ComposanteState& PHY_AttritionData::ComputeComposanteState( MT_Float urbanProtection ) const
+const PHY_ComposanteState& PHY_AttritionData::ComputeComposanteState( double urbanProtection ) const
 {
     assert( urbanProtection < 1.f );
     // Tirage de l'état opérationnel
-    MT_Float rRand = 1. - MIL_Random::rand_ii( MIL_Random::eFire );
+    double rRand = 1. - MIL_Random::rand_ii( MIL_Random::eFire );
 
-    MT_Float rReductionDestroyed = rDestroyed_ * urbanProtection;
-    MT_Float rNewDestroyed = rDestroyed_ - rReductionDestroyed;
+    double rReductionDestroyed = rDestroyed_ * urbanProtection;
+    double rNewDestroyed = rDestroyed_ - rReductionDestroyed;
 
-    MT_Float rReductionReparableWithEvacuation = ( rReparableWithEvacuation_ + rReductionDestroyed ) * urbanProtection;
-    MT_Float rNewReductionReparableWithEvacuation = rReparableWithEvacuation_ + rReductionDestroyed - rReductionReparableWithEvacuation;
+    double rReductionReparableWithEvacuation = ( rReparableWithEvacuation_ + rReductionDestroyed ) * urbanProtection;
+    double rNewReductionReparableWithEvacuation = rReparableWithEvacuation_ + rReductionDestroyed - rReductionReparableWithEvacuation;
 
-    MT_Float rReductionReparableWithoutEvacuation = ( rReparableWithoutEvacuation_ + rReductionReparableWithEvacuation ) * urbanProtection;
-    MT_Float rNewReductionReparableWithoutEvacuation = rReparableWithoutEvacuation_ + rReductionReparableWithEvacuation - rReductionReparableWithoutEvacuation;
+    double rReductionReparableWithoutEvacuation = ( rReparableWithoutEvacuation_ + rReductionReparableWithEvacuation ) * urbanProtection;
+    double rNewReductionReparableWithoutEvacuation = rReparableWithoutEvacuation_ + rReductionReparableWithEvacuation - rReductionReparableWithoutEvacuation;
 
-    MT_Float rDestroyedBound = rNewDestroyed;
-    MT_Float rReparableWithEvacuationBound = rDestroyedBound + rNewReductionReparableWithEvacuation;
-    MT_Float rReparableWithoutEvacuationBound = rReparableWithEvacuationBound + rNewReductionReparableWithoutEvacuation;
+    double rDestroyedBound = rNewDestroyed;
+    double rReparableWithEvacuationBound = rDestroyedBound + rNewReductionReparableWithEvacuation;
+    double rReparableWithoutEvacuationBound = rReparableWithEvacuationBound + rNewReductionReparableWithoutEvacuation;
 
     return rRand <= rDestroyedBound                  ? PHY_ComposanteState::dead_:
            rRand <= rReparableWithEvacuationBound    ? PHY_ComposanteState::repairableWithEvacuation_   :
@@ -119,7 +119,7 @@ PHY_AttritionData& PHY_AttritionData::operator=( const PHY_AttritionData& rhs )
 // Name: PHY_AttritionData::GetScore
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_AttritionData::GetScore() const
+double PHY_AttritionData::GetScore() const
 {
     return rScore_;
 }

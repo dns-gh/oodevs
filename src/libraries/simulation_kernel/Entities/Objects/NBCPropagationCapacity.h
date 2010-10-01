@@ -11,7 +11,6 @@
 #define __NBCPropagationCapacity_h_
 
 #include "PropagationCapacity_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 class MIL_PropagationManager;
@@ -48,8 +47,8 @@ private:
 
     //! @name Update
     //@{
-    void UpdateShape( MIL_Object_ABC& object, const MT_Vector2D& vNormalizedWind, const MT_Vector2D& vPerpendicularToWind, MT_Float windSpeed );
-    bool UpdateState( MIL_Object_ABC& object, const MT_Vector2D& vNormalizedWind, const MT_Vector2D& vPerpendicularToWind, MT_Float windSpeed );
+    void UpdateShape( MIL_Object_ABC& object, const MT_Vector2D& vNormalizedWind, const MT_Vector2D& vPerpendicularToWind, double windSpeed );
+    bool UpdateState( MIL_Object_ABC& object, const MT_Vector2D& vNormalizedWind, const MT_Vector2D& vPerpendicularToWind, double windSpeed );
     void Propagate( const MT_Vector2D& vOrigin, MIL_Object_ABC& object );
     //@}
 

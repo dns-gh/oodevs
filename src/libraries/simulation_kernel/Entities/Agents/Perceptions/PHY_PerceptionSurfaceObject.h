@@ -23,7 +23,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_PerceptionSurfaceObject();
-             PHY_PerceptionSurfaceObject( const PHY_SensorTypeObject& sensorType, const MT_Vector2D& vOrigin, MT_Float rHeight );
+             PHY_PerceptionSurfaceObject( const PHY_SensorTypeObject& sensorType, const MT_Vector2D& vOrigin, double rHeight );
     virtual ~PHY_PerceptionSurfaceObject();
     //@}
 
@@ -56,7 +56,7 @@ private:
     //@{
     const PHY_SensorTypeObject* pSensorType_;
           MT_Vector2D           vOrigin_;
-          MT_Float              rHeight_;
+          double              rHeight_;
     //@}
 };
 

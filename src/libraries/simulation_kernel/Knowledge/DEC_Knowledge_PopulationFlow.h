@@ -84,7 +84,7 @@ private:
     const MIL_PopulationFlow* pFlowKnown_;
     const unsigned int nID_;
     MT_Vector2D direction_;
-    MT_Float rSpeed_;
+    double rSpeed_;
     T_FlowPartMap flowParts_;
     unsigned int nNbrAliveHumans_;
     unsigned int nNbrDeadHumans_;

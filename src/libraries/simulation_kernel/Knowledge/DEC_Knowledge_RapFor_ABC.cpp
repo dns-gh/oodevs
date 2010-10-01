@@ -14,9 +14,9 @@
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 
-const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMin_                        = 0.2;
-const MT_Float DEC_Knowledge_RapFor_ABC::rRapForBoundMax_                        = 5.0;
-      MT_Float DEC_Knowledge_RapFor_ABC::rRapForIncreasePerTimeStepDefaultValue_ = 0.;
+const double DEC_Knowledge_RapFor_ABC::rRapForBoundMin_                        = 0.2;
+const double DEC_Knowledge_RapFor_ABC::rRapForBoundMax_                        = 5.0;
+      double DEC_Knowledge_RapFor_ABC::rRapForIncreasePerTimeStepDefaultValue_ = 0.;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_RapFor_ABC::Initialize
@@ -26,7 +26,7 @@ void DEC_Knowledge_RapFor_ABC::Initialize( xml::xistream& xis )
 {
     // Rapport de force
     xis >> xml::start( "force-ratio" );
-    MT_Float rTmp;
+    double rTmp;
     tools::ReadTimeAttribute( xis, "default-feedback-time", rTmp );
     rTmp = MIL_Tools::ConvertSecondsToSim( rTmp );
     rRapForIncreasePerTimeStepDefaultValue_ = ComputeRapForIncreasePerTimeStepValue( rTmp );
@@ -58,14 +58,14 @@ DEC_Knowledge_RapFor_ABC::~DEC_Knowledge_RapFor_ABC()
 // Name: DEC_Knowledge_RapFor_ABC::ApplyValue
 // Created: NLD 2004-04-08
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_RapFor_ABC::ApplyValue( MT_Float rTotalFightScoreFriend, MT_Float rTotalFightScoreEnemy, const MT_Float rRapForIncreasePerTimeStepValue )
+void DEC_Knowledge_RapFor_ABC::ApplyValue( double rTotalFightScoreFriend, double rTotalFightScoreEnemy, const double rRapForIncreasePerTimeStepValue )
 {
     // New value calculation
-    MT_Float rNewRapForValue = std::numeric_limits< MT_Float >::max();
+    double rNewRapForValue = std::numeric_limits< double >::max();
     if( rTotalFightScoreEnemy != 0. )
         rNewRapForValue = rTotalFightScoreFriend / rTotalFightScoreEnemy;
     // Bound the value between 0.2 and 5.0
-    static MT_Float rRapForMidValue_ = ( rRapForBoundMax_ - rRapForBoundMin_ ) / 2;
+    static double rRapForMidValue_ = ( rRapForBoundMax_ - rRapForBoundMin_ ) / 2;
     if( rNewRapForValue < 1. )
         rNewRapForValue = ( (rRapForMidValue_ - rRapForBoundMin_) * rNewRapForValue ) + rRapForBoundMin_;
     else
@@ -81,7 +81,7 @@ void DEC_Knowledge_RapFor_ABC::ApplyValue( MT_Float rTotalFightScoreFriend, MT_F
 // Name: DEC_Knowledge_RapFor_ABC::GetValue
 // Created: NLD 2004-04-07
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_RapFor_ABC::GetValue()
+double DEC_Knowledge_RapFor_ABC::GetValue()
 {
     Update();
     return rRapForValue_;
@@ -91,7 +91,7 @@ MT_Float DEC_Knowledge_RapFor_ABC::GetValue()
 // Name: DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue()
+double DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue()
 {
     return rRapForIncreasePerTimeStepDefaultValue_;
 }
@@ -100,7 +100,7 @@ MT_Float DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue()
 // Name: DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue( MT_Float rBaseTimeValue )
+double DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue( double rBaseTimeValue )
 {
     if( rBaseTimeValue <= 0. )
         return rRapForBoundMax_ - rRapForBoundMin_;

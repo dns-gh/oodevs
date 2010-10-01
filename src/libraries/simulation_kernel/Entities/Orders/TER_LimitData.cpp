@@ -33,15 +33,15 @@ TER_LimitData::DistanceData::DistanceData( const MT_Vector2D& from, const MT_Vec
 // Name: TER_LimitData::DistanceData::SquareDistance
 // Created: AGE 2005-05-12
 // -----------------------------------------------------------------------------
-MT_Float TER_LimitData::DistanceData::SquareDistance( const MT_Vector2D& p ) const
+double TER_LimitData::DistanceData::SquareDistance( const MT_Vector2D& p ) const
 {
     // $$$$ AGE 2007-07-04: buggued since 1992
     const MT_Vector2D v( p - origin_ );
-    const MT_Float rDotProduct = DotProduct( direction_, v );
+    const double rDotProduct = DotProduct( direction_, v );
     if( rDotProduct <= 0 )
         return p.SquareDistance( origin_ );
     if( rDotProduct >= rSquareLength_ )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
     return v.SquareMagnitude() - rDotProduct * rDotProduct / rSquareLength_;
 }
 
@@ -91,13 +91,13 @@ void TER_LimitData::InitializeDistancesData()
 // Name: TER_LimitData::Distance
 // Created: AGE 2005-03-25
 // -----------------------------------------------------------------------------
-MT_Float TER_LimitData::SquareDistance( const MT_Vector2D& p ) const
+double TER_LimitData::SquareDistance( const MT_Vector2D& p ) const
 {
-    MT_Float rResult = std::numeric_limits< MT_Float >::max();
+    double rResult = std::numeric_limits< double >::max();
     for( CIT_DistancesData it = distancesData_.begin(); it != distancesData_.end(); ++it )
     {
         const DistanceData& data = *it;
-        const MT_Float rSquareDistance = data.SquareDistance( p );
+        const double rSquareDistance = data.SquareDistance( p );
         if( rResult > rSquareDistance )
             rResult = rSquareDistance;
     }
@@ -108,7 +108,7 @@ MT_Float TER_LimitData::SquareDistance( const MT_Vector2D& p ) const
 // Name: TER_LimitData::Distance
 // Created: AGE 2005-05-13
 // -----------------------------------------------------------------------------
-MT_Float TER_LimitData::Distance( const MT_Vector2D& p ) const
+double TER_LimitData::Distance( const MT_Vector2D& p ) const
 {
     return std::sqrt( SquareDistance( p ) );
 }
@@ -148,9 +148,9 @@ const T_PointVector& TER_LimitData::GetPoints() const
 // Name: TER_LimitData::GetLength
 // Created: NLD 2003-04-22
 //-----------------------------------------------------------------------------
-MT_Float TER_LimitData::GetLength() const
+double TER_LimitData::GetLength() const
 {
-    MT_Float rLength = 0.;
+    double rLength = 0.;
     const MT_Vector2D* pPrevPoint = 0;
     for( CIT_PointVector itPoint = points_.begin(); itPoint != points_.end(); ++itPoint )
     {

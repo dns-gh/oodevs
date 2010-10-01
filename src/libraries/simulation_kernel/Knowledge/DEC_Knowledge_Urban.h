@@ -74,7 +74,7 @@ public:
     //! @name Relevance management
     //@{
     void UpdateRelevance();
-    MT_Float GetRelevance() const;
+    double GetRelevance() const;
     //@}
 
     //! @name Network operations

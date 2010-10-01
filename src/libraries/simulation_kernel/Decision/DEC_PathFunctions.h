@@ -39,7 +39,7 @@ public:
 
     static int GetPathState          ( MIL_AgentPion& callerAgent, DEC_Path_ABC* pPath );
     static std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > GetNextObjectOnPath( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > oId, float oDistance, const std::vector< std::string >& params );
-    static boost::shared_ptr< MT_Vector2D > ExtrapolatePosition   ( const MIL_AgentPion& callerAgent, const MT_Float time, bool bBoundOnPath );
+    static boost::shared_ptr< MT_Vector2D > ExtrapolatePosition   ( const MIL_AgentPion& callerAgent, const double time, bool bBoundOnPath );
     static boost::shared_ptr< MT_Vector2D > GetLastPointOfPath    ( const MIL_AgentPion& callerAgent, const DEC_Path_ABC* pPath );
     static bool IsMovingOnPath        ( const MIL_AgentPion& callerAgent, const DEC_Path_ABC* pPath );
     static MT_Vector2D* GetRepPoint   ( boost::shared_ptr< DEC_PathPoint > pPoint );

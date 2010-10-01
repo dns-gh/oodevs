@@ -40,11 +40,11 @@ public:
     bool HasReachedSupplyThreshold() const;
     void ReserveStocks();
 
-    MT_Float Supply() const;
+    double Supply() const;
     void Cancel();
 
-    void RemoveConvoyedMerchandise( MT_Float rNbr );
-    void AddConvoyedMerchandise( MT_Float rNbr );
+    void RemoveConvoyedMerchandise( double rNbr );
+    void AddConvoyedMerchandise( double rNbr );
     void CancelMerchandiseOverheadReservation();
     //@}
 
@@ -52,9 +52,9 @@ public:
     //@{
     const PHY_DotationCategory& GetDotationCategory   () const;
           MIL_AutomateLOG*      GetSupplyingAutomate  () const;
-          MT_Float              GetTotalRequestedValue() const;
-          MT_Float              GetTotalReservedValue () const;
-          MT_Float              GetTotalConvoyedValue () const;
+          double              GetTotalRequestedValue() const;
+          double              GetTotalReservedValue () const;
+          double              GetTotalConvoyedValue () const;
     //@}
 
     //! @name Network
@@ -68,7 +68,7 @@ protected:
     struct sIndividualRequest
     {
         T*          pRequest_;       // == le pion demandeur PHY_Dotation / PHY_DotationStock
-        MT_Float    rRequestedValue_;
+        double    rRequestedValue_;
 
         template< typename Archive > void serialize( Archive&, const unsigned int );
     };
@@ -80,10 +80,10 @@ protected:
 protected:
     T_RequestVector      requests_;
     PHY_RoleInterface_Supply* pStockPion_;
-    MT_Float             rTotalRequestedValue_;
+    double             rTotalRequestedValue_;
     MIL_AutomateLOG*     pSupplyingAutomate_;
-    MT_Float             rTotalReservedValue_;
-    MT_Float             rTotalConvoyedValue_;
+    double             rTotalReservedValue_;
+    double             rTotalConvoyedValue_;
 };
 
 #include "PHY_SupplyRequest_ABC.inl"

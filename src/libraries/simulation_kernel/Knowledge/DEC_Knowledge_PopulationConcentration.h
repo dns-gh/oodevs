@@ -69,7 +69,7 @@ private:
 
     //! @name Tools
     //@{
-    void ChangeRelevance( MT_Float rNewRelevance );
+    void ChangeRelevance( double rNewRelevance );
     //@}
 
 private:
@@ -80,7 +80,7 @@ private:
     const unsigned int nID_;
     unsigned int nTimeLastUpdate_;
     MT_Vector2D position_;
-    MT_Float rRelevance_;
+    double rRelevance_;
     bool bReconAttributesValid_;
     const MIL_PopulationAttitude* pAttitude_;
     unsigned int nNbrAliveHumans_;
@@ -92,7 +92,7 @@ private:
     bool bAttitudeUpdated_;
     bool bRealConcentrationUpdated_;
     bool bRelevanceUpdated_;
-    MT_Float rLastRelevanceSent_;
+    double rLastRelevanceSent_;
     static MIL_IDManager idManager_;
     //@}
 };

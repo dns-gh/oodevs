@@ -65,7 +65,7 @@ void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( const T& caller, DEC_Dec
 // Created: NLD 2006-05-05
 // -----------------------------------------------------------------------------
 template< typename T > 
-T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInCircle( const T& caller, const MT_Vector2D* pCenter, MT_Float rRadius, const std::vector< std::string >& filters )
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInCircle( const T& caller, const MT_Vector2D* pCenter, double rRadius, const std::vector< std::string >& filters )
 {
     assert( pCenter );
     MIL_ObjectFilter filter( filters );

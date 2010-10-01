@@ -52,13 +52,13 @@ PHY_RoleHLA_Composantes::~PHY_RoleHLA_Composantes()
 const PHY_Volume* PHY_RoleHLA_Composantes::GetSignificantVolume( const PHY_SensorTypeAgent& sensorType ) const
 {
     const PHY_Volume* pSignificantVolume = 0;
-    MT_Float rSignificantVolumeFactor = 0.;
+    double rSignificantVolumeFactor = 0.;
     for( CIT_Composantes it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         assert( *it );
         const PHY_ComposanteHLA& composante = **it;
         const PHY_Volume& compTypeVolume = composante.GetType().GetVolume();
-        const MT_Float rVolumeFactor = sensorType.GetFactor( compTypeVolume );
+        const double rVolumeFactor = sensorType.GetFactor( compTypeVolume );
         if( rVolumeFactor > rSignificantVolumeFactor )
         {
             pSignificantVolume = &compTypeVolume;
@@ -209,7 +209,7 @@ void PHY_RoleHLA_Composantes::GetComposantesAbleToBeFired( PHY_Composante_ABC::T
 // Name: PHY_RoleHLA_Composantes::GetOperationalState
 // Created: AGE 2004-12-13
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleHLA_Composantes::GetOperationalState() const
+double PHY_RoleHLA_Composantes::GetOperationalState() const
 {
     unsigned int nCurrentElements = 0;
     unsigned int nMaxElements     = 0;
@@ -229,7 +229,7 @@ MT_Float PHY_RoleHLA_Composantes::GetOperationalState() const
 // Name: PHY_RoleHLA_Composantes::GetMajorOperationalState
 // Created: NLD 2005-11-30
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleHLA_Composantes::GetMajorOperationalState() const
+double PHY_RoleHLA_Composantes::GetMajorOperationalState() const
 {
     return GetOperationalState(); //$$$ HLA POURRI
 }
@@ -274,7 +274,7 @@ void PHY_RoleHLA_Composantes::ApplyDirectFire( PHY_Composante_ABC& compTarget, c
 // Name: PHY_RoleHLA_Composantes::ApplyIndirectFire
 // Created: AGE 2004-11-08
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Composantes::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& /*result*/, MT_Float /*ratio*/ )
+void PHY_RoleHLA_Composantes::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& /*result*/, double /*ratio*/ )
 {
     interactionManager_.Send( HLA_IndirectFire( entity_.GetRole< HLA_RoleInterface >(), dotationCategory ) );
 }

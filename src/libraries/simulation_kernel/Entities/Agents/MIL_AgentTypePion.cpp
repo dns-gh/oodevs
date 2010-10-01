@@ -235,7 +235,7 @@ void MIL_AgentTypePion::ReadPoint( xml::xistream& xis )
             xis.error( "Unknown land type" );
         if( distancesAvantPoints_.find( nType ) != distancesAvantPoints_.end() )
             xis.error( "Unknown 'distance avant point'" );
-        MT_Float& rDistance = distancesAvantPoints_[ nType ];
+        double& rDistance = distancesAvantPoints_[ nType ];
         xis >> xml::attribute( "value", rDistance );
         rDistance = MIL_Tools::ConvertMeterToSim( rDistance );
     }
@@ -256,7 +256,7 @@ void MIL_AgentTypePion::InitializeRapFor( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_AgentTypePion::ReadFeedback( xml::xistream& xis )
 {
-    MT_Float rTimeTmp;
+    double rTimeTmp;
     tools::ReadTimeAttribute( xis, "feedback-time", rTimeTmp );
     rTimeTmp                         = MIL_Tools::ConvertSecondsToSim( rTimeTmp );
     rRapForIncreasePerTimeStepValue_ = DEC_Knowledge_RapFor_ABC::ComputeRapForIncreasePerTimeStepValue( rTimeTmp );

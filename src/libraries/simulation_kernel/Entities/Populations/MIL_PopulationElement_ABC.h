@@ -58,16 +58,16 @@ public:
     void PushHumans( const T_Humans& humans );
     T_Humans PullHumans( unsigned int nNbr );
     void KillAllHumans();
-    MT_Float Exterminate( MT_Float rSurface );
+    double Exterminate( double rSurface );
     unsigned int Kill( unsigned int count );
     unsigned int Resurrect( unsigned int count );
     //@}
 
     //! @name Actions
     //@{
-    void FireOnPions( MT_Float rIntensity, PHY_FireResults_Population& fireResult );
-    void FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
-    MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
+    void FireOnPions( double rIntensity, PHY_FireResults_Population& fireResult );
+    void FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
+    double GetDangerosity( const MIL_AgentPion& target ) const;
     void ApplyFire( unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult );
     void ApplyIndirectFire( const MT_Circle& attritionCircle, PHY_FireResults_ABC& fireResult );
     void ApplyExplosion( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult );
@@ -82,19 +82,19 @@ public:
     unsigned int GetNbrAliveHumans() const;
     unsigned int GetNbrDeadHumans() const;
     unsigned int GetNbrHumans() const;
-    MT_Float GetDensity() const;
+    double GetDensity() const;
     bool IsDead() const;
     bool IsInZone( const TER_Localisation& loc ) const;
 
     virtual const TER_Localisation& GetLocation() const = 0;
     virtual MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
-    virtual MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance, MT_Float rSeed ) const = 0;
+    virtual MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const = 0;
     //@}
 
     //! @name Pion effects
     //@{
-    MT_Float GetPionMaxSpeed( const PHY_Volume& pionVolume ) const;
-    MT_Float GetPionReloadingTimeFactor() const;
+    double GetPionMaxSpeed( const PHY_Volume& pionVolume ) const;
+    double GetPionReloadingTimeFactor() const;
     //@}
 
     //! @name CheckPoints
@@ -142,7 +142,7 @@ private:
     MIL_Population* pPopulation_;
     unsigned int nNbrAliveHumans_;
     unsigned int nNbrDeadHumans_;
-    MT_Float rDensity_; // Alive humans density
+    double rDensity_; // Alive humans density
     const MIL_PopulationAttitude* pAttitude_;
     T_AgentVector collidingAgents_;
     // Network

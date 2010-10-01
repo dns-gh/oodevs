@@ -64,7 +64,7 @@ bool TER_Polygon::IsNull() const
 // Created: NLD 2003-10-17
 // -----------------------------------------------------------------------------
 
-MT_Float TER_Polygon::GetArea() const
+double TER_Polygon::GetArea() const
 {
     if( pData_->rArea_ == -1 )
         pData_->rArea_ = ComputeArea();

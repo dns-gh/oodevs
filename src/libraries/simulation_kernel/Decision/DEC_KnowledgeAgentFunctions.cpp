@@ -59,13 +59,13 @@ float DEC_KnowledgeAgentFunctions::GetPotentialAttrition( const MIL_AgentPion& c
 // Name: DEC_KnowledgeAgentFunctions::IsInDetectionCone
 // Created: JVT 2005-08-23
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsInDetectionCone( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const MT_Vector2D* direction, MT_Float angle )
+bool DEC_KnowledgeAgentFunctions::IsInDetectionCone( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const MT_Vector2D* direction, double angle )
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return false;
     assert( direction );
     const MT_Vector2D& vOrigin = callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const MT_Float rDist = callerAgent.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance();
+    const double rDist = callerAgent.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance();
     return MT_Sector( vOrigin, *direction, angle * MT_PI / 180. ).IsInCone( pKnowledge->GetPosition(), rDist );
 }
 

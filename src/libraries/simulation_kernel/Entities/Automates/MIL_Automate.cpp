@@ -820,13 +820,13 @@ bool MIL_Automate::NotifyImprisoned( const MIL_Object_ABC& camp )
 // Name: MIL_Automate::GetAlivePionsMaxSpeed
 // Created: NLD 2007-04-30
 // -----------------------------------------------------------------------------
-MT_Float MIL_Automate::GetAlivePionsMaxSpeed() const
+double MIL_Automate::GetAlivePionsMaxSpeed() const
 {
-    MT_Float rMaxSpeed = std::numeric_limits< MT_Float >::max();
+    double rMaxSpeed = std::numeric_limits< double >::max();
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
     {
         const MIL_AgentPion& pion = **it;
-        const MT_Float rSpeed = pion.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeed();
+        const double rSpeed = pion.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeed();
         if( rSpeed != 0. )
             rMaxSpeed = std::min( rMaxSpeed, rSpeed );
     }

@@ -31,7 +31,7 @@ public:
     typedef T_PopulationConcentrationVector::iterator        IT_PopulationConcentrationVector;
     typedef T_PopulationConcentrationVector::const_iterator  CIT_PopulationConcentrationVector;
 
-    typedef pathfind::SpatialContainerNode< TER_PopulationConcentration_ABC*, TER_PopulationConcentrationTraits, MT_Float >* T_Hint;
+    typedef pathfind::SpatialContainerNode< TER_PopulationConcentration_ABC*, TER_PopulationConcentrationTraits, double >* T_Hint;
     //@}
 
 public:
@@ -45,7 +45,7 @@ public:
     //@{
 //    bool IsInside             ( const MT_Vector2D& vPos ) const;
 //    bool Intersect2D          ( const MT_Line& orientedLine, T_PointSet& collisions ) const;
-    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const; // NB : return true if the circle is inside
+    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const; // NB : return true if the circle is inside
     bool Intersect2DWithLine  ( const MT_Vector2D& vStart, const MT_Vector2D& vEnd ) const;
     //@}
 

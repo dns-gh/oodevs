@@ -71,7 +71,7 @@ PHY_SensorTypeObject::~PHY_SensorTypeObject()
 // Name: PHY_SensorTypeObject::ComputePerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_Object_ABC& target, MT_Float rSensorHeight ) const
+const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_Object_ABC& target, double rSensorHeight ) const
 {
     assert( target().CanBePerceived() );
 
@@ -89,7 +89,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_Ag
 // Name: PHY_SensorTypeObject::ComputePerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Object& target, MT_Float rSensorHeight ) const
+const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Object& target, double rSensorHeight ) const
 {
     if( objectData_.size() <= target.GetType().GetID() )
         return PHY_PerceptionLevel::notSeen_;
@@ -103,7 +103,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_Ag
 // Name: PHY_SensorTypeObject::GetMaxDistance
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-MT_Float PHY_SensorTypeObject::GetMaxDistance() const
+double PHY_SensorTypeObject::GetMaxDistance() const
 {
     return rMaxDistance_;
 }

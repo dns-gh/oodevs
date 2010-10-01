@@ -235,7 +235,7 @@ void PHY_ComposanteTypePion::InitializeRandomBreakdownTypes( xml::xistream& xis 
     const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
     if( !pType )
         xis.error( "Unknown breakdown type '" + strBuf + "'" );
-    MT_Float rPercentage;
+    double rPercentage;
     xis >> xml::attribute( "percentage", rPercentage );
     if( rPercentage < 0 || rPercentage > 100 )
         xis.error( "random breakdown: percentage not in [0..100]" );
@@ -256,7 +256,7 @@ void PHY_ComposanteTypePion::InitializeAttritionBreakdownTypes( xml::xistream& x
     const PHY_BreakdownType* pType = PHY_BreakdownType::Find( strBuf );
     if( !pType )
         xis.error( "Unknown breakdown type '" + strBuf + "'" );
-    MT_Float rPercentage;
+    double rPercentage;
     xis >> xml::attribute( "percentage", rPercentage );
     if( rPercentage < 0 || rPercentage > 100 )
         xis.error( "attrition breakdown: percentage not in [0..100]" );
@@ -355,11 +355,11 @@ void PHY_ComposanteTypePion::ReadHumanProtection( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InitializeSensors( xml::xistream& xis )
 {
-    rSensorRotationAngle_ = std::numeric_limits< MT_Float >::max();
+    rSensorRotationAngle_ = std::numeric_limits< double >::max();
     xis >> xml::start( "sensors" )
             >> xml::list( "sensor", *this, &PHY_ComposanteTypePion::ReadSensor )
         >> xml::end;
-    if( rSensorRotationAngle_ == std::numeric_limits< MT_Float >::max() )
+    if( rSensorRotationAngle_ == std::numeric_limits< double >::max() )
         rSensorRotationAngle_ = 0.;
     else
         rSensorRotationAngle_ -= std::min( rSensorRotationAngle_, 0.1 );
@@ -572,7 +572,7 @@ void PHY_ComposanteTypePion::ReadRepairing( xml::xistream& xis )
             ntiCapability.bMobility_   = true;
     }
 
-    MT_Float rTime = 0;
+    double rTime = 0;
     if( tools::ReadTimeAttribute( xis, "max-reparation-time", rTime ) )
     {
         if( rTime <= 0 )
@@ -806,7 +806,7 @@ void PHY_ComposanteTypePion::InstanciateSensors( std::back_insert_iterator < std
     for( CIT_SensorTypeMap it = sensorTypes_.begin(); it != sensorTypes_.end(); ++it )
     {
         const PHY_SensorType&  sensorType = *it->first;
-        const MT_Float         rHeight    =  it->second;
+        const double         rHeight    =  it->second;
         inserter = &sensorType.InstanciateSensor( rHeight );
     }
 }
@@ -888,79 +888,79 @@ bool PHY_ComposanteTypePion::CanBypass( const MIL_ObjectType_ABC& object, bool b
 // Name: PHY_ComposanteTypePion::GetConstructionTime
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetConstructionTime( const MIL_ObjectType_ABC& object, MT_Float rSizeCoef ) const
+double PHY_ComposanteTypePion::GetConstructionTime( const MIL_ObjectType_ABC& object, double rSizeCoef ) const
 {
     if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
         return pObjectData->GetConstructionTime( rSizeCoef );
-    return std::numeric_limits< MT_Float >::max();
+    return std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetDestructionTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetDestructionTime( const MIL_ObjectType_ABC& object, MT_Float rSizeCoef ) const
+double PHY_ComposanteTypePion::GetDestructionTime( const MIL_ObjectType_ABC& object, double rSizeCoef ) const
 {
     if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
         return pObjectData->GetDestructionTime( rSizeCoef );
-    return std::numeric_limits< MT_Float >::max();
+    return std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetMiningTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetMiningTime( const MIL_ObjectType_ABC& object ) const
+double PHY_ComposanteTypePion::GetMiningTime( const MIL_ObjectType_ABC& object ) const
 {
     if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
         return pObjectData->GetMiningTime();
-    return std::numeric_limits< MT_Float >::max();
+    return std::numeric_limits< double >::max();
 }
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetDeminingTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetDeminingTime( const MIL_ObjectType_ABC& object ) const
+double PHY_ComposanteTypePion::GetDeminingTime( const MIL_ObjectType_ABC& object ) const
 {
     if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
         return pObjectData->GetDeminingTime();
-    return std::numeric_limits< MT_Float >::max();
+    return std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetBypassTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetBypassTime( const MIL_ObjectType_ABC& object, MT_Float rSizeCoef, bool bObjectIsMined ) const
+double PHY_ComposanteTypePion::GetBypassTime( const MIL_ObjectType_ABC& object, double rSizeCoef, bool bObjectIsMined ) const
 {
     if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
         return pObjectData->GetBypassTime( rSizeCoef, bObjectIsMined );
-    return std::numeric_limits< MT_Float >::max();
+    return std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetMaxSpeed
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetMaxSpeed( const MIL_Object_ABC& object ) const
+double PHY_ComposanteTypePion::GetMaxSpeed( const MIL_Object_ABC& object ) const
 {
     if( objectData_.size() <= object.GetID() )
-        return std::numeric_limits< MT_Float >::max();
+        return std::numeric_limits< double >::max();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetType().GetID() ];
     if( pObjectData )
         return pObjectData->GetMaxSpeed( object );
@@ -1002,7 +1002,7 @@ const PHY_ConsumptionType& PHY_ComposanteTypePion::GetConsumptionMode( const MIL
 // -----------------------------------------------------------------------------
 const PHY_BreakdownType& PHY_ComposanteTypePion::GetBreakdownType( const T_BreakdownTypeProbabilityVector& probasVector ) const
 {
-    const MT_Float rRandomValue = 1. - MIL_Random::rand_ii( 0., 1., MIL_Random::eBreakdowns );
+    const double rRandomValue = 1. - MIL_Random::rand_ii( 0., 1., MIL_Random::eBreakdowns );
 
     for ( CIT_BreakdownTypeProbabilityVector it = probasVector.begin(); it != probasVector.end(); ++it )
     {
@@ -1017,9 +1017,9 @@ const PHY_BreakdownType& PHY_ComposanteTypePion::GetBreakdownType( const T_Break
 // Name: PHY_ComposanteTypePion::GetDangerosity
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& target, MT_Float rDistBtwSourceAndTarget ) const
+double PHY_ComposanteTypePion::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& target, double rDistBtwSourceAndTarget ) const
 {
-    MT_Float rScore = 0.;
+    double rScore = 0.;
     for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
         rScore = std::max( rScore, itWeapon->first->GetDangerosity( firer, target, rDistBtwSourceAndTarget ) );
     return rScore;
@@ -1029,9 +1029,9 @@ MT_Float PHY_ComposanteTypePion::GetDangerosity( const MIL_Agent_ABC& firer, con
 // Name: PHY_ComposanteTypePion::GetMaxRangeToFireOn
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
+double PHY_ComposanteTypePion::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
-    MT_Float rRange = 0;
+    double rRange = 0;
     for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
         rRange = std::max( rRange, itWeapon->first->GetMaxRangeToFireOn( firer, targetComposanteType, rWantedPH ) );
     return rRange;
@@ -1041,9 +1041,9 @@ MT_Float PHY_ComposanteTypePion::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer
 // Name: PHY_ComposanteTypePion::GetMinRangeToFireOn
 // Created: JVT 2004-12-17
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
+double PHY_ComposanteTypePion::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
-    MT_Float rRange = std::numeric_limits< MT_Float >::max();
+    double rRange = std::numeric_limits< double >::max();
     for ( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
         rRange = std::min( rRange, itWeapon->first->GetMinRangeToFireOn( firer, targetComposanteType, rWantedPH ) );
     return rRange;
@@ -1053,9 +1053,9 @@ MT_Float PHY_ComposanteTypePion::GetMinRangeToFireOn( const MIL_Agent_ABC& firer
 // Name: PHY_ComposanteTypePion::GetMaxRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
+double PHY_ComposanteTypePion::GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
-    MT_Float rRange = 0;
+    double rRange = 0;
     for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
         rRange = std::max( rRange, itWeapon->first->GetMaxRangeToFireOnWithPosture( firer, target, targetComposanteType, rWantedPH ) );
     return rRange;
@@ -1065,9 +1065,9 @@ MT_Float PHY_ComposanteTypePion::GetMaxRangeToFireOnWithPosture( const MIL_Agent
 // Name: PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
+double PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
-    MT_Float rRange = std::numeric_limits< MT_Float >::max();
+    double rRange = std::numeric_limits< double >::max();
     for ( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
         rRange = std::min( rRange, itWeapon->first->GetMinRangeToFireOnWithPosture( firer, target, targetComposanteType, rWantedPH ) );
     return rRange;
@@ -1077,9 +1077,9 @@ MT_Float PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture( const MIL_Agent
 // Name: PHY_ComposanteTypePion::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
+double PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
-    MT_Float rRange = -1.;
+    double rRange = -1.;
 
     for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
     {
@@ -1093,9 +1093,9 @@ MT_Float PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC&
 // Name: PHY_ComposanteTypePion::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypePion::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
+double PHY_ComposanteTypePion::GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
-    MT_Float rRange = std::numeric_limits< MT_Float >::max();
+    double rRange = std::numeric_limits< double >::max();
 
     for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
     {

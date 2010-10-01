@@ -14,7 +14,7 @@
 #include "MIL_AgentServer.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 
-static const MT_Float rIteratorEpsilon = 1e-10;
+static const double rIteratorEpsilon = 1e-10;
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionDataIterator::AlignFirstPointOnGrid
@@ -23,7 +23,7 @@ static const MT_Float rIteratorEpsilon = 1e-10;
 //-----------------------------------------------------------------------------
 void PHY_RawVisionDataIterator::AlignFirstPointOnGrid()
 {
-    MT_Float rNextY = rA0_ * (MT_Float)( nNextCellCol_ + 1 ) + rB0_;
+    double rNextY = rA0_ * (double)( nNextCellCol_ + 1 ) + rB0_;
 
     // calcul de la prochaine position de l'iterateur dans l'espace de l'algorithme -> vOutPoint
     // calcul de la longueur réelle parcourue                                       -> rLenght
@@ -44,7 +44,7 @@ void PHY_RawVisionDataIterator::AlignFirstPointOnGrid()
     }
     else
     {
-        MT_Float rOld   = rAlreadyUsedDX_;
+        double rOld   = rAlreadyUsedDX_;
         vOutPoint_.rY_  = nNextCellRow_;
         vOutPoint_.rX_  = rA1_ * vOutPoint_.rY_ + rB1_;
         rAlreadyUsedDX_ = vOutPoint_.rX_ - (int)vOutPoint_.rX_;
@@ -133,8 +133,8 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
     , bIsInGround_      ()
     , bIsInEnv_         ()
 {
-    MT_Float rDx = vEndPos.rX_ - vOutPoint_.rX_;
-    MT_Float rDy = vEndPos.rY_ - vOutPoint_.rY_;
+    double rDx = vEndPos.rX_ - vOutPoint_.rX_;
+    double rDy = vEndPos.rY_ - vOutPoint_.rY_;
 
     if( rDx == 0 && rDy == 0 )  // -> vBeginPos == vEndPos
     {
@@ -148,7 +148,7 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
 
     bSwapOffset_ = bNegX_ || bNegY_ && bNegX_ != bNegY_;
 
-    const MT_Float rCellSize = data_.GetCellSize();
+    const double rCellSize = data_.GetCellSize();
 
     vOutPoint_.rX_ /= rCellSize;
     vOutPoint_.rY_ /= rCellSize;
@@ -215,7 +215,7 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++ ()
     int nCellXOffset = 0;
     int nCellYOffset = 0;
 
-    MT_Float rNextY = rA0_ * (MT_Float)( nNextCellCol_ + 1 ) + rB0_;
+    double rNextY = rA0_ * (double)( nNextCellCol_ + 1 ) + rB0_;
 
     // calcul de la prochaine position de l'iterateur dans l'espace de l'algorithme -> vOutPoint
     // calcul de la longueur réelle parcourue                                       -> rLenght
@@ -299,13 +299,13 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++ ()
 
     pCurrentCell_ = &data_( (unsigned int)nRealCellCol, (unsigned int)nRealCellRow );
 
-    MT_Float rGroundHeight  = rNextY * data_( (unsigned int)( nRealCellCol + nCellYOffset ), (unsigned int)( nRealCellRow + nCellXOffset ) ).GetAltitude() + pCurrentCell_->GetAltitude() * ( 1. - rNextY );
+    double rGroundHeight  = rNextY * data_( (unsigned int)( nRealCellCol + nCellYOffset ), (unsigned int)( nRealCellRow + nCellXOffset ) ).GetAltitude() + pCurrentCell_->GetAltitude() * ( 1. - rNextY );
 
     // calcul des coefficients de changement d'environnement
-    MT_Float rOldGroundCoeff = rGroundCoeff_;
+    double rOldGroundCoeff = rGroundCoeff_;
     rGroundCoeff_ = vOutPoint_.rZ_ - rGroundHeight;
 
-    MT_Float rOldEnvCoeff = rEnvCoeff_;
+    double rOldEnvCoeff = rEnvCoeff_;
     rEnvCoeff_    = rGroundCoeff_ - pCurrentCell_->GetEnvHeight();
 
     bIsInGround_  = ( rGroundCoeff_ < 0. ) || ( ( rGroundCoeff_ * rOldGroundCoeff ) < 0. );

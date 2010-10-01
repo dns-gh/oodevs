@@ -56,7 +56,7 @@ public:
     const std::string& GetTypeName() const;
     const TER_Localisation& GetLocalisation() const;
     E_DemolitionTargetType GetObstacleType() const;
-    MT_Float GetDensity() const;
+    double GetDensity() const;
     unsigned int GetMinesActivityTime() const;
     const MIL_Automate* GetTC2() const;
     //@}
@@ -73,7 +73,7 @@ private:
     std::string type_;
     TER_Localisation localisation_;
     E_DemolitionTargetType pObstacleType_;
-    MT_Float rDensity_;
+    double rDensity_;
     unsigned int nMinesActivityTime_;
     const MIL_Automate* pTC2_;
     //@}

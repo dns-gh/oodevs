@@ -11,7 +11,6 @@
 #define __PHY_RoleHLA_Communications_h_
 
 #include "PHY_RoleInterface_Communications.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <string>
 
 // =============================================================================
@@ -42,7 +41,7 @@ public:
     virtual void UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception );
     virtual void UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision );
 
-    virtual MT_Float ModifySpeed( MT_Float rSpeed ) const;
+    virtual double ModifySpeed( double rSpeed ) const;
     //@}
 
     //! @name Modifiers

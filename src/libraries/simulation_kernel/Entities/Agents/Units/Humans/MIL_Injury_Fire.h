@@ -51,7 +51,7 @@ public:
     //This function is used by pion and their composantes to set the injury
     bool IsInjured( const PHY_ComposantePion& pComposante );
     //This function is used only by the population to set the injury
-    void SetInjury( unsigned int nNbrAliveHumans , MT_Float rDensity );
+    void SetInjury( unsigned int nNbrAliveHumans , double rDensity );
     //This function is used to injure humans that are already injured
     void Injure( PHY_InjuredHuman& injuredHuman );
     void SetInjuryCategory( MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory );

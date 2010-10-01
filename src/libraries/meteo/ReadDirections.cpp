@@ -17,7 +17,7 @@
 MT_Vector2D weather::ReadDirection( const Common::MsgHeading& message )
 {
     MT_Vector2D result( 0, 1 ); // North vector
-    MT_Float radAngle = message.heading() * MT_PI / 180.;
+    double radAngle = message.heading() * MT_PI / 180.;
     result.Rotate( radAngle );
     result.Normalize();
     assert( !result.IsZero() );

@@ -12,7 +12,6 @@
 #ifndef __PHY_SensorType_h_
 #define __PHY_SensorType_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Stl.h"
 
 namespace xml
@@ -42,7 +41,7 @@ public:
 
     //! @name Instanciation
     //@{
-    PHY_Sensor& InstanciateSensor( MT_Float rHeight ) const;
+    PHY_Sensor& InstanciateSensor( double rHeight ) const;
     //@}
 
     //! @name Accessors

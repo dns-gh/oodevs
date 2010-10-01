@@ -62,7 +62,7 @@ const MT_Rect& TER_Localisation::GetBoundingBox() const
 // Created: NLD 2003-07-23
 //-----------------------------------------------------------------------------
 inline 
-bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const
+bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const
 {
     switch( nType_ )
     {
@@ -80,7 +80,7 @@ bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, 
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
 inline 
-bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius, T_PointVector& shape ) const
+bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, T_PointVector& shape ) const
 {
     switch( nType_ )
     {
@@ -102,7 +102,7 @@ bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, 
 // Last modified: JVT 03-09-02
 //-----------------------------------------------------------------------------
 inline 
-bool TER_Localisation::IsInside( const MT_Vector2D& vPos, MT_Float rPrecision ) const
+bool TER_Localisation::IsInside( const MT_Vector2D& vPos, double rPrecision ) const
 {
     switch( nType_ )
     {
@@ -182,7 +182,7 @@ bool TER_Localisation::Intersect2D( const MT_Line& line ) const
 // Created: NLD 2003-10-17
 // -----------------------------------------------------------------------------
 inline 
-MT_Float TER_Localisation::GetArea() const
+double TER_Localisation::GetArea() const
 {
     switch( nType_ )
     {
@@ -199,7 +199,7 @@ MT_Float TER_Localisation::GetArea() const
 // Created: NLD 2003-10-17
 // -----------------------------------------------------------------------------
 inline 
-MT_Float TER_Localisation::GetLength() const
+double TER_Localisation::GetLength() const
 {
     switch( nType_ )
     {
@@ -226,7 +226,7 @@ bool TER_Localisation::WasACircle() const
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
 inline 
-MT_Float TER_Localisation::GetCircleRadius() const
+double TER_Localisation::GetCircleRadius() const
 {
     return rCircleRadius_;
 }

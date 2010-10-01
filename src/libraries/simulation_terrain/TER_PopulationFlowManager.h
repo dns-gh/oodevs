@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    void GetListWithinCircle    ( const MT_Vector2D& vCenter, MT_Float rRadius, T_PopulationFlowVector& flows ) const;
+    void GetListWithinCircle    ( const MT_Vector2D& vCenter, double rRadius, T_PopulationFlowVector& flows ) const;
     void GetListIntersectingLine( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_PopulationFlowVector& flows ) const;
     void GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationFlowVector& flows ) const;
 
@@ -54,7 +54,7 @@ private:
 
     //! @name Types
     //@{
-    typedef pathfind::SpatialContainer< TER_PopulationFlow_ABC*, TER_PopulationFlowTraits, MT_Float > T_PopulationFlows;
+    typedef pathfind::SpatialContainer< TER_PopulationFlow_ABC*, TER_PopulationFlowTraits, double > T_PopulationFlows;
     //@}
 
 private:

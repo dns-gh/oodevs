@@ -224,7 +224,7 @@ void DEC_KnowledgeFunctions::GetIdentifiableKnowledge( directia::brain::Brain& b
 // Name: DEC_KnowledgeFunctions::GetNearbyRefugees
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
-T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbyRefugees( const MIL_AgentPion& callerAgent, MT_Float radius )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbyRefugees( const MIL_AgentPion& callerAgent, double radius )
 {
     T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledgeGroup().GetKnowledge().GetRefugeesInCircle( knowledges, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), radius );
@@ -235,7 +235,7 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbyRefugees( const MIL
 // Name: DEC_KnowledgeFunctions::GetNearbySurrenderedAgents
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
-T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbySurrenderedAgents( const MIL_AgentPion& callerAgent, MT_Float radius )
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbySurrenderedAgents( const MIL_AgentPion& callerAgent, double radius )
 {
     T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledgeGroup().GetKnowledge().GetSurrenderedAgentsInCircle( knowledges, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), radius );
@@ -247,7 +247,7 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbySurrenderedAgents( 
 // Name: DEC_KnowledgeFunctions::EnemyPresenceInCircle
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeFunctions::EnemyPresenceInCircle( const MIL_AgentPion& callerAgent, const MT_Vector2D* center, MT_Float radius )
+bool DEC_KnowledgeFunctions::EnemyPresenceInCircle( const MIL_AgentPion& callerAgent, const MT_Vector2D* center, double radius )
 {
     assert( center );
     return callerAgent.GetKnowledgeGroup().GetKnowledge().EnemyPresenceInCircle( *center, radius );
@@ -257,7 +257,7 @@ bool DEC_KnowledgeFunctions::EnemyPresenceInCircle( const MIL_AgentPion& callerA
 // Name: DEC_KnowledgeFunctions::GetRapForLocal
 // Created: NLD 2004-04-08
 // -----------------------------------------------------------------------------
-MT_Float DEC_KnowledgeFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent )
+double DEC_KnowledgeFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent )
 {
     return callerAgent.GetKnowledge().GetRapForLocalValue();
 }

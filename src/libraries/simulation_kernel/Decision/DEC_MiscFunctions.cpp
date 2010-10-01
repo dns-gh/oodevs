@@ -24,7 +24,7 @@
 // Name: DEC_MiscFunctions::SetCurrentSpeedModificator
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::SetCurrentSpeedModificator( MIL_AgentPion& callerAgent, MT_Float rFactor )
+void DEC_MiscFunctions::SetCurrentSpeedModificator( MIL_AgentPion& callerAgent, double rFactor )
 {
     callerAgent.GetRole< moving::PHY_RoleAction_Moving >().SetSpeedModificator( rFactor );
 }
@@ -33,7 +33,7 @@ void DEC_MiscFunctions::SetCurrentSpeedModificator( MIL_AgentPion& callerAgent, 
 // Name: DEC_MiscFunctions::SetMaxSpeedModificator
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::SetMaxSpeedModificator( MIL_AgentPion& callerAgent, MT_Float rFactor )
+void DEC_MiscFunctions::SetMaxSpeedModificator( MIL_AgentPion& callerAgent, double rFactor )
 {
     callerAgent.GetRole< moving::PHY_RoleAction_Moving >().SetMaxSpeedModificator( rFactor );
 }

@@ -53,9 +53,9 @@ public:
     //! @name Operations
     //@{
     void GetListWithinEllipse( const MT_Ellipse& ellipse, T_AgentVector& agents ) const;
-    void GetListWithinCircle( const MT_Vector2D& vCenter, MT_Float rRadius, T_AgentVector& agents ) const;
+    void GetListWithinCircle( const MT_Vector2D& vCenter, double rRadius, T_AgentVector& agents ) const;
     void GetListWithinLocalisation( const TER_Localisation& localisation, T_AgentVector& agents ) const;
-    void GetListWithinLocalisation( const TER_Localisation& localisation, T_AgentVector& agents, MT_Float rPrecision ) const;
+    void GetListWithinLocalisation( const TER_Localisation& localisation, T_AgentVector& agents, double rPrecision ) const;
     void GetListWithinPolygon( const TER_Polygon& polygon, T_AgentVector& agents ) const;
 
     TER_Agent_ABC::T_Hint UpdatePosition( TER_Agent_ABC& agent, const TER_Agent_ABC::T_Hint& pHint );
@@ -72,7 +72,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef pathfind::SpatialContainer< TER_Agent_ABC*, TER_AgentTraits, MT_Float > T_Agents;
+    typedef pathfind::SpatialContainer< TER_Agent_ABC*, TER_AgentTraits, double > T_Agents;
     //@}
 
 private:

@@ -20,13 +20,13 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationStock )
 
-const MT_Float PHY_DotationStock::maxCapacity_ = 10000000;
+const double PHY_DotationStock::maxCapacity_ = 10000000;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationStock constructor
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, MT_Float rSupplyThresholdRatio, MT_Float rCapacity, bool bInfiniteDotations )
+PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, double rSupplyThresholdRatio, double rCapacity, bool bInfiniteDotations )
     : pStockContainer_   ( &stockContainer    )
     , pCategory_         ( &dotationCategory  )
     , rValue_            ( 0. )
@@ -98,7 +98,7 @@ void PHY_DotationStock::save( MIL_CheckPointOutArchive& file, const unsigned int
 // Name: PHY_DotationStock::SetValue
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-void PHY_DotationStock::SetValue( MT_Float rValue )
+void PHY_DotationStock::SetValue( double rValue )
 {
     assert( pStockContainer_ );
 
@@ -125,7 +125,7 @@ void PHY_DotationStock::SetValue( MT_Float rValue )
 // Name: PHY_DotationStock::AddReservation
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationStock::AddReservation( MT_Float rNbr )
+double PHY_DotationStock::AddReservation( double rNbr )
 {
     return Consume( rNbr );
 }
@@ -134,7 +134,7 @@ MT_Float PHY_DotationStock::AddReservation( MT_Float rNbr )
 // Name: PHY_DotationStock::RemoveReservation
 // Created: NLD 2005-02-11
 // -----------------------------------------------------------------------------
-void PHY_DotationStock::RemoveReservation( MT_Float rNbr )
+void PHY_DotationStock::RemoveReservation( double rNbr )
 {
     SetValue( rValue_ + rNbr );
 }
@@ -153,7 +153,7 @@ const PHY_DotationCategory& PHY_DotationStock::GetCategory() const
 // Name: PHY_DotationStock::GetValue
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationStock::GetValue() const
+double PHY_DotationStock::GetValue() const
 {
     return rValue_;
 }
@@ -162,7 +162,7 @@ MT_Float PHY_DotationStock::GetValue() const
 // Name: PHY_DotationStock::GetCapacity
 // Created: NLD 2005-01-31
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationStock::GetCapacity() const
+double PHY_DotationStock::GetCapacity() const
 {
     return rCapacity_;
 }
@@ -171,7 +171,7 @@ MT_Float PHY_DotationStock::GetCapacity() const
 // Name: PHY_DotationStock::Consume
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationStock::Consume( MT_Float rValue )
+double PHY_DotationStock::Consume( double rValue )
 {
     rValue = std::min( rValue, rValue_ );
     SetValue( rValue_ - rValue );
@@ -200,7 +200,7 @@ bool PHY_DotationStock::HasReachedSupplyThreshold() const
 // Name: PHY_DotationStock::Supply
 // Created: NLD 2005-01-28
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationStock::Supply( MT_Float rSupply )
+double PHY_DotationStock::Supply( double rSupply )
 {
     SetValue( rValue_ + rSupply );
     return rSupply;

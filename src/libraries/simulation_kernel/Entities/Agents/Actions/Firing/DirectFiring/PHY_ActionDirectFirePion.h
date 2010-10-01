@@ -24,7 +24,7 @@
 class PHY_ActionDirectFirePion : public PHY_ActionDirectFirePion_ABC
 {
 public:
-             PHY_ActionDirectFirePion( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, MT_Float percentage, int firingMode, int ammoDotationClass );
+             PHY_ActionDirectFirePion( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, double percentage, int firingMode, int ammoDotationClass );
     virtual ~PHY_ActionDirectFirePion();
 };
 

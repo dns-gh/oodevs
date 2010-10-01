@@ -110,9 +110,9 @@ int DEC_PathFunctions::GetPathState( MIL_AgentPion& /*callerAgent*/, DEC_Path_AB
 // Created: NLD 2004-05-13
 // Created: RPD 2009-08-04
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::ExtrapolatePosition( const MIL_AgentPion& callerAgent, const MT_Float time, bool bBoundOnPath )
+boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::ExtrapolatePosition( const MIL_AgentPion& callerAgent, const double time, bool bBoundOnPath )
 {
-    MT_Float simulationTime = MIL_Tools::ConvertMinutesToSim( time );
+    double simulationTime = MIL_Tools::ConvertMinutesToSim( time );
     boost::shared_ptr< MT_Vector2D > pPos( new MT_Vector2D( callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ExtrapolatePosition( simulationTime, bBoundOnPath ) ) );
     return pPos;
 }
@@ -126,9 +126,9 @@ std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >
     MIL_ObjectFilter filter( params );
     std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
     boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
-    MT_Float rDistanceCollision = 0.;
+    double rDistanceCollision = 0.;
     const PHY_RoleInterface_Location& roleLocation = callerAgent.GetRole< PHY_RoleInterface_Location >();
-    const MT_Float rHeight = roleLocation.GetHeight  ();
+    const double rHeight = roleLocation.GetHeight  ();
     const MT_Vector2D&  position = roleLocation.GetPosition();
     T_KnowledgeObjectVector knowledges;
     callerAgent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );

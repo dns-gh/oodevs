@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectAttributeMine_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 class MineAttribute;
@@ -57,7 +56,7 @@ private:
     const MineAttribute* attr_;
     unsigned int nNbrDotationForMining_;
     unsigned int nMinesActivityTime_;
-    MT_Float rMiningPercentage_;
+    double rMiningPercentage_;
     float rMinesDensity_;
     unsigned int nDotationType_;
     //@}

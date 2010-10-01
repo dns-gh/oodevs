@@ -13,7 +13,6 @@
 #define __PHY_UnitType_h_
 
 #include "Dotations/PHY_DotationCapacities.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {
@@ -52,13 +51,13 @@ public:
     //@{
     const PHY_DotationCapacities&    GetTC1Capacities                 () const;
     const T_CommanderRepartitionMap& GetCommanderRepartition          () const;
-          MT_Float                   GetPostureTime                   ( const PHY_Posture& posture ) const;
-          MT_Float                   GetInstallationTime              () const;
-          MT_Float                   GetUninstallationTime            () const;
-          MT_Float                   GetCoupDeSondeLength             () const;
-          MT_Float                   GetCoupDeSondeWidth              () const;
-          MT_Float                   GetCoefDecontaminationPerTimeStep() const;
-          MT_Float                   GetStockLogisticThresholdRatio   ( const PHY_DotationLogisticType& type ) const;
+          double                   GetPostureTime                   ( const PHY_Posture& posture ) const;
+          double                   GetInstallationTime              () const;
+          double                   GetUninstallationTime            () const;
+          double                   GetCoupDeSondeLength             () const;
+          double                   GetCoupDeSondeWidth              () const;
+          double                   GetCoefDecontaminationPerTimeStep() const;
+          double                   GetStockLogisticThresholdRatio   ( const PHY_DotationLogisticType& type ) const;
           bool                       CanFly                           () const;
           bool                       IsAutonomous                     () const;
     //@}
@@ -80,7 +79,7 @@ private:
 
     typedef std::vector< unsigned int > T_PostureTimesVector;
 
-    typedef std::vector< MT_Float >                        T_StockLogisticThresholdRatios;
+    typedef std::vector< double >                        T_StockLogisticThresholdRatios;
     typedef T_StockLogisticThresholdRatios::const_iterator CIT_StockLogisticThresholdRatios;
     //@}
 
@@ -110,12 +109,12 @@ private:
           T_StockLogisticThresholdRatios stockLogisticThresholdRatios_;
           T_ComposanteTypeMap            composanteTypes_;
           T_PostureTimesVector           postureTimes_;
-          MT_Float                       rInstallationTime_;
-          MT_Float                       rUninstallationTime_;
-          MT_Float                       rCoupDeSondeLength_;
-          MT_Float                       rCoupDeSondeWidth_;
+          double                       rInstallationTime_;
+          double                       rUninstallationTime_;
+          double                       rCoupDeSondeLength_;
+          double                       rCoupDeSondeWidth_;
           T_CommanderRepartitionMap      commandersRepartition_;
-          MT_Float                       rCoefDecontaminationPerTimeStep_;
+          double                       rCoefDecontaminationPerTimeStep_;
           bool                           bCanFly_;
           bool                           bIsAutonomous_; // Drones
 };

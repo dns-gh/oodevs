@@ -91,7 +91,7 @@ void PHY_RolePion_Population::Execute( firing::WeaponReloadingComputer_ABC& algo
     T_KnowledgePopulationCollisionVector collisions;
     pion_.GetKnowledge().GetPopulationsColliding( collisions );
 
-    MT_Float rFactor = 1.;
+    double rFactor = 1.;
     for( CIT_KnowledgePopulationCollisionVector it = collisions.begin(); it != collisions.end(); ++it )
     {
         const DEC_Knowledge_PopulationCollision& population = **it;
@@ -105,13 +105,13 @@ void PHY_RolePion_Population::Execute( firing::WeaponReloadingComputer_ABC& algo
 // Name: PHY_RolePion_Population::GetCollidingPopulationDensity
 // Created: NLD 2006-01-19
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Population::GetCollidingPopulationDensity() const
+double PHY_RolePion_Population::GetCollidingPopulationDensity() const
 {
 
 
     T_KnowledgePopulationCollisionVector populationsColliding;
     pion_.GetKnowledge().GetPopulationsColliding( populationsColliding );
-    MT_Float rPopulationDensity = 0.;
+    double rPopulationDensity = 0.;
     for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
         rPopulationDensity = std::max( rPopulationDensity, (**it).GetMaxPopulationDensity() );
 

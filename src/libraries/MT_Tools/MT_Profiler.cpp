@@ -13,7 +13,7 @@
 #include "MT_Profiler.h"
 #include <windows.h>
 
-int64 MT_Profiler::nFrequency_ = 0;
+long long int MT_Profiler::nFrequency_ = 0;
 
 //-----------------------------------------------------------------------------
 // Name: MT_Profiler::Initialize
@@ -76,7 +76,7 @@ double MT_Profiler::Stop()
 {
     if( nFrequency_ == 0 )
         return 0.;
-    int64 nCounterStop;
+    long long int nCounterStop;
     QueryPerformanceCounter( (LARGE_INTEGER*)&nCounterStop );
     double rTime = ( nCounterStop - nCounterStart_ ) / (double)nFrequency_;
     rLastTime_   = rTime;

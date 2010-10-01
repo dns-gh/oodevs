@@ -46,9 +46,9 @@ public:
     void MosToSimMgrsCoord( double latitude, double longitude, MT_Vector2D& pos ) const;
     void SimToMosMgrsCoord( const MT_Vector2D& pos, double& latitude, double& longitude ) const;
 
-    MT_Float        GetWeldValue() const;
-    MT_Float        GetWidth    () const;
-    MT_Float        GetHeight   () const;
+    double        GetWeldValue() const;
+    double        GetWidth    () const;
+    double        GetHeight   () const;
     const MT_Rect&  GetExtent   () const;
 
     bool IsValidPosition( const MT_Vector2D& pos ) const;
@@ -82,7 +82,7 @@ private:
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
 inline
-MT_Float TER_CoordinateManager::GetWeldValue() const
+double TER_CoordinateManager::GetWeldValue() const
 {
     return 10; // $$$$ AGE 2005-03-08: or what
 }
@@ -92,7 +92,7 @@ MT_Float TER_CoordinateManager::GetWeldValue() const
 // Created: NLD 2005-04-11
 // -----------------------------------------------------------------------------
 inline
-MT_Float TER_CoordinateManager::GetWidth() const
+double TER_CoordinateManager::GetWidth() const
 {
     return extent_.GetWidth();
 }
@@ -102,7 +102,7 @@ MT_Float TER_CoordinateManager::GetWidth() const
 // Created: NLD 2005-04-11
 // -----------------------------------------------------------------------------
 inline
-MT_Float TER_CoordinateManager::GetHeight() const
+double TER_CoordinateManager::GetHeight() const
 {
     return extent_.GetHeight();
 }

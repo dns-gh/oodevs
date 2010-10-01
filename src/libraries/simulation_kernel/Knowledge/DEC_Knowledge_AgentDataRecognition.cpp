@@ -33,8 +33,8 @@ DEC_Knowledge_AgentDataRecognition::DEC_Knowledge_AgentDataRecognition()
     : nTimeLastUpdate_         ( 0 )
     , pArmy_                   ( 0 )
     , bIsPC_                   ( false )
-    , rOperationalState_       ( std::numeric_limits< MT_Float >::max() )
-    , rMajorOperationalState_  ( std::numeric_limits< MT_Float >::max() )
+    , rOperationalState_       ( std::numeric_limits< double >::max() )
+    , rMajorOperationalState_  ( std::numeric_limits< double >::max() )
     , pAgentType_              ( 0 )
     , bOperationalStateChanged_( false )
     , bAgentTypeUpdated_       ( false )
@@ -107,7 +107,7 @@ void DEC_Knowledge_AgentDataRecognition::DoUpdate( const T& data )
 {
     if( data.GetTimeLastUpdate() <= nTimeLastUpdate_ )
         return;
-    MT_Float rNewOpState = data.GetOperationalState();
+    double rNewOpState = data.GetOperationalState();
     if( rOperationalState_ != rNewOpState )
     {
         rOperationalState_ = rNewOpState;
@@ -212,18 +212,18 @@ bool DEC_Knowledge_AgentDataRecognition::HasChanged() const
 // Name: DEC_Knowledge_AgentDataRecognition::GetOperationalState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_AgentDataRecognition::GetOperationalState() const
+double DEC_Knowledge_AgentDataRecognition::GetOperationalState() const
 {
-    return rOperationalState_ == std::numeric_limits< MT_Float >::max() ? 1. : rOperationalState_;
+    return rOperationalState_ == std::numeric_limits< double >::max() ? 1. : rOperationalState_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataRecognition::GetMajorOperationalState
 // Created: NLD 2005-11-30
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_AgentDataRecognition::GetMajorOperationalState() const
+double DEC_Knowledge_AgentDataRecognition::GetMajorOperationalState() const
 {
-    return rMajorOperationalState_ == std::numeric_limits< MT_Float >::max() ? 1. : rMajorOperationalState_;
+    return rMajorOperationalState_ == std::numeric_limits< double >::max() ? 1. : rMajorOperationalState_;
 }
 
 // -----------------------------------------------------------------------------

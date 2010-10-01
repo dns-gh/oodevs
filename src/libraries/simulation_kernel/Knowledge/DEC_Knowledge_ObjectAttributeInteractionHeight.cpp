@@ -49,7 +49,7 @@ DEC_Knowledge_ObjectAttributeInteractionHeight::~DEC_Knowledge_ObjectAttributeIn
 // Name: DEC_Knowledge_ObjectAttributeInteractionHeight::Get
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_ObjectAttributeInteractionHeight::Get() const
+double DEC_Knowledge_ObjectAttributeInteractionHeight::Get() const
 {
     return height_;
 }

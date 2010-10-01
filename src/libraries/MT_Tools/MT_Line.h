@@ -7,7 +7,6 @@
 #define __MT_Line_h_
 
 #include "MT_Tools_Types.h"
-
 #include "MT_Vector2DTypes.h"
 
 typedef enum E_CollisionState
@@ -30,19 +29,19 @@ public:
     const MT_Vector2D&  GetPosStart() const;
     const MT_Vector2D&  GetPosEnd  () const;
     MT_Vector2D         GetCenter  () const;
-    MT_Float            Magnitude  () const;
+    double            Magnitude  () const;
 
     bool                IsClipped  ( const MT_Line& ) const;
     E_CollisionState    Intersect2D( const MT_Line& , MT_Vector2D& ) const;
     E_CollisionState    Intersect2D( const MT_Line& ) const;
-    bool                Intersect2D( const T_PointVector& polyline, T_PointSet& orderedIntersectionSet, MT_Float rPrecision ) const; // Return the intersections between the line and the polyline, ordered
-    bool                Intersect2D( const T_PointVector& polyline, MT_Float rPrecision ) const;
+    bool                Intersect2D( const T_PointVector& polyline, T_PointSet& orderedIntersectionSet, double rPrecision ) const; // Return the intersections between the line and the polyline, ordered
+    bool                Intersect2D( const T_PointVector& polyline, double rPrecision ) const;
 
     MT_Vector2D         ProjectPointOnLine( const MT_Vector2D& vPoint ) const;
-    MT_Float            ProjectPointOnLine( const MT_Vector2D& vPoint, MT_Vector2D& vResult ) const;
+    double            ProjectPointOnLine( const MT_Vector2D& vPoint, MT_Vector2D& vResult ) const;
     MT_Vector2D            ClosestPointOnLine( const MT_Vector2D& ) const;
-    bool                IsInside( const MT_Vector2D&, MT_Float ) const;
-    bool                IsInside( const MT_Vector2D&, MT_Float, MT_Vector2D&  ) const;
+    bool                IsInside( const MT_Vector2D&, double ) const;
+    bool                IsInside( const MT_Vector2D&, double, MT_Vector2D&  ) const;
     MT_Line&            operator = ( const MT_Line& rhs );
 
 private:

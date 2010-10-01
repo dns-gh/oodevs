@@ -110,11 +110,11 @@ void DEC_PerceptionFunctions::SetVisionModeNormal( MIL_Agent_ABC& callerAgent )
 // Created: JVT 2004-10-21
 // Returns an identifier allowing to retrieve the recon point.
 // -----------------------------------------------------------------------------
-int DEC_PerceptionFunctions::EnableRecognitionPoint( DEC_Decision_ABC& callerAgent, MT_Vector2D* pCenter, MT_Float rSize, MT_Float rGrowthSpeed )
+int DEC_PerceptionFunctions::EnableRecognitionPoint( DEC_Decision_ABC& callerAgent, MT_Vector2D* pCenter, double rSize, double rGrowthSpeed )
 {
     assert( pCenter );
-    const MT_Float rSimSize = MIL_Tools::ConvertMeterToSim( rSize );
-    const MT_Float rSimGrowthSpeed = MIL_Tools::ConvertSpeedMosToSim( rGrowthSpeed );
+    const double rSimSize = MIL_Tools::ConvertMeterToSim( rSize );
+    const double rSimGrowthSpeed = MIL_Tools::ConvertSpeedMosToSim( rGrowthSpeed );
     return callerAgent.GetPion().GetRole< PHY_RoleInterface_Perceiver >().EnableRecoPoint( *pCenter, rSimSize, rSimGrowthSpeed, callerAgent );
 }
 
@@ -131,7 +131,7 @@ void DEC_PerceptionFunctions::DisableRecognitionPoint( MIL_Agent_ABC& callerAgen
 // Name: DEC_PerceptionFunctions::EnableObjectRecognitionLocalisation
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-int DEC_PerceptionFunctions::EnableObjectRecognitionLocalisation( DEC_Decision_ABC& callerAgent, const TER_Localisation* pLocalisation, const MT_Vector2D* pCenter, MT_Float rGrowthSpeed )
+int DEC_PerceptionFunctions::EnableObjectRecognitionLocalisation( DEC_Decision_ABC& callerAgent, const TER_Localisation* pLocalisation, const MT_Vector2D* pCenter, double rGrowthSpeed )
 {
     assert( pLocalisation );
     assert( pCenter );

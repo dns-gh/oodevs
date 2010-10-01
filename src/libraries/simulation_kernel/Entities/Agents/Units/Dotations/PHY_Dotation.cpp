@@ -19,7 +19,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Dotation )
 
-const MT_Float PHY_Dotation::maxCapacity_ = 10000000;
+const double PHY_Dotation::maxCapacity_ = 10000000;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Dotation constructor
@@ -109,7 +109,7 @@ void PHY_Dotation::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
 // -----------------------------------------------------------------------------
 void PHY_Dotation::ReadValue( xml::xistream& xis )
 {
-    MT_Float rValue;
+    double rValue;
     xis >> xml::attribute( "quantity", rValue );
     if( rValue < 0. )
         xis.error( "rValue is not greater or equal to 0." );
@@ -125,7 +125,7 @@ void PHY_Dotation::ReadValue( xml::xistream& xis )
 // Name: PHY_Dotation::SetValue
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-void PHY_Dotation::SetValue( MT_Float rValue )
+void PHY_Dotation::SetValue( double rValue )
 {
     if( bDotationBlocked_ )
         return;
@@ -235,7 +235,7 @@ void PHY_Dotation::NotifyReleased()
 // Name: PHY_Dotation::AddConsumptionReservation
 // Created: NLD 2004-09-30
 // -----------------------------------------------------------------------------
-MT_Float PHY_Dotation::AddConsumptionReservation( MT_Float rNbr )
+double PHY_Dotation::AddConsumptionReservation( double rNbr )
 {
     rNbr = Consume( rNbr );
     rConsumptionReservation_ += rNbr;
@@ -246,7 +246,7 @@ MT_Float PHY_Dotation::AddConsumptionReservation( MT_Float rNbr )
 // Name: PHY_Dotation::AddFireReservation
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-MT_Float PHY_Dotation::AddFireReservation( MT_Float rNbr )
+double PHY_Dotation::AddFireReservation( double rNbr )
 {
     rNbr = Consume( rNbr );
     rFireReservation_ += rNbr;
@@ -257,10 +257,10 @@ MT_Float PHY_Dotation::AddFireReservation( MT_Float rNbr )
 // Name: PHY_Dotation::ChangeValueUsingTC2
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-void PHY_Dotation::ChangeValueUsingTC2( MT_Float rCapacityFactor, MIL_AutomateLOG& tc2 )
+void PHY_Dotation::ChangeValueUsingTC2( double rCapacityFactor, MIL_AutomateLOG& tc2 )
 {
     //$$$ checker rFireReservation_ et rConsumptionReservation_
-    MT_Float rValueDiff = ( rCapacity_ * rCapacityFactor ) - rValue_;
+    double rValueDiff = ( rCapacity_ * rCapacityFactor ) - rValue_;
     if( MT_IsZero( rValueDiff ) )
         return;
     assert( pCategory_ );
@@ -275,7 +275,7 @@ void PHY_Dotation::ChangeValueUsingTC2( MT_Float rCapacityFactor, MIL_AutomateLO
 // Name: PHY_Dotation::GetCapacity
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_Dotation::GetCapacity() const
+double PHY_Dotation::GetCapacity() const
 {
     return rCapacity_;
 }
@@ -284,7 +284,7 @@ MT_Float PHY_Dotation::GetCapacity() const
 // Name: PHY_Dotation::GetValue
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_Dotation::GetValue() const
+double PHY_Dotation::GetValue() const
 {
     return rValue_;
 }
@@ -293,7 +293,7 @@ MT_Float PHY_Dotation::GetValue() const
 // Name: PHY_Dotation::Consume
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_Dotation::Consume( MT_Float rValue )
+double PHY_Dotation::Consume( double rValue )
 {
     rValue = std::min( rValue, rValue_ );
     SetValue( rValue_ - rValue );
@@ -314,7 +314,7 @@ const PHY_DotationCategory& PHY_Dotation::GetCategory() const
 // Name: PHY_Dotation::Resupply
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void PHY_Dotation::Resupply( MT_Float rFactor /* = 1. */ )
+void PHY_Dotation::Resupply( double rFactor /* = 1. */ )
 {
     SetValue( rCapacity_ * rFactor );
     rConsumptionReservation_ = 0.;
@@ -377,11 +377,11 @@ bool PHY_Dotation::HasReachedSupplyThreshold() const
 // Name: PHY_Dotation::Supply
 // Created: NLD 2005-01-28
 // -----------------------------------------------------------------------------
-MT_Float PHY_Dotation::Supply( MT_Float rSupply )
+double PHY_Dotation::Supply( double rSupply )
 {
     if( bDotationBlocked_ )
         return 0.;
-    const MT_Float rNewSupply = std::min( rSupply, rCapacity_ - rConsumptionReservation_ - rFireReservation_ - rValue_ );
+    const double rNewSupply = std::min( rSupply, rCapacity_ - rConsumptionReservation_ - rFireReservation_ - rValue_ );
     SetValue( rValue_ + rNewSupply );
     return rNewSupply;
 }

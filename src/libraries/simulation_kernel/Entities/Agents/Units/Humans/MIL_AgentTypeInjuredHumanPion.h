@@ -28,8 +28,6 @@ class AlgorithmsFactories;
 // =============================================================================
 class MIL_AgentTypeInjuredHumanPion : public MIL_AgentTypePion
 {
-    MT_COPYNOTALLOWED( MIL_AgentTypeInjuredHumanPion )
-
 public:
     MIL_AgentTypeInjuredHumanPion( const std::string& strName, const std::string& strType, xml::xistream& xis );
     virtual ~MIL_AgentTypeInjuredHumanPion();

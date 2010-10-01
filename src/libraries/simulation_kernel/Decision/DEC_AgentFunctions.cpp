@@ -128,7 +128,7 @@ bool DEC_AgentFunctions::IsTransported( const MIL_Agent_ABC& callerAgent )
 // Name: DEC_AgentFunctions::SetFlyingHeight
 // Created: JVT 2004-11-02
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::SetFlyingHeight( MIL_Agent_ABC& callerAgent, MT_Float height )
+void DEC_AgentFunctions::SetFlyingHeight( MIL_Agent_ABC& callerAgent, double height )
 {
     assert( height >= 0. && "T'as deja essaye de voler à cette hauteur ?");
     callerAgent.GetRole< PHY_RoleAction_InterfaceFlying >().SetFlyingHeight( height );
@@ -147,7 +147,7 @@ bool DEC_AgentFunctions::IsFlying( const MIL_Agent_ABC& callerAgent )
 // Name: DEC_AgentFunctions::SetElongation
 // Created: JVT 2004-11-03
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::SetElongationFactor( MIL_Agent_ABC& callerAgent, MT_Float factor )
+void DEC_AgentFunctions::SetElongationFactor( MIL_Agent_ABC& callerAgent, double factor )
 {
     assert( factor > 0. );
     callerAgent.GetRole< PHY_RoleInterface_Posture >().SetElongationFactor( factor );
@@ -184,7 +184,7 @@ bool DEC_AgentFunctions::IsAutomateEngaged( const MIL_Agent_ABC& callerAgent )
 // Name: DEC_AgentFunctions::GetOperationalState
 // Created: NLD 2004-04-16
 // -----------------------------------------------------------------------------
-MT_Float DEC_AgentFunctions::GetOperationalState( const MIL_Agent_ABC& callerAgent )
+double DEC_AgentFunctions::GetOperationalState( const MIL_Agent_ABC& callerAgent )
 {
     return callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetOperationalState();
 }
@@ -193,7 +193,7 @@ MT_Float DEC_AgentFunctions::GetOperationalState( const MIL_Agent_ABC& callerAge
 // Name: DEC_AgentFunctions::GetMajorOperationalState
 // Created: NLD 2005-11-25
 // -----------------------------------------------------------------------------
-MT_Float DEC_AgentFunctions::GetMajorOperationalState( const MIL_Agent_ABC& callerAgent )
+double DEC_AgentFunctions::GetMajorOperationalState( const MIL_Agent_ABC& callerAgent )
 {
     return callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorOperationalState();
 }
@@ -403,7 +403,7 @@ bool DEC_AgentFunctions::HasLoadable( const MIL_Agent_ABC& callerAgent )
 // Name: DEC_AgentFunctions::GetLoadingTime
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
-MT_Float DEC_AgentFunctions::GetLoadingTime( const MIL_Agent_ABC& callerAgent )
+double DEC_AgentFunctions::GetLoadingTime( const MIL_Agent_ABC& callerAgent )
 {
     return MIL_Tools::ConvertSimToMinutes( callerAgent.GetRole< transport::PHY_RoleAction_Loading >().GetLoadingTime() );
 }
@@ -412,7 +412,7 @@ MT_Float DEC_AgentFunctions::GetLoadingTime( const MIL_Agent_ABC& callerAgent )
 // Name: DEC_AgentFunctions::GetUnloadingTime
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
-MT_Float DEC_AgentFunctions::GetUnloadingTime( const MIL_Agent_ABC& callerAgent )
+double DEC_AgentFunctions::GetUnloadingTime( const MIL_Agent_ABC& callerAgent )
 {
     return MIL_Tools::ConvertSimToMinutes( callerAgent.GetRole< transport::PHY_RoleAction_Loading >().GetUnloadingTime() );
 }
@@ -636,7 +636,7 @@ bool DEC_AgentFunctions::IsInCity( const MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 float DEC_AgentFunctions::TimeLeftForMoving( const MIL_Agent_ABC& callerAgent )
 {
-    const MT_Float rTime = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().GetMaxTimeForConsumption( PHY_ConsumptionType::moving_ );
+    const double rTime = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().GetMaxTimeForConsumption( PHY_ConsumptionType::moving_ );
     return static_cast< float >( MIL_Tools::ConvertSimToMinutes( rTime ) );
 }
 
@@ -646,7 +646,7 @@ float DEC_AgentFunctions::TimeLeftForMoving( const MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 float DEC_AgentFunctions::TimeToMoveDistance( const MIL_Agent_ABC& callerAgent, float distance )
 {
-   const MT_Float rMaxSpeed = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeedWithReinforcement();
+   const double rMaxSpeed = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeedWithReinforcement();
    if( rMaxSpeed == 0 )
        return std::numeric_limits< float >::max();
     return static_cast< float >( MIL_Tools::ConvertSimToMinutes( MIL_Tools::ConvertMeterToSim( distance ) / rMaxSpeed ) );

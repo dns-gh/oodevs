@@ -16,7 +16,7 @@
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
 
-const MT_Float TER_Localisation::rPrecision_ = 2.1242;
+const double TER_Localisation::rPrecision_ = 2.1242;
 
 //-----------------------------------------------------------------------------
 // Name: TER_Localisation constructor
@@ -81,7 +81,7 @@ TER_Localisation::TER_Localisation( E_LocationType nType, const T_PointVector& p
 // Name: TER_Localisation constructor
 // Created: NLD 2005-02-23
 // -----------------------------------------------------------------------------
-TER_Localisation::TER_Localisation( const MT_Vector2D& vPos, MT_Float rRadius )
+TER_Localisation::TER_Localisation( const MT_Vector2D& vPos, double rRadius )
     : nType_        ( eCircle )
     , bWasCircle_   ( true )
     , vCircleCenter_( vPos )
@@ -109,8 +109,8 @@ TER_Localisation::~TER_Localisation()
 void TER_Localisation::InitializeBoundingBox( CT_PointVector& pointVector )
 {
     // bounding box
-    MT_Vector2D vDownLeft( std::numeric_limits< MT_Float >::max(), std::numeric_limits< MT_Float >::max() );
-    MT_Vector2D vUpRight ( std::numeric_limits< MT_Float >::min(), std::numeric_limits< MT_Float >::min() );
+    MT_Vector2D vDownLeft( std::numeric_limits< double >::max(), std::numeric_limits< double >::max() );
+    MT_Vector2D vUpRight ( std::numeric_limits< double >::min(), std::numeric_limits< double >::min() );
     for ( CIT_PointVector itPoint = pointVector.begin(); itPoint != pointVector.end(); ++itPoint )
     {
         const MT_Vector2D& vPos = *itPoint;
@@ -166,7 +166,7 @@ bool TER_Localisation::InitializeLine()
 inline
 bool TER_Localisation::InitializePoint()
 {
-    static MT_Float rRectSize = 250;
+    static double rRectSize = 250;
     if( pointVector_.size() < 1 )
         return false;
     // Transformation du point en rectangle
@@ -195,10 +195,10 @@ bool TER_Localisation::InitializeCircle()
     vCircleCenter_ = pointVector_[0];
     rCircleRadius_ = ( vCircleCenter_.Distance( pointVector_[1] ) );
     T_PointVector pointsTmp; pointsTmp.reserve( 10 );
-    for( MT_Float rAngle = 0; rAngle < ( MT_PI * 2 ); rAngle += (MT_PI/8) )
+    for( double rAngle = 0; rAngle < ( MT_PI * 2 ); rAngle += (MT_PI/8) )
     {
-        MT_Float rX_ = vCircleCenter_.rX_ + ( rCircleRadius_ * cos( rAngle ) );
-        MT_Float rY_ = vCircleCenter_.rY_ + ( rCircleRadius_ * sin( rAngle ) );
+        double rX_ = vCircleCenter_.rX_ + ( rCircleRadius_ * cos( rAngle ) );
+        double rY_ = vCircleCenter_.rY_ + ( rCircleRadius_ * sin( rAngle ) );
         pointsTmp.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( rX_, rY_ ) ) );
     }
     pointsTmp.push_back( pointsTmp.front() );
@@ -214,13 +214,13 @@ bool TER_Localisation::InitializeCircle()
 // Name: TER_Localisation::ComputeAngle
 // Created: NLD 2003-09-24
 // -----------------------------------------------------------------------------
-MT_Float ComputeAngle( const MT_Vector2D& v1Tmp, const MT_Vector2D& v2Tmp ) //$$$$$ a deplacer dans MT_Vector2D
+double ComputeAngle( const MT_Vector2D& v1Tmp, const MT_Vector2D& v2Tmp ) //$$$$$ a deplacer dans MT_Vector2D
 {
     MT_Vector2D v1 = v1Tmp.Normalized();
     MT_Vector2D v2 = v2Tmp.Normalized();
-    MT_Float rCosAngle = v1.rX_ * v2.rX_ + v1.rY_ * v2.rY_; // (cos angle)
-    MT_Float rSinAngle = v1.rX_ * v2.rY_ - v1.rY_ * v2.rX_; // (sin angle)
-    MT_Float rAngle = acos(rCosAngle);
+    double rCosAngle = v1.rX_ * v2.rX_ + v1.rY_ * v2.rY_; // (cos angle)
+    double rSinAngle = v1.rX_ * v2.rY_ - v1.rY_ * v2.rX_; // (sin angle)
+    double rAngle = acos(rCosAngle);
     if( rSinAngle >= 0.0 )
         return rAngle ;
     return -rAngle;
@@ -239,13 +239,13 @@ bool TER_Localisation::InitializeSector()
         return false;
 
     MT_Vector2D& vCenter  = pointVector_[0];
-    MT_Float     rRadiusA = ( vCenter.Distance( pointVector_[1] ) );
-    MT_Float     rRadiusB = ( vCenter.Distance( pointVector_[2] ) );
+    double     rRadiusA = ( vCenter.Distance( pointVector_[1] ) );
+    double     rRadiusB = ( vCenter.Distance( pointVector_[2] ) );
     MT_Vector2D  vRadiusA( pointVector_[1] - vCenter );
     MT_Vector2D  vRadiusB( pointVector_[2] - vCenter );
 
-    MT_Float rSectorAngle = ComputeAngle( vRadiusA, vRadiusB );
-    MT_Float rOriginAngle = ComputeAngle( vRadiusA, MT_Vector2D( 1, 0 ) );
+    double rSectorAngle = ComputeAngle( vRadiusA, vRadiusB );
+    double rOriginAngle = ComputeAngle( vRadiusA, MT_Vector2D( 1, 0 ) );
 
     if( rSectorAngle < 0 )
         rSectorAngle = 2 * MT_PI + rSectorAngle;
@@ -253,7 +253,7 @@ bool TER_Localisation::InitializeSector()
     T_PointVector pointsTmp;
     pointsTmp.push_back( vCenter );
 
-    MT_Float rAngleTmp = 0;
+    double rAngleTmp = 0;
     while( rAngleTmp <= rSectorAngle )
     {
         MT_Vector2D vNewPoint( rRadiusA * cos( rAngleTmp ), rRadiusB * sin( rAngleTmp ) );
@@ -289,13 +289,13 @@ bool TER_Localisation::InitializeEllipse()
         return false;
 
     MT_Vector2D& vCenter  = pointVector_[0];
-    MT_Float     rRadiusA = ( vCenter.Distance( pointVector_[1] ) );
-    MT_Float     rRadiusB = ( vCenter.Distance( pointVector_[2] ) );
+    double     rRadiusA = ( vCenter.Distance( pointVector_[1] ) );
+    double     rRadiusB = ( vCenter.Distance( pointVector_[2] ) );
     MT_Vector2D  vRadiusA( pointVector_[1] - vCenter );
-    MT_Float rOriginAngle = ComputeAngle( vRadiusA, MT_Vector2D( 1, 0 ) );
+    double rOriginAngle = ComputeAngle( vRadiusA, MT_Vector2D( 1, 0 ) );
 
     T_PointVector pointsTmp;
-    for( MT_Float rAngleTmp = 0; rAngleTmp < ( MT_PI * 2 ); rAngleTmp += MT_ANGLE_POINT_INTERVAL )
+    for( double rAngleTmp = 0; rAngleTmp < ( MT_PI * 2 ); rAngleTmp += MT_ANGLE_POINT_INTERVAL )
     {
         MT_Vector2D vNewPoint( rRadiusA * cos( rAngleTmp ), rRadiusB * sin( rAngleTmp ) );
         vNewPoint.Rotate( rOriginAngle );
@@ -553,7 +553,7 @@ bool TER_Localisation::ComputeNearestPoint( const MT_Vector2D& vSrc, MT_Vector2D
         vResult = pointVector_[ 0 ];
         return true;
     }
-    MT_Float rShortestDist   = std::numeric_limits< MT_Float >::max();
+    double rShortestDist   = std::numeric_limits< double >::max();
     CIT_PointVector itPoint  = pointVector_.begin();
     const MT_Vector2D* pPos1 = &*itPoint;
     for( ++itPoint; itPoint != pointVector_.end(); ++itPoint )
@@ -562,7 +562,7 @@ bool TER_Localisation::ComputeNearestPoint( const MT_Vector2D& vSrc, MT_Vector2D
         MT_Line lineTmp( *pPos1, *pPos2 );
 
         MT_Vector2D vResultTmp = lineTmp.ClosestPointOnLine( vSrc );
-        MT_Float    rDistTmp   = vResultTmp.Distance( vSrc );
+        double    rDistTmp   = vResultTmp.Distance( vSrc );
         if( rDistTmp < rShortestDist )
         {
             rShortestDist = rDistTmp;
@@ -570,7 +570,7 @@ bool TER_Localisation::ComputeNearestPoint( const MT_Vector2D& vSrc, MT_Vector2D
         }
         pPos1 = pPos2;
     }
-    assert( rShortestDist != std::numeric_limits< MT_Float >::max() );
+    assert( rShortestDist != std::numeric_limits< double >::max() );
     return true;
 }
 
@@ -578,16 +578,16 @@ bool TER_Localisation::ComputeNearestPoint( const MT_Vector2D& vSrc, MT_Vector2D
 // Name: TER_Localisation::ComputeNearestPoint
 // Created: SBO 2005-12-13
 // -----------------------------------------------------------------------------
-bool TER_Localisation::ComputeNearestPoint( const TER_Localisation& localisation, MT_Vector2D& vResult, MT_Float& rMinDistance ) const
+bool TER_Localisation::ComputeNearestPoint( const TER_Localisation& localisation, MT_Vector2D& vResult, double& rMinDistance ) const
 {
     const T_PointVector& points = localisation.GetPoints();
-    rMinDistance = std::numeric_limits< MT_Float >::max();
+    rMinDistance = std::numeric_limits< double >::max();
     for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
     {
         MT_Vector2D nearestPointTmp;
         if( ComputeNearestPoint( *it, nearestPointTmp ) )
         {
-            MT_Float rDistance = it->Distance( nearestPointTmp );
+            double rDistance = it->Distance( nearestPointTmp );
             if( rDistance < rMinDistance )
             {
                 rMinDistance = rDistance;
@@ -756,7 +756,7 @@ void TER_Localisation::Split( unsigned int nNbrParts, T_LocalisationPtrVector& l
     else if( nType_ == eLine )
     {
         assert( false );
-//        MT_Float rLineLength = polyline_.Magnitude();
+//        double rLineLength = polyline_.Magnitude();
 //        for( unsigned int i = 0; i < nNbrParts; ++i )
 //        {
 //            TER_Localisation* pLocalisation = new TER_Localisation(); //$$$ RAM
@@ -770,9 +770,10 @@ void TER_Localisation::Split( unsigned int nNbrParts, T_LocalisationPtrVector& l
         assert( TER_World::GetWorld().IsValidPosition( vBarycenter ) );
 
         // 2. Stockage des droites de découpe
+        typedef std::vector< MT_Droite > T_DroiteVector;
         T_DroiteVector droiteVector;
         MT_Vector2D vDir( 0, 1 );
-        MT_Float rAngle = 2. * MT_PI / nNbrParts;
+        double rAngle = 2. * MT_PI / nNbrParts;
         droiteVector.push_back( MT_Droite( vBarycenter, vDir + vBarycenter ) );
         for( unsigned int i = 0; i < nNbrParts; ++i )
         {
@@ -780,7 +781,7 @@ void TER_Localisation::Split( unsigned int nNbrParts, T_LocalisationPtrVector& l
             droiteVector.push_back( MT_Droite( vBarycenter, vDir + vBarycenter ) );
         }
         // 3. Création des localisation découpées
-        CIT_DroiteVector itDroite = droiteVector.begin();
+        T_DroiteVector::const_iterator itDroite = droiteVector.begin();
         const MT_Droite* pPrevDroite = &*itDroite;
         for( ++itDroite; itDroite != droiteVector.end(); ++itDroite )
         {
@@ -819,7 +820,7 @@ void TER_Localisation::Convexify()
 // Name: TER_Localisation::Scale
 // Created: NLD 2003-10-03
 // -----------------------------------------------------------------------------
-void TER_Localisation::Scale( MT_Float rDist )
+void TER_Localisation::Scale( double rDist )
 {
     ///$$$$$ NLD - A DECOUPER
 
@@ -831,7 +832,7 @@ void TER_Localisation::Scale( MT_Float rDist )
         for( CIT_PointVector itPoint = pointVector_.begin(); itPoint != pointVector_.end(); ++itPoint )
         {
             MT_Vector2D vDir( *itPoint - vBarycenter );
-            MT_Float rDirLength  = vDir.Magnitude();
+            double rDirLength  = vDir.Magnitude();
             if( rDirLength > 0 )
                 vDir *= ( ( rDirLength + rDist ) / rDirLength );
             TER_World::GetWorld().ClipPointInsideWorld( vDir += vBarycenter );
@@ -873,8 +874,8 @@ void TER_Localisation::Scale( MT_Float rDist )
     }
     else if( nType_ == ePoint )
     {
-            static MT_Float rRectSize = 250;
-            MT_Float rNewRectSize = rRectSize + rDist;
+            static double rRectSize = 250;
+            double rNewRectSize = rRectSize + rDist;
             // Transformation du point en rectangle
             MT_Vector2D vPos = pointVector_.front();
             pointVector_.clear(); pointVector_.reserve( 5 );
@@ -936,7 +937,7 @@ bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation ) co
 
 namespace
 {
-    MT_Float CirclesIntersectionArea( const TER_Localisation& lhs, const MT_Circle& rhs )
+    double CirclesIntersectionArea( const TER_Localisation& lhs, const MT_Circle& rhs )
     {
         return MT_Circle( lhs.GetCircleCenter(), lhs.GetCircleRadius() ).IntersectionArea( rhs );
     }
@@ -946,7 +947,7 @@ namespace
 // Name: TER_Localisation::GetIntersectionAreaWithCircle
 // Created: SBO 2006-01-19
 // -----------------------------------------------------------------------------
-MT_Float TER_Localisation::GetIntersectionAreaWithCircle( const MT_Circle& circle ) const
+double TER_Localisation::GetIntersectionAreaWithCircle( const MT_Circle& circle ) const
 {
     switch( nType_ )
     {
@@ -962,7 +963,7 @@ MT_Float TER_Localisation::GetIntersectionAreaWithCircle( const MT_Circle& circl
             T_PointVector shape;
             if( ! polyline_.Intersect2DWithCircle( circle.Center(), circle.Radius(), shape ) )
                 return 0.;
-            MT_Float rDistance = 0.;
+            double rDistance = 0.;
             CIT_PointVector itCurrent = shape.begin();
             CIT_PointVector itNext = shape.begin();
             ++itNext;

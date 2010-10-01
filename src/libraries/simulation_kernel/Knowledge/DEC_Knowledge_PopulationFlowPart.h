@@ -50,7 +50,7 @@ public:
     void Prepare();
     bool Update( const DEC_Knowledge_PopulationFlowPerception& perception );
     bool Update( const DEC_Knowledge_PopulationCollision& collision );
-    bool UpdateRelevance( const MT_Float rMaxLifeTime );
+    bool UpdateRelevance( const double rMaxLifeTime );
     bool Clean();
     //@}
 
@@ -62,15 +62,15 @@ public:
 private:
     //! @name Tools
     //@{
-    bool ChangeRelevance( MT_Float rRelevance );
+    bool ChangeRelevance( double rRelevance );
     //@}
 
 private:
     //! @name Member data
     //@{
     T_PointVector shape_;
-    MT_Float rRelevance_;
-    MT_Float rLastRelevanceSent_;
+    double rRelevance_;
+    double rLastRelevanceSent_;
     bool bPerceived_;
     unsigned int nTimeLastUpdate_;
     //@}

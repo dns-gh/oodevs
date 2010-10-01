@@ -48,7 +48,7 @@ bool MIL_Effect_Fly::Execute()
 // Name: MIL_Effect_Fly::SetFlyingHeight
 // Created: JVT 2004-11-02
 // -----------------------------------------------------------------------------
-void MIL_Effect_Fly::SetFlyingHeight( MT_Float rHeight )
+void MIL_Effect_Fly::SetFlyingHeight( double rHeight )
 {
     rHeight_ = rHeight;
 }

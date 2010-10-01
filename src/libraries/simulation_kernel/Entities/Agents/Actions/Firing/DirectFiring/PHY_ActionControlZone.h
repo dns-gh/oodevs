@@ -36,7 +36,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Localisation* pLocalisation, MT_Float rRadius, bool bFire );
+             PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Localisation* pLocalisation, double rRadius, bool bFire );
     virtual ~PHY_ActionControlZone();
 
     //! @name Operations

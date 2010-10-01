@@ -85,7 +85,7 @@ void DEC_Knowledge_AgentComposante::save( MIL_CheckPointOutArchive& file, const 
 // Name: DEC_Knowledge_AgentComposante::GetDangerosity
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_AgentComposante::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposantePion& compTarget, MT_Float rDistBtwSourceAndTarget ) const
+double DEC_Knowledge_AgentComposante::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposantePion& compTarget, double rDistBtwSourceAndTarget ) const
 {
     assert( pType_ );
     if( !bCanFire_ )
@@ -97,7 +97,7 @@ MT_Float DEC_Knowledge_AgentComposante::GetDangerosity( const MIL_Agent_ABC& fir
 // Name: DEC_Knowledge_AgentComposante::GetDangerosity
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_AgentComposante::GetDangerosity( const MIL_Agent_ABC& firer, const DEC_Knowledge_AgentComposante& compTarget, MT_Float rDistBtwSourceAndTarget ) const
+double DEC_Knowledge_AgentComposante::GetDangerosity( const MIL_Agent_ABC& firer, const DEC_Knowledge_AgentComposante& compTarget, double rDistBtwSourceAndTarget ) const
 {
     assert( pType_ );
     if( !bCanFire_ )
@@ -109,7 +109,7 @@ MT_Float DEC_Knowledge_AgentComposante::GetDangerosity( const MIL_Agent_ABC& fir
 // Name: DEC_Knowledge_AgentComposante::GetMaxRangeToFireOn
 // Created: NLD 2004-04-15
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_AgentComposante::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposantePion& compTarget, MT_Float rWantedPH ) const
+double DEC_Knowledge_AgentComposante::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposantePion& compTarget, double rWantedPH ) const
 {
     assert( pType_ );
     if( !bCanFire_ )

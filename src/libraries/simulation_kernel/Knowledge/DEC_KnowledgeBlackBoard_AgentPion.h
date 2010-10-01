@@ -111,7 +111,7 @@ public:
     const T_ConstKnowledgeAgentVector& GetDangerousEnemies() const;
     void GetDangerousEnemiesInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
     void GetAgentsAttacking( T_ConstKnowledgeAgentVector& container ) const;
-    MT_Float GetRapForLocalValue() const;
+    double GetRapForLocalValue() const;
 
     // Objects
     bool IsIdentified( const MIL_Object_ABC& object ) const;

@@ -14,9 +14,9 @@
 // Created: JVT 02-08-08
 //-----------------------------------------------------------------------------
 inline
-MT_Float MIL_Tools::ConvertSpeedMosToSim( MT_Float v )
+double MIL_Tools::ConvertSpeedMosToSim( double v )
 {
-    static MT_Float rConvertionFactor = 1000. * MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 3600.;
+    static double rConvertionFactor = 1000. * MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 3600.;
     // conversion des vitesses de Km/H en pixel/deltaT
     return v * rConvertionFactor;
 }
@@ -27,9 +27,9 @@ MT_Float MIL_Tools::ConvertSpeedMosToSim( MT_Float v )
 // Created: JVT 02-08-08
 //-----------------------------------------------------------------------------
 inline
-MT_Float MIL_Tools::ConvertSpeedSimToMos( MT_Float v )
+double MIL_Tools::ConvertSpeedSimToMos( double v )
 {
-    static MT_Float rConvertionFactor = 3600. / MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 1000.;
+    static double rConvertionFactor = 3600. / MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 1000.;
 
     // conversion des vitesses de pixel/deltaT en Km/H
     return v * rConvertionFactor;
@@ -40,7 +40,7 @@ MT_Float MIL_Tools::ConvertSpeedSimToMos( MT_Float v )
 // Created: JVT 03-01-08
 //-----------------------------------------------------------------------------
 inline
-MT_Float MIL_Tools::ConvertSecondsToSim( MT_Float v )  // s    -> DeltaT
+double MIL_Tools::ConvertSecondsToSim( double v )  // s    -> DeltaT
 {
     return v / MIL_AgentServer::GetWorkspace().GetTimeStepDuration();
 }
@@ -50,7 +50,7 @@ MT_Float MIL_Tools::ConvertSecondsToSim( MT_Float v )  // s    -> DeltaT
 // Created: JVT 03-01-08
 //-----------------------------------------------------------------------------
 inline
-MT_Float MIL_Tools::ConvertMinutesToSim( MT_Float v )  // min  -> DeltaT
+double MIL_Tools::ConvertMinutesToSim( double v )  // min  -> DeltaT
 {
     return ConvertSecondsToSim( 60. * v );
 }
@@ -60,7 +60,7 @@ MT_Float MIL_Tools::ConvertMinutesToSim( MT_Float v )  // min  -> DeltaT
 // Created: JVT 03-06-10
 //-----------------------------------------------------------------------------
 inline
-MT_Float MIL_Tools::ConvertHoursToSim( MT_Float v ) // h -> DeltaT
+double MIL_Tools::ConvertHoursToSim( double v ) // h -> DeltaT
 {
     return ConvertSecondsToSim( 3600. * v );
 }
@@ -70,7 +70,7 @@ MT_Float MIL_Tools::ConvertHoursToSim( MT_Float v ) // h -> DeltaT
 // Created: JVT 04-02-02
 //-----------------------------------------------------------------------------
 inline
-MT_Float MIL_Tools::ConvertSimToMinutes( MT_Float v ) // deltaT -> m
+double MIL_Tools::ConvertSimToMinutes( double v ) // deltaT -> m
 {
     return v * MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 60.;
 }
@@ -80,7 +80,7 @@ MT_Float MIL_Tools::ConvertSimToMinutes( MT_Float v ) // deltaT -> m
 // Created: NLD 2004-11-18
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_Tools::ConvertMeterSquareToSim( MT_Float rValue ) // m² => px²
+double MIL_Tools::ConvertMeterSquareToSim( double rValue ) // m² => px²
 {
     return rValue;
 }
@@ -90,7 +90,7 @@ MT_Float MIL_Tools::ConvertMeterSquareToSim( MT_Float rValue ) // m² => px²
 // Created: NLD 2004-11-18
 // -----------------------------------------------------------------------------
 inline
-float MIL_Tools::ConvertSimToMeterSquare( MT_Float rValue ) // px² => m²
+float MIL_Tools::ConvertSimToMeterSquare( double rValue ) // px² => m²
 {
     return (float)( rValue );
 }
@@ -101,7 +101,7 @@ float MIL_Tools::ConvertSimToMeterSquare( MT_Float rValue ) // px² => m²
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_Tools::ConvertMeterToSim( MT_Float rValue )
+double MIL_Tools::ConvertMeterToSim( double rValue )
 {
     return rValue;
 }
@@ -111,7 +111,7 @@ MT_Float MIL_Tools::ConvertMeterToSim( MT_Float rValue )
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 inline
-float MIL_Tools::ConvertSimToMeter( MT_Float rValue )
+float MIL_Tools::ConvertSimToMeter( double rValue )
 {
     return (float)( rValue  );
 }

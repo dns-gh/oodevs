@@ -44,7 +44,7 @@ void PHY_MaintenanceResourcesAlarms::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceResourcesAlarms::ReadResource( xml::xistream& xis )
 {
-    MT_Float rRation;
+    double rRation;
     std::string strType;
     xis >> xml::attribute( "resource", strType )
         >> xml::attribute( "availability-threshold", rRation );
@@ -71,7 +71,7 @@ void PHY_MaintenanceResourcesAlarms::Terminate()
 // Name: PHY_MaintenanceResourcesAlarms::IsLevelReached
 // Created: NLD 2006-08-02
 // -----------------------------------------------------------------------------
-bool PHY_MaintenanceResourcesAlarms::IsLevelReached( const T_LevelSet& levels, MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+bool PHY_MaintenanceResourcesAlarms::IsLevelReached( const T_LevelSet& levels, double rPreviousRatio, double rCurrentRatio )
 {
     for( CIT_LevelSet it = levels.begin(); it != levels.end(); ++it )
         if( rPreviousRatio > *it && rCurrentRatio <= *it )
@@ -83,7 +83,7 @@ bool PHY_MaintenanceResourcesAlarms::IsLevelReached( const T_LevelSet& levels, M
 // Name: PHY_MaintenanceResourcesAlarms::IsRepairerResourcesLevelReached
 // Created: NLD 2006-08-02
 // -----------------------------------------------------------------------------
-bool PHY_MaintenanceResourcesAlarms::IsRepairerResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+bool PHY_MaintenanceResourcesAlarms::IsRepairerResourcesLevelReached( double rPreviousRatio, double rCurrentRatio )
 {
     return IsLevelReached( repairerResourcesLevels_, rPreviousRatio, rCurrentRatio );
 }
@@ -92,7 +92,7 @@ bool PHY_MaintenanceResourcesAlarms::IsRepairerResourcesLevelReached( MT_Float r
 // Name: PHY_MaintenanceResourcesAlarms::IsHaulerResourcesLevelReached
 // Created: NLD 2006-08-02
 // -----------------------------------------------------------------------------
-bool PHY_MaintenanceResourcesAlarms::IsHaulerResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+bool PHY_MaintenanceResourcesAlarms::IsHaulerResourcesLevelReached( double rPreviousRatio, double rCurrentRatio )
 {
     return IsLevelReached( haulerResourcesLevels_, rPreviousRatio, rCurrentRatio );
 }

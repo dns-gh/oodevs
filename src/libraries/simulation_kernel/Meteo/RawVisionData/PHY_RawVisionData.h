@@ -94,16 +94,16 @@ public:
 
     double   GetCellSize() const;
 
-    MT_Float GetAltitude( const MT_Vector2D& pos )     const;
-    MT_Float GetAltitude( MT_Float rX_, MT_Float rY_ ) const;
+    double GetAltitude( const MT_Vector2D& pos )     const;
+    double GetAltitude( double rX_, double rY_ ) const;
 
     envBits  GetVisionObject( const MT_Vector2D& pos )     const;
-    envBits  GetVisionObject( MT_Float rX_, MT_Float rY_ ) const;
+    envBits  GetVisionObject( double rX_, double rY_ ) const;
 
     const weather::PHY_Meteo::sWindData& GetWind( const MT_Vector2D& vPos ) const;
 
-    MT_Float GetMinAltitude() const;
-    MT_Float GetMaxAltitude() const;
+    double GetMinAltitude() const;
+    double GetMaxAltitude() const;
     void     CalcMinMaxAltitude();
 
     static unsigned int           ConvertEnvironementToObjectIdx( E_VisionObject obj );
@@ -136,15 +136,15 @@ private:
 
 
 
-    MT_Float rCellSize_; // taille (en metre) du côté de la cellule
+    double rCellSize_; // taille (en metre) du côté de la cellule
 
     unsigned int     nNbrCol_;
     unsigned int     nNbrRow_;
 
     sCell**  ppCells_;
 
-    MT_Float rMinAltitude_;
-    MT_Float rMaxAltitude_;
+    double rMinAltitude_;
+    double rMaxAltitude_;
 
     static sCell emptyCell_;
 };

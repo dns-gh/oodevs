@@ -10,8 +10,6 @@
 #ifndef __MIL_ToxicEffectManipulator_h_
 #define __MIL_ToxicEffectManipulator_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 class MIL_NbcAgentType;
 class PHY_HumanWound;
 
@@ -33,7 +31,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ToxicEffectManipulator( const T_NBCAgents& type, MT_Float quantity );
+             MIL_ToxicEffectManipulator( const T_NBCAgents& type, double quantity );
              MIL_ToxicEffectManipulator( const MIL_ToxicEffectManipulator& rhs );
     virtual ~MIL_ToxicEffectManipulator();
     //@}
@@ -41,7 +39,7 @@ public:
     //! @name Operations
     //@{
     const MIL_NbcAgentType& GetType() const;
-    MT_Float                GetQuantity() const;
+    double                GetQuantity() const;
     //@}
 
     //! @name
@@ -59,7 +57,7 @@ private:
     //! @name Data Members
     //@{
     T_NBCAgents types_;
-    MT_Float quantity_;
+    double quantity_;
     //@}
 };
 

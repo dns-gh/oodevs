@@ -26,7 +26,7 @@ class PHY_DotationStock : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, MT_Float rSupplyThresholdRatio, MT_Float rCapacity, bool bInfiniteDotations );
+     PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, double rSupplyThresholdRatio, double rCapacity, bool bInfiniteDotations );
      PHY_DotationStock();
     virtual ~PHY_DotationStock();
     //@}
@@ -42,14 +42,14 @@ public:
     //! @name Accessors
     //@{
     const PHY_DotationCategory& GetCategory() const;
-          MT_Float              GetValue   () const;
-          MT_Float              GetCapacity() const;
+          double              GetValue   () const;
+          double              GetCapacity() const;
     //@}
 
     //! @name Operations
     //@{
-    MT_Float AddReservation   ( MT_Float rNbr );
-    void     RemoveReservation( MT_Float rNbr );
+    double AddReservation   ( double rNbr );
+    void     RemoveReservation( double rNbr );
     void     Resupply        ();
     //@}
 
@@ -57,25 +57,25 @@ public:
     //@{
     bool     HasReachedSupplyThreshold() const;
     bool     NeedSupply               () const;
-    MT_Float Supply                   ( MT_Float rSupply );
+    double Supply                   ( double rSupply );
     //@}
 
 private:
     //! @name Tools
     //@{
-    void     SetValue  ( MT_Float rValue );
-    MT_Float Consume   ( MT_Float rValue );
+    void     SetValue  ( double rValue );
+    double Consume   ( double rValue );
     //@}
 
 private:
     //! @name Member data
     //@{
-    static const MT_Float             maxCapacity_;
+    static const double             maxCapacity_;
           PHY_DotationStockContainer* pStockContainer_;
     const PHY_DotationCategory*       pCategory_;
-          MT_Float                    rValue_;
-          MT_Float                    rCapacity_; // Les stocks peuvent dépasser leurs capacités (Stockage à terre)
-          MT_Float                    rSupplyThreshold_;
+          double                    rValue_;
+          double                    rCapacity_; // Les stocks peuvent dépasser leurs capacités (Stockage à terre)
+          double                    rSupplyThreshold_;
           bool                        bInfiniteDotations_;
     //@}
 };

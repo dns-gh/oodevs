@@ -598,7 +598,7 @@ MIL_KnowledgeGroup* MIL_KnowledgeGroup::FindKnowledgeGroup( unsigned int id ) co
 // Created: SLG 2009-11-30
 // LTO
 // -----------------------------------------------------------------------------
-MT_Float MIL_KnowledgeGroup::GetTimeToDiffuseToKnowledgeGroup() const
+double MIL_KnowledgeGroup::GetTimeToDiffuseToKnowledgeGroup() const
 {
     return timeToDiffuse_;
 }

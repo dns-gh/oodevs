@@ -69,8 +69,8 @@ public:
     static unsigned int GetWidth();
     static unsigned int GetLength();
     static unsigned int GetPropagationAngle();
-    static MT_Float GetConcentrationIncreaseRate();
-    static MT_Float GetConcentrationDecreaseRate();
+    static double GetConcentrationIncreaseRate();
+    static double GetConcentrationDecreaseRate();
     //@}
 
     //! @name Operations
@@ -97,9 +97,9 @@ private:
     static unsigned int length_;
     static unsigned int width_;
     static unsigned int propagationAngle_;
-    static MT_Float concentrationIncreaseRate_;
-    static MT_Float concentrationDecreaseRate_;
-    static MT_Float edgeEffects_;
+    static double concentrationIncreaseRate_;
+    static double concentrationDecreaseRate_;
+    static double edgeEffects_;
     //@}
 };
 

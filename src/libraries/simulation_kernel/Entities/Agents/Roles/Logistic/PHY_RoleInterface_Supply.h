@@ -13,7 +13,6 @@
 #define __PHY_RoleInterface_Supply_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/access.hpp>
 
 namespace xml
@@ -83,9 +82,9 @@ public:
     virtual bool CanContainStock( const PHY_DotationCategory& dotationCategory ) const;
     virtual PHY_DotationStock* AddStock( const PHY_DotationCategory& dotationCategory ) const;
     virtual PHY_DotationStock* GetStock( const PHY_DotationCategory& dotationCategory ) const;
-    virtual MT_Float GetStockAvailablity( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const;
-    virtual MT_Float AddStockReservation( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue );
-    virtual void RemoveStockReservation( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue );
+    virtual double GetStockAvailablity( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
+    virtual double AddStockReservation( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
+    virtual void RemoveStockReservation( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
     virtual PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const;
 
     virtual void StartUsingForLogistic( PHY_ComposantePion& composante );
@@ -97,7 +96,7 @@ public:
     virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const =0;
     virtual void FillSupplyRequest( PHY_SupplyStockRequestContainer& supplyRequest ) const;
     virtual void ResupplyStocks();
-    virtual void ResupplyStocks( const PHY_DotationCategory& category, MT_Float rNbr );
+    virtual void ResupplyStocks( const PHY_DotationCategory& category, double rNbr );
     //@}
 
     //! @name Convoy

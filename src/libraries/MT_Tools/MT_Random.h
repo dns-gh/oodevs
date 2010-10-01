@@ -69,9 +69,9 @@ private:
     inline void nextState();
 
 private:
-    unsigned long   state_[ MT_RandomConsts::N ];
-    unsigned long * next_;
-    unsigned int     left_;
+    unsigned long  state_[ MT_RandomConsts::N ];
+    unsigned long* next_;
+    unsigned int   left_;
 
 private:
     static MT_Random* pInstance_;

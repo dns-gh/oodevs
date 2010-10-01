@@ -126,7 +126,7 @@ void MobilityCapacity::Instanciate( MIL_Object_ABC& object ) const
 // Name: MobilityCapacity::GetMaxSpeed
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-MT_Float MobilityCapacity::GetDefaultSpeed() const
+double MobilityCapacity::GetDefaultSpeed() const
 {
     return rDefaultSpeed_;
 }
@@ -135,7 +135,7 @@ MT_Float MobilityCapacity::GetDefaultSpeed() const
 // Name: MobilityCapacity::ApplySpeedPolicy
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MT_Float MobilityCapacity::ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed, MT_Float structural ) const
+double MobilityCapacity::ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed, double structural ) const
 {
     assert( rAgentSpeedWithinObject      <= rAgentMaxSpeed );
     assert( rAgentSpeedWithinEnvironment <= rAgentMaxSpeed );
@@ -154,8 +154,8 @@ MT_Float MobilityCapacity::ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, M
 // Name: MobilityCapacity::ComputeFactor
 // Created: SLG 2010-06-29
 // -----------------------------------------------------------------------------
-MT_Float MobilityCapacity::ComputeStructuralFactor( const MT_Float structural ) const
+double MobilityCapacity::ComputeStructuralFactor( const double structural ) const
 {
-    const MT_Float min = 0.2;
+    const double min = 0.2;
     return  min + structural * ( 1 - min );
 }

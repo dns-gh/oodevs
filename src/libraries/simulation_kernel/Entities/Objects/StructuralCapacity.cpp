@@ -192,7 +192,7 @@ const PHY_ComposanteState& StructuralCapacity::ComputeComposanteState( const MIL
     if( !attrition )
         throw std::exception( "Error in searching protection" );
     // Tirage de l'état opérationnel
-    const MT_Float rRand = ( 1 - MIL_Random::rand_io( MIL_Random::eFire ) );
+    const double rRand = ( 1 - MIL_Random::rand_io( MIL_Random::eFire ) );
     const double destruction = attrition->destruction_;
     const double repairableWithEvac = attrition->repairableWithEvac_ + destruction;
     const double repairableNoEvac = attrition->repairableNoEvac_ + repairableWithEvac;

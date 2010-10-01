@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectAttributeCrossingSite_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 class CrossingSiteAttribute;
@@ -48,7 +47,7 @@ public:
     //! @name Helpers
     //@{
     bool IsBanksToFitOut() const;
-    MT_Float GetWidth() const;
+    double GetWidth() const;
     //@}
 
 private:
@@ -61,9 +60,9 @@ private:
     //! @name Data Members
     //@{
     const CrossingSiteAttribute* attr_;
-    MT_Float rWidth_;
-    MT_Float rDepth_;
-    MT_Float rCurrentSpeed_;  // Vitesse du courant
+    double rWidth_;
+    double rDepth_;
+    double rCurrentSpeed_;  // Vitesse du courant
     bool  bBanksToFitOut_; // Berges a amenager
     //@}
 };

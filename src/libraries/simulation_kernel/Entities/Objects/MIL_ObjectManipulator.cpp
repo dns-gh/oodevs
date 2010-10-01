@@ -87,7 +87,7 @@ void MIL_ObjectManipulator::Construct()
 // Name: MIL_ObjectManipulator::Construct
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-void MIL_ObjectManipulator::Construct( MT_Float rDeltaPercentage )
+void MIL_ObjectManipulator::Construct( double rDeltaPercentage )
 {
     object_.GetAttribute< ConstructionAttribute >().Build( rDeltaPercentage );
 }
@@ -96,7 +96,7 @@ void MIL_ObjectManipulator::Construct( MT_Float rDeltaPercentage )
 // Name: MIL_ObjectManipulator::Destroy
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-void MIL_ObjectManipulator::Destroy( MT_Float rDeltaPercentage )
+void MIL_ObjectManipulator::Destroy( double rDeltaPercentage )
 {
     object_.GetAttribute< ConstructionAttribute >().Build( -rDeltaPercentage );
 }
@@ -133,7 +133,7 @@ void MIL_ObjectManipulator::Destroy()
 // Name: MIL_ObjectManipulator::Mine
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-void MIL_ObjectManipulator::Mine( MT_Float rDeltaPercentage )
+void MIL_ObjectManipulator::Mine( double rDeltaPercentage )
 {
     object_.GetAttribute< MineAttribute >().Update( rDeltaPercentage );
 }
@@ -151,7 +151,7 @@ void MIL_ObjectManipulator::Mine()
 // Name: MIL_ObjectManipulator::Demine
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-void MIL_ObjectManipulator::Demine( MT_Float rDeltaPercentage )
+void MIL_ObjectManipulator::Demine( double rDeltaPercentage )
 {
     object_.GetAttribute< MineAttribute >().Update( -rDeltaPercentage );
 }
@@ -160,7 +160,7 @@ void MIL_ObjectManipulator::Demine( MT_Float rDeltaPercentage )
 // Name: MIL_ObjectManipulator::Bypass
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-void MIL_ObjectManipulator::Bypass( MT_Float rDeltaPercentage )
+void MIL_ObjectManipulator::Bypass( double rDeltaPercentage )
 {
     object_.Get< BypassableCapacity >().Bypass( object_, rDeltaPercentage );
 }
@@ -362,13 +362,13 @@ bool MIL_ObjectManipulator::CanBeAnimatedBy( const MIL_Agent_ABC& agent ) const
 // Name: MIL_ObjectManipulator::ApplySpeedPolicy
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MT_Float MIL_ObjectManipulator::ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed ) const
+double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed ) const
 {
     const MobilityCapacity* capacity = object_.Retrieve< MobilityCapacity >();
     const StructuralCapacity* structuralcapacity = object_.Retrieve< StructuralCapacity >();
     if ( capacity )
         return capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? 0.01 * structuralcapacity->GetStructuralState() : 1. );
-    return std::numeric_limits< MT_Float >::max();
+    return std::numeric_limits< double >::max();
 }
 
 
@@ -376,7 +376,7 @@ MT_Float MIL_ObjectManipulator::ApplySpeedPolicy( MT_Float rAgentSpeedWithinObje
 // Name: MIL_ObjectManipulator::GetSizeCoef
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-MT_Float MIL_ObjectManipulator::GetSizeCoef() const
+double MIL_ObjectManipulator::GetSizeCoef() const
 {
     BuildableCapacity* buildable = object_.Retrieve< BuildableCapacity >();
     if( buildable && buildable->GetUnit() == ConstructionCapacity::eDensity )

@@ -40,14 +40,14 @@ public:
 
     //! @name Operations
     //@{
-    int CompareOnX( MT_Float rValue, const T_Value& pAgent ) const;
-    int CompareOnY( MT_Float rValue, const T_Value& pAgent ) const;
+    int CompareOnX( double rValue, const T_Value& pAgent ) const;
+    int CompareOnY( double rValue, const T_Value& pAgent ) const;
     //@}
 
 private:
     //! @name Operations
     //@{
-    int Compare( MT_Float rDelta ) const;
+    int Compare( double rDelta ) const;
     //@}
 };
 

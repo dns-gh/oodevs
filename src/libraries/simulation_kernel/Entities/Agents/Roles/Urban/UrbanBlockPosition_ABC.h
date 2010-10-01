@@ -11,7 +11,6 @@
 #define __UrbanBlockPosition_ABC_h_
 
 #include "UrbanLocationComputer_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 class MIL_Agent_ABC;
 class PHY_DotationCategory;
@@ -38,7 +37,7 @@ public:
     virtual geometry::Point2f   GetTargetPosition( MIL_Agent_ABC& firer, urbanLocation::UrbanLocationComputer_ABC::Results& targetResult ) const = 0;
     virtual float               ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const = 0;
     virtual float               ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float /*modificator*/ ) const = 0;
-    virtual MT_Float            ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const = 0;
+    virtual double            ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const = 0;
     //@}
 
 private:

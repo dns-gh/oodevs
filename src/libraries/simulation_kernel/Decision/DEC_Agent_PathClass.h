@@ -10,7 +10,6 @@
 #ifndef __DEC_PathClass_h_
 #define __DEC_PathClass_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include <pathfind/TerrainData.h>
 
 namespace xml
@@ -48,38 +47,38 @@ public:
 
     //! @name Accessors
     //@{
-          MT_Float     GetPreferedTerrainCost              () const;
+          double     GetPreferedTerrainCost              () const;
     const TerrainData& GetPreferedTerrain                  () const;
-          MT_Float     GetAvoidedTerrainCost               () const;
+          double     GetAvoidedTerrainCost               () const;
     const TerrainData& GetAvoidedTerrain                   () const;
 
-          MT_Float     GetAltitudePreference               () const;
+          double     GetAltitudePreference               () const;
 
-          MT_Float     GetComfortFuseauDistance            () const;
-          MT_Float     GetFuseauCostPerMeterOut            () const;
-          MT_Float     GetFuseauCostPerMeterIn             () const;
-          MT_Float     GetMaximumFuseauDistance            () const;
-          MT_Float     GetMaximumFuseauDistanceWithAutomata() const;
+          double     GetComfortFuseauDistance            () const;
+          double     GetFuseauCostPerMeterOut            () const;
+          double     GetFuseauCostPerMeterIn             () const;
+          double     GetMaximumFuseauDistance            () const;
+          double     GetMaximumFuseauDistanceWithAutomata() const;
 
-          MT_Float     GetAutomateFuseauCostPerMeterOut    () const;
-          MT_Float     GetMaximumAutomataFuseauDistance    () const;
+          double     GetAutomateFuseauCostPerMeterOut    () const;
+          double     GetMaximumAutomataFuseauDistance    () const;
 
-          MT_Float     GetDangerDirectionBaseCost          () const;
-          MT_Float     GetDangerDirectionLinearCost        () const;
+          double     GetDangerDirectionBaseCost          () const;
+          double     GetDangerDirectionLinearCost        () const;
 
           bool         AvoidObjects                        () const;
           bool         AvoidEnemies                        () const;
           bool         HandlePopulations                   () const;
 
-          MT_Float     GetEnemyCostOnContact               () const;
-          MT_Float     GetEnemyCostAtSecurityRange         () const;
-          MT_Float     GetEnemyMaximumCost                 () const;
-          MT_Float     GetObjectCost                       ( const MIL_ObjectType_ABC& objectType ) const;
-          MT_Float     GetPopulationAttitudeCost           ( const MIL_PopulationAttitude& attitude ) const;
-          MT_Float     GetPopulationSecurityRange          () const;
-          MT_Float     GetPopulationMaximumCost            () const;
-          MT_Float     GetCostOutsideOfPopulation          () const;
-          MT_Float     GetThreshold                        () const;
+          double     GetEnemyCostOnContact               () const;
+          double     GetEnemyCostAtSecurityRange         () const;
+          double     GetEnemyMaximumCost                 () const;
+          double     GetObjectCost                       ( const MIL_ObjectType_ABC& objectType ) const;
+          double     GetPopulationAttitudeCost           ( const MIL_PopulationAttitude& attitude ) const;
+          double     GetPopulationSecurityRange          () const;
+          double     GetPopulationMaximumCost            () const;
+          double     GetCostOutsideOfPopulation          () const;
+          double     GetThreshold                        () const;
 
           bool         IsShort                             () const;
     //@}
@@ -115,13 +114,13 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MT_Float >                              T_ObjectCosts;
+    typedef std::vector< double >                              T_ObjectCosts;
 
     typedef std::pair< bool /*bFlying*/, bool /*, bAutonomous*/> T_BooleanPair;
     typedef std::pair< std::string, T_BooleanPair >              T_RuleType;
     typedef std::map< T_RuleType, DEC_Agent_PathClass* >         T_Rules;
 
-    typedef std::map< const MIL_PopulationAttitude*, MT_Float >  T_PopulationAttitudeCosts;
+    typedef std::map< const MIL_PopulationAttitude*, double >  T_PopulationAttitudeCosts;
     //@}
 
 private:
@@ -130,35 +129,35 @@ private:
     bool          bShort_;
 
     bool          bAvoidObjects_;
-    MT_Float      rObstructionThreshold_;
+    double      rObstructionThreshold_;
     T_ObjectCosts objectCosts_;
 
-    MT_Float    rAltitudePreference_;
+    double    rAltitudePreference_;
 
-    MT_Float    rPreferedTerrainCost_;
+    double    rPreferedTerrainCost_;
     TerrainData preferedTerrain_;
-    MT_Float    rAvoidedTerrainCost_;
+    double    rAvoidedTerrainCost_;
     TerrainData avoidedTerrain_;
 
-    MT_Float rMaximumFuseauDistance_;
-    MT_Float rMaximumFuseauDistanceWithAutomata_;
-    MT_Float rComfortFuseauDistance_;
-    MT_Float rFuseauCostPerMeterOut_;
-    MT_Float rFuseauCostPerMeterIn_;
+    double rMaximumFuseauDistance_;
+    double rMaximumFuseauDistanceWithAutomata_;
+    double rComfortFuseauDistance_;
+    double rFuseauCostPerMeterOut_;
+    double rFuseauCostPerMeterIn_;
 
-    MT_Float rMaximumAutomataFuseauDistance_;
-    MT_Float rAutomataFuseauCostPerMeterOut_;
+    double rMaximumAutomataFuseauDistance_;
+    double rAutomataFuseauCostPerMeterOut_;
 
-    MT_Float rDangerDirectionBaseCost_;
-    MT_Float rDangerDirectionLinearCost_;
+    double rDangerDirectionBaseCost_;
+    double rDangerDirectionLinearCost_;
 
-    MT_Float rEnemyCostOnContact_;
-    MT_Float rEnemyCostAtSecurityRange_;
-    MT_Float rEnemyMaximumCost_;
+    double rEnemyCostOnContact_;
+    double rEnemyCostAtSecurityRange_;
+    double rEnemyMaximumCost_;
 
-    MT_Float rPopulationSecurityRange_;
-    MT_Float rPopulationMaximumCost_;
-    MT_Float rCostOutsideOfPopulation_;
+    double rPopulationSecurityRange_;
+    double rPopulationMaximumCost_;
+    double rCostOutsideOfPopulation_;
 
     T_PopulationAttitudeCosts populationAttitudeCosts_;
     //@}

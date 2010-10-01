@@ -62,10 +62,10 @@ public:
     virtual void Poison( const MIL_ToxicEffectManipulator& nbcAgent );
     virtual void Contaminate( const MIL_ToxicEffectManipulator& nbcAgent );
     virtual void Decontaminate();
-    virtual void Decontaminate( MT_Float rRatioAgentsWorking );
+    virtual void Decontaminate( double rRatioAgentsWorking );
     void WearNbcProtectionSuit();
     void RemoveNbcProtectionSuit();
-    virtual MT_Float GetContaminationQuantity() const;
+    virtual double GetContaminationQuantity() const;
     virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
     void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     //@}
@@ -101,8 +101,8 @@ private:
     MIL_AgentPion& pion_;
     T_NbcAgentTypeSet nbcAgentTypesContaminating_;
     bool bNbcProtectionSuitWorn_;
-    MT_Float rContaminationState_;
-    MT_Float rContaminationQuantity_;
+    double rContaminationState_;
+    double rContaminationQuantity_;
     bool bHasChanged_;
     bool poisoned_;
     bool lastStatePoisoning_;

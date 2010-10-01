@@ -832,7 +832,7 @@ void DEC_Decision< T >::ClearPlotsRavitaillement()
 // Created: LDC 2009-11-04
 // -----------------------------------------------------------------------------
 template< class T >
-boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::GetLastPointOfPath( const MT_Float time, bool bBoundOnPath ) const
+boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::GetLastPointOfPath( const double time, bool bBoundOnPath ) const
 {
     return DEC_PathFunctions::ExtrapolatePosition( GetPion(), time, bBoundOnPath );
 }
@@ -842,7 +842,7 @@ boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::GetLastPointOfPath( const MT
 // Created: LDC 2009-11-04
 // -----------------------------------------------------------------------------
 template< class T >
-boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::ExtrapolatePosition( const MT_Float time, bool bBoundOnPath ) const
+boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::ExtrapolatePosition( const double time, bool bBoundOnPath ) const
 {
     return DEC_PathFunctions::ExtrapolatePosition( GetPion(), time, bBoundOnPath );
 }
@@ -882,7 +882,7 @@ bool DEC_Decision< T >::IsFlying() const
 // Created: SBO 2009-07-29
 // -----------------------------------------------------------------------------
 template< class T >
-MT_Float DEC_Decision< T >::GetMajorOperationalState() const
+double DEC_Decision< T >::GetMajorOperationalState() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }

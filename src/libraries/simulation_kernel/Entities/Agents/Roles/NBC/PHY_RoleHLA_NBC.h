@@ -34,8 +34,8 @@ public:
     virtual void Poison        ( const MIL_ToxicEffectManipulator& nbcAgent );
     virtual void Contaminate   ( const MIL_ToxicEffectManipulator& nbcAgent );
     virtual void Decontaminate ();
-    virtual void Decontaminate ( MT_Float rRatioAgentsWorking );
-    virtual MT_Float GetContaminationQuantity() const;
+    virtual void Decontaminate ( double rRatioAgentsWorking );
+    virtual double GetContaminationQuantity() const;
     //@}
 
     //! @name Modifiers
@@ -55,7 +55,7 @@ public:
     virtual void WearNbcProtectionSuit  () {}
     virtual void RemoveNbcProtectionSuit() {}
 
-    virtual MT_Float ModifyMaxSpeed( MT_Float /*rSpeed*/    ) const { return 0; }
+    virtual double ModifyMaxSpeed( double /*rSpeed*/    ) const { return 0; }
     //@}
 
     //! @name Network

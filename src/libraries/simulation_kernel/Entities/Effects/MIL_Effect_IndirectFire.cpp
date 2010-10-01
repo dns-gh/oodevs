@@ -32,7 +32,7 @@
 // Name: MIL_Effect_IndirectFire constructor
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, unsigned int nTargetKnowledgeID, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire )
+MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, unsigned int nTargetKnowledgeID, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, double rInterventionTypeToFire )
     : nNbrRefs_                ( 0 )
     , firer_                   ( firer )
     , rInterventionTypeToFire_ ( rInterventionTypeToFire )
@@ -55,7 +55,7 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, un
 // Name: MIL_Effect_IndirectFire constructor
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire )
+MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, double rInterventionTypeToFire )
     : nNbrRefs_                ( 0 )
     , firer_                   ( firer )
     , rInterventionTypeToFire_ ( rInterventionTypeToFire )
@@ -112,7 +112,7 @@ bool MIL_Effect_IndirectFire::CanWeaponBeUsed( const PHY_Weapon& weapon ) const
     if( weapon.GetDotationCategory() != indirectDotationCategory_.GetDotationCategory() )
         return false;
 
-    const MT_Float rFlyingDist = vSourcePosition_.Distance( vTargetPosition_ );
+    const double rFlyingDist = vSourcePosition_.Distance( vTargetPosition_ );
     if( rFlyingDist < weapon.GetMinRangeToIndirectFire() || rFlyingDist > weapon.GetMaxRangeToIndirectFire() )
         return false;
 
@@ -129,7 +129,7 @@ void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_Indirect
 
     UpdateTargetPositionFromKnowledge();
 
-    const MT_Float rNewTimeBeforeImpact = vSourcePosition_.Distance( vTargetPosition_ ) / weaponType.GetAverageSpeed();
+    const double rNewTimeBeforeImpact = vSourcePosition_.Distance( vTargetPosition_ ) / weaponType.GetAverageSpeed();
     rImpactTimeStep_ = std::max( rImpactTimeStep_, rNewTimeBeforeImpact + MIL_Singletons::GetTime().GetCurrentTick() );
 
     nNbrAmmoFired_ += nNbrAmmoReserved;
@@ -227,7 +227,7 @@ unsigned int MIL_Effect_IndirectFire::GetNbrAmmoToCompleteInterventionType() con
     if( bFired_ )
         return 0;
 
-    MT_Float rTmp = indirectDotationCategory_.ConvertToNbrAmmo( rInterventionTypeToFire_ ) - nNbrAmmoFired_;
+    double rTmp = indirectDotationCategory_.ConvertToNbrAmmo( rInterventionTypeToFire_ ) - nNbrAmmoFired_;
     if( rTmp <= 0. )
         return 0;
     return std::max( (unsigned int)1, (unsigned int)rTmp );

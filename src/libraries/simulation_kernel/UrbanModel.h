@@ -10,7 +10,6 @@
 #ifndef __UrbanModel_h_
 #define __UrbanModel_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/split_member.hpp>
 
@@ -52,7 +51,7 @@ public:
     void ReadUrbanModel( const MIL_Config& config );
     void SendCreation( urban::TerrainObject_ABC& UrbanBlock ) const;
     const urban::TerrainObject_ABC* FindUrbanObject( unsigned id ) const;
-    MT_Float GetUrbanBlockCost( MT_Float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    double GetUrbanBlockCost( double weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
     void CreateObjectWrapper( urban::TerrainObject_ABC& object );
     //@}
 

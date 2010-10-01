@@ -66,7 +66,7 @@ double DEC_Population_PathfinderRule::GetChannelingCost( const MT_Vector2D& vFro
         return 0.;
     for( DEC_Population_Path::CIT_PopulationPathChannelerVector it = channelers.begin(); it != channelers.end(); ++it )
     {
-        if( it->ComputeCost( vFrom, vTo, terrainTo, terrainBetween ) != std::numeric_limits< MT_Float >::min() ) // Inside channel
+        if( it->ComputeCost( vFrom, vTo, terrainTo, terrainBetween ) != std::numeric_limits< double >::min() ) // Inside channel
             return 0;
     }
     return path_.GetCostOutsideOfChanneling();

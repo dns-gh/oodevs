@@ -36,16 +36,16 @@ public:
     //! @name Operations
     //@{
     PHY_AttritionData&         operator=             ( const PHY_AttritionData& rhs );
-    MT_Float                   GetScore              () const;
-    const PHY_ComposanteState& ComputeComposanteState( MT_Float urbanProtection ) const;
+    double                   GetScore              () const;
+    const PHY_ComposanteState& ComputeComposanteState( double urbanProtection ) const;
     //@}
 
 private:
-    MT_Float rDestroyed_;
-    MT_Float rReparableWithEvacuation_;
-    MT_Float rReparableWithoutEvacuation_;
+    double rDestroyed_;
+    double rReparableWithEvacuation_;
+    double rReparableWithoutEvacuation_;
 
-    MT_Float rScore_;
+    double rScore_;
 };
 
 #endif // __PHY_AttritionData_h_

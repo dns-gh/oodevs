@@ -22,9 +22,9 @@
 PHY_Speeds::PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration )
     : rMaxSpeed_                ( -1. )
     , rBaseSpeed_               ( -1. )
-    , rAreaSpeeds_              ( new MT_Float[ 8  ] ) // $$$$ AGE 2005-02-03: Use a vector
-    , rBorderSpeeds_            ( new MT_Float[ 8  ] )
-    , rLinearSpeeds_            ( new MT_Float[ 11 ] )
+    , rAreaSpeeds_              ( new double[ 8  ] ) // $$$$ AGE 2005-02-03: Use a vector
+    , rBorderSpeeds_            ( new double[ 8  ] )
+    , rLinearSpeeds_            ( new double[ 11 ] )
     , nLinearPassabilityMask_   ( 0 )
     , nAreaPassabilityMask_     ( 0 )
     , nAreaImpassabilityMask_   ( 0 )
@@ -49,9 +49,9 @@ PHY_Speeds::PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration )
 PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
     : rMaxSpeed_                ( role.GetMaxSpeedWithReinforcement() )
     , rBaseSpeed_               ( role.GetSpeedWithReinforcement( TerrainData() ) )
-    , rAreaSpeeds_              ( new MT_Float[ 8  ] )
-    , rBorderSpeeds_            ( new MT_Float[ 8  ] )
-    , rLinearSpeeds_            ( new MT_Float[ 11 ] )
+    , rAreaSpeeds_              ( new double[ 8  ] )
+    , rBorderSpeeds_            ( new double[ 8  ] )
+    , rLinearSpeeds_            ( new double[ 11 ] )
     , nLinearPassabilityMask_   ( 0 )
     , nAreaPassabilityMask_     ( 0 )
     , nAreaImpassabilityMask_   ( 0 )
@@ -85,9 +85,9 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
 PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role, bool loaded )
     : rMaxSpeed_                ( role.GetTheoricMaxSpeed( loaded ) )
     , rBaseSpeed_               ( role.GetSpeedWithReinforcement( TerrainData() ) )
-    , rAreaSpeeds_              ( new MT_Float[ 8  ] )
-    , rBorderSpeeds_            ( new MT_Float[ 8  ] )
-    , rLinearSpeeds_            ( new MT_Float[ 11 ] )
+    , rAreaSpeeds_              ( new double[ 8  ] )
+    , rBorderSpeeds_            ( new double[ 8  ] )
+    , rLinearSpeeds_            ( new double[ 11 ] )
     , nLinearPassabilityMask_   ( 0 )
     , nAreaPassabilityMask_     ( 0 )
     , nAreaImpassabilityMask_   ( 0 )
@@ -153,7 +153,7 @@ void PHY_Speeds::ReadTerrain( xml::xistream& xis )
     if( data.Area() == 0xFF )
         xis.error( "Unknown terrain type '" + strTerrainType + "'" );
 
-    MT_Float& speed = SpeedFor( data );
+    double& speed = SpeedFor( data );
 
     xis >> xml::attribute( "value", speed );
 
@@ -180,7 +180,7 @@ void PHY_Speeds::CheckInitialization( xml::xistream& xis, unsigned int timeStepD
 {
     for( unsigned nOffset = 0; nOffset < 8; ++nOffset )
     {
-        MT_Float& speed = *( rAreaSpeeds_ + nOffset );
+        double& speed = *( rAreaSpeeds_ + nOffset );
         if( speed == -1 )
         {
             speed = 0;
@@ -189,7 +189,7 @@ void PHY_Speeds::CheckInitialization( xml::xistream& xis, unsigned int timeStepD
     }
     for( unsigned nOffset = 0; nOffset < 8; ++nOffset )
     {
-        MT_Float& speed = *( rBorderSpeeds_ + nOffset );
+        double& speed = *( rBorderSpeeds_ + nOffset );
         if( speed == -1 )
         {
             speed = *( rAreaSpeeds_ + nOffset );
@@ -198,7 +198,7 @@ void PHY_Speeds::CheckInitialization( xml::xistream& xis, unsigned int timeStepD
     }
     for( unsigned nOffset = 0; nOffset < 10; ++nOffset )
     {
-        MT_Float& speed = *( rLinearSpeeds_ + nOffset );
+        double& speed = *( rLinearSpeeds_ + nOffset );
         if( speed == -1 )
         {
             speed = 0;
@@ -219,7 +219,7 @@ void PHY_Speeds::CheckInitialization( xml::xistream& xis, unsigned int timeStepD
 // Name: PHY_Speeds::GetMaxSpeed
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
-MT_Float PHY_Speeds::GetMaxSpeed() const
+double PHY_Speeds::GetMaxSpeed() const
 {
     return rMaxSpeed_;
 }
@@ -228,29 +228,29 @@ MT_Float PHY_Speeds::GetMaxSpeed() const
 // Name: PHY_Speeds::GetMaxSpeed
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
-MT_Float PHY_Speeds::GetMaxSpeed( const TerrainData& data ) const
+double PHY_Speeds::GetMaxSpeed( const TerrainData& data ) const
 {
     if( ! IsPassable( data ) )
         return 0;
-    MT_Float rMax = data == TerrainData() ? rBaseSpeed_ : 0;
+    double rMax = data == TerrainData() ? rBaseSpeed_ : 0;
     {
         unsigned int nOffset = 0;
         const unsigned char area = data.Area();
-        for( MT_Float* it = rAreaSpeeds_; it != rAreaSpeeds_ + 8; ++it, ++nOffset )
+        for( double* it = rAreaSpeeds_; it != rAreaSpeeds_ + 8; ++it, ++nOffset )
             if( area & (1<<nOffset) && *it > rMax )
                 rMax = *it;
     }
     {
         unsigned int nOffset = 0;
         const unsigned char border = data.Border();
-        for( MT_Float* it = rBorderSpeeds_; it != rBorderSpeeds_ + 8; ++it, ++nOffset )
+        for( double* it = rBorderSpeeds_; it != rBorderSpeeds_ + 8; ++it, ++nOffset )
             if( border & (1<<nOffset) && *it > rMax )
                 rMax = *it;
     }
     {
         unsigned nOffset = 0;
         const unsigned short linear = data.Linear();
-        for( MT_Float* it = rLinearSpeeds_; it != rLinearSpeeds_ + 11; ++it, ++nOffset )
+        for( double* it = rLinearSpeeds_; it != rLinearSpeeds_ + 11; ++it, ++nOffset )
             if( linear & (1<<nOffset) && *it > rMax )
                 rMax = *it;
     }
@@ -310,21 +310,21 @@ void PHY_Speeds::GenerateMasks()
     {
         nAreaImpassabilityMask_ = 0;
         unsigned int nOffset = 0;
-        for( MT_Float* it = rAreaSpeeds_; it != rAreaSpeeds_ + 8; ++it, ++nOffset )
+        for( double* it = rAreaSpeeds_; it != rAreaSpeeds_ + 8; ++it, ++nOffset )
             if( *it == 0. )
                 nAreaImpassabilityMask_ |= (1<<nOffset);
     }
     {
         nBorderImpassabilityMask_ = 0;
         unsigned int nOffset = 0;
-        for( MT_Float* it = rBorderSpeeds_; it != rBorderSpeeds_ + 8; ++it, ++nOffset )
+        for( double* it = rBorderSpeeds_; it != rBorderSpeeds_ + 8; ++it, ++nOffset )
             if( *it == 0. )
                 nBorderImpassabilityMask_ |= (1<<nOffset);
     }
     {
         nLinearImpassabilityMask_ = 0;
         unsigned int nOffset = 0;
-        for( MT_Float* it = rLinearSpeeds_; it != rLinearSpeeds_ + 11; ++it, ++nOffset )
+        for( double* it = rLinearSpeeds_; it != rLinearSpeeds_ + 11; ++it, ++nOffset )
             if( *it == 0. )
                 nLinearImpassabilityMask_ |= (1<<nOffset);
     }
@@ -334,7 +334,7 @@ void PHY_Speeds::GenerateMasks()
 // Name: PHY_Speeds::SpeedFor
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
-MT_Float& PHY_Speeds::SpeedFor( const TerrainData& data )
+double& PHY_Speeds::SpeedFor( const TerrainData& data )
 {
     if( data.Area() )
         return *( rAreaSpeeds_ + data.ExtractAreaOffset() );

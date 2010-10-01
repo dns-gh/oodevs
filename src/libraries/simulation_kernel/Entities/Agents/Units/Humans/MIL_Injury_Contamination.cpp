@@ -238,7 +238,7 @@ bool MIL_Injury_Contamination::IsInjured( const PHY_ComposantePion& pComposante 
 // Name: MIL_Injury_Contamination::SetInjury
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-void MIL_Injury_Contamination::SetInjury( unsigned int nNbrAliveHumans , MT_Float rDensity )
+void MIL_Injury_Contamination::SetInjury( unsigned int nNbrAliveHumans , double rDensity )
 {
     //Population doesn't have any protection
 

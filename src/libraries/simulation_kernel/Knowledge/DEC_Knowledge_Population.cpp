@@ -254,7 +254,7 @@ void DEC_Knowledge_Population::Secure( const MIL_AgentPion& pionSecuring )
 // Name: DEC_Knowledge_Population::Exterminate
 // Created: SBO 2005-12-22
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Population::Exterminate( const MIL_AgentPion& exterminator, MT_Float rSurface )
+void DEC_Knowledge_Population::Exterminate( const MIL_AgentPion& exterminator, double rSurface )
 {
     assert( pPopulationKnown_ );
     pPopulationKnown_->Exterminate( exterminator, rSurface );
@@ -288,7 +288,7 @@ DEC_Knowledge_PopulationFlow& DEC_Knowledge_Population::GetKnowledge( const MIL_
 // Name: DEC_Knowledge_Population::GetDangerosity
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Population::GetDangerosity( const MIL_AgentPion& target ) const
+double DEC_Knowledge_Population::GetDangerosity( const MIL_AgentPion& target ) const
 {
     assert( pPopulationKnown_ );
     return pPopulationKnown_->GetDangerosity( target );
@@ -349,7 +349,7 @@ MT_Vector2D DEC_Knowledge_Population::GetSecuringPoint( const MIL_Agent_ABC& sec
 // Name: DEC_Knowledge_Population::GetSafetyPosition
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-MT_Vector2D DEC_Knowledge_Population::GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance ) const
+MT_Vector2D DEC_Knowledge_Population::GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const
 {
     assert( pPopulationKnown_ );
     return pPopulationKnown_->GetSafetyPosition( agent, rMinDistance );
@@ -435,7 +435,7 @@ void DEC_Knowledge_Population::SendStateToNewClient() const
 // Name: DEC_Knowledge_Population::GetDominationState
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Population::GetDominationState() const
+double DEC_Knowledge_Population::GetDominationState() const
 {
     return rDominationState_;
 }

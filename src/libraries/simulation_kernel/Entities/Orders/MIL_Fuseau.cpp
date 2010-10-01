@@ -464,7 +464,7 @@ void MIL_Fuseau::Reset()
 // Created: NLD 2003-04-22
 //-----------------------------------------------------------------------------
 template< typename Iterator >
-void GetNextPoint( MT_Vector2D& vCur, Iterator itEnd, Iterator& itNext, MT_Float rStep ) // const
+void GetNextPoint( MT_Vector2D& vCur, Iterator itEnd, Iterator& itNext, double rStep ) // const
 {
     if( itNext == itEnd )
         return;
@@ -472,7 +472,7 @@ void GetNextPoint( MT_Vector2D& vCur, Iterator itEnd, Iterator& itNext, MT_Float
     MT_Vector2D vNext = *itNext;
 
     MT_Vector2D vDir = vNext - vCur;
-    MT_Float rDirLength = vDir.Magnitude();
+    double rDirLength = vDir.Magnitude();
     if( rDirLength )
         vDir /= rDirLength;
 
@@ -503,13 +503,13 @@ void GetNextPoint( MT_Vector2D& vCur, Iterator itEnd, Iterator& itNext, MT_Float
 // Name: GetPointOnLimitAfterIntersection
 // Created: NLD 2003-08-22
 //-----------------------------------------------------------------------------
-MT_Vector2D GetPointOnLimitAfterIntersection( const T_PointVector& points, const MT_Vector2D& vIntersect, MT_Float rDistBefore ) // const
+MT_Vector2D GetPointOnLimitAfterIntersection( const T_PointVector& points, const MT_Vector2D& vIntersect, double rDistBefore ) // const
 {
     CIT_PointVector itBegin = points.begin();
     CIT_PointVector itPoint = itBegin;
 
     const MT_Vector2D* pPrevPoint = &*itBegin;
-    MT_Float rDist = 0;
+    double rDist = 0;
     for( ++itPoint; itPoint != points.end(); ++itPoint )
     {
         const MT_Vector2D* pCurPoint = &*itPoint;
@@ -591,7 +591,7 @@ bool MIL_Fuseau::Split( unsigned int nNbrSubFuseau, T_PointVectorVector& interme
         for( IT_PointVectorVector it = intermediateLimits.begin(); it != intermediateLimits.end(); ++it, ++i )
         {
             (*it).reserve( leftPointVectorTmp.size() );
-            (*it).push_back( leftPointVectorTmp[j] + vTmp * (MT_Float)(i) );
+            (*it).push_back( leftPointVectorTmp[j] + vTmp * (double)(i) );
         }
     }
 
@@ -683,7 +683,7 @@ void MIL_Fuseau::ComputeNearestEntryPoint( const MT_Vector2D& vStartPos, MT_Vect
     assert( pLeftLimit_ && pRightLimit_ );
     CT_PointVector& borderVector = GetBorderPoints();
 
-    MT_Float rSquareDist = std::numeric_limits<MT_Float>::max();
+    double rSquareDist = std::numeric_limits<double>::max();
 
     const MT_Vector2D* pLastPos = 0;
     for( CIT_PointVector itPoint = borderVector.begin(); itPoint != borderVector.end(); ++itPoint )
@@ -695,7 +695,7 @@ void MIL_Fuseau::ComputeNearestEntryPoint( const MT_Vector2D& vStartPos, MT_Vect
             MT_Line lineTmp( *pLastPos, *pPos );
 
             MT_Vector2D vTmp        = lineTmp.ClosestPointOnLine( vStartPos );
-            MT_Float rSquareDistTmp = vStartPos.SquareDistance( vTmp );
+            double rSquareDistTmp = vStartPos.SquareDistance( vTmp );
             if( rSquareDistTmp < rSquareDist )
             {
                 rSquareDist = rSquareDistTmp;
@@ -713,7 +713,7 @@ namespace
 //$$$ NLD - PUTAIN DE FONCTIONS !
 bool GetPolyLineClosestPoint( const MT_Vector2D& vPos, const T_PointVector& vPoly, MT_Vector2D& vNearest, CIT_PointVector& itNext )
 {
-    MT_Float rDist = std::numeric_limits<MT_Float>::max();
+    double rDist = std::numeric_limits<double>::max();
     bool  bRes                      = false;
     const MT_Vector2D* pLastPos     = 0;
     for( CIT_PointVector itPoint = vPoly.begin(); itPoint != vPoly.end(); ++itPoint )
@@ -723,7 +723,7 @@ bool GetPolyLineClosestPoint( const MT_Vector2D& vPos, const T_PointVector& vPol
         {
             MT_Line lineTmp( *pLastPos, *pPos );
             MT_Vector2D vTmp        = lineTmp.ClosestPointOnLine( vPos );
-            MT_Float rSquareDistTmp = vPos.SquareDistance( vTmp );
+            double rSquareDistTmp = vPos.SquareDistance( vTmp );
             if( rSquareDistTmp < rDist )
             {
                 bRes        = true;
@@ -758,9 +758,9 @@ void MIL_Fuseau::ComputeEntryPoint(const MT_Vector2D& vPos, MT_Vector2D& vResult
     const T_PointVector* pOtherLimit = 0;
     MT_Line*       pExtremity  = 0;
     MT_Vector2D    vNearest;
-    static const MT_Float rNbSteps = MIL_Tools::ConvertMeterToSim( nNbrMeterPerSample_ );
-    MT_Float rOwnStep   = 0.0;
-    MT_Float rOtherStep = 0.0;
+    static const double rNbSteps = MIL_Tools::ConvertMeterToSim( nNbrMeterPerSample_ );
+    double rOwnStep   = 0.0;
+    double rOtherStep = 0.0;
 
     // check nearest point with left border
     IT_PointVector itAfterRefPointProjection;
@@ -781,14 +781,14 @@ void MIL_Fuseau::ComputeEntryPoint(const MT_Vector2D& vPos, MT_Vector2D& vResult
         rOtherStep   = pLeftLimit_ ->GetLength() / rNbSteps;
     }
 
-    MT_Float rSquareDist = vPos.SquareDistance( vNearest );
+    double rSquareDist = vPos.SquareDistance( vNearest );
 
     // check extremity segments
 
     // left
     MT_Line vLeftSeg( *pLeftLimit_->GetPoints().begin(), *pRightLimit_->GetPoints().begin() );
     MT_Vector2D vTmp        = vLeftSeg.ClosestPointOnLine( vPos );
-    MT_Float rSquareDistTmp = vPos.SquareDistance( vTmp );
+    double rSquareDistTmp = vPos.SquareDistance( vTmp );
     if( rSquareDistTmp <= rSquareDist)
     {
         rSquareDist = rSquareDistTmp;
@@ -844,7 +844,7 @@ void MIL_Fuseau::ComputeEntryPoint(const MT_Vector2D& vPos, MT_Vector2D& vResult
 // Name: MIL_Fuseau::ComputePointBeforeLima
 // Created: NLD 2003-08-22
 // -----------------------------------------------------------------------------
-bool MIL_Fuseau::ComputePointBeforeLima( const MIL_LimaOrder& lima, MT_Float rDistBefore, MT_Vector2D& vResult ) const
+bool MIL_Fuseau::ComputePointBeforeLima( const MIL_LimaOrder& lima, double rDistBefore, MT_Vector2D& vResult ) const
 {
     T_PointVector result;
     ComputePointsBeforeLima( lima, rDistBefore, 1, result );
@@ -863,7 +863,7 @@ bool MIL_Fuseau::ComputePointBeforeLima( const MIL_LimaOrder& lima, MT_Float rDi
 // Name: MIL_Fuseau::ComputePointsBeforeLima
 // Created: NLD 2003-08-22
 // -----------------------------------------------------------------------------
-bool MIL_Fuseau::ComputePointsBeforeLima( const MIL_LimaOrder& lima, MT_Float rDistBefore, unsigned int nNbPoints, T_PointVector& results ) const
+bool MIL_Fuseau::ComputePointsBeforeLima( const MIL_LimaOrder& lima, double rDistBefore, unsigned int nNbPoints, T_PointVector& results ) const
 {
     results.clear();
 
@@ -900,21 +900,21 @@ bool MIL_Fuseau::ComputePointsBeforeLima( const MIL_LimaOrder& lima, MT_Float rD
     TER_Polygon::Intersection( supportLine, PRECISION );
 
     // positionnement des points
-    const MT_Float rDist = supportLine.Magnitude() / nNbPoints;
+    const double rDist = supportLine.Magnitude() / nNbPoints;
     if( rDist == 0. )
         return false;
 
-    for ( MT_Float rCurrentDist = rDist * 0.5; nNbPoints--; rCurrentDist += rDist )
+    for ( double rCurrentDist = rDist * 0.5; nNbPoints--; rCurrentDist += rDist )
         results.push_back( supportLine.GetPointAt( rCurrentDist ) );
     return true;
 }
 
 namespace
 {
-    MT_Float ComputeDistance( const T_PointVector& points, const CIT_PointVector& itNextRefPos, const MT_Vector2D& refPos )
+    double ComputeDistance( const T_PointVector& points, const CIT_PointVector& itNextRefPos, const MT_Vector2D& refPos )
     {
         assert( itNextRefPos != points.begin() );
-        MT_Float rDist = 0.;
+        double rDist = 0.;
         CIT_PointVector itPrev = points.begin();
         CIT_PointVector itCur = itPrev;
         ++itCur;
@@ -932,7 +932,7 @@ namespace
 // Name: MIL_Fuseau::ComputeAverageDistanceFromLima
 // Created: NLD 2007-04-29
 // -----------------------------------------------------------------------------
-MT_Float MIL_Fuseau::ComputeAverageDistanceFromLima( const MIL_LimaOrder& lima, const MT_Vector2D& refPoint ) const
+double MIL_Fuseau::ComputeAverageDistanceFromLima( const MIL_LimaOrder& lima, const MT_Vector2D& refPoint ) const
 {
     assert( pMiddleLimit_ );
 
@@ -949,8 +949,8 @@ MT_Float MIL_Fuseau::ComputeAverageDistanceFromLima( const MIL_LimaOrder& lima, 
         return 0.;
 
     // Calcul distance
-    const MT_Float rDist1 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterRefPointProjection, refPointProjection );
-    const MT_Float rDist2 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterLimaPoint         , limaPoint          );
+    const double rDist1 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterRefPointProjection, refPointProjection );
+    const double rDist2 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterLimaPoint         , limaPoint          );
 
     if( rDist1 > rDist2 )
         return 0;
@@ -961,7 +961,7 @@ MT_Float MIL_Fuseau::ComputeAverageDistanceFromLima( const MIL_LimaOrder& lima, 
 // Name: MIL_Fuseau::ComputeAverageDistanceFromObjective
 // Created: NLD 2007-04-29
 // -----------------------------------------------------------------------------
-MT_Float MIL_Fuseau::ComputeAverageDistanceFromObjective( const DEC_Objective& objective, const MT_Vector2D& refPoint ) const
+double MIL_Fuseau::ComputeAverageDistanceFromObjective( const DEC_Objective& objective, const MT_Vector2D& refPoint ) const
 {
     assert( pMiddleLimit_ );
 
@@ -978,8 +978,8 @@ MT_Float MIL_Fuseau::ComputeAverageDistanceFromObjective( const DEC_Objective& o
         return 0.;
 
     // Calcul distance
-    const MT_Float rDist1 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterRefPointProjection , refPointProjection  );
-    const MT_Float rDist2 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterObjectiveProjection, objectiveProjection );
+    const double rDist1 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterRefPointProjection , refPointProjection  );
+    const double rDist2 = ComputeDistance( pMiddleLimit_->GetPoints(), itAfterObjectiveProjection, objectiveProjection );
 
     if( rDist1 > rDist2 )
         return 0;
@@ -1032,16 +1032,16 @@ MIL_Fuseau& MIL_Fuseau::operator=( const MIL_Fuseau& fuseau )
 // Name: MIL_Fuseau::Distance
 // Created: AGE 2005-05-13
 // -----------------------------------------------------------------------------
-MT_Float MIL_Fuseau::Distance( const MT_Vector2D& p, bool bLimitsOnly ) const
+double MIL_Fuseau::Distance( const MT_Vector2D& p, bool bLimitsOnly ) const
 {
     if( ! pLeftLimit_ || ! pRightLimit_
        || ( !bLimitsOnly && IsInside( p ) ) )
         return 0;
 
     MT_Line first( pLeftLimit_->GetPoints().front(), pRightLimit_->GetPoints().front() );
-    const MT_Float rFirstDistance = first.ClosestPointOnLine( p ).Distance( p );
+    const double rFirstDistance = first.ClosestPointOnLine( p ).Distance( p );
     MT_Line last( pLeftLimit_->GetPoints().back(), pRightLimit_->GetPoints().back() );
-    const MT_Float rLastDistance = last.ClosestPointOnLine( p ).Distance( p );
+    const double rLastDistance = last.ClosestPointOnLine( p ).Distance( p );
 
     return std::min( std::min( rFirstDistance, rLastDistance ),
                      std::min( pLeftLimit_->Distance( p ), pRightLimit_->Distance( p ) ) );
@@ -1051,13 +1051,13 @@ MT_Float MIL_Fuseau::Distance( const MT_Vector2D& p, bool bLimitsOnly ) const
 // Name: MIL_Fuseau::GetCost
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
-MT_Float MIL_Fuseau::GetCost( const MT_Vector2D&, const MT_Vector2D& to, MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut, MT_Float rComfortDistanceIn, MT_Float rCostPerMeterIn ) const
+double MIL_Fuseau::GetCost( const MT_Vector2D&, const MT_Vector2D& to, double rMaxDistanceOut, double rCostPerMeterOut, double rComfortDistanceIn, double rCostPerMeterIn ) const
 {
     if( !pLeftLimit_ )
         return 0;
 
     const bool     bInside      = IsInsidish( to );
-    const MT_Float rMinDistance = Distance( to, true );
+    const double rMinDistance = Distance( to, true );
 
     if( bInside )
     {

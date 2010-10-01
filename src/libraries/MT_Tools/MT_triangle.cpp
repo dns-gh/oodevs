@@ -56,7 +56,7 @@ MT_Triangle::~MT_Triangle()
 // Name: MT_Triangle::Intersect2DWithCircle
 // Created: NLD 2003-07-25
 //-----------------------------------------------------------------------------
-bool MT_Triangle::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const
+bool MT_Triangle::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const
 {
     if( IsInside( vCircleCenter ) )
         return true;
@@ -81,7 +81,7 @@ bool MT_Triangle::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Fl
 // Name: MT_Triangle::GetArea
 // Created: NLD 2003-10-17
 // -----------------------------------------------------------------------------
-MT_Float MT_Triangle::GetArea() const
+double MT_Triangle::GetArea() const
 {
     MT_Line lineAB( *pPos1_, *pPos2_ );
 

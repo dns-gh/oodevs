@@ -188,7 +188,7 @@ private:
     virtual bool IsPC() const;
     virtual bool IsTransported() const;
     virtual bool IsFlying() const;
-    virtual MT_Float GetMajorOperationalState() const;
+    virtual double GetMajorOperationalState() const;
     virtual bool IsAutomateEngaged() const;
     virtual bool IsDead() const;
     //@}

@@ -541,7 +541,7 @@ bool MIL_AutomateLOG::MedicalCanCollectionAmbulanceGo( const PHY_MedicalCollecti
 // Name: MIL_AutomateLOG::ConsumeQuota
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::ConsumeQuota( const PHY_DotationCategory& dotationCategory, MT_Float rQuotaConsumed )
+void MIL_AutomateLOG::ConsumeQuota( const PHY_DotationCategory& dotationCategory, double rQuotaConsumed )
 {
     IT_DotationQuotaMap it = stockQuotas_.find( &dotationCategory );
     assert( it != stockQuotas_.end() );
@@ -582,17 +582,17 @@ void MIL_AutomateLOG::SupplyHandleRequest( PHY_SupplyStockState& supplyStockStat
 // Name: MIL_AutomateLOG::SupplyGetStockPion
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Supply* MIL_AutomateLOG::SupplyGetStockPion( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const
+PHY_RoleInterface_Supply* MIL_AutomateLOG::SupplyGetStockPion( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const
 {
     const T_PionVector& pions  = GetPions();
     PHY_RoleInterface_Supply* pSelectedStockPion = 0;
-    MT_Float             rScore             = 0;
+    double             rScore             = 0;
     for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
         PHY_RoleInterface_Supply* stockPion = (**itPion).RetrieveRole< PHY_RoleInterface_Supply >();
         if( stockPion )
         {
-            const MT_Float rNewScore = stockPion->GetStockAvailablity( dotationCategory, rRequestedValue );
+            const double rNewScore = stockPion->GetStockAvailablity( dotationCategory, rRequestedValue );
             if( rNewScore > rScore )
             {
                 rScore             = rNewScore;
@@ -607,17 +607,17 @@ PHY_RoleInterface_Supply* MIL_AutomateLOG::SupplyGetStockPion( const PHY_Dotatio
 // Name: MIL_AutomateLOG::SupplyGetStock
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-MT_Float MIL_AutomateLOG::SupplyGetStock( const PHY_DotationCategory& dotationCategory, MT_Float rRequestedValue ) const
+double MIL_AutomateLOG::SupplyGetStock( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const
 {
     const T_PionVector& pions  = GetPions();
     PHY_RoleInterface_Supply* pSelectedStockPion = 0;
-    MT_Float             rScore             = 0;
+    double             rScore             = 0;
     for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
         PHY_RoleInterface_Supply* stockPion = (**itPion).RetrieveRole< PHY_RoleInterface_Supply >();
         if( stockPion )
         {
-            const MT_Float rNewScore = stockPion->GetStockAvailablity( dotationCategory, rRequestedValue );
+            const double rNewScore = stockPion->GetStockAvailablity( dotationCategory, rRequestedValue );
             if( rNewScore > rScore )
             {
                 rScore             = rNewScore;
@@ -634,7 +634,7 @@ MT_Float MIL_AutomateLOG::SupplyGetStock( const PHY_DotationCategory& dotationCa
 // Name: MIL_AutomateLOG::SupplyReturnStock
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-bool MIL_AutomateLOG::SupplyReturnStock( const PHY_DotationCategory& dotationCategory, MT_Float rReturnedValue  ) const
+bool MIL_AutomateLOG::SupplyReturnStock( const PHY_DotationCategory& dotationCategory, double rReturnedValue  ) const
 {
     const T_PionVector& pions  = GetPions();
     for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
@@ -1051,7 +1051,7 @@ MIL_AutomateLOG* MIL_AutomateLOG::GetMedicalSuperior() const
 // Name: MIL_AutomateLOG::GetQuota
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-MT_Float MIL_AutomateLOG::GetQuota( const PHY_DotationCategory& dotationCategory ) const
+double MIL_AutomateLOG::GetQuota( const PHY_DotationCategory& dotationCategory ) const
 {
     CIT_DotationQuotaMap it = stockQuotas_.find( &dotationCategory );
     if( it == stockQuotas_.end() )

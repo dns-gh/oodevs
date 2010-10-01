@@ -180,7 +180,7 @@ CrossingSiteAttribute& CrossingSiteAttribute::operator=( const CrossingSiteAttri
 // Name: CrossingSiteAttribute::GetWidth
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
-MT_Float CrossingSiteAttribute::GetWidth() const
+double CrossingSiteAttribute::GetWidth() const
 {
     return rWidth_;
 }
@@ -189,7 +189,7 @@ MT_Float CrossingSiteAttribute::GetWidth() const
 // Name: CrossingSiteAttribute::GetDepth
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
-MT_Float CrossingSiteAttribute::GetDepth() const
+double CrossingSiteAttribute::GetDepth() const
 {
     return rDepth_;
 }
@@ -198,7 +198,7 @@ MT_Float CrossingSiteAttribute::GetDepth() const
 // Name: CrossingSiteAttribute::GetSpeed
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
-MT_Float CrossingSiteAttribute::GetSpeed() const
+double CrossingSiteAttribute::GetSpeed() const
 {
     return rCurrentSpeed_;
 }

@@ -25,7 +25,7 @@ unsigned int     PHY_HumanWound::nContaminatedHealingTime_  = 0;
 unsigned int     PHY_HumanWound::nContaminatedRestingTime_  = 0;
 unsigned int     PHY_HumanWound::nMentalDiseaseHealingTime_ = 0;
 unsigned int     PHY_HumanWound::nMentalDiseaseRestingTime_ = 0;
-MT_Float PHY_HumanWound::rMentalDiseaseFactor_      = 0;
+double PHY_HumanWound::rMentalDiseaseFactor_      = 0;
 
 const PHY_HumanWound PHY_HumanWound::notWounded_( "NonBlesse", eNotWounded, Common::non_blesse             );
 const PHY_HumanWound PHY_HumanWound::woundedU3_ ( "U3"       , eWoundedU3 , Common::blesse_urgence_3       );
@@ -36,7 +36,7 @@ const PHY_HumanWound PHY_HumanWound::killed_    ( "Mort"     , eKilled    , Comm
 
 struct PHY_HumanWound::LoadingWrapper
 {
-    void ReadInjury( xml::xistream& xis, MT_Float& rFactorSum )
+    void ReadInjury( xml::xistream& xis, double& rFactorSum )
     {
         PHY_HumanWound::ReadInjury( xis, rFactorSum );
     }
@@ -64,7 +64,7 @@ void PHY_HumanWound::Initialize()
 // -----------------------------------------------------------------------------
 void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
 {
-    MT_Float rTimeVal = 0.;
+    double rTimeVal = 0.;
     xis >> xml::start( "times" );
     tools::ReadTimeAttribute( xis, "diagnosis-time", rTimeVal );
     if( rTimeVal < 0 )
@@ -77,7 +77,7 @@ void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
     nSortingTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( rTimeVal );
     xis >> xml::end;
 
-    MT_Float rFactorSum = 0.;
+    double rFactorSum = 0.;
     LoadingWrapper loader;
     xis >> xml::start( "injuries" )
             >> xml::list( "injury", loader, &LoadingWrapper::ReadInjury, rFactorSum )
@@ -94,7 +94,7 @@ void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
 // Name: PHY_HumanWound::ReadInjury
 // Created: ABL 2007-07-24
 // -----------------------------------------------------------------------------
-void PHY_HumanWound::ReadInjury( xml::xistream& xis, MT_Float& rFactorSum )
+void PHY_HumanWound::ReadInjury( xml::xistream& xis, double& rFactorSum )
 {
     std::string injuryType;
     xis >> xml::attribute( "category", injuryType );
@@ -107,7 +107,7 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, MT_Float& rFactorSum )
         if( wound == killed_ || wound == notWounded_ )
             return;
 
-        MT_Float rValue = 0.;
+        double rValue = 0.;
         xis >> xml::attribute( "percentage", rValue );
         if( rValue < 0 || rValue > 100 )
             xis.error( "injury: percentage not in [0..100]" );
@@ -136,7 +136,7 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, MT_Float& rFactorSum )
     }
     else if( injuryType == "mental" )
     {
-        MT_Float rValue = 0.;
+        double rValue = 0.;
         tools::ReadTimeAttribute( xis, "caring-time", rValue );
         if( rValue < 0 )
             xis.error( "injury: caring-time < 0" );
@@ -154,7 +154,7 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, MT_Float& rFactorSum )
     }
     else if( injuryType == "contaminated" )
     {
-        MT_Float rValue = 0;
+        double rValue = 0;
         tools::ReadTimeAttribute( xis, "caring-time", rValue );
         if( rValue < 0 )
             xis.error( "injury: caring-time < 0" );
@@ -209,9 +209,9 @@ PHY_HumanWound::~PHY_HumanWound()
 // -----------------------------------------------------------------------------
 const PHY_HumanWound& PHY_HumanWound::ChooseRandomWound()
 {
-    const MT_Float rRand = MIL_Random::rand_oi( MIL_Random::eWounds);
+    const double rRand = MIL_Random::rand_oi( MIL_Random::eWounds);
 
-    MT_Float rSumFactors = 0.;
+    double rSumFactors = 0.;
     for( CIT_HumanWoundMap itWound = humanWounds_.begin(); itWound != humanWounds_.end(); ++itWound )
     {
         const PHY_HumanWound& state = *itWound->second;
@@ -385,7 +385,7 @@ bool PHY_HumanWound::operator>( const PHY_HumanWound& rhs ) const
 // Name: PHY_HumanWound::GetWoundedFactor
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-MT_Float PHY_HumanWound::GetWoundedFactor() const
+double PHY_HumanWound::GetWoundedFactor() const
 {
     return rWoundedFactor_;
 }

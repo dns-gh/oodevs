@@ -46,10 +46,10 @@ public:
     //@{
     virtual const PHY_Posture& GetLastPosture                () const;
     virtual const PHY_Posture& GetCurrentPosture             () const;
-    virtual       MT_Float     GetPostureCompletionPercentage() const;
+    virtual       double     GetPostureCompletionPercentage() const;
     virtual       void         SetPosturePostePrepareGenie   ();
     virtual       void         UnsetPosturePostePrepareGenie ();
-    virtual       void         SetTimingFactor               ( MT_Float rFactor );
+    virtual       void         SetTimingFactor               ( double rFactor );
 
     void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
 
@@ -86,13 +86,13 @@ public:
 
     //! @name Perception
     //@{
-    virtual void SetStealthFactor( MT_Float /*rValue*/ ) {}
+    virtual void SetStealthFactor( double /*rValue*/ ) {}
     //@}
 
     //! @name Elongation
     //@{
-    virtual void     SetElongationFactor( MT_Float ) {}
-    virtual MT_Float GetElongationFactor() const { return 0; }
+    virtual void     SetElongationFactor( double ) {}
+    virtual double GetElongationFactor() const { return 0; }
     //@}
 
     //! @name Accessors

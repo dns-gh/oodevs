@@ -72,7 +72,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual MT_Float ModifyPH ( MT_Float rPH ) const = 0;
+    virtual double ModifyPH ( double rPH ) const = 0;
     //@}
 
     //! @name Network

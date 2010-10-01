@@ -750,7 +750,7 @@ void PHY_RolePionLOG_Medical::Clean()
 // Name: PHY_RolePionLOG_Medical::GetAvailabilityRatio
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePionLOG_Medical::GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate ) const
+double PHY_RolePionLOG_Medical::GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate ) const
 {
 
     unsigned int nNbrTotal = 0;
@@ -765,7 +765,7 @@ MT_Float PHY_RolePionLOG_Medical::GetAvailabilityRatio( PHY_ComposanteUsePredica
     }
     if( nNbrTotal == 0 )
         return 1.;
-    return (MT_Float)nNbrAvailableAllowedToWork / (MT_Float)nNbrTotal;
+    return (double)nNbrAvailableAllowedToWork / (double)nNbrTotal;
 }
 
 // -----------------------------------------------------------------------------
@@ -777,9 +777,9 @@ void PHY_RolePionLOG_Medical::StartUsingForLogistic( PHY_ComposantePion& composa
     PHY_ComposanteUsePredicate evacuationUsePred( &PHY_ComposantePion::CanEvacuateCasualties, &PHY_ComposanteTypePion::CanEvacuateCasualties );
     PHY_ComposanteUsePredicate collectionUsePred( &PHY_ComposantePion::CanCollectCasualties , &PHY_ComposanteTypePion::CanCollectCasualties  );
     PHY_ComposanteUsePredicate doctorUsePred( &PHY_ComposantePion::CanDiagnoseHumans    , &PHY_ComposanteTypePion::CanDiagnoseHumans     );
-    MT_Float rEvacuationRatio = GetAvailabilityRatio( evacuationUsePred );
-    MT_Float rCollectionRatio = GetAvailabilityRatio( collectionUsePred );
-    MT_Float rDoctorsRatio = GetAvailabilityRatio( doctorUsePred );
+    double rEvacuationRatio = GetAvailabilityRatio( evacuationUsePred );
+    double rCollectionRatio = GetAvailabilityRatio( collectionUsePred );
+    double rDoctorsRatio = GetAvailabilityRatio( doctorUsePred );
     bHasChanged_ = true;
     composante.StartUsingForLogistic();
     if( PHY_MedicalResourcesAlarms::IsEvacuationResourcesLevelReached( rEvacuationRatio, GetAvailabilityRatio( evacuationUsePred ) ) )

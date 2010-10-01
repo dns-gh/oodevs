@@ -141,7 +141,7 @@ void TER_Polygon::Detach()
 // Name: TER_Polygon::IsInside
 // Created: JDY 03-05-19
 //-----------------------------------------------------------------------------
-bool TER_Polygon::IsInside( const MT_Vector2D& vPos, MT_Float rPrecision ) const
+bool TER_Polygon::IsInside( const MT_Vector2D& vPos, double rPrecision ) const
 {
     if (IsNull())
         return true;
@@ -169,7 +169,7 @@ bool TER_Polygon::IsInsidish( const MT_Vector2D& vPos ) const
 // Name: TER_Polygon::IsOnBorder
 // Created: JDY 03-05-20
 //-----------------------------------------------------------------------------
-bool TER_Polygon::IsOnBorder( const MT_Vector2D& vPos, MT_Float rPrecision ) const
+bool TER_Polygon::IsOnBorder( const MT_Vector2D& vPos, double rPrecision ) const
 {
     // Test des bords
     const MT_Vector2D* pLastPos = 0;
@@ -191,7 +191,7 @@ bool TER_Polygon::IsOnBorder( const MT_Vector2D& vPos, MT_Float rPrecision ) con
 // Name: TER_Polygon::IntersectWithBorder
 // Created: JDY 03-05-19
 //-----------------------------------------------------------------------------
-bool TER_Polygon::IntersectWithBorder( const MT_Line& line, MT_Float rPrecision ) const
+bool TER_Polygon::IntersectWithBorder( const MT_Line& line, double rPrecision ) const
 {
     if (IsNull())
         return false;
@@ -225,7 +225,7 @@ bool TER_Polygon::IntersectWithBorder( const MT_Line& line, MT_Float rPrecision 
 // Name: TER_Polygon::IntersectWithBorder
 // Created: JDY 03-05-28
 //-----------------------------------------------------------------------------
-bool TER_Polygon::IntersectWithBorder( const MT_Line& line,T_PointSet& res, MT_Float rPrecision ) const
+bool TER_Polygon::IntersectWithBorder( const MT_Line& line,T_PointSet& res, double rPrecision ) const
 {
     if (IsNull())
         return false;
@@ -283,7 +283,7 @@ bool TER_Polygon::IntersectWithBorder( const MT_Droite& line, T_PointSet& res ) 
 // Name: TER_Polygon::Intersect2D
 // Created: NLD 2003-07-25
 //-----------------------------------------------------------------------------
-bool TER_Polygon::Intersect2D( const MT_Line& line, MT_Float rPrecision ) const
+bool TER_Polygon::Intersect2D( const MT_Line& line, double rPrecision ) const
 {
     return IsInside( line.GetPosStart(), rPrecision )
         || IsInside( line.GetPosEnd(), rPrecision )
@@ -294,7 +294,7 @@ bool TER_Polygon::Intersect2D( const MT_Line& line, MT_Float rPrecision ) const
 // Name: TER_Polygon::Intersect2D
 // Created: NLD 2003-07-25
 //-----------------------------------------------------------------------------
-bool TER_Polygon::Intersect2D( const MT_Line& line, T_PointSet& collisions, MT_Float rPrecision  ) const
+bool TER_Polygon::Intersect2D( const MT_Line& line, T_PointSet& collisions, double rPrecision  ) const
 {
     collisions.clear();
     IntersectWithBorder( line, collisions, rPrecision );
@@ -309,7 +309,7 @@ bool TER_Polygon::Intersect2D( const MT_Line& line, T_PointSet& collisions, MT_F
 // Name: TER_Polygon::Intersect2D
 // Created: NLD 2003-08-20
 // -----------------------------------------------------------------------------
-bool TER_Polygon::Intersect2D( const MT_Droite& line, T_PointSet& res, MT_Float /*rPrecision*/ ) const
+bool TER_Polygon::Intersect2D( const MT_Droite& line, T_PointSet& res, double /*rPrecision*/ ) const
 {
     return IntersectWithBorder( line, res );
 }
@@ -318,7 +318,7 @@ bool TER_Polygon::Intersect2D( const MT_Droite& line, T_PointSet& res, MT_Float 
 // Name: TER_Polygon::Intersect2DWithCircle
 // Created: NLD 2003-07-25
 //-----------------------------------------------------------------------------
-bool TER_Polygon::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const
+bool TER_Polygon::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const
 {
     if( IsInside( vCircleCenter ) )
         return true;
@@ -342,7 +342,7 @@ bool TER_Polygon::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Fl
 // Name: TER_Polygon::Intersection
 // Created: JVT 2005-05-16
 // -----------------------------------------------------------------------------
-void TER_Polygon::Intersection( MT_Polyline& polyline, MT_Float rPrecision ) const
+void TER_Polygon::Intersection( MT_Polyline& polyline, double rPrecision ) const
 {
     T_PointVector res;
 
@@ -399,8 +399,8 @@ void TER_Polygon::ComputeExtremities( const MT_Droite& line, MT_Vector2D& vLeftP
 void TER_Polygon::ComputeBoundingBox()
 {
     // bounding box
-    MT_Vector2D vDownLeft( std::numeric_limits<MT_Float>::max(), std::numeric_limits<MT_Float>::max() );
-    MT_Vector2D vUpRight ( std::numeric_limits<MT_Float>::min(), std::numeric_limits<MT_Float>::min() );
+    MT_Vector2D vDownLeft( std::numeric_limits<double>::max(), std::numeric_limits<double>::max() );
+    MT_Vector2D vUpRight ( std::numeric_limits<double>::min(), std::numeric_limits<double>::min() );
 
     for ( CIT_PointVector itPoint = pData_->borderVector_.begin(); itPoint != pData_->borderVector_.end(); ++itPoint )
     {
@@ -433,12 +433,12 @@ namespace
     // Name: ComputeOrientation
     // Created: AGE 2005-06-14
     // -----------------------------------------------------------------------------
-    MT_Float ComputeOrientation( const MT_Vector2D& first, const MT_Vector2D& second, const MT_Vector2D& third )
+    double ComputeOrientation( const MT_Vector2D& first, const MT_Vector2D& second, const MT_Vector2D& third )
     {
-        const MT_Float r1 = second.rX_ - first.rX_;
-        const MT_Float r2 = second.rY_ - first.rY_;
-        const MT_Float r3 = third.rX_  - first.rX_;
-        const MT_Float r4 = third.rY_  - first.rY_ ;
+        const double r1 = second.rX_ - first.rX_;
+        const double r2 = second.rY_ - first.rY_;
+        const double r3 = third.rX_  - first.rX_;
+        const double r4 = third.rY_  - first.rY_ ;
         return r1 * r4 - r2 * r3;
     }
 
@@ -446,7 +446,7 @@ namespace
     // Name: TriangleArea
     // Created: AGE 2005-06-14
     // -----------------------------------------------------------------------------
-    MT_Float TriangleArea( const MT_Vector2D& first, const MT_Vector2D& second, const MT_Vector2D& third )
+    double TriangleArea( const MT_Vector2D& first, const MT_Vector2D& second, const MT_Vector2D& third )
     {
         return ComputeOrientation( first, second, third ) * 0.5;
     }
@@ -456,9 +456,9 @@ namespace
 // Name: TER_Polygon::ComputeArea
 // Created: AGE 2005-06-14
 // -----------------------------------------------------------------------------
-MT_Float TER_Polygon::ComputeArea() const
+double TER_Polygon::ComputeArea() const
 {
-    MT_Float result = 0;
+    double result = 0;
     if( ! pData_ || pData_->bIsNull_ || pData_->borderVector_.empty() )
         return 0;
 
@@ -501,7 +501,7 @@ namespace
         hull.push_back( max );
     }
 
-    MT_Float CrossProductTmp( const MT_Vector2D& v1, const MT_Vector2D& v2 )
+    double CrossProductTmp( const MT_Vector2D& v1, const MT_Vector2D& v2 )
     {
         return v1.rX_ * v2.rY_ - v1.rY_ * v2.rX_;
     }
@@ -513,11 +513,11 @@ namespace
     bool FindOuterPoint( const T_PointVector& polygon, const MT_Vector2D& from, const MT_Vector2D& direction, MT_Vector2D& worst )
     {
         bool bFound = false;
-        MT_Float rMaxProjection = 0;
+        double rMaxProjection = 0;
         for( CIT_PointVector it = polygon.begin(); it != polygon.end(); ++it )
         {
             const MT_Vector2D v = from - *it;
-            const MT_Float rProjection = CrossProductTmp( direction, v );
+            const double rProjection = CrossProductTmp( direction, v );
             if( rProjection < -0.001 ) // epsilon
             {
                 bFound = true;
@@ -590,7 +590,7 @@ TER_Polygon::E_BoundedSize TER_Polygon::BoundedSide( const MT_Vector2D& point ) 
                 return eOnBoundary;
             if( next->rY_ > point.rY_ )
             {
-                const MT_Float orientation = ComputeOrientation( *current, point, *next );
+                const double orientation = ComputeOrientation( *current, point, *next );
                 if( orientation == 0 )
                     return eOnBoundary;
                 if( orientation < 0 )
@@ -603,7 +603,7 @@ TER_Polygon::E_BoundedSize TER_Polygon::BoundedSide( const MT_Vector2D& point ) 
                 return eOnBoundary;
             if( next->rY_ < point.rY_ )
             {
-                const MT_Float orientation = ComputeOrientation( *next, point, *current );
+                const double orientation = ComputeOrientation( *next, point, *current );
                 if( orientation == 0 )
                     return eOnBoundary;
                 if( orientation < 0 )
@@ -632,7 +632,7 @@ TER_Polygon::E_BoundedSize TER_Polygon::BoundedSide( const MT_Vector2D& point ) 
 // Name: TER_Polygon::IsInBoundingBox
 // Created: AGE 2005-06-16
 // -----------------------------------------------------------------------------
-bool TER_Polygon::IsInBoundingBox( const MT_Vector2D& p, MT_Float rPrecision /*=0*/) const
+bool TER_Polygon::IsInBoundingBox( const MT_Vector2D& p, double rPrecision /*=0*/) const
 {
     return pData_->boundingBox_.IsInside( p, rPrecision );
 }

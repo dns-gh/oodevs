@@ -64,8 +64,8 @@ public:
     //! @name Accessors
     //@{
     const PHY_AttritionData& GetAttritionData( const PHY_Protection& protection ) const;
-    MT_Float GetAttritionSurface() const;
-    MT_Float GetAttritionPH() const;
+    double GetAttritionSurface() const;
+    double GetAttritionPH() const;
     //@}
 
 private:
@@ -79,8 +79,8 @@ private:
     struct PopulationAttrition
     {
         PopulationAttrition() : surface_( 0. ), ph_( 0 ) {}
-        MT_Float surface_;
-        MT_Float ph_;
+        double surface_;
+        double ph_;
     };
     //@}
 

@@ -185,7 +185,7 @@ const MT_Vector2D& DEC_Knowledge_AgentPerceptionDataDetection::GetDirection() co
 // Name: DEC_Knowledge_AgentPerceptionDataDetection::GetSpeed
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_AgentPerceptionDataDetection::GetSpeed() const
+double DEC_Knowledge_AgentPerceptionDataDetection::GetSpeed() const
 {
     return rSpeed_;
 }
@@ -203,7 +203,7 @@ const MT_Vector2D& DEC_Knowledge_AgentPerceptionDataDetection::GetPosition() con
 // Name: DEC_Knowledge_AgentPerceptionDataDetection::GetAltitude
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_AgentPerceptionDataDetection::GetAltitude() const
+double DEC_Knowledge_AgentPerceptionDataDetection::GetAltitude() const
 {
     return rAltitude_;
 }
@@ -232,7 +232,7 @@ const PHY_Posture& DEC_Knowledge_AgentPerceptionDataDetection::GetCurrentPosture
 // Name: DEC_Knowledge_AgentPerceptionDataDetection::GetPostureCompletionPercentage
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_AgentPerceptionDataDetection::GetPostureCompletionPercentage() const
+double DEC_Knowledge_AgentPerceptionDataDetection::GetPostureCompletionPercentage() const
 {
     return rPostureCompletionPercentage_;
 }

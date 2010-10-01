@@ -12,7 +12,6 @@
 #ifndef __MT_Polyline_h_
 #define __MT_Polyline_h_
 
-#include "MT_Tools_Types.h"
 #include "Mt_Vector2DTypes.h"
 
 class MT_Line;
@@ -24,8 +23,8 @@ class MT_Droite;
 class MT_Polyline
 {
 public:
-     MT_Polyline();
-     MT_Polyline( const T_PointVector& points );
+             MT_Polyline();
+             MT_Polyline( const T_PointVector& points );
     virtual ~MT_Polyline();
 
     //-------------------------------------------------------------------------
@@ -39,16 +38,16 @@ public:
     /** @name Operations */
     //-------------------------------------------------------------------------
     //@{
-    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const; // NB : return true if the circle is inside
-    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius, T_PointVector& shape ) const; // NB : return true if the circle is inside
-    bool IsInside             ( const MT_Vector2D& vPos, MT_Float rPrecision ) const;
-    bool Intersect2D          ( const MT_Line& orientedLine, T_PointSet& collisions, MT_Float rPrecision ) const;
-    bool Intersect2D          ( const MT_Line& line, MT_Float rPrecision ) const;
+    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const; // NB : return true if the circle is inside
+    bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, T_PointVector& shape ) const; // NB : return true if the circle is inside
+    bool IsInside             ( const MT_Vector2D& vPos, double rPrecision ) const;
+    bool Intersect2D          ( const MT_Line& orientedLine, T_PointSet& collisions, double rPrecision ) const;
+    bool Intersect2D          ( const MT_Line& line, double rPrecision ) const;
     bool Intersect2D          ( const MT_Droite& droite, T_PointSet& collisions ) const;
     void Translate            ( const MT_Vector2D& );
 
-    MT_Float    Magnitude () const;
-    MT_Vector2D GetPointAt( MT_Float rDist ) const;
+    double    Magnitude () const;
+    MT_Vector2D GetPointAt( double rDist ) const;
     //@}
 
     //-------------------------------------------------------------------------

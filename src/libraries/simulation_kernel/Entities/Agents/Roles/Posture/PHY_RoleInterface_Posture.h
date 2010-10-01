@@ -13,7 +13,6 @@
 #define __PHY_RoleInterface_Posture_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/access.hpp>
 
 namespace client
@@ -48,11 +47,11 @@ public:
     //@{
     virtual const PHY_Posture& GetLastPosture() const = 0;
     virtual const PHY_Posture& GetCurrentPosture() const = 0;
-    virtual MT_Float GetPostureCompletionPercentage() const = 0;
+    virtual double GetPostureCompletionPercentage() const = 0;
 
     virtual void SetPosturePostePrepareGenie() = 0;
     virtual void UnsetPosturePostePrepareGenie() = 0;
-    virtual void SetTimingFactor( MT_Float rFactor ) = 0;
+    virtual void SetTimingFactor( double rFactor ) = 0;
     //@}
 
     //! @name Operations
@@ -75,13 +74,13 @@ public:
 
     //! @name Perception
     //@{
-    virtual void SetStealthFactor( MT_Float rValue ) = 0;
+    virtual void SetStealthFactor( double rValue ) = 0;
     //@}
 
     //! @name Elongation
     //@{
-    virtual void SetElongationFactor( MT_Float ) = 0;
-    virtual MT_Float GetElongationFactor() const = 0;
+    virtual void SetElongationFactor( double ) = 0;
+    virtual double GetElongationFactor() const = 0;
     //@}
 
     //! @name Accessors

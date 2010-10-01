@@ -13,7 +13,6 @@
 #define __PHY_RoleInterface_Population_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/access.hpp>
 
 // =============================================================================
@@ -46,7 +45,7 @@ public:
     virtual void Update( bool bIsDead ) = 0;
     virtual void Clean() = 0;
     virtual bool HasChanged() const = 0;
-    virtual MT_Float GetCollidingPopulationDensity() const = 0;
+    virtual double GetCollidingPopulationDensity() const = 0;
     //@}
 
 private:

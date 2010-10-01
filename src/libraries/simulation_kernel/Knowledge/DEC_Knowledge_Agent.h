@@ -51,14 +51,14 @@ class DEC_Knowledge_Agent : public DEC_Knowledge_ABC
 {
 public:
     // Parameters - $$$ Changer - ne devrait pas être public
-    static MT_Float rMaxDangerosityDegradationByRelevance_;
-    static MT_Float rMaxDangerosityDegradationByOpState_;
-    static MT_Float rMaxDangerosityDegradationByNeutralizedState_;
+    static double rMaxDangerosityDegradationByRelevance_;
+    static double rMaxDangerosityDegradationByOpState_;
+    static double rMaxDangerosityDegradationByNeutralizedState_;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown, MT_Float relevance = 0.);
+             DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown, double relevance = 0.);
              DEC_Knowledge_Agent();
     virtual ~DEC_Knowledge_Agent();
     //@}
@@ -85,7 +85,7 @@ public:
     //! @name Relevance management
     //@{
     void UpdateRelevance( int currentTimeStep );
-    MT_Float GetRelevance() const;
+    double GetRelevance() const;
     //@}
 
     //! @name Network operations
@@ -104,12 +104,12 @@ public:
     bool IsRefugeeManaged() const;
     bool IsDead() const;
     unsigned int GetID() const;
-    MT_Float GetAltitude() const;
+    double GetAltitude() const;
     const MT_Vector2D& GetPosition() const;
     const MT_Vector2D& GetDirection() const;
-    MT_Float GetSpeed() const;
-    MT_Float GetOperationalState() const;
-    MT_Float GetMajorOperationalState() const;
+    double GetSpeed() const;
+    double GetOperationalState() const;
+    double GetMajorOperationalState() const;
     virtual  MIL_Agent_ABC& GetAgentKnown() const;
     const PHY_NatureAtlas& GetNatureAtlas() const;
     const MIL_Army_ABC* GetArmy() const;
@@ -128,14 +128,14 @@ public:
     const PHY_Volume* GetSignificantVolume( const PHY_SensorTypeAgent& sensorType ) const;
     const PHY_Posture& GetLastPosture() const;
     const PHY_Posture& GetCurrentPosture() const;
-    MT_Float GetPostureCompletionPercentage() const;
+    double GetPostureCompletionPercentage() const;
     //@}
 
     //! @name Decisional operations
     //@{
-    MT_Float GetDangerosity( const DEC_Knowledge_Agent& target ) const;
-    MT_Float GetDangerosity( const MIL_Agent_ABC& target ) const;
-    MT_Float GetMaxRangeToFireOn( const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
+    double GetDangerosity( const DEC_Knowledge_Agent& target ) const;
+    double GetDangerosity( const MIL_Agent_ABC& target ) const;
+    double GetMaxRangeToFireOn( const MIL_Agent_ABC& target, double rWantedPH ) const;
     double GetMaterialComposantesAttritionLevel( boost::shared_ptr< DEC_Knowledge_Urban > urbanKnowledge ) const;
     void Lock();
     void Unlock();
@@ -173,8 +173,8 @@ private:
 
     //! @name Tools
     //@{
-    void DegradeDangerosity( MT_Float& rDangerosity ) const;
-    void ChangeRelevance( MT_Float rNewRelevance );
+    void DegradeDangerosity( double& rDangerosity ) const;
+    void ChangeRelevance( double rNewRelevance );
     //@}
 
 private:
@@ -194,7 +194,7 @@ private:
     T_PerceptionAutomateSourceMap perceptionLevelPerAutomateMap_;
     T_PerceptionAutomateSourceMap previousPerceptionLevelPerAutomateMap_;
     T_PerceptionAgentSourceMap perceptionLevelPerAgentMap_;
-    MT_Float rRelevance_;
+    double rRelevance_;
     int nTimeExtrapolationEnd_;
     bool bLocked_;
     bool bValid_;
@@ -203,7 +203,7 @@ private:
     bool bRelevanceUpdated_;
     bool bCurrentPerceptionLevelUpdated_;
     bool bMaxPerceptionLevelUpdated_;
-    MT_Float rLastRelevanceSent_;
+    double rLastRelevanceSent_;
     static MIL_IDManager idManager_;
     //@}
 };

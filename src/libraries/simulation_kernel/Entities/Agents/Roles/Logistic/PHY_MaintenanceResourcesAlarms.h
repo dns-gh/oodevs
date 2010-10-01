@@ -10,7 +10,6 @@
 #ifndef __PHY_MaintenanceResourcesAlarms_h_
 #define __PHY_MaintenanceResourcesAlarms_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {
@@ -31,8 +30,8 @@ public:
 
     //! @name Operations
     //@{
-    static bool IsRepairerResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio );
-    static bool IsHaulerResourcesLevelReached  ( MT_Float rPreviousRatio, MT_Float rCurrentRatio );
+    static bool IsRepairerResourcesLevelReached( double rPreviousRatio, double rCurrentRatio );
+    static bool IsHaulerResourcesLevelReached  ( double rPreviousRatio, double rCurrentRatio );
     //@}
 
 private:
@@ -44,7 +43,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::set< MT_Float >         T_LevelSet;
+    typedef std::set< double >         T_LevelSet;
     typedef T_LevelSet::const_iterator CIT_LevelSet;
     //@}
 
@@ -52,7 +51,7 @@ private:
     //@{
     struct LoadingWrapper;
     static void ReadResource( xml::xistream& xis );
-    static bool IsLevelReached( const T_LevelSet& levels, MT_Float rPreviousRatio, MT_Float rCurrentRatio );
+    static bool IsLevelReached( const T_LevelSet& levels, double rPreviousRatio, double rCurrentRatio );
     //@}
 
 private:

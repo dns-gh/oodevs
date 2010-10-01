@@ -11,7 +11,6 @@
 #define __MIL_IntelligenceOrder_h_
 
 #include "protocol/protocol.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 class MIL_Fuseau;
 class TER_Localisation;
@@ -36,7 +35,7 @@ public:
     //@{
     bool IsInside( const MIL_Fuseau& fuseau ) const;
     bool IsInside( const TER_Localisation& location ) const;
-    MT_Float SquareDistance( const MT_Vector2D& point ) const;
+    double SquareDistance( const MT_Vector2D& point ) const;
     MT_Vector2D ComputeDirection( const MT_Vector2D& origin ) const;
     bool IsOnFlank( const MIL_Fuseau& fuseau, bool left, bool right ) const;
     bool IsEmbarked() const;

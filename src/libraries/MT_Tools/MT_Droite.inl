@@ -16,12 +16,12 @@
 // Created: NLD 2003-09-29
 // -----------------------------------------------------------------------------
 inline
-MT_Float MT_Droite::GetDistanceToPoint( const MT_Vector2D& vPoint ) const
+double MT_Droite::GetDistanceToPoint( const MT_Vector2D& vPoint ) const
 {
-    MT_Float rTmp = sqrt( ( rA_ * rA_ ) + ( rB_ * rB_ ) );
+    double rTmp = sqrt( ( rA_ * rA_ ) + ( rB_ * rB_ ) );
     if( rTmp == 0.0f )
         return 0.0f;
-    return ( fabs( rA_ * vPoint.rX_ + rB_ * vPoint.rY_ + rC_ ) ) / rTmp;
+    return fabs( rA_ * vPoint.rX_ + rB_ * vPoint.rY_ + rC_ ) / rTmp;
 }
 
 //-----------------------------------------------------------------------------
@@ -29,9 +29,8 @@ MT_Float MT_Droite::GetDistanceToPoint( const MT_Vector2D& vPoint ) const
 // Created: JVT 04-03-17
 //-----------------------------------------------------------------------------
 inline
-MT_Droite::E_Side MT_Droite::GetSide( MT_Float rX, MT_Float rY )  const
+MT_Droite::E_Side MT_Droite::GetSide( double rX, double rY )  const
 {
-    MT_Float rTmp = rX * rA_ + rY * rB_ + rC_;
-
+    double rTmp = rX * rA_ + rY * rB_ + rC_;
     return MT_IsZero( rTmp ) ? eOnBoundary : rTmp < 0 ? eOnNegativeSide : eOnPositiveSide;
 }

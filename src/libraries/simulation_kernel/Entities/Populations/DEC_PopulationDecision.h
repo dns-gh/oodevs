@@ -91,7 +91,7 @@ public:
     //! @name Accessors
     //@{
     MIL_Population&    GetPopulation     () const;
-    MT_Float           GetDominationState() const;
+    double           GetDominationState() const;
     bool               HasStateChanged   () const; // Etat decisionnel
     virtual DEC_AutomateDecision* GetDecAutomate() const;
     virtual std::string GetName() const;
@@ -99,7 +99,7 @@ public:
 
     //! @name Notifications
     //@{
-    void NotifyDominationStateChanged( MT_Float rValue );
+    void NotifyDominationStateChanged( double rValue );
     //@}
 
     //! @name Network
@@ -124,8 +124,8 @@ private:
     //@}
 
 private:
-    MT_Float                             rDominationState_;
-    MT_Float                             rLastDominationState_;
+    double                             rDominationState_;
+    double                             rLastDominationState_;
     bool                                 bStateHasChanged_;
     std::string                          name_;
 

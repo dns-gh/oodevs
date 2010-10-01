@@ -10,7 +10,6 @@
 #ifndef __DEC_Path_KnowledgeAgent_h_
 #define __DEC_Path_KnowledgeAgent_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Vector2D.h"
 
 class DEC_Knowledge_Agent;
@@ -32,16 +31,16 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     MT_Vector2D vEnemyPosition_;
-    MT_Float rSecurityDistance_;
-    MT_Float rFactor_;
-    MT_Float rOffset_;
+    double rSecurityDistance_;
+    double rFactor_;
+    double rOffset_;
     //@}
 };
 

@@ -12,7 +12,6 @@
 #ifndef __PHY_WeaponType_h_
 #define __PHY_WeaponType_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Stl.h"
 
 namespace xml
@@ -63,8 +62,8 @@ public:
     const PHY_DotationCategory& GetDotationCategory () const;
           unsigned int                  GetNbrAmmoPerLoader () const;
           unsigned int                  GetNbrAmmoPerBurst  () const;
-          MT_Float              GetBurstDuration    () const;
-          MT_Float              GetReloadingDuration() const;
+          double              GetBurstDuration    () const;
+          double              GetReloadingDuration() const;
     const std::string&          GetName             () const;
           bool                  CanDirectFire       () const;
           bool                  CanIndirectFire     () const;
@@ -77,23 +76,23 @@ public:
     void     DirectFire         ( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH ) const;
     void     ThrowSmoke         ( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo, PHY_FireResults_ABC& fireResult ) const;
 
-    MT_Float GetDangerosity     ( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& compTarget, bool bUsePH ) const;
-    MT_Float GetDangerosity     ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rDistBtwFirerAndTarget ) const;
+    double GetDangerosity     ( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& compTarget, bool bUsePH ) const;
+    double GetDangerosity     ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget ) const;
 
-    MT_Float GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
-    MT_Float GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
+    double GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
+    double GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
 
-    MT_Float GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
-    MT_Float GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
-    MT_Float GetMaxRangeToFire( const MIL_Agent_ABC& firer, MT_Float rWantedPH ) const;
+    double GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
+    double GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
+    double GetMaxRangeToFire( const MIL_Agent_ABC& firer, double rWantedPH ) const;
 
-    MT_Float GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const;
-    MT_Float GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const;
-    MT_Float GetMaxRangeToIndirectFire() const;
-    MT_Float GetMinRangeToIndirectFire() const;
+    double GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const;
+    double GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const;
+    double GetMaxRangeToIndirectFire() const;
+    double GetMinRangeToIndirectFire() const;
 
-    MT_Float GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const;
-    MT_Float GetPHModificator( const PHY_Posture&          firerPosture, const PHY_Posture&               targetPosture ) const;
+    double GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const;
+    double GetPHModificator( const PHY_Posture&          firerPosture, const PHY_Posture&               targetPosture ) const;
     //@}
 
 private:
@@ -129,9 +128,9 @@ private:
           std::string           strName_;
 
           unsigned int                  nNbrAmmoPerBurst_;
-          MT_Float              rBurstDuration_;
+          double              rBurstDuration_;
           unsigned int                  nNbrAmmoPerLoader_;
-          MT_Float              rReloadingDuration_;
+          double              rReloadingDuration_;
 
     PHY_WeaponDataType_DirectFire*   pDirectFireData_;
     PHY_WeaponDataType_IndirectFire* pIndirectFireData_;

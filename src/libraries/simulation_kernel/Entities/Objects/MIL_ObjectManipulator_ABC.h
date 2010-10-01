@@ -10,8 +10,6 @@
 #ifndef __MIL_ObjectManipulator_ABC_h_
 #define __MIL_ObjectManipulator_ABC_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 class MIL_Agent_ABC;
 
 // =============================================================================
@@ -31,11 +29,11 @@ public:
 
     //! @name Manipulations
     //@{
-    virtual void Construct ( MT_Float rDeltaPercentage ) = 0;
-    virtual void Destroy   ( MT_Float rDeltaPercentage ) = 0;
-    virtual void Mine      ( MT_Float rDeltaPercentage ) = 0;
-    virtual void Demine    ( MT_Float rDeltaPercentage ) = 0;
-    virtual void Bypass    ( MT_Float rDeltaPercentage ) = 0;
+    virtual void Construct ( double rDeltaPercentage ) = 0;
+    virtual void Destroy   ( double rDeltaPercentage ) = 0;
+    virtual void Mine      ( double rDeltaPercentage ) = 0;
+    virtual void Demine    ( double rDeltaPercentage ) = 0;
+    virtual void Bypass    ( double rDeltaPercentage ) = 0;
 
     virtual void Activate  () = 0;
     virtual void Construct () = 0;
@@ -65,13 +63,13 @@ public:
 
     //! @name Construction interface
     //@{
-    virtual MT_Float GetSizeCoef() const = 0;
+    virtual double GetSizeCoef() const = 0;
     //@}
 
     //! @name Speed
     //@{
     virtual bool     HasMobilityInfluence  () const = 0;
-    virtual MT_Float ApplySpeedPolicy( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed ) const = 0;
+    virtual double ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed ) const = 0;
     //@}
 
     //! @name

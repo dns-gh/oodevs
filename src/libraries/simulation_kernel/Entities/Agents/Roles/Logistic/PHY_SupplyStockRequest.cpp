@@ -54,7 +54,7 @@ void PHY_SupplyStockRequest::AddStock( PHY_DotationStock& stock )
 // Name: PHY_SupplyStockRequest::AddStock
 // Created: NLD 2005-12-15
 // -----------------------------------------------------------------------------
-void PHY_SupplyStockRequest::AddStock( PHY_DotationStock& stock, MT_Float rValue )
+void PHY_SupplyStockRequest::AddStock( PHY_DotationStock& stock, double rValue )
 {
     assert( rValue >= 0. );
     sIndividualRequest request;
@@ -71,10 +71,10 @@ void PHY_SupplyStockRequest::AddStock( PHY_DotationStock& stock, MT_Float rValue
 // Name: PHY_SupplyStockRequest::ApplyQuota
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-void PHY_SupplyStockRequest::ApplyQuota( MT_Float rQuota )
+void PHY_SupplyStockRequest::ApplyQuota( double rQuota )
 {
-    const MT_Float rNewTotalRequestedValue_ = std::min( rTotalRequestedValue_, rQuota );
-    const MT_Float rTmp                     = rNewTotalRequestedValue_ / rTotalRequestedValue_;
+    const double rNewTotalRequestedValue_ = std::min( rTotalRequestedValue_, rQuota );
+    const double rTmp                     = rNewTotalRequestedValue_ / rTotalRequestedValue_;
 
     for( IT_RequestVector itRequest = requests_.begin(); itRequest != requests_.end(); ++itRequest )
     {

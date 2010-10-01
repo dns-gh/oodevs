@@ -149,12 +149,12 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, c
 void PHY_RawVisionData::RegisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponClass )
 {
     const MT_Rect bb = surface.GetBoundingBox();
-    MT_Float x = floor( bb.GetLeft()   / rCellSize_ ) * rCellSize_;
-    const MT_Float xMax = ceil ( bb.GetRight()  / rCellSize_ ) * rCellSize_;
-    const MT_Float yMin = floor( bb.GetBottom() / rCellSize_ ) * rCellSize_;
-    const MT_Float yMax = ceil ( bb.GetTop()    / rCellSize_ ) * rCellSize_;
+    double x = floor( bb.GetLeft()   / rCellSize_ ) * rCellSize_;
+    const double xMax = ceil ( bb.GetRight()  / rCellSize_ ) * rCellSize_;
+    const double yMin = floor( bb.GetBottom() / rCellSize_ ) * rCellSize_;
+    const double yMax = ceil ( bb.GetTop()    / rCellSize_ ) * rCellSize_;
     for ( ; x < xMax; x+=rCellSize_ )
-        for ( MT_Float y = yMin; y < yMax; y+=rCellSize_ )
+        for ( double y = yMin; y < yMax; y+=rCellSize_ )
             if( surface.IsInside( MT_Vector2D( x, y ) ) )
             {
                 sCell& cell = operator () ( x, y );
@@ -173,10 +173,10 @@ void PHY_RawVisionData::RegisterWeatherEffect( const MT_Ellipse& surface, const 
 void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponClass )
 {
     const MT_Rect bb = surface.GetBoundingBox();
-    MT_Float x          = floor( bb.GetLeft()   / rCellSize_ ) * rCellSize_;
-    const MT_Float xMax = ceil ( bb.GetRight()  / rCellSize_ ) * rCellSize_;
-    MT_Float y          = floor( bb.GetBottom() / rCellSize_ ) * rCellSize_;
-    const MT_Float yMax = ceil ( bb.GetTop()    / rCellSize_ ) * rCellSize_;
+    double x          = floor( bb.GetLeft()   / rCellSize_ ) * rCellSize_;
+    const double xMax = ceil ( bb.GetRight()  / rCellSize_ ) * rCellSize_;
+    double y          = floor( bb.GetBottom() / rCellSize_ ) * rCellSize_;
+    const double yMax = ceil ( bb.GetTop()    / rCellSize_ ) * rCellSize_;
 
     for ( ; x < xMax; x+=rCellSize_ )
         for ( ; y < yMax; y+=rCellSize_ )
@@ -265,6 +265,6 @@ void PHY_RawVisionData::CalcMinMaxAltitude()
                 nMaxAltitude = nAltitude;
         }
     }
-    rMaxAltitude_ = (MT_Float)nMaxAltitude;
-    rMinAltitude_ = (MT_Float)nMinAltitude;
+    rMaxAltitude_ = (double)nMaxAltitude;
+    rMinAltitude_ = (double)nMinAltitude;
 }

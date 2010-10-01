@@ -134,7 +134,7 @@ public:
     // LTO begin
     const T_KnowledgeGroupVector&                 GetKnowledgeGroups() const;
           MIL_KnowledgeGroup*                     GetParent   () const;
-          MT_Float                                GetTimeToDiffuseToKnowledgeGroup() const;
+          double                                GetTimeToDiffuseToKnowledgeGroup() const;
           bool                                    IsEnabled() const;
           void                                    SetParent( MIL_KnowledgeGroup* parent );
     // LTO end
@@ -199,7 +199,7 @@ private:
     DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;
     T_AutomateVector        automates_;
     T_KnowledgeGroupVector  knowledgeGroups_; // LTO
-    MT_Float                timeToDiffuse_; // LTO
+    double                timeToDiffuse_; // LTO
     bool                    isActivated_; // LTO
     bool                    hasBeenUpdated_;
     bool                    isJammed_;

@@ -12,7 +12,6 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 namespace hla
@@ -55,8 +54,8 @@ public:
 
     //! @name Accessors
     //@{
-    void     Update( MT_Float progress );
-    MT_Float GetState() const;
+    void     Update( double progress );
+    double GetState() const;
     bool     IsBypassed() const;
     //@}
 
@@ -68,7 +67,7 @@ public:
 private:
     //! @name Member data
     //@{
-    MT_Float rBypass_;
+    double rBypass_;
     //@}
 };
 

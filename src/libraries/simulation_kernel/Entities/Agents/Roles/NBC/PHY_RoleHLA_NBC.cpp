@@ -71,7 +71,7 @@ void PHY_RoleHLA_NBC::Decontaminate()
 // Name: PHY_RoleHLA_NBC::Decontaminate
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_NBC::Decontaminate( MT_Float /*rRatioAgentsWorking*/ )
+void PHY_RoleHLA_NBC::Decontaminate( double /*rRatioAgentsWorking*/ )
 {
     // NOTHING
 }
@@ -89,7 +89,7 @@ void PHY_RoleHLA_NBC::ChangeStatus( const std::vector< std::string >& statuses )
 // Name: PHY_RoleHLA_NBC::GetContaminationQuantity
 // Created: HBD 2010-06-08
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleHLA_NBC::GetContaminationQuantity() const
+double PHY_RoleHLA_NBC::GetContaminationQuantity() const
 {
     return 0.;
 }

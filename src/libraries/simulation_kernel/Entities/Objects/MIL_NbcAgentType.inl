@@ -143,7 +143,7 @@ unsigned int MIL_NbcAgentType::GetGasLifeTime() const
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_NbcAgentType::GetGasPropagationAngle() const
+double MIL_NbcAgentType::GetGasPropagationAngle() const
 {
     return rGasPropagationAngle_;
 }
@@ -153,7 +153,7 @@ MT_Float MIL_NbcAgentType::GetGasPropagationAngle() const
 // Created: NLD 2004-05-05
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_NbcAgentType::GetCoefMaxSpeedModificator()
+double MIL_NbcAgentType::GetCoefMaxSpeedModificator()
 {
     return rCoefMaxSpeedModificator_;    
 }
@@ -163,7 +163,7 @@ MT_Float MIL_NbcAgentType::GetCoefMaxSpeedModificator()
 // Created: NLD 2004-05-05
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_NbcAgentType::GetCoefReloadingTimeModificator()
+double MIL_NbcAgentType::GetCoefReloadingTimeModificator()
 {
     return rCoefReloadingTimeModificator_;    
 }
@@ -173,7 +173,7 @@ MT_Float MIL_NbcAgentType::GetCoefReloadingTimeModificator()
 // Created: HBD 2010-06-08
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_NbcAgentType::GetContaminationDistance()
+double MIL_NbcAgentType::GetContaminationDistance()
 {
     return rContaminationDistance_;
 }
@@ -182,7 +182,7 @@ MT_Float MIL_NbcAgentType::GetContaminationDistance()
 // Created: HBD 2010-06-08
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_NbcAgentType::GetMinContaminationQuantity()
+double MIL_NbcAgentType::GetMinContaminationQuantity()
 {
     return rContaminationQuantityGiven_;
 }

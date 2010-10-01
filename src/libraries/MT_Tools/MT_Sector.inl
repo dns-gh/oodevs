@@ -14,7 +14,7 @@
 // Created: JVT 02-08-30
 //-----------------------------------------------------------------------------
 inline
-bool MT_Sector::IsInCone( const MT_Vector2D& vPos, MT_Float rRadius ) const
+bool MT_Sector::IsInCone( const MT_Vector2D& vPos, double rRadius ) const
 {
     if ( rSemiAngle_ >= MT_PI || rSemiAngle_ <= 0 ) // vision sur 360°
         return vPos.SquareDistance( vOrigin_ ) <= ( rRadius * rRadius );
@@ -65,7 +65,7 @@ const MT_Vector2D& MT_Sector::GetOrigin() const
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
 inline
-MT_Float MT_Sector::GetAngle() const
+double MT_Sector::GetAngle() const
 {
     return rSemiAngle_ * 2;
 }

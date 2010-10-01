@@ -46,23 +46,22 @@ public:
     // @name Tools
     //@{
     virtual bool IsNull               () const;
-            bool IsInside             ( const MT_Vector2D& vPos, MT_Float rPrecision = 0.1 ) const; // $$$$ AGE 2005-01-31: stoopid precision
+            bool IsInside             ( const MT_Vector2D& vPos, double rPrecision = 0.1 ) const; // $$$$ AGE 2005-01-31: stoopid precision
             bool IsInsidish           ( const MT_Vector2D& vPos ) const;
-            bool IsOnBorder           ( const MT_Vector2D& vPos, MT_Float rPrecision ) const;
-            bool IntersectWithBorder  ( const MT_Line& segment, MT_Float rPrecision     ) const;
-            bool IntersectWithBorder  ( const MT_Line& segment, T_PointSet& res, MT_Float rPrecision ) const;
+            bool IsOnBorder           ( const MT_Vector2D& vPos, double rPrecision ) const;
+            bool IntersectWithBorder  ( const MT_Line& segment, double rPrecision     ) const;
+            bool IntersectWithBorder  ( const MT_Line& segment, T_PointSet& res, double rPrecision ) const;
             bool IntersectWithBorder  ( const MT_Droite& line, T_PointSet& res ) const;
-            bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, MT_Float rRadius ) const; // NB : return true if the circle is inside
-            bool Intersect2D          ( const MT_Line& segment, MT_Float rPrecision     ) const;
-            bool Intersect2D          ( const MT_Line& segment, T_PointSet& res, MT_Float rPrecision ) const;
-            bool Intersect2D          ( const MT_Droite& line , T_PointSet& res, MT_Float rPrecision ) const;
-            void Intersection         (       MT_Polyline& polyline, MT_Float rPrecision ) const;
+            bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const; // NB : return true if the circle is inside
+            bool Intersect2D          ( const MT_Line& segment, double rPrecision     ) const;
+            bool Intersect2D          ( const MT_Line& segment, T_PointSet& res, double rPrecision ) const;
+            bool Intersect2D          ( const MT_Droite& line , T_PointSet& res, double rPrecision ) const;
+            void Intersection         (       MT_Polyline& polyline, double rPrecision ) const;
 
             void ComputeExtremities   ( const MT_Droite& line, MT_Vector2D& vLeftPoint, MT_Vector2D& vRightPoint ) const; // Retourne les deux du polygone sur la droite
 
-            MT_Float GetArea          () const;
+            double GetArea          () const;
 
-    const T_TrianglePtrVector& GetTriangles   () const; //$$$ A GICLER
     const T_PointVector&       GetBorderPoints() const; //$$$ A CLEANER
 
     MT_Rect GetBoundingBox() const;
@@ -87,10 +86,10 @@ private:
 
     //! @name Helpers
     //@{
-    MT_Float      ComputeArea() const;
+    double      ComputeArea() const;
     E_BoundedSize BoundedSide( const MT_Vector2D& pos ) const;
     void          Convexify();
-    bool          IsInBoundingBox( const MT_Vector2D& p, MT_Float rPrecision = 0 ) const;
+    bool          IsInBoundingBox( const MT_Vector2D& p, double rPrecision = 0 ) const;
     void          ComputeBoundingBox();
     //@}
 
@@ -103,7 +102,7 @@ private:
     {
         PolygonData() : bIsNull_( false ), rArea_( -1 ) {};
         bool             bIsNull_;
-        mutable MT_Float rArea_; // $$$$ AGE 2005-06-14: late initialization
+        mutable double rArea_; // $$$$ AGE 2005-06-14: late initialization
         T_PointVector    borderVector_;
         MT_Rect          boundingBox_;
     } * pData_;

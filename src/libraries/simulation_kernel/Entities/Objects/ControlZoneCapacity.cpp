@@ -30,7 +30,7 @@ namespace
     class StaticLoader
     {
     public:
-        typedef std::vector< MT_Float > T_FirePercentageVector;
+        typedef std::vector< double > T_FirePercentageVector;
     public:
         StaticLoader( T_FirePercentageVector& vFirePercentages )
             : vFirePercentages_ ( vFirePercentages )
@@ -65,7 +65,7 @@ namespace
         void ReadPercentage( xml::xistream& xis )
         {
             std::string volume;
-            MT_Float rFirePercentage;
+            double rFirePercentage;
 
             xis >> xml::attribute( "volume", volume );
             const PHY_Volume* pVolume = PHY_Volume::FindVolume( volume );
@@ -167,7 +167,7 @@ void ControlZoneCapacity::Instanciate( MIL_Object_ABC& object ) const
 // Name: ControlZoneCapacity::GetUnitDensityFirePercentage
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
-MT_Float ControlZoneCapacity::GetUnitDensityFirePercentage( const PHY_Volume& volume ) const
+double ControlZoneCapacity::GetUnitDensityFirePercentage( const PHY_Volume& volume ) const
 {
     return vFirePercentages_[ volume.GetID() ];
 }
@@ -178,8 +178,8 @@ MT_Float ControlZoneCapacity::GetUnitDensityFirePercentage( const PHY_Volume& vo
 // -----------------------------------------------------------------------------
 void ControlZoneCapacity::RetrieveTargets( const MIL_Object_ABC& object, T_TargetVector& targets ) const
 {
-    MT_Float area = object.GetLocalisation().GetArea();
-    MT_Float rPHCoeff = MT_IsZero( area )
+    double area = object.GetLocalisation().GetArea();
+    double rPHCoeff = MT_IsZero( area )
                                 ? 0
                                 : controller_->GetRole< human::PHY_RoleInterface_Humans >().GetNbrUsableHumans() / area;
     targets.clear();
@@ -190,7 +190,7 @@ void ControlZoneCapacity::RetrieveTargets( const MIL_Object_ABC& object, T_Targe
 // Name: ControlZoneCapacity::ControlTarget
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
-void ControlZoneCapacity::ControlTarget( MIL_Agent_ABC* agent, const MIL_Army_ABC& army, MT_Float phCoef, T_TargetVector& targets ) const
+void ControlZoneCapacity::ControlTarget( MIL_Agent_ABC* agent, const MIL_Army_ABC& army, double phCoef, T_TargetVector& targets ) const
 {
     if( army.IsAFriend( agent->GetArmy() ) == eTristate_True )
         return;

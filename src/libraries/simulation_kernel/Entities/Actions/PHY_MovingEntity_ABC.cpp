@@ -88,7 +88,7 @@ bool PHY_MovingEntity_ABC::SerializeCurrentPath( Common::MsgPath& asn ) const
 // Name: PHY_MovingEntity_ABC::ExtrapolatePosition
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-MT_Vector2D PHY_MovingEntity_ABC::ExtrapolatePosition( const MT_Vector2D& position, const MT_Float rSpeed, const MT_Float rTime, const bool bBoundOnPath ) const
+MT_Vector2D PHY_MovingEntity_ABC::ExtrapolatePosition( const MT_Vector2D& position, const double rSpeed, const double rTime, const bool bBoundOnPath ) const
 {
     return pathWalker_.ExtrapolatePosition( position, rSpeed, rTime, bBoundOnPath );
 }
@@ -106,7 +106,7 @@ bool PHY_MovingEntity_ABC::IsMovingOn( const DEC_Path_ABC& path ) const
 // Name: PHY_MovingEntity_ABC::ComputeFutureObjectCollision
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-bool PHY_MovingEntity_ABC::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, MT_Float& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const
+bool PHY_MovingEntity_ABC::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const
 {
     return pathWalker_.ComputeFutureObjectCollision( vStartPos, objectsToTest, rDistance, pObject );
 }

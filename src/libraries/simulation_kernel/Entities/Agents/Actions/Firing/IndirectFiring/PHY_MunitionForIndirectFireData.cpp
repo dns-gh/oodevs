@@ -59,7 +59,7 @@ void PHY_MunitionForIndirectFireData::operator()( const PHY_ComposantePion& comp
     if( !pIndirectFireData || pIndirectFireData->GetIndirectFireDotationCategory() != indirectWeaponCategory_ )
         return;
 
-    const MT_Float rRange = firer_.GetRole< PHY_RoleInterface_Location >().GetPosition().Distance( vTargetPosition_ );
+    const double rRange = firer_.GetRole< PHY_RoleInterface_Location >().GetPosition().Distance( vTargetPosition_ );
 
     if( rRange < weapon.GetMinRangeToIndirectFire() || rRange > weapon.GetMaxRangeToIndirectFire() )
         return;

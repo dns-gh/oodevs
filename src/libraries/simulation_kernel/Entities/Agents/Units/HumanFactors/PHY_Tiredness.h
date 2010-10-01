@@ -12,7 +12,6 @@
 #ifndef __PHY_Tiredness_h_
 #define __PHY_Tiredness_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Stl.h"
 
 namespace Common
@@ -61,12 +60,12 @@ public:
     const std::string&          GetName                         () const;
           unsigned int                  GetID                           () const;
           Common::EnumUnitTiredness GetAsnID                        () const;
-          MT_Float              GetWeight                       () const;
-          MT_Float              GetCoefMaxSpeedModificator      () const;
-          MT_Float              GetCoefReloadingTimeModificator () const;
-          MT_Float              GetCoefPhModificator            () const;
-          MT_Float              GetCoefPostureTimeModificator   () const;
-          MT_Float              GetCoefSensorDistanceModificator() const;
+          double              GetWeight                       () const;
+          double              GetCoefMaxSpeedModificator      () const;
+          double              GetCoefReloadingTimeModificator () const;
+          double              GetCoefPhModificator            () const;
+          double              GetCoefPostureTimeModificator   () const;
+          double              GetCoefSensorDistanceModificator() const;
     //@}
 
     //! @name Operators
@@ -87,7 +86,7 @@ private:
     //@}
 
 private:
-     PHY_Tiredness( const std::string& strName, E_TirednessType nType, Common::EnumUnitTiredness nAsnID, MT_Float rWeight );
+     PHY_Tiredness( const std::string& strName, E_TirednessType nType, Common::EnumUnitTiredness nAsnID, double rWeight );
     ~PHY_Tiredness();
 
     //! @name Init
@@ -99,13 +98,13 @@ private:
     const std::string           strName_;
     const E_TirednessType       nType_;
     const Common::EnumUnitTiredness nAsnID_;
-    const MT_Float              rDIAWeight_;
+    const double              rDIAWeight_;
 
-    MT_Float rCoefMaxSpeedModificator_;
-    MT_Float rCoefReloadingTimeModificator_;
-    MT_Float rCoefPhModificator_;
-    MT_Float rCoefPostureTimeModificator_;
-    MT_Float rCoefSensorDistanceModificator_;
+    double rCoefMaxSpeedModificator_;
+    double rCoefReloadingTimeModificator_;
+    double rCoefPhModificator_;
+    double rCoefPostureTimeModificator_;
+    double rCoefSensorDistanceModificator_;
 
 private:
     //! @name Statics

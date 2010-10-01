@@ -37,8 +37,8 @@ public:
     //@{
     virtual bool Update();
     virtual void GetMerchandiseToConvoy              ( T_MerchandiseToConvoyMap& container ) const;
-    virtual void RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
-    virtual void AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+    virtual void RemoveConvoyedMerchandise           ( const PHY_DotationCategory& dotationCategory, double rNbrDotations );
+    virtual void AddConvoyedMerchandise              ( const PHY_DotationCategory& dotationCategory, double rNbrDotations );
     virtual void CancelMerchandiseOverheadReservation();
     //@}
 

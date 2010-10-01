@@ -82,7 +82,7 @@ const PHY_DotationCategory& PHY_Weapon::GetDotationCategory() const
 // Name: PHY_Weapon::GetMaxRangeToFireOn
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_Weapon::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
+double PHY_Weapon::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
     return type_.GetMaxRangeToFireOn( firer, targetComposanteType, rWantedPH );
 }
@@ -91,7 +91,7 @@ MT_Float PHY_Weapon::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_
 // Name: PHY_Weapon::GetMinRangeToFireOn
 // Created: JVT 2004-12-17
 // -----------------------------------------------------------------------------
-MT_Float PHY_Weapon::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const
+double PHY_Weapon::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
     return type_.GetMinRangeToFireOn( firer, targetComposanteType, rWantedPH );
 }
@@ -100,7 +100,7 @@ MT_Float PHY_Weapon::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_
 // Name: PHY_Weapon::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_Weapon::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, MT_Float rDistBtwFirerAndTarget ) const
+double PHY_Weapon::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwFirerAndTarget ) const
 {
     return type_.GetDangerosity( firer, compTarget, rDistBtwFirerAndTarget );
 }
@@ -109,7 +109,7 @@ MT_Float PHY_Weapon::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_Compo
 // Name: PHY_Weapon::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_Weapon::GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const
+double PHY_Weapon::GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const
 {
     return type_.GetDangerosity( firer, target, targetComposanteType, bUsePH );
 }
@@ -127,7 +127,7 @@ bool PHY_Weapon::IsReady() const
 // Name: PHY_Weapon::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_Weapon::GetMaxRangeToIndirectFire() const
+double PHY_Weapon::GetMaxRangeToIndirectFire() const
 {
     return type_.GetMaxRangeToIndirectFire();
 }
@@ -136,7 +136,7 @@ MT_Float PHY_Weapon::GetMaxRangeToIndirectFire() const
 // Name: phy_weapon::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
-MT_Float PHY_Weapon::GetMinRangeToIndirectFire() const
+double PHY_Weapon::GetMinRangeToIndirectFire() const
 {
     return type_.GetMinRangeToIndirectFire();
 }
@@ -216,7 +216,7 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& ta
     if( (unsigned int)rNextTimeStepToFire_ < nNextTimeStep )
     {
         const PHY_RoePopulation& roe  = firer.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
-        const MT_Float rDamageSurface = target.GetPopulation().GetType().GetDamageSurface( roe );
+        const double rDamageSurface = target.GetPopulation().GetType().GetDamageSurface( roe );
         const unsigned int     nKilledHumans  = (unsigned int)ceil( rDamageSurface * target.GetDensity() );
 
         unsigned int nNbrAmmoToFire = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nKilledHumans );

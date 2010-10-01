@@ -14,7 +14,7 @@
 
 namespace
 {
-    int64 GetSystemTime()
+    long long int GetSystemTime()
     {
         FILETIME ft;
         GetSystemTimeAsFileTime(&ft);
@@ -54,7 +54,7 @@ MT_Timer_ABC::~MT_Timer_ABC()
 */
 // Created:  NLD 00-09-29 
 //-----------------------------------------------------------------------------
-void MT_Timer_ABC::Process( int64 currentTime )
+void MT_Timer_ABC::Process( long long int currentTime )
 {
     if( !bStarted_ || bPaused_ )
         return;
@@ -72,7 +72,7 @@ void MT_Timer_ABC::Process( int64 currentTime )
 */
 // Created:  NLD 00-09-29 
 //-----------------------------------------------------------------------------
-void MT_Timer_ABC::Start( int64 tPeriod )
+void MT_Timer_ABC::Start( long long int tPeriod )
 {
     tPeriod_  = tPeriod;
     bStarted_ = true;

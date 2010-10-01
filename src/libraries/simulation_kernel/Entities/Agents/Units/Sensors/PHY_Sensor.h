@@ -12,8 +12,6 @@
 #ifndef __PHY_Sensor_h_
 #define __PHY_Sensor_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 class PHY_SensorType;
 
 // =============================================================================
@@ -23,18 +21,18 @@ class PHY_SensorType;
 class PHY_Sensor : private boost::noncopyable
 {
 public:
-             PHY_Sensor( const PHY_SensorType& type, MT_Float rHeight );
+             PHY_Sensor( const PHY_SensorType& type, double rHeight );
     virtual ~PHY_Sensor();
 
     //! @name Accessors
     //@{
-          MT_Float        GetHeight() const;
+          double        GetHeight() const;
     const PHY_SensorType& GetType  () const;
     //@}
 
 private:
     const PHY_SensorType& type_;
-    const MT_Float        rHeight_;
+    const double        rHeight_;
 };
 
 #endif // __PHY_Sensor_h_

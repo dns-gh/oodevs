@@ -13,7 +13,6 @@
 #define __MIL_Effect_Fly_h_
 
 #include "MIL_Effect_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 class PHY_RoleAction_InterfaceFlying;
 
@@ -31,12 +30,12 @@ public:
     //@{
     virtual bool Execute();
 
-    void SetFlyingHeight( MT_Float rHeight );
+    void SetFlyingHeight( double rHeight );
     //@}
 
 private:
     PHY_RoleAction_InterfaceFlying& roleFlying_;
-    MT_Float                        rHeight_;
+    double                        rHeight_;
 };
 
 #endif // __MIL_Effect_Fly_h_

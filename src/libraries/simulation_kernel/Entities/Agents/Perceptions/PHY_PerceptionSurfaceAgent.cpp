@@ -32,7 +32,7 @@ PHY_PerceptionSurfaceAgent::PHY_PerceptionSurfaceAgent()
 // Name: PHY_PerceptionSurfaceAgent constructor
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-PHY_PerceptionSurfaceAgent::PHY_PerceptionSurfaceAgent( const PHY_SensorTypeAgent& sensorType, const MT_Vector2D& vOrigin, MT_Float rHeight )
+PHY_PerceptionSurfaceAgent::PHY_PerceptionSurfaceAgent( const PHY_SensorTypeAgent& sensorType, const MT_Vector2D& vOrigin, double rHeight )
     : vOrigin_    ( vOrigin    )
     , pSensorType_( &sensorType )
     , rHeight_    ( rHeight    )
@@ -190,7 +190,7 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
 // Name: PHY_PerceptionSurfaceAgent::ComputePerceptionAccuracy
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-MT_Float PHY_PerceptionSurfaceAgent::ComputePerceptionAccuracy( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationFlow& target ) const
+double PHY_PerceptionSurfaceAgent::ComputePerceptionAccuracy( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationFlow& target ) const
 {
     return pSensorType_->ComputePerceptionAccuracy( perceiver.GetPion(), target, rHeight_ );
 }

@@ -57,7 +57,7 @@ void MIL_ProfilerMgr::NotifyTickEnd( unsigned int /*nTick*/ )
 // Name: MIL_ProfilerMgr::NotifyDecisionUpdated
 // Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
-void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_AgentPion& pion, MT_Float rTime )
+void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_AgentPion& pion, double rTime )
 {
     if( !bEnabled_ )
         return;
@@ -69,7 +69,7 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_AgentPion& pion, MT_Float
 // Name: MIL_ProfilerMgr::NotifyDecisionUpdated
 // Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
-void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Automate& automate, MT_Float rTime )
+void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Automate& automate, double rTime )
 {
     if( !bEnabled_ )
         return;
@@ -81,7 +81,7 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Automate& automate, MT_Fl
 // Name: MIL_ProfilerMgr::NotifyDecisionUpdated
 // Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
-void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Population& population, MT_Float rTime )
+void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Population& population, double rTime )
 {
     if( !bEnabled_ )
         return;

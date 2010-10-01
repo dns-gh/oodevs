@@ -187,7 +187,7 @@ const MT_Vector2D& DEC_Knowledge_PopulationFlowPerception::GetDirection() const
 // Name: DEC_Knowledge_PopulationFlowPerception::GetSpeed
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_PopulationFlowPerception::GetSpeed() const
+double DEC_Knowledge_PopulationFlowPerception::GetSpeed() const
 {
     assert( pPopulationFlowPerceived_ );
     return pPopulationFlowPerceived_->GetSpeed();

@@ -14,7 +14,6 @@
 
 #include "MIL_Random.h"
 #include "MT_Tools/MT_InterpolatedFunction.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Vector3D.h"
 #include "MT_Tools/MT_Stl.h"
 
@@ -46,13 +45,13 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float GetDangerosity                ( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const;
-    MT_Float GetDangerosity                ( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rDistBtwFirerAndTarget ) const;
-    MT_Float GetMaxRangeToFireOn           ( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
-    MT_Float GetMinRangeToFireOn           ( const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
-    MT_Float GetMaxRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
-    MT_Float GetMinRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
-    MT_Float GetMaxRangeToFire             ( MT_Float rWantedPH ) const;
+    double GetDangerosity                ( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH ) const;
+    double GetDangerosity                ( const PHY_ComposanteType_ABC& targetComposanteType, double rDistBtwFirerAndTarget ) const;
+    double GetMaxRangeToFireOn           ( const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
+    double GetMinRangeToFireOn           ( const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
+    double GetMaxRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, double rWantedPH ) const;
+    double GetMinRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, double rWantedPH ) const;
+    double GetMaxRangeToFire             ( double rWantedPH ) const;
     void     Fire                          ( MIL_Agent_ABC& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH ) const;
     void     Fire                          ( MIL_Agent_ABC& firer, MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const;
     //@}
@@ -60,26 +59,26 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MT_InterpolatedFunction< MT_Float > >  T_PhVector;
+    typedef std::vector< MT_InterpolatedFunction< double > >  T_PhVector;
     typedef T_PhVector::const_iterator                          CIT_PhVector;
     //@}
 
 private:
     //! @name Init / Tools
     //@{
-    MT_Float GetPH( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_Volume& targetVolume, const MT_Vector3D& firerPosition, const MT_Vector3D& targetPosition ) const;
-    MT_Float GetPH( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, const PHY_Volume& targetVolume, MT_Float rDistance ) const;
+    double GetPH( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_Volume& targetVolume, const MT_Vector3D& firerPosition, const MT_Vector3D& targetPosition ) const;
+    double GetPH( const PHY_Posture& firerPosture, const PHY_Posture& targetPosture, const PHY_Volume& targetVolume, double rDistance ) const;
 
-    MT_Float GetMaxDistanceForPH( MT_Float rPH, const PHY_Posture&          firerPosture, const PHY_Posture& targetPosture              , const PHY_Volume& targetVolume ) const;
-    MT_Float GetMinDistanceForPH( MT_Float rPH, const PHY_Posture&          firerPosture, const PHY_Posture& targetPosture              , const PHY_Volume& targetVolume ) const;
-    MT_Float GetMaxDistanceForPH( MT_Float rPH, const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
-    MT_Float GetMinDistanceForPH( MT_Float rPH, const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
+    double GetMaxDistanceForPH( double rPH, const PHY_Posture&          firerPosture, const PHY_Posture& targetPosture              , const PHY_Volume& targetVolume ) const;
+    double GetMinDistanceForPH( double rPH, const PHY_Posture&          firerPosture, const PHY_Posture& targetPosture              , const PHY_Volume& targetVolume ) const;
+    double GetMaxDistanceForPH( double rPH, const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
+    double GetMinDistanceForPH( double rPH, const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture, const PHY_Volume& targetVolume ) const;
 
     void InitializePH( xml::xistream& xis );
     //@}
     //! @name Helpers
     //@{
-    void ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& phFunction );
+    void ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction< double >& phFunction );
     void NotifyFirerPerception( MIL_Agent_ABC& firer, MIL_Agent_ABC& target ) const;
     bool IsFirerInsideRecognitionDistance( MIL_Agent_ABC& firer, MIL_Agent_ABC& target ) const;
     //@}

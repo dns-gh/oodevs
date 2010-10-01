@@ -40,16 +40,16 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Agent )
 
-MT_Float DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_        = 0.2; // 20%
-MT_Float DEC_Knowledge_Agent::rMaxDangerosityDegradationByOpState_          = 0.2; // 20%
-MT_Float DEC_Knowledge_Agent::rMaxDangerosityDegradationByNeutralizedState_ = 0.8; // 80%
+double DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_        = 0.2; // 20%
+double DEC_Knowledge_Agent::rMaxDangerosityDegradationByOpState_          = 0.2; // 20%
+double DEC_Knowledge_Agent::rMaxDangerosityDegradationByNeutralizedState_ = 0.8; // 80%
 MIL_IDManager DEC_Knowledge_Agent::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown, MT_Float rRelevance )
+DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown, double rRelevance )
     : DEC_Knowledge_ABC()
     , pKnowledgeGroup_               ( &knowledgeGroup )
     , pAgentKnown_                   ( &agentKnown )
@@ -332,11 +332,11 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_Agent& knowledge, int curr
 // Name: DEC_Knowledge_Agent::ChangeRelevance
 // Created: NLD 2005-08-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Agent::ChangeRelevance( MT_Float rNewRelevance )
+void DEC_Knowledge_Agent::ChangeRelevance( double rNewRelevance )
 {
     if( rRelevance_ == rNewRelevance )
         return;
-    static const MT_Float rDeltaForNetwork = 0.05;
+    static const double rDeltaForNetwork = 0.05;
     if( fabs( rLastRelevanceSent_ - rNewRelevance ) > rDeltaForNetwork || rNewRelevance == 0. || rNewRelevance == 1. )
         bRelevanceUpdated_ = true;
     rRelevance_ = rNewRelevance;
@@ -365,10 +365,10 @@ void DEC_Knowledge_Agent::UpdateRelevance(int currentTimeStep)
         return;
     }
     // Degradation : effacement au bout de X minutes
-    const MT_Float rTimeRelevanceDegradation = ( currentTimeStep - nTimeLastUpdate_ ) / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxLifeTime();
+    const double rTimeRelevanceDegradation = ( currentTimeStep - nTimeLastUpdate_ ) / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxLifeTime();
     // Degradation : effacement quand l'unité réelle et l'unité connnue sont distantes de X metres
-    const MT_Float rDistanceBtwKnowledgeAndKnown = dataDetection_.GetPosition().Distance( pAgentKnown_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    const MT_Float rDistRelevanceDegradation     = rDistanceBtwKnowledgeAndKnown / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit();
+    const double rDistanceBtwKnowledgeAndKnown = dataDetection_.GetPosition().Distance( pAgentKnown_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    const double rDistRelevanceDegradation     = rDistanceBtwKnowledgeAndKnown / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit();
     ChangeRelevance( std::max( 0., rRelevance_ - rTimeRelevanceDegradation - rDistRelevanceDegradation ) );
     nTimeLastUpdate_ = currentTimeStep;
 }
@@ -534,12 +534,12 @@ void DEC_Knowledge_Agent::SendMsgDestruction() const
 // Name: DEC_Knowledge_Agent::DegradeDangerosity
 // Created: NLD 2004-05-26
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Agent::DegradeDangerosity( MT_Float& rDangerosity ) const
+void DEC_Knowledge_Agent::DegradeDangerosity( double& rDangerosity ) const
 {
     // Pertinence
     rDangerosity *= ( 1 - ( (-rMaxDangerosityDegradationByRelevance_ * rRelevance_) + rMaxDangerosityDegradationByRelevance_ ) );
     // Etat opérationel
-    const MT_Float rOpState = dataRecognition_.GetOperationalState();
+    const double rOpState = dataRecognition_.GetOperationalState();
     if( rOpState == 0. ) // L'unité est morte
         rDangerosity = 0;
     else
@@ -554,7 +554,7 @@ void DEC_Knowledge_Agent::DegradeDangerosity( MT_Float& rDangerosity ) const
 // Name: DEC_Knowledge_Agent::GetDangerosity
 // Created: NLD 2004-04-02
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target ) const
+double DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target ) const
 {
     if( *pMaxPerceptionLevel_ < PHY_PerceptionLevel::recognized_
         ||  IsAFriend( target.GetArmy() ) == eTristate_True
@@ -564,12 +564,12 @@ MT_Float DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target ) cons
     const PHY_ComposantePion* pTargetMajorComposante = target.GetRole< PHY_RolePion_Composantes >().GetMajorComposante();
     if( !pTargetMajorComposante )
         return 0.;
-    MT_Float rDangerosity = 0.;
+    double rDangerosity = 0.;
     // Fight score
     const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
     const MT_Vector3D vTargetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_, targetLocation.GetAltitude() );
     const MT_Vector3D vDataPosition  ( dataDetection_.GetPosition().rX_, dataDetection_.GetPosition().rY_, dataDetection_.GetAltitude() );
-    const MT_Float    rDistBtwSourceAndTarget = vTargetPosition.Distance( vDataPosition );
+    const double    rDistBtwSourceAndTarget = vTargetPosition.Distance( vDataPosition );
     const T_KnowledgeComposanteVector& composantes = dataRecognition_.GetComposantes();
     for( CIT_KnowledgeComposanteVector itComposante = composantes.begin(); itComposante != composantes.end(); ++itComposante )
         rDangerosity = std::max( rDangerosity, itComposante->GetDangerosity( *pAgentKnown_, *pTargetMajorComposante, rDistBtwSourceAndTarget ) );
@@ -581,14 +581,14 @@ MT_Float DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target ) cons
 // Name: DEC_Knowledge_Agent::GetDangerosity
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Agent::GetDangerosity( const DEC_Knowledge_Agent& target ) const
+double DEC_Knowledge_Agent::GetDangerosity( const DEC_Knowledge_Agent& target ) const
 {
     if( *pMaxPerceptionLevel_ < PHY_PerceptionLevel::recognized_ )
         return 0.;
         // Same team ...
 //    if( GetArmy() && GetArmy().IsAFriend( target ) == eTristate_True )
 //        return 0.;
-    MT_Float rDangerosity = 0.;
+    double rDangerosity = 0.;
     // Target is dead ....
     const DEC_Knowledge_AgentComposante* pTargetMajorComposante = target.GetMajorComposante();
     if( !pTargetMajorComposante )
@@ -596,7 +596,7 @@ MT_Float DEC_Knowledge_Agent::GetDangerosity( const DEC_Knowledge_Agent& target 
     // Fight score
     const MT_Vector3D vTargetPosition( target.GetPosition().rX_, target.GetPosition().rY_, target.GetAltitude() );
     const MT_Vector3D vDataPosition  ( dataDetection_.GetPosition().rX_, dataDetection_.GetPosition().rY_, dataDetection_.GetAltitude() );
-    const MT_Float rDistBtwSourceAndTarget = vTargetPosition.Distance( vDataPosition );
+    const double rDistBtwSourceAndTarget = vTargetPosition.Distance( vDataPosition );
     const T_KnowledgeComposanteVector& composantes = dataRecognition_.GetComposantes();
     for( CIT_KnowledgeComposanteVector itComposante = composantes.begin(); itComposante != composantes.end(); ++itComposante )
         rDangerosity = std::max( rDangerosity, itComposante->GetDangerosity( *pAgentKnown_, *pTargetMajorComposante, rDistBtwSourceAndTarget ) );
@@ -608,13 +608,13 @@ MT_Float DEC_Knowledge_Agent::GetDangerosity( const DEC_Knowledge_Agent& target 
 // Name: DEC_Knowledge_Agent::GetMaxRangeToFireOn
 // Created: NLD 2004-04-13
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Agent::GetMaxRangeToFireOn( const MIL_Agent_ABC& target, MT_Float rWantedPH ) const
+double DEC_Knowledge_Agent::GetMaxRangeToFireOn( const MIL_Agent_ABC& target, double rWantedPH ) const
 {
     // Get back the most dangerous composante type of the target (from our point of view ...)
     const PHY_ComposantePion* pTargetComposante = target.GetRole< PHY_RolePion_Composantes >().GetMajorComposante();
     if( !pTargetComposante )
         return 0.;
-    MT_Float rRange = 0;
+    double rRange = 0;
     const T_KnowledgeComposanteVector& composantes = dataRecognition_.GetComposantes();
     for( CIT_KnowledgeComposanteVector itComposante = composantes.begin(); itComposante != composantes.end(); ++itComposante )
     {
@@ -703,12 +703,12 @@ void DEC_Knowledge_Agent::KillOfficers()
 const PHY_Volume* DEC_Knowledge_Agent::GetSignificantVolume( const PHY_SensorTypeAgent& sensorType ) const
 {
     const PHY_Volume* pSignificantVolume = 0;
-    MT_Float rSignificantVolumeFactor     = 0.;
+    double rSignificantVolumeFactor     = 0.;
     const T_ComposanteVolumeSet& visionVolumes = dataDetection_.GetVisionVolumes();
     for( CIT_ComposanteVolumeSet it = visionVolumes.begin(); it != visionVolumes.end(); ++it )
     {
         const PHY_Volume& volume = **it;
-        MT_Float rVolumeFactor = sensorType.GetFactor( volume );
+        double rVolumeFactor = sensorType.GetFactor( volume );
         if( rVolumeFactor > rSignificantVolumeFactor )
         {
             pSignificantVolume = &volume;
@@ -823,7 +823,7 @@ const MT_Vector2D& DEC_Knowledge_Agent::GetDirection() const
 // Name: DEC_Knowledge_Agent::GetAltitude
 // Created: NLD 2004-06-07
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Agent::GetAltitude() const
+double DEC_Knowledge_Agent::GetAltitude() const
 {
     return dataDetection_.GetAltitude();
 }
@@ -832,7 +832,7 @@ MT_Float DEC_Knowledge_Agent::GetAltitude() const
 // Name: DEC_Knowledge_Agent::GetSpeed
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Agent::GetSpeed() const
+double DEC_Knowledge_Agent::GetSpeed() const
 {
     return dataDetection_.GetSpeed();
 }
@@ -841,7 +841,7 @@ MT_Float DEC_Knowledge_Agent::GetSpeed() const
 // Name: DEC_Knowledge_Agent::GetRelevance
 // Created: NLD 2004-03-22
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Agent::GetRelevance() const
+double DEC_Knowledge_Agent::GetRelevance() const
 {
     return rRelevance_;
 }
@@ -850,7 +850,7 @@ MT_Float DEC_Knowledge_Agent::GetRelevance() const
 // Name: DEC_Knowledge_Agent::GetPostureCompletionPercentage
 // Created: NLD 2004-04-01
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Agent::GetPostureCompletionPercentage() const
+double DEC_Knowledge_Agent::GetPostureCompletionPercentage() const
 {
     return dataDetection_.GetPostureCompletionPercentage();
 }
@@ -910,7 +910,7 @@ const PHY_PerceptionLevel& DEC_Knowledge_Agent::GetCurrentPerceptionLevel( const
 // Name: DEC_Knowledge_Agent::GetOperationalState
 // Created: NLD 2004-04-14
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Agent::GetOperationalState() const
+double DEC_Knowledge_Agent::GetOperationalState() const
 {
     return dataRecognition_.GetOperationalState();
 }
@@ -919,7 +919,7 @@ MT_Float DEC_Knowledge_Agent::GetOperationalState() const
 // Name: DEC_Knowledge_Agent::GetMajorOperationalState
 // Created: NLD 2005-11-30
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Agent::GetMajorOperationalState() const
+double DEC_Knowledge_Agent::GetMajorOperationalState() const
 {
     return dataRecognition_.GetMajorOperationalState();
 }

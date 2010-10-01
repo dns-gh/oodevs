@@ -50,7 +50,7 @@ public:
     typedef T_RequestMap::iterator                                         IT_RequestMap;
     typedef T_RequestMap::const_iterator                                  CIT_RequestMap;
 
-    typedef std::map< const PHY_DotationCategory*, MT_Float > T_MerchandiseToConvoyMap;
+    typedef std::map< const PHY_DotationCategory*, double > T_MerchandiseToConvoyMap;
     //@}
 
     //! @name Operations
@@ -58,8 +58,8 @@ public:
     void AddRequest( const PHY_SupplyStockRequest& request );
 
     void GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
-    void RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
-    void AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+    void RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations );
+    void AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations );
     void CancelMerchandiseOverheadReservation();
 
     void Supply() const;

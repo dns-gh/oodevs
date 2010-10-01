@@ -69,24 +69,24 @@ public:
     //@{
     void     AddCapacity   ( const PHY_DotationCapacity& capacity );
     void     RemoveCapacity( const PHY_DotationCapacity& capacity );
-    MT_Float GetCapacity   ( const PHY_DotationCategory& category ) const;
+    double GetCapacity   ( const PHY_DotationCategory& category ) const;
 
     void     CancelConsumptionReservations ();
-    MT_Float AddConsumptionReservation     ( const PHY_DotationCategory& category, MT_Float rNbr );
+    double AddConsumptionReservation     ( const PHY_DotationCategory& category, double rNbr );
     void     ConsumeConsumptionReservations();
 
-    MT_Float AddFireReservation     ( const PHY_DotationCategory& category, MT_Float rNbr );
+    double AddFireReservation     ( const PHY_DotationCategory& category, double rNbr );
     void     ConsumeFireReservations();
 
-    MT_Float GetValue( const PHY_DotationCategory& category ) const;
-    MT_Float Consume ( const PHY_DotationCategory& category, MT_Float rNbr );
-    MT_Float Supply  ( const PHY_DotationCategory& category, MT_Float rNbr );
+    double GetValue( const PHY_DotationCategory& category ) const;
+    double Consume ( const PHY_DotationCategory& category, double rNbr );
+    double Supply  ( const PHY_DotationCategory& category, double rNbr );
 
     const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const;
     float GetIlluminatingRange( ) const;
 
-    void     Resupply( MT_Float rFactor = 1. );
-    void     Resupply( const PHY_AmmoDotationClass& ammoDotationClass, MT_Float rFactor );
+    void     Resupply( double rFactor = 1. );
+    void     Resupply( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor );
     //@}
 
     //! @name Misc
@@ -104,7 +104,7 @@ public:
     //@{
     void NotifySupplyNeeded          ( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const;
     void FillSupplyRequest           ( PHY_SupplyDotationRequestContainer& supplyRequest ) const;
-    void ChangeDotationsValueUsingTC2( const PHY_AmmoDotationClass* pAmmoDotationClass, MT_Float rCapacityFactor, MIL_AutomateLOG& tc2 ) const;
+    void ChangeDotationsValueUsingTC2( const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor, MIL_AutomateLOG& tc2 ) const;
     //@}
 
     //! @name Accessors

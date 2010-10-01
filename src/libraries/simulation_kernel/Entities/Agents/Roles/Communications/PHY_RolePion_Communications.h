@@ -15,7 +15,6 @@
 #include "PHY_RoleInterface_Communications.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {
@@ -124,8 +123,8 @@ private:
 
     MIL_KnowledgeGroup* pJammingKnowledgeGroup_;
 private:
-    static MT_Float rCoefSpeedModificator_;
-    static MT_Float rCoefReloadingTimeModificator_;
+    static double rCoefSpeedModificator_;
+    static double rCoefReloadingTimeModificator_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Communications* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Communications* role, const unsigned int /*version*/ );

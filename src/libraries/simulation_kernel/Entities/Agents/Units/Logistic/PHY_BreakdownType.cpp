@@ -54,7 +54,7 @@ PHY_BreakdownType::E_Type PHY_BreakdownType::ConvertType( const std::string& str
 void PHY_BreakdownType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing breakdown types" );
-    MT_Float rTimeVal;
+    double rTimeVal;
     std::string timeVal;
     LoadingWrapper loader;
     xis >> xml::start( "breakdowns" )
@@ -132,7 +132,7 @@ PHY_BreakdownType::PHY_BreakdownType( const std::string& strName, const PHY_Main
     , nTheoricRepairTime_( 0 )
 {
     std::string repairTime, variance;
-    MT_Float rVariance;
+    double rVariance;
     xis >> xml::attribute( "id", nID_ )
         >> xml::attribute( "average-repairing-time", repairTime )
         >> xml::attribute( "variance", variance );

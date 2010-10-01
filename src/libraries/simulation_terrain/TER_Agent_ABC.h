@@ -40,7 +40,7 @@ public:
     typedef T_AgentPtrVector::iterator        IT_AgentPtrVector;
     typedef T_AgentPtrVector::const_iterator CIT_AgentPtrVector;
 
-    typedef pathfind::SpatialContainerNode< TER_Agent_ABC*, TER_AgentTraits, MT_Float >* T_Hint;
+    typedef pathfind::SpatialContainerNode< TER_Agent_ABC*, TER_AgentTraits, double >* T_Hint;
     //@}
 
 public:

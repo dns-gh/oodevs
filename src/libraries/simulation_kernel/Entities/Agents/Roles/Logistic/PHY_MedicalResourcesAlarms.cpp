@@ -45,7 +45,7 @@ void PHY_MedicalResourcesAlarms::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MedicalResourcesAlarms::ReadResourceLevel( xml::xistream& xis )
 {
-    MT_Float rRatio;
+    double rRatio;
     std::string resourceType;
     xis >> xml::attribute( "resource", resourceType )
         >> xml::attribute( "availability-threshold", rRatio );
@@ -80,7 +80,7 @@ void PHY_MedicalResourcesAlarms::Terminate()
 // Name: PHY_MedicalResourcesAlarms::IsLevelReached
 // Created: NLD 2006-08-02
 // -----------------------------------------------------------------------------
-bool PHY_MedicalResourcesAlarms::IsLevelReached( const T_LevelSet& levels, MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+bool PHY_MedicalResourcesAlarms::IsLevelReached( const T_LevelSet& levels, double rPreviousRatio, double rCurrentRatio )
 {
     for( CIT_LevelSet it = levels.begin(); it != levels.end(); ++it )
     {
@@ -94,7 +94,7 @@ bool PHY_MedicalResourcesAlarms::IsLevelReached( const T_LevelSet& levels, MT_Fl
 // Name: PHY_MedicalResourcesAlarms::IsEvacuationResourcesLevelReached
 // Created: NLD 2006-08-02
 // -----------------------------------------------------------------------------
-bool PHY_MedicalResourcesAlarms::IsEvacuationResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+bool PHY_MedicalResourcesAlarms::IsEvacuationResourcesLevelReached( double rPreviousRatio, double rCurrentRatio )
 {
     return IsLevelReached( evacuationResourcesLevels_, rPreviousRatio, rCurrentRatio );
 }
@@ -103,7 +103,7 @@ bool PHY_MedicalResourcesAlarms::IsEvacuationResourcesLevelReached( MT_Float rPr
 // Name: PHY_MedicalResourcesAlarms::IsCollectionResourcesLevelReached
 // Created: NLD 2006-08-02
 // -----------------------------------------------------------------------------
-bool PHY_MedicalResourcesAlarms::IsCollectionResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+bool PHY_MedicalResourcesAlarms::IsCollectionResourcesLevelReached( double rPreviousRatio, double rCurrentRatio )
 {
     return IsLevelReached( collectionResourcesLevels_, rPreviousRatio, rCurrentRatio );
 }
@@ -112,7 +112,7 @@ bool PHY_MedicalResourcesAlarms::IsCollectionResourcesLevelReached( MT_Float rPr
 // Name: PHY_MedicalResourcesAlarms::IsDoctorResourcesLevelReached
 // Created: NLD 2006-08-02
 // -----------------------------------------------------------------------------
-bool PHY_MedicalResourcesAlarms::IsDoctorResourcesLevelReached( MT_Float rPreviousRatio, MT_Float rCurrentRatio )
+bool PHY_MedicalResourcesAlarms::IsDoctorResourcesLevelReached( double rPreviousRatio, double rCurrentRatio )
 {
     return IsLevelReached( doctorsResourcesLevels_, rPreviousRatio, rCurrentRatio );
 }

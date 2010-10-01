@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     void AddElement( const MIL_PopulationElement_ABC& element );
     //@}
 
@@ -51,7 +51,7 @@ private:
             , pAttitude_ ( &element.GetAttitude() )
         {}
         TER_Localisation location_;
-        MT_Float rDensity_;
+        double rDensity_;
         const MIL_PopulationAttitude* pAttitude_;
     };
 
@@ -61,7 +61,7 @@ private:
 
     //! @name Helpers
     //@{
-    MT_Float ComputeClosestElementInRange( const MT_Vector2D& position, MT_Float rMaxRange, sPopulationElement const*& pResult ) const;
+    double ComputeClosestElementInRange( const MT_Vector2D& position, double rMaxRange, sPopulationElement const*& pResult ) const;
     //@}
 
 private:

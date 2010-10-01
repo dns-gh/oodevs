@@ -59,18 +59,18 @@ public:
     virtual void Clean() = 0;
 
     virtual void MagicMove( const MT_Vector2D& vNewPosition ) = 0;
-    virtual void Move( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed ) = 0;
+    virtual void Move( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, double rNewSpeed ) = 0;
     //@}
 
     //! @name Accessors
     //@{
-    virtual MT_Float GetHeight() const = 0;
-    virtual MT_Float GetAltitude() const = 0;
+    virtual double GetHeight() const = 0;
+    virtual double GetAltitude() const = 0;
     virtual const MT_Vector2D& GetPosition() const = 0;
     virtual boost::shared_ptr<MT_Vector2D> GetSharedPosition() const = 0;
     virtual const MT_Vector2D& GetDirection() const = 0;
     virtual MIL_Agent_ABC& GetAgent() const = 0;
-    virtual MT_Float GetCurrentSpeed() const = 0;
+    virtual double GetCurrentSpeed() const = 0;
     virtual bool HasDoneMagicMove() const = 0;
     virtual bool HasSpeedChanged() const = 0; // Position or direction or height has changed
     virtual bool HasLocationChanged() const = 0;

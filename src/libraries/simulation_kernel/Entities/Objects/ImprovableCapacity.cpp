@@ -184,8 +184,8 @@ void ImprovableCapacity::Mine( MIL_Object_ABC& object )
 {
     if( object.IsMarkedForDestruction() )
         return;
-    const MT_Float rNewMiningPercentage = 1.;
-    const MT_Float rDeltaPercentage = rNewMiningPercentage - object.GetAttribute< MineAttribute >().GetState();
+    const double rNewMiningPercentage = 1.;
+    const double rDeltaPercentage = rNewMiningPercentage - object.GetAttribute< MineAttribute >().GetState();
     if( rDeltaPercentage == 0 )
         return;
     object.GetAttribute< MineAttribute >().Update( rDeltaPercentage );

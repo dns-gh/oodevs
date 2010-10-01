@@ -20,7 +20,6 @@
 #define __DEC_Agent_PathfinderRule_h_
 
 #include <pathfind/TerrainRule_ABC.h>
-#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Vector2D.h"
 
 class MIL_Fuseau;
@@ -64,15 +63,15 @@ private:
 
     //! @name Helpers
     //@{
-    MT_Float GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType );
-    MT_Float GetTerrainCost( const TerrainData& data ) const;
-    MT_Float GetDangerDirectionCost( const MT_Vector2D& to ) const;
-    MT_Float GetAltitudeCost( MT_Float rAltitudeTo ) const;
-    MT_Float GetFuseauxCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
-    MT_Float GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
-    MT_Float GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
-    MT_Float GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
-    MT_Float GetPopulationsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    double GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType );
+    double GetTerrainCost( const TerrainData& data ) const;
+    double GetDangerDirectionCost( const MT_Vector2D& to ) const;
+    double GetAltitudeCost( double rAltitudeTo ) const;
+    double GetFuseauxCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    double GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    double GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    double GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    double GetPopulationsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     //@}
 
 private:
@@ -84,33 +83,33 @@ private:
     const bool bShort_;
     // Terrain
     const TerrainData& avoidedTerrain_;
-    const MT_Float rAvoidedTerrainCost_;
+    const double rAvoidedTerrainCost_;
     const TerrainData& preferedTerrain_;
-    const MT_Float rPreferedTerrainCost_;
+    const double rPreferedTerrainCost_;
     // Altitude
-    const MT_Float rMinAltitude_;
-    const MT_Float rMaxAltitude_;
-    const MT_Float rAltitudeCostPerMeter_;
-    const MT_Float rMaxSlope_;
+    const double rMinAltitude_;
+    const double rMaxAltitude_;
+    const double rAltitudeCostPerMeter_;
+    const double rMaxSlope_;
     // Fuseau
     const MIL_Fuseau* pFuseau_;
-    MT_Float rMaximumFuseauDistance_;
-    const MT_Float rComfortFuseauDistance_;
-    const MT_Float rFuseauCostPerMeterOut_;
-    const MT_Float rFuseauCostPerMeterIn_;
+    double rMaximumFuseauDistance_;
+    const double rComfortFuseauDistance_;
+    const double rFuseauCostPerMeterOut_;
+    const double rFuseauCostPerMeterIn_;
     // Fuseau automate
     const MIL_Fuseau*  pAutomateFuseau_;
-    MT_Float rMaximumAutomataFuseauDistance_;
-    MT_Float rAutomataFuseauCostPerMeterOut_;
+    double rMaximumAutomataFuseauDistance_;
+    double rAutomataFuseauCostPerMeterOut_;
     // Danger direction
     const MT_Vector2D dangerDirection_;
-    const MT_Float rDangerDirectionBaseCost_;
-    const MT_Float rDangerDirectionLinearCost_;
+    const double rDangerDirectionBaseCost_;
+    const double rDangerDirectionLinearCost_;
     const MT_Vector2D dangerPoint_;
     // Enemies
-    const MT_Float rEnemyMaximumCost_;
+    const double rEnemyMaximumCost_;
     // Populations
-    const MT_Float rPopulationMaximumCost_;
+    const double rPopulationMaximumCost_;
 };
 
 #endif // __DEC_Agent_PathfinderRule_h_

@@ -36,17 +36,17 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
-    MT_Float GetCostOut() const;
+    double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    double GetCostOut() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     TER_Localisation localisation_;
-    MT_Float rCostIn_;
-    MT_Float rCostOut_;
-    MT_Float rObstructionThreshold_;
+    double rCostIn_;
+    double rCostOut_;
+    double rObstructionThreshold_;
     //@}
 };
 

@@ -10,8 +10,6 @@
 #ifndef __PHY_Speeds_h_
 #define __PHY_Speeds_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 namespace xml
 {
     class xistream;
@@ -43,8 +41,8 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float GetMaxSpeed() const;
-    MT_Float GetMaxSpeed( const TerrainData& data ) const;
+    double GetMaxSpeed() const;
+    double GetMaxSpeed( const TerrainData& data ) const;
     bool     IsPassable( const TerrainData& data ) const;
     //@}
 
@@ -65,19 +63,19 @@ private:
     void ReadSpeed          ( xml::xistream& xis, unsigned int timeStepDuration );
     void ReadTerrain        ( xml::xistream& xis );
     void CheckInitialization( xml::xistream& xis, unsigned int timeStepDuration );
-    MT_Float& SpeedFor( const TerrainData& data );
+    double& SpeedFor( const TerrainData& data );
     void GenerateMasks();
     //@}
 
 private:
     //! @name Member data
     //@{
-    MT_Float rMaxSpeed_;
+    double rMaxSpeed_;
 
-    MT_Float  rBaseSpeed_;
-    MT_Float* rAreaSpeeds_  ;
-    MT_Float* rBorderSpeeds_;
-    MT_Float* rLinearSpeeds_;
+    double  rBaseSpeed_;
+    double* rAreaSpeeds_  ;
+    double* rBorderSpeeds_;
+    double* rLinearSpeeds_;
 
     unsigned short nLinearPassabilityMask_;
     unsigned char  nAreaPassabilityMask_;

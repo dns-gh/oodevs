@@ -81,7 +81,7 @@ MineAttribute::MineAttribute( const Common::MsgMissionParameter_Value& attribute
 void MineAttribute::Load( xml::xistream& xis )
 {
     assert( dotation_ != 0 );
-    const MT_Float completion = xis.attribute< MT_Float >( "completion", 1.f );
+    const double completion = xis.attribute< double >( "completion", 1.f );
     if( completion > 0. && completion <= 1. )
         rMiningPercentage_ = completion;
     nCurrentNbrDotation_ = static_cast< unsigned int >( rMiningPercentage_ * nFullNbrDotation_ );
@@ -214,7 +214,7 @@ void MineAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribute
 // Name: MineAttribute::UpdateConstruction
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
-void MineAttribute::Set( MT_Float percentage )
+void MineAttribute::Set( double percentage )
 {
     rMiningPercentage_ = std::max( 0., std::min( 1., percentage ) );
     nCurrentNbrDotation_ = (unsigned int)( rMiningPercentage_ * nFullNbrDotation_ );
@@ -225,7 +225,7 @@ void MineAttribute::Set( MT_Float percentage )
 // Name: MineAttribute::UpdateConstruction
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
-void MineAttribute::Update( MT_Float rDeltaPercentage )
+void MineAttribute::Update( double rDeltaPercentage )
 {
     Set( rMiningPercentage_ + rDeltaPercentage );
 }
@@ -234,9 +234,9 @@ void MineAttribute::Update( MT_Float rDeltaPercentage )
 // Name: MineAttribute::GetDotationNeededForConstruction
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-unsigned int MineAttribute::GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const
+unsigned int MineAttribute::GetDotationNeededForConstruction( double rDeltaPercentage ) const
 {
-    const MT_Float rNewPercentage = std::max( 0., std::min( 1., rMiningPercentage_ + rDeltaPercentage ) );
+    const double rNewPercentage = std::max( 0., std::min( 1., rMiningPercentage_ + rDeltaPercentage ) );
     return (unsigned int)( rNewPercentage * nFullNbrDotation_ ) - nCurrentNbrDotation_;
 }
 
@@ -244,9 +244,9 @@ unsigned int MineAttribute::GetDotationNeededForConstruction( MT_Float rDeltaPer
 // Name: MineAttribute::GetDotationRecoveredWhenDestroying
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-unsigned int MineAttribute::GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const
+unsigned int MineAttribute::GetDotationRecoveredWhenDestroying( double rDeltaPercentage ) const
 {
-    const MT_Float rNewPercentage = std::max( 0., std::min( 1., rMiningPercentage_ - rDeltaPercentage ) );
+    const double rNewPercentage = std::max( 0., std::min( 1., rMiningPercentage_ - rDeltaPercentage ) );
     return nCurrentNbrDotation_ - (unsigned int)( rNewPercentage * nFullNbrDotation_ );
 }
 
@@ -278,7 +278,7 @@ void MineAttribute::Deserialize( const hla::AttributeIdentifier& attributeID, hl
 // Name: MineAttribute::GetPercentage
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-MT_Float MineAttribute::GetState() const
+double MineAttribute::GetState() const
 {
     return rMiningPercentage_;
 }

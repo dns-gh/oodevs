@@ -12,7 +12,6 @@
 #ifndef __PHY_MedicalCollectionAmbulance_h_
 #define __PHY_MedicalCollectionAmbulance_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 
 class PHY_ComposantePion;
@@ -96,7 +95,7 @@ private:
     E_State                     nState_;
     int                         nTimer_;
     bool                        bEmergencyAmbulance_;
-    MT_Float                    rNbrHumanHandled_;
+    double                    rNbrHumanHandled_;
     PHY_RoleInterface_Medical*  pSortingArea_;
     //@}
 };

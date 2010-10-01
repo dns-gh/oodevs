@@ -43,7 +43,7 @@ PHY_DotationConsumption::~PHY_DotationConsumption()
 // Name: PHY_DotationConsumption::GetConsumption
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationConsumption::GetConsumption() const
+double PHY_DotationConsumption::GetConsumption() const
 {
     return rConsumption_;
 }

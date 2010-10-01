@@ -66,7 +66,7 @@ public:
     bool Clean();
     void Recon();
     void Secure( const MIL_AgentPion& pionSecuring );
-    void Exterminate( const MIL_AgentPion& exterminator, MT_Float rSurface );
+    void Exterminate( const MIL_AgentPion& exterminator, double rSurface );
     void CopyFrom( const DEC_Knowledge_Population& knowledge );
     //@}
 
@@ -76,14 +76,14 @@ public:
     const MIL_Army_ABC& GetArmy() const;
     const MIL_KnowledgeGroup& GetKnowledgeGroup() const;
     MIL_Population& GetPopulationKnown() const;
-    MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
+    double GetDangerosity( const MIL_AgentPion& target ) const;
     bool IsRecon() const;
     bool IsInZone( const TER_Localisation& loc ) const;
-    MT_Float GetDominationState() const;
+    double GetDominationState() const;
     const MIL_PopulationAttitude& GetAttitude() const;
     MT_Vector2D GetClosestPoint( const MT_Vector2D& refPos ) const;
     MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
-    MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, MT_Float rMinDistance ) const;
+    MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const;
     //@}
 
     //! @name Network operations
@@ -128,7 +128,7 @@ private:
     T_FlowMap flows_;
     bool bIsRecon_;
     bool bReconAttributesValid_;
-    MT_Float rDominationState_;
+    double rDominationState_;
     bool bDecStateUpdated_;
     static MIL_IDManager idManager_;
     //@}

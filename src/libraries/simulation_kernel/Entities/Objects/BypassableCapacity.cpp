@@ -78,7 +78,7 @@ void BypassableCapacity::Instanciate( MIL_Object_ABC& object ) const
 // Name: BypassableCapacity::Bypass
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-void BypassableCapacity::Bypass( MIL_Object_ABC& object, MT_Float rDeltaPercentage )
+void BypassableCapacity::Bypass( MIL_Object_ABC& object, double rDeltaPercentage )
 {
     object.GetAttribute< BypassAttribute >().Update( rDeltaPercentage );
 }

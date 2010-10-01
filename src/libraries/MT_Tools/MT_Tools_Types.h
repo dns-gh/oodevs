@@ -13,16 +13,20 @@
 #define __MT_Tools_Types_h_
 
 #include "MT_Assert.h"
+#include <cmath>
 
-typedef double        MT_Float;
-#define MT_Epsilon  1e-8
 #define MT_PI 3.14159265358979323
-inline  MT_Float     MT_flabs( MT_Float rF )    { return ( rF >= 0. ? rF : -rF ); }
-inline  bool         MT_IsZero( MT_Float rF )    { return MT_flabs( rF ) < MT_Epsilon; }
-inline  bool         MT_IsSameSigns( MT_Float rA, MT_Float rB ) { return ( rA * rB ) >= 0.; }
+
+inline bool MT_IsZero( double r )
+{
+    return fabs( r ) < 1e-8;
+}
+inline bool MT_IsSameSigns( double a, double b )
+{
+    return a * b >= 0;
+}
 
 typedef unsigned uint;
-typedef long long int int64;
 
 #define MT_COPYNOTALLOWED(cls)      \
 private:                            \

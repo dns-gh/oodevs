@@ -12,7 +12,6 @@
 #ifndef __PHY_SupplyConsign_ABC_h_
 #define __PHY_SupplyConsign_ABC_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 
 namespace client
 {
@@ -51,7 +50,7 @@ public:
 
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, MT_Float > T_MerchandiseToConvoyMap;
+    typedef std::map< const PHY_DotationCategory*, double > T_MerchandiseToConvoyMap;
     //@}
 
 
@@ -62,8 +61,8 @@ public:
     const MIL_Automate& GetSuppliedAutomate() const;
 
     virtual void GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const = 0;
-    virtual void RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations ) = 0;
-    virtual void AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations ) = 0;
+    virtual void RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations ) = 0;
+    virtual void AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations ) = 0;
     virtual void CancelMerchandiseOverheadReservation() = 0;
     //@}
 

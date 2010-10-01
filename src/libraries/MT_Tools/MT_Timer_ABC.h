@@ -44,13 +44,13 @@ public:
     /** @name Operations */
     //-----------------------------------------------------------------------------
     //@{
-    void Start( int64 tPeriod );
+    void Start( long long int tPeriod );
     void Stop ();
 
     void Pause ();
     void Resume();
 
-    void Process( int64 currentTime );
+    void Process( long long int currentTime );
     //@}
 
 private:
@@ -58,10 +58,10 @@ private:
     /** @name Member data */
     //-----------------------------------------------------------------------------
     //@{
-    int64 tPeriod_;
-    int64 tLastTimeLaunched_;
-    bool  bStarted_;
-    bool  bPaused_;
+    long long int tPeriod_;
+    long long int tLastTimeLaunched_;
+    bool bStarted_;
+    bool bPaused_;
     //@}
 };
 

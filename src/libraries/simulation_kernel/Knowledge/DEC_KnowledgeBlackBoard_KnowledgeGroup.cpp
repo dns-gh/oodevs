@@ -257,7 +257,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone( T_ConstKnow
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInCircle
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const
 {
     container.clear();
     const T_KnowledgeAgentVector& enemies = GetEnemies();
@@ -273,7 +273,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInCircle( T_ConstKn
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::EnemyPresenceInCircle
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeBlackBoard_KnowledgeGroup::EnemyPresenceInCircle( const MT_Vector2D& center, MT_Float rRadius ) const
+bool DEC_KnowledgeBlackBoard_KnowledgeGroup::EnemyPresenceInCircle( const MT_Vector2D& center, double rRadius ) const
 {
     const T_KnowledgeAgentVector& enemies = GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); ++it )
@@ -289,7 +289,7 @@ bool DEC_KnowledgeBlackBoard_KnowledgeGroup::EnemyPresenceInCircle( const MT_Vec
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetRefugeesInCircle
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetRefugeesInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetRefugeesInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const
 {
     assert( pKnowledgeAgentContainer_ );
     container.clear();
@@ -306,7 +306,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetRefugeesInCircle( T_ConstKnowled
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetSurrenderedAgentsInCircle
 // Created: NLD 2006-04-14
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetSurrenderedAgentsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetSurrenderedAgentsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const
 {
     assert( pKnowledgeAgentContainer_ );
     container.clear();

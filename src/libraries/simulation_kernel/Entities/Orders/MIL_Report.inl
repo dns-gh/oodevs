@@ -94,7 +94,7 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const PHY
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, MT_Float nParam1, MT_Float nParam2 )
+void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, double nParam1, double nParam2 )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter1( MIL_MissionParameterFactory::Create( static_cast< float >( nParam1 ) ) );

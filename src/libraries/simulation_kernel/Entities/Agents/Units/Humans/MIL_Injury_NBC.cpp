@@ -145,7 +145,7 @@ bool MIL_Injury_NBC::IsInjured( const PHY_ComposantePion& /*pComposante*/ )
 // Name: MIL_Injury_NBC::SetInjury
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-void MIL_Injury_NBC::SetInjury( unsigned int /*nNbrAliveHumans*/ , MT_Float /*rDensity*/ )
+void MIL_Injury_NBC::SetInjury( unsigned int /*nNbrAliveHumans*/ , double /*rDensity*/ )
 {/*
     //Population doesn't have any protection
     //Ne pas oublier de prendre en compte le temps d'exposition

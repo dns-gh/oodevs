@@ -13,7 +13,6 @@
 #define __PHY_RoleInterface_NBC_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/access.hpp>
 
 namespace client
@@ -51,8 +50,8 @@ public:
     virtual void Poison( const MIL_ToxicEffectManipulator& contamination ) = 0;
     virtual void Contaminate( const MIL_ToxicEffectManipulator& contamination ) = 0;
     virtual void Decontaminate() = 0;
-    virtual void Decontaminate( MT_Float rRatioAgentsWorking ) = 0;
-    virtual MT_Float GetContaminationQuantity() const = 0;
+    virtual void Decontaminate( double rRatioAgentsWorking ) = 0;
+    virtual double GetContaminationQuantity() const = 0;
     //@}
 
     //! @name Operations

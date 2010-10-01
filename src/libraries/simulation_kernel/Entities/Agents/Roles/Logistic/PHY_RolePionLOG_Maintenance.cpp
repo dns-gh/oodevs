@@ -213,7 +213,7 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const un
 // Name: PHY_RolePionLOG_Maintenance::GetAvailabilityRatio
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate, const PHY_MaintenanceWorkRate* pWorkRate ) const
+double PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate, const PHY_MaintenanceWorkRate* pWorkRate ) const
 {
     unsigned int nNbrTotal = 0;
     unsigned int nNbrAvailableAllowedToWork = 0;
@@ -238,7 +238,7 @@ MT_Float PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePre
     }
     if( nNbrTotal == 0 )
         return 1.;
-    return (MT_Float)nNbrAvailableAllowedToWork / (MT_Float)nNbrTotal;
+    return (double)nNbrAvailableAllowedToWork / (double)nNbrTotal;
 }
 
 // -----------------------------------------------------------------------------
@@ -249,8 +249,8 @@ void PHY_RolePionLOG_Maintenance::StartUsingForLogistic( PHY_ComposantePion& com
 {
     PHY_ComposanteUsePredicate repairerUsePred( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair );
     PHY_ComposanteUsePredicate haulerUsePred( &PHY_ComposantePion::CanHaul  , &PHY_ComposanteTypePion::CanHaul );
-    MT_Float rRepairerRatio = GetAvailabilityRatio( repairerUsePred, pWorkRate_ );
-    MT_Float rHaulerRatio = GetAvailabilityRatio( haulerUsePred   );
+    double rRepairerRatio = GetAvailabilityRatio( repairerUsePred, pWorkRate_ );
+    double rHaulerRatio = GetAvailabilityRatio( haulerUsePred   );
     bHasChanged_ = true;
     composante.StartUsingForLogistic();
     if( PHY_MaintenanceResourcesAlarms::IsRepairerResourcesLevelReached( rRepairerRatio, GetAvailabilityRatio( repairerUsePred, pWorkRate_ ) ) )
@@ -276,7 +276,7 @@ class AvailableHaulerComputer : public OnComponentFunctor_ABC
 {
 public:
     AvailableHaulerComputer( const PHY_ComposanteTypePion& composanteType )
-        : rScore_( std::numeric_limits< MT_Float >::max() )
+        : rScore_( std::numeric_limits< double >::max() )
         , composanteType_( composanteType )
         , pSelectedHauler_( 0 )
     {
@@ -574,7 +574,7 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceC
     if( !bSystemEnabled_ || !HasUsableRepairer( composanteState.GetComposanteBreakdown() ) )
         return std::numeric_limits< int >::min();
     // Parts score
-    MT_Float rRatioPartsAvailable = 0.;
+    double rRatioPartsAvailable = 0.;
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion_.GetAlgorithms().dotationComputerFactory_->Create() );
     pion_.Execute( *dotationComputer );
 

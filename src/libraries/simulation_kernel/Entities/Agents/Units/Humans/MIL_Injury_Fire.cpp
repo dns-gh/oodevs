@@ -258,7 +258,7 @@ bool MIL_Injury_Fire::IsInjured( const PHY_ComposantePion& pComposante )
 // Name: MIL_Injury_Fire::SetInjury
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-void MIL_Injury_Fire::SetInjury( unsigned int nNbrAliveHumans , MT_Float rDensity )
+void MIL_Injury_Fire::SetInjury( unsigned int nNbrAliveHumans , double rDensity )
 {
     //Population doesn't have any protection
     //First we compute the number of persons caught in the fire

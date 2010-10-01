@@ -58,7 +58,7 @@ public:
     //! @name Operations
     //@{
     virtual void                MagicMove( MT_Vector2D vPosition );
-    virtual MT_Float            ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const;
+    virtual double            ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const;
     virtual geometry::Point2f   GetFirerPosition( MIL_Agent_ABC& target ) const;
     virtual geometry::Point2f   GetTargetPosition( MIL_Agent_ABC& target ) const;
     virtual float               ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const;

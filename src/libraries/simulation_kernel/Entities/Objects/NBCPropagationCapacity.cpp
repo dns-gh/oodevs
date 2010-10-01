@@ -121,8 +121,8 @@ void NBCPropagationCapacity::Update( MIL_Object_ABC& object, float time )
     MT_Vector2D vNormalizedWind , vPerpendicularToWind;
 
     //The normalized vector which indicates the wind direction
-    const MT_Float sqrRx = pow( wind.vWindDirection_.rX_ , 2 );
-    const MT_Float sqrRy = pow( wind.vWindDirection_.rY_ , 2 );
+    const double sqrRx = pow( wind.vWindDirection_.rX_ , 2 );
+    const double sqrRy = pow( wind.vWindDirection_.rY_ , 2 );
     vNormalizedWind.rX_ = attr.GetLength() * wind.vWindDirection_.rX_ / pow( sqrRy + sqrRx, 0.5);
     vNormalizedWind.rY_ = attr.GetWidth() * wind.vWindDirection_.rY_ / pow( sqrRy + sqrRx, 0.5);
 
@@ -152,11 +152,11 @@ void NBCPropagationCapacity::Update( MIL_Object_ABC& object, float time )
 // Name: NBCPropagationCapacity::UpdateShape
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-void NBCPropagationCapacity::UpdateShape( MIL_Object_ABC& object, const MT_Vector2D& vNormalizedWind, const MT_Vector2D& vPerpendicularToWind, MT_Float windSpeed )
+void NBCPropagationCapacity::UpdateShape( MIL_Object_ABC& object, const MT_Vector2D& vNormalizedWind, const MT_Vector2D& vPerpendicularToWind, double windSpeed )
 {
     NBCTypeAttribute& attr = object.GetAttribute< NBCTypeAttribute >();
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
-    MT_Float seq = windSpeed / attr.GetLength();
+    double seq = windSpeed / attr.GetLength();
     for( int i = 0 ; i <= seq; i ++ )
     {
         for( int j = - ( int )( attr.GetPropagationAngle() / 2 ) ; j <= ( int )( attr.GetPropagationAngle() / 2 ) ; j++ )
@@ -170,11 +170,11 @@ void NBCPropagationCapacity::UpdateShape( MIL_Object_ABC& object, const MT_Vecto
 // Name: NBCPropagationCapacity::UpdateState
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-bool NBCPropagationCapacity::UpdateState( MIL_Object_ABC& object, const MT_Vector2D& vNormalizedWind, const MT_Vector2D& vPerpendicularToWind, MT_Float windSpeed )
+bool NBCPropagationCapacity::UpdateState( MIL_Object_ABC& object, const MT_Vector2D& vNormalizedWind, const MT_Vector2D& vPerpendicularToWind, double windSpeed )
 {
     NBCTypeAttribute& attr = object.GetAttribute< NBCTypeAttribute >();
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
-    MT_Float seq = windSpeed / attr.GetLength();
+    double seq = windSpeed / attr.GetLength();
     for( int i = 0 ; i <= seq; i ++ )
     {
         for( int j = -( int )( attr.GetPropagationAngle()/2 ) ; j <= ( int )( attr.GetPropagationAngle()/2 ) ; j++ )

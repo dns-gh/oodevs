@@ -12,7 +12,6 @@
 #ifndef __PHY_Morale_h_
 #define __PHY_Morale_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Stl.h"
 
 namespace Common
@@ -56,7 +55,7 @@ public:
     //@{
     const std::string&        GetName  () const;
           unsigned int                GetID    () const;
-          MT_Float            GetWeight() const;
+          double            GetWeight() const;
           Common::EnumUnitMorale GetAsnID () const;
     //@}
 
@@ -79,14 +78,14 @@ private:
     //@}
 
 private:
-     PHY_Morale( const std::string& strName, E_MoraleType nType, Common::EnumUnitMorale nAsnID, MT_Float rDIAWeight );
+     PHY_Morale( const std::string& strName, E_MoraleType nType, Common::EnumUnitMorale nAsnID, double rDIAWeight );
     ~PHY_Morale();
 
 private:
     const std::string          strName_;
     const E_MoraleType         nType_;
     const Common::EnumUnitMorale nAsnID_;
-    const MT_Float             rDIAWeight_;
+    const double             rDIAWeight_;
 
 private:
     static T_MoraleMap morales_;

@@ -56,7 +56,7 @@ MIL_PopulationElement_ABC::~MIL_PopulationElement_ABC()
 // Name: MIL_PopulationElement_ABC::GetDangerosity
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationElement_ABC::GetDangerosity( const MIL_AgentPion& target ) const
+double MIL_PopulationElement_ABC::GetDangerosity( const MIL_AgentPion& target ) const
 {
     assert( pAttitude_   );
     assert( pPopulation_ );
@@ -68,7 +68,7 @@ MT_Float MIL_PopulationElement_ABC::GetDangerosity( const MIL_AgentPion& target 
     if( !pTargetComposante )
         return 0.;
 
-    const MT_Float           rPH           = pPopulation_->GetType().GetPH( *pAttitude_, rDensity_ );
+    const double           rPH           = pPopulation_->GetType().GetPH( *pAttitude_, rDensity_ );
     const PHY_AttritionData& attritionData = pPopulation_->GetType().GetAttritionData( *pAttitude_, pTargetComposante->GetType().GetProtection() );
 
     return rPH * attritionData.GetScore();
@@ -78,7 +78,7 @@ MT_Float MIL_PopulationElement_ABC::GetDangerosity( const MIL_AgentPion& target 
 // Name: MIL_PopulationElement_ABC::FireOnPion
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult )
+void MIL_PopulationElement_ABC::FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult )
 {
     assert( pAttitude_ );
     assert( pPopulation_ );
@@ -92,7 +92,7 @@ void MIL_PopulationElement_ABC::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& 
 
     target.NotifyAttackedBy( *pPopulation_ );
 
-    const MT_Float rPH = GetPopulation().GetType().GetPH( *pAttitude_, rDensity_ );
+    const double rPH = GetPopulation().GetType().GetPH( *pAttitude_, rDensity_ );
     if( !( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH * rIntensity ) )
         return;
 
@@ -104,7 +104,7 @@ void MIL_PopulationElement_ABC::FireOnPion( MT_Float rIntensity, MIL_Agent_ABC& 
 // Name: MIL_PopulationElement_ABC::FireOnPions
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::FireOnPions( MT_Float rIntensity, PHY_FireResults_Population& fireResult )
+void MIL_PopulationElement_ABC::FireOnPions( double rIntensity, PHY_FireResults_Population& fireResult )
 {
     assert( pAttitude_ );
     for( CIT_AgentVector it = collidingAgents_.begin(); it != collidingAgents_.end(); ++it )
@@ -143,7 +143,7 @@ void MIL_PopulationElement_ABC::ApplyIndirectFire( const MT_Circle& attritionCir
 {
     assert( pPopulation_ );
     // $$$$ SBO 2006-04-07: 2% kill, at least one kill
-    unsigned int nTmp = unsigned int ( ceil( 0.02f * std::min( MT_Float( nNbrAliveHumans_ ), rDensity_ * GetLocation().GetIntersectionAreaWithCircle( attritionCircle ) ) ) );
+    unsigned int nTmp = unsigned int ( ceil( 0.02f * std::min( double( nNbrAliveHumans_ ), rDensity_ * GetLocation().GetIntersectionAreaWithCircle( attritionCircle ) ) ) );
 
     nNbrDeadHumans_  += nTmp;
     nNbrAliveHumans_ -= nTmp;
@@ -160,7 +160,7 @@ void MIL_PopulationElement_ABC::ApplyExplosion( const AttritionCapacity& capacit
 {
     const unsigned int nNbrTarget = std::min( nNbrAliveHumans_, unsigned int ( std::max( 1., rDensity_ * capacity.GetAttritionSurface() ) ) );
 
-    const MT_Float rPH = capacity.GetAttritionPH();
+    const double rPH = capacity.GetAttritionPH();
     unsigned int nHit = 0;
     for( unsigned int i = 0; i < nNbrTarget; ++i )
         if( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH )
@@ -202,7 +202,7 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
 // Name: MIL_PopulationElement_ABC::GetPionMaxSpeed
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationElement_ABC::GetPionMaxSpeed( const PHY_Volume& pionVolume ) const
+double MIL_PopulationElement_ABC::GetPionMaxSpeed( const PHY_Volume& pionVolume ) const
 {
     assert( pAttitude_ );
     return pPopulation_->GetPionMaxSpeed( *pAttitude_, rDensity_, pionVolume );
@@ -212,7 +212,7 @@ MT_Float MIL_PopulationElement_ABC::GetPionMaxSpeed( const PHY_Volume& pionVolum
 // Name: MIL_PopulationElement_ABC::GetPionReloadingTimeFactor
 // Created: NLD 2005-11-02
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationElement_ABC::GetPionReloadingTimeFactor() const
+double MIL_PopulationElement_ABC::GetPionReloadingTimeFactor() const
 {
     return pPopulation_->GetPionReloadingTimeFactor( rDensity_ );
 }
@@ -262,7 +262,7 @@ void MIL_PopulationElement_ABC::save( MIL_CheckPointOutArchive& file, const unsi
 // Name: MIL_PopulationElement_ABC::GetDensity
 // Created: NLD 2005-10-27
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationElement_ABC::GetDensity() const
+double MIL_PopulationElement_ABC::GetDensity() const
 {
     return rDensity_;
 }
@@ -357,11 +357,11 @@ unsigned int MIL_PopulationElement_ABC::GetNbrHumans() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::UpdateDensity()
 {
-    const MT_Float rArea = GetLocation().GetArea();
+    const double rArea = GetLocation().GetArea();
     if( rArea == 0. )
         rDensity_ = 0; // $$$ +infini sauf si aucun humain
     else
-        rDensity_ = MT_Float( nNbrAliveHumans_ ) / rArea;
+        rDensity_ = double( nNbrAliveHumans_ ) / rArea;
 }
 
 // -----------------------------------------------------------------------------
@@ -427,10 +427,10 @@ void MIL_PopulationElement_ABC::KillAllHumans()
 // Name: MIL_PopulationElement_ABC::Exterminate
 // Created: SBO 2005-12-22
 // -----------------------------------------------------------------------------
-MT_Float MIL_PopulationElement_ABC::Exterminate( MT_Float rSurface )
+double MIL_PopulationElement_ABC::Exterminate( double rSurface )
 {
     assert( rDensity_ != 0 );
-    MT_Float rKills = rSurface * rDensity_;
+    double rKills = rSurface * rDensity_;
     if( rKills > nNbrAliveHumans_ )
         rKills = nNbrAliveHumans_;
 

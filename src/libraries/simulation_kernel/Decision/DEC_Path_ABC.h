@@ -13,7 +13,6 @@
 #define __DEC_Path_ABC_h_
 
 #include "simulation_terrain/TER_PathFindRequest_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 class DEC_PathSection_ABC;
 class TerrainData;
@@ -47,7 +46,7 @@ public:
             void Cancel               ();
     virtual void CleanAfterComputation();
 
-            MT_Float GetLength     () const;
+            double GetLength     () const;
     virtual bool     NeedRefine    () const = 0;
     virtual bool     UseStrictClosest() const = 0;
     virtual void     AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint ) = 0;

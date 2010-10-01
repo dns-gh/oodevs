@@ -306,7 +306,7 @@ void DEC_Agent_PathClass::ReadPopulationsCost( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void DEC_Agent_PathClass::ReadPopulation( xml::xistream& xis )
 {
-    MT_Float rCost = 0.0f;
+    double rCost = 0.0f;
     std::string strAttitude;
     xis >> xml::attribute( "attitude", strAttitude );
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
@@ -334,7 +334,7 @@ const DEC_Agent_PathClass& DEC_Agent_PathClass::GetPathClass( const DEC_PathType
 // Name: DEC_Agent_PathClass::GetObjectCost
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathClass::GetObjectCost( const MIL_ObjectType_ABC& objectType ) const
+double DEC_Agent_PathClass::GetObjectCost( const MIL_ObjectType_ABC& objectType ) const
 {
    if( objectCosts_.size() <= objectType.GetID() )
         return 0.;
@@ -345,7 +345,7 @@ MT_Float DEC_Agent_PathClass::GetObjectCost( const MIL_ObjectType_ABC& objectTyp
 // Name: DEC_Agent_PathClass::GetPopulationAttitudeCost
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathClass::GetPopulationAttitudeCost( const MIL_PopulationAttitude& attitude ) const
+double DEC_Agent_PathClass::GetPopulationAttitudeCost( const MIL_PopulationAttitude& attitude ) const
 {
     T_PopulationAttitudeCosts::const_iterator it = populationAttitudeCosts_.find( &attitude );
     if( it == populationAttitudeCosts_.end() )
@@ -357,7 +357,7 @@ MT_Float DEC_Agent_PathClass::GetPopulationAttitudeCost( const MIL_PopulationAtt
 // Name: DEC_Agent_PathClass::GetCostOutsideOfPopulation
 // Created: SBO 2006-03-27
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathClass::GetCostOutsideOfPopulation() const
+double DEC_Agent_PathClass::GetCostOutsideOfPopulation() const
 {
     return rCostOutsideOfPopulation_;
 }

@@ -48,7 +48,7 @@ PHY_DotationCapacity::~PHY_DotationCapacity()
 // Name: PHY_DotationCapacity::GetCapacity
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationCapacity::GetCapacity() const
+double PHY_DotationCapacity::GetCapacity() const
 {
     return rCapacity_;
 }
@@ -57,7 +57,7 @@ MT_Float PHY_DotationCapacity::GetCapacity() const
 // Name: PHY_DotationCapacity::GetSupplyThreshold
 // Created: NLD 2005-01-21
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationCapacity::GetSupplyThreshold() const
+double PHY_DotationCapacity::GetSupplyThreshold() const
 {
     return rSupplyThreshold_;
 }

@@ -96,7 +96,7 @@ PHY_DotationCategory::~PHY_DotationCategory()
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory::InitializePackagingData( xml::xistream& xis )
 {
-    MT_Float rNbrInPackage;
+    double rNbrInPackage;
     xis >> xml::attribute( "package-size", rNbrInPackage )
         >> xml::attribute( "package-mass", rWeight_ )
         >> xml::attribute( "package-volume", rVolume_ );
@@ -176,7 +176,7 @@ void PHY_DotationCategory::ListUrbanAttrition( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory::ReadUrbanAttritionModifier( xml::xistream& xis )
 {
-    MT_Float rFactor;
+    double rFactor;
     std::string materialType;
     xis >> xml::attribute( "material-type", materialType )
         >> xml::attribute( "value", rFactor );
@@ -280,7 +280,7 @@ const PHY_AttritionData& PHY_DotationCategory::GetAttritionData( const PHY_Prote
 // Name: PHY_DotationCategory::GetUrbanAttritionModifer
 // Created: SLG 2010-04-14
 // -----------------------------------------------------------------------------
-const MT_Float PHY_DotationCategory::GetUrbanAttritionModifer( unsigned materialId ) const
+const double PHY_DotationCategory::GetUrbanAttritionModifer( unsigned materialId ) const
 {
     assert( urbanAttritionFactors_.size() > materialId );
     return urbanAttritionFactors_[ materialId ];
@@ -290,7 +290,7 @@ const MT_Float PHY_DotationCategory::GetUrbanAttritionModifer( unsigned material
 // Name: PHY_DotationCategory::GetAttritionScore
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationCategory::GetAttritionScore( const PHY_Protection& protectionTarget ) const
+double PHY_DotationCategory::GetAttritionScore( const PHY_Protection& protectionTarget ) const
 {
     return GetAttritionData( protectionTarget ).GetScore();
 }
@@ -302,7 +302,7 @@ MT_Float PHY_DotationCategory::GetAttritionScore( const PHY_Protection& protecti
 void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
     assert( pIndirectFireData_ );
-    const MT_Float rInterventionTypeFired = pIndirectFireData_->ConvertToInterventionType( nNbrAmmoFired );
+    const double rInterventionTypeFired = pIndirectFireData_->ConvertToInterventionType( nNbrAmmoFired );
     pIndirectFireData_->ApplyEffect( firer, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult );
 }
 
@@ -313,7 +313,7 @@ void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, 
 void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
     assert( pIndirectFireData_ );
-    const MT_Float rInterventionTypeFired = pIndirectFireData_->ConvertToInterventionType( nNbrAmmoFired );
+    const double rInterventionTypeFired = pIndirectFireData_->ConvertToInterventionType( nNbrAmmoFired );
     pIndirectFireData_->ApplyEffect( firer, target, rInterventionTypeFired, fireResult );
 }
 
@@ -431,7 +431,7 @@ bool PHY_DotationCategory::operator!=( const PHY_DotationCategory& rhs ) const
 // Name: PHY_DotationCategory::GetWeight
 // Created: NLD 2005-07-13
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationCategory::GetWeight() const
+double PHY_DotationCategory::GetWeight() const
 {
     return rWeight_;
 }
@@ -440,7 +440,7 @@ MT_Float PHY_DotationCategory::GetWeight() const
 // Name: PHY_DotationCategory::GetVolume
 // Created: NLD 2005-07-13
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationCategory::GetVolume() const
+double PHY_DotationCategory::GetVolume() const
 {
     return rVolume_;
 }

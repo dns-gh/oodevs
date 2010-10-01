@@ -63,23 +63,23 @@ PHY_RawVisionData::sCell& PHY_RawVisionData::operator() ( double rCol, double rR
 // Created: JVT 03-02-24
 //-----------------------------------------------------------------------------
 inline
-MT_Float PHY_RawVisionData::GetAltitude( MT_Float rX, MT_Float rY ) const
+double PHY_RawVisionData::GetAltitude( double rX, double rY ) const
 {
     unsigned int nCol = GetCol( rX );
     unsigned int nRow = GetRow( rY );
 
-    MT_Float rScaledX = rX / rCellSize_;
+    double rScaledX = rX / rCellSize_;
 
-    return MT_LinearInterpolation< MT_Float >() ( 
+    return MT_LinearInterpolation< double >() ( 
                  nRow, 
-                 MT_LinearInterpolation< MT_Float >()( 
+                 MT_LinearInterpolation< double >()( 
                     nCol, 
                     operator () ( nCol, nRow ).GetAltitude(),
                     nCol + 1,
                     operator () ( nCol + 1, nRow ).GetAltitude(),
                     rScaledX ),
                  nRow + 1,
-                 MT_LinearInterpolation< MT_Float >()(
+                 MT_LinearInterpolation< double >()(
                     nCol,
                     operator () ( nCol, nRow + 1 ).GetAltitude(),
                     nCol + 1,
@@ -94,7 +94,7 @@ MT_Float PHY_RawVisionData::GetAltitude( MT_Float rX, MT_Float rY ) const
 // Last modified: JVT 03-02-24
 //-----------------------------------------------------------------------------
 inline
-MT_Float PHY_RawVisionData::GetAltitude( const MT_Vector2D& pos ) const
+double PHY_RawVisionData::GetAltitude( const MT_Vector2D& pos ) const
 {
     return GetAltitude( pos.rX_, pos.rY_ );
 }
@@ -127,7 +127,7 @@ const weather::PHY_Meteo::sWindData& PHY_RawVisionData::GetWind( const MT_Vector
 // Created: JVT 03-07-04
 //-----------------------------------------------------------------------------
 inline
-PHY_RawVisionData::envBits PHY_RawVisionData::GetVisionObject( MT_Float rX_, MT_Float rY_ ) const
+PHY_RawVisionData::envBits PHY_RawVisionData::GetVisionObject( double rX_, double rY_ ) const
 {
     return operator () ( rX_, rY_ ).GetEnv();
 }
@@ -169,7 +169,7 @@ double PHY_RawVisionData::GetCellSize() const
 // Created: FBD 03-02-13
 //-----------------------------------------------------------------------------
 inline
-MT_Float PHY_RawVisionData::GetMinAltitude() const
+double PHY_RawVisionData::GetMinAltitude() const
 {
     return rMinAltitude_;
 }
@@ -180,7 +180,7 @@ MT_Float PHY_RawVisionData::GetMinAltitude() const
 // Created: FBD 03-02-13
 //-----------------------------------------------------------------------------
 inline
-MT_Float PHY_RawVisionData::GetMaxAltitude() const
+double PHY_RawVisionData::GetMaxAltitude() const
 {
     return rMaxAltitude_;
 }

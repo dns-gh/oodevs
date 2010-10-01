@@ -66,7 +66,7 @@ public:
     const MIL_AgentType_ABC&                 GetTypePionPC                    () const;
     const DEC_Model_ABC&                     GetModel                         () const;
     const std::string&                       GetName                          () const;
-          MT_Float                           GetRapForIncreasePerTimeStepValue() const;
+          double                           GetRapForIncreasePerTimeStepValue() const;
     //@}
 
     //! @name Operations
@@ -131,7 +131,7 @@ private:
     const DEC_Model_ABC*      pModel_;
           T_CompositionMap    composition_;
     const MIL_AgentType_ABC*  pTypePC_;
-          MT_Float            rRapForIncreasePerTimeStepValue_;
+          double            rRapForIncreasePerTimeStepValue_;
 
 private:
     static T_AutomateTypeAllocatorMap  automateTypeAllocators_;

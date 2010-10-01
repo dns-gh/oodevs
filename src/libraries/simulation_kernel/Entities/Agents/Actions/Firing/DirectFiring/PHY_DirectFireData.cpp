@@ -68,7 +68,7 @@ void PHY_DirectFireData::sComposanteWeapons::RemoveWeapon( PHY_Weapon& weapon )
 // Name: PHY_DirectFireData constructor
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-PHY_DirectFireData::PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType, E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, const PHY_AmmoDotationClass* pAmmoDotationClass /* = 0 */ )
+PHY_DirectFireData::PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType, E_FiringMode nFiringMode, double rPercentageComposantesToUse, const PHY_AmmoDotationClass* pAmmoDotationClass /* = 0 */ )
     : bHasWeaponsNotReady_        ( false )
     , bHasWeaponsAndNoAmmo_       ( false )
     , firer_                      ( firer )
@@ -177,13 +177,13 @@ void PHY_DirectFireData::RemoveFirer( const PHY_ComposantePion& firer )
 // Name: PHY_DirectFireData::sComposanteWeapons::GetBestWeapon
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-bool PHY_DirectFireData::sComposanteWeapons::GetBestWeapon( MT_Float& rBestScore, const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pBestWeapon ) const
+bool PHY_DirectFireData::sComposanteWeapons::GetBestWeapon( double& rBestScore, const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pBestWeapon ) const
 {
     bool bUpdated = false;
     for( CIT_WeaponVector itWeapon = weaponsReady_.begin(); itWeapon != weaponsReady_.end(); ++itWeapon )
     {
         PHY_Weapon& weapon = **itWeapon;
-        MT_Float rCurrentScore = weapon.GetDangerosity( firer, target, compTarget.GetType(), true ); // 'true' = 'use PH'
+        double rCurrentScore = weapon.GetDangerosity( firer, target, compTarget.GetType(), true ); // 'true' = 'use PH'
         if( rCurrentScore >= rBestScore )
         {
             bUpdated = true;
@@ -227,7 +227,7 @@ bool PHY_DirectFireData::sComposanteWeapons::GetRandomWeapon( const MIL_AgentPio
 // -----------------------------------------------------------------------------
 void PHY_DirectFireData::ChooseBestWeapon( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, const PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const
 {
-    MT_Float rBestScore = 0;
+    double rBestScore = 0;
     pBestFirer  = 0;
     pBestWeapon = 0;
     for( CIT_ComposanteWeaponsMap it = composantesWeapons_.begin(); it != composantesWeapons_.end(); ++it )

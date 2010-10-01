@@ -242,7 +242,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
     brain[ "DEC_Connaissances_PartageConnaissancesDansZoneAvec" ] =
         boost::function< void( DEC_Decision_ABC*, const MT_Vector2D*, float ) >( boost::bind( &DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2, _3 ) );
     brain[ "DEC_Knowledges_ObjectsInCircle" ] =
-        boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const MT_Vector2D*, MT_Float, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInCircle< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2, _3 ) );
+        boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const MT_Vector2D*, double, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInCircle< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2, _3 ) );
     brain[ "DEC_ObjectKnowledgesInZone" ] =
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInZone< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2 ) );
     brain[ "DEC_Connaissances_ObjetsDansFuseau" ] =
@@ -308,9 +308,9 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
     brain[ "DEC_Geometry_SplitLocalisation" ] =
         boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInParts< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2 ) );
     brain[ "DEC_Geometrie_DecoupeFuseauEnTroncons" ] =
-        boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( const MT_Float ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInSections< MIL_Automate >, boost::ref( GetAutomate() ), _1  ) );
+        boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( const double ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInSections< MIL_Automate >, boost::ref( GetAutomate() ), _1  ) );
     brain[ "DEC_Geometrie_CalculerPositionObstacle" ] =
-        boost::function< boost::shared_ptr< MT_Vector2D >( MT_Vector2D*, const std::string&, MT_Float) >( boost::bind( &DEC_GeometryFunctions::ComputeObstaclePosition< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( MT_Vector2D*, const std::string&, double) >( boost::bind( &DEC_GeometryFunctions::ComputeObstaclePosition< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) );
     brain[ "DEC_Geometrie_CalculerPointArrivee" ] =
                             boost::bind( &DEC_GeometryFunctions::ComputeDestPoint< MIL_Automate >, boost::ref( GetAutomate() ) );
     brain[ "DEC_Geometrie_CalculerPointDepart" ] =
@@ -320,11 +320,11 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
     brain[ "DEC_Geometrie_CalculerPositionParRapportALima" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( int, float ) >( boost::bind( &DEC_GeometryFunctions::ComputePointBeforeLima< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2 ) );
     brain[ "DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau" ] =
-        boost::function< boost::shared_ptr< MT_Vector2D >( unsigned int, MT_Float, const MIL_Fuseau* ) >( boost::bind( &DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( unsigned int, double, const MIL_Fuseau* ) >( boost::bind( &DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) );
     brain[ "DEC_Geometrie_CalculerPositionsParRapportALima" ] =
-        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( unsigned int, MT_Float, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::ComputePointsBeforeLima, boost::ref( GetAutomate() ), _1, _2, _3 ) );
+        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( unsigned int, double, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::ComputePointsBeforeLima, boost::ref( GetAutomate() ), _1, _2, _3 ) );
     brain[ "DEC_Geometrie_PositionsParRapportALocalisation" ] =
-        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const std::vector< DEC_Decision_ABC* >&, TER_Localisation*, MT_Vector2D*, MT_Float ) >( boost::bind( &DEC_GeometryFunctions ::ComputeLocalisationPointsForPionsInFuseau, _1, _2, _3, _4 ) );
+        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const std::vector< DEC_Decision_ABC* >&, TER_Localisation*, MT_Vector2D*, double ) >( boost::bind( &DEC_GeometryFunctions ::ComputeLocalisationPointsForPionsInFuseau, _1, _2, _3, _4 ) );
     brain[ "DEC_Geometrie_StartCalculLignesAvantEtArriere" ] =
         boost::function< DEC_FrontAndBackLinesComputer* ( const std::vector< DEC_Decision_ABC* >& ) >( boost::bind( &DEC_GeometryFunctions::StartComputingFrontAndBackLines, boost::ref( GetAutomate() ), _1 ) );
     brain[ "DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere" ] =

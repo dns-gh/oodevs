@@ -12,7 +12,6 @@
 
 #include "MIL_MissionParameterFactory.h"
 #include "MT_Tools/MT_IdentifierManager.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {
@@ -439,7 +438,7 @@ public:
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, const PHY_ComposanteTypePion& parameter );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, const PHY_DotationCategory& parameter );
-    template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, MT_Float nParam1, MT_Float nParam2 );
+    template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, double nParam1, double nParam2 );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, int nParam );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, const MIL_Effect_IndirectFire& flyingShell );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );

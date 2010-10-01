@@ -10,8 +10,6 @@
 #ifndef __PHY_DotationCategory_IndirectFire_ABC_h_
 #define __PHY_DotationCategory_IndirectFire_ABC_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
-
 namespace xml
 {
     class xistream;
@@ -43,11 +41,11 @@ public:
 
     //! @name Operations
     //@{
-    MT_Float ConvertToInterventionType( unsigned int nNbr ) const;
-    MT_Float ConvertToNbrAmmo( MT_Float rNbrIT ) const;
-    virtual void ApplyEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const = 0;
-    virtual void ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
-    virtual bool HasHit( const MIL_Agent_ABC& target, MT_Float ) const;
+    double ConvertToInterventionType( unsigned int nNbr ) const;
+    double ConvertToNbrAmmo( double rNbrIT ) const;
+    virtual void ApplyEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const = 0;
+    virtual void ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
+    virtual bool HasHit( const MIL_Agent_ABC& target, double ) const;
     //@}
 
 protected:
@@ -56,8 +54,8 @@ protected:
     const PHY_IndirectFireDotationClass& category_;
     const PHY_DotationCategory& dotationCategory_;
     unsigned int nInterventionType_;
-    MT_Float rDispersionX_;
-    MT_Float rDispersionY_;
+    double rDispersionX_;
+    double rDispersionY_;
     //@}
 };
 

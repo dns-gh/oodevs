@@ -115,8 +115,8 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
     if( object().IsBuilt() )
         return eFinished;
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eConstruct, object );
-    const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
-    if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
+    const double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
+    if( rDeltaPercentage == std::numeric_limits< double >::max() )
         return eNoCapacity;
 
     // $$$$ TODO: refactor to handle more than a single resource
@@ -176,8 +176,8 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
     {
         PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eDemine, object );
 
-        const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
-        if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
+        const double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
+        if( rDeltaPercentage == std::numeric_limits< double >::max() )
             return eNoCapacity;
 
         pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
@@ -188,8 +188,8 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
     {
         PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eDestroy, object );
 
-        const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
-        if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
+        const double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
+        if( rDeltaPercentage == std::numeric_limits< double >::max() )
             return eNoCapacity;
 
         // $$$$ TODO: refactor to handle more than a single resource
@@ -220,8 +220,8 @@ int PHY_RoleAction_Objects::Mine( MIL_Object_ABC& object )
     if( !object().CanBeMined() )
         return eImpossible;
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eMine, object );
-    const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
-    if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
+    const double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
+    if( rDeltaPercentage == std::numeric_limits< double >::max() )
         return eNoCapacity;
 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
@@ -265,8 +265,8 @@ int PHY_RoleAction_Objects::Demine( MIL_Object_ABC& object )
         return eImpossible;
 
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eDemine, object );
-    const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
-    if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
+    const double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
+    if( rDeltaPercentage == std::numeric_limits< double >::max() )
         return eNoCapacity;
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
     object().Demine( rDeltaPercentage );
@@ -291,8 +291,8 @@ int PHY_RoleAction_Objects::Bypass( boost::shared_ptr< DEC_Knowledge_Object >& p
         return eFinished;
 
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eBypass, object );
-    const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
-    if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
+    const double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
+    if( rDeltaPercentage == std::numeric_limits< double >::max() )
         return eNoCapacity;
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
     object().Bypass( rDeltaPercentage );
@@ -368,8 +368,8 @@ int PHY_RoleAction_Objects::Supply( boost::shared_ptr< DEC_Knowledge_Object >& o
     if( attribute->IsFull() )
         return eFinished;
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eConstruct, object );
-    const MT_Float rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
-    if( rDeltaPercentage == std::numeric_limits< MT_Float >::max() )
+    const double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
+    if( rDeltaPercentage == std::numeric_limits< double >::max() )
         return eNoCapacity;
     typedef std::vector< std::pair< const PHY_DotationCategory*, unsigned int > > T_SelectionVector;
     typedef T_SelectionVector::iterator IT_SelectionVector;

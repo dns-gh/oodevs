@@ -50,8 +50,8 @@ public:
     const std::string& GetName              () const;
           unsigned int         GetID                () const;
           unsigned int         GetNeutralizationTime() const;
-          MT_Float     GetHumanDeadRatio    ( const PHY_ComposanteState& composanteState ) const;
-          MT_Float     GetHumanWoundedRatio ( const PHY_ComposanteState& composanteState ) const;
+          double     GetHumanDeadRatio    ( const PHY_ComposanteState& composanteState ) const;
+          double     GetHumanWoundedRatio ( const PHY_ComposanteState& composanteState ) const;
           bool         IsHuman              () const;
     //@}
 
@@ -88,8 +88,8 @@ private:
     {
         T_HumanEffect();
 
-        MT_Float rDeadRatio_;
-        MT_Float rWoundedRatio_;
+        double rDeadRatio_;
+        double rWoundedRatio_;
     };
     typedef std::vector< T_HumanEffect >   T_HumanEffects;
     typedef T_HumanEffects::const_iterator IT_HumanEffects;
@@ -102,8 +102,8 @@ private:
           unsigned int           nID_;
           E_Type         nType_;
           T_HumanEffects attritionEffectsOnHumans_;
-          MT_Float       rBreakdownProbabilityEva_;
-          MT_Float       rBreakdownProbabilityNeva_;
+          double       rBreakdownProbabilityEva_;
+          double       rBreakdownProbabilityNeva_;
 
     mutable MT_GaussianRandom neutralizationTime_;
     //@}

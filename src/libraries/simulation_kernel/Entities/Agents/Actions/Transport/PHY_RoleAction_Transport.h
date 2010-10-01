@@ -16,7 +16,6 @@
 #include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 #include "MT_Tools/Role_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 namespace client
 {
@@ -48,12 +47,12 @@ public:
     struct sTransportData
     {
         sTransportData();
-        sTransportData( MT_Float rTotalWeight, bool bTransportOnlyLoadable );
+        sTransportData( double rTotalWeight, bool bTransportOnlyLoadable );
 
         bool     bTransportOnlyLoadable_;
-        MT_Float rTotalWeight_;
-        MT_Float rRemainingWeight_;
-        MT_Float rTransportedWeight_;
+        double rTotalWeight_;
+        double rRemainingWeight_;
+        double rTransportedWeight_;
 
         template< class Archive >
         void serialize( Archive & ar, unsigned int /*version*/ )
@@ -153,10 +152,10 @@ private:
     //! @name Helpers
     //@{
     bool HasChanged() const;
-    void ComputeLoadingTime( MT_Float& rLoadingTime, MT_Float& rWeightToLoad ) const;
-    MT_Float ComputeUnloadingTime() const;
-    MT_Float DoLoad( const MT_Float rWeightToLoad );
-    MT_Float DoUnload( const MT_Float rWeightToUnload );
+    void ComputeLoadingTime( double& rLoadingTime, double& rWeightToLoad ) const;
+    double ComputeUnloadingTime() const;
+    double DoLoad( const double rWeightToLoad );
+    double DoUnload( const double rWeightToUnload );
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Transport* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Transport* role, const unsigned int /*version*/ );
@@ -170,7 +169,7 @@ private:
     E_State               nState_;
     bool                  bLoadUnloadHasBeenUpdated_;
     T_TransportedPionMap  transportedPions_;
-    MT_Float              rWeightTransported_;
+    double              rWeightTransported_;
     //@}
 };
 

@@ -10,7 +10,6 @@
 #ifndef __DEC_Decision_ABC_h_
 #define __DEC_Decision_ABC_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/Role_ABC.h"
 #include <directia/brain/Brain.h>
 
@@ -129,12 +128,12 @@ public:
     virtual bool IsPC() const = 0;
     virtual bool IsTransported() const = 0;
     virtual bool IsFlying() const = 0;
-    virtual MT_Float GetMajorOperationalState() const = 0;
+    virtual double GetMajorOperationalState() const = 0;
     virtual bool IsAutomateEngaged() const = 0;
     virtual bool IsDead() const = 0;
 
-    virtual boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const MT_Float time, bool bBoundOnPath ) const = 0;
-    virtual boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const MT_Float time, bool bBoundOnPath ) const = 0;
+    virtual boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const double time, bool bBoundOnPath ) const = 0;
+    virtual boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const double time, bool bBoundOnPath ) const = 0;
     //@}
 
     //! @name Serialization

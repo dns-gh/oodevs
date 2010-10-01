@@ -16,7 +16,7 @@
 // Name: MIL_ToxicEffectManipulator constructor
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-MIL_ToxicEffectManipulator::MIL_ToxicEffectManipulator( const T_NBCAgents& types, MT_Float quantity )
+MIL_ToxicEffectManipulator::MIL_ToxicEffectManipulator( const T_NBCAgents& types, double quantity )
     : types_   ( types )
     , quantity_( quantity )
 {
@@ -47,7 +47,7 @@ MIL_ToxicEffectManipulator::~MIL_ToxicEffectManipulator()
 // Name: MIL_ToxicEffectManipulator::GetQuantity
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
-MT_Float MIL_ToxicEffectManipulator::GetQuantity() const
+double MIL_ToxicEffectManipulator::GetQuantity() const
 {
     return quantity_;
 }

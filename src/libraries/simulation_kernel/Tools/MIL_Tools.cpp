@@ -32,7 +32,7 @@ MIL_Tools::converter< PHY_RawVisionData::E_VisionObject > MIL_Tools::environneme
 // Name: MIL_Tools::GetAltitude
 // Created: JVT 03-03-17
 //-----------------------------------------------------------------------------
-MT_Float MIL_Tools::GetAltitude( const MT_Vector2D& vPos )
+double MIL_Tools::GetAltitude( const MT_Vector2D& vPos )
 {
     return MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( vPos );
 }

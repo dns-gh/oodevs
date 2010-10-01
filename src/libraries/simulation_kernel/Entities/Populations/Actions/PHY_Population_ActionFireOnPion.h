@@ -41,7 +41,7 @@ public:
 private:
     MIL_Population&            population_;
     PHY_FireResults_Population fireResults_;
-    const MT_Float             rIntensity_;
+    const double             rIntensity_;
     MIL_Agent_ABC*             pTarget_;
 };
 

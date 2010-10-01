@@ -42,7 +42,7 @@ const PHY_Speeds& DEC_Agent_Path::GetUnitSpeeds() const
 // Created: AGE 2005-04-13
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_Agent_Path::GetUnitMaxSlope() const
+double DEC_Agent_Path::GetUnitMaxSlope() const
 {
     return rMaxSlope_;
 }
@@ -92,7 +92,7 @@ const DEC_Agent_Path::T_PathKnowledgeObjectByTypesVector& DEC_Agent_Path::GetPat
 // Created: NLD 2007-02-09
 // -----------------------------------------------------------------------------
 inline
-MT_Float DEC_Agent_Path::GetCostOutsideOfAllObjects() const
+double DEC_Agent_Path::GetCostOutsideOfAllObjects() const
 {
     return rCostOutsideOfAllObjects_;
 }

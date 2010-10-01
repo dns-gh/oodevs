@@ -11,7 +11,6 @@
 #define __MIL_Injury_ABC_h_
 
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 class PHY_ComposantePion;
 class PHY_InjuredHuman;
@@ -43,7 +42,7 @@ public:
     //@{
     virtual float SetLifeExpectancy() const = 0;
     virtual bool IsInjured( const PHY_ComposantePion& pComposante ) = 0; //This is used by the "ComposantePion"
-    virtual void SetInjury( unsigned int nNbrAliveHumans, MT_Float rDensity ) = 0; //This is used by the population
+    virtual void SetInjury( unsigned int nNbrAliveHumans, double rDensity ) = 0; //This is used by the population
     virtual void Injure( PHY_InjuredHuman& injuredHuman ) = 0; //This is used by someone already injured
     virtual void SetInjuryCategory( MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory ) = 0;
     virtual bool CanInjuryBeDeadly() = 0;

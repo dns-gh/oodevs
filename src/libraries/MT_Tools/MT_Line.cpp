@@ -43,18 +43,18 @@ MT_Line::~MT_Line()
 E_CollisionState MT_Line::Intersect2D( const MT_Line& line ) const
 {
 
-    MT_Float rX1 = GetPosStart().rX_;
-    MT_Float rY1 = GetPosStart().rY_;
-    MT_Float rX2 = GetPosEnd().rX_;
-    MT_Float rY2 = GetPosEnd().rY_;
+    double rX1 = GetPosStart().rX_;
+    double rY1 = GetPosStart().rY_;
+    double rX2 = GetPosEnd().rX_;
+    double rY2 = GetPosEnd().rY_;
 
-    MT_Float rX3 = line.GetPosStart().rX_;
-    MT_Float rY3 = line.GetPosStart().rY_;
-    MT_Float rX4 = line.GetPosEnd().rX_;
-    MT_Float rY4 = line.GetPosEnd().rY_;
+    double rX3 = line.GetPosStart().rX_;
+    double rY3 = line.GetPosStart().rY_;
+    double rX4 = line.GetPosEnd().rX_;
+    double rY4 = line.GetPosEnd().rY_;
 
-    MT_Float rA1, rA2, rB1, rB2, rC1, rC2;  // Coefficients of line eqns.
-    MT_Float r1, r2, r3, r4;                // 'Sign' values
+    double rA1, rA2, rB1, rB2, rC1, rC2;  // Coefficients of line eqns.
+    double r1, r2, r3, r4;                // 'Sign' values
 
     // Compute rA1, rB1, rC1, where line joining points 1 and 2 is "rA1 rX + rB1 rY + rC1 = 0.f"
 
@@ -106,21 +106,21 @@ E_CollisionState MT_Line::Intersect2D( const MT_Line& line ) const
 //-----------------------------------------------------------------------------
 bool MT_Line::IsClipped( const MT_Line& Line ) const
 {
-//    const MT_Float rEpsilon = 1e-8;
+//    const double rEpsilon = 1e-8;
     const MT_Vector2D& vPosStartSrc = GetPosStart();
     const MT_Vector2D& vPosEndSrc =   GetPosEnd();
 
     const MT_Vector2D& vPosStartDest = Line.GetPosStart();
     const MT_Vector2D& vPosEndDest =   Line.GetPosEnd();
 
-    const MT_Float rUx = vPosEndSrc.rX_ - vPosStartSrc.rX_;
-    const MT_Float rUy = vPosEndSrc.rY_ - vPosStartSrc.rY_;
+    const double rUx = vPosEndSrc.rX_ - vPosStartSrc.rX_;
+    const double rUy = vPosEndSrc.rY_ - vPosStartSrc.rY_;
     if( _Orientation( vPosStartDest.rX_ - vPosStartSrc.rX_, vPosStartDest.rY_ - vPosStartSrc.rY_, rUx, rUy )
       * _Orientation( vPosEndDest.rX_   - vPosStartSrc.rX_, vPosEndDest.rY_   - vPosStartSrc.rY_, rUx, rUy ) > 0 )
         return false;
 
-    const MT_Float rVx = vPosEndDest.rX_ - vPosStartDest.rX_;
-    const MT_Float rVy = vPosEndDest.rY_ - vPosStartDest.rY_;
+    const double rVx = vPosEndDest.rX_ - vPosStartDest.rX_;
+    const double rVy = vPosEndDest.rY_ - vPosStartDest.rY_;
     if( _Orientation( vPosStartSrc.rX_ - vPosStartDest.rX_, vPosStartSrc.rY_ - vPosStartDest.rY_, rVx, rVy )
       * _Orientation( vPosEndSrc.rX_   - vPosStartDest.rX_, vPosEndSrc.rY_   - vPosStartDest.rY_, rVx, rVy ) > 0 )
         return false;
@@ -132,7 +132,7 @@ bool MT_Line::IsClipped( const MT_Line& Line ) const
 
 
 inline
-bool  _GEN_IsZero( MT_Float rF )
+bool  _GEN_IsZero( double rF )
 {
     return rF < 1e-4 && rF > -1e-4;
 }
@@ -143,24 +143,24 @@ bool  _GEN_IsZero( MT_Float rF )
 //-----------------------------------------------------------------------------
 E_CollisionState MT_Line::Intersect2D( const MT_Line& line, MT_Vector2D& vPosIntersect ) const
 {
-    const MT_Float rX1 = GetPosStart().rX_;
-    const MT_Float rY1 = GetPosStart().rY_;
-    const MT_Float rX2 = GetPosEnd().rX_;
-    const MT_Float rY2 = GetPosEnd().rY_;
+    const double rX1 = GetPosStart().rX_;
+    const double rY1 = GetPosStart().rY_;
+    const double rX2 = GetPosEnd().rX_;
+    const double rY2 = GetPosEnd().rY_;
 
-    const MT_Float rX3 = line.GetPosStart().rX_;
-    const MT_Float rY3 = line.GetPosStart().rY_;
-    const MT_Float rX4 = line.GetPosEnd().rX_;
-    const MT_Float rY4 = line.GetPosEnd().rY_;
+    const double rX3 = line.GetPosStart().rX_;
+    const double rY3 = line.GetPosStart().rY_;
+    const double rX4 = line.GetPosEnd().rX_;
+    const double rY4 = line.GetPosEnd().rY_;
 
     // Compute rA1, rB1, rC1, where line joining points 1 and 2 is "rA1 rX + rB1 rY + rC1 = 0.f"
-    const MT_Float rA1 = rY2 - rY1;
-    const MT_Float rB1 = rX1 - rX2;
-    const MT_Float rC1 = rX2 * rY1 - rX1 * rY2;
+    const double rA1 = rY2 - rY1;
+    const double rB1 = rX1 - rX2;
+    const double rC1 = rX2 * rY1 - rX1 * rY2;
 
     // Compute r3 and r4.
-    const MT_Float r3 = rA1 * rX3 + rB1 * rY3 + rC1;
-    const MT_Float r4 = rA1 * rX4 + rB1 * rY4 + rC1;
+    const double r3 = rA1 * rX3 + rB1 * rY3 + rC1;
+    const double r4 = rA1 * rX4 + rB1 * rY4 + rC1;
 
     /// Check signs of r3 and r4.
     // If both point 3 and point 4 lie on same side of line 1, the line segments do not intersect
@@ -169,13 +169,13 @@ E_CollisionState MT_Line::Intersect2D( const MT_Line& line, MT_Vector2D& vPosInt
 
     // Compute a2, b2, c2
 
-    const MT_Float rA2 = rY4 - rY3;
-    const MT_Float rB2 = rX3 - rX4;
-    const MT_Float rC2 = rX4 * rY3 - rX3 * rY4;
+    const double rA2 = rY4 - rY3;
+    const double rB2 = rX3 - rX4;
+    const double rC2 = rX4 * rY3 - rX3 * rY4;
 
     // Compute r1 and r2
-    const MT_Float r1 = rA2 * rX1 + rB2 * rY1 + rC2;
-    const MT_Float r2 = rA2 * rX2 + rB2 * rY2 + rC2;
+    const double r1 = rA2 * rX1 + rB2 * rY1 + rC2;
+    const double r2 = rA2 * rX2 + rB2 * rY2 + rC2;
 
     // Check signs of r1 and r2.
     // If both point 1 and point 2 lie on same side of second line segment, the line segments do not intersect
@@ -183,15 +183,15 @@ E_CollisionState MT_Line::Intersect2D( const MT_Line& line, MT_Vector2D& vPosInt
         return ( eDontIntersect );
 
     // Line segments intersect: compute intersection point
-    const MT_Float rDenom = rA1 * rB2 - rA2 * rB1;
+    const double rDenom = rA1 * rB2 - rA2 * rB1;
     if( _GEN_IsZero( rDenom ) )
         return ( eCollinear );
 
 
     // The rDenom/2 is to get rounding instead of truncating. It is added or subtracted to the numerator, depending upon the sign of the numerator.
-    const MT_Float rNumX = rB1 * rC2 - rB2 * rC1;
-    const MT_Float rNumY = rA2 * rC1 - rA1 * rC2;
-    const MT_Float rInvDenom = MT_Float( 1 ) / rDenom;
+    const double rNumX = rB1 * rC2 - rB2 * rC1;
+    const double rNumY = rA2 * rC1 - rA1 * rC2;
+    const double rInvDenom = double( 1 ) / rDenom;
     vPosIntersect.rX_ = rNumX * rInvDenom;
     vPosIntersect.rY_ = rNumY * rInvDenom;
     // lines_intersect
@@ -215,7 +215,7 @@ MT_Line& MT_Line::operator = ( const MT_Line& rhs )
 // Name: MT_Line::Intersect2D
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
-bool MT_Line::Intersect2D( const T_PointVector& polyline, T_PointSet& orderedIntersectionSet, MT_Float rPrecision ) const
+bool MT_Line::Intersect2D( const T_PointVector& polyline, T_PointSet& orderedIntersectionSet, double rPrecision ) const
 {
     // Return the intersections between the line and the polyline, ordered
 
@@ -254,7 +254,7 @@ bool MT_Line::Intersect2D( const T_PointVector& polyline, T_PointSet& orderedInt
 // Name: MT_Line::Intersect2D
 // Created: NLD 2003-07-25
 //-----------------------------------------------------------------------------
-bool MT_Line::Intersect2D( const T_PointVector& polyline, MT_Float rPrecision ) const
+bool MT_Line::Intersect2D( const T_PointVector& polyline, double rPrecision ) const
 {
     CIT_PointVector itFirstPoint = polyline.begin();
     const MT_Vector2D* pPos1 = &*itFirstPoint;

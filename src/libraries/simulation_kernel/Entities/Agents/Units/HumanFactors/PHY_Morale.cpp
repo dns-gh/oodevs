@@ -48,7 +48,7 @@ void PHY_Morale::Terminate()
 // Name: PHY_Morale constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Morale::PHY_Morale( const std::string& strName, E_MoraleType nType, Common::EnumUnitMorale nAsnID, MT_Float rDIAWeight )
+PHY_Morale::PHY_Morale( const std::string& strName, E_MoraleType nType, Common::EnumUnitMorale nAsnID, double rDIAWeight )
     : strName_   ( strName )
     , nType_     ( nType   )
     , nAsnID_    ( nAsnID  )
@@ -146,7 +146,7 @@ unsigned int PHY_Morale::GetID() const
 // Name: PHY_Morale::GetWeight
 // Created: NLD 2004-12-01
 // -----------------------------------------------------------------------------
-MT_Float PHY_Morale::GetWeight() const
+double PHY_Morale::GetWeight() const
 {
     return rDIAWeight_;
 }

@@ -116,11 +116,11 @@ public:
     const T_KnowledgeAgentVector& GetEnemies() const;
     void GetLivingEnemiesInZone( T_ConstKnowledgeAgentVector& container, const TER_Polygon& zone ) const;
     void GetLivingEnemiesInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
-    void GetLivingEnemiesInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
-    bool EnemyPresenceInCircle( const MT_Vector2D& center, MT_Float rRadius ) const;
+    void GetLivingEnemiesInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const;
+    bool EnemyPresenceInCircle( const MT_Vector2D& center, double rRadius ) const;
 
-    void GetRefugeesInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
-    void GetSurrenderedAgentsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
+    void GetRefugeesInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const;
+    void GetSurrenderedAgentsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const;
 
     // Knowledge populations
     DEC_Knowledge_Population* GetKnowledgePopulation( const DEC_Knowledge_PopulationCollision& collision ) const;

@@ -145,7 +145,7 @@ void AttritionCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Ag
 
     unsigned int hits = fireResult.GetHits();
     if( hits > 0 )
-        construction->Build( - MT_Float( hits ) / MT_Float( construction->GetMaxDotation() ) );
+        construction->Build( - double( hits ) / double( construction->GetMaxDotation() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +165,7 @@ void AttritionCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_Pop
             population.ApplyExplosion( *this, fireResult );
             unsigned int hits = fireResult.GetHits();
             if( hits > 0 )
-                construction->Build( - MT_Float( hits ) / MT_Float( construction->GetMaxDotation() ) );
+                construction->Build( - double( hits ) / double( construction->GetMaxDotation() ) );
         }
     }
 }
@@ -184,7 +184,7 @@ const PHY_AttritionData& AttritionCapacity::GetAttritionData( const PHY_Protecti
 // Name: AttritionCapacity::GetAttritionSurface
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-MT_Float AttritionCapacity::GetAttritionSurface() const
+double AttritionCapacity::GetAttritionSurface() const
 {
     return population_.surface_;
 }
@@ -193,7 +193,7 @@ MT_Float AttritionCapacity::GetAttritionSurface() const
 // Name: AttritionCapacity::GetAttritionSurface
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-MT_Float AttritionCapacity::GetAttritionPH() const
+double AttritionCapacity::GetAttritionPH() const
 {
     return population_.ph_;
 }

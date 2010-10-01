@@ -24,15 +24,15 @@
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( xml::xistream& xis )
-    : rTimeBaseConstruction_      ( std::numeric_limits< MT_Float >::max() )
-    , rTimeBaseDestruction_       ( std::numeric_limits< MT_Float >::max() )
+    : rTimeBaseConstruction_      ( std::numeric_limits< double >::max() )
+    , rTimeBaseDestruction_       ( std::numeric_limits< double >::max() )
     , rTimeConstructionCoef_      ( 1 )
     , rTimeDestructionCoef_       ( 1 )
-    , rTimeMining_                ( std::numeric_limits< MT_Float >::max() )
-    , rTimeDemining_              ( std::numeric_limits< MT_Float >::max() )
+    , rTimeMining_                ( std::numeric_limits< double >::max() )
+    , rTimeDemining_              ( std::numeric_limits< double >::max() )
     , rCoefTimeBypass_            ( 1. )
-    , rSpeedWithinWhenNotBypassed_( std::numeric_limits< MT_Float >::max() )
-    , rSpeedWithinWhenBypassed_   ( std::numeric_limits< MT_Float >::max() )
+    , rSpeedWithinWhenNotBypassed_( std::numeric_limits< double >::max() )
+    , rSpeedWithinWhenBypassed_   ( std::numeric_limits< double >::max() )
     , pConsumptionMode_           ( 0 )
 {
     std::string strConsumptionMode = "";
@@ -47,10 +47,10 @@ PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "bypassed-speed"           , rSpeedWithinWhenBypassed_    );
 
     if( rSpeedWithinWhenNotBypassed_ < 0 )
-        rSpeedWithinWhenNotBypassed_ = std::numeric_limits< MT_Float >::max();
+        rSpeedWithinWhenNotBypassed_ = std::numeric_limits< double >::max();
 
     if( rSpeedWithinWhenBypassed_ < 0 )
-        rSpeedWithinWhenBypassed_ = std::numeric_limits< MT_Float >::max();
+        rSpeedWithinWhenBypassed_ = std::numeric_limits< double >::max();
 
     xis >> xml::optional >> xml::attribute( "consumption-mode", strConsumptionMode );
 
@@ -75,7 +75,7 @@ PHY_ComposanteTypeObjectData::~PHY_ComposanteTypeObjectData()
 // Name: PHY_ComposanteTypeObjectData::GetMaxSpeed
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypeObjectData::GetMaxSpeed( const MIL_Object_ABC& object ) const
+double PHY_ComposanteTypeObjectData::GetMaxSpeed( const MIL_Object_ABC& object ) const
 {
     if( object().IsBypassed() )
         return rSpeedWithinWhenBypassed_;
@@ -89,7 +89,7 @@ MT_Float PHY_ComposanteTypeObjectData::GetMaxSpeed( const MIL_Object_ABC& object
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypeObjectData::CanConstruct() const
 {
-    return rTimeBaseConstruction_ != std::numeric_limits< MT_Float >::max();
+    return rTimeBaseConstruction_ != std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ bool PHY_ComposanteTypeObjectData::CanConstruct() const
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypeObjectData::CanDestroy() const
 {
-    return rTimeBaseDestruction_ != std::numeric_limits< MT_Float >::max();
+    return rTimeBaseDestruction_ != std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +107,7 @@ bool PHY_ComposanteTypeObjectData::CanDestroy() const
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypeObjectData::CanMine() const
 {
-    return rTimeMining_ != std::numeric_limits< MT_Float >::max();
+    return rTimeMining_ != std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ bool PHY_ComposanteTypeObjectData::CanMine() const
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypeObjectData::CanDemine() const
 {
-    return rTimeDemining_ != std::numeric_limits< MT_Float >::max();
+    return rTimeDemining_ != std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
@@ -132,10 +132,10 @@ bool PHY_ComposanteTypeObjectData::CanBypass( bool bObjectIsMined ) const
 // Name: PHY_ComposanteTypeObjectData::GetConstructionTime
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypeObjectData::GetConstructionTime( MT_Float rSizeCoef ) const
+double PHY_ComposanteTypeObjectData::GetConstructionTime( double rSizeCoef ) const
 {
-    if( rTimeBaseConstruction_ == std::numeric_limits< MT_Float >::max() )
-        return std::numeric_limits< MT_Float >::max();
+    if( rTimeBaseConstruction_ == std::numeric_limits< double >::max() )
+        return std::numeric_limits< double >::max();
     return rTimeBaseConstruction_ + ( rSizeCoef * rTimeConstructionCoef_ );
 }
 
@@ -143,10 +143,10 @@ MT_Float PHY_ComposanteTypeObjectData::GetConstructionTime( MT_Float rSizeCoef )
 // Name: PHY_ComposanteTypeObjectData::GetDestructionTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypeObjectData::GetDestructionTime( MT_Float rSizeCoef ) const
+double PHY_ComposanteTypeObjectData::GetDestructionTime( double rSizeCoef ) const
 {
-    if( rTimeBaseDestruction_ == std::numeric_limits< MT_Float >::max() )
-        return std::numeric_limits< MT_Float >::max();
+    if( rTimeBaseDestruction_ == std::numeric_limits< double >::max() )
+        return std::numeric_limits< double >::max();
     return rTimeBaseDestruction_ + ( rSizeCoef * rTimeDestructionCoef_ );
 }
 
@@ -154,7 +154,7 @@ MT_Float PHY_ComposanteTypeObjectData::GetDestructionTime( MT_Float rSizeCoef ) 
 // Name: PHY_ComposanteTypeObjectData::GetMiningTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypeObjectData::GetMiningTime() const
+double PHY_ComposanteTypeObjectData::GetMiningTime() const
 {
     return rTimeMining_;
 }
@@ -163,7 +163,7 @@ MT_Float PHY_ComposanteTypeObjectData::GetMiningTime() const
 // Name: PHY_ComposanteTypeObjectData::GetDeminingTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypeObjectData::GetDeminingTime() const
+double PHY_ComposanteTypeObjectData::GetDeminingTime() const
 {
     return rTimeDemining_;
 }
@@ -172,16 +172,16 @@ MT_Float PHY_ComposanteTypeObjectData::GetDeminingTime() const
 // Name: PHY_ComposanteTypeObjectData::GetBypassTime
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-MT_Float PHY_ComposanteTypeObjectData::GetBypassTime( MT_Float rSizeCoef, bool bObjectIsMined ) const
+double PHY_ComposanteTypeObjectData::GetBypassTime( double rSizeCoef, bool bObjectIsMined ) const
 {
-    MT_Float rTime = GetDestructionTime( rSizeCoef );
-    if( rTime == std::numeric_limits< MT_Float >::max() )
-        return std::numeric_limits< MT_Float >::max();
+    double rTime = GetDestructionTime( rSizeCoef );
+    if( rTime == std::numeric_limits< double >::max() )
+        return std::numeric_limits< double >::max();
     if( !bObjectIsMined )
         return rTime;
 
-    if( GetDeminingTime() == std::numeric_limits< MT_Float >::max() )
-        return std::numeric_limits< MT_Float >::max();
+    if( GetDeminingTime() == std::numeric_limits< double >::max() )
+        return std::numeric_limits< double >::max();
     return ( rTime + GetDeminingTime() ) * rCoefTimeBypass_;
 }
 

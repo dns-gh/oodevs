@@ -133,7 +133,7 @@ bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationCol
 // Name: DEC_Knowledge_PopulationFlowPart::UpdateRelevance
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const MT_Float rMaxLifeTime )
+bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const double rMaxLifeTime )
 {
     assert( rRelevance_ > 0. );
     if( bPerceived_ )
@@ -149,8 +149,8 @@ bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const MT_Float rMaxLifeT
     else
     {
         // Degradation : effacement au bout de X minutes
-        const MT_Float rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / rMaxLifeTime;
-        const MT_Float rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
+        const double rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / rMaxLifeTime;
+        const double rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
         nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         return ChangeRelevance( rRelevance );
     }
@@ -180,11 +180,11 @@ bool DEC_Knowledge_PopulationFlowPart::Clean()
 // Name: DEC_Knowledge_PopulationFlowPart::ChangeRelevance
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_PopulationFlowPart::ChangeRelevance( MT_Float rNewRelevance )
+bool DEC_Knowledge_PopulationFlowPart::ChangeRelevance( double rNewRelevance )
 {
     if( rRelevance_ == rNewRelevance )
         return false;
-    static const MT_Float rDeltaForNetwork = 0.05;
+    static const double rDeltaForNetwork = 0.05;
     if( fabs( rLastRelevanceSent_ - rNewRelevance ) > rDeltaForNetwork || rNewRelevance == 0. || rNewRelevance == 1. )
     {
         rRelevance_ = rNewRelevance;

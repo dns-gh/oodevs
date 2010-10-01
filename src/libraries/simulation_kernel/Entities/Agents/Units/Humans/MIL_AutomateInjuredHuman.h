@@ -37,8 +37,6 @@ class PHY_ComposantePion;
 // =============================================================================
 class MIL_AutomateInjuredHuman : public MIL_Automate
 {
-    MT_COPYNOTALLOWED( MIL_AutomateInjuredHuman )
-
 public:
              MIL_AutomateInjuredHuman(  const MIL_AutomateTypeInjuredHuman& type
                                         , unsigned int nID, MIL_Formation& parent

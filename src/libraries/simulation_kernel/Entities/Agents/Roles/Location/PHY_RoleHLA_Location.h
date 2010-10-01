@@ -49,19 +49,19 @@ public:
     virtual void Clean() {}
 
     virtual void MagicMove( const MT_Vector2D& /*vNewPosition*/ ) {}
-    virtual void Move( const MT_Vector2D& /*vNewPosition*/, const MT_Vector2D& /*vNewDirection*/, MT_Float /*rNewSpeed*/ ) {}
-    virtual void Fly( MT_Float /*rHeight*/ ) {}
+    virtual void Move( const MT_Vector2D& /*vNewPosition*/, const MT_Vector2D& /*vNewDirection*/, double /*rNewSpeed*/ ) {}
+    virtual void Fly( double /*rHeight*/ ) {}
     //@}
 
     //! @name Accessors
     //@{
-    virtual MT_Float GetHeight() const;
-    virtual MT_Float GetAltitude() const;
+    virtual double GetHeight() const;
+    virtual double GetAltitude() const;
     virtual const MT_Vector2D& GetPosition() const;
     virtual boost::shared_ptr<MT_Vector2D> GetSharedPosition() const;
     virtual const MT_Vector2D& GetDirection() const;
     virtual MIL_Agent_ABC& GetAgent() const;
-    virtual MT_Float GetCurrentSpeed() const;
+    virtual double GetCurrentSpeed() const;
     virtual bool HasDoneMagicMove() const;
     virtual bool HasSpeedChanged() const { return false; }; // Position or direction or height has changed
     virtual bool HasLocationChanged() const { return false; };
@@ -71,7 +71,7 @@ public:
 
     //! @name Crap
     //@{
-    virtual MT_Float GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, void* pParams ) const;
+    virtual double GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, void* pParams ) const;
     //@}
     virtual void Serialize( HLA_UpdateFunctor& /*functor*/ ) const {};
 
@@ -81,8 +81,8 @@ private:
     MIL_AgentHLA& pion_;
     MT_Vector2D vDirection_;
     boost::shared_ptr< MT_Vector2D > pvPosition_;
-    MT_Float rHeight_;
-    MT_Float rCurrentSpeed_;
+    double rHeight_;
+    double rCurrentSpeed_;
     //@}
 };
 

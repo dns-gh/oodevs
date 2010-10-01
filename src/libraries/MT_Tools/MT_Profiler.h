@@ -46,13 +46,13 @@ public:
     //@}
 
 private:
-    static int64 nFrequency_;
+    static long long int nFrequency_;
 
 private:
-    int64   nCounterStart_;     // l'heure du start
-    double  rLastTime_;         // la derniere valeur mesurée
-    double  rTotalTime_;        // sum of all start/stop elapsing (in ms)
-    int     nNbrCount_;         // Number of start Profiler was started (for GetAverageTime );
+    long long int nCounterStart_; // l'heure du start
+    double rLastTime_;            // la derniere valeur mesurée
+    double rTotalTime_;           // sum of all start/stop elapsing (in ms)
+    int nNbrCount_;               // Number of start Profiler was started (for GetAverageTime );
 
 };
 

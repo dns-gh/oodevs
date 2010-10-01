@@ -15,7 +15,6 @@
 #include <string>
 #include <map>
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_ScipioException.h"
 
 #endif // __simulation_orders_pch_h_

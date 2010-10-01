@@ -94,7 +94,7 @@ void PHY_RoleHLA_Location::Deserialize( const hla::AttributeIdentifier& attribut
 // Name: PHY_RoleHLA_Location::GetHeight
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleHLA_Location::GetHeight() const
+double PHY_RoleHLA_Location::GetHeight() const
 {
     return rHeight_;
 }
@@ -103,7 +103,7 @@ MT_Float PHY_RoleHLA_Location::GetHeight() const
 // Name: PHY_RoleHLA_Location::GetAltitude
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleHLA_Location::GetAltitude() const
+double PHY_RoleHLA_Location::GetAltitude() const
 {
     return MIL_Tools::GetAltitude( *pvPosition_ ) + rHeight_;
 }
@@ -148,7 +148,7 @@ MIL_Agent_ABC& PHY_RoleHLA_Location::GetAgent() const
 // Name: PHY_RoleHLA_Location::GetCurrentSpeed
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleHLA_Location::GetCurrentSpeed() const
+double PHY_RoleHLA_Location::GetCurrentSpeed() const
 {
     return rCurrentSpeed_;
 }
@@ -175,7 +175,7 @@ bool PHY_RoleHLA_Location::IsValid() const
 // Name: PHY_RoleHLA_Location::GetCost
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-MT_Float PHY_RoleHLA_Location::GetCost( const MT_Vector2D&, const MT_Vector2D&, const TerrainData&, const TerrainData&, void* ) const
+double PHY_RoleHLA_Location::GetCost( const MT_Vector2D&, const MT_Vector2D&, const TerrainData&, const TerrainData&, void* ) const
 {
     throw std::exception( __FUNCTION__ " should not be called on distant agents" );
 }

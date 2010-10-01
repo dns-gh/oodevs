@@ -20,9 +20,9 @@ MIL_NBCType::T_NBCTypeMap MIL_NBCType::nbcAgentTypes_;
 unsigned int MIL_NBCType::length_;
 unsigned int MIL_NBCType::width_;
 unsigned int MIL_NBCType::propagationAngle_;
-MT_Float MIL_NBCType::concentrationIncreaseRate_;
-MT_Float MIL_NBCType::concentrationDecreaseRate_;
-MT_Float MIL_NBCType::edgeEffects_;
+double MIL_NBCType::concentrationIncreaseRate_;
+double MIL_NBCType::concentrationDecreaseRate_;
+double MIL_NBCType::edgeEffects_;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FireClass::Initialize
@@ -242,7 +242,7 @@ unsigned int MIL_NBCType::GetLength()
 // Created: RFT 19/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-MT_Float MIL_NBCType::GetConcentrationIncreaseRate()
+double MIL_NBCType::GetConcentrationIncreaseRate()
 {
     return concentrationIncreaseRate_;
 }
@@ -252,7 +252,7 @@ MT_Float MIL_NBCType::GetConcentrationIncreaseRate()
 // Created: RFT 19/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-MT_Float MIL_NBCType::GetConcentrationDecreaseRate()
+double MIL_NBCType::GetConcentrationDecreaseRate()
 {
     return concentrationDecreaseRate_;
 }

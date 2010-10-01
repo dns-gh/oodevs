@@ -56,7 +56,7 @@ const DEC_Model_ABC& MIL_AgentTypePion::GetModel() const
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_AgentTypePion::GetDistanceAvantPoint( const TerrainData& nType ) const
+double MIL_AgentTypePion::GetDistanceAvantPoint( const TerrainData& nType ) const
 {
     CIT_DistanceAvantPointMap it = distancesAvantPoints_.find( nType );
     return it == distancesAvantPoints_.end() ? 0. : it->second;
@@ -67,7 +67,7 @@ MT_Float MIL_AgentTypePion::GetDistanceAvantPoint( const TerrainData& nType ) co
 // Created: JVT 2005-05-10
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_AgentTypePion::GetDistanceAvantLima() const
+double MIL_AgentTypePion::GetDistanceAvantLima() const
 {
     return rDistanceAvantLimas_;
 }
@@ -77,7 +77,7 @@ MT_Float MIL_AgentTypePion::GetDistanceAvantLima() const
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_AgentTypePion::GetRapForIncreasePerTimeStepValue() const
+double MIL_AgentTypePion::GetRapForIncreasePerTimeStepValue() const
 {
     return rRapForIncreasePerTimeStepValue_;
 }

@@ -11,7 +11,6 @@
 #define __PHY_RoleHLA_Dotations_h_
 
 #include "PHY_RoleInterface_Dotations.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 class MIL_Entity_ABC;
 
@@ -54,22 +53,22 @@ public:
 
     //! @name Dotations management
     //@{
-    virtual MT_Float SupplyDotation     ( const PHY_DotationCategory& /*category*/, MT_Float /*rNbr*/ ) { return 0; }
+    virtual double SupplyDotation     ( const PHY_DotationCategory& /*category*/, double /*rNbr*/ ) { return 0; }
     virtual void     ResupplyDotations  () {}
-    virtual void     ResupplyDotations  ( const PHY_AmmoDotationClass& /*ammoDotationClass*/, MT_Float /*rFactor*/ ) {}
-    virtual void     ResupplyDotations  ( const PHY_DotationType&      /*type*/             , MT_Float /*rFactor*/ ) {}
+    virtual void     ResupplyDotations  ( const PHY_AmmoDotationClass& /*ammoDotationClass*/, double /*rFactor*/ ) {}
+    virtual void     ResupplyDotations  ( const PHY_DotationType&      /*type*/             , double /*rFactor*/ ) {}
     //@}
 
     //! @name Consumption management
     //@{
     virtual bool                 SetConsumptionMode      ( const PHY_ConsumptionType& /*mode*/ ) { return false; }
     virtual void                 RollbackConsumptionMode () {}
-    virtual MT_Float             GetMaxTimeForConsumption( const PHY_ConsumptionType& /*mode*/ ) const { return 0; }
+    virtual double             GetMaxTimeForConsumption( const PHY_ConsumptionType& /*mode*/ ) const { return 0; }
     //@}
 
     //! @name Fire dotations
     //@{
-    virtual MT_Float AddFireReservation( const PHY_DotationCategory& /*category*/, MT_Float /*rNbr*/ ) { return 0; }
+    virtual double AddFireReservation( const PHY_DotationCategory& /*category*/, double /*rNbr*/ ) { return 0; }
     virtual const PHY_DotationCategory* GetIlluminationDotations( float /*range*/, bool /*permanent*/ ) const { return 0; }
     virtual float GetIlluminatingRange( ) const { return 0; }
     virtual void SetForbiddenDotation( const PHY_DotationCategory& /*category*/ ) {};
@@ -87,7 +86,7 @@ public:
     //@{
     virtual void NotifySupplyNeeded          ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bNewNeed*/ ) const {}; // Logistic
     virtual void FillSupplyRequest           ( PHY_SupplyDotationRequestContainer& /*supplyRequest*/ ) const {};
-    virtual void ChangeDotationsValueUsingTC2( const PHY_DotationType& /*dotationType*/, const PHY_AmmoDotationClass* /*pAmmoDotationClass*/, MT_Float /*rCapacityFactor*/ ) const {};
+    virtual void ChangeDotationsValueUsingTC2( const PHY_DotationType& /*dotationType*/, const PHY_AmmoDotationClass* /*pAmmoDotationClass*/, double /*rCapacityFactor*/ ) const {};
     //@}
 
 private:

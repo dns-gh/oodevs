@@ -12,7 +12,6 @@
 #ifndef __PHY_RadarType_h_
 #define __PHY_RadarType_h_
 
-#include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Stl.h"
 
 namespace xml
@@ -51,7 +50,7 @@ public:
     //@{
     const std::string&    GetName  () const;
     const PHY_RadarClass& GetClass () const;
-          MT_Float        GetRadius() const;
+          double        GetRadius() const;
     //@}
 
 private:
@@ -91,19 +90,19 @@ private:
     const unsigned int            nID_;
 
     // Range
-    MT_Float rRadius_;
-    MT_Float rMinHeight_;
-    MT_Float rMaxHeight_;
+    double rRadius_;
+    double rMinHeight_;
+    double rMaxHeight_;
 
     T_ActivityVector detectableActivities_;
 
     // Acquistion times
-    MT_Float rDetectionTime_;
-    MT_Float rRecognitionTime_;
-    MT_Float rIdentificationTime_;
-    MT_Float rPcDetectionTime_;
-    MT_Float rPcRecognitionTime_;
-    MT_Float rPcIdentificationTime_;
+    double rDetectionTime_;
+    double rRecognitionTime_;
+    double rIdentificationTime_;
+    double rPcDetectionTime_;
+    double rPcRecognitionTime_;
+    double rPcIdentificationTime_;
 
 private:
     static T_RadarTypeMap radarTypes_;

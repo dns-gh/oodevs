@@ -25,8 +25,6 @@ class MIL_AgentPion;
 // =============================================================================
 class PHY_ActionDistributeObject : public PHY_DecisionCallbackAction_ABC
 {
-    MT_COPYNOTALLOWED( PHY_ActionDistributeObject )
-
 public:
     //! @name Types
     //@{

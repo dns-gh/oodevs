@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_RapFor_ABC_h_
 
 #include "DEC_Knowledge_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 
 namespace xml
 {
@@ -39,20 +38,20 @@ public:
 
     //! @name Accessors
     //@{
-    MT_Float GetValue();
+    double GetValue();
     //@}
 
     //! @name Tools
     //@{
     static void Initialize( xml::xistream& xis );
-    static MT_Float ComputeRapForIncreasePerTimeStepValue( MT_Float rBaseTimeValue );
-    static MT_Float GetRapForIncreasePerTimeStepDefaultValue();
+    static double ComputeRapForIncreasePerTimeStepValue( double rBaseTimeValue );
+    static double GetRapForIncreasePerTimeStepDefaultValue();
     //@}
 
 protected:
     //! @name Tools
     //@{
-    void ApplyValue( MT_Float rTotalFightScoreFriend, MT_Float rTotalFightScoreEnemy, const MT_Float rRapForIncreasePerTimeStepValue );
+    void ApplyValue( double rTotalFightScoreFriend, double rTotalFightScoreEnemy, const double rRapForIncreasePerTimeStepValue );
     bool NeedUpdate() const;
     virtual void Update() = 0;
     //@}
@@ -60,16 +59,16 @@ protected:
 protected:
     //! @name Member data
     //@{
-    MT_Float rRapForValue_;
+    double rRapForValue_;
     unsigned int nLastCacheUpdateTick_;
     //@}
 
 private:
     //! @name Member data
     //@{
-    static const MT_Float rRapForBoundMin_;
-    static const MT_Float rRapForBoundMax_;
-    static MT_Float rRapForIncreasePerTimeStepDefaultValue_;
+    static const double rRapForBoundMin_;
+    static const double rRapForBoundMax_;
+    static double rRapForIncreasePerTimeStepDefaultValue_;
     //@}
 };
 

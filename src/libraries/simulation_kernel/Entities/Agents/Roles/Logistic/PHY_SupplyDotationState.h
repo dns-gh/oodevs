@@ -37,7 +37,7 @@ public:
 
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, MT_Float > T_MerchandiseToConvoyMap;
+    typedef std::map< const PHY_DotationCategory*, double > T_MerchandiseToConvoyMap;
     //@}
 
     //! @name Operations
@@ -47,8 +47,8 @@ public:
     bool IsSupplying( const PHY_DotationCategory& dotationCategory ) const;
 
     void GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
-    void RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
-    void AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, MT_Float rNbrDotations );
+    void RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations );
+    void AddConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations );
     void CancelMerchandiseOverheadReservation();
 
     void Supply() const;

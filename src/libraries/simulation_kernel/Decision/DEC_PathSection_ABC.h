@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     bool     Execute  ( TerrainPathfinder& pathfind, unsigned int nComputationEndTime );
-    MT_Float GetLength() const;
+    double GetLength() const;
     void     Cancel   ();
     //@}
 

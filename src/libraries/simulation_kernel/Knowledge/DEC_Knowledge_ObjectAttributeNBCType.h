@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectAttributeNBCType_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "MT_Tools/MT_Tools_Types.h"
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/split_member.hpp>
 
@@ -27,8 +26,6 @@ class MIL_CheckPointOutArchive;
 // =============================================================================
 class DEC_Knowledge_ObjectAttributeNBCType : public DEC_Knowledge_ObjectAttribute_ABC
 {
-    MT_COPYNOTALLOWED( DEC_Knowledge_ObjectAttributeNBCType )
-
 public:
     //! @name Constructors/Destructor
     //@{
