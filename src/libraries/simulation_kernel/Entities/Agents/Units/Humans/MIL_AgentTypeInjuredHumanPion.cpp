@@ -20,8 +20,8 @@
 // Name: MIL_AgentTypeInjuredHumanPion constructor
 // Created: RFT 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypeInjuredHumanPion::MIL_AgentTypeInjuredHumanPion( const std::string& strName, xml::xistream& xis )
-    : MIL_AgentTypePion( strName, xis )
+MIL_AgentTypeInjuredHumanPion::MIL_AgentTypeInjuredHumanPion( const std::string& strName, const std::string& strType, xml::xistream& xis )
+    : MIL_AgentTypePion( strName, strType, xis )
 {
     // NOTHING
 }
@@ -61,7 +61,7 @@ MIL_AgentPion* MIL_AgentTypeInjuredHumanPion::InstanciatePion( MIL_Automate& aut
 // Name: MIL_AgentTypeInjuredHumanPion::Create
 // Created: RFT 2005-02-08
 // -----------------------------------------------------------------------------
-const MIL_AgentTypePion* MIL_AgentTypeInjuredHumanPion::Create( const std::string& strName, xml::xistream& xis )
+const MIL_AgentTypePion* MIL_AgentTypeInjuredHumanPion::Create( const std::string& strName, const std::string& strType, xml::xistream& xis )
 {
-    return new MIL_AgentTypeInjuredHumanPion( strName, xis );
+    return new MIL_AgentTypeInjuredHumanPion( strName, strType, xis );
 }

@@ -26,7 +26,7 @@ namespace xml
 class MIL_AgentTypePionREFUGIE : public MIL_AgentTypePion
 {
 public:
-             MIL_AgentTypePionREFUGIE( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePionREFUGIE( const std::string& strName, const std::string& strType, xml::xistream& xis );
     virtual ~MIL_AgentTypePionREFUGIE();
 
     //! @name Accessors
@@ -34,7 +34,7 @@ public:
     virtual bool IsRefugee() const;
     //@}
 
-    static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
+    static const MIL_AgentTypePion* Create( const std::string& strName, const std::string& strType, xml::xistream& xis );
 };
 
 #endif // __MIL_AgentTypePionREFUGIE_h_

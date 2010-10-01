@@ -17,9 +17,10 @@
 // Name: MIL_AgentType_ABC constructor
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------
-MIL_AgentType_ABC::MIL_AgentType_ABC( const std::string& strName, xml::xistream& xis )
+MIL_AgentType_ABC::MIL_AgentType_ABC( const std::string& strName, const std::string& strType, xml::xistream& xis )
     : nID_         ( 0 )
     , strName_     ( strName )
+    , strType_     ( strType )
     , pNatureLevel_( 0 )
     , pNatureAtlas_( 0 )
 {
@@ -101,6 +102,15 @@ const PHY_NatureAtlas& MIL_AgentType_ABC::GetNatureAtlas() const
 const std::string& MIL_AgentType_ABC::GetName() const
 {
     return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentType_ABC::GetName
+// Created: LMT 2010-09-29
+// -----------------------------------------------------------------------------
+const std::string& MIL_AgentType_ABC::GetMilPionType() const
+{
+    return strType_;
 }
 
 // -----------------------------------------------------------------------------

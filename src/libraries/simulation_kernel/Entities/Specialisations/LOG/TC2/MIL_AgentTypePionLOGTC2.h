@@ -26,7 +26,7 @@ namespace xml
 class MIL_AgentTypePionLOGTC2 : public MIL_AgentTypePionLOG_ABC
 {
 public:
-             MIL_AgentTypePionLOGTC2( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePionLOGTC2( const std::string& strName, const std::string& strType, xml::xistream& xis );
     virtual ~MIL_AgentTypePionLOGTC2();
 
     //! @name Instanciation
@@ -36,7 +36,7 @@ public:
     virtual void RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const;
     //@}
 
-    static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
+    static const MIL_AgentTypePion* Create( const std::string& strName, const std::string& strType, xml::xistream& xis );
 };
 
 #endif // __MIL_AgentTypePionLOGTC2_h_

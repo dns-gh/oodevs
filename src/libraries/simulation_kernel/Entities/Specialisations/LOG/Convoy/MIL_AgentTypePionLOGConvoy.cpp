@@ -19,8 +19,8 @@
 // Name: MIL_AgentTypePionLOGConvoy constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionLOGConvoy::MIL_AgentTypePionLOGConvoy( const std::string& strName, xml::xistream& xis )
-    : MIL_AgentTypePionLOG_ABC( strName, xis )
+MIL_AgentTypePionLOGConvoy::MIL_AgentTypePionLOGConvoy( const std::string& strName, const std::string& strType, xml::xistream& xis )
+    : MIL_AgentTypePionLOG_ABC( strName, strType, xis )
 {
     // $$$ ?? Checker que le type ne contient aucun equipement ?
 }
@@ -67,7 +67,7 @@ void MIL_AgentTypePionLOGConvoy::RegisterRoles( MIL_AgentPion& pion, DEC_DataBas
 // Name: MIL_AgentTypePionINF::Create
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-const MIL_AgentTypePion* MIL_AgentTypePionLOGConvoy::Create( const std::string& strName, xml::xistream& xis )
+const MIL_AgentTypePion* MIL_AgentTypePionLOGConvoy::Create( const std::string& strName, const std::string& strType, xml::xistream& xis )
 {
-    return new MIL_AgentTypePionLOGConvoy( strName, xis );
+    return new MIL_AgentTypePionLOGConvoy( strName, strType, xis );
 }

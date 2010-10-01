@@ -26,7 +26,7 @@ namespace xml
 class MIL_AgentTypePionMILICE : public MIL_AgentTypePion
 {
 public:
-             MIL_AgentTypePionMILICE( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePionMILICE( const std::string& strName, const std::string& strType, xml::xistream& xis );
     virtual ~MIL_AgentTypePionMILICE();
 
     //! @name Accessors
@@ -34,7 +34,7 @@ public:
     virtual bool IsMilitia() const;
     //@}
 
-    static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
+    static const MIL_AgentTypePion* Create( const std::string& strName, const std::string& strType, xml::xistream& xis );
 };
 
 #endif // __MIL_AgentTypePionMILICE_h_

@@ -21,8 +21,8 @@
 // Name: MIL_AgentTypePionCirculation constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionCirculation::MIL_AgentTypePionCirculation( const std::string& strName, xml::xistream& xis )
-    : MIL_AgentTypePion( strName, xis )
+MIL_AgentTypePionCirculation::MIL_AgentTypePionCirculation( const std::string& strName, const std::string& strType, xml::xistream& xis )
+    : MIL_AgentTypePion( strName, strType, xis )
 {
 }
 
@@ -39,9 +39,9 @@ MIL_AgentTypePionCirculation::~MIL_AgentTypePionCirculation()
 // Name: MIL_AgentTypePionCirculation::Create
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-const MIL_AgentTypePion* MIL_AgentTypePionCirculation::Create( const std::string& strName, xml::xistream& xis )
+const MIL_AgentTypePion* MIL_AgentTypePionCirculation::Create( const std::string& strName, const std::string& strType, xml::xistream& xis )
 {
-    return new MIL_AgentTypePionCirculation( strName, xis );
+    return new MIL_AgentTypePionCirculation( strName, strType, xis );
 }
 
 // -----------------------------------------------------------------------------

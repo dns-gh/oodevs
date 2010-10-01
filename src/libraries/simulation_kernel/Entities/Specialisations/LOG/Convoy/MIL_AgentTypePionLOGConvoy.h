@@ -28,7 +28,7 @@ class AlgorithmsFactories;
 class MIL_AgentTypePionLOGConvoy : public MIL_AgentTypePionLOG_ABC
 {
 public:
-             MIL_AgentTypePionLOGConvoy( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePionLOGConvoy( const std::string& strName, const std::string& strType, xml::xistream& xis );
     virtual ~MIL_AgentTypePionLOGConvoy();
 
     //! @name Instanciation
@@ -38,7 +38,7 @@ public:
     virtual void RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const;
     //@}
 
-    static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
+    static const MIL_AgentTypePion* Create( const std::string& strName, const std::string& strType, xml::xistream& xis );
 };
 
 #endif // __MIL_AgentTypePionLOGConvoy_h_

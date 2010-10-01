@@ -16,8 +16,8 @@
 // Name: MIL_AgentTypePionASY constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionASY::MIL_AgentTypePionASY( const std::string& strName, xml::xistream& xis )
-    : MIL_AgentTypePion( strName, xis )
+MIL_AgentTypePionASY::MIL_AgentTypePionASY( const std::string& strName, const std::string& strType, xml::xistream& xis )
+    : MIL_AgentTypePion( strName, strType, xis )
 {
     // NOTHING
 }
@@ -35,9 +35,9 @@ MIL_AgentTypePionASY::~MIL_AgentTypePionASY()
 // Name: MIL_AgentTypePionASY::Create
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-const MIL_AgentTypePion* MIL_AgentTypePionASY::Create( const std::string& strName, xml::xistream& xis )
+const MIL_AgentTypePion* MIL_AgentTypePionASY::Create( const std::string& strName, const std::string& strType, xml::xistream& xis )
 {
-    return new MIL_AgentTypePionASY( strName, xis );
+    return new MIL_AgentTypePionASY( strName, strType, xis );
 }
 
 // -----------------------------------------------------------------------------

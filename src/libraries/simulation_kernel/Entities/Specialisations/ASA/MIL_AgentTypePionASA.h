@@ -26,10 +26,10 @@ namespace xml
 class MIL_AgentTypePionASA : public MIL_AgentTypePion
 {
 public:
-             MIL_AgentTypePionASA( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePionASA( const std::string& strName, const std::string& strType, xml::xistream& xis );
     virtual ~MIL_AgentTypePionASA();
 
-    static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
+    static const MIL_AgentTypePion* Create( const std::string& strName, const std::string& strType, xml::xistream& xis );
 };
 
 #endif // __MIL_AgentTypePionASA_h_

@@ -21,8 +21,8 @@
 // Name: MIL_AgentTypePionLOGMaintenance constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionLOGMaintenance::MIL_AgentTypePionLOGMaintenance( const std::string& strName, xml::xistream& xis )
-    : MIL_AgentTypePionLOG_ABC( strName, xis )
+MIL_AgentTypePionLOGMaintenance::MIL_AgentTypePionLOGMaintenance( const std::string& strName, const std::string& strType, xml::xistream& xis )
+    : MIL_AgentTypePionLOG_ABC( strName, strType, xis )
 {
     // NOTHING
 }
@@ -69,7 +69,7 @@ void MIL_AgentTypePionLOGMaintenance::RegisterRoles( MIL_AgentPion& pion, DEC_Da
 // Name: MIL_AgentTypePionINF::Create
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-const MIL_AgentTypePion* MIL_AgentTypePionLOGMaintenance::Create( const std::string& strName, xml::xistream& xis )
+const MIL_AgentTypePion* MIL_AgentTypePionLOGMaintenance::Create( const std::string& strName, const std::string& strType, xml::xistream& xis )
 {
-    return new MIL_AgentTypePionLOGMaintenance( strName, xis );
+    return new MIL_AgentTypePionLOGMaintenance( strName, strType, xis );
 }

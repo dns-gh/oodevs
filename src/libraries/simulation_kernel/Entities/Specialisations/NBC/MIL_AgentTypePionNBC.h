@@ -26,12 +26,12 @@ namespace xml
 class MIL_AgentTypePionNBC : public MIL_AgentTypePion
 {
 public:
-             MIL_AgentTypePionNBC( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePionNBC( const std::string& strName, const std::string& strType, xml::xistream& xis );
     virtual ~MIL_AgentTypePionNBC();
 
     virtual void RegisterFunctions( directia::brain::Brain& brain, MIL_Agent_ABC& agent ) const;
 
-    static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
+    static const MIL_AgentTypePion* Create( const std::string& strName, const std::string& strType, xml::xistream& xis );
 };
 
 #endif // __MIL_AgentTypePionNBC_h_

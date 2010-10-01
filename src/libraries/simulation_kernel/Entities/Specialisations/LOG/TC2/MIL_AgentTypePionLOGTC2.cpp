@@ -23,8 +23,8 @@
 // Name: MIL_AgentTypePionLOGTC2 constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionLOGTC2::MIL_AgentTypePionLOGTC2( const std::string& strName, xml::xistream& xis )
-    : MIL_AgentTypePionLOG_ABC( strName, xis )
+MIL_AgentTypePionLOGTC2::MIL_AgentTypePionLOGTC2( const std::string& strName, const std::string& strType, xml::xistream& xis )
+    : MIL_AgentTypePionLOG_ABC( strName, strType, xis )
 {
     // NOTHING
 }
@@ -73,7 +73,7 @@ void MIL_AgentTypePionLOGTC2::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& 
 // Name: MIL_AgentTypePionINF::Create
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-const MIL_AgentTypePion* MIL_AgentTypePionLOGTC2::Create( const std::string& strName, xml::xistream& xis )
+const MIL_AgentTypePion* MIL_AgentTypePionLOGTC2::Create( const std::string& strName, const std::string& strType, xml::xistream& xis )
 {
-    return new MIL_AgentTypePionLOGTC2( strName, xis );
+    return new MIL_AgentTypePionLOGTC2( strName, strType, xis );
 }

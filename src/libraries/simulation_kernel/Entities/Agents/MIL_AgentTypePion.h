@@ -43,7 +43,7 @@ class MIL_AgentTypePion : public MIL_AgentType_ABC
 {
 
 public:
-             MIL_AgentTypePion( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePion( const std::string& strName, const std::string& strType, xml::xistream& xis );
     virtual ~MIL_AgentTypePion();
 
     //! @name Manager
@@ -51,7 +51,7 @@ public:
     static void Initialize( xml::xistream& xis );
     static void Terminate ();
 
-    static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
+    static const MIL_AgentTypePion* Create( const std::string& strName, const std::string& strType, xml::xistream& xis );
     static const MIL_AgentTypePion* Find  ( const std::string& strName );
     static const MIL_AgentTypePion* Find  ( unsigned int nID );
     //@}
@@ -93,7 +93,7 @@ private:
     typedef std::map< std::string, const MIL_AgentTypePion*, sCaseInsensitiveLess > T_PionTypeMap;
     typedef T_PionTypeMap::const_iterator                                           CIT_PionTypeMap;
 
-    typedef const MIL_AgentTypePion* (*T_PionTypeAllocator)( const std::string& strName, xml::xistream& xis );
+    typedef const MIL_AgentTypePion* (*T_PionTypeAllocator)( const std::string& strName, const std::string& strType, xml::xistream& xis );
 
     typedef std::map< std::string, T_PionTypeAllocator, sCaseInsensitiveLess > T_PionTypeAllocatorMap;
     typedef T_PionTypeAllocatorMap::const_iterator                             CIT_PionTypeAllocatorMap;

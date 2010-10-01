@@ -26,7 +26,7 @@ namespace xml
 class MIL_AgentTypePionLOG_ABC : public MIL_AgentTypePion
 {
 public:
-             MIL_AgentTypePionLOG_ABC( const std::string& strName, xml::xistream& xis );
+             MIL_AgentTypePionLOG_ABC( const std::string& strName, const std::string& strType, xml::xistream& xis );
     virtual ~MIL_AgentTypePionLOG_ABC();
 
     virtual void RegisterFunctions( directia::brain::Brain& brain, MIL_Agent_ABC& agent ) const;

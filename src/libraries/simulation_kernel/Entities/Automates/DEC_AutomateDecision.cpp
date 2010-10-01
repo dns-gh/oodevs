@@ -210,6 +210,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
     brain[ "DEC_Automate_PionPCDeAutomate" ] =
         boost::function< DEC_Decision_ABC*( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetPionPCOfAutomate, _1 ) );
     brain[ "DEC_Automate_AutomatesSubordonnes" ] = boost::bind( &DEC_AutomateFunctions::GetAutomates, boost::cref( GetAutomate() ) );
+    brain[ "DEC_Automate_PionsMelee" ] = boost::bind( &DEC_AutomateFunctions::GetPionsMelee, boost::cref( GetAutomate() ) );
     brain[ "DEC_AutomateSuperieur_EstEmbraye" ] = boost::bind( &DEC_AutomateFunctions::IsParentAutomateEngaged, boost::cref( GetAutomate() ) );
 
     brain[ "DEC_Automate_PionsDeAutomateSansPC" ] =

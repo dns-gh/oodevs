@@ -16,8 +16,8 @@
 // Name: MIL_AgentTypePionREFUGIE constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionREFUGIE::MIL_AgentTypePionREFUGIE( const std::string& strName, xml::xistream& xis )
-    : MIL_AgentTypePion( strName, xis )
+MIL_AgentTypePionREFUGIE::MIL_AgentTypePionREFUGIE( const std::string& strName, const std::string& strType, xml::xistream& xis )
+    : MIL_AgentTypePion( strName, strType, xis )
 {
     // NOTHING
 }
@@ -35,9 +35,9 @@ MIL_AgentTypePionREFUGIE::~MIL_AgentTypePionREFUGIE()
 // Name: MIL_AgentTypePionREFUGIE::Create
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-const MIL_AgentTypePion* MIL_AgentTypePionREFUGIE::Create( const std::string& strName, xml::xistream& xis )
+const MIL_AgentTypePion* MIL_AgentTypePionREFUGIE::Create( const std::string& strName, const std::string& strType, xml::xistream& xis )
 {
-    return new MIL_AgentTypePionREFUGIE( strName, xis );
+    return new MIL_AgentTypePionREFUGIE( strName, strType, xis );
 }
 
 // -----------------------------------------------------------------------------

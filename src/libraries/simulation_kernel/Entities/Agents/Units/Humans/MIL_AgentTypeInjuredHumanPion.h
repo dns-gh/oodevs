@@ -31,7 +31,7 @@ class MIL_AgentTypeInjuredHumanPion : public MIL_AgentTypePion
     MT_COPYNOTALLOWED( MIL_AgentTypeInjuredHumanPion )
 
 public:
-    MIL_AgentTypeInjuredHumanPion( const std::string& strName, xml::xistream& xis );
+    MIL_AgentTypeInjuredHumanPion( const std::string& strName, const std::string& strType, xml::xistream& xis );
     virtual ~MIL_AgentTypeInjuredHumanPion();
 
     //! @name Instanciation
@@ -41,7 +41,7 @@ public:
     //@}
 
 public:
-    static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
+    static const MIL_AgentTypePion* Create( const std::string& strName, const std::string& strType, xml::xistream& xis );
 };
 
 #endif // __MIL_AgentTypeInjuredHumanPion_h_

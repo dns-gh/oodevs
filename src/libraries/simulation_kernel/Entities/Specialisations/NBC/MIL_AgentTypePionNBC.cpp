@@ -22,8 +22,8 @@
 // Name: MIL_AgentTypePionNBC constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionNBC::MIL_AgentTypePionNBC( const std::string& strName, xml::xistream& xis )
-    : MIL_AgentTypePion( strName, xis )
+MIL_AgentTypePionNBC::MIL_AgentTypePionNBC( const std::string& strName, const std::string& strType, xml::xistream& xis )
+    : MIL_AgentTypePion( strName, strType, xis )
 {
 
 }
@@ -41,9 +41,9 @@ MIL_AgentTypePionNBC::~MIL_AgentTypePionNBC()
 // Name: MIL_AgentTypePionNBC::Create
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-const MIL_AgentTypePion* MIL_AgentTypePionNBC::Create( const std::string& strName, xml::xistream& xis )
+const MIL_AgentTypePion* MIL_AgentTypePionNBC::Create( const std::string& strName, const std::string& strType, xml::xistream& xis )
 {
-    return new MIL_AgentTypePionNBC( strName, xis );
+    return new MIL_AgentTypePionNBC( strName, strType, xis );
 }
 
 // -----------------------------------------------------------------------------

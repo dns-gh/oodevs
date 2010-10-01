@@ -79,9 +79,9 @@ MIL_AgentTypePion::T_PionTypeMap           MIL_AgentTypePion::pionTypes_;
 // Name: MIL_AgentTypePion::Create
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-const MIL_AgentTypePion* MIL_AgentTypePion::Create( const std::string& strName, xml::xistream& xis )
+const MIL_AgentTypePion* MIL_AgentTypePion::Create( const std::string& strName, const std::string& strType, xml::xistream& xis )
 {
-    return new MIL_AgentTypePion( strName, xis );
+    return new MIL_AgentTypePion( strName, strType, xis );
 }
 
 struct MIL_AgentTypePion::LoadingWrapper
@@ -145,7 +145,7 @@ void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
     const MIL_AgentTypePion*& pType = pionTypes_[ strName ];
     if( pType )
         xis.error( "Pion type already defined" );
-    pType = (*itPionAllocator->second)( strName, xis );
+    pType = (*itPionAllocator->second)( strName, strType, xis );
 
     if( !ids_.insert( pType->GetID() ).second )
         xis.error( "Pion type ID already used" );
@@ -170,8 +170,8 @@ void MIL_AgentTypePion::Terminate()
 // Name: MIL_AgentTypePion constructor
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, xml::xistream& xis )
-    : MIL_AgentType_ABC               ( strName, xis )
+MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, const std::string& strType, xml::xistream& xis )
+    : MIL_AgentType_ABC               ( strName, strType, xis )
     , pUnitType_                      ( new PHY_UnitType( xis ) )
     , rDistanceAvantLimas_            ( 0. )
     , rRapForIncreasePerTimeStepValue_( DEC_Knowledge_RapFor_ABC::GetRapForIncreasePerTimeStepDefaultValue() )

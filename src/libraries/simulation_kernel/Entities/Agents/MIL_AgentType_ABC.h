@@ -40,7 +40,7 @@ class MIL_AgentType_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Desctructor
     //@{
-             MIL_AgentType_ABC( const std::string& strName, xml::xistream& xis );
+             MIL_AgentType_ABC( const std::string& strName, const std::string& strType, xml::xistream& xis );
     virtual ~MIL_AgentType_ABC();
     //@}
 
@@ -48,6 +48,7 @@ public:
     //@{
     unsigned int GetID() const;
     const std::string& GetName() const;
+    const std::string& GetMilPionType() const;
     const PHY_NatureLevel& GetNatureLevel() const;
     const PHY_NatureAtlas& GetNatureAtlas() const;
     virtual bool IsMilitia() const;
@@ -75,6 +76,7 @@ private:
     //@{
     unsigned int nID_;
     const std::string strName_;
+    const std::string strType_;
     const PHY_NatureLevel* pNatureLevel_;
     const PHY_NatureAtlas* pNatureAtlas_;
     //@}

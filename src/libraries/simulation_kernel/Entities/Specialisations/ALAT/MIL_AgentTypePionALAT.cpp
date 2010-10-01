@@ -22,8 +22,8 @@
 // Name: MIL_AgentTypePionALAT constructor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-MIL_AgentTypePionALAT::MIL_AgentTypePionALAT( const std::string& strName, xml::xistream& xis )
-    : MIL_AgentTypePion( strName, xis )
+MIL_AgentTypePionALAT::MIL_AgentTypePionALAT( const std::string& strName, const std::string& strType, xml::xistream& xis )
+    : MIL_AgentTypePion( strName, strType, xis )
 {
     // NOTHING
 }
@@ -41,9 +41,9 @@ MIL_AgentTypePionALAT::~MIL_AgentTypePionALAT()
 // Name: MIL_AgentTypePionINF::Create
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-const MIL_AgentTypePion* MIL_AgentTypePionALAT::Create( const std::string& strName, xml::xistream& xis )
+const MIL_AgentTypePion* MIL_AgentTypePionALAT::Create( const std::string& strName, const std::string& strType, xml::xistream& xis )
 {
-    return new MIL_AgentTypePionALAT( strName, xis );
+    return new MIL_AgentTypePionALAT( strName, strType, xis );
 }
 
 // -----------------------------------------------------------------------------

@@ -120,6 +120,24 @@ DEC_Decision_ABC* DEC_AutomateFunctions::GetPionPCOfAutomate( DEC_Decision_ABC* 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::GetPionsMelee
+// Created: LMT 2010-09-29
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsMelee( const MIL_Automate& callerAutomate )
+{
+    const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
+    std::vector< DEC_Decision_ABC* > result;
+    for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
+    {
+        const std::string& type = (*it)->GetType().GetMilPionType();
+        if( type == "Pion ABC" || type == "Pion INF" )
+            result.push_back( &(**it).GetDecision() );
+    }
+    return result;
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::DecisionalState
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
