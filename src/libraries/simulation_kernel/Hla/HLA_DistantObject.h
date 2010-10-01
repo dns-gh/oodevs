@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-30 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_DistantObject.h $
-// $Author: Age $
-// $Modtime: 13/12/04 10:29 $
-// $Revision: 4 $
-// $Workfile: HLA_DistantObject.h $
-//
-// *****************************************************************************
 
 #ifndef __HLA_DistantObject_h_
 #define __HLA_DistantObject_h_
@@ -43,19 +34,16 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Construct ( double rDeltaPercentage );
-    virtual void Destroy   ( double rDeltaPercentage );
-    virtual void Mine      ( double rDeltaPercentage );
-    virtual void Demine    ( double rDeltaPercentage );
-    virtual void Bypass    ( double rDeltaPercentage );
-//    virtual void Prepare   ();
-    virtual void Activate  ();
-
+    virtual void Construct( double rDeltaPercentage );
+    virtual void Destroy( double rDeltaPercentage );
+    virtual void Mine( double rDeltaPercentage );
+    virtual void Demine( double rDeltaPercentage );
+    virtual void Bypass( double rDeltaPercentage );
+//    virtual void Prepare();
+    virtual void Activate();
     virtual void Deserialize( const hla::AttributeIdentifier& attributeID, const hla::Deserializer& deserializer );
-    virtual void Serialize  ( hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
-
+    virtual void Serialize( hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
     virtual void Destroy();
-
     virtual bool HideObject() const;
     //@}
 
@@ -89,7 +77,6 @@ private:
     double rConstructionPercentage_;
     double rMiningPercentage_;
     double rBypassPercentage_;
-
     hla::ObjectIdentifier id_;
     HLA_InteractionManager_ABC& interactionManager_;
     //@}

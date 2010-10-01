@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-30 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_LocalObject.h $
-// $Author: Age $
-// $Modtime: 13/12/04 10:29 $
-// $Revision: 5 $
-// $Workfile: HLA_LocalObject.h $
-//
-// *****************************************************************************
 
 #ifndef __HLA_LocalObject_h_
 #define __HLA_LocalObject_h_
@@ -41,11 +32,16 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Construct( double rDeltaPercentage );
+    virtual void Destroy( double rDeltaPercentage );
+    virtual void Mine( double rDeltaPercentage );
+    virtual void Demine( double rDeltaPercentage );
+    virtual void Bypass( double rDeltaPercentage );
+//    virtual void Prepare();
+    virtual void Activate();
     virtual void Deserialize( const hla::AttributeIdentifier& attributeID, const hla::Deserializer& deserializer );
-    virtual void Serialize  ( hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
-
+    virtual void Serialize( hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
     virtual void Destroy();
-
     virtual bool HideObject() const;
     //@}
 

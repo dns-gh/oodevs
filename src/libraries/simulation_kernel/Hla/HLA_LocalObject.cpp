@@ -6,23 +6,14 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-30 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_LocalObject.cpp $
-// $Author: Age $
-// $Modtime: 13/12/04 10:29 $
-// $Revision: 5 $
-// $Workfile: HLA_LocalObject.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "HLA_LocalObject.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
-#include "MIL_AgentServer.h"
 #include "HLA_Federate.h"
 #include "HLA_InteractionManager_ABC.h"
 #include "HLA_UpdateFunctor.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "MIL_AgentServer.h"
 
 using namespace hla;
 
@@ -32,7 +23,7 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 HLA_LocalObject::HLA_LocalObject( MIL_Object_ABC& object )
     : object_( object )
-    , id_( unsigned int( -1 ) )
+    , id_    ( unsigned int( -1 ) )
 {
     // NOTHING
 }
@@ -45,6 +36,15 @@ HLA_LocalObject::~HLA_LocalObject()
 {
     if( MIL_AgentServer::GetWorkspace().GetHLAFederate() )
         MIL_AgentServer::GetWorkspace().GetHLAFederate()->Unregister( object_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HLA_LocalObject::Activate
+// Created: LGY 2010-10-01
+// -----------------------------------------------------------------------------
+void HLA_LocalObject::Activate()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -100,4 +100,49 @@ void HLA_LocalObject::Destroy()
 bool HLA_LocalObject::HideObject() const
 {
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: HLA_LocalObject::Construct
+// Created: LGY 2010-10-01
+// -----------------------------------------------------------------------------
+void HLA_LocalObject::Construct( double /*rDeltaPercentage*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: HLA_LocalObject::Destroy
+// Created: LGY 2010-10-01
+// -----------------------------------------------------------------------------
+void HLA_LocalObject::Destroy( double /*rDeltaPercentage*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: HLA_LocalObject::Mine
+// Created: LGY 2010-10-01
+// -----------------------------------------------------------------------------
+void HLA_LocalObject::Mine( double /*rDeltaPercentage*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: HLA_LocalObject::Demine
+// Created: LGY 2010-10-01
+// -----------------------------------------------------------------------------
+void HLA_LocalObject::Demine( double /*rDeltaPercentage*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: HLA_LocalObject::Bypass
+// Created: LGY 2010-10-01
+// -----------------------------------------------------------------------------
+void HLA_LocalObject::Bypass( double /*rDeltaPercentage*/ )
+{
+    // NOTHING
 }

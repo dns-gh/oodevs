@@ -6,15 +6,7 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-30 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_DistantObject.cpp $
-// $Author: Age $
-// $Modtime: 31/01/05 12:00 $
-// $Revision: 6 $
-// $Workfile: HLA_DistantObject.cpp $
-//
-// *****************************************************************************
+
 
 #include "simulation_kernel_pch.h"
 #include "HLA_DistantObject.h"
@@ -40,12 +32,12 @@ using namespace hla;
 // Created: AGE 2004-11-30
 // -----------------------------------------------------------------------------
 HLA_DistantObject::HLA_DistantObject( const ObjectIdentifier& objectId, HLA_InteractionManager_ABC& interactionManager )
-    : pObject_( 0 )
+    : pObject_                ( 0 )
     , rConstructionPercentage_( 0 )
     , rMiningPercentage_      ( 0 )
     , rBypassPercentage_      ( 0 )
-    , id_( objectId )
-    , interactionManager_( interactionManager )
+    , id_                     ( objectId )
+    , interactionManager_     ( interactionManager )
 {
     // NOTHING
 }
@@ -58,7 +50,6 @@ HLA_DistantObject::~HLA_DistantObject()
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: HLA_DistantObject::Construct
@@ -120,8 +111,8 @@ void HLA_DistantObject::Bypass( double rDeltaPercentage )
 // -----------------------------------------------------------------------------
 void HLA_DistantObject::Activate()
 {
-assert( false );
-    //    interactionManager_.Send( HLA_Activation( *this, true ) );
+    assert( false );
+//    interactionManager_.Send( HLA_Activation( *this, true ) );
 }
 
 // -----------------------------------------------------------------------------
