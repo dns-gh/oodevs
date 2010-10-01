@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-29 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_FireInteraction.h $
-// $Author: Age $
-// $Modtime: 29/11/04 17:18 $
-// $Revision: 1 $
-// $Workfile: HLA_FireInteraction.h $
-//
-// *****************************************************************************
 
 #ifndef __HLA_FireInteraction_h_
 #define __HLA_FireInteraction_h_
@@ -38,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              HLA_FireInteraction();
-             HLA_FireInteraction( const PHY_DotationCategory& ammunition );
+    explicit HLA_FireInteraction( const PHY_DotationCategory& ammunition );
     virtual ~HLA_FireInteraction();
     //@}
 

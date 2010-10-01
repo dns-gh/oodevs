@@ -6,21 +6,12 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-29 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_TargetedInteraction.cpp $
-// $Author: Age $
-// $Modtime: 29/11/04 16:48 $
-// $Revision: 1 $
-// $Workfile: HLA_TargetedInteraction.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "HLA_TargetedInteraction.h"
-#include "Entities/Agents/Roles/HLA/HLA_RoleInterface.h"
-#include "MIL_AgentServer.h"
 #include "HLA_Federate.h"
+#include "MIL_AgentServer.h"
+#include "Entities/Agents/Roles/HLA/HLA_RoleInterface.h"
 
 using namespace hla;
 

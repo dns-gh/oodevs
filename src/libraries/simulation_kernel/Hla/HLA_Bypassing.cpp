@@ -6,23 +6,14 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-12-06 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_Bypassing.cpp $
-// $Author: Age $
-// $Modtime: 6/12/04 17:32 $
-// $Revision: 1 $
-// $Workfile: HLA_Bypassing.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "HLA_Bypassing.h"
-#include <hla/Interaction.h>
-#include <hla/Attribute.h>
 #include "HLA_Serialization.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+#include <hla/Interaction.h>
+#include <hla/Attribute.h>
 
 using namespace hla;
 

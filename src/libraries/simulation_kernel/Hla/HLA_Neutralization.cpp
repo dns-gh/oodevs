@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-12-02 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_Neutralization.cpp $
-// $Author: Age $
-// $Modtime: 2/12/04 11:58 $
-// $Revision: 1 $
-// $Workfile: HLA_Neutralization.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "HLA_Neutralization.h"
@@ -55,7 +46,7 @@ HLA_Neutralization::~HLA_Neutralization()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Interaction< HLA_Neutralization >& HLA_Neutralization::CreateInteractionClass
+// Name: HLA_Neutralization::CreateInteractionClass
 // Created: AGE 2004-12-02
 // -----------------------------------------------------------------------------
 Interaction< HLA_Neutralization >& HLA_Neutralization::CreateInteractionClass( InteractionNotification_ABC< HLA_Neutralization >& callback )

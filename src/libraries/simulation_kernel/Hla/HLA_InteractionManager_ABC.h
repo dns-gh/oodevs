@@ -38,7 +38,6 @@ public:
     virtual void Send( const HLA_DirectFire& interaction ) = 0;
     virtual void Send( const HLA_IndirectFire& interaction ) = 0;
     virtual void Send( const HLA_Neutralization& interaction ) = 0;
-
     virtual void Send( const HLA_Activation& interaction ) = 0;
     virtual void Send( const HLA_Bypassing& interaction ) = 0;
     virtual void Send( const HLA_Construction& interaction ) = 0;

@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-29 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_IndirectFire.h $
-// $Author: Age $
-// $Modtime: 29/11/04 17:21 $
-// $Revision: 2 $
-// $Workfile: HLA_IndirectFire.h $
-//
-// *****************************************************************************
 
 #ifndef __HLA_IndirectFire_h_
 #define __HLA_IndirectFire_h_

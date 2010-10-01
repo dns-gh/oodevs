@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-24 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_DirectFire.h $
-// $Author: Age $
-// $Modtime: 29/11/04 17:18 $
-// $Revision: 3 $
-// $Workfile: HLA_DirectFire.h $
-//
-// *****************************************************************************
 
 #ifndef __HLA_DirectFire_h_
 #define __HLA_DirectFire_h_
@@ -22,7 +13,6 @@
 #include "HLA_Interaction_ABC.h"
 #include "HLA_TargetedInteraction.h"
 #include "HLA_FireInteraction.h"
-
 #include "simulation_kernel/Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 
 namespace hla
@@ -57,7 +47,6 @@ public:
     //@}
 
 private:
-
     //! @name Helpers
     //@{
     void ApplyFire( const PHY_DotationCategory& ammunition, MIL_Agent_ABC& target, const std::string& strTargetComposante, const PHY_Composante_ABC::T_ComposanteVector& allComposantes, PHY_FireResults_ABC& fireResult ) const;

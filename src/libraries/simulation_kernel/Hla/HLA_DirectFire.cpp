@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-24 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Hla/HLA_DirectFire.cpp $
-// $Author: Nld $
-// $Modtime: 21/02/05 12:09 $
-// $Revision: 7 $
-// $Workfile: HLA_DirectFire.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "HLA_DirectFire.h"

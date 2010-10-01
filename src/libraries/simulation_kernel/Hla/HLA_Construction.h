@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-12-06 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_Construction.h $
-// $Author: Age $
-// $Modtime: 6/12/04 16:35 $
-// $Revision: 1 $
-// $Workfile: HLA_Construction.h $
-//
-// *****************************************************************************
 
 #ifndef __HLA_Construction_h_
 #define __HLA_Construction_h_

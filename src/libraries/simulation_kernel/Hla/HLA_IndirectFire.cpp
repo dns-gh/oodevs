@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-29 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Hla/HLA_IndirectFire.cpp $
-// $Author: Nld $
-// $Modtime: 21/02/05 12:08 $
-// $Revision: 3 $
-// $Workfile: HLA_IndirectFire.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "HLA_IndirectFire.h"
@@ -40,7 +31,7 @@ HLA_IndirectFire::HLA_IndirectFire()
 // Created: AGE 2004-11-29
 // -----------------------------------------------------------------------------
 HLA_IndirectFire::HLA_IndirectFire( const HLA_RoleInterface& role, const PHY_DotationCategory& ammunition )
-    : HLA_TargetedInteraction( role       )
+    : HLA_TargetedInteraction( role )
     , HLA_FireInteraction    ( ammunition )
 {
     // NOTHING
@@ -56,7 +47,7 @@ HLA_IndirectFire::~HLA_IndirectFire()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Interaction< HLA_IndirectFire >& HLA_IndirectFire::CreateInteractionClass
+// Name: HLA_IndirectFire::CreateInteractionClass
 // Created: AGE 2004-11-29
 // -----------------------------------------------------------------------------
 Interaction< HLA_IndirectFire >& HLA_IndirectFire::CreateInteractionClass( InteractionNotification_ABC< HLA_IndirectFire >& callback )

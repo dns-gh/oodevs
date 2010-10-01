@@ -41,7 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              HLA_ObjectInteraction();
-             HLA_ObjectInteraction( const HLA_Object_ABC& target );
+    explicit HLA_ObjectInteraction( const HLA_Object_ABC& target );
     virtual ~HLA_ObjectInteraction();
     //@}
 

@@ -26,7 +26,6 @@
 // Created: AGE 2004-11-29
 // -----------------------------------------------------------------------------
 HLA_FireInteraction::HLA_FireInteraction()
-    : strAmmunition_( "" )
 {
     // NOTHING
 }
@@ -36,7 +35,7 @@ HLA_FireInteraction::HLA_FireInteraction()
 // Created: AGE 2004-11-29
 // -----------------------------------------------------------------------------
 HLA_FireInteraction::HLA_FireInteraction( const PHY_DotationCategory& ammunition )
-: strAmmunition_( ammunition.GetName() )
+    : strAmmunition_( ammunition.GetName() )
 {
     // NOTHING
 }

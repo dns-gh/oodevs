@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-29 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_TargetedInteraction.h $
-// $Author: Age $
-// $Modtime: 29/11/04 17:17 $
-// $Revision: 1 $
-// $Workfile: HLA_TargetedInteraction.h $
-//
-// *****************************************************************************
 
 #ifndef __HLA_TargetedInteraction_h_
 #define __HLA_TargetedInteraction_h_
@@ -41,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              HLA_TargetedInteraction();
-             HLA_TargetedInteraction( const HLA_RoleInterface& hlaRole );
+    explicit HLA_TargetedInteraction( const HLA_RoleInterface& hlaRole );
     virtual ~HLA_TargetedInteraction();
     //@}
 

@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-12-06 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_Bypassing.h $
-// $Author: Age $
-// $Modtime: 6/12/04 16:30 $
-// $Revision: 1 $
-// $Workfile: HLA_Bypassing.h $
-//
-// *****************************************************************************
 
 #ifndef __HLA_Bypassing_h_
 #define __HLA_Bypassing_h_

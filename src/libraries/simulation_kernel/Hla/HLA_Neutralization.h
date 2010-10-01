@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-12-02 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_Neutralization.h $
-// $Author: Age $
-// $Modtime: 2/12/04 11:55 $
-// $Revision: 1 $
-// $Workfile: HLA_Neutralization.h $
-//
-// *****************************************************************************
 
 #ifndef __HLA_Neutralization_h_
 #define __HLA_Neutralization_h_
@@ -40,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              HLA_Neutralization();
-             HLA_Neutralization( const HLA_RoleInterface& role );
+    explicit HLA_Neutralization( const HLA_RoleInterface& role );
     virtual ~HLA_Neutralization();
     //@}
 

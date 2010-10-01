@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-12-06 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_ObjectInteraction.cpp $
-// $Author: Age $
-// $Modtime: 6/12/04 14:55 $
-// $Revision: 1 $
-// $Workfile: HLA_ObjectInteraction.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "HLA_ObjectInteraction.h"
