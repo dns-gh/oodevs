@@ -12,7 +12,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include <boost/lexical_cast.hpp>
 #include <iostream>
-#pragma warning( disable : 4503 )
+#pragma warning( disable : 4503 4355 )
 
 using namespace plugins::dis;
 

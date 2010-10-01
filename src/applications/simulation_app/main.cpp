@@ -21,7 +21,6 @@
 int __cdecl NoMoreMemoryHandler( unsigned int nSize )
 {
     int nResult = MessageBox( 0, MT_FormatString( "No more memory (%d bytes requested) - Retry ?", nSize ).c_str(), "SWORD - Memory error", MB_ICONERROR | MB_RETRYCANCEL | MB_TOPMOST );
-
     switch( nResult )
     {
         case IDRETRY:

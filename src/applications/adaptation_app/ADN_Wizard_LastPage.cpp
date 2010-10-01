@@ -19,10 +19,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Wizard_LastPage.h"
 
-#include <qstring.h>
-#include <qlabel.h>
-#include <qwizard.h>
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_LastPage constructor
 // Created: APE 2005-01-11

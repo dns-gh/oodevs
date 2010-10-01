@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "Application.h"
 #include "moc_Application.cpp"
-
 #include "MainWindow.h"
 #include "Config.h"
 #include "LoggerProxy.h"

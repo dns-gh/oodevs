@@ -11,10 +11,10 @@
 #define __ActionParameter_ABC_h_
 
 #include "ParameterContainer_ABC.h"
+#include <geometry/types.h>
 #pragma warning( push, 0 )
 #include <qstring.h>
 #pragma warning( pop )
-#include <geometry/types.h>
 
 namespace Common
 {
