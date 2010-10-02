@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "plugins_test_pch.h"
-#include <turtle/mock.hpp>
 #include "timeline_plugin/RestClient.h"
 #include "timeline_plugin/Publisher_ABC.h"
 #include "timeline_plugin/ActionLoader.h"
@@ -20,9 +19,7 @@ BOOST_AUTO_TEST_CASE( test_ws_client_connection_get )
 {
     std::string host( "localhost:8088" );
     std::string path( "/scenario/1" );
-
     plugins::timeline::RestClient client( host, path, false );
-
     std::string response;
     client.DoGet( "", response );
     if( ! response.empty() )
@@ -31,7 +28,7 @@ BOOST_AUTO_TEST_CASE( test_ws_client_connection_get )
 }
 */
 
-MOCK_BASE_CLASS( MockPublisher, plugins::timeline::Publisher_ABC )     // defines a 'MockDatabase' class implementing 'Database_ABC'
+MOCK_BASE_CLASS( MockPublisher, plugins::timeline::Publisher_ABC )
 {
     MOCK_METHOD( PullSituation, 3 )
     MOCK_METHOD( PushReport, 1 )
@@ -42,7 +39,6 @@ namespace
     std::string Expect( const std::string& data )
     {
         xml::xostringstream xos;
-        
         xos << xml::start( "CommitScenario" ) << xml::attribute( "xmlns", "urn:masa:taranis:scenario:1.0" ) 
                 << xml::attribute( "xmlns:noNamespaceSchemaLocation", "CommitScenario.xsd" )
                 << xml::attribute( "id", 1 )
@@ -55,10 +51,7 @@ namespace
                 << xml::start( "CommitScheduler" ) << xml::attribute( "timestamp", 0 )
                     << xml::start( "schedule" ) 
                         << xml::attribute( "id", -1 ) << xml::attribute( "task", -1 ) 
-                        << xml::attribute( "time", "2008-08-11T08:12:20" ) << xml::attribute( "status", "pending" ) 
-                    << xml::end
-                << xml::end
-            << xml::end;
+                        << xml::attribute( "time", "2008-08-11T08:12:20" ) << xml::attribute( "status", "pending" );
         return xos.str();
     }
 }
@@ -66,22 +59,12 @@ namespace
 BOOST_AUTO_TEST_CASE( timeline_plugin_action_loader_test )
 {
     const std::string filename( BOOST_RESOLVE( "timeline_plugin/orders.ord" ) );
-    
-    MockPublisher mock;
-    std::string expect;
-    {
-        xml::xifstream xis( filename );
-        xis >> xml::start( "actions" ) >> xml::start( "action" );
-        
-        xml::xostringstream xos;
-        xos << xml::start( "action" ) << xml::xisubstream( xis ) << xml::end;
-        expect = Expect( xos.str() );
-    }
-    
-    MOCK_EXPECT( mock, PushReport ).exactly( 1 ).with( expect );
-    plugins::timeline::ActionLoader loader( 1, 1, mock );
+    MockPublisher publisher;
+    xml::xifstream xis( filename );
+    xis >> xml::start( "actions" ) >> xml::start( "action" );
+    xml::xostringstream xos;
+    xos << xml::content( "action", xis );
+    MOCK_EXPECT( publisher, PushReport ).once().with( Expect( xos.str() ) );
+    plugins::timeline::ActionLoader loader( 1, 1, publisher );
     loader.Load( filename );
-
-    mock.verify();
 }
-

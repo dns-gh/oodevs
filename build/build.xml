@@ -257,7 +257,7 @@
         </copy>
     </target>
 
-    <target name="library.timeline_plugin" description="build Timeline interoperability dispatcher plugin" depends="library.dispatcher">
+    <target name="library.timeline_plugin" description="build timeline_plugin static library" depends="library.dispatcher">
         <build-lib name="timeline_plugin" pattern="lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
 
@@ -670,7 +670,7 @@
 
     <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin,library.bml_plugin,library.crossbow_plugin,library.timeline_plugin">
         <build-test name="plugins" depends="xerces,terrain,boost,openssl"
-            libs="directia-${platform}-mt-4_6,libprotobuf,MT_Logger,
+            libs="directia-${platform}-mt-4_6,libprotobuf,
             lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
             lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix},
             lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix},
@@ -678,6 +678,7 @@
             lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
             lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix},
             lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix},
+            lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
             lib${ant.project.name}_protocol-${platform}-mt">
         </build-test>
     </target>
