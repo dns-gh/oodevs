@@ -18,7 +18,6 @@ namespace
     std::pair< std::string, std::string > ExtractHost( const std::string& host )
     {
         std::string::size_type pos = host.find_last_of( ":" );
-
         return std::make_pair( std::string( host, 0, pos ), ( pos != std::string::npos ) ? std::string( host, pos + 1, host.length() - pos ) : "" );
     }
 }
@@ -35,17 +34,11 @@ Connection::Connection( const std::string& host, bool useSsl )
     , sslSocket_( socket_, ctx_ )
 {
     std::pair< std::string, std::string > hostinfo( ExtractHost( host ) );
-    // Start an asynchronous resolve to translate the server and service names
-    // into a list of endpoints.
-    std::auto_ptr< tcp::resolver::query > query;
-    if( ! hostinfo.second.empty() )
-        query.reset( new tcp::resolver::query( hostinfo.first, hostinfo.second ) );
-    else
-        query.reset( new tcp::resolver::query( hostinfo.first, useSsl_ ? "https" : "http" ) );
+    tcp::resolver::query query( hostinfo.first, hostinfo.second.empty() ? (useSsl_ ? "https" : "http") : hostinfo.second );
     boost::system::error_code error = boost::asio::error::host_not_found;
-    ResolveHandler( *query, error );
+    ResolveHandler( query, error );
     if( error )
-      throw boost::system::system_error( error );
+        throw boost::system::system_error( error );
     if( useSsl_ )
     {
         ctx_.set_verify_mode( boost::asio::ssl::context::verify_none );
@@ -68,13 +61,11 @@ Connection::~Connection( )
 // -----------------------------------------------------------------------------
 void Connection::ResolveHandler( tcp::resolver::query& query, boost::system::error_code& error )
 {
-    tcp::resolver::iterator endpoint_iterator = resolver_.resolve( query );
-    tcp::resolver::iterator end;
-    // Try each endpoint until we successfully establish a connection.
-    while ( error && endpoint_iterator != end )
+    tcp::resolver::iterator it = resolver_.resolve( query );
+    while( error && it != tcp::resolver::iterator() )
     {
         socket_.close();
-        socket_.connect( *endpoint_iterator++, error );
+        socket_.connect( *it++, error );
     }
 }
 
@@ -84,12 +75,9 @@ void Connection::ResolveHandler( tcp::resolver::query& query, boost::system::err
 // -----------------------------------------------------------------------------
 size_t Connection::Write( boost::asio::streambuf& request )
 {
-    size_t result;
     if( useSsl_ )
-        result = boost::asio::write( sslSocket_, request );
-    else
-        result = boost::asio::write( socket_, request );
-    return result;
+        return boost::asio::write( sslSocket_, request );
+    return boost::asio::write( socket_, request );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,12 +86,9 @@ size_t Connection::Write( boost::asio::streambuf& request )
 // -----------------------------------------------------------------------------
 size_t Connection::ReadUntil( boost::asio::streambuf& response, const std::string& delimiter )
 {
-    size_t result;
     if( useSsl_ )
-        result = boost::asio::read_until( sslSocket_, response, delimiter);
-    else
-        result = boost::asio::read_until( socket_, response, delimiter);
-    return result;
+        return boost::asio::read_until( sslSocket_, response, delimiter);
+    return boost::asio::read_until( socket_, response, delimiter);
 }
 
 // -----------------------------------------------------------------------------
@@ -112,10 +97,7 @@ size_t Connection::ReadUntil( boost::asio::streambuf& response, const std::strin
 // -----------------------------------------------------------------------------
 size_t Connection::Read( boost::asio::streambuf& response, boost::system::error_code& error )
 {
-    size_t result;
     if( useSsl_ )
-        result = boost::asio::read( sslSocket_, response, boost::asio::transfer_at_least( 1 ), error );
-    else
-        result = boost::asio::read( socket_, response, boost::asio::transfer_at_least( 1 ), error );
-    return result;
+        return boost::asio::read( sslSocket_, response, boost::asio::transfer_at_least( 1 ), error );
+    return boost::asio::read( socket_, response, boost::asio::transfer_at_least( 1 ), error );
 }

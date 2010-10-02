@@ -108,7 +108,7 @@ void RestClient::ReadHeader( boost::asio::streambuf& response )
     // Proceed header
     std::string header;
     std::string encoding( "Transfer-Encoding:" );
-    while ( std::getline( response_stream, header ) && header != "\r" )
+    while( std::getline( response_stream, header ) && header != "\r" )
     {
         std::string::size_type pos = header.find( encoding );
         if( pos != std::string::npos )
