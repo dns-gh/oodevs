@@ -30,7 +30,6 @@ namespace timeline
 // =============================================================================
 class Task
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

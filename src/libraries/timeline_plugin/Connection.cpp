@@ -23,30 +23,29 @@ namespace
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: Connection constructor
+// Created: JCR 2010-05-31
+// -----------------------------------------------------------------------------
 Connection::Connection( const std::string& host, bool useSsl )
-    : io_service_ ()
-    , resolver_ ( io_service_ )
-    , socket_ ( io_service_ )
-    , ctx_( io_service_, boost::asio::ssl::context::sslv23 )
-    , useSsl_( useSsl )
-    , sslSocket_ ( socket_, ctx_ )
+    : resolver_ ( io_service_ )
+    , socket_   ( io_service_ )
+    , ctx_      ( io_service_, boost::asio::ssl::context::sslv23 )
+    , useSsl_   ( useSsl )
+    , sslSocket_( socket_, ctx_ )
 {
     std::pair< std::string, std::string > hostinfo( ExtractHost( host ) );
-    
     // Start an asynchronous resolve to translate the server and service names
     // into a list of endpoints.
     std::auto_ptr< tcp::resolver::query > query;
-    
-    if ( ! hostinfo.second.empty() )
+    if( ! hostinfo.second.empty() )
         query.reset( new tcp::resolver::query( hostinfo.first, hostinfo.second ) );
     else
         query.reset( new tcp::resolver::query( hostinfo.first, useSsl_ ? "https" : "http" ) );
-
     boost::system::error_code error = boost::asio::error::host_not_found;
     ResolveHandler( *query, error );
     if( error )
       throw boost::system::system_error( error );
-    
     if( useSsl_ )
     {
         ctx_.set_verify_mode( boost::asio::ssl::context::verify_none );
@@ -54,6 +53,10 @@ Connection::Connection( const std::string& host, bool useSsl )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: Connection destructor
+// Created: JCR 2010-05-31
+// -----------------------------------------------------------------------------
 Connection::~Connection( )
 {
     socket_.close();
@@ -67,7 +70,6 @@ void Connection::ResolveHandler( tcp::resolver::query& query, boost::system::err
 {
     tcp::resolver::iterator endpoint_iterator = resolver_.resolve( query );
     tcp::resolver::iterator end;
-
     // Try each endpoint until we successfully establish a connection.
     while ( error && endpoint_iterator != end )
     {
@@ -76,6 +78,10 @@ void Connection::ResolveHandler( tcp::resolver::query& query, boost::system::err
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: Connection::Write
+// Created: JCR 2010-05-31
+// -----------------------------------------------------------------------------
 size_t Connection::Write( boost::asio::streambuf& request )
 {
     size_t result;
@@ -86,6 +92,10 @@ size_t Connection::Write( boost::asio::streambuf& request )
     return result;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Connection::ReadUntil
+// Created: JCR 2010-05-31
+// -----------------------------------------------------------------------------
 size_t Connection::ReadUntil( boost::asio::streambuf& response, const std::string& delimiter )
 {
     size_t result;
@@ -96,6 +106,10 @@ size_t Connection::ReadUntil( boost::asio::streambuf& response, const std::strin
     return result;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Connection::Read
+// Created: JCR 2010-05-31
+// -----------------------------------------------------------------------------
 size_t Connection::Read( boost::asio::streambuf& response, boost::system::error_code& error )
 {
     size_t result;

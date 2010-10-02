@@ -74,7 +74,7 @@ void ScenarioManager::Handle( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ScenarioManager::ReadTask( xml::xistream& xis )
 {
-    if ( xis.attribute<std::string>( "type" ) == "action" && xis.has_child( "action" ) )
+    if( xis.attribute<std::string>( "type" ) == "action" && xis.has_child( "action" ) )
     {
         long id = xis.attribute<long>( "id" );
         tasks_[ id ].reset( new Task( xis ) );
@@ -89,7 +89,7 @@ void ScenarioManager::ReadSchedule( xml::xistream& xis )
 {
     long id = xis.attribute<long>( "task" );
     T_TaskMap::iterator it = tasks_.find( id );
-    if ( it != tasks_.end() && xis.attribute<std::string>( "status" ) == "executed" )
+    if( it != tasks_.end() && xis.attribute<std::string>( "status" ) == "executed" )
         it->second->Execute( actions_ );
 }
 

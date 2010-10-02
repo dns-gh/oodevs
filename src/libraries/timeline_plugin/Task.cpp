@@ -41,7 +41,7 @@ Task::~Task()
 // -----------------------------------------------------------------------------
 void Task::Execute( ActionPublisher& publisher )
 {
-    if ( !triggered_ )
+    if( !triggered_ )
         publisher.Execute( *xis_ );
     triggered_ = true;
 }

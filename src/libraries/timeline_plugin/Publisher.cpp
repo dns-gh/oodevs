@@ -11,11 +11,10 @@
 #include "Publisher.h"
 #include "RestClient.h"
 #include "ResponseHandler_ABC.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
+#include "MT_Tools/MT_Logger.h"
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>
-
-#pragma warning( push, 1 )
+#pragma warning( push, 0 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 
@@ -27,8 +26,8 @@ using namespace plugins::timeline;
 // Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
 Publisher::Publisher( xml::xistream& xis )
-    : log_ ( false )
-    , useSsl_ ( false )
+    : log_   ( false )
+    , useSsl_( false )
 {
     std::string type;
     xis >> xml::attribute( "host", host_ ) 
@@ -37,12 +36,11 @@ Publisher::Publisher( xml::xistream& xis )
         >> xml::start( "scenario" ) 
             >> xml::attribute( "id", scenario_ )
         >> xml::end;
-
     getURI_ = "/scenario/" + boost::lexical_cast<std::string>( scenario_ );
     postURI_ = "/scenario/" + boost::lexical_cast<std::string>( scenario_ ) + "/update";
-    if ( log_ )
+    if( log_ )
         MT_LOG_INFO_MSG( "Timeline service loaded on : " << host_ )
-    if ( type == "https" )
+    if( type == "https" )
     {
         MT_LOG_INFO_MSG( " - connecting using SSL" )
         useSsl_ = true;
@@ -64,7 +62,7 @@ Publisher::~Publisher()
 // -----------------------------------------------------------------------------
 std::string Publisher::GetUri( const std::string& timestamp )
 {
-    if ( timestamp.empty() )
+    if( timestamp.empty() )
         return getURI_;
     return getURI_ + "/poll/" + timestamp;
 }
@@ -87,9 +85,9 @@ void Publisher::PullSituation( const std::string& message, const std::string& ti
 
         boost::recursive_mutex::scoped_lock locker( mutex_ );
         handler.Handle( xml::xistringstream( result ) );
-        if ( log_ )
+        if( log_ )
             MT_LOG_INFO_MSG( result )
-        if ( log_ )
+        if( log_ )
             MT_LOG_INFO_MSG( "Pull situation from server succeeded." )
     }
     catch (std::exception& e)
@@ -115,10 +113,10 @@ void Publisher::PushReport( const std::string& message )
             boost::recursive_mutex::scoped_lock locker( mutex_ );
             client.DoPost( message, result );
 
-            if ( log_ )
+            if( log_ )
                 MT_LOG_INFO_MSG( message )
 
-            if ( log_ )
+            if( log_ )
                 MT_LOG_INFO_MSG( "Push report to server." )
         }
     }

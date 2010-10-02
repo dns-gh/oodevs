@@ -25,7 +25,12 @@ namespace plugins
 {
 namespace timeline
 {
-
+// =============================================================================
+/** @class  Connection
+    @brief  Connection
+*/
+// Created: JCR 2010-09-08
+// =============================================================================
 class Connection
 {
 public:
@@ -34,8 +39,8 @@ public:
              Connection( const std::string& host, bool useSsl );
     virtual ~Connection();
     //@}
-    
-    //! @name I/O Operators
+
+    //! @name Operations
     //@{
     size_t Write( boost::asio::streambuf& request );
     size_t ReadUntil( boost::asio::streambuf& response, const std::string& delimiter );
