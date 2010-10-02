@@ -10,15 +10,13 @@
 #ifndef __timeline_plugin_pch_h_
 #define __timeline_plugin_pch_h_
 
-#include <string>
-#include <memory>
-#include <map>
-#include <vector>
-
-#pragma warning( push )
-#pragma warning( disable : 4996 4512 )
+#pragma warning( push, 0 )
 #include <qstring.h>
 #include <qstringlist.h>
 #pragma warning( pop )
+#include <vector>
+#include <string>
+#include <memory>
+#include <map>
 
 #endif // __timeline_plugin_pch_h_

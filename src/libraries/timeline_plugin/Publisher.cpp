@@ -30,7 +30,7 @@ Publisher::Publisher( xml::xistream& xis )
     : log_ ( false )
     , useSsl_ ( false )
 {
-	std::string type;
+    std::string type;
     xis >> xml::attribute( "host", host_ ) 
         >> xml::optional >> xml::attribute( "log", log_ ) 
         >> xml::optional >> xml::attribute( "type", type )
@@ -42,11 +42,11 @@ Publisher::Publisher( xml::xistream& xis )
     postURI_ = "/scenario/" + boost::lexical_cast<std::string>( scenario_ ) + "/update";
     if ( log_ )
         MT_LOG_INFO_MSG( "Timeline service loaded on : " << host_ )
-	if ( type == "https" )
-	{
-		MT_LOG_INFO_MSG( " - connecting using SSL" )
-		useSsl_ = true;
-	}
+    if ( type == "https" )
+    {
+        MT_LOG_INFO_MSG( " - connecting using SSL" )
+        useSsl_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -81,9 +81,9 @@ void Publisher::PullSituation( const std::string& message, const std::string& ti
 
         RestClient client( host_, GetUri( timestamp ), useSsl_ );
             
-		client.DoGet( message, result );
-		if( client.GetStatus() != 200 || result.size() == 0 )
-			throw std::exception( "Content of url reports from webService is empty" );
+        client.DoGet( message, result );
+        if( client.GetStatus() != 200 || result.size() == 0 )
+            throw std::exception( "Content of url reports from webService is empty" );
 
         boost::recursive_mutex::scoped_lock locker( mutex_ );
         handler.Handle( xml::xistringstream( result ) );
@@ -112,8 +112,8 @@ void Publisher::PushReport( const std::string& message )
             
             RestClient client( host_, postURI_, useSsl_ );
 
-			boost::recursive_mutex::scoped_lock locker( mutex_ );
-			client.DoPost( message, result );
+            boost::recursive_mutex::scoped_lock locker( mutex_ );
+            client.DoPost( message, result );
 
             if ( log_ )
                 MT_LOG_INFO_MSG( message )

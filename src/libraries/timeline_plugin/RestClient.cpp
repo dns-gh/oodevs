@@ -9,8 +9,8 @@
 
 #include "timeline_plugin_pch.h"
 #include "RestClient.h"
-
 #include <iostream>
+
 using namespace plugins::timeline;
 
 // -----------------------------------------------------------------------------
@@ -18,11 +18,11 @@ using namespace plugins::timeline;
 // Created: JCR 2010-05-31
 // -----------------------------------------------------------------------------
 RestClient::RestClient( const std::string& host, const std::string& path, bool useSsl )
-    : host_ ( host )
-    , path_ ( path )
-    , status_ ( 400 )
+    : host_    ( host )
+    , path_    ( path )
+    , status_  ( 400 )
     , useChunk_( false )
-    , socket_ ( host_, useSsl )
+    , socket_  ( host_, useSsl )
 {
     // NOTHING
 }
@@ -42,7 +42,7 @@ RestClient::~RestClient()
 // -----------------------------------------------------------------------------
 void RestClient::DoPost( const std::string& message, std::string& response )
 {
-	boost::asio::streambuf request;
+    boost::asio::streambuf request;
     std::ostream request_stream( &request );
     request_stream << "POST " << path_ << " HTTP/1.0\r\n";
     request_stream << "Host: " << host_ << "\r\n";
@@ -52,7 +52,6 @@ void RestClient::DoPost( const std::string& message, std::string& response )
     request_stream << "Content-Type: text/xml\r\n";
     request_stream << "Content-length: " << message.length() <<"\r\n\r\n";
     request_stream << message;
-
     ProceedRequest( request, response );
 }
 
@@ -71,7 +70,6 @@ void RestClient::DoGet( const std::string& message, std::string& response )
     ProceedRequest( request, response );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: RestClient::ProceedRequest
 // Created: JCR 2010-05-31
@@ -79,10 +77,7 @@ void RestClient::DoGet( const std::string& message, std::string& response )
 void RestClient::ProceedRequest( boost::asio::streambuf& request, std::string& content )
 {
     boost::asio::streambuf response;
-
-    // Send the request.
     socket_.Write( request );
-
     ReadHeader( response );
     if( GetStatus() == 200 )
         ReadContent( response, content );
@@ -94,7 +89,7 @@ void RestClient::ProceedRequest( boost::asio::streambuf& request, std::string& c
 // -----------------------------------------------------------------------------
 void RestClient::ReadHeader( boost::asio::streambuf& response )
 {
-	socket_.ReadUntil( response, "\r\n" );
+    socket_.ReadUntil( response, "\r\n" );
 
     // Check that response is OK.
     std::istream response_stream( &response );
@@ -108,7 +103,7 @@ void RestClient::ReadHeader( boost::asio::streambuf& response )
     // LOG( status_message );
 
     // Read the response headers, which are terminated by a blank line.
-	socket_.ReadUntil( response, "\r\n\r\n" );
+    socket_.ReadUntil( response, "\r\n\r\n" );
 
     // Proceed header
     std::string header;
@@ -131,9 +126,6 @@ void RestClient::ReadHeader( boost::asio::streambuf& response )
 void RestClient::ReadContent( boost::asio::streambuf& response, std::string& content )
 {
     boost::system::error_code error = boost::asio::error::host_not_found;
-
-    // Read until EOF, writing data to output as we go.
-
     while( socket_.Read( response, error ) )
     {
         std::ostringstream ss;

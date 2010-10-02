@@ -24,7 +24,6 @@ namespace plugins
 {
 namespace timeline
 {
-
 // =============================================================================
 /** @class  RestClient
     @brief  RestClient
@@ -33,7 +32,6 @@ namespace timeline
 // =============================================================================
 class RestClient
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -59,7 +57,7 @@ private:
     RestClient& operator=( const RestClient& ); //!< Assignment operator
     //@}
 
-	//! @name Helpers
+    //! @name Helpers
     //@{
     void ProceedRequest( boost::asio::streambuf& response, std::string& content );
     void ReadHeader( boost::asio::streambuf& response );
@@ -67,16 +65,12 @@ private:
     //@}
 
 private:
-    //! @name Network Member data
+    //! @name Member data
     //@{
     std::string host_;
     std::string path_;
     bool useChunk_;
     Connection socket_;
-    //@}
-
-    //! @name Member data
-    //@{
     unsigned status_;
     //@}
 };

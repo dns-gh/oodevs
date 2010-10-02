@@ -18,12 +18,10 @@ namespace xml
     class xistream;
 }
 
-
 namespace plugins
 {
 namespace timeline
 {
-
 // =============================================================================
 /** @class  Publisher
     @brief  Publisher
@@ -32,7 +30,6 @@ namespace timeline
 // =============================================================================
 class Publisher : public Publisher_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -53,7 +50,7 @@ private:
     Publisher& operator=( const Publisher& ); //!< Assignment operator
     //@}}
 
-    //! @name 
+    //! @name Helpers
     //@{
     std::string GetUri( const std::string& timestamp );
     //@}
@@ -67,10 +64,6 @@ private:
     std::string getURI_;
     long scenario_;
     bool useSsl_;
-    //@}
-
-    //! @name Logger
-    //@{
     bool log_;
     //@}
 };

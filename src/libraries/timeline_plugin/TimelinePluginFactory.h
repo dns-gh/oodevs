@@ -16,7 +16,6 @@ namespace plugins
 {
 namespace timeline
 {
-
 // =============================================================================
 /** @class  TimelinePluginFactory
     @brief  TimelinePluginFactory
@@ -25,7 +24,6 @@ namespace timeline
 // =============================================================================
 class TimelinePluginFactory : public dispatcher::PluginFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

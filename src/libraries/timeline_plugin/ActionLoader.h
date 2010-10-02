@@ -12,7 +12,6 @@
 
 namespace xml
 {
-    class xostringstream;
     class xistream;
 }
 
@@ -30,11 +29,10 @@ namespace timeline
 // =============================================================================
 class ActionLoader
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionLoader( long scenarioId, long actorId, Publisher_ABC& publisher );
+             ActionLoader( long scenarioId, long actorId, Publisher_ABC& publisher );
     virtual ~ActionLoader();
     //@}
 
@@ -59,8 +57,8 @@ private:
     //! @name Member data
     //@{
     Publisher_ABC& publisher_;
-    long actorId_;
     long scenarioId_;
+    long actorId_;
     //@}
 };
 

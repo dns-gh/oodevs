@@ -42,7 +42,7 @@ namespace timeline
     class PublisherActor;
     class ActionPublisher;
     class ScenarioManager;
-    
+
 // =============================================================================
 /** @class  TimelinePlugin
     @brief  TimelinePlugin
@@ -51,7 +51,6 @@ namespace timeline
 // =============================================================================
 class TimelinePlugin : public dispatcher::Plugin_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -73,7 +72,7 @@ private:
     TimelinePlugin& operator=( const TimelinePlugin& ); //!< Assignment operator
     //@}
 
-    //! @name 
+    //! @name Helpers
     //@{
     void Load( const tools::ExerciseConfig& config, xml::xistream& xis );
     //@}

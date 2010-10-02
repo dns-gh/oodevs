@@ -19,7 +19,6 @@ namespace plugins
 {
 namespace timeline
 {
-
 // =============================================================================
 /** @class  ResponseHandler_ABC
     @brief  ResponseHandler_ABC
@@ -28,7 +27,6 @@ namespace timeline
 // =============================================================================
 class ResponseHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -39,6 +37,13 @@ public:
     //! @name Operations
     //@{
     virtual void Handle( xml::xistream& response ) = 0;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    ResponseHandler_ABC( const ResponseHandler_ABC& );            //!< Copy constructor
+    ResponseHandler_ABC& operator=( const ResponseHandler_ABC& ); //!< Assignment operator
     //@}
 };
 

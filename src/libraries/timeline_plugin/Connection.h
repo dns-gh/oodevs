@@ -35,15 +35,15 @@ public:
     virtual ~Connection();
     //@}
     
-	//! @name I/O Operators
+    //! @name I/O Operators
     //@{
-	size_t Write( boost::asio::streambuf& request );
-	size_t ReadUntil( boost::asio::streambuf& response, const std::string& delimiter );
-	size_t Read( boost::asio::streambuf& response, boost::system::error_code& error );
-	//@}
+    size_t Write( boost::asio::streambuf& request );
+    size_t ReadUntil( boost::asio::streambuf& response, const std::string& delimiter );
+    size_t Read( boost::asio::streambuf& response, boost::system::error_code& error );
+    //@}
 
 private:
-	//! @name Helpers
+    //! @name Helpers
     //@{
     void ResolveHandler( tcp::resolver::query& query, boost::system::error_code& error );
     //@}
@@ -57,7 +57,7 @@ private:
     boost::asio::ssl::context ctx_;
     boost::asio::ssl::stream<tcp::socket&> sslSocket_;
     bool useSsl_;
-	//@}
+    //@}
 };
 
 }

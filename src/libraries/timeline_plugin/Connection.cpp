@@ -29,7 +29,7 @@ Connection::Connection( const std::string& host, bool useSsl )
     , socket_ ( io_service_ )
     , ctx_( io_service_, boost::asio::ssl::context::sslv23 )
     , useSsl_( useSsl )
-	, sslSocket_ ( socket_, ctx_ )
+    , sslSocket_ ( socket_, ctx_ )
 {
     std::pair< std::string, std::string > hostinfo( ExtractHost( host ) );
     
@@ -48,15 +48,15 @@ Connection::Connection( const std::string& host, bool useSsl )
       throw boost::system::system_error( error );
     
     if( useSsl_ )
-	{
-		ctx_.set_verify_mode( boost::asio::ssl::context::verify_none );
-		sslSocket_.handshake( boost::asio::ssl::stream_base::client );
-	}
+    {
+        ctx_.set_verify_mode( boost::asio::ssl::context::verify_none );
+        sslSocket_.handshake( boost::asio::ssl::stream_base::client );
+    }
 }
 
 Connection::~Connection( )
 {
-	socket_.close();
+    socket_.close();
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ void Connection::ResolveHandler( tcp::resolver::query& query, boost::system::err
     // Try each endpoint until we successfully establish a connection.
     while ( error && endpoint_iterator != end )
     {
-		socket_.close();
+        socket_.close();
         socket_.connect( *endpoint_iterator++, error );
     }
 }
@@ -80,28 +80,28 @@ size_t Connection::Write( boost::asio::streambuf& request )
 {
     size_t result;
     if( useSsl_ )
-		result = boost::asio::write( sslSocket_, request );
-	else
-		result = boost::asio::write( socket_, request );
-	return result;
+        result = boost::asio::write( sslSocket_, request );
+    else
+        result = boost::asio::write( socket_, request );
+    return result;
 }
 
 size_t Connection::ReadUntil( boost::asio::streambuf& response, const std::string& delimiter )
 {
     size_t result;
     if( useSsl_ )
-		result = boost::asio::read_until( sslSocket_, response, delimiter);
-	else
-		result = boost::asio::read_until( socket_, response, delimiter);
-	return result;
+        result = boost::asio::read_until( sslSocket_, response, delimiter);
+    else
+        result = boost::asio::read_until( socket_, response, delimiter);
+    return result;
 }
 
 size_t Connection::Read( boost::asio::streambuf& response, boost::system::error_code& error )
 {
     size_t result;
     if( useSsl_ )
-		result = boost::asio::read( sslSocket_, response, boost::asio::transfer_at_least( 1 ), error );
-	else
-		result = boost::asio::read( socket_, response, boost::asio::transfer_at_least( 1 ), error );
-	return result;
+        result = boost::asio::read( sslSocket_, response, boost::asio::transfer_at_least( 1 ), error );
+    else
+        result = boost::asio::read( socket_, response, boost::asio::transfer_at_least( 1 ), error );
+    return result;
 }

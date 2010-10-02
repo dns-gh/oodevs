@@ -14,10 +14,9 @@
 #include "ActionPublisher.h"
 #include "ActionLoader.h"
 #include "Publisher.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
+#include "MT_Tools/MT_Logger.h"
 #include "tools/ExerciseConfig.h"
 #include "clients_kernel/Controller.h"
-
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::timeline;
@@ -28,9 +27,9 @@ using namespace plugins::timeline;
 // -----------------------------------------------------------------------------
 TimelinePlugin::TimelinePlugin( dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::ExerciseConfig& config, xml::xistream& xis,
                                 dispatcher::SimulationPublisher_ABC& simulationPublisher )
-    : controller_ ( new kernel::Controller() )
-    , actions_ ( new ActionPublisher( *controller_, config, model, staticModel, simulationPublisher ) )
-    , scenario_ ( new ScenarioManager( *actions_ ) )
+    : controller_( new kernel::Controller() )
+    , actions_   ( new ActionPublisher( *controller_, config, model, staticModel, simulationPublisher ) )
+    , scenario_  ( new ScenarioManager( *actions_ ) )
     , publisher_ ( new PublisherActor( std::auto_ptr< Publisher_ABC >( new Publisher( xis ) ) ) )
 {
     Load( config, xis );
@@ -54,7 +53,6 @@ void TimelinePlugin::Load( const tools::ExerciseConfig& config, xml::xistream& x
 {
     std::string file;
     long scenarioId, actorId;
-
     xis >> xml::start( "orders" )
                 >> xml::attribute( "file", file )
         >> xml::end
@@ -67,7 +65,6 @@ void TimelinePlugin::Load( const tools::ExerciseConfig& config, xml::xistream& x
     ActionLoader loader( scenarioId, actorId, *publisher_ );
     loader.Load( config.BuildExerciseChildFile( file ) );
 }
-    
 
 // -----------------------------------------------------------------------------
 // Name: TimelinePlugin::Receive
@@ -75,8 +72,7 @@ void TimelinePlugin::Load( const tools::ExerciseConfig& config, xml::xistream& x
 // -----------------------------------------------------------------------------
 void TimelinePlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
-    // Check update
-    if( wrapper.message().has_control_end_tick() )       
+    if( wrapper.message().has_control_end_tick() )
         scenario_->Update( *publisher_ );
 }
 
