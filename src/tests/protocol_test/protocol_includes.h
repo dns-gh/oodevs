@@ -10,6 +10,8 @@
 #ifndef __Protocol_Includes_h_
 #define __Protocol_Includes_h_
 
+#pragma warning( push, 0 )
 #include "generated/test.pb.h"
+#pragma warning( pop )
 
 #endif __Protocol_Includes_h_

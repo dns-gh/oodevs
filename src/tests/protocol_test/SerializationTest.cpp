@@ -13,13 +13,15 @@
 #include "MockClient.h"
 #include "MockServer.h"
 
-using namespace mockpp;
-
 namespace
 {
-    struct Timeout
+    struct Timeout : private boost::noncopyable
     {
-        explicit Timeout( unsigned int duration ) : duration_( duration ) { Start(); }
+        explicit Timeout( unsigned int duration )
+            : duration_( duration )
+        {
+            Start();
+        }
         void Start()
         {
             start_ = boost::posix_time::microsec_clock::universal_time();
@@ -40,8 +42,8 @@ namespace
             , client_  ( endpoint_ )
             , server_  ( port_ )
         {
-            server_.ConnectionSucceeded_mocker.expects( once() ).with( mockpp::any() );
-            client_.ConnectionSucceeded_mocker.expects( once() ).with( eq< const std::string >( endpoint_ ) );
+            MOCK_EXPECT( server_.OnConnectionSucceeded, _ ).once();
+            MOCK_EXPECT( client_.OnConnectionSucceeded, _ ).once().with( endpoint_ );
             Timeout timeout( 1000 );
             while( !client_.Connected() && !timeout.Expired() )
             {
@@ -49,13 +51,12 @@ namespace
                 server_.Update();
             }
             BOOST_REQUIRE( client_.Connected() );
-            client_.verify();
-            server_.verify();
+            mock::verify();
         }
         template< typename M >
         void VerifyServerReception( M& message, unsigned int count = 1 )
         {
-            AddServerExpectation( message, count );
+            MOCK_EXPECT( server_.OnReceivePion, _ ).exactly( count ).with( mock::any, message );
             const boost::posix_time::ptime start = boost::posix_time::microsec_clock::universal_time();
             for( unsigned int i = 0; i < count; ++i )
             {
@@ -67,13 +68,7 @@ namespace
                     server_.Update();
             }
             BOOST_TEST_MESSAGE( "sent " << count << " message(s) in " << boost::posix_time::microsec_clock::universal_time() - start );
-            client_.verify();
-            server_.verify();
-        }
-
-        void AddServerExpectation( MsgPion& message, unsigned int count = 1 )
-        {
-            server_.OnReceivePion_mocker.expects( exactly( count ) ).with( mockpp::any(), eq< const MsgPion >( message ) );
+            mock::verify();
         }
 
         template< typename M >
@@ -93,18 +88,17 @@ namespace
                 }
             }
             BOOST_TEST_MESSAGE( "Sent " << count << " message(s) in " << boost::posix_time::microsec_clock::universal_time() - start );
-            client_.verify();
-            server_.verify();
+            mock::verify();
         }
 
         void AddClientExpectation( MsgPion& message, unsigned int count = 1 )
         {
-            client_.OnReceivePion_mocker.expects( exactly( count ) ).with( eq< const std::string >( endpoint_ ), eq< const MsgPion >( message ) );
+            MOCK_EXPECT( client_.OnReceivePion, _ ).exactly( count ).with( endpoint_, message );
         }
 
         void AddClientExpectation( EmptyMessage& message, unsigned int count = 1 )
         {
-            client_.OnReceiveEmpty_mocker.expects( exactly( count ) ).with( eq< const std::string >( endpoint_ ), eq< const EmptyMessage >( message ) );
+            MOCK_EXPECT( client_.OnReceiveEmpty, _ ).exactly( count ).with( endpoint_, message );
         }
 
         const std::string endpoint_;
@@ -113,6 +107,7 @@ namespace
         MockServer server_;
     };
 }
+
 
 //BOOST_FIXTURE_TEST_SUITE( MessageTestSuite, MessageSendingFixture )
 

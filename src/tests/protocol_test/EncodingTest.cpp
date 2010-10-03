@@ -16,8 +16,6 @@
 #include "tools/MessageIdentifierFactory.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-using namespace mockpp;
-
 namespace
 {
     bool operator==( const SimpleTest& lhs, const SimpleTest& rhs )

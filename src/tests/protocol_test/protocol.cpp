@@ -8,8 +8,6 @@
 // *****************************************************************************
 
 #include "protocol_test_pch.h"
-
-#pragma warning( push )
-#pragma warning( disable : 4244 4125 4127 4512 )
+#pragma warning( push, 0 )
 #include "generated/test.pb.cc"
 #pragma warning( pop )

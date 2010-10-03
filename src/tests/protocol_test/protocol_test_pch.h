@@ -16,15 +16,14 @@
 #define BOOST_LIB_NAME boost_unit_test_framework
 #include <boost/config/auto_link.hpp>
 
-#define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
-
-#define MOCKPP_ENABLE_DEFAULT_FORMATTER
-#include <mockpp/chaining/CountedChainableMethod.h>
-#include <mockpp/chaining/ChainingMockObjectSupport.h>
+#include <turtle/mock.hpp>
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
+#pragma warning( push, 0 )
 #include <boost/date_time/gregorian/gregorian.hpp>
+#pragma warning( pop )
+
 #define BOOST_FAIL_ON_DATE( year, month, day )                                                                  \
     const boost::gregorian::date expected( year, month, day );                                                  \
     const boost::gregorian::date actual( boost::gregorian::day_clock::local_day() );                            \

@@ -19,20 +19,13 @@
 */
 // Created: FHD 2009-08-24
 // =============================================================================
-class MockClient : public mockpp::ChainableMockObject
-                 , public tools::ClientNetworker
+MOCK_BASE_CLASS( MockClient, tools::ClientNetworker )
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit MockClient( const std::string& address )
-        : mockpp::ChainableMockObject( "MockClient", 0 )
-        , tools::ClientNetworker( address )
-        , OnReceivePion_mocker( "OnReceive", this )
-        , OnReceiveEmpty_mocker( "OnReceive", this )
-        , ConnectionSucceeded_mocker( "ConnectionSucceeded", this )
-        , ConnectionFailed_mocker( "ConnectionFailed", this )
-        , ConnectionError_mocker( "ConnectionError", this )
+        : tools::ClientNetworker( address )
         , connected_( false )
         , received_( false )
     {
@@ -68,30 +61,30 @@ public:
     void OnReceive( const std::string& endpoint, const MsgPion& message )
     {
         LogReceived( message );
-        OnReceivePion_mocker.forward( endpoint, message );
+        OnReceivePion( endpoint, message );
     }
     void OnReceive( const std::string& endpoint, const EmptyMessage& message )
     {
         LogReceived( message );
-        OnReceiveEmpty_mocker.forward( endpoint, message );
+        OnReceiveEmpty( endpoint, message );
     }
     virtual void ConnectionSucceeded( const std::string& endpoint )
     {
         connected_ = true;
         tools::ClientNetworker::ConnectionSucceeded( endpoint );
-        ConnectionSucceeded_mocker.forward( endpoint );
+        OnConnectionSucceeded( endpoint );
     }
     virtual void ConnectionFailed( const std::string& address, const std::string& error )
     {
         connected_ = false;
         tools::ClientNetworker::ConnectionFailed( address, error );
-        ConnectionFailed_mocker.forward( address, error );
+        OnConnectionFailed( address, error );
     }
     virtual void ConnectionError( const std::string& address, const std::string& error )
     {
         connected_ = false;
         tools::ClientNetworker::ConnectionError( address, error );
-        ConnectionError_mocker.forward( address, error );
+        OnConnectionError( address, error );
     }
 
 private:
@@ -103,13 +96,13 @@ private:
     }
 
 public:
-    //! @name Mock methods
+    //! @name Member data
     //@{
-    mockpp::ChainableMockMethod< void, const std::string, const MsgPion >      OnReceivePion_mocker;
-    mockpp::ChainableMockMethod< void, const std::string, const EmptyMessage > OnReceiveEmpty_mocker;
-    mockpp::ChainableMockMethod< void, const std::string >                     ConnectionSucceeded_mocker;
-    mockpp::ChainableMockMethod< void, const std::string, const std::string >  ConnectionFailed_mocker;
-    mockpp::ChainableMockMethod< void, const std::string, const std::string >  ConnectionError_mocker;
+    MOCK_FUNCTOR( void( const std::string&, const MsgPion& ) ) OnReceivePion;
+    MOCK_FUNCTOR( void( const std::string&, const EmptyMessage& ) ) OnReceiveEmpty;
+    MOCK_FUNCTOR( void( const std::string& ) ) OnConnectionSucceeded;
+    MOCK_FUNCTOR( void( const std::string&, const std::string& ) ) OnConnectionFailed;
+    MOCK_FUNCTOR( void( const std::string&, const std::string& ) ) OnConnectionError;
     //@}
 
 private:
