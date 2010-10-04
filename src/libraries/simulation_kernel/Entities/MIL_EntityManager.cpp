@@ -231,10 +231,6 @@ MIL_EntityManager::~MIL_EntityManager()
     delete pObjectManager_;
 }
 
-// =============================================================================
-// ODB INIT
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ReadODB
 // Created: NLD 2004-08-11
@@ -434,10 +430,8 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Automate& parent 
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
 {
     MIL_AgentPion* pPion = agentFactory_->Create( type, automate, xis );
-
     if( hla_ )
         hla_->Register( *pPion );
-
     return *pPion;
 }
 
@@ -448,19 +442,13 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
     MIL_AgentPion* pPion = agentFactory_->Create( type, automate, vPosition );
-
     if( hla_ )
         hla_->Register( *pPion );
-
     pPion->SendCreation ();
     pPion->SendFullState();
     pPion->SendKnowledge();
     return *pPion;
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::CreateObject
@@ -532,10 +520,6 @@ const MIL_ObjectType_ABC& MIL_EntityManager::FindObjectType( const std::string& 
     return pObjectManager_->FindType( type );
 }
 
-// =============================================================================
-// UPDATE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::UpdateKnowledges
 // Created: NLD 2004-08-19
@@ -543,14 +527,11 @@ const MIL_ObjectType_ABC& MIL_EntityManager::FindObjectType( const std::string& 
 void MIL_EntityManager::UpdateKnowledges()
 {
     profiler_.Start();
-
-    int currentTimeStep =  MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-    armyFactory_->Apply( boost::bind( &MIL_Army_ABC::UpdateKnowledges,  _1, boost::ref(currentTimeStep) ) );
+    int currentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    armyFactory_->Apply( boost::bind( &MIL_Army_ABC::UpdateKnowledges, _1, boost::ref( currentTimeStep ) ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateKnowledges, _1 ) );
-
     armyFactory_->Apply( boost::bind( &MIL_Army_ABC::CleanKnowledges, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::CleanKnowledges, _1 ) );
-
     rKnowledgesTime_ = profiler_.Stop();
 }
 
@@ -582,7 +563,7 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateDecisions()
 {
-    float duration = (float)MIL_AgentServer::GetWorkspace().GetTimeStepDuration();
+    float duration = static_cast< float >( MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
     if( profilerManager_.IsProfilingEnabled() )
     {
         MT_Profiler decisionUpdateProfiler;
@@ -622,12 +603,9 @@ void MIL_EntityManager::UpdateDecisions()
 void MIL_EntityManager::UpdateActions()
 {
     profiler_.Start();
-
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateActions, _1 ) );
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateActions, _1 ) );
-
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateActions, _1 ) );
-
     rActionsTime_ = profiler_.Stop();
 }
 
@@ -638,7 +616,6 @@ void MIL_EntityManager::UpdateActions()
 void MIL_EntityManager::UpdateEffects()
 {
     assert( pObjectManager_ );
-
     profiler_.Start();
     pObjectManager_->ProcessEvents();
     effectManager_.Update();
@@ -652,19 +629,15 @@ void MIL_EntityManager::UpdateEffects()
 void MIL_EntityManager::UpdateStates()
 {
     profiler_.Start();
-
     // !! Automate avant Pions (?? => LOG ??)
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateState, _1 ) );
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateState, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateState, _1 ) );
-
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateNetwork, _1 ) );
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateNetwork, _1 ) );
-
     assert( pObjectManager_ );
     pObjectManager_->UpdateStates();
-
     rStatesTime_ = profiler_.Stop();
 }
 
@@ -677,10 +650,8 @@ void MIL_EntityManager::PreprocessRandomBreakdowns()
     const unsigned int nCurrentTimeStep = time_.GetCurrentTick();
     if( nRandomBreakdownsNextTimeStep_ > nCurrentTimeStep )
         return;
-
     while( nRandomBreakdownsNextTimeStep_ <= nCurrentTimeStep )
         nRandomBreakdownsNextTimeStep_ += ( 3600 * 24 / time_.GetTickDuration() );
-
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::PreprocessRandomBreakdowns, _1, nRandomBreakdownsNextTimeStep_ ) );
     MT_LOG_INFO_MSG( "Breakdowns preprocessed" );
 }
@@ -693,9 +664,7 @@ void MIL_EntityManager::PreprocessRandomBreakdowns()
 void MIL_EntityManager::UpdateKnowledgeGroups()
 {
     profiler_.Start();
-
     knowledgeGroupFactory_->Apply( boost::bind( &MIL_KnowledgeGroup::UpdateKnowledgeGroup, _1 ) );
-
     rStatesTime_ = profiler_.Stop();
 }
 
@@ -711,9 +680,9 @@ void MIL_EntityManager::Update()
         UpdateKnowledges();
         UpdateDecisions ();
     }
-    UpdateActions   ();
-    UpdateEffects   ();
-    UpdateStates    ();
+    UpdateActions();
+    UpdateEffects();
+    UpdateStates();
     UpdateKnowledgeGroups(); // LTO
 };
 
@@ -727,10 +696,6 @@ void MIL_EntityManager::Clean()
     automateFactory_->Apply( boost::bind( &MIL_Automate::Clean, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::Clean, _1 ) );
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::SendStateToNewClient
@@ -936,9 +901,7 @@ void MIL_EntityManager::OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrd
 {
     client::FragOrderAck ack;
     unsigned int taskerId ( TaskerToId( message.tasker() ) );
-
     ack().set_error_code( MsgsSimToClient::OrderAck::no_error );
-
     try
     {
         if( MIL_Automate* pAutomate = FindAutomate( taskerId ) )
@@ -1497,8 +1460,6 @@ MIL_Formation* MIL_EntityManager::FindFormation( unsigned int nID ) const
     return formationFactory_->Find( nID );
 }
 
-
-
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::FindKnowledgeGroup
 // Created: SLG 2009-12-17
@@ -1517,7 +1478,6 @@ MIL_AgentPion* MIL_EntityManager::FindAgentPion( unsigned int nID ) const
 {
     return agentFactory_->Find( nID );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::GetArmies
