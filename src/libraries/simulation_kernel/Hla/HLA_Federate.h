@@ -18,10 +18,10 @@ namespace hla
     class ObjectIdentifier;
     class RtiAmbassador_ABC;
     class Federate;
+    class TimeFactory_ABC;
+    class TimeIntervalFactory_ABC;
 }
 
-class HLA_TimeFactory;
-class HLA_TimeIntervalFactory;
 class HLA_RoleInterface;
 class HLA_Object_ABC;
 class HLA_InteractionManager;
@@ -87,10 +87,10 @@ private:
 private:
     //! @name Member data
     //@{
-    HLA_TimeFactory*         pTimeFactory_;
-    HLA_TimeIntervalFactory* pIntervalFactory_;
-    hla::RtiAmbassador_ABC*  pAmbassador_;
-    hla::Federate*           pFederate_;
+    hla::TimeFactory_ABC*         pTimeFactory_;
+    hla::TimeIntervalFactory_ABC* pIntervalFactory_;
+    hla::RtiAmbassador_ABC*       pAmbassador_;
+    hla::Federate*                pFederate_;
 
     hla::Class< HLA_RoleInterface >*                  pUnitClass_;
     hla::ObjectRegistration_ABC< HLA_RoleInterface >* pUnitRegistration_;

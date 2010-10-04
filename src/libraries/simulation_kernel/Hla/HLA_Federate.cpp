@@ -18,10 +18,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "HLA_Federate.h"
-#include "HLA_TimeFactory.h"
-#include "HLA_TimeIntervalFactory.h"
-#include "HLA_Time.h"
-#include "HLA_TimeInterval.h"
 #include "HLA_DirectFire.h"
 #include "HLA_IndirectFire.h"
 #include "HLA_InteractionManager.h"
@@ -36,7 +32,11 @@
 #include "tools/MIL_IDManager.h"
 #include "MT_Tools/MT_Logger.h"
 #include <hla/hla_lib.h>
-#include <windows.h>
+#include <hla/SimpleTime.h>
+#include <hla/SimpleTimeFactory.h>
+#include <hla/SimpleTimeInterval.h>
+#include <hla/SimpleTimeIntervalFactory.h>
+#include <boost/lexical_cast.hpp>
 
 using namespace hla;
 
@@ -50,10 +50,10 @@ namespace
 // Created: AGE 2004-11-05
 // -----------------------------------------------------------------------------
 HLA_Federate::HLA_Federate( const std::string& strFederateName, unsigned int nTimeStepDuration )
-    : pTimeFactory_    ( new HLA_TimeFactory() )
-    , pIntervalFactory_( new HLA_TimeIntervalFactory() )
-    , pAmbassador_     ( RtiAmbassador_ABC::CreateAmbassador( *pTimeFactory_, *pIntervalFactory_ ) )
-    , pFederate_       ( new Federate( *pAmbassador_, strFederateName, HLA_Time(), HLA_TimeInterval( nTimeStepDuration ) ) )
+    : pTimeFactory_       ( new hla::SimpleTimeFactory() )
+    , pIntervalFactory_   ( new hla::SimpleTimeIntervalFactory() )
+    , pAmbassador_        ( RtiAmbassador_ABC::CreateAmbassador( *pTimeFactory_, *pIntervalFactory_, RtiAmbassador_ABC::TimeStampOrder ) )
+    , pFederate_          ( new Federate( *pAmbassador_, strFederateName, hla::SimpleTime(), hla::SimpleTimeInterval( nTimeStepDuration ) ) )
     , pUnitClass_         ( 0 )
     , pUnitRegistration_  ( 0 )
     , pObjectClass_       ( 0 )
@@ -137,7 +137,7 @@ namespace
         };
         virtual void Destroy( HLA_Object_ABC& object )
         {
-            object.Destroy();
+            object.Destroy(); // $$$$ _RC_ SLI 2010-09-20: delete object instead??
         };
     private:
         ObjectRegistration& operator=( const ObjectRegistration& );
@@ -151,7 +151,6 @@ namespace
 // -----------------------------------------------------------------------------
 void HLA_Federate::InitializeClasses()
 {
-    ::Sleep( 10000 ); // $$$$ AGE 2005-02-21: So that the FVT doesn't complain about the initialisation
     assert( pFederate_ );
     pInteractionManager_ = new HLA_InteractionManager( *pFederate_ );
 
@@ -179,7 +178,6 @@ void HLA_Federate::InitializeClasses()
     pObjectClass_->Register( AttributeIdentifier( "option" ) );
     pObjectClass_->Register( AttributeIdentifier( "extra" ) );
     pFederate_->Register( ClassIdentifier( "Localisable.ObjetScipio" ), *pObjectClass_ );
-    ::Sleep( 10000 );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,7 +189,7 @@ void HLA_Federate::Register( MIL_AgentPion& agent )
     assert( pUnitClass_ );
     HLA_RoleLocalPion* hlaRole = new HLA_RoleLocalPion( agent );
     agent.RegisterRole( *hlaRole );
-    const ObjectIdentifier objectId = pUnitClass_->Register( *hlaRole );
+    const ObjectIdentifier objectId = pUnitClass_->Register( *hlaRole, boost::lexical_cast< std::string >( agent.GetID() ) );
     hlaRole->SetId( objectId );
     localAgents_[ objectId ] = &agent;
 }
@@ -207,7 +205,7 @@ void HLA_Federate::Register( MIL_Object_ABC& object )
     if( object.GetHLAView() )
         return;
     HLA_LocalObject& hlaView = * new HLA_LocalObject( object );
-    const ObjectIdentifier objectId = pObjectClass_->Register( hlaView );
+    const ObjectIdentifier objectId = pObjectClass_->Register( hlaView, boost::lexical_cast< std::string >( object.GetID() ) );
     hlaView.SetId( objectId );
     object.SetHLAView( hlaView );
     localObjects_[ objectId ] = &object ;
