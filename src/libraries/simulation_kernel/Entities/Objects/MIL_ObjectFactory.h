@@ -34,13 +34,12 @@ class MIL_Army_ABC;
 class MIL_Object_ABC;
 class MIL_ObjectBuilder_ABC;
 class MIL_ObjectLoader;
-class MIL_ObjectManager;
 class MIL_ObjectType_ABC;
 class TER_Localisation;
 
 // =============================================================================
 /** @class  MIL_ObjectFactory
-    @brief  MIL_ObjectFactory
+    @brief  MIL Object factory
 */
 // Created: JCR 2008-06-02
 // =============================================================================
@@ -49,7 +48,7 @@ class MIL_ObjectFactory
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_ObjectFactory( MIL_ObjectManager& manager );
+             MIL_ObjectFactory();
     virtual ~MIL_ObjectFactory();
     //@}
 
@@ -60,8 +59,8 @@ public:
 
     //! @name Operations
     //@{
-    MIL_Object_ABC& BuildObject( xml::xistream& xis, MIL_Army_ABC& army );
-    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode BuildObject( const Common::MsgMissionParameters& asn, MIL_Army_ABC& army );
+    MIL_Object_ABC* BuildObject( xml::xistream& xis, MIL_Army_ABC& army );
+    MIL_Object_ABC* BuildObject( const Common::MsgMissionParameters& asn, MIL_Army_ABC& army, MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode& value );
     MIL_Object_ABC* BuildObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, Common::ObstacleType_DemolitionTargetType obstacleType );
     MIL_Object_ABC* BuildObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army );
     MIL_Object_ABC* BuildUrbanObject( const urban::TerrainObject_ABC& object );
@@ -78,12 +77,6 @@ private:
     MIL_ObjectFactory( const MIL_ObjectFactory& );            //!< Copy constructor
     MIL_ObjectFactory& operator=( const MIL_ObjectFactory& ); //!< Assignment operator
     //@}
-
-private:
-    //! @name
-    //@{
-    MIL_ObjectManager& manager_;
-    //@}
 };
 
-#endif
+#endif // __MIL_ObjectFactory_h_

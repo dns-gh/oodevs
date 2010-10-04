@@ -95,17 +95,18 @@ public:
     void OnReceiveMsgChangeResourceLinks( const MsgsClientToSim::MsgMagicAction& message, unsigned int nCtx );
     //@}
 
-    //! @name
-    //@{
-    void RegisterObject( MIL_Object_ABC& object );
-    //@}
-
 private:
     //! @name Types
     //@{
     typedef std::map< unsigned int, MIL_Object_ABC* >   T_ObjectMap;
     typedef T_ObjectMap::iterator               IT_ObjectMap;
     typedef T_ObjectMap::const_iterator         CIT_ObjectMap;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void RegisterObject( MIL_Object_ABC* pObject );
     //@}
 
 private:

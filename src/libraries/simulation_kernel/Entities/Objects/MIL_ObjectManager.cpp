@@ -40,7 +40,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectManager )
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 MIL_ObjectManager::MIL_ObjectManager()
-    : builder_ ( new MIL_ObjectFactory( *this ) )
+    : builder_( new MIL_ObjectFactory() )
 {
     // NOTHING
 }
@@ -73,10 +73,6 @@ void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const unsigned int
 {
     file << objects_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::ProcessEvents
@@ -111,23 +107,21 @@ void MIL_ObjectManager::UpdateStates()
     }
 }
 
-// =============================================================================
-// MANAGER
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::RegisterObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::RegisterObject( MIL_Object_ABC& object )
+void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
 {
+    if( !pObject )
+        return;
     if( MIL_Singletons::GetHla() )
-        MIL_Singletons::GetHla()->Register( object );
-    if( ! objects_.insert( std::make_pair( object.GetID(), &object ) ).second )
+        MIL_Singletons::GetHla()->Register( *pObject );
+    if( !objects_.insert( std::make_pair( pObject->GetID(), pObject ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
-    object.SendCreation(); //$$$ a déplacer ...
-    if( object.GetArmy() )
-        object.GetArmy()->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( object ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
+    pObject->SendCreation(); //$$$ a déplacer ...
+    if( pObject->GetArmy() )
+        pObject->GetArmy()->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *pObject ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +139,11 @@ const MIL_ObjectType_ABC& MIL_ObjectManager::FindType( const std::string& type )
 // -----------------------------------------------------------------------------
 MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
 {
-    return builder_->BuildObject( xis, army );
+    MIL_Object_ABC* pObject = builder_->BuildObject( xis, army );
+    if( !pObject )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object" ); //@TODO MGD propagate reference
+    RegisterObject( pObject );
+    return *pObject;
 }
 
 // -----------------------------------------------------------------------------
@@ -155,14 +153,14 @@ MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_AB
 MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const Common::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies )
 {  //@TODO MGD Try to externalize ASN when protobuff will be merged
    //@HBD : Verify later that conversion from MIL_Army to MIL_Army_ABC was right
-
     if( message.elem_size() != 5 ) // type, location, name, team, attributes
         return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
-
     MIL_Army_ABC* pArmy = armies.Find( message.elem( 3 ).value().party().id() );
     if( !pArmy )
         return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_camp;
-    return builder_->BuildObject( message, *pArmy );
+    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode value = MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
+    RegisterObject( builder_->BuildObject( message, *pArmy, value ) );
+    return value;
 }
 
 // -----------------------------------------------------------------------------
@@ -171,7 +169,9 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObje
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
 {
-    return builder_->BuildObject( type, army, localisation, Common::ObstacleType_DemolitionTargetType_preliminary );
+    MIL_Object_ABC* pObject = builder_->BuildObject( type, army, localisation, Common::ObstacleType_DemolitionTargetType_preliminary );
+    RegisterObject( pObject );
+    return pObject;
 }
 
 // -----------------------------------------------------------------------------
@@ -181,7 +181,11 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType )
 {
     if( pLocalisation )
-        return builder_->BuildObject( type, army, *pLocalisation, obstacleType );
+    {
+        MIL_Object_ABC* pObject = builder_->BuildObject( type, army, *pLocalisation, obstacleType );
+        RegisterObject( pObject );
+        return pObject;
+    }
     return 0;
 }
 
@@ -191,7 +195,9 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder )
 {
-    return builder_->BuildObject( builder, army );
+    MIL_Object_ABC* pObject = builder_->BuildObject( builder, army );
+    RegisterObject( pObject );
+    return pObject;
 }
 
 // -----------------------------------------------------------------------------
@@ -200,9 +206,10 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const MIL_O
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( const urban::TerrainObject_ABC& object )
 {
-    MIL_Object_ABC* obj = builder_->BuildUrbanObject( object );
-    urbanIds_.push_back( obj->GetID() );
-    return obj;
+    MIL_Object_ABC* pObject = builder_->BuildUrbanObject( object );
+    RegisterObject( pObject );
+    urbanIds_.push_back( pObject->GetID() );
+    return pObject;
 }
 
 // -----------------------------------------------------------------------------
@@ -241,10 +248,6 @@ UrbanObjectWrapper* MIL_ObjectManager::FindUrbanWrapper( unsigned int nId )
     return 0;
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::SendCreation
 // Created: SLG 2010-06-23
@@ -280,9 +283,7 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
     MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode nErrorCode = MsgsSimToClient::MsgObjectMagicActionAck::no_error;
 
     if( msg.type() == MsgsClientToSim::MsgObjectMagicAction::create )
-    {
         nErrorCode = CreateObject( msg.parameters(), armies );
-    }
     else if( msg.type() == MsgsClientToSim::MsgObjectMagicAction::destroy )
     {
         MIL_Object_ABC* pObject = Find( msg.object().id() );
@@ -291,7 +292,6 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
         else
             (*pObject)().Destroy();
     }
-
     else if( msg.type() == MsgsClientToSim::MsgObjectMagicAction::update )
     {
         MIL_Object_ABC* pObject = Find( msg.object().id() );
@@ -304,7 +304,6 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
                 nErrorCode = pObject->OnUpdate( params.elem( 0 ).value() );
         }
     }
-
     client::ObjectMagicActionAck asnReplyMsg;
     asnReplyMsg().set_error_code( nErrorCode );
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
@@ -333,4 +332,3 @@ void MIL_ObjectManager::OnReceiveMsgChangeResourceLinks( const MsgsClientToSim::
     asnReplyMsg().set_error_code( nErrorCode );
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
-
