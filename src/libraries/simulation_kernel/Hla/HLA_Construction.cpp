@@ -63,7 +63,7 @@ void HLA_Construction::Execute() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Interaction< HLA_Construction >& HLA_Construction::CreateInteractionClass
+// Name: HLA_Construction::CreateInteractionClass
 // Created: AGE 2004-12-06
 // -----------------------------------------------------------------------------
 Interaction< HLA_Construction >& HLA_Construction::CreateInteractionClass( InteractionNotification_ABC< HLA_Construction >& callback )

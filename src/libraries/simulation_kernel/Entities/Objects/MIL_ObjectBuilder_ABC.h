@@ -15,7 +15,7 @@ class MIL_Object_ABC;
 
 // =============================================================================
 /** @class  MIL_ObjectBuilder_ABC
-    @brief  MIL_ObjectBuilder_ABC
+    @brief  MIL Object builder definition
 */
 // Created: JCR 2008-06-02
 // =============================================================================
@@ -24,7 +24,7 @@ class MIL_ObjectBuilder_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-            MIL_ObjectBuilder_ABC() {}
+             MIL_ObjectBuilder_ABC() {}
     virtual ~MIL_ObjectBuilder_ABC() {}
     //@}
 

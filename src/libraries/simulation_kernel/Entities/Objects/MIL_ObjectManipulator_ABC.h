@@ -23,7 +23,7 @@ class MIL_ObjectManipulator_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-            MIL_ObjectManipulator_ABC() {}
+             MIL_ObjectManipulator_ABC() {}
     virtual ~MIL_ObjectManipulator_ABC() {}
     //@}
 
