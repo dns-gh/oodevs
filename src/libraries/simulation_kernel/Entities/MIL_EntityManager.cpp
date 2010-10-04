@@ -482,6 +482,16 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Ar
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreateDistantObject
+// Created: SLI 2010-10-04
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* MIL_EntityManager::CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
+{
+    assert( pObjectManager_ );
+    return pObjectManager_->CreateDistantObject( type, army, localisation );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::CreateObject
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------

@@ -77,6 +77,7 @@ public:
     //@TODO MGD return reference
     MIL_Object_ABC&     CreateObject( xml::xistream& xis, MIL_Army_ABC& army );
     MIL_Object_ABC*     CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
+    MIL_Object_ABC*     CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
     MIL_Object_ABC*     CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType );
     MIL_Object_ABC*     CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
     MIL_Object_ABC*     CreateUrbanObject( const urban::TerrainObject_ABC& object );
@@ -107,6 +108,7 @@ private:
     //! @name Helpers
     //@{
     void RegisterObject( MIL_Object_ABC* pObject );
+    void RegisterDistantObject( MIL_Object_ABC* pObject );
     //@}
 
 private:

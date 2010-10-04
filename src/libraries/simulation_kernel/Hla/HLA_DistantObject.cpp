@@ -24,6 +24,7 @@
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include <hla/Deserializer.h>
 #include <hla/AttributeIdentifier.h>
+#include <boost/bind.hpp>
 
 using namespace hla;
 
@@ -126,7 +127,17 @@ void HLA_DistantObject::Deserialize( const AttributeIdentifier& attributeID, con
     else
     {
         DeserializeAttribute( attributeID, deserializer );
-        pObject_ = InstanciateObject();
+        if( !strArmy_.empty() )
+            pObject_ = InstanciateObject();
+    }
+}
+
+namespace
+{
+    void Resolve( const std::string& name, MIL_Army_ABC*& pArmy, const MIL_Army_ABC& army )
+    {
+        if( army.GetName() == name ) // $$$$ _RC_ SLI 2010-10-04: army name is unique?
+            pArmy = const_cast< MIL_Army_ABC* >( &army ); // $$$$ _RC_ SLI 2010-10-04: dirty const_cast
     }
 }
 
@@ -136,18 +147,22 @@ void HLA_DistantObject::Deserialize( const AttributeIdentifier& attributeID, con
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* HLA_DistantObject::InstanciateObject()
 {
-    MIL_Army* pArmy = 0;// = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy_ );//@TODO MGD give armies resolver to HLA role
+    MIL_Army_ABC* pArmy = 0;
+    MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies().Apply( boost::bind( &Resolve, boost::cref( strArmy_ ), boost::ref( pArmy ), _1 ) );
     if( !pArmy )
         return 0;
     if( localisation_.GetType() == TER_Localisation::eNone )
         return 0;
-    MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( strObjectType_, *pArmy, localisation_ );
+    MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateDistantObject( strObjectType_, *pArmy, localisation_ );
     if( pObject )
     {
         MIL_Object_ABC& object = *pObject;
-        object().Construct( rConstructionPercentage_ );
-        object().Mine( rMiningPercentage_ );
-        object().Bypass( rBypassPercentage_ );
+        if( object().CanBeConstructed() )
+            object().Construct( rConstructionPercentage_ );
+        if( object().CanBeMined() )
+            object().Mine( rMiningPercentage_ );
+        if( object().CanBeBypassed() )
+            object().Bypass( rBypassPercentage_ );
         pObject->SetHLAView( *this );
     }
     return pObject;

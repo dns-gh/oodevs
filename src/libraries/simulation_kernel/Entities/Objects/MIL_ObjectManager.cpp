@@ -117,6 +117,17 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
         return;
     if( MIL_Singletons::GetHla() )
         MIL_Singletons::GetHla()->Register( *pObject );
+    RegisterDistantObject( pObject );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::RegisterDistantObject
+// Created: SLI 2010-10-04
+// -----------------------------------------------------------------------------
+void MIL_ObjectManager::RegisterDistantObject( MIL_Object_ABC* pObject )
+{
+    if( !pObject )
+        return;
     if( !objects_.insert( std::make_pair( pObject->GetID(), pObject ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     pObject->SendCreation(); //$$$ a déplacer ...
@@ -171,6 +182,17 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 {
     MIL_Object_ABC* pObject = builder_->BuildObject( type, army, localisation, Common::ObstacleType_DemolitionTargetType_preliminary );
     RegisterObject( pObject );
+    return pObject;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::CreateDistantObject
+// Created: SLI 2010-10-04
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* MIL_ObjectManager::CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
+{
+    MIL_Object_ABC* pObject = builder_->BuildObject( type, army, localisation, Common::ObstacleType_DemolitionTargetType_preliminary );
+    RegisterDistantObject( pObject );
     return pObject;
 }
 
