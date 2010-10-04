@@ -56,6 +56,15 @@ void NatureSelectionWidget::StartCategory( const std::string& /*title*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NatureSelectionWidget::EndCategory
+// Created: LDC 2010-10-04
+// -----------------------------------------------------------------------------
+void NatureSelectionWidget::EndCategory()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: NatureSelectionWidget::AddChoice
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------

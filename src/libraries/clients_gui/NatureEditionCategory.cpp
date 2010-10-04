@@ -73,7 +73,6 @@ void NatureEditionCategory::StartCategory( const std::string& title )
     {
         label_->setText( tools::translate( "models::app6", title.c_str() ) );
         box_->clear();
-        box_->insertItem( tools::translate( "models::app6", "undefined" ) );
         internalNames_.clear();
         internalNames_[ tools::translate( "models::app6", "undefined" ) ] = "undefined";
     }
@@ -88,7 +87,6 @@ void NatureEditionCategory::AddChoice( SymbolRule* rule, const std::string& name
     if( current_.isNull() )
     {
         QString translatedName = tools::translate( "models::app6", name.c_str() );
-        box_->insertItem( translatedName );
         internalNames_[ translatedName ] = name;
     }
     else if( rule && name == current_.ascii() )
@@ -96,6 +94,20 @@ void NatureEditionCategory::AddChoice( SymbolRule* rule, const std::string& name
         next_ = new NatureEditionCategory( parentWidget(), rule );
         next_->show();
         connect( next_, SIGNAL( NatureChanged( const QString& ) ), this, SLOT( OnNatureChanged( const QString& ) ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: NatureEditionCategory::EndCategory
+// Created: LDC 2010-10-04
+// -----------------------------------------------------------------------------
+void NatureEditionCategory::EndCategory()
+{
+    if( current_.isNull() )
+    {
+        box_->clear();
+        for( std::map< QString, std::string >::const_iterator it = internalNames_.begin(); it != internalNames_.end(); ++it )
+            box_->insertItem( it->first );
     }
 }
 

@@ -78,4 +78,5 @@ void SymbolRule::Accept( SymbolVisitor_ABC& visitor ) const
     visitor.StartCategory( name_ );
     for( CIT_Cases it = cases_.begin(); it != cases_.end(); ++it )
         it->second->Accept( visitor );
+    visitor.EndCategory();
 }

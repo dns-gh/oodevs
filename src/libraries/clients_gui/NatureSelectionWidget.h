@@ -57,6 +57,7 @@ private:
     //! @name Helpers
     //@{
     virtual void StartCategory( const std::string& title );
+    virtual void EndCategory();
     virtual void AddChoice( kernel::SymbolRule* rule, const std::string& name, const std::string& value );
     virtual void startDrag();
     //@}

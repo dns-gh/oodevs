@@ -107,6 +107,10 @@
         <translation>blindé</translation>
     </message>
     <message>
+        <source>track</source>
+        <translation>à chenilles</translation>
+    </message>
+    <message>
         <source>tracked</source>
         <translation>à chenilles</translation>
     </message>
@@ -139,6 +143,10 @@
         <translation>dépannage</translation>
     </message>
     <message>
+        <source>fixed_wing</source>
+        <translation>voilure fixe</translation>
+    </message>
+    <message>
         <source>fixed wing</source>
         <translation>voilure fixe</translation>
     </message>
@@ -153,6 +161,10 @@
     <message>
         <source>utility</source>
         <translation>utilitaire</translation>
+    </message>
+    <message>
+        <source>rotary_wing</source>
+        <translation>voilure tournante</translation>
     </message>
     <message>
         <source>rotary wing</source>
@@ -195,12 +207,20 @@
         <translation>mécanisé</translation>
     </message>
     <message>
+        <source>artillery survey</source>
+        <translation>observation</translation>
+    </message>
+    <message>
         <source>field artillery</source>
         <translation>artillerie sol - sol</translation>
     </message>
     <message>
         <source>howiltzer gun</source>
         <translation>obusier/canon</translation>
+    </message>
+    <message>
+        <source>self-propelled</source>
+        <translation>autoporteur</translation>
     </message>
     <message>
         <source>self_propelled</source>
@@ -213,6 +233,10 @@
     <message>
         <source>mortar</source>
         <translation>mortier</translation>
+    </message>
+    <message>
+        <source>self-propelled track</source>
+        <translation>auto-moteur à chenilles</translation>
     </message>
     <message>
         <source>self-propelled tracked</source>
@@ -229,6 +253,10 @@
     <message>
         <source>rocket</source>
         <translation>roquette</translation>
+    </message>
+    <message>
+        <source>single rocket launcher</source>
+        <translation>lance roquette simple</translation>
     </message>
     <message>
         <source>multi rocket launcher</source>

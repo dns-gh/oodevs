@@ -32,6 +32,7 @@ public:
     //! @name Operations
     //@{
     virtual void StartCategory( const std::string& title ) = 0;
+    virtual void EndCategory() = 0;
     virtual void AddChoice( SymbolRule* rule, const std::string& name, const std::string& value ) = 0;
     //@}
 };

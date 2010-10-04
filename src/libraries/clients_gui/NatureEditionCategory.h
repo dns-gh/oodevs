@@ -62,6 +62,7 @@ private:
     //@{
     virtual void StartCategory( const std::string& title );
     virtual void AddChoice( kernel::SymbolRule* rule, const std::string& name, const std::string& value );
+    virtual void EndCategory();
     void Select( const QString& value );
     //@}
 
