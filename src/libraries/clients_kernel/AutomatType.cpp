@@ -79,7 +79,7 @@ const AgentType* AutomatType::GetTypePC() const
 // Name: AutomatType::GetId
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-unsigned long AutomatType::GetId()
+unsigned long AutomatType::GetId() const
 {
     return id_;
 }

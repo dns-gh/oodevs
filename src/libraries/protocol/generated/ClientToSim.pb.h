@@ -73,11 +73,14 @@ enum MsgUnitMagicAction_Type {
   MsgUnitMagicAction_Type_change_formation_superior = 22,
   MsgUnitMagicAction_Type_knowledge_group_update = 23,
   MsgUnitMagicAction_Type_log_supply_push_flow = 24,
-  MsgUnitMagicAction_Type_log_supply_change_quotas = 25
+  MsgUnitMagicAction_Type_log_supply_change_quotas = 25,
+  MsgUnitMagicAction_Type_automat_creation = 26,
+  MsgUnitMagicAction_Type_formation_creation = 27,
+  MsgUnitMagicAction_Type_crowd_creation = 28
 };
 bool MsgUnitMagicAction_Type_IsValid(int value);
 const MsgUnitMagicAction_Type MsgUnitMagicAction_Type_Type_MIN = MsgUnitMagicAction_Type_move_to;
-const MsgUnitMagicAction_Type MsgUnitMagicAction_Type_Type_MAX = MsgUnitMagicAction_Type_log_supply_change_quotas;
+const MsgUnitMagicAction_Type MsgUnitMagicAction_Type_Type_MAX = MsgUnitMagicAction_Type_crowd_creation;
 
 const ::google::protobuf::EnumDescriptor* MsgUnitMagicAction_Type_descriptor();
 inline const ::std::string& MsgUnitMagicAction_Type_Name(MsgUnitMagicAction_Type value) {
@@ -740,6 +743,9 @@ class MsgUnitMagicAction : public ::google::protobuf::Message {
   static const Type knowledge_group_update = MsgUnitMagicAction_Type_knowledge_group_update;
   static const Type log_supply_push_flow = MsgUnitMagicAction_Type_log_supply_push_flow;
   static const Type log_supply_change_quotas = MsgUnitMagicAction_Type_log_supply_change_quotas;
+  static const Type automat_creation = MsgUnitMagicAction_Type_automat_creation;
+  static const Type formation_creation = MsgUnitMagicAction_Type_formation_creation;
+  static const Type crowd_creation = MsgUnitMagicAction_Type_crowd_creation;
   static inline bool Type_IsValid(int value) {
     return MsgUnitMagicAction_Type_IsValid(value);
   }
@@ -761,12 +767,12 @@ class MsgUnitMagicAction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.UnitId id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline const ::Common::UnitId& id() const;
-  inline ::Common::UnitId* mutable_id();
+  // required .Common.Tasker tasker = 1;
+  inline bool has_tasker() const;
+  inline void clear_tasker();
+  static const int kTaskerFieldNumber = 1;
+  inline const ::Common::Tasker& tasker() const;
+  inline ::Common::Tasker* mutable_tasker();
   
   // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
   inline bool has_type() const;
@@ -786,7 +792,7 @@ class MsgUnitMagicAction : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::UnitId* id_;
+  ::Common::Tasker* tasker_;
   int type_;
   ::Common::MsgMissionParameters* parameters_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
@@ -2107,21 +2113,21 @@ inline ::Common::MsgCoordLatLong* MsgUnitCreationRequest::mutable_position() {
 
 // MsgUnitMagicAction
 
-// required .Common.UnitId id = 1;
-inline bool MsgUnitMagicAction::has_id() const {
+// required .Common.Tasker tasker = 1;
+inline bool MsgUnitMagicAction::has_tasker() const {
   return _has_bit(0);
 }
-inline void MsgUnitMagicAction::clear_id() {
-  if (id_ != NULL) id_->::Common::UnitId::Clear();
+inline void MsgUnitMagicAction::clear_tasker() {
+  if (tasker_ != NULL) tasker_->::Common::Tasker::Clear();
   _clear_bit(0);
 }
-inline const ::Common::UnitId& MsgUnitMagicAction::id() const {
-  return id_ != NULL ? *id_ : *default_instance_->id_;
+inline const ::Common::Tasker& MsgUnitMagicAction::tasker() const {
+  return tasker_ != NULL ? *tasker_ : *default_instance_->tasker_;
 }
-inline ::Common::UnitId* MsgUnitMagicAction::mutable_id() {
+inline ::Common::Tasker* MsgUnitMagicAction::mutable_tasker() {
   _set_bit(0);
-  if (id_ == NULL) id_ = new ::Common::UnitId;
-  return id_;
+  if (tasker_ == NULL) tasker_ = new ::Common::Tasker;
+  return tasker_;
 }
 
 // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;

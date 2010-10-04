@@ -238,4 +238,11 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Urban", "bool" );
         CreateOrderParameter( "Nodes", "list" );
     }
+    
+    else if( name_ == "automat_creation" )
+    {
+        CreateOrderParameter( "AutomatType", "identifier" );
+        CreateOrderParameter( "KnowledgeGroup", "identifier" );
+        CreateOrderParameter( "Location", "point" );
+    }
 }

@@ -43,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    unsigned long GetId();
+    unsigned long GetId() const;
     std::string GetName() const;
     const AgentType* GetTypePC() const;
     std::string GetSymbol() const;

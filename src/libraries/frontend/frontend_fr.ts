@@ -113,7 +113,7 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     </message>
     <message>
         <source>Geodatabase order import:</source>
-        <translation type="unfinished">Import d'ordre de base de donnée géographique</translation>
+        <translation type="unfinished">Import d&apos;ordre de base de donnée géographique</translation>
     </message>
 </context>
 <context>

@@ -155,7 +155,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       sizeof(MsgUnitCreationRequest));
   MsgUnitMagicAction_descriptor_ = file->message_type(5);
   static const int MsgUnitMagicAction_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction, tasker_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction, parameters_),
   };
@@ -432,88 +432,89 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
     "de\"\210\001\n\026MsgUnitCreationRequest\022\036\n\004type\030\001 "
     "\002(\0132\020.Common.UnitType\022#\n\010superior\030\002 \002(\0132"
     "\021.Common.AutomatId\022)\n\010position\030\003 \002(\0132\027.C"
-    "ommon.MsgCoordLatLong\"\206\006\n\022MsgUnitMagicAc"
-    "tion\022\032\n\002id\030\001 \002(\0132\016.Common.UnitId\0226\n\004type"
-    "\030\002 \002(\0162(.MsgsClientToSim.MsgUnitMagicAct"
+    "ommon.MsgCoordLatLong\"\314\006\n\022MsgUnitMagicAc"
+    "tion\022\036\n\006tasker\030\001 \002(\0132\016.Common.Tasker\0226\n\004"
+    "type\030\002 \002(\0162(.MsgsClientToSim.MsgUnitMagi"
+    "cAction.Type\0220\n\nparameters\030\003 \002(\0132\034.Commo"
+    "n.MsgMissionParameters\"\253\005\n\004Type\022\013\n\007move_"
+    "to\020\000\022\020\n\014surrender_to\020\001\022\024\n\020cancel_surrend"
+    "er\020\002\022\030\n\024recover_transporters\020\003\022\025\n\021destro"
+    "y_component\020\004\022\017\n\013recover_all\020\005\022\022\n\016recove"
+    "r_troops\020\006\022\026\n\022recover_equipments\020\007\022\025\n\021re"
+    "cover_resources\020\010\022\017\n\013destroy_all\020\t\022\030\n\024ch"
+    "ange_human_factors\020\n\022\024\n\020partial_recovery"
+    "\020\013\022\021\n\runit_creation\020\014\022\025\n\021create_fire_ord"
+    "er\020\r\022\033\n\027crowd_total_destruction\020\016\022\016\n\ncro"
+    "wd_kill\020\017\022\023\n\017crowd_resurrect\020\020\022\031\n\025crowd_"
+    "change_attitude\020\021\022\032\n\026change_knowledge_gr"
+    "oup\020\022\022\031\n\025change_logistic_links\020\023\022\030\n\024unit"
+    "_change_superior\020\024\022\033\n\027change_automat_sup"
+    "erior\020\025\022\035\n\031change_formation_superior\020\026\022\032"
+    "\n\026knowledge_group_update\020\027\022\030\n\024log_supply"
+    "_push_flow\020\030\022\034\n\030log_supply_change_quotas"
+    "\020\031\022\024\n\020automat_creation\020\032\022\026\n\022formation_cr"
+    "eation\020\033\022\022\n\016crowd_creation\020\034\"\213\002\n\027MsgKnow"
+    "ledgeMagicAction\0221\n\017knowledge_group\030\001 \002("
+    "\0132\030.Common.KnowledgeGroupId\022;\n\004type\030\002 \002("
+    "\0162-.MsgsClientToSim.MsgKnowledgeMagicAct"
     "ion.Type\0220\n\nparameters\030\003 \002(\0132\034.Common.Ms"
-    "gMissionParameters\"\351\004\n\004Type\022\013\n\007move_to\020\000"
-    "\022\020\n\014surrender_to\020\001\022\024\n\020cancel_surrender\020\002"
-    "\022\030\n\024recover_transporters\020\003\022\025\n\021destroy_co"
-    "mponent\020\004\022\017\n\013recover_all\020\005\022\022\n\016recover_tr"
-    "oops\020\006\022\026\n\022recover_equipments\020\007\022\025\n\021recove"
-    "r_resources\020\010\022\017\n\013destroy_all\020\t\022\030\n\024change"
-    "_human_factors\020\n\022\024\n\020partial_recovery\020\013\022\021"
-    "\n\runit_creation\020\014\022\025\n\021create_fire_order\020\r"
-    "\022\033\n\027crowd_total_destruction\020\016\022\016\n\ncrowd_k"
-    "ill\020\017\022\023\n\017crowd_resurrect\020\020\022\031\n\025crowd_chan"
-    "ge_attitude\020\021\022\032\n\026change_knowledge_group\020"
-    "\022\022\031\n\025change_logistic_links\020\023\022\030\n\024unit_cha"
-    "nge_superior\020\024\022\033\n\027change_automat_superio"
-    "r\020\025\022\035\n\031change_formation_superior\020\026\022\032\n\026kn"
-    "owledge_group_update\020\027\022\030\n\024log_supply_pus"
-    "h_flow\020\030\022\034\n\030log_supply_change_quotas\020\031\"\213"
-    "\002\n\027MsgKnowledgeMagicAction\0221\n\017knowledge_"
-    "group\030\001 \002(\0132\030.Common.KnowledgeGroupId\022;\n"
-    "\004type\030\002 \002(\0162-.MsgsClientToSim.MsgKnowled"
-    "geMagicAction.Type\0220\n\nparameters\030\003 \002(\0132\034"
-    ".Common.MsgMissionParameters\"N\n\004Type\022\n\n\006"
-    "enable\020\000\022\020\n\014update_party\020\001\022\027\n\023update_par"
-    "ty_parent\020\002\022\017\n\013update_type\020\003\"\332\003\n\024MsgObje"
-    "ctMagicAction\022 \n\006object\030\001 \002(\0132\020.Common.O"
-    "bjectId\0228\n\004type\030\002 \002(\0162*.MsgsClientToSim."
-    "MsgObjectMagicAction.Type\0220\n\nparameters\030"
-    "\003 \002(\0132\034.Common.MsgMissionParameters\"+\n\004T"
-    "ype\022\n\n\006create\020\000\022\n\n\006update\020\001\022\013\n\007destroy\020\002"
-    "\"\206\002\n\tAttribute\022\020\n\014construction\020\000\022\014\n\010obst"
-    "acle\020\001\022\010\n\004mine\020\002\022\021\n\ractivity_time\020\003\022\n\n\006b"
-    "ypass\020\004\022\014\n\010logistic\020\005\022\007\n\003nbc\020\006\022\021\n\rcrossi"
-    "ng_site\020\007\022\020\n\014supply_route\020\010\022\017\n\013toxic_clo"
-    "ud\020\t\022\010\n\004fire\020\n\022\025\n\021medical_treatment\020\013\022\026\n"
-    "\022interaction_height\020\014\022\t\n\005stock\020\r\022\r\n\tnbc_"
-    "agent\020\016\022\020\n\014effect_delay\020\017\"\200\002\n\016MsgMagicAc"
-    "tion\0222\n\004type\030\001 \002(\0162$.MsgsClientToSim.Msg"
-    "MagicAction.Type\0220\n\nparameters\030\002 \002(\0132\034.C"
-    "ommon.MsgMissionParameters\"\207\001\n\004Type\022\022\n\016g"
-    "lobal_weather\020\000\022\021\n\rlocal_weather\020\001\022\024\n\020ch"
-    "ange_diplomacy\020\002\022\032\n\026create_knowledge_gro"
-    "up\020\003\022&\n\"change_resource_network_properti"
-    "es\020\004\"5\n MsgControlCheckPointSetFrequency"
-    "\022\021\n\tfrequency\030\001 \002(\005\"7\n!MsgControlCheckPo"
-    "intDeleteRequest\022\022\n\ncheckpoint\030\001 \002(\t\"!\n\037"
-    "MsgControlCheckPointListRequest\"3\n\033MsgCo"
-    "ntrolEnableVisionCones\022\024\n\014vision_cones\030\001"
-    " \002(\010\"\323\t\n\016MsgClientToSim\022\017\n\007context\030\001 \001(\005"
-    "\0228\n\007message\030\002 \002(\0132\'.MsgsClientToSim.MsgC"
-    "lientToSim.Content\032\365\010\n\007Content\022,\n\014contro"
-    "l_stop\030\001 \001(\0132\026.Common.MsgControlStop\022.\n\r"
-    "control_pause\030\002 \001(\0132\027.Common.MsgControlP"
-    "ause\0220\n\016control_resume\030\003 \001(\0132\030.Common.Ms"
-    "gControlResume\022F\n\032control_change_time_fa"
-    "ctor\030\004 \001(\0132\".Common.MsgControlChangeTime"
-    "Factor\022K\n\030control_date_time_change\030\005 \001(\013"
-    "2).MsgsClientToSim.MsgControlDatetimeCha"
-    "nge\022Q\n\033control_checkpoint_save_now\030\006 \001(\013"
-    "2,.MsgsClientToSim.MsgControlCheckPointS"
-    "aveNow\022[\n control_checkpoint_set_frequen"
-    "cy\030\007 \001(\01321.MsgsClientToSim.MsgControlChe"
-    "ckPointSetFrequency\022Q\n\033control_toggle_vi"
-    "sion_cones\030\010 \001(\0132,.MsgsClientToSim.MsgCo"
-    "ntrolEnableVisionCones\022(\n\nunit_order\030\t \001"
-    "(\0132\024.Common.MsgUnitOrder\022.\n\rautomat_orde"
-    "r\030\n \001(\0132\027.Common.MsgAutomatOrder\022*\n\013crow"
-    "d_order\030\013 \001(\0132\025.Common.MsgCrowdOrder\0221\n\n"
-    "frag_order\030\014 \001(\0132\035.MsgsClientToSim.MsgFr"
-    "agOrder\022<\n\020set_automat_mode\030\r \001(\0132\".Msgs"
-    "ClientToSim.MsgSetAutomatMode\022F\n\025unit_cr"
-    "eation_request\030\016 \001(\0132\'.MsgsClientToSim.M"
-    "sgUnitCreationRequest\022>\n\021unit_magic_acti"
-    "on\030\017 \001(\0132#.MsgsClientToSim.MsgUnitMagicA"
-    "ction\022B\n\023object_magic_action\030\020 \001(\0132%.Msg"
-    "sClientToSim.MsgObjectMagicAction\022H\n\026kno"
-    "wledge_magic_action\030\021 \001(\0132(.MsgsClientTo"
-    "Sim.MsgKnowledgeMagicAction\0225\n\014magic_act"
-    "ion\030\022 \001(\0132\037.MsgsClientToSim.MsgMagicActi"
-    "on", 3762);
+    "gMissionParameters\"N\n\004Type\022\n\n\006enable\020\000\022\020"
+    "\n\014update_party\020\001\022\027\n\023update_party_parent\020"
+    "\002\022\017\n\013update_type\020\003\"\332\003\n\024MsgObjectMagicAct"
+    "ion\022 \n\006object\030\001 \002(\0132\020.Common.ObjectId\0228\n"
+    "\004type\030\002 \002(\0162*.MsgsClientToSim.MsgObjectM"
+    "agicAction.Type\0220\n\nparameters\030\003 \002(\0132\034.Co"
+    "mmon.MsgMissionParameters\"+\n\004Type\022\n\n\006cre"
+    "ate\020\000\022\n\n\006update\020\001\022\013\n\007destroy\020\002\"\206\002\n\tAttri"
+    "bute\022\020\n\014construction\020\000\022\014\n\010obstacle\020\001\022\010\n\004"
+    "mine\020\002\022\021\n\ractivity_time\020\003\022\n\n\006bypass\020\004\022\014\n"
+    "\010logistic\020\005\022\007\n\003nbc\020\006\022\021\n\rcrossing_site\020\007\022"
+    "\020\n\014supply_route\020\010\022\017\n\013toxic_cloud\020\t\022\010\n\004fi"
+    "re\020\n\022\025\n\021medical_treatment\020\013\022\026\n\022interacti"
+    "on_height\020\014\022\t\n\005stock\020\r\022\r\n\tnbc_agent\020\016\022\020\n"
+    "\014effect_delay\020\017\"\200\002\n\016MsgMagicAction\0222\n\004ty"
+    "pe\030\001 \002(\0162$.MsgsClientToSim.MsgMagicActio"
+    "n.Type\0220\n\nparameters\030\002 \002(\0132\034.Common.MsgM"
+    "issionParameters\"\207\001\n\004Type\022\022\n\016global_weat"
+    "her\020\000\022\021\n\rlocal_weather\020\001\022\024\n\020change_diplo"
+    "macy\020\002\022\032\n\026create_knowledge_group\020\003\022&\n\"ch"
+    "ange_resource_network_properties\020\004\"5\n Ms"
+    "gControlCheckPointSetFrequency\022\021\n\tfreque"
+    "ncy\030\001 \002(\005\"7\n!MsgControlCheckPointDeleteR"
+    "equest\022\022\n\ncheckpoint\030\001 \002(\t\"!\n\037MsgControl"
+    "CheckPointListRequest\"3\n\033MsgControlEnabl"
+    "eVisionCones\022\024\n\014vision_cones\030\001 \002(\010\"\323\t\n\016M"
+    "sgClientToSim\022\017\n\007context\030\001 \001(\005\0228\n\007messag"
+    "e\030\002 \002(\0132\'.MsgsClientToSim.MsgClientToSim"
+    ".Content\032\365\010\n\007Content\022,\n\014control_stop\030\001 \001"
+    "(\0132\026.Common.MsgControlStop\022.\n\rcontrol_pa"
+    "use\030\002 \001(\0132\027.Common.MsgControlPause\0220\n\016co"
+    "ntrol_resume\030\003 \001(\0132\030.Common.MsgControlRe"
+    "sume\022F\n\032control_change_time_factor\030\004 \001(\013"
+    "2\".Common.MsgControlChangeTimeFactor\022K\n\030"
+    "control_date_time_change\030\005 \001(\0132).MsgsCli"
+    "entToSim.MsgControlDatetimeChange\022Q\n\033con"
+    "trol_checkpoint_save_now\030\006 \001(\0132,.MsgsCli"
+    "entToSim.MsgControlCheckPointSaveNow\022[\n "
+    "control_checkpoint_set_frequency\030\007 \001(\01321"
+    ".MsgsClientToSim.MsgControlCheckPointSet"
+    "Frequency\022Q\n\033control_toggle_vision_cones"
+    "\030\010 \001(\0132,.MsgsClientToSim.MsgControlEnabl"
+    "eVisionCones\022(\n\nunit_order\030\t \001(\0132\024.Commo"
+    "n.MsgUnitOrder\022.\n\rautomat_order\030\n \001(\0132\027."
+    "Common.MsgAutomatOrder\022*\n\013crowd_order\030\013 "
+    "\001(\0132\025.Common.MsgCrowdOrder\0221\n\nfrag_order"
+    "\030\014 \001(\0132\035.MsgsClientToSim.MsgFragOrder\022<\n"
+    "\020set_automat_mode\030\r \001(\0132\".MsgsClientToSi"
+    "m.MsgSetAutomatMode\022F\n\025unit_creation_req"
+    "uest\030\016 \001(\0132\'.MsgsClientToSim.MsgUnitCrea"
+    "tionRequest\022>\n\021unit_magic_action\030\017 \001(\0132#"
+    ".MsgsClientToSim.MsgUnitMagicAction\022B\n\023o"
+    "bject_magic_action\030\020 \001(\0132%.MsgsClientToS"
+    "im.MsgObjectMagicAction\022H\n\026knowledge_mag"
+    "ic_action\030\021 \001(\0132(.MsgsClientToSim.MsgKno"
+    "wledgeMagicAction\0225\n\014magic_action\030\022 \001(\0132"
+    "\037.MsgsClientToSim.MsgMagicAction", 3832);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToSim.proto", &protobuf_RegisterTypes);
   MsgControlDatetimeChange::default_instance_ = new MsgControlDatetimeChange();
@@ -1891,6 +1892,9 @@ bool MsgUnitMagicAction_Type_IsValid(int value) {
     case 23:
     case 24:
     case 25:
+    case 26:
+    case 27:
+    case 28:
       return true;
     default:
       return false;
@@ -1924,11 +1928,14 @@ const MsgUnitMagicAction_Type MsgUnitMagicAction::change_formation_superior;
 const MsgUnitMagicAction_Type MsgUnitMagicAction::knowledge_group_update;
 const MsgUnitMagicAction_Type MsgUnitMagicAction::log_supply_push_flow;
 const MsgUnitMagicAction_Type MsgUnitMagicAction::log_supply_change_quotas;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::automat_creation;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::formation_creation;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::crowd_creation;
 const MsgUnitMagicAction_Type MsgUnitMagicAction::Type_MIN;
 const MsgUnitMagicAction_Type MsgUnitMagicAction::Type_MAX;
 #endif  // _MSC_VER
 #ifndef _MSC_VER
-const int MsgUnitMagicAction::kIdFieldNumber;
+const int MsgUnitMagicAction::kTaskerFieldNumber;
 const int MsgUnitMagicAction::kTypeFieldNumber;
 const int MsgUnitMagicAction::kParametersFieldNumber;
 #endif  // !_MSC_VER
@@ -1938,7 +1945,7 @@ MsgUnitMagicAction::MsgUnitMagicAction() {
 }
 
 void MsgUnitMagicAction::InitAsDefaultInstance() {
-  id_ = const_cast< ::Common::UnitId*>(&::Common::UnitId::default_instance());
+  tasker_ = const_cast< ::Common::Tasker*>(&::Common::Tasker::default_instance());
   parameters_ = const_cast< ::Common::MsgMissionParameters*>(&::Common::MsgMissionParameters::default_instance());
 }
 
@@ -1949,7 +1956,7 @@ MsgUnitMagicAction::MsgUnitMagicAction(const MsgUnitMagicAction& from) {
 
 void MsgUnitMagicAction::SharedCtor() {
   _cached_size_ = 0;
-  id_ = NULL;
+  tasker_ = NULL;
   type_ = 0;
   parameters_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -1961,7 +1968,7 @@ MsgUnitMagicAction::~MsgUnitMagicAction() {
 
 void MsgUnitMagicAction::SharedDtor() {
   if (this != default_instance_) {
-    delete id_;
+    delete tasker_;
     delete parameters_;
   }
 }
@@ -1984,7 +1991,7 @@ MsgUnitMagicAction* MsgUnitMagicAction::New() const {
 void MsgUnitMagicAction::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (_has_bit(0)) {
-      if (id_ != NULL) id_->::Common::UnitId::Clear();
+      if (tasker_ != NULL) tasker_->::Common::Tasker::Clear();
     }
     type_ = 0;
     if (_has_bit(2)) {
@@ -2001,14 +2008,14 @@ bool MsgUnitMagicAction::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .Common.UnitId id = 1;
+      // required .Common.Tasker tasker = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_id()));
+             input, mutable_tasker()));
         if (input->ExpectTag(16)) goto parse_type;
         break;
       }
@@ -2068,10 +2075,10 @@ void MsgUnitMagicAction::SerializeWithCachedSizes(
     return;
   }
   
-  // required .Common.UnitId id = 1;
+  // required .Common.Tasker tasker = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      1, this->id(), output);
+      1, this->tasker(), output);
   }
   
   // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
@@ -2094,11 +2101,11 @@ void MsgUnitMagicAction::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgUnitMagicAction::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required .Common.UnitId id = 1;
+  // required .Common.Tasker tasker = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        1, this->id(), target);
+        1, this->tasker(), target);
   }
   
   // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
@@ -2125,11 +2132,11 @@ int MsgUnitMagicAction::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .Common.UnitId id = 1;
-    if (has_id()) {
+    // required .Common.Tasker tasker = 1;
+    if (has_tasker()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->id());
+          this->tasker());
     }
     
     // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
@@ -2171,7 +2178,7 @@ void MsgUnitMagicAction::MergeFrom(const MsgUnitMagicAction& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      mutable_id()->::Common::UnitId::MergeFrom(from.id());
+      mutable_tasker()->::Common::Tasker::MergeFrom(from.tasker());
     }
     if (from._has_bit(1)) {
       set_type(from.type());
@@ -2198,8 +2205,8 @@ void MsgUnitMagicAction::CopyFrom(const MsgUnitMagicAction& from) {
 bool MsgUnitMagicAction::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
   
-  if (has_id()) {
-    if (!this->id().IsInitialized()) return false;
+  if (has_tasker()) {
+    if (!this->tasker().IsInitialized()) return false;
   }
   if (has_parameters()) {
     if (!this->parameters().IsInitialized()) return false;
@@ -2209,7 +2216,7 @@ bool MsgUnitMagicAction::IsInitialized() const {
 
 void MsgUnitMagicAction::Swap(MsgUnitMagicAction* other) {
   if (other != this) {
-    std::swap(id_, other->id_);
+    std::swap(tasker_, other->tasker_);
     std::swap(type_, other->type_);
     std::swap(parameters_, other->parameters_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);

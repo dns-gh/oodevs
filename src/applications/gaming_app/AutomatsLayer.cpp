@@ -19,6 +19,7 @@
 #include "gaming/StaticModel.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Point.h"
@@ -104,6 +105,11 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
         RequestCreation( point, *droppedItem );
         return true;
     }
+    if( const AutomatType* droppedItem = gui::ValuedDragObject::GetValue< const AutomatType >( event ) )
+    {
+        RequestCreation( point, *droppedItem );
+        return true;
+    }
     return false;
 }
 
@@ -121,6 +127,27 @@ void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kerne
     UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Unit Creation" ), true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
+    action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+    action->Attach( *new ActionTasker( selected_, false ) );
+    action->RegisterAndPublish( actionsModel_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatsLayer::RequestCreation
+// Created: LDC 2010-10-01
+// -----------------------------------------------------------------------------
+void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type )
+{
+    kernel::Point location;
+    location.AddPoint( point );
+
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "automat_creation" );
+    UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Automat Creation" ), true );
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
+    int knowledgeGroup = 0; // $$$$ LDC FIXME TODO Retrieve knowledge group of parent automat
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), knowledgeGroup ) );
     action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( selected_, false ) );

@@ -33,6 +33,10 @@
         <source>sword-ot@masagroup.net</source>
         <translation>sword-ot@masagroup.net</translation>
     </message>
+    <message>
+        <source>Unhandled error</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AuthoringPage</name>

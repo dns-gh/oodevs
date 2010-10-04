@@ -11,8 +11,12 @@
 #include "UnitMagicAction.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/publisher_ABC.h"
-#include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/MagicActionType.h"
 
 using namespace actions;
 
@@ -80,7 +84,17 @@ void UnitMagicAction::Publish( Publisher_ABC& publisher ) const
     MsgsClientToSim::MsgUnitMagicAction_Type type =
         ( MsgsClientToSim::MsgUnitMagicAction_Type ) GetType().GetId();
     simulation::UnitMagicAction message;
-    message().mutable_id()->set_id( GetEntity().GetId() );
+    const kernel::Entity_ABC& entity = GetEntity();
+    if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
+        message().mutable_tasker()->mutable_unit()->set_id( GetEntity().GetId() );
+    else if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
+        message().mutable_tasker()->mutable_automat()->set_id( GetEntity().GetId() );
+    else if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
+        message().mutable_tasker()->mutable_formation()->set_id( GetEntity().GetId() );
+    else if( dynamic_cast< const kernel::Population_ABC* >( &entity ) )
+        message().mutable_tasker()->mutable_crowd()->set_id( GetEntity().GetId() );
+    else
+        throw std::runtime_error( "Unknown tasker" );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message.Send( publisher );
