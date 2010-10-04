@@ -70,6 +70,8 @@ public:
     bool               IsHLAEnabled              () const;
     const std::string& GetHLAFederation          () const;
     const std::string& GetHLAFederate            () const;
+    const std::string& GetHLAHost                () const;
+    const std::string& GetHLAPort                () const;
     const std::string& GetCheckpointNameTestMode () const;
 
     int                GetRandomSeed             () const;
@@ -151,6 +153,8 @@ private:
     bool           bPausedAtStartup_;
     std::string    hlaFederation_;
     std::string    hlaFederate_;
+    std::string    hlaHost_;
+    std::string    hlaPort_;
     std::string    strCheckPointNameTestMode_;
     T_CRCMap       CRCMap_;
     int            randomSeed_;

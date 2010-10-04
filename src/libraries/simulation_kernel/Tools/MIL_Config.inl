@@ -293,6 +293,26 @@ const std::string& MIL_Config::GetHLAFederate() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Config::GetHLAHost
+// Created: SLI 2010-10-04
+// -----------------------------------------------------------------------------
+inline
+const std::string& MIL_Config::GetHLAHost() const
+{
+    return hlaHost_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetHLAPort
+// Created: SLI 2010-10-04
+// -----------------------------------------------------------------------------
+inline
+const std::string& MIL_Config::GetHLAPort() const
+{
+    return hlaPort_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Config::GetCheckpointTestName
 // Created: JSR 2010-03-11
 // -----------------------------------------------------------------------------

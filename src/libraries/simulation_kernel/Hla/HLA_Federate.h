@@ -41,7 +41,7 @@ class HLA_Federate
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit HLA_Federate( const std::string& strFederateName );
+             HLA_Federate( const std::string& strFederateName, const std::string& host, const std::string& port );
     virtual ~HLA_Federate();
     //@}
 
