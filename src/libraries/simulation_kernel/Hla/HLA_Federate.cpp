@@ -49,11 +49,11 @@ namespace
 // Name: HLA_Federate constructor
 // Created: AGE 2004-11-05
 // -----------------------------------------------------------------------------
-HLA_Federate::HLA_Federate( const std::string& strFederateName, unsigned int nTimeStepDuration )
+HLA_Federate::HLA_Federate( const std::string& strFederateName )
     : pTimeFactory_       ( new hla::SimpleTimeFactory() )
     , pIntervalFactory_   ( new hla::SimpleTimeIntervalFactory() )
     , pAmbassador_        ( RtiAmbassador_ABC::CreateAmbassador( *pTimeFactory_, *pIntervalFactory_, RtiAmbassador_ABC::TimeStampOrder ) )
-    , pFederate_          ( new Federate( *pAmbassador_, strFederateName, hla::SimpleTime(), hla::SimpleTimeInterval( nTimeStepDuration ) ) )
+    , pFederate_          ( new Federate( *pAmbassador_, strFederateName, hla::SimpleTime(), hla::SimpleTimeInterval( 0 ) ) )
     , pUnitClass_         ( 0 )
     , pUnitRegistration_  ( 0 )
     , pObjectClass_       ( 0 )

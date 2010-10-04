@@ -41,7 +41,7 @@ class HLA_Federate
 public:
     //! @name Constructors/Destructor
     //@{
-             HLA_Federate( const std::string& strFederateName, unsigned int nTimeStepDuration );
+    explicit HLA_Federate( const std::string& strFederateName );
     virtual ~HLA_Federate();
     //@}
 

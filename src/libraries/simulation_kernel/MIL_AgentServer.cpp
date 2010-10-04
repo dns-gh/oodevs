@@ -151,7 +151,7 @@ void MIL_AgentServer::ReadHLA()
     if( !config_.IsHLAEnabled() )
         return;
     MT_LOG_INFO_MSG( "Initializing HLA" );
-    pFederate_ = new HLA_Federate( config_.GetHLAFederate(), nTimeStepDuration_ );
+    pFederate_ = new HLA_Federate( config_.GetHLAFederate() );
     if( ! pFederate_->Join( config_.GetHLAFederation() ) )
     {
         MT_LOG_WARNING_MSG( "Could not join federation '" << config_.GetHLAFederation() << "'" );
