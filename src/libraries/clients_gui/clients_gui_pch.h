@@ -10,7 +10,7 @@
 #ifndef __clients_gui_pch_h_
 #define __clients_gui_pch_h_
 
-#pragma warning( disable : 4231 4290 4702 )
+#pragma warning( disable : 4231 4290 4702 4355 )
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>

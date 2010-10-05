@@ -50,15 +50,12 @@ namespace
         return true;
     }
 
-    static unsigned long headerSize_ = 2 * sizeof( unsigned long );
-
     struct EncodingFixture
     {
         template< typename M >
         void Verify( M& message, unsigned int count = 1 )
         {
             const unsigned long tag = tools::MessageIdentifierFactory::GetIdentifier< M >();
-
             BOOST_REQUIRE( message.IsInitialized() );
             const boost::posix_time::ptime start = boost::posix_time::microsec_clock::universal_time();
             for( unsigned int i = 0; i < count; ++i )
@@ -72,7 +69,8 @@ namespace
                 BOOST_REQUIRE_NO_THROW( decoder.reset( new tools::MessageDecoder< M >( StripHeader( encodedCopy ) ) ) );
                 const M& decodedMessage = *decoder;
                 BOOST_CHECK( message == decodedMessage );
-                BOOST_CHECK_EQUAL( static_cast< unsigned long >( message.ByteSize() ), encodedMessage.Size() - headerSize_ );
+                static const unsigned long headerSize = 2 * sizeof( unsigned long );
+                BOOST_CHECK_EQUAL( static_cast< unsigned long >( message.ByteSize() ), encodedMessage.Size() - headerSize );
             }
             BOOST_TEST_MESSAGE( "Encoded " << count << " '" << typeid( message ).name() << "' message(s) in " << boost::posix_time::microsec_clock::universal_time() - start );
         }

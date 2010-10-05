@@ -19,6 +19,7 @@
 
 #pragma warning( disable : 4505 )
 #include <turtle/mock.hpp>
+
 std::string BOOST_RESOLVE( const std::string& filename );
 
 #endif // __dispatcher_kernel_test_pch_h_
