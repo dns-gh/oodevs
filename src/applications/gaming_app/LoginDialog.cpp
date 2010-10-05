@@ -29,7 +29,9 @@ namespace
             setText( profile_.GetLogin().isEmpty() ? tools::translate( "LoginDialog", "Anonymous" ) : profile_.GetLogin() );
             const QString pixmap = QString( "images/gaming/profile/%1%2.png" ).arg( profile_.IsSupervior() ? "supervisor" : "standard" )
                                                                               .arg( profile_.IsPasswordProtected() ? "_password" : "" );
-            setPixmap( QPixmap( tools::ExerciseConfig::BuildResourceChildFile( pixmap.ascii() ).c_str() ) );
+            QImage img( tools::ExerciseConfig::BuildResourceChildFile( pixmap.ascii() ).c_str() );
+            img = img.scale( 30, 30 );
+            setPixmap( img );
         }
 
         bool RequiresPassword() const { return profile_.IsPasswordProtected(); }
@@ -62,13 +64,15 @@ LoginDialog::LoginDialog( QWidget* pParent, const Profile& profile, Network& net
 
     {
         users_ = new QIconView( this );
-        users_->setGridX( 60 );
-        users_->setGridY( 60 );
+        users_->setGridX( 300 );
+        users_->setGridY( 30 );
         users_->setMinimumSize( 345, 200 );
-        users_->setWordWrapIconText( false );
+        users_->setWordWrapIconText( true );
         users_->setSorting( true );
         users_->setItemsMovable( false );
         users_->setHScrollBarMode( QScrollView::AlwaysOff );
+        users_->setItemTextPos( QIconView::Right );
+        users_->setResizeMode( QIconView::Adjust );
         connect( users_, SIGNAL( selectionChanged( QIconViewItem* ) ), SLOT( OnSelectItem( QIconViewItem* ) ) );
         connect( users_, SIGNAL( doubleClicked( QIconViewItem* ) ), SLOT( OnAccept() ) );
         connect( users_, SIGNAL( returnPressed( QIconViewItem* ) ), SLOT( OnAccept() ) );
