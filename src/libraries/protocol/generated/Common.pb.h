@@ -6459,6 +6459,13 @@ class MsgExercise : public ::google::protobuf::Message {
   inline bool running() const;
   inline void set_running(bool value);
   
+  // optional uint32 port = 3;
+  inline bool has_port() const;
+  inline void clear_port();
+  static const int kPortFieldNumber = 3;
+  inline ::google::protobuf::uint32 port() const;
+  inline void set_port(::google::protobuf::uint32 value);
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -6466,11 +6473,12 @@ class MsgExercise : public ::google::protobuf::Message {
   ::std::string* name_;
   static const ::std::string _default_name_;
   bool running_;
+  ::google::protobuf::uint32 port_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -15238,6 +15246,22 @@ inline bool MsgExercise::running() const {
 inline void MsgExercise::set_running(bool value) {
   _set_bit(1);
   running_ = value;
+}
+
+// optional uint32 port = 3;
+inline bool MsgExercise::has_port() const {
+  return _has_bit(2);
+}
+inline void MsgExercise::clear_port() {
+  port_ = 0u;
+  _clear_bit(2);
+}
+inline ::google::protobuf::uint32 MsgExercise::port() const {
+  return port_;
+}
+inline void MsgExercise::set_port(::google::protobuf::uint32 value) {
+  _set_bit(2);
+  port_ = value;
 }
 
 // -------------------------------------------------------------------

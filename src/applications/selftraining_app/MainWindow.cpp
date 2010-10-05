@@ -11,18 +11,20 @@
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
 #include "Config.h"
-#include "ExerciseService.h"
 #include "HomePage.h"
 #include "LinkInterpreter.h"
 #include "NetworkExerciseLister.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/Tools.h"
+#include "clients_kernel/Controllers.h"
+#include "frontend/Launcher.h"
 #include "tools/Version.h"
 
 #include <qapplication.h>
 #include <qwidgetstack.h>
 #include <qpixmap.h>
 #include <qpalette.h>
+#include <qtimer.h>
 
 namespace
 {
@@ -42,8 +44,9 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , config_( GetConfig() )
     , interpreter_( new LinkInterpreter( this, controllers ) )
-    , exercises_( new ExerciseService( controllers, *config_ ) )
-    , exerciseLister_( new NetworkExerciseLister( *config_ ) )
+    , launcher_( new frontend::Launcher( controllers, *config_ ) )
+    , exerciseLister_( new NetworkExerciseLister( this, controllers, *config_ ) )
+    , networkTimer_( new QTimer( this ) )
 {
     setCaption( tools::translate( "Application", "SWORD" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );
     setIcon( MAKE_PIXMAP( csword ) );
@@ -54,6 +57,9 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
     new HomePage( pages_, *config_, controllers, *exerciseLister_, *interpreter_ );
     setCentralWidget( pages_ );
     CenterWindow();
+
+    connect( networkTimer_, SIGNAL( timeout() ), SLOT( Update() ) );
+    networkTimer_->start( 100 );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +68,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
 // -----------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
-    // NOTHING
+    networkTimer_->stop();
+    launcher_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -117,6 +124,15 @@ void MainWindow::Maximize()
 {
     show();
     setActiveWindow();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::Update
+// Created: SBO 2010-10-01
+// -----------------------------------------------------------------------------
+void MainWindow::Update()
+{
+    launcher_->Update();
 }
 
 // -----------------------------------------------------------------------------

@@ -41,8 +41,6 @@ public:
 
     //! @name Operations
     //@{
-    unsigned short GetListServerPort() const;
-    unsigned short GetListClientPort() const;
     void SetProfile( EProfile profile );
     EProfile GetProfile() const;
     //@}
@@ -57,8 +55,6 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned short listServerPort_;
-    unsigned short listClientPort_;
     EProfile profile_;
     //@}
 };

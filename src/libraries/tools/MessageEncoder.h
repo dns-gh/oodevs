@@ -15,6 +15,7 @@
 #include <google/protobuf/Message.h>
 #include <google/protobuf/Descriptor.h>
 #pragma warning( pop )
+#include <sstream>
 
 namespace tools
 {

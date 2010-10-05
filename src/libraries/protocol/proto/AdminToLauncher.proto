@@ -49,7 +49,7 @@ message MsgAdminDirectoryChangeNotification {}
 
 message MsgAdminToLauncher {
     message Content {
-        optional MsgConnectionRequest    connection_request = 1;
+        optional MsgConnectionRequest                              connection_request                = 1;
         optional MsgControlStart                                   control_start                     = 2;
         optional MsgControlStop                                    control_stop                      = 3;
         optional MsgExercicesListRequest                           exercise_list_request             = 4;

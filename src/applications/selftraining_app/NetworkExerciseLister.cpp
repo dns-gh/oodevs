@@ -9,43 +9,32 @@
 
 #include "selftraining_app_pch.h"
 #include "NetworkExerciseLister.h"
+#include "moc_NetworkExerciseLister.cpp"
 #include "Config.h"
 #include "ExerciseList.h"
+#include "clients_kernel/Controllers.h"
 #include "frontend/commands.h"
-#pragma warning( push, 0 )
-#pragma warning( disable: 4512 )
-#include <boost/bind.hpp>
-#include <boost/thread.hpp>
-#include <boost/tokenizer.hpp>
+#include "frontend/Exercise.h"
+#include "frontend/Exercises.h"
+#include "frontend/LauncherClient.h"
 #include <boost/lexical_cast.hpp>
-
-#pragma warning( pop )
-
-using namespace boost::asio;
+#include <qtimer.h>
 
 // -----------------------------------------------------------------------------
 // Name: NetworkExerciseLister constructor
 // Created: LDC 2008-10-24
 // -----------------------------------------------------------------------------
-NetworkExerciseLister::NetworkExerciseLister( const Config& config, const std::string& subDir )
-    : config_( config )
+NetworkExerciseLister::NetworkExerciseLister( QObject* parent, kernel::Controllers& controllers, const Config& config, const std::string& subDir )
+    : controllers_( controllers )
+    , config_( config )
     , subDir_( subDir )
-    , socket_( 0 )
-    , thread_( 0 )
+    , launcher_( new frontend::LauncherClient( controllers.controller_ ) )
+    , list_( 0 )
+    , timer_( new QTimer( parent ) )
+    , pendingQuery_( false )
 {
-    try
-    {
-        socket_.reset( new boost::asio::ip::udp::socket( network_, ip::udp::endpoint( ip::udp::v4(), config.GetListClientPort() ) ) );
-        thread_.reset( new boost::thread( boost::bind( &NetworkExerciseLister::RunNetwork, this ) ) );
-        socket_->async_receive( buffer( answer_, 1024 ),
-                                boost::bind( &NetworkExerciseLister::OnReceive, this,
-                                              placeholders::error,
-                                              placeholders::bytes_transferred ) );
-    }
-    catch( ... )
-    {
-        // $$$$ SBO 2008-10-31: throw exception to warn user
-    }
+    connect( timer_, SIGNAL( timeout() ), SLOT( Update() ) );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,122 +43,55 @@ NetworkExerciseLister::NetworkExerciseLister( const Config& config, const std::s
 // -----------------------------------------------------------------------------
 NetworkExerciseLister::~NetworkExerciseLister()
 {
-    network_.stop();
-    if( thread_.get() )
-        thread_->join();
+    timer_->stop();
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetworkExerciseLister::AddList
-// Created: LDC 2008-10-24
+// Name: NetworkExerciseLister::QueryExercises
+// Created: SBO 2010-10-04
 // -----------------------------------------------------------------------------
-void NetworkExerciseLister::AddList( ExerciseList* list )
+void NetworkExerciseLister::QueryExercises( const std::string& host, unsigned int port, ExerciseList& list )
 {
-    lists_.push_back( list );
+    list_ = &list;
+    pendingQuery_ = true;
+    launcher_->Connect( host, port );
+    timer_->start( 100 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetworkExerciseLister::DownloadExercises
-// Created: LDC 2008-10-23
+// Name: NetworkExerciseLister::Update
+// Created: SBO 2010-10-04
 // -----------------------------------------------------------------------------
-void NetworkExerciseLister::DownloadExercises( const std::string& host, unsigned int port )
+void NetworkExerciseLister::Update()
 {
-    Send( host, port );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetworkExerciseLister::RunNetwork
-// Created: LDC 2008-10-24
-// -----------------------------------------------------------------------------
-void NetworkExerciseLister::RunNetwork()
-{
-    network_.run();
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetworkExerciseLister::OnReceive
-// Created: LDC 2008-10-23
-// -----------------------------------------------------------------------------
-void NetworkExerciseLister::OnReceive( const boost::system::error_code& error, size_t bytes_received )
-{
-    ClearListeners();
-    if( !error )
+    if( launcher_->Connected() && pendingQuery_ )
     {
-        const std::string exercises( answer_, bytes_received );
-        typedef boost::tokenizer< boost::char_separator< char > > T_Tokenizer;
-        boost::char_separator< char > separator( "," );
-        const T_Tokenizer tok( exercises, separator );
-        for( T_Tokenizer::const_iterator it = tok.begin(); it != tok.end(); ++it )
-        {
-            std::string token = *it;
-            int dotPosition = token.find( ":" );
-            std::string scenario = token.substr( 0, dotPosition );
-            std::string port = token.substr( dotPosition + 1, token.length() - dotPosition -1 );
-            UpdateListeners( scenario, port );
-        }
+        exercises_.clear();
+        if( list_ )
+            list_->Clear();
+        launcher_->QueryExerciseList();
+        pendingQuery_ = false;
     }
-    else
+    launcher_->Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetworkExerciseLister::NotifyUpdated
+// Created: SBO 2010-10-01
+// -----------------------------------------------------------------------------
+void NetworkExerciseLister::NotifyUpdated( const frontend::Exercises& exercises )
+{
+    if( launcher_->Connected() )
+        launcher_->Disconnect();
+    tools::Iterator< const frontend::Exercise& > it( exercises.CreateIterator() );
+    while( it.HasMoreElements() )
     {
-        for( CIT_Lists it = lists_.begin(); it != lists_.end(); ++it )
-            (*it)->Update();
+        const frontend::Exercise& exercise = it.NextElement();
+        if( exercise.IsRunning() )
+            exercises_[ exercise.GetName() ] = exercise.GetPort();
     }
-    socket_->async_receive( buffer( answer_, 1024 ),
-                            boost::bind( &NetworkExerciseLister::OnReceive, this,
-                                          placeholders::error,
-                                          placeholders::bytes_transferred ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetworkExerciseLister::Send
-// Created: LDC 2008-10-23
-// -----------------------------------------------------------------------------
-void NetworkExerciseLister::Send( const std::string& host, unsigned int port )
-{
-    try
-    {
-        if( !socket_.get() )
-            return;
-        ip::udp::resolver resolver( network_ );
-        ip::udp::resolver::query query( host, boost::lexical_cast< std::string >( port ) );
-        ip::udp::resolver::iterator iterator = resolver.resolve(query);
-        ip::udp::endpoint endpoint = *iterator;
-        socket_->async_send_to( buffer( "exercises" ), endpoint, boost::bind( &NetworkExerciseLister::OnSendExercisesRequest, this, placeholders::error ) );
-    }
-    catch( ... )
-    {
-        // NOTHING
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetworkExerciseLister::OnSendExercisesRequest
-// Created: LDC 2008-10-23
-// -----------------------------------------------------------------------------
-void NetworkExerciseLister::OnSendExercisesRequest( const boost::system::error_code& /*error*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetworkExerciseLister::ClearListeners
-// Created: LDC 2008-10-24
-// -----------------------------------------------------------------------------
-void NetworkExerciseLister::ClearListeners()
-{
-    exercises_.clear();
-    for( CIT_Lists it = lists_.begin(); it != lists_.end(); ++it )
-        (*it)->Clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: NetworkExerciseLister::UpdateListeners
-// Created: LDC 2008-10-24
-// -----------------------------------------------------------------------------
-void NetworkExerciseLister::UpdateListeners( const std::string& scenario, const std::string& port )
-{
-    exercises_[ scenario ] = boost::lexical_cast< unsigned short >( port );
-    for( CIT_Lists it = lists_.begin(); it != lists_.end(); ++it )
-        (*it)->Update();
+    list_->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -178,14 +100,9 @@ void NetworkExerciseLister::UpdateListeners( const std::string& scenario, const 
 // -----------------------------------------------------------------------------
 void NetworkExerciseLister::ListExercises( QStringList& list ) const
 {
-    if( exercises_.empty() )
-        list = frontend::commands::ListExercises( config_, subDir_ );
-    else
-    {
-        list.clear();
-        for ( CIT_PortDictionary it = exercises_.begin(); it != exercises_.end(); ++it )
-            list.append( it->first.c_str() );
-    }
+    list.clear();
+    for( T_PortDictionary::const_iterator it = exercises_.begin(); it != exercises_.end(); ++it )
+        list.append( it->first.c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,9 +111,9 @@ void NetworkExerciseLister::ListExercises( QStringList& list ) const
 // -----------------------------------------------------------------------------
 unsigned short NetworkExerciseLister::GetPort( const QString& exercise ) const
 {
-    std::string exerciseStr = exercise.ascii();
-    CIT_PortDictionary it = exercises_.find( exerciseStr );
+    const std::string exerciseName = exercise.ascii();
+    T_PortDictionary::const_iterator it = exercises_.find( exerciseName );
     if( it != exercises_.end() )
-        return it->second;
+        return unsigned short( it->second );
     return 0;
 }

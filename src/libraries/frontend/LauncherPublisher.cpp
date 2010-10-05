@@ -3,53 +3,51 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 MASA Group
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
-#include "selftraining_app_pch.h"
-#include "Config.h"
+#include "frontend_pch.h"
+#include "LauncherPublisher.h"
+#include "protocol/LauncherSenders.h"
+#include "tools/MessageSender_ABC.h"
 
-#pragma warning( push )
-#pragma warning( disable: 4127 4511 4512 )
-#include <boost/program_options.hpp>
-#pragma warning( pop )
-
-namespace po = boost::program_options;
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
-// Name: Config constructor
-// Created: LDC 2008-10-27
+// Name: LauncherPublisher constructor
+// Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-Config::Config()
-    : profile_( eAdministrator )
+LauncherPublisher::LauncherPublisher( tools::MessageSender_ABC& sender, const std::string& endpoint )
+    : sender_( sender )
+    , endpoint_( endpoint )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config destructor
-// Created: LDC 2008-10-27
+// Name: LauncherPublisher destructor
+// Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-Config::~Config()
+LauncherPublisher::~LauncherPublisher()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::SetProfile
-// Created: JSR 2010-07-12
+// Name: LauncherPublisher::Send
+// Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-void Config::SetProfile( EProfile profile )
+void LauncherPublisher::Send( const MsgsAdminToLauncher::MsgAdminToLauncher& message )
 {
-    profile_ = profile;
+    sender_.Send( endpoint_, message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::GetProfile
-// Created: JSR 2010-07-12
+// Name: LauncherPublisher::Send
+// Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-Config::EProfile Config::GetProfile() const
+void LauncherPublisher::Send( const MsgsLauncherToAdmin::MsgLauncherToAdmin& message )
 {
-    return profile_;
+    sender_.Send( endpoint_, message );
 }

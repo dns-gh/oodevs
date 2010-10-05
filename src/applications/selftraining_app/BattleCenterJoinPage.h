@@ -46,7 +46,7 @@ private slots:
     //@{
     virtual void OnJoin();
     void SelectExercise( const QString& exercise, const Profile& profile );
-    void ReloadExerciseList();
+    void UpdateExerciseList();
     //@}
 
 private:
@@ -54,11 +54,6 @@ private:
     //@{
     BattleCenterJoinPage( const BattleCenterJoinPage& );            //!< Copy constructor
     BattleCenterJoinPage& operator=( const BattleCenterJoinPage& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void Update();
     //@}
 
 private:

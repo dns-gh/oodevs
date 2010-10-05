@@ -47,17 +47,15 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
         label = new QLabel( tools::translate( "BattleCenterJoinPage", "Port:" ), hbox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
         port_ = new QSpinBox( hbox );
-        port_->setMaxValue( 32000 );
-        port_->setValue( config.GetListServerPort() );
+        port_->setMaxValue( 65535 );
+        port_->setValue( config.GetLauncherPort() );
         QPushButton* pButton = new QPushButton( tools::translate( "BattleCenterJoinPage", "Update" ), hbox );
-        connect( pButton, SIGNAL( clicked() ), this, SLOT( ReloadExerciseList() ) );
+        connect( pButton, SIGNAL( clicked() ), SLOT( UpdateExerciseList() ) );
     }
     {
         exercises_ = new ExerciseList( box, config_, exerciseLister_, "", true, true, true, false );
-        exerciseLister_.AddList( exercises_ );
-        connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( SelectExercise( const QString&, const Profile& ) ) );
+        connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), SLOT( SelectExercise( const QString&, const Profile& ) ) );
     }
-    ReloadExerciseList();
     EnableButton( eButtonJoin, false );
     AddContent( box );
 }
@@ -69,15 +67,6 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
 BattleCenterJoinPage::~BattleCenterJoinPage()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: BattleCenterJoinPage::Update
-// Created: SBO 2008-10-14
-// -----------------------------------------------------------------------------
-void BattleCenterJoinPage::Update()
-{
-//    exercises_->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -112,10 +101,10 @@ void BattleCenterJoinPage::OnJoin()
 }
 
 // -----------------------------------------------------------------------------
-// Name: BattleCenterJoinPage::ReloadExerciseList
+// Name: BattleCenterJoinPage::UpdateExerciseList
 // Created: LDC 2008-10-23
 // -----------------------------------------------------------------------------
-void BattleCenterJoinPage::ReloadExerciseList()
+void BattleCenterJoinPage::UpdateExerciseList()
 {
-    exerciseLister_.DownloadExercises( host_->text().ascii(), static_cast< unsigned int >( port_->value() ) );
+    exerciseLister_.QueryExercises( host_->text().ascii(), static_cast< unsigned int >( port_->value() ), *exercises_ );
 }

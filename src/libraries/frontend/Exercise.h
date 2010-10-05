@@ -3,54 +3,60 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __frontend_Config_h_
-#define __frontend_Config_h_
+#ifndef __Exercise_h_
+#define __Exercise_h_
 
-#include "tools/GeneralConfig.h"
+namespace Common
+{
+    class MsgExercise;
+}
 
 namespace frontend
 {
 
 // =============================================================================
-/** @class  Config
-    @brief  Config
+/** @class  Exercise
+    @brief  Exercise
 */
-// Created: SBO 2008-03-14
+// Created: SBO 2010-10-01
 // =============================================================================
-class Config : public tools::GeneralConfig
+class Exercise
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             Config();
-    virtual ~Config();
+    explicit Exercise( const Common::MsgExercise& message );
+    virtual ~Exercise();
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
-    std::string GetPackageFile() const;
-    unsigned short GetLauncherPort() const;
+    std::string GetName() const;
+    unsigned int GetPort() const;
+    bool IsRunning() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Config( const Config& );            //!< Copy constructor
-    Config& operator=( const Config& ); //!< Assignment operator
+    Exercise( const Exercise& );            //!< Copy constructor
+    Exercise& operator=( const Exercise& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string package_;
-    unsigned short launcherPort_;
+    const std::string name_;
+    const unsigned int port_;
+    bool running_;
     //@}
 };
 
 }
 
-#endif // __frontend_Config_h_
+#endif // __Exercise_h_

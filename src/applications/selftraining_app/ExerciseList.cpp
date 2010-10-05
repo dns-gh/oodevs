@@ -169,6 +169,7 @@ ExerciseList::~ExerciseList()
 // -----------------------------------------------------------------------------
 void ExerciseList::Update()
 {
+    qApp->setOverrideCursor( QCursor::WaitCursor );
     if( editTerrainList_ && editModelList_ )
     {
         editTerrainList_->clear();
@@ -341,6 +342,7 @@ void ExerciseList::customEvent( QCustomEvent* e )
         exercises_->sort();
         if( exercises_->childCount() )
             exercises_->setSelected( exercises_->firstChild(), true );
+        qApp->restoreOverrideCursor();
     }
     else if( e->type() == 4243 )
     {

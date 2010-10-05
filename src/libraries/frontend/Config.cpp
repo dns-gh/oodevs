@@ -51,10 +51,12 @@ namespace
 // -----------------------------------------------------------------------------
 Config::Config()
     : GeneralConfig( GetDefaultRoot( tools::translate( "Application", "SWORD" ).ascii() ) )
+    , launcherPort_( 33000 )
 {
     po::options_description desc( "Frontend options" );
     desc.add_options()
-        ( "install" , po::value( &package_ ), "specify the package to install" )
+        ( "install"      , po::value( &package_      ), "specify the package to install" )
+        ( "launcher-port", po::value( &launcherPort_ ), "specify the launcher server listening port" )
     ;
     AddOptions( desc );
 }
@@ -75,4 +77,13 @@ Config::~Config()
 std::string Config::GetPackageFile() const
 {
     return package_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetLauncherPort
+// Created: SBO 2010-10-01
+// -----------------------------------------------------------------------------
+unsigned short Config::GetLauncherPort() const
+{
+    return launcherPort_;
 }

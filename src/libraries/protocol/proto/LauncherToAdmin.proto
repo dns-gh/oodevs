@@ -32,8 +32,8 @@ message MsgExercicesListResponse {
         success = 0;
         failure	= 1;
     }
-    required ErrorCode          error_code  = 1;
-    repeated Common.MsgExercise exercise    = 2;
+    required ErrorCode          error_code = 1;
+    repeated Common.MsgExercise exercise   = 2;
 }
 
 message MsgConnectedProfileList {
@@ -82,10 +82,10 @@ message MsgSimulationComponentState {
 
 message MsgLauncherToAdmin {
     message Content {
-        optional MsgConnectionAck           connection_ack         = 1;
-        optional MsgExercicesListResponse   exercise_list_response = 2;
-        optional MsgControlStartAck         control_start_ack      = 3;
-        optional MsgControlStopAck          control_stop_ack       = 4;
+        optional MsgConnectionAck                                     connection_ack                        = 1;
+        optional MsgExercicesListResponse                             exercise_list_response                = 2;
+        optional MsgControlStartAck                                   control_start_ack                     = 3;
+        optional MsgControlStopAck                                    control_stop_ack                      = 4;
         optional MsgsSimToClient.MsgControlCheckPointSetFrequencyAck  control_checkpoint_set_frequency_ack  = 5;
         optional Common.MsgUnitChangeSuperior                         unit_change_superior                  = 6;
         optional Common.MsgAutomatChangeSuperior                      automat_change_superior               = 7;

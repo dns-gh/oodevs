@@ -10,22 +10,24 @@
 #ifndef __ExerciseLister_h_
 #define __ExerciseLister_h_
 
-#pragma warning( push )
-#pragma warning( disable: 4512 )
-#ifndef _WIN32_WINNT
-#   define _WIN32_WINNT 0x0501
-#endif
-#include <boost/asio.hpp>
-#pragma warning( pop )
 #include "ExerciseLister_ABC.h"
+#include "tools/ElementObserver_ABC.h"
+#include <map>
 
-namespace boost
+namespace frontend
 {
-    class thread;
+    class Exercises;
+    class LauncherClient;
 }
 
-class ExerciseList;
+namespace kernel
+{
+    class Controllers;
+}
+
 class Config;
+class ExerciseList;
+class QTimer;
 
 // =============================================================================
 /** @class  NetworkExerciseLister
@@ -33,21 +35,31 @@ class Config;
 */
 // Created: LDC 2008-10-24
 // =============================================================================
-class NetworkExerciseLister : public ExerciseLister_ABC
+class NetworkExerciseLister : public QObject
+                            , public ExerciseLister_ABC
+                            , public tools::Observer_ABC
+                            , public tools::ElementObserver_ABC< frontend::Exercises >
 {
+    Q_OBJECT;
+
 public:
     //! @name Constructors/Destructor
     //@{
-             NetworkExerciseLister( const Config& config, const std::string& subDir ="" );
+             NetworkExerciseLister( QObject* parent, kernel::Controllers& controllers, const Config& config, const std::string& subDir ="" );
     virtual ~NetworkExerciseLister();
     //@}
 
     //! @name Operations
     //@{
-    void DownloadExercises( const std::string& host, unsigned int port );
-    void AddList( ExerciseList* list );
+    void QueryExercises( const std::string& host, unsigned int port, ExerciseList& list );
     virtual void ListExercises( QStringList& list ) const;
     virtual unsigned short GetPort( const QString& exercise ) const;
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void Update();
     //@}
 
 private:
@@ -59,33 +71,25 @@ private:
 
     //! @name Helpers
     //@{
-    void OnSendExercisesRequest( const boost::system::error_code& error );
-    void Send( const std::string& host, unsigned int port );
-    void OnReceive( const boost::system::error_code& error, size_t bytes_received );
-    void RunNetwork();
-    void ClearListeners();
-    void UpdateListeners( const std::string& scenario, const std::string& port );
+    virtual void NotifyUpdated( const frontend::Exercises& exercises );
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< ExerciseList* > T_Lists;
-    typedef T_Lists::const_iterator    CIT_Lists;
-    typedef std::map< std::string, unsigned short > T_PortDictionary;
-    typedef T_PortDictionary::const_iterator      CIT_PortDictionary;
+    typedef std::map< std::string, unsigned int > T_PortDictionary;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const Config&                  config_;
-    std::string                    subDir_;
-    boost::asio::io_service        network_;
-    std::auto_ptr< boost::asio::ip::udp::socket > socket_;
-    char                           answer_[1024];
-    std::auto_ptr< boost::thread > thread_;
-    T_Lists                        lists_;
-    T_PortDictionary               exercises_;
+    kernel::Controllers& controllers_;
+    const Config& config_;
+    std::string subDir_;
+    std::auto_ptr< frontend::LauncherClient > launcher_;
+    ExerciseList* list_;
+    T_PortDictionary exercises_;
+    QTimer* timer_;
+    bool pendingQuery_;
     //@}
 };
 
