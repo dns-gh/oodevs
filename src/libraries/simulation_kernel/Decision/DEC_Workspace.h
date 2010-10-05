@@ -35,7 +35,7 @@ namespace brain
 class DEC_Workspace : private boost::noncopyable
 {
 public:
-     DEC_Workspace( MIL_Config& config );
+    explicit DEC_Workspace( MIL_Config& config );
     virtual ~DEC_Workspace();
 
     //! @name Fonction dia
@@ -45,9 +45,9 @@ public:
 
     //! @name Models management
     //@{
-    const DEC_Model_ABC*       FindModelPion         ( const std::string& strModelName  ) const;
-    const DEC_Model_ABC*       FindModelAutomate     ( const std::string& strModelName  ) const;
-    const DEC_Model_ABC*       FindModelPopulation   ( const std::string& strModelName  ) const;
+    const DEC_Model_ABC* FindModelPion( const std::string& strModelName  ) const;
+    const DEC_Model_ABC* FindModelAutomate( const std::string& strModelName  ) const;
+    const DEC_Model_ABC* FindModelPopulation( const std::string& strModelName  ) const;
     //@}
 
     void InitKnowledges( directia::brain::Brain& brain ) const;

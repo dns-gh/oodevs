@@ -50,7 +50,7 @@ MIL_Army_ABC* MIL_Object_ABC::GetArmy()
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T >             T& MIL_Object_ABC::GetAttribute
+// Name: MIL_Object_ABC::GetAttribute
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
 template< typename T > T& MIL_Object_ABC::GetAttribute()
@@ -59,7 +59,7 @@ template< typename T > T& MIL_Object_ABC::GetAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T >             T& MIL_Object_ABC::GetAttribute
+// Name: MIL_Object_ABC::GetAttribute
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
 template< typename T > const T& MIL_Object_ABC::GetAttribute() const
@@ -68,7 +68,7 @@ template< typename T > const T& MIL_Object_ABC::GetAttribute() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > T& MIL_Object_ABC::GetAttribute
+// Name: MIL_Object_ABC::GetAttribute
 // Created: JCR 2008-05-26
 // -----------------------------------------------------------------------------
 template< typename T, typename I > T& MIL_Object_ABC::GetAttribute()
@@ -83,7 +83,7 @@ template< typename T, typename I > T& MIL_Object_ABC::GetAttribute()
     return *static_cast< T* >( attribute );
 }
 // -----------------------------------------------------------------------------
-// Name: template< typename T > T* MIL_Object_ABC::RetrieveAttribute
+// Name: MIL_Object_ABC::RetrieveAttribute
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
 template< typename T > 
@@ -93,7 +93,7 @@ T* MIL_Object_ABC::RetrieveAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > T* MIL_Object_ABC::RetrieveAttribute
+// Name: MIL_Object_ABC::RetrieveAttribute
 // Created: LDC 2009-03-25
 // -----------------------------------------------------------------------------
 template< typename T > 
@@ -114,7 +114,7 @@ void MIL_Object_ABC::AddCapacity( T* capacity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T> void MIL_Object_ABC::ProcessAgentsInside
+// Name: MIL_Object_ABC::ProcessAgentsInside
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
 template< typename Functor > 
@@ -123,9 +123,8 @@ void MIL_Object_ABC::ProcessAgentsInside( Functor functor ) const
     interaction_.ProcessInteraction( functor );
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: template< typename T > void Object::SetAttribute
+// Name: MIL_Object_ABC::SetAttribute
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 template< typename T, typename I >
