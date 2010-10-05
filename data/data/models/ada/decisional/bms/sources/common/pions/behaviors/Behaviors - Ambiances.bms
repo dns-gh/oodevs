@@ -43,7 +43,6 @@ do
                         else
                             F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                         end
-
                     end
                 end
 

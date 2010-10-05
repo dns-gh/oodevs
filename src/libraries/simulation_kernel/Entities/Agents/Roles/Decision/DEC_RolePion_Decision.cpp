@@ -538,6 +538,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Agent_RoePopulation" ] = boost::bind( &DEC_AgentFunctions::GetRoePopulation, boost::cref( GetPion() ) );
     brain[ "DEC_HasDotation" ] =
         boost::function< bool ( const PHY_DotationCategory* ) >( boost::bind( &DEC_AgentFunctions::HasDotation, boost::cref( GetPion() ), _1 ) );
+    brain[ "DEC_CanUseDotation" ] =
+        boost::function< bool ( const PHY_DotationCategory* ) >( boost::bind( &DEC_AgentFunctions::CanUseDotation, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Agent_IlluminateRange" ] = boost::bind( &DEC_AgentFunctions::GetIlluminatingRange, boost::cref( GetPion() ) );
  
 

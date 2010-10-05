@@ -23,10 +23,13 @@
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
@@ -41,7 +44,9 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "DEC_AutomateFunctions.h"
 #include "DEC_GeometryFunctions.h"
+#include "DotationComputer_ABC.h"
 #include "protocol/ClientSenders.h"
+
 
 //-----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsNeutralized
@@ -762,6 +767,56 @@ bool DEC_AgentFunctions::HasDotation( const MIL_Agent_ABC& callerAgent, const PH
 {
     return callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().GetDotationNumber( *category ) > 0;
 }
+
+namespace
+{
+    class CanUseDotationComputer : public dotation::DotationComputer_ABC
+    {
+    public:
+        //! @name Constructors/Destructor
+        //@{
+        CanUseDotationComputer( const PHY_DotationCategory* category ) : category_( category ), result_( true ) {}
+        virtual ~CanUseDotationComputer() {}
+        //@}
+
+        //! @name Operations
+        //@{
+        virtual void SetDotationContainer( PHY_DotationGroupContainer& /*container*/ ) {}
+        virtual bool HasDotation( const PHY_DotationCategory& /*category*/ ) const { return false; }
+        virtual double GetDotationValue( const PHY_DotationCategory& /*category*/ ) const { return 0.; }
+        virtual double GetDotationCapacity( const PHY_DotationCategory& /*category*/ ) const { return 0.; }
+        virtual void SetForbiddenAmmunition( const std::vector< const PHY_DotationCategory* >* container )
+        {
+            if( container )
+                for( std::vector< const PHY_DotationCategory* >::const_iterator it = container->begin(); it != container->end(); ++it )
+                {
+                    if( category_ == *it )
+                    {
+                        result_ = false;
+                        return;
+                    }
+                }
+        }
+
+        //@}
+        bool result_;
+    private:
+        const PHY_DotationCategory* category_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanUseDotation
+// Created: HBD 2010-10-01
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::CanUseDotation( MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category )
+{
+    CanUseDotationComputer dotationComputer( category );
+
+    callerAgent.Execute<dotation::DotationComputer_ABC>( dotationComputer );
+    return dotationComputer.result_;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::Suicide

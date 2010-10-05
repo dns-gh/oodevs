@@ -114,6 +114,7 @@ public:
 
     //Dotations
     static bool HasDotation( const MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category );
+    static bool CanUseDotation( MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category );
 
     // Installation
     static bool IsInstalled( const MIL_Agent_ABC& callerAgent );

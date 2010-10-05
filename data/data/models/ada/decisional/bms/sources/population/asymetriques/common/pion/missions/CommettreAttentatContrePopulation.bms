@@ -75,7 +75,14 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                             self.ePhaseMission = eSExfiltrer
                         end
                     end
-
+                    if( false == DEC_CanUseDotation( self._namedParams.mission.dotation_ ) ) then
+                        do
+                            DEC_RC( eRC_TirIndirectForbiddenAmmo )
+                            DEC_RC( eRC_MissionImpossible )
+                            Activate( self.activations.ACT_Info_Trace, 1, { "Forbidden Dotation: mission impossible", } )
+                            self.ePhaseMission = eSExfiltrer
+                        end
+                    end
                     _continue = false
                 --[[// Infiltration
 ]]                cases_switch_1[1] = true

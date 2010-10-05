@@ -399,6 +399,7 @@ public:
         eRC_DebutAppui,
         eRC_FinAppui,
         eRC_ObjetNonContournable,
+        eRC_TirIndirectForbiddenAmmo,
 
         eRC_TirIndirectSurCible = 271,
         eRC_MunitionInterdite = 302,
