@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-05 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_Federate.cpp $
-// $Author: Age $
-// $Modtime: 24/02/05 15:13 $
-// $Revision: 25 $
-// $Workfile: HLA_Federate.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "HLA_Federate.h"

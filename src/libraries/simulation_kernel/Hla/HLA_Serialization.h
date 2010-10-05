@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-10 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_Serialization.h $
-// $Author: Age $
-// $Modtime: 10/12/04 11:32 $
-// $Revision: 6 $
-// $Workfile: HLA_Serialization.h $
-//
-// *****************************************************************************
 
 #ifndef __HLA_Serialization_h_
 #define __HLA_Serialization_h_

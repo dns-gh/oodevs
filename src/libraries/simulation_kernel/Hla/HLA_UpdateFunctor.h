@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-08 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_UpdateFunctor.h $
-// $Author: Age $
-// $Modtime: 13/12/04 9:59 $
-// $Revision: 2 $
-// $Workfile: HLA_UpdateFunctor.h $
-//
-// *****************************************************************************
 
 #ifndef __HLA_UpdateFunctor_h_
 #define __HLA_UpdateFunctor_h_
@@ -22,7 +13,6 @@
 #include <hla/UpdateFunctor_ABC.h>
 #include <hla/AttributeIdentifier.h>
 #include <hla/Serializer.h>
-#include "HLA_Serialization.h"
 
 // =============================================================================
 /** @class  HLA_UpdateFunctor
@@ -35,7 +25,7 @@ class HLA_UpdateFunctor
 public:
     //! @name Constructors/Destructor
     //@{
-            HLA_UpdateFunctor( hla::UpdateFunctor_ABC& functor, bool bUpdateAll );
+             HLA_UpdateFunctor( hla::UpdateFunctor_ABC& functor, bool bUpdateAll );
     virtual ~HLA_UpdateFunctor();
     //@}
 

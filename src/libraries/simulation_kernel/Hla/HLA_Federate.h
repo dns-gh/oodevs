@@ -48,8 +48,8 @@ public:
     //! @name Operations
     //@{
     bool Join( const std::string& strFederationName );
-    void Register  ( MIL_AgentPion& agent );
-    void Register  ( MIL_Object_ABC& object );
+    void Register( MIL_AgentPion& agent );
+    void Register( MIL_Object_ABC& object );
     void Unregister( MIL_Object_ABC& object );
 
     void Step();
@@ -81,26 +81,22 @@ private:
     typedef T_AgentMap::const_iterator                      CIT_AgentMap;
 
     typedef std::map< hla::ObjectIdentifier, MIL_Object_ABC* > T_ObjectMap;
-    typedef T_ObjectMap::const_iterator                   CIT_ObjectMap;
+    typedef T_ObjectMap::const_iterator                      CIT_ObjectMap;
     //@}
 
 private:
     //! @name Member data
     //@{
-    hla::TimeFactory_ABC*         pTimeFactory_;
+    hla::TimeFactory_ABC* pTimeFactory_;
     hla::TimeIntervalFactory_ABC* pIntervalFactory_;
-    hla::RtiAmbassador_ABC*       pAmbassador_;
-    hla::Federate*                pFederate_;
-
-    hla::Class< HLA_RoleInterface >*                  pUnitClass_;
+    hla::RtiAmbassador_ABC* pAmbassador_;
+    hla::Federate* pFederate_;
+    hla::Class< HLA_RoleInterface >* pUnitClass_;
     hla::ObjectRegistration_ABC< HLA_RoleInterface >* pUnitRegistration_;
-
-    hla::Class< HLA_Object_ABC >*                    pObjectClass_;
-    hla::ObjectRegistration_ABC< HLA_Object_ABC >*   pObjectRegistration_;
-
-    HLA_InteractionManager*     pInteractionManager_;
-
-    T_AgentMap  localAgents_;
+    hla::Class< HLA_Object_ABC >* pObjectClass_;
+    hla::ObjectRegistration_ABC< HLA_Object_ABC >* pObjectRegistration_;
+    HLA_InteractionManager* pInteractionManager_;
+    T_AgentMap localAgents_;
     T_ObjectMap localObjects_;
     //@}
 };

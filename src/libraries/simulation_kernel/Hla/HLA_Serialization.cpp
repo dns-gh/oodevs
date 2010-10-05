@@ -9,12 +9,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "HLA_Serialization.h"
-#include <hla/Serializer.h>
-#include <hla/Deserializer.h>
-#include <hla/ObjectIdentifier.h>
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_World.h"
 #include "tools/MIL_Tools.h"
+#include <hla/Serializer.h>
+#include <hla/Deserializer.h>
+#include <hla/ObjectIdentifier.h>
 
 using namespace hla;
 

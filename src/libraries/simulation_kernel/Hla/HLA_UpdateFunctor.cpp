@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2004-11-08 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Hla/HLA_UpdateFunctor.cpp $
-// $Author: Age $
-// $Modtime: 13/12/04 9:59 $
-// $Revision: 2 $
-// $Workfile: HLA_UpdateFunctor.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "HLA_UpdateFunctor.h"
@@ -26,7 +17,7 @@ using namespace hla;
 // Created: AGE 2004-11-08
 // -----------------------------------------------------------------------------
 HLA_UpdateFunctor::HLA_UpdateFunctor( UpdateFunctor_ABC& functor, bool bUpdateAll )
-    : functor_( functor )
+    : functor_   ( functor )
     , bUpdateAll_( bUpdateAll )
 {
     // NOTHING
