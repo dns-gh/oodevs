@@ -39,6 +39,7 @@ HLA_DistantObject::HLA_DistantObject( const ObjectIdentifier& objectId, HLA_Inte
     , rBypassPercentage_      ( 0 )
     , id_                     ( objectId )
     , interactionManager_     ( interactionManager )
+    , isDestroying_           ( false )
 {
     // NOTHING
 }
@@ -209,6 +210,7 @@ void HLA_DistantObject::Destroy()
 {
     if( pObject_ )
         pObject_->MarkForDestruction();
+    isDestroying_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -226,5 +228,5 @@ ObjectIdentifier HLA_DistantObject::GetId() const
 // -----------------------------------------------------------------------------
 bool HLA_DistantObject::HideObject() const
 {
-    return true;
+    return ! isDestroying_;
 }

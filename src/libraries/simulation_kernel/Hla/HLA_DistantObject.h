@@ -79,6 +79,7 @@ private:
     double rBypassPercentage_;
     hla::ObjectIdentifier id_;
     HLA_InteractionManager_ABC& interactionManager_;
+    bool isDestroying_;
     //@}
 };
 
