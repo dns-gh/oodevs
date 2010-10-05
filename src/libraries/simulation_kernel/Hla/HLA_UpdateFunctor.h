@@ -13,6 +13,7 @@
 #include <hla/UpdateFunctor_ABC.h>
 #include <hla/AttributeIdentifier.h>
 #include <hla/Serializer.h>
+#include "HLA_Serialization.h"
 
 // =============================================================================
 /** @class  HLA_UpdateFunctor
