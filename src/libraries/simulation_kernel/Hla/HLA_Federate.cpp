@@ -209,10 +209,11 @@ void HLA_Federate::Register( MIL_Object_ABC& object )
 void HLA_Federate::Unregister( MIL_Object_ABC& object )
 {
     assert( pObjectClass_ );
-    if( ! object.GetHLAView() )
-        throw std::exception( "local object has no HLA view" );
-    localObjects_.erase( object.GetHLAView()->GetId() );
-    pObjectClass_->Unregister( *object.GetHLAView() );
+    if( object.GetHLAView() )
+    {
+        localObjects_.erase( object.GetHLAView()->GetId() );
+        pObjectClass_->Unregister( *object.GetHLAView() );
+    }
 }
 
 // -----------------------------------------------------------------------------

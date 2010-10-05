@@ -96,6 +96,8 @@ void MIL_ObjectManager::UpdateStates()
         if( object.IsReadyForDeletion() )
         {
             object.SendDestruction();
+            if( MIL_Singletons::GetHla() )
+                MIL_Singletons::GetHla()->Unregister( object );
             delete &object;
             it = objects_.erase( it );
         }

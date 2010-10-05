@@ -34,8 +34,7 @@ HLA_LocalObject::HLA_LocalObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 HLA_LocalObject::~HLA_LocalObject()
 {
-    if( MIL_AgentServer::GetWorkspace().GetHLAFederate() )
-        MIL_AgentServer::GetWorkspace().GetHLAFederate()->Unregister( object_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
