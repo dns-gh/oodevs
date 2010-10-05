@@ -284,10 +284,8 @@ bool NBCAttribute::ReadAgents( const std::string& strAgents )
     std::istringstream stream( strAgents );
     std::string strAgent;
     while( std::getline( stream, strAgent ) )
-    {
         if( !Insert( strAgent ) )
             return false;
-    }
     return true;
 }
 
