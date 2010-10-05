@@ -33,9 +33,19 @@ BOOST_CLASS_EXPORT_IMPLEMENT( InputToxicCloudAttribute )
 
 namespace
 {
+    geometry::Point2d ConvertToLatLong( const MT_Float& posX, const MT_Float& posY )
+    {
+        double latitude, longitude;
+        TER_World::GetWorld().SimToMosMgrsCoord( MT_Vector2D( posX, posY ), latitude, longitude );
+        return geometry::Point2d( longitude, latitude );
+    }
+
     geometry::Rectangle2d ConvertTo( const MT_Rect& rect )
     {
-        return geometry::Rectangle2d( rect.GetLeft(), rect.GetBottom(), rect.GetRight(), rect.GetTop() );
+        const geometry::Point2d bottomLeft( ConvertToLatLong( rect.GetLeft(), rect.GetBottom() ) );
+        const geometry::Point2d topRight( ConvertToLatLong( rect.GetRight(), rect.GetTop() ) );
+
+        return geometry::Rectangle2d( bottomLeft.X(), bottomLeft.Y(), topRight.X(), topRight.Y() );
     }
 }
 
@@ -52,6 +62,14 @@ InputToxicCloudAttribute::InputToxicCloudAttribute()
      quantities_->SetRefinementPolicy( 20 );  // $$$$ JCR 2007-09-13: profiling?
 }
 
+namespace
+{
+    std::string BuildPropagationFile( const std::string& path )
+    {
+        return MIL_AgentServer::GetWorkspace().GetConfig().GetPropagationFile( path );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: InputToxicCloudAttribute constructor
 // Created: JCR 2008-06-05
@@ -59,7 +77,7 @@ InputToxicCloudAttribute::InputToxicCloudAttribute()
 InputToxicCloudAttribute::InputToxicCloudAttribute( xml::xistream& xis )
     : extent_    ( ConvertTo( TER_World::GetWorld().GetExtent() ) )
     , quantities_( new T_Quantities( extent_ ) )
-    , filename_  ( xis.attribute< std::string >( "source" ) )
+    , filename_  ( BuildPropagationFile( xis.attribute< std::string >( "source" ) ) )
     , dataField_ ( xis.attribute< std::string >( "data-field" ) )
     , schedule_  ( new T_Schedule() )
     , bExport_   ( xis.attribute< bool >( "export", true ) )
@@ -291,8 +309,9 @@ namespace
 // -----------------------------------------------------------------------------
 void InputToxicCloudAttribute::LoadShape( const std::string& name )
 {
-    const std::string fdir( filename_, 0, filename_.find_last_of( '/' ) );
-    gdal_ogr::OGR_Directory dir( "", fdir + "/propagation" );
+    const std::string fdir( tools::GeneralConfig::BuildChildPath( filename_, "propagation" ) );
+
+    gdal_ogr::OGR_Directory dir( "", fdir );
     Handler handler( field_, *quantities_, export_ );
     quantities_->Clear();
     export_.clear();

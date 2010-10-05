@@ -89,6 +89,9 @@ void ExerciseConfig::LoadExercise( const std::string& file )
                 >> xml::optional >> xml::start( "population" )
                     >> xml::attribute( "name", population_ )
                 >> xml::end
+				>> xml::optional >> xml::start( "propagations" );
+        propagations_ = xis.attribute< std::string >( "name", "propagations" );
+        xis     >> xml::end
                 >> xml::optional >> xml::start( "scores" );
         scores_ = xis.attribute< std::string >( "file", "scores.xml" );
         xis     >> xml::end
@@ -270,6 +273,26 @@ std::string ExerciseConfig::GetScoresFile() const
 std::string ExerciseConfig::GetSuccessFactorsFile() const
 {
     return BuildExerciseChildFile( successFactors_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetPropagationFile
+// Created: JCR 2010-05-13
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetPropagationFile( const std::string& path ) const
+{
+    return BuildPropagationChildFile( path, "propagation.xml" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::BuildPropagationChildFile
+// Created: JCR 2010-05-12
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::BuildPropagationChildFile( const std::string& path, const std::string& file ) const
+{
+    std::string propagations( propagations_ );
+    ResolveRelativePath( BuildDirectoryFile( GetRootDir(), "data" ), propagations );
+    return BuildDirectoryFile( BuildDirectoryFile( propagations, path ), file );
 }
 
 // -----------------------------------------------------------------------------

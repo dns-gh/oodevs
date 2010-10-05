@@ -10,9 +10,14 @@
 #include "clients_gui_pch.h"
 #include "InputPropagationPrototype_ABC.h"
 #include "moc_InputPropagationPrototype_ABC.cpp"
-#include "RichLabel.h"
 #include "Tools.h"
-#include <qfiledialog.h>
+#include "tools/GeneralConfig.h"
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/convenience.hpp>
+
+
+namespace bfs = boost::filesystem;
 
 using namespace kernel;
 using namespace gui;
@@ -21,18 +26,19 @@ using namespace gui;
 // Name: InputPropagationPrototype_ABC constructor
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
-InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent )
+InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent, const tools::GeneralConfig& config )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "InputPropagationPrototype_ABC", "Propagation" ) )
+    , root_ ( config.GetRootDir() )
 {
-    sourceLabel_ = new gui::RichLabel( tools::translate( "InputPropagationPrototype_ABC", "Input file:" ), this );
-    pPathButton_ = new QPushButton( tools::translate( "InputPropagationPrototype_ABC", "Browse..." ), this );
-    connect( pPathButton_, SIGNAL( clicked() ), this, SLOT( LoadPath() ) );
+    new QLabel( tools::translate( "InputPropagationPrototype_ABC", "Propagation Model:" ), this );
+    propagationFiles_ = new ValuedComboBox< std::string >( this );
+    FillInPaths();
 
     new QLabel( tools::translate( "InputPropagationPrototype_ABC", "Lookup data:" ), this );
     dataField_ = new ValuedComboBox< std::string >( this );
     // TODO : %TMP%
-    dataField_->AddItem( std::string( "Mesure C" ), std::string( "nom_var_shp_mesure_C" ) );
-    dataField_->AddItem( std::string( "Mesure Ct" ), std::string( "nom_var_shp_mesure_Ct" ) );
+    dataField_->AddItem( tools::translate( "InputPropagationPrototype_ABC", "Mesure C" ), std::string( "nom_var_shp_mesure_C" ) );
+    dataField_->AddItem( tools::translate( "InputPropagationPrototype_ABC", "Mesure Ct" ), std::string( "nom_var_shp_mesure_Ct" ) );
 
     new QLabel( tools::translate( "InputPropagationPrototype_ABC", "Send data:" ), this );
     exportData_ = new QCheckBox( this );
@@ -47,32 +53,70 @@ InputPropagationPrototype_ABC::~InputPropagationPrototype_ABC()
     // NOTHING
 }
 
+namespace
+{
+    // Copied from fronted library
+
+    template< typename Validator >
+    QStringList ListDirectories( const std::string& base, Validator v )
+    {
+        QStringList result;
+        const bfs::path root = bfs::path( base, bfs::native );
+        if( ! bfs::exists( root ) )
+            return result;
+
+        bfs::recursive_directory_iterator end;
+        for( bfs::recursive_directory_iterator it( root ); it != end; ++it )
+        {
+            const bfs::path child = *it;
+            if( v( child ) )
+            {
+                QStringList entry;
+                bfs::path p( child );
+                for( int i = it.level(); i >= 0; --i )
+                {
+                    entry.push_front( p.leaf().c_str() );
+                    p = p.parent_path();
+                }
+                result.append( entry.join( "/" ) );
+                it.no_push();
+            }
+        }
+        return result;
+    }
+
+    bool IsPropagationDir( const bfs::path& dir )
+    {
+        return bfs::is_directory( dir )
+               && bfs::exists( dir / "propagation.xml" )
+               && bfs::exists( dir / "propagation" )
+               && bfs::is_directory( dir / "propagation" );
+    }
+
+    std::string BuildPropagationDir( const std::string& root, const std::string& path )
+    {
+        return ( bfs::path( root, bfs::native ) / path ).native_directory_string();
+    }
+}
+// -----------------------------------------------------------------------------
+// Name: InputPropagationPrototype_ABC::FillInPaths
+// Created: JCR 2010-05-12
+// -----------------------------------------------------------------------------
+void InputPropagationPrototype_ABC::FillInPaths()
+{
+    std::string path( BuildPropagationDir( root_, "data/propagations" ) );
+    QStringList result( ListDirectories( path, &IsPropagationDir ) );
+
+    for ( QStringList::const_iterator it = result.constBegin(); it != result.constEnd(); ++it )
+        propagationFiles_->AddItem( *it, (*it).ascii() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: InputPropagationPrototype_ABC::CheckValidity
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 bool InputPropagationPrototype_ABC::CheckValidity() const
 {
-    bool isValid = ! source_.empty() && ! dataField_->GetValue().empty();
-    if( ! isValid )
-        sourceLabel_->Warn( 3000 );
-    return isValid;
+    return ! propagationFiles_->GetValue().empty() && ! dataField_->GetValue().empty();
 }
 
-// -----------------------------------------------------------------------------
-// Name: InputPropagationPrototype_ABC::LoadPath
-// Created: JCR 2008-06-30
-// -----------------------------------------------------------------------------
-void InputPropagationPrototype_ABC::LoadPath()
-{
-    static const int length = 22;
-    QString fileName = QFileDialog::getOpenFileName( "./", tools::translate( "InputPropagationPrototype_ABC", "Propagation (propagation.xml)" ), 0, tools::translate( "InputPropagationPrototype_ABC", "Open File" ) );
-    if( fileName.ascii() )
-    {
-        source_ = std::string( fileName.ascii() );
-        if( source_.size() > length )
-            pPathButton_->setText( std::string( "..." + std::string( source_.begin() + ( source_.size() - length ), source_.end() ) ).c_str() );
-        else
-            pPathButton_->setText( source_.c_str() );
-    }
-}

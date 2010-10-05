@@ -17,6 +17,11 @@ namespace kernel
     class Object_ABC;
 }
 
+namespace tools
+{
+    class GeneralConfig;
+}
+
 class ObjectAttributesContainer;
 class StaticModel;
 class TeamsModel;
@@ -32,7 +37,7 @@ class ObjectPrototype : public gui::ObjectPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer );
+             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer, const tools::GeneralConfig& config );
     virtual ~ObjectPrototype();
     //@}
 

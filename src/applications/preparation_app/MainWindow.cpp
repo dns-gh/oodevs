@@ -226,7 +226,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
 
     // object creation window
-    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.teams_, *paramLayer, *glProxy_ );
+    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.teams_, *paramLayer, *glProxy_, config_ );
     pCreationPanel->AddPanel( objectCreationPanel );
 
     ::WeatherLayer* weatherLayer = new ::WeatherLayer( *glProxy_, *eventStrategy_ );

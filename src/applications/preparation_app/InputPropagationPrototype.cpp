@@ -20,8 +20,8 @@ using namespace kernel;
 // Name: InputPropagationPrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-InputPropagationPrototype::InputPropagationPrototype( QWidget* parent, kernel::Object_ABC*& creation )
-    : InputPropagationPrototype_ABC( parent )
+InputPropagationPrototype::InputPropagationPrototype( QWidget* parent, const tools::GeneralConfig& config, kernel::Object_ABC*& creation )
+    : InputPropagationPrototype_ABC( parent, config )
     , creation_( creation )
 {
     // NOTHING
@@ -46,7 +46,7 @@ void InputPropagationPrototype::Commit()
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         InputToxicCloudAttribute* attribute = new InputToxicCloudAttribute( dico );
-                                  attribute->SetSource( source_, dataField_->GetValue() );
+                                  attribute->SetSource( propagationFiles_->currentText().ascii(), dataField_->GetValue() );
                                   attribute->SetExportData( exportData_->isChecked() );
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }

@@ -13,6 +13,11 @@
 #include "ObjectAttributePrototype_ABC.h"
 #include "ValuedComboBox.h"
 
+namespace tools
+{
+    class GeneralConfig;
+}
+
 namespace gui
 {
     class RichLabel;
@@ -30,7 +35,7 @@ class InputPropagationPrototype_ABC : public ObjectAttributePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit InputPropagationPrototype_ABC( QWidget* parent );
+    explicit InputPropagationPrototype_ABC( QWidget* parent, const tools::GeneralConfig& config );
     virtual ~InputPropagationPrototype_ABC();
     //@}
 
@@ -39,26 +44,25 @@ public:
     virtual bool CheckValidity() const;
     //@}
 
-private slots:
-    //! @name slots
-    //@{
-    void LoadPath();
-    //@}
-
 private:
-    //! @name Copy/Assignment
+    //! @name Copy/Assignement
     //@{
     InputPropagationPrototype_ABC( const InputPropagationPrototype_ABC& );            //!< Copy constructor
-    InputPropagationPrototype_ABC& operator=( const InputPropagationPrototype_ABC& ); //!< Assignment operator
+    InputPropagationPrototype_ABC& operator=( const InputPropagationPrototype_ABC& ); //!< Assignement operator
+    //@}
+
+    //! @name
+    //@{
+    void FillInPaths();
     //@}
 
 protected:
     //! @name Member data
     //@{
     gui::RichLabel* sourceLabel_;
-    std::string source_;
+    const std::string root_;
+    ValuedComboBox< std::string >* propagationFiles_;
     ValuedComboBox< std::string >* dataField_;
-    QPushButton* pPathButton_;
     QCheckBox* exportData_;
     //@}
 };

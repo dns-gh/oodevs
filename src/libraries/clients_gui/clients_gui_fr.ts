@@ -258,20 +258,16 @@
         <translation>Envoyer les données:</translation>
     </message>
     <message>
-        <source>Propagation (propagation.xml)</source>
-        <translation>Propagation (propagation.xml)</translation>
+        <source>Propagation Model:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open File</source>
-        <translation>Ouvrir fichier</translation>
+        <source>Mesure C</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Input file:</source>
-        <translation>Fichier source: </translation>
-    </message>
-    <message>
-        <source>Browse...</source>
-        <translation>Parcourir...</translation>
+        <source>Mesure Ct</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

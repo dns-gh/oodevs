@@ -28,7 +28,7 @@ class InputPropagationPrototype : public gui::InputPropagationPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InputPropagationPrototype( QWidget* parent, kernel::Object_ABC*& creation );
+             InputPropagationPrototype( QWidget* parent, const tools::GeneralConfig& config, kernel::Object_ABC*& creation );
     virtual ~InputPropagationPrototype();
     //@}
 

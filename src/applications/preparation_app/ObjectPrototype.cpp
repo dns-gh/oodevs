@@ -58,11 +58,11 @@ namespace
         container.push_back( new LogisticPrototype( parent, controllers, object ) );
     }
 
-    void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, Object_ABC*& object )
+    void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, const tools::GeneralConfig& config, Object_ABC*& object )
     {
         std::string model( xis.attribute< std::string >( "model" ) );
         if( model == "input" )
-            container.push_back( new InputPropagationPrototype( parent, object ) );
+            container.push_back( new InputPropagationPrototype( parent, config, object ) );
         else if( model == "fire" )
             container.push_back( new FirePrototype( parent, resolver, object ) );
     }
@@ -98,7 +98,7 @@ namespace
     /*
     * Register capacity tag
     */
-    ObjectAttributePrototypeFactory_ABC& FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, Object_ABC*& object )
+    ObjectAttributePrototypeFactory_ABC& FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, const tools::GeneralConfig& config, Object_ABC*& object )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
         factory->Register( "constructor"        , boost::bind( &::ConstructorAttribute, _1, _2, _3, boost::ref( object ) ) );
@@ -113,7 +113,7 @@ namespace
         factory->Register( "interference"       , boost::bind( &::InterferenceAttribute, _2, _3, boost::ref( object ) ) );
 
         factory->Register( "healable"           , boost::bind( &::MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
-        factory->Register( "propagation"        , boost::bind( &::PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
+        factory->Register( "propagation"        , boost::bind( &::PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( config ), boost::ref( object ) ) );
 
         factory->Register( "contamination"      , boost::bind( &::ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
         return *factory;
@@ -124,8 +124,8 @@ namespace
 // Name: ObjectPrototype constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, ParametersLayer& layer )
-    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, FactoryBuilder( controllers, model.objectTypes_, creation_ ) )
+ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, ParametersLayer& layer, const tools::GeneralConfig& config )
+    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, FactoryBuilder( controllers, model.objectTypes_, config, creation_ ) )
     , model_( teamsModel )
     , creation_( 0 )
 {

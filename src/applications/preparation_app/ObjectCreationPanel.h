@@ -13,6 +13,11 @@
 #include "tools/ElementObserver_ABC.h"
 #include "clients_gui/InfoPanel_ABC.h"
 
+namespace tools
+{
+    class GeneralConfig;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -46,7 +51,7 @@ class ObjectCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
+             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const tools::GeneralConfig& config );
     virtual ~ObjectCreationPanel();
     //@}
 

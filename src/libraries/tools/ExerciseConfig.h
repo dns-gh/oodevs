@@ -56,6 +56,9 @@ public:
     virtual std::string GetScoresFile() const;
     virtual std::string GetSuccessFactorsFile() const;
 
+    virtual std::string GetPropagationFile( const std::string& path ) const;
+    virtual std::string BuildPropagationChildFile( const std::string& path, const std::string& file ) const;
+
     virtual void Parse( int argc, char** argv );
     void LoadExercise( const std::string& file );
     //@}
@@ -86,6 +89,7 @@ private:
     std::string scores_;
     std::string successFactors_;
     std::string population_;
+    std::string propagations_;
     //@}
 };
 

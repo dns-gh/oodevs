@@ -41,19 +41,33 @@
     <interference/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
-  <object geometry="polygon" name="NBC Area" symbol="G*MPNR----****X" type="nbc zone">
+  <object geometry="polygon" name="NBC Area - External" symbol="G*MPNR----****X" type="nbc zone (external model)">
     <avoidable distance="100"/>
     <contamination max-toxic="1"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <propagation model="input"/>
   </object>
-  <object geometry="point" name="NBC Cloud" symbol="G*MPNL----****X" type="nbc cloud">
+  <object geometry="point" name="NBC Cloud - External" symbol="G*MPNL----****X" type="nbc cloud (external model)">
     <avoidable distance="100"/>
     <contamination max-toxic="1"/>
     <interaction-height height="100"/>
     <intoxication max-toxic="1"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <propagation model="input"/>
+  </object>
+  <object geometry="polygon" name="NBC Area" symbol="G*MPNR----****X" type="nbc zone">
+    <avoidable distance="100"/>
+    <contamination max-toxic="1"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <propagation model="cloud"/>
+  </object>
+  <object geometry="polygon" name="NBC Cloud" symbol="G*MPNL----****X" type="nbc cloud">
+    <avoidable distance="100"/>
+    <contamination max-toxic="1"/>
+    <interaction-height height="100"/>
+    <intoxication max-toxic="1"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <propagation model="cloud"/>
   </object>
   <object geometry="point" name="Arson/Fire" symbol="O*VPA-----*****" type="fire">
     <extinguishable/>
@@ -319,5 +333,12 @@
   <object geometry="polygon" name="Urban Block" symbol="" type="urban block">
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseBlocUrbain"/>
     <structural value="100"/>
+  </object>
+  <object geometry="point" name="Dirty bomb" symbol="O*VPA-----*****" type="dirty bomb">
+    <activable/>
+    <attrition category="standard landmine"/>
+    <contamination max-toxic="1"/>
+    <interaction-height height="100"/>
+    <intoxication max-toxic="1"/>
   </object>
 </objects>
