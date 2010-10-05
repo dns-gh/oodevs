@@ -17,13 +17,7 @@
 #include <map>
 #include <vector>
 #include <memory>
-#include <boost/shared_ptr.hpp>
-#include <xeumeuleu/xml.hpp>
-
-#include <gdal/ogrsf_frmts.h>
 
 #include "MT_Tools/MT_Logger.h"
-
-#undef max
 
 #endif // __crossbow_plugin_pch_h_

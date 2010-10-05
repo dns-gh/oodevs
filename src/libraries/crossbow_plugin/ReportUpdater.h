@@ -28,7 +28,7 @@ namespace crossbow
     class Database_ABC;
     class Workspace_ABC;
     class ReportFactory;
-    class WorkingSession;
+    class WorkingSession_ABC;
 
 // =============================================================================
 /** @class  ReportUpdater
@@ -41,7 +41,7 @@ class ReportUpdater
 public:
     //! @name Constructors/Destructor
     //@{
-            ReportUpdater( Workspace_ABC& workspace, const dispatcher::Config& config, const dispatcher::Model_ABC& model, const WorkingSession& session );
+            ReportUpdater( Workspace_ABC& workspace, const dispatcher::Config& config, const dispatcher::Model_ABC& model, const WorkingSession_ABC& session );
     virtual ~ReportUpdater();
     //@}
 
@@ -71,8 +71,8 @@ private:
 
     //! @name Member data
     //@{
-    Database_ABC&           database_;
-    const WorkingSession&   session_;
+    Workspace_ABC&          workspace_;
+    const WorkingSession_ABC&   session_;
     //@}
 };
 

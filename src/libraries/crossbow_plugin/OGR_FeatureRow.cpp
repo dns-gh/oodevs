@@ -12,10 +12,12 @@
 #include "Point.h"
 #include "Area.h"
 #include "Line.h"
+
 #include <gdal/ogr_core.h>
 #include <gdal/ogr_feature.h>
 #include <gdal/ogrsf_frmts.h>
 #include <boost/noncopyable.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins;
 using namespace crossbow;
@@ -26,7 +28,7 @@ using namespace crossbow;
 // -----------------------------------------------------------------------------
 OGR_FeatureRow::OGR_FeatureRow( OGRSpatialReference* spatialReference )
     : spatialReference_ ( spatialReference )
-    , feature_ ( 0 )
+    , log_ ( false )
 {
     // NOTHING
 }
@@ -37,17 +39,7 @@ OGR_FeatureRow::OGR_FeatureRow( OGRSpatialReference* spatialReference )
 // -------- ---------------------------------------------------------------------
 OGR_FeatureRow::~OGR_FeatureRow()
 {
-    Release();
-}
-
-// -----------------------------------------------------------------------------
-// Name: OGR_FeatureRow::Release
-// Created: JCR 2010-02-25
-// -----------------------------------------------------------------------------
-void OGR_FeatureRow::Release()
-{
-    if( feature_ != NULL )
-        OGRFeature::DestroyFeature( feature_ );
+    // NOTHING
 }
 
 namespace
@@ -56,13 +48,16 @@ namespace
     {
     public:
         FieldConverter( OGRFeature& feature, int index )
-            : feature_( feature )
-            , index_  ( index )
+            : feature_ ( feature ), index_ ( index )
         {
-            // NOTHING
         }
 
         void operator()( int value ) const
+        {
+            feature_.SetField( index_, value );
+        }
+
+        void operator()( double value ) const
         {
             feature_.SetField( index_, value );
         }
@@ -83,8 +78,8 @@ namespace
             {
             case OFTInteger:
                 return crossbow::FieldVariant( feature_.GetFieldAsInteger( index_ ) );
-            // case OFTReal:
-            //     return crossbow::FieldVariant( feature_.GetFieldAsDouble( index_ ) );
+            case OFTReal:
+                return crossbow::FieldVariant( feature_.GetFieldAsDouble( index_ ) );
             case OFTString:
                 return crossbow::FieldVariant( std::string( feature_.GetFieldAsString( index_ ) ) );
             default:
@@ -93,7 +88,7 @@ namespace
         }
     private:
         OGRFeature& feature_;
-        int index_;
+        const int index_;
     };
 }
 
@@ -104,18 +99,37 @@ namespace
 void OGR_FeatureRow::SetField( const std::string& field, const FieldVariant& value )
 {
     const int index = feature_->GetFieldIndex( field.c_str() );
-    boost::apply_visitor( FieldConverter( *feature_, index ), value );
+    if( index > -1 )
+        boost::apply_visitor( FieldConverter( *feature_, index ), value );
 }
 
+namespace
+{
+    void Log( OGRFeature& feature )
+    {
+        char* value;
+        OGRGeometry* result = feature.GetGeometryRef();
+
+        if( result )
+        {
+            result->exportToWkt( &value );
+            MT_LOG_INFO_MSG( "OGR_FeatureRow: IsValid:" << boost::lexical_cast<std::string>( result->IsValid() ) << " "
+                                       << " Surface:" << result->getGeometryName() << " "
+                                       << " Value: " << value );
+        }
+        else
+            MT_LOG_ERROR_MSG( "OGR_FeatureRow: geometry not registered" );
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: OGR_FeatureRow::SetShape
 // Created: JCR 2010-02-24
 // -----------------------------------------------------------------------------
 void OGR_FeatureRow::SetGeometry( const Shape_ABC& shape )
 {
-    // $$$$ TODO ! OGRGeometry* geometry = feature_->GetGeometryRef();
-    // geometry->Update();
-    feature_->SetGeometryDirectly( shape.Extract( spatialReference_ ) );
+    shape.Serialize( *feature_, spatialReference_ );
+    if( log_ )
+        Log( *feature_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,6 +139,9 @@ void OGR_FeatureRow::SetGeometry( const Shape_ABC& shape )
 FieldVariant OGR_FeatureRow::GetField( const std::string& name ) const
 {
     int index = feature_->GetFieldIndex( name.c_str() );
+    if( index == -1 )
+        throw std::runtime_error( "Cannot retrieve field " + name );
+
     OGRFieldDefn* def = feature_->GetFieldDefnRef( index );
 
     FieldConverter converter( *feature_, index );
@@ -171,10 +188,9 @@ Shape_ABC& OGR_FeatureRow::GetGeometry() const
 // Name: OGR_FeatureRow::BindFeature
 // Created: JCR 2010-02-25
 // -----------------------------------------------------------------------------
-void OGR_FeatureRow::BindFeature( OGRFeature& feature, long /*id*/ )
+void OGR_FeatureRow::BindFeature( boost::shared_ptr< OGRFeature > feature, long /*id*/ )
 {
-    Release();
-    feature_ = &feature;
+    feature_ = feature;
 }
 
 // -----------------------------------------------------------------------------
@@ -192,5 +208,16 @@ long OGR_FeatureRow::GetID() const
 // -----------------------------------------------------------------------------
 void OGR_FeatureRow::Insert( OGRLayer& layer ) const
 {
-    layer.CreateFeature( feature_ );
+    if( feature_.get() && layer.CreateFeature( feature_.get() ) != OGRERR_NONE )
+        throw std::runtime_error( "unable to insert feature to the layer" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OGR_FeatureRow::Update
+// Created: JCR 2010-04-09
+// -----------------------------------------------------------------------------
+void OGR_FeatureRow::Update( OGRLayer& layer ) const
+{
+    if( feature_.get() && layer.SetFeature( feature_.get() ) != OGRERR_NONE )
+        throw std::runtime_error( "unable to update feature to the layer" );
 }

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __StatusListener_h_
-#define __StatusListener_h_
+#ifndef __plugins_crossbow_StatusListener_h_
+#define __plugins_crossbow_StatusListener_h_
 
 #include "Listener_ABC.h"
 
@@ -21,9 +21,10 @@ namespace plugins
 {
 namespace crossbow
 {
-    class Database_ABC;
+    class Workspace_ABC;
     class Table_ABC;
     class Row_ABC;
+    class WorkingSession_ABC;
 
 // =============================================================================
 /** @class  StatusListener
@@ -36,7 +37,7 @@ class StatusListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StatusListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher );
+             StatusListener( Workspace_ABC& database, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session );
     virtual ~StatusListener();
     //@}
 
@@ -54,15 +55,20 @@ private:
 
     //! @name Helpers
     //@{
+    void Clean();
+    void ListenStatusUpdate( Table_ABC& table );
     void ChangeStatus( const std::string& status );
+    void ListenTimefactorUpdate( Table_ABC& table );
+    void ChangeTimeFactor( int speed );
+    void MarkProcessed( Row_ABC& row ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
-//    Table_ABC& propertiesTable_;
-    Database_ABC& database_;
+    Workspace_ABC& workspace_;
+    const WorkingSession_ABC& session_;
     bool paused_;
     //@}
 };
@@ -70,4 +76,4 @@ private:
 }
 }
 
-#endif // __StatusListener_h_
+#endif // __plugins_crossbow_StatusListener_h_

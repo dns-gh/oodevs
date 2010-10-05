@@ -59,7 +59,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ListenRow( const Row_ABC& row );
+    bool ListenRow( const Row_ABC& row );
     void Clean();
     void MarkProcessed( long orderid ) const;
     //@}
@@ -69,10 +69,9 @@ private:
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
     std::auto_ptr< OrderDispatcher >     dispatcher_;
+    Workspace_ABC&                       workspace_;
     long                                 ref_;
-    Database_ABC&                        database_;
     const WorkingSession&                session_;
-    std::auto_ptr< Table_ABC >           table_;
     //@}
 };
 

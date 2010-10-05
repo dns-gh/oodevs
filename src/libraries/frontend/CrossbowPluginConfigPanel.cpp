@@ -45,17 +45,13 @@ CrossbowPluginConfigPanel::CrossbowPluginConfigPanel( QWidget* parent, const too
     box_->setCheckable( true );
     box_->setChecked( false );
     {
-        Style( new QLabel( tools::translate( "CrossbowPluginConfigPanel", "Geodatabase export:" ), box_ ) );
-        geodatabase_ = Style( new QLineEdit( "sde://user:password@host:port/sword_crossbow_db.sword", box_ ) );
-        QToolTip::add( geodatabase_, tools::translate( "CrossbowPluginConfigPanel", "GDB: filename.{gdb|mdb}\nSDE connection: sde://user:password@host:port/db_name.sword" ) );
+        Style( new QLabel( tools::translate( "CrossbowPluginConfigPanel", "Feature database (manage geometry information):" ), box_ ) );
+        featureDb_ = Style( new QLineEdit( "sde://user:password@host:port/sword_crossbow_db.sword", box_ ) );
+        QToolTip::add( featureDb_, tools::translate( "CrossbowPluginConfigPanel", "GDB: filename.{gdb|mdb}\nSDE connection: sde://user:password@host:port/db_name.sword" ) );
     }
     {
-        Style( new QLabel( tools::translate( "CrossbowPluginConfigPanel", "Geodatabase population export:" ), box_ ) );
-        population_ = Style( new QLineEdit( box_ ) );
-    }
-    {
-        Style( new QLabel( tools::translate( "CrossbowPluginConfigPanel", "Geodatabase order import:" ), box_ ) );
-        shared_ = Style( new QLineEdit( box_ ) );
+        Style( new QLabel( tools::translate( "CrossbowPluginConfigPanel", "Flat database (manage no geometry information):" ), box_ ) );
+        flatDb_ = Style( new QLineEdit( "postgres://user:password@host:port/sword_crossbow_db.sword", box_ ) );
     }
 }
 
@@ -77,11 +73,10 @@ void CrossbowPluginConfigPanel::Commit( const std::string& exercise, const std::
     if( box_->isChecked() )
     {
         frontend::CreateSession action( config_, exercise, session );
+        action.SetOption( "session/config/dispatcher/plugins/crossbow/geometry/@connection", featureDb_->text() );
+        action.SetOption( "session/config/dispatcher/plugins/crossbow/flat/@connection", flatDb_->text() );
         action.SetOption( "session/config/simulation/dispatcher/@embedded", false );
-        action.SetOption( "session/config/simulation/dispatcher/@path", "./dispatcher/" );
-        action.SetOption( "session/config/dispatcher/plugins/crossbow/@geodatabase", geodatabase_->text() );
-        action.SetOption( "session/config/dispatcher/plugins/crossbow/@geodatabase-population", population_->text() );
-        action.SetOption( "session/config/dispatcher/plugins/crossbow/@geodatabase-shared", shared_->text() );
+        // action.SetOption( "session/config/simulation/dispatcher/@path", "./dispatcher/" );
         action.Commit();
     }
 }

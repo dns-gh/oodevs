@@ -29,6 +29,7 @@ OGR_FeatureClass::OGR_FeatureClass( OGRLayer& layer )
     , feature_ ( new OGR_FeatureRow( layer_.GetSpatialRef() ) )
 {
     layer_.ResetReading();
+    BeginTransaction();
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +38,9 @@ OGR_FeatureClass::OGR_FeatureClass( OGRLayer& layer )
 // -----------------------------------------------------------------------------
 OGR_FeatureClass::~OGR_FeatureClass()
 {
-    // NOTHING
+    EndTransaction();
+    if( OGRERR_NONE != layer_.SyncToDisk() )
+        MT_LOG_ERROR_MSG( "Crossbow plugin : OGR_FeatureClass::SyncToDisk failed" )
 }
 
 // -----------------------------------------------------------------------------
@@ -46,8 +49,8 @@ OGR_FeatureClass::~OGR_FeatureClass()
 // -----------------------------------------------------------------------------
 Row_ABC& OGR_FeatureClass::CreateRow()
 {
-    OGRFeature* poFeature = OGRFeature::CreateFeature( layer_.GetLayerDefn() );
-    feature_->BindFeature( *poFeature, poFeature->GetFID() );
+    boost::shared_ptr< OGRFeature > poFeature( OGRFeature::CreateFeature( layer_.GetLayerDefn() ), &OGRFeature::DestroyFeature );
+    feature_->BindFeature( poFeature, poFeature->GetFID() );
     return *feature_;
 }
 
@@ -57,10 +60,10 @@ Row_ABC& OGR_FeatureClass::CreateRow()
 // -----------------------------------------------------------------------------
 Row_ABC* OGR_FeatureClass::GetNextRow()
 {
-    OGRFeature* poFeature = layer_.GetNextFeature();
-    if( poFeature == NULL )
+    boost::shared_ptr< OGRFeature > poFeature( layer_.GetNextFeature(), &OGRFeature::DestroyFeature );
+    if( poFeature.get() == NULL )
         return NULL;
-    feature_->BindFeature( *poFeature, poFeature->GetFID() );
+    feature_->BindFeature( poFeature, poFeature->GetFID() );
     return feature_.get();
 }
 
@@ -94,11 +97,11 @@ void OGR_FeatureClass::DeleteRows( const std::string& query )
 // Name: OGR_FeatureClass::UpdateRow
 // Created: JCR 2010-02-25
 // -----------------------------------------------------------------------------
-void OGR_FeatureClass::UpdateRow( const Row_ABC& /*row*/ )
+void OGR_FeatureClass::UpdateRow( const Row_ABC& row )
 {
-    // $$$$ TODO ?
-    editor_->EndTransaction();
-    layer_.SyncToDisk();
+    if( &row != feature_.get() )
+        return;
+    feature_->Update( layer_ );
 }
 
 // -----------------------------------------------------------------------------

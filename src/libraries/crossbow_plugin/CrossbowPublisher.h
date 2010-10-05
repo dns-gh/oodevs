@@ -7,11 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef __CrossbowPublisher_h_
-#define __CrossbowPublisher_h_
+#ifndef __plugins_crossbow_CrossbowPublisher_h_
+#define __plugins_crossbow_CrossbowPublisher_h_
 
 #include "dispatcher/MessageHandler_ABC.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace dispatcher
 {
@@ -76,8 +77,10 @@ private:
     //@{
     bool IsRelevant( const MsgsSimToClient::MsgSimToClient& asn ) const;
     bool IsRelevant( const MsgsMessengerToClient::MsgMessengerToClient& asn ) const;
-    void UpdateOnTick( const MsgsSimToClient::MsgSimToClient& asn );
-    void UpdateDatabase( const MsgsSimToClient::MsgSimToClient& asn );
+	bool IsRelevantAcknowledge( const MsgsSimToClient::MsgSimToClient& asn ) const;
+    void UpdateOnTick( const MsgsSimToClient::MsgSimToClient& asn );	
+	void UpdateOnAcknowledge( const MsgsSimToClient::MsgSimToClient& asn );
+	void UpdateDatabase( const MsgsSimToClient::MsgSimToClient& asn );
     void UpdateDatabase( const MsgsMessengerToClient::MsgMessengerToClient& asn );
     void UpdateFolkDatabase( const MsgsSimToClient::MsgSimToClient& asn );
     void UpdateListeners();
@@ -93,7 +96,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Model_ABC&                  model_;
+    dispatcher::Model_ABC&              model_;
     std::auto_ptr< OGR_Workspace >      workspace_;
     std::auto_ptr< OrderTypes >         orderTypes_;    // $$$$ SBO 2007-09-27: to put this stuff
     std::auto_ptr< DatabaseUpdater >    databaseUpdater_;
@@ -109,4 +112,4 @@ private:
 }
 }
 
-#endif // __CrossbowPublisher_h_
+#endif // __plugins_crossbow_CrossbowPublisher_h_

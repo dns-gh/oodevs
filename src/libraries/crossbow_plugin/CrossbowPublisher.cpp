@@ -23,6 +23,8 @@
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Config.h"
 
+#include <boost/bind.hpp>
+
 using namespace plugins;
 using namespace plugins::crossbow;
 
@@ -50,7 +52,7 @@ CrossbowPublisher::CrossbowPublisher( const dispatcher::Config& config, dispatch
     // activate listeners
     listeners_.push_back( T_SharedListener( new OrderListener( *workspace_, model, *orderTypes_, publisher, *session_ ) ) );
     listeners_.push_back( T_SharedListener( new ObjectListener( *workspace_, publisher, *session_ ) ) );
-    // listeners_.push_back( T_SharedListener( new StatusListener( workspace_->GetDatabase( "geodatabase" ), publisher ) ) );
+    // listeners_.push_back( T_SharedListener( new StatusListener( *workspace_, publisher, *session_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,17 +127,65 @@ bool CrossbowPublisher::IsRelevant( const MsgsMessengerToClient::MsgMessengerToC
 
 
 // -----------------------------------------------------------------------------
+// Name: CrossbowPublisher::IsRelevantAcknowledge
+// Created: MPT 2009-12-22
+// -----------------------------------------------------------------------------
+bool CrossbowPublisher::IsRelevantAcknowledge( const MsgsSimToClient::MsgSimToClient& wrapper ) const
+{
+    /* if( wrapper.message().has_unit_order_ack() ||
+        wrapper.message().has_automat_order_ack() ||
+        wrapper.message().has_population_order_ack() ||
+        wrapper.message().has_frag_order_ack() ||
+        wrapper.message().has_set_automat_mode_ack() ||
+        wrapper.message().has_unit_creation_request_ack() ||
+        wrapper.message().has_unit_magic_action_ack() ) */
+    if( wrapper.message().has_object_magic_action_ack() )
+        return true;
+
+  /*case T_MsgsSimToClient_msg_msg_population_magic_action_ack
+    case T_MsgsSimToClient_msg_msg_change_diplomacy_ack
+    case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group_ack
+    case T_MsgsSimToClient_msg_msg_automat_change_logistic_links_ack
+    case T_MsgsSimToClient_msg_msg_automat_change_superior_ack
+    case T_MsgsSimToClient_msg_msg_unit_change_superior_ack
+    case T_MsgsSimToClient_msg_msg_log_supply_push_flow_ack
+    case T_MsgsSimToClient_msg_msg_log_supply_change_quotas_ack
+    case T_MsgsSimToClient_msg_msg_control_information
+    case T_MsgsSimToClient_msg_msg_control_profiling_information
+    case T_MsgsSimToClient_msg_msg_control_begin_tick
+    case T_MsgsSimToClient_msg_msg_control_end_tick
+    case T_MsgsSimToClient_msg_msg_control_stop_ack
+    case T_MsgsSimToClient_msg_msg_control_pause_ack
+    case T_MsgsSimToClient_msg_msg_control_resume_ack
+    case T_MsgsSimToClient_msg_msg_control_change_time_factor_ack
+    case T_MsgsSimToClient_msg_msg_control_date_time_change_ack
+    case T_MsgsSimToClient_msg_msg_control_global_meteo_ack
+    case T_MsgsSimToClient_msg_msg_control_local_meteo_ack*/
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: CrossbowPublisher::Receive
 // Created: SBO 2007-09-27
 // -----------------------------------------------------------------------------
 void CrossbowPublisher::Receive( const MsgsSimToClient::MsgSimToClient& asn )
 {
-    if( !IsRelevant( asn ) )
-        return;
+    try
+    {
+        if( IsRelevantAcknowledge( asn ) )
+            UpdateOnAcknowledge( asn );
 
-    UpdateOnTick( asn );
-    UpdateDatabase( asn );
-    UpdateFolkDatabase( asn );
+        if( !IsRelevant( asn ) )
+            return;
+
+        UpdateOnTick( asn );
+        UpdateDatabase( asn );
+        UpdateFolkDatabase( asn );
+    }
+    catch ( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "ERROR CATCHED :" << __FUNCTION__ << std::string( e.what() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -144,10 +194,16 @@ void CrossbowPublisher::Receive( const MsgsSimToClient::MsgSimToClient& asn )
 // -----------------------------------------------------------------------------
 void CrossbowPublisher::Receive( const MsgsMessengerToClient::MsgMessengerToClient& asn )
 {
-    if( !IsRelevant( asn ) )
-        return;
-
-    UpdateDatabase( asn );
+    try
+    {
+        if( !IsRelevant( asn ) )
+            return;
+        UpdateDatabase( asn );
+    }
+    catch ( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "ERROR CATCHED :" << __FUNCTION__ << std::string( e.what() ) );
+    }
 }
 
 
@@ -167,15 +223,14 @@ void CrossbowPublisher::UpdateOnTick( const MsgsSimToClient::MsgSimToClient& wra
     else if( wrapper.message().has_control_begin_tick() )
     {
         MT_LOG_INFO_MSG( "tick " << wrapper.message().control_begin_tick().current_tick() );
-        {
-            UpdateListeners();
-        }
-//        databaseUpdater_->Lock();
+		// update simulation clock
+        databaseUpdater_->Update( wrapper.message().control_begin_tick() );
+		UpdateListeners();
     }
     else if( wrapper.message().has_control_end_tick() )
     {
-        // folkUpdater_->Drop();
-        databaseUpdater_->Flush();
+        folkUpdater_->Flush();
+        databaseUpdater_->Flush( /*false*/ );
     }
 }
 
@@ -197,28 +252,38 @@ void CrossbowPublisher::UpdateDatabase( const MsgsSimToClient::MsgSimToClient& w
     else if( wrapper.message().has_unit_attributes() )
         databaseUpdater_->Update( wrapper.message().unit_attributes() );
     else if( wrapper.message().has_unit_destruction() )
-        databaseUpdater_->DestroyUnit( wrapper.message().unit_destruction() );
+        databaseUpdater_->Update( wrapper.message().unit_destruction() );
 
     else if( wrapper.message().has_unit_knowledge_creation() )
         databaseUpdater_->Update( wrapper.message().unit_knowledge_creation() );
     else if( wrapper.message().has_unit_knowledge_update() )
         databaseUpdater_->Update( wrapper.message().unit_knowledge_update() );
     else if( wrapper.message().has_unit_knowledge_destruction() )
-        databaseUpdater_->DestroyUnitKnowledge( wrapper.message().unit_knowledge_destruction() );
+        databaseUpdater_->Update( wrapper.message().unit_knowledge_destruction() );
 
     else if( wrapper.message().has_object_knowledge_creation() )
         databaseUpdater_->Update( wrapper.message().object_knowledge_creation() );
     else if( wrapper.message().has_object_knowledge_update() )
         databaseUpdater_->Update( wrapper.message().object_knowledge_update() );
     else if( wrapper.message().has_object_knowledge_destruction() )
-        databaseUpdater_->DestroyObjectKnowledge( wrapper.message().object_knowledge_destruction() );
+        databaseUpdater_->Update( wrapper.message().object_knowledge_destruction() );
 
     else if( wrapper.message().has_object_creation() )
         databaseUpdater_->Update( wrapper.message().object_creation() );
-    // else if( wrapper.message().has__object_update() )
-    //    databaseUpdater_->Update( wrapper.message().object_update() );
+    else if( wrapper.message().has_object_update() )
+        databaseUpdater_->Update( wrapper.message().object_update() );
     else if( wrapper.message().has_object_destruction() )
-        databaseUpdater_->DestroyObject( wrapper.message().object_destruction() );
+        databaseUpdater_->Update( wrapper.message().object_destruction() );
+
+	else if( wrapper.message().has_object_knowledge_creation() )
+        databaseUpdater_->Update( wrapper.message().object_knowledge_creation() );
+    else if( wrapper.message().has_object_knowledge_update() )
+        databaseUpdater_->Update( wrapper.message().object_knowledge_update() );
+    else if( wrapper.message().has_object_knowledge_destruction() )
+        databaseUpdater_->Update( wrapper.message().object_knowledge_destruction() );
+
+	else if( wrapper.message().has_party_creation() )
+        databaseUpdater_->Update( wrapper.message().party_creation() );
 
     else if( wrapper.message().has_report() )
         reportUpdater_->Update( wrapper.message().report() );
@@ -257,14 +322,21 @@ void CrossbowPublisher::UpdateFolkDatabase( const MsgsSimToClient::MsgSimToClien
 }
 
 // -----------------------------------------------------------------------------
+// Name: CrossbowPublisher::HandleAcknowledge
+// Created: MPT 2009-12-22
+// -----------------------------------------------------------------------------
+void CrossbowPublisher::UpdateOnAcknowledge( const MsgsSimToClient::MsgSimToClient& wrapper )
+{
+    if ( wrapper.message().has_object_magic_action_ack() )
+        databaseUpdater_->Log( wrapper.message().object_magic_action_ack() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: CrossbowPublisher::UpdateListeners
 // Created: SBO 2007-09-27
 // -----------------------------------------------------------------------------
 void CrossbowPublisher::UpdateListeners()
 {
-    if( modelLoaded_ )
-    {
-        for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-            (*it)->Listen();
-    }
+	if( modelLoaded_ )
+        std::for_each( listeners_.begin(), listeners_.end(), boost::bind( &Listener_ABC::Listen, _1 ) );
 }

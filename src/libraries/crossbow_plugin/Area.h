@@ -12,6 +12,8 @@
 
 #include "PointCollection.h"
 
+class OGRPolygon;
+
 namespace Common
 {
     class MsgLocation;
@@ -42,19 +44,20 @@ public:
     //! @name Operations
     //@{
     void Serialize( std::ostream& geometry ) const;
+	void SerializeWkt( std::ostream& geometry ) const;
     void Serialize( Common::MsgLocation& message ) const;
     //@}
 
     //! @name
     //@{
-    virtual OGRPolygon* Extract( OGRSpatialReference* spatialReference ) const;
+    void Serialize( OGRFeature& feature, OGRSpatialReference* spatialReference ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Copy/Assignement
     //@{
     Area( const Area& );            //!< Copy constructor
-    Area& operator=( const Area& ); //!< Assignment operator
+    Area& operator=( const Area& ); //!< Assignement operator
     //@}
 };
 

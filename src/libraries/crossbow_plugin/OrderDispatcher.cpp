@@ -29,14 +29,23 @@
 using namespace plugins;
 using namespace plugins::crossbow;
 
+namespace 
+{
+    Database_ABC& GetDatabase( Workspace_ABC& workspace )
+    {
+        return workspace.GetDatabase( "flat" );
+    }
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: OrderDispatcher constructor
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
 OrderDispatcher::OrderDispatcher( Workspace_ABC& workspace, const OrderTypes& types, const dispatcher::Model_ABC& model )
-    : types_     ( types )
-    , model_     ( model )
-    , database_  ( workspace.GetDatabase( "flat" ) )
+    : types_( types )
+    , model_( model )
+    , workspace_ ( workspace )
     , serializer_( new OrderParameterSerializer( workspace, model ) )
 {
     // Clean();
@@ -69,21 +78,6 @@ void OrderDispatcher::Clean()
 OrderDispatcher::~OrderDispatcher()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: OrderDispatcher::Dispatch
-// Created: SBO 2007-05-31
-// -----------------------------------------------------------------------------
-void OrderDispatcher::Dispatch( dispatcher::SimulationPublisher_ABC& publisher, const Row_ABC& row )
-{
-    const unsigned long id = GetTargetId( row );
-    if( const dispatcher::Agent_ABC* agent = model_.Agents().Find( id ) )
-        DispatchMission( publisher, *agent, row );
-    else if( const dispatcher::Automat_ABC* automat = model_.Automats().Find( id ) )
-        DispatchMission( publisher, *automat, row );
-    else
-        MT_LOG_ERROR_MSG( "Unable to resolve order target unit : " << id );
 }
 
 namespace
@@ -134,17 +128,57 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrderDispatcher::IsValidOrder
+// Created: JCR 2010-07-19
+// -----------------------------------------------------------------------------
+bool OrderDispatcher::IsValidOrder( const Row_ABC& row ) const
+{
+    const int targetId = GetField< int >( row, "unit_id" );
+    const kernel::OrderType* type = 0;
+    if( const dispatcher::Agent_ABC* agent = model_.Agents().Find( targetId ) )
+    {
+        if( agent->GetSuperior().IsEngaged() )
+            type = GetAutomatMission( row );
+        else
+            type = GetAgentMission( row );
+    } 
+    else if( const dispatcher::Automat_ABC* automat = model_.Automats().Find( targetId ) )
+        type = GetAutomatMission( row );
+    if ( type ) 
+        return IsValidOrder( row.GetID(), *type );
+    MT_LOG_ERROR_MSG( "Unable to resolve order for the target unit: " << targetId );
+    return false;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: OrderDispatcher::Dispatch
+// Created: SBO 2007-05-31
+// -----------------------------------------------------------------------------
+void OrderDispatcher::Dispatch( dispatcher::SimulationPublisher_ABC& publisher, const Row_ABC& row )
+{
+    const int id = GetField< int >( row, "unit_id" );
+    if( const dispatcher::Agent_ABC* agent = model_.Agents().Find( id ) )
+	{
+        if( agent->GetSuperior().IsEngaged() )
+            DispatchAutomatMission( publisher, agent->GetSuperior(), row );
+        else
+            DispatchAgentMission( publisher, *agent, row );
+    }
+    else if( const dispatcher::Automat_ABC* automat = model_.Automats().Find( id ) )
+        DispatchAutomatMission( publisher, *automat, row );
+    else
+        MT_LOG_ERROR_MSG( "Unable to resolve order for the target unit: " << id );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: OrderDispatcher::DispatchMission
 // Updated: JCR
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent_ABC& agent, const Row_ABC& row )
+void OrderDispatcher::DispatchAgentMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent_ABC& agent, const Row_ABC& row )
 {
-    if( agent.GetSuperior().IsEngaged() )
-    {
-        DispatchMission( publisher, agent.GetSuperior(), row );
-        return;
-    }
     const kernel::OrderType* type = GetAgentMission( row );
     if( !type )
     {
@@ -154,10 +188,9 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
     simulation::UnitOrder message;
     try
     {
-        const long orderId = GetField< long >( row, "id" );
         message().mutable_tasker()->set_id( agent.GetId() );
         message().mutable_type()->set_id( type->GetId() );
-        SetParameters( *message().mutable_parameters(), orderId, *type );
+        SetParameters( *message().mutable_parameters(), row.GetID(), *type );
         message.Send( publisher );
     }
     catch ( std::exception& e )
@@ -171,7 +204,7 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
 // Updated: JCR
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat_ABC& automat, const Row_ABC& row )
+void OrderDispatcher::DispatchAutomatMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat_ABC& automat, const Row_ABC& row )
 {
     const kernel::OrderType* type = GetAutomatMission( row );
     if( !type )
@@ -182,10 +215,9 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
     simulation::AutomatOrder message;
     try
     {
-        const long orderId = GetField< long >( row, "id" );
         message().mutable_tasker()->set_id( automat.GetId() );
         message().mutable_type()->set_id( type->GetId() );
-        SetParameters( *message().mutable_parameters(), orderId, *type );
+        SetParameters( *message().mutable_parameters(), row.GetID(), *type );
         message.Send( publisher );
     }
     catch ( std::exception& e )
@@ -212,21 +244,12 @@ void OrderDispatcher::DispatchFragOrder( dispatcher::SimulationPublisher_ABC& pu
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrderDispatcher::GetTargetId
-// Created: SBO 2007-05-31
-// -----------------------------------------------------------------------------
-unsigned long OrderDispatcher::GetTargetId( const Row_ABC& row ) const
-{
-    return GetField< long >( row, "unit_id" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: OrderDispatcher::GetAgentMission
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
 const kernel::OrderType* OrderDispatcher::GetAgentMission( const Row_ABC& row ) const
 {
-    const std::string name = GetField< std::string >( row, "name" );
+    const std::string name( GetField< std::string >( row, "name" ) );
     const kernel::OrderType* order = types_.FindAgentMission( name );
     if( !order )
         MT_LOG_ERROR_MSG( "Unknown agent mission : " << name );
@@ -239,7 +262,7 @@ const kernel::OrderType* OrderDispatcher::GetAgentMission( const Row_ABC& row ) 
 // -----------------------------------------------------------------------------
 const kernel::OrderType* OrderDispatcher::GetAutomatMission( const Row_ABC& row ) const
 {
-    const std::string name = GetField< std::string >( row, "name" );
+    const std::string name( GetField< std::string >( row, "name" ) );
     const kernel::OrderType* order = types_.FindAutomatMission( name );
     if( !order )
         MT_LOG_ERROR_MSG( "Unknown automat mission : " << name );
@@ -252,14 +275,14 @@ const kernel::OrderType* OrderDispatcher::GetAutomatMission( const Row_ABC& row 
 // -----------------------------------------------------------------------------
 void OrderDispatcher::SetParameters( Common::MsgMissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type )
 {
-    std::auto_ptr< Table_ABC > params_( database_.OpenTable( "OrderParameters" ) );
+    std::auto_ptr< Table_ABC > params_( GetDatabase( workspace_ ).OpenTable( "OrderParameters" ) );
+
     Row_ABC* result = params_->Find( "order_id=" + boost::lexical_cast< std::string >( orderId ) );
     for( unsigned long i = 0; result != 0 && i < type.Count(); ++i )
     {
         SetParameter( *parameters.add_elem(), *result, type );
         result = params_->GetNextRow();
     }
-    // TODO : if( i < parameters.elem_size() )
 }
 
 namespace
@@ -278,6 +301,35 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrderDispatcher::IsValidOrder
+// Created: JCR 2010-07-19
+// -----------------------------------------------------------------------------
+bool OrderDispatcher::IsValidOrder( unsigned long orderId, const kernel::OrderType& type ) const
+{
+    std::auto_ptr< Table_ABC > params_( GetDatabase( workspace_ ).OpenTable( "OrderParameters" ) );
+    Row_ABC* result = params_->Find( "order_id=" + boost::lexical_cast< std::string >( orderId ) );
+    unsigned n = 0;
+
+    try 
+    {
+        while ( result != NULL && ++n )
+        {
+            const std::string name( GetField< std::string >( *result, "name" ) );
+            const kernel::OrderParameter* param = GetParameterByName( type, name );        
+            if( ! ( param && serializer_->IsValidParameter( *param ) ) )
+                throw std::runtime_error( "Unknown parameter: " + name );
+            result = params_->GetNextRow();
+        }
+    }
+    catch ( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Order [" << type.GetName() << "] validation error: " << e.what() );
+        return false;
+    }
+    return n == type.Count();
+}
+
+// -----------------------------------------------------------------------------
 // Name: OrderDispatcher::SetParameter
 // Updated: JCR
 // Created: SBO 2007-05-31
@@ -285,9 +337,9 @@ namespace
 void OrderDispatcher::SetParameter( Common::MsgMissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type )
 {
     const std::string name( GetField< std::string >( row, "name" ) );
-    const long parameterId = GetField< long >( row, "id" ); // OBJECTID
     try
     {
+        const long parameterId = row.GetID();
         const kernel::OrderParameter* param = GetParameterByName( type, name );
         parameter.set_null_value( ! param );
         if( param )

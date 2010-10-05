@@ -72,6 +72,7 @@ public:
     //@{
     void Serialize( Common::MsgMissionParameter& message, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value ) const;
     void Clean( Common::MsgMissionParameter& message ) const;
+    bool IsValidParameter( const kernel::OrderParameter& parameter ) const;
     //@}
 
 private:
@@ -115,11 +116,14 @@ private:
     //@}
 
 private:
+
+    class LazyDatabaseConnection;
+
+private:
     //! @name Member data
     //@{
     const dispatcher::Model_ABC& model_;
-    Database_ABC& geometryDb_;
-    Database_ABC& database_;
+	Workspace_ABC& workspace_;  //!< Reference geometry database only
     std::auto_ptr< OrderParameterTypeResolver > types_;
     //@}
 };

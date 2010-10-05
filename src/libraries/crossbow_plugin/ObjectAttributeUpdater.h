@@ -34,29 +34,59 @@ namespace plugins
 {
 namespace crossbow
 {
-class Database_ABC;
-class InsertQueryBuilder;
+    class Workspace_ABC;
+    class Table_ABC;
+    class WorkingSession_ABC;
 
-class ObjectAttributeUpdater{
+class ObjectAttributeUpdater
+{
 public:
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributes& msg );
+    //! @name Constructor / desctructor
+    //@{
+    ObjectAttributeUpdater( Workspace_ABC& workspace, const WorkingSession_ABC& session, long objectId );
+    ~ObjectAttributeUpdater();
+    //@}
+
+    //! @name Updater
+    //@{
+    void Update( const Common::ObjectAttributes& msg );
+    //@}
 
 private:
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeConstruction& construction );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeObstacle&  obstacle );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeMine&  mine );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeActivityTime&  activity_time );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeBypass&  bypass );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeLogistic&  logistic );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeNBC&  nbc );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeCrossingSite&  crossing_site );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeSupplyRoute&  supply_route );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeToxicCloud&  toxic_cloud );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeFire&  fire );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeMedicalTreatment&  medical_treatment );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeInteractionHeight&  interaction_height );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeNBCType&  nbc_agent );
-    static void UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeStock & stock );
+    //! @name Copy/Assignement
+    //@{
+    ObjectAttributeUpdater( const ObjectAttributeUpdater& );            //!< Copy constructor
+    ObjectAttributeUpdater& operator=( const ObjectAttributeUpdater& ); //!< Assignement operator
+    //@}
+
+    //! @name Attribute updater
+    //@{
+    void Update( const Common::ObjectAttributeConstruction& construction );
+    void Update( const Common::ObjectAttributeObstacle& obstacle );
+    void Update( const Common::ObjectAttributeMine& mine );
+    void Update( const Common::ObjectAttributeActivityTime& activity_time );
+    void Update( const Common::ObjectAttributeBypass& bypass );
+    void Update( const Common::ObjectAttributeLogistic& logistic );
+    void Update( const Common::ObjectAttributeNBC& nbc );
+    void Update( const Common::ObjectAttributeCrossingSite& crossing_site );
+    void Update( const Common::ObjectAttributeSupplyRoute& supply_route );
+    void Update( const Common::ObjectAttributeToxicCloud& toxic_cloud );
+    void Update( const Common::ObjectAttributeFire& fire );
+    void Update( const Common::ObjectAttributeMedicalTreatment& medical_treatment );
+    void Update( const Common::ObjectAttributeInteractionHeight& interaction_height );
+    void Update( const Common::ObjectAttributeNBCType& nbc_agent );
+    void Update( const Common::ObjectAttributeStock& stock );
+    //@}
+
+    //! @name
+    //@{
+    Table_ABC* OpenTable( const std::string& name );
+    //@}
+
+private:
+    Workspace_ABC&              workspace_;
+    const WorkingSession_ABC&   session_;
+    long           objectId_;
 };
 
 }

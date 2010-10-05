@@ -20,7 +20,7 @@ namespace crossbow
     class Row_ABC;
     class Workspace_ABC;
     class Database_ABC;
-    class WorkingSession;
+    class WorkingSession_ABC;
 
 // =============================================================================
 /** @class  FolkUpdater
@@ -33,7 +33,7 @@ class FolkUpdater
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FolkUpdater( Workspace_ABC& workspace, const WorkingSession& session );
+    explicit FolkUpdater( Workspace_ABC& workspace, const WorkingSession_ABC& session );
     virtual ~FolkUpdater();
     //@}
 
@@ -47,7 +47,7 @@ public:
     //@{
     void Update( const MsgsSimToClient::MsgFolkCreation& msg );
     void Update( const MsgsSimToClient::MsgFolkGraphUpdate& msg );
-    void Drop();
+    void Flush();
     //@}
 
 private:
@@ -89,8 +89,8 @@ private:
 
     //! @name Folk Database
     //@{
-    Database_ABC& database_;
-    const WorkingSession& session_;
+    Workspace_ABC& workspace_;
+    const WorkingSession_ABC& session_;
     //@}
 };
 

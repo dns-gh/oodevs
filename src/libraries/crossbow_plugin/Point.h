@@ -18,6 +18,8 @@ namespace Common
     class MsgCoordLatLong;
 }
 
+class OGRPoint;
+
 namespace plugins
 {
 namespace crossbow
@@ -49,11 +51,12 @@ public:
 
     //! @name
     //@{
-    virtual OGRPoint* Extract( OGRSpatialReference* spatialReference ) const;
+    virtual void Serialize( OGRFeature& feature, OGRSpatialReference* spatialReference ) const;
     //@}
 
     //! @name
     //@{
+    void Serialize( OGRPoint& point, OGRSpatialReference* spatialReference ) const;
     std::ostream& SerializeCoordinates( std::ostream& geometry, char sep ) const;
     //@}
 

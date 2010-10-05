@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Line_h_
-#define __Line_h_
+#ifndef __plugins_crossbow_Line_h_
+#define __plugins_crossbow_Line_h_
 
 #include "PointCollection.h"
 
@@ -44,12 +44,13 @@ public:
     //! @name Operations
     //@{
     void Serialize( std::ostream& geometry ) const;
+	void SerializeWkt( std::ostream& geometry ) const;
     void Serialize( Common::MsgLocation& message ) const;
     //@}
 
     //! @name
     //@{
-    virtual OGRLineString* Extract( OGRSpatialReference* spatialReference ) const;
+    virtual void Serialize( OGRFeature& feature, OGRSpatialReference* spatialReference ) const;
     //@}
 
 private:
@@ -63,4 +64,4 @@ private:
 }
 }
 
-#endif // __Line_h_
+#endif // __plugins_crossbow_Line_h_

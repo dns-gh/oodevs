@@ -9,6 +9,7 @@
 
 #include "crossbow_plugin_pch.h"
 #include "OrderParameterTypeResolver.h"
+#include <algorithm>
 
 using namespace plugins::crossbow;
 
@@ -28,7 +29,7 @@ OrderParameterTypeResolver& OrderParameterTypeResolver::Register( const std::str
 // -----------------------------------------------------------------------------
 int OrderParameterTypeResolver::Resolve( const std::string& type ) const
 {
-    std::string lowerType = type;
+    std::string lowerType( type );
     std::transform( type.begin(), type.end(), lowerType.begin(), &tolower );
     T_TypeMap::const_iterator it = map_.find( lowerType );
     if( it != map_.end() )

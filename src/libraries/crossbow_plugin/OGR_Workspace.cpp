@@ -11,8 +11,10 @@
 #include "OGR_Workspace.h"
 #include "DatabaseFactory.h"
 #include "Database_ABC.h"
-
+#include "tools/ExerciseConfig.h"
+#include <xeumeuleu/xml.hpp>
 #include <gdal/gdal.h>
+#include <gdal/ogr_api.h>
 #include <gdal/ogrsf_frmts.h>
 
 using namespace plugins;
@@ -21,9 +23,9 @@ namespace
 {
     void InitializeOGR( int argc, char* argv[] )
     {
+        OGRRegisterAll();
         if( argc > 0 && GDALGeneralCmdLineProcessor( argc, &argv, 0 ) < 1 )
             throw std::runtime_error( "error while processing gdal commands." );
-        OGRRegisterAll();
     }
 }
 
@@ -42,8 +44,8 @@ crossbow::OGR_Workspace::OGR_Workspace( int argc, char* argv[] )
 // -----------------------------------------------------------------------------
 crossbow::OGR_Workspace::OGR_Workspace()
 {
-    int argc = 0;
-    char *argv[] = { "crossbow_test_CrossbowConnection" };
+    int argc = 1;
+    char *argv[] = { "--verbose" };
     InitializeOGR( argc, argv );
 }
 
@@ -53,28 +55,29 @@ crossbow::OGR_Workspace::OGR_Workspace()
 // -----------------------------------------------------------------------------
 crossbow::OGR_Workspace::~OGR_Workspace()
 {
-    // NOTHING
+    OGRCleanupAll();
 }
 
 // -----------------------------------------------------------------------------
 // Name: OGR_Workspace constructor
 // Created: JCR 2010-02-24
 // -----------------------------------------------------------------------------
-void crossbow::OGR_Workspace::Initialize( xml::xistream& xis, const dispatcher::Config& config )
+void crossbow::OGR_Workspace::Initialize( xml::xistream& xis, const tools::ExerciseConfig& config )
 {
     std::string reference;
 
     xis >> xml::optional
         >> xml::attribute( "default", reference );
 
+    path_ = config.GetExerciseFile();
     if( reference.empty() )
     {
-        xis >> xml::list( "property", *this, &crossbow::OGR_Workspace::InitializeProperty, config );
+        xis >> xml::list( *this, &crossbow::OGR_Workspace::InitializeProperty );
     }
     else
     {
-        InitializeConnectionReference( "geometry", config, reference );
-        InitializeConnectionReference( "flat", config, reference );
+        InitializeConnectionReference( "geometry", reference );
+        InitializeConnectionReference( "flat", reference );
     }
 }
 
@@ -82,9 +85,9 @@ void crossbow::OGR_Workspace::Initialize( xml::xistream& xis, const dispatcher::
 // Name: OGR_Workspace::InitializeProperty
 // Created: JCR 2010-03-23
 // -----------------------------------------------------------------------------
-void crossbow::OGR_Workspace::InitializeProperty( xml::xistream& xis, const dispatcher::Config& config )
+void crossbow::OGR_Workspace::InitializeProperty( const std::string& name, xml::xistream& xis )
 {
-    InitializeConnectionReference( xis.attribute< std::string >( "name" ), config, xis.attribute< std::string >( "connection" ) );
+    InitializeConnectionReference( name, xml::attribute< std::string >( xis, "connection" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,31 +97,53 @@ void crossbow::OGR_Workspace::InitializeProperty( xml::xistream& xis, const disp
 crossbow::Database_ABC& crossbow::OGR_Workspace::GetDatabase( const std::string& name )
 {
     T_DatabasesMap::iterator it = databases_.find( name );
-    if( ! it->second )
+    if( it == databases_.end() )
         throw std::runtime_error( "database reference " + name + " not initialized" );
+    if( ! it->second.get() )
+        InitializeConnection( name );
     return *it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OGR_Workspace::Release
+// Created: JCR 2010-05-12
+// -----------------------------------------------------------------------------
+void crossbow::OGR_Workspace::Release( const std::string& name )
+{
+    T_Database& db = databases_[ name ];
+    db.reset( ( Database_ABC* )0 ) ;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OGR_Workspace::InitializeConnection
+// Created: JCR 2010-05-12
+// -----------------------------------------------------------------------------
+void crossbow::OGR_Workspace::InitializeConnection( const std::string& name )
+{
+    T_Database& db = databases_[ name ];
+
+    if( !db )
+    {
+        const std::string& reference = connections_[ name ];
+        CIT_DatabasesReferenceMap it = references_.find( reference );
+        // connection or db is already referenced under an other tag
+        if( it != references_.end() )
+            db = databases_[ it->second ];
+        if( !db )
+        {
+            DatabaseFactory factory;
+            db = T_Database( factory.Create( tools::GeneralConfig::BuildChildPath( path_, name ), reference ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: crossbow::OGR_Workspace::Initialize
 // Created: JCR 2008-01-11
 // -----------------------------------------------------------------------------
-void crossbow::OGR_Workspace::InitializeConnectionReference( const std::string& name, const dispatcher::Config& config, const std::string& reference )
+void crossbow::OGR_Workspace::InitializeConnectionReference( const std::string& name, const std::string& reference )
 {
-    T_Database& db = databases_[ name ];
-
-    if( !db )
-    {
-        CIT_DatabasesReferenceMap it = references_.find( reference );
-        // connection or db is already referenced under an other tag
-        if( it != references_.end() )
-            db = databases_[ it->second ];
-        else
-        {
-            DatabaseFactory factory;
-            db = T_Database( factory.Create( config, reference ) );
-            references_[ reference ] = name;
-        }
-    }
+    connections_[ name ] = reference;
+    InitializeConnection( name );
+    references_[ reference ] = name;
 }
-

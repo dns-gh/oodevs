@@ -42,7 +42,7 @@ namespace crossbow
 
 // =============================================================================
 /** @class  OrderDispatcher
-    @brief  Order dispatcher
+    @brief  OrderDispatcher
 */
 // Created: SBO 2007-05-31
 // =============================================================================
@@ -58,6 +58,7 @@ public:
     //! @name Operations
     //@{
     void Dispatch( dispatcher::SimulationPublisher_ABC& publisher, const Row_ABC& row );
+    bool IsValidOrder( const Row_ABC& row ) const;
     //@}
 
 private:
@@ -74,18 +75,18 @@ private:
 
     //! @name Mission Helpers
     //@{
-    void DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent_ABC& agent, const Row_ABC& row );
-    void DispatchMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat_ABC& automat, const Row_ABC& row );
+    void DispatchAgentMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Agent_ABC& agent, const Row_ABC& row );
+    void DispatchAutomatMission( dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Automat_ABC& automat, const Row_ABC& row );
     void DispatchFragOrder( dispatcher::SimulationPublisher_ABC& publisher, unsigned long targetId, const Row_ABC& row );
     //@}
 
     //! @name Parameter Helpers
     //@{
-    unsigned long GetTargetId( const Row_ABC& row ) const;
     const kernel::OrderType* GetAgentMission( const Row_ABC& row ) const;
     const kernel::OrderType* GetAutomatMission( const Row_ABC& row ) const;
     void SetParameters( Common::MsgMissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type );
     void SetParameter( Common::MsgMissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type );
+    bool IsValidOrder( unsigned long orderId, const kernel::OrderType& type ) const;
     //@}
 
 private:
@@ -93,7 +94,7 @@ private:
     //@{
     const OrderTypes& types_;
     const dispatcher::Model_ABC& model_;
-    Database_ABC& database_;
+    Workspace_ABC& workspace_;
     std::auto_ptr< OrderParameterSerializer > serializer_;
     //@}
 };

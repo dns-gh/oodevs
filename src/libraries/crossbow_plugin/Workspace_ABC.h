@@ -33,6 +33,7 @@ public:
     //! @name
     //@{
     virtual Database_ABC& GetDatabase( const std::string& name ) = 0;
+    virtual void Release( const std::string& name ) = 0;
     //@}
 };
 

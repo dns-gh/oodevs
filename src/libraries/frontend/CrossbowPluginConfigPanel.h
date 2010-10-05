@@ -56,9 +56,8 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     QGroupBox* box_;
-    QLineEdit* geodatabase_;
-    QLineEdit* population_;
-    QLineEdit* shared_;
+    QLineEdit* flatDb_;
+    QLineEdit* featureDb_;
     //@}
 };
 

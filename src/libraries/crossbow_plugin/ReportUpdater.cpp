@@ -23,10 +23,10 @@ using namespace plugins::crossbow;
 // Name: ReportUpdater constructor
 // Created: JCR 2010-03-23
 // -----------------------------------------------------------------------------
-ReportUpdater::ReportUpdater( Workspace_ABC& workspace, const dispatcher::Config& config, const dispatcher::Model_ABC& model, const WorkingSession& session )
-    : database_     ( workspace.GetDatabase( "flat" ) )
-    , reportFactory_( new ReportFactory( config, model ) )
-    , session_      ( session )
+ReportUpdater::ReportUpdater( Workspace_ABC& workspace, const dispatcher::Config& config, const dispatcher::Model_ABC& model, const WorkingSession_ABC& session )
+    : workspace_ ( workspace )
+    , reportFactory_ ( new ReportFactory( config, model ) )
+    , session_ ( session )
 {
     // NOTHING
 }
@@ -49,7 +49,7 @@ void ReportUpdater::Clean()
     try
     {
         const std::string clause( "session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );
-        database_.ClearTable( "Reports", clause );
+        workspace_.GetDatabase( "flat" ).ClearTable( "Reports", clause );
     }
     catch ( std::exception& e )
     {
@@ -63,7 +63,7 @@ void ReportUpdater::Clean()
 // -----------------------------------------------------------------------------
 void ReportUpdater::Update( const MsgsSimToClient::MsgReport& msg )
 {
-    std::auto_ptr< Table_ABC > table( database_.OpenTable( "Reports" ) );
+    std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "flat" ).OpenTable( "Reports" ) );
 
     Row_ABC& row = table->CreateRow();
     row.SetField( "unit_id", FieldVariant( (long)msg.report().id() ) );

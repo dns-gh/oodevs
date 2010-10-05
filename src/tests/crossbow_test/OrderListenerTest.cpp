@@ -12,19 +12,41 @@
 #include "crossbow_plugin/OGR_Workspace.h"
 #include "crossbow_plugin/DatabaseFactory.h"
 #include "crossbow_plugin/Database_ABC.h"
-#include "dispatcher/Config.h"
-
+#include "tools/ExerciseConfig.h"
 #include "dispatcher/Model_ABC.h"
+
 #include "clients_kernel/OrderParameter.h"
+
 #pragma warning( push, 0 )
 #pragma warning( disable: 4505 )
 #include <turtle/mock.hpp>
 #pragma warning( pop )
 
 using namespace plugins;
-using namespace plugins::crossbow;
 
-MOCK_BASE_CLASS( MockDatabase, Database_ABC )     // defines a 'MockDatabase' class implementing 'Database_ABC'
+namespace
+{
+    std::string GetHost()
+    {
+        static std::string host = "localhost";
+        return host;
+    }
+
+    template< typename T >
+    void CheckEncoding( T& message )
+    {
+        tools::AsnMessageEncoder< T > asnEncoder( message );
+    }
+}
+
+MOCK_BASE_CLASS( MockWorkspace, crossbow::Workspace_ABC )     // defines a 'MockWorkspace' class implementing 'Workspace_ABC'
+{
+    MOCK_METHOD( GetDatabase, 1 )
+    MOCK_METHOD( Release, 1 )
+};
+
+
+MOCK_BASE_CLASS( MockDatabase, crossbow::Database_ABC )     // defines a 'MockDatabase' class implementing 'Database_ABC'
 {
     MOCK_METHOD( OpenBufferedTable, 2 )
     MOCK_METHOD( OpenTable, 1 )                   // implements the 'display' method from 'view' (taking 1 argument)
@@ -36,6 +58,8 @@ MOCK_BASE_CLASS( MockDatabase, Database_ABC )     // defines a 'MockDatabase' cl
 
 MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )     // defines a 'MockDatabase' class implementing 'Database_ABC'
 {
+    MOCK_METHOD( Accept, 1 );
+
     MOCK_METHOD( sides, 0 )
     MOCK_METHOD( knowledgeGroups, 0 )
     MOCK_METHOD( formations, 0 )
@@ -53,33 +77,41 @@ MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )     // defines a 'MockDataba
     MOCK_METHOD( populationFires, 0 )
     MOCK_METHOD( fireEffects, 0 )
     MOCK_METHOD( reports, 0 )
+
+    MOCK_METHOD( GetAgentTypes, 0 );
+    MOCK_METHOD( GetMissionTypes, 0 );
+    MOCK_METHOD( GetFragOrderTypes, 0 );
+    MOCK_METHOD( GetObjectTypes, 0 );
+    MOCK_METHOD( GetMedicalTreatmentTypes, 0 );
 };
 
 
 BOOST_AUTO_TEST_CASE( crossbow_test_serialize_bool )
 {
-    MockDatabase mockDatabase;
+    MockWorkspace mockWorkspace;
     MockModel mockModel;
 
-    OrderParameterSerializer serializer( mockDatabase, mockModel );
+    crossbow::OrderParameterSerializer serializer( mockWorkspace, mockModel );
     ASN1T_MissionParameter asn;
     kernel::OrderParameter parameter( "param", "bool", false );
     serializer.Serialize( asn, parameter, 0, "true" );
     BOOST_CHECK_EQUAL( asn.value.t, T_MissionParameter_value_aBool );
     BOOST_CHECK_EQUAL( asn.value.u.aBool, static_cast< asn::ASN1BOOL >( true ) );
+    BOOST_CHECK_NO_THROW( CheckEncoding( asn ) );
 }
 
 BOOST_AUTO_TEST_CASE( crossbow_test_serialize_real )
 {
-    MockDatabase mockDatabase;
+    MockWorkspace mockWorkspace;
     MockModel mockModel;
 
-    OrderParameterSerializer serializer( mockDatabase, mockModel );
+    crossbow::OrderParameterSerializer serializer( mockWorkspace, mockModel );
     ASN1T_MissionParameter asn;
     kernel::OrderParameter parameter( "param", "real", false );
     serializer.Serialize( asn, parameter, 0, "42.5" );
     BOOST_CHECK_EQUAL( asn.value.t, T_MissionParameter_value_aReal );
     BOOST_CHECK_EQUAL( asn.value.u.aReal, static_cast< asn::ASN1REAL >( 42.5 ) );
+    BOOST_CHECK_NO_THROW( CheckEncoding( asn ) );
 }
 
 /*
@@ -173,13 +205,12 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_point_lehavre )
     MockModel mockModel;
     int gdal_argc = 0;
     char *gdal_argv[] = { "--version" };
-    crossbow::OGR_Workspace scoped( gdal_argc, gdal_argv );
+    crossbow::OGR_Workspace workspace( gdal_argc, gdal_argv );
     {
-        dispatcher::Config config;
-        crossbow::DatabaseFactory factory;
-        std::auto_ptr< crossbow::Database_ABC > db( factory.Create( config, "sde://sword:sword@sword-test.dmz.masagroup.net:6789/sword_crossbow_db.sword" ) );
+        workspace.InitializeConnectionReference( "geometry", "sde://sword:sword@" + GetHost() + ":6789/sword_crossbow_db.sword" );
+        workspace.InitializeConnectionReference( "flat", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
 
-        OrderParameterSerializer serializer( *db, mockModel );
+        crossbow::OrderParameterSerializer serializer( workspace, mockModel );
         ASN1T_MissionParameter asn;
         kernel::OrderParameter parameter( "param", "point", false );
         serializer.Serialize( asn, parameter, 321, "orderparameters_point_test" ); // point is registered with sql script
@@ -188,6 +219,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_point_lehavre )
         BOOST_CHECK_EQUAL( asn.value.u.point->coordinates.n, 1u );
         BOOST_CHECK_CLOSE( asn.value.u.point->coordinates.elem[0].latitude, 49.53863960876465, 0.0001 );
         BOOST_CHECK_CLOSE( asn.value.u.point->coordinates.elem[0].longitude, 0.14297806372070312, 0.0001 );
+        BOOST_CHECK_NO_THROW( CheckEncoding( asn ) );
         CleanAsnLocation( asn.value.u.point );
     }
 }
@@ -197,13 +229,11 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_point_monterey )
     MockModel mockModel;
     int gdal_argc = 0;
     char *gdal_argv[] = { "--version" };
-    crossbow::OGR_Workspace scoped( gdal_argc, gdal_argv );
+    crossbow::OGR_Workspace workspace( gdal_argc, gdal_argv );
     {
-        dispatcher::Config config;
-        crossbow::DatabaseFactory factory;
-        std::auto_ptr< crossbow::Database_ABC > db( factory.Create( config, "sde://sword:sword@sword-test.dmz.masagroup.net:6789/sword_crossbow_db.sword" ) );
+        workspace.InitializeConnectionReference( "geometry", "sde://sword:sword@" + GetHost() + ":6789/sword_crossbow_db.sword" );
 
-        OrderParameterSerializer serializer( *db, mockModel );
+        crossbow::OrderParameterSerializer serializer( workspace, mockModel );
         ASN1T_MissionParameter asn;
         kernel::OrderParameter parameter( "param", "point", false );
         serializer.Serialize( asn, parameter, 325, "orderparameters_point_test" ); // point is registered with sql script
@@ -212,6 +242,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_point_monterey )
         BOOST_CHECK_EQUAL( asn.value.u.point->coordinates.n, 1u );
         BOOST_CHECK_CLOSE( asn.value.u.point->coordinates.elem[0].latitude, 36.645834, 0.0001 );
         BOOST_CHECK_CLOSE( asn.value.u.point->coordinates.elem[0].longitude, -121.815033, 0.0001 );
+        BOOST_CHECK_NO_THROW( CheckEncoding( asn ) );
         CleanAsnLocation( asn.value.u.point );
     }
 }
@@ -221,13 +252,11 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_pointlist )
     MockModel mockModel;
     int gdal_argc = 0;
     char *gdal_argv[] = { "--version" };
-    crossbow::OGR_Workspace scoped( gdal_argc, gdal_argv );
+    crossbow::OGR_Workspace workspace( gdal_argc, gdal_argv );
     {
-        dispatcher::Config config;
-        crossbow::DatabaseFactory factory;
-        std::auto_ptr< crossbow::Database_ABC > db( factory.Create( config, "sde://sword:sword@sword-test.dmz.masagroup.net:6789/sword_crossbow_db.sword" ) );
+        workspace.InitializeConnectionReference( "geometry", "sde://sword:sword@" + GetHost() + ":6789/sword_crossbow_db.sword" );
 
-        OrderParameterSerializer serializer( *db, mockModel );
+        crossbow::OrderParameterSerializer serializer( workspace, mockModel );
         ASN1T_MissionParameter asn;
         kernel::OrderParameter parameter( "param", "pointlist", false );
         serializer.Serialize( asn, parameter, 324, "orderparameters_point_test" ); // point is registered with sql script
@@ -246,6 +275,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_pointlist )
         BOOST_CHECK_EQUAL( asn.value.u.pointList->elem[ 2 ].coordinates.n, 1u );
         BOOST_CHECK_CLOSE( asn.value.u.pointList->elem[ 2 ].coordinates.elem[0].latitude, 49.53863960876465, 0.0001 );
         BOOST_CHECK_CLOSE( asn.value.u.pointList->elem[ 2 ].coordinates.elem[0].longitude, 0.14297806372070312, 0.0001 );
+        BOOST_CHECK_NO_THROW( CheckEncoding( asn ) );
         CleanAsnLocationList( asn.value.u.pointList );
     }
 }
@@ -255,18 +285,17 @@ BOOST_AUTO_TEST_CASE( crossbow_test_charge_memory_orderparameter_point_serializa
     MockModel mockModel;
     int gdal_argc = 0;
     char *gdal_argv[] = { "--version" };
-    crossbow::OGR_Workspace scoped( gdal_argc, gdal_argv );
+    crossbow::OGR_Workspace workspace( gdal_argc, gdal_argv );
     {
-        dispatcher::Config config;
-        crossbow::DatabaseFactory factory;
-        std::auto_ptr< crossbow::Database_ABC > db( factory.Create( config, "sde://sword:sword@sword-test.dmz.masagroup.net:6789/sword_crossbow_db.sword" ) );
+        workspace.InitializeConnectionReference( "geometry", "sde://sword:sword@" + GetHost() + ":6789/sword_crossbow_db.sword" );
 
         for ( int i = 1000; i > 0; --i )
         {
-            OrderParameterSerializer serializer( *db, mockModel );
+            crossbow::OrderParameterSerializer serializer( workspace, mockModel );
             ASN1T_MissionParameter asn;
             kernel::OrderParameter parameter( "param", "point", false );
             serializer.Serialize( asn, parameter, 321, "orderparameters_point_test" ); // point is registered with sql script
+            BOOST_CHECK_NO_THROW( CheckEncoding( asn ) );
             CleanAsnLocation( asn.value.u.point );
         }
     }
@@ -277,18 +306,17 @@ BOOST_AUTO_TEST_CASE( crossbow_test_charge_memory_orderparameter_pointlist_seria
     MockModel mockModel;
     int gdal_argc = 0;
     char *gdal_argv[] = { "--version" };
-    crossbow::OGR_Workspace scoped( gdal_argc, gdal_argv );
+    crossbow::OGR_Workspace workspace( gdal_argc, gdal_argv );
     {
-        dispatcher::Config config;
-        crossbow::DatabaseFactory factory;
-        std::auto_ptr< crossbow::Database_ABC > db( factory.Create( config, "sde://sword:sword@sword-test.dmz.masagroup.net:6789/sword_crossbow_db.sword" ) );
+        workspace.InitializeConnectionReference( "geometry", "sde://sword:sword@" + GetHost() + ":6789/sword_crossbow_db.sword" );
 
         for ( int i = 1000; i > 0; --i )
         {
-            OrderParameterSerializer serializer( *db, mockModel );
+            crossbow::OrderParameterSerializer serializer( workspace, mockModel );
             ASN1T_MissionParameter asn;
             kernel::OrderParameter parameter( "param", "pointlist", false );
             serializer.Serialize( asn, parameter, 324, "orderparameters_point_test" ); // point is registered with sql script
+            BOOST_CHECK_NO_THROW( CheckEncoding( asn ) );
             CleanAsnLocationList( asn.value.u.pointList );
         }
     }
@@ -300,13 +328,11 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_line )
     MockModel mockModel;
     int gdal_argc = 0;
     char *gdal_argv[] = { "--version" };
-    crossbow::OGR_Workspace scoped( gdal_argc, gdal_argv );
+    crossbow::OGR_Workspace workspace( gdal_argc, gdal_argv );
     {
-        dispatcher::Config config;
-        crossbow::DatabaseFactory factory;
-        std::auto_ptr< crossbow::Database_ABC > db( factory.Create( config, "sde://sword:sword@sword-test.dmz.masagroup.net:6789/sword_crossbow_db.sword" ) );
+        workspace.InitializeConnectionReference( "geometry", "sde://sword:sword@" + GetHost() + ":6789/sword_crossbow_db.sword" );
 
-        OrderParameterSerializer serializer( *db, mockModel );
+        crossbow::OrderParameterSerializer serializer( workspace, mockModel );
         ASN1T_MissionParameter asn;
         kernel::OrderParameter parameter( "param", "path", false );
         serializer.Serialize( asn, parameter, 322, "orderparameters_line_test" ); // point is registered with sql script
@@ -317,6 +343,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_line )
         BOOST_CHECK_CLOSE( asn.value.u.path->coordinates.elem[0].longitude, 0.1283868466796875, 0.0001 );
         BOOST_CHECK_CLOSE( asn.value.u.path->coordinates.elem[1].latitude, 49.52353340759277, 0.0001 );
         BOOST_CHECK_CLOSE( asn.value.u.path->coordinates.elem[1].longitude, 0.11705719580078125, 0.0001 );
+        BOOST_CHECK_NO_THROW( CheckEncoding( asn ) );
         CleanAsnLocation( asn.value.u.path );
     }
 }
@@ -326,13 +353,11 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_area )
     MockModel mockModel;
     int gdal_argc = 0;
     char *gdal_argv[] = { "--version" };
-    crossbow::OGR_Workspace scoped( gdal_argc, gdal_argv );
+    crossbow::OGR_Workspace workspace( gdal_argc, gdal_argv );
     {
-        dispatcher::Config config;
-        crossbow::DatabaseFactory factory;
-        std::auto_ptr< crossbow::Database_ABC > db( factory.Create( config, "sde://sword:sword@sword-test.dmz.masagroup.net:6789/sword_crossbow_db.sword" ) );
+        workspace.InitializeConnectionReference( "geometry", "sde://sword:sword@" + GetHost() + ":6789/sword_crossbow_db.sword" );
 
-        OrderParameterSerializer serializer( *db, mockModel );
+        crossbow::OrderParameterSerializer serializer( workspace, mockModel );
         ASN1T_MissionParameter asn;
         kernel::OrderParameter parameter( "param", "polygon", false );
         serializer.Serialize( asn, parameter, 323, "orderparameters_area_test" ); // point is registered with sql script
@@ -347,6 +372,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_serialize_area )
         BOOST_CHECK_CLOSE( asn.value.u.polygon->coordinates.elem[2].longitude, 0.12169205297851562, 0.0001 );
         BOOST_CHECK_CLOSE( asn.value.u.polygon->coordinates.elem[3].latitude, 49.52336174621582, 0.0001 );
         BOOST_CHECK_CLOSE( asn.value.u.polygon->coordinates.elem[3].longitude, 0.1283868466796875, 0.0001 );
+        BOOST_CHECK_NO_THROW( CheckEncoding( asn ) );
         CleanAsnLocation( asn.value.u.polygon );
     }
 }
@@ -359,7 +385,7 @@ BOOST_AUTO_TEST_CASE( CrossbowTest_OrderSerialize_Agent )
 
     MOCK_EXPECT( mockModel, agents ).once();
 
-    OrderParameterSerializer serializer( mockDatabase, mockModel );
+    crossbow::OrderParameterSerializer serializer( mockDatabase, mockModel );
     ASN1T_MissionParameter asn;
     kernel::OrderParameter parameter( "param", "Agent", false );
     serializer.Serialize( asn, parameter, 0, "5" );
@@ -374,7 +400,7 @@ BOOST_AUTO_TEST_CASE( CrossbowTest_OrderSerialize_AgentList_0 )
 
     MOCK_EXPECT( mockModel, agents ).never();
 
-    OrderParameterSerializer serializer( mockDatabase, mockModel );
+    crossbow::OrderParameterSerializer serializer( mockDatabase, mockModel );
     ASN1T_MissionParameter asn;
     kernel::OrderParameter parameter( "param", "AgentList", false );
     serializer.Serialize( asn, parameter, 0, "" );
@@ -390,7 +416,7 @@ BOOST_AUTO_TEST_CASE( CrossbowTest_OrderSerialize_AgentList_1 )
 
     MOCK_EXPECT( mockModel, agents ).once();
 
-    OrderParameterSerializer serializer( mockDatabase, mockModel );
+    crossbow::OrderParameterSerializer serializer( mockDatabase, mockModel );
     ASN1T_MissionParameter asn;
     kernel::OrderParameter parameter( "param", "AgentList", false );
     serializer.Serialize( asn, parameter, 0, "12" );
@@ -406,7 +432,7 @@ BOOST_AUTO_TEST_CASE( CrossbowTest_OrderSerialize_AgentList_5 )
 
     MOCK_EXPECT( mockModel, agents ).exactly( 5 );
 
-    OrderParameterSerializer serializer( mockDatabase, mockModel );
+    crossbow::OrderParameterSerializer serializer( mockDatabase, mockModel );
     ASN1T_MissionParameter asn;
     kernel::OrderParameter parameter( "param", "AgentList", false );
     serializer.Serialize( asn, parameter, 0, "12,35468,56,5,3" );

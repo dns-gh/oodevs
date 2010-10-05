@@ -10,218 +10,361 @@
 #include "crossbow_plugin_pch.h"
 #include "protocol/protocol.h"
 #include "ObjectAttributeUpdater.h"
-#include "QueryBuilder.h"
+#include "Workspace_ABC.h"
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
+#include "WorkingSession_ABC.h"
+
+#include <boost/noncopyable.hpp>
 
 using namespace plugins;
 using namespace plugins::crossbow;
 
-
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributes& msg ){
-    if( msg.has_activity_time() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.activity_time() );
-    if( msg.has_bypass() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.bypass() );
-    if( msg.has_construction() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.construction() );
-    if( msg.has_crossing_site() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.crossing_site() );
-    if( msg.has_fire() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.fire() );
-    if( msg.has_interaction_height() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.interaction_height() );
-    if( msg.has_logistic() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.logistic() );
-    if( msg.has_medical_treatment() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.medical_treatment() );
-    if( msg.has_mine() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.mine() );
-    if( msg.has_nbc() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.nbc() );
-    if( msg.has_nbc_agent() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.nbc_agent() );
-    if( msg.has_obstacle() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.obstacle() );
-    if( msg.has_stock() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.stock() );
-    if( msg.has_supply_route() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.supply_route() );
-    if( msg.has_toxic_cloud() )
-        ObjectAttributeUpdater::UpdateObjectAttribute( db, objectId, msg.toxic_cloud() );
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater constructor
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+ObjectAttributeUpdater::ObjectAttributeUpdater( Workspace_ABC& workspace, const WorkingSession_ABC& session, long objectId )
+    : workspace_( workspace )
+    , session_ ( session )
+    , objectId_ ( objectId )
+{
+    // NOTHING
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeConstruction& construction ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Construction" ) );
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater destructor
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+ObjectAttributeUpdater::~ObjectAttributeUpdater()
+{
+    // NOTHING
+}
 
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
-    if( construction.has_density() )
-        builder.SetField( "density", construction.density() ); //real
+#define CHECK_ATTRIBUTE_UPDATE( ATTR ) \
+    if( msg.has_##ATTR##() ) \
+        Update( msg.##ATTR##() )
+
+
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributes& msg )
+{
+    CHECK_ATTRIBUTE_UPDATE( activity_time   );
+    CHECK_ATTRIBUTE_UPDATE( bypass          );
+    CHECK_ATTRIBUTE_UPDATE( construction    );
+    CHECK_ATTRIBUTE_UPDATE( crossing_site   );
+    CHECK_ATTRIBUTE_UPDATE( fire            );
+    CHECK_ATTRIBUTE_UPDATE( interaction_height );
+    CHECK_ATTRIBUTE_UPDATE( logistic        );
+    CHECK_ATTRIBUTE_UPDATE( medical_treatment );
+    CHECK_ATTRIBUTE_UPDATE( mine            );
+    CHECK_ATTRIBUTE_UPDATE( nbc             );
+    CHECK_ATTRIBUTE_UPDATE( nbc_agent       );
+    CHECK_ATTRIBUTE_UPDATE( obstacle        );
+    CHECK_ATTRIBUTE_UPDATE( stock           );
+    CHECK_ATTRIBUTE_UPDATE( supply_route    );
+    CHECK_ATTRIBUTE_UPDATE( toxic_cloud     );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::OpenTable
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+Table_ABC* ObjectAttributeUpdater::OpenTable( const std::string& name )
+{
+    return workspace_.GetDatabase( "flat" ).OpenTable( name );
+}
+
+namespace 
+{
+    class RowManipulator : boost::noncopyable
+    {
+    public:
+        RowManipulator( Table_ABC& table, const WorkingSession_ABC& session, int objectId )
+            : table_ ( table )
+            , updating_ ( true )
+        {
+            std::stringstream query;
+            query << "object_id=" << objectId << " AND session_id=" << session.GetId();
+            row_ = table_.Find( query.str() );
+            if( !row_ )
+            {
+                row_ = &table_.CreateRow();
+                row_->SetField( "object_id", FieldVariant( objectId ) );
+                row_->SetField( "session_id", FieldVariant( session.GetId() ) );
+                updating_ = false;
+            }
+        }
+        
+        ~RowManipulator()
+        {
+            if( updating_ )
+                table_.UpdateRow( *row_ );
+            else
+                table_.InsertRow( *row_ );
+        }
+
+        void SetField( const std::string& field, const FieldVariant& value )
+        {
+            row_->SetField( field, value );
+        }
+        
+    private:
+        Table_ABC&  table_;
+        Row_ABC*    row_;
+        bool        updating_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeConstruction& construction )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Construction" ) );
+
+    RowManipulator row( *table, session_, objectId_ );
+
+    if( construction.density() )
+        row.SetField( "density", FieldVariant( construction.density() ) ); //real
     if( construction.has_percentage() )
-        builder.SetField( "percentage", construction.percentage() ); //int
+        row.SetField( "percentage", FieldVariant( construction.percentage() ) ); //int
     if( construction.has_resource() )
-        builder.SetField( "resource", (long)construction.resource().id() ); //int
+        row.SetField( "dotation_type", FieldVariant( static_cast< long >( construction.resource().id() ) ) ); //int
     if( construction.has_dotation_nbr() )
-        builder.SetField( "dotation_nbr", construction.dotation_nbr() ); //int
-
-    db.Execute( builder );
+        row.SetField( "dotation_nbr", FieldVariant( construction.dotation_nbr() ) ); //int
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeObstacle& obstacle ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Obstacle" ) );
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeObstacle& obstacle )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Obstacle" ) );
 
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
-    builder.SetField( "activated", obstacle.activated() ); // bool
-    // JSR
-    builder.SetField( "type", obstacle.type() == Common::ObstacleType_DemolitionTargetType_preliminary ? "preliminary" : "reserved" );
-
-    db.Execute( builder );
+    RowManipulator row( *table, session_, objectId_ );
+    row.SetField( "activated", FieldVariant( obstacle.activated() ) ); // bool
+    row.SetField( "type", FieldVariant( std::string( obstacle.type() == Common::ObstacleType_DemolitionTargetType_preliminary ? "preliminary" : "reserved" ) ) );
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeMine& mine ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Mine" ) );
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeMine& mine )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Mine" ) );
 
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
+    RowManipulator row( *table, session_, objectId_ );
     if( mine.has_density() )
-        builder.SetField( "density", mine.density() );
+        row.SetField( "density", FieldVariant( mine.density() ) );
     if( mine.has_percentage() )
-        builder.SetField( "percentage", mine.percentage() );
+        row.SetField( "percentage", FieldVariant( mine.percentage() ) );
     if( mine.has_resource() )
-        builder.SetField( "resource", (long)mine.resource().id() );
+        row.SetField( "dotation_type", FieldVariant( (long)mine.resource().id() ) );
     if( mine.has_dotation_nbr() )
-        builder.SetField( "dotation_nbr", mine.dotation_nbr() );
-
-    db.Execute( builder );
+        row.SetField( "dotation_nbr", FieldVariant( mine.dotation_nbr() ) );
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeActivityTime& activity_time ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Activity_Time" ) );
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeActivityTime& activity_time )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Activity_Time" ) );
 
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
-    builder.SetField( "activity_time", activity_time.value() ); // int
-
-    db.Execute( builder );
+    RowManipulator row( *table, session_, objectId_ );
+    row.SetField( "activity_time", FieldVariant( activity_time.value() ) ); // int
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeBypass& bypass ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Bypass" ) );
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeBypass& bypass )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Bypass" ) );
 
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
+    RowManipulator row( *table, session_, objectId_ );
     if( bypass.has_percentage() )
-        builder.SetField( "percentage", bypass.percentage() ); //int
-
-    db.Execute( builder );
+        row.SetField( "percentage", FieldVariant( bypass.percentage() ) ); //int
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeLogistic& logistic ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Logistic" ) );
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeLogistic& logistic )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Logistic" ) );
 
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
-    builder.SetField( "tc2", (long)logistic.tc2().id() ); // automat id
-
-    db.Execute( builder );
+    RowManipulator row( *table, session_, objectId_ );
+    row.SetField( "tc2", FieldVariant( static_cast< long >( logistic.tc2().id() ) ) ); // automat id
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeNBC& nbc ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_NBC" ) );
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeNBC& nbc )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_NBC" ) );
 
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
-    builder.SetField( "danger_level", nbc.danger_level() ); // int
+    RowManipulator row( *table, session_, objectId_ );
+    row.SetField( "danger_level", FieldVariant( nbc.danger_level() ) ); // int
     // nbc.nbc_agents // list object: TODO
-
-    db.Execute( builder );
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeCrossingSite& crossing_site ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Crossing_Site" ) );
-
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
-
-    builder.SetField( "banks_require_fitting", crossing_site.banks_require_fitting() ); //boolean
-    builder.SetField( "depth", crossing_site.depth() ); //int
-    builder.SetField( "flow_rate", crossing_site.flow_rate() ); //int
-    builder.SetField( "width", crossing_site.width() ); //int
-
-    db.Execute( builder );
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeCrossingSite& crossing_site )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Crossing_Site" ) );
+    
+    RowManipulator row( *table, session_, objectId_ );
+    row.SetField( "banks_require_fitting", FieldVariant( crossing_site.banks_require_fitting() ) ); // int
+    // nbc.nbc_agents // list object: TODO
+    row.SetField( "depth", FieldVariant( crossing_site.depth() ) ); //int
+    row.SetField( "flow_rate", FieldVariant( crossing_site.flow_rate() ) ); //int
+    row.SetField( "width", FieldVariant( crossing_site.width() ) ); //int
 }
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeSupplyRoute& supply_route ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_SupplyRoute" ) );
 
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
-    builder.SetField( "equipped", supply_route.equipped() ); // boolean
-    builder.SetField( "flow_rate", supply_route.flow_rate() ); // int
-    builder.SetField( "length", supply_route.length() ); // int
-    builder.SetField( "max_weight", supply_route.max_weight() ); // int
-    builder.SetField( "width", supply_route.width() ); // int
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeSupplyRoute& supply_route )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_SupplyRoute" ) );
 
-    db.Execute( builder );
+    RowManipulator row( *table, session_, objectId_ );
+    row.SetField( "equipped", FieldVariant( supply_route.equipped() ) ); // boolean
+    row.SetField( "flow_rate", FieldVariant( supply_route.flow_rate() ) ); // int
+    row.SetField( "length", FieldVariant( supply_route.length() ) ); // int
+    row.SetField( "max_weight", FieldVariant( supply_route.max_weight() ) ); // int
+    row.SetField( "width", FieldVariant( supply_route.width() ) ); // int
 }
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeToxicCloud& /*toxic_cloud*/ ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Toxic_Cloud" ) );
 
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeToxicCloud& /*toxic_cloud*/ )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Toxic_Cloud" ) );
+    
+    RowManipulator row( *table, session_, objectId_ );
     //toxic_cloud.quantities // list: todo
-    db.Execute( builder );
-}
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeFire& fire ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Fire" ) );
-
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
-    builder.SetField( "class_id", fire.class_id() ); // int
-    builder.SetField( "heat", fire.heat() ); // int
-
-    db.Execute( builder );
-}
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeMedicalTreatment& medical_treatment ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Medical_Treatment" ) );
-
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
-    builder.SetField( "doctors", medical_treatment.doctors() ); // int
-    builder.SetField( "beds", medical_treatment.beds() ); // int
-    builder.SetField( "available_doctors", medical_treatment.available_doctors() ); // int
-    builder.SetField( "available_beds", medical_treatment.available_beds() ); // int
-
-    db.Execute( builder );
-}
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeInteractionHeight& interaction_height ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Interaction_Height" ) );
-
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
-    builder.SetField( "height", interaction_height.height() ); //real
-
-    db.Execute( builder );
-}
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeNBCType& nbc_agent ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_NBC_Type" ) );
-
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
-    builder.SetField( "agent_id", (long)nbc_agent.agent().id() ); // int 
-    builder.SetField( "concentration", nbc_agent.concentration() ); // int 
-    builder.SetField( "source_life_duration", nbc_agent.source_life_duration() ); // int 
-
-    db.Execute( builder );
 }
 
-void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objectId, const Common::ObjectAttributeStock& /*stock*/ ){
-    InsertQueryBuilder builder( db.GetTableName( "TacticalObject_Attribute_Stock" ) );
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeFire& fire )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Fire" ) );
+    RowManipulator row( *table, session_, objectId_ );
+    
+    row.SetField( "class_id", FieldVariant( fire.class_id() ) ); // int
+    row.SetField( "heat", FieldVariant( fire.heat() ) ); // int
+}
 
-    builder.SetId( "id" );
-    builder.SetField( "object_id", objectId );
+namespace
+{
+        
+    // TODO all bed Capacities
+    /* TODO $$$$ MIGRATION HS
+    void UpdateBedCapacities( RowManipulator& row,  const ASN1T_ObjectAttributeMedicalTreatment& medical_treatment )
+    {
+        int available = 0;
+        bool availableUpdated = false;
+        int baseline = 0;
+        bool baselineUpdated = false;
+        
+        for ( int i = 0; i < (int)medical_treatment.bed_capacities.n; ++i ) 
+        {
+            const ASN1T_ObjectAttributeMedicalTreatmentBedCapacity& capacity = medical_treatment.bed_capacities.elem[ i ];
+            
+            // $$$$ JCR - HACK : Do not take into account NegativeFlowIsolation which is a subset of MedicalSurgical and the last registered element!! 
+            // $$$$ TODO: ADD this information in the MedicalTreatment definition and the ASN message.
+            if ( capacity.type_id == 7 ) // SKIP
+                continue;
+            if( capacity.m.available_countPresent )
+            {
+                availableUpdated = true;
+                available += capacity.available_count;
+            }
+            if( capacity.m.baseline_countPresent )
+            {
+                baselineUpdated = true;
+                baseline += capacity.baseline_count;
+            }
+        }
+        if( baselineUpdated )
+            row.SetField( "beds", FieldVariant( baseline ) ); // int
+        if( availableUpdated )
+            row.SetField( "available_beds", FieldVariant( available ) ); // int
+    }
+    $$$$ TODO */
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeMedicalTreatment& medical_treatment )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Medical_Treatment" ) );
+
+    RowManipulator row( *table, session_, objectId_ );
+    
+    if( medical_treatment.has_doctors() )
+        row.SetField( "doctors", FieldVariant( medical_treatment.doctors() ) ); // int
+    if( medical_treatment.has_available_doctors() )
+        row.SetField( "available_doctors", FieldVariant( medical_treatment.available_doctors() ) ); // int
+    // $$$$ TODO UpdateBedCapacities( row, medical_treatment );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeInteractionHeight& interaction_height )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Interaction_Height" ) );
+
+    RowManipulator row( *table, session_, objectId_ );
+    row.SetField( "height", FieldVariant( interaction_height.height() ) ); // 
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeNBCType& nbc_agent )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_NBC_Type" ) );
+    
+    RowManipulator row( *table, session_, objectId_ );
+    row.SetField( "agent_id", FieldVariant( static_cast< long >( nbc_agent.agent().id() ) ) ); // int
+    row.SetField( "concentration", FieldVariant( nbc_agent.concentration() ) ); // int
+    row.SetField( "source_life_duration", FieldVariant( nbc_agent.source_life_duration() ) ); // int
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2010-06-08
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const Common::ObjectAttributeStock& /*stock*/ )
+{
+    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Stock" ) );
+    
+    RowManipulator row( *table, session_, objectId_ );
     //todo: list : stock.resources
-    db.Execute( builder );
 }

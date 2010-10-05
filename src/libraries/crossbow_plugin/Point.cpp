@@ -10,6 +10,7 @@
 #include "crossbow_plugin_pch.h"
 #include "Point.h"
 #include "protocol/SimulationSenders.h"
+#include <gdal/ogr_feature.h>
 
 using namespace plugins;
 
@@ -57,14 +58,15 @@ crossbow::Point::~Point()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Point::Extract
-// Created: JCR 2010-02-26
+// Name: Point::Serialize
+// Created: JCR 2010-04-08
 // -----------------------------------------------------------------------------
-OGRPoint* crossbow::Point::Extract( OGRSpatialReference* spatialReference ) const
+void crossbow::Point::Serialize( OGRFeature& feature, OGRSpatialReference* spatialReference ) const
 {
-    OGRPoint* point = new OGRPoint( x_, y_ );
-    point->assignSpatialReference( spatialReference );
-    return point;
+    OGRPoint point( x_, y_ );
+
+    point.assignSpatialReference( spatialReference );
+    feature.SetGeometry( &point );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,6 +81,17 @@ void crossbow::Point::Serialize( std::ostream& geometry ) const
     geometry << "st_point("
                 << ss.str() << ',' << srid
              << ")";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Point::Serialize
+// Created: JCR 2010-04-08
+// -----------------------------------------------------------------------------
+void crossbow::Point::Serialize( OGRPoint& point, OGRSpatialReference* spatialReference ) const
+{
+    point.setX( x_ );
+    point.setY( y_ );
+    point.assignSpatialReference( spatialReference );
 }
 
 // -----------------------------------------------------------------------------

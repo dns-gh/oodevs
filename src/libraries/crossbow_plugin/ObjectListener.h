@@ -59,14 +59,14 @@ private:
     //@{
     void Clean();
     void SendCreation( const Row_ABC& row );
+    void ListenObjectCreationRequest( Database_ABC& database, const std::string& tablename, const std::string& query );
     //@}
 
 private:
     //! @name Member data
     //@{
     dispatcher::SimulationPublisher_ABC& publisher_;
-    Database_ABC& database_;
-    std::auto_ptr< Table_ABC > table_;
+    Workspace_ABC& workspace_;
     const WorkingSession& session_;
     //@}
 };

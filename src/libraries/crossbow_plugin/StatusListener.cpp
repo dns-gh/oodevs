@@ -9,11 +9,14 @@
 
 #include "crossbow_plugin_pch.h"
 #include "StatusListener.h"
+#include "Workspace_ABC.h"
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
+#include "WorkingSession_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins;
 using namespace plugins::crossbow;
@@ -22,12 +25,13 @@ using namespace plugins::crossbow;
 // Name: StatusListener constructor
 // Created: JCR 2007-06-13
 // -----------------------------------------------------------------------------
-StatusListener::StatusListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher )
+StatusListener::StatusListener( Workspace_ABC& workspace, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session )
     : publisher_      ( publisher )
-    , database_       ( database )
+    , workspace_      ( workspace )
     , paused_         ( false )
+    , session_        ( session )
 {
-    // NOTHING
+    Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -46,6 +50,28 @@ namespace
     {
         return boost::get< Type >( row.GetField( name ) );
     }
+
+    Database_ABC& GetDatabase( Workspace_ABC& workspace )
+    {
+        return workspace.GetDatabase( "flat" );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusListener::Clean
+// Created: MPT 2009-12-15
+// -----------------------------------------------------------------------------
+void StatusListener::Clean()
+{
+    try
+    {
+        std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "SimulationProperties" ) );
+        table->DeleteRows( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );
+    }
+    catch ( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "StatusListener is not correctly loaded : " + std::string( e.what() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -54,10 +80,64 @@ namespace
 // -----------------------------------------------------------------------------
 void StatusListener::Listen()
 {
-    std::auto_ptr< Table_ABC > properties( database_.OpenTable( "SimulationProperties" ) );
-    Row_ABC* result = properties->Find( "Property='Status'" );
-    if( result )
-        ChangeStatus( GetField< std::string >( *result, "PropertyValue" ) );
+    try
+    {
+        std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "SimulationProperties" ) );
+
+        ListenStatusUpdate( *table );
+        ListenTimefactorUpdate( *table );
+    }
+    catch ( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( __FUNCTION__ + std::string( e.what() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusListener::ListenStatus
+// Created: JCR 2010-06-07
+// -----------------------------------------------------------------------------
+void StatusListener::ListenStatusUpdate( Table_ABC& table )
+{
+    std::stringstream ss;
+    ss << "property='status' AND checked=-1 AND session_id=" << session_.GetId();
+
+    Row_ABC* results = table.Find( ss.str() );
+    while( results != 0 )
+    {
+        ChangeStatus( GetField< std::string >( *results, "value" ) );
+        MarkProcessed( *results );
+        results = table.GetNextRow();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusListener::ListenTimefactorUpdate
+// Created: JCR 2010-06-07
+// -----------------------------------------------------------------------------
+void StatusListener::ListenTimefactorUpdate( Table_ABC& table )
+{
+    std::stringstream ss;
+
+    ss << "property = 'timefactor' AND checked=-1 AND session_id=" << session_.GetId();
+    Row_ABC* results = table.Find( ss.str() );
+    while ( results != 0 )
+    {
+        int factor = boost::lexical_cast< int >( GetField< std::string >( *results, "value" ) );
+
+        ChangeTimeFactor( factor );
+        MarkProcessed( *results );
+        results = table.GetNextRow();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderListener::MarkProcessed
+// Created: MPT 2009-12-15
+// -----------------------------------------------------------------------------
+void StatusListener::MarkProcessed( Row_ABC& row ) const
+{
+    row.SetField( "checked", FieldVariant( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,4 +158,16 @@ void StatusListener::ChangeStatus( const std::string& status )
         message.Send( publisher_ );
         paused_ = true;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusListener::ChangeTimeFactor
+// Created: MPT 2009-12-15
+// -----------------------------------------------------------------------------
+void StatusListener::ChangeTimeFactor( int speed )
+{
+    simulation::ControlChangeTimeFactor message;
+    
+    message().set_time_factor( speed );
+    message.Send( publisher_ );
 }

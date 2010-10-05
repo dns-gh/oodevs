@@ -11,6 +11,8 @@
 #define __Shape_ABC_h_
 
 #include <gdal/ogr_geometry.h>
+#include <gdal/ogr_feature.h>
+
 
 namespace Common
 {
@@ -45,7 +47,7 @@ public:
 
     //! @name
     //@{
-    virtual OGRGeometry* Extract( OGRSpatialReference* spatialReference ) const = 0;
+    virtual void Serialize( OGRFeature& feature, OGRSpatialReference* spatialReference ) const = 0;
     //@}
 };
 

@@ -11,6 +11,8 @@
 #include "protocol/protocol.h"
 #include "PointCollection.h"
 #include "Point.h"
+#include <gdal/ogr_geometry.h>
+#include <gdal/ogr_feature.h>
 
 using namespace plugins::crossbow;
 
@@ -57,25 +59,30 @@ PointCollection::~PointCollection()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PointCollection::Extract
-// Created: JCR 2010-02-26
+// Name: PointCollection::Serialize
+// Created: JCR 2010-04-08
 // -----------------------------------------------------------------------------
-OGRGeometry* PointCollection::Extract( OGRSpatialReference* spatialReference ) const
+void PointCollection::Serialize( OGRFeature& feature, OGRSpatialReference* spatialReference ) const
 {
-    OGRLineString* points = new OGRLineString();
-    return Extract( points, spatialReference );
+    OGRLineString points;
+    Serialize( points, spatialReference );
+    feature.SetGeometry( &points );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PointCollection::Extract
 // Created: JCR 2010-02-27
 // -----------------------------------------------------------------------------
-OGRLineString* PointCollection::Extract( OGRLineString* points, OGRSpatialReference* spatialReference ) const
+void PointCollection::Serialize( OGRLineString& points, OGRSpatialReference* spatialReference ) const
 {
-    points->assignSpatialReference( spatialReference );
+    points.assignSpatialReference( spatialReference );
     for( CIT_Points it = points_.begin(); it != points_.end(); ++it )
-        points->addPoint( it->Extract( spatialReference ) );
-    return points;
+    {
+        OGRPoint point;
+        // point.setCoordinateDimension( 2 );
+        it->Serialize( point, spatialReference );
+        points.addPoint( &point );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -9,8 +9,9 @@
 
 #include "crossbow_plugin_pch.h"
 #include "DatabaseFactory.h"
-#include "dispatcher/Config.h"
 #include "OGR_Database.h"
+#include "tools/GeneralConfig.h"
+
 #include <gdal/ogrsf_frmts.h>
 
 #pragma warning( push, 0 )
@@ -24,8 +25,6 @@ namespace bfs = boost::filesystem;
 
 using namespace plugins;
 using namespace plugins::crossbow;
-
-
 
 // -----------------------------------------------------------------------------
 // Name: DatabaseFactory constructor
@@ -68,7 +67,7 @@ namespace
     bool IsPostgreSQLDatabase( const bfs::path& p )
     {
         // boost::regexp_match( )
-        return p.root_path() == "postgis:";
+        return p.root_path() == "postgres:";
     }
 
     class ConnectionProperty
@@ -122,12 +121,12 @@ namespace
             // PG:"dbname='databasename' host='addr' port='5432' user='x' password='y'"
             if( protocol_ != "postgres" )
                 throw std::runtime_error( "invalid PG protocol : " + protocol_ );
-            return std::string( "PG:\"" ) +
-                    "dbname='" + database_ + "." + schema_ + "'" +
-                    "host='" + server_ + "'" +
-                    "port='" + port_ + "'" +
-                    "user='" + user_ + "'" +
-                    "password='" + password_ + "'" + "\"";
+            return std::string( "PG:" ) +
+                    "dbname=" + database_ + /*"." + schema_ +*/ " " +
+                    "host=" + server_ + " " +
+                    "port=" + port_ + " " +
+                    "user=" + user_ + " " +
+                    "password=" + password_;
         }
     public:
         std::string database_;
@@ -147,14 +146,14 @@ namespace
 // Name: DatabaseFactory::Create
 // Created: JCR 2009-02-10
 // -----------------------------------------------------------------------------
-std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::Create( const dispatcher::Config& config, const std::string& name ) const
+std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::Create( const std::string& path, const std::string& name ) const
 {
     bfs::path p( name, bfs::native );
 
     if( IsFileDatabase( p ) )
-        return CreatePgeo( config, name );
+        return CreatePgeo( path, name );
     if( IsShapefileDatabase( p ) )
-        return CreateShapefile( config, name );
+        return CreateShapefile( path, name );
     if( IsSDEDatabase( p ) )
         return CreateSDE( name );
     if( IsPostgreSQLDatabase( p ) )
@@ -166,17 +165,35 @@ namespace
 {
     OGRSFDriver* GetDriver( const char* name )
     {
-        OGRSFDriver* driver = OGRSFDriverRegistrar::GetRegistrar()->GetDriverByName( "ESRI Shapefile" );
+        OGRSFDriver* driver = OGRSFDriverRegistrar::GetRegistrar()->GetDriverByName( name );
         if( !driver )
             throw std::runtime_error( "Unknown driver : " + std::string( name ) );
         return driver;
     }
 
+    OGRDataSource* TryCreateDatabase( const std::string& connection, OGRSFDriver* driver )
+    {
+        OGRDataSource* db = OGRSFDriverRegistrar::Open( connection.c_str(), TRUE, &driver );
+        if( !db ) // READONLY
+        {
+            MT_LOG_INFO_MSG( "Had to open data source read-only." );
+            db = OGRSFDriverRegistrar::Open( connection.c_str(), FALSE, &driver );
+        }
+        return db;
+    }
+
     std::auto_ptr< crossbow::Database_ABC > CreateDatabase( OGRDataSource* db, const std::string& name, const std::string& schema )
     {
         if( !db )
-            throw std::runtime_error( "Unknown geodatabase connection properties: " + name );
+            throw std::runtime_error( "Cannot instanciate the appropriate driver on " + name );
         return std::auto_ptr< crossbow::Database_ABC >( new OGR_Database( db, name, schema ) );
+    }
+
+    std::auto_ptr< crossbow::Database_ABC > CreateDatabase( OGRDataSource* db, const std::string& name )
+    {
+        if( !db )
+            throw std::runtime_error( "Cannot instanciate the appropriate driver on " + name );
+        return std::auto_ptr< crossbow::Database_ABC >( new OGR_Database( db ) );
     }
 }
 
@@ -184,10 +201,10 @@ namespace
 // Name: std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreateShapefile
 // Created: JCR 2010-03-01
 // -----------------------------------------------------------------------------
-std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreateShapefile( const dispatcher::Config& config, const std::string& name ) const
+std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreateShapefile( const std::string& path, const std::string& name ) const
 {
     OGRSFDriver* driver = GetDriver( "ESRI Shapefile" );
-    OGRDataSource* datasource = OGRSFDriverRegistrar::Open( config.BuildExerciseChildFile( name ).c_str(), TRUE, &driver );
+    OGRDataSource* datasource = OGRSFDriverRegistrar::Open( tools::GeneralConfig::BuildChildPath( path, name ).c_str(), TRUE, &driver );
     return CreateDatabase( datasource, "", "" );
 }
 
@@ -195,10 +212,10 @@ std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreateShapefile( const 
 // Name: std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreatePgeo
 // Created: JCR 2010-03-01
 // -----------------------------------------------------------------------------
-std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreatePgeo( const dispatcher::Config& config, const std::string& name ) const
+std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreatePgeo( const std::string& path, const std::string& name ) const
 {
     OGRSFDriver* driver = GetDriver( "PGeo" );
-    OGRDataSource* datasource = OGRSFDriverRegistrar::Open( config.BuildExerciseChildFile( name ).c_str(), TRUE, &driver );
+    OGRDataSource* datasource = OGRSFDriverRegistrar::Open( tools::GeneralConfig::BuildChildPath( path, name ).c_str(), TRUE, &driver );
     return CreateDatabase( datasource, "", "" );
 }
 
@@ -211,8 +228,8 @@ std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreateSDE( const std::s
     OGRSFDriver* driver = GetDriver( "SDE" );
     ConnectionProperty  properties( name, "sde" );
     const std::string connection( properties.toSDE() );
-    std::cout << connection << std::endl;
-    OGRDataSource* datasource = OGRSFDriverRegistrar::Open( connection.c_str(), TRUE, &driver );
+    MT_LOG_INFO_MSG( connection );
+    OGRDataSource* datasource = TryCreateDatabase( connection, driver );
     return CreateDatabase( datasource, properties.database_, properties.schema_ );
 }
 
@@ -224,6 +241,8 @@ std::auto_ptr< crossbow::Database_ABC > DatabaseFactory::CreatePostgreSQL( const
 {
     OGRSFDriver* driver = GetDriver( "PostgreSQL" );
     ConnectionProperty  properties( name, "postgres" );
-    OGRDataSource* datasource = OGRSFDriverRegistrar::Open( properties.toPostgreSQL().c_str(), TRUE, &driver );
-    return CreateDatabase( datasource, properties.database_, properties.schema_ );
+    const std::string connection( properties.toPostgreSQL() );
+    MT_LOG_INFO_MSG( connection );
+    OGRDataSource* datasource = TryCreateDatabase( connection, driver );
+    return CreateDatabase( datasource, properties.database_, "" /*, properties.schema_*/ );
 }

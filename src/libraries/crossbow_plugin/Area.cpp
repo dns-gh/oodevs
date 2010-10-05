@@ -52,33 +52,62 @@ crossbow::Area::~Area()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: Point::Extract
-// Created: JCR 2010-02-26
-// -----------------------------------------------------------------------------
-OGRPolygon* crossbow::Area::Extract( OGRSpatialReference* spatialReference ) const
+namespace
 {
-    OGRPolygon* geometry = new OGRPolygon();
-
-    geometry->assignSpatialReference( spatialReference );
-    OGRLinearRing* ring = static_cast< OGRLinearRing* >( PointCollection::Extract( new OGRLinearRing(), spatialReference ) );
-    // ring->closeRing();
-    geometry->addRingDirectly( ring );
-    return geometry;
+    void ImportWkt( OGRPolygon& geometry, const std::string& strwkt )
+    {
+        char* value = const_cast< char* >( strwkt.c_str() );
+        geometry.importFromWkt( &value );
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: Line::Serialize
+// Name: Area::Serialize
+//    NOTE: OGR builds geometry with 3 dimension points even if 2 is explictly specified
+//       OGR implementation is :
+/*
+    OGRLinearRing ring;
+    ring.setCoordinateDimension( 2 );
+    PointCollection::Serialize( ring, spatialReference );
+    geometry.setCoordinateDimension( 2 );
+    geometry.addRing( &ring );
+    geometry.closeRings();
+*/
+// Created: JCR 2010-04-08
+// -----------------------------------------------------------------------------
+void crossbow::Area::Serialize( OGRFeature& feature, OGRSpatialReference* spatialReference ) const
+{
+    OGRPolygon geometry;
+    std::stringstream ssWkt;
+
+    SerializeWkt( ssWkt );
+    ImportWkt( geometry, ssWkt.str() );
+    geometry.assignSpatialReference( spatialReference );
+    if( feature.SetGeometry( &geometry ) != OGRERR_NONE )
+        throw std::runtime_error( "Failed to area geometry." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Area::SerializeWkt
+// Created: JCR 2009-04-27
+// -----------------------------------------------------------------------------
+void crossbow::Area::SerializeWkt( std::ostream& geometry ) const
+{
+    geometry << "POLYGON(";
+    PointCollection::Serialize( geometry );
+    geometry << ")";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Area::Serialize
 // Created: JCR 2009-04-27
 // -----------------------------------------------------------------------------
 void crossbow::Area::Serialize( std::ostream& geometry ) const
 {
     const int srid = 0;
-    geometry << "st_polygon("
-             << "'polygon(";
-    PointCollection::Serialize( geometry );
-    geometry << ")'," << srid
-             << ")";
+    geometry << "st_polygon('";
+    SerializeWkt( geometry );
+    geometry << "'," << srid << ")";
 }
 
 // -----------------------------------------------------------------------------

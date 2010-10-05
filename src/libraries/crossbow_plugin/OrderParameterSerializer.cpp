@@ -9,6 +9,12 @@
 
 #include "crossbow_plugin_pch.h"
 #include "OrderParameterSerializer.h"
+#include "clients_kernel/OrderParameter.h"
+#include "dispatcher/Model_ABC.h"
+#include "dispatcher/Agent.h"
+#include "dispatcher/Automat.h"
+#include "dispatcher/AgentKnowledge.h"
+#include "dispatcher/ObjectKnowledge.h"
 #include "Shape_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
@@ -17,12 +23,8 @@
 #include "PointCollection.h"
 #include "Point.h"
 #include "OrderParameterTypeResolver.h"
-#include "dispatcher/Model_ABC.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
-#include "dispatcher/AgentKnowledge.h"
-#include "dispatcher/ObjectKnowledge.h"
-#include "clients_kernel/OrderParameter.h"
+
+#include <algorithm>
 #pragma warning( push, 0 )
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
@@ -38,14 +40,21 @@
 using namespace plugins;
 using namespace plugins::crossbow;
 
+namespace 
+{   
+    Database_ABC& GetDatabase( Workspace_ABC& workspace )
+    {
+        return workspace.GetDatabase( "geometry" );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer constructor
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
 OrderParameterSerializer::OrderParameterSerializer( Workspace_ABC& workspace, const dispatcher::Model_ABC& model )
     : model_( model )
-    , geometryDb_( workspace.GetDatabase( "geometry" ) )
-    , database_( workspace.GetDatabase( "flat" ) )
+    , workspace_ ( workspace )
     , types_ ( new OrderParameterTypeResolver() )
 {
     // NOTHING
@@ -133,6 +142,15 @@ namespace
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: OrderParameterSerializer::IsValidParameter
+// Created: JCR 2010-07-19
+// -----------------------------------------------------------------------------
+bool OrderParameterSerializer::IsValidParameter( const kernel::OrderParameter& parameter ) const
+{
+    return types_->Resolve( parameter.GetType() ) > 0;
+}
+
 #define BIND_SERIALIZER( serializer ) \
             boost::bind( &OrderParameterSerializer::serializer, boost::ref( *this ), _1, _2 )
 
@@ -192,7 +210,8 @@ void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, 
         SerializeMissionObjective( *message.mutable_value()->mutable_missionobjective(), value );
     else if( type == "objectivelist" )
         SerializeMissionObjectiveList( *message.mutable_value()->mutable_missionobjectivelist(), value );
-
+	else 
+		throw std::runtime_error( "mission parameter not supported : " + parameter.GetType() + " with value " + value );
 
     /* TODO
     case T_MissionParameter_value_atlasNature:
@@ -321,10 +340,9 @@ void OrderParameterSerializer::SerializeLocation( LocationType& message, const R
 template< typename T >
 void OrderParameterSerializer::SerializeLocation( T& message, unsigned long parameterId, const std::string& tablename ) const
 {
-    // std::auto_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
-    Table_ABC& table = geometryDb_.OpenBufferedTable( tablename, false );
+    std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( tablename ) );
     const std::string query( "parameter_id=" + boost::lexical_cast< std::string >( parameterId ) );
-    SerializeLocation( message, table.Find( query ) );
+    SerializeLocation( message, table->Find( query ) );
 }
 
 
@@ -337,7 +355,7 @@ void OrderParameterSerializer::SerializeLocationList( T& message, unsigned long 
 {
     typedef boost::function< void ( Common::MsgLocation&, const Common::MsgLocation* ) > Functor;
     std::vector< Common::MsgLocation* > locations;
-    boost::shared_ptr< Table_ABC > table( &geometryDb_.OpenBufferedTable( tablename, false ) );
+    boost::shared_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( tablename ) );
     FillLocationlist( locations, table, parameterId );
     SerializeList( message, locations, FunctorWrapperList< Common::MsgLocation, Functor >( CopyLocation() ) );
     std::for_each( locations.begin(), locations.end(), boost::checked_deleter< Common::MsgLocation >() );
@@ -347,6 +365,7 @@ void OrderParameterSerializer::SerializeLocationList( T& message, unsigned long 
 // Name: OrderParameterSerializer::SerializeLocList
 // Created: JCR 2009-10-15
 // -----------------------------------------------------------------------------
+/*
 template< typename T >
 void OrderParameterSerializer::SerializeLocList( T& message, unsigned long parameterId, const std::string& tablename ) const
 {
@@ -358,6 +377,7 @@ void OrderParameterSerializer::SerializeLocList( T& message, unsigned long param
     for ( unsigned int i = 0; i < locations.size(); i++)
         c( *message.mutable_elem( i )->mutable_location(), locations[ i ] );
 }
+*/
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::FillLocationlist
@@ -509,7 +529,7 @@ void OrderParameterSerializer::SerializeObjectKnowledge( Common::ObjectKnowledge
 // -----------------------------------------------------------------------------
 void OrderParameterSerializer::SerializeMissionObjective( Common::MsgMissionObjective& /*message*/, const std::string& /*value*/ ) const
 {
-   // message = new Common::MsgMissionObjective;
+   // NOTHING
 }
 
 // -----------------------------------------------------------------------------

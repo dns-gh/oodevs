@@ -11,7 +11,7 @@
 #include "WorkingSession.h"
 #include "Workspace_ABC.h"
 #include "QuerySessionData.h"
-#include "dispatcher/Config.h"
+#include "tools/SessionConfig.h"
 #include <boost/filesystem/path.hpp>
 
 using namespace plugins;
@@ -22,11 +22,13 @@ namespace bfs = boost::filesystem;
 // Name: Constructor
 // Created: MPT 2009-07-27
 // -----------------------------------------------------------------------------
-WorkingSession::WorkingSession( Workspace_ABC& workspace, const dispatcher::Config& config )
+WorkingSession::WorkingSession( Workspace_ABC& workspace, const tools::SessionConfig& config )
 {
     QuerySessionData querySession( workspace.GetDatabase( "flat" ) );
+
     LoadExercise( config, querySession );
     LoadSession( config, querySession );
+    MT_LOG_INFO_MSG( "CrossbowPlugin : loaded for exercise " << exercise_.first << " and session_id " << session_.second );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +62,7 @@ int WorkingSession::GetExercise() const
 // Name: WorkingSession::ReadExerciseName
 // Created: MPT 2009-07-27
 // -----------------------------------------------------------------------------
-void WorkingSession::LoadExercise( const dispatcher::Config& config, QuerySessionData& database )
+void WorkingSession::LoadExercise( const tools::ExerciseConfig& config, QuerySessionData& database )
 {
     bfs::path p( config.GetExerciseFile(), bfs::native );
     exercise_.first = p.parent_path().filename();
@@ -79,7 +81,7 @@ void WorkingSession::LoadExercise( const dispatcher::Config& config, QuerySessio
 // Name: DatabasePublisher::ReadSessionName
 // Created: MPT 2009-07-27
 // -----------------------------------------------------------------------------
-void WorkingSession::LoadSession( const dispatcher::Config& config, QuerySessionData& database )
+void WorkingSession::LoadSession( const tools::SessionConfig& config, QuerySessionData& database )
 {
     bfs::path p( config.GetSessionDir(), bfs::native );
     session_.first = p.filename();

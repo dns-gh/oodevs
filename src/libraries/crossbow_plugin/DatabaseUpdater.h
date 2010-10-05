@@ -12,27 +12,14 @@
 
 #include "DatabaseUpdater_ABC.h"
 
-namespace MsgsMessengerToClient
+namespace Common
 {
-    class MsgLimitCreation;
-    class MsgLimaCreation;
+    class ObjectAttributes;
 }
 
 namespace MsgsSimToClient
 {
-    class MsgFormationCreation;
-    class MsgUnitCreation;
-    class MsgUnitKnowledgeCreation;
-    class MsgLimaCreation;
-    class MsgObjectCreation;
-    class MsgReport;
-    class MsgAutomatCreation;
-    class MsgUnitAttributes;
-    class MsgUnitKnowledgeUpdate;
-    class MsgAutomatAttributes;
-    class MsgUnitDestruction;
-    class MsgUnitKnowledgeDestruction;
-    class MsgObjectDestruction;
+    enum MsgObjectMagicActionAck_ErrorCode;
 }
 
 namespace dispatcher
@@ -46,7 +33,7 @@ namespace crossbow
 {
     class Workspace_ABC;
     class Database_ABC;
-    class WorkingSession;
+    class WorkingSession_ABC;
 
 // =============================================================================
 /** @class  DatabaseUpdater
@@ -59,38 +46,51 @@ class DatabaseUpdater : public DatabaseUpdater_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DatabaseUpdater( Workspace_ABC& workspace, const dispatcher::Model_ABC& model, const WorkingSession& session );
+             DatabaseUpdater( Workspace_ABC& workspace, const dispatcher::Model_ABC& model, const WorkingSession_ABC& session );
     virtual ~DatabaseUpdater();
     //@}
 
     //! @name
     //@{
-    void Flush();
+    void Flush( bool reset = true );
     void Clean();
     //@}
 
-    //! @name Operators
+    //! @name MsgsMessengerToClient
     //@{
-    void Update( const MsgsSimToClient::MsgUnitCreation& msg );
-    void Update( const MsgsSimToClient::MsgUnitKnowledgeCreation& msg );
     void Update( const MsgsMessengerToClient::MsgLimitCreation& msg );
     void Update( const MsgsMessengerToClient::MsgLimaCreation& msg );
+    //@}
+    
+
+    //! @name MsgsSimToClient
+    //@{
+    void Update( const MsgsSimToClient::MsgUnitCreation& msg );
+    void Update( const MsgsSimToClient::MsgUnitAttributes& msg );
+    void Update( const MsgsSimToClient::MsgUnitDestruction& msg );
+
+    void Update( const MsgsSimToClient::MsgAutomatCreation& message );
+    void Update( const MsgsSimToClient::MsgAutomatAttributes& msg );
+
+    void Update( const MsgsSimToClient::MsgUnitKnowledgeCreation& msg );
+    void Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& msg );
+    void Update( const MsgsSimToClient::MsgUnitKnowledgeDestruction& msg );
+
     void Update( const MsgsSimToClient::MsgObjectCreation& msg );
+    void Update( const MsgsSimToClient::MsgObjectUpdate& msg );
+    void Update( const MsgsSimToClient::MsgObjectDestruction& msg );
+
+    void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& msg );
+    void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg );
+    void Update( const MsgsSimToClient::MsgObjectKnowledgeDestruction& msg );
+
     void Update( const MsgsSimToClient::MsgReport& msg );
     void Update( const MsgsSimToClient::MsgFormationCreation& message );
-    void Update( const MsgsSimToClient::MsgAutomatCreation& message );
-    void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& msg );
+  
+	void Update( const MsgsSimToClient::MsgControlBeginTick& msg );
+    void Update( const MsgsSimToClient::MsgPartyCreation& msg );
 
-    void Update( const MsgsSimToClient::MsgUnitAttributes& msg );
-    void Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& msg );
-    void Update( const MsgsSimToClient::MsgAutomatAttributes& msg );
-    void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg );
-
-    void DestroyUnit( const MsgsSimToClient::MsgUnitDestruction& msg );
-    void Update( const MsgsSimToClient::MsgUnitKnowledgeDestruction& msg );
-    void DestroyUnitKnowledge( const MsgsSimToClient::MsgUnitKnowledgeDestruction& msg );
-    void DestroyObject( const MsgsSimToClient::MsgObjectDestruction& msg ); // $$$$ SBO 2007-09-27: typedef bullshit
-    void DestroyObjectKnowledge( const MsgsSimToClient::MsgObjectKnowledgeDestruction& msg );
+    void Log( const MsgsSimToClient::MsgObjectMagicActionAck& msg );
     //@}
 
 private:
@@ -100,18 +100,34 @@ private:
     DatabaseUpdater& operator=( const DatabaseUpdater& ); //!< Assignment operator
     //@}
 
-    //! @name
+    //! @name Objects
     //@{
     void UpdateObjectKnowledgeGeometry( const std::string& tablename, const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg );
+	void UpdateObjectAttributes( unsigned long oid, const Common::ObjectAttributes& msg );
+    
+    // void Update( const MsgsSimToClient::MsgObjectAttributes& msg );
+
+    //@}
+
+    //! @name Error
+    //@{
+    std::string Error( const MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode& error ) const;
+    //@}
+
+
+private:
+    //! @name
+    //@{
+    class LazyDatabaseConnection;
     //@}
 
 private:
     //! @name Member data
     //@{
-    Database_ABC&               geometryDb_;
-    Database_ABC&               flatDb_;
+    Workspace_ABC& workspace_;
+    std::auto_ptr< LazyDatabaseConnection > database_;
     const dispatcher::Model_ABC&    model_;
-    const WorkingSession&       session_;
+    const WorkingSession_ABC&   session_;
     //@}
 };
 

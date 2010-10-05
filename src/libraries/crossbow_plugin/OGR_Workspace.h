@@ -19,9 +19,9 @@ namespace xml
     class xistream;
 }
 
-namespace dispatcher
+namespace tools
 {
-    class Config;
+    class ExerciseConfig;
 }
 
 namespace plugins
@@ -46,16 +46,17 @@ public:
     virtual ~OGR_Workspace();
     //@}
 
-    //! @name 
+    //! @name
     //@{
-    void Initialize( xml::xistream& xis, const dispatcher::Config& config );
-    void InitializeProperty( xml::xistream& xis, const dispatcher::Config& config );
-    void InitializeConnectionReference( const std::string& name, const dispatcher::Config& config, const std::string& reference );
+    void Initialize( xml::xistream& xis, const tools::ExerciseConfig& config );
+    void InitializeProperty( const std::string& name, xml::xistream& xis );
+    void InitializeConnectionReference( const std::string& name, const std::string& reference );
     //@}
 
-    //! @name 
+    //! @name
     //@{
     Database_ABC& GetDatabase( const std::string& name );
+    void Release( const std::string& name );
     //@}
 
 private:
@@ -65,22 +66,29 @@ private:
     OGR_Workspace& operator=( const OGR_Workspace& ); //!< Assignment operator
     //@}
 
+    //! @name
+    //@{
+    void InitializeConnection( const std::string& name );
+    //@}
+
 private:
     typedef boost::shared_ptr< Database_ABC >       T_Database;
     typedef std::map< std::string, T_Database >     T_DatabasesMap;
     typedef std::map< std::string, std::string >    T_DatabasesReferenceMap;
+    typedef std::map< std::string, std::string >    T_DatabasesConnectionMap;
     typedef T_DatabasesReferenceMap::const_iterator CIT_DatabasesReferenceMap;
 
 private:
-    //! @name 
+    //! @name
     //@{
     T_DatabasesMap          databases_;
+    T_DatabasesConnectionMap connections_;
     T_DatabasesReferenceMap references_; // use to not open db twice
+    std::string             path_;
     //@}
 };
 
 }
-} // end namespace OGR
+} // end namespace plugins::crossbow
 
 #endif // __OGR_Workspace_h_
-

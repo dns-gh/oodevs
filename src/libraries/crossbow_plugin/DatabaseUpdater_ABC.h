@@ -13,19 +13,24 @@
 namespace MsgsSimToClient
 {
     class MsgFormationCreation;
-    class MsgUnitCreation;
-    class MsgUnitKnowledgeCreation;
-    class MsgObjectCreation;
     class MsgAutomatCreation;
-    class MsgObjectKnowledgeCreation;
-    class MsgUnitAttributes;
-    class MsgUnitKnowledgeUpdate;
-    class MsgObjectKnowledgeUpdate;
     class MsgAutomatAttributes;
+    class MsgUnitCreation;
+    class MsgUnitAttributes;
     class MsgUnitDestruction;
+    class MsgUnitKnowledgeCreation;
+    class MsgUnitKnowledgeUpdate;
     class MsgUnitKnowledgeDestruction;
+    class MsgObjectCreation;
     class MsgObjectDestruction;
+    class MsgObjectUpdate;
+    class MsgObjectKnowledgeCreation;
+    class MsgObjectKnowledgeUpdate;
     class MsgObjectKnowledgeDestruction;
+    class MsgReport;
+    class MsgPartyCreation;
+    class MsgControlBeginTick;
+    class MsgObjectMagicActionAck;
 }
 
 namespace MsgsMessengerToClient
@@ -59,26 +64,39 @@ public:
     virtual void Clean() = 0;
     //@}
 
-    //! @name Operators
+    //! @name MsgsMessengerToClient
     //@{
-    virtual void Update( const MsgsSimToClient::MsgUnitCreation& msg ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgUnitKnowledgeCreation& msg ) = 0;
     virtual void Update( const MsgsMessengerToClient::MsgLimitCreation& msg ) = 0;
     virtual void Update( const MsgsMessengerToClient::MsgLimaCreation& msg ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgObjectCreation& msg ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgFormationCreation& asn ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgAutomatCreation& asn ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& msg ) = 0;
+    //@}
+    
 
+    //! @name MsgsSimToClient
+    //@{
+    virtual void Update( const MsgsSimToClient::MsgUnitCreation& msg ) = 0;
     virtual void Update( const MsgsSimToClient::MsgUnitAttributes& msg ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& msg ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg ) = 0;
+    virtual void Update( const MsgsSimToClient::MsgUnitDestruction& msg ) = 0;
+
+    virtual void Update( const MsgsSimToClient::MsgAutomatCreation& message ) = 0;
     virtual void Update( const MsgsSimToClient::MsgAutomatAttributes& msg ) = 0;
 
-    virtual void DestroyUnit( const MsgsSimToClient::MsgUnitDestruction& msg ) = 0;
-    virtual void DestroyUnitKnowledge( const MsgsSimToClient::MsgUnitKnowledgeDestruction& msg ) = 0;
-    virtual void DestroyObject( const MsgsSimToClient::MsgObjectDestruction& msg ) = 0; // $$$$ SBO 2007-09-27: typedef bullshit
-    virtual void DestroyObjectKnowledge( const MsgsSimToClient::MsgObjectKnowledgeDestruction& msg ) = 0;
+    virtual void Update( const MsgsSimToClient::MsgUnitKnowledgeCreation& msg ) = 0;
+    virtual void Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& msg ) = 0;
+    virtual void Update( const MsgsSimToClient::MsgUnitKnowledgeDestruction& msg ) = 0;
+
+    virtual void Update( const MsgsSimToClient::MsgObjectCreation& msg ) = 0;
+    virtual void Update( const MsgsSimToClient::MsgObjectUpdate& msg ) = 0;
+    virtual void Update( const MsgsSimToClient::MsgObjectDestruction& msg ) = 0;
+
+    virtual void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& msg ) = 0;
+    virtual void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg ) = 0;
+    virtual void Update( const MsgsSimToClient::MsgObjectKnowledgeDestruction& msg ) = 0;
+
+    virtual void Update( const MsgsSimToClient::MsgReport& msg ) = 0;
+    virtual void Update( const MsgsSimToClient::MsgFormationCreation& message ) = 0;
+
+	virtual void Update( const MsgsSimToClient::MsgControlBeginTick& msg ) = 0;
+    virtual void Update( const MsgsSimToClient::MsgPartyCreation& msg ) = 0;
     //@}
 };
 

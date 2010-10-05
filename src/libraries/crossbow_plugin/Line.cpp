@@ -11,6 +11,9 @@
 #include "Line.h"
 #include "Point.h"
 #include "protocol/SimulationSenders.h"
+#include <gdal/ogr_geometry.h>
+#include <gdal/ogr_feature.h>
+#include <sstream>
 
 using namespace plugins;
 
@@ -52,13 +55,46 @@ crossbow::Line::~Line()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: Point::Extract
-// Created: JCR 2010-02-26
-// -----------------------------------------------------------------------------
-OGRLineString* crossbow::Line::Extract( OGRSpatialReference* spatialReference ) const
+namespace
 {
-    return static_cast<OGRLineString*>( PointCollection::Extract( spatialReference ) );
+    void ImportWkt( OGRLineString& geometry, const std::string& strwkt )
+    {
+        char* value = const_cast< char* >( strwkt.c_str() );
+        geometry.importFromWkt( &value );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Line::Serialize
+//    NOTE: OGR builds geometry with 3 dimension points even if 2 is explictly specified
+//       OGR implementation is :
+/*
+        geometry.setCoordinateDimension( 2 );
+        geometry.assignSpatialReference( spatialReference );
+        PointCollection::Serialize( geometry, spatialReference );
+*/
+// Created: JCR 2010-04-08
+// -----------------------------------------------------------------------------
+void crossbow::Line::Serialize( OGRFeature& feature, OGRSpatialReference* spatialReference ) const
+{
+    OGRLineString geometry;
+    std::stringstream ssWkt;
+
+    SerializeWkt( ssWkt );
+    ImportWkt( geometry, ssWkt.str() );
+    geometry.assignSpatialReference( spatialReference );
+    if( feature.SetGeometry( &geometry ) != OGRERR_NONE )
+        throw std::runtime_error( "Failed to set line geometry." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Line::SerializeWkt
+// Created: JCR 2010-05-17
+// -----------------------------------------------------------------------------
+void crossbow::Line::SerializeWkt( std::ostream& geometry ) const
+{
+    geometry << "LINESTRING"; // point collection already provides '(' and ')'
+    PointCollection::Serialize( geometry );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,11 +104,9 @@ OGRLineString* crossbow::Line::Extract( OGRSpatialReference* spatialReference ) 
 void crossbow::Line::Serialize( std::ostream& geometry ) const
 {
     const int srid = 0;
-    geometry << "st_linestring("
-             << "'linestring"; // point collection already provides '(' and ')'
-    PointCollection::Serialize( geometry );
-    geometry << "'," << srid
-             << ")";
+    geometry << "st_linestring('";
+    SerializeWkt( geometry );
+    geometry << "'," << srid << ")";
 }
 
 // -----------------------------------------------------------------------------

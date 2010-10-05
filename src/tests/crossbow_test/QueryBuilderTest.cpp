@@ -62,14 +62,14 @@ BOOST_AUTO_TEST_CASE( EsriTest_QueryBuilder_InsertLine )
 {
     InsertQueryBuilder builder( "table" );
     builder.SetGeometry( crossbow::Line() );
-    BOOST_CHECK_EQUAL( "INSERT INTO table (shape) VALUES (st_linestring('linestring()',0))", builder.Create() );
+    BOOST_CHECK_EQUAL( "INSERT INTO table (shape) VALUES (st_linestring('LINESTRING()',0))", builder.Create() );
 }
 
 BOOST_AUTO_TEST_CASE( EsriTest_QueryBuilder_InsertPolygon )
 {
     InsertQueryBuilder builder( "table" );
     builder.SetGeometry( Area() );
-    BOOST_CHECK_EQUAL( "INSERT INTO table (shape) VALUES (st_polygon('polygon(())',0))", builder.Create() );
+    BOOST_CHECK_EQUAL( "INSERT INTO table (shape) VALUES (st_polygon('POLYGON(())',0))", builder.Create() );
 }
 
 

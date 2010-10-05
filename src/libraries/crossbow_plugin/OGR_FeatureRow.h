@@ -13,6 +13,7 @@
 #include "FieldVariant.h"
 #include "Row_ABC.h"
 #include "Shape_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 class OGRFeature;
 class OGRLayer;
@@ -54,7 +55,8 @@ public:
     //! @name Tools
     //@{
     void Insert( OGRLayer& layer ) const;
-    void BindFeature( OGRFeature& feature, long id );
+    void Update( OGRLayer& layer ) const;
+    void BindFeature( boost::shared_ptr< OGRFeature > feature, long id );
     //@}
 
 private:
@@ -64,7 +66,7 @@ private:
     OGR_FeatureRow& operator=( const OGR_FeatureRow& ); //!< Assignment operator
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void Release();
     //@}
@@ -72,9 +74,14 @@ private:
 private:
     //! @name Member data
     //@{
-    OGRFeature* feature_;
+    boost::shared_ptr< OGRFeature > feature_;
     OGRSpatialReference* spatialReference_;
     mutable std::auto_ptr< Shape_ABC > shape_;
+    //@}
+
+    //! @name Log
+    //@{
+    bool log_;
     //@}
 };
 

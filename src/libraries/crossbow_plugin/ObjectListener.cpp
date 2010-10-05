@@ -31,12 +31,11 @@ using namespace plugins::crossbow;
 // Created: SBO 2007-09-23
 // -----------------------------------------------------------------------------
 ObjectListener::ObjectListener( Workspace_ABC& workspace, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session )
-    : publisher_( publisher )
-    , database_  ( workspace.GetDatabase( "geometry" ) )
+    : publisher_ ( publisher )
+    , workspace_ ( workspace )
     , session_ ( session )
 {
-    table_.reset( database_.OpenTable( "Create_TacticalObject_Point" ) );
-    Clean();
+
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +55,19 @@ void ObjectListener::Clean()
 {
     try
     {
-        table_->DeleteRows( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );
+        std::string query( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );
+        {
+            std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "geometry" ).OpenTable( "Create_TacticalObject_Point" ) );
+            table->DeleteRows( query );
+        }
+        {
+            std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "geometry" ).OpenTable( "Create_TacticalObject_Line" ) );
+            table->DeleteRows( query );
+        }
+        {
+            std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "geometry" ).OpenTable( "Create_TacticalObject_Area" ) );
+            table->DeleteRows( query );
+        }
     }
     catch ( std::exception& e )
     {
@@ -70,31 +81,47 @@ void ObjectListener::Clean()
 // -----------------------------------------------------------------------------
 void ObjectListener::Listen()
 {
-    std::stringstream query;
-    query << "info <> '' AND session_id=" << session_.GetId();
-
-    Row_ABC* row = table_->Find( query.str() );
-    bool bHasUpdates = row != 0;
-    while( row )
+    try
     {
-        SendCreation( *row );
-        row = table_->GetNextRow();
+        std::string query( "session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );
+        Database_ABC& database = workspace_.GetDatabase( "geometry" );
+
+        ListenObjectCreationRequest( database, "Create_TacticalObject_Point", query );
+        ListenObjectCreationRequest( database, "Create_TacticalObject_Line", query );
+        ListenObjectCreationRequest( database, "Create_TacticalObject_Area", query );
     }
-    if( bHasUpdates )
-        table_->DeleteRows( query.str() );
+    catch ( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( __FUNCTION__ + std::string( e.what() ) );
+    }
 }
 
 namespace
 {
-    // $$$$ SBO 2007-09-23: hard coded object list
-    std::string GetType( const std::string& type )
+    template< typename Type >
+    Type GetField( const Row_ABC& row, const std::string& name )
     {
-        if( type == "fire" )
-            return "fire";
-        if( type == "emergency shelter" )
-            return "emergency shelter";
-        throw std::runtime_error( "unsupported object type" );
+        return boost::get< Type >( row.GetField( name ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListener::ListenObjectCreationRequest
+// Created: JCR 2010-06-07
+// -----------------------------------------------------------------------------
+void ObjectListener::ListenObjectCreationRequest( Database_ABC& database, const std::string& tablename, const std::string& query )
+{
+    std::auto_ptr< Table_ABC > table( database.OpenTable( tablename ) );
+
+    Row_ABC* row = table->Find( query );
+    bool bHasUpdates = row != 0;
+    while( row )
+    {
+        SendCreation( *row );
+        row = table->GetNextRow();
+    }
+    if( bHasUpdates )
+        table->DeleteRows( query );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,26 +131,25 @@ namespace
 void ObjectListener::SendCreation( const Row_ABC& row )
 {
     simulation::ObjectMagicAction message;
+    
     /*MsgsClientToSim::MsgMagicActionCreateObject* creation = message().mutable_action()->mutable_create_object();
     creation->set_team( 1 ); // $$$$ SBO 2007-09-23: Hard coded !!
     creation->set_type( GetType( boost::get< std::string >( row.GetField( "Info" ) ) ).c_str() );
     creation->set_name( "" );
     row.GetGeometry().Serialize( *creation->mutable_location() );*/
+    
     message().mutable_object()->set_id( 0 );
     message().set_type( MsgsClientToSim::MsgObjectMagicAction_Type_create );
-
+    // team
+    message().mutable_parameters()->add_elem()->mutable_value()->mutable_party()->set_id( GetField< int >( row, "team_id" ) );
     // type
-    message().mutable_parameters()->add_elem()->mutable_value()->set_acharstr( GetType( boost::get< std::string >( row.GetField( "Info" ) ) ).c_str() );
+    message().mutable_parameters()->add_elem()->mutable_value()->set_acharstr( GetField< std::string >( row, "type" ) );
+    // name
+    message().mutable_parameters()->add_elem()->mutable_value()->set_acharstr( GetField< std::string >( row, "name" ) );
 
     // location
     row.GetGeometry().Serialize( *message().mutable_parameters()->add_elem()->mutable_value()->mutable_location() );
-
-    // name
-    message().mutable_parameters()->add_elem()->mutable_value()->set_acharstr( "" );
-
-    // team
-    message().mutable_parameters()->add_elem()->mutable_value()->mutable_party()->set_id( 1 ); // $$$$ SBO 2007-09-23: Hard coded !!
-
+    
     // list (unused but must be created)
     message().mutable_parameters()->add_elem();
 

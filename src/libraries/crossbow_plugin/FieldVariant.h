@@ -19,7 +19,7 @@ namespace plugins
 {
 namespace crossbow
 {
-    typedef boost::variant< int, long, std::string, bool > FieldVariant;
+    typedef boost::variant< int, double, std::string, bool > FieldVariant;
 }
 }
 

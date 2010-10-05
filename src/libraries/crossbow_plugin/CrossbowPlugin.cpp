@@ -92,9 +92,17 @@ CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream&
                                 dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& publisher,
                                 dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& dispatcher,
                                 dispatcher::LinkResolver_ABC& /*links*/, dispatcher::CompositeRegistrable& /*registrables*/ )
-    : crossbowPublisher_( new CrossbowPublisher( config, model, publisher, xis ) )
-    , clientNetworker_  ( new DummyClientNetworker() )
+    : clientNetworker_  ( new DummyClientNetworker() )
 {
+    try
+    {
+        crossbowPublisher_.reset( new CrossbowPublisher( config, model, publisher, xis ) );
+        MT_LOG_INFO_MSG( "CrossbowPlugin : registered." )
+    }
+    catch ( std::exception& ex )
+    {
+        MT_LOG_ERROR_MSG( "CrossbowPlugin : load failed - " + std::string( ex.what() ) )
+    }
     dispatcher.RegisterMessage( *this, &CrossbowPlugin::OnReceiveMessengerToClient );
 }
 
@@ -127,7 +135,8 @@ void CrossbowPlugin::Update()
 // -----------------------------------------------------------------------------
 void CrossbowPlugin::Receive( const MsgsSimToClient::MsgSimToClient& asnMsg )
 {
-    crossbowPublisher_->Receive( asnMsg );
+    if( crossbowPublisher_.get() )
+        crossbowPublisher_->Receive( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +145,8 @@ void CrossbowPlugin::Receive( const MsgsSimToClient::MsgSimToClient& asnMsg )
 // -----------------------------------------------------------------------------
 void CrossbowPlugin::Send( const MsgsMessengerToClient::MsgMessengerToClient& asnMsg )
 {
-    crossbowPublisher_->Receive( asnMsg );
+    if( crossbowPublisher_.get() )
+        crossbowPublisher_->Receive( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +155,8 @@ void CrossbowPlugin::Send( const MsgsMessengerToClient::MsgMessengerToClient& as
 // -----------------------------------------------------------------------------
 void CrossbowPlugin::OnReceiveMessengerToClient( const std::string& /*link*/, const MsgsMessengerToClient::MsgMessengerToClient& message )
 {
-    crossbowPublisher_->Receive( message );
+    if( crossbowPublisher_.get() )
+        crossbowPublisher_->Receive( message );
 }
 
 // -----------------------------------------------------------------------------

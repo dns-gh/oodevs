@@ -14,7 +14,7 @@
 #include "Table_ABC.h"
 #include "Row_ABC.h"
 #include "QueryBuilder.h"
-#include "WorkingSession.h"
+#include "WorkingSession_ABC.h"
 
 namespace MsgsSimToClient
 {
@@ -30,20 +30,20 @@ using namespace plugins::crossbow;
 // Name: FolkUpdater constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-FolkUpdater::FolkUpdater( Workspace_ABC& workspace, const WorkingSession& session )
-    : database_ ( workspace.GetDatabase( "feature" ) )
+FolkUpdater::FolkUpdater( Workspace_ABC& workspace, const WorkingSession_ABC& session )
+    : workspace_ ( workspace )
     , updated_( 0 )
     , session_( session )
 {
-    UpdateQueryBuilder builder( database_.GetTableName( "Population" ) );
-
-    builder.SetField( "individuals", (long)0 );
-    builder.SetField( "road", (long)0 );
-    builder.SetField( "pavement", (long)0 );
-    builder.SetField( "office", (long)0 );
-    builder.SetField( "shop", (long)0 );
-    builder.SetField( "residential", (long)0 );
-    builder.SetField( "session_id" , session_.GetId() );
+//    UpdateQueryBuilder builder( database_.GetTableName( "Population" ) );
+//
+//    builder.SetField( "individuals", (long)0 );
+//    builder.SetField( "road", (long)0 );
+//    builder.SetField( "pavement", (long)0 );
+//    builder.SetField( "office", (long)0 );
+//    builder.SetField( "shop", (long)0 );
+//    builder.SetField( "residential", (long)0 );
+//    builder.SetField( "session_id" , session_.GetId() );
     // Let previous state because of the delay : database_.Execute( builder );
 }
 
@@ -95,10 +95,9 @@ void FolkUpdater::Update( const MsgsSimToClient::MsgFolkGraphUpdate& msg )
 // Name: DatabaseUpdater::Drop
 // Created: JCR 2007-11-21
 // -----------------------------------------------------------------------------
-void FolkUpdater::Drop()
+void FolkUpdater::Flush()
 {
-    // LockedScopeEditor   lock( database_ );
-    // database_.ReleaseTable( "Population" );
+    // workspace_.Release( "geometry" );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +110,7 @@ void FolkUpdater::Update( const MsgsSimToClient::MsgFolkGraphEdgeUpdate& msg )
     Update( edge, msg );
     if( ++updated_ >= edges_.size() )
     {
-        std::auto_ptr< Table_ABC > table( database_.OpenTable( "Population" ) );
+        std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "flat" ).OpenTable( "Population" ) );
         Commit( *table );
         updated_ = 0;
     }
@@ -124,18 +123,11 @@ void FolkUpdater::Update( const MsgsSimToClient::MsgFolkGraphEdgeUpdate& msg )
 void FolkUpdater::Commit( Table_ABC& table )
 {
     Row_ABC* row = table.Find( "", true );
-    int checkflush = 0;
     table.BeginTransaction();
     for( CIT_Edges it = edges_.begin(); it != edges_.end() && row; ++it )
     {
         CommitEdge( *row, *it );
-
-        if( ++checkflush >= 500 )
-        {
-            table.UpdateRow( *row );
-            // table.BeginTransaction();
-            checkflush = 0;
-        }
+        table.UpdateRow( *row );
         row = table.GetNextRow();
     }
     table.EndTransaction();
@@ -147,13 +139,13 @@ void FolkUpdater::Commit( Table_ABC& table )
 // -----------------------------------------------------------------------------
 void FolkUpdater::CommitEdge( Row_ABC& row, const Edge& edge )
 {
-    row.SetField( "Individuals", FieldVariant( (long)edge.population_ ) );
-    row.SetField( "Pavement"   , FieldVariant( (long)edge.containers_[0] ) );
-    row.SetField( "Road"       , FieldVariant( (long)edge.containers_[1] ) );
-    row.SetField( "Office"     , FieldVariant( (long)edge.containers_[2] ) );
-    row.SetField( "Residential", FieldVariant( (long)edge.containers_[3] ) );
-    row.SetField( "Shop"       , FieldVariant( (long)edge.containers_[4] ) );
-    row.SetField( "session_id" , FieldVariant( (long)session_.GetId() ) );
+    row.SetField( "Individuals", FieldVariant( static_cast< int >( edge.population_ ) ) );
+    row.SetField( "Pavement"   , FieldVariant( static_cast< int >( edge.containers_[0] ) ) );
+    row.SetField( "Road"       , FieldVariant( static_cast< int >( edge.containers_[1] ) ) );
+    row.SetField( "Office"     , FieldVariant( static_cast< int >( edge.containers_[2] ) ) );
+    row.SetField( "Residential", FieldVariant( static_cast< int >( edge.containers_[3] ) ) );
+    row.SetField( "Shop"       , FieldVariant( static_cast< int >( edge.containers_[4] ) ) );
+    row.SetField( "session_id" , FieldVariant( static_cast< int >( session_.GetId() ) ) );
 }
 
 // -----------------------------------------------------------------------------

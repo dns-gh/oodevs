@@ -11,7 +11,7 @@
 #include "OGR_Database.h"
 #include "OGR_Workspace.h"
 #include "OGR_FeatureClass.h"
-
+#include <algorithm>
 #include <gdal/ogrsf_frmts.h>
 
 using namespace plugins;
@@ -30,7 +30,7 @@ OGR_Database::OGR_Database( OGRDataSource* datasource )
 }
 
 // -----------------------------------------------------------------------------
-// Name: OGR_Database constructor
+// Name: OGR_Database constructor   
 // Created: JCR 2010-02-24
 // -----------------------------------------------------------------------------
 OGR_Database::OGR_Database( OGRDataSource* datasource, const std::string& name, const std::string& schema )
@@ -56,9 +56,11 @@ OGR_Database::~OGR_Database()
 // -----------------------------------------------------------------------------
 std::string OGR_Database::GetTableName( const std::string& name ) const
 {
+    std::string result( name );
+    std::transform( result.begin(), result.end(), result.begin(), ::tolower );
     if( name_ != "" && schema_ != "" )
-        return name_ + "." + schema_ + "." + name;
-    return name;
+        return name_ + "." + schema_ + "." + result;
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -117,5 +119,6 @@ void OGR_Database::Execute( const QueryBuilder_ABC& /*builder*/ )
 // -----------------------------------------------------------------------------
 void OGR_Database::Flush()
 {
-    // NOTHING
+    if( OGRERR_NONE != datasource_->SyncToDisk() )
+        MT_LOG_ERROR_MSG( "Crossbow plugin : OGR_Database::SyncToDisk failed" )
 }

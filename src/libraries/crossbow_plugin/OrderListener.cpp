@@ -10,18 +10,25 @@
 #include "crossbow_plugin_pch.h"
 #include "OrderListener.h"
 #include "OrderDispatcher.h"
-#include "QueryBuilder.h"
 #include "Workspace_ABC.h"
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
-#include "QueryBuilder.h"
 #include "WorkingSession.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace dispatcher;
 using namespace plugins;
 using namespace plugins::crossbow;
+
+
+namespace 
+{
+    Database_ABC& GetDatabase( Workspace_ABC& workspace )
+    {
+        return workspace.GetDatabase( "flat" );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: OrderListener constructor
@@ -30,11 +37,10 @@ using namespace plugins::crossbow;
 OrderListener::OrderListener( Workspace_ABC& workspace, const dispatcher::Model_ABC& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session )
     : publisher_ ( publisher )
     , dispatcher_( new OrderDispatcher( workspace, types, model ) )
-    , database_  ( workspace.GetDatabase( "flat" ) )
-    , ref_       ( 0 )
-    , session_   ( session )
+    , workspace_  ( workspace )
+    , ref_ ( 0 )
+    , session_ ( session )
 {
-    table_.reset( database_.OpenTable( "Orders" ) );
     Clean();
 }
 
@@ -55,7 +61,26 @@ void OrderListener::Clean()
 {
     try
     {
-        table_->DeleteRows( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );
+        /* TODO : CASCADING Delete for every parameters
+        {
+            std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "OrderParameters" ) );
+            table->DeleteRows( 
+                "EXISTS ( SELECT 1 FROM sword.orders WHERE" 
+                          "order_id=sword.orders.id AND sword.orders.session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) + ")" );
+        }
+        {
+            std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "Orders" ) );
+            table->DeleteRows( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );
+        }
+        */
+        std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "Orders" ) );
+        Row_ABC* row = table->Find( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );
+        while( row != 0 )
+        {
+            row->SetField( "checked", FieldVariant( true ) );
+            table->UpdateRow( *row );
+            row = table->GetNextRow();
+        }
     }
     catch ( std::exception& e )
     {
@@ -78,36 +103,45 @@ namespace
 // -----------------------------------------------------------------------------
 void OrderListener::Listen()
 {
+    bool doUpdate = false;
     try
     {
         std::stringstream ss;
-        ss << "id > " << ref_ << " AND checked=-1" << " AND session_id=" << session_.GetId(); // OBJECTID
-        const Row_ABC* row = table_->Find( ss.str() );
+        ss << "checked=-1 AND session_id=" << session_.GetId(); // OBJECTID
+        std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "Orders" ) );
+        const Row_ABC* row = table->Find( ss.str() );
         while( row != 0 )
         {
-            ListenRow( *row );
-            row = table_->GetNextRow();
+            doUpdate |= ListenRow( *row );
+            row = table->GetNextRow();
         }
     }
     catch ( std::exception& ex )
     {
         MT_LOG_ERROR_MSG( "crossbow::Listen : " + std::string( ex.what() ) );
     }
+    if ( doUpdate )
+        GetDatabase( workspace_ ).Flush();
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderListener::ListenRow
 // Created: JCR 2010-02-27
 // -----------------------------------------------------------------------------
-void OrderListener::ListenRow( const Row_ABC& row )
+bool OrderListener::ListenRow( const Row_ABC& row )
 {
     long orderid = -1;
     try
     {
-        ref_ = row.GetID();
-        orderid = GetField< long >( row, "id" );
-        dispatcher_->Dispatch( publisher_, row );
-        MarkProcessed( orderid );
+        orderid = row.GetID();
+        if( orderid != -1 )
+        {
+            if ( dispatcher_->IsValidOrder( row ) )
+            {
+                dispatcher_->Dispatch( publisher_, row );
+                MarkProcessed( orderid );
+            }
+        }
     }
     catch ( std::exception& ex )
     {
@@ -115,6 +149,7 @@ void OrderListener::ListenRow( const Row_ABC& row )
             MarkProcessed( orderid );
         MT_LOG_ERROR_MSG( "crossbow::ListenRow - unable to build order correctly: " << std::endl << ex.what() );
     }
+    return orderid >= 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,11 +159,16 @@ void OrderListener::ListenRow( const Row_ABC& row )
 void OrderListener::MarkProcessed( long orderid ) const
 {
     std::stringstream ss;
-    ss << "id = " << orderid << " AND checked=-1" << " AND session_id=" << session_.GetId(); // OBJECTID
+    ss << "id=" << orderid << " AND checked=-1" << " AND session_id=" << session_.GetId(); // OBJECTID
 
-    std::auto_ptr< Table_ABC > table( database_.OpenTable( "Orders" ) );
+    std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "Orders" ) );
     Row_ABC* row = table->Find( ss.str() );
-    if( row == 0 )
+    if( row == NULL )
         throw std::runtime_error( "unable to process requested order: " + ss.str() );
-    row->SetField( "checked", FieldVariant( true ) );
+    while ( row != NULL )
+    {
+        row->SetField( "checked", FieldVariant( true ) );
+        table->UpdateRow( *row );
+        row = table->GetNextRow();
+    }
 }

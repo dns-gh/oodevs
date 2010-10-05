@@ -10,15 +10,8 @@
 #ifndef __crossbow_DatabaseFactory_h_
 #define __crossbow_DatabaseFactory_h_
 
-namespace dispatcher
-{
-    class Config;
-}
-
 namespace plugins
 {
-    class Config;
-
 namespace crossbow
 {
     class Database_ABC;
@@ -40,14 +33,14 @@ public:
 
     //! @name Operations
     //@{
-    std::auto_ptr< crossbow::Database_ABC > Create( const dispatcher::Config& config, const std::string& name ) const;
+    std::auto_ptr< crossbow::Database_ABC > Create( const std::string& path, const std::string& name ) const;
     //@}
 
 private:
     //! @name Operations
     //@{
-    std::auto_ptr< crossbow::Database_ABC > CreateShapefile( const dispatcher::Config& config, const std::string& name ) const;
-    std::auto_ptr< crossbow::Database_ABC > CreatePgeo( const dispatcher::Config& config, const std::string& name ) const;
+    std::auto_ptr< crossbow::Database_ABC > CreateShapefile( const std::string& path, const std::string& name ) const;
+    std::auto_ptr< crossbow::Database_ABC > CreatePgeo( const std::string& path, const std::string& name ) const;
     std::auto_ptr< crossbow::Database_ABC > CreatePostgreSQL( const std::string& name ) const;
     std::auto_ptr< crossbow::Database_ABC > CreateSDE( const std::string& name ) const;
     //@}
