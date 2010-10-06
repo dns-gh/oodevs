@@ -104,16 +104,12 @@ SDE connection: sde://user:password@host:port/db_name.sword</source>
 Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     </message>
     <message>
-        <source>Geodatabase export:</source>
-        <translation type="unfinished">Export de base de données géographiques</translation>
+        <source>Feature database (manage geometry information):</source>
+        <translation type="unfinished">Export vers base de données (informations géométriques)</translation>
     </message>
     <message>
-        <source>Geodatabase population export:</source>
-        <translation type="unfinished">Export de population de base de données géographiques</translation>
-    </message>
-    <message>
-        <source>Geodatabase order import:</source>
-        <translation type="unfinished">Import d&apos;ordre de base de donnée géographique</translation>
+        <source>Flat database (manage no geometry information):</source>
+        <translation type="unfinished">Export vers base de données (informations no géométriques)</translation>
     </message>
 </context>
 <context>

@@ -14,9 +14,7 @@
 #include "hla_plugin/HlaPluginFactory.h"
 #include "dis_plugin/DisPluginFactory.h"
 #include "tic_plugin/TicPluginFactory.h"
-#ifdef CROSSBOW_PLUGIN
-#   include "crossbow_plugin/CrossbowPluginFactory.h"
-#endif
+#include "crossbow_plugin/CrossbowPluginFactory.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
@@ -39,9 +37,7 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
         dispatcher_->RegisterPluginFactory( *new hla::HlaPluginFactory() );
         dispatcher_->RegisterPluginFactory( *new dis::DisPluginFactory() );
         dispatcher_->RegisterPluginFactory( *new tic::TicPluginFactory() );
-#ifdef CROSSBOW_PLUGIN
         dispatcher_->RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
-#endif
         dispatcher_->RegisterPluginFactory( *new bml::BmlPluginFactory() );
         dispatcher_->CreatePlugins();
     }
