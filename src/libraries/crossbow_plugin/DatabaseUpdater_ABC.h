@@ -92,7 +92,6 @@ public:
     virtual void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg ) = 0;
     virtual void Update( const MsgsSimToClient::MsgObjectKnowledgeDestruction& msg ) = 0;
 
-    virtual void Update( const MsgsSimToClient::MsgReport& msg ) = 0;
     virtual void Update( const MsgsSimToClient::MsgFormationCreation& message ) = 0;
 
 	virtual void Update( const MsgsSimToClient::MsgControlBeginTick& msg ) = 0;
