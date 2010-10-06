@@ -283,7 +283,7 @@ void DEC_Decision< T >::StopMission( const std::string& strBehavior )
     try
     {
         pRefs_->stopEvents_.operator ()< const std::string& >( strBehavior );
-		pMission_.reset();
+        pMission_.reset();
     }
     catch( std::runtime_error& )
     {
