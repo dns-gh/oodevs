@@ -33,7 +33,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( InputToxicCloudAttribute )
 
 namespace
 {
-    geometry::Point2d ConvertToLatLong( const MT_Float& posX, const MT_Float& posY )
+    geometry::Point2d ConvertToLatLong( const double& posX, const double& posY )
     {
         double latitude, longitude;
         TER_World::GetWorld().SimToMosMgrsCoord( MT_Vector2D( posX, posY ), latitude, longitude );
@@ -374,6 +374,10 @@ namespace
                 return 1;
             return 0;
         }
+
+    private:
+        const Intersecter& operator=( const Intersecter& ); // Assignement
+
     private:
          const MT_Vector2D& position_;
     };
@@ -388,6 +392,11 @@ namespace
             quantity_ += quantity.second;
             return false;
         }
+
+    private:
+        AssessQuantity( const AssessQuantity& ); // Copy
+        const AssessQuantity& operator=( const AssessQuantity& ); // Assignement
+
     private:
         double& quantity_;
         unsigned int n_;
