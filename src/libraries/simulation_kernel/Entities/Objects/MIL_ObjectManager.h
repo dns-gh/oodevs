@@ -58,7 +58,7 @@ class UrbanObjectWrapper;
 class MIL_ObjectManager : private boost::noncopyable
 {
 public:
-     MIL_ObjectManager();
+             MIL_ObjectManager();
     virtual ~MIL_ObjectManager();
 
     //! @name CheckPoints
@@ -77,7 +77,7 @@ public:
     //@TODO MGD return reference
     MIL_Object_ABC&     CreateObject( xml::xistream& xis, MIL_Army_ABC& army );
     MIL_Object_ABC*     CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
-    MIL_Object_ABC*     CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
+    MIL_Object_ABC*     CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& name );
     MIL_Object_ABC*     CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType );
     MIL_Object_ABC*     CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
     MIL_Object_ABC*     CreateUrbanObject( const urban::TerrainObject_ABC& object );
@@ -99,9 +99,9 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< unsigned int, MIL_Object_ABC* >   T_ObjectMap;
-    typedef T_ObjectMap::iterator               IT_ObjectMap;
-    typedef T_ObjectMap::const_iterator         CIT_ObjectMap;
+    typedef std::map< unsigned int, MIL_Object_ABC* > T_ObjectMap;
+    typedef T_ObjectMap::iterator                    IT_ObjectMap;
+    typedef T_ObjectMap::const_iterator             CIT_ObjectMap;
     //@}
 
 private:
@@ -120,9 +120,9 @@ private:
 private:
     //! @name
     //@{
-    T_ObjectMap                         objects_;
+    T_ObjectMap objects_;
     std::auto_ptr< MIL_ObjectFactory >  builder_;
-    std::vector< unsigned int >         urbanIds_;
+    std::vector< unsigned int > urbanIds_;
     //@}
 };
 

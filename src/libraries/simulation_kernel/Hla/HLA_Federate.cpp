@@ -161,6 +161,7 @@ void HLA_Federate::InitializeClasses()
     pObjectRegistration_ = new ObjectRegistration( *pInteractionManager_ );
     pObjectClass_ = new Class< HLA_Object_ABC >( *pObjectRegistration_ );
     pObjectClass_->Register( AttributeIdentifier( "coordonnees" ) );
+    pObjectClass_->Register( AttributeIdentifier( "nom" ) );
     pObjectClass_->Register( AttributeIdentifier( "type" ) );
     pObjectClass_->Register( AttributeIdentifier( "armee" ) );
     pObjectClass_->Register( AttributeIdentifier( "completion" ) );
@@ -199,7 +200,7 @@ void HLA_Federate::Register( MIL_Object_ABC& object )
     const ObjectIdentifier objectId = pObjectClass_->Register( hlaView, boost::lexical_cast< std::string >( object.GetID() ) );
     hlaView.SetId( objectId );
     object.SetHLAView( hlaView );
-    localObjects_[ objectId ] = &object ;
+    localObjects_[ objectId ] = &object;
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +210,7 @@ void HLA_Federate::Register( MIL_Object_ABC& object )
 void HLA_Federate::Unregister( MIL_Object_ABC& object )
 {
     assert( pObjectClass_ );
-    if( object.GetHLAView() )
+    if( object.GetHLAView() && localObjects_.find( object.GetHLAView()->GetId() ) != localObjects_.end() )
     {
         localObjects_.erase( object.GetHLAView()->GetId() );
         pObjectClass_->Unregister( *object.GetHLAView() );

@@ -33,13 +33,13 @@ using namespace hla;
 // Created: AGE 2004-11-30
 // -----------------------------------------------------------------------------
 HLA_DistantObject::HLA_DistantObject( const ObjectIdentifier& objectId, HLA_InteractionManager_ABC& interactionManager )
-    : pObject_                ( 0 )
-    , rConstructionPercentage_( 0 )
-    , rMiningPercentage_      ( 0 )
-    , rBypassPercentage_      ( 0 )
-    , id_                     ( objectId )
-    , interactionManager_     ( interactionManager )
-    , isDestroying_           ( false )
+    : pObject_               ( 0 )
+    , constructionPercentage_( 0 )
+    , miningPercentage_      ( 0 )
+    , bypassPercentage_      ( 0 )
+    , id_                    ( objectId )
+    , interactionManager_    ( interactionManager )
+    , isDestroying_          ( false )
 {
     // NOTHING
 }
@@ -128,7 +128,7 @@ void HLA_DistantObject::Deserialize( const AttributeIdentifier& attributeID, con
     else
     {
         DeserializeAttribute( attributeID, deserializer );
-        if( !strArmy_.empty() )
+        if( !name_.empty() && !army_.empty() )
             pObject_ = InstanciateObject();
     }
 }
@@ -149,21 +149,21 @@ namespace
 MIL_Object_ABC* HLA_DistantObject::InstanciateObject()
 {
     MIL_Army_ABC* pArmy = 0;
-    MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies().Apply( boost::bind( &Resolve, boost::cref( strArmy_ ), boost::ref( pArmy ), _1 ) );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies().Apply( boost::bind( &Resolve, boost::cref( army_ ), boost::ref( pArmy ), _1 ) );
     if( !pArmy )
         return 0;
     if( localisation_.GetType() == TER_Localisation::eNone )
         return 0;
-    MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateDistantObject( strObjectType_, *pArmy, localisation_ );
+    MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateDistantObject( objectType_, *pArmy, localisation_, name_ );
     if( pObject )
     {
         MIL_Object_ABC& object = *pObject;
         if( object().CanBeConstructed() )
-            object().Construct( rConstructionPercentage_ );
+            object().Construct( constructionPercentage_ );
         if( object().CanBeMined() )
-            object().Mine( rMiningPercentage_ );
+            object().Mine( miningPercentage_ );
         if( object().CanBeBypassed() )
-            object().Bypass( rBypassPercentage_ );
+            object().Bypass( bypassPercentage_ );
         pObject->SetHLAView( *this );
     }
     return pObject;
@@ -175,22 +175,24 @@ MIL_Object_ABC* HLA_DistantObject::InstanciateObject()
 // -----------------------------------------------------------------------------
 void HLA_DistantObject::DeserializeAttribute( const AttributeIdentifier& attributeID, Deserializer deserializer )
 {
-    if( attributeID == "type" )
-        deserializer >> strObjectType_;
+    if( attributeID == "nom" )
+        deserializer >> name_;
+    else if( attributeID == "type" )
+        deserializer >> objectType_;
     else if( attributeID == "armee" )
-        deserializer >> strArmy_;
+        deserializer >> army_;
     else if( attributeID == "option" )
-        deserializer >> strOption_;
+        deserializer >> option_;
     else if( attributeID == "extra" )
-        deserializer >> strExtra_;
+        deserializer >> extra_;
     else if( attributeID == "coordonnees" )
         deserializer >> localisation_;
     else if( attributeID == "completion" )
-        deserializer >> rConstructionPercentage_;
+        deserializer >> constructionPercentage_;
     else if( attributeID == "valorisation" )
-        deserializer >> rMiningPercentage_;
+        deserializer >> miningPercentage_;
     else if( attributeID == "contournement" )
-        deserializer >> rBypassPercentage_;
+        deserializer >> bypassPercentage_;
 }
 
 // -----------------------------------------------------------------------------

@@ -68,15 +68,16 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string strObjectType_;
-    std::string strArmy_;
-    std::string strOption_;
-    std::string strExtra_;
+    std::string name_;
+    std::string objectType_;
+    std::string army_;
+    std::string option_;
+    std::string extra_;
     TER_Localisation localisation_;
     MIL_Object_ABC* pObject_;
-    double rConstructionPercentage_;
-    double rMiningPercentage_;
-    double rBypassPercentage_;
+    double constructionPercentage_;
+    double miningPercentage_;
+    double bypassPercentage_;
     hla::ObjectIdentifier id_;
     HLA_InteractionManager_ABC& interactionManager_;
     bool isDestroying_;

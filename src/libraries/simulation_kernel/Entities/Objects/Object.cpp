@@ -93,10 +93,9 @@ Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const 
 // -----------------------------------------------------------------------------
 Object::Object()
     : MIL_Object_ABC()
-    , id_          ( 0 )
-    , name_        ()
-    , pView_       ( 0 )
-    , manipulator_ ( new MIL_ObjectManipulator( *this ) )
+    , id_         ( 0 )
+    , pView_      ( 0 )
+    , manipulator_( new MIL_ObjectManipulator( *this ) )
 {
     // NOTHING
 }
@@ -162,12 +161,9 @@ void Object::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "name", name_ )
             << xml::attribute( "type", GetType().GetName() );
     GetLocalisation().Write( xos );
-    xos << xml::start( "attributes" );
-    {
-        std::for_each( attributes_.begin(), attributes_.end(),
-            boost::bind( &ObjectAttribute_ABC::WriteODB, _1, boost::ref( xos ) ) );
-    }
-    xos << xml::end;
+    xos     << xml::start( "attributes" );
+    std::for_each( attributes_.begin(), attributes_.end(), boost::bind( &ObjectAttribute_ABC::WriteODB, _1, boost::ref( xos ) ) );
+    xos     << xml::end;
     xos << xml::end; // object
 }
 
@@ -369,7 +365,6 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode Object::OnUpdate( const MsgMi
             break;
         }
     }
-
     return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
 }
 
@@ -496,7 +491,8 @@ void Object::Deserialize( const AttributeIdentifier& attributeID, Deserializer d
 void Object::Serialize( HLA_UpdateFunctor& functor ) const
 {
     functor.Serialize( "armee", false, GetArmy()->GetName() );
-    functor.Serialize( "type",  false, GetType().GetName() );
+    functor.Serialize( "type", false, GetType().GetName() );
+    functor.Serialize( "nom", false, name_ );
     functor.Serialize( "coordonnees", ( xAttrToUpdateForHLA_ & eAttrUpdate_Localisation ) != 0, GetLocalisation() );
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Serialize, _1, boost::ref( functor ) ) );
@@ -516,7 +512,7 @@ boost::shared_ptr< DEC_Knowledge_Object > Object::CreateKnowledge( const MIL_Arm
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< DEC_Knowledge_Object > Object::CreateKnowledge
+// Name: Object::CreateKnowledge
 // Created: LDC 2010-04-15
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > Object::CreateKnowledge( const MIL_KnowledgeGroup& group )

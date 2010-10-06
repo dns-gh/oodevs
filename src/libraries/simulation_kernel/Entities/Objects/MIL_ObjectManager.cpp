@@ -182,7 +182,7 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObje
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
 {
-    MIL_Object_ABC* pObject = builder_->BuildObject( type, army, localisation, Common::ObstacleType_DemolitionTargetType_preliminary );
+    MIL_Object_ABC* pObject = builder_->BuildObject( "", type, army, localisation, Common::ObstacleType_DemolitionTargetType_preliminary );
     RegisterObject( pObject );
     return pObject;
 }
@@ -191,9 +191,9 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 // Name: MIL_ObjectManager::CreateDistantObject
 // Created: SLI 2010-10-04
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectManager::CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
+MIL_Object_ABC* MIL_ObjectManager::CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& name )
 {
-    MIL_Object_ABC* pObject = builder_->BuildObject( type, army, localisation, Common::ObstacleType_DemolitionTargetType_preliminary );
+    MIL_Object_ABC* pObject = builder_->BuildObject( name, type, army, localisation, Common::ObstacleType_DemolitionTargetType_preliminary );
     RegisterDistantObject( pObject );
     return pObject;
 }
@@ -206,7 +206,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::
 {
     if( pLocalisation )
     {
-        MIL_Object_ABC* pObject = builder_->BuildObject( type, army, *pLocalisation, obstacleType );
+        MIL_Object_ABC* pObject = builder_->BuildObject( "", type, army, *pLocalisation, obstacleType );
         RegisterObject( pObject );
         return pObject;
     }

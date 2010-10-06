@@ -485,10 +485,10 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Ar
 // Name: MIL_EntityManager::CreateDistantObject
 // Created: SLI 2010-10-04
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_EntityManager::CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
+MIL_Object_ABC* MIL_EntityManager::CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& name )
 {
     assert( pObjectManager_ );
-    return pObjectManager_->CreateDistantObject( type, army, localisation );
+    return pObjectManager_->CreateDistantObject( type, army, localisation, name );
 }
 
 // -----------------------------------------------------------------------------
