@@ -98,11 +98,8 @@ private:
     void SerializeMissionObjectiveList( Common::MsgMissionObjectiveList& message, const std::string& value ) const;
     template< typename T >
     void SerializeLocation( T& message, unsigned long parameterId, const std::string& value ) const;
-    template< typename T >
+    template< typename T, typename Base >
     void SerializeLocationList( T& message, unsigned long parameterId, const std::string& value ) const;
-
-    template< typename T >
-    void SerializeLocList( T& message, unsigned long parameterId, const std::string& tablename ) const;
 
     template< typename T >
     void SerializeLocation( T& message, const Row_ABC* row ) const;

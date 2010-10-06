@@ -90,30 +90,18 @@ namespace
     template< typename Container, typename FunctorWrapper >
     void SerializeList( Container& message, const typename FunctorWrapper::Container& values, FunctorWrapper wrapper )
     {
-        //message = new Container();
-        //message->n
-        //int size = values.size();
         if( !values.empty() )
         {
-            //message.mutable_elem() = new typename FunctorWrapper::Element[ size ];
-//            for (int i = 0; i < size /*message.elem_size()*/; i++)
-//            {
-//                *message.mutable_elem( i ) = wrapper( *message.mutable_elem( i ), values[ i ] );
-//            }
-
             std::transform( message.mutable_elem()->begin(), message.mutable_elem()->end(),
                 values.begin(), message.mutable_elem()->begin(), wrapper );
 
         }
-//        else
-//            //message->elem = 0;
-//            *message.mutable_elem() = NULL;
     }
 
-    template< typename T, typename Functor >
-    struct FunctorWrapperList : public FunctorWrapper< T, std::vector< T* >, Functor >
+    template< typename T, typename Functor, typename Base = T >
+    struct FunctorWrapperList : public FunctorWrapper< Base, std::vector< T* >, Functor >
     {
-        FunctorWrapperList( Functor functor ) : FunctorWrapper< T, std::vector< T* >, Functor >( functor ) {}
+        FunctorWrapperList( Functor functor ) : FunctorWrapper< Base, std::vector< T* >, Functor >( functor ) {}
     };
 
     template< typename Element, typename Container, typename Functor >
@@ -125,8 +113,18 @@ namespace
         SerializeList( message, values, FunctorWrapper< Element, std::vector< std::string >, Functor >( functor ) );
     }
 
+    
     struct CopyLocation
     {
+        template< typename TLocationList >
+        void operator()( TLocationList& lhs, const Common::MsgLocation* rhs )
+        {
+            lhs.mutable_location()->set_type( rhs->type() );
+            for ( int i = 0; i < rhs->coordinates().elem_size(); i++ )
+                *lhs.mutable_location()->mutable_coordinates()->add_elem() = rhs->coordinates().elem( i );
+        }
+
+        template<>
         void operator()( Common::MsgLocation& lhs, const Common::MsgLocation* rhs )
         {
             lhs.set_type( rhs->type() );
@@ -183,11 +181,11 @@ void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, 
     else if( type == "intelligencelist" )
         SerializeIntelligenceList( *message.mutable_value()->mutable_intelligencelist(), value );
     else if( type == "pointlist" )
-        SerializeLocList< Common::MsgPointList >( *message.mutable_value()->mutable_pointlist(), parameterId, value );
+        SerializeLocationList< Common::MsgPointList, Common::MsgPoint >( *message.mutable_value()->mutable_pointlist(), parameterId, value );
     else if( type == "polygonlist" )
-        SerializeLocList< Common::MsgPolygonList >( *message.mutable_value()->mutable_polygonlist(), parameterId, value );
+        SerializeLocationList< Common::MsgPolygonList, Common::MsgPolygon >( *message.mutable_value()->mutable_polygonlist(), parameterId, value );
     else if( type == "locationlist" )
-        SerializeLocationList( *message.mutable_value()->mutable_locationlist(), parameterId, value );
+        SerializeLocationList< Common::MsgLocationList, Common::MsgLocation >( *message.mutable_value()->mutable_locationlist(), parameterId, value );
     else if( type == "numeric" )
         message.mutable_value()->set_areal( boost::lexical_cast< float >( value ) );
     else if( type == "enumeration" )
@@ -350,34 +348,16 @@ void OrderParameterSerializer::SerializeLocation( T& message, unsigned long para
 // Name: OrderParameterSerializer::SerializeLocationList
 // Created: JCR 2009-10-15
 // -----------------------------------------------------------------------------
-template< typename T >
+template< typename T, typename Base >
 void OrderParameterSerializer::SerializeLocationList( T& message, unsigned long parameterId, const std::string& tablename ) const
 {
-    typedef boost::function< void ( Common::MsgLocation&, const Common::MsgLocation* ) > Functor;
+    typedef boost::function< void ( Base&, const Common::MsgLocation* ) > Functor;
     std::vector< Common::MsgLocation* > locations;
     boost::shared_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( tablename ) );
     FillLocationlist( locations, table, parameterId );
-    SerializeList( message, locations, FunctorWrapperList< Common::MsgLocation, Functor >( CopyLocation() ) );
+    SerializeList( message, locations, FunctorWrapperList< Common::MsgLocation, Functor, Base >( CopyLocation() ) );
     std::for_each( locations.begin(), locations.end(), boost::checked_deleter< Common::MsgLocation >() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: OrderParameterSerializer::SerializeLocList
-// Created: JCR 2009-10-15
-// -----------------------------------------------------------------------------
-/*
-template< typename T >
-void OrderParameterSerializer::SerializeLocList( T& message, unsigned long parameterId, const std::string& tablename ) const
-{
-    typedef boost::function< void ( Common::MsgLocation&, const Common::MsgLocation* ) > Functor;
-    std::vector< Common::MsgLocation* > locations;
-    boost::shared_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
-    FillLocationlist( locations, table, parameterId );
-    CopyLocation c;
-    for ( unsigned int i = 0; i < locations.size(); i++)
-        c( *message.mutable_elem( i )->mutable_location(), locations[ i ] );
-}
-*/
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::FillLocationlist

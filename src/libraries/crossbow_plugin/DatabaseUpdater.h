@@ -84,9 +84,8 @@ public:
     void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg );
     void Update( const MsgsSimToClient::MsgObjectKnowledgeDestruction& msg );
 
-    void Update( const MsgsSimToClient::MsgReport& msg );
     void Update( const MsgsSimToClient::MsgFormationCreation& message );
-  
+
 	void Update( const MsgsSimToClient::MsgControlBeginTick& msg );
     void Update( const MsgsSimToClient::MsgPartyCreation& msg );
 
