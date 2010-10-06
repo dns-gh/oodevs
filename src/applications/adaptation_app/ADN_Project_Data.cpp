@@ -297,7 +297,7 @@ void ADN_Project_Data::Reset()
 
     // load default parameters (included has resource)
     xml::xistringstream defaultFile( physicalXml );
-    ReadArchive( defaultFile );
+    dataInfos_.ReadArchive( defaultFile );
 }
 
 //-----------------------------------------------------------------------------

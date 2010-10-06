@@ -277,7 +277,7 @@ void ADN_Categories_Data::WriteSizes( xml::xostream& output )
 // -----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::WriteArmors
 // Created: APE 2004-11-16
-// -----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------- 
 void ADN_Categories_Data::WriteArmors( xml::xostream& output )
 {
     // Check the armors data for duplicates.
@@ -288,7 +288,7 @@ void ADN_Categories_Data::WriteArmors( xml::xostream& output )
     ADN_Tools::AddSchema( output, "Armors" );
     for( helpers::T_ArmorInfos_Vector::const_iterator itArmor = vArmors_.begin(); itArmor != vArmors_.end(); ++itArmor )
         ( *itArmor )->WriteArchive( output );
-    output << xml::end;
+    output << xml::end; 
 }
 
 // -----------------------------------------------------------------------------

@@ -46,4 +46,5 @@ static const char* physicalXml =
 "  <missions file=\"Orders.xml\"/>\n"
 "  <object-names file=\"ObjectNames.xml\"/>\n"
 "  <urban file=\"Urban.xml\"/>\n"
+"  <resource-networks file=\"ResourceNetworks.xml\"/>\n"
 "</physical>";

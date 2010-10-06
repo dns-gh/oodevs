@@ -114,9 +114,18 @@ int main( uint nArgc, char** ppArgv )
         if( !outputFile.empty() )
             MessageBox( 0, exception.what(), "Sword Adaptation Tool - Exception", MB_ICONERROR | MB_OK );
         else
+        {
             MT_LOG_ERROR_MSG( exception.what() );
+            QMessageBox::critical( 0, "Critical", exception.what() );
+        }
+
         app.quit();
         MT_LOG_UNREGISTER_LOGGER( consoleLogger );
+        return EXIT_FAILURE;
+    }
+    catch( ... )
+    {
+        QMessageBox::critical( 0, "Critical", "Unknown error !" );
         return EXIT_FAILURE;
     }
     app.quit();
