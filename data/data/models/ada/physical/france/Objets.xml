@@ -280,7 +280,7 @@
   </object>
   <object geometry="polygon" name="Aire de poser" symbol="G*GPGAL---****X" type="landing area"/>
   <object geometry="polygon" name="Piste" symbol="G*GPGAZ---****X" type="trail"/>
-  <object geometry="polygon" name="Platforme" symbol="G*PLATFORM*****" type="platform"/>
+  <object geometry="polygon" name="Plate-forme" symbol="G*PLATFORM*****" type="platform"/>
   <object geometry="polygon" name="Zone de mobilité améliorée" symbol="G*MPSP----****X" type="mobility enhanced area"/>
   <object geometry="polygon" name="Zone de poser (hélicoptère)" symbol="G*GPGAL---****X" type="landing area (helicopter)"/>
   <object geometry="polygon" name="Aire logistique" symbol="G*SPAR----****X" type="logistic area"/>
@@ -312,7 +312,7 @@
     <population-filter density="0.5"/>
   </object>
   <object geometry="point" name="Installation" symbol="S*GPI-----*****" type="installation"/>
-  <object geometry="polygon" name="Sensors detection zone" symbol="G*GPGAL---****X" type="sensorsDetectionZone">
+  <object geometry="polygon" name="Zone de détection de capteurs" symbol="G*GPGAL---****X" type="sensorsDetectionZone">
     <detection>
       <acquisition-times>
         <acquisition-time level="detection" time="200s"/>
@@ -321,7 +321,7 @@
       </acquisition-times>
     </detection>
   </object>
-  <object geometry="polygon" name="Sensors zone" symbol="G*GPGAL---****X" type="sensors">
+  <object geometry="polygon" name="Zone de capteurs" symbol="G*GPGAL---****X" type="sensors">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable/>
     </constructor>
