@@ -106,17 +106,6 @@ function Start()
                           message = "Test de validation </xsl:text><xsl:value-of select="$profilename"/><xsl:text>. Attendez avant de deconnecter.",
                           buttons = {} } )
                         </xsl:text>
-                        <xsl:for-each select='action[@name="Unit Creation"]'>
-                        <xsl:text>        
-                        --local entity = model.orbat:FindAgent( </xsl:text><xsl:value-of select="@id"/><xsl:text> )
-                        --entity:Teleport( coord:UtmPosition( "29TNF2072470458" ) )
-                        -- entity:UnrecoverAll()</xsl:text>
-                        <xsl:value-of select='./parameter[@name="UnitType"]/@value'/>
-                        <xsl:text>", "</xsl:text>
-                        <xsl:value-of select='@target'/>
-                        <xsl:text>" )</xsl:text>
-                        </xsl:for-each>
-
                         <xsl:variable name="orbat" select="document('../out/Poseidon VA/orbat.xml')"/>
                         <xsl:for-each select="$orbat//side/tactical/formation/automat/unit">
                         <xsl:text>
