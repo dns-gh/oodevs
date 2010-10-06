@@ -161,9 +161,6 @@ template< class T >
 void DEC_Decision< T >::Reset( std::string groupName )
 {
     StopDefaultBehavior();
-    if( groupName != "" && !!pRefs_->cleanBrainBeforeDeletion_ )
-        pRefs_->cleanBrainBeforeDeletion_( groupName );
-    InitBrain( brainFile_, modelName_, includePath_, groupName );
     StartDefaultBehavior();
 }
 
@@ -286,7 +283,7 @@ void DEC_Decision< T >::StopMission( const std::string& strBehavior )
     try
     {
         pRefs_->stopEvents_.operator ()< const std::string& >( strBehavior );
-        pMission_.reset();
+		pMission_.reset();
     }
     catch( std::runtime_error& )
     {
