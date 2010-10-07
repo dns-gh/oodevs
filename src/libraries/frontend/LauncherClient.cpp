@@ -23,7 +23,6 @@ using namespace frontend;
 // -----------------------------------------------------------------------------
 LauncherClient::LauncherClient( kernel::Controller& controller )
     : tools::ClientNetworker( "", false )
-    , controller_( controller )
     , exercises_( new Exercises( controller ) )
     , connected_( false )
 {

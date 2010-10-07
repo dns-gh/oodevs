@@ -67,7 +67,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
     std::auto_ptr< Exercises > exercises_;
     std::auto_ptr< LauncherPublisher > publisher_;
     bool connected_;
