@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<project name="validation_test_seq" default="all">
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+    <property name="output" value="out"/>
+    <property name="input_exercise" value="../../exercises/Poseidon VA"/>
+    <property name="target_exercise" value="../../exercises/validation_test_seq"/>
+    <property name="exe" value="D:/projets/csword/trunk/out/applications/simulation_app/vc80/Release/simulation_app.exe"/>
+    <property name="root_dir" value="D:/projets/csword/trunk/data"/>
+    <property name="working_dir" value="D:/projets/csword/trunk/run/vc80"/>
+    <property name="scripts_dir" value="scripts"/>
+    <property name="reports_dir" value="reports"/>
+    <property name="sword_doc" value="../../../../doc/04-Integration_Testing"/>
+    
+    <target name="clean" description="Deletes output directory.">
+        <delete dir="${output}"/>
+        <delete dir="tmp"/>
+    </target>
+
+    <target name="realclean" depends="clean" description="Deletes target_exercise directory.">
+        <delete dir="${target_exercise}"/>
+        <delete dir="${scripts_dir}"/>
+        <delete dir="${reports_dir}"/>
+    </target>
+
+    <target name="generate" depends="clean" description="Builds exercises considering ord files in sword doc.">
+        <foreach param="file" target="transform">
+            <path>
+                <fileset dir="${sword_doc}">
+                    <include name="**/*.ord"/>
+                </fileset>
+            </path>
+        </foreach>
+    </target>
+
+    <target name="transform">
+        <basename property="filename" file="${file}" suffix=".ord"/>
+        <mkdir dir="${output}/${filename}"/>
+        <copy todir="${output}/${filename}"><fileset dir="${input_exercise}" excludes=".svn"/></copy>
+        <delete file="${output}/${filename}/sessions/default/session.xml"/>
+        <xslt in="input/config.xml" style="xsl/session.xsl" out="${output}/${filename}/sessions/default/session.xml">
+            <param name="testname" expression="${filename}"/>
+        </xslt>
+        <copy tofile="${output}/${filename}/${scripts_dir}/resources/${filename}.ord" file="${file}"/>
+        <xslt in="${file}" style="xsl/transformation.xsl" out="${output}/${filename}/${scripts_dir}/${filename}.lua">
+            <param name="profilename" expression="${filename}"/>
+        </xslt>
+    </target>
+
+    <target name="deploy" depends="generate" description="Copy the generated exercises into target_exercise" >
+        <basename property="exercisename" file="${target_exercise}"/>
+        <mkdir dir="${target_exercise}"/>
+        <copy todir="${target_exercise}">
+            <fileset dir="${output}"/>
+        </copy>
+        <exec executable="bash.exe">
+            <arg value="generateLaunchers.sh"/>
+            <arg value="${exe}"/>
+            <arg value="${root_dir}"/>
+            <arg value="${working_dir}"/>
+            <arg value="${scripts_dir}"/>
+            <arg value="${exercisename}"/>
+            <arg value="${sword_doc}"/>
+        </exec>
+    </target>
+
+    <target name="launch" description="Run generated exercises.">
+        <exec executable="bash.exe">
+            <arg value="launch.sh"/>
+            <arg value="${scripts_dir}"/>
+        </exec>
+    </target>
+    
+    <target name="reports" description="imports log files from launched exercises to reports directory.">
+        <exec executable="bash.exe">
+            <arg value="reports.sh"/>
+            <arg value="${target_exercise}"/>
+            <arg value="${reports_dir}"/>
+        </exec>
+    </target>
+    
+    <target name="all" depends="realclean, deploy, launch, reports"/>
+    
+</project>

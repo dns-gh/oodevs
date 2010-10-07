@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<config>
+    <tests>
+        <test name="0035" ticks="50"/>
+        <test name="293-2-Melee_Pion_Controler" ticks="30"/>
+    </tests>
+</config>
