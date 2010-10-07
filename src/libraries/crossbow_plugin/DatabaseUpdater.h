@@ -86,7 +86,7 @@ public:
 
     void Update( const MsgsSimToClient::MsgFormationCreation& message );
 
-	void Update( const MsgsSimToClient::MsgControlBeginTick& msg );
+    void Update( const MsgsSimToClient::MsgControlBeginTick& msg );
     void Update( const MsgsSimToClient::MsgPartyCreation& msg );
 
     void Log( const MsgsSimToClient::MsgObjectMagicActionAck& msg );
@@ -102,7 +102,7 @@ private:
     //! @name Objects
     //@{
     void UpdateObjectKnowledgeGeometry( const std::string& tablename, const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg );
-	void UpdateObjectAttributes( unsigned long oid, const Common::ObjectAttributes& msg );
+    void UpdateObjectAttributes( unsigned long oid, const Common::ObjectAttributes& msg );
     
     // void Update( const MsgsSimToClient::MsgObjectAttributes& msg );
 

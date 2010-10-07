@@ -44,7 +44,7 @@ public:
     //! @name Operations
     //@{
     void Serialize( std::ostream& geometry ) const;
-	void SerializeWkt( std::ostream& geometry ) const;
+    void SerializeWkt( std::ostream& geometry ) const;
     void Serialize( Common::MsgLocation& message ) const;
     //@}
 

@@ -120,7 +120,7 @@ private:
     //! @name Member data
     //@{
     const dispatcher::Model_ABC& model_;
-	Workspace_ABC& workspace_;  //!< Reference geometry database only
+    Workspace_ABC& workspace_;  //!< Reference geometry database only
     std::auto_ptr< OrderParameterTypeResolver > types_;
     //@}
 };

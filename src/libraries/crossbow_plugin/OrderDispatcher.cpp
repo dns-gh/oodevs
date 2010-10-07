@@ -159,7 +159,7 @@ void OrderDispatcher::Dispatch( dispatcher::SimulationPublisher_ABC& publisher, 
 {
     const int id = GetField< int >( row, "unit_id" );
     if( const dispatcher::Agent_ABC* agent = model_.Agents().Find( id ) )
-	{
+    {
         if( agent->GetSuperior().IsEngaged() )
             DispatchAutomatMission( publisher, agent->GetSuperior(), row );
         else

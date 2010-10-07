@@ -208,8 +208,8 @@ void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, 
         SerializeMissionObjective( *message.mutable_value()->mutable_missionobjective(), value );
     else if( type == "objectivelist" )
         SerializeMissionObjectiveList( *message.mutable_value()->mutable_missionobjectivelist(), value );
-	else 
-		throw std::runtime_error( "mission parameter not supported : " + parameter.GetType() + " with value " + value );
+    else 
+        throw std::runtime_error( "mission parameter not supported : " + parameter.GetType() + " with value " + value );
 
     /* TODO
     case T_MissionParameter_value_atlasNature:

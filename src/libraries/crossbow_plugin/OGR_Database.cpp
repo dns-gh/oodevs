@@ -30,7 +30,7 @@ OGR_Database::OGR_Database( OGRDataSource* datasource )
 }
 
 // -----------------------------------------------------------------------------
-// Name: OGR_Database constructor   
+// Name: OGR_Database constructor
 // Created: JCR 2010-02-24
 // -----------------------------------------------------------------------------
 OGR_Database::OGR_Database( OGRDataSource* datasource, const std::string& name, const std::string& schema )

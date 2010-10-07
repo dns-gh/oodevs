@@ -77,10 +77,10 @@ private:
     //@{
     bool IsRelevant( const MsgsSimToClient::MsgSimToClient& asn ) const;
     bool IsRelevant( const MsgsMessengerToClient::MsgMessengerToClient& asn ) const;
-	bool IsRelevantAcknowledge( const MsgsSimToClient::MsgSimToClient& asn ) const;
-    void UpdateOnTick( const MsgsSimToClient::MsgSimToClient& asn );	
-	void UpdateOnAcknowledge( const MsgsSimToClient::MsgSimToClient& asn );
-	void UpdateDatabase( const MsgsSimToClient::MsgSimToClient& asn );
+    bool IsRelevantAcknowledge( const MsgsSimToClient::MsgSimToClient& asn ) const;
+    void UpdateOnTick( const MsgsSimToClient::MsgSimToClient& asn );
+    void UpdateOnAcknowledge( const MsgsSimToClient::MsgSimToClient& asn );
+    void UpdateDatabase( const MsgsSimToClient::MsgSimToClient& asn );
     void UpdateDatabase( const MsgsMessengerToClient::MsgMessengerToClient& asn );
     void UpdateFolkDatabase( const MsgsSimToClient::MsgSimToClient& asn );
     void UpdateListeners();

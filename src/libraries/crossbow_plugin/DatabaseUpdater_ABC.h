@@ -94,7 +94,7 @@ public:
 
     virtual void Update( const MsgsSimToClient::MsgFormationCreation& message ) = 0;
 
-	virtual void Update( const MsgsSimToClient::MsgControlBeginTick& msg ) = 0;
+    virtual void Update( const MsgsSimToClient::MsgControlBeginTick& msg ) = 0;
     virtual void Update( const MsgsSimToClient::MsgPartyCreation& msg ) = 0;
     //@}
 };

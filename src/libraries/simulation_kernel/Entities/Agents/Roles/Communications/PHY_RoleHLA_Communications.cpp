@@ -100,7 +100,7 @@ void PHY_RoleHLA_Communications::DeactivateBlackout( )
 // Name: PHY_RoleHLA_Communications::ModifySpeed
 // Created: AHC 2009-08-18
 // -----------------------------------------------------------------------------
-double PHY_RoleHLA_Communications::ModifySpeed            ( double rSpeed    ) const
+double PHY_RoleHLA_Communications::ModifySpeed( double rSpeed ) const
 {
     return rSpeed;
 }

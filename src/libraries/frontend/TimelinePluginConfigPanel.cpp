@@ -57,18 +57,18 @@ TimelinePluginConfigPanel::TimelinePluginConfigPanel( QWidget* parent, const too
         Style( new QLabel( tools::translate( "TimelinePluginConfigPanel", "Host: " ), box ) );
         host_ = Style( new QLineEdit( "localhost:8088", box ) );
     }
-	{
+    {
         QHBox* box = Style( new QHBox( box_ ) );
-		Style( new QLabel( tools::translate( "TimelinePluginConfigPanel", "Use SSL: " ), box ) );
-		ssl_ = Style( new QCheckBox( box ) );
-		ssl_->setChecked( false );
-	}
-	{
+        Style( new QLabel( tools::translate( "TimelinePluginConfigPanel", "Use SSL: " ), box ) );
+        ssl_ = Style( new QCheckBox( box ) );
+        ssl_->setChecked( false );
+    }
+    {
         QHBox* box = Style( new QHBox( box_ ) );
-		Style( new QLabel( tools::translate( "TimelinePluginConfigPanel", "Log: " ), box ) );
-		log_ = Style( new QCheckBox( box ) );
-		log_->setChecked( false );
-	}
+        Style( new QLabel( tools::translate( "TimelinePluginConfigPanel", "Log: " ), box ) );
+        log_ = Style( new QCheckBox( box ) );
+        log_->setChecked( false );
+    }
     {
         QGroupBox* services = new QGroupBox( 1, Horizontal, tools::translate( "TimelinePluginConfigPanel", "Service configuration:" ), box_ );
         {

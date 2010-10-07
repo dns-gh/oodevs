@@ -89,7 +89,7 @@ void ExerciseConfig::LoadExercise( const std::string& file )
                 >> xml::optional >> xml::start( "population" )
                     >> xml::attribute( "name", population_ )
                 >> xml::end
-				>> xml::optional >> xml::start( "propagations" );
+                >> xml::optional >> xml::start( "propagations" );
         propagations_ = xis.attribute< std::string >( "name", "propagations" );
         xis     >> xml::end
                 >> xml::optional >> xml::start( "scores" );

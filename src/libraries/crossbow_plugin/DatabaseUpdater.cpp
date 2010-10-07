@@ -330,21 +330,21 @@ namespace
     // -----------------------------------------------------------------------------
     bool UpdateGeometry( Row_ABC& row, const Common::MsgLocation& location )
     {
- 		bool result = false;
+         bool result = false;
         switch ( location.type() )
         {
         case Common::MsgLocation::point:    
-			row.SetGeometry( Point( location.coordinates().elem( 0 ) ) ); 
-			result = true;
-			break;
+            row.SetGeometry( Point( location.coordinates().elem( 0 ) ) ); 
+            result = true;
+            break;
         case Common::MsgLocation::line:     
-			row.SetGeometry( Line( location.coordinates() ) ); 
-			result = true;
-			break;
+            row.SetGeometry( Line( location.coordinates() ) ); 
+            result = true;
+            break;
         case Common::MsgLocation::polygon:  
-			result = true;
-			row.SetGeometry( Area( location.coordinates() ) );
-			break;
+            result = true;
+            row.SetGeometry( Area( location.coordinates() ) );
+            break;
         default:                      /*row.SetGeometry( Location( asn.location ) );*/ break; // $$$$ SBO 2007-08-31: TODO
         }
         return result;
@@ -376,7 +376,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgObjectCreation& msg )
     row.SetField( "session_id", FieldVariant( session_.GetId() ) );
     UpdateSymbol( row, model_.Objects(), msg.object().id() );
     UpdateGeometry( row, msg.location() );
-	UpdateObjectAttributes( msg.object().id(), msg.attributes() );
+    UpdateObjectAttributes( msg.object().id(), msg.attributes() );
     table->InsertRow( row );
 }
 
@@ -560,7 +560,7 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgUnitAttributes& msg )
             row->SetField( "direction", FieldVariant( msg.direction().heading() ) );
         if( msg.has_position() )
             row->SetGeometry( Point( msg.position() ) );
-		table->UpdateRow( *row );
+        table->UpdateRow( *row );
     }
 }
 

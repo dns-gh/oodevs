@@ -223,9 +223,9 @@ void CrossbowPublisher::UpdateOnTick( const MsgsSimToClient::MsgSimToClient& wra
     else if( wrapper.message().has_control_begin_tick() )
     {
         MT_LOG_INFO_MSG( "tick " << wrapper.message().control_begin_tick().current_tick() );
-		// update simulation clock
+        // update simulation clock
         databaseUpdater_->Update( wrapper.message().control_begin_tick() );
-		UpdateListeners();
+        UpdateListeners();
     }
     else if( wrapper.message().has_control_end_tick() )
     {
@@ -275,14 +275,14 @@ void CrossbowPublisher::UpdateDatabase( const MsgsSimToClient::MsgSimToClient& w
     else if( wrapper.message().has_object_destruction() )
         databaseUpdater_->Update( wrapper.message().object_destruction() );
 
-	else if( wrapper.message().has_object_knowledge_creation() )
+    else if( wrapper.message().has_object_knowledge_creation() )
         databaseUpdater_->Update( wrapper.message().object_knowledge_creation() );
     else if( wrapper.message().has_object_knowledge_update() )
         databaseUpdater_->Update( wrapper.message().object_knowledge_update() );
     else if( wrapper.message().has_object_knowledge_destruction() )
         databaseUpdater_->Update( wrapper.message().object_knowledge_destruction() );
 
-	else if( wrapper.message().has_party_creation() )
+    else if( wrapper.message().has_party_creation() )
         databaseUpdater_->Update( wrapper.message().party_creation() );
 
     else if( wrapper.message().has_report() )
@@ -337,6 +337,6 @@ void CrossbowPublisher::UpdateOnAcknowledge( const MsgsSimToClient::MsgSimToClie
 // -----------------------------------------------------------------------------
 void CrossbowPublisher::UpdateListeners()
 {
-	if( modelLoaded_ )
+    if( modelLoaded_ )
         std::for_each( listeners_.begin(), listeners_.end(), boost::bind( &Listener_ABC::Listen, _1 ) );
 }
