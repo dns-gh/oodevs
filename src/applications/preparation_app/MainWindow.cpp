@@ -26,6 +26,7 @@
 #include "ObjectCreationPanel.h"
 #include "ObjectListView.h"
 #include "ObjectsLayer.h"
+#include "OrbatAttributesPanel.h"
 #include "PopulationListView.h"
 #include "PopulationsLayer.h"
 #include "PreparationProfile.h"
@@ -89,6 +90,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OptionVariant.h"
@@ -160,7 +162,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
-    ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_.profiles_ );
+    ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_.profiles_, staticModel_.extensions_ );
     ProfileWizardDialog* profileWizardDialog = new ProfileWizardDialog( this, model_, model_.profiles_ );
 
     QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
@@ -218,6 +220,14 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         moveDockWindow( pResourceWnd, Qt::DockLeft );
         setDockEnabled( pResourceWnd, Qt::DockTop, false );
         pResourceWnd->hide();
+    }
+
+    {
+        pOrbatAttributes_ = new OrbatAttributesPanel( this, controllers, staticModel_.extensions_ );
+        moveDockWindow( pOrbatAttributes_, Qt::DockLeft );
+        setDockEnabled( pOrbatAttributes_, Qt::DockTop, false );
+        setAppropriate( pOrbatAttributes_, false );
+        pOrbatAttributes_->hide();
     }
 
     // A few layers
@@ -391,6 +401,13 @@ bool MainWindow::Load()
         selector_->Close();
         selector_->Load();
         staticModel_.Load( config_ );
+        if( staticModel_.extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" ) )
+            setAppropriate( pOrbatAttributes_, true );
+        else
+        {
+            setAppropriate( pOrbatAttributes_, false );
+            pOrbatAttributes_->hide();
+        }
         SetWindowTitle( false );
     }
     catch( xml::exception& e )

@@ -9,42 +9,42 @@
 
 #include "preparation_pch.h"
 #include "AgentFactory.h"
-
-#include "Model.h"
-#include "clients_kernel/AgentTypes.h"
 #include "Agent.h"
-#include "Automat.h"
-#include "AgentsModel.h"
-#include "KnowledgeGroupsModel.h"
-#include "AgentFactory.h"
-#include "AgentPositions.h"
 #include "AgentCommunications.h"
+#include "AgentFactory.h"
 #include "AgentHierarchies.h"
-#include "AutomatDecisions.h"
-#include "AutomatPositions.h"
-#include "AutomatHierarchies.h"
+#include "AgentPositions.h"
+#include "AgentsModel.h"
+#include "Automat.h"
 #include "AutomatCommunications.h"
+#include "AutomatDecisions.h"
+#include "AutomatHierarchies.h"
+#include "AutomatPositions.h"
+#include "CommandPostAttributes.h"
 #include "Dotations.h"
-#include "Stocks.h"
+#include "KnowledgeGroupsModel.h"
 #include "MaintenanceStates.h"
 #include "MedicalStates.h"
-#include "SupplyStates.h"
-#include "Tc2States.h"
-#include "TacticalLines.h"
-#include "CommandPostAttributes.h"
+#include "Model.h"
 #include "Population.h"
-#include "PopulationPositions.h"
 #include "PopulationHierarchies.h"
+#include "PopulationPositions.h"
 #include "Populations.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "StaticModel.h"
+#include "Stocks.h"
+#include "SupplyStates.h"
+#include "TacticalLines.h"
+#include "Tc2States.h"
+#include "clients_kernel/AgentType.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/DictionaryExtensions.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/AutomatType.h"
-#include "clients_kernel/AgentType.h"
-#include "StaticModel.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Team_ABC.h"
 
 using namespace kernel;
 
@@ -89,7 +89,6 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
         result->Attach( *new CommandPostAttributes( *result ) );
     if( type.IsLogisticSupply() )
         result->Attach( *new Stocks( controllers_.controller_, *result, dico ) );
-
     result->Polish();
     return result;
 }
@@ -107,7 +106,6 @@ kernel::Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType
     result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
-
     Entity_ABC* kg = FindorCreateKnowledgeGroup( parent );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
     result->Attach< TC2Hierarchies >( *new Tc2States( controllers_.controller_, *result, dico ) );
@@ -118,7 +116,6 @@ kernel::Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType
     if( type.IsLogisticSupply() )
         result->Attach< SupplyHierarchies >( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
     result->Attach( *new TacticalLines() );
-
     result->Polish();
     return result;
 }
@@ -134,11 +131,9 @@ kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
         top = const_cast< kernel::Entity_ABC* >( &hierarchies->GetTop() );
     else
         top = const_cast< kernel::Entity_ABC* >( &parent.Get< kernel::CommunicationHierarchies >().GetTop() );
-
     Population* result = new Population( type, controllers_.controller_, idManager_ );
     result->Attach< Positions >( *new PopulationPositions( *result, static_.coordinateConverter_, position ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
-
     if( Populations* popus = top->Retrieve< Populations >() )
         popus->AddPopulation( *result );
     result->Polish();
@@ -184,7 +179,12 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
         result->Attach( *new CommandPostAttributes( *result ) );
     if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
-
+    if( xis.has_child( "extensions" ) )
+    {
+        xis.start( "extensions" );
+        result->Attach( *new DictionaryExtensions( xis ) );
+        xis.end();
+    }
     result->Polish();
     return result;
 }
@@ -209,7 +209,12 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     if( result->GetType().IsLogisticSupply() )
         result->Attach< SupplyHierarchies >( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
     result->Attach( *new TacticalLines() );
-
+    if( xis.has_child( "extensions" ) )
+    {
+        xis.start( "extensions" );
+        result->Attach( *new DictionaryExtensions( xis ) );
+        xis.end();
+    }
     result->Polish();
     return result;
 }
@@ -223,7 +228,12 @@ kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_A
     Population* result = new Population( xis, controllers_.controller_, idManager_, static_.types_ );
     result->Attach< Positions >( *new PopulationPositions( xis, *result, static_.coordinateConverter_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
-
+    if( xis.has_child( "extensions" ) )
+    {
+        xis.start( "extensions" );
+        result->Attach( *new DictionaryExtensions( xis ) );
+        xis.end();
+    }
     if( Populations* popus = parent.Retrieve< Populations >() )
         popus->AddPopulation( *result );
     result->Polish();

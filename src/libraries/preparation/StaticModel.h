@@ -13,12 +13,13 @@
 namespace kernel
 {
     class AgentTypes;
-    class ObjectTypes;
-    class DetectionMap;
     class Controllers;
-    class CoordinateSystems;
     class CoordinateConverter_ABC;
+    class CoordinateSystems;
+    class DetectionMap;
+    class ExtensionTypes;
     class FormationLevels;
+    class ObjectTypes;
 }
 
 namespace tools
@@ -72,6 +73,7 @@ public:
     kernel::AgentTypes&              types_;
     kernel::ObjectTypes&             objectTypes_;
     kernel::FormationLevels&         levels_;
+    kernel::ExtensionTypes&          extensions_;
     TeamKarmas&                      teamKarmas_;
     IntelligenceKarmas&              intelligenceKarmas_;
     gui::DrawingTypes&               drawings_;

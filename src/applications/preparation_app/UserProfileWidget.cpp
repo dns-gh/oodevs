@@ -12,15 +12,26 @@
 #include "moc_UserProfileWidget.cpp"
 #include "UserProfileUnitRights.h"
 #include "UserProfilePopulationRights.h"
+#include "clients_kernel/AttributeType.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/DictionaryType.h"
+#include "clients_kernel/ExtensionType.h"
+#include "clients_kernel/ExtensionTypes.h"
 #include "preparation/UserProfile.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileWidget constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons )
-    : QTabWidget( parent, "UserProfileWidget" )
-    , profile_( 0 )
+UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, const ExtensionTypes& extensions )
+    : QTabWidget    ( parent, "UserProfileWidget" )
+    , controllers_  ( controllers )
+    , extensions_   ( extensions )
+    , profile_      ( 0 )
+    , userRoleDico_ ( 0 )
 {
     {
         QVBox* box = new QVBox( this );
@@ -31,8 +42,19 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
         login_ = new QLineEdit( group );
         new QLabel( tr( "Password:" ), group );
         password_ = new QLineEdit( group );
+        userRoleGroup_ = new QGroupBox( 1, Qt::Horizontal, "User role", box );
+        userRoleGroup_->setCheckable( true );
+        userRoleGroup_->setMargin( 5 );
+        QHBox* roleBox = new QHBox( userRoleGroup_ );
+        userRoleLabel_ = new QLabel( roleBox );
+        userRole_ = new QComboBox( roleBox );
+        roleBox->setStretchFactor( userRoleLabel_, 1 );
+        roleBox->setStretchFactor( userRole_, 1 );
+        connect( userRoleGroup_, SIGNAL( toggled( bool ) ), this, SLOT( OnUserRoleActivation( bool ) ) );
+        connect( userRole_, SIGNAL( activated( const QString& ) ), this, SLOT( OnUserRole( const QString& ) ) );
+        userRoleGroup_->hide();
         addTab( box, tr( "General" ) );
-        connect( login_   , SIGNAL( textChanged( const QString& ) ), SLOT( OnLoginChanged   ( const QString& ) ) );
+        connect( login_, SIGNAL( textChanged( const QString& ) ), SLOT( OnLoginChanged( const QString& ) ) );
         connect( password_, SIGNAL( textChanged( const QString& ) ), SLOT( OnPasswordChanged( const QString& ) ) );
     }
     {
@@ -55,6 +77,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
                         "'Write' permission allows you to control an unit." ), group );
     }
     SetEnabled( false );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +86,52 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
 // -----------------------------------------------------------------------------
 UserProfileWidget::~UserProfileWidget()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::NotifyUpdated
+// Created: JSR 2010-10-06
+// -----------------------------------------------------------------------------
+void UserProfileWidget::NotifyUpdated( const kernel::ModelLoaded& )
+{
+    userRole_->clear();
+    userRoleDico_ = 0;
+    userRoleGroup_->hide();
+    ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "profile-attributes" );
+    if( type )
+    {
+        tools::Iterator< const AttributeType& > it = type->CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const AttributeType& attribute = it.NextElement();
+            if( attribute.GetType() == AttributeType::ETypeDictionary )
+            {
+                std::string dictionary;
+                attribute.GetDictionaryValues( dictionary, dicoKind_, dicoLanguage_ );
+                userRoleDico_ = extensions_.tools::StringResolver< DictionaryType >::Find( dictionary );
+                if( userRoleDico_ )
+                {
+                    QStringList list;
+                    userRoleDico_->GetStringList( list, dicoKind_, dicoLanguage_ );
+                    userRoleLabel_->setText( attribute.GetLabel( dicoLanguage_, "" ).c_str() );
+                    userRole_->insertStringList( list );
+                    userRoleGroup_->show();
+                }
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::NotifyUpdated
+// Created: JSR 2010-10-06
+// -----------------------------------------------------------------------------
+void UserProfileWidget::NotifyUpdated( const kernel::ModelUnLoaded& )
+{
+    userRoleDico_ = 0;
+    userRole_->clear();
+    userRoleGroup_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -76,6 +144,13 @@ void UserProfileWidget::Display( UserProfile& profile )
     login_->setText( profile.GetLogin() );
     password_->setText( profile.GetPassword() );
     supervisor_->setChecked( profile.IsSupervisor() );
+    if( userRoleDico_ )
+    {
+        userRoleGroup_->setChecked( profile_->HasUserRole() );
+        int userRole = profile_->UserRole();
+        if( userRole != -1 )            
+            userRole_->setCurrentText( userRoleDico_->GetString( userRole, dicoKind_, dicoLanguage_ ).c_str() );
+    }
     unitRights_->Display( profile );
     populationRights_->Display( profile );
     SetEnabled( true );
@@ -117,6 +192,32 @@ void UserProfileWidget::OnSupervisorChanged( bool supervisor )
 {
     if( profile_ )
         profile_->SetSupervisor( supervisor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::OnUserRoleActivation
+// Created: JSR 2010-10-06
+// -----------------------------------------------------------------------------
+void UserProfileWidget::OnUserRoleActivation( bool enable )
+{
+    if( userRoleDico_ && profile_ )
+    {
+        profile_->SetUserRoleEnabled( enable );
+        if( enable && profile_->UserRole() == -1 )
+            profile_->SetUserRole( userRoleDico_->GetId( userRole_->currentText().ascii(), dicoKind_, dicoLanguage_ ) );
+        controllers_.controller_.Update( profile_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::OnUserRole
+// Created: JSR 2010-10-06
+// -----------------------------------------------------------------------------
+void UserProfileWidget::OnUserRole( const QString& role )
+{
+    if( userRoleDico_ && profile_ )
+        profile_->SetUserRole( userRoleDico_->GetId( role.ascii(), dicoKind_, dicoLanguage_ ) );
+    controllers_.controller_.Update( profile_ );
 }
 
 // -----------------------------------------------------------------------------

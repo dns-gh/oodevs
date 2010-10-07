@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>Unhandled error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur inconnue</translation>
     </message>
 </context>
 <context>

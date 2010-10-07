@@ -570,6 +570,13 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
+    <name>OrbatAttributesPanel</name>
+    <message>
+        <source>Extensions</source>
+        <translation>Extensions</translation>
+    </message>
+</context>
+<context>
     <name>PopulationListView</name>
     <message>
         <source>Create side</source>

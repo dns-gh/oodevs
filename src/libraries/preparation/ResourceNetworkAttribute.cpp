@@ -147,7 +147,6 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
                 if( viewport.IsVisible( Rectangle2f( from, to ) ) )
                     tools.DrawArrow( from, to );
             }
-            glDisable( GL_LINE_STIPPLE );
         }
         else
             if( filter == 0 || IsSelected() )

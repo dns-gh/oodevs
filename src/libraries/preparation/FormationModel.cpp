@@ -14,6 +14,7 @@
 #include "Model.h"
 #include "LimitsModel.h"
 #include "IntelligencesModel.h"
+#include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -71,6 +72,12 @@ void FormationModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, Mod
         >> xml::list( "lima"        , model.limits_       , &LimitsModel::CreateLima   , *(Entity_ABC*)formation )
         >> xml::list( "limit"       , model.limits_       , &LimitsModel::CreateLimit  , *(Entity_ABC*)formation )
         >> xml::list( "intelligence", model.intelligences_, &IntelligencesModel::Create, *(Entity_ABC*)formation );
+    if( xis.has_child( "extensions" ) )
+    {
+        xis.start( "extensions" );
+        formation->Attach( *new DictionaryExtensions( xis ) );
+        xis.end();
+    }
 }
 
 // -----------------------------------------------------------------------------

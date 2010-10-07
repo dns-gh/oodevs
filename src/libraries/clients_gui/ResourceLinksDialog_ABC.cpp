@@ -27,7 +27,7 @@ using namespace kernel;
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
 ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile )
-    : QDockWindow( parent, "resource" )
+    : QDockWindow      ( parent, "resource" )
     , controllers_     ( controllers )
     , dotationResolver_( dotationResolver )
     , profile_         ( profile )
@@ -243,7 +243,7 @@ void ResourceLinksDialog_ABC::OnValueChanged( int, int )
         QCheckTableItem* item = static_cast< QCheckTableItem* >( table_->item( j, 1 ) );
         if( item )
         {
-            bool enable = static_cast< QCheckTableItem* >( table_->item( j, 1 ) )->isChecked();
+            bool enable = item->isChecked();
             table_->item( j, 2 )->setEnabled( enable );
             resourceNodes_[ resource ].links_[ j ].capacity_ = enable ? table_->text( j, 2 ).toInt() : -1;
         }

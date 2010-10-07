@@ -12,16 +12,17 @@
 #include "IntelligenceKarmas.h"
 #include "SuccessFactorActionTypes.h"
 #include "TeamKarmas.h"
+#include "clients_gui/DrawingTypes.h"
 #include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/DetectionMap.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/CoordinateSystems.h"
-#include "clients_kernel/ModelLoaded.h"
+#include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/FormationLevels.h"
-#include "clients_gui/DrawingTypes.h"
+#include "clients_kernel/ModelLoaded.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "indicators/GaugeTypes.h"
 #include "indicators/Primitives.h"
 #include "tools/ExerciseConfig.h"
@@ -40,6 +41,7 @@ StaticModel::StaticModel( Controllers& controllers )
     , types_                   ( *new AgentTypes() )
     , objectTypes_             ( *new ObjectTypes() )
     , levels_                  ( *new FormationLevels() )
+    , extensions_              ( *new ExtensionTypes() )
     , teamKarmas_              ( *new TeamKarmas() )
     , intelligenceKarmas_      ( *new IntelligenceKarmas() )
     , drawings_                ( *new gui::DrawingTypes( controllers.controller_ ) )
@@ -62,6 +64,7 @@ StaticModel::~StaticModel()
     delete &drawings_;
     delete &intelligenceKarmas_;
     delete &teamKarmas_;
+    delete &extensions_;
     delete &levels_;
     delete &objectTypes_;
     delete &types_;
@@ -85,6 +88,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     indicators_.Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
     gaugeTypes_.Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ) );
     successFactorActionTypes_.Load( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactorActions.xml" ) );
+    extensions_.Load( tools::GeneralConfig::BuildResourceChildFile( "Extensions.xml" ) );
     controllers_.controller_.Update( ModelLoaded( config ) );
 }
 
@@ -100,5 +104,6 @@ void StaticModel::Purge()
     drawings_.Purge();
     types_.Purge();
     objectTypes_.Purge();
+    extensions_.Purge();
     controllers_.controller_.Update( ModelUnLoaded() );
 }

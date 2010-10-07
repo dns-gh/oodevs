@@ -18,7 +18,7 @@
 // Name: ProfileDialog constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ProfilesModel& model )
+ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ProfilesModel& model, const kernel::ExtensionTypes& extensions )
     : QDialog( parent, "ProfileDialog" )
     , model_( model )
 {
@@ -46,7 +46,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
 
     box = new QVBox( this );
     box->setMargin( 5 );
-    pages_ = new UserProfileWidget( box, controllers, factory, icons );
+    pages_ = new UserProfileWidget( box, controllers, factory, icons, extensions );
     pages_->setMargin( 5 );
     grid->addWidget( box, 1, 1 );
 

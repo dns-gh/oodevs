@@ -9,15 +9,15 @@
 
 #include "preparation_pch.h"
 #include "UserProfile.h"
-#include "Model.h"
 #include "AgentsModel.h"
-#include "TeamsModel.h"
 #include "FormationModel.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
+#include "Model.h"
+#include "TeamsModel.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -25,21 +25,23 @@
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, const Model& model )
-    : controller_( controller )
-    , model_( model )
-    , supervisor_( false )
-    , isClone_( false )
+    : controller_     ( controller )
+    , model_          ( model )
+    , supervisor_     ( false )
+    , isClone_        ( false )
+    , userRoleEnabled_( false )
+    , userRole_       ( -1 )
 {
     const ExistenceChecker< tools::Resolver< kernel::Team_ABC > >       teamChecker( model_.teams_ );
     const ExistenceChecker< tools::Resolver< kernel::Formation_ABC > >  formationChecker( model_.formations_ );
     const ExistenceChecker< tools::Resolver< kernel::Automat_ABC > >    automatChecker( model_.agents_ );
     const ExistenceChecker< tools::Resolver< kernel::Population_ABC > > populationChecker( model_.agents_ );
 
-    std::string login, pass, role;
+    std::string login, pass;
     xis >> xml::attribute( "name", login )
         >> xml::attribute( "password", pass )
         >> xml::attribute( "supervision", supervisor_ )
-        >> xml::optional >> xml::attribute( "scipio-role", role )
+        >> xml::optional >> xml::attribute( "role", userRole_ )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
                 >> xml::list( "side"      , *this, &UserProfile::ReadRights, readSides_, teamChecker )
@@ -54,9 +56,9 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
                 >> xml::list( "population", *this, &UserProfile::ReadRights, writePopulations_, populationChecker )
             >> xml::end
         >> xml::end;
+    userRoleEnabled_ = ( userRole_ != -1 );
     login_ = login.c_str();
     password_ = pass.c_str();
-    role_ = role.c_str();
     controller_.Create( *this );
 }
 
@@ -65,12 +67,14 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
 UserProfile::UserProfile( const QString& login, kernel::Controller& controller, const Model& model )
-    : controller_( controller )
-    , model_     ( model )
-    , login_     ( login )
-    , password_  ( "" )
-    , supervisor_( false )
-    , isClone_   ( false )
+    : controller_     ( controller )
+    , model_          ( model )
+    , login_          ( login )
+    , password_       ( "" )
+    , supervisor_     ( false )
+    , isClone_        ( false )
+    , userRoleEnabled_( false )
+    , userRole_       ( -1 )
 {
     controller_.Create( *this );
 }
@@ -80,20 +84,22 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
 // Created: SBO 2007-03-29
 // -----------------------------------------------------------------------------
 UserProfile::UserProfile( const UserProfile& p )
-    : controller_       ( p.controller_ )
-    , model_            ( p.model_ )
-    , login_            ( p.login_ )
-    , password_         ( p.password_ )
-    , supervisor_       ( p.supervisor_ )
-    , readSides_        ( p.readSides_ )
-    , readFormations_   ( p.readFormations_ )
-    , readAutomats_     ( p.readAutomats_ )
-    , readPopulations_  ( p.readPopulations_ )
-    , writeSides_       ( p.writeSides_ )
-    , writeFormations_  ( p.writeFormations_ )
-    , writeAutomats_    ( p.writeAutomats_ )
-    , writePopulations_ ( p.writePopulations_ )
-    , isClone_          ( true )
+    : controller_      ( p.controller_ )
+    , model_           ( p.model_ )
+    , login_           ( p.login_ )
+    , password_        ( p.password_ )
+    , supervisor_      ( p.supervisor_ )
+    , readSides_       ( p.readSides_ )
+    , readFormations_  ( p.readFormations_ )
+    , readAutomats_    ( p.readAutomats_ )
+    , readPopulations_ ( p.readPopulations_ )
+    , writeSides_      ( p.writeSides_ )
+    , writeFormations_ ( p.writeFormations_ )
+    , writeAutomats_   ( p.writeAutomats_ )
+    , writePopulations_( p.writePopulations_ )
+    , isClone_         ( true )
+    , userRoleEnabled_ ( p.userRoleEnabled_ )
+    , userRole_        ( p.userRole_ )
 {
     // NOTHING
 }
@@ -115,8 +121,8 @@ UserProfile::~UserProfile()
 void UserProfile::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "profile" );
-    if( role_.length() )
-        xos << xml::attribute( "scipio-role", role_.ascii() );
+    if( userRoleEnabled_ && userRole_ != -1 )
+        xos << xml::attribute( "role", userRole_ );
     xos     << xml::attribute( "name", login_.ascii() )
             << xml::attribute( "password", password_.ascii() )
             << xml::attribute( "supervision", supervisor_ )
@@ -223,6 +229,24 @@ bool UserProfile::IsWriteable( const kernel::Entity_ABC& entity ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile::HasUserRole
+// Created: JSR 2010-10-06
+// -----------------------------------------------------------------------------
+bool UserProfile::HasUserRole() const
+{
+    return userRoleEnabled_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::UserRole
+// Created: JSR 2010-10-06
+// -----------------------------------------------------------------------------
+int UserProfile::UserRole() const
+{
+    return userRole_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile::SetLogin
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
@@ -303,6 +327,24 @@ void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile::SetUserRoleEnabled
+// Created: JSR 2010-10-06
+// -----------------------------------------------------------------------------
+void UserProfile::SetUserRoleEnabled( bool enable )
+{
+    userRoleEnabled_ = enable;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::SetUserRole
+// Created: JSR 2010-10-06
+// -----------------------------------------------------------------------------
+void UserProfile::SetUserRole( int userRole )
+{
+    userRole_ = userRole;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile::operator=
 // Created: SBO 2007-03-29
 // -----------------------------------------------------------------------------
@@ -319,5 +361,7 @@ UserProfile& UserProfile::operator=( const UserProfile& p )
     writeFormations_  = p.writeFormations_;
     writeAutomats_    = p.writeAutomats_;
     writePopulations_ = p.writePopulations_;
+    userRoleEnabled_  = p.userRoleEnabled_;
+    userRole_         = p.userRole_;
     return *this;
 }

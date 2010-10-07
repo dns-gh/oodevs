@@ -43,12 +43,13 @@ public:
 
     //! @name Accessors
     //@{
-    QString GetLogin    () const;
-    QString GetPassword () const;
-    bool    IsSupervisor() const;
-
-    bool IsReadable ( const kernel::Entity_ABC& entity ) const;
+    QString GetLogin() const;
+    QString GetPassword() const;
+    bool IsSupervisor() const;
+    bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
+    bool HasUserRole() const;
+    int UserRole() const;
     //@}
 
     //! @name Setters
@@ -56,9 +57,10 @@ public:
     virtual void SetLogin( const QString& value );
     void SetPassword( const QString& value );
     void SetSupervisor( bool value );
-
-    void SetReadable ( const kernel::Entity_ABC& entity, bool readable );
+    void SetReadable( const kernel::Entity_ABC& entity, bool readable );
     void SetWriteable( const kernel::Entity_ABC& entity, bool writeable );
+    void SetUserRoleEnabled( bool enable );
+    void SetUserRole( int userRole );
     //@}
 
     //! @name Operations
@@ -101,12 +103,9 @@ private:
     //@{
     kernel::Controller& controller_;
     const Model& model_;
-
     QString login_;
     QString password_;
-    bool    supervisor_;
-    QString role_;
-
+    bool supervisor_;
     T_Ids readSides_;
     T_Ids readFormations_;
     T_Ids readAutomats_;
@@ -115,8 +114,9 @@ private:
     T_Ids writeFormations_;
     T_Ids writeAutomats_;
     T_Ids writePopulations_;
-
     bool isClone_;
+    bool userRoleEnabled_;
+    int userRole_;
     //@}
 };
 

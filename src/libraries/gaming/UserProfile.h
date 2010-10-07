@@ -42,7 +42,7 @@ class UserProfile : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    UserProfile( const MsgsAuthenticationToClient::MsgProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher );
+             UserProfile( const MsgsAuthenticationToClient::MsgProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher );
              UserProfile( const QString& login, kernel::Controller& controller, Publisher_ABC& publisher );
              UserProfile( const UserProfile& );
     virtual ~UserProfile();
@@ -52,22 +52,21 @@ public:
     //@{
     void RequestCreation();
     void RequestDeletion();
-    void RequestUpdate  ( const QString& newLogin );
+    void RequestUpdate( const QString& newLogin );
     virtual void DoUpdate( const MsgsAuthenticationToClient::MsgProfileUpdate& message );
     //@}
 
     //! @name Accessors
     //@{
-    QString GetLogin    () const;
-    QString GetPassword () const;
-    bool    IsSupervisor() const;
-    bool    IsReadable  ( const kernel::Entity_ABC& entity ) const;
-    bool    IsWriteable ( const kernel::Entity_ABC& entity ) const;
-
-    void SetPassword  ( const QString& password );
+    QString GetLogin() const;
+    QString GetPassword() const;
+    bool IsSupervisor() const;
+    bool IsReadable( const kernel::Entity_ABC& entity ) const;
+    bool IsWriteable( const kernel::Entity_ABC& entity ) const;
+    void SetPassword( const QString& password );
     void SetSupervisor( bool supervisor );
-    void SetReadable  ( const kernel::Entity_ABC& entity, bool readable );
-    void SetWriteable ( const kernel::Entity_ABC& entity, bool writeable );
+    void SetReadable( const kernel::Entity_ABC& entity, bool readable );
+    void SetWriteable( const kernel::Entity_ABC& entity, bool writeable );
     //@}
 
 private:
@@ -90,13 +89,11 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    Publisher_ABC&      publisher_;
-    bool                registered_;
-
+    Publisher_ABC& publisher_;
+    bool registered_;
     QString login_;
     QString password_;
-    bool    supervision_;
-
+    bool supervision_;
     T_Ids readSides_;
     T_Ids readFormations_;
     T_Ids readAutomats_;

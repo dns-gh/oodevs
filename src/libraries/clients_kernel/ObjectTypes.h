@@ -13,10 +13,14 @@
 #include "tools/Resolver.h"
 #include "Resolver2.h"
 
-namespace xml { class xistream; };
 namespace tools
 {
     class ExerciseConfig;
+}
+
+namespace xml
+{
+    class xistream;
 }
 
 namespace kernel

@@ -13,6 +13,7 @@
 namespace kernel
 {
     class Controllers;
+    class ExtensionTypes;
 }
 
 namespace gui
@@ -38,7 +39,7 @@ class ProfileDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ProfilesModel& model );
+             ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ProfilesModel& model, const kernel::ExtensionTypes& extensions );
     virtual ~ProfileDialog();
     //@}
 

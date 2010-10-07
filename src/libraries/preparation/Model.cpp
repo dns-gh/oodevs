@@ -165,8 +165,8 @@ void Model::Load( const tools::ExerciseConfig& config, std::string& loadingError
         const std::string orbatFile = config.GetOrbatFile() ;
         if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
         {
-            UpdateName( config.GetOrbatFile() );
-            xml::xifstream xis( config.GetOrbatFile() );
+            UpdateName( orbatFile );
+            xml::xifstream xis( orbatFile );
             teams_.Load( xis, *this, loadingErrors );
         }
     }
