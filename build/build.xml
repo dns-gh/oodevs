@@ -164,7 +164,7 @@
     </target>
 
 
-    <target name="library.actions_gui" description="build actions_gui static library" depends="library.clients_gui,library.actions">
+    <target name="library.actions_gui" description="build actions_gui library" depends="library.clients_gui,library.actions">
         <build-lib name="actions_gui" depends="boost,qt,xerces" pattern="lib${ant.project.name}_actions_gui-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
@@ -295,7 +295,7 @@
             pattern="dispatcher-${platform}-mt"
             libs="HLA,libFedTime,masalloc,tools,libprotobuf,gdal_i,
                   directia-${platform}-mt-4_6,
-                  lib${ant.project.name}_actions-static-${platform}-mt@{suffix},
+                  lib${ant.project.name}_actions-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_aar_plugin-${platform}-mt@{suffix},
