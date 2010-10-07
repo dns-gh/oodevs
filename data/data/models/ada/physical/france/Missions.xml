@@ -1740,61 +1740,78 @@
       <parameter dia-name="ObjectiveList_" max-occurs="unbounded" min-occurs="1" name="ObjectiveListParam" optional="true" type="Objective"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.FaireMouvement" dia-type="net.masagroup.sword.france.military.company.tasks.FaireMouvement" id="1003" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.FaireMouvement" name="COMMUNES FaireMouvement">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Decrocher" dia-type="net.masagroup.sword.france.military.company.tasks.Decrocher" id="1011" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Decrocher" name="COMMUNES Decrocher">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="objectives" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Suivre" dia-type="net.masagroup.sword.france.military.company.tasks.Suivre" id="1012" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Suivre" name="COMMUNES Suivre">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="objective" name="Unite a suivre" optional="false" type="Agent"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Stationner" dia-type="net.masagroup.sword.france.military.company.tasks.Stationner" id="1013" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Stationner" name="COMMUNES Stationner">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="objectives" name="Point de stationnement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" dia-type="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" id="1014" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" name="COMMUNES Orienter Refugies">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="people" name="Refugies" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="camp" name="Camp de refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" dia-type="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" id="1015" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" name="COMMUNES Prendre en compte Prisonniers">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="people" name="Prisonniers" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="camp" name="Camp de prisonniers" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" dia-type="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" id="1016" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" name="COMMUNES Se Faire Decontaminer">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="destination" name="Destination" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Interdire" dia-type="net.masagroup.sword.france.military.company.tasks.Interdire" id="1017" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Interdire" name="MELEE Interdire un Bloc Urbain">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="objectives" name="Objectif a interdire" optional="false" type="UrbanBlock"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions d'interdiction" optional="false" type="Point"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObject"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Reconnaitre" dia-type="net.masagroup.sword.france.military.company.tasks.Reconnaitre" id="1019" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Reconnaitre" name="MELEE Reconnaitre un itinéraire">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Destination" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.StationnerBM" dia-type="T_Mission_Automate_StationnerBM" id="1005" mrt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.StationnerBM" name="StationnerBM">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="position" name="Point de stationnement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" dia-type="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" id="1018" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" name="COMMUNES Se Faire Transporter">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="objectives" name="Point d'embarquement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" dia-type="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" id="1008" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" name="ASS SeDeployer">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="area" name="Zone de deploiement" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeRecompleter" dia-type="net.masagroup.sword.france.military.company.tasks.SeRecompleter" id="1021" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeRecompleter" name="COMMUNES Se Recompleter">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="objectives" name="Zone" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" dia-type="T_Mission_Automate_Deploy" id="1022" mrt-dia-behavior="net.masagroup.sword.military.company.combat.support.artillery.tasks.Deploy" name="Deploy">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="deploymentArea" name="Zone de deploiement" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" dia-type="net.masagroup.sword.france.military.company.tasks.Franchir" id="1010" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" name="COMMUNES Franchir">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="meetingPoint" name="Destination" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Controler" dia-type="net.masagroup.sword.france.military.company.tasks.Controler" id="1020" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Controler" name="MELEE Controler Secteur">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="objectives" name="Zone a controler" optional="false" type="Polygon"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObject"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.SEmparer" dia-type="net.masagroup.sword.france.military.company.combat.tasks.SEmparer" id="1024" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.SEmparer" name="MELEE S'emparer">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="objective" name="Objectif a s'emparer" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Polygon"/>
@@ -1803,16 +1820,20 @@
       </parameter>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Detruire" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Detruire" id="1025" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Detruire" name="MELEE Detruire">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a detruire" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Neutraliser" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Neutraliser" id="1026" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Neutraliser" name="MELEE Neutraliser">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a neutraliser" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Fixer" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Fixer" id="1028" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Fixer" name="MELEE Fixer">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a fixer" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="postions pour fixer" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" dia-type="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" id="1023" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" name="ASS Illumination et Tir Synchronisé">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
       <parameter dia-name="tireur" name="Tireur" optional="false" type="Agent"/>
       <parameter dia-name="allie" max-occurs="unbounded" min-occurs="1" name="Illuminateur allie" optional="false" type="Agent"/>
       <parameter dia-name="objective" name="Cible" optional="false" type="AgentKnowledge"/>
@@ -1820,11 +1841,15 @@
       <parameter dia-name="munition" name="Munitions" optional="false" type="DotationType"/>
       <parameter dia-name="interventionType" name="Intervention type" optional="false" type="Numeric"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Harceler" dia-type="net.masagroup.sword.france.military.company.tasks.Harceler" id="1029" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Harceler" name="MELEE Harceler zone">
-      <parameter dia-name="objectives" name="Zone a harceler" optional="false" type="Polygon"/>
-      <parameter dia-name="obstacles" name="Obstacles" optional="true" type="GenObject"/>
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Harceler" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Harceler" id="1029" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Harceler" name="MELEE Harceler">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
+      <parameter dia-name="objective" name="Zone a harceler" optional="false" type="Polygon"/>
+      <parameter dia-name="meetingPoints" max-occurs="unbounded" min-occurs="1" name="Position d'observation" optional="true" type="Point"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObject"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Attaquer" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Attaquer" id="1030" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Attaquer" name="MELEE Attaquer"/>
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Attaquer" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Attaquer" id="1030" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Attaquer" name="MELEE Attaquer">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="MIS_Population_FaireMouvement" dia-type="T_Mission_Population_FaireMouvement" id="332" name="Faire Mouvement">
