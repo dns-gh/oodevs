@@ -45,6 +45,7 @@ private:
     //! @name data
     //@{
     std::string portArg_;
+    unsigned int port_;
     //@}
 
 };

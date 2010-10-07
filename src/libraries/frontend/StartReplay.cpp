@@ -24,11 +24,12 @@ using namespace frontend;
 // -----------------------------------------------------------------------------
 StartReplay::StartReplay( const tools::GeneralConfig& config, const QString& exercise, const QString& session, unsigned port, bool attach )
     : SpawnCommand( config, "replayer_app.exe", attach )
+    , port_ ( port )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument ( session );
-    portArg_ = "--port=" + boost::lexical_cast< std::string >( port );
+    portArg_ = "--port="  + boost::lexical_cast< std::string >( port );
     AddArgument( portArg_.c_str() );
 }
 
@@ -48,7 +49,7 @@ StartReplay::~StartReplay()
 bool StartReplay::Wait()
 {
     bool ready = false;
-    ClientReplayNetworker test( ready, "localhost:" + portArg_, true );
+    ClientReplayNetworker test( ready, "localhost:" +  boost::lexical_cast< std::string >( port_ ), true );
     while ( !ready )
     {
         test.Update();

@@ -371,7 +371,7 @@ void ExerciseList::AddExerciseEntry( const QString& exercise )
         if( !item )
         {
             if( parent )
-                item = new MyListViewItem( parent );
+                item = new MyListViewItem( parent );    
             else
                 item = new MyListViewItem( exercises_ );
             item->setText( 0, GetExerciseDisplayName( *it ) );
