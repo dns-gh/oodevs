@@ -35,12 +35,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual geometry::Point2f GetPosition() const = 0;
-    virtual float             GetHeight() const = 0;
+    virtual geometry::Point2f GetPosition( bool aggregate = true ) const = 0;
+    virtual float             GetHeight( bool aggregate = true ) const = 0;
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f, float adaptiveFactor = 1.f ) const = 0;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const = 0;
     virtual geometry::Rectangle2f GetBoundingBox() const = 0;
     virtual void Accept( LocationVisitor_ABC& visitor ) const = 0;
+    virtual bool CanAggregate() const = 0;
     //@}
 };
 

@@ -35,9 +35,9 @@ PopulationPositions::~PopulationPositions()
 // Name: PopulationPositions::GetPosition
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-geometry::Point2f PopulationPositions::GetPosition() const
+geometry::Point2f PopulationPositions::GetPosition( bool aggregated ) const
 {
-    return population_.GetPosition();
+    return population_.GetPosition( aggregated );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,9 +62,9 @@ bool PopulationPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 // Name: PopulationPositions::GetHeight
 // Created: AGE 2006-04-18
 // -----------------------------------------------------------------------------
-float PopulationPositions::GetHeight() const
+float PopulationPositions::GetHeight( bool aggregated ) const
 {
-    return population_.GetHeight();
+    return population_.GetHeight( aggregated);
 }
 
 // -----------------------------------------------------------------------------
@@ -82,5 +82,14 @@ geometry::Rectangle2f PopulationPositions::GetBoundingBox() const
 // -----------------------------------------------------------------------------
 void PopulationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
-    visitor.VisitPoint( GetPosition() );
+    visitor.VisitPoint( GetPosition( true ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationPositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool PopulationPositions::CanAggregate() const
+{
+    return false;
 }

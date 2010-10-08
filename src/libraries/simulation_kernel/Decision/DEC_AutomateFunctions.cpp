@@ -51,15 +51,17 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithoutPC( const
 {
     std::vector< DEC_Decision_ABC* > result;
     const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
-    assert( pions.size() != 0 );
-    result.reserve( pions.size() - 1 );
-    for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
-        if( callerAutomate.GetPionPC() != (**it) )
-        {
-            const PHY_RolePion_Communications& role = (*it)->GetRole< PHY_RolePion_Communications >();
-            if( role.CanReceive() )
-                result.push_back( &(*it)->GetDecision() );
-        }
+    if( pions.size() > 0 )
+    {
+        result.reserve( pions.size() - 1 );
+        for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
+            if( callerAutomate.GetPionPC() != (**it) )
+            {
+                const PHY_RolePion_Communications& role = (*it)->GetRole< PHY_RolePion_Communications >();
+                if( role.CanReceive() )
+                    result.push_back( &(*it)->GetDecision() );
+            }
+    }
     return result;
 }
 

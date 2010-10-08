@@ -126,7 +126,7 @@ QString PopulationConcentration::GetAttitude() const
 // Name: PopulationConcentration::GetHeight
 // Created: SBO 2006-08-23
 // -----------------------------------------------------------------------------
-float PopulationConcentration::GetHeight() const
+float PopulationConcentration::GetHeight( bool ) const
 {
     return 0.;
 }
@@ -165,7 +165,7 @@ void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const ke
 // Name: PopulationConcentration::GetPosition
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-geometry::Point2f PopulationConcentration::GetPosition() const
+geometry::Point2f PopulationConcentration::GetPosition( bool ) const
 {
     return position_;
 }
@@ -205,4 +205,13 @@ geometry::Rectangle2f PopulationConcentration::GetBoundingBox() const
 void PopulationConcentration::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
     visitor.VisitCircle( position_, radius_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool PopulationConcentration::CanAggregate() const
+{
+    return false;
 }

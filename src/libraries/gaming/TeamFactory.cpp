@@ -9,27 +9,28 @@
 
 #include "gaming_pch.h"
 #include "TeamFactory.h"
-#include "Model.h"
-#include "TeamsModel.h"
 #include "AgentsModel.h"
-#include "ObjectKnowledges.h"
-#include "Team.h"
-#include "Diplomacies.h"
-#include "TeamHierarchies.h"
-#include "TeamTacticalHierarchies.h"
-#include "FormationHierarchy.h"
-#include "Formation.h"
-#include "StaticModel.h"
-#include "Equipments.h"
-#include "Troops.h"
-#include "Dotations.h"
+#include "AggregatedPositions.h"
 #include "ConvexHulls.h"
+#include "Diplomacies.h"
+#include "Dotations.h"
 #include "EntityIntelligences.h"
+#include "Equipments.h"
+#include "Formation.h"
+#include "FormationHierarchy.h"
+#include "Model.h"
+#include "ObjectKnowledges.h"
+#include "StaticModel.h"
+#include "Team.h"
+#include "TeamHierarchies.h"
+#include "TeamsModel.h"
+#include "TeamTacticalHierarchies.h"
+#include "Troops.h"
+#include "UrbanKnowledges.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/AgentTypes.h"
-#include "UrbanKnowledges.h"
 
 using namespace kernel;
 
@@ -93,6 +94,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const MsgsSimToClient::MsgF
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach< kernel::Dotations_ABC >  ( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new ConvexHulls( *result ) );
+    result->Attach< kernel::Positions >( *new AggregatedPositions( *result ) );
     result->Update( message );
     result->Polish();
     return result;

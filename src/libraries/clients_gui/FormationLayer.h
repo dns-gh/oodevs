@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __FormationLayer_h_
-#define __FormationLayer_h_
+#ifndef __gui_FormationLayer_h_
+#define __gui_FormationLayer_h_
 
 #include "EntityLayer.h"
 #include "tools/SelectionObserver_ABC.h"
@@ -64,4 +64,4 @@ private:
 
 }
 
-#endif // __FormationLayer_h_
+#endif // __gui_FormationLayer_h_

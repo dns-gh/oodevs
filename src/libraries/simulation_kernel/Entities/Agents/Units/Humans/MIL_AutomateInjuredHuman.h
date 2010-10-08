@@ -39,17 +39,13 @@ class MIL_AutomateInjuredHuman : public MIL_Automate
 {
 public:
              MIL_AutomateInjuredHuman(  const MIL_AutomateTypeInjuredHuman& type
-                                        , unsigned int nID, MIL_Formation& parent
+                                        , unsigned int nID, MIL_Entity_ABC& parent
                                         , xml::xistream& xis
                                         , DEC_DataBase& database
                                         , unsigned int gcPause 
                                         , unsigned int gcMult );
-             MIL_AutomateInjuredHuman(  const MIL_AutomateTypeInjuredHuman& type
-                                        , unsigned int nID, MIL_Automate&  parent
-                                        , xml::xistream& xis
-                                        , DEC_DataBase& database
-                                        , unsigned int gcPause 
-                                        , unsigned int gcMult );
+             MIL_AutomateInjuredHuman( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+    
     virtual ~MIL_AutomateInjuredHuman();
 
     //! @name CheckPoints

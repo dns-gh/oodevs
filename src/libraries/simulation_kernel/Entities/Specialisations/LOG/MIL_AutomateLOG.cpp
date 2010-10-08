@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomateLOG.h"
 #include "MIL_AutomateTypeLOG.h"
+#include "Entities/MIL_Formation.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
@@ -62,7 +63,7 @@ void load_construct_data( Archive& archive, MIL_AutomateLOG* automat, const unsi
 // Name: MIL_AutomateLOG constructor
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
     : MIL_Automate                ( type, nID, parent, xis, database, gcPause, gcMult )
     , pMaintenanceSuperior_       ( 0 )
     , pMedicalSuperior_           ( 0 )
@@ -81,10 +82,10 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int 
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG constructor
-// Created: NLD 2007-03-29
+// Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
-    : MIL_Automate                ( type, nID, parent, xis, database, gcPause, gcMult )
+MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+    : MIL_Automate                ( type, nID, parent, knowledgeGroup, name, database, gcPause, gcMult )
     , pMaintenanceSuperior_       ( 0 )
     , pMedicalSuperior_           ( 0 )
     , pSupplySuperior_            ( 0 )
@@ -97,8 +98,8 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int 
     , nTickRcStockSupplyQuerySent_( 0 )
     , pLogisticAction_            ( new PHY_ActionLogistic< MIL_AutomateLOG >( *this ) )
 {
-    this->RegisterAction( pLogisticAction_ );
-}
+    // NOTHING
+}    
 
 MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID )
     : MIL_Automate(type, nID)

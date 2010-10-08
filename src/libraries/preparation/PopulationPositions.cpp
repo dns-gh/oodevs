@@ -88,7 +88,7 @@ void PopulationPositions::UpdatePosition()
 // Name: PopulationPositions::GetPosition
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-geometry::Point2f PopulationPositions::GetPosition() const
+geometry::Point2f PopulationPositions::GetPosition( bool ) const
 {
     return center_;
 }
@@ -97,7 +97,7 @@ geometry::Point2f PopulationPositions::GetPosition() const
 // Name: PopulationPositions::GetHeight
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-float PopulationPositions::GetHeight() const
+float PopulationPositions::GetHeight( bool ) const
 {
     return 0.;
 }
@@ -165,4 +165,13 @@ void PopulationPositions::SerializeAttributes( xml::xostream& xos ) const
 void PopulationPositions::Set( const geometry::Point2f& point )
 {
     center_ = point;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationPositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool PopulationPositions::CanAggregate() const
+{
+    return false;
 }

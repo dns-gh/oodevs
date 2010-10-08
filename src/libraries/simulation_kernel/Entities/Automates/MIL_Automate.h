@@ -82,8 +82,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Formation& formation, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
-             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Automate&  parent   , xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~MIL_Automate();
     //@}
 
@@ -171,22 +171,22 @@ public:
 
     //! @name Network
     //@{
-            void SendCreation                     () const;
-    virtual void SendFullState                    () const;
-            void SendKnowledge                    () const;
+            void SendCreation                      () const;
+    virtual void SendFullState                     () const;
+            void SendKnowledge                     () const;
 
-            void OnReceiveMsgOrder                ( const Common::MsgAutomatOrder&                 msg );
-            void OnReceiveMsgFragOrder            ( const MsgsClientToSim::MsgFragOrder&           msg );
-            void OnReceiveMsgSetAutomateMode      ( const MsgsClientToSim::MsgSetAutomatMode&      msg );
-            void OnReceiveMsgUnitCreationRequest  ( const MsgsClientToSim::MsgUnitCreationRequest& msg );
-            void OnReceiveMsgUnitCreationRequest  ( const MsgsClientToSim::MsgUnitMagicAction&     msg );
-            void OnReceiveMsgUnitMagicAction      ( const MsgsClientToSim::MsgUnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
-            void OnReceiveMsgMagicActionMoveTo    ( const MsgsClientToSim::MsgUnitMagicAction&     msg );
-            void OnReceiveMsgChangeKnowledgeGroup ( const MsgsClientToSim::MsgUnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
-            void OnReceiveMsgChangeSuperior       ( const MsgsClientToSim::MsgUnitMagicAction&     msg, const tools::Resolver< MIL_Formation >& formations );
-    virtual void OnReceiveMsgChangeLogisticLinks  ( const MsgsClientToSim::MsgUnitMagicAction&     msg );
-    virtual void OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionParameters&            msg );
-    virtual void OnReceiveMsgLogSupplyPushFlow    ( const Common::MsgMissionParameters&            msg );
+            void OnReceiveMsgOrder                 ( const Common::MsgAutomatOrder&                 msg );
+            void OnReceiveMsgFragOrder             ( const MsgsClientToSim::MsgFragOrder&           msg );
+            void OnReceiveMsgSetAutomateMode       ( const MsgsClientToSim::MsgSetAutomatMode&      msg );
+            void OnReceiveMsgUnitCreationRequest   ( const MsgsClientToSim::MsgUnitCreationRequest& msg );
+            void OnReceiveMsgUnitCreationRequest   ( const MsgsClientToSim::MsgUnitMagicAction&     msg );
+            void OnReceiveMsgUnitMagicAction       ( const MsgsClientToSim::MsgUnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
+            void OnReceiveMsgMagicActionMoveTo     ( const MsgsClientToSim::MsgUnitMagicAction&     msg );
+            void OnReceiveMsgChangeKnowledgeGroup  ( const MsgsClientToSim::MsgUnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
+            void OnReceiveMsgChangeSuperior        ( const MsgsClientToSim::MsgUnitMagicAction&     msg, const tools::Resolver< MIL_Formation >& formations );
+    virtual void OnReceiveMsgChangeLogisticLinks   ( const MsgsClientToSim::MsgUnitMagicAction&     msg );
+    virtual void OnReceiveMsgLogSupplyChangeQuotas ( const Common::MsgMissionParameters&            msg );
+    virtual void OnReceiveMsgLogSupplyPushFlow     ( const Common::MsgMissionParameters&            msg );
     //@}
 
     //! @name Misc

@@ -281,10 +281,6 @@
         <source>Unit Creation</source>
         <translation>Création d&apos;unité</translation>
     </message>
-    <message>
-        <source>Automat Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>BorrowingsListView</name>

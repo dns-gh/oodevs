@@ -41,15 +41,16 @@ namespace
         {
             moveable_->Move( position );
         }
-        virtual geometry::Point2f GetPosition() const
+        virtual geometry::Point2f GetPosition( bool aggregated ) const
         {
-            return moveable_->GetPosition();
+            return moveable_->GetPosition( aggregated );
         }
-        virtual float GetHeight() const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
+        virtual float GetHeight( bool ) const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
         virtual bool IsAt( const geometry::Point2f& /*pos*/, float /*precision = 100.f*/,  float /*adaptiveFactor = 1.f*/) const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
         virtual bool IsIn( const geometry::Rectangle2f& /*rectangle*/ ) const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
         virtual geometry::Rectangle2f GetBoundingBox() const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
         virtual void Accept( LocationVisitor_ABC& /*visitor*/ ) const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
+        virtual bool CanAggregate() const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
 
     private:
         kernel::Moveable_ABC* moveable_;
@@ -110,9 +111,9 @@ AgentPositions::~AgentPositions()
 // Name: AgentPositions::GetPosition
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-Point2f AgentPositions::GetPosition() const
+Point2f AgentPositions::GetPosition( bool aggregated ) const
 {
-    if( ! aggregated_ )
+    if( !aggregated || !aggregated_ )
         return position_;
     return agent_.Get< CommunicationHierarchies >().GetUp().Get< Positions >().GetPosition();
 }
@@ -121,9 +122,9 @@ Point2f AgentPositions::GetPosition() const
 // Name: AgentPositions::GetHeight
 // Created: AGE 2006-04-18
 // -----------------------------------------------------------------------------
-float AgentPositions::GetHeight() const
+float AgentPositions::GetHeight( bool aggregated ) const
 {
-    if( ! aggregated_ )
+    if( !aggregated || !aggregated_ )
         return height_;
     return agent_.Get< CommunicationHierarchies >().GetUp().Get< Positions >().GetHeight();
 }
@@ -136,7 +137,7 @@ bool AgentPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/, floa
 {
     const float halfSizeX = 500.f * 0.5f * ( aggregated_ ? 2.f : 1.f ); // $$$$ SBO 2006-03-21: use font size?
     const float sizeY     = 400.f * ( aggregated_ ? 2.f : 1.f );
-    const Point2f position = GetPosition();
+    const Point2f position = GetPosition( true );
     const Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
                                  position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
     return agentBBox.IsInside( pos );
@@ -148,7 +149,7 @@ bool AgentPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/, floa
 // -----------------------------------------------------------------------------
 bool AgentPositions::IsIn( const Rectangle2f& rectangle ) const
 {
-    return rectangle.IsInside( GetPosition() );
+    return rectangle.IsInside( GetPosition( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +158,7 @@ bool AgentPositions::IsIn( const Rectangle2f& rectangle ) const
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f AgentPositions::GetBoundingBox() const
 {
-    const geometry::Point2f center = GetPosition();
+    const geometry::Point2f center = GetPosition( true );
     return geometry::Rectangle2f( center.X() - 250, center.Y(), center.X() + 250, center.Y() + 400 );
 }
 
@@ -167,7 +168,7 @@ geometry::Rectangle2f AgentPositions::GetBoundingBox() const
 // -----------------------------------------------------------------------------
 void AgentPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
-    visitor.VisitPoint( GetPosition() );
+    visitor.VisitPoint( GetPosition( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -215,4 +216,13 @@ void AgentPositions::Move( const geometry::Point2f& position )
 void AgentPositions::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
     dico.Register( (const AgentPositions*)this, tools::translate( "AgentPositions", "Info/Position" ), moveable_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentPositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool AgentPositions::CanAggregate() const
+{
+    return true;
 }

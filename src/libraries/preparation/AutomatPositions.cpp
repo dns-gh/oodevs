@@ -10,10 +10,10 @@
 #include "preparation_pch.h"
 #include "AutomatPositions.h"
 #include "AgentPositions.h"
-#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
@@ -42,15 +42,15 @@ AutomatPositions::~AutomatPositions()
 // Name: AutomatPositions::GetPosition
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-Point2f AutomatPositions::GetPosition() const
+Point2f AutomatPositions::GetPosition( bool ) const
 {
     Point2f aggregatedPosition;
     unsigned count = 0;
-    tools::Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = automat_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions& childPositions = children.NextElement().Get< Positions >();
-        const Point2f childPosition = ((const AgentPositions&)( childPositions )).position_;
+        const Point2f childPosition = childPositions.GetPosition( false );
         aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
         ++count;
     }
@@ -61,15 +61,15 @@ Point2f AutomatPositions::GetPosition() const
 // Name: AutomatPositions::GetHeight
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-float AutomatPositions::GetHeight() const
+float AutomatPositions::GetHeight( bool ) const
 {
     float height = 0;
     unsigned count = 0;
-    tools::Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = automat_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions& childPositions = children.NextElement().Get< Positions >();
-        const float childHeight = ((const AgentPositions&)( childPositions )).height_;
+        const float childHeight = childPositions.GetHeight( false );
         height+=childHeight;
         ++count;
     }
@@ -85,7 +85,7 @@ bool AutomatPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/, fl
     // $$$$ AGE 2006-10-06: CP de AgentPositions...
     const float halfSizeX = 500.f * 0.5f * 2.f; // $$$$ SBO 2006-03-21: use font size?
     const float sizeY     = 400.f * 2.f;
-    const Point2f position = GetPosition();
+    const Point2f position = GetPosition( true );
     const Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
                                  position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
     return agentBBox.IsInside( pos );
@@ -97,7 +97,7 @@ bool AutomatPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/, fl
 // -----------------------------------------------------------------------------
 bool AutomatPositions::IsIn( const Rectangle2f& rectangle ) const
 {
-    return rectangle.IsInside( GetPosition() );
+    return rectangle.IsInside( GetPosition( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ bool AutomatPositions::IsIn( const Rectangle2f& rectangle ) const
 // -----------------------------------------------------------------------------
 Rectangle2f AutomatPositions::GetBoundingBox() const
 {
-    const Point2f center = GetPosition();
+    const Point2f center = GetPosition( true );
     return Rectangle2f( center.X() - 500, center.Y(), center.X() + 500, center.Y() + 800 );
 }
 
@@ -116,7 +116,7 @@ Rectangle2f AutomatPositions::GetBoundingBox() const
 // -----------------------------------------------------------------------------
 void AutomatPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
-    visitor.VisitPoint( GetPosition() );
+    visitor.VisitPoint( GetPosition( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,12 +135,21 @@ void AutomatPositions::Draw( const Point2f& where, const kernel::Viewport_ABC& v
 // -----------------------------------------------------------------------------
 void AutomatPositions::Move( const geometry::Point2f& point )
 {
-    const geometry::Vector2f vect( GetPosition(), point );
-    tools::Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    const geometry::Vector2f vect( GetPosition( true ), point );
+    tools::Iterator< const Entity_ABC& > children = automat_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions* positions = children.NextElement().Retrieve< Positions >();
         if( const kernel::Moveable_ABC* childPositions = dynamic_cast< const kernel::Moveable_ABC* >( positions ) )
-            const_cast< kernel::Moveable_ABC& >( *childPositions ).Move( positions->GetPosition() + vect );
+            const_cast< kernel::Moveable_ABC& >( *childPositions ).Move( positions->GetPosition( false ) + vect );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatPositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool AutomatPositions::CanAggregate() const
+{
+    return true;
 }

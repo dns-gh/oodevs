@@ -88,6 +88,17 @@ Action_ABC* ActionsModel::CreateAction( const Entity_ABC& target, const FragOrde
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::CreateAutomatCreationAction
+// Created: LDC 2010-10-06
+// -----------------------------------------------------------------------------
+Action_ABC* ActionsModel::CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes )
+{
+    Action_ABC* action = factory_.CreateAutomatCreationAction( type, selected, controller, agentTypes );
+    Register( action->GetId(), *action );
+    return action;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------

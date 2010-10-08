@@ -36,14 +36,14 @@ FormationPositions::~FormationPositions()
 // Name: FormationPositions::GetPosition
 // Created: SBO 2009-02-02
 // -----------------------------------------------------------------------------
-geometry::Point2f FormationPositions::GetPosition() const
+geometry::Point2f FormationPositions::GetPosition( bool ) const
 {
     geometry::Point2f aggregatedPosition;
     unsigned count = 0;
     tools::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
-        const geometry::Point2f& childPosition = children.NextElement().Get< kernel::Positions >().GetPosition();
+        const geometry::Point2f& childPosition = children.NextElement().Get< kernel::Positions >().GetPosition( false );
         aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
         ++count;
     }
@@ -54,14 +54,14 @@ geometry::Point2f FormationPositions::GetPosition() const
 // Name: FormationPositions::GetHeight
 // Created: SBO 2009-02-02
 // -----------------------------------------------------------------------------
-float FormationPositions::GetHeight() const
+float FormationPositions::GetHeight( bool ) const
 {
     float height = 0;
     unsigned count = 0;
     tools::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
-        height += children.NextElement().Get< kernel::Positions >().GetHeight();
+        height += children.NextElement().Get< kernel::Positions >().GetHeight( false );
         ++count;
     }
     return count ? height / count : height;
@@ -76,7 +76,7 @@ bool FormationPositions::IsAt( const geometry::Point2f& pos, float precision /*=
     // $$$$ SBO 2009-02-02: Aggregated symbol position
     const float halfSizeX = 500.f * 0.5f * 2.f; // $$$$ SBO 2006-03-21: use font size?
     const float sizeY     = 400.f * 2.f;
-    const geometry::Point2f position = GetPosition();
+    const geometry::Point2f position = GetPosition( true );
     const geometry::Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
                                            position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
     return agentBBox.IsInside( pos );
@@ -88,7 +88,7 @@ bool FormationPositions::IsAt( const geometry::Point2f& pos, float precision /*=
 // -----------------------------------------------------------------------------
 bool FormationPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 {
-    return rectangle.IsInside( GetPosition() );
+    return rectangle.IsInside( GetPosition( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +97,7 @@ bool FormationPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f FormationPositions::GetBoundingBox() const
 {
-    const geometry::Point2f center = GetPosition();
+    const geometry::Point2f center = GetPosition( true );
     return geometry::Rectangle2f( center.X() - 500, center.Y(), center.X() + 500, center.Y() + 800 );
 }
 
@@ -107,7 +107,7 @@ geometry::Rectangle2f FormationPositions::GetBoundingBox() const
 // -----------------------------------------------------------------------------
 void FormationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
-    visitor.VisitPoint( GetPosition() );
+    visitor.VisitPoint( GetPosition( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,12 +116,21 @@ void FormationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void FormationPositions::Move( const geometry::Point2f& point )
 {
-    const geometry::Vector2f vect( GetPosition(), point );
+    const geometry::Vector2f vect( GetPosition( true ), point );
     tools::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const kernel::Positions* positions = children.NextElement().Retrieve< kernel::Positions >();
         if( const kernel::Moveable_ABC* childPositions = dynamic_cast< const kernel::Moveable_ABC* >( positions ) )
-            const_cast< kernel::Moveable_ABC& >( *childPositions ).Move( positions->GetPosition() + vect );
+            const_cast< kernel::Moveable_ABC& >( *childPositions ).Move( positions->GetPosition( false ) + vect );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationPositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool FormationPositions::CanAggregate() const
+{
+    return true;
 }

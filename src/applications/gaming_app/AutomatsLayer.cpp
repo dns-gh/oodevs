@@ -9,6 +9,8 @@
 
 #include "gaming_app_pch.h"
 #include "AutomatsLayer.h"
+#include "actions/ActionFactory.h"
+#include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Identifier.h"
@@ -89,7 +91,8 @@ void AutomatsLayer::NotifySelected( const Automat_ABC* automat )
 // -----------------------------------------------------------------------------
 bool AutomatsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
 {
-    return selected_ && gui::ValuedDragObject::Provides< const AgentType >( event );
+    return selected_ && ( gui::ValuedDragObject::Provides< const AgentType >( event )
+        || gui::ValuedDragObject::Provides< const AutomatType >( event ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,19 +140,11 @@ void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kerne
 // Name: AutomatsLayer::RequestCreation
 // Created: LDC 2010-10-01
 // -----------------------------------------------------------------------------
-void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type )
+void AutomatsLayer::RequestCreation( const geometry::Point2f& /*point*/, const kernel::AutomatType& type )
 {
-    kernel::Point location;
-    location.AddPoint( point );
-
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "automat_creation" );
-    UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Automat Creation" ), true );
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
-    int knowledgeGroup = 0; // $$$$ LDC FIXME TODO Retrieve knowledge group of parent automat
-    action->AddParameter( *new parameters::Identifier( it.NextElement(), knowledgeGroup ) );
-    action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
+    Action_ABC* action = actionsModel_.CreateAutomatCreationAction( type , *selected_, controllers_.controller_, static_.types_ );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( selected_, false ) );
-    action->RegisterAndPublish( actionsModel_ );
+    action->Polish();
+    actionsModel_.Publish( *action );
 }

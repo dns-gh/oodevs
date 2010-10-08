@@ -38,7 +38,7 @@ UrbanPositions::~UrbanPositions()
 // Name: UrbanPositions::GetPosition
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
-geometry::Point2f UrbanPositions::GetPosition() const
+geometry::Point2f UrbanPositions::GetPosition( bool ) const
 {
     const geometry::Polygon2f* footprint = object_.GetFootprint();
     if( footprint )
@@ -50,7 +50,7 @@ geometry::Point2f UrbanPositions::GetPosition() const
 // Name: UrbanPositions::GetHeight
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
-float UrbanPositions::GetHeight() const
+float UrbanPositions::GetHeight( bool ) const
 {
     return 0;
 }
@@ -105,4 +105,13 @@ void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Vie
     if( drawer_.get() == 0 )
         drawer_.reset( new gui::UrbanDrawer( tools ) );
     object_.Draw( *drawer_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool UrbanPositions::CanAggregate() const
+{
+    return false;
 }

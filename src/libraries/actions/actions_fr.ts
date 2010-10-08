@@ -36,6 +36,14 @@
         <source>Executing target not set</source>
         <translation>Unité exécutante non trouvée</translation>
     </message>
+    <message>
+        <source>Automat creation</source>
+        <translation>Création d'automate</translation>
+    </message>
+    <message>
+        <source>New automat</source>
+        <translation>Nouvel automate</translation>
+    </message>
 </context>
 <context>
     <name>ActionParameter</name>

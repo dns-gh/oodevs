@@ -66,26 +66,28 @@ class AutomateFactory_ABC;
 class DEC_DataBase;
 class FormationFactory_ABC;
 class KnowledgeGroupFactory_ABC;
+class MIL_AgentTypePion;
+class MIL_AutomateType;
 class MIL_EffectManager;
 class MIL_ObjectManager;
 class MIL_Army;
 class MIL_Army_ABC;
 class MIL_AgentPion;
 class MIL_Automate;
+class MIL_Config;
+class MIL_Entity_ABC;
 class MIL_Formation;
+class MIL_IDManager;
+class MIL_Intelligence;
 class MIL_KnowledgeGroup;
-class MIL_AgentTypePion;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 class MIL_ObjectBuilder_ABC;
 class MIL_Population;
-class TER_Localisation;
-class MIL_Config;
 class MIL_ProfilerMgr;
 class MIL_Time_ABC;
-class MIL_Intelligence;
-class MIL_IDManager;
 class PopulationFactory_ABC;
+class TER_Localisation;
 class UrbanModel;
 
 class HLA_Federate;
@@ -104,8 +106,8 @@ public:
 
     //! @name Factory
     //@{
-    void CreateAutomat     ( xml::xistream& xis, MIL_Automate&  parent );
-    void CreateAutomat     ( xml::xistream& xis, MIL_Formation& formation );
+    void CreateAutomat     ( xml::xistream& xis, MIL_Entity_ABC&  parent );
+    void CreateAutomat     ( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent );
     void CreateIntelligence( xml::xistream& xis, MIL_Formation& formation );
     MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate&  automate , xml::xistream& xis );
     MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
@@ -164,7 +166,7 @@ public:
     void OnReceiveMsgObjectMagicAction           ( const MsgsClientToSim::MsgObjectMagicAction&             message, unsigned int nCtx );
     void OnReceiveMsgUnitOrder                   ( const Common::MsgUnitOrder&                              message, unsigned int nCtx );
     void OnReceiveMsgAutomatOrder                ( const Common::MsgAutomatOrder&                           message, unsigned int nCtx );
-    void OnReceiveMsgCrowdOrder             ( const Common::MsgCrowdOrder&                        message, unsigned int nCtx );
+    void OnReceiveMsgCrowdOrder                  ( const Common::MsgCrowdOrder&                             message, unsigned int nCtx );
     void OnReceiveMsgFragOrder                   ( const MsgsClientToSim::MsgFragOrder&                     message, unsigned int nCtx );
     void OnReceiveMsgSetAutomateMode             ( const MsgsClientToSim::MsgSetAutomatMode&                message, unsigned int nCtx );
     void OnReceiveMsgUnitCreationRequest         ( const MsgsClientToSim::MsgUnitCreationRequest&           message, unsigned int nCtx );
@@ -196,17 +198,18 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ProcessMsgAutomateChangeKnowledgeGroup( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
-    void ProcessMsgAutomateChangeLogisticLinks ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
-    void ProcessMsgAutomateChangeSuperior      ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
-    void ProcessMsgUnitChangeSuperior          ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
-    void ProcessMsgLogSupplyChangeQuotas       ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
-    void ProcessMsgLogSupplyPushFlow           ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
-    void ProcessMsgMagicActionMoveTo           ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void ProcessMsgAutomateChangeKnowledgeGroup( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
+    void ProcessMsgAutomateChangeLogisticLinks ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
+    void ProcessMsgAutomateChangeSuperior      ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
+    void ProcessMsgUnitChangeSuperior          ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
+    void ProcessMsgLogSupplyChangeQuotas       ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
+    void ProcessMsgLogSupplyPushFlow           ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
+    void ProcessMsgMagicActionMoveTo           ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
     // LTO begin
-    void ProcessMsgKnowledgeGroupUpdate        ( const MsgsClientToSim::MsgKnowledgeMagicAction&          message, unsigned int nCtx );
-    void ProcessMsgMagicActionCreateFireOrder  ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void ProcessMsgKnowledgeGroupUpdate        ( const MsgsClientToSim::MsgKnowledgeMagicAction& message, unsigned int nCtx );
+    void ProcessMsgMagicActionCreateFireOrder  ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
     // LTO end
+    void ProcessMsgAutomatCreationRequest      ( const MsgsClientToSim::MsgUnitMagicAction&      message, MIL_Entity_ABC& entity );
     //@}
 
     //! @name types

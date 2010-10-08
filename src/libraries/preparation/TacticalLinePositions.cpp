@@ -64,7 +64,7 @@ void TacticalLinePositions::ReadPoint( xml::xistream& xis )
 // Name: TacticalLinePositions::GetPosition
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-geometry::Point2f TacticalLinePositions::GetPosition() const
+geometry::Point2f TacticalLinePositions::GetPosition( bool ) const
 {
     return pointList_.front();
 }
@@ -73,7 +73,7 @@ geometry::Point2f TacticalLinePositions::GetPosition() const
 // Name: TacticalLinePositions::GetHeight
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-float TacticalLinePositions::GetHeight() const
+float TacticalLinePositions::GetHeight( bool ) const
 {
     return 0.f;
 }
@@ -107,7 +107,7 @@ bool TacticalLinePositions::IsAt( const geometry::Point2f& point, float precisio
 // -----------------------------------------------------------------------------
 bool TacticalLinePositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 {
-    return rectangle.IsInside( GetPosition() );
+    return rectangle.IsInside( GetPosition( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -243,4 +243,13 @@ void TacticalLinePositions::ComputeBoundingBox()
     boundingBox_ = geometry::Rectangle2f();
     for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
         boundingBox_.Incorporate( *it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool TacticalLinePositions::CanAggregate() const
+{
+    return false;
 }

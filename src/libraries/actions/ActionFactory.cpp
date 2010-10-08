@@ -15,25 +15,31 @@
 #include "AgentMission.h"
 #include "AutomatMission.h"
 #include "FragOrder.h"
+#include "Identifier.h"
 #include "KnowledgeGroupMagicAction.h"
 #include "MagicAction.h"
 #include "ObjectMagicAction.h"
 #include "Parameter_ABC.h"
 #include "ParameterFactory_ABC.h"
 #include "PopulationMission.h"
+#include "String.h"
 #include "UnitMagicAction.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/StaticModel.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
@@ -548,4 +554,58 @@ void ActionFactory::ReadParameter( xml::xistream& xis, actions::Action_ABC& acti
         throw std::exception( tools::translate( "ActionFactory", "Parameter mismatch in action '%1' (id: %2): %3." )
                                 .arg( action.GetName() ).arg( action.GetId() ).arg( e.what() ) );
     }
+}
+
+namespace
+{
+    unsigned int FindKnowledgeGroupForArmy( const kernel::Entity_ABC& entity )
+    {
+        if( dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) )
+            return entity.GetId();
+        const kernel::CommunicationHierarchies& hierarchy = entity.Get< kernel::CommunicationHierarchies >();
+        tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            unsigned int group = FindKnowledgeGroupForArmy( it.NextElement() );
+            if( group )
+                return group;
+        }
+        return 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateAutomatCreationAction
+// Created: LDC 2010-10-06
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const
+{
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( agentTypes ).Get( "automat_creation" );
+    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Automat Creation" ), true );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
+    int knowledgeGroup = 0;
+    const kernel::CommunicationHierarchies* hierarchy = selected.Retrieve< kernel::CommunicationHierarchies >();
+    if ( !hierarchy )
+    {
+        const kernel::TacticalHierarchies& tacticalHierarchy = selected.Get< kernel::TacticalHierarchies >();
+        const kernel::Entity_ABC& top = tacticalHierarchy.GetTop();
+        knowledgeGroup = FindKnowledgeGroupForArmy( top );
+    }
+    else
+    {
+        const kernel::Entity_ABC* superior = hierarchy->GetSuperior();
+        while( superior )
+        {
+            if( dynamic_cast< const kernel::KnowledgeGroup_ABC* >( superior ) )
+            {
+                knowledgeGroup = superior->GetId();
+                break;
+            }
+            superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior();
+        }
+    }
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), knowledgeGroup ) );
+    action->AddParameter( *new parameters::String( it.NextElement(), tools::translate( "ActionFactory", "New Automat" ).ascii() ) );
+    return action;
 }

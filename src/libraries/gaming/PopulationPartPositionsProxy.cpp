@@ -33,18 +33,18 @@ PopulationPartPositionsProxy::~PopulationPartPositionsProxy()
 // Name: PopulationPartPositionsProxy::GetPosition
 // Created: SBO 2008-08-12
 // -----------------------------------------------------------------------------
-geometry::Point2f PopulationPartPositionsProxy::GetPosition() const
+geometry::Point2f PopulationPartPositionsProxy::GetPosition( bool aggregated ) const
 {
-    return positions_.GetPosition();
+    return positions_.GetPosition( aggregated );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationPartPositionsProxy::GetHeight
 // Created: SBO 2008-08-12
 // -----------------------------------------------------------------------------
-float PopulationPartPositionsProxy::GetHeight() const
+float PopulationPartPositionsProxy::GetHeight( bool aggregated ) const
 {
-    return positions_.GetHeight();
+    return positions_.GetHeight( aggregated );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,4 +81,13 @@ geometry::Rectangle2f PopulationPartPositionsProxy::GetBoundingBox() const
 void PopulationPartPositionsProxy::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
     positions_.Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationPartPositionsProxy::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool PopulationPartPositionsProxy::CanAggregate() const
+{
+    return false;
 }

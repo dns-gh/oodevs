@@ -48,27 +48,7 @@ AutomateFactory::~AutomateFactory()
 // Name: AutomateFactory::Create
 // Created: MGD 2009-08-17
 // -----------------------------------------------------------------------------
-MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Automate& parent )
-{
-    unsigned int id;
-    std::string strType;
-
-    xis >> xml::attribute( "id", id )
-        >> xml::attribute( "type", strType );
-
-    const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( strType );
-    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, database_, gcPause_, gcMult_ );
-    automate.ReadOverloading( xis );
-    tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
-
-    return automate;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateFactory::Create
-// Created: MGD 2009-08-17
-// -----------------------------------------------------------------------------
-MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Formation& parent )
+MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Entity_ABC& parent )
 {
     unsigned int id;
     std::string strType;
@@ -86,6 +66,18 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Formation& parent
 
     return automate;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AutomateFactory::Create
+// Created: LDC 2010-10-05
+// -----------------------------------------------------------------------------
+MIL_Automate& AutomateFactory::Create( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent )
+{
+    MIL_Automate& automate = type.InstanciateAutomate( idManager_.GetFreeId(), parent, knowledgeGroup, name, database_, gcPause_, gcMult_ );
+    tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
+
+    return automate;
+}    
 
 // -----------------------------------------------------------------------------
 // Name: AutomateFactory::load

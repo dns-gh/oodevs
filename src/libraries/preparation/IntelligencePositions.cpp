@@ -53,7 +53,7 @@ IntelligencePositions::~IntelligencePositions()
 // Name: IntelligencePositions::GetPosition
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------
-geometry::Point2f IntelligencePositions::GetPosition() const
+geometry::Point2f IntelligencePositions::GetPosition( bool ) const
 {
     return position_;
 }
@@ -62,7 +62,7 @@ geometry::Point2f IntelligencePositions::GetPosition() const
 // Name: IntelligencePositions::GetHeight
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------
-float IntelligencePositions::GetHeight() const
+float IntelligencePositions::GetHeight( bool ) const
 {
     return height_;
 }
@@ -75,7 +75,7 @@ bool IntelligencePositions::IsAt( const geometry::Point2f& pos, float precision 
 {
     const float halfSizeX = 500.f * 0.5f; // $$$$ SBO 2006-03-21: use font size?
     const float sizeY     = 400.f;
-    const geometry::Point2f position = GetPosition();
+    const geometry::Point2f position = GetPosition( true );
     const geometry::Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
                                            position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
     return agentBBox.IsInside( pos );
@@ -87,7 +87,7 @@ bool IntelligencePositions::IsAt( const geometry::Point2f& pos, float precision 
 // -----------------------------------------------------------------------------
 bool IntelligencePositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 {
-    return rectangle.IsInside( GetPosition() );
+    return rectangle.IsInside( GetPosition( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ bool IntelligencePositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f IntelligencePositions::GetBoundingBox() const
 {
-    const geometry::Point2f center = GetPosition();
+    const geometry::Point2f center = GetPosition( true );
     return geometry::Rectangle2f( center.X() - 250, center.Y(), center.X() + 250, center.Y() + 400 );
 }
 
@@ -106,7 +106,7 @@ geometry::Rectangle2f IntelligencePositions::GetBoundingBox() const
 // -----------------------------------------------------------------------------
 void IntelligencePositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
-    visitor.VisitPoint( GetPosition() );
+    visitor.VisitPoint( GetPosition( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,4 +135,13 @@ void IntelligencePositions::Draw( const geometry::Point2f& where, const kernel::
 void IntelligencePositions::SerializeIntelligences( xml::xostream& xos ) const
 {
     xos << xml::attribute( "position", converter_.ConvertToMgrs( position_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IntelligencePositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool IntelligencePositions::CanAggregate() const
+{
+    return false;
 }

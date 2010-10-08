@@ -57,7 +57,7 @@ TacticalLinePositions::~TacticalLinePositions()
 // Name: TacticalLinePositions::GetPosition
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-geometry::Point2f TacticalLinePositions::GetPosition() const
+geometry::Point2f TacticalLinePositions::GetPosition( bool ) const
 {
     return pointList_.front();
 }
@@ -66,7 +66,7 @@ geometry::Point2f TacticalLinePositions::GetPosition() const
 // Name: TacticalLinePositions::GetHeight
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-float TacticalLinePositions::GetHeight() const
+float TacticalLinePositions::GetHeight( bool ) const
 {
     return 0.f;
 }
@@ -173,4 +173,13 @@ void TacticalLinePositions::Update( const Common::MsgTacticalLine& message )
         pointList_.push_back( converter_.ConvertToXY( message.geometry().coordinates().elem(i) ) );
         boundingBox_.Incorporate( pointList_.back() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool TacticalLinePositions::CanAggregate() const
+{
+    return false;
 }

@@ -218,7 +218,7 @@ namespace
             boundingBox.Incorporate( bbox.TopRight() );
             boundingBox.Incorporate( bbox.BottomLeft() );
             if( center.IsZero() )
-                center = concreteEntity.GetPosition();
+                center = concreteEntity.GetPosition( true );
         }
     }
 }
@@ -239,7 +239,7 @@ void Population::ComputeCenter()
 // Name: Population::GetPosition
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-geometry::Point2f Population::GetPosition() const
+geometry::Point2f Population::GetPosition( bool ) const
 {
     return center_;
 }
@@ -248,7 +248,7 @@ geometry::Point2f Population::GetPosition() const
 // Name: Population::GetHeight
 // Created: AGE 2006-04-18
 // -----------------------------------------------------------------------------
-float Population::GetHeight() const
+float Population::GetHeight( bool ) const
 {
     return 0;
 }
@@ -322,7 +322,7 @@ geometry::Rectangle2f Population::GetBoundingBox() const
 // -----------------------------------------------------------------------------
 void Population::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
-    visitor.VisitPoint( GetPosition() );
+    visitor.VisitPoint( GetPosition( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -368,4 +368,13 @@ void Population::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
                   .Display( tools::translate( "Population", "Domination:" ), nDomination_ );
         displayers_.clear();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool Population::CanAggregate() const
+{
+    return false;
 }

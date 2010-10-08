@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __AutomatPositions_h_
-#define __AutomatPositions_h_
+#ifndef __AggregatedPositions_h_
+#define __AggregatedPositions_h_
 
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
@@ -19,37 +19,38 @@ namespace kernel
 }
 
 // =============================================================================
-/** @class  AutomatPositions
-    @brief  AutomatPositions
+/** @class  AggregatedPositions
+    @brief  AggregatedPositions
 */
 // Created: AGE 2006-10-06
 // =============================================================================
-class AutomatPositions : public kernel::Positions
+class AggregatedPositions : public kernel::Positions
                        , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AutomatPositions( const kernel::Entity_ABC& automat );
-    virtual ~AutomatPositions();
+    explicit AggregatedPositions( const kernel::Entity_ABC& automat );
+    virtual ~AggregatedPositions();
     //@}
 
     //! @name Operations
     //@{
-    virtual geometry::Point2f GetPosition() const;
-    virtual float             GetHeight() const;
+    virtual geometry::Point2f GetPosition( bool ) const;
+    virtual float             GetHeight( bool ) const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision, float adaptiveFactor ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual bool CanAggregate() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    AutomatPositions( const AutomatPositions& );            //!< Copy constructor
-    AutomatPositions& operator=( const AutomatPositions& ); //!< Assignment operator
+    AggregatedPositions( const AggregatedPositions& );            //!< Copy constructor
+    AggregatedPositions& operator=( const AggregatedPositions& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -61,11 +62,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::Entity_ABC& automat_;
+    const kernel::Entity_ABC& entity_;
     mutable T_PointVector children_;
-    mutable T_PointVector hull_;
-    mutable geometry::Point2f leftMost_, rightMost_;
-    mutable geometry::Point2f position_;
     //@}
 };
 

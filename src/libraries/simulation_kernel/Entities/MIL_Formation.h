@@ -11,11 +11,17 @@
 #define __MIL_Formation_h_
 
 #include "MIL.h"
+#include "MIL_Entity_ABC.h"
 #include "tools/Resolver.h"
 namespace xml
 {
     class xostream;
     class xistream;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgUnitMagicAction;
 }
 
 class MIL_Army_ABC;
@@ -30,14 +36,15 @@ class MIL_Automate;
 */
 // Created: NLD 2006-10-11
 // =============================================================================
-class MIL_Formation : public tools::Resolver< MIL_Formation >
+class MIL_Formation : public MIL_Entity_ABC
+                    , public tools::Resolver< MIL_Formation >
                     , public tools::Resolver< MIL_Automate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory );
-             MIL_Formation();
+             MIL_Formation( const std::string& name );
     virtual ~MIL_Formation();
     //@}
 
@@ -85,6 +92,13 @@ private:
     void InitializeFormation( xml::xistream& xis, FormationFactory_ABC& formationFactory );
     void InitializeAutomate( xml::xistream& xis, AutomateFactory_ABC& automateFactory );
     //@}
+    
+    //! @name Serialization
+    //@{
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Formation* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Formation* role, const unsigned int /*version*/ );
+    //@}
+
 
 private:
     //! @name Attributes
@@ -93,8 +107,9 @@ private:
     MIL_Army_ABC* pArmy_;
     MIL_Formation* pParent_;
     const PHY_NatureLevel* pLevel_;
-    std::string strName_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_Formation )
 
 #endif // __MIL_Formation_h_

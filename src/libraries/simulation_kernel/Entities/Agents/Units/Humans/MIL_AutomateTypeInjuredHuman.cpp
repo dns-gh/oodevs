@@ -56,7 +56,7 @@ bool MIL_AutomateTypeInjuredHuman::IsInjuredHuman() const
 // Created: RFT 2004-12-27
 // -----------------------------------------------------------------------------
 MIL_Automate& MIL_AutomateTypeInjuredHuman::InstanciateAutomate( unsigned int nID
-                                                                , MIL_Formation& parent
+                                                                , MIL_Entity_ABC& parent
                                                                 , xml::xistream& xis
                                                                 , DEC_DataBase& database
                                                                 , unsigned int gcPause
@@ -67,18 +67,13 @@ MIL_Automate& MIL_AutomateTypeInjuredHuman::InstanciateAutomate( unsigned int nI
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeInjuredHuman::InstanciateAutomate
-// Created: RFT 2004-12-27
+// Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateTypeInjuredHuman::InstanciateAutomate( unsigned int nID
-                                                                , MIL_Automate& parent
-                                                                , xml::xistream& xis
-                                                                , DEC_DataBase& database
-                                                                , unsigned int gcPause
-                                                                , unsigned int gcMult ) const
-{
-    return *new MIL_AutomateInjuredHuman( *this, nID, parent, xis, database, gcPause, gcMult );
+MIL_Automate& MIL_AutomateTypeInjuredHuman::InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const
+{    
+    return *new MIL_AutomateInjuredHuman( *this, nID, parent, knowledgeGroup, name, database, gcPause, gcMult );
 }
-
+    
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeInjuredHuman::Create
 // Created: RFT 2004-12-27

@@ -16,6 +16,7 @@
 #include "MIL_AutomateTypeInjuredHuman.h"
 #include "PHY_InjuredHuman.h"
 
+#include "Entities/MIL_Formation.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -46,7 +47,7 @@ void load_construct_data( Archive& archive, MIL_AutomateInjuredHuman* automat, c
 // Created: RFT 2004-12-21
 // -----------------------------------------------------------------------------
 MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman(     const MIL_AutomateTypeInjuredHuman& type
-                                                        , unsigned int nID, MIL_Formation& parent
+                                                        , unsigned int nID, MIL_Entity_ABC& parent
                                                         , xml::xistream& xis
                                                         , DEC_DataBase& database
                                                         , unsigned int gcPause
@@ -58,18 +59,13 @@ MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman(     const MIL_AutomateTypeIn
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateInjuredHuman constructor
-// Created: RFT 2007-03-29
+// Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman(     const MIL_AutomateTypeInjuredHuman& type
-                                                        , unsigned int nID, MIL_Automate& parent
-                                                        , xml::xistream& xis
-                                                        , DEC_DataBase& database
-                                                        , unsigned int gcPause
-                                                        , unsigned int gcMult )
-    : MIL_Automate( type, nID, parent, xis, database, gcPause, gcMult )
+MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+    : MIL_Automate( type, nID, parent, knowledgeGroup, name, database, gcPause, gcMult )
 {
     // NOTHING
-}
+}    
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateInjuredHuman constructor

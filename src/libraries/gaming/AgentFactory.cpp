@@ -69,7 +69,7 @@
 #include "StaticModel.h"
 #include "AgentHierarchies.h"
 #include "AutomatLives.h"
-#include "AutomatPositions.h"
+#include "AggregatedPositions.h"
 #include "AutomatHierarchies.h"
 #include "AutomatTacticalHierarchies.h"
 #include "PopulationHierarchies.h"
@@ -127,7 +127,7 @@ kernel::Automat_ABC* AgentFactory::Create( const MsgsSimToClient::MsgAutomatCrea
     result->Attach( *new AutomatLives( *result ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, result->GetType(), dico ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
-    result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );
+    result->Attach< kernel::Positions >( *new AggregatedPositions( *result ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dico ) );
     result->Attach( *new Quotas( controllers_.controller_, static_.objectTypes_ ) );
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );

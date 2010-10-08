@@ -8,9 +8,8 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "AutomatPositions.h"
-#include "AgentPositions.h"
-#include "clients_kernel/CommunicationHierarchies.h"
+#include "AggregatedPositions.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
@@ -20,42 +19,41 @@ using namespace kernel;
 using namespace geometry;
 
 // -----------------------------------------------------------------------------
-// Name: AutomatPositions constructor
+// Name: AggregatedPositions constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-AutomatPositions::AutomatPositions( const Entity_ABC& automat )
-    : automat_( automat )
+AggregatedPositions::AggregatedPositions( const Entity_ABC& entity )
+    : entity_( entity )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatPositions destructor
+// Name: AggregatedPositions destructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-AutomatPositions::~AutomatPositions()
+AggregatedPositions::~AggregatedPositions()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatPositions::GetPosition
+// Name: AggregatedPositions::GetPosition
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-Point2f AutomatPositions::GetPosition() const
+Point2f AggregatedPositions::GetPosition( bool ) const
 {
     Point2f aggregatedPosition;
     unsigned count = 0;
     geometry::Point2f fallback;
-    tools::Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
-        const Positions& childPositions          = children.NextElement().Get< Positions >();
-        const AgentPositions& realChildPositions = (const AgentPositions&)( childPositions );
-        fallback = realChildPositions.position_;
-        if( ! realChildPositions.dead_ )
+        const Positions& childPositions = children.NextElement().Get< Positions >();
+        fallback = childPositions.GetPosition( false );
+        if( childPositions.CanAggregate() )
         {
-            const Point2f childPosition = realChildPositions.position_;
+            const Point2f childPosition = fallback;
             aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
             ++count;
         }
@@ -64,79 +62,94 @@ Point2f AutomatPositions::GetPosition() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatPositions::GetHeight
+// Name: AggregatedPositions::GetHeight
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-float AutomatPositions::GetHeight() const
+float AggregatedPositions::GetHeight( bool ) const
 {
     float height = 0;
     unsigned count = 0;
-    tools::Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions& childPositions = children.NextElement().Get< Positions >();
-        const float childHeight = ((const AgentPositions&)( childPositions )).height_;
-        height+=childHeight;
+        height+=childPositions.GetHeight( false );
         ++count;
     }
     return count ? height / count : height;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatPositions::IsAt
+// Name: AggregatedPositions::IsAt
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-bool AutomatPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor*/ /*= 1.f*/ ) const
+bool AggregatedPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor*/ /*= 1.f*/ ) const
 {
     // $$$$ AGE 2006-10-06: CP de AgentPositions...
     const float halfSizeX = 500.f * 0.5f * 2.f; // $$$$ SBO 2006-03-21: use font size?
     const float sizeY     = 400.f * 2.f;
-    const Point2f position = GetPosition();
+    const Point2f position = GetPosition( true );
     const Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
                                  position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
     return agentBBox.IsInside( pos );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatPositions::IsIn
+// Name: AggregatedPositions::IsIn
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-bool AutomatPositions::IsIn( const Rectangle2f& rectangle ) const
+bool AggregatedPositions::IsIn( const Rectangle2f& rectangle ) const
 {
-    return rectangle.IsInside( GetPosition() );
+    return rectangle.IsInside( GetPosition( true ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatPositions::GetBoundingBox
+// Name: AggregatedPositions::GetBoundingBox
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-Rectangle2f AutomatPositions::GetBoundingBox() const
+Rectangle2f AggregatedPositions::GetBoundingBox() const
 {
     Rectangle2f result;
-    tools::Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions& childPositions = children.NextElement().Get< Positions >();
-        result.Incorporate( ((const AgentPositions&)( childPositions )).position_ );
+        result.Incorporate( childPositions.GetPosition( false ) );
     }
     return result;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatPositions::Accept
+// Name: AggregatedPositions::Accept
 // Created: SBO 2009-05-25
 // -----------------------------------------------------------------------------
-void AutomatPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+void AggregatedPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
-    visitor.VisitPoint( GetPosition() );
+    visitor.VisitPoint( GetPosition( true ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatPositions::Draw
+// Name: AggregatedPositions::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatPositions::Draw( const Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void AggregatedPositions::Draw( const Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() )
         tools.DrawCross( where, GL_CROSSSIZE );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregatedPositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool AggregatedPositions::CanAggregate() const
+{
+    tools::Iterator< const Entity_ABC& > children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+    while( children.HasMoreElements() )
+    {
+        const Positions& childPositions = children.NextElement().Get< Positions >();
+        if( childPositions.CanAggregate() )
+            return true;
+    }
+    return false;
 }

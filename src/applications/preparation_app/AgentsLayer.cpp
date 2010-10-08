@@ -158,7 +158,7 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         if( !selectedAgent_ )
             return false;
         // if the events comes from the list or if far enough
-        if( event->source() || position->GetPosition().Distance( point ) > 100 )
+        if( event->source() || position->GetPosition( true ).Distance( point ) > 100 )
             position->Move( point );
         return true;
     }

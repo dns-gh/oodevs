@@ -150,7 +150,7 @@ QString PopulationFlow::GetAttitude() const
 // Name: PopulationFlow::GetHeight
 // Created: SBO 2006-08-23
 // -----------------------------------------------------------------------------
-float PopulationFlow::GetHeight() const
+float PopulationFlow::GetHeight( bool ) const
 {
     return 0.;
 }
@@ -191,7 +191,7 @@ void PopulationFlow::Draw( const geometry::Point2f& /*where*/, const kernel::Vie
 // Name: PopulationFlow::GetPosition
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-geometry::Point2f PopulationFlow::GetPosition() const
+geometry::Point2f PopulationFlow::GetPosition( bool ) const
 {
     if( ! flow_.empty() )
         return flow_.front();
@@ -247,4 +247,13 @@ geometry::Rectangle2f PopulationFlow::GetBoundingBox() const
 void PopulationFlow::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
     visitor.VisitLines( flow_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool PopulationFlow::CanAggregate() const
+{
+    return false;
 }

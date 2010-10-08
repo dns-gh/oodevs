@@ -409,18 +409,18 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis )
 // Name: MIL_EntityManager::CreateAutomat
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Formation& formation )
+void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Entity_ABC& parent )
 {
-    automateFactory_->Create( xis, formation );
+    automateFactory_->Create( xis, parent );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::CreateAutomat
-// Created: NLD 2006-10-11
+// Created: LDC 2010-10-05
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Automate& parent )
+void MIL_EntityManager::CreateAutomat( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent )
 {
-    automateFactory_->Create( xis, parent );
+    automateFactory_->Create( type, knowledgeGroup, name, parent );
 }
 
 // -----------------------------------------------------------------------------
@@ -832,6 +832,14 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
         case MsgsClientToSim::MsgUnitMagicAction::log_supply_change_quotas:
             ProcessMsgLogSupplyChangeQuotas( message, nCtx );
             break;
+        case MsgsClientToSim::MsgUnitMagicAction::automat_creation:
+            if( MIL_Automate*  pAutomate = FindAutomate( id ) )
+                ProcessMsgAutomatCreationRequest( message, *pAutomate );
+            else if( MIL_Formation* pFormation = FindFormation( id ) )
+                ProcessMsgAutomatCreationRequest( message, *pFormation );
+            else
+                throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_unit );
+            break;
         default:
             if( MIL_Automate* pAutomate = FindAutomate( id ) )
                 pAutomate->OnReceiveMsgUnitMagicAction( message, *armyFactory_ );
@@ -847,6 +855,45 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
         ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ProcessMsgAutomatCreationRequest
+// Created: LDC 2010-10-06
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::ProcessMsgAutomatCreationRequest( const MsgsClientToSim::MsgUnitMagicAction& msg, MIL_Entity_ABC& entity )
+{
+    try
+    {
+        if( msg.type() != MsgsClientToSim::MsgUnitMagicAction_Type_automat_creation )
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
+
+        if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
+
+        const Common::MsgMissionParameter& id = msg.parameters().elem( 0 );
+        if( !id.has_value() || !id.value().has_identifier() )
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
+
+        const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( id.value().identifier() );
+        if( !pType )
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_unit );
+
+        const Common::MsgMissionParameter& groupId = msg.parameters().elem( 1 );
+        if( !groupId.has_value() || !groupId.value().has_identifier() )
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
+
+        const Common::MsgMissionParameter& nameParam = msg.parameters().elem( 2 );
+        if( !nameParam.has_value() || !nameParam.value().has_acharstr() )
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
+        const std::string name = nameParam.value().acharstr();
+        MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, groupId.value().identifier(), name, entity ); // auto-registration
+    }
+    catch( std::runtime_error& )
+    {
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_unit );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -95,7 +95,7 @@ void ObjectPositions::ReadPoint( xml::xistream& xis )
 // Name: ObjectPositions::GetPosition
 // Created: SBO 2006-09-11
 // -----------------------------------------------------------------------------
-geometry::Point2f ObjectPositions::GetPosition() const
+geometry::Point2f ObjectPositions::GetPosition( bool ) const
 {
     if( ! points_.empty() )
         return points_.front();
@@ -106,7 +106,7 @@ geometry::Point2f ObjectPositions::GetPosition() const
 // Name: ObjectPositions::GetHeight
 // Created: SBO 2006-09-11
 // -----------------------------------------------------------------------------
-float ObjectPositions::GetHeight() const
+float ObjectPositions::GetHeight( bool ) const
 {
     return 0;
 }
@@ -161,7 +161,7 @@ void ObjectPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
     if( location_ )
         location_->Accept( visitor );
     else
-        visitor.VisitPoint( GetPosition() );
+        visitor.VisitPoint( GetPosition( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,4 +258,13 @@ void ObjectPositions::Draw( const geometry::Point2f&, const kernel::Viewport_ABC
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() ) // $$$$ SBO 2009-05-29: location_->IsValid()
         return;
     tools.DrawTacticalGraphics( symbol_, *location_, tools.ShouldDisplay() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool ObjectPositions::CanAggregate() const
+{
+    return false;
 }

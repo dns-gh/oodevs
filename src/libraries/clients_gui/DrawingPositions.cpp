@@ -66,7 +66,7 @@ void DrawingPositions::Translate( const geometry::Point2f& from, const geometry:
 // Name: DrawingPositions::GetPosition
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-geometry::Point2f DrawingPositions::GetPosition() const
+geometry::Point2f DrawingPositions::GetPosition( bool ) const
 {
     return position_;
 }
@@ -75,7 +75,7 @@ geometry::Point2f DrawingPositions::GetPosition() const
 // Name: DrawingPositions::GetHeight
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-float DrawingPositions::GetHeight() const
+float DrawingPositions::GetHeight( bool ) const
 {
     return 0.; // $$$$ SBO 2008-06-02:
 }
@@ -200,4 +200,13 @@ void DrawingPositions::VisitPath( const geometry::Point2f& point, const T_PointV
     position_.Set( position_.X() * points.size() + point.X(),
                    position_.Y() * points.size() + point.Y() );
     position_.Set( position_.X() / ( points.size() + 1 ), position_.Y() / ( points.size() + 1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingPositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool DrawingPositions::CanAggregate() const
+{
+    return false;
 }

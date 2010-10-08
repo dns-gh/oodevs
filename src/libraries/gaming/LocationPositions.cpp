@@ -45,7 +45,7 @@ LocationPositions::~LocationPositions()
 // Name: LocationPositions::GetPosition
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-geometry::Point2f LocationPositions::GetPosition() const
+geometry::Point2f LocationPositions::GetPosition( bool ) const
 {
     if( ! points_.empty() )
         return points_.front();
@@ -56,7 +56,7 @@ geometry::Point2f LocationPositions::GetPosition() const
 // Name: LocationPositions::GetHeight
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-float LocationPositions::GetHeight() const
+float LocationPositions::GetHeight( bool ) const
 {
     return 0;
 }
@@ -223,4 +223,13 @@ void LocationPositions::AddPoint( const geometry::Point2f& point )
 const kernel::Location_ABC* LocationPositions::GetLocation() const
 {
     return location_.get();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationPositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool LocationPositions::CanAggregate() const
+{
+    return false;
 }

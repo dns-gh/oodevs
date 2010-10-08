@@ -35,7 +35,7 @@ AgentKnowledgePositions::~AgentKnowledgePositions()
 // Name: AgentKnowledgePositions::GetPosition
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-geometry::Point2f AgentKnowledgePositions::GetPosition() const
+geometry::Point2f AgentKnowledgePositions::GetPosition( bool ) const
 {
     return position_;
 }
@@ -44,7 +44,7 @@ geometry::Point2f AgentKnowledgePositions::GetPosition() const
 // Name: AgentKnowledgePositions::GetHeight
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-float AgentKnowledgePositions::GetHeight() const
+float AgentKnowledgePositions::GetHeight( bool ) const
 {
     return 0;
 }
@@ -100,4 +100,13 @@ geometry::Rectangle2f AgentKnowledgePositions::GetBoundingBox() const
 void AgentKnowledgePositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
     visitor.VisitPoint( position_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool AgentKnowledgePositions::CanAggregate() const
+{
+    return true;
 }

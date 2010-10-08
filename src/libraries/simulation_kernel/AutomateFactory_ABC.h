@@ -38,8 +38,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_Automate& Create( xml::xistream& xis, MIL_Automate& parent ) = 0;
-    virtual MIL_Automate& Create( xml::xistream& xis, MIL_Formation& parent ) = 0;
+    virtual MIL_Automate& Create( xml::xistream& xis, MIL_Entity_ABC& parent ) = 0;
+    virtual MIL_Automate& Create( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent ) = 0;
     //@}
 
     //! @name CheckPoint

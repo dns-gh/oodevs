@@ -16,9 +16,12 @@ class Publisher_ABC;
 
 namespace kernel
 {
+    class AgentTypes;
+    class AutomatType;
+    class Controller;
     class Entity_ABC;
-    class MissionType;
     class FragOrderType;
+    class MissionType;
 }
 
 namespace xml
@@ -53,6 +56,7 @@ public:
     //@{
     Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission );
     Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder );
+    Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes );
     void Destroy( const Action_ABC& action );
     void Purge( const ActionsFilter_ABC* filter = 0 );
     void Load( const std::string& filename, bool readonly = false );

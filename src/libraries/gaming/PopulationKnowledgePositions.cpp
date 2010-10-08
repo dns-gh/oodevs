@@ -48,18 +48,18 @@ const kernel::Positions& PopulationKnowledgePositions::GetRealPosition() const
 // Name: PopulationKnowledgePositions::GetPosition
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-geometry::Point2f PopulationKnowledgePositions::GetPosition() const
+geometry::Point2f PopulationKnowledgePositions::GetPosition( bool aggregated ) const
 {
-    return GetRealPosition().GetPosition();
+    return GetRealPosition().GetPosition( aggregated );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePositions::GetHeight
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-float PopulationKnowledgePositions::GetHeight() const
+float PopulationKnowledgePositions::GetHeight( bool aggregated ) const
 {
-    return GetRealPosition().GetHeight();
+    return GetRealPosition().GetHeight( aggregated );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,4 +96,13 @@ geometry::Rectangle2f PopulationKnowledgePositions::GetBoundingBox() const
 void PopulationKnowledgePositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 {
     GetRealPosition().Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledgePositions::CanAggregate
+// Created: LDC 2010-10-07
+// -----------------------------------------------------------------------------
+bool PopulationKnowledgePositions::CanAggregate() const
+{
+    return false;
 }

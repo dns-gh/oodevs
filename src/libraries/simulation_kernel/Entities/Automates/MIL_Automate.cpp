@@ -81,12 +81,12 @@ void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigne
 // Name: MIL_Automate constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
     : MIL_Entity_ABC                     ( xis )
     , pType_                             ( &type )
     , nID_                               ( nID )
-    , pParentFormation_                  ( &parent )
-    , pParentAutomate_                   ( 0 )
+    , pParentFormation_                  ( dynamic_cast< MIL_Formation* >( &parent ) )
+    , pParentAutomate_                   ( dynamic_cast< MIL_Automate* >( &parent ) )
     , bEngaged_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
     , pOrderManager_                     ( new MIL_AutomateOrderManager( *this ) )
@@ -105,38 +105,10 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pArmySurrenderedTo_                ( 0 )
 {
     Initialize( xis, database, gcPause, gcMult );
-    pParentFormation_->RegisterAutomate( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate constructor
-// Created: NLD 2007-03-29
-// -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Automate& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
-    : MIL_Entity_ABC                     ( xis )
-    , pType_                             ( &type )
-    , nID_                               ( nID )
-    , pParentFormation_                  ( 0 )
-    , pParentAutomate_                   ( &parent )
-    , bEngaged_                          ( true )
-    , pKnowledgeGroup_                   ( 0 )
-    , pOrderManager_                     ( new MIL_AutomateOrderManager( *this ) )
-    , pPionPC_                           ( 0 )
-    , pions_                             ()
-    , recycledPions_                     ()
-    , automates_                         ()
-    , bAutomateModeChanged_              ( true )
-    , pTC2_                              ( 0 )
-    , pNominalTC2_                       ( 0 )
-    , bDotationSupplyNeeded_             ( false )
-    , bDotationSupplyExplicitlyRequested_( false )
-    , dotationSupplyStates_              ( )
-    , nTickRcDotationSupplyQuerySent_    ( 0 )
-    , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
-    , pArmySurrenderedTo_                ( 0 )
-{
-    Initialize( xis, database, gcPause, gcMult );
-    pParentAutomate_->RegisterAutomate( *this );
+    if( pParentFormation_ )
+        pParentFormation_->RegisterAutomate( *this );
+    else if( pParentAutomate_ )
+        pParentAutomate_->RegisterAutomate( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +136,52 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
 {
     // NOTHING
 }
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate constructor
+// Created: LDC 2010-10-05
+// -----------------------------------------------------------------------------
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+    : MIL_Entity_ABC                     ( name )
+    , pType_                             ( &type )
+    , nID_                               ( nID )
+    , pParentFormation_                  ( dynamic_cast< MIL_Formation* >( &parent ) )
+    , pParentAutomate_                   ( dynamic_cast< MIL_Automate* >( &parent ) )
+    , bEngaged_                          ( true )
+    , pKnowledgeGroup_                   ( 0 )
+    , pOrderManager_                     ( new MIL_AutomateOrderManager( *this ) )
+    , pPionPC_                           ( 0 )
+    , pions_                             ()
+    , recycledPions_                     ()
+    , automates_                         ()
+    , bAutomateModeChanged_              ( true )
+    , pTC2_                              ( 0 )
+    , pNominalTC2_                       ( 0 )
+    , bDotationSupplyNeeded_             ( false )
+    , bDotationSupplyExplicitlyRequested_( false )
+    , dotationSupplyStates_              ( )
+    , nTickRcDotationSupplyQuerySent_    ( 0 )
+    , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
+    , pArmySurrenderedTo_                ( 0 )
+{
+    pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( knowledgeGroup );
+    if( !pKnowledgeGroup_ )
+        throw std::runtime_error( "Unknown knowledge group" );
+    pKnowledgeGroup_->RegisterAutomate( *this );
 
+    RegisterRole( *new DEC_AutomateDecision( *this, database, gcPause, gcMult ) ) ;
+    RegisterRole( *new DEC_Representations() );
+
+    if( pParentFormation_ )
+        pParentFormation_->RegisterAutomate( *this );
+    else if( pParentAutomate_ )
+        pParentAutomate_->RegisterAutomate( *this );
+
+    SendCreation ();
+    SendFullState();
+    SendKnowledge();
+}
+    
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate destructor
 // Created: NLD 2004-08-11

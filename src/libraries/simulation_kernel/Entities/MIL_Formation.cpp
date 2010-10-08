@@ -27,15 +27,15 @@
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory )
-    : pArmy_  ( &army )
+    : MIL_Entity_ABC( xis ) 
+    , pArmy_  ( &army )
     , pParent_( pParent )
     , pLevel_ ( 0 )
 
 {
     xis >> xml::attribute( "id", nID_ );
     std::string strLevel;
-    xis >> xml::attribute( "name", strName_ )
-        >> xml::attribute( "level", strLevel );
+    xis >> xml::attribute( "level", strLevel );
 
     pLevel_ = PHY_NatureLevel::Find( strLevel );
     if( !pLevel_ )
@@ -54,8 +54,9 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
 // Name: MIL_Formation constructor
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-MIL_Formation::MIL_Formation()
-    : nID_       ( 0 )
+MIL_Formation::MIL_Formation( const std::string& name )
+    : MIL_Entity_ABC( name )
+    , nID_       ( 0 )
     , pArmy_     ( 0 )
     , pParent_   ( 0 )
     , pLevel_    ( 0 )
@@ -99,6 +100,22 @@ void MIL_Formation::InitializeAutomate( xml::xistream& xis, AutomateFactory_ABC&
     {
         MT_LOG_ERROR_MSG( e.what() );
     }
+}
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Formation )
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_Formation* formation, const unsigned int /*version*/ )
+{
+    archive << formation->GetName();
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_Formation* formation, const unsigned int /*version*/ )
+{
+    std::string name;
+    archive >> name;
+    ::new( formation )MIL_Formation( name );
 }
 
 namespace boost
@@ -149,8 +166,7 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
    file >> nLevel;
    pLevel_ = PHY_NatureLevel::Find( nLevel );
    assert( pLevel_ );
-   file >> strName_
-        >> tools::Resolver< MIL_Formation >::elements_
+   file >> tools::Resolver< MIL_Formation >::elements_
         >> tools::Resolver< MIL_Automate >::elements_;
 }
 
@@ -166,7 +182,6 @@ void MIL_Formation::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
          << pArmy_
          << pParent_
          << level
-         << strName_
          << tools::Resolver< MIL_Formation >::elements_
          << tools::Resolver< MIL_Automate >::elements_;
 }
@@ -181,7 +196,7 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
     xos << xml::start( "formation" )
             << xml::attribute( "id", nID_ )
             << xml::attribute( "level", pLevel_->GetName() )
-            << xml::attribute( "name", strName_ );
+            << xml::attribute( "name", GetName() );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref(xos) ) );
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::WriteODB, _1, boost::ref(xos) ) );
     xos << xml::end; // formation
@@ -208,7 +223,7 @@ void MIL_Formation::SendCreation() const
     client::FormationCreation asn;
     asn().mutable_formation()->set_id( nID_ );
     asn().mutable_party()->set_id( pArmy_->GetID() );
-    asn().set_name( strName_.c_str() );
+    asn().set_name( GetName().c_str() );
     asn().set_level( pLevel_->GetAsnID() );
     if( pParent_ )
         asn().mutable_parent()->set_id( pParent_->GetID() );
