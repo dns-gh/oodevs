@@ -17,7 +17,7 @@
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge )
-    : localisation_         ( knowledge.GetLocalisation() )
+    : knowledge_            ( &knowledge )
     , rCostIn_              ( 0 )
     , rCostOut_             ( 0 )
     , rObstructionThreshold_( pathClass.GetThreshold() )
@@ -43,7 +43,7 @@ DEC_Path_KnowledgeObject::~DEC_Path_KnowledgeObject()
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Path_KnowledgeObject& copy )
-    : localisation_         ( copy.localisation_ )
+    : knowledge_            ( copy.knowledge_ )
     , rCostOut_             ( copy.rCostOut_ )
     , rCostIn_              ( copy.rCostIn_ )
     , rObstructionThreshold_( copy.rObstructionThreshold_ )
@@ -57,7 +57,7 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Path_KnowledgeObje
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject& DEC_Path_KnowledgeObject::operator=( const DEC_Path_KnowledgeObject& copy )
 {
-    localisation_.Reset( copy.localisation_ );
+    knowledge_ = copy.knowledge_;
     rCostIn_ = copy.rCostIn_;
     rCostOut_ = copy.rCostOut_;
     rObstructionThreshold_ = copy.rObstructionThreshold_;
@@ -71,11 +71,22 @@ DEC_Path_KnowledgeObject& DEC_Path_KnowledgeObject::operator=( const DEC_Path_Kn
 double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData&, const TerrainData& ) const
 {
     const MT_Line line( from, to );
-    if( localisation_.Intersect2D( line ) || localisation_.IsInside( to ) )
+    if( knowledge_->GetLocalisation().Intersect2D( line ) || knowledge_->GetLocalisation().IsInside( to ) )
     {
         if( rCostIn_ >= rObstructionThreshold_ ) //$$$$ SLG put the value in pathfind xml
             return -1;  //$$$$ SLG in order to block the unit if there is an object
         return rCostIn_;
     }
     return std::numeric_limits< double >::min();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeObject::GetRealObject
+// Created: JSR 2010-10-07
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* DEC_Path_KnowledgeObject::GetObjectKnown() const
+{
+    if( knowledge_ )
+        return knowledge_->GetObjectKnown();
+    return 0;
 }

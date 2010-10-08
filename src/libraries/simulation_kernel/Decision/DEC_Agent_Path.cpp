@@ -313,6 +313,8 @@ DEC_Agent_Path::IT_PathPointList DEC_Agent_Path::GetPreviousPathPointOnDifferent
     return itCurrent;
 }
 
+#pragma warning( push )
+#pragma warning( disable : 4127 ) // conditional expression is constant
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::InsertPointAvant
 // Created: NLD 2005-08-11
@@ -371,6 +373,8 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
         itCurrent = itPrev;
     }
 }
+
+#pragma warning( pop )
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::InsertPointAvant
@@ -535,6 +539,15 @@ void DEC_Agent_Path::InsertDecPoints()
         InsertPointAvants();
     // Limas
     InsertLimas();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::GetSpeedWithReinforcement
+// Created: JSR 2010-10-07
+// -----------------------------------------------------------------------------
+double DEC_Agent_Path::GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const
+{
+    return queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( environment, object );
 }
 
 // -----------------------------------------------------------------------------

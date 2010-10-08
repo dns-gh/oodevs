@@ -36,15 +36,16 @@ PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( xml::xistream& xis )
     , pConsumptionMode_           ( 0 )
 {
     std::string strConsumptionMode = "";
-    tools::ReadTimeAttribute( xis, "initial-construction-time", rTimeBaseConstruction_       );
-    tools::ReadTimeAttribute( xis, "initial-destruction-time" , rTimeBaseDestruction_        );
-    tools::ReadTimeAttribute( xis, "valorization-time"        , rTimeMining_                 );
-    tools::ReadTimeAttribute( xis, "devalorization-time"      , rTimeDemining_               );
-    tools::ReadTimeAttribute( xis, "construction-time-factor" , rTimeConstructionCoef_       );
-    tools::ReadTimeAttribute( xis, "destruction-time-factor"  , rTimeDestructionCoef_        );
-    tools::ReadTimeAttribute( xis, "bypass-gain-factor"       , rCoefTimeBypass_             );
-    tools::ReadTimeAttribute( xis, "non-bypassed-speed"       , rSpeedWithinWhenNotBypassed_ );
-    tools::ReadTimeAttribute( xis, "bypassed-speed"           , rSpeedWithinWhenBypassed_    );
+    tools::ReadTimeAttribute( xis, "initial-construction-time", rTimeBaseConstruction_);
+    tools::ReadTimeAttribute( xis, "initial-destruction-time" , rTimeBaseDestruction_ );
+    tools::ReadTimeAttribute( xis, "valorization-time"        , rTimeMining_          );
+    tools::ReadTimeAttribute( xis, "devalorization-time"      , rTimeDemining_        );
+    tools::ReadTimeAttribute( xis, "construction-time-factor" , rTimeConstructionCoef_);
+    tools::ReadTimeAttribute( xis, "destruction-time-factor"  , rTimeDestructionCoef_ );
+    
+    xis >> xml::optional >> xml::attribute( "bypass-gain-factor", rCoefTimeBypass_             );
+    xis >> xml::optional >> xml::attribute( "non-bypassed-speed", rSpeedWithinWhenNotBypassed_ );
+    xis >> xml::optional >> xml::attribute( "bypassed-speed",     rSpeedWithinWhenBypassed_    );
 
     if( rSpeedWithinWhenNotBypassed_ < 0 )
         rSpeedWithinWhenNotBypassed_ = std::numeric_limits< double >::max();

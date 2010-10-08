@@ -10,10 +10,10 @@
 #ifndef __DEC_Path_KnowledgeObject_h_
 #define __DEC_Path_KnowledgeObject_h_
 
-#include "simulation_terrain/TER_Localisation.h"
-
 class DEC_Knowledge_Object;
 class DEC_Agent_PathClass;
+class MIL_Object_ABC;
+class MT_Vector2D;
 class TerrainData;
 
 // =============================================================================
@@ -38,12 +38,13 @@ public:
     //@{
     double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     double GetCostOut() const;
+    MIL_Object_ABC* GetObjectKnown() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    TER_Localisation localisation_;
+    const DEC_Knowledge_Object* knowledge_;
     double rCostIn_;
     double rCostOut_;
     double rObstructionThreshold_;

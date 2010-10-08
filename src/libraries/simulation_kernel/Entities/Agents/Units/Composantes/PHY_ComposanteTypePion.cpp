@@ -959,7 +959,7 @@ double PHY_ComposanteTypePion::GetBypassTime( const MIL_ObjectType_ABC& object, 
 // -----------------------------------------------------------------------------
 double PHY_ComposanteTypePion::GetMaxSpeed( const MIL_Object_ABC& object ) const
 {
-    if( objectData_.size() <= object.GetID() )
+    if( objectData_.size() <= object.GetType().GetID() )
         return std::numeric_limits< double >::max();
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetType().GetID() ];
     if( pObjectData )

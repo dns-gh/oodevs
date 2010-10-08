@@ -143,7 +143,7 @@ double DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, con
 // Name: DEC_Agent_PathfinderRule::GetObjectsCost
 // Created: NLD 2006-01-31
 // -----------------------------------------------------------------------------
-double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
+double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double& rSpeed ) const
 {
     // default cost : outside all objects
     double rObjectCost = path_.GetCostOutsideOfAllObjects();
@@ -165,6 +165,9 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
                 if( rCurrentObjectCost < 0. ) // Impossible move (for example destroyed bridge)
                     return rCurrentObjectCost;
                 rObjectCost += rCurrentObjectCost;
+                MIL_Object_ABC* obj = itKnowledge->GetObjectKnown();
+                if( obj )
+                    rSpeed = std::min( rSpeed, path_.GetSpeedWithReinforcement( nLinkTerrainType, *obj ) );
             }
         }
     }
@@ -260,7 +263,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
         return IMPOSSIBLE_DESTINATION( "Out of world" );
 
     // speed
-    const double rSpeed = path_.GetUnitSpeeds().GetMaxSpeed( nLinkTerrainType );
+    double rSpeed = path_.GetUnitSpeeds().GetMaxSpeed( nLinkTerrainType );
     if( rSpeed <= 0. )
         return IMPOSSIBLE_WAY( "Speeds on terrain" );
 
@@ -303,8 +306,8 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     rDynamicCost += rUrbanBlockCost;
 
     // objects
-    const double rObjectsCost = GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType );
-    if( rObjectsCost < 0 )
+    const double rObjectsCost = GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType, rSpeed );
+    if( rObjectsCost < 0 || rSpeed <= 0. )
         return IMPOSSIBLE_WAY( "Objects" );
     rDynamicCost += rObjectsCost;
 
