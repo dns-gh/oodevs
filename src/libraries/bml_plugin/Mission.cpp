@@ -199,7 +199,7 @@ void Mission::SendAutomatMission( dispatcher::SimulationPublisher_ABC& publisher
     simulation::AutomatOrder asn;
     asn().mutable_tasker()->set_id( automatTaskee_->GetId());
     asn().mutable_type()->set_id( type_.GetId());
-    if( type_.Count()) > 0 )
+    if( type_.Count() > 0 )
         for( int i = 0; i < type_.Count(); ++i )
             asn().mutable_parameters()->add_elem();
     Serialize( *asn().mutable_parameters() );
