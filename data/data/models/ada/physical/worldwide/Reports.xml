@@ -462,5 +462,5 @@
   <report id="3011" message="Contaminated"/>
   <report id="3012" message="enemy fire"/>
   <report id="3013" message="sustaining enemy fire"/>
-  <report id="3014" message="UAV must be in exploitation"/>
+  <report id="3014" message="UAV must be deployed first"/>
 </reports>
