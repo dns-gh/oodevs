@@ -24,6 +24,9 @@ namespace MsgsClientToSim
 
 namespace kernel
 {
+    class AgentTypes;
+    class AutomatType;
+    class Controller;
     class Entity_ABC;
     class MissionType;
     class FragOrderType;
@@ -65,6 +68,8 @@ public:
     virtual actions::Action_ABC* CreateAction( const Common::MsgAutomatOrder& message ) const = 0;
     virtual actions::Action_ABC* CreateAction( const Common::MsgCrowdOrder& message ) const = 0;
     virtual actions::Action_ABC* CreateAction( const MsgsClientToSim::MsgFragOrder& message ) const = 0;
+    
+    virtual actions::Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const = 0;
     //@}
 };
 
