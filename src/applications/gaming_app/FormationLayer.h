@@ -1,0 +1,73 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+#ifndef __FormationLayer_h_
+#define __FormationLayer_h_
+
+#include "clients_gui/FormationLayer.h"
+
+namespace actions
+{
+    class ActionsModel;
+}
+
+namespace kernel
+{
+    class AutomatType;
+    class Time_ABC;
+}
+
+class StaticModel;
+
+// =============================================================================
+/** @class  FormationLayer
+    @brief  FormationLayer
+*/
+// Created: LDC 2010-10-06
+// =============================================================================
+class FormationLayer : public gui::FormationLayer
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+    FormationLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation );
+    virtual ~FormationLayer();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual bool HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point );
+    virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    FormationLayer( const FormationLayer& );            //!< Copy constructor
+    FormationLayer& operator=( const FormationLayer& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void NotifySelected( const kernel::Formation_ABC* formation );
+    void RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::SafePointer< kernel::Formation_ABC > selected_;
+    actions::ActionsModel& actionsModel_;
+    const StaticModel& static_;
+    const kernel::Time_ABC& simulation_;
+    //@}
+};
+
+#endif // __FormationsLayer_h_
