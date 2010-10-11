@@ -877,6 +877,7 @@
         <update name="terrain" modules="terrain,graphics,pathfind,vmap,geodata,gdal_ogr" version="2.0"/>
         <update name="terrain" modules="urban"/>
         <update name="terrain" package="SWORD Terrain_${platform}.exe"/>
+		<update name="terrain" package="terraintools_${platform}.zip"/> 
         <update name="qt" version="3.3.8"/>
         <update name="boost"/>
         <update name="boost" package="geometry" todir="${include.dir}"/>

@@ -281,6 +281,10 @@ FunctionEnd
     !insertmacro OT._KillRunning "gaming_app.exe"
     !insertmacro OT._KillRunning "preparation_app.exe"
     !insertmacro OT._KillRunning "replayer_app.exe"
+	!insertmacro OT._KillRunning "detection_app.exe"
+	!insertmacro OT._KillRunning "raster_app.exe"
+	!insertmacro OT._KillRunning "generation_app.exe"
+	!insertmacro OT._KillRunning "terrain_workshop_app.exe"
     
 !macroend
 
@@ -321,9 +325,11 @@ FunctionEnd
 
     Section "${ComponentName}"
         SetOutPath "$INSTDIR\installation files"
-        File "${OUTDIR}\SWORD ${ComponentName}_${PLATFORM}.exe"
+        File "${OUTDIR}\terraintools_${PLATFORM}.zip"
         WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}" "RootDirectory" "$INSTDIR\${ComponentName}\applications"
-        ExecWait '"$INSTDIR\installation files\SWORD ${ComponentName}_${PLATFORM}.exe" /S /LANG=$LANGUAGE /$MultiUser.InstallMode /INSTALLREP="$INSTDIR\${ComponentName}"'
+		nsisunz::Unzip "$INSTDIR\installation files\terraintools_${PLATFORM}.zip" "$INSTDIR\${ComponentName}"
+	    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_TN_TOOLS)\$(OT_GEN).lnk" "$INSTDIR\applications\generation_app.exe" ""  "$INSTDIR\applications\sword-ot.ico"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_TN_TOOLS)\$(OT_WKP).lnk" "$INSTDIR\applications\terrain_workshop_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
 
 !macroend
@@ -333,8 +339,8 @@ FunctionEnd
 ;------------------------------------------------------------------------------
 !macro OT.UninstallAdditionalComponent ComponentName
 
-    IfFileExists "$INSTDIR\${ComponentName}\uninstall.exe" 0 +3
-        ExecWait '"$INSTDIR\${ComponentName}\uninstall.exe" /S _?=$INSTDIR\${ComponentName}'
+		RMDir /r $INSTDIR\${ComponentName}"
+		${locate::RMDirEmpty} "$INSTDIR\${ComponentName}" "/M=*.* /G=1 /B=1" $R1
         DeleteRegKey ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}"
 
 !macroend
