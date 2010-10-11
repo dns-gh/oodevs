@@ -556,7 +556,7 @@
     -->
     <target name="test" depends="generate-license,test-scripts,test-adaptation,3a_test,plugins_test,clients_test,
                                  dispatcher_test,application.simulation_kernel_test,application.integration_decisionnal_test,
-                                 protocol_test,checkpoint_test,import_test,actions_test" description="run all tests"/>
+                                 protocol_test,checkpoint_test,import_test,actions_test,test-data-reports" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
         <build-test name="3a" depends="xerces,terrain,boost"
@@ -772,6 +772,37 @@
         </build-test>
     </target>
 
+    <macrodef name="count">
+        <attribute name="property"/>
+        <attribute name="string"/>
+        <attribute name="file"/>
+        <sequential>
+            <resourcecount property="@{property}">
+                <tokens>
+                    <concat>
+                      <filterchain>
+                          <tokenfilter>
+                              <containsstring contains="@{string}"/>
+                          </tokenfilter>
+                      </filterchain>
+                      <fileset file="@{file}"/>
+                    </concat>
+                </tokens>
+            </resourcecount>
+        </sequential>
+    </macrodef>
+    <target name="test-data-reports" description="check that ada/physical/france/Reports.xml and ada/physical/worldwide/Reports.xml contain the same amount of reports">
+        <count property="test-data-reports.worldwide" string="report id=" file="${data.dir}/data/models/Ada/physical/worldwide/Reports.xml"/>
+        <count property="test-data-reports.france" string="report id=" file="${data.dir}/data/models/Ada/physical/france/Reports.xml"/>
+        <fail message="File 'reports.xml' from physical databases doesn't contain the same amount of entries - France:${test-data-reports.france} vs Worldwide:${test-data-reports.worldwide}">
+            <condition>
+                <not>
+                    <equals arg1="${test-data-reports.worldwide}" arg2="${test-data-reports.france}"/>
+                </not>
+            </condition>
+        </fail>	
+    </target>
+    
     <!--
     ============================================================================
     package
