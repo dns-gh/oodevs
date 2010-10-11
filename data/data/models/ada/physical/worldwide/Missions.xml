@@ -1814,7 +1814,7 @@ overwhelming force.]]></doctrine>
   <fragorders>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="345" name="NBC suit on"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_EnleverTenueNBC" id="346" name="NBC suit off"/>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadio" id="347" name="radio silence"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadio" id="347" name="Radio silence"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadio" id="348" name="Radio silence lifted"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" id="349" name="Radar silence"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ArreterSilenceRadar" id="350" name="Radar silence lifted"/>

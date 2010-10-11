@@ -354,98 +354,98 @@
     <parameter type="Numeric"/>
   </report>
 <!-- Synchro a traduire -->
-  <report id="258" message="execution attentat"/>
-  <report id="259" message="debut mission : %1">
+  <report id="258" message="bombing"/>
+  <report id="259" message="mission started : %1">
     <parameter type="String"/>
   </report>
-  <report id="260" message="fin mission : %1">
+  <report id="260" message="mission completed : %1">
     <parameter type="String"/>
   </report>
-  <report id="261" message="debut de la phase : %1">
+  <report id="261" message="phase started : %1">
     <parameter type="String"/>
   </report>
-  <report id="262" message="fin de la phase : %1">
+  <report id="262" message="phase completed : %1">
     <parameter type="String"/>
   </report>
-  <report id="263" message="activation obstacle de manoeuvre"/>
-  <report id="264" message="debut animation %1">
+  <report id="263" message="reserved obstacle activated"/>
+  <report id="264" message="work started for %1">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report id="265" message="tir direct sur la cible : %1">
+  <report id="265" message="direct fire on target : %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report id="266" message="fin animation %1">
+  <report id="266" message="work completed for %1">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report id="267" message="illumination de la cible"/>
-  <report id="268" message="debut degagement %1">
+  <report id="267" message="target illumination"/>
+  <report id="268" message="bypass started for %1">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report id="269" message="fin degagement"/>
-  <report id="270" message="tir direct impossible"/>
-  <report id="271" message="tir indirect sur la cible : %1">
+  <report id="269" message="bypass completed"/>
+  <report id="270" message="impossible direct fire"/>
+  <report id="271" message="indirect fire on target : %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report id="272" message="pas de capacité de tir"/>
-  <report id="273" message="type de munition invalide"/>
-  <report id="274" message="tir indirect impossible"/>
-  <report id="275" message="Cible non perçue"/>
-  <report id="276" message="Cible tactiquement détruite : %1">
+  <report id="272" message="no fire capacity"/>
+  <report id="273" message="unvalid ammunition type"/>
+  <report id="274" message="impossible indirect fire"/>
+  <report id="275" message="Target not detected"/>
+  <report id="276" message="Target tactically destroyed : %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report id="277" message="Vision verrouillee et radar active"/>
-  <report id="278" message="Debut de reconnaissance du bloc urbain"/>
-  <report id="279" message="Fin de reconnaissance du bloc urbain"/>
-  <report id="280" message="Debut de reconnaissance de la position"/>
-  <report id="281" message="Fin de reconnaissance de la position"/>
-  <report id="282" message="Fin du tir direct sur la cible : %1">
+  <report id="277" message="Locked vision and active radar"/>
+  <report id="278" message="Urban block reconnaissance started"/>
+  <report id="279" message="Urban block reconnaissance completed"/>
+  <report id="280" message="Position reconnaissance started"/>
+  <report id="281" message="Position reconnaissance completed"/>
+  <report id="282" message="Direct fire completed on target : %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report id="283" message="Debut des travaux pour l'objet : %1">
+  <report id="283" message="Work started for object : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report id="284" message="Fin des travaux pour l'objet : %1">
+  <report id="284" message="Work completed for object : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report id="285" message="Fin du tir indirect sur la cible : %1">
+  <report id="285" message="Indirect fire completed on target : %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report id="286" message="Debut de neutralisation de la cible : %1">
+  <report id="286" message="Neutralization started on target : %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report id="287" message="Fin de neutralisation de la cible : %1">
+  <report id="287" message="Neutralization completed on target : %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report id="288" message="Vision verrouillee"/>
-  <report id="289" message="debut de construction objet"/>
-  <report id="290" message="Object %1 déjà occupé">
+  <report id="288" message="Vision locked"/>
+  <report id="289" message="Work started"/>
+  <report id="290" message="Object %1 already occupied">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report id="291" message="Silence Radio Partiel"/>
-  <report id="292" message="Debut de reconnaissance de la zone"/>
-  <report id="293" message="Fin de reconnaissance de la zone"/>
-  <report id="294" message="Travaux impossibles : pas de capacite de construction"/>
-  <report id="295" message="Travaux impossibles : pas de dotation"/>
-  <report id="296" message="Début embarquement"/>
-  <report id="297" message="Début débarquement"/>
-  <report id="298" message="Debut du ratissage du bloc urbain"/>
-  <report id="299" message="Fin du ratissage du bloc urbain"/>
-  <report id="300" message="Debut du ratissage de la zone"/>
-  <report id="301" message="Fin du ratissage de la zone"/>
-  <report id="302" message="Munition interdite : %1">
+  <report id="291" message="Partial radio silence"/>
+  <report id="292" message="Area reconnaissance started"/>
+  <report id="293" message="Area reconnaissance completed"/>
+  <report id="294" message="Work impossible : no construction capacity"/>
+  <report id="295" message="Travaux impossibles : no dotation"/>
+  <report id="296" message="Embarkment started"/>
+  <report id="297" message="Disembarkment started"/>
+  <report id="298" message="Urban bloc sweeping started"/>
+  <report id="299" message="Urban bloc sweeping completed"/>
+  <report id="300" message="Area sweeping started"/>
+  <report id="301" message="Area sweeping completed"/>
+  <report id="302" message="Forbidden ammunition : %1">
     <parameter type="DotationType"/>
   </report>
-  <report id="303" message="Munition autorisée : %1">
+  <report id="303" message="Authorized ammunition : %1">
     <parameter type="DotationType"/>
   </report>
-  <report id="304" message="Debut du bouclage de la zone"/>
-  <report id="305" message="Fin du bouclage de la zone"/>
-  <report id="306" message="En appui"/>
-  <report id="307" message="En mouvement, l'appui n'est pas assuré"/>
-  <report id="308" message="l'objet n'est pas contournable"/>
-  <report id="309" message="Travaux impossibles : pas de capacite de destruction"/>
-  <report id="310" message="Cible non illuminée"/>
-  <report id="311" message="Tir impossible : Munition interdite"/>
+  <report id="304" message="Area cordoning off started"/>
+  <report id="305" message="Area cordoning off completed"/>
+  <report id="306" message="Supporting"/>
+  <report id="307" message="While moving, the support is not ensured"/>
+  <report id="308" message="unavoidable object"/>
+  <report id="309" message="Work impossible : no destrution capacity"/>
+  <report id="310" message="Target unilluminated"/>
+  <report id="311" message="Impossible fire : Forbidden ammunition"/>
 	<!-- Synchro a traduire -->  
   
   <report id="3000" message="Embarkment - started"/>
