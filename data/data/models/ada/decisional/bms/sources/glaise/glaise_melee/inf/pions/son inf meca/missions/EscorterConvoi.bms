@@ -133,7 +133,7 @@ node "BEH_Mission_Pion_VAB_EscorterUnConvoi"
         self.mission = self.mission or DEC_GetMission( myself )
         self.pionConvoi = self.pionConvoi or self.mission.uniteAEscorter_
         self.eAction = self.eAction or eActionEnCours
-        self.ePhase = self.ePhase or eEscorter
+        self.ePhase = self.ePhase or ePreparerMission
         if( ModuleBegins() ) then
             do
                 StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
