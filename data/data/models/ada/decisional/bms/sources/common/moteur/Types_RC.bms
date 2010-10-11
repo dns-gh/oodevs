@@ -314,7 +314,14 @@ eRC_DisembarkmentStarted = 3004
 eRC_DisembarkmentInterrupted = 3005
 eRC_DisembarkmentResumed = 3006
 eRC_DisembarkmentFinished = 3007
-eNbr = 3008
+eRC_ProtectionActiveReussie = 3008
+eRC_ProtectionActiveHardKillReussie = 3009
+eRC_Empoisonne  = 3010
+eRC_Contamine  = 3011
+eRC_TirSurCampEnnemi  = 3012
+eRC_TireParCampEnnemi  = 3013
+eRC_DroneDoitEtreMisEnOeuvre  = 3014
+eNbr = 3015
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion

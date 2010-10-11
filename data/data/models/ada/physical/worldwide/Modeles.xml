@@ -616,8 +616,6 @@
         <mission name="secure area (against populations assault)"/>
         <mission name="prepare to"/>
         <mission name="prepare to (take up position)"/>
-        <mission name="Infantry - hold"/>
-        <mission name="Infantry - destroy"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -1421,7 +1419,7 @@
       <missions>
         <mission name="Militia - seize and hold position"/>
         <mission name="Militia - ambush"/>
-        <mission name="Infantry - destroy"/>
+        <mission name="Infantry - destroy (intervene)"/>
         <mission name="Infantry - harass"/>
         <mission name="move"/>
         <mission name="follow"/>
@@ -1484,7 +1482,7 @@
         <mission name="withdraw"/>
         <mission name="move"/>
         <mission name="adopt transportation posture"/>
-        <mission name="Infantry - destroy"/>
+        <mission name="Infantry - destroy (intervene)"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="park"/>

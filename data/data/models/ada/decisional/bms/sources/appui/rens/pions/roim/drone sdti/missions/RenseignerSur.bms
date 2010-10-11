@@ -39,6 +39,7 @@ includedFiles["sources/appui/rens/pions/roim/drone sdti/missions/RenseignerSur.b
 ]]if( not myself.bMiseEnOeuvre_ ) then
                     do
                         DEC_Trace( "----- Le drone doit être mise en oeuvre -----" )
+                        DEC_RC( eRC_DroneDoitEtreMisEnOeuvre )
                         DEC_RC( eRC_MissionImpossible )
                                                 Halt( self )
                         do return end

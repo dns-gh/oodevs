@@ -459,4 +459,5 @@
   <report id="3011" message="Contaminé"/>
   <report id="3012" message="tir sur camp ennemi"/>
   <report id="3013" message="tire par camp ennemi"/>
+  <report id="3014" message="le drone doit être mis en oeuvre"/>
 </reports>
