@@ -78,7 +78,7 @@ void Profile::Login() const
 // -----------------------------------------------------------------------------
 void Profile::Login( const std::string& login, const std::string& password ) const
 {
-    login_    = login;
+    login_ = login;
     password_ = password;
     Login();
     controller_.Update( *(kernel::Profile_ABC*)this );
@@ -241,7 +241,7 @@ bool Profile::IsVisible( const Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool Profile::IsKnowledgeVisible( const kernel::Knowledge_ABC& entity ) const
 {
-    return IsInHierarchy( entity, readEntities_, false );
+    return IsInHierarchy( entity.GetOwner(), readEntities_, false );
 }
 
 // -----------------------------------------------------------------------------

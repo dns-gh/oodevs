@@ -22,9 +22,9 @@
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
 ProfileFilter::ProfileFilter( kernel::Controllers& controllers, const kernel::Profile_ABC& forward )
-     : controller_( controllers.controller_ )
-     , forward_( forward )
-     , entity_( controllers )
+     : controller_  ( controllers.controller_ )
+     , forward_     ( forward )
+     , entity_      ( controllers )
      , tHierarchies_( 0 )
      , cHierarchies_( 0 )
      , iHierarchies_( 0 )
@@ -59,7 +59,6 @@ bool ProfileFilter::IsVisible( const kernel::Entity_ABC& entity ) const
     return ( IsInKnowledgeGroup( entity ) || IsObjectOfSameTeam( entity ) || IsInHierarchy( entity ) ) && forward_.IsVisible( entity );
 }
 
-
 namespace
 {
     bool IsVisibleFromTeam( const kernel::Knowledge_ABC& knowledge, const kernel::Entity_ABC* entity )
@@ -69,17 +68,16 @@ namespace
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ProfileFilter::IsKnowledgeVisible
 // Created: HBD 2010-08-03
 // -----------------------------------------------------------------------------
 bool ProfileFilter::IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge ) const
 {
-    const AgentKnowledges* filteredGroup = 0;   
+    const AgentKnowledges* filteredGroup = 0;
     const AgentKnowledges* knowldegeToCheckGroup = 0;
-    if ( !entity_ )
-        return true;
+    if( !entity_ )
+        return forward_.IsKnowledgeVisible( knowledge );
     for( const kernel::Entity_ABC* superior = &cHierarchies_->GetEntity(); superior && !filteredGroup; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
         filteredGroup = superior->Retrieve< AgentKnowledges >();
     for( const kernel::Entity_ABC* superior = &knowledge.GetOwner(); superior && !knowldegeToCheckGroup; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )

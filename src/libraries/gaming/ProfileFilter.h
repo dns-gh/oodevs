@@ -14,7 +14,8 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
-namespace kernel {
+namespace kernel
+{
     class Entity_ABC;
     class Controllers;
     class Hierarchies;
@@ -41,12 +42,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString GetLogin    () const;
-    virtual bool IsVisible      ( const kernel::Entity_ABC& entity ) const;
+    virtual QString GetLogin() const;
+    virtual bool IsVisible( const kernel::Entity_ABC& entity ) const;
     virtual bool IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge ) const;
-    virtual bool CanBeOrdered   ( const kernel::Entity_ABC& entity ) const;
-    virtual bool CanDoMagic     ( const kernel::Entity_ABC& entity ) const;
-    virtual bool IsSupervision  () const;
+    virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
+    virtual bool CanDoMagic( const kernel::Entity_ABC& entity ) const;
+    virtual bool IsSupervision() const;
 
     void SetFilter( const kernel::Entity_ABC& entity );
     void RemoveFilter();

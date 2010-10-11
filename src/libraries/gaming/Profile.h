@@ -78,10 +78,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsVisible   ( const kernel::Entity_ABC& entity ) const;
-    virtual bool IsKnowledgeVisible   ( const kernel::Knowledge_ABC& entity ) const;
+    virtual bool IsVisible( const kernel::Entity_ABC& entity ) const;
+    virtual bool IsKnowledgeVisible( const kernel::Knowledge_ABC& entity ) const;
     virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
-    virtual bool CanDoMagic  ( const kernel::Entity_ABC& entity ) const;
+    virtual bool CanDoMagic( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
@@ -93,8 +93,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< unsigned long >   T_Ids;
-    typedef T_Ids::const_iterator        CIT_Ids;
+    typedef std::vector< unsigned long > T_Ids;
+    typedef T_Ids::const_iterator      CIT_Ids;
 
     typedef std::set< const kernel::Entity_ABC* > T_Entities;
     typedef T_Entities::const_iterator          CIT_Entities;
@@ -121,7 +121,7 @@ private:
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Services& services );
 
-    void Add   ( const kernel::Entity_ABC& entity, const T_Ids& readIds, const T_Ids& readWriteIds );
+    void Add( const kernel::Entity_ABC& entity, const T_Ids& readIds, const T_Ids& readWriteIds );
     void Remove( const kernel::Entity_ABC& entity );
     static bool IsInHierarchy( const kernel::Entity_ABC& entity, const T_Entities& entities, bool childOnly );
     static bool IsInHierarchy( const kernel::Entity_ABC& entity, const kernel::Hierarchies& hierarchy, const kernel::Entity_ABC& other, bool childOnly );
@@ -138,10 +138,8 @@ private:
     bool loggedIn_;
     bool supervision_;
     bool simulation_;
-
     T_Entities readEntities_;
     T_Entities readWriteEntities_;
-
     T_Ids readTeams_;
     T_Ids writeTeams_;
     T_Ids readAutomats_;
