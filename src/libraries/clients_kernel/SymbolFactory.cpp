@@ -81,9 +81,9 @@ std::string SymbolFactory::CreateSymbol( const std::string& hierarchy ) const
 // -----------------------------------------------------------------------------
 std::string SymbolFactory::CreateLevelSymbol( const std::string& level ) const
 {
-    std::string result( levelBase_ );
+    std::string result;
     levelRule_->Evaluate( level, result );
-    return result;
+    return ( ! result.empty() ) ? levelBase_ + result : result;
 }
 
 // -----------------------------------------------------------------------------
