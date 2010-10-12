@@ -353,7 +353,6 @@
     <parameter type="Numeric"/>
     <parameter type="Numeric"/>
   </report>
-<!-- Synchro a traduire -->
   <report id="258" message="bombing"/>
   <report id="259" message="mission started : %1">
     <parameter type="String"/>
@@ -446,8 +445,6 @@
   <report id="309" message="Work impossible : no destrution capacity"/>
   <report id="310" message="Target unilluminated"/>
   <report id="311" message="Impossible fire : Forbidden ammunition"/>
-	<!-- Synchro a traduire -->  
-  
   <report id="3000" message="Embarkment - started"/>
   <report id="3001" message="Embarkment - interrupted"/>
   <report id="3002" message="Embarkment - resumed"/>
