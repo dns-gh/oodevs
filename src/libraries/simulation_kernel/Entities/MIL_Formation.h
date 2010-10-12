@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "MIL_Entity_ABC.h"
 #include "tools/Resolver.h"
+
 namespace xml
 {
     class xostream;
@@ -53,7 +54,6 @@ public:
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-
     void WriteODB( xml::xostream& xos ) const;
     void WriteLogisticLinksODB( xml::xostream& xos ) const;
     //@}
@@ -62,10 +62,8 @@ public:
     //@{
     void RegisterAutomate( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );
-
     void RegisterFormation( MIL_Formation& formation );
     void UnregisterFormation( MIL_Formation& formation );
-
     //@}
 
     //! @name Accessors
@@ -91,6 +89,7 @@ private:
     //@{
     void InitializeFormation( xml::xistream& xis, FormationFactory_ABC& formationFactory );
     void InitializeAutomate( xml::xistream& xis, AutomateFactory_ABC& automateFactory );
+    void ReadExtension( xml::xistream& xis );
     //@}
     
     //! @name Serialization
@@ -107,6 +106,7 @@ private:
     MIL_Army_ABC* pArmy_;
     MIL_Formation* pParent_;
     const PHY_NatureLevel* pLevel_;
+    std::map< std::string, std::string > extensions_;
     //@}
 };
 

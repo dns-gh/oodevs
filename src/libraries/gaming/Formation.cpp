@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Formation.h"
 #include "Tools.h"
+#include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 
@@ -25,6 +26,13 @@ Formation::Formation( const MsgsSimToClient::MsgFormationCreation& message, Cont
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( level_.GetName() ).arg( message.formation().id() );
+    if( message.has_extension() )
+    {
+        DictionaryExtensions* extensions = new DictionaryExtensions;
+        for( int i = 0; i < message.extension().entries_size(); ++i )
+            extensions->SetValue( message.extension().entries( i ).name(), message.extension().entries( i ).value() );
+        Attach( *extensions );
+    }
     CreateDictionary( controller );
 }
 

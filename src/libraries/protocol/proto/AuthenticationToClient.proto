@@ -73,15 +73,7 @@ message MsgProfileDestructionRequestAck {
     required string    login      = 2;
 }
 
-// Scipio roles :
-enum Role {
-    superviseur	= 0; 
-    anibas		= 1;
-    eniex		= 2;
-    direx		= 3; 
-    environnement	= 4; 
-    analyse			= 5;
-}
+message RoleType { required uint32 id = 1; }
 
 message MsgProfile {
     required string                  login                   = 1;
@@ -95,7 +87,7 @@ message MsgProfile {
     optional Common.CrowdIdList      read_only_crowds        = 9;
     optional Common.CrowdIdList      read_write_crowds       = 10;
     required bool                    supervisor              = 11;
-    optional Role                    role                    = 12;
+    optional RoleType                role                    = 12;
 }
 
 message MsgProfileDescriptionList {

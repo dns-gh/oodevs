@@ -124,31 +124,27 @@ private:
 private:
     //! @name Member data
     //@{
-    Model_ABC&              model_;
+    Model_ABC& model_;
     const unsigned long type_; // XML reference - no resolved by dispatcher
     dispatcher::Team_ABC& team_;
     dispatcher::Formation_ABC* parentFormation_;
     dispatcher::Automat_ABC* parentAutomat_;
     dispatcher::KnowledgeGroup_ABC* knowledgeGroup_;
     tools::Resolver< DotationQuota > quotas_;
-
-    Common::EnumAutomatMode                     nAutomatState_;
-    MsgsSimToClient::ForceRatio_Value           nForceRatioState_;
-    Common::EnumMeetingEngagementStatus         nCloseCombatState_;
-    Common::EnumOperationalStatus               nOperationalState_;
-    MsgsSimToClient::RulesOfEngagement_Value    nRoe_;
-
+    Common::EnumAutomatMode nAutomatState_;
+    MsgsSimToClient::ForceRatio_Value nForceRatioState_;
+    Common::EnumMeetingEngagementStatus nCloseCombatState_;
+    Common::EnumOperationalStatus nOperationalState_;
+    MsgsSimToClient::RulesOfEngagement_Value nRoe_;
     kernel::Automat_ABC* pTC2_;
     kernel::Automat_ABC* pLogMaintenance_;
     kernel::Automat_ABC* pLogMedical_;
     kernel::Automat_ABC* pLogSupply_;
-
     std::auto_ptr< AutomatOrder > order_;
-
     DecisionalState decisionalInfos_;
-
     tools::Resolver< dispatcher::Agent_ABC >   agents_;
     tools::Resolver< dispatcher::Automat_ABC > automats_;
+    std::map< std::string, std::string > extensions_;
     //@}
 };
 

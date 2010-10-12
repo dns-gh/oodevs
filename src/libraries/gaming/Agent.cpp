@@ -27,7 +27,6 @@ using namespace kernel;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 Agent::Agent( const MsgsSimToClient::MsgUnitCreation& message, Controller& controller,  const tools::Resolver_ABC< AgentType >& resolver )
-
     : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.nom().c_str() ) )
     , type_( resolver.Get( message.type().id() ) )
     , isPc_( message.pc() != 0 )

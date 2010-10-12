@@ -22,11 +22,12 @@
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
 UserProfile::UserProfile( const MsgsAuthenticationToClient::MsgProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher )
-    : controller_( controller )
-    , publisher_( publisher )
-    , registered_( true )
+    : controller_ ( controller )
+    , publisher_  ( publisher )
+    , registered_ ( true )
     , login_      ( "" )
     , supervision_( false )
+    , role_       ( -1 )
 {
     controller_.Create( *this );
     SetProfile( message.profile() );
@@ -37,11 +38,12 @@ UserProfile::UserProfile( const MsgsAuthenticationToClient::MsgProfileCreation& 
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
 UserProfile::UserProfile( const QString& login, kernel::Controller& controller, Publisher_ABC& publisher )
-    : controller_( controller )
-    , publisher_( publisher )
-    , registered_( false )
-    , login_( login )
+    : controller_ ( controller )
+    , publisher_  ( publisher )
+    , registered_ ( false )
+    , login_      ( login )
     , supervision_( false )
+    , role_       ( -1 )
 {
     // NOTHING
 }
@@ -57,6 +59,7 @@ UserProfile::UserProfile( const UserProfile& p )
     , login_            ( p.login_ )
     , password_         ( p.password_ )
     , supervision_      ( p.supervision_ )
+    , role_             ( p.role_ )
     , readSides_        ( p.readSides_ )
     , readFormations_   ( p.readFormations_ )
     , readAutomats_     ( p.readAutomats_ )
@@ -124,6 +127,8 @@ void UserProfile::RequestUpdate( const QString& newLogin )
     profile.set_login( newLogin.ascii() );
     profile.set_password( password_.ascii() );
     profile.set_supervisor( supervision_ );
+    if( role_ != -1 )
+        profile.mutable_role()->set_id( role_ );
     CopyList( readSides_, *profile.mutable_read_only_camps() );
     CopyList( writeSides_, *profile.mutable_read_write_camps() );
     CopyList( readFormations_, *profile.mutable_read_only_formations() );
@@ -168,7 +173,8 @@ void UserProfile::SetProfile( const MsgsAuthenticationToClient::MsgProfile& prof
     if( profile.has_password()  )
         password_ = profile.password().c_str();
     supervision_ = profile.supervisor();
-
+    if( profile.has_role() )
+        role_ = profile.role().id();
     if( profile.has_read_only_camps()  )
         CopyList( profile.read_only_camps(), readSides_);
     if( profile.has_read_only_formations()  )
@@ -207,6 +213,15 @@ QString UserProfile::GetLogin() const
 QString UserProfile::GetPassword() const
 {
     return password_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::GetRole
+// Created: JSR 2010-10-12
+// -----------------------------------------------------------------------------
+int UserProfile::GetRole() const
+{
+    return role_;
 }
 
 // -----------------------------------------------------------------------------

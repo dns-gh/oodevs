@@ -19,8 +19,6 @@ namespace MsgsAuthenticationToClient
     class MsgProfileDescription;
 }
 
-enum E_ScipioRole;
-
 namespace MsgsClientToSim
 {
     class MsgClientToSim;
@@ -28,7 +26,6 @@ namespace MsgsClientToSim
 
 namespace MsgsClientToAuthentication
 {
-    class MsgProfileUpdateRequest;
     class MsgProfileCreationRequest;
     class MsgProfileUpdateRequest;
 }
@@ -75,10 +72,10 @@ public:
     //! @name Main
     //@{
     bool CheckPassword( const std::string& strPassword ) const;
-    bool CheckRights  ( const MsgsClientToSim::MsgClientToSim& msg ) const;
-    bool CheckRights  ( const MsgsClientToAuthentication::MsgClientToAuthentication& msg ) const;
-    bool CheckRights  ( const MsgsClientToReplay::MsgClientToReplay&         msg ) const;
-    bool CheckRights  ( const Common::MsgChatTarget& source, const Common::MsgChatTarget& target ) const;
+    bool CheckRights( const MsgsClientToSim::MsgClientToSim& msg ) const;
+    bool CheckRights( const MsgsClientToAuthentication::MsgClientToAuthentication& msg ) const;
+    bool CheckRights( const MsgsClientToReplay::MsgClientToReplay& msg ) const;
+    bool CheckRights( const Common::MsgChatTarget& source, const Common::MsgChatTarget& target ) const;
     //@}
 
     //! @name Accessors
@@ -88,8 +85,8 @@ public:
 
     //! @name Network
     //@{
-    void Send        ( MsgsAuthenticationToClient::MsgProfile& asn ) const;
-    void Send        ( MsgsAuthenticationToClient::MsgProfileDescription& asn ) const;
+    void Send( MsgsAuthenticationToClient::MsgProfile& asn ) const;
+    void Send( MsgsAuthenticationToClient::MsgProfileDescription& asn ) const;
     void SendCreation( ClientPublisher_ABC& publisher ) const;
     //@}
 
@@ -102,9 +99,9 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::set< const kernel::Automat_ABC* >    T_AutomatSet;
-    typedef std::set< const kernel::Team_ABC* >       T_SideSet;
-    typedef std::set< const kernel::Formation_ABC* >  T_FormationSet;
+    typedef std::set< const kernel::Automat_ABC* > T_AutomatSet;
+    typedef std::set< const kernel::Team_ABC* > T_SideSet;
+    typedef std::set< const kernel::Formation_ABC* > T_FormationSet;
     typedef std::set< const kernel::Population_ABC* > T_PopulationSet;
     //@}
 
@@ -117,11 +114,11 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAutomatRights   ( xml::xistream& xis, T_AutomatSet&    container );
-    void ReadSideRights      ( xml::xistream& xis, T_SideSet&       container );
-    void ReadFormationRights ( xml::xistream& xis, T_FormationSet&  container );
+    void ReadAutomatRights( xml::xistream& xis, T_AutomatSet& container );
+    void ReadSideRights( xml::xistream& xis, T_SideSet& container );
+    void ReadFormationRights( xml::xistream& xis, T_FormationSet& container );
     void ReadPopulationRights( xml::xistream& xis, T_PopulationSet& container );
-    void ReadRights          ( const MsgsAuthenticationToClient::MsgProfile& message );
+    void ReadRights( const MsgsAuthenticationToClient::MsgProfile& message );
     //@}
 
 private:
@@ -129,25 +126,24 @@ private:
     //@{
     const Model& model_;
     ClientPublisher_ABC& clients_;
-
-    std::string     strLogin_;
-    std::string     strPassword_;
-    E_ScipioRole    role_;
+    std::string strLogin_;
+    std::string strPassword_;
+    int role_;
 
     // Read only
-    T_AutomatSet    readOnlyAutomats_;
-    T_SideSet       readOnlySides_;
-    T_FormationSet  readOnlyFormations_;
+    T_AutomatSet readOnlyAutomats_;
+    T_SideSet readOnlySides_;
+    T_FormationSet readOnlyFormations_;
     T_PopulationSet readOnlyPopulations_;
 
     // Read write
-    T_AutomatSet    readWriteAutomats_;
-    T_SideSet       readWriteSides_;
-    T_FormationSet  readWriteFormations_;
+    T_AutomatSet readWriteAutomats_;
+    T_SideSet readWriteSides_;
+    T_FormationSet readWriteFormations_;
     T_PopulationSet readWritePopulations_;
 
     // Supervision
-    bool            bSupervision_;
+    bool  bSupervision_;
     //@}
 };
 

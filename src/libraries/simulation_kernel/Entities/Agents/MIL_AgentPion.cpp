@@ -88,6 +88,9 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , algorithmFactories_  ( algorithmFactories )
 {
     automate.RegisterPion( *this );
+    xis >> xml::optional >> xml::start( "extensions" )
+        >> xml::list( "entry", *this, &MIL_AgentPion::ReadExtension )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +178,6 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> pAutomate_
       // >> actions_ // actions non sauvegardées
          >> pKnowledgeBlackBoard_;
-
     LoadRole< network::NET_RolePion_Dotations >( file, *this );
     LoadRole< PHY_RolePion_Reinforcement >( file, *this );
     LoadRole< PHY_RolePion_Posture >( file, *this );
@@ -217,43 +219,41 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pType_ );
-
     file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
     file << bIsPC_
         << pAutomate_
         // << actions_ // actions non sauvegardées
         << pKnowledgeBlackBoard_;
-
     SaveRole< network::NET_RolePion_Dotations >( *this, file );
-    SaveRole< PHY_RolePion_Reinforcement     >( *this, file );
-    SaveRole< PHY_RolePion_Posture           >( *this, file );
-    SaveRole< PHY_RolePion_Location          >( *this, file );
-    SaveRole< PHY_RolePion_UrbanLocation     >( *this, file );
+    SaveRole< PHY_RolePion_Reinforcement >( *this, file );
+    SaveRole< PHY_RolePion_Posture >( *this, file );
+    SaveRole< PHY_RolePion_Location >( *this, file );
+    SaveRole< PHY_RolePion_UrbanLocation >( *this, file );
     SaveRole< dotation::PHY_RolePion_Dotations >( *this, file );
-    SaveRole< human::PHY_RolePion_Humans     >( *this, file );
-    SaveRole< PHY_RolePion_Composantes       >( *this, file );
-    SaveRole< PHY_RolePion_ActiveProtection  >( *this, file );
-    SaveRole< PHY_RolePion_Perceiver         >( *this, file );
-    SaveRole< nbc::PHY_RolePion_NBC          >( *this, file );
-    SaveRole< PHY_RolePion_Communications    >( *this, file );
-    SaveRole< PHY_RolePion_HumanFactors      >( *this, file );
+    SaveRole< human::PHY_RolePion_Humans >( *this, file );
+    SaveRole< PHY_RolePion_Composantes >( *this, file );
+    SaveRole< PHY_RolePion_ActiveProtection >( *this, file );
+    SaveRole< PHY_RolePion_Perceiver >( *this, file );
+    SaveRole< nbc::PHY_RolePion_NBC >( *this, file );
+    SaveRole< PHY_RolePion_Communications >( *this, file );
+    SaveRole< PHY_RolePion_HumanFactors >( *this, file );
     SaveRole< transport::PHY_RolePion_Transported >( *this, file );
-    //SaveRole< PHY_RolePion_Maintenance       >( *this, file );//@TODO refactor with new save
-    //SaveRole< PHY_RolePion_Medical           >( *this, file );
-    //SaveRole< PHY_RolePion_Supply            >( *this, file );
+    //SaveRole< PHY_RolePion_Maintenance >( *this, file );//@TODO refactor with new save
+    //SaveRole< PHY_RolePion_Medical >( *this, file );
+    //SaveRole< PHY_RolePion_Supply >( *this, file );
     SaveRole< surrender::PHY_RolePion_Surrender >( *this, file );
     SaveRole< refugee::PHY_RolePion_Refugee >( *this, file );
     SaveRole< PHY_RolePion_Population >( *this, file );
     SaveRole< transport::PHY_RoleAction_Loading >( *this, file );
     SaveRole< transport::PHY_RoleAction_Transport >( *this, file );
-    SaveRole< moving::PHY_RoleAction_Moving  >( *this, file );
-    SaveRole< PHY_RoleAction_Objects         >( *this, file );
-    SaveRole< firing::PHY_RoleAction_DirectFiring    >( *this, file );
-    SaveRole< firing::PHY_RoleAction_IndirectFiring  >( *this, file );
-    SaveRole< DEC_RolePion_Decision          >( *this, file );
+    SaveRole< moving::PHY_RoleAction_Moving >( *this, file );
+    SaveRole< PHY_RoleAction_Objects >( *this, file );
+    SaveRole< firing::PHY_RoleAction_DirectFiring >( *this, file );
+    SaveRole< firing::PHY_RoleAction_IndirectFiring >( *this, file );
+    SaveRole< DEC_RolePion_Decision >( *this, file );
     SaveRole< PHY_RoleAction_InterfaceFlying >( *this, file );
-    SaveRole< PHY_RoleAction_FolkInfluence   >( *this, file );
-    SaveRole< PHY_RolePion_Illumination >     ( *this, file ); // LTO
+    SaveRole< PHY_RoleAction_FolkInfluence >( *this, file );
+    SaveRole< PHY_RolePion_Illumination >( *this, file ); // LTO
 }
 
 // -----------------------------------------------------------------------------
@@ -263,24 +263,18 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
 void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
 {
     assert( pType_ );
-
     xos << xml::start( "unit" );
-
     MIL_Entity_ABC::WriteODB( xos ) ;
-
     xos     << xml::attribute( "id", GetID() )
             << xml::attribute( "type", pType_->GetName() )
             << xml::attribute( "command-post", bIsPC_ )
             << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition() ) );
-
     GetRole< PHY_RolePion_Composantes >().WriteODB( xos ); // Equipements
-    GetRole< human::PHY_RolePion_Humans      >().WriteODB( xos ); // Personnels
-    GetRole< dotation::PHY_RolePion_Dotations   >().WriteODB( xos ); // Dotations
-
+    GetRole< human::PHY_RolePion_Humans >().WriteODB( xos ); // Personnels
+    GetRole< dotation::PHY_RolePion_Dotations >().WriteODB( xos ); // Dotations
     const PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();//@TODO verify
     if( role )
         role->WriteODB( xos ); // Stocks
-
     xos << xml::end;// unit
 }
 
@@ -291,10 +285,9 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
 void MIL_AgentPion::ReadOverloading( xml::xistream& xis )
 {
     // Dotations overloaded by ODB
-    GetRole< PHY_RolePion_Composantes  >().ReadOverloading( xis ); // Composantes + humans
-    GetRole< dotation::PHY_RolePion_Dotations    >().ReadOverloading( xis );
+    GetRole< PHY_RolePion_Composantes >().ReadOverloading( xis ); // Composantes + humans
+    GetRole< dotation::PHY_RolePion_Dotations >().ReadOverloading( xis );
     GetRole< PHY_RolePion_HumanFactors >().ReadOverloading( xis );
-
     PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         role->ReadOverloading( xis ); // Stocks
@@ -367,7 +360,6 @@ void MIL_AgentPion::UpdateDecision( float duration )
     {
         MIL_Report::PostEvent( *this, MIL_Report::eReport_MissionImpossible_ );
     }
-    //GetRole< DEC_Decision_ABC >().GarbageCollect();
 }
 
 // -----------------------------------------------------------------------------
@@ -377,28 +369,28 @@ void MIL_AgentPion::UpdateDecision( float duration )
 void MIL_AgentPion::UpdatePhysicalState()
 {
     const bool bIsDead = IsDead();
-    GetRole< dotation::PHY_RolePion_Dotations     >().Update( bIsDead );
-    GetRole< human::PHY_RolePion_Humans           >().Update( bIsDead );
-    GetRole< PHY_RolePion_Composantes             >().Update( bIsDead );
-    GetRole< PHY_RolePion_Posture                 >().Update( bIsDead );
-    GetRole< PHY_RolePion_Reinforcement           >().Update( bIsDead );
-    GetRole< PHY_RolePion_Location                >().Update( bIsDead );
-    GetRole< nbc::PHY_RolePion_NBC                >().Update( bIsDead );
-    GetRole< PHY_RolePion_Communications          >().Update( bIsDead );
-    GetRole< PHY_RolePion_HumanFactors            >().Update( bIsDead );
-    GetRole< transport::PHY_RolePion_Transported  >().Update( bIsDead );
-    GetRole< surrender::PHY_RolePion_Surrender    >().Update( bIsDead );
-    GetRole< refugee::PHY_RolePion_Refugee        >().Update( bIsDead );
-    GetRole< PHY_RolePion_Population              >().Update( bIsDead );
-    GetRole< PHY_RolePion_Perceiver               >().Update( bIsDead ); // Doit être après PHY_RolePion_Composantes $$$ pourri - utiliser des observers
-    GetRole< transport::PHY_RoleAction_Loading    >().Update( bIsDead );
-    GetRole< transport::PHY_RoleAction_Transport  >().Update( bIsDead );
-    GetRole< PHY_RoleAction_Objects               >().Update( bIsDead );
-    GetRole< moving::PHY_RoleAction_Moving        >().Update( bIsDead );
-    GetRole< PHY_RoleAction_InterfaceFlying       >().Update( bIsDead );
-    GetRole< firing::PHY_RoleAction_DirectFiring  >().Update( bIsDead );
-    GetRole< firing::PHY_RoleAction_IndirectFiring>().Update( bIsDead );
-    GetRole< PHY_RoleAction_FolkInfluence         >().Update( bIsDead );
+    GetRole< dotation::PHY_RolePion_Dotations >().Update( bIsDead );
+    GetRole< human::PHY_RolePion_Humans >().Update( bIsDead );
+    GetRole< PHY_RolePion_Composantes >().Update( bIsDead );
+    GetRole< PHY_RolePion_Posture >().Update( bIsDead );
+    GetRole< PHY_RolePion_Reinforcement >().Update( bIsDead );
+    GetRole< PHY_RolePion_Location >().Update( bIsDead );
+    GetRole< nbc::PHY_RolePion_NBC >().Update( bIsDead );
+    GetRole< PHY_RolePion_Communications >().Update( bIsDead );
+    GetRole< PHY_RolePion_HumanFactors >().Update( bIsDead );
+    GetRole< transport::PHY_RolePion_Transported >().Update( bIsDead );
+    GetRole< surrender::PHY_RolePion_Surrender >().Update( bIsDead );
+    GetRole< refugee::PHY_RolePion_Refugee >().Update( bIsDead );
+    GetRole< PHY_RolePion_Population >().Update( bIsDead );
+    GetRole< PHY_RolePion_Perceiver >().Update( bIsDead ); // Doit être après PHY_RolePion_Composantes $$$ pourri - utiliser des observers
+    GetRole< transport::PHY_RoleAction_Loading >().Update( bIsDead );
+    GetRole< transport::PHY_RoleAction_Transport >().Update( bIsDead );
+    GetRole< PHY_RoleAction_Objects >().Update( bIsDead );
+    GetRole< moving::PHY_RoleAction_Moving >().Update( bIsDead );
+    GetRole< PHY_RoleAction_InterfaceFlying >().Update( bIsDead );
+    GetRole< firing::PHY_RoleAction_DirectFiring >().Update( bIsDead );
+    GetRole< firing::PHY_RoleAction_IndirectFiring >().Update( bIsDead );
+    GetRole< PHY_RoleAction_FolkInfluence >().Update( bIsDead );
     PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >(); //@TODO add update to new role interface
     if( role )
         role->Update( bIsDead );
@@ -408,6 +400,15 @@ void MIL_AgentPion::UpdatePhysicalState()
     PHY_RoleInterface_Supply* role3 = RetrieveRole< PHY_RoleInterface_Supply >();
     if( role3 )
         role3->Update( bIsDead );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::ReadExtension
+// Created: JSR 2010-10-08
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::ReadExtension( xml::xistream& xis )
+{
+    extensions_[ xis.attribute< std::string >( "key" ) ] = xis.attribute< std::string >( "value" );
 }
 
 // -----------------------------------------------------------------------------
@@ -444,30 +445,29 @@ void MIL_AgentPion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) c
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::Clean()
 {
-    GetRole< PHY_RolePion_Location                   >().Clean();
-    GetRole< PHY_RolePion_Perceiver                  >().Clean();
-    GetRole< dotation::PHY_RolePion_Dotations        >().Clean();
-    GetRole< human::PHY_RolePion_Humans              >().Clean();
-    GetRole< PHY_RolePion_Composantes                >().Clean();
-    GetRole< PHY_RolePion_Posture                    >().Clean();
-    GetRole< PHY_RolePion_Reinforcement              >().Clean();
-    GetRole< nbc::PHY_RolePion_NBC                   >().Clean();
-    GetRole< PHY_RolePion_Communications             >().Clean();
-    GetRole< PHY_RolePion_HumanFactors               >().Clean();
-    GetRole< surrender::PHY_RoleInterface_Surrender  >().Clean();
-    GetRole< refugee::PHY_RolePion_Refugee           >().Clean();
-    GetRole< PHY_RolePion_Population                 >().Clean();
-    GetRole< transport::PHY_RoleInterface_Transported>().Clean();
-    GetRole< transport::PHY_RoleAction_Transport     >().Clean();
-    GetRole< transport::PHY_RoleAction_Loading       >().Clean();
-    GetRole< PHY_RoleAction_Objects                  >().Clean();
-    GetRole< moving::PHY_RoleAction_Moving           >().Clean();
-    GetRole< PHY_RoleAction_InterfaceFlying          >().Clean();
-    GetRole< firing::PHY_RoleAction_DirectFiring     >().Clean();
-    GetRole< firing::PHY_RoleAction_IndirectFiring   >().Clean();
-    GetRole< DEC_RolePion_Decision                   >().Clean();
-    GetRole< PHY_RoleAction_FolkInfluence            >().Clean();
-
+    GetRole< PHY_RolePion_Location >().Clean();
+    GetRole< PHY_RolePion_Perceiver >().Clean();
+    GetRole< dotation::PHY_RolePion_Dotations >().Clean();
+    GetRole< human::PHY_RolePion_Humans >().Clean();
+    GetRole< PHY_RolePion_Composantes >().Clean();
+    GetRole< PHY_RolePion_Posture >().Clean();
+    GetRole< PHY_RolePion_Reinforcement >().Clean();
+    GetRole< nbc::PHY_RolePion_NBC >().Clean();
+    GetRole< PHY_RolePion_Communications >().Clean();
+    GetRole< PHY_RolePion_HumanFactors >().Clean();
+    GetRole< surrender::PHY_RoleInterface_Surrender >().Clean();
+    GetRole< refugee::PHY_RolePion_Refugee >().Clean();
+    GetRole< PHY_RolePion_Population >().Clean();
+    GetRole< transport::PHY_RoleInterface_Transported >().Clean();
+    GetRole< transport::PHY_RoleAction_Transport >().Clean();
+    GetRole< transport::PHY_RoleAction_Loading >().Clean();
+    GetRole< PHY_RoleAction_Objects >().Clean();
+    GetRole< moving::PHY_RoleAction_Moving >().Clean();
+    GetRole< PHY_RoleAction_InterfaceFlying >().Clean();
+    GetRole< firing::PHY_RoleAction_DirectFiring >().Clean();
+    GetRole< firing::PHY_RoleAction_IndirectFiring >().Clean();
+    GetRole< DEC_RolePion_Decision >().Clean();
+    GetRole< PHY_RoleAction_FolkInfluence >().Clean();
     PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >();//@TODO Add an interface for role with clean, update
     if( role )
         role->Clean();
@@ -561,14 +561,27 @@ boost::shared_ptr< DEC_Knowledge_Agent > MIL_AgentPion::CreateKnowledge( const M
 void MIL_AgentPion::SendCreation() const
 {
     assert( pType_ );
-
     client::UnitCreation asnMsg;
     asnMsg().mutable_unit()->set_id( GetID() );
     asnMsg().mutable_type()->set_id( pType_->GetID() );
-    asnMsg().set_nom         ( GetName().c_str() ); // !! pointeur sur const char*
+    asnMsg().set_nom( GetName() );
     asnMsg().mutable_automat()->set_id( GetAutomate().GetID() );
-    asnMsg().set_pc          ( IsPC() );
+    asnMsg().set_pc( IsPC() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    // TODO à mettre dans UnitCreation quand l'erreur dans le protocole pourra être corrigée (extensions dans creation et pas attributes)
+    if( extensions_.size() )
+    {
+        client::UnitAttributes msg;
+        msg().mutable_unit()->set_id( GetID() );
+        for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
+        {
+            MsgsSimToClient::Extension_Entry* entry = msg().mutable_extension()->add_entries();
+            entry->set_name( it->first );
+            entry->set_value( it->second );
+        }
+        msg.Send( NET_Publisher_ABC::Publisher() );
+        msg().mutable_extension()->mutable_entries()->Clear();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -589,7 +602,6 @@ void MIL_AgentPion::SendKnowledge() const
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->SendFullState();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgOrder
@@ -648,28 +660,20 @@ void MIL_AgentPion::OnReceiveMsgMagicActionMoveTo( const MT_Vector2D& vPosition 
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn )
 {
-    if( asn.type() != MsgsClientToSim::MsgUnitMagicAction_Type_move_to )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
-
+    if( asn.type() != MsgsClientToSim::MsgUnitMagicAction::move_to )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     if( pAutomate_->IsEngaged() )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_automate_embraye );
-
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_automate_embraye );
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1)
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
-
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     const Common::MsgMissionParameter& parametre = asn.parameters().elem( 0 );
     if( !parametre.has_value() || !parametre.value().has_point() )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
-
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     const Common::MsgPoint& point = parametre.value().point();
-
-    if( point.location().type() != Common::MsgLocation_Geometry_point
-        || point.location().coordinates().elem_size() != 1 )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
-
+    if( point.location().type() != Common::MsgLocation::point  || point.location().coordinates().elem_size() != 1 )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
-
     MagicMove( vPosTmp );
     UpdatePhysicalState();
 }
@@ -682,28 +686,26 @@ void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const Common::MsgMissionPar
 {
     if( msg.elem( 0 ).has_value() && msg.elem( 0 ).value().has_enumeration() )
     {
-        Common::EnumUnitTiredness tiredness = ( Common::EnumUnitTiredness ) msg.elem( 0 ).value().enumeration();
+        Common::EnumUnitTiredness tiredness = static_cast< Common::EnumUnitTiredness >( msg.elem( 0 ).value().enumeration() );
         const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( tiredness );
         if( !pTiredness )
-            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness );
     }
-
     if( msg.elem( 1 ).has_value() && msg.elem( 1 ).value().has_enumeration() )
     {
-        Common::EnumUnitMorale morale = ( Common::EnumUnitMorale ) msg.elem( 1 ).value().enumeration();
+        Common::EnumUnitMorale morale = static_cast< Common::EnumUnitMorale >( msg.elem( 1 ).value().enumeration() );
         const PHY_Morale* pMoral = PHY_Morale::Find( morale );
         if( !pMoral )
-            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetMorale( *pMoral );
     }
-
     if( msg.elem( 2 ).has_value() && msg.elem( 2 ).value().has_enumeration() )
     {
-        Common::EnumUnitExperience experience = ( Common::EnumUnitExperience ) msg.elem( 2 ).value().enumeration();
+        Common::EnumUnitExperience experience = static_cast< Common::EnumUnitExperience >( msg.elem( 2 ).value().enumeration() );
         const PHY_Experience* pExperience = PHY_Experience::Find( experience );
         if( !pExperience )
-            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
     }
 }
@@ -724,7 +726,6 @@ void MIL_AgentPion::OnReceiveMsgResupplyHumans()
 void MIL_AgentPion::OnReceiveMsgResupplyResources()
 {
     GetRole< dotation::PHY_RolePion_Dotations >().ResupplyDotations();
-
     PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         role->ResupplyStocks();
@@ -773,7 +774,6 @@ void MIL_AgentPion::OnReceiveMsgResupply( const Common::MsgMissionParameters& ms
                 roleComposantes.ChangeComposantesAvailability( *pComposanteType, number );
         }
     }
-
     if( msg.elem( 1 ).has_value() ) // Humans
     {
         human::PHY_RolePion_Humans& roleHumans = GetRole< human::PHY_RolePion_Humans >();
@@ -786,7 +786,6 @@ void MIL_AgentPion::OnReceiveMsgResupply( const Common::MsgMissionParameters& ms
                 roleHumans.ChangeHumansAvailability( *pHumanRank, number );
         }
     }
-
     if( msg.elem( 2 ).has_value() ) // Dotations
     {
         dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
@@ -799,7 +798,6 @@ void MIL_AgentPion::OnReceiveMsgResupply( const Common::MsgMissionParameters& ms
                 roleDotations.ResupplyDotations( *pDotationType, number / 100. );
         }
     }
-
     if( msg.elem( 3 ).has_value() ) // Ammunition
     {
         dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
@@ -812,21 +810,16 @@ void MIL_AgentPion::OnReceiveMsgResupply( const Common::MsgMissionParameters& ms
                 roleDotations.ResupplyDotations( *pAmmoClass, number / 100. );
         }
     }
-
-    if( msg.elem( 4 ).has_value() ) // stocks
-    {
-        if( PHY_RoleInterface_Supply* roleSupply = RetrieveRole< PHY_RoleInterface_Supply >() )
+    PHY_RoleInterface_Supply* roleSupply = RetrieveRole< PHY_RoleInterface_Supply >();
+    if( roleSupply && msg.elem( 4 ).has_value() ) // stocks
+        for( int i = 0; i < msg.elem( 4 ).value().list_size(); ++i )
         {
-            for( int i = 0; i < msg.elem( 4 ).value().list_size(); ++i )
-            {
-                unsigned int stock = msg.elem( 4 ).value().list( i ).list( 0 ).identifier();
-                int number = msg.elem( 4 ).value().list( i ).list( 1 ).quantity();
-                const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( stock );
-                if( pDotationCategory )
-                    roleSupply->ResupplyStocks( *pDotationCategory, number );
-            }
+            unsigned int stock = msg.elem( 4 ).value().list( i ).list( 0 ).identifier();
+            int number = msg.elem( 4 ).value().list( i ).list( 1 ).quantity();
+            const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( stock );
+            if( pDotationCategory )
+                roleSupply->ResupplyStocks( *pDotationCategory, number );
         }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -855,37 +848,37 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitM
 {
     switch( msg.type() )
     {
-    case MsgsClientToSim::MsgUnitMagicAction_Type_surrender_to:
+    case MsgsClientToSim::MsgUnitMagicAction::surrender_to:
         pAutomate_->OnReceiveMsgUnitMagicAction( msg, armies );
         return;
-    case MsgsClientToSim::MsgUnitMagicAction_Type_cancel_surrender:
+    case MsgsClientToSim::MsgUnitMagicAction::cancel_surrender:
         pAutomate_->OnReceiveMsgUnitMagicAction( msg, armies );
         return;
-    case MsgsClientToSim::MsgUnitMagicAction_Type_recover_transporters:
+    case MsgsClientToSim::MsgUnitMagicAction::recover_transporters:
         OnReceiveMsgRecoverHumansTransporters();
         break;
-    case MsgsClientToSim::MsgUnitMagicAction_Type_destroy_component:
+    case MsgsClientToSim::MsgUnitMagicAction::destroy_component:
         OnReceiveMsgDestroyComponent();
         break;
-    case MsgsClientToSim::MsgUnitMagicAction_Type_recover_all:
+    case MsgsClientToSim::MsgUnitMagicAction::recover_all:
         OnReceiveMsgResupplyAll();
         break;
-    case MsgsClientToSim::MsgUnitMagicAction_Type_recover_troops:
+    case MsgsClientToSim::MsgUnitMagicAction::recover_troops:
         OnReceiveMsgResupplyHumans();
         break;
-    case MsgsClientToSim::MsgUnitMagicAction_Type_recover_equipments:
+    case MsgsClientToSim::MsgUnitMagicAction::recover_equipments:
         OnReceiveMsgResupplyEquipement();
         break;
-    case MsgsClientToSim::MsgUnitMagicAction_Type_recover_resources:
+    case MsgsClientToSim::MsgUnitMagicAction::recover_resources:
         OnReceiveMsgResupplyResources();
         break;
-    case MsgsClientToSim::MsgUnitMagicAction_Type_destroy_all:
+    case MsgsClientToSim::MsgUnitMagicAction::destroy_all:
         OnReceiveMsgDestroyAll();
         break;
-    case MsgsClientToSim::MsgUnitMagicAction_Type_change_human_factors:
+    case MsgsClientToSim::MsgUnitMagicAction::change_human_factors:
         OnReceiveMsgChangeHumanFactors( msg.parameters() );
         break;
-    case MsgsClientToSim::MsgUnitMagicAction_Type_partial_recovery:
+    case MsgsClientToSim::MsgUnitMagicAction::partial_recovery:
         OnReceiveMsgResupply( msg.parameters() );
         break;
     default:
@@ -926,10 +919,8 @@ void MIL_AgentPion::OnReceiveMsgChangeSuperior( const MIL_EntityManager& manager
     MIL_Automate* pNewAutomate = manager.FindAutomate( msg.parameters().elem( 0 ).value().automat().id() );
     if( !pNewAutomate )
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck::ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_invalid_automate );
-
     if( pNewAutomate->GetArmy() != GetArmy() )
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck::ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_parties_mismatched );
-
     pAutomate_->UnregisterPion( *this );
     pAutomate_ = pNewAutomate;
     pAutomate_->RegisterPion  ( *this );
@@ -990,8 +981,7 @@ void MIL_AgentPion::ChangeSuperior( MIL_Automate& newAutomate )
     assert( GetArmy() == newAutomate.GetArmy() );
     pAutomate_->UnregisterPion( *this );
     pAutomate_ = &newAutomate;
-    pAutomate_->RegisterPion  ( *this );
-
+    pAutomate_->RegisterPion( *this );
     client::UnitChangeSuperior asnMsg;
     asnMsg().mutable_unit()->set_id( GetID() );
     asnMsg().mutable_parent()->set_id( newAutomate.GetID() );
@@ -1012,7 +1002,6 @@ void MIL_AgentPion::NotifyAttackedBy( MIL_AgentPion& attacker )
         MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByFriendSide );
     else if( GetArmy().IsAnEnemy( attacker.GetArmy() ) == eTristate_True )
         MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByEnemySide );
-
     GetKnowledge().GetKsFire().NotifyAttackedBy( attacker );
 }
 
@@ -1151,21 +1140,16 @@ double MIL_AgentPion::GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > p
         ||  GetArmy().IsAFriend( *pTargetKnowledge->GetArmy() ) == eTristate_True
         ||  pTargetKnowledge->IsSurrendered() )
         return 0.;
-
     // Target is dead ....
     const DEC_Knowledge_AgentComposante* pTargetMajorComposante = pTargetKnowledge->GetMajorComposante();
     if( !pTargetMajorComposante )
         return 0.;
-
-    float rDangerosity = 0.;
-
+    double rDangerosity = 0.;
     // Fight score
     const MT_Vector3D sourcePosition( position->rX_, position->rY_, 0.);
     const MT_Vector3D targetPosition  ( pTargetKnowledge->GetPosition().rX_, pTargetKnowledge->GetPosition().rY_, pTargetKnowledge->GetAltitude() );
-    const double rDistBtwSourceAndTarget = sourcePosition.Distance( targetPosition );
-
+    const float rDistBtwSourceAndTarget = static_cast< const float >( sourcePosition.Distance( targetPosition ) );
     rDangerosity = GetRole< PHY_RoleInterface_Composantes >().GetDangerosity( *pTargetMajorComposante, rDistBtwSourceAndTarget );
-
     //DegradeDangerosity( rDangerosity );//@TODO MGD before commit
     return rDangerosity;
 }
@@ -1178,20 +1162,16 @@ double MIL_AgentPion::Distance( const MIL_Agent_ABC& target ) const
 {
     const PHY_RoleInterface_Location& firerLocation = GetRole< PHY_RoleInterface_Location >();
     const geometry::Point2f firerPosition( static_cast< float >( firerLocation.GetPosition().rX_ ), static_cast< float >( firerLocation.GetPosition().rY_ ) );
-
     const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
     const geometry::Point2f targetPosition( static_cast< float >( targetLocation.GetPosition().rX_ ), static_cast< float >( targetLocation.GetPosition().rY_ ) );
-
     const PHY_RoleInterface_UrbanLocation& firerUrbanRole = GetRole< PHY_RoleInterface_UrbanLocation >();
     const PHY_RoleInterface_UrbanLocation& targetUrbanRole = target.GetRole< PHY_RoleInterface_UrbanLocation >();
-
     if( firerUrbanRole.GetCurrentUrbanBlock() == targetUrbanRole.GetCurrentUrbanBlock() && firerUrbanRole.GetCurrentUrbanBlock() )
         return firerUrbanRole.ComputeDistanceInsideSameUrbanBlock( const_cast< MIL_Agent_ABC& >( target ) );
     else
     {
         geometry::Point2f realFirerPosition = firerUrbanRole.GetFirerPosition( const_cast< MIL_Agent_ABC& >( target ) );
         geometry::Point2f realTargetPosition = targetUrbanRole.GetTargetPosition( const_cast< MIL_AgentPion& >( *this ) );
-
         MT_Vector3D vFirerPosition(  realFirerPosition.X(), realFirerPosition.Y(), firerLocation.GetAltitude() );
         MT_Vector3D vTargetPosition(  realTargetPosition.X(), realTargetPosition.Y(), targetLocation.GetAltitude() );
         return vFirerPosition.Distance( vTargetPosition );

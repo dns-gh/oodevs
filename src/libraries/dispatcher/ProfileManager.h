@@ -18,8 +18,6 @@ namespace MsgsSimToClient
     class MsgSimToClient;
 }
 
-enum E_ScipioRole;
-
 namespace MsgsAuthenticationToClient
 {
     enum  MsgProfileCreationRequestAck_ErrorCode;
@@ -77,7 +75,6 @@ public:
     MsgsAuthenticationToClient::MsgProfileDestructionRequestAck_ErrorCode Destroy( const MsgsClientToAuthentication::MsgProfileDestructionRequest& message );
 
     static void RegisterRoles();
-    static E_ScipioRole FindRole( const std::string& name );
     //@}
 
 private:

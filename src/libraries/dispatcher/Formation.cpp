@@ -26,13 +26,16 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Formation::Formation( const Model_ABC& model, const MsgsSimToClient::MsgFormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels )
-    : Formation_ABC( msg.formation().id(), QString(msg.name().c_str()) )
+    : Formation_ABC( msg.formation().id(), QString( msg.name().c_str() ) )
     , model_ ( model )
     , name_  ( msg.name() )
     , team_  ( model.Sides().Get( msg.party().id() ) )
     , level_ ( levels.Get( msg.level() ) )
     , parent_( msg.has_parent() ? &model.Formations().Get( msg.parent().id() ) : 0 )
 {
+    if( msg.has_extension() )
+        for( int i = 0; i < msg.extension().entries_size(); ++i )
+            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( parent_ )
         parent_->Register( *this );
     else
@@ -109,15 +112,18 @@ void Formation::SetSuperior( dispatcher::Team_ABC& /*superior*/ )
 void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::FormationCreation message;
-
     message().mutable_formation()->set_id( GetId() );
     message().mutable_party()->set_id( team_.GetId() );
     message().set_name( name_ );
     message().set_level( Common::EnumNatureLevel( level_.GetId() ) );
-
     if( parent_ )
         message().mutable_parent()->set_id( parent_->GetId() );
-
+    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+    {
+        MsgsSimToClient::Extension_Entry* entry = message().mutable_extension()->add_entries();
+        entry->set_name( it->first );
+        entry->set_value( it->second );
+    }
     message.Send( publisher );
 }
 

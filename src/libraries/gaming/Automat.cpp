@@ -9,16 +9,17 @@
 
 #include "gaming_pch.h"
 #include "Automat.h"
-#include "clients_kernel/AutomatType.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
-#include "clients_kernel/App6Symbol.h"
-#include "clients_kernel/Karma.h"
 #include "Diplomacies.h"
 #include "Tools.h"
+#include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/DictionaryExtensions.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Karma.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
 
@@ -33,6 +34,13 @@ Automat::Automat( const MsgsSimToClient::MsgAutomatCreation& message, Controller
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.automat().id() );
+    if( message.has_extension() )
+    {
+        DictionaryExtensions* extensions = new DictionaryExtensions;
+        for( int i = 0; i < message.extension().entries_size(); ++i )
+            extensions->SetValue( message.extension().entries( i ).name(), message.extension().entries( i ).value() );
+        Attach( *extensions );
+    }
     RegisterSelf( *this );
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );

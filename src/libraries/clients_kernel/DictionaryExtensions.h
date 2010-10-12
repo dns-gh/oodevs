@@ -32,6 +32,13 @@ class DictionaryExtensions : public Extension_ABC
                            , public Serializable_ABC
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, std::string > T_Extensions;
+    typedef T_Extensions::const_iterator       CIT_Extensions;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              DictionaryExtensions();
@@ -46,6 +53,7 @@ public:
     bool IsEnabled() const;
     void SetValue( const std::string& name, const std::string& value );
     const std::string& GetValue( const std::string& name ) const;
+    const T_Extensions& GetExtensions() const;
     //@}
 
 private:
@@ -57,21 +65,14 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadEntry( xml::xistream& xis );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, std::string > T_Entries;
-    typedef T_Entries::const_iterator          CIT_Entries;
+    void ReadExtension( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
     bool enabled_;
-    T_Entries entries_; 
+    T_Extensions extensions_; 
     //@}
 };
 

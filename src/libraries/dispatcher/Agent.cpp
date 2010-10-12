@@ -295,6 +295,9 @@ void Agent::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
             borrowings_.Register( i, *loan );
         }
     }
+    if( asnMsg.has_extension() )
+        for( int i = 0; i < asnMsg.extension().entries_size(); ++i )
+            extensions_[ asnMsg.extension().entries( i ).name() ] = asnMsg.extension().entries( i ).value();
 }
 
 // -----------------------------------------------------------------------------
@@ -469,7 +472,12 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             for( tools::Iterator< const Loan& > it = lendings_.CreateIterator(); it.HasMoreElements(); )
                 it.NextElement().Send( *asn().mutable_equipements_pretes()->add_elem() );
         }
-
+        for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+        {
+            MsgsSimToClient::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+            entry->set_name( it->first );
+            entry->set_value( it->second );
+        }
         asn.Send( publisher );
     }
 

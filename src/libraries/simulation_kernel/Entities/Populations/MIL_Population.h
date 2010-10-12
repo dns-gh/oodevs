@@ -17,10 +17,6 @@
 
 namespace Common
 {
-    class MsgMagicActionPopulationChangeAttitude;
-    class MsgMagicActionPopulationKill;
-    class MsgMagicActionPopulationMoveTo;
-    class MsgMagicActionPopulationResurrect;
     class MsgCrowdOrder;
 }
 
@@ -66,98 +62,94 @@ public:
 
     //! @name Accessors
     //@{
-          unsigned int                        GetID                () const;
-    const MIL_PopulationType&         GetType              () const;
-    const DEC_PopulationDecision&     GetDecision          () const;
-          DEC_PopulationDecision&     GetDecision          ();
-    const MIL_PopulationOrderManager& GetOrderManager      () const;
-          MIL_PopulationOrderManager& GetOrderManager      ();
-          double                    GetMaxSpeed          () const;
-          double                    GetDefaultFlowDensity() const;
-    const MIL_PopulationAttitude&     GetDefaultAttitude   () const;
-    const MIL_PopulationAttitude&     GetAttitude          () const;
-    const MIL_Army&                   GetArmy              () const;
-    const DEC_PopulationKnowledge&    GetKnowledge         () const;
-          bool                        IsDead               () const;
-          bool                        HasDoneMagicMove     () const;
-          unsigned int                GetNbrAliveHumans    () const;
-          unsigned int                GetNbrDeadHumans     () const;
+    unsigned int GetID() const;
+    const MIL_PopulationType& GetType() const;
+    const DEC_PopulationDecision& GetDecision() const;
+    DEC_PopulationDecision& GetDecision();
+    const MIL_PopulationOrderManager& GetOrderManager() const;
+    MIL_PopulationOrderManager& GetOrderManager();
+    double GetMaxSpeed() const;
+    double GetDefaultFlowDensity() const;
+    const MIL_PopulationAttitude& GetDefaultAttitude() const;
+    const MIL_PopulationAttitude& GetAttitude() const;
+    const MIL_Army& GetArmy() const;
+    const DEC_PopulationKnowledge& GetKnowledge() const;
+    bool IsDead() const;
+    bool HasDoneMagicMove() const;
+    unsigned int GetNbrAliveHumans() const;
+    unsigned int GetNbrDeadHumans() const;
     //@}
 
     //! @name Geometry
     //@{
-    bool        IsInZone         ( const TER_Localisation& loc           ) const;
-    MT_Vector2D GetClosestPoint  ( const MT_Vector2D&      refPos        ) const;
-    MT_Vector2D GetClosestPoint  ( const TER_Localisation& loc           ) const;
-    double    GetDistanceTo    ( const TER_Localisation& loc           ) const;
-    MT_Vector2D GetSecuringPoint ( const MIL_Agent_ABC&    securingAgent ) const;
-    MT_Vector2D GetSafetyPosition( const MIL_AgentPion&    agent        , double rMinDistance ) const;
+    bool IsInZone( const TER_Localisation& loc ) const;
+    MT_Vector2D GetClosestPoint( const MT_Vector2D& refPos ) const;
+    MT_Vector2D GetClosestPoint( const TER_Localisation& loc ) const;
+    double GetDistanceTo( const TER_Localisation& loc ) const;
+    MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
+    MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const;
     boost::shared_ptr< MT_Vector2D > GetBarycenter() const;
     //@}
 
     //! @name Effects on pions
     //@{
-    double GetPionMaxSpeed  ( const MIL_PopulationAttitude& attitude, double rDensity, const PHY_Volume& pionVolume ) const;
-    void     SetPionMaxSpeed  ( double rSpeed );
-    void     ResetPionMaxSpeed();
-
+    double GetPionMaxSpeed( const MIL_PopulationAttitude& attitude, double rDensity, const PHY_Volume& pionVolume ) const;
+    void SetPionMaxSpeed( double rSpeed );
+    void ResetPionMaxSpeed();
     double GetPionReloadingTimeFactor( double rDensity ) const;
     //@}
 
     //! @name Effects from pions
     //@{
-    void NotifyAttackedBy( const MIL_Agent_ABC&    attacker );
-    void Secure          ( const MIL_AgentPion&    securer  );
-    void Exterminate     ( const MIL_AgentPion&    exterminator, double rSurface );
-    void NotifyChanneled ( const TER_Localisation& localisation );
+    void NotifyAttackedBy( const MIL_Agent_ABC& attacker );
+    void Secure( const MIL_AgentPion& securer  );
+    void Exterminate( const MIL_AgentPion& exterminator, double rSurface );
+    void NotifyChanneled( const TER_Localisation& localisation );
     //@}
 
     //! @name Operations
     //@{
     void UpdateKnowledges();
-    void CleanKnowledges ();
-    void UpdateDecision  ( float duration );
-    void UpdateState     ();
-    void Clean           ();
+    void CleanKnowledges();
+    void UpdateDecision( float duration );
+    void UpdateState();
+    void Clean();
     //@}
 
     //! @name Actions
     //@{
-    void     Move          ( const MT_Vector2D& destination );
-    void     FireOnPions   ( double rIntensity, PHY_FireResults_Population& fireResult );
-    void     FireOnPion    ( double rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
+    void Move( const MT_Vector2D& destination );
+    void FireOnPions( double rIntensity, PHY_FireResults_Population& fireResult );
+    void FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
     double GetDangerosity( const MIL_AgentPion& target ) const;
-    void     SetAttitude   ( const MIL_PopulationAttitude& attitude );
-    void     SetBlinded    ( bool blinded );
-    bool     IsBlinded     () const;
-
-    MIL_PopulationElement_ABC* GetClosestAliveElement    ( const MIL_Agent_ABC& reference ) const;
-    void                       ComputeClosestAliveElement( const MT_Vector2D& position, MIL_PopulationElement_ABC*& pClosestElement, double& rMinDistance ) const;
+    void SetAttitude( const MIL_PopulationAttitude& attitude );
+    void SetBlinded( bool blinded );
+    bool IsBlinded() const;
+    MIL_PopulationElement_ABC* GetClosestAliveElement( const MIL_Agent_ABC& reference ) const;
+    void ComputeClosestAliveElement( const MT_Vector2D& position, MIL_PopulationElement_ABC*& pClosestElement, double& rMinDistance ) const;
     //@}
 
     //! @name Tools
     //@{
-    MIL_PopulationFlow&          CreateFlow      ( MIL_PopulationConcentration& concentration );
-    MIL_PopulationFlow&          CreateFlow      ( const MIL_PopulationFlow& source, const MT_Vector2D& splitPoint );
+    MIL_PopulationFlow& CreateFlow( MIL_PopulationConcentration& concentration );
+    MIL_PopulationFlow& CreateFlow( const MIL_PopulationFlow& source, const MT_Vector2D& splitPoint );
     MIL_PopulationConcentration& GetConcentration( const MT_Vector2D& position );
     //@}
 
     //! @name Network
     //@{
-    void OnReceiveMsgOrder    ( const Common::MsgCrowdOrder& msg );
-    void OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder&       msg );
-    void SendCreation         () const;
-    void SendFullState        () const;
-    void UpdateNetwork        ();
-
-    void OnReceiveMsgCrowdMagicAction      ( const MsgsClientToSim::MsgUnitMagicAction& asnMsg );
+    void OnReceiveMsgOrder( const Common::MsgCrowdOrder& msg );
+    void OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder& msg );
+    void SendCreation() const;
+    void SendFullState() const;
+    void UpdateNetwork();
+    void OnReceiveMsgCrowdMagicAction( const MsgsClientToSim::MsgUnitMagicAction& asnMsg );
     void OnReceiveMsgCrowdMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn );
     //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     void WriteODB( xml::xostream& xos ) const;
@@ -168,19 +160,21 @@ public:
     virtual void Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& visitor ) const;
     //@}
 
-       //! @name People Counter
+    //! @name People Counter
     //@{
     struct sPeopleCounter
     {
         sPeopleCounter( unsigned int rInit );
         unsigned GetBoundedPeople( unsigned int nPeople );
-
         unsigned int nPeople_;
     };
-
+    //@}
 
 protected:
+    //! @name Constructor
+    //@{
     MIL_Population( const MIL_PopulationType& type );
+    //@}
 
 private:
     //! @name Copy/Assignment
@@ -191,15 +185,16 @@ private:
 
     //! @name Magic actions
     //@{
-    void OnReceiveMsgDestroyAll    ();
+    void OnReceiveMsgDestroyAll();
     void OnReceiveMsgChangeAttitude( const MsgsClientToSim::MsgUnitMagicAction& asn );
-    void OnReceiveMsgKill          ( const MsgsClientToSim::MsgUnitMagicAction& asn );
-    void OnReceiveMsgResurrect     ( const MsgsClientToSim::MsgUnitMagicAction& asn );
+    void OnReceiveMsgKill( const MsgsClientToSim::MsgUnitMagicAction& asn );
+    void OnReceiveMsgResurrect( const MsgsClientToSim::MsgUnitMagicAction& asn );
     //@}
 
     //! @name Network
     //@{
     void SendDestruction() const;
+    void ReadExtension( xml::xistream& xis );
     //@}
 
     //! @name Helpers
@@ -212,42 +207,39 @@ private:
     //! @name Types
     //@{
     typedef std::vector< MIL_PopulationConcentration* > T_ConcentrationVector;
-    typedef T_ConcentrationVector::iterator             IT_ConcentrationVector;
-    typedef T_ConcentrationVector::const_iterator       CIT_ConcentrationVector;
+    typedef T_ConcentrationVector::iterator            IT_ConcentrationVector;
+    typedef T_ConcentrationVector::const_iterator     CIT_ConcentrationVector;
 
-    typedef std::vector< MIL_PopulationFlow* >          T_FlowVector;
-    typedef T_FlowVector::iterator                      IT_FlowVector;
-    typedef T_FlowVector::const_iterator                CIT_FlowVector;
+    typedef std::vector< MIL_PopulationFlow* > T_FlowVector;
+    typedef T_FlowVector::iterator            IT_FlowVector;
+    typedef T_FlowVector::const_iterator     CIT_FlowVector;
     //@}
 
 private:
-    const MIL_PopulationType*        pType_;
-    const unsigned int               nID_;
-          MIL_Army*                  pArmy_;
-    const MIL_PopulationAttitude*    pDefaultAttitude_;
-          unsigned int               nPeopleCount_;
+    const MIL_PopulationType* pType_;
+    const unsigned int nID_;
+    MIL_Army* pArmy_;
+    const MIL_PopulationAttitude* pDefaultAttitude_;
+    unsigned int nPeopleCount_;
+    T_ConcentrationVector concentrations_;
+    T_FlowVector flows_;
+    T_ConcentrationVector trashedConcentrations_;
+    T_FlowVector trashedFlows_;
+    DEC_PopulationKnowledge* pKnowledge_;
+    MIL_PopulationOrderManager orderManager_;
+    boost::shared_ptr< MT_Vector2D > vBarycenter;
 
-          T_ConcentrationVector      concentrations_;
-          T_FlowVector               flows_;
+    // Pion effects
+    bool bPionMaxSpeedOverloaded_;
+    double rOverloadedPionMaxSpeed_;
+    bool bBlinded_;
 
-          T_ConcentrationVector      trashedConcentrations_;
-          T_FlowVector               trashedFlows_;
+    // Misc
+    bool bHasDoneMagicMove_;
+    std::map< std::string, std::string > extensions_;
 
-          DEC_PopulationKnowledge*   pKnowledge_;
-          MIL_PopulationOrderManager orderManager_;
-
-          boost::shared_ptr< MT_Vector2D > vBarycenter;
-
-          // Pion effects
-          bool                       bPionMaxSpeedOverloaded_;
-          double                   rOverloadedPionMaxSpeed_;
-          bool                       bBlinded_;
-
-          // Misc
-          bool                       bHasDoneMagicMove_;
-
-          template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ );
-          template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Population* population, const unsigned int /*version*/ );
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Population* population, const unsigned int /*version*/ );
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_Population )

@@ -30,7 +30,7 @@ DictionaryExtensions::DictionaryExtensions()
 DictionaryExtensions::DictionaryExtensions( xml::xistream& xis )
     : enabled_( true )
 {
-    xis >> xml::list( "entry", *this, &DictionaryExtensions::ReadEntry );
+    xis >> xml::list( "entry", *this, &DictionaryExtensions::ReadExtension );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,10 +48,10 @@ DictionaryExtensions::~DictionaryExtensions()
 // -----------------------------------------------------------------------------
 void DictionaryExtensions::SerializeAttributes( xml::xostream& xos ) const
 {
-    if( enabled_ && !entries_.empty() )
+    if( enabled_ && !extensions_.empty() )
     {
         xos << xml::start( "extensions" );
-        for( CIT_Entries it = entries_.begin(); it != entries_.end(); ++it )
+        for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
             xos << xml::start( "entry" )
                 << xml::attribute( "key", it->first )
                 << xml::attribute( "value", it->second )
@@ -84,7 +84,7 @@ bool DictionaryExtensions::IsEnabled() const
 // -----------------------------------------------------------------------------
 void DictionaryExtensions::SetValue( const std::string& name, const std::string& value )
 {
-    entries_[ name ] = value;
+    extensions_[ name ] = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -94,17 +94,26 @@ void DictionaryExtensions::SetValue( const std::string& name, const std::string&
 const std::string& DictionaryExtensions::GetValue( const std::string& name ) const
 {
     static const std::string defaultString;
-    CIT_Entries it = entries_.find( name );
-    if( it != entries_.end() )
+    CIT_Extensions it = extensions_.find( name );
+    if( it != extensions_.end() )
         return it->second;
     return defaultString;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DictionaryExtensions::ReadEntry
+// Name: DictionaryExtensions::GetExtensions
+// Created: JSR 2010-10-11
+// -----------------------------------------------------------------------------
+const DictionaryExtensions::T_Extensions& DictionaryExtensions::GetExtensions() const
+{
+    return extensions_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DictionaryExtensions::ReadExtension
 // Created: JSR 2010-10-06
 // -----------------------------------------------------------------------------
-void DictionaryExtensions::ReadEntry( xml::xistream& xis )
+void DictionaryExtensions::ReadExtension( xml::xistream& xis )
 {
-    entries_[ xis.attribute< std::string >( "key" ) ] = xis.attribute< std::string >( "value" );
+    extensions_[ xis.attribute< std::string >( "key" ) ] = xis.attribute< std::string >( "value" );
 }

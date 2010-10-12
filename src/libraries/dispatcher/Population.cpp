@@ -36,6 +36,9 @@ Population::Population( Model_ABC& model, const MsgsSimToClient::MsgCrowdCreatio
     , nDominationState_( 0 )
     , order_           ( 0 )
 {
+    if( msg.has_extension() )
+        for( int i = 0; i < msg.extension().entries_size(); ++i )
+            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     side_.Register( *this );
     RegisterSelf( *this );
 }
@@ -171,6 +174,12 @@ void Population::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_party()->set_id( side_.GetId() );
     asn().mutable_type()->set_id( nType_ );
     asn().set_nom( strName_ );
+    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+    {
+        MsgsSimToClient::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+        entry->set_name( it->first );
+        entry->set_value( it->second );
+    }
     asn.Send( publisher );
 }
 

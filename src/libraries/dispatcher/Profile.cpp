@@ -21,7 +21,6 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>
-#include "MT_Tools/MT_Scipio_enum.h"
 
 using namespace dispatcher;
 
@@ -34,12 +33,11 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
     , clients_     ( clients )
     , strLogin_    ( strLogin )
     , bSupervision_( false )
-    , role_        ( eRoleUndefined )
+    , role_        ( -1 )
 {
-    std::string role;
     xis >> xml::attribute( "password", strPassword_ )
         >> xml::attribute( "supervision", bSupervision_ )
-        >> xml::optional >> xml::attribute( "scipio-role", role )
+        >> xml::optional >> xml::attribute( "role", role_ )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
                 >> xml::list( "automat"   , *this, &Profile::ReadAutomatRights   , readOnlyAutomats_    )
@@ -54,8 +52,6 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
                 >> xml::list( "population", *this, &Profile::ReadPopulationRights, readWritePopulations_ )
             >> xml::end
         >> xml::end;
-    if( !role.empty() )
-        role_ = ProfileManager::FindRole( role );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +64,7 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const MsgsCl
     , strLogin_    ( message.profile().login() )
     , strPassword_ ( message.profile().has_password()  ? message.profile().password() : "" )
     , bSupervision_( message.profile().supervisor() )
-    , role_        ( message.profile().has_role()   ? static_cast< E_ScipioRole > ( message.profile().role() ) : eRoleUndefined )
+    , role_        ( message.profile().has_role()   ? message.profile().role().id() : -1 )
 {
     ReadRights( message.profile() );
     SendCreation( clients_ );
@@ -297,9 +293,8 @@ void Profile::Send( MsgsAuthenticationToClient::MsgProfile& message ) const
 {
     message.set_login( strLogin_ );
     message.set_supervisor( bSupervision_ );
-    if( role_ != eRoleUndefined )
-        message.set_role( static_cast< MsgsAuthenticationToClient::Role >( role_ ) );
-
+    if( role_ != -1 )
+        message.mutable_role()->set_id( role_ );
     Serialize( *message.mutable_read_only_automates(), readOnlyAutomats_ );
     Serialize( *message.mutable_read_write_automates(), readWriteAutomats_ );
     Serialize( *message.mutable_read_only_camps(), readOnlySides_ );
@@ -350,7 +345,7 @@ void Profile::Update( const MsgsClientToAuthentication::MsgProfileUpdateRequest&
     if( updatemessage().profile().has_password()  )
         updatemessage().mutable_profile()->set_password( strPassword_ );
     if( updatemessage().profile().has_role()  )
-        updatemessage().mutable_profile()->set_role( static_cast< MsgsAuthenticationToClient::Role >( role_ ) );
+        updatemessage().mutable_profile()->mutable_role()->set_id( role_ );
     Send( *updatemessage().mutable_profile() );
     updatemessage.Send( clients_ );
 }

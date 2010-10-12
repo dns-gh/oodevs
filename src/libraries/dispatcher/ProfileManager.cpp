@@ -253,16 +253,3 @@ void ProfileManager::RegisterRoles()
     RegisterRole( "analyse" );
     RegisterRole( "gestim" );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ProfileManager::FindRole
-// Created: RPD 2010-05-30
-// -----------------------------------------------------------------------------
-E_ScipioRole ProfileManager::FindRole( const std::string& name )
-{
-    unsigned roleID ( eRoleUndefined );
-    CIT_RoleMap cit = roles_.find( name );
-    if( cit != roles_.end() )
-        roleID = cit->second;
-    return static_cast< E_ScipioRole >( roleID );
-}

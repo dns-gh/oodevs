@@ -20,13 +20,11 @@
 namespace Common
 {
     class MsgMissionParameters;
-    class MsgUnitChangeSuperior;
     class MsgUnitOrder;
 }
 
 namespace MsgsClientToSim
 {
-    class MsgUnitFragOrder;
     class MsgUnitMagicAction;
 }
 
@@ -38,12 +36,9 @@ namespace xml
 
 class DEC_Decision_ABC;
 class DEC_KnowledgeBlackBoard_AgentPion;
-class DEC_KS_AgentQuerier;
 class MIL_Army;
 class MIL_Automate;
 class MIL_EntityManager;
-class MIL_Fuseau;
-class MIL_LimaFunction;
 class HLA_UpdateFunctor;
 
 // =============================================================================
@@ -160,6 +155,7 @@ private:
     //! @name Operations
     //@{
     void UpdatePhysicalState();
+    void ReadExtension( xml::xistream& xis );
     //@}
 
     //! @name Magic actions
@@ -190,6 +186,7 @@ private:
     const AlgorithmsFactories& algorithmFactories_;
     DEC_KnowledgeBlackBoard_AgentPion* pKnowledgeBlackBoard_;
     MIL_PionOrderManager& orderManager_;
+    std::map< std::string, std::string > extensions_;
     //@}
 };
 

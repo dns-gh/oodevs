@@ -13,6 +13,7 @@
 #include "PopulationConcentration.h"
 #include "PopulationPartPositionsProxy.h"
 #include "Tools.h"
+#include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/PopulationType.h"
@@ -39,6 +40,13 @@ Population::Population( const MsgsSimToClient::MsgCrowdCreation& message, Contro
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.crowd().id() );
+    if( message.has_extension() )
+    {
+        DictionaryExtensions* extensions = new DictionaryExtensions;
+        for( int i = 0; i < message.extension().entries_size(); ++i )
+            extensions->SetValue( message.extension().entries( i ).name(), message.extension().entries( i ).value() );
+        Attach( *extensions );
+    }
     RegisterSelf( *this );
     Attach( *new PropertiesDictionary( controllers.controller_ ) );
     controllers_.Register( *this );

@@ -60,6 +60,7 @@ public:
     //@{
     QString GetLogin() const;
     QString GetPassword() const;
+    int GetRole() const;
     bool IsSupervisor() const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
@@ -94,6 +95,7 @@ private:
     QString login_;
     QString password_;
     bool supervision_;
+    int role_;
     T_Ids readSides_;
     T_Ids readFormations_;
     T_Ids readAutomats_;

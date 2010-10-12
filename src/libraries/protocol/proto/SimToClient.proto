@@ -257,8 +257,9 @@ message MsgControlResumeAck {
 
 message MsgPartyCreation {
    required Common.PartyId       party          = 1;
-   required string               name = 2;
-   required Common.EnumDiplomacy type = 3;
+   required string               name           = 2;
+   required Common.EnumDiplomacy type           = 3;
+   optional Extension            extension      = 4;
 }
 
 message MsgFormationCreation {
@@ -267,6 +268,7 @@ message MsgFormationCreation {
     optional Common.FormationId       parent          = 3;
     required Common.EnumNatureLevel   level           = 4;
     required string                   name            = 5;
+    optional Extension                extension       = 6;
 }
 
 message MsgAutomatCreation {
@@ -276,6 +278,7 @@ message MsgAutomatCreation {
     required Common.ParentEntity           parent          = 4;
     required Common.PartyId                party           = 5;
     optional Common.KnowledgeGroupId       knowledge_group = 6;
+    optional Extension                     extension       = 7;
 }
 
 message RulesOfEngagement {
@@ -307,11 +310,11 @@ message MsgAutomatAttributes {
 
 
 message MsgUnitCreation {
-   required Common.UnitId    unit    = 1;
-   required Common.UnitType  type    = 2;
-   required string           nom     = 3;
-   required Common.AutomatId automat = 4;
-   required bool             pc      = 5;
+   required Common.UnitId    unit      = 1;
+   required Common.UnitType  type      = 2;
+   required string           nom       = 3;
+   required Common.AutomatId automat   = 4;
+   required bool             pc        = 5;
 }
 
 message BorrowedEquipments {
@@ -381,6 +384,14 @@ message Communication {
     optional Common.KnowledgeGroupId  knowledge_group = 2;
 }
 
+message Extension {
+    message Entry {
+        required string name  = 1;
+        required string value = 2;
+    }
+    repeated Entry entries = 1;
+}
+
 message MsgUnitAttributes {
     enum Posture {
         mouvement           = 0;
@@ -447,6 +458,7 @@ message MsgUnitAttributes {
     optional Common.UnitId                      surrendered_unit              = 42;
     optional bool                               prisonnier                    = 43;
     optional bool                               refugie_pris_en_compte        = 44;
+    optional Extension                          extension                     = 45;
 }
 
 message MsgUnitPathFind {
@@ -904,10 +916,11 @@ message MsgLogSupplyQuotas {
 }
 
 message MsgCrowdCreation {
-   required Common.CrowdId   crowd = 1;
-   required Common.CrowdType type  = 2;
-   optional string           nom   = 3;
-   required Common.PartyId   party = 4;
+   required Common.CrowdId   crowd     = 1;
+   required Common.CrowdType type      = 2;
+   optional string           nom       = 3;
+   required Common.PartyId   party     = 4;
+   optional Extension        extension = 5;
 }
 
 message MsgCrowdUpdate {

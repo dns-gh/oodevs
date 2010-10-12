@@ -48,13 +48,10 @@ PopulationFactory::~PopulationFactory()
 // -----------------------------------------------------------------------------
 MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army& army )
 {
-    std::string strType;
-    xis >> xml::attribute( "type", strType );
-
+    std::string strType( xis.attribute< std::string >( "type" ) );
     const MIL_PopulationType* pType = MIL_PopulationType::Find( strType );
     if( !pType )
         xis.error( "Unknown population type" );
-
     MIL_Population& population = *new MIL_Population( xis, *pType, army, database_, gcPause_, gcMult_ );
     Register( population.GetID(), population );
     return population;

@@ -15,8 +15,6 @@
 #include "MIL_PopulationAttitude.h"
 #include "DEC_PopulationDecision.h"
 #include "DEC_PopulationKnowledge.h"
-#include "MIL_AgentServer.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -36,7 +34,7 @@ namespace
     template< typename R >
     void SaveRole( const MIL_Population& population, MIL_CheckPointOutArchive& file )
     {
-        const R* const role = & population.GetRole< R >();
+        const R* const role = &population.GetRole< R >();
         file << role;
     }
 }
@@ -81,19 +79,18 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( strAttitude );
     if( !pDefaultAttitude_ )
         xis.error( "Unknown attitude" );
-
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
     RegisterRole( *new DEC_PopulationDecision( *this, database, gcPause, gcMult ) );
     RegisterRole( *new DEC_Representations() );
-
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
     concentrations_.push_back( pConcentration );
     nPeopleCount_ = pConcentration->GetNbrAliveHumans();
-
-    pArmy_->RegisterPopulation( *this );
-    
+    pArmy_->RegisterPopulation( *this );    
     vBarycenter.reset( new MT_Vector2D() );
     UpdateBarycenter();
+    xis >> xml::optional >> xml::start( "extensions" )
+        >> xml::list( "entry", *this, &MIL_Population::ReadExtension )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -115,14 +112,9 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
     , bBlinded_               ( false )
 {
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
-
     vBarycenter.reset( new MT_Vector2D() );
     UpdateBarycenter();
 }
-
-// =============================================================================
-// Accessors
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population destructor
@@ -153,10 +145,6 @@ DEC_PopulationDecision& MIL_Population::GetDecision()
     return GetRole< DEC_PopulationDecision>();
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::load
 // Created: SBO 2005-10-18
@@ -164,15 +152,12 @@ DEC_PopulationDecision& MIL_Population::GetDecision()
 void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
-
     file >> const_cast< unsigned int& >( nID_ )
          >> const_cast< MIL_Army*& >( pArmy_ );
-
     unsigned int nAttitudeID;
     file >> nAttitudeID;
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
     assert( pDefaultAttitude_ );
-
     file >> nPeopleCount_
          >> concentrations_
          >> flows_
@@ -188,7 +173,6 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
         RegisterRole( *pRole );
         RegisterRole( *new DEC_Representations() );
     }
-
     UpdateBarycenter();
 }
 
@@ -199,7 +183,6 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
-
     unsigned attitude = pDefaultAttitude_->GetID();
     file << nID_
          << pArmy_
@@ -226,27 +209,27 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
     assert( pArmy_ );
     assert( pDefaultAttitude_ );
     assert( !concentrations_.empty() || !flows_.empty() );
-
     xos << xml::start( "population" );
-
     MIL_Entity_ABC::WriteODB ( xos ) ;
-
-    xos << xml::attribute( "id"      , nID_ )
-        << xml::attribute( "type"    , pType_->GetName() )
-        << xml::attribute( "humans"  , GetNbrAliveHumans() + GetNbrDeadHumans() )
+    xos << xml::attribute( "id", nID_ )
+        << xml::attribute( "type", pType_->GetName() )
+        << xml::attribute( "humans", GetNbrAliveHumans() + GetNbrDeadHumans() )
         << xml::attribute( "attitude", pDefaultAttitude_->GetName() );
-
     if( !concentrations_.empty() )
         xos << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( concentrations_.front()->GetPosition() ) );
     else
         xos << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( flows_.front()->GetPosition() ) );
-
     xos << xml::end; // population
 }
 
-// =============================================================================
-// EFFECTS FROM PIONS
-// =============================================================================
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::ReadExtension
+// Created: JSR 2010-10-08
+// -----------------------------------------------------------------------------
+void MIL_Population::ReadExtension( xml::xistream& xis )
+{
+    extensions_[ xis.attribute< std::string >( "key" ) ] = xis.attribute< std::string >( "value" );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::NotifyAttackedBy
@@ -283,7 +266,6 @@ void MIL_Population::Exterminate( const MIL_AgentPion& exterminator, double rSur
         rSurface -= pElement->Exterminate( rSurface );
     }
     NotifyAttackedBy( exterminator );
-
     MIL_Report::PostEvent( *this, MIL_Report::eReport_TerroristAttackAgainstPopulation );
 }
 
@@ -296,10 +278,6 @@ void MIL_Population::NotifyChanneled( const TER_Localisation& localisation )
     assert( pKnowledge_ );
     pKnowledge_->NotifyChanneled( localisation );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::UpdateKnowledges
@@ -336,7 +314,6 @@ void MIL_Population::UpdateDecision( float duration )
     {
         MIL_Report::PostEvent( *this, MIL_Report::eReport_MissionImpossible_ );
     }
-    //GetRole< DEC_Decision_ABC >().GarbageCollect();
 }
 
 // -----------------------------------------------------------------------------
@@ -348,11 +325,9 @@ void MIL_Population::UpdateState()
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
         delete *it;
     trashedConcentrations_.clear();
-
     for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
         delete *it;
     trashedFlows_.clear();
-
     // Flows
     for( IT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); )
     {
@@ -363,7 +338,7 @@ void MIL_Population::UpdateState()
             trashedFlows_.push_back( pFlow );
         }
         else
-            ++ itFlow;
+            ++itFlow;
     }
 
     // Concentrations
@@ -376,7 +351,7 @@ void MIL_Population::UpdateState()
             trashedConcentrations_.push_back( pConcentration );
         }
         else
-            ++ itConcentration;
+            ++itConcentration;
     }
 }
 
@@ -387,19 +362,12 @@ void MIL_Population::UpdateState()
 void MIL_Population::Clean()
 {
     GetRole< DEC_PopulationDecision >().Clean();
-
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        (**itConcentration).Clean();
-
+        ( **itConcentration ).Clean();
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        (**itFlow).Clean();
-
+        ( **itFlow ).Clean();
     bHasDoneMagicMove_ = false;
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::IsDead
@@ -408,19 +376,13 @@ void MIL_Population::Clean()
 bool MIL_Population::IsDead() const
 {
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        if( !(**itConcentration).IsDead() )
+        if( !( **itConcentration ).IsDead() )
             return false;
-
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        if( !(**itFlow).IsDead() )
+        if( !( **itFlow ).IsDead() )
             return false;
-
     return true;
 }
-
-// =============================================================================
-// GEOMETRY
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::IsInZone
@@ -429,13 +391,11 @@ bool MIL_Population::IsDead() const
 bool MIL_Population::IsInZone( const TER_Localisation& loc ) const
 {
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        if( (**itConcentration).IsInZone( loc ) )
+        if( ( **itConcentration ).IsInZone( loc ) )
             return true;
-
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        if( (**itFlow).IsInZone( loc ) )
+        if( ( **itFlow ).IsInZone( loc ) )
             return true;
-
     return false;
 }
 
@@ -446,16 +406,13 @@ bool MIL_Population::IsInZone( const TER_Localisation& loc ) const
 MT_Vector2D MIL_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
 {
     MT_Vector2D closestPoint;
-    double    rMinDistance = std::numeric_limits< double >::max();
-
+    double rMinDistance = std::numeric_limits< double >::max();
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
     {
-        if( (**itConcentration).IsDead() )
+        if( ( **itConcentration ).IsDead() )
             continue;
-
         MT_Vector2D nearestPointTmp;
-
-        if( !(**itConcentration).GetLocation().ComputeNearestPoint( refPos, nearestPointTmp ) )
+        if( !( **itConcentration ).GetLocation().ComputeNearestPoint( refPos, nearestPointTmp ) )
             continue;
         double rDistance = refPos.Distance( nearestPointTmp );
         if( rDistance < rMinDistance )
@@ -464,15 +421,12 @@ MT_Vector2D MIL_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
             closestPoint = nearestPointTmp;
         }
     }
-
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
     {
-        if( (**itFlow).IsDead() )
+        if( ( **itFlow ).IsDead() )
             continue;
-
         MT_Vector2D nearestPointTmp;
-
-        if( !(**itFlow).GetLocation().ComputeNearestPoint( refPos, nearestPointTmp ) )
+        if( !( **itFlow ).GetLocation().ComputeNearestPoint( refPos, nearestPointTmp ) )
             continue;
         double rDistance = refPos.Distance( nearestPointTmp );
         if( rDistance < rMinDistance )
@@ -505,37 +459,31 @@ void MIL_Population::ComputeClosestAliveElement( const MT_Vector2D& position, MI
 {
     pClosestElement = 0;
     rMinDistance = std::numeric_limits< double >::max();
-
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
     {
-        if( (**itConcentration).IsDead() )
+        if( ( **itConcentration ).IsDead() )
             continue;
-
         MT_Vector2D nearestPoint;
-
-        if( !(**itConcentration).GetLocation().ComputeNearestPoint( position, nearestPoint ) )
+        if( !( **itConcentration ).GetLocation().ComputeNearestPoint( position, nearestPoint ) )
             continue;
         double rDistance = position.Distance( nearestPoint );
         if( rDistance < rMinDistance )
         {
-            rMinDistance    = rDistance;
+            rMinDistance = rDistance;
             pClosestElement = *itConcentration;
         }
     }
-
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
     {
-        if( (**itFlow).IsDead() )
+        if( ( **itFlow ).IsDead() )
             continue;
-
         MT_Vector2D nearestPoint;
-
-        if( !(**itFlow).GetLocation().ComputeNearestPoint( position, nearestPoint ) )
+        if( !( **itFlow ).GetLocation().ComputeNearestPoint( position, nearestPoint ) )
             continue;
         double rDistance = position.Distance( nearestPoint );
         if( rDistance < rMinDistance )
         {
-            rMinDistance    = rDistance;
+            rMinDistance = rDistance;
             pClosestElement = *itFlow;
         }
     }
@@ -548,17 +496,14 @@ void MIL_Population::ComputeClosestAliveElement( const MT_Vector2D& position, MI
 void MIL_Population::GetClosestPointAndDistance( const TER_Localisation& loc, MT_Vector2D& closestPoint, double& rMinDistance ) const
 {
     rMinDistance = std::numeric_limits< double >::max();
-
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
     {
-        if( (**itConcentration).IsDead() )
+        if( ( **itConcentration ).IsDead() )
             continue;
-
         MT_Vector2D nearestPointTmp;
-        double    rDistance;
-        if( !(**itConcentration).GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance ) )
+        double rDistance;
+        if( !( **itConcentration ).GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance ) )
             continue;
-
         if( rDistance < rMinDistance )
         {
             rMinDistance = rDistance;
@@ -568,12 +513,11 @@ void MIL_Population::GetClosestPointAndDistance( const TER_Localisation& loc, MT
 
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
     {
-        if( (**itFlow).IsDead() )
+        if( ( **itFlow ).IsDead() )
             continue;
-
         MT_Vector2D nearestPointTmp;
-        double    rDistance;
-        if( !(**itFlow).GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance ) )
+        double rDistance;
+        if( !( **itFlow ).GetLocation().ComputeNearestPoint( loc, nearestPointTmp, rDistance ) )
             continue;
         if( rDistance < rMinDistance )
         {
@@ -590,7 +534,7 @@ void MIL_Population::GetClosestPointAndDistance( const TER_Localisation& loc, MT
 MT_Vector2D MIL_Population::GetClosestPoint( const TER_Localisation& loc ) const
 {
     MT_Vector2D closestPoint;
-    double    rMinDistance;
+    double rMinDistance;
     GetClosestPointAndDistance( loc, closestPoint, rMinDistance );
     return closestPoint;
 }
@@ -602,7 +546,7 @@ MT_Vector2D MIL_Population::GetClosestPoint( const TER_Localisation& loc ) const
 double MIL_Population::GetDistanceTo( const TER_Localisation& loc ) const
 {
     MT_Vector2D closestPoint;
-    double    rMinDistance;
+    double rMinDistance;
     GetClosestPointAndDistance( loc, closestPoint, rMinDistance );
     return rMinDistance;
 }
@@ -676,10 +620,9 @@ unsigned int MIL_Population::GetNbrAliveHumans() const
 {
     unsigned int nResult = 0;
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        nResult += (**itConcentration).GetNbrAliveHumans();
-
+        nResult += ( **itConcentration ).GetNbrAliveHumans();
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        nResult += (**itFlow).GetNbrAliveHumans();
+        nResult += ( **itFlow ).GetNbrAliveHumans();
     return nResult;
 }
 
@@ -691,16 +634,11 @@ unsigned int MIL_Population::GetNbrDeadHumans() const
 {
     unsigned int nResult = 0;
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        nResult += (**itConcentration).GetNbrDeadHumans();
-
+        nResult += ( **itConcentration ).GetNbrDeadHumans();
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        nResult += (**itFlow).GetNbrDeadHumans();
+        nResult += ( **itFlow ).GetNbrDeadHumans();
     return nResult;
 }
-
-// =============================================================================
-// ACTIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::Move
@@ -709,11 +647,9 @@ unsigned int MIL_Population::GetNbrDeadHumans() const
 void MIL_Population::Move( const MT_Vector2D& destination )
 {
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        (**itConcentration).Move( destination );
-
+        ( **itConcentration ).Move( destination );
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        (**itFlow).Move( destination );
-    
+        ( **itFlow ).Move( destination );
     UpdateBarycenter();
 }
 
@@ -726,10 +662,9 @@ void MIL_Population::FireOnPions( double rIntensity, PHY_FireResults_Population&
     if( !IsBlinded() )
     {
         for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-            (**itConcentration).FireOnPions( rIntensity, fireResult );
-
+            ( **itConcentration ).FireOnPions( rIntensity, fireResult );
         for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-            (**itFlow).FireOnPions( rIntensity, fireResult );
+            ( **itFlow ).FireOnPions( rIntensity, fireResult );
     }
 }
 
@@ -740,7 +675,6 @@ void MIL_Population::FireOnPions( double rIntensity, PHY_FireResults_Population&
 void MIL_Population::FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult )
 {
     MIL_PopulationElement_ABC* pClosestElement = GetClosestAliveElement( target );
-
     if( pClosestElement )
         pClosestElement->FireOnPion( rIntensity, target, fireResult );
 }
@@ -765,10 +699,9 @@ double MIL_Population::GetDangerosity( const MIL_AgentPion& target ) const
 void MIL_Population::SetAttitude( const MIL_PopulationAttitude& attitude )
 {
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        (**itConcentration).SetAttitude( attitude );
-
+        ( **itConcentration ).SetAttitude( attitude );
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        (**itFlow).SetAttitude( attitude );
+        ( **itFlow ).SetAttitude( attitude );
 }
 
 // =============================================================================
@@ -804,19 +737,12 @@ MIL_PopulationFlow& MIL_Population::CreateFlow( const MIL_PopulationFlow& source
 MIL_PopulationConcentration& MIL_Population::GetConcentration( const MT_Vector2D& position )
 {
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-    {
-        if( (**it).IsNearPosition( position ) )
+        if( ( **it ).IsNearPosition( position ) )
             return **it;
-    }
-
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, position );
     concentrations_.push_back( pConcentration );
     return *pConcentration;
 }
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::GetMaxSpeed
@@ -837,9 +763,6 @@ double MIL_Population::GetDefaultFlowDensity() const
     assert( pType_ );
     return pType_->GetDefaultFlowDensity();
 }
-// =============================================================================
-// PION EFFECTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::GetPionReloadingTimeFactor
@@ -863,10 +786,6 @@ double MIL_Population::GetPionMaxSpeed( const MIL_PopulationAttitude& attitude, 
     else
         return pType_->GetPionMaxSpeed( attitude, rDensity, pionVolume );
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::OnReceiveMsgOrder
@@ -893,21 +812,21 @@ void MIL_Population::OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder&
 void MIL_Population::OnReceiveMsgCrowdMagicAction( const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
     switch( msg.type() )
-        {
-        case MsgsClientToSim::MsgUnitMagicAction::crowd_total_destruction:
-            OnReceiveMsgDestroyAll();
-            break;
-        case MsgsClientToSim::MsgUnitMagicAction::crowd_kill:
-            OnReceiveMsgKill( msg );
-            break;
-        case MsgsClientToSim::MsgUnitMagicAction::crowd_resurrect:
-            OnReceiveMsgResurrect( msg );
-            break;
-        case MsgsClientToSim::MsgUnitMagicAction::crowd_change_attitude:
-            OnReceiveMsgChangeAttitude( msg );
-            break;
-        default:
-            assert( false );
+    {
+    case MsgsClientToSim::MsgUnitMagicAction::crowd_total_destruction:
+        OnReceiveMsgDestroyAll();
+        break;
+    case MsgsClientToSim::MsgUnitMagicAction::crowd_kill:
+        OnReceiveMsgKill( msg );
+        break;
+    case MsgsClientToSim::MsgUnitMagicAction::crowd_resurrect:
+        OnReceiveMsgResurrect( msg );
+        break;
+    case MsgsClientToSim::MsgUnitMagicAction::crowd_change_attitude:
+        OnReceiveMsgChangeAttitude( msg );
+        break;
+    default:
+        assert( false );
     }
 }
 
@@ -919,32 +838,24 @@ void MIL_Population::OnReceiveMsgCrowdMagicActionMoveTo( const MsgsClientToSim::
 {
     if( asn.type() != MsgsClientToSim::MsgUnitMagicAction::move_to )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck::ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
-
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck::ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
-
     const Common::MsgMissionParameter& parametre = asn.parameters().elem( 0 );
     if( !parametre.has_value() || !parametre.value().has_point() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck::ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
-
     const Common::MsgPoint& point = parametre.value().point();
-
-    if( point.location().type() != Common::MsgLocation_Geometry_point
+    if( point.location().type() != Common::MsgLocation::point
         || point.location().coordinates().elem_size() != 1 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck::ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
-
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
-
    // merge all concentrations into new
     T_ConcentrationVector concentrations = concentrations_;
     for( IT_ConcentrationVector it = concentrations.begin(); it != concentrations.end(); ++it )
-        (**it).MagicMove( vPosTmp );
-
+        ( **it ).MagicMove( vPosTmp );
     // merge all flows into new concentration
     for( IT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-        (**it).MagicMove( vPosTmp );
-
+        ( **it ).MagicMove( vPosTmp );
     GetRole< DEC_PopulationDecision >().Reset();
     orderManager_.CancelMission();
     bHasDoneMagicMove_ = true;
@@ -957,11 +868,9 @@ void MIL_Population::OnReceiveMsgCrowdMagicActionMoveTo( const MsgsClientToSim::
 void MIL_Population::OnReceiveMsgDestroyAll()
 {
     for( IT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        (**it).KillAllHumans();
-
+        ( **it ).KillAllHumans();
     for( IT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-        (**it).KillAllHumans();
-
+        ( **it ).KillAllHumans();
     GetRole< DEC_PopulationDecision >().Reset();
     orderManager_.CancelMission();
 }
@@ -974,11 +883,9 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const MsgsClientToSim::MsgUnitM
 {
     if( !msg.has_parameters() )
         throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck::ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
-
     const Common::MsgMissionParameter& parametre = msg.parameters().elem( 0 );
     if( !parametre.has_value() || !parametre.value().has_enumeration() )
         throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck::ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
-
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( parametre.value().enumeration() );
     if( !pAttitude )
         throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck::ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
@@ -989,7 +896,6 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const MsgsClientToSim::MsgUnitM
         ( **it ).SetAttitude( *pAttitude );
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
         ( **it ).SetAttitude( *pAttitude );
-
 
     // concentration
     /*if( asn.beneficiaire().has_concentration() )
@@ -1031,23 +937,21 @@ void MIL_Population::OnReceiveMsgKill( const MsgsClientToSim::MsgUnitMagicAction
 {
     if( !msg.has_parameters() )
         throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck::ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
-
     const Common::MsgMissionParameter& parametre = msg.parameters().elem( 0 );
     if( !parametre.has_value() || !parametre.value().has_quantity() )
         throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck::ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
-
     unsigned int remainingKills = parametre.value().quantity();
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         if( remainingKills == 0 )
             return;
-        remainingKills -= (**it).Kill( remainingKills );
+        remainingKills -= ( **it ).Kill( remainingKills );
     }
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
     {
         if( remainingKills == 0 )
             return;
-        remainingKills -= (**it).Kill( remainingKills );
+        remainingKills -= ( **it ).Kill( remainingKills );
     }
 }
 
@@ -1059,23 +963,21 @@ void MIL_Population::OnReceiveMsgResurrect( const MsgsClientToSim::MsgUnitMagicA
 {
     if( !msg.has_parameters() )
         throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
-
     const Common::MsgMissionParameter& parametre = msg.parameters().elem( 0 );
     if( !parametre.has_value() || !parametre.value().has_quantity() )
         throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
-
     unsigned int remainingResurrections = parametre.value().quantity();
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         if( remainingResurrections == 0 )
             return;
-        remainingResurrections -= (**it).Resurrect( remainingResurrections );
+        remainingResurrections -= ( **it ).Resurrect( remainingResurrections );
     }
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
     {
         if( remainingResurrections == 0 )
             return;
-        remainingResurrections -= (**it).Resurrect( remainingResurrections );
+        remainingResurrections -= ( **it ).Resurrect( remainingResurrections );
     }
 }
 
@@ -1089,18 +991,24 @@ void MIL_Population::SendCreation() const
     asnMsg().mutable_crowd()->set_id( nID_ );
     asnMsg().mutable_type()->set_id( pType_->GetID() );
     asnMsg().mutable_party()->set_id( pArmy_->GetID() );
-    asnMsg().set_nom            ( GetName().c_str() ); // !! pointeur sur const char*
+    asnMsg().set_nom( GetName() );
+    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
+    {
+        MsgsSimToClient::Extension_Entry* entry = asnMsg().mutable_extension()->add_entries();
+        entry->set_name( it->first );
+        entry->set_value( it->second );
+    }
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-
+    if( asnMsg().has_extension() )
+        asnMsg().mutable_extension()->mutable_entries()->Clear();
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        (**it).SendCreation();
+        ( **it ).SendCreation();
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
-        (**it).SendCreation();
-
+        ( **it ).SendCreation();
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-        (**it).SendCreation();
+        ( **it ).SendCreation();
     for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
-        (**it).SendCreation();
+        ( **it ).SendCreation();
 }
 
 // -----------------------------------------------------------------------------
@@ -1113,21 +1021,16 @@ void MIL_Population::SendFullState() const
     asnMsg().mutable_crowd()->set_id( nID_ );
     GetRole< DEC_PopulationDecision >().SendFullState( asnMsg );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-
     sPeopleCounter counter( nPeopleCount_ );
     sPeopleCounter trashCounter( nPeopleCount_ );
-
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        (**it).SendFullState( counter );
-
+        ( **it ).SendFullState( counter );
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
-        (**it).SendFullState( trashCounter );
-
+        ( **it ).SendFullState( trashCounter );
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-        (**it).SendFullState( counter );
-
+        ( **it ).SendFullState( counter );
     for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
-        (**it).SendFullState( trashCounter );
+        ( **it ).SendFullState( trashCounter );
 }
 
 // -----------------------------------------------------------------------------
@@ -1143,19 +1046,16 @@ void MIL_Population::UpdateNetwork()
         GetRole< DEC_PopulationDecision >().SendChangedState( asnMsg );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
-
     sPeopleCounter counter( nPeopleCount_ );
     sPeopleCounter trashCounter( nPeopleCount_ );
-
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        (**it).SendChangedState( counter );
+        ( **it ).SendChangedState( counter );
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
-        (**it).SendChangedState( trashCounter);
-
+        ( **it ).SendChangedState( trashCounter);
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-        (**it).SendChangedState( counter);
+        ( **it ).SendChangedState( counter);
     for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
-        (**it).SendChangedState( trashCounter );
+        ( **it ).SendChangedState( trashCounter );
 }
 
 // -----------------------------------------------------------------------------
@@ -1170,8 +1070,6 @@ void MIL_Population::Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& 
         visitor.Visit( **it );
 }
 
-
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::sPeopleCounter::sPeopleCounter
 // Created: MGD 2009-10-21
@@ -1179,7 +1077,7 @@ void MIL_Population::Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& 
 MIL_Population::sPeopleCounter::sPeopleCounter( unsigned int nInit )
     : nPeople_ ( nInit )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1318,11 +1216,9 @@ void MIL_Population::UpdateBarycenter()
 {
     MT_Vector2D currentBarycenter;
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        currentBarycenter += (**itConcentration).GetPosition();
-
+        currentBarycenter += ( **itConcentration ).GetPosition();
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        currentBarycenter += (**itFlow).GetPosition();
-
+        currentBarycenter += ( **itFlow ).GetPosition();
     unsigned int elements = concentrations_.size() + flows_.size();
     if( elements > 0 )
     {

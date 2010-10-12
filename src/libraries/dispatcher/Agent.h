@@ -181,6 +181,7 @@ private:
     AgentLogSupply*                                         pLogSupply_;
 
     std::auto_ptr< AgentOrder >                             order_;
+    std::map< std::string, std::string >                    extensions_;
 };
 
 }

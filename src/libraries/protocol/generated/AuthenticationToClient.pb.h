@@ -39,6 +39,7 @@ class MsgProfileUpdateRequestAck;
 class MsgProfileUpdate;
 class MsgProfileDestruction;
 class MsgProfileDestructionRequestAck;
+class RoleType;
 class MsgProfile;
 class MsgProfileDescriptionList;
 class MsgProfileDescription;
@@ -124,28 +125,6 @@ inline bool MsgProfileDestructionRequestAck_ErrorCode_Parse(
     const ::std::string& name, MsgProfileDestructionRequestAck_ErrorCode* value) {
   return ::google::protobuf::internal::ParseNamedEnum<MsgProfileDestructionRequestAck_ErrorCode>(
     MsgProfileDestructionRequestAck_ErrorCode_descriptor(), name, value);
-}
-enum Role {
-  superviseur = 0,
-  anibas = 1,
-  eniex = 2,
-  direx = 3,
-  environnement = 4,
-  analyse = 5
-};
-bool Role_IsValid(int value);
-const Role Role_MIN = superviseur;
-const Role Role_MAX = analyse;
-
-const ::google::protobuf::EnumDescriptor* Role_descriptor();
-inline const ::std::string& Role_Name(Role value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    Role_descriptor(), value);
-}
-inline bool Role_Parse(
-    const ::std::string& name, Role* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<Role>(
-    Role_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -950,6 +929,93 @@ class MsgProfileDestructionRequestAck : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class RoleType : public ::google::protobuf::Message {
+ public:
+  RoleType();
+  virtual ~RoleType();
+  
+  RoleType(const RoleType& from);
+  
+  inline RoleType& operator=(const RoleType& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const RoleType& default_instance();
+  void Swap(RoleType* other);
+  
+  // implements Message ----------------------------------------------
+  
+  RoleType* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const RoleType& from);
+  void MergeFrom(const RoleType& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required uint32 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 id() const;
+  inline void set_id(::google::protobuf::uint32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::uint32 id_;
+  friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
+  friend void protobuf_AssignDesc_AuthenticationToClient_2eproto();
+  friend void protobuf_ShutdownFile_AuthenticationToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static RoleType* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgProfile : public ::google::protobuf::Message {
  public:
   MsgProfile();
@@ -1086,12 +1152,12 @@ class MsgProfile : public ::google::protobuf::Message {
   inline bool supervisor() const;
   inline void set_supervisor(bool value);
   
-  // optional .MsgsAuthenticationToClient.Role role = 12;
+  // optional .MsgsAuthenticationToClient.RoleType role = 12;
   inline bool has_role() const;
   inline void clear_role();
   static const int kRoleFieldNumber = 12;
-  inline MsgsAuthenticationToClient::Role role() const;
-  inline void set_role(MsgsAuthenticationToClient::Role value);
+  inline const ::MsgsAuthenticationToClient::RoleType& role() const;
+  inline ::MsgsAuthenticationToClient::RoleType* mutable_role();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -1110,7 +1176,7 @@ class MsgProfile : public ::google::protobuf::Message {
   ::Common::CrowdIdList* read_only_crowds_;
   ::Common::CrowdIdList* read_write_crowds_;
   bool supervisor_;
-  int role_;
+  ::MsgsAuthenticationToClient::RoleType* role_;
   friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
   friend void protobuf_AssignDesc_AuthenticationToClient_2eproto();
   friend void protobuf_ShutdownFile_AuthenticationToClient_2eproto();
@@ -2018,6 +2084,26 @@ inline ::std::string* MsgProfileDestructionRequestAck::mutable_login() {
 
 // -------------------------------------------------------------------
 
+// RoleType
+
+// required uint32 id = 1;
+inline bool RoleType::has_id() const {
+  return _has_bit(0);
+}
+inline void RoleType::clear_id() {
+  id_ = 0u;
+  _clear_bit(0);
+}
+inline ::google::protobuf::uint32 RoleType::id() const {
+  return id_;
+}
+inline void RoleType::set_id(::google::protobuf::uint32 value) {
+  _set_bit(0);
+  id_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // MsgProfile
 
 // required string login = 1;
@@ -2256,21 +2342,21 @@ inline void MsgProfile::set_supervisor(bool value) {
   supervisor_ = value;
 }
 
-// optional .MsgsAuthenticationToClient.Role role = 12;
+// optional .MsgsAuthenticationToClient.RoleType role = 12;
 inline bool MsgProfile::has_role() const {
   return _has_bit(11);
 }
 inline void MsgProfile::clear_role() {
-  role_ = 0;
+  if (role_ != NULL) role_->::MsgsAuthenticationToClient::RoleType::Clear();
   _clear_bit(11);
 }
-inline MsgsAuthenticationToClient::Role MsgProfile::role() const {
-  return static_cast< MsgsAuthenticationToClient::Role >(role_);
+inline const ::MsgsAuthenticationToClient::RoleType& MsgProfile::role() const {
+  return role_ != NULL ? *role_ : *default_instance_->role_;
 }
-inline void MsgProfile::set_role(MsgsAuthenticationToClient::Role value) {
-  GOOGLE_DCHECK(MsgsAuthenticationToClient::Role_IsValid(value));
+inline ::MsgsAuthenticationToClient::RoleType* MsgProfile::mutable_role() {
   _set_bit(11);
-  role_ = value;
+  if (role_ == NULL) role_ = new ::MsgsAuthenticationToClient::RoleType;
+  return role_;
 }
 
 // -------------------------------------------------------------------
@@ -2562,10 +2648,6 @@ inline const EnumDescriptor* GetEnumDescriptor< ::MsgsAuthenticationToClient::Ms
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsAuthenticationToClient::MsgProfileDestructionRequestAck_ErrorCode>() {
   return ::MsgsAuthenticationToClient::MsgProfileDestructionRequestAck_ErrorCode_descriptor();
-}
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< MsgsAuthenticationToClient::Role>() {
-  return MsgsAuthenticationToClient::Role_descriptor();
 }
 
 }  // namespace google

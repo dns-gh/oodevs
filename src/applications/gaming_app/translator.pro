@@ -73,6 +73,7 @@ ObjectKnowledgePanel.cpp \
 ObjectMagicOrdersInterface.cpp \
 ObjectPanel.cpp \
 OrbatToolbar.cpp \
+OrbatAttributesDialog.cpp \
 PopulationKnowledgePanel.cpp \
 PopulationMagicOrdersInterface.cpp \
 ProfilingPanel.cpp \

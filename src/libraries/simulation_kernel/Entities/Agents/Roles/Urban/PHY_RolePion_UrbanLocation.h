@@ -57,15 +57,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void                MagicMove( MT_Vector2D vPosition );
-    virtual double            ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const;
-    virtual geometry::Point2f   GetFirerPosition( MIL_Agent_ABC& target ) const;
-    virtual geometry::Point2f   GetTargetPosition( MIL_Agent_ABC& target ) const;
-    virtual float               ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const;
-    virtual float               ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const;
-    virtual float               ComputeRatioPionInside( const geometry::Polygon2f& polygon, float modificator ) const;
-    void                        Execute( posture::PostureComputer_ABC& algorithm ) const;
-    void                        Execute( moving::SpeedComputer_ABC& algorithm ) const;
+    virtual void MagicMove( MT_Vector2D vPosition );
+    virtual double ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const;
+    virtual geometry::Point2f GetFirerPosition( MIL_Agent_ABC& target ) const;
+    virtual geometry::Point2f GetTargetPosition( MIL_Agent_ABC& target ) const;
+    virtual float ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const;
+    virtual float ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const;
+    virtual float ComputeRatioPionInside( const geometry::Polygon2f& polygon, float modificator ) const;
+    void Execute( posture::PostureComputer_ABC& algorithm ) const;
+    void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Event handlers

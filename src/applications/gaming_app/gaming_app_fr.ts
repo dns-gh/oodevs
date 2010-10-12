@@ -2263,6 +2263,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>OrbatAttributesDialog</name>
+    <message>
+        <source>Extensions</source>
+        <translation>Extensions</translation>
+    </message>
+</context>
+<context>
     <name>OrbatToolbar</name>
     <message>
         <source>Aggregate all automats</source>

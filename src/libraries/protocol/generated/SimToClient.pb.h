@@ -82,6 +82,8 @@ class HumanDotations_HumanDotation;
 class ContaminationState;
 class NBCAgents;
 class Communication;
+class Extension;
+class Extension_Entry;
 class MsgUnitAttributes;
 class MsgUnitPathFind;
 class MsgUnitDestruction;
@@ -3953,6 +3955,13 @@ class MsgPartyCreation : public ::google::protobuf::Message {
   inline Common::EnumDiplomacy type() const;
   inline void set_type(Common::EnumDiplomacy value);
   
+  // optional .MsgsSimToClient.Extension extension = 4;
+  inline bool has_extension() const;
+  inline void clear_extension();
+  static const int kExtensionFieldNumber = 4;
+  inline const ::MsgsSimToClient::Extension& extension() const;
+  inline ::MsgsSimToClient::Extension* mutable_extension();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -3961,11 +3970,12 @@ class MsgPartyCreation : public ::google::protobuf::Message {
   ::std::string* name_;
   static const ::std::string _default_name_;
   int type_;
+  ::MsgsSimToClient::Extension* extension_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -4074,6 +4084,13 @@ class MsgFormationCreation : public ::google::protobuf::Message {
   inline void set_name(const char* value, size_t size);
   inline ::std::string* mutable_name();
   
+  // optional .MsgsSimToClient.Extension extension = 6;
+  inline bool has_extension() const;
+  inline void clear_extension();
+  static const int kExtensionFieldNumber = 6;
+  inline const ::MsgsSimToClient::Extension& extension() const;
+  inline ::MsgsSimToClient::Extension* mutable_extension();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -4084,11 +4101,12 @@ class MsgFormationCreation : public ::google::protobuf::Message {
   int level_;
   ::std::string* name_;
   static const ::std::string _default_name_;
+  ::MsgsSimToClient::Extension* extension_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -4204,6 +4222,13 @@ class MsgAutomatCreation : public ::google::protobuf::Message {
   inline const ::Common::KnowledgeGroupId& knowledge_group() const;
   inline ::Common::KnowledgeGroupId* mutable_knowledge_group();
   
+  // optional .MsgsSimToClient.Extension extension = 7;
+  inline bool has_extension() const;
+  inline void clear_extension();
+  static const int kExtensionFieldNumber = 7;
+  inline const ::MsgsSimToClient::Extension& extension() const;
+  inline ::MsgsSimToClient::Extension* mutable_extension();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -4215,11 +4240,12 @@ class MsgAutomatCreation : public ::google::protobuf::Message {
   ::Common::ParentEntity* parent_;
   ::Common::PartyId* party_;
   ::Common::KnowledgeGroupId* knowledge_group_;
+  ::MsgsSimToClient::Extension* extension_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -6012,6 +6038,201 @@ class Communication : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class Extension_Entry : public ::google::protobuf::Message {
+ public:
+  Extension_Entry();
+  virtual ~Extension_Entry();
+  
+  Extension_Entry(const Extension_Entry& from);
+  
+  inline Extension_Entry& operator=(const Extension_Entry& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Extension_Entry& default_instance();
+  void Swap(Extension_Entry* other);
+  
+  // implements Message ----------------------------------------------
+  
+  Extension_Entry* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Extension_Entry& from);
+  void MergeFrom(const Extension_Entry& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  
+  // required string value = 2;
+  inline bool has_value() const;
+  inline void clear_value();
+  static const int kValueFieldNumber = 2;
+  inline const ::std::string& value() const;
+  inline void set_value(const ::std::string& value);
+  inline void set_value(const char* value);
+  inline void set_value(const char* value, size_t size);
+  inline ::std::string* mutable_value();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* name_;
+  static const ::std::string _default_name_;
+  ::std::string* value_;
+  static const ::std::string _default_value_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static Extension_Entry* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class Extension : public ::google::protobuf::Message {
+ public:
+  Extension();
+  virtual ~Extension();
+  
+  Extension(const Extension& from);
+  
+  inline Extension& operator=(const Extension& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Extension& default_instance();
+  void Swap(Extension* other);
+  
+  // implements Message ----------------------------------------------
+  
+  Extension* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Extension& from);
+  void MergeFrom(const Extension& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  typedef Extension_Entry Entry;
+  
+  // accessors -------------------------------------------------------
+  
+  // repeated .MsgsSimToClient.Extension.Entry entries = 1;
+  inline int entries_size() const;
+  inline void clear_entries();
+  static const int kEntriesFieldNumber = 1;
+  inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::Extension_Entry >& entries() const;
+  inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::Extension_Entry >* mutable_entries();
+  inline const ::MsgsSimToClient::Extension_Entry& entries(int index) const;
+  inline ::MsgsSimToClient::Extension_Entry* mutable_entries(int index);
+  inline ::MsgsSimToClient::Extension_Entry* add_entries();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::Extension_Entry > entries_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static Extension* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgUnitAttributes : public ::google::protobuf::Message {
  public:
   MsgUnitAttributes();
@@ -6448,6 +6669,13 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   inline bool refugie_pris_en_compte() const;
   inline void set_refugie_pris_en_compte(bool value);
   
+  // optional .MsgsSimToClient.Extension extension = 45;
+  inline bool has_extension() const;
+  inline void clear_extension();
+  static const int kExtensionFieldNumber = 45;
+  inline const ::MsgsSimToClient::Extension& extension() const;
+  inline ::MsgsSimToClient::Extension* mutable_extension();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -6496,11 +6724,12 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   ::Common::UnitId* surrendered_unit_;
   bool prisonnier_;
   bool refugie_pris_en_compte_;
+  ::MsgsSimToClient::Extension* extension_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(44 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(45 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -13876,6 +14105,13 @@ class MsgCrowdCreation : public ::google::protobuf::Message {
   inline const ::Common::PartyId& party() const;
   inline ::Common::PartyId* mutable_party();
   
+  // optional .MsgsSimToClient.Extension extension = 5;
+  inline bool has_extension() const;
+  inline void clear_extension();
+  static const int kExtensionFieldNumber = 5;
+  inline const ::MsgsSimToClient::Extension& extension() const;
+  inline ::MsgsSimToClient::Extension* mutable_extension();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -13885,11 +14121,12 @@ class MsgCrowdCreation : public ::google::protobuf::Message {
   ::std::string* nom_;
   static const ::std::string _default_nom_;
   ::Common::PartyId* party_;
+  ::MsgsSimToClient::Extension* extension_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -21964,6 +22201,23 @@ inline void MsgPartyCreation::set_type(Common::EnumDiplomacy value) {
   type_ = value;
 }
 
+// optional .MsgsSimToClient.Extension extension = 4;
+inline bool MsgPartyCreation::has_extension() const {
+  return _has_bit(3);
+}
+inline void MsgPartyCreation::clear_extension() {
+  if (extension_ != NULL) extension_->::MsgsSimToClient::Extension::Clear();
+  _clear_bit(3);
+}
+inline const ::MsgsSimToClient::Extension& MsgPartyCreation::extension() const {
+  return extension_ != NULL ? *extension_ : *default_instance_->extension_;
+}
+inline ::MsgsSimToClient::Extension* MsgPartyCreation::mutable_extension() {
+  _set_bit(3);
+  if (extension_ == NULL) extension_ = new ::MsgsSimToClient::Extension;
+  return extension_;
+}
+
 // -------------------------------------------------------------------
 
 // MsgFormationCreation
@@ -22076,6 +22330,23 @@ inline ::std::string* MsgFormationCreation::mutable_name() {
     name_ = new ::std::string;
   }
   return name_;
+}
+
+// optional .MsgsSimToClient.Extension extension = 6;
+inline bool MsgFormationCreation::has_extension() const {
+  return _has_bit(5);
+}
+inline void MsgFormationCreation::clear_extension() {
+  if (extension_ != NULL) extension_->::MsgsSimToClient::Extension::Clear();
+  _clear_bit(5);
+}
+inline const ::MsgsSimToClient::Extension& MsgFormationCreation::extension() const {
+  return extension_ != NULL ? *extension_ : *default_instance_->extension_;
+}
+inline ::MsgsSimToClient::Extension* MsgFormationCreation::mutable_extension() {
+  _set_bit(5);
+  if (extension_ == NULL) extension_ = new ::MsgsSimToClient::Extension;
+  return extension_;
 }
 
 // -------------------------------------------------------------------
@@ -22207,6 +22478,23 @@ inline ::Common::KnowledgeGroupId* MsgAutomatCreation::mutable_knowledge_group()
   _set_bit(5);
   if (knowledge_group_ == NULL) knowledge_group_ = new ::Common::KnowledgeGroupId;
   return knowledge_group_;
+}
+
+// optional .MsgsSimToClient.Extension extension = 7;
+inline bool MsgAutomatCreation::has_extension() const {
+  return _has_bit(6);
+}
+inline void MsgAutomatCreation::clear_extension() {
+  if (extension_ != NULL) extension_->::MsgsSimToClient::Extension::Clear();
+  _clear_bit(6);
+}
+inline const ::MsgsSimToClient::Extension& MsgAutomatCreation::extension() const {
+  return extension_ != NULL ? *extension_ : *default_instance_->extension_;
+}
+inline ::MsgsSimToClient::Extension* MsgAutomatCreation::mutable_extension() {
+  _set_bit(6);
+  if (extension_ == NULL) extension_ = new ::MsgsSimToClient::Extension;
+  return extension_;
 }
 
 // -------------------------------------------------------------------
@@ -23080,6 +23368,123 @@ inline ::Common::KnowledgeGroupId* Communication::mutable_knowledge_group() {
 
 // -------------------------------------------------------------------
 
+// Extension_Entry
+
+// required string name = 1;
+inline bool Extension_Entry::has_name() const {
+  return _has_bit(0);
+}
+inline void Extension_Entry::clear_name() {
+  if (name_ != &_default_name_) {
+    name_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& Extension_Entry::name() const {
+  return *name_;
+}
+inline void Extension_Entry::set_name(const ::std::string& value) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void Extension_Entry::set_name(const char* value) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void Extension_Entry::set_name(const char* value, size_t size) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* Extension_Entry::mutable_name() {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+
+// required string value = 2;
+inline bool Extension_Entry::has_value() const {
+  return _has_bit(1);
+}
+inline void Extension_Entry::clear_value() {
+  if (value_ != &_default_value_) {
+    value_->clear();
+  }
+  _clear_bit(1);
+}
+inline const ::std::string& Extension_Entry::value() const {
+  return *value_;
+}
+inline void Extension_Entry::set_value(const ::std::string& value) {
+  _set_bit(1);
+  if (value_ == &_default_value_) {
+    value_ = new ::std::string;
+  }
+  value_->assign(value);
+}
+inline void Extension_Entry::set_value(const char* value) {
+  _set_bit(1);
+  if (value_ == &_default_value_) {
+    value_ = new ::std::string;
+  }
+  value_->assign(value);
+}
+inline void Extension_Entry::set_value(const char* value, size_t size) {
+  _set_bit(1);
+  if (value_ == &_default_value_) {
+    value_ = new ::std::string;
+  }
+  value_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* Extension_Entry::mutable_value() {
+  _set_bit(1);
+  if (value_ == &_default_value_) {
+    value_ = new ::std::string;
+  }
+  return value_;
+}
+
+// -------------------------------------------------------------------
+
+// Extension
+
+// repeated .MsgsSimToClient.Extension.Entry entries = 1;
+inline int Extension::entries_size() const {
+  return entries_.size();
+}
+inline void Extension::clear_entries() {
+  entries_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::Extension_Entry >&
+Extension::entries() const {
+  return entries_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::Extension_Entry >*
+Extension::mutable_entries() {
+  return &entries_;
+}
+inline const ::MsgsSimToClient::Extension_Entry& Extension::entries(int index) const {
+  return entries_.Get(index);
+}
+inline ::MsgsSimToClient::Extension_Entry* Extension::mutable_entries(int index) {
+  return entries_.Mutable(index);
+}
+inline ::MsgsSimToClient::Extension_Entry* Extension::add_entries() {
+  return entries_.Add();
+}
+
+// -------------------------------------------------------------------
+
 // MsgUnitAttributes
 
 // required .Common.UnitId unit = 1;
@@ -23811,6 +24216,23 @@ inline bool MsgUnitAttributes::refugie_pris_en_compte() const {
 inline void MsgUnitAttributes::set_refugie_pris_en_compte(bool value) {
   _set_bit(43);
   refugie_pris_en_compte_ = value;
+}
+
+// optional .MsgsSimToClient.Extension extension = 45;
+inline bool MsgUnitAttributes::has_extension() const {
+  return _has_bit(44);
+}
+inline void MsgUnitAttributes::clear_extension() {
+  if (extension_ != NULL) extension_->::MsgsSimToClient::Extension::Clear();
+  _clear_bit(44);
+}
+inline const ::MsgsSimToClient::Extension& MsgUnitAttributes::extension() const {
+  return extension_ != NULL ? *extension_ : *default_instance_->extension_;
+}
+inline ::MsgsSimToClient::Extension* MsgUnitAttributes::mutable_extension() {
+  _set_bit(44);
+  if (extension_ == NULL) extension_ = new ::MsgsSimToClient::Extension;
+  return extension_;
 }
 
 // -------------------------------------------------------------------
@@ -28428,6 +28850,23 @@ inline ::Common::PartyId* MsgCrowdCreation::mutable_party() {
   _set_bit(3);
   if (party_ == NULL) party_ = new ::Common::PartyId;
   return party_;
+}
+
+// optional .MsgsSimToClient.Extension extension = 5;
+inline bool MsgCrowdCreation::has_extension() const {
+  return _has_bit(4);
+}
+inline void MsgCrowdCreation::clear_extension() {
+  if (extension_ != NULL) extension_->::MsgsSimToClient::Extension::Clear();
+  _clear_bit(4);
+}
+inline const ::MsgsSimToClient::Extension& MsgCrowdCreation::extension() const {
+  return extension_ != NULL ? *extension_ : *default_instance_->extension_;
+}
+inline ::MsgsSimToClient::Extension* MsgCrowdCreation::mutable_extension() {
+  _set_bit(4);
+  if (extension_ == NULL) extension_ = new ::MsgsSimToClient::Extension;
+  return extension_;
 }
 
 // -------------------------------------------------------------------

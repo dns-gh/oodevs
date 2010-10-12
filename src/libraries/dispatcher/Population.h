@@ -100,14 +100,14 @@ private:
 private:
     //! @name Member data
     //@{
-          Model_ABC&    model_;
+    Model_ABC& model_;
     const unsigned long nType_;
     const std::string strName_;
     dispatcher::Team_ABC& side_;
-
     unsigned int nDominationState_;
     std::auto_ptr< PopulationOrder > order_;
     DecisionalState decisionalInfos_;
+    std::map< std::string, std::string > extensions_;
     //@}
 };
 

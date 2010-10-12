@@ -35,7 +35,7 @@ Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& m
     , type_             ( msg.type().id() )
     , team_             ( model.Sides().Get( msg.party().id() ) )
     , parentFormation_  ( msg.parent().has_formation() ? &model.Formations().Get( msg.parent().formation().id() ) : 0 )
-    , parentAutomat_    ( msg.parent().has_automat()  ? &model.Automats().Get( msg.parent().automat().id() ) : 0 )
+    , parentAutomat_    ( msg.parent().has_automat() ? &model.Automats().Get( msg.parent().automat().id() ) : 0 )
     , knowledgeGroup_   ( &model.KnowledgeGroups().Get( msg.knowledge_group().id() ) )
     , pTC2_             ( 0 )
     , pLogMaintenance_  ( 0 )
@@ -48,9 +48,11 @@ Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& m
     , nRoe_             ( MsgsSimToClient::RulesOfEngagement_Value_tir_interdit )
     , order_            ( 0 )
 {
+    if( msg.has_extension() )
+        for( int i = 0; i < msg.extension().entries_size(); ++i )
+            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( ! parentFormation_ && ! parentAutomat_ )
         throw std::runtime_error( __FUNCTION__ ": invalid parent for automat " + msg.nom() );
-
     knowledgeGroup_->Register( *this );
     if( parentFormation_ )
         parentFormation_->Register( *this );
@@ -301,11 +303,16 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
         asn().set_nom( GetName() );
         asn().mutable_party()->set_id( team_.GetId() );
         asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
-
         if( parentFormation_ )
             asn().mutable_parent()->mutable_formation()->set_id( parentFormation_->GetId() );
         if( parentAutomat_ )
             asn().mutable_parent()->mutable_automat()->set_id( parentAutomat_->GetId() );
+        for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+        {
+            MsgsSimToClient::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+            entry->set_name( it->first );
+            entry->set_value( it->second );
+        }
         asn.Send( publisher );
     }
     {
