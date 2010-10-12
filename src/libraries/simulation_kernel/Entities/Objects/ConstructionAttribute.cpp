@@ -122,15 +122,19 @@ ConstructionAttribute& ConstructionAttribute::operator=( const ConstructionAttri
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
+    dotation_ = 0;
     std::string dotation;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
        >> dotation
        >> nFullNbrDotation_
        >> nCurrentNbrDotation_
        >> rConstructionPercentage_;
-    dotation_ = PHY_DotationType::FindDotationCategory( dotation );
-    if( !dotation_ )
-       throw std::runtime_error( "Unknown dotation category - " + dotation + " - " );
+    if( !dotation.empty() )
+    {
+        dotation_ = PHY_DotationType::FindDotationCategory( dotation );
+        if( !dotation_ )
+            throw std::runtime_error( "Unknown dotation category - " + dotation + " - " );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -139,11 +143,12 @@ void ConstructionAttribute::load( MIL_CheckPointInArchive& ar, const unsigned in
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
+    std::string emptyString;
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     if( dotation_ )
        ar << dotation_->GetName();
     else
-       ar << "";
+       ar << emptyString;
     ar << nFullNbrDotation_
        << nCurrentNbrDotation_
        << rConstructionPercentage_;
