@@ -12,23 +12,19 @@
 #ifndef __ADN_Objects_Data_h_
 #define __ADN_Objects_Data_h_
 
-#include <string>
-#include <map>
-#include <memory>
-
-#include "boost/mpl/vector.hpp"
-#include "boost/mpl/transform.hpp"
-#include "boost/tuple/tuple.hpp"
-#include "boost/shared_ptr.hpp"
-
 #include "ADN_Data_ABC.h"
-
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Equipement_Data.h"
 #include "ADN_DataTreeNode_ABC.h"
 #include "ADN_Type_Choice.h"
-
+#include <string>
+#include <map>
+#include <memory>
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/transform.hpp>
+#include <boost/tuple/tuple.hpp>
+#include <boost/shared_ptr.hpp>
 
 class xml::xistream;
 
