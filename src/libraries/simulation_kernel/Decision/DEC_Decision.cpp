@@ -111,9 +111,9 @@ void RegisterUrbanBlockFunctions( directia::brain::Brain& brain )
 {
    brain[ "DEC_ConnaissanceUrbanBlock_Barycentre" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetCurrentBarycenter, _1 ) );
- 
+   brain[ "DEC_ConnaissanceUrbanBlock_Lisiere" ] = boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( boost::shared_ptr< DEC_Knowledge_Urban > ) >
+       ( boost::bind( &DEC_KnowledgeUrbanFunctions::GetBoundingBox, _1 ) );
 }
-   
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterAreaFunctions
@@ -135,6 +135,7 @@ void RegisterTimeManagementFunctions( directia::brain::Brain& brain )
     brain[ "DEC_TempsReel" ] = &DEC_DIAFunctions::GetRealTime;
     brain[ "DEC_Nuit" ] = &DEC_DIAFunctions::IsNight;
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterParametersCopyFunctions
 // Created: SLI 2010-07-09

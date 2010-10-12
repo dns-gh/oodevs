@@ -30,6 +30,7 @@
 #include <urban/MaterialCompositionType.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/Architecture.h>
+#include <geometry/Types.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeUrbanFunctions::GetCurrentPerceptionLevel
@@ -46,7 +47,7 @@ float DEC_KnowledgeUrbanFunctions::GetCurrentRecceProgress( boost::shared_ptr< D
 // Name: DEC_KnowledgeUrbanFunctions::GetLivingEnemiesInBU
 // Created: GGE 2010-08-16
 // -----------------------------------------------------------------------------
-T_ConstKnowledgeAgentVector DEC_KnowledgeUrbanFunctions::GetLivingEnemiesInBU(  const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
+T_ConstKnowledgeAgentVector DEC_KnowledgeUrbanFunctions::GetLivingEnemiesInBU( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
 {
     T_ConstKnowledgeAgentVector knowledges;
 
@@ -70,6 +71,32 @@ boost::shared_ptr< MT_Vector2D > DEC_KnowledgeUrbanFunctions::GetCurrentBarycent
         pos.reset( new MT_Vector2D( temp.X(), temp.Y() ) );
     }
     return pos;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeUrbanFunctions::GetBoundingBox
+// Created: LGY 2010-10-11
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_KnowledgeUrbanFunctions::GetBoundingBox( boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
+{
+    std::vector< boost::shared_ptr< MT_Vector2D > > result;
+    if( pKnowledge.get() && pKnowledge->IsValid() )
+    {
+        const geometry::Polygon2f* pBoundingBox = pKnowledge->GetTerrainObjectKnown().GetFootprint();
+        if( pBoundingBox )
+        {
+            const geometry::Polygon2f::T_Vertices& points = pBoundingBox->Vertices();
+            const geometry::Point2f barycenter = pBoundingBox->Barycenter();
+            for( geometry::Polygon2f::CIT_Vertices it = points.begin(); it != points.end(); ++it )
+            {
+                const float distance = 1.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
+                geometry::Vector2f vector( barycenter, *it );
+                geometry::Point2f point = *it + vector.Normalize() * distance;
+                result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( point.X(), point.Y() ) ) );
+            }
+        }
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------
