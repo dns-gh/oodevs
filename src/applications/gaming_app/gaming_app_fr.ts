@@ -276,13 +276,6 @@
     </message>
 </context>
 <context>
-    <name>AutomatsLayer</name>
-    <message>
-        <source>Unit Creation</source>
-        <translation>Création d&apos;unité</translation>
-    </message>
-</context>
-<context>
     <name>BorrowingsListView</name>
     <message>
         <source>Lender</source>

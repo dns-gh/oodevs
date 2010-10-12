@@ -56,7 +56,7 @@ public:
 
 public:
              MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
-             MIL_AutomateLOG( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             MIL_AutomateLOG( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult, unsigned int context );
     virtual ~MIL_AutomateLOG();
 
     //! @name CheckPoints

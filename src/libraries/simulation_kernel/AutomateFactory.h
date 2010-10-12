@@ -33,7 +33,7 @@ public:
     //! @name Operations
     //@{
     virtual MIL_Automate& Create( xml::xistream& xis, MIL_Entity_ABC& parent );
-    virtual MIL_Automate& Create( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent );
+    virtual MIL_Automate& Create( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int context );
     //@}
 
     BOOST_SERIALIZATION_SPLIT_MEMBER()

@@ -107,7 +107,7 @@ public:
     //! @name Factory
     //@{
     void CreateAutomat     ( xml::xistream& xis, MIL_Entity_ABC&  parent );
-    void CreateAutomat     ( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent );
+    void CreateAutomat     ( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int nCtx );
     void CreateIntelligence( xml::xistream& xis, MIL_Formation& formation );
     MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate&  automate , xml::xistream& xis );
     MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
@@ -209,7 +209,7 @@ private:
     void ProcessMsgKnowledgeGroupUpdate        ( const MsgsClientToSim::MsgKnowledgeMagicAction& message, unsigned int nCtx );
     void ProcessMsgMagicActionCreateFireOrder  ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
     // LTO end
-    void ProcessMsgAutomatCreationRequest      ( const MsgsClientToSim::MsgUnitMagicAction&      message, MIL_Entity_ABC& entity );
+    void ProcessMsgAutomatCreationRequest      ( const MsgsClientToSim::MsgUnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx );
     //@}
 
     //! @name types

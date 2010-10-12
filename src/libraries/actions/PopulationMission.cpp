@@ -52,7 +52,7 @@ PopulationMission::~PopulationMission()
 // Name: PopulationMission::Publish
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void PopulationMission::Publish( Publisher_ABC& publisher ) const
+void PopulationMission::Publish( Publisher_ABC& publisher, int ) const
 {
     simulation::CrowdOrder message;
     message().mutable_tasker()->set_id( GetEntity().GetId() );

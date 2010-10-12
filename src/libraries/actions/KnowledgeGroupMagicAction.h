@@ -41,7 +41,7 @@ public:
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
     virtual void Polish();
-    virtual void Publish( Publisher_ABC& publisher ) const;
+    virtual void Publish( Publisher_ABC& publisher, int context ) const;
     //@}
 
 private:

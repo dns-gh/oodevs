@@ -21,10 +21,12 @@
 #include "ObjectMagicAction.h"
 #include "Parameter_ABC.h"
 #include "ParameterFactory_ABC.h"
+#include "Point.h"
 #include "PopulationMission.h"
 #include "String.h"
 #include "UnitMagicAction.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
@@ -37,6 +39,7 @@
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/Point.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -607,5 +610,21 @@ actions::Action_ABC* ActionFactory::CreateAutomatCreationAction( const kernel::A
     }
     action->AddParameter( *new parameters::Identifier( it.NextElement(), knowledgeGroup ) );
     action->AddParameter( *new parameters::String( it.NextElement(), tools::translate( "ActionFactory", "New Automat" ).ascii() ) );
+    return action;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateAgentCreationAction
+// Created: LDC 2010-10-11
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter ) const
+{
+    kernel::Point location;
+    location.AddPoint( point );
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( agentTypes ).Get( "unit_creation" );
+    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Unit Creation" ), true );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
+    action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter, location ) );
     return action;
 }

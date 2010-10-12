@@ -10,10 +10,10 @@
 #include "gaming_app_pch.h"
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
-#include "AgentsLayer.h"
-#include "AgentKnowledgesLayer.h"
 #include "ActionsLayer.h"
 #include "AfterAction.h"
+#include "AgentsLayer.h"
+#include "AgentKnowledgesLayer.h"
 #include "AgentList.h"
 #include "AutomatsLayer.h"
 #include "ChatDock.h"
@@ -67,6 +67,7 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include "gaming/AgentServerMsgMgr.h"
+#include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
 #include "gaming/Network.h"
 #include "gaming/Population.h"
@@ -207,7 +208,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
     gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile );
-    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer, model_.actions_, staticModel_, simulation );
+    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model.agents_ );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this, "orbat" );

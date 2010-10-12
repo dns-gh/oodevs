@@ -54,7 +54,7 @@ AgentMission::~AgentMission()
 // Name: AgentMission::Publish
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void AgentMission::Publish( Publisher_ABC& publisher ) const
+void AgentMission::Publish( Publisher_ABC& publisher, int ) const
 {
     simulation::UnitOrder message;
     message().mutable_tasker()->set_id( GetEntity().GetId() );

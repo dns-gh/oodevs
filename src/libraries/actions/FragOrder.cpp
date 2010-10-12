@@ -96,7 +96,7 @@ void FragOrder::Serialize( xml::xostream& xos ) const
 // Name: FragOrder::Publish
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void FragOrder::Publish( Publisher_ABC& publisher ) const
+void FragOrder::Publish( Publisher_ABC& publisher, int ) const
 {
     simulation::FragOrder message;
     if( GetEntity().GetTypeName() == "automat" )

@@ -75,7 +75,7 @@ void KnowledgeGroupMagicAction::Polish()
 // Name: KnowledgeGroupMagicAction::Publish
 // Created: JSR 2010-04-20
 // -----------------------------------------------------------------------------
-void KnowledgeGroupMagicAction::Publish( Publisher_ABC& publisher ) const
+void KnowledgeGroupMagicAction::Publish( Publisher_ABC& publisher, int ) const
 {
     MsgsClientToSim::MsgKnowledgeMagicAction_Type type =
         ( MsgsClientToSim::MsgKnowledgeMagicAction_Type ) GetType().GetId();

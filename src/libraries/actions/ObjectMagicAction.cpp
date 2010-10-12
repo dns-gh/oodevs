@@ -79,7 +79,7 @@ void ObjectMagicAction::Serialize( xml::xostream& xos ) const
 // Name: ObjectMagicAction::Publish
 // Created: JSR 2010-04-21
 // -----------------------------------------------------------------------------
-void ObjectMagicAction::Publish( Publisher_ABC& publisher ) const
+void ObjectMagicAction::Publish( Publisher_ABC& publisher, int ) const
 {
     MsgsClientToSim::MsgObjectMagicAction_Type type =
         ( MsgsClientToSim::MsgObjectMagicAction_Type ) GetType().GetId();

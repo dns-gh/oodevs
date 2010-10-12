@@ -141,7 +141,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
 // Name: MIL_Automate constructor
 // Created: LDC 2010-10-05
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult, unsigned int context )
     : MIL_Entity_ABC                     ( name )
     , pType_                             ( &type )
     , nID_                               ( nID )
@@ -177,7 +177,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     else if( pParentAutomate_ )
         pParentAutomate_->RegisterAutomate( *this );
 
-    SendCreation ();
+    SendCreation ( context );
     SendFullState();
     SendKnowledge();
 }
@@ -881,7 +881,7 @@ bool MIL_Automate::GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const
 // Name: MIL_Automate::SendCreation
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void MIL_Automate::SendCreation() const
+void MIL_Automate::SendCreation( unsigned int context ) const
 {
     client::AutomatCreation asn;
     asn().mutable_automat()->set_id( nID_ );
@@ -895,7 +895,7 @@ void MIL_Automate::SendCreation() const
         asn().mutable_parent()->mutable_automat()->set_id( pParentAutomate_->GetID() );
     else if( pParentFormation_ )
         asn().mutable_parent()->mutable_formation()->set_id( pParentFormation_->GetID() );
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn.Send( NET_Publisher_ABC::Publisher(), context );
 
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).SendCreation();
@@ -1376,6 +1376,8 @@ void MIL_Automate::RegisterPion( MIL_AgentPion& pion )
 {
     assert( std::find( pions_.begin(), pions_.end(), &pion ) == pions_.end() );
     pions_.push_back( &pion );
+    if( !pPionPC_ )
+        pPionPC_ = &pion;
 }
 
 // -----------------------------------------------------------------------------

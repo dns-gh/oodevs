@@ -24,9 +24,11 @@ namespace MsgsClientToSim
 
 namespace kernel
 {
+    class AgentType;
     class AgentTypes;
     class AutomatType;
     class Controller;
+    class CoordinateConverter_ABC;
     class Entity_ABC;
     class MissionType;
     class FragOrderType;
@@ -70,6 +72,7 @@ public:
     virtual actions::Action_ABC* CreateAction( const MsgsClientToSim::MsgFragOrder& message ) const = 0;
     
     virtual actions::Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const = 0;
+    virtual actions::Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter ) const = 0;
     //@}
 };
 

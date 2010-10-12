@@ -130,6 +130,7 @@ namespace MsgsSimToClient
     class MsgControlResumeAck;
     class MsgControlChangeTimeFactorAck;
     class MsgActionCreateFireOrderAck;
+    class Listener;
 }
 
 namespace Common
@@ -248,6 +249,11 @@ public:
     virtual void Send( const MsgsClientToMessenger::MsgClientToMessenger&           wrapper ) ;
 
     void SetElements( Model& model, Profile& profile );
+    //@}
+
+    //! @name Callbacks/listeners
+    //@{
+    void RegisterListener( boost::shared_ptr< MsgsSimToClient::Listener >& listener );
     //@}
 
 private:
@@ -498,6 +504,11 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::set< boost::shared_ptr< MsgsSimToClient::Listener > > T_Listeners;
+    //@}
+
     //! @name Member data
     //@{
     tools::MessageDispatcher_ABC& dispatcher_;
@@ -510,6 +521,7 @@ private:
     Simulation&          simulation_;
     kernel::Logger_ABC&  logger_;
     CommandHandler&      commands_;
+    T_Listeners          listeners_;
     //@}
 };
 

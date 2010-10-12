@@ -83,7 +83,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
-             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult, unsigned int context );
     virtual ~MIL_Automate();
     //@}
 
@@ -171,7 +171,7 @@ public:
 
     //! @name Network
     //@{
-            void SendCreation                      () const;
+            void SendCreation                      ( unsigned int context = 0 ) const;
     virtual void SendFullState                     () const;
             void SendKnowledge                     () const;
 

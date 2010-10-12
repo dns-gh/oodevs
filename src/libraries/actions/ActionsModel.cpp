@@ -99,6 +99,17 @@ Action_ABC* ActionsModel::CreateAutomatCreationAction( const kernel::AutomatType
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::CreateAgentCreationAction
+// Created: LDC 2010-10-11
+// -----------------------------------------------------------------------------
+Action_ABC* ActionsModel::CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter )
+{
+    Action_ABC* action = factory_.CreateAgentCreationAction( type, point, selected, controller, agentTypes, coordinateConverter );
+    Register( action->GetId(), *action );
+    return action;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
@@ -179,7 +190,7 @@ void ActionsModel::Save( const std::string& filename, const ActionsFilter_ABC* f
 // Name: ActionsModel::Publish
 // Created: JSR 2010-04-07
 // -----------------------------------------------------------------------------
-void ActionsModel::Publish( const Action_ABC& action )
+void ActionsModel::Publish( const Action_ABC& action, int context )
 {
-    action.Publish( publisher_ );
+    action.Publish( publisher_, context );
 }

@@ -41,6 +41,10 @@
         <translation>Création d'automate</translation>
     </message>
     <message>
+        <source>Unit Creation</source>
+        <translation>Création d&apos;unité</translation>
+    </message>
+    <message>
         <source>New automat</source>
         <translation>Nouvel automate</translation>
     </message>

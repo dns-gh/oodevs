@@ -84,8 +84,8 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int 
 // Name: MIL_AutomateLOG constructor
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
-    : MIL_Automate                ( type, nID, parent, knowledgeGroup, name, database, gcPause, gcMult )
+MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult, unsigned int context )
+    : MIL_Automate                ( type, nID, parent, knowledgeGroup, name, database, gcPause, gcMult, context )
     , pMaintenanceSuperior_       ( 0 )
     , pMedicalSuperior_           ( 0 )
     , pSupplySuperior_            ( 0 )

@@ -15,7 +15,7 @@
 MOCK_BASE_CLASS( MockAutomateFactory, AutomateFactory_ABC )
 {
     MOCK_METHOD_EXT( Create, 2, MIL_Automate& ( xml::xistream&, MIL_Entity_ABC& ), Create );
-    MOCK_METHOD_EXT( Create, 4, MIL_Automate& ( const MIL_AutomateType &,unsigned int,const std::string &,MIL_Entity_ABC & ), DynamicCreate );
+    MOCK_METHOD_EXT( Create, 5, MIL_Automate& ( const MIL_AutomateType &,unsigned int,const std::string &,MIL_Entity_ABC &, unsigned int ), DynamicCreate );
 };
 
 #endif // __MockArmy_h_

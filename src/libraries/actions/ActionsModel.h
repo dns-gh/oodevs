@@ -16,9 +16,11 @@ class Publisher_ABC;
 
 namespace kernel
 {
+    class AgentType;
     class AgentTypes;
     class AutomatType;
     class Controller;
+    class CoordinateConverter_ABC;
     class Entity_ABC;
     class FragOrderType;
     class MissionType;
@@ -57,11 +59,12 @@ public:
     Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission );
     Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder );
     Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes );
+    Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter );
     void Destroy( const Action_ABC& action );
     void Purge( const ActionsFilter_ABC* filter = 0 );
     void Load( const std::string& filename, bool readonly = false );
     void Save( const std::string& filename, const ActionsFilter_ABC* filter = 0 ) const;
-    void Publish( const Action_ABC& action );
+    void Publish( const Action_ABC& action, int context = 0 );
     //@}
 
 private:

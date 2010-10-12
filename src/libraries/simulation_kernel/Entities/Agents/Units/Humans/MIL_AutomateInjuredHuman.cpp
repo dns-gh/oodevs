@@ -61,8 +61,8 @@ MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman(     const MIL_AutomateTypeIn
 // Name: MIL_AutomateInjuredHuman constructor
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
-    : MIL_Automate( type, nID, parent, knowledgeGroup, name, database, gcPause, gcMult )
+MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult, unsigned int context )
+    : MIL_Automate( type, nID, parent, knowledgeGroup, name, database, gcPause, gcMult, context )
 {
     // NOTHING
 }    

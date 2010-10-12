@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "AutomatsLayer.h"
+#include "AutomatCreationListener.h"
 #include "actions/ActionFactory.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
@@ -21,13 +22,16 @@
 #include "gaming/StaticModel.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_gui/ValuedDragObject.h"
+#include "gaming/AgentServerMsgMgr.h"
 #include "protocol/simulationsenders.h"
+#include <time.h>
 
 using namespace kernel;
 using namespace actions;
@@ -36,13 +40,18 @@ using namespace actions;
 // Name: AutomatsLayer constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-AutomatsLayer::AutomatsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const Profile_ABC& profile, gui::AgentsLayer& agents, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation )
+AutomatsLayer::AutomatsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view,
+                             const Profile_ABC& profile, gui::AgentsLayer& agents, actions::ActionsModel& actionsModel,
+                             const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager,
+                             tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel )
     : gui::AutomatsLayer( controllers, tools, strategy, view, profile, agents )
     , tools_( tools )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
     , selected_( controllers )
+    , messageManager_( messageManager )
+    , agentsModel_( agentsModel )
 {
     // NOTHING
 }
@@ -80,7 +89,7 @@ void AutomatsLayer::Draw( const Entity_ABC& entity, Viewport_ABC& viewport )
 // Name: AutomatsLayer::NotifySelected
 // Created: SBO 2007-06-20
 // -----------------------------------------------------------------------------
-void AutomatsLayer::NotifySelected( const Automat_ABC* automat )
+void AutomatsLayer::NotifySelected( const kernel::Automat_ABC* automat )
 {
     selected_ = automat;
 }
@@ -122,15 +131,7 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AgentType& type )
 {
-    kernel::Point location;
-    location.AddPoint( point );
-
-    // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_creation" );
-    UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Unit Creation" ), true );
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
-    action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
+    actions::Action_ABC* action = actionsModel_.CreateAgentCreationAction( type, point, *selected_, controllers_.controller_, static_.types_, static_.coordinateConverter_ );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );
@@ -140,11 +141,15 @@ void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kerne
 // Name: AutomatsLayer::RequestCreation
 // Created: LDC 2010-10-01
 // -----------------------------------------------------------------------------
-void AutomatsLayer::RequestCreation( const geometry::Point2f& /*point*/, const kernel::AutomatType& type )
+void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type )
 {
     Action_ABC* action = actionsModel_.CreateAutomatCreationAction( type , *selected_, controllers_.controller_, static_.types_ );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( selected_, false ) );
     action->Polish();
-    actionsModel_.Publish( *action );
+    int context = (int)clock();
+    boost::shared_ptr< MsgsSimToClient::Listener > listener( new AutomatCreationListener( point, type, context,
+        agentsModel_, controllers_.controller_, static_.types_, static_.coordinateConverter_, actionsModel_ ) );
+    messageManager_.RegisterListener( listener );
+    actionsModel_.Publish( *action, context );
 }

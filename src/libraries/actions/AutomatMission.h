@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Publish( Publisher_ABC& publisher ) const;
+    virtual void Publish( Publisher_ABC& publisher, int context ) const;
     //@}
 
 private:

@@ -229,7 +229,7 @@ void MIL_Formation::SendCreation() const
         asn().mutable_parent()->set_id( pParent_->GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1 ) );//@TODO MGD Move to factory
-    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendCreation, _1 ) );
+    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendCreation, _1, 0 ) );
 }
 
 // -----------------------------------------------------------------------------

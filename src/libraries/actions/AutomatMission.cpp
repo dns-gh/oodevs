@@ -51,7 +51,7 @@ AutomatMission::~AutomatMission()
 // Name: AutomatMission::Publish
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void AutomatMission::Publish( Publisher_ABC& publisher ) const
+void AutomatMission::Publish( Publisher_ABC& publisher, int ) const
 {
     simulation::AutomatOrder message;
     message().mutable_tasker()->set_id( GetEntity().GetId());

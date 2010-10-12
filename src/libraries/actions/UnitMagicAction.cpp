@@ -79,25 +79,25 @@ void UnitMagicAction::Serialize( xml::xostream& xos ) const
 // Name: UnitMagicAction::Publish
 // Created: JSR 2010-04-13
 // -----------------------------------------------------------------------------
-void UnitMagicAction::Publish( Publisher_ABC& publisher ) const
+void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
 {
     MsgsClientToSim::MsgUnitMagicAction_Type type =
         ( MsgsClientToSim::MsgUnitMagicAction_Type ) GetType().GetId();
     simulation::UnitMagicAction message;
     const kernel::Entity_ABC& entity = GetEntity();
     if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
-        message().mutable_tasker()->mutable_unit()->set_id( GetEntity().GetId() );
+        message().mutable_tasker()->mutable_unit()->set_id( entity.GetId() );
     else if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
-        message().mutable_tasker()->mutable_automat()->set_id( GetEntity().GetId() );
+        message().mutable_tasker()->mutable_automat()->set_id( entity.GetId() );
     else if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
-        message().mutable_tasker()->mutable_formation()->set_id( GetEntity().GetId() );
+        message().mutable_tasker()->mutable_formation()->set_id( entity.GetId() );
     else if( dynamic_cast< const kernel::Population_ABC* >( &entity ) )
-        message().mutable_tasker()->mutable_crowd()->set_id( GetEntity().GetId() );
+        message().mutable_tasker()->mutable_crowd()->set_id( entity.GetId() );
     else
         throw std::runtime_error( "Unknown tasker" );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
-    message.Send( publisher );
+    message.Send( publisher, context );
     if( type == MsgsClientToSim::MsgUnitMagicAction_Type_move_to )
         const_cast< kernel::Entity_ABC& >( GetEntity() ).Update( message() );
     message().Clear();
