@@ -89,7 +89,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_KnowledgeUrbanFunctions::Get
             const geometry::Point2f barycenter = pBoundingBox->Barycenter();
             for( geometry::Polygon2f::CIT_Vertices it = points.begin(); it != points.end(); ++it )
             {
-                const float distance = 1.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
+                const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
                 geometry::Vector2f vector( barycenter, *it );
                 geometry::Point2f point = *it + vector.Normalize() * distance;
                 result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( point.X(), point.Y() ) ) );
