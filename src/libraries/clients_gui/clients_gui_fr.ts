@@ -259,15 +259,15 @@
     </message>
     <message>
         <source>Propagation Model:</source>
-        <translation type="unfinished"></translation>
+        <translation>Modèle de propagation:</translation>
     </message>
     <message>
         <source>Mesure C</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesure C</translation>
     </message>
     <message>
         <source>Mesure Ct</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesure Ct</translation>
     </message>
 </context>
 <context>
@@ -455,32 +455,32 @@
 <context>
     <name>PresetDialog</name>
     <message>
-        <source>Remane preset</source>
-        <translation type="unfinished">Renommer le dégradé</translation>
+        <source>Rename preset</source>
+        <translation>Renommer le dégradé</translation>
     </message>
     <message>
         <source>New Name:</source>
-        <translation type="unfinished">Nouveau nom :</translation>
+        <translation>Nouveau nom :</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Attention</translation>
+        <translation>Attention</translation>
     </message>
     <message>
         <source>Preset name is empty.</source>
-        <translation type="unfinished">Le nom du dégradé est vide.</translation>
+        <translation>Le nom du dégradé est vide.</translation>
     </message>
     <message>
         <source>Preset name already exists.</source>
-        <translation type="unfinished">Le nom du dégradé existe déjà.</translation>
+        <translation>Le nom du dégradé existe déjà.</translation>
     </message>
 </context>
 <context>
@@ -493,8 +493,8 @@
 <context>
     <name>ResourceLinksDialog</name>
     <message>
-        <source>Resource</source>
-        <translation>Ressource</translation>
+        <source>Enabled</source>
+        <translation>Activé</translation>
     </message>
 </context>
 <context>

@@ -90,12 +90,12 @@ protected:
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     const kernel::Profile_ABC& profile_;
     const kernel::ResourceNetwork_ABC* selected_;
-    QListViewItem* selectedItem_;
+    QListBoxItem* selectedItem_;
     bool urban_;
     unsigned int id_;
     kernel::ResourceNetwork_ABC::T_ResourceNodes resourceNodes_;
     QVBox* pMainLayout_;
-    QListView* dotationList_;
+    QListBox* dotationList_;
     QGroupBox* groupBox_;
     QSpinBox* production_;
     QSpinBox* consumption_;

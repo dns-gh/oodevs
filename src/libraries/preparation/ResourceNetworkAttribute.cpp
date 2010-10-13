@@ -120,7 +120,7 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
     Point2f from = urbanResolver_.Get( id_ ).Barycenter();
 
     glPushAttrib( GL_LINE_BIT );
-    glLineWidth( 3.f );
+    glLineWidth( 1.f );
 
     for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
@@ -268,5 +268,5 @@ void ResourceNetworkAttribute::SetColor( const std::string& resource ) const
 {
     float red, green, blue;
     resourceNetworkResolver_.Get( resource ).GetColor( red, green, blue );
-    glColor3f( red, green, blue );
+    glColor4f( red, green, blue, 0.5f );
 }

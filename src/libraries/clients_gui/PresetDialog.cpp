@@ -28,7 +28,7 @@ PresetDialog::PresetDialog( QWidget* parent, Gradient& gradient, kernel::Options
     , presets_ ( presets )
 {
     setFixedSize( 300, 50 );
-    setCaption( tr( "Remane preset" ) );
+    setCaption( tr( "Rename preset" ) );
     setModal( true );
     CreateContent();
     CreateButton();
