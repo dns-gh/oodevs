@@ -25,9 +25,9 @@ const std::string VisualisationScalesPanel::strMinScale( "VisuScaleMin" );
 const std::string VisualisationScalesPanel::strMaxScale( "VisuScaleMax" );
 
 const VisualisationScalesPanel::Scale VisualisationScalesPanel::DefaultScales[ 14 ] =
-    { { 10000, 100000 },   { 0, 25000 },    { 0, 100000 }, { 0, 25000 },     { 5000, 10000000 }
-    , { 5000, 500000 },   { 5000, 50000 },  { 0, 10000 },  { 5000, 500000 }, { 0, 50000 }
-    , { 5000, 10000000 }, { 5000, 500000 }, { 0, 50000 },  { 0, 25000 } };
+    { { 10000, 100000 },   { 0, 25000 },    { 0, 100000 }, { 0, 25000 },     { 0, 10000000 }
+    , { 0, 500000 },   { 0, 50000 },  { 0, 10000 },  { 0, 500000 }, { 0, 50000 }
+    , { 0, 10000000 }, { 0, 500000 }, { 0, 50000 },  { 0, 25000 } };
 
 // -----------------------------------------------------------------------------
 // Name: VisualisationScalesPanel constructor
