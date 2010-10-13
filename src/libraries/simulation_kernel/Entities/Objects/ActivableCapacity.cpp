@@ -57,7 +57,7 @@ ActivableCapacity::~ActivableCapacity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void ActivableCapacity::serialize
+// Name: ActivableCapacity::serialize
 // Created: JCR 2008-07-04
 // -----------------------------------------------------------------------------
 template< typename Archive > void ActivableCapacity::serialize( Archive& file, const unsigned int )

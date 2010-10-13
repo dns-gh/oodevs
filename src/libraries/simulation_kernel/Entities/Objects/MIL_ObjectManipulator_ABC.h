@@ -14,7 +14,7 @@ class MIL_Agent_ABC;
 
 // =============================================================================
 /** @class  MIL_ObjectManipulator_ABC
-    @brief  MIL_ObjectManipulator_ABC
+    @brief  MIL Object manipulator definition
 */
 // Created: JCR 2008-06-02
 // =============================================================================
@@ -29,16 +29,16 @@ public:
 
     //! @name Manipulations
     //@{
-    virtual void Construct ( double rDeltaPercentage ) = 0;
-    virtual void Destroy   ( double rDeltaPercentage ) = 0;
-    virtual void Mine      ( double rDeltaPercentage ) = 0;
-    virtual void Demine    ( double rDeltaPercentage ) = 0;
-    virtual void Bypass    ( double rDeltaPercentage ) = 0;
+    virtual void Construct( double rDeltaPercentage ) = 0;
+    virtual void Destroy  ( double rDeltaPercentage ) = 0;
+    virtual void Mine     ( double rDeltaPercentage ) = 0;
+    virtual void Demine   ( double rDeltaPercentage ) = 0;
+    virtual void Bypass   ( double rDeltaPercentage ) = 0;
 
-    virtual void Activate  () = 0;
-    virtual void Construct () = 0;
-    virtual void Destroy   () = 0;
-    virtual void Mine      () = 0;
+    virtual void Activate () = 0;
+    virtual void Construct() = 0;
+    virtual void Destroy  () = 0;
+    virtual void Mine     () = 0;
 
     virtual void Extinguish( int agent, int nHose ) = 0;
 
@@ -51,14 +51,14 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool CanBeConstructed          () const = 0;
-    virtual bool CanBeMined                () const = 0;
-    virtual bool CanBeDemined              () const = 0;
-    virtual bool CanBeDestroyed            () const = 0;
-    virtual bool CanBeBypassed             () const = 0;
-    virtual bool CanBePerceived            () const = 0;
-    virtual bool CanBeActivated            () const = 0;
-    virtual bool CanBeOccupiedBy           ( const MIL_Agent_ABC& agent ) const = 0;
+    virtual bool CanBeConstructed() const = 0;
+    virtual bool CanBeMined      () const = 0;
+    virtual bool CanBeDemined    () const = 0;
+    virtual bool CanBeDestroyed  () const = 0;
+    virtual bool CanBeBypassed   () const = 0;
+    virtual bool CanBePerceived  () const = 0;
+    virtual bool CanBeActivated  () const = 0;
+    virtual bool CanBeOccupiedBy ( const MIL_Agent_ABC& agent ) const = 0;
     //@}
 
     //! @name Construction interface
@@ -68,7 +68,7 @@ public:
 
     //! @name Speed
     //@{
-    virtual bool     HasMobilityInfluence  () const = 0;
+    virtual bool HasMobilityInfluence() const = 0;
     virtual double ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed ) const = 0;
     //@}
 

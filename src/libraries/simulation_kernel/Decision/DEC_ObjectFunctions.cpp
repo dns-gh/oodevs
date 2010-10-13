@@ -101,7 +101,7 @@ bool DEC_ObjectFunctions::ActivateObject( boost::shared_ptr< DEC_Knowledge_Objec
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_ObjectFunctions::MagicDestroyObject
+// Name: DEC_ObjectFunctions::MagicDestroyObject
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
 void DEC_ObjectFunctions::MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
@@ -115,7 +115,7 @@ void DEC_ObjectFunctions::MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_O
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< DEC_Gen_Object > CreateDynamicGenObject
+// Name: DEC_ObjectFunctions::CreateDynamicGenObject
 // Created: MGD 2010-06-16
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Gen_Object > DEC_ObjectFunctions::CreateDynamicGenObject( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary )

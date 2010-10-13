@@ -63,7 +63,7 @@ void HLA_Mining::Execute() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Interaction< HLA_Mining >& HLA_Mining::CreateInteractionClass
+// Name: HLA_Mining::CreateInteractionClass
 // Created: AGE 2004-12-06
 // -----------------------------------------------------------------------------
 Interaction< HLA_Mining >& HLA_Mining::CreateInteractionClass( InteractionNotification_ABC< HLA_Mining >& callback )

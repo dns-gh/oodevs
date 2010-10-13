@@ -172,15 +172,7 @@ private:
     T_InteractiveCapacities interactives_;
     T_Attributes attributes_;
     std::auto_ptr< Object > pChildObject_;
-    //@}
-
-    //! @name
-    //@{
     std::auto_ptr< MIL_ObjectManipulator_ABC > manipulator_;
-    //@}
-
-    //! @name HLA
-    //@{
     HLA_Object_ABC* pView_;
     //@}
 

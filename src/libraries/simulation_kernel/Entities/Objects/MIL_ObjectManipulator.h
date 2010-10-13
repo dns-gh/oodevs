@@ -16,7 +16,7 @@ class MIL_Object_ABC;
 
 // =============================================================================
 /** @class  MIL_ObjectManipulator
-    @brief  MIL_ObjectManipulator
+    @brief  MIL Object manipulator
 */
 // Created: JCR 2008-06-02
 // =============================================================================
@@ -32,12 +32,12 @@ public:
 
     //! @name
     //@{
-    virtual void Construct ( double rDeltaPercentage );
-    virtual void Destroy   ( double rDeltaPercentage );
-    virtual void Mine      ( double rDeltaPercentage );
-    virtual void Demine    ( double rDeltaPercentage );
-    virtual void Bypass    ( double rDeltaPercentage );
-    virtual void Activate  ();
+    virtual void Construct( double rDeltaPercentage );
+    virtual void Destroy  ( double rDeltaPercentage );
+    virtual void Mine     ( double rDeltaPercentage );
+    virtual void Demine   ( double rDeltaPercentage );
+    virtual void Bypass   ( double rDeltaPercentage );
+    virtual void Activate ();
 
     virtual void Construct();
     virtual void Destroy  ();

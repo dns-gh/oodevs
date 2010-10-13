@@ -101,7 +101,7 @@ ObstacleAttribute::~ObstacleAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: template < typename Archive > void ObstacleAttribute::serialize
+// Name: ObstacleAttribute::serialize
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
 template < typename Archive > void ObstacleAttribute::serialize( Archive& file, const unsigned int )

@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectManipulator.h"
 #include "MIL_Object_ABC.h"
-
 #include "BuildableCapacity.h"
 #include "ImprovableCapacity.h"
 #include "BypassableCapacity.h"
@@ -22,7 +21,6 @@
 #include "DetectionCapacity.h"
 #include "SpawnCapacity.h"
 #include "StructuralCapacity.h"
-
 #include "AnimatorAttribute.h"
 #include "ChildObjectAttribute.h"
 #include "ConstructionAttribute.h"
@@ -30,17 +28,13 @@
 #include "MineAttribute.h"
 #include "ObstacleAttribute.h"
 #include "OccupantAttribute.h"
-
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
-
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-
 #include "tools/Iterator.h"
 #include "tools/MIL_Tools.h"
-
 #include "simulation_terrain/TER_Localisation.h"
 
 // -----------------------------------------------------------------------------
