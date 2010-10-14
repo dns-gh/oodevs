@@ -97,12 +97,13 @@ void Simulation::ChangeSpeed( int timeFactor )
 void Simulation::Update( const MsgsSimToClient::MsgControlInformation& message )
 {
     tickCount_    = unsigned( -1 );
+    currentTick_  = message.current_tick();
     tickDuration_ = message.tick_duration();
     paused_       = message.status() == Common::paused;
     timeFactor_   = message.time_factor();
     time_         = message.current_tick() * tickDuration_;
-    initialDate_  = std::string( (const char*)message.initial_date_time().data().c_str(), 15 );
-    date_         = std::string( (const char*)message.date_time().data().c_str(), 15 );
+    initialDate_  = message.initial_date_time().data();
+    date_         = message.date_time().data();
     controller_.Update( *this );
 }
 
@@ -113,6 +114,7 @@ void Simulation::Update( const MsgsSimToClient::MsgControlInformation& message )
 void Simulation::Update( const MsgsReplayToClient::MsgControlReplayInformation& message )
 {
     tickDuration_ = message.tick_duration();
+    currentTick_  = message.current_tick();
     tickCount_    = message.tick_count();
     paused_       = message.status() == Common::paused;
     timeFactor_   = message.time_factor();
