@@ -419,6 +419,7 @@ public:
         eRC_Contaminated = 3011,
         eRC_TirSurCampEnnemi = 3012,
         eRC_TireParCampEnnemi = 3013,
+        eRC_MissionImpossibleReason = 312,
         eLast
     };
     //@}
