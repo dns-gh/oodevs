@@ -82,3 +82,32 @@ bool MIL_AutomatListParameter::ToAutomatList( std::vector< DEC_Decision_ABC* >& 
         value[i] = automatList_[i];
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomatListParameter::ToList
+// Created: MGD 2010-10-14
+// -----------------------------------------------------------------------------
+bool MIL_AutomatListParameter::ToList( std::vector< Common::MsgMissionParameter_Value >& result ) const
+{
+    for( std::vector< DEC_AutomateDecision* >::const_iterator it = automatList_.begin(); it != automatList_.end(); ++it )
+    {
+        Common::MsgMissionParameter_Value automat;
+        automat.mutable_automat()->set_id( (*it)->GetAutomate().GetID() );
+        result.push_back( automat );
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomatListParameter::ToList
+// Created: MGD 2010-10-14
+// -----------------------------------------------------------------------------
+bool MIL_AutomatListParameter::ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& result ) const
+{
+    for( std::vector< DEC_AutomateDecision* >::const_iterator it = automatList_.begin(); it != automatList_.end(); ++it )
+    {
+        boost::shared_ptr<MIL_MissionParameter_ABC> param = MIL_MissionParameterFactory::Create( *it );
+        result.push_back( param );
+    }
+    return true;
+}

@@ -40,6 +40,8 @@ public:
     //@{
     virtual bool ToAutomatList( Common::AutomatIdList& ) const;
     virtual bool ToAutomatList( std::vector< DEC_Decision_ABC* >& ) const;
+    virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const;
+    virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const;
     //@}
 
 private:

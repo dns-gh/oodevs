@@ -11,6 +11,7 @@
 #include "protocol/protocol.h"
 #include "MIL_AgentListParameter.h"
 #include "MIL_AgentServer.h"
+#include "MIL_MissionParameterFactory.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Decision/DEC_Decision_ABC.h"
@@ -82,5 +83,34 @@ bool MIL_AgentListParameter::ToAgentList( std::vector< DEC_Decision_ABC* >& valu
     value.resize( unitList_.size() );
     for( unsigned int i = 0; i < unitList_.size(); ++i )
         value[i] = unitList_[i];
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentListParameter::ToList
+// Created: MGD 2010-10-14
+// -----------------------------------------------------------------------------
+bool MIL_AgentListParameter::ToList( std::vector< Common::MsgMissionParameter_Value >& result ) const
+{
+    for( std::vector< DEC_Decision_ABC* >::const_iterator it = unitList_.begin(); it != unitList_.end(); ++it )
+    {
+        Common::MsgMissionParameter_Value unit;
+        unit.mutable_unit()->set_id( (*it)->GetPion().GetID() );
+        result.push_back( unit );
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentListParameter::ToList
+// Created: MGD 2010-10-14
+// -----------------------------------------------------------------------------
+bool MIL_AgentListParameter::ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& result ) const
+{
+    for( std::vector< DEC_Decision_ABC* >::const_iterator it = unitList_.begin(); it != unitList_.end(); ++it )
+    {
+        boost::shared_ptr<MIL_MissionParameter_ABC> param = MIL_MissionParameterFactory::CreatePawn( *it );
+        result.push_back( param );
+    }
     return true;
 }

@@ -40,6 +40,8 @@ public:
     //@{
     virtual bool ToAgentList( Common::UnitIdList& asn ) const;
     virtual bool ToAgentList( std::vector< DEC_Decision_ABC* >& value ) const;
+    virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const;
+    virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const;
     //@}
 
 private:
