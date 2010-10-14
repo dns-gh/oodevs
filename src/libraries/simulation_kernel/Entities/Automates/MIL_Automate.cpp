@@ -317,10 +317,6 @@ void MIL_Automate::Initialize( xml::xistream& xis, DEC_DataBase& database, unsig
     xis >> xml::optional() >> xml::attribute( "engaged", bEngaged_ );
     unsigned int nKnowledgeGroup;
     xis >> xml::attribute( "knowledge-group", nKnowledgeGroup );
-    pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( nKnowledgeGroup );
-    if( !pKnowledgeGroup_ )
-        xis.error( "Unknown knowledge group" );
-    pKnowledgeGroup_->RegisterAutomate( *this );
     RegisterRole( *new DEC_AutomateDecision( *this, database, gcPause, gcMult ) ) ;
     RegisterRole( *new DEC_Representations() );
     xis >> xml::list( "unit", *this, &MIL_Automate::ReadUnitSubordinate )
@@ -330,6 +326,10 @@ void MIL_Automate::Initialize( xml::xistream& xis, DEC_DataBase& database, unsig
         >> xml::end;
     if( !pPionPC_ )
         xis.error( "Automat's command post is not defined" );
+    pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( nKnowledgeGroup );
+    if( !pKnowledgeGroup_ )
+        xis.error( "Unknown knowledge group" );
+    pKnowledgeGroup_->RegisterAutomate( *this );
 }
 
 // -----------------------------------------------------------------------------
