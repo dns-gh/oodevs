@@ -10,7 +10,7 @@
     <property name="working_dir" value="D:/projets/csword/trunk/run/vc80"/>
     <property name="scripts_dir" value="scripts"/>
     <property name="reports_dir" value="reports"/>
-    <property name="sword_doc" value="../../../../doc/04-Integration_Testing"/>
+    <property name="sword_doc" value="../../../../doc/03-Unit_Testing"/>
     
     <target name="clean" description="Deletes output directory.">
         <delete dir="${output}"/>
