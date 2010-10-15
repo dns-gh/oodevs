@@ -34,13 +34,12 @@
     </target>
 
     <target name="transform">
+        <dirname property="dirname" file="${file}"/>
         <basename property="filename" file="${file}" suffix=".ord"/>
         <mkdir dir="${output}/${filename}"/>
         <copy todir="${output}/${filename}"><fileset dir="${input_exercise}" excludes=".svn"/></copy>
         <delete file="${output}/${filename}/sessions/default/session.xml"/>
-        <xslt in="input/config.xml" style="xsl/session.xsl" out="${output}/${filename}/sessions/default/session.xml">
-            <param name="testname" expression="${filename}"/>
-        </xslt>
+        <xslt in="${dirname}/${filename}.config" style="xsl/session.xsl" out="${output}/${filename}/sessions/default/session.xml"/>
         <copy tofile="${output}/${filename}/${scripts_dir}/resources/${filename}.ord" file="${file}"/>
         <xslt in="${file}" style="xsl/transformation.xsl" out="${output}/${filename}/${scripts_dir}/${filename}.lua">
             <param name="profilename" expression="${filename}"/>
