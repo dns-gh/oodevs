@@ -62,4 +62,20 @@
       </readwrite>
     </rights>
   </profile>
+  <profile name="Blue_4_nonsuper" password="" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <formation id="4"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Blue_7_nonsuper" password="" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="7"/>
+      </readwrite>
+    </rights>
+  </profile>
 </profiles>
