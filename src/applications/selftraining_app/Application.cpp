@@ -94,7 +94,7 @@ void Application::CreateTranslators()
     AddTranslator( "clients_kernel", locale );
     AddTranslator( "clients_gui", locale );
     AddTranslator( "selftraining_app", locale );
-    AddTranslator( "tools", locale );
+    AddTranslator( "clients_gui_sword", locale );
 }
 
 // -----------------------------------------------------------------------------

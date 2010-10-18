@@ -63,7 +63,7 @@ Application::Application( int argc, char** argv, const QString& expiration )
     AddTranslator( locale, "gaming_app" );
     AddTranslator( locale, "reports" );
     AddTranslator( locale, "indicators" );
-    AddTranslator( locale, "tools" );
+    AddTranslator( locale, "clients_gui_sword" );
     ENT_Tr::InitTranslations();
 }
 
