@@ -876,7 +876,6 @@
         <update name="geocoord"/>
         <update name="terrain" modules="terrain,graphics,pathfind,vmap,geodata,gdal_ogr" version="2.0"/>
         <update name="terrain" modules="urban"/>
-        <update name="terrain" package="SWORD Terrain_${platform}.exe"/>
 		<update name="terrain" package="terraintools_${platform}.zip"/> 
         <update name="qt" version="3.3.8"/>
         <update name="boost"/>
@@ -897,9 +896,8 @@
         <update name="svgl"/>
         <update name="zlib"/>
         <update name="bugtrap"/>
-        <update name="shapelib"/>
-        <update name="gdal" version="1.6.a"/>
-        <update name="esri" version="9.2"/>
+		<update name="shapelib"/>
+        <update name="gdal"/>
         <update name="turtle"/>
         <update name="protobuf"/>
         <update name="vcredist" package="vcredist"/>

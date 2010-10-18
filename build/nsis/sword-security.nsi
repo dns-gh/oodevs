@@ -92,9 +92,9 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\userDdm.dll"
     File /x "*D.dll" "${RUNDIR}\xerces*.dll"
     File /x "*D.dll" "${RUNDIR}\Xalan*.dll"
+    File "${RUNDIR}\shapelib.dll"
     File "${RUNDIR}\zlib1.dll"
     File "${RUNDIR}\bugtrap.dll"
-    File "${RUNDIR}\shapelib.dll"
     File "${RUNDIR}\dispatcher-${PLATFORM}-mt.dll"
     File "${RUNDIR}\directia-${PLATFORM}-mt-4_6.dll"
     File "${RUNDIR}\lua-${PLATFORM}-mt-5_1_4.dll"
@@ -119,8 +119,7 @@ Section "!${PRODUCT_NAME}"
     
     ; terrain dependencies
     File "${RUNDIR}\comerr32.dll" 
-    File "${RUNDIR}\expat_ogdi31.dll"
-    File "${RUNDIR}\gdal16.dll"
+    File "${RUNDIR}\gdal*.dll"
     File "${RUNDIR}\gdal_SDE.dll"
     File /nonfatal "${RUNDIR}\geos_c.dll"
     File "${RUNDIR}\gssapi32.dll"
@@ -133,21 +132,22 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\libpq.dll"
     File "${RUNDIR}\libxslt.dll"
     File "${RUNDIR}\msvcr71.dll"
-    File "${RUNDIR}\ogdi31.dll"
     File "${RUNDIR}\ogr_SDE.dll"
     File "${RUNDIR}\proj.dll"
-    File "${RUNDIR}\rpf.dll"
-    File "${RUNDIR}\vrf.dll"
-    File "${RUNDIR}\zlib_ogdi31.dll"
     
-    ; evaluation licence
+	; evaluation licence
     !ifdef EVALUATION
         File "${RUNDIR}\evaluation.lic"
     !endif
     
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
       
-    
+    ;projection settings( used in crossbow)
+	SetOutPath "$INSTDIR\applications\projection_data"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /r "${RUNDIR}\projection_data\*"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL	   
+	
     ; resources: sql deployment
     SetOutPath "$INSTDIR\applications\resources\sql"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL

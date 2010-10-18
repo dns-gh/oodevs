@@ -328,8 +328,8 @@ FunctionEnd
         File "${OUTDIR}\terraintools_${PLATFORM}.zip"
         WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}" "RootDirectory" "$INSTDIR\${ComponentName}\applications"
 		nsisunz::Unzip "$INSTDIR\installation files\terraintools_${PLATFORM}.zip" "$INSTDIR\${ComponentName}"
-	    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_TN_TOOLS)\$(OT_GEN).lnk" "$INSTDIR\applications\generation_app.exe" ""  "$INSTDIR\applications\sword-ot.ico"
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_TN_TOOLS)\$(OT_WKP).lnk" "$INSTDIR\applications\terrain_workshop_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+;	    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_TN_TOOLS)\$(OT_GEN).lnk" "$INSTDIR\applications\generation_app.exe" ""  ;"$INSTDIR\applications\sword-ot.ico"
+;    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_TN_TOOLS)\$(OT_WKP).lnk" "$INSTDIR\applications\terrain_workshop_app.exe" "" ;"$INSTDIR\applications\sword-ot.ico"
     SectionEnd
 
 !macroend
