@@ -210,14 +210,24 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
     std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) );
     if( type != expected )
     {
-        if( type == "phaselinelist" )
-            type = "phaseline";
-        else if( type == "direction" )
-            type = "heading";
-        else if( type == "intelligencelist" )
-            type = "intelligence";
-        if( type != expected )
-            ThrowUnexpected( parameter, xis );
+        if( expected == "locationcomposite" )
+        {
+            LocationCompositeVisitor visitor;
+            parameter.Accept( visitor );
+            if( !visitor.Ok( type ) )
+                ThrowUnexpected( parameter, xis );
+        }
+        else
+        {
+            if( type == "phaselinelist" )
+                type = "phaseline";
+            else if( type == "direction" )
+                type = "heading";
+            else if( type == "intelligencelist" )
+                type = "intelligence";
+            if( type != expected )
+                ThrowUnexpected( parameter, xis );
+        }
     }
     std::auto_ptr< actions::Parameter_ABC > param;
 
