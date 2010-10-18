@@ -1,10 +1,10 @@
 scripts_dir=$1
+reports_dir=$2
 
-nbfile=`find $scripts_dir -name '*.sh' | wc -l`
-
-for i in `seq 1 $nbfile`
+for file in `find $scripts_dir -name '*.sh'`
 do 
-    filename=`find $scripts_dir -name '*.sh' | sed $i{D}`
-    echo "executing" $filename"..."
-    $filename
+    echo "executing" $file"..."
+    testname=`echo $file | cut -d '/' -f 2 | cut -d '.' -f 1`
+    mkdir -p ${reports_dir}
+    $file 1> ${reports_dir}/${testname}_exec.log
 done

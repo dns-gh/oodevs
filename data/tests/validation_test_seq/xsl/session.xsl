@@ -23,7 +23,7 @@
                     <orbat checkcomposition="false"/>
                     <pathfinder threads="1"/>
                     <profiling enabled="false"/>
-                    <time factor="10" step="10">
+                    <time factor="100" step="10">
                         <xsl:attribute name="end-tick">
                             <xsl:value-of select="@ticks"/>
                         </xsl:attribute>

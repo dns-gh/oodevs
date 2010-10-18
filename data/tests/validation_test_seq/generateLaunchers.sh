@@ -5,14 +5,11 @@ scripts_dir=$4
 exercisename=$5
 sword_doc=$6
 
-nbfile=`find $sword_doc -name '*.ord' | wc -l`
-
 mkdir -p $scripts_dir
 
-for i in `seq 1 $nbfile`
+for file in `find $sword_doc -name '*.ord'`
 do 
-    filename=`find $sword_doc -name '*.ord' | sed $i{D}`
-    testname=`echo $filename | grep -o "[^/]*$" | cut -d "." -f 1`
+    testname=`echo $file | grep -o "[^/]*$" | cut -d "." -f 1`
     touch $scripts_dir/$testname.sh
     chmod +x $scripts_dir/$testname.sh
     echo 'cd '$working_dir'

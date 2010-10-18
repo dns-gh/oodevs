@@ -67,6 +67,7 @@
         <exec executable="bash.exe">
             <arg value="launch.sh"/>
             <arg value="${scripts_dir}"/>
+            <arg value="${reports_dir}"/>
         </exec>
     </target>
     
