@@ -12,22 +12,30 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_GeometryFunctions.h"
 #include "DEC_FrontAndBackLinesComputer.h"
+#include "UrbanModel.h"
+#include "Decision/DEC_Decision_ABC.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
-#include "Decision/DEC_Decision_ABC.h"
+#include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "tools/MIL_Tools.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include "simulation_terrain/TER_ObjectManager.h"
+#include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Random.h"
+#include <urban/Architecture.h>
+#include <urban/TerrainObject_ABC.h>
 
 #define PRECISION 0.0000001
 
@@ -916,6 +924,135 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeLocalisationBaryc
     boost::shared_ptr< MT_Vector2D > pBarycenter( new MT_Vector2D( MT_ComputeBarycenter( pLocalisation->GetPoints() ) ) );
     assert( TER_World::GetWorld().IsValidPosition( *pBarycenter ) );
     return pBarycenter;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeUrbanBlockLocalisations
+// Created: LMT 2010-10-13
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUrbanBlockLocalisations( boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
+{
+    std::vector< boost::shared_ptr< MT_Vector2D > > result;
+    if( pKnowledge->IsValid() )
+    {
+        const urban::TerrainObject_ABC& terrainObject = pKnowledge->GetTerrainObjectKnown();
+        const geometry::Polygon2f* pVertices = terrainObject.GetFootprint();
+        const geometry::Point2f barycenter = pVertices->Barycenter();
+        boost::shared_ptr< MT_Vector2D > position( new MT_Vector2D( barycenter.X(), barycenter.Y() ) );
+        result.push_back( position );
+        DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( terrainObject, false, result );
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeLocalisationsInsideBlock
+// Created: LMT 2010-10-13
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( const urban::TerrainObject_ABC& terrainObject, bool onlyInsideBlock, std::vector< boost::shared_ptr< MT_Vector2D > >& result )
+{
+    const geometry::Polygon2f* pVertices = terrainObject.GetFootprint();
+    if( pVertices )
+    {
+        const geometry::Polygon2f::T_Vertices& points = pVertices->Vertices();
+        const geometry::Point2f barycenter = pVertices->Barycenter();
+        for( geometry::Polygon2f::CIT_Vertices it = points.begin(); it != points.end(); ++it )
+        {
+            const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
+            geometry::Vector2f vector( barycenter, *it );
+            geometry::Point2f point = *it + vector.Normalize() * distance;
+            boost::shared_ptr< MT_Vector2D > position( new MT_Vector2D( point.X(), point.Y() ) );
+            if( !onlyInsideBlock || terrainObject.IsInside( point ) )
+                result.push_back( position );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeTrafficableLocalisationBarycenter
+// @return a position which the agent can reach inside an area, or the barycenter if no trafficable position can be found.
+// Created: LMT 2010-10-13
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocalisationBarycenter( MIL_AgentPion& pion, TER_Localisation* pLocalisation )
+{
+    if( !pLocalisation )
+        throw std::runtime_error( "Compute barycenter of null position" );
+    boost::shared_ptr< MT_Vector2D > pBarycenter( new MT_Vector2D( MT_ComputeBarycenter( pLocalisation->GetPoints() ) ) );
+    double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+    if( !DEC_GeometryFunctions::IsUrbanBlockTrafficable( *pBarycenter, myWeight ) )
+    {
+        std::vector< const TER_Object_ABC* > objects;
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle2( *pBarycenter, 1, objects );
+        for( std::vector< const TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
+        {
+            const UrbanObjectWrapper* urbanObject = dynamic_cast< const UrbanObjectWrapper* >( *it );
+            const urban::TerrainObject_ABC& terrainObject = urbanObject->GetObject();
+            const geometry::Polygon2f* pVertices = terrainObject.GetFootprint();
+            if( pVertices )
+            {
+                const geometry::Polygon2f::T_Vertices& points = pVertices->Vertices();
+                const geometry::Point2f barycenter = pVertices->Barycenter();
+                for( geometry::Polygon2f::CIT_Vertices it = points.begin(); it != points.end(); ++it )
+                {
+                    const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
+                    geometry::Vector2f vector( barycenter, *it );
+                    geometry::Point2f point = *it + vector.Normalize() * distance;
+                    MT_Vector2D position( point.X(), point.Y() );
+                    if( DEC_GeometryFunctions::IsUrbanBlockTrafficable( position, myWeight ) )
+                    {
+                        if( pLocalisation->IsInside( position ) )    
+                        {
+                            *pBarycenter = position;
+                            return pBarycenter;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return pBarycenter;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::IsUrbanBlockTrafficable
+// Created: LDC 2010-08-10
+// -----------------------------------------------------------------------------
+bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight )
+{
+    std::vector< const TER_Object_ABC* > objects;
+    TER_World::GetWorld().GetObjectManager().GetListWithinCircle2( point, 1, objects );
+    for( std::vector< const TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
+    {
+        const UrbanObjectWrapper* urbanObject = dynamic_cast< const UrbanObjectWrapper* >( *it );
+        if( urbanObject && urbanObject->GetLocalisation().GetArea() && urbanObject->IsInside( point ) )
+        {
+            const urban::TerrainObject_ABC& terrainObject = urbanObject->GetObject();
+            const urban::Architecture* architecture = terrainObject.Retrieve< urban::Architecture >();
+            if( architecture )
+                return( architecture->GetTrafficability() > weight );
+        }
+    }
+    return true;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable
+// Created: LMT 2010-10-18
+// -----------------------------------------------------------------------------
+bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point )
+{
+    double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+    const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( point );
+    if( terrainObject )
+    {
+        const urban::Architecture* architecture = terrainObject->Retrieve< urban::Architecture >();
+        if( architecture )
+        {
+           return( architecture->GetTrafficability() > myWeight );
+        }
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------------------

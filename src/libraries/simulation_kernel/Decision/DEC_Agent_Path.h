@@ -95,7 +95,6 @@ private:
     //! @name Helper to bypass lack of check of terrain in heuristics.
     //@{
     bool IsDestinationTrafficable() const;
-    bool IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight ) const;
     //@}
 
     //! @name Points insertion Tools

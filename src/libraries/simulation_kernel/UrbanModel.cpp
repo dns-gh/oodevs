@@ -131,6 +131,12 @@ const urban::TerrainObject_ABC* UrbanModel::FindUrbanObject( unsigned id ) const
     return visitor.GetObject();
 }
 
+const urban::TerrainObject_ABC* UrbanModel::FindBlock( const MT_Vector2D& center ) const
+{
+    geometry::Point2f point( static_cast< float >( center.rX_ ), static_cast< float >( center.rY_ ) );
+    return model_->FindBlock( point );
+}
+
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::FindUrbanBlock
 // Created: RPD 2009-11-23

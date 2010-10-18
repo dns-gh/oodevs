@@ -22,6 +22,7 @@ class MIL_Fuseau;
 class MIL_LimaOrder;
 class MT_Vector2D;
 class TER_Localisation;
+class DEC_Knowledge_Urban;
 
 namespace directia
 {
@@ -36,6 +37,10 @@ namespace binders
     class ScriptRef;
 }
 }
+}
+namespace urban
+{
+    class TerrainObject_ABC;
 }
 
 // =============================================================================
@@ -69,6 +74,14 @@ public:
     static boost::shared_ptr< MT_Vector2D > ComputeAgentsBarycenter( const std::vector< DEC_Decision_ABC* >& selection ); //$$$ Pourri
     static float ComputeDistanceFromMiddleLine( const std::vector< DEC_Decision_ABC*>& selPions, DEC_Decision_ABC* pReferencePion );
     static boost::shared_ptr< MT_Vector2D > ComputeLocalisationBarycenter( TER_Localisation* pLocalisation );
+
+    
+    static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeUrbanBlockLocalisations( boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge );
+    static void ComputeLocalisationsInsideBlock( const urban::TerrainObject_ABC& terrainObject, bool onlyInsideBlock, std::vector< boost::shared_ptr< MT_Vector2D > >& result );
+
+    static boost::shared_ptr< MT_Vector2D > ComputeTrafficableLocalisationBarycenter( MIL_AgentPion& pion, TER_Localisation* pLocalisation );
+    
+    static bool IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight );
     static boost::shared_ptr< MT_Vector2D > ComputeCoverPosition( const std::vector< DEC_Decision_ABC* >& pions, MT_Vector2D* pDirection, float distance );
     static boost::shared_ptr< MT_Vector2D > ComputeRandomPointOnCircle( MT_Vector2D* pCenter, float radius );
     static boost::shared_ptr< MT_Vector2D > ComputeRandomPointInCircle( MT_Vector2D* pCenter, float radius );
@@ -85,6 +98,7 @@ public:
     static boost::shared_ptr< TER_Localisation > ComputeAreaInZone( const MIL_Fuseau* zone, const MT_Vector2D* center );
     static double ComputeAreaSize( TER_Localisation* pLocalisation );
     static double ComputeAreaDiameter( TER_Localisation* pLocalisation );
+    static bool IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point );
 
     static DEC_FrontAndBackLinesComputer* StartComputingFrontAndBackLines( const MIL_Automate& callerAutomate, const std::vector< DEC_Decision_ABC* >& pionDecisionList );
     static DEC_FrontAndBackLinesComputer* StartComputingAutomatFrontAndBackLines( const MIL_Automate& callerAutomate, const std::vector< DEC_Decision_ABC* >& automatDecisionList );

@@ -12,6 +12,7 @@
 #include "DEC_Agent_PathSection.h"
 #include "DEC_Agent_PathClass.h"
 #include "MIL_AgentServer.h"
+#include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Rep_PathPoint_Front.h"
@@ -25,7 +26,6 @@
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -35,8 +35,6 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
-#include <urban/Architecture.h>
-#include <urban/TerrainObject_ABC.h>
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::Initialize
@@ -625,30 +623,9 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
     float weight = static_cast< float >( GetUnitMajorWeight() );
     for( CIT_PointVector it = pathPoints_.begin(); it != pathPoints_.end(); ++it )
     {
-        if( !IsUrbanBlockTrafficable( *it, weight ) )
+        if( !DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
             return false;
     }
     return true;
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::IsUrbanBlockTrafficable
-// Created: LDC 2010-08-10
-// -----------------------------------------------------------------------------
-bool DEC_Agent_Path::IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight ) const
-{
-    std::vector< const TER_Object_ABC* > objects;
-    TER_World::GetWorld().GetObjectManager().GetListWithinCircle2( point, 1, objects );
-    for (std::vector< const TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
-    {
-        const UrbanObjectWrapper* urbanObject = dynamic_cast< const UrbanObjectWrapper* >( *it );
-        if( urbanObject && urbanObject->GetLocalisation().GetArea() && urbanObject->IsInside( point ) )
-        {
-            const urban::TerrainObject_ABC& terrainObject = urbanObject->GetObject();
-            const urban::Architecture* architecture = terrainObject.Retrieve< urban::Architecture >();
-            if( architecture )
-                return( architecture->GetTrafficability() > weight );
-        }
-    }
-    return true;
-}

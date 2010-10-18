@@ -31,6 +31,10 @@
 #include <urban/TerrainObject_ABC.h>
 #include <urban/Architecture.h>
 #include <geometry/Types.h>
+#include <boost/lexical_cast.hpp>
+
+#include "MT_Tools/MT_FormatString.h"
+#include "MT_Tools/MT_Logger.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeUrbanFunctions::GetCurrentPerceptionLevel
@@ -228,3 +232,5 @@ double DEC_KnowledgeUrbanFunctions::GetPerception( const MIL_AgentPion& callerAg
     const_cast< MIL_AgentPion& >( callerAgent ).Execute( *dataComputer );
     return dataFunctor.GetEnergy();
 }
+
+// $$$$ _RC_ LGY 2010-10-11: ici
