@@ -142,6 +142,7 @@ Section "!${PRODUCT_NAME}"
     File /r "${RUNDIR}\projection_data\*"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
+    SetOutPath "$INSTDIR\applications"
     CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_ADAPTATION).lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_SELF_TRAINING).lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
