@@ -413,7 +413,7 @@
     </distance-before-points>
   </unit>
   <unit decisional-model="Artillery locating radar group" id="14" name="Artillery locating radar group" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="oo" nature="combat/field artillery/target acquisision/radar"/>
+    <nature atlas-nature="Vehicule" level="oo" nature="combat/field artillery/target acquisition/radar"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VAB RATAC"/>
       <equipment convoyer="true" count="2" crew="2" type="Light Medium Tactical Vehicle"/>
