@@ -19,7 +19,6 @@ function Start()
                 if profile ~= "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>" then
                     return
                 end
-                ClearDisplay()
                 ChangeState( "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>_waitstep" )
             end
         },
@@ -65,6 +64,7 @@ function Start()
             events.client:UserChose(),
             { "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>_autoormandialog" },
             function( dialog, answer )
+                ClearDisplay()
                 if dialog == "selectMode_choice" then
                     if answer == "Automatique" then
                         ChangeState( "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>_play" )
@@ -88,51 +88,6 @@ function Start()
             end
         ),
 
-        AtState( "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>_initDialog",
-            function()
-                Dialog( { id      = "init_choice",
-                          message = "Test de validation </xsl:text><xsl:value-of select="$profilename"/><xsl:text>.",
-                          buttons = { "Reset" } } )
-            end
-        ),
-
-        {
-            events.client:UserChose(),
-            { "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>_initDialog" },
-            function( dialog, answer )
-                if dialog == "init_choice" then
-                    if answer == "Reset" then
-                        Dialog( { id      = "init_wait",
-                          message = "Test de validation </xsl:text><xsl:value-of select="$profilename"/><xsl:text>. Attendez avant de deconnecter.",
-                          buttons = {} } )
-                        </xsl:text>
-                        <xsl:variable name="orbat" select="document('../out/Poseidon VA/orbat.xml')"/>
-                        <xsl:for-each select="$orbat//side/tactical/formation/automat/unit">
-                        <xsl:text>
-                        local entity = model.orbat:FindAgent( </xsl:text><xsl:value-of select="@id"/><xsl:text> )
-                        if ( coord:ToUtm( entity:GetPosition() ) ~= "</xsl:text><xsl:value-of select="@position"/><xsl:text>" ) then
-                            entity:Teleport( coord:UtmPosition( "</xsl:text><xsl:value-of select="@position"/><xsl:text>" ) )
-                        end
-                        entity:RecoverAll()
-                        </xsl:text>
-                        </xsl:for-each>
-                        <xsl:text>
-                        ChangeState( "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>_clean" )
-                    end
-                end
-            end
-        },
-
-        {
-            events.sim:TickEnded(),
-            { "</xsl:text><xsl:value-of select="$profilename"/><xsl:text>_clean" },
-            function()
-                Dialog( { id      = "ok_for_disconect",
-                          message = "Test de validation </xsl:text><xsl:value-of select="$profilename"/><xsl:text>. OK pour deconnecter.",
-                          buttons = {} } )
-                Deactivate()
-            end
-        },
     }
     DeclareEvents( eventTable )
 

@@ -8,7 +8,7 @@
     <property name="input_exercise" value="../../exercises/Poseidon VA"/>
     <property name="test_name" value="Poseidon VA"/>
     <property name="target_exercise" value="../../exercises/validation_test"/>
-    <property name="sword_doc" value="../../../../doc/04-Integration_Testing"/>
+    <property name="sword_doc" value="../../../../doc/03-Unit_Testing"/>
 
     <target name="clean" description="Deletes output directory.">
         <delete dir="${output}"/>
@@ -20,7 +20,6 @@
 
     <target name="init" depends="clean">
         <copy todir="${output}/${test_name}"><fileset dir="${input_exercise}" excludes=".svn"/></copy>
-        <copy todir="${output}/${test_name}"><fileset dir="${input}" excludes=".svn"/></copy>
         <copy todir="${output}/orders">
             <fileset dir="${sword_doc}">
                 <include name="**/*.ord"/>
