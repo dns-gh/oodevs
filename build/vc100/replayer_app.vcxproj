@@ -41,6 +41,8 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='release|Win32'">false</LinkIncremental>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">D:\dev\lib\vc100;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='release|Win32'">D:\dev\lib\vc100;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;$(LibraryPath)</LibraryPath>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectName)-vc100-mt-gd</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectName)-vc100-mt</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -54,14 +56,14 @@
       </PrecompiledHeader>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <AdditionalDependencies>dbghelp.lib;winmm.lib;iphlpapi.lib;tools_d.lib;xerces-c_3D.lib;psapi.lib;pathfind_d.lib;geocoord_d.lib;HLA_d.lib;libFedTimed.lib;libprotobufd.lib;directia-vc100-mt-gd-4_6.lib;qtmaind.lib;qt-mt338d.lib;urban_d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)_d.exe</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>../../lib/vc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -80,7 +82,7 @@
       </PrecompiledHeader>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -88,7 +90,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>dbghelp.lib;winmm.lib;tools.lib;psapi.lib;iphlpapi.lib;xerces-c_3.lib;geocoord.lib;HLA.lib;libFedTime.lib;libprotobuf.lib;directia-vc100-mt-4_6.lib;qtmain.lib;qt-mt338.lib;urban.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>../../lib/vc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>

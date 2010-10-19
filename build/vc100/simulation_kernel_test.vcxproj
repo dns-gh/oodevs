@@ -41,6 +41,8 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='release|Win32'">false</LinkIncremental>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">D:\dev\lib\vc100;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='release|Win32'">D:\dev\lib\vc100;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;$(LibraryPath)</LibraryPath>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(ProjectName)-vc100-mt-gd</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(ProjectName)-vc100-mt</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -55,14 +57,14 @@
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <AdditionalDependencies>dbghelp.lib;winmm.lib;HLA_d.lib;libFedTimed.lib;pathfind_d.lib;geocoord_d.lib;tools_d.lib;psapi.lib;masalloc_d.lib;iphlpapi.lib;geodata_d.lib;gdal_i.lib;gdal_ogr.lib;directia-vc100-mt-gd-4_6.lib;urban_d.lib;xerces-c_3D.lib;libprotobufd.lib;qtmaind.lib;qt-mt338d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)-vc100-mt-gd.exe</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>../../lib/vc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
@@ -87,7 +89,7 @@
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>
@@ -95,7 +97,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>dbghelp.lib;winmm.lib;HLA.lib;libFedTime.lib;pathfind.lib;geocoord.lib;tools.lib;psapi.lib;masalloc.lib;iphlpapi.lib;geodata.lib;gdal_i.lib;gdal_ogr.lib;directia-vc100-mt-4_6.lib;urban.lib;xerces-c_3.lib;libprotobuf.lib;qtmain.lib;qt-mt338.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)-vc100-mt.exe</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>../../lib/vc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
