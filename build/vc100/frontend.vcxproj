@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|Win32">
+      <Configuration>debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|Win32">
+      <Configuration>release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B878605D-F426-451F-B852-2FEA60F02918}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='release|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='release|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../src/libraries;../../include;../../include/qt;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>$(ProjectName)_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)lib$(ProjectName)-vc100-mt-gd.lib</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>../../src/libraries;../../include;../../include/qt;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>$(ProjectName)_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)lib$(ProjectName)-vc100-mt.lib</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\frontend\CommandLineTools.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\Config.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\frontend_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\ClientReplayNetworker.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\commands.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\CreateExercise.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\CreateSession.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\CreateTerrain.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\EditExercise.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\ImportExercise.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\JoinAnalysis.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\JoinExercise.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\SpawnCommand.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\StartAuthoring.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\StartExercise.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\StartReplay.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\StartTerrainWorkshop.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\ConfigurationManipulator.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\XmlNode.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\ExerciseListener.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\ProcessList.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\CheckpointConfigPanel.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\CheckpointList.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\AdvancedConfigPanel.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\CrossbowPluginConfigPanel.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\DisPluginConfigPanel.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\HlaPluginConfigPanel.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\RandomPluginConfigPanel.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\TimelinePluginConfigPanel.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\Launcher.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\LauncherClient.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\LauncherPublisher.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\LauncherService.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\ProcessService.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\Exercise.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\Exercises.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\frontend\CommandLineTools.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\Config.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\frontend_pch.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ClientReplayNetworker.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\commands.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\CreateExercise.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\CreateSession.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\CreateTerrain.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\EditExercise.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ImportExercise.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\JoinAnalysis.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\JoinExercise.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\Process_ABC.h" />
+    <CustomBuild Include="..\..\src\libraries\frontend\SpawnCommand.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+      </Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+      </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\frontend\StartAuthoring.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\StartExercise.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\StartReplay.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\StartTerrainWorkshop.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ConfigurationManipulator.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\XmlNode.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ExerciseListener.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ProcessList.h" />
+    <CustomBuild Include="..\..\src\libraries\frontend\CheckpointConfigPanel.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\frontend\CheckpointList.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\frontend\AdvancedConfigPanel.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\CrossbowPluginConfigPanel.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\DisPluginConfigPanel.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\HlaPluginConfigPanel.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\PluginConfig_ABC.h" />
+    <CustomBuild Include="..\..\src\libraries\frontend\RandomPluginConfigPanel.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\frontend\TimelinePluginConfigPanel.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(Filename).h</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\frontend\Launcher.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\Launcher_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\LauncherClient.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\LauncherPublisher.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\LauncherService.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\ProcessService.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\Exercise.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\Exercises.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\frontend\frontend_fr.ts" />
+    <CustomBuild Include="..\..\src\libraries\frontend\translator.pro">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">lupdate -noobsolete -verbose %(FullPath)
+lrelease -verbose %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">./translator;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">lupdate -noobsolete -verbose %(FullPath)
+lrelease -verbose %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">./translator;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="clients_gui.vcxproj">
+      <Project>{414655f4-84bf-4f22-9afb-855102f9cf2a}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="tools.vcxproj">
+      <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

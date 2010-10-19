@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{0e8734a5-5054-47ac-a4f8-bbf9ecdfe980}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Formations">
+      <UniqueIdentifier>{b4aea4b0-ce1d-4303-93b5-86fa97aa9f81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\internal">
+      <UniqueIdentifier>{e15f31a4-e44e-44b0-a855-7d0dc04a2951}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\tic_plugin\Platform_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic_plugin\PlatformAdapter.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic_plugin\PlatformVisitor_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic_plugin\tic_plugin_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic_plugin\TicExtension_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic_plugin\TicPluginFactory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic_plugin\DiamondFormation.h">
+      <Filter>Source Files\Formations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic_plugin\Formation_ABC.h">
+      <Filter>Source Files\Formations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic_plugin\Movable_ABC.h">
+      <Filter>Source Files\Formations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic_plugin\RoadFormation.h">
+      <Filter>Source Files\Formations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic_plugin\ExtensionFactory.h">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic_plugin\Platform.h">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic_plugin\TicExtension.h">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tic_plugin\TicPlugin.h">
+      <Filter>Source Files\internal</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\tic_plugin\PlatformAdapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic_plugin\tic_plugin_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic_plugin\TicPluginFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic_plugin\DiamondFormation.cpp">
+      <Filter>Source Files\Formations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic_plugin\Formation_ABC.cpp">
+      <Filter>Source Files\Formations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic_plugin\RoadFormation.cpp">
+      <Filter>Source Files\Formations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic_plugin\ExtensionFactory.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic_plugin\Platform.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic_plugin\TicExtension.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tic_plugin\TicPlugin.cpp">
+      <Filter>Source Files\internal</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

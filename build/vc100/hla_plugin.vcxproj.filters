@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{39396425-0c1f-4cd4-8ff8-c555e835fd7a}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Extensions">
+      <UniqueIdentifier>{89daaa88-14ba-4768-8922-b65afe510464}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Types">
+      <UniqueIdentifier>{9ddafbc1-364a-4dcf-bee1-4f6df87dd3db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Types\HLA">
+      <UniqueIdentifier>{bdaaf26e-8ba6-4bf3-affb-886916a4ddc1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\FederateFacade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\HlaPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\HlaPluginFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AgentExtension.cpp">
+      <Filter>Source Files\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ExtensionFactory.cpp">
+      <Filter>Source Files\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateMarking.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Coordinates.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Dimension.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\EntityIdentifier.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\EntityType.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Formation.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\SilentEntity.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Spatial.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateEntityClass.cpp">
+      <Filter>Source Files\Types\HLA</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\FederateFacade.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaPlugin.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaPluginFactory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SerializationTools.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AgentExtension.h">
+      <Filter>Source Files\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ExtensionFactory.h">
+      <Filter>Source Files\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\HlaExtension_ABC.h">
+      <Filter>Source Files\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateMarking.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Coordinates.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Dimension.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\EntityIdentifier.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\EntityType.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Formation.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\SilentEntity.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Spatial.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateEntityClass.h">
+      <Filter>Source Files\Types\HLA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectClass_ABC.h">
+      <Filter>Source Files\Types\HLA</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5329D3C5-9566-4B03-B75A-3F3191B65489}</ProjectGuid>
+    <RootNamespace>simulation_orders</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</IntDir>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\dev\lib\vc100;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\dev\lib\vc100;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../src/libraries;../../src/libraries/simulation_orders;../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>../../src/libraries;../../include;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <PreprocessorDefinitions>_DEBUG;_LIB;_WINDOWS;WIN32;MT_AUTO_LINK;USE_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>$(ProjectName)_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4511;4512;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(OutDir)libcsword_$(ProjectName)-vc100-mt-gd.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <AdditionalIncludeDirectories>../../src/libraries;../../src/libraries/simulation_orders;../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>../../src/libraries;../../include;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <PreprocessorDefinitions>_USE_INLINE;NDEBUG;_LIB;_RELEASE;_WINDOWS;WIN32;MT_AUTO_LINK;USE_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>$(ProjectName)_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+      <DisableSpecificWarnings>4511;4512;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(OutDir)libcsword_$(ProjectName)-vc100-mt.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\simulation_orders\simulation_orders_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Agent.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_AgentKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_AgentKnowledgeList.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_AgentList.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Automat.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_AutomatList.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Bool.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Direction.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_DotationType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Enumeration.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_EquipmentType.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_GDH.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_GenObject.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_GenObjectList.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_IndirectFire.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Location.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_LocationComposite.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_LocationCompositeList.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_LocationList.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_MaintenancePriorities.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_MedicalPriorities.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_NatureAtlas.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Numeric.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_ObjectiveList.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_ObjectKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_ObjectKnowledgeList.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Path.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_PathList.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Point.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_PointList.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Polygon.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_PolygonList.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_PopulationKnowledge.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_String.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_UrbanBlock.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\simulation_orders\simulation_orders_pch.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_MissionParameter_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Agent.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_AgentKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_AgentKnowledgeList.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_AgentList.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Automat.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_AutomatList.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Bool.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Direction.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_DotationType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Enumeration.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_EquipmentType.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_GDH.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_GenObject.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_GenObjectList.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_IndirectFire.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Location.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_LocationComposite.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_LocationCompositeList.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_LocationList.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_MaintenancePriorities.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_MedicalPriorities.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_NatureAtlas.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Numeric.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_ObjectiveList.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_ObjectKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_ObjectKnowledgeList.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Path.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_PathList.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Point.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_PointList.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_Polygon.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_PolygonList.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_PopulationKnowledge.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_String.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_orders\MIL_ParameterType_UrbanBlock.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

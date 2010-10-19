@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{bf269d29-269e-45e5-9cb2-af5684db7845}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Elements">
+      <UniqueIdentifier>{b05ef1dd-298b-489b-9f75-e225bbcf5562}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Types">
+      <UniqueIdentifier>{7a436aed-8d07-4a92-b123-50309034a793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Types\Primitives">
+      <UniqueIdentifier>{88e5a0a2-4c54-45e9-b1a4-a4841bea24d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Types\Data">
+      <UniqueIdentifier>{3dd03766-fb52-4844-8a23-2f83ca114a35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parsing and serialization">
+      <UniqueIdentifier>{f0e646b6-1933-4625-8f0c-e30328c74304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gauges">
+      <UniqueIdentifier>{fe9077a1-6c62-4a92-a048-08b970e57ea2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gauges\Types">
+      <UniqueIdentifier>{40b1dc8b-41b3-4872-861b-aea5808e3c90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translations">
+      <UniqueIdentifier>{e364247c-0384-4a0f-ae63-d4b4241583f2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\indicators\indicators_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\ElementFactory.cpp">
+      <Filter>Source Files\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\Function.cpp">
+      <Filter>Source Files\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\FunctionParameter.cpp">
+      <Filter>Source Files\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\Variable.cpp">
+      <Filter>Source Files\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\Primitive.cpp">
+      <Filter>Source Files\Types\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\PrimitiveParameter.cpp">
+      <Filter>Source Files\Types\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\Primitives.cpp">
+      <Filter>Source Files\Types\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\CollectionDataType.cpp">
+      <Filter>Source Files\Types\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\DataTypeFactory.cpp">
+      <Filter>Source Files\Types\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\ElementTypeResolver.cpp">
+      <Filter>Source Files\Types\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\SimpleDataType.cpp">
+      <Filter>Source Files\Types\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\FormulaParser.cpp">
+      <Filter>Source Files\Parsing and serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\Serializer.cpp">
+      <Filter>Source Files\Parsing and serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\Variables.cpp">
+      <Filter>Source Files\Parsing and serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\Gauge.cpp">
+      <Filter>Source Files\Gauges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\Tendency.cpp">
+      <Filter>Source Files\Gauges</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\GaugeNormalizer.cpp">
+      <Filter>Source Files\Gauges\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\GaugeType.cpp">
+      <Filter>Source Files\Gauges\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\GaugeTypeFactory.cpp">
+      <Filter>Source Files\Gauges\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\GaugeTypes.cpp">
+      <Filter>Source Files\Gauges\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\indicators\IconsGaugeType.cpp">
+      <Filter>Source Files\Gauges\Types</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\indicators\indicators_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\Constant.h">
+      <Filter>Source Files\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\Element_ABC.h">
+      <Filter>Source Files\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\ElementFactory.h">
+      <Filter>Source Files\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\ElementFactory_ABC.h">
+      <Filter>Source Files\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\Function.h">
+      <Filter>Source Files\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\FunctionParameter.h">
+      <Filter>Source Files\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\Variable.h">
+      <Filter>Source Files\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\Primitive.h">
+      <Filter>Source Files\Types\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\PrimitiveParameter.h">
+      <Filter>Source Files\Types\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\Primitives.h">
+      <Filter>Source Files\Types\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\CollectionDataType.h">
+      <Filter>Source Files\Types\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\DataType_ABC.h">
+      <Filter>Source Files\Types\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\DataTypeFactory.h">
+      <Filter>Source Files\Types\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\ElementTypeResolver.h">
+      <Filter>Source Files\Types\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\SimpleDataType.h">
+      <Filter>Source Files\Types\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\ElementDeclarator_ABC.h">
+      <Filter>Source Files\Parsing and serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\FormulaParser.h">
+      <Filter>Source Files\Parsing and serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\GrammarHandler_ABC.h">
+      <Filter>Source Files\Parsing and serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\Serializer.h">
+      <Filter>Source Files\Parsing and serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\Variables.h">
+      <Filter>Source Files\Parsing and serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\Gauge.h">
+      <Filter>Source Files\Gauges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\GaugeFactory_ABC.h">
+      <Filter>Source Files\Gauges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\Tendency.h">
+      <Filter>Source Files\Gauges</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\GaugeNormalizer.h">
+      <Filter>Source Files\Gauges\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\GaugeType.h">
+      <Filter>Source Files\Gauges\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\GaugeTypeFactory.h">
+      <Filter>Source Files\Gauges\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\GaugeTypes.h">
+      <Filter>Source Files\Gauges\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\indicators\IconsGaugeType.h">
+      <Filter>Source Files\Gauges\Types</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\libraries\indicators\translator.pro">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

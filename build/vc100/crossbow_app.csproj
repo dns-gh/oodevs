@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FE72B633-50B7-4BA4-8D90-9EBEBAAF9AED}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sword.Crossbow</RootNamespace>
+    <AssemblyName>Sword.Crossbow</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\out\applications\crossbow_app\vc80\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>true</RegisterForComInterop>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRules>-Microsoft.Globalization#CA1301;-Microsoft.Globalization#CA1302;-Microsoft.Globalization#CA1303;-Microsoft.Globalization#CA1306;-Microsoft.Globalization#CA1304;-Microsoft.Globalization#CA1305;-Microsoft.Globalization#CA1300</CodeAnalysisRules>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\out\applications\crossbow_app\vc80\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>true</RegisterForComInterop>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="ESRI.ArcGIS.3DAnalyst, Version=9.2.3.1380, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINDOWS\assembly\GAC_MSIL\ESRI.ArcGIS.3DAnalyst\9.2.3.1380__8fc3cc631e44ad86\ESRI.ArcGIS.3DAnalyst.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.ADF, Version=9.2.3.1380, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.ArcGlobe, Version=9.2.3.1380, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.ArcMapUI, Version=9.2.3.1380, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Carto, Version=9.2.3.1380, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINDOWS\assembly\GAC_MSIL\ESRI.ArcGIS.Carto\9.2.3.1380__8fc3cc631e44ad86\ESRI.ArcGIS.Carto.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Catalog, Version=9.2.3.1380, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINDOWS\assembly\GAC_MSIL\ESRI.ArcGIS.Catalog\9.2.3.1380__8fc3cc631e44ad86\ESRI.ArcGIS.Catalog.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.CatalogUI, Version=9.2.3.1380, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.DataSourcesGDB, Version=9.2.3.1380, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.DefenseSolutions, Version=9.3.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL" />
+    <Reference Include="ESRI.ArcGIS.Display, Version=9.2.3.1380, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINDOWS\assembly\GAC_MSIL\ESRI.ArcGIS.Display\9.2.3.1380__8fc3cc631e44ad86\ESRI.ArcGIS.Display.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Framework, Version=9.2.3.1380, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINDOWS\assembly\GAC_MSIL\ESRI.ArcGIS.Framework\9.2.3.1380__8fc3cc631e44ad86\ESRI.ArcGIS.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geodatabase, Version=9.2.3.1380, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINDOWS\assembly\GAC_MSIL\ESRI.ArcGIS.Geodatabase\9.2.3.1380__8fc3cc631e44ad86\ESRI.ArcGIS.Geodatabase.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geometry, Version=9.2.3.1380, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINDOWS\assembly\GAC_MSIL\ESRI.ArcGIS.Geometry\9.2.3.1380__8fc3cc631e44ad86\ESRI.ArcGIS.Geometry.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.System, Version=9.2.3.1380, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINDOWS\assembly\GAC_MSIL\ESRI.ArcGIS.System\9.2.3.1380__8fc3cc631e44ad86\ESRI.ArcGIS.System.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.SystemUI, Version=9.2.3.1380, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINDOWS\assembly\GAC_MSIL\ESRI.ArcGIS.SystemUI\9.2.3.1380__8fc3cc631e44ad86\ESRI.ArcGIS.SystemUI.dll</HintPath>
+    </Reference>
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\src\applications\crossbow_app\CreateWorkspace.cs">
+      <Link>CreateWorkspace.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\DatabaseManager.cs">
+      <Link>DatabaseManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\DocumentProxy.cs">
+      <Link>DocumentProxy.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\DynamicElement.cs">
+      <Link>DynamicLayer\DynamicElement.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\DynamicLayer.cs">
+      <Link>DynamicLayer\DynamicLayer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\DynamicLayerPersistVariant.cs">
+      <Link>DynamicLayer\DynamicLayerPersistVariant.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\DynamicLayerSelection.cs">
+      <Link>DynamicLayer\DynamicLayerSelection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\FeatureDrawer.cs">
+      <Link>DynamicLayer\FeatureDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\IOrderParameter.cs">
+      <Link>Order\IOrderParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\MultiItemSelectionMenu.cs">
+      <Link>MultiItemSelectionMenu.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\Orbat.cs">
+      <Link>Orbat.cs</Link>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\Orbat.Designer.cs">
+      <Link>Orbat.Designer.cs</Link>
+      <DependentUpon>Orbat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\MissionOrderForm.cs">
+      <Link>Order\MissionOrderForm.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\MissionOrderForm.Designer.cs">
+      <Link>Order\MissionOrderForm.Designer.cs</Link>
+      <DependentUpon>MissionOrderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\OrbatCommand.cs">
+      <Link>OrbatCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\Order.cs">
+      <Link>Order\Order.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\OrderFactory.cs">
+      <Link>Order\OrderFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\OrderHandler.cs">
+      <Link>Order\OrderHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\OrderParameter.cs">
+      <Link>Order\OrderParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\ParameterDirection.cs">
+      <Link>Order\ParameterDirection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\ParameterLimas.cs">
+      <Link>Order\ParameterLimas.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\ParameterLimits.cs">
+      <Link>Order\ParameterLimits.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\ParameterTypeFactory.cs">
+      <Link>Order\ParameterTypeFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\PointFeatureDrawer.cs">
+      <Link>DynamicLayer\PointFeatureDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\PolylineFeatureDrawer.cs">
+      <Link>DynamicLayer\PolylineFeatureDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\Registry.cs">
+      <Link>Registry.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\ScopeLockEditor.cs">
+      <Link>ScopeLockEditor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\StaticModel.cs">
+      <Link>StaticModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\SwordBar.cs">
+      <Link>SwordBar.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\SwordExtension.cs">
+      <Link>SwordExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\SwordMenu.cs">
+      <Link>SwordMenu.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\SymbolFactory.cs">
+      <Link>SymbolFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\WorkspaceBuilder.cs">
+      <Link>WorkspaceBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\WorkspaceConfiguration.cs">
+      <Link>WorkspaceConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\WorkspaceConfigurationForm.cs">
+      <Link>WorkspaceConfigurationForm.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\InfoPanel.cs">
+      <Link>InfoPanel.cs</Link>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\InfoPanel.Designer.cs">
+      <Link>InfoPanel.Designer.cs</Link>
+      <DependentUpon>InfoPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\InfoPanelCommand.cs" />
+    <Compile Include="..\..\src\applications\crossbow_app\CreateEventTool.cs" />
+    <Compile Include="..\..\src\applications\crossbow_app\EmergencyHandler.cs" />
+    <Compile Include="..\..\src\applications\crossbow_app\OrderTool.cs">
+      <Link>OrderTool.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\applications\crossbow_app\ParameterIntelligences.cs">
+      <Link>Order\ParameterIntelligences.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\src\applications\crossbow_app\FilterViewTool.cs" />
+    <Compile Include="..\..\src\applications\crossbow_app\AddDynamicMoleLayer.cs" />
+    <Compile Include="..\..\src\applications\crossbow_app\Tools.cs" />
+    <Compile Include="..\..\src\applications\crossbow_app\WorkspaceConfigurationForm.Designer.cs">
+      <Link>WorkspaceConfigurationForm.Designer.cs</Link>
+      <DependentUpon>WorkspaceConfigurationForm.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\src\applications\crossbow_app\MissionOrderForm.resx">
+      <Link>Order\MissionOrderForm.resx</Link>
+      <DependentUpon>MissionOrderForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\src\applications\crossbow_app\Orbat.resx">
+      <Link>Orbat.resx</Link>
+      <DependentUpon>Orbat.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\src\applications\crossbow_app\WorkspaceConfigurationForm.resx">
+      <Link>WorkspaceConfigurationForm.resx</Link>
+      <DependentUpon>WorkspaceConfigurationForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\src\applications\crossbow_app\InfoPanel.resx">
+      <Link>InfoPanel.resx</Link>
+      <DependentUpon>InfoPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\src\applications\crossbow_app\res\AddDynamicMoleLayer.bmp">
+      <Link>AddDynamicMoleLayer.bmp</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\src\applications\crossbow_app\res\FilterViewTool.bmp">
+      <Link>FilterViewTool.bmp</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\src\applications\crossbow_app\res\OrbatCommand.bmp">
+      <Link>OrbatCommand.bmp</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\src\applications\crossbow_app\res\CreateWorkspace.bmp">
+      <Link>CreateWorkspace.bmp</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\src\applications\crossbow_app\res\InfoPanelCommand.bmp">
+      <Link>InfoPanelCommand.bmp</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\src\applications\crossbow_app\res\CreateEventTool.bmp">
+      <Link>CreateEventTool.bmp</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\src\applications\crossbow_app\res\CreateEventTool.cur">
+      <Link>CreateEventTool.cur</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\src\applications\crossbow_app\res\OrderTool.bmp">
+      <Link>OrderTool.bmp</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\src\applications\crossbow_app\res\OrderTool.cur">
+      <Link>OrderTool.cur</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

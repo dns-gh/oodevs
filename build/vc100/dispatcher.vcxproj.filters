@@ -1,0 +1,842 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{cb8c74c5-ed39-42a6-8445-f27f97d1ef14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network">
+      <UniqueIdentifier>{a984ec09-176a-4f4a-83fc-62904ed1b127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network\Simulation">
+      <UniqueIdentifier>{e1ce9175-f1ad-49d8-8ec9-d053b862422b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network\Clients">
+      <UniqueIdentifier>{a6007ce4-1283-417c-892f-3be95a0ea1f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Profiles">
+      <UniqueIdentifier>{d25da8bc-74e3-4bdc-8286-51b3926c3ec2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{6775ef9a-5299-4845-924c-04a8a0985b77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Agent">
+      <UniqueIdentifier>{53c5fd93-d2a0-417f-ba15-6fda66553009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Agent\Log">
+      <UniqueIdentifier>{384e1bae-f080-41c0-8cea-3906eee9bb69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Agent\Log\Consigns">
+      <UniqueIdentifier>{7017eded-0967-4603-b56c-031a14e4f231}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Object">
+      <UniqueIdentifier>{178f48ee-b513-4e95-ba8c-7b56597ac9b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Object\Attributes">
+      <UniqueIdentifier>{12b74a7c-ee21-4310-8dc7-928a3296e384}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Tools">
+      <UniqueIdentifier>{ecf86b75-f47c-446d-b59d-355511831d38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Population">
+      <UniqueIdentifier>{e5cc31de-420c-48ef-bed0-2b7e21a672a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Fire">
+      <UniqueIdentifier>{0eb73f53-c7dc-40d4-a1a7-01c22c0bf496}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Mission">
+      <UniqueIdentifier>{a41d086f-5c1a-4f7a-9098-c04689b84861}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Visitors">
+      <UniqueIdentifier>{fae25bdb-98b7-4158-b09d-f9a71ac290fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Extensions">
+      <UniqueIdentifier>{8bcdc559-0ee5-4317-8c5a-3864a026dec4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Extensions\Symbols">
+      <UniqueIdentifier>{824e3fb8-8bcc-42c2-b887-64413bb8b155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Extensions\Publishing">
+      <UniqueIdentifier>{b0b921a0-b403-4345-80ed-0f77052afb79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Urban">
+      <UniqueIdentifier>{288ec290-4eae-4cc8-9e40-dc2e4c149882}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Urban\Attributes">
+      <UniqueIdentifier>{e50ff987-6526-4000-85be-258cd5466b78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Knowledge">
+      <UniqueIdentifier>{7db9d079-057a-45ce-ba9d-d7998d1320cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Knowledge\Agent">
+      <UniqueIdentifier>{848715c5-b027-4209-8664-ff2f0fb83200}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Knowledge\Object">
+      <UniqueIdentifier>{ecaa6e92-6837-4f7f-a2bf-efc1e1626417}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Knowledge\Population">
+      <UniqueIdentifier>{79241b85-9f4b-4928-aae0-08b29ee5381c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Knowledge\Urban">
+      <UniqueIdentifier>{cf56aa63-04e9-451f-9e6c-b2e69b71b953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Automat">
+      <UniqueIdentifier>{8d3ed3cb-ca08-4411-9d74-a6fe4e0b917e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Folk">
+      <UniqueIdentifier>{96c01ab1-318a-4a1f-b5cf-7694d445e41e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Team">
+      <UniqueIdentifier>{81da2720-1219-4cf7-8adb-63d513a05b8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Weather">
+      <UniqueIdentifier>{0d17f210-3f8f-4cf8-8a7c-31e04fe0493c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Adapters">
+      <UniqueIdentifier>{317841e0-ba05-44ab-ad7f-2f3f960f6441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\KnowledgeGroup">
+      <UniqueIdentifier>{c59c4811-41a1-4edc-bd7d-d84eced1fd21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Formation">
+      <UniqueIdentifier>{76496996-b4d4-4e81-906a-c46ebcbd31c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Replay">
+      <UniqueIdentifier>{634b5680-4568-438c-adf7-5090e985f2b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Replay\Extensions">
+      <UniqueIdentifier>{87757569-8757-4310-9dc2-ae8c6ce2d3ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\plugins">
+      <UniqueIdentifier>{3ff0f789-f9fd-468b-8430-44c98d079ec5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{8458079a-1b4c-4d73-9cdd-0304140d68b7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Dispatcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\dispatcher_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\PluginFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Services.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Simulation.cpp">
+      <Filter>Source Files\Network\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\SimulationNetworker.cpp">
+      <Filter>Source Files\Network\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Client.cpp">
+      <Filter>Source Files\Network\Clients</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\ClientsNetworker.cpp">
+      <Filter>Source Files\Network\Clients</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\DefaultProfile.cpp">
+      <Filter>Source Files\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Profile.cpp">
+      <Filter>Source Files\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\ProfileManager.cpp">
+      <Filter>Source Files\Profiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\DecisionalState.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Model.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Report.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\SimpleEntity.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\SimulationModel.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\StaticModel.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Agent.cpp">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Dotation.cpp">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Equipment.cpp">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Humans.cpp">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Loan.cpp">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentLogMaintenance.cpp">
+      <Filter>Source Files\Model\Agent\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentLogMedical.cpp">
+      <Filter>Source Files\Model\Agent\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentLogSupply.cpp">
+      <Filter>Source Files\Model\Agent\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\EquipmentAvailability.cpp">
+      <Filter>Source Files\Model\Agent\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\MaintenanceEquipmentAvailability.cpp">
+      <Filter>Source Files\Model\Agent\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\MedicalEquipmentAvailability.cpp">
+      <Filter>Source Files\Model\Agent\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignMaintenance.cpp">
+      <Filter>Source Files\Model\Agent\Log\Consigns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignMedical.cpp">
+      <Filter>Source Files\Model\Agent\Log\Consigns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogConsignSupply.cpp">
+      <Filter>Source Files\Model\Agent\Log\Consigns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyDotation.cpp">
+      <Filter>Source Files\Model\Agent\Log\Consigns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Object.cpp">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\ActivityTimeAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\BypassAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\ConstructionAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\CrossingSiteAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\DelayAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\FireAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\LogisticAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\MedicalTreatmentAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\MineAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\NBCAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\ObstacleAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\ResourceNetworkAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\SealOffAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\SupplyRouteAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\ToxicCloudAttribute.cpp">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\GenObject.cpp">
+      <Filter>Source Files\Model\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Localisation.cpp">
+      <Filter>Source Files\Model\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Objective.cpp">
+      <Filter>Source Files\Model\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Population.cpp">
+      <Filter>Source Files\Model\Population</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationConcentration.cpp">
+      <Filter>Source Files\Model\Population</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationFlow.cpp">
+      <Filter>Source Files\Model\Population</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Fire.cpp">
+      <Filter>Source Files\Model\Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\FireEffect.cpp">
+      <Filter>Source Files\Model\Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationFire.cpp">
+      <Filter>Source Files\Model\Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentOrder.cpp">
+      <Filter>Source Files\Model\Mission</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\AutomatOrder.cpp">
+      <Filter>Source Files\Model\Mission</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Order_ABC.cpp">
+      <Filter>Source Files\Model\Mission</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationOrder.cpp">
+      <Filter>Source Files\Model\Mission</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Visitors.cpp">
+      <Filter>Source Files\Model\Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\CompositeFactory.cpp">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentKnowledgeSymbols.cpp">
+      <Filter>Source Files\Model\Extensions\Symbols</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentSymbols.cpp">
+      <Filter>Source Files\Model\Extensions\Symbols</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\AutomatSymbols.cpp">
+      <Filter>Source Files\Model\Extensions\Symbols</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\FormationSymbols.cpp">
+      <Filter>Source Files\Model\Extensions\Symbols</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\ObjectSymbols.cpp">
+      <Filter>Source Files\Model\Extensions\Symbols</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\SideSymbols.cpp">
+      <Filter>Source Files\Model\Extensions\Symbols</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\UrbanObject.cpp">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\ArchitectureAttribute.cpp">
+      <Filter>Source Files\Model\Urban\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\ColorAttribute.cpp">
+      <Filter>Source Files\Model\Urban\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\InfrastructuresAttribute.cpp">
+      <Filter>Source Files\Model\Urban\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\StructureAttribute.cpp">
+      <Filter>Source Files\Model\Urban\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentKnowledge.cpp">
+      <Filter>Source Files\Model\Knowledge\Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\ObjectKnowledge.cpp">
+      <Filter>Source Files\Model\Knowledge\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationConcentrationKnowledge.cpp">
+      <Filter>Source Files\Model\Knowledge\Population</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationFlowKnowledge.cpp">
+      <Filter>Source Files\Model\Knowledge\Population</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationFlowPart.cpp">
+      <Filter>Source Files\Model\Knowledge\Population</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\PopulationKnowledge.cpp">
+      <Filter>Source Files\Model\Knowledge\Population</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\UrbanKnowledge.cpp">
+      <Filter>Source Files\Model\Knowledge\Urban</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Automat.cpp">
+      <Filter>Source Files\Model\Automat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\DotationQuota.cpp">
+      <Filter>Source Files\Model\Automat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\FolkModel.cpp">
+      <Filter>Source Files\Model\Folk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Side.cpp">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\MeteoModel.cpp">
+      <Filter>Source Files\Model\Weather</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\AgentKnowledgeConverter.cpp">
+      <Filter>Source Files\Model\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\ModelAdapter.cpp">
+      <Filter>Source Files\Model\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\ObjectKnowledgeConverter.cpp">
+      <Filter>Source Files\Model\Adapters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\KnowledgeGroup.cpp">
+      <Filter>Source Files\Model\KnowledgeGroup</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Formation.cpp">
+      <Filter>Source Files\Model\Formation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Frames.cpp">
+      <Filter>Source Files\Replay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Loader.cpp">
+      <Filter>Source Files\Replay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\MessageLoader.cpp">
+      <Filter>Source Files\Replay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Replayer.cpp">
+      <Filter>Source Files\Replay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\SimulationDispatcher.cpp">
+      <Filter>Source Files\Replay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Synchroniser.cpp">
+      <Filter>Source Files\Replay</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\ReplaySynchronisations.cpp">
+      <Filter>Source Files\Replay\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\CompositeRegistrable.cpp">
+      <Filter>Source Files\plugins</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\DispatcherPlugin.cpp">
+      <Filter>Source Files\plugins</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Logger.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\dispatcher\Position.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Config.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Dispatcher.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\dispatcher_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\PluginFactory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\PluginFactory_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Services.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\MessageHandler_ABC.h">
+      <Filter>Source Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\NullClientPublisher.h">
+      <Filter>Source Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\SimulationPublisher_ABC.h">
+      <Filter>Source Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Simulation.h">
+      <Filter>Source Files\Network\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\SimulationNetworker.h">
+      <Filter>Source Files\Network\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Client.h">
+      <Filter>Source Files\Network\Clients</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ClientsNetworker.h">
+      <Filter>Source Files\Network\Clients</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\DefaultProfile.h">
+      <Filter>Source Files\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Profile.h">
+      <Filter>Source Files\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Profile_ABC.h">
+      <Filter>Source Files\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ProfileManager.h">
+      <Filter>Source Files\Profiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\DecisionalState.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Model.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Model_ABC.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Report.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Sendable.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\SimpleEntity.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\SimulationModel.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\StaticModel.h">
+      <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Agent.h">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Agent_ABC.h">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Dotation.h">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Equipment.h">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Humans.h">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Loan.h">
+      <Filter>Source Files\Model\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentLogMaintenance.h">
+      <Filter>Source Files\Model\Agent\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentLogMedical.h">
+      <Filter>Source Files\Model\Agent\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentLogSupply.h">
+      <Filter>Source Files\Model\Agent\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\EquipmentAvailability.h">
+      <Filter>Source Files\Model\Agent\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\MaintenanceEquipmentAvailability.h">
+      <Filter>Source Files\Model\Agent\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\MedicalEquipmentAvailability.h">
+      <Filter>Source Files\Model\Agent\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignMaintenance.h">
+      <Filter>Source Files\Model\Agent\Log\Consigns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignMedical.h">
+      <Filter>Source Files\Model\Agent\Log\Consigns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignSupply.h">
+      <Filter>Source Files\Model\Agent\Log\Consigns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyDotation.h">
+      <Filter>Source Files\Model\Agent\Log\Consigns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Object.h">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Object_ABC.h">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectAttribute_ABC.h">
+      <Filter>Source Files\Model\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ActivityTimeAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\BypassAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ConstructionAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\CrossingSiteAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\DelayAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\FireAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\LogisticAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\MedicalTreatmentAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\MineAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\NBCAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ObstacleAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ResourceNetworkAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\SealOffAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\SupplyRouteAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ToxicCloudAttribute.h">
+      <Filter>Source Files\Model\Object\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\GenObject.h">
+      <Filter>Source Files\Model\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Localisation.h">
+      <Filter>Source Files\Model\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Objective.h">
+      <Filter>Source Files\Model\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Population.h">
+      <Filter>Source Files\Model\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Population_ABC.h">
+      <Filter>Source Files\Model\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationConcentration.h">
+      <Filter>Source Files\Model\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationConcentration_ABC.h">
+      <Filter>Source Files\Model\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationFlow.h">
+      <Filter>Source Files\Model\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationFlow_ABC.h">
+      <Filter>Source Files\Model\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Fire.h">
+      <Filter>Source Files\Model\Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\FireEffect.h">
+      <Filter>Source Files\Model\Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationFire.h">
+      <Filter>Source Files\Model\Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentOrder.h">
+      <Filter>Source Files\Model\Mission</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\AutomatOrder.h">
+      <Filter>Source Files\Model\Mission</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Order_ABC.h">
+      <Filter>Source Files\Model\Mission</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationOrder.h">
+      <Filter>Source Files\Model\Mission</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Visitors.h">
+      <Filter>Source Files\Model\Visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\CompositeFactory.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ExtensionFactory_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Factory_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentKnowledgeSymbols.h">
+      <Filter>Source Files\Model\Extensions\Symbols</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentSymbols.h">
+      <Filter>Source Files\Model\Extensions\Symbols</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\AutomatSymbols.h">
+      <Filter>Source Files\Model\Extensions\Symbols</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\EntitySymbols_ABC.h">
+      <Filter>Source Files\Model\Extensions\Symbols</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\FormationSymbols.h">
+      <Filter>Source Files\Model\Extensions\Symbols</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectSymbols.h">
+      <Filter>Source Files\Model\Extensions\Symbols</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\SideSymbols.h">
+      <Filter>Source Files\Model\Extensions\Symbols</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\EntityPublisher.h">
+      <Filter>Source Files\Model\Extensions\Publishing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\EntityPublisher_ABC.h">
+      <Filter>Source Files\Model\Extensions\Publishing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\UrbanObject.h">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\UrbanObject_ABC.h">
+      <Filter>Source Files\Model\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ArchitectureAttribute.h">
+      <Filter>Source Files\Model\Urban\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ColorAttribute.h">
+      <Filter>Source Files\Model\Urban\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\InfrastructuresAttribute.h">
+      <Filter>Source Files\Model\Urban\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\StructureAttribute.h">
+      <Filter>Source Files\Model\Urban\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\UrbanObjectAttribute_ABC.h">
+      <Filter>Source Files\Model\Urban\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentKnowledge.h">
+      <Filter>Source Files\Model\Knowledge\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentKnowledge_ABC.h">
+      <Filter>Source Files\Model\Knowledge\Agent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectKnowledge.h">
+      <Filter>Source Files\Model\Knowledge\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectKnowledge_ABC.h">
+      <Filter>Source Files\Model\Knowledge\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationConcentrationKnowledge.h">
+      <Filter>Source Files\Model\Knowledge\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationFlowKnowledge.h">
+      <Filter>Source Files\Model\Knowledge\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationFlowPart.h">
+      <Filter>Source Files\Model\Knowledge\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\PopulationKnowledge.h">
+      <Filter>Source Files\Model\Knowledge\Population</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\UrbanKnowledge.h">
+      <Filter>Source Files\Model\Knowledge\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\UrbanKnowledge_ABC.h">
+      <Filter>Source Files\Model\Knowledge\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Automat.h">
+      <Filter>Source Files\Model\Automat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Automat_ABC.h">
+      <Filter>Source Files\Model\Automat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\DotationQuota.h">
+      <Filter>Source Files\Model\Automat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\FolkModel.h">
+      <Filter>Source Files\Model\Folk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Side.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Team_ABC.h">
+      <Filter>Source Files\Model\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\MeteoModel.h">
+      <Filter>Source Files\Model\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\AgentKnowledgeConverter.h">
+      <Filter>Source Files\Model\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ModelAdapter.h">
+      <Filter>Source Files\Model\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectKnowledgeConverter.h">
+      <Filter>Source Files\Model\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\KnowledgeGroup.h">
+      <Filter>Source Files\Model\KnowledgeGroup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\KnowledgeGroup_ABC.h">
+      <Filter>Source Files\Model\KnowledgeGroup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Formation.h">
+      <Filter>Source Files\Model\Formation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Formation_ABC.h">
+      <Filter>Source Files\Model\Formation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Frames.h">
+      <Filter>Source Files\Replay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Loader.h">
+      <Filter>Source Files\Replay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\MessageLoader.h">
+      <Filter>Source Files\Replay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\MessageLoader_ABC.h">
+      <Filter>Source Files\Replay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Replayer.h">
+      <Filter>Source Files\Replay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ReplayModel_ABC.h">
+      <Filter>Source Files\Replay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\SimulationDispatcher.h">
+      <Filter>Source Files\Replay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Synchroniser.h">
+      <Filter>Source Files\Replay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\ReplaySynchronisations.h">
+      <Filter>Source Files\Replay\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\CompositePlugin.h">
+      <Filter>Source Files\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\CompositeRegistrable.h">
+      <Filter>Source Files\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\DispatcherPlugin.h">
+      <Filter>Source Files\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\LinkResolver_ABC.h">
+      <Filter>Source Files\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Plugin_ABC.h">
+      <Filter>Source Files\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Registrable_ABC.h">
+      <Filter>Source Files\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Logger.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\Position.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\dispatcher\EquipmentAvailability.inl">
+      <Filter>Source Files\Model\Agent\Log</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6B144816-9773-40F9-ADE6-0ACBC2EAE516}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</IntDir>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\dev\lib\vc100;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\dev\lib\vc100;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../src/libraries;../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;_LIB;_WINDOWS;WIN32;MT_AUTO_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>$(ProjectName)_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(OutDir)libcsword_$(ProjectName)-vc100-mt-gd.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <AdditionalIncludeDirectories>../../src/libraries;../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;_LIB;_RELEASE;_WINDOWS;WIN32;MT_AUTO_LINK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>$(ProjectName)_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(OutDir)libcsword_$(ProjectName)-vc100-mt.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\simulation_terrain_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_World.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_CoordinateManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_DynamicData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PathFinderThread.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PathFindManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Localisation.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Polygon.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Object_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_ObjectManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_ObjectTraits.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Agent_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_AgentManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_AgentTraits.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentration_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentrationManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentrationTraits.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlow_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowTraits.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\simulation_terrain_pch.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_World.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_CoordinateManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_NodeFunctor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_DynamicData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PathFinderThread.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PathFindManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PathFindRequest_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Localisation.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Polygon.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Object_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_ObjectManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_ObjectTraits.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Agent_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_AgentManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_AgentTraits.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationManager.h" />
+    <CustomBuildStep Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentration_ABC.h" />
+    <CustomBuildStep Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentrationManager.h" />
+    <CustomBuildStep Include="..\..\src\libraries\simulation_terrain\TER_PopulationConcentrationTraits.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlow_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowTraits.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\simulation_terrain\TER_World.inl" />
+    <None Include="..\..\src\libraries\simulation_terrain\TER_Localisation.inl" />
+    <None Include="..\..\src\libraries\simulation_terrain\TER_Polygon.inl" />
+    <None Include="..\..\src\libraries\simulation_terrain\TER_Object_ABC.inl" />
+    <None Include="..\..\src\libraries\simulation_terrain\TER_PopulationManager.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="MT_Tools.vcxproj">
+      <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

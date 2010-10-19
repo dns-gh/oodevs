@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{c3e0a970-1a1b-4464-83bb-133236beffd6}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Mocks">
+      <UniqueIdentifier>{c83a54a9-5573-4df9-88c9-1fc985181bf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests">
+      <UniqueIdentifier>{88f7cc2d-fe06-4477-aace-11ef7d21352e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\tests\dispatcher_test\dispatcher_test_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\dispatcher_test\AgentTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\dispatcher_test\AutomatTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\dispatcher_test\KnowledgeGroupTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\dispatcher_test\ObjectKnowledgeTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\dispatcher_test\ObjectTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\dispatcher_test\TeamTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\dispatcher_test\UrbanKnowledgeTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\dispatcher_test\UrbanObjectTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\tests\dispatcher_test\dispatcher_test_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\dispatcher_test\Helpers.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\dispatcher_test\MockAgent.h">
+      <Filter>Source Files\Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\dispatcher_test\MockAutomat.h">
+      <Filter>Source Files\Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\dispatcher_test\MockClientPublisher.h">
+      <Filter>Source Files\Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\dispatcher_test\MockFormation.h">
+      <Filter>Source Files\Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\dispatcher_test\MockKnowledgeGroup.h">
+      <Filter>Source Files\Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\dispatcher_test\MockModel.h">
+      <Filter>Source Files\Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\dispatcher_test\MockObject.h">
+      <Filter>Source Files\Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\dispatcher_test\MockObjectKnowledge.h">
+      <Filter>Source Files\Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\dispatcher_test\MockSide.h">
+      <Filter>Source Files\Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\dispatcher_test\MockUrbanObject.h">
+      <Filter>Source Files\Mocks</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

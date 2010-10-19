@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6bfbfcd0-8c9a-4589-8011-22ceade91920}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Actions">
+      <UniqueIdentifier>{87948e42-cc5e-4353-bdba-e3a0e77e542a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menus">
+      <UniqueIdentifier>{84931044-9255-463e-a28a-6b2ff57a056c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Panels">
+      <UniqueIdentifier>{585724f2-1453-41c9-9bab-5a8da7f042d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Widgets">
+      <UniqueIdentifier>{f4658108-0858-4915-ba67-40afc910d1e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translations">
+      <UniqueIdentifier>{04db664f-e804-43da-a052-3176ab66a840}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\applications\frontend_app\ActionLinker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\frontend_app_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\InfoBubble.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\MainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\ActionCategory.cpp">
+      <Filter>Source Files\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\ActionItem.cpp">
+      <Filter>Source Files\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\ActionList.cpp">
+      <Filter>Source Files\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\Actions.cpp">
+      <Filter>Source Files\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\ActionsContext.cpp">
+      <Filter>Source Files\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\MainMenu.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\CreateExercisePanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\CreatePackagePanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\EditExercisePanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\GameConfigPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\InstallPackagePanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\JoinAnalysisPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\JoinExercisePanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\Panel_ABC.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\RestartExercisePanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\StartAnalysisPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\StartExercisePanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\TerrainCreationPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\frontend_app\AdvancedButton.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\applications\frontend_app\ActionLinker.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\frontend_app\frontend_app_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\frontend_app\InfoBubble.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\frontend_app\MainWindow.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\frontend_app\resources.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\frontend_app\ActionItem.h">
+      <Filter>Source Files\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\frontend_app\Actions.h">
+      <Filter>Source Files\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\frontend_app\ActionsContext.h">
+      <Filter>Source Files\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\frontend_app\MainMenu.h">
+      <Filter>Source Files\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\frontend_app\Panel_ABC.h">
+      <Filter>Source Files\Panels</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\applications\frontend_app\frontend_app_fr.ts">
+      <Filter>Translations</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\src\applications\frontend_app\Application.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\ActionCategory.h">
+      <Filter>Source Files\Actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\ActionList.h">
+      <Filter>Source Files\Actions</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\CreateExercisePanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\CreatePackagePanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\EditExercisePanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\GameConfigPanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\InstallPackagePanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\JoinAnalysisPanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\JoinExercisePanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\RestartExercisePanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\StartAnalysisPanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\StartExercisePanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\TerrainCreationPanel.h">
+      <Filter>Source Files\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\AdvancedButton.h">
+      <Filter>Source Files\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\frontend_app\translator.pro">
+      <Filter>Translations</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E907053A-8F48-4029-B778-3B8435282539}</ProjectGuid>
+    <RootNamespace>protocol</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</IntDir>
+    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</PreBuildEventUseInBuild>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../out/libraries/$(ProjectName)/vc100/$(Configuration)\</IntDir>
+    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</PreBuildEventUseInBuild>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\dev\lib\vc100;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\dev\lib\vc100;$(VCInstallDir)PlatformSDK\lib;$(VCInstallDir)PlatformSDK\common\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Message>Generating protobuf code</Message>
+      <Command>"..\..\bin\protoc.exe" -I=..\..\src\libraries\protocol\proto --cpp_out=..\..\src\libraries\protocol\generated ..\..\src\libraries\protocol\proto\*.proto</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../src/libraries;../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;_LIB;_WINDOWS;WIN32;MT_AUTO_LINK;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderFile>$(ProjectName)_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(OutDir)libcsword_$(ProjectName)-vc100-mt-gd.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+      <Message>Generating protobuf code</Message>
+      <Command>"..\..\bin\protoc.exe" -I=..\..\src\libraries\protocol\proto --cpp_out=..\..\src\libraries\protocol\generated ..\..\src\libraries\protocol\proto\*.proto</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <AdditionalIncludeDirectories>../../src/libraries;../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_COMPACT;NDEBUG;_LIB;_RELEASE;_WINDOWS;WIN32;MT_AUTO_LINK;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderFile>$(ProjectName)_pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(OutDir)libcsword_$(ProjectName)-vc100-mt.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\protocol\Aar.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\AarSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Authentication.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\AuthenticationSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\ClientPublisher_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\ClientSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Definitions.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Dispatcher.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\DispatcherSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Launcher.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\LauncherSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Messenger.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\MessengerSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\MsgsSimToClientListener.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Protocol.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\ProtocolVersionChecker.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Replay.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\ReplaySenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Senders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\ServerPublisher_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Simulation.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\SimulationSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\AarToClient.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\AdminToLauncher.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\AuthenticationToClient.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\ClientToAar.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\ClientToAuthentication.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\ClientToMessenger.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\ClientToReplay.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\ClientToSim.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\Common.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\DispatcherToClient.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\DispatcherToSim.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\LauncherToAdmin.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\MessengerToClient.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\PluginToClient.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\ReplayToClient.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\SimToClient.pb.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\generated\Version.pb.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\protocol\Protocol.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\ProtocolVersionChecker.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\generated\AarToClient.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\AdminToLauncher.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\AuthenticationToClient.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\ClientToAar.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\ClientToAuthentication.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\ClientToMessenger.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\ClientToReplay.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\ClientToSim.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\Common.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\DispatcherToClient.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\DispatcherToSim.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\LauncherToAdmin.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\MessengerToClient.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\PluginToClient.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\ReplayToClient.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\SimToClient.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\generated\Version.pb.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\libraries\protocol\proto\AarToClient.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\AdminToLauncher.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\AuthenticationToClient.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\ClientToAar.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\ClientToAuthentication.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\ClientToMessenger.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\ClientToReplay.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\ClientToSim.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\Common.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\DispatcherToClient.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\DispatcherToSim.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\LauncherToAdmin.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\MessengerToClient.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\ReplayToClient.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\SimToClient.proto" />
+    <None Include="..\..\src\libraries\protocol\proto\Version.proto" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
