@@ -251,11 +251,11 @@
         <knowledge-group id="153" name="Groupe de connaissance [153]" type="Standard"/>
       </communication>
       <populations/>
-      <logistics>
+      <logistic>
         <tc2 id="89">
           <subordinate id="89"/>
         </tc2>
-      </logistics>
+      </logistic>
     </side>
     <side id="126" name="Rouge" type="enemy">
       <objects>
@@ -492,7 +492,7 @@
       <populations>
         <population attitude="calme" humans="10000" id="155" name="Population standard [155]" position="30UXU2259645029" type="Population standard"/>
       </populations>
-      <logistics/>
+      <logistic/>
     </side>
     <side id="128" name="Vert" type="neutral">
       <objects/>
@@ -509,7 +509,7 @@
       <populations>
         <population attitude="calme" humans="10000" id="156" name="Population standard [156]" position="30UXU2472544970" type="Population standard"/>
       </populations>
-      <logistics/>
+      <logistic/>
     </side>
     <side id="129" name="Turquoise" type="friend">
       <objects/>
@@ -526,7 +526,7 @@
       <populations>
         <population attitude="calme" humans="10000" id="157" name="Population standard [157]" position="30UXU2628245049" type="Population standard"/>
       </populations>
-      <logistics/>
+      <logistic/>
     </side>
   </sides>
   <diplomacies>
