@@ -24,7 +24,7 @@
       <populations/>
       <logistics>
         <tc2 id="188"/>
-      </logistic>
+      </logistics>
     </side>
     <side id="3" name="Enemy" type="enemy">
       <objects/>

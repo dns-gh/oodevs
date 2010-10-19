@@ -161,7 +161,7 @@
       <populations/>
       <logistics>
         <tc2 id="58"/>
-      </logistic>
+      </logistics>
     </side>
     <side id="3" name="NeutralGuys" type="neutral">
       <objects/>
