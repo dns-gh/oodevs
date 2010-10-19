@@ -98,8 +98,8 @@
   <report id="73" message="en appui"/>
   <report id="74" message="non operationnel"/>
   <report id="75" message="operationnel"/>
-  <report id="76" message="ambiance vitesse"/>
-  <report id="77" message="ambiance surete"/>
+  <report id="76" message="Posture de surete désactivée"/>
+  <report id="77" message="Posture de surete activée"/>
   <report id="78" message="sur lima de type %1">
     <parameter type="Enumeration">
       <value id="0" name="ligne_debouche"/>
@@ -445,6 +445,11 @@
   <report id="309" message="Travaux impossibles : pas de capacite de destruction"/>
   <report id="310" message="Cible non illuminée"/>
   <report id="311" message="Tir impossible : Munition interdite"/>
+  <report id="312" message="%1">
+    <parameter type="String"/>
+  </report>
+  <report id="313" message="Posture de protection activée"/>
+  <report id="314" message="Posture de protection désactivée"/>
   <report id="3000" message="Embarquement - début"/>
   <report id="3001" message="Embarquement - interruption"/>
   <report id="3002" message="Embarquement - reprise"/>

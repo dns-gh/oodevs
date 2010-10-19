@@ -98,8 +98,8 @@
   <report id="73" message="supporting"/>
   <report id="74" message="non operational"/>
   <report id="75" message="operational"/>
-  <report id="76" message="standard posture"/>
-  <report id="77" message="safety posture"/>
+  <report id="76" message="Safety posture on"/>
+  <report id="77" message="Safety posture off"/>
   <report id="78" message="on phase line. Type: %1">
     <parameter type="Enumeration">
       <value id="0" name="departure line"/>
@@ -445,6 +445,11 @@
   <report id="309" message="Work impossible : no destrution capacity"/>
   <report id="310" message="Target unilluminated"/>
   <report id="311" message="Impossible fire : Forbidden ammunition"/>
+  <report id="312" message="%1">
+    <parameter type="String"/>
+  </report>
+  <report id="313" message="Cover posture on"/>
+  <report id="314" message="Cover posture off"/>
   <report id="3000" message="Embarkment - started"/>
   <report id="3001" message="Embarkment - interrupted"/>
   <report id="3002" message="Embarkment - resumed"/>
