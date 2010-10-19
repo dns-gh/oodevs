@@ -493,6 +493,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
+            message.set_logistic_level( Common::tc2 );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
@@ -516,7 +517,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
             // network serialization
             MockClientPublisher publisher;
             MOCK_EXPECT( publisher, SendSimToClient ).once(); // TODO! AutomatCreation
-            //MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
+            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
             result->SendCreation( publisher );
             publisher.verify();
         }
