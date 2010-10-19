@@ -36,7 +36,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
 {
     setResizeEnabled( true );
     setCloseMode( QDockWindow::Always );
-    setCaption( tr( "Resource Networks" ) );
+    setCaption( tools::translate( "ResourceLinksDialog_ABC", "Resource Networks" ) );
     QVBox* mainLayout = new QVBox( this );
     setWidget( mainLayout );
     pMainLayout_ = new QVBox( mainLayout );
@@ -46,7 +46,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     dotationList_ = new QListBox( pNodeBox );
     dotationList_->setMaximumHeight( 60 );
     connect( dotationList_, SIGNAL( selectionChanged() ), this, SLOT( Update() ) );
-    groupBox_ = new QGroupBox( 1, Qt::Horizontal,  tools::translate( "ResourceLinksDialog", "Enabled" ), pNodeBox );
+    groupBox_ = new QGroupBox( 1, Qt::Horizontal, tools::translate( "ResourceLinksDialog_ABC", "Enabled" ), pNodeBox );
     groupBox_->setCheckable( true );
     connect( groupBox_, SIGNAL( toggled( bool ) ), this, SLOT( OnActivationChanged( bool ) ) );
     {

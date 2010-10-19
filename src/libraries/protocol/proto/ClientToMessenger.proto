@@ -91,25 +91,45 @@ message MsgNoteDestructionRequest {
 }
 // LTO end
 
+// client objects:
+
+message MsgClientObjectCreationRequest {
+    optional string name                            = 1;
+    repeated Common.ClientObjectProperty properties = 2;
+    optional bool persistent                        = 3;    // toggle persistence for this object
+}
+
+message MsgClientObjectUpdateRequest {
+    required Common.ClientObjectId object           = 1;
+    optional string name                            = 2;
+    repeated Common.ClientObjectProperty properties = 3;
+}
+
+message MsgClientObjectDestructionRequest {
+    required Common.ClientObjectId object           = 1;
+}
+
 message MsgClientToMessenger {
     message Content {
-        optional MsgLimitCreationRequest           limit_creation_request           = 1;
-        optional MsgLimitDestructionRequest        limit_destruction_request        = 2;
-        optional MsgLimitUpdateRequest             limit_update_request             = 3;
-        optional MsgLimaCreationRequest            lima_creation_request            = 4;
-        optional MsgLimaDestructionRequest         lima_destruction_request         = 5;
-        optional MsgLimaUpdateRequest              lima_update_request              = 6;
-        optional MsgIntelligenceCreationRequest    intelligence_creation_request    = 7;
-        optional MsgIntelligenceUpdateRequest      intelligence_update_request      = 8;
-        optional MsgIntelligenceDestructionRequest intelligence_destruction_request = 9;
-        optional MsgShapeCreationRequest           shape_creation_request           = 10;
-        optional MsgShapeDestructionRequest        shape_destruction_request        = 11;
-        optional MsgShapeUpdateRequest             shape_update_request             = 12;
-        optional Common.MsgTextMessage             text_message                     = 13;
-        optional MsgNoteCreationRequest            note_creation_request            = 14;
-        optional MsgNoteUpdateRequest              note_update_request              = 15;
-        optional MsgNoteDestructionRequest         note_destruction_request         = 16;
-        
+        optional MsgLimitCreationRequest           limit_creation_request            = 1;
+        optional MsgLimitDestructionRequest        limit_destruction_request         = 2;
+        optional MsgLimitUpdateRequest             limit_update_request              = 3;
+        optional MsgLimaCreationRequest            lima_creation_request             = 4;
+        optional MsgLimaDestructionRequest         lima_destruction_request          = 5;
+        optional MsgLimaUpdateRequest              lima_update_request               = 6;
+        optional MsgIntelligenceCreationRequest    intelligence_creation_request     = 7;
+        optional MsgIntelligenceUpdateRequest      intelligence_update_request       = 8;
+        optional MsgIntelligenceDestructionRequest intelligence_destruction_request  = 9;
+        optional MsgShapeCreationRequest           shape_creation_request            = 10;
+        optional MsgShapeDestructionRequest        shape_destruction_request         = 11;
+        optional MsgShapeUpdateRequest             shape_update_request              = 12;
+        optional Common.MsgTextMessage             text_message                      = 13;
+        optional MsgNoteCreationRequest            note_creation_request             = 14;
+        optional MsgNoteUpdateRequest              note_update_request               = 15;
+        optional MsgNoteDestructionRequest         note_destruction_request          = 16;
+        optional MsgClientObjectCreationRequest    client_object_creation_request    = 17;
+        optional MsgClientObjectUpdateRequest      client_object_update_request      = 18;
+        optional MsgClientObjectDestructionRequest client_object_destruction_request = 19;
     }
     optional int32   context = 1;
     required Content message = 2;

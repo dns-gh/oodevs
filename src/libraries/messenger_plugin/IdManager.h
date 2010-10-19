@@ -32,6 +32,7 @@ public:
     //! @name Operations
     //@{
     unsigned int NextId();
+    void Lock( unsigned long id );
     //@}
 
 private:

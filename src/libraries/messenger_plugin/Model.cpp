@@ -14,6 +14,7 @@
 #include "TacticalLinesModel.h"
 #include "DrawingsModel.h"
 #include "NotesModel.h"
+#include "ClientObjectsModel.h"
 #include "Entity_ABC.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"
@@ -36,8 +37,9 @@ Model::Model( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC&
     , converter_    ( new kernel::CoordinateConverter( config ) )
     , tacticalLines_( *new TacticalLinesModel( clients, *idManager_, *converter_ ) )
     , intelligences_( *new IntelligencesModel( clients, *idManager_, *converter_ ) )
-    , drawings_     ( *new DrawingsModel( config, clients, *idManager_, *converter_ ))
-    , notes_        ( *new NotesModel ( config, clients, *idManager_ , config_.BuildSessionChildFile("notes.csv") ))
+    , drawings_     ( *new DrawingsModel( config, clients, *idManager_, *converter_ ) )
+    , notes_        ( *new NotesModel( config, clients, *idManager_ , config_.BuildSessionChildFile( "notes.csv" ) ) )
+    , clientObjects_( *new ClientObjectsModel( clients, *idManager_ ) )
 {
     registrables.Add( new dispatcher::RegistrableProxy( drawings_ ) );
     Load();
@@ -53,6 +55,7 @@ Model::~Model()
     delete &drawings_;
     delete &intelligences_;
     delete &tacticalLines_;
+    delete &clientObjects_;
 }
 
 // -----------------------------------------------------------------------------
@@ -65,6 +68,7 @@ void Model::SendStateToNewClient( dispatcher::ClientPublisher_ABC& client )
     intelligences_.SendStateToNewClient( client );
     drawings_     .SendStateToNewClient( client );
     notes_        .SendStateToNewClient( client );
+    clientObjects_.SendStateToNewClient( client );
 }
 
 namespace
@@ -111,6 +115,7 @@ void Model::Save( const std::string& name ) const
             (*eit)->Write( xos, *converter_ );
         xos << xml::end;
     }
+    clientObjects_.Write( xos );
     xos << xml::end;
 
     drawings_.Save( directory );
@@ -127,6 +132,9 @@ void Model::Load()
     {
         xml::xifstream xis( GetCheckPointFileName( config_.GetCheckpointDirectory() ) );
         xis >> xml::start( "messenger" )
+                >> xml::optional >> xml::start( "client-objects" )
+                    >> xml::list( "client-object", clientObjects_, &ClientObjectsModel::ReadClientObject )
+                >> xml::end
                 >> xml::list( "automat"  , *this, &Model::ReadAutomat )
                 >> xml::list( "formation", *this, &Model::ReadFormation )
             >> xml::end;

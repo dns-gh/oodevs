@@ -12,9 +12,8 @@
 #include "IdManager.h"
 #include "Intelligence.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include <boost/bind.hpp>
-//#include "protocol/protocol.h"
 #include "protocol/MessengerSenders.h"
+#include <boost/bind.hpp>
 
 using namespace Common;
 using namespace MsgsClientToMessenger;
@@ -70,7 +69,7 @@ void IntelligencesModel::Write( xml::xostream& xos )
 void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgIntelligenceCreationRequest& asn )
 {
     plugins::messenger::IntelligenceCreationRequestAck ack ;
-    ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck_ErrorCode_no_error );
+    ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck::no_error );
     try
     {
         std::auto_ptr< Intelligence > intelligence( new Intelligence( idManager_.NextId(), asn ) );
@@ -92,7 +91,7 @@ void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
 void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgIntelligenceUpdateRequest& asn )
 {
     plugins::messenger::IntelligenceUpdateRequestAck ack ;
-    ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck_ErrorCode_no_error );
+    ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck::no_error );
 
     Intelligence* intelligence = Find( asn.intelligence().id() );
     if( intelligence )
@@ -101,7 +100,7 @@ void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
         intelligence->SendUpdate( clients_ );
     }
     else
-        ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck_ErrorCode_error_invalid_oid );
+        ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck::error_invalid_oid );
     ack.Send( publisher );
 }
 
@@ -112,7 +111,7 @@ void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
 void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgIntelligenceDestructionRequest& asn )
 {
     plugins::messenger::IntelligenceDestructionRequestAck ack ;
-    ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck_ErrorCode_no_error );
+    ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck::no_error );
 
     Intelligence* intelligence = Find( asn.id().id() );
     if( intelligence )
@@ -122,7 +121,7 @@ void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
         Remove( asn.id().id() );
     }
     else
-        ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck_ErrorCode_error_invalid_oid );
+        ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck::error_invalid_oid );
     ack.Send( publisher );
 }
 

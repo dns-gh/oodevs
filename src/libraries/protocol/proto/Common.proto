@@ -33,6 +33,7 @@ message UnitKnowledgeId                    { required uint32              id = 1
 message UnitKnowledgeIdList                { repeated UnitKnowledgeId   elem = 1; }
 message UrbanObjectId                      { required uint32              id = 1; }
 message UrbanObjectKnowledgeId             { required uint32              id = 1; }
+message ClientObjectId                     { required uint32              id = 1; }
 
 message Tasker {
     optional AutomatId    automat    = 1;
@@ -597,6 +598,19 @@ message MsgCrowdOrder {
 }
 
 // Messenger common types
+
+message ClientObjectProperty {
+    message Value {
+        optional string string_value            = 1;
+        optional int32 integer_value            = 2;
+        optional uint32 unsigned_integer_value  = 3;
+        optional float float_value              = 4;
+        optional bool bool_value                = 5;
+    }
+    required string name = 1;
+    required Value value = 2;
+}
+
 message MsgTacticalLine {
     message Diffusion {
        optional AutomatId   automat   = 1;

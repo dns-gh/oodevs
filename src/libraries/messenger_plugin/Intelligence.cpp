@@ -201,7 +201,7 @@ void Intelligence::SendDestruction( dispatcher::ClientPublisher_ABC& publisher )
 // -----------------------------------------------------------------------------
 void Intelligence::SendFullState( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    SendCreation(publisher);
+    SendCreation( publisher );
 }
 
 // -----------------------------------------------------------------------------

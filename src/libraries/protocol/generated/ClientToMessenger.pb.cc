@@ -58,6 +58,15 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgNoteDestructionRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgNoteDestructionRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgClientObjectCreationRequest_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgClientObjectCreationRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgClientObjectUpdateRequest_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgClientObjectUpdateRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgClientObjectDestructionRequest_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgClientObjectDestructionRequest_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgClientToMessenger_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgClientToMessenger_reflection_ = NULL;
@@ -317,7 +326,56 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgNoteDestructionRequest));
-  MsgClientToMessenger_descriptor_ = file->message_type(15);
+  MsgClientObjectCreationRequest_descriptor_ = file->message_type(15);
+  static const int MsgClientObjectCreationRequest_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectCreationRequest, name_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectCreationRequest, properties_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectCreationRequest, persistent_),
+  };
+  MsgClientObjectCreationRequest_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgClientObjectCreationRequest_descriptor_,
+      MsgClientObjectCreationRequest::default_instance_,
+      MsgClientObjectCreationRequest_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectCreationRequest, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectCreationRequest, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgClientObjectCreationRequest));
+  MsgClientObjectUpdateRequest_descriptor_ = file->message_type(16);
+  static const int MsgClientObjectUpdateRequest_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectUpdateRequest, object_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectUpdateRequest, name_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectUpdateRequest, properties_),
+  };
+  MsgClientObjectUpdateRequest_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgClientObjectUpdateRequest_descriptor_,
+      MsgClientObjectUpdateRequest::default_instance_,
+      MsgClientObjectUpdateRequest_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectUpdateRequest, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectUpdateRequest, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgClientObjectUpdateRequest));
+  MsgClientObjectDestructionRequest_descriptor_ = file->message_type(17);
+  static const int MsgClientObjectDestructionRequest_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectDestructionRequest, object_),
+  };
+  MsgClientObjectDestructionRequest_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgClientObjectDestructionRequest_descriptor_,
+      MsgClientObjectDestructionRequest::default_instance_,
+      MsgClientObjectDestructionRequest_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectDestructionRequest, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectDestructionRequest, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgClientObjectDestructionRequest));
+  MsgClientToMessenger_descriptor_ = file->message_type(18);
   static const int MsgClientToMessenger_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToMessenger, context_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToMessenger, message_),
@@ -334,7 +392,7 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgClientToMessenger));
   MsgClientToMessenger_Content_descriptor_ = MsgClientToMessenger_descriptor_->nested_type(0);
-  static const int MsgClientToMessenger_Content_offsets_[16] = {
+  static const int MsgClientToMessenger_Content_offsets_[19] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToMessenger_Content, limit_creation_request_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToMessenger_Content, limit_destruction_request_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToMessenger_Content, limit_update_request_),
@@ -351,6 +409,9 @@ void protobuf_AssignDesc_ClientToMessenger_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToMessenger_Content, note_creation_request_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToMessenger_Content, note_update_request_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToMessenger_Content, note_destruction_request_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToMessenger_Content, client_object_creation_request_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToMessenger_Content, client_object_update_request_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToMessenger_Content, client_object_destruction_request_),
   };
   MsgClientToMessenger_Content_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -406,6 +467,12 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgNoteDestructionRequest_descriptor_, &MsgNoteDestructionRequest::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgClientObjectCreationRequest_descriptor_, &MsgClientObjectCreationRequest::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgClientObjectUpdateRequest_descriptor_, &MsgClientObjectUpdateRequest::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgClientObjectDestructionRequest_descriptor_, &MsgClientObjectDestructionRequest::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgClientToMessenger_descriptor_, &MsgClientToMessenger::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgClientToMessenger_Content_descriptor_, &MsgClientToMessenger_Content::default_instance());
@@ -444,6 +511,12 @@ void protobuf_ShutdownFile_ClientToMessenger_2eproto() {
   delete MsgNoteUpdateRequest_reflection_;
   delete MsgNoteDestructionRequest::default_instance_;
   delete MsgNoteDestructionRequest_reflection_;
+  delete MsgClientObjectCreationRequest::default_instance_;
+  delete MsgClientObjectCreationRequest_reflection_;
+  delete MsgClientObjectUpdateRequest::default_instance_;
+  delete MsgClientObjectUpdateRequest_reflection_;
+  delete MsgClientObjectDestructionRequest::default_instance_;
+  delete MsgClientObjectDestructionRequest_reflection_;
   delete MsgClientToMessenger::default_instance_;
   delete MsgClientToMessenger_reflection_;
   delete MsgClientToMessenger_Content::default_instance_;
@@ -495,42 +568,58 @@ void protobuf_AddDesc_ClientToMessenger_2eproto() {
     "st\022\n\n\002id\030\001 \002(\r\022\014\n\004name\030\002 \001(\t\022\016\n\006number\030\003"
     " \001(\t\022\023\n\013description\030\004 \001(\t\022\016\n\006parent\030\005 \001("
     "\r\";\n\031MsgNoteDestructionRequest\022\n\n\002id\030\001 \002"
-    "(\r\022\022\n\ndelete_all\030\002 \002(\010\"\377\n\n\024MsgClientToMe"
-    "ssenger\022\017\n\007context\030\001 \001(\005\022D\n\007message\030\002 \002("
-    "\01323.MsgsClientToMessenger.MsgClientToMes"
-    "senger.Content\032\217\n\n\007Content\022N\n\026limit_crea"
-    "tion_request\030\001 \001(\0132..MsgsClientToMesseng"
-    "er.MsgLimitCreationRequest\022T\n\031limit_dest"
-    "ruction_request\030\002 \001(\01321.MsgsClientToMess"
-    "enger.MsgLimitDestructionRequest\022J\n\024limi"
-    "t_update_request\030\003 \001(\0132,.MsgsClientToMes"
-    "senger.MsgLimitUpdateRequest\022L\n\025lima_cre"
-    "ation_request\030\004 \001(\0132-.MsgsClientToMessen"
-    "ger.MsgLimaCreationRequest\022R\n\030lima_destr"
-    "uction_request\030\005 \001(\01320.MsgsClientToMesse"
-    "nger.MsgLimaDestructionRequest\022H\n\023lima_u"
-    "pdate_request\030\006 \001(\0132+.MsgsClientToMessen"
-    "ger.MsgLimaUpdateRequest\022\\\n\035intelligence"
-    "_creation_request\030\007 \001(\01325.MsgsClientToMe"
-    "ssenger.MsgIntelligenceCreationRequest\022X"
-    "\n\033intelligence_update_request\030\010 \001(\01323.Ms"
-    "gsClientToMessenger.MsgIntelligenceUpdat"
-    "eRequest\022b\n intelligence_destruction_req"
-    "uest\030\t \001(\01328.MsgsClientToMessenger.MsgIn"
-    "telligenceDestructionRequest\022N\n\026shape_cr"
-    "eation_request\030\n \001(\0132..MsgsClientToMesse"
-    "nger.MsgShapeCreationRequest\022T\n\031shape_de"
-    "struction_request\030\013 \001(\01321.MsgsClientToMe"
-    "ssenger.MsgShapeDestructionRequest\022J\n\024sh"
-    "ape_update_request\030\014 \001(\0132,.MsgsClientToM"
-    "essenger.MsgShapeUpdateRequest\022,\n\014text_m"
-    "essage\030\r \001(\0132\026.Common.MsgTextMessage\022L\n\025"
-    "note_creation_request\030\016 \001(\0132-.MsgsClient"
-    "ToMessenger.MsgNoteCreationRequest\022H\n\023no"
-    "te_update_request\030\017 \001(\0132+.MsgsClientToMe"
-    "ssenger.MsgNoteUpdateRequest\022R\n\030note_des"
-    "truction_request\030\020 \001(\01320.MsgsClientToMes"
-    "senger.MsgNoteDestructionRequest", 2912);
+    "(\r\022\022\n\ndelete_all\030\002 \002(\010\"t\n\036MsgClientObjec"
+    "tCreationRequest\022\014\n\004name\030\001 \001(\t\0220\n\nproper"
+    "ties\030\002 \003(\0132\034.Common.ClientObjectProperty"
+    "\022\022\n\npersistent\030\003 \001(\010\"\206\001\n\034MsgClientObject"
+    "UpdateRequest\022&\n\006object\030\001 \002(\0132\026.Common.C"
+    "lientObjectId\022\014\n\004name\030\002 \001(\t\0220\n\npropertie"
+    "s\030\003 \003(\0132\034.Common.ClientObjectProperty\"K\n"
+    "!MsgClientObjectDestructionRequest\022&\n\006ob"
+    "ject\030\001 \002(\0132\026.Common.ClientObjectId\"\236\r\n\024M"
+    "sgClientToMessenger\022\017\n\007context\030\001 \001(\005\022D\n\007"
+    "message\030\002 \002(\01323.MsgsClientToMessenger.Ms"
+    "gClientToMessenger.Content\032\256\014\n\007Content\022N"
+    "\n\026limit_creation_request\030\001 \001(\0132..MsgsCli"
+    "entToMessenger.MsgLimitCreationRequest\022T"
+    "\n\031limit_destruction_request\030\002 \001(\01321.Msgs"
+    "ClientToMessenger.MsgLimitDestructionReq"
+    "uest\022J\n\024limit_update_request\030\003 \001(\0132,.Msg"
+    "sClientToMessenger.MsgLimitUpdateRequest"
+    "\022L\n\025lima_creation_request\030\004 \001(\0132-.MsgsCl"
+    "ientToMessenger.MsgLimaCreationRequest\022R"
+    "\n\030lima_destruction_request\030\005 \001(\01320.MsgsC"
+    "lientToMessenger.MsgLimaDestructionReque"
+    "st\022H\n\023lima_update_request\030\006 \001(\0132+.MsgsCl"
+    "ientToMessenger.MsgLimaUpdateRequest\022\\\n\035"
+    "intelligence_creation_request\030\007 \001(\01325.Ms"
+    "gsClientToMessenger.MsgIntelligenceCreat"
+    "ionRequest\022X\n\033intelligence_update_reques"
+    "t\030\010 \001(\01323.MsgsClientToMessenger.MsgIntel"
+    "ligenceUpdateRequest\022b\n intelligence_des"
+    "truction_request\030\t \001(\01328.MsgsClientToMes"
+    "senger.MsgIntelligenceDestructionRequest"
+    "\022N\n\026shape_creation_request\030\n \001(\0132..MsgsC"
+    "lientToMessenger.MsgShapeCreationRequest"
+    "\022T\n\031shape_destruction_request\030\013 \001(\01321.Ms"
+    "gsClientToMessenger.MsgShapeDestructionR"
+    "equest\022J\n\024shape_update_request\030\014 \001(\0132,.M"
+    "sgsClientToMessenger.MsgShapeUpdateReque"
+    "st\022,\n\014text_message\030\r \001(\0132\026.Common.MsgTex"
+    "tMessage\022L\n\025note_creation_request\030\016 \001(\0132"
+    "-.MsgsClientToMessenger.MsgNoteCreationR"
+    "equest\022H\n\023note_update_request\030\017 \001(\0132+.Ms"
+    "gsClientToMessenger.MsgNoteUpdateRequest"
+    "\022R\n\030note_destruction_request\030\020 \001(\01320.Msg"
+    "sClientToMessenger.MsgNoteDestructionReq"
+    "uest\022]\n\036client_object_creation_request\030\021"
+    " \001(\01325.MsgsClientToMessenger.MsgClientOb"
+    "jectCreationRequest\022Y\n\034client_object_upd"
+    "ate_request\030\022 \001(\01323.MsgsClientToMessenge"
+    "r.MsgClientObjectUpdateRequest\022c\n!client"
+    "_object_destruction_request\030\023 \001(\01328.Msgs"
+    "ClientToMessenger.MsgClientObjectDestruc"
+    "tionRequest", 3531);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToMessenger.proto", &protobuf_RegisterTypes);
   MsgLimaCreationRequest::default_instance_ = new MsgLimaCreationRequest();
@@ -548,6 +637,9 @@ void protobuf_AddDesc_ClientToMessenger_2eproto() {
   MsgNoteCreationRequest::default_instance_ = new MsgNoteCreationRequest();
   MsgNoteUpdateRequest::default_instance_ = new MsgNoteUpdateRequest();
   MsgNoteDestructionRequest::default_instance_ = new MsgNoteDestructionRequest();
+  MsgClientObjectCreationRequest::default_instance_ = new MsgClientObjectCreationRequest();
+  MsgClientObjectUpdateRequest::default_instance_ = new MsgClientObjectUpdateRequest();
+  MsgClientObjectDestructionRequest::default_instance_ = new MsgClientObjectDestructionRequest();
   MsgClientToMessenger::default_instance_ = new MsgClientToMessenger();
   MsgClientToMessenger_Content::default_instance_ = new MsgClientToMessenger_Content();
   MsgLimaCreationRequest::default_instance_->InitAsDefaultInstance();
@@ -565,6 +657,9 @@ void protobuf_AddDesc_ClientToMessenger_2eproto() {
   MsgNoteCreationRequest::default_instance_->InitAsDefaultInstance();
   MsgNoteUpdateRequest::default_instance_->InitAsDefaultInstance();
   MsgNoteDestructionRequest::default_instance_->InitAsDefaultInstance();
+  MsgClientObjectCreationRequest::default_instance_->InitAsDefaultInstance();
+  MsgClientObjectUpdateRequest::default_instance_->InitAsDefaultInstance();
+  MsgClientObjectDestructionRequest::default_instance_->InitAsDefaultInstance();
   MsgClientToMessenger::default_instance_->InitAsDefaultInstance();
   MsgClientToMessenger_Content::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_ClientToMessenger_2eproto);
@@ -4629,6 +4724,828 @@ void MsgNoteDestructionRequest::Swap(MsgNoteDestructionRequest* other) {
 
 // ===================================================================
 
+const ::std::string MsgClientObjectCreationRequest::_default_name_;
+#ifndef _MSC_VER
+const int MsgClientObjectCreationRequest::kNameFieldNumber;
+const int MsgClientObjectCreationRequest::kPropertiesFieldNumber;
+const int MsgClientObjectCreationRequest::kPersistentFieldNumber;
+#endif  // !_MSC_VER
+
+MsgClientObjectCreationRequest::MsgClientObjectCreationRequest() {
+  SharedCtor();
+}
+
+void MsgClientObjectCreationRequest::InitAsDefaultInstance() {
+}
+
+MsgClientObjectCreationRequest::MsgClientObjectCreationRequest(const MsgClientObjectCreationRequest& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgClientObjectCreationRequest::SharedCtor() {
+  _cached_size_ = 0;
+  name_ = const_cast< ::std::string*>(&_default_name_);
+  persistent_ = false;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgClientObjectCreationRequest::~MsgClientObjectCreationRequest() {
+  SharedDtor();
+}
+
+void MsgClientObjectCreationRequest::SharedDtor() {
+  if (name_ != &_default_name_) {
+    delete name_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgClientObjectCreationRequest::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgClientObjectCreationRequest_descriptor_;
+}
+
+const MsgClientObjectCreationRequest& MsgClientObjectCreationRequest::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_ClientToMessenger_2eproto();  return *default_instance_;
+}
+
+MsgClientObjectCreationRequest* MsgClientObjectCreationRequest::default_instance_ = NULL;
+
+MsgClientObjectCreationRequest* MsgClientObjectCreationRequest::New() const {
+  return new MsgClientObjectCreationRequest;
+}
+
+void MsgClientObjectCreationRequest::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (_has_bit(0)) {
+      if (name_ != &_default_name_) {
+        name_->clear();
+      }
+    }
+    persistent_ = false;
+  }
+  properties_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgClientObjectCreationRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional string name = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+              input, this->mutable_name()));
+        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+          this->name().data(), this->name().length(),
+          ::google::protobuf::internal::WireFormat::PARSE);
+        if (input->ExpectTag(18)) goto parse_properties;
+        break;
+      }
+      
+      // repeated .Common.ClientObjectProperty properties = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_properties:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+              input, add_properties()));
+        if (input->ExpectTag(18)) goto parse_properties;
+        if (input->ExpectTag(24)) goto parse_persistent;
+        break;
+      }
+      
+      // optional bool persistent = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_persistent:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
+              input, &persistent_));
+        _set_bit(2);
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgClientObjectCreationRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgClientObjectCreationRequest::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // optional string name = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->name(), output);
+  }
+  
+  // repeated .Common.ClientObjectProperty properties = 2;
+  for (int i = 0; i < this->properties_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      2, this->properties(i), output);
+  }
+  
+  // optional bool persistent = 3;
+  if (_has_bit(2)) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->persistent(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgClientObjectCreationRequest::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // optional string name = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->name(), target);
+  }
+  
+  // repeated .Common.ClientObjectProperty properties = 2;
+  for (int i = 0; i < this->properties_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->properties(i), target);
+  }
+  
+  // optional bool persistent = 3;
+  if (_has_bit(2)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->persistent(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgClientObjectCreationRequest::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional string name = 1;
+    if (has_name()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->name());
+    }
+    
+    // optional bool persistent = 3;
+    if (has_persistent()) {
+      total_size += 1 + 1;
+    }
+    
+  }
+  // repeated .Common.ClientObjectProperty properties = 2;
+  total_size += 1 * this->properties_size();
+  for (int i = 0; i < this->properties_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->properties(i));
+  }
+  
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgClientObjectCreationRequest::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgClientObjectCreationRequest* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgClientObjectCreationRequest*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgClientObjectCreationRequest::MergeFrom(const MsgClientObjectCreationRequest& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  properties_.MergeFrom(from.properties_);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      set_name(from.name());
+    }
+    if (from._has_bit(2)) {
+      set_persistent(from.persistent());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgClientObjectCreationRequest::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgClientObjectCreationRequest::CopyFrom(const MsgClientObjectCreationRequest& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgClientObjectCreationRequest::IsInitialized() const {
+  
+  for (int i = 0; i < properties_size(); i++) {
+    if (!this->properties(i).IsInitialized()) return false;
+  }
+  return true;
+}
+
+void MsgClientObjectCreationRequest::Swap(MsgClientObjectCreationRequest* other) {
+  if (other != this) {
+    std::swap(name_, other->name_);
+    properties_.Swap(&other->properties_);
+    std::swap(persistent_, other->persistent_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgClientObjectCreationRequest::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgClientObjectCreationRequest_descriptor_;
+  metadata.reflection = MsgClientObjectCreationRequest_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+const ::std::string MsgClientObjectUpdateRequest::_default_name_;
+#ifndef _MSC_VER
+const int MsgClientObjectUpdateRequest::kObjectFieldNumber;
+const int MsgClientObjectUpdateRequest::kNameFieldNumber;
+const int MsgClientObjectUpdateRequest::kPropertiesFieldNumber;
+#endif  // !_MSC_VER
+
+MsgClientObjectUpdateRequest::MsgClientObjectUpdateRequest() {
+  SharedCtor();
+}
+
+void MsgClientObjectUpdateRequest::InitAsDefaultInstance() {
+  object_ = const_cast< ::Common::ClientObjectId*>(&::Common::ClientObjectId::default_instance());
+}
+
+MsgClientObjectUpdateRequest::MsgClientObjectUpdateRequest(const MsgClientObjectUpdateRequest& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgClientObjectUpdateRequest::SharedCtor() {
+  _cached_size_ = 0;
+  object_ = NULL;
+  name_ = const_cast< ::std::string*>(&_default_name_);
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgClientObjectUpdateRequest::~MsgClientObjectUpdateRequest() {
+  SharedDtor();
+}
+
+void MsgClientObjectUpdateRequest::SharedDtor() {
+  if (name_ != &_default_name_) {
+    delete name_;
+  }
+  if (this != default_instance_) {
+    delete object_;
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgClientObjectUpdateRequest::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgClientObjectUpdateRequest_descriptor_;
+}
+
+const MsgClientObjectUpdateRequest& MsgClientObjectUpdateRequest::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_ClientToMessenger_2eproto();  return *default_instance_;
+}
+
+MsgClientObjectUpdateRequest* MsgClientObjectUpdateRequest::default_instance_ = NULL;
+
+MsgClientObjectUpdateRequest* MsgClientObjectUpdateRequest::New() const {
+  return new MsgClientObjectUpdateRequest;
+}
+
+void MsgClientObjectUpdateRequest::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (_has_bit(0)) {
+      if (object_ != NULL) object_->::Common::ClientObjectId::Clear();
+    }
+    if (_has_bit(1)) {
+      if (name_ != &_default_name_) {
+        name_->clear();
+      }
+    }
+  }
+  properties_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgClientObjectUpdateRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .Common.ClientObjectId object = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_object()));
+        if (input->ExpectTag(18)) goto parse_name;
+        break;
+      }
+      
+      // optional string name = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_name:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+              input, this->mutable_name()));
+        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+          this->name().data(), this->name().length(),
+          ::google::protobuf::internal::WireFormat::PARSE);
+        if (input->ExpectTag(26)) goto parse_properties;
+        break;
+      }
+      
+      // repeated .Common.ClientObjectProperty properties = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_properties:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+              input, add_properties()));
+        if (input->ExpectTag(26)) goto parse_properties;
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgClientObjectUpdateRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgClientObjectUpdateRequest::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // required .Common.ClientObjectId object = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->object(), output);
+  }
+  
+  // optional string name = 2;
+  if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      2, this->name(), output);
+  }
+  
+  // repeated .Common.ClientObjectProperty properties = 3;
+  for (int i = 0; i < this->properties_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      3, this->properties(i), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgClientObjectUpdateRequest::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required .Common.ClientObjectId object = 1;
+  if (_has_bit(0)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->object(), target);
+  }
+  
+  // optional string name = 2;
+  if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->name(), target);
+  }
+  
+  // repeated .Common.ClientObjectProperty properties = 3;
+  for (int i = 0; i < this->properties_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        3, this->properties(i), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgClientObjectUpdateRequest::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .Common.ClientObjectId object = 1;
+    if (has_object()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->object());
+    }
+    
+    // optional string name = 2;
+    if (has_name()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->name());
+    }
+    
+  }
+  // repeated .Common.ClientObjectProperty properties = 3;
+  total_size += 1 * this->properties_size();
+  for (int i = 0; i < this->properties_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->properties(i));
+  }
+  
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgClientObjectUpdateRequest::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgClientObjectUpdateRequest* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgClientObjectUpdateRequest*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgClientObjectUpdateRequest::MergeFrom(const MsgClientObjectUpdateRequest& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  properties_.MergeFrom(from.properties_);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      mutable_object()->::Common::ClientObjectId::MergeFrom(from.object());
+    }
+    if (from._has_bit(1)) {
+      set_name(from.name());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgClientObjectUpdateRequest::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgClientObjectUpdateRequest::CopyFrom(const MsgClientObjectUpdateRequest& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgClientObjectUpdateRequest::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  
+  if (has_object()) {
+    if (!this->object().IsInitialized()) return false;
+  }
+  for (int i = 0; i < properties_size(); i++) {
+    if (!this->properties(i).IsInitialized()) return false;
+  }
+  return true;
+}
+
+void MsgClientObjectUpdateRequest::Swap(MsgClientObjectUpdateRequest* other) {
+  if (other != this) {
+    std::swap(object_, other->object_);
+    std::swap(name_, other->name_);
+    properties_.Swap(&other->properties_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgClientObjectUpdateRequest::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgClientObjectUpdateRequest_descriptor_;
+  metadata.reflection = MsgClientObjectUpdateRequest_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgClientObjectDestructionRequest::kObjectFieldNumber;
+#endif  // !_MSC_VER
+
+MsgClientObjectDestructionRequest::MsgClientObjectDestructionRequest() {
+  SharedCtor();
+}
+
+void MsgClientObjectDestructionRequest::InitAsDefaultInstance() {
+  object_ = const_cast< ::Common::ClientObjectId*>(&::Common::ClientObjectId::default_instance());
+}
+
+MsgClientObjectDestructionRequest::MsgClientObjectDestructionRequest(const MsgClientObjectDestructionRequest& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgClientObjectDestructionRequest::SharedCtor() {
+  _cached_size_ = 0;
+  object_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgClientObjectDestructionRequest::~MsgClientObjectDestructionRequest() {
+  SharedDtor();
+}
+
+void MsgClientObjectDestructionRequest::SharedDtor() {
+  if (this != default_instance_) {
+    delete object_;
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgClientObjectDestructionRequest::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgClientObjectDestructionRequest_descriptor_;
+}
+
+const MsgClientObjectDestructionRequest& MsgClientObjectDestructionRequest::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_ClientToMessenger_2eproto();  return *default_instance_;
+}
+
+MsgClientObjectDestructionRequest* MsgClientObjectDestructionRequest::default_instance_ = NULL;
+
+MsgClientObjectDestructionRequest* MsgClientObjectDestructionRequest::New() const {
+  return new MsgClientObjectDestructionRequest;
+}
+
+void MsgClientObjectDestructionRequest::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (_has_bit(0)) {
+      if (object_ != NULL) object_->::Common::ClientObjectId::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgClientObjectDestructionRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .Common.ClientObjectId object = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_object()));
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgClientObjectDestructionRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgClientObjectDestructionRequest::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // required .Common.ClientObjectId object = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->object(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgClientObjectDestructionRequest::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required .Common.ClientObjectId object = 1;
+  if (_has_bit(0)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->object(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgClientObjectDestructionRequest::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .Common.ClientObjectId object = 1;
+    if (has_object()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->object());
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgClientObjectDestructionRequest::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgClientObjectDestructionRequest* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgClientObjectDestructionRequest*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgClientObjectDestructionRequest::MergeFrom(const MsgClientObjectDestructionRequest& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      mutable_object()->::Common::ClientObjectId::MergeFrom(from.object());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgClientObjectDestructionRequest::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgClientObjectDestructionRequest::CopyFrom(const MsgClientObjectDestructionRequest& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgClientObjectDestructionRequest::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  
+  if (has_object()) {
+    if (!this->object().IsInitialized()) return false;
+  }
+  return true;
+}
+
+void MsgClientObjectDestructionRequest::Swap(MsgClientObjectDestructionRequest* other) {
+  if (other != this) {
+    std::swap(object_, other->object_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgClientObjectDestructionRequest::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgClientObjectDestructionRequest_descriptor_;
+  metadata.reflection = MsgClientObjectDestructionRequest_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
 #ifndef _MSC_VER
 const int MsgClientToMessenger_Content::kLimitCreationRequestFieldNumber;
 const int MsgClientToMessenger_Content::kLimitDestructionRequestFieldNumber;
@@ -4646,6 +5563,9 @@ const int MsgClientToMessenger_Content::kTextMessageFieldNumber;
 const int MsgClientToMessenger_Content::kNoteCreationRequestFieldNumber;
 const int MsgClientToMessenger_Content::kNoteUpdateRequestFieldNumber;
 const int MsgClientToMessenger_Content::kNoteDestructionRequestFieldNumber;
+const int MsgClientToMessenger_Content::kClientObjectCreationRequestFieldNumber;
+const int MsgClientToMessenger_Content::kClientObjectUpdateRequestFieldNumber;
+const int MsgClientToMessenger_Content::kClientObjectDestructionRequestFieldNumber;
 #endif  // !_MSC_VER
 
 MsgClientToMessenger_Content::MsgClientToMessenger_Content() {
@@ -4669,6 +5589,9 @@ void MsgClientToMessenger_Content::InitAsDefaultInstance() {
   note_creation_request_ = const_cast< ::MsgsClientToMessenger::MsgNoteCreationRequest*>(&::MsgsClientToMessenger::MsgNoteCreationRequest::default_instance());
   note_update_request_ = const_cast< ::MsgsClientToMessenger::MsgNoteUpdateRequest*>(&::MsgsClientToMessenger::MsgNoteUpdateRequest::default_instance());
   note_destruction_request_ = const_cast< ::MsgsClientToMessenger::MsgNoteDestructionRequest*>(&::MsgsClientToMessenger::MsgNoteDestructionRequest::default_instance());
+  client_object_creation_request_ = const_cast< ::MsgsClientToMessenger::MsgClientObjectCreationRequest*>(&::MsgsClientToMessenger::MsgClientObjectCreationRequest::default_instance());
+  client_object_update_request_ = const_cast< ::MsgsClientToMessenger::MsgClientObjectUpdateRequest*>(&::MsgsClientToMessenger::MsgClientObjectUpdateRequest::default_instance());
+  client_object_destruction_request_ = const_cast< ::MsgsClientToMessenger::MsgClientObjectDestructionRequest*>(&::MsgsClientToMessenger::MsgClientObjectDestructionRequest::default_instance());
 }
 
 MsgClientToMessenger_Content::MsgClientToMessenger_Content(const MsgClientToMessenger_Content& from) {
@@ -4694,6 +5617,9 @@ void MsgClientToMessenger_Content::SharedCtor() {
   note_creation_request_ = NULL;
   note_update_request_ = NULL;
   note_destruction_request_ = NULL;
+  client_object_creation_request_ = NULL;
+  client_object_update_request_ = NULL;
+  client_object_destruction_request_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4719,6 +5645,9 @@ void MsgClientToMessenger_Content::SharedDtor() {
     delete note_creation_request_;
     delete note_update_request_;
     delete note_destruction_request_;
+    delete client_object_creation_request_;
+    delete client_object_update_request_;
+    delete client_object_destruction_request_;
   }
 }
 
@@ -4788,6 +5717,17 @@ void MsgClientToMessenger_Content::Clear() {
     }
     if (_has_bit(15)) {
       if (note_destruction_request_ != NULL) note_destruction_request_->::MsgsClientToMessenger::MsgNoteDestructionRequest::Clear();
+    }
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    if (_has_bit(16)) {
+      if (client_object_creation_request_ != NULL) client_object_creation_request_->::MsgsClientToMessenger::MsgClientObjectCreationRequest::Clear();
+    }
+    if (_has_bit(17)) {
+      if (client_object_update_request_ != NULL) client_object_update_request_->::MsgsClientToMessenger::MsgClientObjectUpdateRequest::Clear();
+    }
+    if (_has_bit(18)) {
+      if (client_object_destruction_request_ != NULL) client_object_destruction_request_->::MsgsClientToMessenger::MsgClientObjectDestructionRequest::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -5003,6 +5943,45 @@ bool MsgClientToMessenger_Content::MergePartialFromCodedStream(
        parse_note_destruction_request:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_note_destruction_request()));
+        if (input->ExpectTag(138)) goto parse_client_object_creation_request;
+        break;
+      }
+      
+      // optional .MsgsClientToMessenger.MsgClientObjectCreationRequest client_object_creation_request = 17;
+      case 17: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_client_object_creation_request:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_client_object_creation_request()));
+        if (input->ExpectTag(146)) goto parse_client_object_update_request;
+        break;
+      }
+      
+      // optional .MsgsClientToMessenger.MsgClientObjectUpdateRequest client_object_update_request = 18;
+      case 18: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_client_object_update_request:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_client_object_update_request()));
+        if (input->ExpectTag(154)) goto parse_client_object_destruction_request;
+        break;
+      }
+      
+      // optional .MsgsClientToMessenger.MsgClientObjectDestructionRequest client_object_destruction_request = 19;
+      case 19: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_client_object_destruction_request:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_client_object_destruction_request()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -5127,6 +6106,24 @@ void MsgClientToMessenger_Content::SerializeWithCachedSizes(
       16, this->note_destruction_request(), output);
   }
   
+  // optional .MsgsClientToMessenger.MsgClientObjectCreationRequest client_object_creation_request = 17;
+  if (_has_bit(16)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      17, this->client_object_creation_request(), output);
+  }
+  
+  // optional .MsgsClientToMessenger.MsgClientObjectUpdateRequest client_object_update_request = 18;
+  if (_has_bit(17)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      18, this->client_object_update_request(), output);
+  }
+  
+  // optional .MsgsClientToMessenger.MsgClientObjectDestructionRequest client_object_destruction_request = 19;
+  if (_has_bit(18)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      19, this->client_object_destruction_request(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -5245,6 +6242,27 @@ void MsgClientToMessenger_Content::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         16, this->note_destruction_request(), target);
+  }
+  
+  // optional .MsgsClientToMessenger.MsgClientObjectCreationRequest client_object_creation_request = 17;
+  if (_has_bit(16)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        17, this->client_object_creation_request(), target);
+  }
+  
+  // optional .MsgsClientToMessenger.MsgClientObjectUpdateRequest client_object_update_request = 18;
+  if (_has_bit(17)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        18, this->client_object_update_request(), target);
+  }
+  
+  // optional .MsgsClientToMessenger.MsgClientObjectDestructionRequest client_object_destruction_request = 19;
+  if (_has_bit(18)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        19, this->client_object_destruction_request(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -5373,6 +6391,29 @@ int MsgClientToMessenger_Content::ByteSize() const {
     }
     
   }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    // optional .MsgsClientToMessenger.MsgClientObjectCreationRequest client_object_creation_request = 17;
+    if (has_client_object_creation_request()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->client_object_creation_request());
+    }
+    
+    // optional .MsgsClientToMessenger.MsgClientObjectUpdateRequest client_object_update_request = 18;
+    if (has_client_object_update_request()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->client_object_update_request());
+    }
+    
+    // optional .MsgsClientToMessenger.MsgClientObjectDestructionRequest client_object_destruction_request = 19;
+    if (has_client_object_destruction_request()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->client_object_destruction_request());
+    }
+    
+  }
   if (!unknown_fields().empty()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
@@ -5448,6 +6489,17 @@ void MsgClientToMessenger_Content::MergeFrom(const MsgClientToMessenger_Content&
       mutable_note_destruction_request()->::MsgsClientToMessenger::MsgNoteDestructionRequest::MergeFrom(from.note_destruction_request());
     }
   }
+  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    if (from._has_bit(16)) {
+      mutable_client_object_creation_request()->::MsgsClientToMessenger::MsgClientObjectCreationRequest::MergeFrom(from.client_object_creation_request());
+    }
+    if (from._has_bit(17)) {
+      mutable_client_object_update_request()->::MsgsClientToMessenger::MsgClientObjectUpdateRequest::MergeFrom(from.client_object_update_request());
+    }
+    if (from._has_bit(18)) {
+      mutable_client_object_destruction_request()->::MsgsClientToMessenger::MsgClientObjectDestructionRequest::MergeFrom(from.client_object_destruction_request());
+    }
+  }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
@@ -5513,6 +6565,15 @@ bool MsgClientToMessenger_Content::IsInitialized() const {
   if (has_note_destruction_request()) {
     if (!this->note_destruction_request().IsInitialized()) return false;
   }
+  if (has_client_object_creation_request()) {
+    if (!this->client_object_creation_request().IsInitialized()) return false;
+  }
+  if (has_client_object_update_request()) {
+    if (!this->client_object_update_request().IsInitialized()) return false;
+  }
+  if (has_client_object_destruction_request()) {
+    if (!this->client_object_destruction_request().IsInitialized()) return false;
+  }
   return true;
 }
 
@@ -5534,6 +6595,9 @@ void MsgClientToMessenger_Content::Swap(MsgClientToMessenger_Content* other) {
     std::swap(note_creation_request_, other->note_creation_request_);
     std::swap(note_update_request_, other->note_update_request_);
     std::swap(note_destruction_request_, other->note_destruction_request_);
+    std::swap(client_object_creation_request_, other->client_object_creation_request_);
+    std::swap(client_object_update_request_, other->client_object_update_request_);
+    std::swap(client_object_destruction_request_, other->client_object_destruction_request_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

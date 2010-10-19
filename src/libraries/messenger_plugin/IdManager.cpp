@@ -39,3 +39,13 @@ unsigned int IdManager::NextId()
 {
     return ++nextId_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: IdManager::nexId
+// Created: JSR 2010-10-18
+// -----------------------------------------------------------------------------
+void IdManager::Lock( unsigned long id )
+{
+    if( id >= nextId_ )
+        nextId_ = id + 1;
+}

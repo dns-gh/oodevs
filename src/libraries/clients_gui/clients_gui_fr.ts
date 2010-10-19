@@ -491,13 +491,6 @@
     </message>
 </context>
 <context>
-    <name>ResourceLinksDialog</name>
-    <message>
-        <source>Enabled</source>
-        <translation>Activé</translation>
-    </message>
-</context>
-<context>
     <name>ResourceLinksDialog_ABC</name>
     <message>
         <source>Target</source>
@@ -538,6 +531,10 @@
     <message>
         <source>Resource Networks</source>
         <translation>Réseaux de ressource</translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation>Activé</translation>
     </message>
 </context>
 <context>

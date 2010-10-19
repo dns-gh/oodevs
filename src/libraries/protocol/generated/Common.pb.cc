@@ -82,6 +82,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* UrbanObjectKnowledgeId_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   UrbanObjectKnowledgeId_reflection_ = NULL;
+const ::google::protobuf::Descriptor* ClientObjectId_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  ClientObjectId_reflection_ = NULL;
 const ::google::protobuf::Descriptor* Tasker_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Tasker_reflection_ = NULL;
@@ -308,6 +311,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgCrowdOrder_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgCrowdOrder_reflection_ = NULL;
+const ::google::protobuf::Descriptor* ClientObjectProperty_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  ClientObjectProperty_reflection_ = NULL;
+const ::google::protobuf::Descriptor* ClientObjectProperty_Value_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  ClientObjectProperty_Value_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgTacticalLine_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgTacticalLine_reflection_ = NULL;
@@ -781,7 +790,22 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(UrbanObjectKnowledgeId));
-  Tasker_descriptor_ = file->message_type(23);
+  ClientObjectId_descriptor_ = file->message_type(23);
+  static const int ClientObjectId_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientObjectId, id_),
+  };
+  ClientObjectId_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      ClientObjectId_descriptor_,
+      ClientObjectId::default_instance_,
+      ClientObjectId_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientObjectId, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientObjectId, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(ClientObjectId));
+  Tasker_descriptor_ = file->message_type(24);
   static const int Tasker_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Tasker, automat_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Tasker, formation_),
@@ -799,7 +823,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Tasker));
-  ParentEntity_descriptor_ = file->message_type(24);
+  ParentEntity_descriptor_ = file->message_type(25);
   static const int ParentEntity_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ParentEntity, automat_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ParentEntity, formation_),
@@ -815,7 +839,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ParentEntity));
-  DrawingId_descriptor_ = file->message_type(25);
+  DrawingId_descriptor_ = file->message_type(26);
   static const int DrawingId_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(DrawingId, id_),
   };
@@ -830,7 +854,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(DrawingId));
-  IntelligenceId_descriptor_ = file->message_type(26);
+  IntelligenceId_descriptor_ = file->message_type(27);
   static const int IntelligenceId_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(IntelligenceId, id_),
   };
@@ -845,7 +869,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(IntelligenceId));
-  TacticalLineId_descriptor_ = file->message_type(27);
+  TacticalLineId_descriptor_ = file->message_type(28);
   static const int TacticalLineId_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TacticalLineId, id_),
   };
@@ -860,7 +884,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(TacticalLineId));
-  MarkerId_descriptor_ = file->message_type(28);
+  MarkerId_descriptor_ = file->message_type(29);
   static const int MarkerId_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MarkerId, id_),
   };
@@ -875,7 +899,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MarkerId));
-  FireId_descriptor_ = file->message_type(29);
+  FireId_descriptor_ = file->message_type(30);
   static const int FireId_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FireId, id_),
   };
@@ -890,7 +914,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(FireId));
-  FireEffectId_descriptor_ = file->message_type(30);
+  FireEffectId_descriptor_ = file->message_type(31);
   static const int FireEffectId_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FireEffectId, id_),
   };
@@ -905,7 +929,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(FireEffectId));
-  ReportId_descriptor_ = file->message_type(31);
+  ReportId_descriptor_ = file->message_type(32);
   static const int ReportId_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ReportId, id_),
   };
@@ -920,7 +944,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ReportId));
-  WeatherId_descriptor_ = file->message_type(32);
+  WeatherId_descriptor_ = file->message_type(33);
   static const int WeatherId_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(WeatherId, id_),
   };
@@ -935,7 +959,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(WeatherId));
-  MaintenanceRequestId_descriptor_ = file->message_type(33);
+  MaintenanceRequestId_descriptor_ = file->message_type(34);
   static const int MaintenanceRequestId_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MaintenanceRequestId, id_),
   };
@@ -950,7 +974,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MaintenanceRequestId));
-  MedicalRequestId_descriptor_ = file->message_type(34);
+  MedicalRequestId_descriptor_ = file->message_type(35);
   static const int MedicalRequestId_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MedicalRequestId, id_),
   };
@@ -965,7 +989,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MedicalRequestId));
-  SupplyRequestId_descriptor_ = file->message_type(35);
+  SupplyRequestId_descriptor_ = file->message_type(36);
   static const int SupplyRequestId_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SupplyRequestId, id_),
   };
@@ -980,7 +1004,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(SupplyRequestId));
-  AutomatType_descriptor_ = file->message_type(36);
+  AutomatType_descriptor_ = file->message_type(37);
   static const int AutomatType_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AutomatType, id_),
   };
@@ -995,7 +1019,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(AutomatType));
-  BreakdownType_descriptor_ = file->message_type(37);
+  BreakdownType_descriptor_ = file->message_type(38);
   static const int BreakdownType_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BreakdownType, id_),
   };
@@ -1010,7 +1034,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(BreakdownType));
-  EquipmentType_descriptor_ = file->message_type(38);
+  EquipmentType_descriptor_ = file->message_type(39);
   static const int EquipmentType_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(EquipmentType, id_),
   };
@@ -1025,7 +1049,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(EquipmentType));
-  FragOrderType_descriptor_ = file->message_type(39);
+  FragOrderType_descriptor_ = file->message_type(40);
   static const int FragOrderType_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FragOrderType, id_),
   };
@@ -1040,7 +1064,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(FragOrderType));
-  MissionType_descriptor_ = file->message_type(40);
+  MissionType_descriptor_ = file->message_type(41);
   static const int MissionType_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MissionType, id_),
   };
@@ -1055,7 +1079,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MissionType));
-  NBCAgentType_descriptor_ = file->message_type(41);
+  NBCAgentType_descriptor_ = file->message_type(42);
   static const int NBCAgentType_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(NBCAgentType, id_),
   };
@@ -1070,7 +1094,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(NBCAgentType));
-  ObjectType_descriptor_ = file->message_type(42);
+  ObjectType_descriptor_ = file->message_type(43);
   static const int ObjectType_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectType, id_),
   };
@@ -1085,7 +1109,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectType));
-  CrowdType_descriptor_ = file->message_type(43);
+  CrowdType_descriptor_ = file->message_type(44);
   static const int CrowdType_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CrowdType, id_),
   };
@@ -1100,7 +1124,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(CrowdType));
-  ReportType_descriptor_ = file->message_type(44);
+  ReportType_descriptor_ = file->message_type(45);
   static const int ReportType_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ReportType, id_),
   };
@@ -1115,7 +1139,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ReportType));
-  ResourceType_descriptor_ = file->message_type(45);
+  ResourceType_descriptor_ = file->message_type(46);
   static const int ResourceType_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ResourceType, id_),
   };
@@ -1130,7 +1154,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ResourceType));
-  UnitType_descriptor_ = file->message_type(46);
+  UnitType_descriptor_ = file->message_type(47);
   static const int UnitType_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(UnitType, id_),
   };
@@ -1145,7 +1169,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(UnitType));
-  ResourceNetworkType_descriptor_ = file->message_type(47);
+  ResourceNetworkType_descriptor_ = file->message_type(48);
   static const int ResourceNetworkType_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ResourceNetworkType, name_),
   };
@@ -1160,7 +1184,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ResourceNetworkType));
-  MsgHeading_descriptor_ = file->message_type(48);
+  MsgHeading_descriptor_ = file->message_type(49);
   static const int MsgHeading_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgHeading, heading_),
   };
@@ -1175,7 +1199,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgHeading));
-  MsgDateTime_descriptor_ = file->message_type(49);
+  MsgDateTime_descriptor_ = file->message_type(50);
   static const int MsgDateTime_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgDateTime, data_),
   };
@@ -1190,7 +1214,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgDateTime));
-  MsgDotationStock_descriptor_ = file->message_type(50);
+  MsgDotationStock_descriptor_ = file->message_type(51);
   static const int MsgDotationStock_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgDotationStock, ressource_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgDotationStock, quantite_disponible_),
@@ -1206,7 +1230,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgDotationStock));
-  SeqOfDotationStock_descriptor_ = file->message_type(51);
+  SeqOfDotationStock_descriptor_ = file->message_type(52);
   static const int SeqOfDotationStock_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SeqOfDotationStock, elem_),
   };
@@ -1221,7 +1245,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(SeqOfDotationStock));
-  MsgDotationQuota_descriptor_ = file->message_type(52);
+  MsgDotationQuota_descriptor_ = file->message_type(53);
   static const int MsgDotationQuota_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgDotationQuota, ressource_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgDotationQuota, quota_disponible_),
@@ -1237,7 +1261,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgDotationQuota));
-  SeqOfDotationQuota_descriptor_ = file->message_type(53);
+  SeqOfDotationQuota_descriptor_ = file->message_type(54);
   static const int SeqOfDotationQuota_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SeqOfDotationQuota, elem_),
   };
@@ -1252,7 +1276,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(SeqOfDotationQuota));
-  MsgAutomatChangeKnowledgeGroup_descriptor_ = file->message_type(54);
+  MsgAutomatChangeKnowledgeGroup_descriptor_ = file->message_type(55);
   static const int MsgAutomatChangeKnowledgeGroup_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAutomatChangeKnowledgeGroup, automat_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAutomatChangeKnowledgeGroup, party_),
@@ -1269,7 +1293,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgAutomatChangeKnowledgeGroup));
-  MsgChangeLogisticLinks_descriptor_ = file->message_type(55);
+  MsgChangeLogisticLinks_descriptor_ = file->message_type(56);
   static const int MsgChangeLogisticLinks_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgChangeLogisticLinks, requester_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgChangeLogisticLinks, tc2_),
@@ -1286,7 +1310,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgChangeLogisticLinks));
-  MsgAutomatChangeSuperior_oid_superior_descriptor_ = file->message_type(56);
+  MsgAutomatChangeSuperior_oid_superior_descriptor_ = file->message_type(57);
   static const int MsgAutomatChangeSuperior_oid_superior_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAutomatChangeSuperior_oid_superior, formation_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAutomatChangeSuperior_oid_superior, automat_),
@@ -1302,7 +1326,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgAutomatChangeSuperior_oid_superior));
-  MsgAutomatChangeSuperior_descriptor_ = file->message_type(57);
+  MsgAutomatChangeSuperior_descriptor_ = file->message_type(58);
   static const int MsgAutomatChangeSuperior_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAutomatChangeSuperior, automat_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAutomatChangeSuperior, superior_),
@@ -1318,7 +1342,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgAutomatChangeSuperior));
-  MsgUnitChangeSuperior_descriptor_ = file->message_type(58);
+  MsgUnitChangeSuperior_descriptor_ = file->message_type(59);
   static const int MsgUnitChangeSuperior_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitChangeSuperior, unit_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitChangeSuperior, parent_),
@@ -1334,7 +1358,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgUnitChangeSuperior));
-  MsgControlStop_descriptor_ = file->message_type(59);
+  MsgControlStop_descriptor_ = file->message_type(60);
   static const int MsgControlStop_offsets_[1] = {
   };
   MsgControlStop_reflection_ =
@@ -1348,7 +1372,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlStop));
-  MsgControlPause_descriptor_ = file->message_type(60);
+  MsgControlPause_descriptor_ = file->message_type(61);
   static const int MsgControlPause_offsets_[1] = {
   };
   MsgControlPause_reflection_ =
@@ -1362,7 +1386,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlPause));
-  MsgControlResume_descriptor_ = file->message_type(61);
+  MsgControlResume_descriptor_ = file->message_type(62);
   static const int MsgControlResume_offsets_[1] = {
   };
   MsgControlResume_reflection_ =
@@ -1376,7 +1400,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlResume));
-  MsgControlChangeTimeFactor_descriptor_ = file->message_type(62);
+  MsgControlChangeTimeFactor_descriptor_ = file->message_type(63);
   static const int MsgControlChangeTimeFactor_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlChangeTimeFactor, time_factor_),
   };
@@ -1391,7 +1415,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlChangeTimeFactor));
-  MsgExercise_descriptor_ = file->message_type(63);
+  MsgExercise_descriptor_ = file->message_type(64);
   static const int MsgExercise_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgExercise, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgExercise, running_),
@@ -1408,7 +1432,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgExercise));
-  MsgNetworkAddress_descriptor_ = file->message_type(64);
+  MsgNetworkAddress_descriptor_ = file->message_type(65);
   static const int MsgNetworkAddress_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNetworkAddress, ip_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNetworkAddress, port_),
@@ -1424,7 +1448,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgNetworkAddress));
-  RgbColor_descriptor_ = file->message_type(65);
+  RgbColor_descriptor_ = file->message_type(66);
   static const int RgbColor_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RgbColor, red_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RgbColor, green_),
@@ -1441,7 +1465,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(RgbColor));
-  RgbaColor_descriptor_ = file->message_type(66);
+  RgbaColor_descriptor_ = file->message_type(67);
   static const int RgbaColor_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RgbaColor, red_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RgbaColor, green_),
@@ -1459,7 +1483,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(RgbaColor));
-  MsgCoordLatLong_descriptor_ = file->message_type(67);
+  MsgCoordLatLong_descriptor_ = file->message_type(68);
   static const int MsgCoordLatLong_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgCoordLatLong, latitude_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgCoordLatLong, longitude_),
@@ -1475,7 +1499,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgCoordLatLong));
-  MsgCoordLatLongList_descriptor_ = file->message_type(68);
+  MsgCoordLatLongList_descriptor_ = file->message_type(69);
   static const int MsgCoordLatLongList_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgCoordLatLongList, elem_),
   };
@@ -1490,7 +1514,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgCoordLatLongList));
-  MsgLocation_descriptor_ = file->message_type(69);
+  MsgLocation_descriptor_ = file->message_type(70);
   static const int MsgLocation_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLocation, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLocation, coordinates_),
@@ -1507,7 +1531,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLocation));
   MsgLocation_Geometry_descriptor_ = MsgLocation_descriptor_->enum_type(0);
-  MsgLine_descriptor_ = file->message_type(70);
+  MsgLine_descriptor_ = file->message_type(71);
   static const int MsgLine_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLine, location_),
   };
@@ -1522,7 +1546,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLine));
-  MsgLocationList_descriptor_ = file->message_type(71);
+  MsgLocationList_descriptor_ = file->message_type(72);
   static const int MsgLocationList_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLocationList, elem_),
   };
@@ -1537,7 +1561,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLocationList));
-  MsgPath_descriptor_ = file->message_type(72);
+  MsgPath_descriptor_ = file->message_type(73);
   static const int MsgPath_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPath, location_),
   };
@@ -1552,7 +1576,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgPath));
-  MsgPathList_descriptor_ = file->message_type(73);
+  MsgPathList_descriptor_ = file->message_type(74);
   static const int MsgPathList_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPathList, elem_),
   };
@@ -1567,7 +1591,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgPathList));
-  MsgPoint_descriptor_ = file->message_type(74);
+  MsgPoint_descriptor_ = file->message_type(75);
   static const int MsgPoint_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPoint, location_),
   };
@@ -1582,7 +1606,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgPoint));
-  MsgPointList_descriptor_ = file->message_type(75);
+  MsgPointList_descriptor_ = file->message_type(76);
   static const int MsgPointList_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPointList, elem_),
   };
@@ -1597,7 +1621,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgPointList));
-  MsgPolygon_descriptor_ = file->message_type(76);
+  MsgPolygon_descriptor_ = file->message_type(77);
   static const int MsgPolygon_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPolygon, location_),
   };
@@ -1612,7 +1636,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgPolygon));
-  MsgPolygonList_descriptor_ = file->message_type(77);
+  MsgPolygonList_descriptor_ = file->message_type(78);
   static const int MsgPolygonList_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPolygonList, elem_),
   };
@@ -1627,7 +1651,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgPolygonList));
-  MsgLogMedicalPriorities_descriptor_ = file->message_type(78);
+  MsgLogMedicalPriorities_descriptor_ = file->message_type(79);
   static const int MsgLogMedicalPriorities_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogMedicalPriorities, elem_),
   };
@@ -1642,7 +1666,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLogMedicalPriorities));
-  ObstacleType_descriptor_ = file->message_type(79);
+  ObstacleType_descriptor_ = file->message_type(80);
   static const int ObstacleType_offsets_[1] = {
   };
   ObstacleType_reflection_ =
@@ -1657,7 +1681,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObstacleType));
   ObstacleType_DemolitionTargetType_descriptor_ = ObstacleType_descriptor_->enum_type(0);
-  MsgPlannedWork_descriptor_ = file->message_type(80);
+  MsgPlannedWork_descriptor_ = file->message_type(81);
   static const int MsgPlannedWork_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPlannedWork, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPlannedWork, position_),
@@ -1677,7 +1701,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgPlannedWork));
-  MsgPlannedWorkList_descriptor_ = file->message_type(81);
+  MsgPlannedWorkList_descriptor_ = file->message_type(82);
   static const int MsgPlannedWorkList_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPlannedWorkList, elem_),
   };
@@ -1692,7 +1716,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgPlannedWorkList));
-  MsgLogMaintenancePriorities_descriptor_ = file->message_type(82);
+  MsgLogMaintenancePriorities_descriptor_ = file->message_type(83);
   static const int MsgLogMaintenancePriorities_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogMaintenancePriorities, elem_),
   };
@@ -1707,7 +1731,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLogMaintenancePriorities));
-  MsgMissionObjective_descriptor_ = file->message_type(83);
+  MsgMissionObjective_descriptor_ = file->message_type(84);
   static const int MsgMissionObjective_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionObjective, localisation_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionObjective, horaire_),
@@ -1723,7 +1747,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgMissionObjective));
-  MsgMissionObjectiveList_descriptor_ = file->message_type(84);
+  MsgMissionObjectiveList_descriptor_ = file->message_type(85);
   static const int MsgMissionObjectiveList_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionObjectiveList, elem_),
   };
@@ -1738,7 +1762,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgMissionObjectiveList));
-  MsgLimaOrder_descriptor_ = file->message_type(85);
+  MsgLimaOrder_descriptor_ = file->message_type(86);
   static const int MsgLimaOrder_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimaOrder, lima_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimaOrder, horaire_),
@@ -1756,7 +1780,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLimaOrder));
   MsgLimaOrder_Function_descriptor_ = MsgLimaOrder_descriptor_->enum_type(0);
-  MsgLimasOrder_descriptor_ = file->message_type(86);
+  MsgLimasOrder_descriptor_ = file->message_type(87);
   static const int MsgLimasOrder_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLimasOrder, elem_),
   };
@@ -1771,7 +1795,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLimasOrder));
-  MsgIntelligence_descriptor_ = file->message_type(87);
+  MsgIntelligence_descriptor_ = file->message_type(88);
   static const int MsgIntelligence_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgIntelligence, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgIntelligence, nature_),
@@ -1792,7 +1816,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgIntelligence));
-  MsgIntelligenceList_descriptor_ = file->message_type(88);
+  MsgIntelligenceList_descriptor_ = file->message_type(89);
   static const int MsgIntelligenceList_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgIntelligenceList, elem_),
   };
@@ -1807,7 +1831,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgIntelligenceList));
-  MsgChangeDiplomacy_descriptor_ = file->message_type(89);
+  MsgChangeDiplomacy_descriptor_ = file->message_type(90);
   static const int MsgChangeDiplomacy_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgChangeDiplomacy, party1_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgChangeDiplomacy, party2_),
@@ -1824,7 +1848,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgChangeDiplomacy));
-  MsgAtlasNature_descriptor_ = file->message_type(90);
+  MsgAtlasNature_descriptor_ = file->message_type(91);
   static const int MsgAtlasNature_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAtlasNature, nature_),
   };
@@ -1840,7 +1864,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgAtlasNature));
   MsgAtlasNature_AtlasNature_descriptor_ = MsgAtlasNature_descriptor_->enum_type(0);
-  MsgMissionParameter_descriptor_ = file->message_type(91);
+  MsgMissionParameter_descriptor_ = file->message_type(92);
   static const int MsgMissionParameter_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter, null_value_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter, value_),
@@ -1913,7 +1937,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgMissionParameter_Value));
-  MsgMissionParameters_descriptor_ = file->message_type(92);
+  MsgMissionParameters_descriptor_ = file->message_type(93);
   static const int MsgMissionParameters_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameters, elem_),
   };
@@ -1928,7 +1952,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgMissionParameters));
-  MsgUnitOrder_descriptor_ = file->message_type(93);
+  MsgUnitOrder_descriptor_ = file->message_type(94);
   static const int MsgUnitOrder_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitOrder, tasker_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitOrder, type_),
@@ -1948,7 +1972,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgUnitOrder));
-  MsgAutomatOrder_descriptor_ = file->message_type(94);
+  MsgAutomatOrder_descriptor_ = file->message_type(95);
   static const int MsgAutomatOrder_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAutomatOrder, tasker_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAutomatOrder, type_),
@@ -1968,7 +1992,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgAutomatOrder));
-  MsgCrowdOrder_descriptor_ = file->message_type(95);
+  MsgCrowdOrder_descriptor_ = file->message_type(96);
   static const int MsgCrowdOrder_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgCrowdOrder, tasker_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgCrowdOrder, type_),
@@ -1988,7 +2012,42 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgCrowdOrder));
-  MsgTacticalLine_descriptor_ = file->message_type(96);
+  ClientObjectProperty_descriptor_ = file->message_type(97);
+  static const int ClientObjectProperty_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientObjectProperty, name_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientObjectProperty, value_),
+  };
+  ClientObjectProperty_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      ClientObjectProperty_descriptor_,
+      ClientObjectProperty::default_instance_,
+      ClientObjectProperty_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientObjectProperty, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientObjectProperty, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(ClientObjectProperty));
+  ClientObjectProperty_Value_descriptor_ = ClientObjectProperty_descriptor_->nested_type(0);
+  static const int ClientObjectProperty_Value_offsets_[5] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientObjectProperty_Value, string_value_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientObjectProperty_Value, integer_value_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientObjectProperty_Value, unsigned_integer_value_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientObjectProperty_Value, float_value_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientObjectProperty_Value, bool_value_),
+  };
+  ClientObjectProperty_Value_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      ClientObjectProperty_Value_descriptor_,
+      ClientObjectProperty_Value::default_instance_,
+      ClientObjectProperty_Value_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientObjectProperty_Value, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientObjectProperty_Value, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(ClientObjectProperty_Value));
+  MsgTacticalLine_descriptor_ = file->message_type(98);
   static const int MsgTacticalLine_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgTacticalLine, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgTacticalLine, geometry_),
@@ -2021,7 +2080,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgTacticalLine_Diffusion));
-  MsgShape_descriptor_ = file->message_type(97);
+  MsgShape_descriptor_ = file->message_type(99);
   static const int MsgShape_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShape, category_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShape, color_),
@@ -2039,7 +2098,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgShape));
-  MsgChatTarget_descriptor_ = file->message_type(98);
+  MsgChatTarget_descriptor_ = file->message_type(100);
   static const int MsgChatTarget_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgChatTarget, profile_),
   };
@@ -2054,7 +2113,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgChatTarget));
-  MsgTextMessage_descriptor_ = file->message_type(99);
+  MsgTextMessage_descriptor_ = file->message_type(101);
   static const int MsgTextMessage_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgTextMessage, source_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgTextMessage, target_),
@@ -2071,7 +2130,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgTextMessage));
-  ResourceNetwork_descriptor_ = file->message_type(100);
+  ResourceNetwork_descriptor_ = file->message_type(102);
   static const int ResourceNetwork_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ResourceNetwork, resource_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ResourceNetwork, link_),
@@ -2112,7 +2171,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ResourceNetwork_Link));
   ResourceNetwork_Link_TargetKind_descriptor_ = ResourceNetwork_Link_descriptor_->enum_type(0);
-  ObjectAttributeResourceNetwork_descriptor_ = file->message_type(101);
+  ObjectAttributeResourceNetwork_descriptor_ = file->message_type(103);
   static const int ObjectAttributeResourceNetwork_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeResourceNetwork, network_),
   };
@@ -2127,7 +2186,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeResourceNetwork));
-  ObjectAttributeConstruction_descriptor_ = file->message_type(102);
+  ObjectAttributeConstruction_descriptor_ = file->message_type(104);
   static const int ObjectAttributeConstruction_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeConstruction, resource_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeConstruction, dotation_nbr_),
@@ -2145,7 +2204,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeConstruction));
-  ObjectAttributeMine_descriptor_ = file->message_type(103);
+  ObjectAttributeMine_descriptor_ = file->message_type(105);
   static const int ObjectAttributeMine_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMine, resource_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMine, dotation_nbr_),
@@ -2163,7 +2222,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeMine));
-  ObjectAttributeLogistic_descriptor_ = file->message_type(104);
+  ObjectAttributeLogistic_descriptor_ = file->message_type(106);
   static const int ObjectAttributeLogistic_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeLogistic, tc2_),
   };
@@ -2178,7 +2237,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeLogistic));
-  ObjectAttributeInteractionHeight_descriptor_ = file->message_type(105);
+  ObjectAttributeInteractionHeight_descriptor_ = file->message_type(107);
   static const int ObjectAttributeInteractionHeight_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeInteractionHeight, height_),
   };
@@ -2193,7 +2252,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeInteractionHeight));
-  ObjectAttributeObstacle_descriptor_ = file->message_type(106);
+  ObjectAttributeObstacle_descriptor_ = file->message_type(108);
   static const int ObjectAttributeObstacle_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeObstacle, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeObstacle, activated_),
@@ -2210,7 +2269,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeObstacle));
-  ObjectAttributeActivityTime_descriptor_ = file->message_type(107);
+  ObjectAttributeActivityTime_descriptor_ = file->message_type(109);
   static const int ObjectAttributeActivityTime_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeActivityTime, value_),
   };
@@ -2225,7 +2284,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeActivityTime));
-  ObjectAttributeBypass_descriptor_ = file->message_type(108);
+  ObjectAttributeBypass_descriptor_ = file->message_type(110);
   static const int ObjectAttributeBypass_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeBypass, percentage_),
   };
@@ -2240,7 +2299,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeBypass));
-  ObjectAttributeEffectDelay_descriptor_ = file->message_type(109);
+  ObjectAttributeEffectDelay_descriptor_ = file->message_type(111);
   static const int ObjectAttributeEffectDelay_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeEffectDelay, value_),
   };
@@ -2255,7 +2314,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeEffectDelay));
-  ObjectAttributeNBC_descriptor_ = file->message_type(110);
+  ObjectAttributeNBC_descriptor_ = file->message_type(112);
   static const int ObjectAttributeNBC_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeNBC, danger_level_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeNBC, nbc_agents_),
@@ -2271,7 +2330,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeNBC));
-  StockResource_descriptor_ = file->message_type(111);
+  StockResource_descriptor_ = file->message_type(113);
   static const int StockResource_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StockResource, resource_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StockResource, current_),
@@ -2288,7 +2347,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(StockResource));
-  ObjectAttributeStock_descriptor_ = file->message_type(112);
+  ObjectAttributeStock_descriptor_ = file->message_type(114);
   static const int ObjectAttributeStock_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeStock, resources_),
   };
@@ -2303,7 +2362,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeStock));
-  ObjectAttributeCrossingSite_descriptor_ = file->message_type(113);
+  ObjectAttributeCrossingSite_descriptor_ = file->message_type(115);
   static const int ObjectAttributeCrossingSite_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeCrossingSite, width_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeCrossingSite, depth_),
@@ -2321,7 +2380,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeCrossingSite));
-  ObjectAttributeSupplyRoute_descriptor_ = file->message_type(114);
+  ObjectAttributeSupplyRoute_descriptor_ = file->message_type(116);
   static const int ObjectAttributeSupplyRoute_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeSupplyRoute, equipped_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeSupplyRoute, max_weight_),
@@ -2340,7 +2399,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeSupplyRoute));
-  MsgLocatedQuantity_descriptor_ = file->message_type(115);
+  MsgLocatedQuantity_descriptor_ = file->message_type(117);
   static const int MsgLocatedQuantity_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLocatedQuantity, coordinate_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLocatedQuantity, quantity_),
@@ -2356,7 +2415,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLocatedQuantity));
-  MsgLocatedQuantityList_descriptor_ = file->message_type(116);
+  MsgLocatedQuantityList_descriptor_ = file->message_type(118);
   static const int MsgLocatedQuantityList_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLocatedQuantityList, elem_),
   };
@@ -2371,7 +2430,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLocatedQuantityList));
-  ObjectAttributeToxicCloud_descriptor_ = file->message_type(117);
+  ObjectAttributeToxicCloud_descriptor_ = file->message_type(119);
   static const int ObjectAttributeToxicCloud_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeToxicCloud, quantities_),
   };
@@ -2386,7 +2445,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeToxicCloud));
-  ObjectAttributeFire_descriptor_ = file->message_type(118);
+  ObjectAttributeFire_descriptor_ = file->message_type(120);
   static const int ObjectAttributeFire_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeFire, class_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeFire, heat_),
@@ -2402,7 +2461,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeFire));
-  ObjectAttributeMedicalTreatment_descriptor_ = file->message_type(119);
+  ObjectAttributeMedicalTreatment_descriptor_ = file->message_type(121);
   static const int ObjectAttributeMedicalTreatment_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatment, type_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatment, beds_),
@@ -2421,7 +2480,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeMedicalTreatment));
-  ObjectAttributeNBCType_descriptor_ = file->message_type(120);
+  ObjectAttributeNBCType_descriptor_ = file->message_type(122);
   static const int ObjectAttributeNBCType_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeNBCType, agent_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeNBCType, concentration_),
@@ -2438,7 +2497,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeNBCType));
-  ObjectAttributeSealOff_descriptor_ = file->message_type(121);
+  ObjectAttributeSealOff_descriptor_ = file->message_type(123);
   static const int ObjectAttributeSealOff_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeSealOff, level_),
   };
@@ -2453,7 +2512,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeSealOff));
-  ObjectAttributes_descriptor_ = file->message_type(122);
+  ObjectAttributes_descriptor_ = file->message_type(124);
   static const int ObjectAttributes_offsets_[18] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributes, construction_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributes, obstacle_),
@@ -2485,7 +2544,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributes));
-  MsgNote_descriptor_ = file->message_type(123);
+  MsgNote_descriptor_ = file->message_type(125);
   static const int MsgNote_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNote, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNote, number_),
@@ -2503,7 +2562,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgNote));
-  MsgWeatherAttributes_descriptor_ = file->message_type(124);
+  MsgWeatherAttributes_descriptor_ = file->message_type(126);
   static const int MsgWeatherAttributes_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgWeatherAttributes, temperature_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgWeatherAttributes, wind_speed_),
@@ -2607,6 +2666,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     UrbanObjectId_descriptor_, &UrbanObjectId::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     UrbanObjectKnowledgeId_descriptor_, &UrbanObjectKnowledgeId::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    ClientObjectId_descriptor_, &ClientObjectId::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Tasker_descriptor_, &Tasker::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -2756,6 +2817,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgCrowdOrder_descriptor_, &MsgCrowdOrder::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    ClientObjectProperty_descriptor_, &ClientObjectProperty::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    ClientObjectProperty_Value_descriptor_, &ClientObjectProperty_Value::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgTacticalLine_descriptor_, &MsgTacticalLine::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgTacticalLine_Diffusion_descriptor_, &MsgTacticalLine_Diffusion::default_instance());
@@ -2868,6 +2933,8 @@ void protobuf_ShutdownFile_Common_2eproto() {
   delete UrbanObjectId_reflection_;
   delete UrbanObjectKnowledgeId::default_instance_;
   delete UrbanObjectKnowledgeId_reflection_;
+  delete ClientObjectId::default_instance_;
+  delete ClientObjectId_reflection_;
   delete Tasker::default_instance_;
   delete Tasker_reflection_;
   delete ParentEntity::default_instance_;
@@ -3016,6 +3083,10 @@ void protobuf_ShutdownFile_Common_2eproto() {
   delete MsgAutomatOrder_reflection_;
   delete MsgCrowdOrder::default_instance_;
   delete MsgCrowdOrder_reflection_;
+  delete ClientObjectProperty::default_instance_;
+  delete ClientObjectProperty_reflection_;
+  delete ClientObjectProperty_Value::default_instance_;
+  delete ClientObjectProperty_Value_reflection_;
   delete MsgTacticalLine::default_instance_;
   delete MsgTacticalLine_reflection_;
   delete MsgTacticalLine_Diffusion::default_instance_;
@@ -3108,370 +3179,376 @@ void protobuf_AddDesc_Common_2eproto() {
     "tKnowledgeId\022\n\n\002id\030\001 \002(\r\"<\n\023UnitKnowledg"
     "eIdList\022%\n\004elem\030\001 \003(\0132\027.Common.UnitKnowl"
     "edgeId\"\033\n\rUrbanObjectId\022\n\n\002id\030\001 \002(\r\"$\n\026U"
-    "rbanObjectKnowledgeId\022\n\n\002id\030\001 \002(\r\"\222\001\n\006Ta"
-    "sker\022\"\n\007automat\030\001 \001(\0132\021.Common.AutomatId"
-    "\022&\n\tformation\030\002 \001(\0132\023.Common.FormationId"
-    "\022\036\n\005crowd\030\003 \001(\0132\017.Common.CrowdId\022\034\n\004unit"
-    "\030\004 \001(\0132\016.Common.UnitId\"Z\n\014ParentEntity\022\""
-    "\n\007automat\030\001 \001(\0132\021.Common.AutomatId\022&\n\tfo"
-    "rmation\030\002 \001(\0132\023.Common.FormationId\"\027\n\tDr"
-    "awingId\022\n\n\002id\030\001 \002(\r\"\034\n\016IntelligenceId\022\n\n"
-    "\002id\030\001 \002(\r\"\034\n\016TacticalLineId\022\n\n\002id\030\001 \002(\r\""
-    "\026\n\010MarkerId\022\n\n\002id\030\001 \002(\r\"\024\n\006FireId\022\n\n\002id\030"
-    "\001 \002(\r\"\032\n\014FireEffectId\022\n\n\002id\030\001 \002(\r\"\026\n\010Rep"
-    "ortId\022\n\n\002id\030\001 \002(\r\"\027\n\tWeatherId\022\n\n\002id\030\001 \002"
-    "(\r\"\"\n\024MaintenanceRequestId\022\n\n\002id\030\001 \002(\r\"\036"
-    "\n\020MedicalRequestId\022\n\n\002id\030\001 \002(\r\"\035\n\017Supply"
-    "RequestId\022\n\n\002id\030\001 \002(\r\"\031\n\013AutomatType\022\n\n\002"
-    "id\030\001 \002(\r\"\033\n\rBreakdownType\022\n\n\002id\030\001 \002(\r\"\033\n"
-    "\rEquipmentType\022\n\n\002id\030\001 \002(\r\"\033\n\rFragOrderT"
-    "ype\022\n\n\002id\030\001 \002(\r\"\031\n\013MissionType\022\n\n\002id\030\001 \002"
-    "(\r\"\032\n\014NBCAgentType\022\n\n\002id\030\001 \002(\r\"\030\n\nObject"
-    "Type\022\n\n\002id\030\001 \002(\t\"\027\n\tCrowdType\022\n\n\002id\030\001 \002("
-    "\r\"\030\n\nReportType\022\n\n\002id\030\001 \002(\r\"\032\n\014ResourceT"
-    "ype\022\n\n\002id\030\001 \002(\r\"\026\n\010UnitType\022\n\n\002id\030\001 \002(\r\""
-    "#\n\023ResourceNetworkType\022\014\n\004name\030\001 \002(\t\"\035\n\n"
-    "MsgHeading\022\017\n\007heading\030\001 \002(\005\"\033\n\013MsgDateTi"
-    "me\022\014\n\004data\030\001 \002(\t\"[\n\020MsgDotationStock\022*\n\014"
-    "ressource_id\030\001 \002(\0132\024.Common.ResourceType"
-    "\022\033\n\023quantite_disponible\030\002 \002(\005\"<\n\022SeqOfDo"
-    "tationStock\022&\n\004elem\030\001 \003(\0132\030.Common.MsgDo"
-    "tationStock\"X\n\020MsgDotationQuota\022*\n\014resso"
-    "urce_id\030\001 \002(\0132\024.Common.ResourceType\022\030\n\020q"
-    "uota_disponible\030\002 \002(\005\"<\n\022SeqOfDotationQu"
-    "ota\022&\n\004elem\030\001 \003(\0132\030.Common.MsgDotationQu"
-    "ota\"\227\001\n\036MsgAutomatChangeKnowledgeGroup\022\""
-    "\n\007automat\030\001 \002(\0132\021.Common.AutomatId\022\036\n\005pa"
-    "rty\030\002 \002(\0132\017.Common.PartyId\0221\n\017knowledge_"
-    "group\030\003 \002(\0132\030.Common.KnowledgeGroupId\"\216\001"
-    "\n\026MsgChangeLogisticLinks\022\'\n\trequester\030\001 "
-    "\002(\0132\024.Common.ParentEntity\022\036\n\003tc2\030\002 \001(\0132\021"
-    ".Common.AutomatId\022+\n\rlogistic_base\030\003 \001(\013"
-    "2\024.Common.ParentEntity\"s\n%MsgAutomatChan"
-    "geSuperior_oid_superior\022&\n\tformation\030\001 \001"
-    "(\0132\023.Common.FormationId\022\"\n\007automat\030\002 \001(\013"
-    "2\021.Common.AutomatId\"\177\n\030MsgAutomatChangeS"
-    "uperior\022\"\n\007automat\030\001 \002(\0132\021.Common.Automa"
-    "tId\022?\n\010superior\030\002 \002(\0132-.Common.MsgAutoma"
-    "tChangeSuperior_oid_superior\"X\n\025MsgUnitC"
-    "hangeSuperior\022\034\n\004unit\030\001 \002(\0132\016.Common.Uni"
-    "tId\022!\n\006parent\030\002 \002(\0132\021.Common.AutomatId\"\020"
-    "\n\016MsgControlStop\"\021\n\017MsgControlPause\"\022\n\020M"
-    "sgControlResume\"1\n\032MsgControlChangeTimeF"
-    "actor\022\023\n\013time_factor\030\001 \002(\005\":\n\013MsgExercis"
-    "e\022\014\n\004name\030\001 \002(\t\022\017\n\007running\030\002 \001(\010\022\014\n\004port"
-    "\030\003 \001(\r\"3\n\021MsgNetworkAddress\022\n\n\002ip\030\001 \002(\t\022"
-    "\022\n\004port\030\002 \002(\005:\0048080\"4\n\010RgbColor\022\013\n\003red\030\001"
-    " \002(\005\022\r\n\005green\030\002 \002(\005\022\014\n\004blue\030\003 \002(\005\"D\n\tRgb"
-    "aColor\022\013\n\003red\030\001 \002(\005\022\r\n\005green\030\002 \002(\005\022\014\n\004bl"
-    "ue\030\003 \002(\005\022\r\n\005alpha\030\004 \002(\002\"6\n\017MsgCoordLatLo"
-    "ng\022\020\n\010latitude\030\001 \002(\001\022\021\n\tlongitude\030\002 \002(\001\""
-    "<\n\023MsgCoordLatLongList\022%\n\004elem\030\002 \003(\0132\027.C"
-    "ommon.MsgCoordLatLong\"\327\001\n\013MsgLocation\022*\n"
-    "\004type\030\001 \002(\0162\034.Common.MsgLocation.Geometr"
-    "y\0220\n\013coordinates\030\002 \001(\0132\033.Common.MsgCoord"
-    "LatLongList\"j\n\010Geometry\022\n\n\006circle\020\000\022\013\n\007e"
-    "llipse\020\001\022\010\n\004line\020\002\022\r\n\trectangle\020\003\022\013\n\007pol"
-    "ygon\020\004\022\t\n\005point\020\005\022\n\n\006sector\020\006\022\010\n\004none\020\007\""
-    "0\n\007MsgLine\022%\n\010location\030\001 \002(\0132\023.Common.Ms"
-    "gLocation\"4\n\017MsgLocationList\022!\n\004elem\030\001 \003"
-    "(\0132\023.Common.MsgLocation\"0\n\007MsgPath\022%\n\010lo"
-    "cation\030\001 \002(\0132\023.Common.MsgLocation\",\n\013Msg"
-    "PathList\022\035\n\004elem\030\001 \003(\0132\017.Common.MsgPath\""
-    "1\n\010MsgPoint\022%\n\010location\030\001 \002(\0132\023.Common.M"
-    "sgLocation\".\n\014MsgPointList\022\036\n\004elem\030\001 \003(\013"
-    "2\020.Common.MsgPoint\"3\n\nMsgPolygon\022%\n\010loca"
-    "tion\030\001 \002(\0132\023.Common.MsgLocation\"2\n\016MsgPo"
-    "lygonList\022 \n\004elem\030\001 \003(\0132\022.Common.MsgPoly"
-    "gon\"?\n\027MsgLogMedicalPriorities\022$\n\004elem\030\001"
-    " \003(\0162\026.Common.EnumHumanWound\"E\n\014Obstacle"
-    "Type\"5\n\024DemolitionTargetType\022\017\n\013prelimin"
-    "ary\020\000\022\014\n\010reserved\020\001\"\317\001\n\016MsgPlannedWork\022\014"
-    "\n\004type\030\001 \002(\t\022%\n\010position\030\002 \002(\0132\023.Common."
-    "MsgLocation\022@\n\rtype_obstacle\030\003 \001(\0162).Com"
-    "mon.ObstacleType.DemolitionTargetType\022\017\n"
-    "\007densite\030\004 \001(\002\022\036\n\003tc2\030\005 \001(\0132\021.Common.Aut"
-    "omatId\022\025\n\ractivity_time\030\006 \001(\005\":\n\022MsgPlan"
-    "nedWorkList\022$\n\004elem\030\001 \003(\0132\026.Common.MsgPl"
-    "annedWork\"B\n\033MsgLogMaintenancePriorities"
-    "\022#\n\004elem\030\001 \003(\0132\025.Common.EquipmentType\"f\n"
-    "\023MsgMissionObjective\022)\n\014localisation\030\001 \002"
-    "(\0132\023.Common.MsgLocation\022$\n\007horaire\030\002 \002(\013"
-    "2\023.Common.MsgDateTime\"D\n\027MsgMissionObjec"
-    "tiveList\022)\n\004elem\030\001 \003(\0132\033.Common.MsgMissi"
-    "onObjective\"\201\003\n\014MsgLimaOrder\022\035\n\004lima\030\001 \002"
-    "(\0132\017.Common.MsgLine\022$\n\007horaire\030\002 \002(\0132\023.C"
-    "ommon.MsgDateTime\0220\n\tfonctions\030\003 \003(\0162\035.C"
-    "ommon.MsgLimaOrder.Function\"\371\001\n\010Function"
-    "\022\022\n\016ligne_debouche\020\000\022\035\n\031ligne_changement"
-    "_attitude\020\001\022\026\n\022ligne_coordination\020\002\022\023\n\017l"
-    "igne_interdire\020\003\022\022\n\016ligne_objectif\020\004\022\024\n\020"
-    "ligne_coup_arret\020\005\022\021\n\rligne_recueil\020\006\022\027\n"
-    "\023ligne_debut_mission\020\007\022\025\n\021ligne_fin_miss"
-    "ion\020\010\022 \n\034ligne_identification_accueil\020\t\""
-    "3\n\rMsgLimasOrder\022\"\n\004elem\030\001 \003(\0132\024.Common."
-    "MsgLimaOrder\"\346\001\n\017MsgIntelligence\022\014\n\004name"
-    "\030\001 \002(\t\022\016\n\006nature\030\002 \002(\t\022&\n\005level\030\003 \002(\0162\027."
-    "Common.EnumNatureLevel\022\020\n\010embarked\030\004 \002(\010"
-    "\022)\n\010location\030\005 \002(\0132\027.Common.MsgCoordLatL"
-    "ong\022(\n\tdiplomacy\030\006 \002(\0162\025.Common.EnumDipl"
-    "omacy\022&\n\tformation\030\007 \002(\0132\023.Common.Format"
-    "ionId\"<\n\023MsgIntelligenceList\022%\n\004elem\030\001 \003"
-    "(\0132\027.Common.MsgIntelligence\"\201\001\n\022MsgChang"
-    "eDiplomacy\022\037\n\006party1\030\001 \002(\0132\017.Common.Part"
-    "yId\022\037\n\006party2\030\002 \002(\0132\017.Common.PartyId\022)\n\n"
-    "diplomatie\030\003 \002(\0162\025.Common.EnumDiplomacy\""
-    "\322\001\n\016MsgAtlasNature\022\016\n\006nature\030\001 \002(\005\"\257\001\n\013A"
-    "tlasNature\022\n\n\006blinde\020\001\022\007\n\003ass\020\002\022\006\n\002pc\020\004\022"
-    "\007\n\003log\020\010\022\013\n\007mortier\020\020\022\022\n\016lance_roquette\020"
-    " \022\014\n\010vehicule\020@\022\025\n\020personnel_a_pied\020\200\001\022\020"
-    "\n\013helicoptere\020\200\002\022\r\n\010indefini\020\200\004\022\010\n\003asa\020\200"
-    "\010\022\t\n\004none\020\200\020\"\323\016\n\023MsgMissionParameter\022\022\n\n"
-    "null_value\030\001 \001(\010\0220\n\005value\030\002 \001(\0132!.Common"
-    ".MsgMissionParameter.Value\032\365\r\n\005Value\022\r\n\005"
-    "aBool\030\001 \001(\010\022\r\n\005aReal\030\002 \001(\002\022\023\n\013enumeratio"
-    "n\030\003 \001(\005\022\035\n\004path\030\004 \001(\0132\017.Common.MsgPath\022%"
-    "\n\010pathList\030\005 \001(\0132\023.Common.MsgPathList\022\037\n"
-    "\005point\030\006 \001(\0132\020.Common.MsgPoint\022\'\n\tpointL"
-    "ist\030\007 \001(\0132\024.Common.MsgPointList\022#\n\007polyg"
-    "on\030\010 \001(\0132\022.Common.MsgPolygon\022+\n\013polygonL"
-    "ist\030\t \001(\0132\026.Common.MsgPolygonList\022%\n\010loc"
-    "ation\030\n \001(\0132\023.Common.MsgLocation\022-\n\014loca"
-    "tionList\030\013 \001(\0132\027.Common.MsgLocationList\022"
-    "#\n\007heading\030\014 \001(\0132\022.Common.MsgHeading\022+\n\013"
-    "atlasNature\030\r \001(\0132\026.Common.MsgAtlasNatur"
-    "e\022\034\n\004unit\030\016 \001(\0132\016.Common.UnitId\022$\n\010unitL"
-    "ist\030\017 \001(\0132\022.Common.UnitIdList\022\"\n\007automat"
-    "\030\020 \001(\0132\021.Common.AutomatId\022*\n\013automatList"
-    "\030\021 \001(\0132\025.Common.AutomatIdList\022.\n\runitKno"
-    "wledge\030\022 \001(\0132\027.Common.UnitKnowledgeId\0226\n"
-    "\021unitKnowledgeList\030\023 \001(\0132\033.Common.UnitKn"
-    "owledgeIdList\0222\n\017objectKnowledge\030\024 \001(\0132\031"
-    ".Common.ObjectKnowledgeId\022:\n\023objectKnowl"
-    "edgeList\030\025 \001(\0132\035.Common.ObjectKnowledgeI"
-    "dList\0220\n\016crowdKnowledge\030\026 \001(\0132\030.Common.C"
-    "rowdKnowledgeId\022+\n\013plannedWork\030\027 \001(\0132\026.C"
-    "ommon.MsgPlannedWork\0223\n\017plannedWorkList\030"
-    "\030 \001(\0132\032.Common.MsgPlannedWorkList\022*\n\014res"
-    "ourceType\030\031 \001(\0132\024.Common.ResourceType\022,\n"
-    "\requipmentType\030\032 \001(\0132\025.Common.EquipmentT"
-    "ype\022#\n\013tirIndirect\030\033 \001(\0132\016.Common.FireId"
-    "\022%\n\010dateTime\030\034 \001(\0132\023.Common.MsgDateTime\022"
-    "E\n\030logMaintenancePriorities\030\035 \001(\0132#.Comm"
-    "on.MsgLogMaintenancePriorities\022=\n\024logMed"
-    "icalPriorities\030\036 \001(\0132\037.Common.MsgLogMedi"
-    "calPriorities\022\020\n\010aCharStr\030\037 \001(\t\0225\n\020missi"
-    "onObjective\030  \001(\0132\033.Common.MsgMissionObj"
-    "ective\022=\n\024missionObjectiveList\030! \001(\0132\037.C"
-    "ommon.MsgMissionObjectiveList\022\035\n\004line\030\" "
-    "\001(\0132\017.Common.MsgLine\022)\n\nlimasOrder\030# \001(\013"
-    "2\025.Common.MsgLimasOrder\0225\n\020intelligenceL"
-    "ist\030$ \001(\0132\033.Common.MsgIntelligenceList\022)"
-    "\n\nurbanBlock\030% \001(\0132\025.Common.UrbanObjectI"
-    "d\022\036\n\005party\030& \001(\0132\017.Common.PartyId\022&\n\tfor"
-    "mation\030\' \001(\0132\023.Common.FormationId\022\022\n\nide"
-    "ntifier\030( \001(\r\022\020\n\010quantity\030) \001(\005\0220\n\016knowl"
-    "edgeGroup\030* \001(\0132\030.Common.KnowledgeGroupI"
-    "d\022/\n\004list\030+ \003(\0132!.Common.MsgMissionParam"
-    "eter.Value\"A\n\024MsgMissionParameters\022)\n\004el"
-    "em\030\001 \003(\0132\033.Common.MsgMissionParameter\"\350\001"
-    "\n\014MsgUnitOrder\022\036\n\006tasker\030\001 \002(\0132\016.Common."
-    "UnitId\022!\n\004type\030\002 \002(\0132\023.Common.MissionTyp"
-    "e\0220\n\nparameters\030\003 \001(\0132\034.Common.MsgMissio"
-    "nParameters\022\r\n\005label\030\004 \001(\t\022+\n\016symbolLoca"
-    "tion\030\005 \001(\0132\023.Common.MsgLocation\022\'\n\nstart"
-    "_time\030\006 \001(\0132\023.Common.MsgDateTime\"\356\001\n\017Msg"
-    "AutomatOrder\022!\n\006tasker\030\001 \002(\0132\021.Common.Au"
-    "tomatId\022!\n\004type\030\002 \002(\0132\023.Common.MissionTy"
-    "pe\0220\n\nparameters\030\003 \001(\0132\034.Common.MsgMissi"
-    "onParameters\022\r\n\005label\030\004 \001(\t\022+\n\016symbolLoc"
-    "ation\030\005 \001(\0132\023.Common.MsgLocation\022\'\n\nstar"
-    "t_time\030\006 \001(\0132\023.Common.MsgDateTime\"\352\001\n\rMs"
-    "gCrowdOrder\022\037\n\006tasker\030\001 \002(\0132\017.Common.Cro"
-    "wdId\022!\n\004type\030\002 \002(\0132\023.Common.MissionType\022"
-    "0\n\nparameters\030\003 \001(\0132\034.Common.MsgMissionP"
-    "arameters\022\r\n\005label\030\004 \001(\t\022+\n\016symbolLocati"
-    "on\030\005 \001(\0132\023.Common.MsgLocation\022\'\n\nstart_t"
-    "ime\030\006 \001(\0132\023.Common.MsgDateTime\"\325\001\n\017MsgTa"
-    "cticalLine\022\014\n\004name\030\001 \002(\t\022%\n\010geometry\030\002 \002"
-    "(\0132\023.Common.MsgLocation\0224\n\tdiffusion\030\003 \002"
-    "(\0132!.Common.MsgTacticalLine.Diffusion\032W\n"
-    "\tDiffusion\022\"\n\007automat\030\001 \001(\0132\021.Common.Aut"
-    "omatId\022&\n\tformation\030\002 \001(\0132\023.Common.Forma"
-    "tionId\"i\n\010MsgShape\022\020\n\010category\030\001 \002(\t\022\r\n\005"
-    "color\030\002 \002(\t\022\017\n\007pattern\030\003 \002(\t\022+\n\006points\030\004"
-    " \002(\0132\033.Common.MsgCoordLatLongList\" \n\rMsg"
-    "ChatTarget\022\017\n\007profile\030\001 \002(\t\"o\n\016MsgTextMe"
-    "ssage\022%\n\006source\030\001 \002(\0132\025.Common.MsgChatTa"
-    "rget\022%\n\006target\030\002 \002(\0132\025.Common.MsgChatTar"
-    "get\022\017\n\007message\030\003 \002(\t\"\362\002\n\017ResourceNetwork"
-    "\022-\n\010resource\030\001 \002(\0132\033.Common.ResourceNetw"
-    "orkType\022*\n\004link\030\002 \003(\0132\034.Common.ResourceN"
-    "etwork.Link\022\017\n\007enabled\030\003 \002(\010\022\021\n\tmax_stoc"
-    "k\030\004 \001(\r\022\r\n\005stock\030\005 \001(\r\022\022\n\nproduction\030\006 \001"
-    "(\r\022\023\n\013consumption\030\007 \001(\r\022\020\n\010critical\030\010 \001("
-    "\010\032\225\001\n\004Link\0225\n\004kind\030\001 \002(\0162\'.Common.Resour"
-    "ceNetwork.Link.TargetKind\022\021\n\ttarget_id\030\002"
-    " \002(\r\022\020\n\010capacity\030\003 \002(\005\022\014\n\004flow\030\004 \002(\r\"#\n\n"
-    "TargetKind\022\t\n\005urban\020\001\022\n\n\006object\020\002\"J\n\036Obj"
-    "ectAttributeResourceNetwork\022(\n\007network\030\001"
-    " \003(\0132\027.Common.ResourceNetwork\"\200\001\n\033Object"
-    "AttributeConstruction\022&\n\010resource\030\001 \001(\0132"
-    "\024.Common.ResourceType\022\024\n\014dotation_nbr\030\002 "
-    "\001(\005\022\017\n\007density\030\003 \001(\002\022\022\n\npercentage\030\004 \001(\005"
-    "\"x\n\023ObjectAttributeMine\022&\n\010resource\030\001 \001("
-    "\0132\024.Common.ResourceType\022\024\n\014dotation_nbr\030"
-    "\002 \001(\005\022\017\n\007density\030\003 \001(\002\022\022\n\npercentage\030\004 \001"
-    "(\005\"9\n\027ObjectAttributeLogistic\022\036\n\003tc2\030\001 \002"
-    "(\0132\021.Common.AutomatId\"2\n ObjectAttribute"
-    "InteractionHeight\022\016\n\006height\030\001 \002(\002\"~\n\027Obj"
-    "ectAttributeObstacle\0227\n\004type\030\001 \002(\0162).Com"
-    "mon.ObstacleType.DemolitionTargetType\022\021\n"
-    "\tactivated\030\002 \001(\010\022\027\n\017activation_time\030\003 \001("
-    "\005\",\n\033ObjectAttributeActivityTime\022\r\n\005valu"
-    "e\030\001 \002(\005\"+\n\025ObjectAttributeBypass\022\022\n\nperc"
-    "entage\030\001 \002(\005\"+\n\032ObjectAttributeEffectDel"
-    "ay\022\r\n\005value\030\001 \002(\005\"T\n\022ObjectAttributeNBC\022"
-    "\024\n\014danger_level\030\001 \002(\005\022(\n\nnbc_agents\030\002 \003("
-    "\0132\024.Common.NBCAgentType\"Y\n\rStockResource"
-    "\022&\n\010resource\030\001 \002(\0132\024.Common.ResourceType"
-    "\022\017\n\007current\030\002 \002(\005\022\017\n\007maximum\030\003 \001(\005\"@\n\024Ob"
-    "jectAttributeStock\022(\n\tresources\030\001 \003(\0132\025."
-    "Common.StockResource\"m\n\033ObjectAttributeC"
-    "rossingSite\022\r\n\005width\030\001 \002(\005\022\r\n\005depth\030\002 \002("
-    "\005\022\021\n\tflow_rate\030\003 \002(\005\022\035\n\025banks_require_fi"
-    "tting\030\004 \002(\010\"t\n\032ObjectAttributeSupplyRout"
-    "e\022\020\n\010equipped\030\001 \002(\010\022\022\n\nmax_weight\030\002 \002(\005\022"
-    "\r\n\005width\030\003 \002(\005\022\016\n\006length\030\004 \002(\005\022\021\n\tflow_r"
-    "ate\030\005 \002(\005\"S\n\022MsgLocatedQuantity\022+\n\ncoord"
-    "inate\030\001 \002(\0132\027.Common.MsgCoordLatLong\022\020\n\010"
-    "quantity\030\002 \002(\002\"B\n\026MsgLocatedQuantityList"
-    "\022(\n\004elem\030\001 \003(\0132\032.Common.MsgLocatedQuanti"
-    "ty\"O\n\031ObjectAttributeToxicCloud\0222\n\nquant"
-    "ities\030\001 \002(\0132\036.Common.MsgLocatedQuantityL"
-    "ist\"5\n\023ObjectAttributeFire\022\020\n\010class_id\030\001"
-    " \002(\005\022\014\n\004heat\030\002 \002(\005\"\204\001\n\037ObjectAttributeMe"
-    "dicalTreatment\022\017\n\007type_id\030\001 \003(\r\022\014\n\004beds\030"
-    "\002 \002(\005\022\026\n\016available_beds\030\003 \002(\005\022\017\n\007doctors"
-    "\030\004 \002(\005\022\031\n\021available_doctors\030\005 \002(\005\"r\n\026Obj"
-    "ectAttributeNBCType\022#\n\005agent\030\001 \002(\0132\024.Com"
-    "mon.NBCAgentType\022\025\n\rconcentration\030\002 \002(\005\022"
-    "\034\n\024source_life_duration\030\003 \002(\005\"\'\n\026ObjectA"
-    "ttributeSealOff\022\r\n\005level\030\001 \002(\005\"\344\007\n\020Objec"
-    "tAttributes\0229\n\014construction\030\001 \001(\0132#.Comm"
-    "on.ObjectAttributeConstruction\0221\n\010obstac"
-    "le\030\002 \001(\0132\037.Common.ObjectAttributeObstacl"
-    "e\022)\n\004mine\030\003 \001(\0132\033.Common.ObjectAttribute"
-    "Mine\022:\n\ractivity_time\030\004 \001(\0132#.Common.Obj"
-    "ectAttributeActivityTime\022-\n\006bypass\030\005 \001(\013"
-    "2\035.Common.ObjectAttributeBypass\0221\n\010logis"
-    "tic\030\006 \001(\0132\037.Common.ObjectAttributeLogist"
-    "ic\022\'\n\003nbc\030\007 \001(\0132\032.Common.ObjectAttribute"
-    "NBC\022:\n\rcrossing_site\030\010 \001(\0132#.Common.Obje"
-    "ctAttributeCrossingSite\0228\n\014supply_route\030"
-    "\t \001(\0132\".Common.ObjectAttributeSupplyRout"
-    "e\0226\n\013toxic_cloud\030\n \001(\0132!.Common.ObjectAt"
-    "tributeToxicCloud\022)\n\004fire\030\013 \001(\0132\033.Common"
-    ".ObjectAttributeFire\022B\n\021medical_treatmen"
-    "t\030\014 \001(\0132\'.Common.ObjectAttributeMedicalT"
-    "reatment\022D\n\022interaction_height\030\r \001(\0132(.C"
-    "ommon.ObjectAttributeInteractionHeight\022+"
-    "\n\005stock\030\016 \001(\0132\034.Common.ObjectAttributeSt"
-    "ock\0221\n\tnbc_agent\030\017 \001(\0132\036.Common.ObjectAt"
-    "tributeNBCType\0228\n\014effect_delay\030\020 \001(\0132\".C"
-    "ommon.ObjectAttributeEffectDelay\0220\n\010seal"
-    "_off\030\021 \001(\0132\036.Common.ObjectAttributeSealO"
-    "ff\022A\n\021resource_networks\030\022 \001(\0132&.Common.O"
-    "bjectAttributeResourceNetwork\"L\n\007MsgNote"
-    "\022\014\n\004name\030\001 \002(\t\022\016\n\006number\030\002 \002(\t\022\023\n\013descri"
-    "ption\030\003 \002(\t\022\016\n\006parent\030\004 \002(\r\"\220\002\n\024MsgWeath"
-    "erAttributes\022\023\n\013temperature\030\001 \002(\005\022\022\n\nwin"
-    "d_speed\030\002 \002(\005\022*\n\016wind_direction\030\003 \002(\0132\022."
-    "Common.MsgHeading\022\023\n\013cloud_floor\030\004 \002(\005\022\025"
-    "\n\rcloud_ceiling\030\005 \002(\005\022\025\n\rcloud_density\030\006"
-    " \002(\005\0224\n\rprecipitation\030\007 \002(\0162\035.Common.Enu"
-    "mPrecipitationType\022*\n\010lighting\030\010 \002(\0162\030.C"
-    "ommon.EnumLightingType*m\n\022EnumDotationFa"
-    "mily\022\014\n\010munition\020\000\022\r\n\tcarburant\020\001\022\014\n\010exp"
-    "losif\020\002\022\010\n\004mine\020\003\022\013\n\007barbele\020\004\022\t\n\005piece\020"
-    "\005\022\n\n\006ration\020\006*Q\n\024EnumAmmunitionFamily\022\010\n"
-    "\004obus\020\000\022\017\n\013missile_sol\020\001\022\017\n\013missile_air\020"
-    "\002\022\r\n\tmitraille\020\003*w\n\025EnumPrecipitationTyp"
-    "e\022\030\n\024pas_de_precipitation\020\000\022\021\n\rtempete_s"
-    "able\020\001\022\016\n\nbrouillard\020\002\022\013\n\007crachin\020\003\022\t\n\005p"
-    "luie\020\004\022\t\n\005neige\020\005**\n\022EnumFireEffectType\022"
-    "\t\n\005smoke\020\000\022\t\n\005light\020\001*(\n\014UnitFireType\022\n\n"
-    "\006direct\020\000\022\014\n\010indirect\020\001*\245\002\n\020EnumLighting"
-    "Type\022\023\n\017jour_sans_nuage\020\000\022\024\n\020jour_peu_nu"
-    "ageux\020\001\022\034\n\030jour_moyennement_nuageux\020\002\022\026\n"
-    "\022jour_assez_nuageux\020\003\022\025\n\021jour_tres_nuage"
-    "ux\020\004\022\024\n\020nuit_pleine_lune\020\005\022\034\n\030nuit_trois"
-    "_quart_de_lune\020\006\022\022\n\016nuit_demi_lune\020\007\022\026\n\022"
-    "nuit_quart_de_lune\020\010\022\026\n\022nuit_nouvelle_lu"
-    "ne\020\t\022\r\n\teclairant\020\n\022\022\n\016global_weather\020\013*"
-    "\264\003\n EnumLogMaintenanceHandlingStatus\022\033\n\027"
-    "deplacement_vers_chaine\020\000\022$\n attente_dis"
-    "ponibilite_remorqueur\020\001\022 \n\034remorqueur_de"
-    "placement_aller\020\002\022\031\n\025remorqueur_chargeme"
-    "nt\020\003\022!\n\035remorqueur_deplacement_retour\020\004\022"
-    "\033\n\027remorqueur_dechargement\020\005\022\034\n\030diagnost"
-    "ique_maintenance\020\006\0220\n,attente_prise_en_c"
-    "harge_par_niveau_superieur\020\007\022 \n\034attente_"
-    "disponibilite_pieces\020\010\022$\n attente_dispon"
-    "ibilite_reparateur\020\t\022\016\n\nreparation\020\n\022\017\n\013"
-    "retour_pion\020\013\022\027\n\023termine_maintenance\020\014*\364"
-    "\005\n\034EnumLogMedicalHandlingStatus\022*\n&atten"
-    "te_disponibilite_ambulance_releve\020\000\022&\n\"a"
-    "mbulance_releve_deplacement_aller\020\001\022\037\n\033a"
-    "mbulance_releve_chargement\020\002\022/\n+attente_"
-    "chargement_complet_ambulance_releve\020\003\022\'\n"
-    "#ambulance_releve_deplacement_retour\020\004\022!"
-    "\n\035ambulance_releve_dechargement\020\005\0223\n/att"
-    "ente_disponibilite_medecin_pour_diagnost"
-    "ique\020\006\022\020\n\014diagnostique\020\007\022\031\n\025recherche_se"
-    "cteur_tri\020\010\022*\n&attente_disponibilite_med"
-    "ecin_pour_tri\020\t\022\007\n\003tri\020\n\022\032\n\026recherche_se"
-    "cteur_soin\020\013\022+\n\'attente_disponibilite_me"
-    "decin_pour_soin\020\014\022\010\n\004soin\020\r\022\023\n\017hospitali"
-    "sation\020\016\022-\n)attente_disponibilite_ambula"
-    "nce_ramassage\020\017\022\"\n\036ambulance_ramassage_c"
-    "hargement\020\020\0222\n.attente_chargement_comple"
-    "t_ambulance_ramassage\020\021\022)\n%ambulance_ram"
-    "assage_deplacement_aller\020\022\022$\n ambulance_"
-    "ramassage_dechargement\020\023\022\013\n\007termine\020\024*_\n"
-    "\022EnumUnitVisibility\022\r\n\tinvisible\020\000\022\014\n\010de"
-    "tected\020\001\022\016\n\nrecognized\020\002\022\016\n\nidentified\020\003"
-    "\022\014\n\010recorded\020\004*H\n\023EnumSimulationState\022\013\n"
-    "\007running\020\000\022\n\n\006paused\020\001\022\013\n\007stopped\020\002\022\013\n\007l"
-    "oading\020\003*5\n\023EnumDispatcherState\022\r\n\tavail"
-    "able\020\000\022\017\n\013unavailable\020\001*l\n\033EnumMeetingEn"
-    "gagementStatus\022\020\n\014none_meeting\020\000\022\020\n\014etat"
-    "_esquive\020\001\022\r\n\tetat_fixe\020\002\022\032\n\026etat_poursu"
-    "ite_mission\020\003*[\n\025EnumOperationalStatus\022\026"
-    "\n\022detruit_totalement\020\000\022\030\n\024detruit_tactiq"
-    "uement\020\001\022\020\n\014operationnel\020\002*+\n\017EnumAutoma"
-    "tMode\022\013\n\007embraye\020\000\022\013\n\007debraye\020\001*F\n\021EnumC"
-    "rowdAttitude\022\t\n\005calme\020\000\022\n\n\006agitee\020\001\022\013\n\007e"
-    "xcitee\020\002\022\r\n\tagressive\020\003*8\n\021EnumUnitTired"
-    "ness\022\n\n\006normal\020\000\022\013\n\007fatigue\020\001\022\n\n\006epuise\020"
-    "\002*@\n\016EnumUnitMorale\022\r\n\tfanatique\020\000\022\007\n\003bo"
-    "n\020\001\022\t\n\005moyen\020\002\022\013\n\007mauvais\020\003*@\n\022EnumUnitE"
-    "xperience\022\013\n\007veteran\020\000\022\017\n\013experimente\020\001\022"
-    "\014\n\010conscrit\020\002*8\n\rEnumHumanRank\022\014\n\010offici"
-    "er\020\000\022\020\n\014sous_officer\020\001\022\007\n\003mdr\020\002*X\n\rEnumD"
-    "iplomacy\022\021\n\runknown_diplo\020\000\022\020\n\014friend_di"
-    "plo\020\001\022\017\n\013enemy_diplo\020\002\022\021\n\rneutral_diplo\020"
-    "\003*\210\001\n\016EnumHumanWound\022\016\n\nnon_blesse\020\000\022\010\n\004"
-    "mort\020\001\022\024\n\020blesse_urgence_1\020\002\022\024\n\020blesse_u"
-    "rgence_2\020\003\022\024\n\020blesse_urgence_3\020\004\022\032\n\026bles"
-    "se_urgence_extreme\020\005*Y\n\037EnumLogMaintenan"
-    "ceRegimeTravail\022\014\n\010regime_1\020\000\022\014\n\010regime_"
-    "2\020\001\022\014\n\010regime_3\020\002\022\014\n\010regime_4\020\003*\204\001\n\017Enum"
-    "NatureLevel\022\024\n\020none_naturelevel\020\000\022\005\n\001o\020\001"
-    "\022\006\n\002oo\020\002\022\007\n\003ooo\020\003\022\005\n\001i\020\004\022\006\n\002ii\020\005\022\007\n\003iii\020"
-    "\006\022\005\n\001x\020\007\022\006\n\002xx\020\010\022\007\n\003xxx\020\t\022\010\n\004xxxx\020\n\022\t\n\005x"
-    "xxxx\020\013*9\n\021EnumLogisticLevel\022\010\n\004none\020\000\022\007\n"
-    "\003tc2\020\001\022\021\n\rlogistic_base\020\002", 15385);
+    "rbanObjectKnowledgeId\022\n\n\002id\030\001 \002(\r\"\034\n\016Cli"
+    "entObjectId\022\n\n\002id\030\001 \002(\r\"\222\001\n\006Tasker\022\"\n\007au"
+    "tomat\030\001 \001(\0132\021.Common.AutomatId\022&\n\tformat"
+    "ion\030\002 \001(\0132\023.Common.FormationId\022\036\n\005crowd\030"
+    "\003 \001(\0132\017.Common.CrowdId\022\034\n\004unit\030\004 \001(\0132\016.C"
+    "ommon.UnitId\"Z\n\014ParentEntity\022\"\n\007automat\030"
+    "\001 \001(\0132\021.Common.AutomatId\022&\n\tformation\030\002 "
+    "\001(\0132\023.Common.FormationId\"\027\n\tDrawingId\022\n\n"
+    "\002id\030\001 \002(\r\"\034\n\016IntelligenceId\022\n\n\002id\030\001 \002(\r\""
+    "\034\n\016TacticalLineId\022\n\n\002id\030\001 \002(\r\"\026\n\010MarkerI"
+    "d\022\n\n\002id\030\001 \002(\r\"\024\n\006FireId\022\n\n\002id\030\001 \002(\r\"\032\n\014F"
+    "ireEffectId\022\n\n\002id\030\001 \002(\r\"\026\n\010ReportId\022\n\n\002i"
+    "d\030\001 \002(\r\"\027\n\tWeatherId\022\n\n\002id\030\001 \002(\r\"\"\n\024Main"
+    "tenanceRequestId\022\n\n\002id\030\001 \002(\r\"\036\n\020MedicalR"
+    "equestId\022\n\n\002id\030\001 \002(\r\"\035\n\017SupplyRequestId\022"
+    "\n\n\002id\030\001 \002(\r\"\031\n\013AutomatType\022\n\n\002id\030\001 \002(\r\"\033"
+    "\n\rBreakdownType\022\n\n\002id\030\001 \002(\r\"\033\n\rEquipment"
+    "Type\022\n\n\002id\030\001 \002(\r\"\033\n\rFragOrderType\022\n\n\002id\030"
+    "\001 \002(\r\"\031\n\013MissionType\022\n\n\002id\030\001 \002(\r\"\032\n\014NBCA"
+    "gentType\022\n\n\002id\030\001 \002(\r\"\030\n\nObjectType\022\n\n\002id"
+    "\030\001 \002(\t\"\027\n\tCrowdType\022\n\n\002id\030\001 \002(\r\"\030\n\nRepor"
+    "tType\022\n\n\002id\030\001 \002(\r\"\032\n\014ResourceType\022\n\n\002id\030"
+    "\001 \002(\r\"\026\n\010UnitType\022\n\n\002id\030\001 \002(\r\"#\n\023Resourc"
+    "eNetworkType\022\014\n\004name\030\001 \002(\t\"\035\n\nMsgHeading"
+    "\022\017\n\007heading\030\001 \002(\005\"\033\n\013MsgDateTime\022\014\n\004data"
+    "\030\001 \002(\t\"[\n\020MsgDotationStock\022*\n\014ressource_"
+    "id\030\001 \002(\0132\024.Common.ResourceType\022\033\n\023quanti"
+    "te_disponible\030\002 \002(\005\"<\n\022SeqOfDotationStoc"
+    "k\022&\n\004elem\030\001 \003(\0132\030.Common.MsgDotationStoc"
+    "k\"X\n\020MsgDotationQuota\022*\n\014ressource_id\030\001 "
+    "\002(\0132\024.Common.ResourceType\022\030\n\020quota_dispo"
+    "nible\030\002 \002(\005\"<\n\022SeqOfDotationQuota\022&\n\004ele"
+    "m\030\001 \003(\0132\030.Common.MsgDotationQuota\"\227\001\n\036Ms"
+    "gAutomatChangeKnowledgeGroup\022\"\n\007automat\030"
+    "\001 \002(\0132\021.Common.AutomatId\022\036\n\005party\030\002 \002(\0132"
+    "\017.Common.PartyId\0221\n\017knowledge_group\030\003 \002("
+    "\0132\030.Common.KnowledgeGroupId\"\216\001\n\026MsgChang"
+    "eLogisticLinks\022\'\n\trequester\030\001 \002(\0132\024.Comm"
+    "on.ParentEntity\022\036\n\003tc2\030\002 \001(\0132\021.Common.Au"
+    "tomatId\022+\n\rlogistic_base\030\003 \001(\0132\024.Common."
+    "ParentEntity\"s\n%MsgAutomatChangeSuperior"
+    "_oid_superior\022&\n\tformation\030\001 \001(\0132\023.Commo"
+    "n.FormationId\022\"\n\007automat\030\002 \001(\0132\021.Common."
+    "AutomatId\"\177\n\030MsgAutomatChangeSuperior\022\"\n"
+    "\007automat\030\001 \002(\0132\021.Common.AutomatId\022?\n\010sup"
+    "erior\030\002 \002(\0132-.Common.MsgAutomatChangeSup"
+    "erior_oid_superior\"X\n\025MsgUnitChangeSuper"
+    "ior\022\034\n\004unit\030\001 \002(\0132\016.Common.UnitId\022!\n\006par"
+    "ent\030\002 \002(\0132\021.Common.AutomatId\"\020\n\016MsgContr"
+    "olStop\"\021\n\017MsgControlPause\"\022\n\020MsgControlR"
+    "esume\"1\n\032MsgControlChangeTimeFactor\022\023\n\013t"
+    "ime_factor\030\001 \002(\005\":\n\013MsgExercise\022\014\n\004name\030"
+    "\001 \002(\t\022\017\n\007running\030\002 \001(\010\022\014\n\004port\030\003 \001(\r\"3\n\021"
+    "MsgNetworkAddress\022\n\n\002ip\030\001 \002(\t\022\022\n\004port\030\002 "
+    "\002(\005:\0048080\"4\n\010RgbColor\022\013\n\003red\030\001 \002(\005\022\r\n\005gr"
+    "een\030\002 \002(\005\022\014\n\004blue\030\003 \002(\005\"D\n\tRgbaColor\022\013\n\003"
+    "red\030\001 \002(\005\022\r\n\005green\030\002 \002(\005\022\014\n\004blue\030\003 \002(\005\022\r"
+    "\n\005alpha\030\004 \002(\002\"6\n\017MsgCoordLatLong\022\020\n\010lati"
+    "tude\030\001 \002(\001\022\021\n\tlongitude\030\002 \002(\001\"<\n\023MsgCoor"
+    "dLatLongList\022%\n\004elem\030\002 \003(\0132\027.Common.MsgC"
+    "oordLatLong\"\327\001\n\013MsgLocation\022*\n\004type\030\001 \002("
+    "\0162\034.Common.MsgLocation.Geometry\0220\n\013coord"
+    "inates\030\002 \001(\0132\033.Common.MsgCoordLatLongLis"
+    "t\"j\n\010Geometry\022\n\n\006circle\020\000\022\013\n\007ellipse\020\001\022\010"
+    "\n\004line\020\002\022\r\n\trectangle\020\003\022\013\n\007polygon\020\004\022\t\n\005"
+    "point\020\005\022\n\n\006sector\020\006\022\010\n\004none\020\007\"0\n\007MsgLine"
+    "\022%\n\010location\030\001 \002(\0132\023.Common.MsgLocation\""
+    "4\n\017MsgLocationList\022!\n\004elem\030\001 \003(\0132\023.Commo"
+    "n.MsgLocation\"0\n\007MsgPath\022%\n\010location\030\001 \002"
+    "(\0132\023.Common.MsgLocation\",\n\013MsgPathList\022\035"
+    "\n\004elem\030\001 \003(\0132\017.Common.MsgPath\"1\n\010MsgPoin"
+    "t\022%\n\010location\030\001 \002(\0132\023.Common.MsgLocation"
+    "\".\n\014MsgPointList\022\036\n\004elem\030\001 \003(\0132\020.Common."
+    "MsgPoint\"3\n\nMsgPolygon\022%\n\010location\030\001 \002(\013"
+    "2\023.Common.MsgLocation\"2\n\016MsgPolygonList\022"
+    " \n\004elem\030\001 \003(\0132\022.Common.MsgPolygon\"?\n\027Msg"
+    "LogMedicalPriorities\022$\n\004elem\030\001 \003(\0162\026.Com"
+    "mon.EnumHumanWound\"E\n\014ObstacleType\"5\n\024De"
+    "molitionTargetType\022\017\n\013preliminary\020\000\022\014\n\010r"
+    "eserved\020\001\"\317\001\n\016MsgPlannedWork\022\014\n\004type\030\001 \002"
+    "(\t\022%\n\010position\030\002 \002(\0132\023.Common.MsgLocatio"
+    "n\022@\n\rtype_obstacle\030\003 \001(\0162).Common.Obstac"
+    "leType.DemolitionTargetType\022\017\n\007densite\030\004"
+    " \001(\002\022\036\n\003tc2\030\005 \001(\0132\021.Common.AutomatId\022\025\n\r"
+    "activity_time\030\006 \001(\005\":\n\022MsgPlannedWorkLis"
+    "t\022$\n\004elem\030\001 \003(\0132\026.Common.MsgPlannedWork\""
+    "B\n\033MsgLogMaintenancePriorities\022#\n\004elem\030\001"
+    " \003(\0132\025.Common.EquipmentType\"f\n\023MsgMissio"
+    "nObjective\022)\n\014localisation\030\001 \002(\0132\023.Commo"
+    "n.MsgLocation\022$\n\007horaire\030\002 \002(\0132\023.Common."
+    "MsgDateTime\"D\n\027MsgMissionObjectiveList\022)"
+    "\n\004elem\030\001 \003(\0132\033.Common.MsgMissionObjectiv"
+    "e\"\201\003\n\014MsgLimaOrder\022\035\n\004lima\030\001 \002(\0132\017.Commo"
+    "n.MsgLine\022$\n\007horaire\030\002 \002(\0132\023.Common.MsgD"
+    "ateTime\0220\n\tfonctions\030\003 \003(\0162\035.Common.MsgL"
+    "imaOrder.Function\"\371\001\n\010Function\022\022\n\016ligne_"
+    "debouche\020\000\022\035\n\031ligne_changement_attitude\020"
+    "\001\022\026\n\022ligne_coordination\020\002\022\023\n\017ligne_inter"
+    "dire\020\003\022\022\n\016ligne_objectif\020\004\022\024\n\020ligne_coup"
+    "_arret\020\005\022\021\n\rligne_recueil\020\006\022\027\n\023ligne_deb"
+    "ut_mission\020\007\022\025\n\021ligne_fin_mission\020\010\022 \n\034l"
+    "igne_identification_accueil\020\t\"3\n\rMsgLima"
+    "sOrder\022\"\n\004elem\030\001 \003(\0132\024.Common.MsgLimaOrd"
+    "er\"\346\001\n\017MsgIntelligence\022\014\n\004name\030\001 \002(\t\022\016\n\006"
+    "nature\030\002 \002(\t\022&\n\005level\030\003 \002(\0162\027.Common.Enu"
+    "mNatureLevel\022\020\n\010embarked\030\004 \002(\010\022)\n\010locati"
+    "on\030\005 \002(\0132\027.Common.MsgCoordLatLong\022(\n\tdip"
+    "lomacy\030\006 \002(\0162\025.Common.EnumDiplomacy\022&\n\tf"
+    "ormation\030\007 \002(\0132\023.Common.FormationId\"<\n\023M"
+    "sgIntelligenceList\022%\n\004elem\030\001 \003(\0132\027.Commo"
+    "n.MsgIntelligence\"\201\001\n\022MsgChangeDiplomacy"
+    "\022\037\n\006party1\030\001 \002(\0132\017.Common.PartyId\022\037\n\006par"
+    "ty2\030\002 \002(\0132\017.Common.PartyId\022)\n\ndiplomatie"
+    "\030\003 \002(\0162\025.Common.EnumDiplomacy\"\322\001\n\016MsgAtl"
+    "asNature\022\016\n\006nature\030\001 \002(\005\"\257\001\n\013AtlasNature"
+    "\022\n\n\006blinde\020\001\022\007\n\003ass\020\002\022\006\n\002pc\020\004\022\007\n\003log\020\010\022\013"
+    "\n\007mortier\020\020\022\022\n\016lance_roquette\020 \022\014\n\010vehic"
+    "ule\020@\022\025\n\020personnel_a_pied\020\200\001\022\020\n\013helicopt"
+    "ere\020\200\002\022\r\n\010indefini\020\200\004\022\010\n\003asa\020\200\010\022\t\n\004none\020"
+    "\200\020\"\323\016\n\023MsgMissionParameter\022\022\n\nnull_value"
+    "\030\001 \001(\010\0220\n\005value\030\002 \001(\0132!.Common.MsgMissio"
+    "nParameter.Value\032\365\r\n\005Value\022\r\n\005aBool\030\001 \001("
+    "\010\022\r\n\005aReal\030\002 \001(\002\022\023\n\013enumeration\030\003 \001(\005\022\035\n"
+    "\004path\030\004 \001(\0132\017.Common.MsgPath\022%\n\010pathList"
+    "\030\005 \001(\0132\023.Common.MsgPathList\022\037\n\005point\030\006 \001"
+    "(\0132\020.Common.MsgPoint\022\'\n\tpointList\030\007 \001(\0132"
+    "\024.Common.MsgPointList\022#\n\007polygon\030\010 \001(\0132\022"
+    ".Common.MsgPolygon\022+\n\013polygonList\030\t \001(\0132"
+    "\026.Common.MsgPolygonList\022%\n\010location\030\n \001("
+    "\0132\023.Common.MsgLocation\022-\n\014locationList\030\013"
+    " \001(\0132\027.Common.MsgLocationList\022#\n\007heading"
+    "\030\014 \001(\0132\022.Common.MsgHeading\022+\n\013atlasNatur"
+    "e\030\r \001(\0132\026.Common.MsgAtlasNature\022\034\n\004unit\030"
+    "\016 \001(\0132\016.Common.UnitId\022$\n\010unitList\030\017 \001(\0132"
+    "\022.Common.UnitIdList\022\"\n\007automat\030\020 \001(\0132\021.C"
+    "ommon.AutomatId\022*\n\013automatList\030\021 \001(\0132\025.C"
+    "ommon.AutomatIdList\022.\n\runitKnowledge\030\022 \001"
+    "(\0132\027.Common.UnitKnowledgeId\0226\n\021unitKnowl"
+    "edgeList\030\023 \001(\0132\033.Common.UnitKnowledgeIdL"
+    "ist\0222\n\017objectKnowledge\030\024 \001(\0132\031.Common.Ob"
+    "jectKnowledgeId\022:\n\023objectKnowledgeList\030\025"
+    " \001(\0132\035.Common.ObjectKnowledgeIdList\0220\n\016c"
+    "rowdKnowledge\030\026 \001(\0132\030.Common.CrowdKnowle"
+    "dgeId\022+\n\013plannedWork\030\027 \001(\0132\026.Common.MsgP"
+    "lannedWork\0223\n\017plannedWorkList\030\030 \001(\0132\032.Co"
+    "mmon.MsgPlannedWorkList\022*\n\014resourceType\030"
+    "\031 \001(\0132\024.Common.ResourceType\022,\n\requipment"
+    "Type\030\032 \001(\0132\025.Common.EquipmentType\022#\n\013tir"
+    "Indirect\030\033 \001(\0132\016.Common.FireId\022%\n\010dateTi"
+    "me\030\034 \001(\0132\023.Common.MsgDateTime\022E\n\030logMain"
+    "tenancePriorities\030\035 \001(\0132#.Common.MsgLogM"
+    "aintenancePriorities\022=\n\024logMedicalPriori"
+    "ties\030\036 \001(\0132\037.Common.MsgLogMedicalPriorit"
+    "ies\022\020\n\010aCharStr\030\037 \001(\t\0225\n\020missionObjectiv"
+    "e\030  \001(\0132\033.Common.MsgMissionObjective\022=\n\024"
+    "missionObjectiveList\030! \001(\0132\037.Common.MsgM"
+    "issionObjectiveList\022\035\n\004line\030\" \001(\0132\017.Comm"
+    "on.MsgLine\022)\n\nlimasOrder\030# \001(\0132\025.Common."
+    "MsgLimasOrder\0225\n\020intelligenceList\030$ \001(\0132"
+    "\033.Common.MsgIntelligenceList\022)\n\nurbanBlo"
+    "ck\030% \001(\0132\025.Common.UrbanObjectId\022\036\n\005party"
+    "\030& \001(\0132\017.Common.PartyId\022&\n\tformation\030\' \001"
+    "(\0132\023.Common.FormationId\022\022\n\nidentifier\030( "
+    "\001(\r\022\020\n\010quantity\030) \001(\005\0220\n\016knowledgeGroup\030"
+    "* \001(\0132\030.Common.KnowledgeGroupId\022/\n\004list\030"
+    "+ \003(\0132!.Common.MsgMissionParameter.Value"
+    "\"A\n\024MsgMissionParameters\022)\n\004elem\030\001 \003(\0132\033"
+    ".Common.MsgMissionParameter\"\350\001\n\014MsgUnitO"
+    "rder\022\036\n\006tasker\030\001 \002(\0132\016.Common.UnitId\022!\n\004"
+    "type\030\002 \002(\0132\023.Common.MissionType\0220\n\nparam"
+    "eters\030\003 \001(\0132\034.Common.MsgMissionParameter"
+    "s\022\r\n\005label\030\004 \001(\t\022+\n\016symbolLocation\030\005 \001(\013"
+    "2\023.Common.MsgLocation\022\'\n\nstart_time\030\006 \001("
+    "\0132\023.Common.MsgDateTime\"\356\001\n\017MsgAutomatOrd"
+    "er\022!\n\006tasker\030\001 \002(\0132\021.Common.AutomatId\022!\n"
+    "\004type\030\002 \002(\0132\023.Common.MissionType\0220\n\npara"
+    "meters\030\003 \001(\0132\034.Common.MsgMissionParamete"
+    "rs\022\r\n\005label\030\004 \001(\t\022+\n\016symbolLocation\030\005 \001("
+    "\0132\023.Common.MsgLocation\022\'\n\nstart_time\030\006 \001"
+    "(\0132\023.Common.MsgDateTime\"\352\001\n\rMsgCrowdOrde"
+    "r\022\037\n\006tasker\030\001 \002(\0132\017.Common.CrowdId\022!\n\004ty"
+    "pe\030\002 \002(\0132\023.Common.MissionType\0220\n\nparamet"
+    "ers\030\003 \001(\0132\034.Common.MsgMissionParameters\022"
+    "\r\n\005label\030\004 \001(\t\022+\n\016symbolLocation\030\005 \001(\0132\023"
+    ".Common.MsgLocation\022\'\n\nstart_time\030\006 \001(\0132"
+    "\023.Common.MsgDateTime\"\326\001\n\024ClientObjectPro"
+    "perty\022\014\n\004name\030\001 \002(\t\0221\n\005value\030\002 \002(\0132\".Com"
+    "mon.ClientObjectProperty.Value\032}\n\005Value\022"
+    "\024\n\014string_value\030\001 \001(\t\022\025\n\rinteger_value\030\002"
+    " \001(\005\022\036\n\026unsigned_integer_value\030\003 \001(\r\022\023\n\013"
+    "float_value\030\004 \001(\002\022\022\n\nbool_value\030\005 \001(\010\"\325\001"
+    "\n\017MsgTacticalLine\022\014\n\004name\030\001 \002(\t\022%\n\010geome"
+    "try\030\002 \002(\0132\023.Common.MsgLocation\0224\n\tdiffus"
+    "ion\030\003 \002(\0132!.Common.MsgTacticalLine.Diffu"
+    "sion\032W\n\tDiffusion\022\"\n\007automat\030\001 \001(\0132\021.Com"
+    "mon.AutomatId\022&\n\tformation\030\002 \001(\0132\023.Commo"
+    "n.FormationId\"i\n\010MsgShape\022\020\n\010category\030\001 "
+    "\002(\t\022\r\n\005color\030\002 \002(\t\022\017\n\007pattern\030\003 \002(\t\022+\n\006p"
+    "oints\030\004 \002(\0132\033.Common.MsgCoordLatLongList"
+    "\" \n\rMsgChatTarget\022\017\n\007profile\030\001 \002(\t\"o\n\016Ms"
+    "gTextMessage\022%\n\006source\030\001 \002(\0132\025.Common.Ms"
+    "gChatTarget\022%\n\006target\030\002 \002(\0132\025.Common.Msg"
+    "ChatTarget\022\017\n\007message\030\003 \002(\t\"\362\002\n\017Resource"
+    "Network\022-\n\010resource\030\001 \002(\0132\033.Common.Resou"
+    "rceNetworkType\022*\n\004link\030\002 \003(\0132\034.Common.Re"
+    "sourceNetwork.Link\022\017\n\007enabled\030\003 \002(\010\022\021\n\tm"
+    "ax_stock\030\004 \001(\r\022\r\n\005stock\030\005 \001(\r\022\022\n\nproduct"
+    "ion\030\006 \001(\r\022\023\n\013consumption\030\007 \001(\r\022\020\n\010critic"
+    "al\030\010 \001(\010\032\225\001\n\004Link\0225\n\004kind\030\001 \002(\0162\'.Common"
+    ".ResourceNetwork.Link.TargetKind\022\021\n\ttarg"
+    "et_id\030\002 \002(\r\022\020\n\010capacity\030\003 \002(\005\022\014\n\004flow\030\004 "
+    "\002(\r\"#\n\nTargetKind\022\t\n\005urban\020\001\022\n\n\006object\020\002"
+    "\"J\n\036ObjectAttributeResourceNetwork\022(\n\007ne"
+    "twork\030\001 \003(\0132\027.Common.ResourceNetwork\"\200\001\n"
+    "\033ObjectAttributeConstruction\022&\n\010resource"
+    "\030\001 \001(\0132\024.Common.ResourceType\022\024\n\014dotation"
+    "_nbr\030\002 \001(\005\022\017\n\007density\030\003 \001(\002\022\022\n\npercentag"
+    "e\030\004 \001(\005\"x\n\023ObjectAttributeMine\022&\n\010resour"
+    "ce\030\001 \001(\0132\024.Common.ResourceType\022\024\n\014dotati"
+    "on_nbr\030\002 \001(\005\022\017\n\007density\030\003 \001(\002\022\022\n\npercent"
+    "age\030\004 \001(\005\"9\n\027ObjectAttributeLogistic\022\036\n\003"
+    "tc2\030\001 \002(\0132\021.Common.AutomatId\"2\n ObjectAt"
+    "tributeInteractionHeight\022\016\n\006height\030\001 \002(\002"
+    "\"~\n\027ObjectAttributeObstacle\0227\n\004type\030\001 \002("
+    "\0162).Common.ObstacleType.DemolitionTarget"
+    "Type\022\021\n\tactivated\030\002 \001(\010\022\027\n\017activation_ti"
+    "me\030\003 \001(\005\",\n\033ObjectAttributeActivityTime\022"
+    "\r\n\005value\030\001 \002(\005\"+\n\025ObjectAttributeBypass\022"
+    "\022\n\npercentage\030\001 \002(\005\"+\n\032ObjectAttributeEf"
+    "fectDelay\022\r\n\005value\030\001 \002(\005\"T\n\022ObjectAttrib"
+    "uteNBC\022\024\n\014danger_level\030\001 \002(\005\022(\n\nnbc_agen"
+    "ts\030\002 \003(\0132\024.Common.NBCAgentType\"Y\n\rStockR"
+    "esource\022&\n\010resource\030\001 \002(\0132\024.Common.Resou"
+    "rceType\022\017\n\007current\030\002 \002(\005\022\017\n\007maximum\030\003 \001("
+    "\005\"@\n\024ObjectAttributeStock\022(\n\tresources\030\001"
+    " \003(\0132\025.Common.StockResource\"m\n\033ObjectAtt"
+    "ributeCrossingSite\022\r\n\005width\030\001 \002(\005\022\r\n\005dep"
+    "th\030\002 \002(\005\022\021\n\tflow_rate\030\003 \002(\005\022\035\n\025banks_req"
+    "uire_fitting\030\004 \002(\010\"t\n\032ObjectAttributeSup"
+    "plyRoute\022\020\n\010equipped\030\001 \002(\010\022\022\n\nmax_weight"
+    "\030\002 \002(\005\022\r\n\005width\030\003 \002(\005\022\016\n\006length\030\004 \002(\005\022\021\n"
+    "\tflow_rate\030\005 \002(\005\"S\n\022MsgLocatedQuantity\022+"
+    "\n\ncoordinate\030\001 \002(\0132\027.Common.MsgCoordLatL"
+    "ong\022\020\n\010quantity\030\002 \002(\002\"B\n\026MsgLocatedQuant"
+    "ityList\022(\n\004elem\030\001 \003(\0132\032.Common.MsgLocate"
+    "dQuantity\"O\n\031ObjectAttributeToxicCloud\0222"
+    "\n\nquantities\030\001 \002(\0132\036.Common.MsgLocatedQu"
+    "antityList\"5\n\023ObjectAttributeFire\022\020\n\010cla"
+    "ss_id\030\001 \002(\005\022\014\n\004heat\030\002 \002(\005\"\204\001\n\037ObjectAttr"
+    "ibuteMedicalTreatment\022\017\n\007type_id\030\001 \003(\r\022\014"
+    "\n\004beds\030\002 \002(\005\022\026\n\016available_beds\030\003 \002(\005\022\017\n\007"
+    "doctors\030\004 \002(\005\022\031\n\021available_doctors\030\005 \002(\005"
+    "\"r\n\026ObjectAttributeNBCType\022#\n\005agent\030\001 \002("
+    "\0132\024.Common.NBCAgentType\022\025\n\rconcentration"
+    "\030\002 \002(\005\022\034\n\024source_life_duration\030\003 \002(\005\"\'\n\026"
+    "ObjectAttributeSealOff\022\r\n\005level\030\001 \002(\005\"\344\007"
+    "\n\020ObjectAttributes\0229\n\014construction\030\001 \001(\013"
+    "2#.Common.ObjectAttributeConstruction\0221\n"
+    "\010obstacle\030\002 \001(\0132\037.Common.ObjectAttribute"
+    "Obstacle\022)\n\004mine\030\003 \001(\0132\033.Common.ObjectAt"
+    "tributeMine\022:\n\ractivity_time\030\004 \001(\0132#.Com"
+    "mon.ObjectAttributeActivityTime\022-\n\006bypas"
+    "s\030\005 \001(\0132\035.Common.ObjectAttributeBypass\0221"
+    "\n\010logistic\030\006 \001(\0132\037.Common.ObjectAttribut"
+    "eLogistic\022\'\n\003nbc\030\007 \001(\0132\032.Common.ObjectAt"
+    "tributeNBC\022:\n\rcrossing_site\030\010 \001(\0132#.Comm"
+    "on.ObjectAttributeCrossingSite\0228\n\014supply"
+    "_route\030\t \001(\0132\".Common.ObjectAttributeSup"
+    "plyRoute\0226\n\013toxic_cloud\030\n \001(\0132!.Common.O"
+    "bjectAttributeToxicCloud\022)\n\004fire\030\013 \001(\0132\033"
+    ".Common.ObjectAttributeFire\022B\n\021medical_t"
+    "reatment\030\014 \001(\0132\'.Common.ObjectAttributeM"
+    "edicalTreatment\022D\n\022interaction_height\030\r "
+    "\001(\0132(.Common.ObjectAttributeInteractionH"
+    "eight\022+\n\005stock\030\016 \001(\0132\034.Common.ObjectAttr"
+    "ibuteStock\0221\n\tnbc_agent\030\017 \001(\0132\036.Common.O"
+    "bjectAttributeNBCType\0228\n\014effect_delay\030\020 "
+    "\001(\0132\".Common.ObjectAttributeEffectDelay\022"
+    "0\n\010seal_off\030\021 \001(\0132\036.Common.ObjectAttribu"
+    "teSealOff\022A\n\021resource_networks\030\022 \001(\0132&.C"
+    "ommon.ObjectAttributeResourceNetwork\"L\n\007"
+    "MsgNote\022\014\n\004name\030\001 \002(\t\022\016\n\006number\030\002 \002(\t\022\023\n"
+    "\013description\030\003 \002(\t\022\016\n\006parent\030\004 \002(\r\"\220\002\n\024M"
+    "sgWeatherAttributes\022\023\n\013temperature\030\001 \002(\005"
+    "\022\022\n\nwind_speed\030\002 \002(\005\022*\n\016wind_direction\030\003"
+    " \002(\0132\022.Common.MsgHeading\022\023\n\013cloud_floor\030"
+    "\004 \002(\005\022\025\n\rcloud_ceiling\030\005 \002(\005\022\025\n\rcloud_de"
+    "nsity\030\006 \002(\005\0224\n\rprecipitation\030\007 \002(\0162\035.Com"
+    "mon.EnumPrecipitationType\022*\n\010lighting\030\010 "
+    "\002(\0162\030.Common.EnumLightingType*m\n\022EnumDot"
+    "ationFamily\022\014\n\010munition\020\000\022\r\n\tcarburant\020\001"
+    "\022\014\n\010explosif\020\002\022\010\n\004mine\020\003\022\013\n\007barbele\020\004\022\t\n"
+    "\005piece\020\005\022\n\n\006ration\020\006*Q\n\024EnumAmmunitionFa"
+    "mily\022\010\n\004obus\020\000\022\017\n\013missile_sol\020\001\022\017\n\013missi"
+    "le_air\020\002\022\r\n\tmitraille\020\003*w\n\025EnumPrecipita"
+    "tionType\022\030\n\024pas_de_precipitation\020\000\022\021\n\rte"
+    "mpete_sable\020\001\022\016\n\nbrouillard\020\002\022\013\n\007crachin"
+    "\020\003\022\t\n\005pluie\020\004\022\t\n\005neige\020\005**\n\022EnumFireEffe"
+    "ctType\022\t\n\005smoke\020\000\022\t\n\005light\020\001*(\n\014UnitFire"
+    "Type\022\n\n\006direct\020\000\022\014\n\010indirect\020\001*\245\002\n\020EnumL"
+    "ightingType\022\023\n\017jour_sans_nuage\020\000\022\024\n\020jour"
+    "_peu_nuageux\020\001\022\034\n\030jour_moyennement_nuage"
+    "ux\020\002\022\026\n\022jour_assez_nuageux\020\003\022\025\n\021jour_tre"
+    "s_nuageux\020\004\022\024\n\020nuit_pleine_lune\020\005\022\034\n\030nui"
+    "t_trois_quart_de_lune\020\006\022\022\n\016nuit_demi_lun"
+    "e\020\007\022\026\n\022nuit_quart_de_lune\020\010\022\026\n\022nuit_nouv"
+    "elle_lune\020\t\022\r\n\teclairant\020\n\022\022\n\016global_wea"
+    "ther\020\013*\264\003\n EnumLogMaintenanceHandlingSta"
+    "tus\022\033\n\027deplacement_vers_chaine\020\000\022$\n atte"
+    "nte_disponibilite_remorqueur\020\001\022 \n\034remorq"
+    "ueur_deplacement_aller\020\002\022\031\n\025remorqueur_c"
+    "hargement\020\003\022!\n\035remorqueur_deplacement_re"
+    "tour\020\004\022\033\n\027remorqueur_dechargement\020\005\022\034\n\030d"
+    "iagnostique_maintenance\020\006\0220\n,attente_pri"
+    "se_en_charge_par_niveau_superieur\020\007\022 \n\034a"
+    "ttente_disponibilite_pieces\020\010\022$\n attente"
+    "_disponibilite_reparateur\020\t\022\016\n\nreparatio"
+    "n\020\n\022\017\n\013retour_pion\020\013\022\027\n\023termine_maintena"
+    "nce\020\014*\364\005\n\034EnumLogMedicalHandlingStatus\022*"
+    "\n&attente_disponibilite_ambulance_releve"
+    "\020\000\022&\n\"ambulance_releve_deplacement_aller"
+    "\020\001\022\037\n\033ambulance_releve_chargement\020\002\022/\n+a"
+    "ttente_chargement_complet_ambulance_rele"
+    "ve\020\003\022\'\n#ambulance_releve_deplacement_ret"
+    "our\020\004\022!\n\035ambulance_releve_dechargement\020\005"
+    "\0223\n/attente_disponibilite_medecin_pour_d"
+    "iagnostique\020\006\022\020\n\014diagnostique\020\007\022\031\n\025reche"
+    "rche_secteur_tri\020\010\022*\n&attente_disponibil"
+    "ite_medecin_pour_tri\020\t\022\007\n\003tri\020\n\022\032\n\026reche"
+    "rche_secteur_soin\020\013\022+\n\'attente_disponibi"
+    "lite_medecin_pour_soin\020\014\022\010\n\004soin\020\r\022\023\n\017ho"
+    "spitalisation\020\016\022-\n)attente_disponibilite"
+    "_ambulance_ramassage\020\017\022\"\n\036ambulance_rama"
+    "ssage_chargement\020\020\0222\n.attente_chargement"
+    "_complet_ambulance_ramassage\020\021\022)\n%ambula"
+    "nce_ramassage_deplacement_aller\020\022\022$\n amb"
+    "ulance_ramassage_dechargement\020\023\022\013\n\007termi"
+    "ne\020\024*_\n\022EnumUnitVisibility\022\r\n\tinvisible\020"
+    "\000\022\014\n\010detected\020\001\022\016\n\nrecognized\020\002\022\016\n\nident"
+    "ified\020\003\022\014\n\010recorded\020\004*H\n\023EnumSimulationS"
+    "tate\022\013\n\007running\020\000\022\n\n\006paused\020\001\022\013\n\007stopped"
+    "\020\002\022\013\n\007loading\020\003*5\n\023EnumDispatcherState\022\r"
+    "\n\tavailable\020\000\022\017\n\013unavailable\020\001*l\n\033EnumMe"
+    "etingEngagementStatus\022\020\n\014none_meeting\020\000\022"
+    "\020\n\014etat_esquive\020\001\022\r\n\tetat_fixe\020\002\022\032\n\026etat"
+    "_poursuite_mission\020\003*[\n\025EnumOperationalS"
+    "tatus\022\026\n\022detruit_totalement\020\000\022\030\n\024detruit"
+    "_tactiquement\020\001\022\020\n\014operationnel\020\002*+\n\017Enu"
+    "mAutomatMode\022\013\n\007embraye\020\000\022\013\n\007debraye\020\001*F"
+    "\n\021EnumCrowdAttitude\022\t\n\005calme\020\000\022\n\n\006agitee"
+    "\020\001\022\013\n\007excitee\020\002\022\r\n\tagressive\020\003*8\n\021EnumUn"
+    "itTiredness\022\n\n\006normal\020\000\022\013\n\007fatigue\020\001\022\n\n\006"
+    "epuise\020\002*@\n\016EnumUnitMorale\022\r\n\tfanatique\020"
+    "\000\022\007\n\003bon\020\001\022\t\n\005moyen\020\002\022\013\n\007mauvais\020\003*@\n\022En"
+    "umUnitExperience\022\013\n\007veteran\020\000\022\017\n\013experim"
+    "ente\020\001\022\014\n\010conscrit\020\002*8\n\rEnumHumanRank\022\014\n"
+    "\010officier\020\000\022\020\n\014sous_officer\020\001\022\007\n\003mdr\020\002*X"
+    "\n\rEnumDiplomacy\022\021\n\runknown_diplo\020\000\022\020\n\014fr"
+    "iend_diplo\020\001\022\017\n\013enemy_diplo\020\002\022\021\n\rneutral"
+    "_diplo\020\003*\210\001\n\016EnumHumanWound\022\016\n\nnon_bless"
+    "e\020\000\022\010\n\004mort\020\001\022\024\n\020blesse_urgence_1\020\002\022\024\n\020b"
+    "lesse_urgence_2\020\003\022\024\n\020blesse_urgence_3\020\004\022"
+    "\032\n\026blesse_urgence_extreme\020\005*Y\n\037EnumLogMa"
+    "intenanceRegimeTravail\022\014\n\010regime_1\020\000\022\014\n\010"
+    "regime_2\020\001\022\014\n\010regime_3\020\002\022\014\n\010regime_4\020\003*\204"
+    "\001\n\017EnumNatureLevel\022\024\n\020none_naturelevel\020\000"
+    "\022\005\n\001o\020\001\022\006\n\002oo\020\002\022\007\n\003ooo\020\003\022\005\n\001i\020\004\022\006\n\002ii\020\005\022"
+    "\007\n\003iii\020\006\022\005\n\001x\020\007\022\006\n\002xx\020\010\022\007\n\003xxx\020\t\022\010\n\004xxxx"
+    "\020\n\022\t\n\005xxxxx\020\013*9\n\021EnumLogisticLevel\022\010\n\004no"
+    "ne\020\000\022\007\n\003tc2\020\001\022\021\n\rlogistic_base\020\002", 15632);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Common.proto", &protobuf_RegisterTypes);
   AutomatId::default_instance_ = new AutomatId();
@@ -3497,6 +3574,7 @@ void protobuf_AddDesc_Common_2eproto() {
   UnitKnowledgeIdList::default_instance_ = new UnitKnowledgeIdList();
   UrbanObjectId::default_instance_ = new UrbanObjectId();
   UrbanObjectKnowledgeId::default_instance_ = new UrbanObjectKnowledgeId();
+  ClientObjectId::default_instance_ = new ClientObjectId();
   Tasker::default_instance_ = new Tasker();
   ParentEntity::default_instance_ = new ParentEntity();
   DrawingId::default_instance_ = new DrawingId();
@@ -3571,6 +3649,8 @@ void protobuf_AddDesc_Common_2eproto() {
   MsgUnitOrder::default_instance_ = new MsgUnitOrder();
   MsgAutomatOrder::default_instance_ = new MsgAutomatOrder();
   MsgCrowdOrder::default_instance_ = new MsgCrowdOrder();
+  ClientObjectProperty::default_instance_ = new ClientObjectProperty();
+  ClientObjectProperty_Value::default_instance_ = new ClientObjectProperty_Value();
   MsgTacticalLine::default_instance_ = new MsgTacticalLine();
   MsgTacticalLine_Diffusion::default_instance_ = new MsgTacticalLine_Diffusion();
   MsgShape::default_instance_ = new MsgShape();
@@ -3625,6 +3705,7 @@ void protobuf_AddDesc_Common_2eproto() {
   UnitKnowledgeIdList::default_instance_->InitAsDefaultInstance();
   UrbanObjectId::default_instance_->InitAsDefaultInstance();
   UrbanObjectKnowledgeId::default_instance_->InitAsDefaultInstance();
+  ClientObjectId::default_instance_->InitAsDefaultInstance();
   Tasker::default_instance_->InitAsDefaultInstance();
   ParentEntity::default_instance_->InitAsDefaultInstance();
   DrawingId::default_instance_->InitAsDefaultInstance();
@@ -3699,6 +3780,8 @@ void protobuf_AddDesc_Common_2eproto() {
   MsgUnitOrder::default_instance_->InitAsDefaultInstance();
   MsgAutomatOrder::default_instance_->InitAsDefaultInstance();
   MsgCrowdOrder::default_instance_->InitAsDefaultInstance();
+  ClientObjectProperty::default_instance_->InitAsDefaultInstance();
+  ClientObjectProperty_Value::default_instance_->InitAsDefaultInstance();
   MsgTacticalLine::default_instance_->InitAsDefaultInstance();
   MsgTacticalLine_Diffusion::default_instance_->InitAsDefaultInstance();
   MsgShape::default_instance_->InitAsDefaultInstance();
@@ -8813,6 +8896,209 @@ void UrbanObjectKnowledgeId::Swap(UrbanObjectKnowledgeId* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = UrbanObjectKnowledgeId_descriptor_;
   metadata.reflection = UrbanObjectKnowledgeId_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int ClientObjectId::kIdFieldNumber;
+#endif  // !_MSC_VER
+
+ClientObjectId::ClientObjectId() {
+  SharedCtor();
+}
+
+void ClientObjectId::InitAsDefaultInstance() {
+}
+
+ClientObjectId::ClientObjectId(const ClientObjectId& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void ClientObjectId::SharedCtor() {
+  _cached_size_ = 0;
+  id_ = 0u;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+ClientObjectId::~ClientObjectId() {
+  SharedDtor();
+}
+
+void ClientObjectId::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* ClientObjectId::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return ClientObjectId_descriptor_;
+}
+
+const ClientObjectId& ClientObjectId::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_Common_2eproto();  return *default_instance_;
+}
+
+ClientObjectId* ClientObjectId::default_instance_ = NULL;
+
+ClientObjectId* ClientObjectId::New() const {
+  return new ClientObjectId;
+}
+
+void ClientObjectId::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    id_ = 0u;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool ClientObjectId::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 id = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
+              input, &id_));
+        _set_bit(0);
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void ClientObjectId::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    ClientObjectId::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // required uint32 id = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->id(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* ClientObjectId::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required uint32 id = 1;
+  if (_has_bit(0)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->id(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int ClientObjectId::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 id = 1;
+    if (has_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->id());
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void ClientObjectId::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const ClientObjectId* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const ClientObjectId*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void ClientObjectId::MergeFrom(const ClientObjectId& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      set_id(from.id());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void ClientObjectId::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void ClientObjectId::CopyFrom(const ClientObjectId& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ClientObjectId::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  
+  return true;
+}
+
+void ClientObjectId::Swap(ClientObjectId* other) {
+  if (other != this) {
+    std::swap(id_, other->id_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata ClientObjectId::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = ClientObjectId_descriptor_;
+  metadata.reflection = ClientObjectId_reflection_;
   return metadata;
 }
 
@@ -28472,6 +28758,641 @@ void MsgCrowdOrder::Swap(MsgCrowdOrder* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = MsgCrowdOrder_descriptor_;
   metadata.reflection = MsgCrowdOrder_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+const ::std::string ClientObjectProperty_Value::_default_string_value_;
+#ifndef _MSC_VER
+const int ClientObjectProperty_Value::kStringValueFieldNumber;
+const int ClientObjectProperty_Value::kIntegerValueFieldNumber;
+const int ClientObjectProperty_Value::kUnsignedIntegerValueFieldNumber;
+const int ClientObjectProperty_Value::kFloatValueFieldNumber;
+const int ClientObjectProperty_Value::kBoolValueFieldNumber;
+#endif  // !_MSC_VER
+
+ClientObjectProperty_Value::ClientObjectProperty_Value() {
+  SharedCtor();
+}
+
+void ClientObjectProperty_Value::InitAsDefaultInstance() {
+}
+
+ClientObjectProperty_Value::ClientObjectProperty_Value(const ClientObjectProperty_Value& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void ClientObjectProperty_Value::SharedCtor() {
+  _cached_size_ = 0;
+  string_value_ = const_cast< ::std::string*>(&_default_string_value_);
+  integer_value_ = 0;
+  unsigned_integer_value_ = 0u;
+  float_value_ = 0;
+  bool_value_ = false;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+ClientObjectProperty_Value::~ClientObjectProperty_Value() {
+  SharedDtor();
+}
+
+void ClientObjectProperty_Value::SharedDtor() {
+  if (string_value_ != &_default_string_value_) {
+    delete string_value_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* ClientObjectProperty_Value::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return ClientObjectProperty_Value_descriptor_;
+}
+
+const ClientObjectProperty_Value& ClientObjectProperty_Value::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_Common_2eproto();  return *default_instance_;
+}
+
+ClientObjectProperty_Value* ClientObjectProperty_Value::default_instance_ = NULL;
+
+ClientObjectProperty_Value* ClientObjectProperty_Value::New() const {
+  return new ClientObjectProperty_Value;
+}
+
+void ClientObjectProperty_Value::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (_has_bit(0)) {
+      if (string_value_ != &_default_string_value_) {
+        string_value_->clear();
+      }
+    }
+    integer_value_ = 0;
+    unsigned_integer_value_ = 0u;
+    float_value_ = 0;
+    bool_value_ = false;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool ClientObjectProperty_Value::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional string string_value = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+              input, this->mutable_string_value()));
+        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+          this->string_value().data(), this->string_value().length(),
+          ::google::protobuf::internal::WireFormat::PARSE);
+        if (input->ExpectTag(16)) goto parse_integer_value;
+        break;
+      }
+      
+      // optional int32 integer_value = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_integer_value:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+              input, &integer_value_));
+        _set_bit(1);
+        if (input->ExpectTag(24)) goto parse_unsigned_integer_value;
+        break;
+      }
+      
+      // optional uint32 unsigned_integer_value = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_unsigned_integer_value:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
+              input, &unsigned_integer_value_));
+        _set_bit(2);
+        if (input->ExpectTag(37)) goto parse_float_value;
+        break;
+      }
+      
+      // optional float float_value = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+          goto handle_uninterpreted;
+        }
+       parse_float_value:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadFloat(
+              input, &float_value_));
+        _set_bit(3);
+        if (input->ExpectTag(40)) goto parse_bool_value;
+        break;
+      }
+      
+      // optional bool bool_value = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_bool_value:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
+              input, &bool_value_));
+        _set_bit(4);
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void ClientObjectProperty_Value::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    ClientObjectProperty_Value::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // optional string string_value = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->string_value().data(), this->string_value().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->string_value(), output);
+  }
+  
+  // optional int32 integer_value = 2;
+  if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->integer_value(), output);
+  }
+  
+  // optional uint32 unsigned_integer_value = 3;
+  if (_has_bit(2)) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->unsigned_integer_value(), output);
+  }
+  
+  // optional float float_value = 4;
+  if (_has_bit(3)) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(4, this->float_value(), output);
+  }
+  
+  // optional bool bool_value = 5;
+  if (_has_bit(4)) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(5, this->bool_value(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* ClientObjectProperty_Value::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // optional string string_value = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->string_value().data(), this->string_value().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->string_value(), target);
+  }
+  
+  // optional int32 integer_value = 2;
+  if (_has_bit(1)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->integer_value(), target);
+  }
+  
+  // optional uint32 unsigned_integer_value = 3;
+  if (_has_bit(2)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->unsigned_integer_value(), target);
+  }
+  
+  // optional float float_value = 4;
+  if (_has_bit(3)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(4, this->float_value(), target);
+  }
+  
+  // optional bool bool_value = 5;
+  if (_has_bit(4)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(5, this->bool_value(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int ClientObjectProperty_Value::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional string string_value = 1;
+    if (has_string_value()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->string_value());
+    }
+    
+    // optional int32 integer_value = 2;
+    if (has_integer_value()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->integer_value());
+    }
+    
+    // optional uint32 unsigned_integer_value = 3;
+    if (has_unsigned_integer_value()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->unsigned_integer_value());
+    }
+    
+    // optional float float_value = 4;
+    if (has_float_value()) {
+      total_size += 1 + 4;
+    }
+    
+    // optional bool bool_value = 5;
+    if (has_bool_value()) {
+      total_size += 1 + 1;
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void ClientObjectProperty_Value::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const ClientObjectProperty_Value* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const ClientObjectProperty_Value*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void ClientObjectProperty_Value::MergeFrom(const ClientObjectProperty_Value& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      set_string_value(from.string_value());
+    }
+    if (from._has_bit(1)) {
+      set_integer_value(from.integer_value());
+    }
+    if (from._has_bit(2)) {
+      set_unsigned_integer_value(from.unsigned_integer_value());
+    }
+    if (from._has_bit(3)) {
+      set_float_value(from.float_value());
+    }
+    if (from._has_bit(4)) {
+      set_bool_value(from.bool_value());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void ClientObjectProperty_Value::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void ClientObjectProperty_Value::CopyFrom(const ClientObjectProperty_Value& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ClientObjectProperty_Value::IsInitialized() const {
+  
+  return true;
+}
+
+void ClientObjectProperty_Value::Swap(ClientObjectProperty_Value* other) {
+  if (other != this) {
+    std::swap(string_value_, other->string_value_);
+    std::swap(integer_value_, other->integer_value_);
+    std::swap(unsigned_integer_value_, other->unsigned_integer_value_);
+    std::swap(float_value_, other->float_value_);
+    std::swap(bool_value_, other->bool_value_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata ClientObjectProperty_Value::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = ClientObjectProperty_Value_descriptor_;
+  metadata.reflection = ClientObjectProperty_Value_reflection_;
+  return metadata;
+}
+
+
+// -------------------------------------------------------------------
+
+const ::std::string ClientObjectProperty::_default_name_;
+#ifndef _MSC_VER
+const int ClientObjectProperty::kNameFieldNumber;
+const int ClientObjectProperty::kValueFieldNumber;
+#endif  // !_MSC_VER
+
+ClientObjectProperty::ClientObjectProperty() {
+  SharedCtor();
+}
+
+void ClientObjectProperty::InitAsDefaultInstance() {
+  value_ = const_cast< ::Common::ClientObjectProperty_Value*>(&::Common::ClientObjectProperty_Value::default_instance());
+}
+
+ClientObjectProperty::ClientObjectProperty(const ClientObjectProperty& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void ClientObjectProperty::SharedCtor() {
+  _cached_size_ = 0;
+  name_ = const_cast< ::std::string*>(&_default_name_);
+  value_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+ClientObjectProperty::~ClientObjectProperty() {
+  SharedDtor();
+}
+
+void ClientObjectProperty::SharedDtor() {
+  if (name_ != &_default_name_) {
+    delete name_;
+  }
+  if (this != default_instance_) {
+    delete value_;
+  }
+}
+
+const ::google::protobuf::Descriptor* ClientObjectProperty::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return ClientObjectProperty_descriptor_;
+}
+
+const ClientObjectProperty& ClientObjectProperty::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_Common_2eproto();  return *default_instance_;
+}
+
+ClientObjectProperty* ClientObjectProperty::default_instance_ = NULL;
+
+ClientObjectProperty* ClientObjectProperty::New() const {
+  return new ClientObjectProperty;
+}
+
+void ClientObjectProperty::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (_has_bit(0)) {
+      if (name_ != &_default_name_) {
+        name_->clear();
+      }
+    }
+    if (_has_bit(1)) {
+      if (value_ != NULL) value_->::Common::ClientObjectProperty_Value::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool ClientObjectProperty::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string name = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+              input, this->mutable_name()));
+        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+          this->name().data(), this->name().length(),
+          ::google::protobuf::internal::WireFormat::PARSE);
+        if (input->ExpectTag(18)) goto parse_value;
+        break;
+      }
+      
+      // required .Common.ClientObjectProperty.Value value = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_value:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_value()));
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void ClientObjectProperty::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    ClientObjectProperty::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // required string name = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->name(), output);
+  }
+  
+  // required .Common.ClientObjectProperty.Value value = 2;
+  if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      2, this->value(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* ClientObjectProperty::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required string name = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->name(), target);
+  }
+  
+  // required .Common.ClientObjectProperty.Value value = 2;
+  if (_has_bit(1)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->value(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int ClientObjectProperty::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required string name = 1;
+    if (has_name()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->name());
+    }
+    
+    // required .Common.ClientObjectProperty.Value value = 2;
+    if (has_value()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->value());
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void ClientObjectProperty::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const ClientObjectProperty* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const ClientObjectProperty*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void ClientObjectProperty::MergeFrom(const ClientObjectProperty& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      set_name(from.name());
+    }
+    if (from._has_bit(1)) {
+      mutable_value()->::Common::ClientObjectProperty_Value::MergeFrom(from.value());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void ClientObjectProperty::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void ClientObjectProperty::CopyFrom(const ClientObjectProperty& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ClientObjectProperty::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  
+  return true;
+}
+
+void ClientObjectProperty::Swap(ClientObjectProperty* other) {
+  if (other != this) {
+    std::swap(name_, other->name_);
+    std::swap(value_, other->value_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata ClientObjectProperty::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = ClientObjectProperty_descriptor_;
+  metadata.reflection = ClientObjectProperty_reflection_;
   return metadata;
 }
 

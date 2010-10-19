@@ -14,6 +14,7 @@
 #include "IntelligencesModel.h"
 #include "DrawingsModel.h"
 #include "NotesModel.h"
+#include "ClientObjectsModel.h"
 #include "Chat.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "dispatcher/LinkResolver_ABC.h"
@@ -131,4 +132,11 @@ void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, con
         model_->notes_.HandleRequest( wrapper.message().note_update_request() );
     if( wrapper.message().has_note_destruction_request() )
         model_->notes_.HandleRequest( wrapper.message().note_destruction_request() );
+    // Client objects
+    if( wrapper.message().has_client_object_creation_request() )
+        model_->clientObjects_.HandleRequest( publisher, wrapper.message().client_object_creation_request() );
+    if( wrapper.message().has_client_object_update_request() )
+        model_->clientObjects_.HandleRequest( publisher, wrapper.message().client_object_update_request() );
+    if( wrapper.message().has_client_object_destruction_request() )
+        model_->clientObjects_.HandleRequest( publisher, wrapper.message().client_object_destruction_request() );
 }

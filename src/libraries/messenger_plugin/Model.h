@@ -36,6 +36,7 @@ namespace messenger
     class IntelligencesModel;
     class DrawingsModel;
     class NotesModel;
+    class ClientObjectsModel;
 
 // =============================================================================
 /** @class  Model
@@ -87,8 +88,9 @@ public:
     const dispatcher::Config& config_;
     TacticalLinesModel& tacticalLines_;
     IntelligencesModel& intelligences_;
-    DrawingsModel&      drawings_;
-    NotesModel&         notes_;
+    DrawingsModel& drawings_;
+    NotesModel& notes_;
+    ClientObjectsModel& clientObjects_;
     //@}
 };
 

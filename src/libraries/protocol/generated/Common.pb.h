@@ -53,6 +53,7 @@ class UnitKnowledgeId;
 class UnitKnowledgeIdList;
 class UrbanObjectId;
 class UrbanObjectKnowledgeId;
+class ClientObjectId;
 class Tasker;
 class ParentEntity;
 class DrawingId;
@@ -127,6 +128,8 @@ class MsgMissionParameters;
 class MsgUnitOrder;
 class MsgAutomatOrder;
 class MsgCrowdOrder;
+class ClientObjectProperty;
+class ClientObjectProperty_Value;
 class MsgTacticalLine;
 class MsgTacticalLine_Diffusion;
 class MsgShape;
@@ -2811,6 +2814,93 @@ class UrbanObjectKnowledgeId : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static UrbanObjectKnowledgeId* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ClientObjectId : public ::google::protobuf::Message {
+ public:
+  ClientObjectId();
+  virtual ~ClientObjectId();
+  
+  ClientObjectId(const ClientObjectId& from);
+  
+  inline ClientObjectId& operator=(const ClientObjectId& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ClientObjectId& default_instance();
+  void Swap(ClientObjectId* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ClientObjectId* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ClientObjectId& from);
+  void MergeFrom(const ClientObjectId& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required uint32 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 id() const;
+  inline void set_id(::google::protobuf::uint32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::uint32 id_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ClientObjectId* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -10206,6 +10296,230 @@ class MsgCrowdOrder : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class ClientObjectProperty_Value : public ::google::protobuf::Message {
+ public:
+  ClientObjectProperty_Value();
+  virtual ~ClientObjectProperty_Value();
+  
+  ClientObjectProperty_Value(const ClientObjectProperty_Value& from);
+  
+  inline ClientObjectProperty_Value& operator=(const ClientObjectProperty_Value& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ClientObjectProperty_Value& default_instance();
+  void Swap(ClientObjectProperty_Value* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ClientObjectProperty_Value* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ClientObjectProperty_Value& from);
+  void MergeFrom(const ClientObjectProperty_Value& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional string string_value = 1;
+  inline bool has_string_value() const;
+  inline void clear_string_value();
+  static const int kStringValueFieldNumber = 1;
+  inline const ::std::string& string_value() const;
+  inline void set_string_value(const ::std::string& value);
+  inline void set_string_value(const char* value);
+  inline void set_string_value(const char* value, size_t size);
+  inline ::std::string* mutable_string_value();
+  
+  // optional int32 integer_value = 2;
+  inline bool has_integer_value() const;
+  inline void clear_integer_value();
+  static const int kIntegerValueFieldNumber = 2;
+  inline ::google::protobuf::int32 integer_value() const;
+  inline void set_integer_value(::google::protobuf::int32 value);
+  
+  // optional uint32 unsigned_integer_value = 3;
+  inline bool has_unsigned_integer_value() const;
+  inline void clear_unsigned_integer_value();
+  static const int kUnsignedIntegerValueFieldNumber = 3;
+  inline ::google::protobuf::uint32 unsigned_integer_value() const;
+  inline void set_unsigned_integer_value(::google::protobuf::uint32 value);
+  
+  // optional float float_value = 4;
+  inline bool has_float_value() const;
+  inline void clear_float_value();
+  static const int kFloatValueFieldNumber = 4;
+  inline float float_value() const;
+  inline void set_float_value(float value);
+  
+  // optional bool bool_value = 5;
+  inline bool has_bool_value() const;
+  inline void clear_bool_value();
+  static const int kBoolValueFieldNumber = 5;
+  inline bool bool_value() const;
+  inline void set_bool_value(bool value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* string_value_;
+  static const ::std::string _default_string_value_;
+  ::google::protobuf::int32 integer_value_;
+  ::google::protobuf::uint32 unsigned_integer_value_;
+  float float_value_;
+  bool bool_value_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ClientObjectProperty_Value* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ClientObjectProperty : public ::google::protobuf::Message {
+ public:
+  ClientObjectProperty();
+  virtual ~ClientObjectProperty();
+  
+  ClientObjectProperty(const ClientObjectProperty& from);
+  
+  inline ClientObjectProperty& operator=(const ClientObjectProperty& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ClientObjectProperty& default_instance();
+  void Swap(ClientObjectProperty* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ClientObjectProperty* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ClientObjectProperty& from);
+  void MergeFrom(const ClientObjectProperty& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  typedef ClientObjectProperty_Value Value;
+  
+  // accessors -------------------------------------------------------
+  
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  
+  // required .Common.ClientObjectProperty.Value value = 2;
+  inline bool has_value() const;
+  inline void clear_value();
+  static const int kValueFieldNumber = 2;
+  inline const ::Common::ClientObjectProperty_Value& value() const;
+  inline ::Common::ClientObjectProperty_Value* mutable_value();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* name_;
+  static const ::std::string _default_name_;
+  ::Common::ClientObjectProperty_Value* value_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ClientObjectProperty* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgTacticalLine_Diffusion : public ::google::protobuf::Message {
  public:
   MsgTacticalLine_Diffusion();
@@ -14081,6 +14395,26 @@ inline void UrbanObjectKnowledgeId::set_id(::google::protobuf::uint32 value) {
 
 // -------------------------------------------------------------------
 
+// ClientObjectId
+
+// required uint32 id = 1;
+inline bool ClientObjectId::has_id() const {
+  return _has_bit(0);
+}
+inline void ClientObjectId::clear_id() {
+  id_ = 0u;
+  _clear_bit(0);
+}
+inline ::google::protobuf::uint32 ClientObjectId::id() const {
+  return id_;
+}
+inline void ClientObjectId::set_id(::google::protobuf::uint32 value) {
+  _set_bit(0);
+  id_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // Tasker
 
 // optional .Common.AutomatId automat = 1;
@@ -17597,6 +17931,179 @@ inline ::Common::MsgDateTime* MsgCrowdOrder::mutable_start_time() {
   _set_bit(5);
   if (start_time_ == NULL) start_time_ = new ::Common::MsgDateTime;
   return start_time_;
+}
+
+// -------------------------------------------------------------------
+
+// ClientObjectProperty_Value
+
+// optional string string_value = 1;
+inline bool ClientObjectProperty_Value::has_string_value() const {
+  return _has_bit(0);
+}
+inline void ClientObjectProperty_Value::clear_string_value() {
+  if (string_value_ != &_default_string_value_) {
+    string_value_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& ClientObjectProperty_Value::string_value() const {
+  return *string_value_;
+}
+inline void ClientObjectProperty_Value::set_string_value(const ::std::string& value) {
+  _set_bit(0);
+  if (string_value_ == &_default_string_value_) {
+    string_value_ = new ::std::string;
+  }
+  string_value_->assign(value);
+}
+inline void ClientObjectProperty_Value::set_string_value(const char* value) {
+  _set_bit(0);
+  if (string_value_ == &_default_string_value_) {
+    string_value_ = new ::std::string;
+  }
+  string_value_->assign(value);
+}
+inline void ClientObjectProperty_Value::set_string_value(const char* value, size_t size) {
+  _set_bit(0);
+  if (string_value_ == &_default_string_value_) {
+    string_value_ = new ::std::string;
+  }
+  string_value_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ClientObjectProperty_Value::mutable_string_value() {
+  _set_bit(0);
+  if (string_value_ == &_default_string_value_) {
+    string_value_ = new ::std::string;
+  }
+  return string_value_;
+}
+
+// optional int32 integer_value = 2;
+inline bool ClientObjectProperty_Value::has_integer_value() const {
+  return _has_bit(1);
+}
+inline void ClientObjectProperty_Value::clear_integer_value() {
+  integer_value_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 ClientObjectProperty_Value::integer_value() const {
+  return integer_value_;
+}
+inline void ClientObjectProperty_Value::set_integer_value(::google::protobuf::int32 value) {
+  _set_bit(1);
+  integer_value_ = value;
+}
+
+// optional uint32 unsigned_integer_value = 3;
+inline bool ClientObjectProperty_Value::has_unsigned_integer_value() const {
+  return _has_bit(2);
+}
+inline void ClientObjectProperty_Value::clear_unsigned_integer_value() {
+  unsigned_integer_value_ = 0u;
+  _clear_bit(2);
+}
+inline ::google::protobuf::uint32 ClientObjectProperty_Value::unsigned_integer_value() const {
+  return unsigned_integer_value_;
+}
+inline void ClientObjectProperty_Value::set_unsigned_integer_value(::google::protobuf::uint32 value) {
+  _set_bit(2);
+  unsigned_integer_value_ = value;
+}
+
+// optional float float_value = 4;
+inline bool ClientObjectProperty_Value::has_float_value() const {
+  return _has_bit(3);
+}
+inline void ClientObjectProperty_Value::clear_float_value() {
+  float_value_ = 0;
+  _clear_bit(3);
+}
+inline float ClientObjectProperty_Value::float_value() const {
+  return float_value_;
+}
+inline void ClientObjectProperty_Value::set_float_value(float value) {
+  _set_bit(3);
+  float_value_ = value;
+}
+
+// optional bool bool_value = 5;
+inline bool ClientObjectProperty_Value::has_bool_value() const {
+  return _has_bit(4);
+}
+inline void ClientObjectProperty_Value::clear_bool_value() {
+  bool_value_ = false;
+  _clear_bit(4);
+}
+inline bool ClientObjectProperty_Value::bool_value() const {
+  return bool_value_;
+}
+inline void ClientObjectProperty_Value::set_bool_value(bool value) {
+  _set_bit(4);
+  bool_value_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ClientObjectProperty
+
+// required string name = 1;
+inline bool ClientObjectProperty::has_name() const {
+  return _has_bit(0);
+}
+inline void ClientObjectProperty::clear_name() {
+  if (name_ != &_default_name_) {
+    name_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& ClientObjectProperty::name() const {
+  return *name_;
+}
+inline void ClientObjectProperty::set_name(const ::std::string& value) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void ClientObjectProperty::set_name(const char* value) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void ClientObjectProperty::set_name(const char* value, size_t size) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ClientObjectProperty::mutable_name() {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+
+// required .Common.ClientObjectProperty.Value value = 2;
+inline bool ClientObjectProperty::has_value() const {
+  return _has_bit(1);
+}
+inline void ClientObjectProperty::clear_value() {
+  if (value_ != NULL) value_->::Common::ClientObjectProperty_Value::Clear();
+  _clear_bit(1);
+}
+inline const ::Common::ClientObjectProperty_Value& ClientObjectProperty::value() const {
+  return value_ != NULL ? *value_ : *default_instance_->value_;
+}
+inline ::Common::ClientObjectProperty_Value* ClientObjectProperty::mutable_value() {
+  _set_bit(1);
+  if (value_ == NULL) value_ = new ::Common::ClientObjectProperty_Value;
+  return value_;
 }
 
 // -------------------------------------------------------------------

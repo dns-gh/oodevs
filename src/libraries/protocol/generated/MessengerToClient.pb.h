@@ -61,6 +61,13 @@ class MsgShapeDestructionRequestAck;
 class MsgNoteCreation;
 class MsgNoteUpdate;
 class MsgNoteDestruction;
+class ClientObjectAck;
+class MsgClientObjectCreation;
+class MsgClientObjectUpdate;
+class MsgClientObjectDestruction;
+class MsgClientObjectCreationRequestAck;
+class MsgClientObjectUpdateRequestAck;
+class MsgClientObjectDestructionRequestAck;
 class MsgMessengerToClient;
 class MsgMessengerToClient_Content;
 
@@ -123,6 +130,26 @@ inline bool ShapeRequestAck_ErrorCode_Parse(
     const ::std::string& name, ShapeRequestAck_ErrorCode* value) {
   return ::google::protobuf::internal::ParseNamedEnum<ShapeRequestAck_ErrorCode>(
     ShapeRequestAck_ErrorCode_descriptor(), name, value);
+}
+enum ClientObjectAck_ErrorCode {
+  ClientObjectAck_ErrorCode_success = 0,
+  ClientObjectAck_ErrorCode_duplicate_attribute_name = 1,
+  ClientObjectAck_ErrorCode_invalid_attribute_name = 2,
+  ClientObjectAck_ErrorCode_invalid_object_id = 3
+};
+bool ClientObjectAck_ErrorCode_IsValid(int value);
+const ClientObjectAck_ErrorCode ClientObjectAck_ErrorCode_ErrorCode_MIN = ClientObjectAck_ErrorCode_success;
+const ClientObjectAck_ErrorCode ClientObjectAck_ErrorCode_ErrorCode_MAX = ClientObjectAck_ErrorCode_invalid_object_id;
+
+const ::google::protobuf::EnumDescriptor* ClientObjectAck_ErrorCode_descriptor();
+inline const ::std::string& ClientObjectAck_ErrorCode_Name(ClientObjectAck_ErrorCode value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    ClientObjectAck_ErrorCode_descriptor(), value);
+}
+inline bool ClientObjectAck_ErrorCode_Parse(
+    const ::std::string& name, ClientObjectAck_ErrorCode* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ClientObjectAck_ErrorCode>(
+    ClientObjectAck_ErrorCode_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -3016,6 +3043,705 @@ class MsgNoteDestruction : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class ClientObjectAck : public ::google::protobuf::Message {
+ public:
+  ClientObjectAck();
+  virtual ~ClientObjectAck();
+  
+  ClientObjectAck(const ClientObjectAck& from);
+  
+  inline ClientObjectAck& operator=(const ClientObjectAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ClientObjectAck& default_instance();
+  void Swap(ClientObjectAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ClientObjectAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ClientObjectAck& from);
+  void MergeFrom(const ClientObjectAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  typedef ClientObjectAck_ErrorCode ErrorCode;
+  static const ErrorCode success = ClientObjectAck_ErrorCode_success;
+  static const ErrorCode duplicate_attribute_name = ClientObjectAck_ErrorCode_duplicate_attribute_name;
+  static const ErrorCode invalid_attribute_name = ClientObjectAck_ErrorCode_invalid_attribute_name;
+  static const ErrorCode invalid_object_id = ClientObjectAck_ErrorCode_invalid_object_id;
+  static inline bool ErrorCode_IsValid(int value) {
+    return ClientObjectAck_ErrorCode_IsValid(value);
+  }
+  static const ErrorCode ErrorCode_MIN =
+    ClientObjectAck_ErrorCode_ErrorCode_MIN;
+  static const ErrorCode ErrorCode_MAX =
+    ClientObjectAck_ErrorCode_ErrorCode_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  ErrorCode_descriptor() {
+    return ClientObjectAck_ErrorCode_descriptor();
+  }
+  static inline const ::std::string& ErrorCode_Name(ErrorCode value) {
+    return ClientObjectAck_ErrorCode_Name(value);
+  }
+  static inline bool ErrorCode_Parse(const ::std::string& name,
+      ErrorCode* value) {
+    return ClientObjectAck_ErrorCode_Parse(name, value);
+  }
+  
+  // accessors -------------------------------------------------------
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  friend void  protobuf_AddDesc_MessengerToClient_2eproto();
+  friend void protobuf_AssignDesc_MessengerToClient_2eproto();
+  friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[1];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ClientObjectAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgClientObjectCreation : public ::google::protobuf::Message {
+ public:
+  MsgClientObjectCreation();
+  virtual ~MsgClientObjectCreation();
+  
+  MsgClientObjectCreation(const MsgClientObjectCreation& from);
+  
+  inline MsgClientObjectCreation& operator=(const MsgClientObjectCreation& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgClientObjectCreation& default_instance();
+  void Swap(MsgClientObjectCreation* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgClientObjectCreation* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgClientObjectCreation& from);
+  void MergeFrom(const MsgClientObjectCreation& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.ClientObjectId object = 1;
+  inline bool has_object() const;
+  inline void clear_object();
+  static const int kObjectFieldNumber = 1;
+  inline const ::Common::ClientObjectId& object() const;
+  inline ::Common::ClientObjectId* mutable_object();
+  
+  // required string name = 2;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 2;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  
+  // repeated .Common.ClientObjectProperty properties = 3;
+  inline int properties_size() const;
+  inline void clear_properties();
+  static const int kPropertiesFieldNumber = 3;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::ClientObjectProperty >& properties() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::ClientObjectProperty >* mutable_properties();
+  inline const ::Common::ClientObjectProperty& properties(int index) const;
+  inline ::Common::ClientObjectProperty* mutable_properties(int index);
+  inline ::Common::ClientObjectProperty* add_properties();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::ClientObjectId* object_;
+  ::std::string* name_;
+  static const ::std::string _default_name_;
+  ::google::protobuf::RepeatedPtrField< ::Common::ClientObjectProperty > properties_;
+  friend void  protobuf_AddDesc_MessengerToClient_2eproto();
+  friend void protobuf_AssignDesc_MessengerToClient_2eproto();
+  friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgClientObjectCreation* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgClientObjectUpdate : public ::google::protobuf::Message {
+ public:
+  MsgClientObjectUpdate();
+  virtual ~MsgClientObjectUpdate();
+  
+  MsgClientObjectUpdate(const MsgClientObjectUpdate& from);
+  
+  inline MsgClientObjectUpdate& operator=(const MsgClientObjectUpdate& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgClientObjectUpdate& default_instance();
+  void Swap(MsgClientObjectUpdate* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgClientObjectUpdate* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgClientObjectUpdate& from);
+  void MergeFrom(const MsgClientObjectUpdate& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.ClientObjectId object = 1;
+  inline bool has_object() const;
+  inline void clear_object();
+  static const int kObjectFieldNumber = 1;
+  inline const ::Common::ClientObjectId& object() const;
+  inline ::Common::ClientObjectId* mutable_object();
+  
+  // optional string name = 2;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 2;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  
+  // repeated .Common.ClientObjectProperty properties = 3;
+  inline int properties_size() const;
+  inline void clear_properties();
+  static const int kPropertiesFieldNumber = 3;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::ClientObjectProperty >& properties() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::ClientObjectProperty >* mutable_properties();
+  inline const ::Common::ClientObjectProperty& properties(int index) const;
+  inline ::Common::ClientObjectProperty* mutable_properties(int index);
+  inline ::Common::ClientObjectProperty* add_properties();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::ClientObjectId* object_;
+  ::std::string* name_;
+  static const ::std::string _default_name_;
+  ::google::protobuf::RepeatedPtrField< ::Common::ClientObjectProperty > properties_;
+  friend void  protobuf_AddDesc_MessengerToClient_2eproto();
+  friend void protobuf_AssignDesc_MessengerToClient_2eproto();
+  friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgClientObjectUpdate* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgClientObjectDestruction : public ::google::protobuf::Message {
+ public:
+  MsgClientObjectDestruction();
+  virtual ~MsgClientObjectDestruction();
+  
+  MsgClientObjectDestruction(const MsgClientObjectDestruction& from);
+  
+  inline MsgClientObjectDestruction& operator=(const MsgClientObjectDestruction& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgClientObjectDestruction& default_instance();
+  void Swap(MsgClientObjectDestruction* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgClientObjectDestruction* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgClientObjectDestruction& from);
+  void MergeFrom(const MsgClientObjectDestruction& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.ClientObjectId object = 1;
+  inline bool has_object() const;
+  inline void clear_object();
+  static const int kObjectFieldNumber = 1;
+  inline const ::Common::ClientObjectId& object() const;
+  inline ::Common::ClientObjectId* mutable_object();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::ClientObjectId* object_;
+  friend void  protobuf_AddDesc_MessengerToClient_2eproto();
+  friend void protobuf_AssignDesc_MessengerToClient_2eproto();
+  friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgClientObjectDestruction* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgClientObjectCreationRequestAck : public ::google::protobuf::Message {
+ public:
+  MsgClientObjectCreationRequestAck();
+  virtual ~MsgClientObjectCreationRequestAck();
+  
+  MsgClientObjectCreationRequestAck(const MsgClientObjectCreationRequestAck& from);
+  
+  inline MsgClientObjectCreationRequestAck& operator=(const MsgClientObjectCreationRequestAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgClientObjectCreationRequestAck& default_instance();
+  void Swap(MsgClientObjectCreationRequestAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgClientObjectCreationRequestAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgClientObjectCreationRequestAck& from);
+  void MergeFrom(const MsgClientObjectCreationRequestAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  
+  // required .MsgsMessengerToClient.ClientObjectAck.ErrorCode error_code = 2;
+  inline bool has_error_code() const;
+  inline void clear_error_code();
+  static const int kErrorCodeFieldNumber = 2;
+  inline ::MsgsMessengerToClient::ClientObjectAck_ErrorCode error_code() const;
+  inline void set_error_code(::MsgsMessengerToClient::ClientObjectAck_ErrorCode value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* name_;
+  static const ::std::string _default_name_;
+  int error_code_;
+  friend void  protobuf_AddDesc_MessengerToClient_2eproto();
+  friend void protobuf_AssignDesc_MessengerToClient_2eproto();
+  friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgClientObjectCreationRequestAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgClientObjectUpdateRequestAck : public ::google::protobuf::Message {
+ public:
+  MsgClientObjectUpdateRequestAck();
+  virtual ~MsgClientObjectUpdateRequestAck();
+  
+  MsgClientObjectUpdateRequestAck(const MsgClientObjectUpdateRequestAck& from);
+  
+  inline MsgClientObjectUpdateRequestAck& operator=(const MsgClientObjectUpdateRequestAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgClientObjectUpdateRequestAck& default_instance();
+  void Swap(MsgClientObjectUpdateRequestAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgClientObjectUpdateRequestAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgClientObjectUpdateRequestAck& from);
+  void MergeFrom(const MsgClientObjectUpdateRequestAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.ClientObjectId object = 1;
+  inline bool has_object() const;
+  inline void clear_object();
+  static const int kObjectFieldNumber = 1;
+  inline const ::Common::ClientObjectId& object() const;
+  inline ::Common::ClientObjectId* mutable_object();
+  
+  // required .MsgsMessengerToClient.ClientObjectAck.ErrorCode error_code = 2;
+  inline bool has_error_code() const;
+  inline void clear_error_code();
+  static const int kErrorCodeFieldNumber = 2;
+  inline ::MsgsMessengerToClient::ClientObjectAck_ErrorCode error_code() const;
+  inline void set_error_code(::MsgsMessengerToClient::ClientObjectAck_ErrorCode value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::ClientObjectId* object_;
+  int error_code_;
+  friend void  protobuf_AddDesc_MessengerToClient_2eproto();
+  friend void protobuf_AssignDesc_MessengerToClient_2eproto();
+  friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgClientObjectUpdateRequestAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgClientObjectDestructionRequestAck : public ::google::protobuf::Message {
+ public:
+  MsgClientObjectDestructionRequestAck();
+  virtual ~MsgClientObjectDestructionRequestAck();
+  
+  MsgClientObjectDestructionRequestAck(const MsgClientObjectDestructionRequestAck& from);
+  
+  inline MsgClientObjectDestructionRequestAck& operator=(const MsgClientObjectDestructionRequestAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgClientObjectDestructionRequestAck& default_instance();
+  void Swap(MsgClientObjectDestructionRequestAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgClientObjectDestructionRequestAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgClientObjectDestructionRequestAck& from);
+  void MergeFrom(const MsgClientObjectDestructionRequestAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.ClientObjectId object = 1;
+  inline bool has_object() const;
+  inline void clear_object();
+  static const int kObjectFieldNumber = 1;
+  inline const ::Common::ClientObjectId& object() const;
+  inline ::Common::ClientObjectId* mutable_object();
+  
+  // required .MsgsMessengerToClient.ClientObjectAck.ErrorCode error_code = 2;
+  inline bool has_error_code() const;
+  inline void clear_error_code();
+  static const int kErrorCodeFieldNumber = 2;
+  inline ::MsgsMessengerToClient::ClientObjectAck_ErrorCode error_code() const;
+  inline void set_error_code(::MsgsMessengerToClient::ClientObjectAck_ErrorCode value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::ClientObjectId* object_;
+  int error_code_;
+  friend void  protobuf_AddDesc_MessengerToClient_2eproto();
+  friend void protobuf_AssignDesc_MessengerToClient_2eproto();
+  friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgClientObjectDestructionRequestAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgMessengerToClient_Content : public ::google::protobuf::Message {
  public:
   MsgMessengerToClient_Content();
@@ -3265,6 +3991,48 @@ class MsgMessengerToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsMessengerToClient::MsgNoteDestruction& note_destruction() const;
   inline ::MsgsMessengerToClient::MsgNoteDestruction* mutable_note_destruction();
   
+  // optional .MsgsMessengerToClient.MsgClientObjectCreation client_object_creation = 29;
+  inline bool has_client_object_creation() const;
+  inline void clear_client_object_creation();
+  static const int kClientObjectCreationFieldNumber = 29;
+  inline const ::MsgsMessengerToClient::MsgClientObjectCreation& client_object_creation() const;
+  inline ::MsgsMessengerToClient::MsgClientObjectCreation* mutable_client_object_creation();
+  
+  // optional .MsgsMessengerToClient.MsgClientObjectUpdate client_object_update = 30;
+  inline bool has_client_object_update() const;
+  inline void clear_client_object_update();
+  static const int kClientObjectUpdateFieldNumber = 30;
+  inline const ::MsgsMessengerToClient::MsgClientObjectUpdate& client_object_update() const;
+  inline ::MsgsMessengerToClient::MsgClientObjectUpdate* mutable_client_object_update();
+  
+  // optional .MsgsMessengerToClient.MsgClientObjectDestruction client_object_destruction = 31;
+  inline bool has_client_object_destruction() const;
+  inline void clear_client_object_destruction();
+  static const int kClientObjectDestructionFieldNumber = 31;
+  inline const ::MsgsMessengerToClient::MsgClientObjectDestruction& client_object_destruction() const;
+  inline ::MsgsMessengerToClient::MsgClientObjectDestruction* mutable_client_object_destruction();
+  
+  // optional .MsgsMessengerToClient.MsgClientObjectCreationRequestAck client_object_creation_ack = 32;
+  inline bool has_client_object_creation_ack() const;
+  inline void clear_client_object_creation_ack();
+  static const int kClientObjectCreationAckFieldNumber = 32;
+  inline const ::MsgsMessengerToClient::MsgClientObjectCreationRequestAck& client_object_creation_ack() const;
+  inline ::MsgsMessengerToClient::MsgClientObjectCreationRequestAck* mutable_client_object_creation_ack();
+  
+  // optional .MsgsMessengerToClient.MsgClientObjectUpdateRequestAck client_object_update_ack = 33;
+  inline bool has_client_object_update_ack() const;
+  inline void clear_client_object_update_ack();
+  static const int kClientObjectUpdateAckFieldNumber = 33;
+  inline const ::MsgsMessengerToClient::MsgClientObjectUpdateRequestAck& client_object_update_ack() const;
+  inline ::MsgsMessengerToClient::MsgClientObjectUpdateRequestAck* mutable_client_object_update_ack();
+  
+  // optional .MsgsMessengerToClient.MsgClientObjectDestructionRequestAck client_object_destruction_ack = 34;
+  inline bool has_client_object_destruction_ack() const;
+  inline void clear_client_object_destruction_ack();
+  static const int kClientObjectDestructionAckFieldNumber = 34;
+  inline const ::MsgsMessengerToClient::MsgClientObjectDestructionRequestAck& client_object_destruction_ack() const;
+  inline ::MsgsMessengerToClient::MsgClientObjectDestructionRequestAck* mutable_client_object_destruction_ack();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -3297,11 +4065,17 @@ class MsgMessengerToClient_Content : public ::google::protobuf::Message {
   ::MsgsMessengerToClient::MsgNoteCreation* note_creation_;
   ::MsgsMessengerToClient::MsgNoteUpdate* note_update_;
   ::MsgsMessengerToClient::MsgNoteDestruction* note_destruction_;
+  ::MsgsMessengerToClient::MsgClientObjectCreation* client_object_creation_;
+  ::MsgsMessengerToClient::MsgClientObjectUpdate* client_object_update_;
+  ::MsgsMessengerToClient::MsgClientObjectDestruction* client_object_destruction_;
+  ::MsgsMessengerToClient::MsgClientObjectCreationRequestAck* client_object_creation_ack_;
+  ::MsgsMessengerToClient::MsgClientObjectUpdateRequestAck* client_object_update_ack_;
+  ::MsgsMessengerToClient::MsgClientObjectDestructionRequestAck* client_object_destruction_ack_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
   friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(28 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(34 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -4654,6 +5428,346 @@ inline void MsgNoteDestruction::set_id(::google::protobuf::uint32 value) {
 
 // -------------------------------------------------------------------
 
+// ClientObjectAck
+
+// -------------------------------------------------------------------
+
+// MsgClientObjectCreation
+
+// required .Common.ClientObjectId object = 1;
+inline bool MsgClientObjectCreation::has_object() const {
+  return _has_bit(0);
+}
+inline void MsgClientObjectCreation::clear_object() {
+  if (object_ != NULL) object_->::Common::ClientObjectId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::ClientObjectId& MsgClientObjectCreation::object() const {
+  return object_ != NULL ? *object_ : *default_instance_->object_;
+}
+inline ::Common::ClientObjectId* MsgClientObjectCreation::mutable_object() {
+  _set_bit(0);
+  if (object_ == NULL) object_ = new ::Common::ClientObjectId;
+  return object_;
+}
+
+// required string name = 2;
+inline bool MsgClientObjectCreation::has_name() const {
+  return _has_bit(1);
+}
+inline void MsgClientObjectCreation::clear_name() {
+  if (name_ != &_default_name_) {
+    name_->clear();
+  }
+  _clear_bit(1);
+}
+inline const ::std::string& MsgClientObjectCreation::name() const {
+  return *name_;
+}
+inline void MsgClientObjectCreation::set_name(const ::std::string& value) {
+  _set_bit(1);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgClientObjectCreation::set_name(const char* value) {
+  _set_bit(1);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgClientObjectCreation::set_name(const char* value, size_t size) {
+  _set_bit(1);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgClientObjectCreation::mutable_name() {
+  _set_bit(1);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+
+// repeated .Common.ClientObjectProperty properties = 3;
+inline int MsgClientObjectCreation::properties_size() const {
+  return properties_.size();
+}
+inline void MsgClientObjectCreation::clear_properties() {
+  properties_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Common::ClientObjectProperty >&
+MsgClientObjectCreation::properties() const {
+  return properties_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Common::ClientObjectProperty >*
+MsgClientObjectCreation::mutable_properties() {
+  return &properties_;
+}
+inline const ::Common::ClientObjectProperty& MsgClientObjectCreation::properties(int index) const {
+  return properties_.Get(index);
+}
+inline ::Common::ClientObjectProperty* MsgClientObjectCreation::mutable_properties(int index) {
+  return properties_.Mutable(index);
+}
+inline ::Common::ClientObjectProperty* MsgClientObjectCreation::add_properties() {
+  return properties_.Add();
+}
+
+// -------------------------------------------------------------------
+
+// MsgClientObjectUpdate
+
+// required .Common.ClientObjectId object = 1;
+inline bool MsgClientObjectUpdate::has_object() const {
+  return _has_bit(0);
+}
+inline void MsgClientObjectUpdate::clear_object() {
+  if (object_ != NULL) object_->::Common::ClientObjectId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::ClientObjectId& MsgClientObjectUpdate::object() const {
+  return object_ != NULL ? *object_ : *default_instance_->object_;
+}
+inline ::Common::ClientObjectId* MsgClientObjectUpdate::mutable_object() {
+  _set_bit(0);
+  if (object_ == NULL) object_ = new ::Common::ClientObjectId;
+  return object_;
+}
+
+// optional string name = 2;
+inline bool MsgClientObjectUpdate::has_name() const {
+  return _has_bit(1);
+}
+inline void MsgClientObjectUpdate::clear_name() {
+  if (name_ != &_default_name_) {
+    name_->clear();
+  }
+  _clear_bit(1);
+}
+inline const ::std::string& MsgClientObjectUpdate::name() const {
+  return *name_;
+}
+inline void MsgClientObjectUpdate::set_name(const ::std::string& value) {
+  _set_bit(1);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgClientObjectUpdate::set_name(const char* value) {
+  _set_bit(1);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgClientObjectUpdate::set_name(const char* value, size_t size) {
+  _set_bit(1);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgClientObjectUpdate::mutable_name() {
+  _set_bit(1);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+
+// repeated .Common.ClientObjectProperty properties = 3;
+inline int MsgClientObjectUpdate::properties_size() const {
+  return properties_.size();
+}
+inline void MsgClientObjectUpdate::clear_properties() {
+  properties_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Common::ClientObjectProperty >&
+MsgClientObjectUpdate::properties() const {
+  return properties_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Common::ClientObjectProperty >*
+MsgClientObjectUpdate::mutable_properties() {
+  return &properties_;
+}
+inline const ::Common::ClientObjectProperty& MsgClientObjectUpdate::properties(int index) const {
+  return properties_.Get(index);
+}
+inline ::Common::ClientObjectProperty* MsgClientObjectUpdate::mutable_properties(int index) {
+  return properties_.Mutable(index);
+}
+inline ::Common::ClientObjectProperty* MsgClientObjectUpdate::add_properties() {
+  return properties_.Add();
+}
+
+// -------------------------------------------------------------------
+
+// MsgClientObjectDestruction
+
+// required .Common.ClientObjectId object = 1;
+inline bool MsgClientObjectDestruction::has_object() const {
+  return _has_bit(0);
+}
+inline void MsgClientObjectDestruction::clear_object() {
+  if (object_ != NULL) object_->::Common::ClientObjectId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::ClientObjectId& MsgClientObjectDestruction::object() const {
+  return object_ != NULL ? *object_ : *default_instance_->object_;
+}
+inline ::Common::ClientObjectId* MsgClientObjectDestruction::mutable_object() {
+  _set_bit(0);
+  if (object_ == NULL) object_ = new ::Common::ClientObjectId;
+  return object_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgClientObjectCreationRequestAck
+
+// required string name = 1;
+inline bool MsgClientObjectCreationRequestAck::has_name() const {
+  return _has_bit(0);
+}
+inline void MsgClientObjectCreationRequestAck::clear_name() {
+  if (name_ != &_default_name_) {
+    name_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& MsgClientObjectCreationRequestAck::name() const {
+  return *name_;
+}
+inline void MsgClientObjectCreationRequestAck::set_name(const ::std::string& value) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgClientObjectCreationRequestAck::set_name(const char* value) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgClientObjectCreationRequestAck::set_name(const char* value, size_t size) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgClientObjectCreationRequestAck::mutable_name() {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+
+// required .MsgsMessengerToClient.ClientObjectAck.ErrorCode error_code = 2;
+inline bool MsgClientObjectCreationRequestAck::has_error_code() const {
+  return _has_bit(1);
+}
+inline void MsgClientObjectCreationRequestAck::clear_error_code() {
+  error_code_ = 0;
+  _clear_bit(1);
+}
+inline ::MsgsMessengerToClient::ClientObjectAck_ErrorCode MsgClientObjectCreationRequestAck::error_code() const {
+  return static_cast< ::MsgsMessengerToClient::ClientObjectAck_ErrorCode >(error_code_);
+}
+inline void MsgClientObjectCreationRequestAck::set_error_code(::MsgsMessengerToClient::ClientObjectAck_ErrorCode value) {
+  GOOGLE_DCHECK(::MsgsMessengerToClient::ClientObjectAck_ErrorCode_IsValid(value));
+  _set_bit(1);
+  error_code_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgClientObjectUpdateRequestAck
+
+// required .Common.ClientObjectId object = 1;
+inline bool MsgClientObjectUpdateRequestAck::has_object() const {
+  return _has_bit(0);
+}
+inline void MsgClientObjectUpdateRequestAck::clear_object() {
+  if (object_ != NULL) object_->::Common::ClientObjectId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::ClientObjectId& MsgClientObjectUpdateRequestAck::object() const {
+  return object_ != NULL ? *object_ : *default_instance_->object_;
+}
+inline ::Common::ClientObjectId* MsgClientObjectUpdateRequestAck::mutable_object() {
+  _set_bit(0);
+  if (object_ == NULL) object_ = new ::Common::ClientObjectId;
+  return object_;
+}
+
+// required .MsgsMessengerToClient.ClientObjectAck.ErrorCode error_code = 2;
+inline bool MsgClientObjectUpdateRequestAck::has_error_code() const {
+  return _has_bit(1);
+}
+inline void MsgClientObjectUpdateRequestAck::clear_error_code() {
+  error_code_ = 0;
+  _clear_bit(1);
+}
+inline ::MsgsMessengerToClient::ClientObjectAck_ErrorCode MsgClientObjectUpdateRequestAck::error_code() const {
+  return static_cast< ::MsgsMessengerToClient::ClientObjectAck_ErrorCode >(error_code_);
+}
+inline void MsgClientObjectUpdateRequestAck::set_error_code(::MsgsMessengerToClient::ClientObjectAck_ErrorCode value) {
+  GOOGLE_DCHECK(::MsgsMessengerToClient::ClientObjectAck_ErrorCode_IsValid(value));
+  _set_bit(1);
+  error_code_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgClientObjectDestructionRequestAck
+
+// required .Common.ClientObjectId object = 1;
+inline bool MsgClientObjectDestructionRequestAck::has_object() const {
+  return _has_bit(0);
+}
+inline void MsgClientObjectDestructionRequestAck::clear_object() {
+  if (object_ != NULL) object_->::Common::ClientObjectId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::ClientObjectId& MsgClientObjectDestructionRequestAck::object() const {
+  return object_ != NULL ? *object_ : *default_instance_->object_;
+}
+inline ::Common::ClientObjectId* MsgClientObjectDestructionRequestAck::mutable_object() {
+  _set_bit(0);
+  if (object_ == NULL) object_ = new ::Common::ClientObjectId;
+  return object_;
+}
+
+// required .MsgsMessengerToClient.ClientObjectAck.ErrorCode error_code = 2;
+inline bool MsgClientObjectDestructionRequestAck::has_error_code() const {
+  return _has_bit(1);
+}
+inline void MsgClientObjectDestructionRequestAck::clear_error_code() {
+  error_code_ = 0;
+  _clear_bit(1);
+}
+inline ::MsgsMessengerToClient::ClientObjectAck_ErrorCode MsgClientObjectDestructionRequestAck::error_code() const {
+  return static_cast< ::MsgsMessengerToClient::ClientObjectAck_ErrorCode >(error_code_);
+}
+inline void MsgClientObjectDestructionRequestAck::set_error_code(::MsgsMessengerToClient::ClientObjectAck_ErrorCode value) {
+  GOOGLE_DCHECK(::MsgsMessengerToClient::ClientObjectAck_ErrorCode_IsValid(value));
+  _set_bit(1);
+  error_code_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // MsgMessengerToClient_Content
 
 // optional .MsgsMessengerToClient.MsgLimitCreation limit_creation = 1;
@@ -5132,6 +6246,108 @@ inline ::MsgsMessengerToClient::MsgNoteDestruction* MsgMessengerToClient_Content
   return note_destruction_;
 }
 
+// optional .MsgsMessengerToClient.MsgClientObjectCreation client_object_creation = 29;
+inline bool MsgMessengerToClient_Content::has_client_object_creation() const {
+  return _has_bit(28);
+}
+inline void MsgMessengerToClient_Content::clear_client_object_creation() {
+  if (client_object_creation_ != NULL) client_object_creation_->::MsgsMessengerToClient::MsgClientObjectCreation::Clear();
+  _clear_bit(28);
+}
+inline const ::MsgsMessengerToClient::MsgClientObjectCreation& MsgMessengerToClient_Content::client_object_creation() const {
+  return client_object_creation_ != NULL ? *client_object_creation_ : *default_instance_->client_object_creation_;
+}
+inline ::MsgsMessengerToClient::MsgClientObjectCreation* MsgMessengerToClient_Content::mutable_client_object_creation() {
+  _set_bit(28);
+  if (client_object_creation_ == NULL) client_object_creation_ = new ::MsgsMessengerToClient::MsgClientObjectCreation;
+  return client_object_creation_;
+}
+
+// optional .MsgsMessengerToClient.MsgClientObjectUpdate client_object_update = 30;
+inline bool MsgMessengerToClient_Content::has_client_object_update() const {
+  return _has_bit(29);
+}
+inline void MsgMessengerToClient_Content::clear_client_object_update() {
+  if (client_object_update_ != NULL) client_object_update_->::MsgsMessengerToClient::MsgClientObjectUpdate::Clear();
+  _clear_bit(29);
+}
+inline const ::MsgsMessengerToClient::MsgClientObjectUpdate& MsgMessengerToClient_Content::client_object_update() const {
+  return client_object_update_ != NULL ? *client_object_update_ : *default_instance_->client_object_update_;
+}
+inline ::MsgsMessengerToClient::MsgClientObjectUpdate* MsgMessengerToClient_Content::mutable_client_object_update() {
+  _set_bit(29);
+  if (client_object_update_ == NULL) client_object_update_ = new ::MsgsMessengerToClient::MsgClientObjectUpdate;
+  return client_object_update_;
+}
+
+// optional .MsgsMessengerToClient.MsgClientObjectDestruction client_object_destruction = 31;
+inline bool MsgMessengerToClient_Content::has_client_object_destruction() const {
+  return _has_bit(30);
+}
+inline void MsgMessengerToClient_Content::clear_client_object_destruction() {
+  if (client_object_destruction_ != NULL) client_object_destruction_->::MsgsMessengerToClient::MsgClientObjectDestruction::Clear();
+  _clear_bit(30);
+}
+inline const ::MsgsMessengerToClient::MsgClientObjectDestruction& MsgMessengerToClient_Content::client_object_destruction() const {
+  return client_object_destruction_ != NULL ? *client_object_destruction_ : *default_instance_->client_object_destruction_;
+}
+inline ::MsgsMessengerToClient::MsgClientObjectDestruction* MsgMessengerToClient_Content::mutable_client_object_destruction() {
+  _set_bit(30);
+  if (client_object_destruction_ == NULL) client_object_destruction_ = new ::MsgsMessengerToClient::MsgClientObjectDestruction;
+  return client_object_destruction_;
+}
+
+// optional .MsgsMessengerToClient.MsgClientObjectCreationRequestAck client_object_creation_ack = 32;
+inline bool MsgMessengerToClient_Content::has_client_object_creation_ack() const {
+  return _has_bit(31);
+}
+inline void MsgMessengerToClient_Content::clear_client_object_creation_ack() {
+  if (client_object_creation_ack_ != NULL) client_object_creation_ack_->::MsgsMessengerToClient::MsgClientObjectCreationRequestAck::Clear();
+  _clear_bit(31);
+}
+inline const ::MsgsMessengerToClient::MsgClientObjectCreationRequestAck& MsgMessengerToClient_Content::client_object_creation_ack() const {
+  return client_object_creation_ack_ != NULL ? *client_object_creation_ack_ : *default_instance_->client_object_creation_ack_;
+}
+inline ::MsgsMessengerToClient::MsgClientObjectCreationRequestAck* MsgMessengerToClient_Content::mutable_client_object_creation_ack() {
+  _set_bit(31);
+  if (client_object_creation_ack_ == NULL) client_object_creation_ack_ = new ::MsgsMessengerToClient::MsgClientObjectCreationRequestAck;
+  return client_object_creation_ack_;
+}
+
+// optional .MsgsMessengerToClient.MsgClientObjectUpdateRequestAck client_object_update_ack = 33;
+inline bool MsgMessengerToClient_Content::has_client_object_update_ack() const {
+  return _has_bit(32);
+}
+inline void MsgMessengerToClient_Content::clear_client_object_update_ack() {
+  if (client_object_update_ack_ != NULL) client_object_update_ack_->::MsgsMessengerToClient::MsgClientObjectUpdateRequestAck::Clear();
+  _clear_bit(32);
+}
+inline const ::MsgsMessengerToClient::MsgClientObjectUpdateRequestAck& MsgMessengerToClient_Content::client_object_update_ack() const {
+  return client_object_update_ack_ != NULL ? *client_object_update_ack_ : *default_instance_->client_object_update_ack_;
+}
+inline ::MsgsMessengerToClient::MsgClientObjectUpdateRequestAck* MsgMessengerToClient_Content::mutable_client_object_update_ack() {
+  _set_bit(32);
+  if (client_object_update_ack_ == NULL) client_object_update_ack_ = new ::MsgsMessengerToClient::MsgClientObjectUpdateRequestAck;
+  return client_object_update_ack_;
+}
+
+// optional .MsgsMessengerToClient.MsgClientObjectDestructionRequestAck client_object_destruction_ack = 34;
+inline bool MsgMessengerToClient_Content::has_client_object_destruction_ack() const {
+  return _has_bit(33);
+}
+inline void MsgMessengerToClient_Content::clear_client_object_destruction_ack() {
+  if (client_object_destruction_ack_ != NULL) client_object_destruction_ack_->::MsgsMessengerToClient::MsgClientObjectDestructionRequestAck::Clear();
+  _clear_bit(33);
+}
+inline const ::MsgsMessengerToClient::MsgClientObjectDestructionRequestAck& MsgMessengerToClient_Content::client_object_destruction_ack() const {
+  return client_object_destruction_ack_ != NULL ? *client_object_destruction_ack_ : *default_instance_->client_object_destruction_ack_;
+}
+inline ::MsgsMessengerToClient::MsgClientObjectDestructionRequestAck* MsgMessengerToClient_Content::mutable_client_object_destruction_ack() {
+  _set_bit(33);
+  if (client_object_destruction_ack_ == NULL) client_object_destruction_ack_ = new ::MsgsMessengerToClient::MsgClientObjectDestructionRequestAck;
+  return client_object_destruction_ack_;
+}
+
 // -------------------------------------------------------------------
 
 // MsgMessengerToClient
@@ -5187,6 +6403,10 @@ inline const EnumDescriptor* GetEnumDescriptor< ::MsgsMessengerToClient::Intelli
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsMessengerToClient::ShapeRequestAck_ErrorCode>() {
   return ::MsgsMessengerToClient::ShapeRequestAck_ErrorCode_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsMessengerToClient::ClientObjectAck_ErrorCode>() {
+  return ::MsgsMessengerToClient::ClientObjectAck_ErrorCode_descriptor();
 }
 
 }  // namespace google
