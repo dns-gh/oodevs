@@ -40,7 +40,7 @@
       <populations>
         <population attitude="calme" humans="10000" id="29" name="Population standard [29]" position="31UEQ1089024355" type="Population standard"/>
       </populations>
-      <logistic/>
+      <logistics/>
     </side>
     <side id="3" name="Camp Rouge" type="enemy">
       <objects/>
@@ -62,7 +62,7 @@
         <knowledge-group id="4" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
   </sides>
   <diplomacies>

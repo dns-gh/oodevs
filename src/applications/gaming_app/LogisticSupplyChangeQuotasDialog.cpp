@@ -13,6 +13,7 @@
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Automat.h"
+#include "actions/Formation.h"
 #include "actions/ParameterList.h"
 #include "actions/UnitMagicAction.h"
 #include "gaming/AgentsModel.h"
@@ -21,22 +22,106 @@
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
+#include "gaming/TeamsModel.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/ExtensionVisitor_ABC.h"
 #include "tools/Iterator.h"
-#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "protocol/simulationsenders.h"
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
 
 using namespace kernel;
 using namespace gui;
 using namespace actions;
 using namespace parameters;
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyChangeQuotasDialog::SelectedHolder constructor
+// Created: AHC 2010-10-12
+// -----------------------------------------------------------------------------
+LogisticSupplyChangeQuotasDialog::SelectedHolder::SelectedHolder(kernel::Controllers& controllers)
+    : selectedAutomat_( controllers )
+    , selectedFormation_( controllers )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyChangeQuotasDialog::SelectedHolder::Selected
+// Created: AHC 2010-10-12
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* LogisticSupplyChangeQuotasDialog::SelectedHolder::Selected() const
+{
+    const kernel::Entity_ABC* retval = 0;
+    if( selectedAutomat_ )
+        retval = (const kernel::Entity_ABC*)selectedAutomat_;
+    if( selectedFormation_ )
+        retval = (const kernel::Entity_ABC*)selectedFormation_;
+    return retval;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyChangeQuotasDialog::SelectedHolder::Set
+// Created: AHC 2010-10-12
+// -----------------------------------------------------------------------------
+void LogisticSupplyChangeQuotasDialog::SelectedHolder::Set( const kernel::Automat_ABC& agent )
+{
+    selectedAutomat_ = &agent;
+    selectedFormation_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyChangeQuotasDialog::SelectedHolder::Set
+// Created: AHC 2010-10-12
+// -----------------------------------------------------------------------------
+void LogisticSupplyChangeQuotasDialog::SelectedHolder::Set( const kernel::Formation_ABC& agent )
+{
+    selectedFormation_ = &agent;
+    selectedAutomat_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyChangeQuotasDialog::SelectedHolder::operator const kernel::Entity_ABC*
+// Created: AHC 2010-10-12
+// -----------------------------------------------------------------------------
+LogisticSupplyChangeQuotasDialog::SelectedHolder::operator const kernel::Entity_ABC* () const
+{
+    return Selected();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyChangeQuotasDialog::SelectedHolder::Reset
+// Created: AHC 2010-10-12
+// -----------------------------------------------------------------------------
+void LogisticSupplyChangeQuotasDialog::SelectedHolder::Reset(  )
+{
+    selectedAutomat_ = 0;
+    selectedFormation_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyChangeQuotasDialog::SelectedHolder::GetParameter
+// Created: AHC 2010-10-12
+// -----------------------------------------------------------------------------
+actions::Parameter_ABC* LogisticSupplyChangeQuotasDialog::SelectedHolder::GetParameter(const kernel::OrderParameter& parameter, kernel::Controller& controller)
+{
+    actions::Parameter_ABC* retval = 0;
+    if(selectedAutomat_)
+        retval =  new parameters::Automat(parameter, *selectedAutomat_, controller);
+    else if(selectedFormation_)
+        retval =  new parameters::Formation(parameter, *selectedFormation_, controller);
+    return retval;
+}
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyChangeQuotasDialog constructor
@@ -58,7 +143,7 @@ LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* par
     QHBox* box = new QHBox( this );
     box->setMargin( 5 );
     new QLabel( tr( "Target:" ), box );
-    targetCombo_ = new ValuedComboBox< const Automat_ABC* >( box );
+    targetCombo_ = new ValuedComboBox< const Entity_ABC* >( box );
     targetCombo_->setMinimumWidth( 150 );
     layout->addWidget( box );
 
@@ -104,10 +189,25 @@ void LogisticSupplyChangeQuotasDialog::NotifyContextMenu( const Automat_ABC& age
 {
     if( profile_.CanBeOrdered( agent ) )
     {
-        const kernel::AutomatType& type = agent.GetType();
-        if( type.IsLogisticSupply() )
+        if( agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
         {
-            selected_ = &agent;
+            selected_.Set( agent );
+            menu.InsertItem( "Command", tr( "Allocate supply quotas" ), this, SLOT( Show() ) );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyChangeQuotasDialog::NotifyContextMenu
+// Created: SBO 2006-07-03
+// -----------------------------------------------------------------------------
+void LogisticSupplyChangeQuotasDialog::NotifyContextMenu( const kernel::Formation_ABC& agent, ContextMenu& menu )
+{
+    if( profile_.CanBeOrdered( agent ) )
+    {
+        if( agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
+        {
+            selected_.Set( agent );
             menu.InsertItem( "Command", tr( "Allocate supply quotas" ), this, SLOT( Show() ) );
         }
     }
@@ -123,13 +223,26 @@ void LogisticSupplyChangeQuotasDialog::Show()
         return;
 
     targetCombo_->Clear();
-    tools::Iterator< const Automat_ABC& > it = model_.agents_.Resolver< Automat_ABC >::CreateIterator();
-    while( it.HasMoreElements() )
+
     {
-        const Automat_ABC& agent = it.NextElement();
-        const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
-        if( log && ( log->GetSupply() == selected_ || ( log->GetSupply() == 0 && log->GetTC2() == selected_ ) ) )
-            targetCombo_->AddItem( agent.GetName(), &agent );
+        tools::Iterator< const Automat_ABC& > it = model_.agents_.Resolver< Automat_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Automat_ABC& agent = it.NextElement();
+            const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
+            if( log && ( log->GetSuperior() == selected_ || ( log->GetSuperior() == 0 && log->GetTC2() == selected_ ) ) )
+                targetCombo_->AddItem( agent.GetName(), &agent );
+        }
+    }
+    {
+        tools::Iterator< const Formation_ABC& > it = model_.teams_.Resolver< Formation_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Formation_ABC& agent = it.NextElement();
+            const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
+            if( log && log->GetSuperior() == selected_  )
+                targetCombo_->AddItem( agent.GetName(), &agent );
+        }
     }
     OnSelectionChanged();
     show();
@@ -149,7 +262,7 @@ namespace
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::Validate()
 {
-    const Automat_ABC* target = targetCombo_->count() ? targetCombo_->GetValue() : 0;
+    const Entity_ABC* target = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( !selected_ || !target )
         return;
 
@@ -162,7 +275,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, tr( "Log Supply Change Quotas" ), true );
 
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *new parameters::Automat( it.NextElement(), *selected_, controllers_.controller_ ) );
+    action->AddParameter( *selected_.GetParameter( it.NextElement(), controllers_.controller_ ) );
 
     parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
 
@@ -189,7 +302,26 @@ void LogisticSupplyChangeQuotasDialog::Validate()
 void LogisticSupplyChangeQuotasDialog::Reject()
 {
     reject();
-    selected_ = 0;
+    selected_.Reset();
+}
+
+namespace
+{
+
+	struct SupplyStatesVisitor : kernel::ExtensionVisitor_ABC<SupplyStates>
+	{
+		SupplyStatesVisitor( LogisticSupplyChangeQuotasDialog& dlg, void (LogisticSupplyChangeQuotasDialog::*pFunc)(const SupplyStates&) )
+				: dlg_(dlg), pFunc_ ( pFunc ) {}
+
+		void Visit( const SupplyStates& extension )
+		{
+			(dlg_.*pFunc_)(extension);
+		}
+	private:
+		LogisticSupplyChangeQuotasDialog& dlg_;
+		void (LogisticSupplyChangeQuotasDialog::*pFunc_)(const SupplyStates&);
+
+	};
 }
 
 // -----------------------------------------------------------------------------
@@ -201,14 +333,12 @@ void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
     supplies_.clear();
     dotationTypes_.clear();
     dotationTypes_.append( "" );
-    const Automat_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
+    const Entity_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( agent )
     {
-        // $$$$ AGE 2006-10-06: use LogisticHierarchies ?
-        const CommunicationHierarchies& hierarchies = agent->Get< CommunicationHierarchies >();
-        tools::Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
-        while( children.HasMoreElements() )
-            AddDotation( children.NextElement() );
+        const TacticalHierarchies& hierarchies = agent->Get< TacticalHierarchies >();
+        SupplyStatesVisitor visitor( *this, &LogisticSupplyChangeQuotasDialog::AddDotation );
+        hierarchies.Accept<SupplyStates>(visitor);
     }
     table_->setNumRows( 0 );
     if( ! dotationTypes_.empty() )
@@ -219,24 +349,21 @@ void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
 // Name: LogisticSupplyChangeQuotasDialog::AddDotation
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void LogisticSupplyChangeQuotasDialog::AddDotation( const kernel::Entity_ABC& entity )
+void LogisticSupplyChangeQuotasDialog::AddDotation( const SupplyStates& states )
 {
-    if( const SupplyStates* states = entity.Retrieve< SupplyStates >() )
-    {
-        tools::Iterator< const Dotation& > it = states->CreateIterator();
-        while( it.HasMoreElements() )
-        {
-            const Dotation& dotation = it.NextElement();
-            const QString type = dotation.type_->GetCategory().c_str();
-            Dotation& supply = supplies_[ type ];
-            if( ! supply.type_ )
-            {
-                dotationTypes_.append( type );
-                supply.type_ = dotation.type_;
-            }
-            supply.quantity_ += dotation.quantity_;
-        }
-    }
+	tools::Iterator< const Dotation& > it = states.CreateIterator();
+	while( it.HasMoreElements() )
+	{
+		const Dotation& dotation = it.NextElement();
+		const QString type = dotation.type_->GetCategory().c_str();
+		Dotation& supply = supplies_[ type ];
+		if( ! supply.type_ )
+		{
+			dotationTypes_.append( type );
+			supply.type_ = dotation.type_;
+		}
+		supply.quantity_ += dotation.quantity_;
+	}
 }
 
 // -----------------------------------------------------------------------------
@@ -245,7 +372,7 @@ void LogisticSupplyChangeQuotasDialog::AddDotation( const kernel::Entity_ABC& en
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
 {
-    const Automat_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
+    const Entity_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( !selected_ || !agent )
         return;
 
@@ -275,7 +402,7 @@ void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::AddItem()
 {
-    const Automat_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
+    const Entity_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( !selected_ || !agent )
         return;
     const unsigned int rows = table_->numRows() + 1;

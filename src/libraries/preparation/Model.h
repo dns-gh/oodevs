@@ -116,8 +116,8 @@ public:
     Exercise& exercise_;
     TeamsModel& teams_;
     KnowledgeGroupsModel& knowledgeGroups_;
-    FormationModel& formations_;
     AgentsModel& agents_;
+    FormationModel& formations_;
     LimitsModel& limits_;
     WeatherModel& weather_;
     ProfilesModel& profiles_;

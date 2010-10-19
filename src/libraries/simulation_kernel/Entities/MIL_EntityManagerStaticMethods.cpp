@@ -36,6 +36,8 @@
 #include "Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
+#include "Agents/Units/Logistic/PHY_LogisticLevel.h"
+#include "Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Agents/Units/Logistic/PHY_BreakdownType.h"
 #include "Agents/Roles/Logistic/PHY_Convoy_ABC.h"
@@ -118,6 +120,8 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     PHY_NatureAtlas              ::Initialize();
     PHY_RoePopulation            ::Initialize();
     PHY_MaintenanceLevel         ::Initialize();
+    PHY_LogisticLevel            ::Initialize();
+    PHY_LogisticLevel            ::Initialize();
     PHY_PerceptionLevel          ::Initialize();
     PHY_RadarClass               ::Initialize();
     MIL_PopulationAttitude       ::Initialize();

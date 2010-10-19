@@ -462,7 +462,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
             MsgsSimToClient::MsgLogSupplyQuotas& message = *expected.mutable_message()->mutable_log_supply_quotas();
-            message.mutable_automat()->set_id( 1 );
+            message.mutable_supplied()->mutable_automat()->set_id( 1 );
             message.mutable_quotas()->add_elem();
             message.mutable_quotas()->mutable_elem( 0 )->mutable_ressource_id()->set_id( 42 );
             message.mutable_quotas()->mutable_elem( 0 )->set_quota_disponible( 5112 );
@@ -534,12 +534,10 @@ BOOST_AUTO_TEST_CASE( Automat_LogisticLinksCanBeChanged )
             // change logistic links
             MsgsSimToClient::MsgSimToClient expected;
             expected.set_context( 0 );
-            Common::MsgAutomatChangeLogisticLinks& message = *expected.mutable_message()->mutable_automat_change_logistic_links();
-            message.mutable_automat()->set_id( 1 );
-            message.mutable_maintenance()->set_id( 1 );
-            message.mutable_supply()->set_id( 1 );
-            message.mutable_health()->set_id( 1 );
+            Common::MsgChangeLogisticLinks& message = *expected.mutable_message()->mutable_automat_change_logistic_links();
+            message.mutable_requester()->mutable_automat()->set_id( 1 );
             message.mutable_tc2()->set_id( 1 );
+            message.mutable_logistic_base()->mutable_automat()->set_id( 1 );
             automats.Get( 1 ).Update( message );
 
             // network serialization

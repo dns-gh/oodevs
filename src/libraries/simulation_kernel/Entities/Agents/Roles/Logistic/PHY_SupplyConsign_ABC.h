@@ -12,6 +12,7 @@
 #ifndef __PHY_SupplyConsign_ABC_h_
 #define __PHY_SupplyConsign_ABC_h_
 
+#include "Entities/Automates/MIL_Automate.h"
 
 namespace client
 {
@@ -31,7 +32,8 @@ class PHY_SupplyConsign_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate );
+             PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate
+                     , MIL_Automate& stockSupplier, bool bExternalTransfert);
              PHY_SupplyConsign_ABC();
     virtual ~PHY_SupplyConsign_ABC();
     //@}
@@ -56,9 +58,11 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_AutomateLOG& GetSupplyingAutomate() const;
-    MIL_AutomateLOG& GetConvoyingAutomate() const;
-    const MIL_Automate& GetSuppliedAutomate() const;
+    MIL_AutomateLOG& GetSupplier() const;
+    MIL_AutomateLOG& GetConvoyer() const;
+    const MIL_Automate& GetSupplied() const;
+    MIL_Automate& GetStockSupplier() const;
+
 
     virtual void GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const = 0;
     virtual void RemoveConvoyedMerchandise( const PHY_DotationCategory& dotationCategory, double rNbrDotations ) = 0;
@@ -104,12 +108,14 @@ private:
     const MIL_Automate* pSuppliedAutomate_;
     E_State nState_;
     bool bHasChanged_;
+    MIL_Automate*      pStockSupplier_;
     //@}
 
 protected:
     //! @name Member data
     //@{
     int nTimer_;
+    bool             bExternalTransfert_;
     //@}
 };
 

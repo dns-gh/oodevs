@@ -18,6 +18,8 @@
 #include "gaming/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/MagicActionType.h"
@@ -41,6 +43,7 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     , simulation_( simulation)
     , profile_( profile )
     , selected_( controllers )
+    , selectedLevel_( &kernel::LogisticLevel::none_ )
 {
     setCaption( tr( "Logistic links edition" ) );
     QVBoxLayout* layout = new QVBoxLayout( this );
@@ -61,20 +64,14 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     color = new QLabel( grid );
     color->setPixmap( QPixmap( 10, 10 ) );
     color->pixmap()->fill( QColor( 128, 0, 0 ) );
-    label = new QLabel( tr( "Maintenance superior" ), grid );
-    maintenanceCombo_ = new ValuedComboBox< const Automat_ABC* >( grid );
+    label = new QLabel( tr( "Automat superior" ), grid );
+    automatSuperiorCombo_ = new ValuedComboBox< const Automat_ABC* >( grid );
 
     color = new QLabel( "", grid );
     color->setPixmap( QPixmap( 10, 10 ) );
     color->pixmap()->fill( QColor( 255, 164, 200 ) );
-    label = new QLabel( tr( "Medical superior" ), grid );
-    medicalCombo_ = new ValuedComboBox< const Automat_ABC* >( grid );
-
-    color = new QLabel( "  ", grid );
-    color->setPixmap( QPixmap( 10, 10 ) );
-    color->pixmap()->fill( QColor( 255, 150, 10 ) );
-    label = new QLabel( tr( "Supply superior" ), grid );
-    supplyCombo_ = new ValuedComboBox< const Automat_ABC* >( grid );
+    label = new QLabel( tr( "Formation superior" ), grid );
+    formationSuperiorCombo_ = new ValuedComboBox< const Formation_ABC* >( grid );
 
     QHBox* box = new QHBox( this );
     layout->addWidget( box );
@@ -86,9 +83,8 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
 
     tc2Combo_->AddItem( tr( "None" ), 0 );
-    maintenanceCombo_->AddItem( tr( "None" ), 0 );
-    medicalCombo_->AddItem( tr( "None" ), 0 );
-    supplyCombo_->AddItem( tr( "None" ), 0 );
+    automatSuperiorCombo_->AddItem( tr( "None" ), 0 );
+    formationSuperiorCombo_->AddItem( tr( "None" ), 0 );
 
     controllers_.Register( *this );
     hide();
@@ -111,22 +107,19 @@ void ChangeLogisticLinksDialog::Show()
 {
     if( !selected_ )
         return;
-    const Automat_ABC& agent = *selected_;
+    const Entity_ABC& agent = *(selected_);
 
     // $$$$ AGE 2006-08-24: display aussi ?
     const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
     if( !log )
         return;
-    const AutomatType& type = agent.GetType();
 
     tc2Combo_->SetCurrentItem( log->GetTC2() );
-    maintenanceCombo_->SetCurrentItem( log->GetMaintenance() );
-    medicalCombo_->SetCurrentItem( log->GetMedical() );
-    supplyCombo_->SetCurrentItem( log->GetSupply() );
+    automatSuperiorCombo_->SetCurrentItem( log->GetAutomatSuperior() );
+    formationSuperiorCombo_->SetCurrentItem( log->GetFormationSuperior() );
 
-    maintenanceCombo_->setEnabled( type.IsLogisticMaintenance() );
-    medicalCombo_->setEnabled( type.IsLogisticMedical() );
-    supplyCombo_->setEnabled( type.IsLogisticSupply() );
+    automatSuperiorCombo_->setEnabled( *selectedLevel_ != kernel::LogisticLevel::none_ );
+    formationSuperiorCombo_->setEnabled( *selectedLevel_ != kernel::LogisticLevel::none_ );
     show();
 }
 
@@ -137,15 +130,12 @@ void ChangeLogisticLinksDialog::Show()
 void ChangeLogisticLinksDialog::NotifyCreated( const Automat_ABC& agent )
 {
     // $$$$ AGE 2006-10-13: add only if agent is seen ?
+    bool isLogistic = agent.GetLogisticLevel() != kernel::LogisticLevel::none_;
     const AutomatType& type = agent.GetType();
     if( type.IsTC2() )
         tc2Combo_->AddItem( agent.GetName(), &agent );
-    if( type.IsLogisticMaintenance() && !type.IsTC2() )
-        maintenanceCombo_->AddItem( agent.GetName(), &agent );
-    if( type.IsLogisticMedical() && !type.IsTC2() )
-        medicalCombo_->AddItem( agent.GetName(), &agent );
-    if( type.IsLogisticSupply() && !type.IsTC2() )
-        supplyCombo_->AddItem( agent.GetName(), &agent );
+    if( isLogistic && !type.IsTC2() )
+        automatSuperiorCombo_->AddItem( agent.GetName(), &agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,24 +144,45 @@ void ChangeLogisticLinksDialog::NotifyCreated( const Automat_ABC& agent )
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyDeleted( const Automat_ABC& agent )
 {
+    bool isLogistic = agent.GetLogisticLevel() != kernel::LogisticLevel::none_;
     const AutomatType& type = agent.GetType();
     if( type.IsTC2() )
         tc2Combo_->RemoveItem( &agent );
-    if( type.IsLogisticMaintenance() && !type.IsTC2() )
-        maintenanceCombo_->RemoveItem( &agent );
-    if( type.IsLogisticMedical() && !type.IsTC2() )
-        medicalCombo_->RemoveItem( &agent );
-    if( type.IsLogisticSupply() && !type.IsTC2() )
-        supplyCombo_->RemoveItem( &agent );
+    if( isLogistic && !type.IsTC2() )
+        automatSuperiorCombo_->RemoveItem( &agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeLogisticLinksDialog::NotifyCreated
+// Created: AHC 2010-10-12
+// -----------------------------------------------------------------------------
+void ChangeLogisticLinksDialog::NotifyCreated( const Formation_ABC& agent )
+{
+    // $$$$ AGE 2006-10-13: add only if agent is seen ?
+    bool isLogistic = agent.GetLogisticLevel() != kernel::LogisticLevel::none_;
+    if( isLogistic )
+        formationSuperiorCombo_->AddItem( agent.GetName(), &agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeLogisticLinksDialog::NotifyDeleted
+// Created: AHC 2010-10-12
+// -----------------------------------------------------------------------------
+void ChangeLogisticLinksDialog::NotifyDeleted( const Formation_ABC& agent )
+{
+    bool isLogistic = agent.GetLogisticLevel() != kernel::LogisticLevel::none_;
+    if( isLogistic )
+        formationSuperiorCombo_->RemoveItem( &agent );
 }
 
 namespace
 {
-    unsigned int GetId( ValuedComboBox< const Automat_ABC* >& combo )
+    template <typename T>
+    unsigned int GetId( ValuedComboBox< const T* >& combo )
     {
         if( combo.isEnabled() )
         {
-            const Automat_ABC* agent = combo.count() ? combo.GetValue() : 0;
+            const T* agent = combo.count() ? combo.GetValue() : 0;
             return agent ? agent->GetId() : 0;
         }
         else
@@ -192,9 +203,8 @@ void ChangeLogisticLinksDialog::Validate()
         UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Change Logistic Links"), true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *tc2Combo_ ) ) );
-        action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *maintenanceCombo_ ) ) );
-        action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *medicalCombo_ ) ) );
-        action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *supplyCombo_ ) ) );
+        action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *automatSuperiorCombo_ ) ) );
+        action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *formationSuperiorCombo_ ) ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selected_, false ) );
         action->RegisterAndPublish( actionsModel_ );
@@ -220,7 +230,22 @@ void ChangeLogisticLinksDialog::NotifyContextMenu( const Automat_ABC& agent, Con
 {
     if( profile_.CanBeOrdered( agent ) && agent.Retrieve< LogisticLinks >() )
     {
-        selected_ = &agent;
+        selected_ = (Entity_ABC*)&agent;
+        selectedLevel_ = &agent.GetLogisticLevel();
+        menu.InsertItem( "Command", tr( "Change logistic links" ), this, SLOT( Show() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeLogisticLinksDialog::NotifyContextMenu
+// Created: AHC 2010-10-12
+// -----------------------------------------------------------------------------
+void ChangeLogisticLinksDialog::NotifyContextMenu( const Formation_ABC& agent, ContextMenu& menu )
+{
+    if( profile_.CanBeOrdered( agent ) && agent.Retrieve< LogisticLinks >() )
+    {
+        selected_ = (Entity_ABC*)&agent;
+        selectedLevel_ = &agent.GetLogisticLevel();
         menu.InsertItem( "Command", tr( "Change logistic links" ), this, SLOT( Show() ) );
     }
 }

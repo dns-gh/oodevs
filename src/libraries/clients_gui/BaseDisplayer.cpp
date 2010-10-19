@@ -37,6 +37,7 @@
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -340,4 +341,13 @@ void BaseDisplayer::Call( const kernel::KnowledgeGroup_ABC& value )
 void BaseDisplayer::Clear()
 {
 
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: JSR 2010-04-19
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::LogisticLevel& value )
+{
+    AddToDisplay( value.GetName() );
 }

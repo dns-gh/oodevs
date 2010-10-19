@@ -57,7 +57,7 @@
       <populations>
         <population attitude="calme" humans="1000" id="457" name="Population standard[457]" position="31UCP0257236725" type="Population standard"/>
       </populations>
-      <logistic/>
+      <logistics/>
     </side>
     <side id="3" name="Les Gentils" type="friend">
      <objects/>
@@ -86,7 +86,7 @@
       <populations>
         <population attitude="calme" humans="1000" id="458" name="Population standard [458]" position="31UCP2278735626" type="Population standard"/>
       </populations>
-      <logistic/>
+      <logistics/>
     </side>
   </sides>
   <diplomacies>

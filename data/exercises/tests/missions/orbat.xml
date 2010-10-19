@@ -29,7 +29,7 @@
         <knowledge-group id="3" name="Knowledge group [3]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
     <side id="4" name="blue" type="friend">
       <objects/>
@@ -38,7 +38,7 @@
           <automat engaged="false" id="7" knowledge-group="6" name="Escadron de Chars LECLERC [7]" type="Escadron de Chars LECLERC">
             <unit command-post="true" id="8" name="Peloton LECLERC CDT ESC" position="31UEQ0689955485" type="Peloton LECLERC CDT ESC"/>
           </automat>
-          <automat engaged="true" id="12" knowledge-group="6" name="TC2 GAM604 [12]" type="TC2 GAM604">
+          <automat engaged="true" id="12" knowledge-group="6" name="TC2 GAM604 [12]" type="TC2 GAM604" logistic-level="tc2">
             <unit command-post="true" id="13" name="TC2 GAM604" position="31UDQ8545043790" type="TC2 GAM604"/>
           </automat>
         </formation>
@@ -47,16 +47,12 @@
         <knowledge-group id="6" name="Knowledge group [6]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic>
-        <automat id="12">
-          <subordinate id="7" link="tc2"/>
-          <subordinate id="12" link="maintenance"/>
-          <subordinate id="12" link="medical"/>
-          <subordinate id="12" link="supply">
-            <quotas/>
-          </subordinate>
-        </automat>
-      </logistic>
+      <logistics>
+        <tc2 id="12">
+          <subordinate id="7"/>
+          <subordinate id="12"/>
+        </tc2>
+      </logistics>
     </side>
   </sides>
   <diplomacies>

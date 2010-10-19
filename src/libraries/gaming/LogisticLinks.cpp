@@ -16,7 +16,8 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "protocol/Protocol.h"
 
@@ -26,14 +27,14 @@ using namespace kernel;
 // Name: LogisticLinks constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-LogisticLinks::LogisticLinks( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& resolver, const AutomatType& type, PropertiesDictionary& dictionary )
+LogisticLinks::LogisticLinks( Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
+                     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, PropertiesDictionary& dictionary )
     : controller_( controller )
-    , resolver_( resolver )
-    , type_( type )
+    , automatResolver_( automatResolver )
+    , formationResolver_ ( formationResolver )
     , tc2_( 0 )
-    , maintenanceSuperior_( 0 )
-    , medicalSuperior_( 0 )
-    , supplySuperior_( 0 )
+    , automatSuperior_( 0 )
+    , formationSuperior_( 0 )
 {
     CreateDictionary( dictionary );
 }
@@ -54,9 +55,8 @@ LogisticLinks::~LogisticLinks()
 void LogisticLinks::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
     dico.Register( *this, tools::translate( "Logistic", "Logistic links/TC2" ), tc2_ );
-    dico.Register( *this, tools::translate( "Logistic", "Logistic links/Maintenance superior" ), maintenanceSuperior_ );
-    dico.Register( *this, tools::translate( "Logistic", "Logistic links/Medical superior" ), medicalSuperior_ );
-    dico.Register( *this, tools::translate( "Logistic", "Logistic links/Supply superior" ), supplySuperior_ );
+    dico.Register( *this, tools::translate( "Logistic", "Logistic links/Automat superior" ), automatSuperior_ );
+    dico.Register( *this, tools::translate( "Logistic", "Logistic links/Formation superior" ), formationSuperior_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,42 +69,46 @@ Automat_ABC* LogisticLinks::GetTC2() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLinks::GetMaintenance
-// Created: AGE 2006-02-16
+// Name: LogisticLinks::GetAutomatSuperior
+// Created: AHC 2010-10-11
 // -----------------------------------------------------------------------------
-Automat_ABC* LogisticLinks::GetMaintenance() const
+Automat_ABC* LogisticLinks::GetAutomatSuperior() const
 {
-    return maintenanceSuperior_;
+    return automatSuperior_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLinks::GetMedical
-// Created: AGE 2006-02-16
+// Name: LogisticLinks::GetFormationSuperior
+// Created: AHC 2010-10-11
 // -----------------------------------------------------------------------------
-Automat_ABC* LogisticLinks::GetMedical() const
+Formation_ABC* LogisticLinks::GetFormationSuperior() const
 {
-    return medicalSuperior_;
+    return formationSuperior_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLinks::GetSupply
-// Created: AGE 2006-02-16
+// Name: LogisticLinks::GetFormationSuperior
+// Created: AHC 2010-10-11
 // -----------------------------------------------------------------------------
-Automat_ABC* LogisticLinks::GetSupply() const
+kernel::Entity_ABC* LogisticLinks::GetSuperior() const
 {
-    return supplySuperior_;
+    kernel::Entity_ABC* retval = 0;
+    if( automatSuperior_ )
+        retval = automatSuperior_;
+    else if( formationSuperior_ )
+        retval = formationSuperior_;
+    return retval;
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLinks::DoUpdate
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void LogisticLinks::DoUpdate( const Common::MsgAutomatChangeLogisticLinks& message )
+void LogisticLinks::DoUpdate( const Common::MsgChangeLogisticLinks& message )
 {
-    tc2_ = message.has_tc2()? resolver_.Find( message.tc2().id() ) : 0;
-    maintenanceSuperior_ = message.has_maintenance() ? resolver_.Find( message.maintenance().id() ) : 0;
-    medicalSuperior_ = message.has_health() ? resolver_.Find( message.health().id() ) : 0;
-    supplySuperior_ = message.has_supply() ? resolver_.Find( message.supply().id() ) : 0;
+    tc2_ = message.has_tc2()? automatResolver_.Find( message.tc2().id() ) : 0;
+    automatSuperior_ = message.logistic_base().has_automat() ? automatResolver_.Find( message.logistic_base().automat().id() ) : 0;
+    formationSuperior_ = message.logistic_base().has_formation() ? formationResolver_.Find( message.logistic_base().formation().id() ) : 0;
 
     controller_.Update( *(LogisticLinks_ABC*)this );
 }
@@ -116,10 +120,9 @@ void LogisticLinks::DoUpdate( const Common::MsgAutomatChangeLogisticLinks& messa
 void LogisticLinks::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Logistic", "Logistic links" ) )
-                .Display( tools::translate( "Logistic", "TC2:" ),                  GetTC2() )
-                .Display( tools::translate( "Logistic", "Maintenance superior:" ), GetMaintenance() )
-                .Display( tools::translate( "Logistic", "Medical superior:" ),     GetMedical() )
-                .Display( tools::translate( "Logistic", "Supply superior:" ),      GetSupply() );
+                .Display( tools::translate( "Logistic", "TC2:" ),                GetTC2() )
+                .Display( tools::translate( "Logistic", "Automat superior:" ),   GetAutomatSuperior() )
+                .Display( tools::translate( "Logistic", "Formation superior:" ), GetFormationSuperior() );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,6 +130,18 @@ void LogisticLinks::Display( Displayer_ABC& displayer ) const
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
 void LogisticLinks::DrawLink( const geometry::Point2f& where, Automat_ABC* agent, const GlTools_ABC& tools, float curve, bool link, bool missing ) const
+{
+    if( agent && link )
+        tools.DrawCurvedArrow( where, agent->Get< Positions >().GetPosition(), curve );
+    else if( ! agent && missing )
+        tools.DrawCircle( geometry::Point2f( where.X(), where.Y() + 150 ), 300.0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticLinks::DrawLink
+// Created: AHC 2010-10-12
+// -----------------------------------------------------------------------------
+void LogisticLinks::DrawLink( const geometry::Point2f& where, Formation_ABC* agent, const GlTools_ABC& tools, float curve, bool link, bool missing ) const
 {
     if( agent && link )
         tools.DrawCurvedArrow( where, agent->Get< Positions >().GetPosition(), curve );
@@ -151,14 +166,13 @@ void LogisticLinks::Draw( const geometry::Point2f& where, const kernel::Viewport
     glColor4f( COLOR_YELLOW );
     DrawLink( where, GetTC2(), tools, 0.3f, displayLinks, displayMissing );
 
-    glColor4f( COLOR_PINK );
-    DrawLink( where, GetMedical(), tools, 0.4f, displayLinks, displayMissing && type_.IsLogisticMedical() );
-
     glColor4f( COLOR_MAROON );
-    DrawLink( where, GetMaintenance(), tools, 0.5f, displayLinks, displayMissing && type_.IsLogisticMaintenance() );
-
-    glColor4f( COLOR_ORANGE );
-    DrawLink( where, GetSupply(), tools, 0.6f, displayLinks, displayMissing && type_.IsLogisticSupply() );
+    if( GetAutomatSuperior() )
+        DrawLink( where, GetAutomatSuperior(), tools, 0.4f, displayLinks, displayMissing &&
+                GetAutomatSuperior()->GetLogisticLevel() != kernel::LogisticLevel::none_ );
+    else if ( GetFormationSuperior() )
+        DrawLink( where, GetFormationSuperior(), tools, 0.5f, displayLinks, displayMissing &&
+                GetFormationSuperior()->GetLogisticLevel() != kernel::LogisticLevel::none_ );
 
     glPopAttrib();
 }

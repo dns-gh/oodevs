@@ -36,7 +36,7 @@ LogisticAttribute::LogisticAttribute( xml::xistream& xis )
         xis.error( "Automate TC2 specified is invalid" );
     if( !pTC2Tmp->GetType().IsLogistic() )
         xis.error( "Automate TC2 specified is not a logistic automate" );
-    pTC2_ = static_cast< MIL_AutomateLOG* >( pTC2Tmp );
+    pTC2_ = pTC2Tmp->GetBrainLogistic();
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +50,7 @@ LogisticAttribute::LogisticAttribute( const Common::MsgMissionParameter_Value& a
         throw std::runtime_error( "Automate TC2 specified is invalid" );
     if( !pTC2Tmp->GetType().IsLogistic() )
         throw std::runtime_error( "Automate TC2 specified is not a logistic automate" );
-    pTC2_ = static_cast< MIL_AutomateLOG* >( pTC2Tmp );
+    pTC2_ = pTC2Tmp->GetBrainLogistic();
 }
 
 // -----------------------------------------------------------------------------

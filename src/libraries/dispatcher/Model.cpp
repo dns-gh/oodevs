@@ -134,7 +134,12 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_change_diplomacy() )
         sides_.Get( wrapper.message().change_diplomacy().party1().id() ).Update( wrapper.message().change_diplomacy() ); 
     if( wrapper.message().has_automat_change_logistic_links() )
-        automats_.Get( wrapper.message().automat_change_logistic_links().automat().id() ).Update( wrapper.message().automat_change_logistic_links() ); 
+    {
+        if( wrapper.message().automat_change_logistic_links().requester().has_automat() )
+            automats_.Get( wrapper.message().automat_change_logistic_links().requester().automat().id() ).Update( wrapper.message().automat_change_logistic_links() );
+        else
+            formations_.Get( wrapper.message().automat_change_logistic_links().requester().formation().id() ).Update( wrapper.message().automat_change_logistic_links() );
+    }
     if( wrapper.message().has_automat_change_knowledge_group() )
         automats_.Get( wrapper.message().automat_change_knowledge_group().automat().id() ).Update( wrapper.message().automat_change_knowledge_group() ); 
     if( wrapper.message().has_automat_change_superior() )
@@ -148,6 +153,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_unit_change_superior() )
         agents_.Get( wrapper.message().unit_change_superior().unit().id() ).Update( wrapper.message().unit_change_superior() ); 
     if( wrapper.message().has_log_supply_push_flow_ack() ||
+        wrapper.message().has_log_supply_pull_flow_ack() ||
         wrapper.message().has_log_supply_change_quotas_ack() )
         { // NOTHING
         }
@@ -277,8 +283,12 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_log_supply_state() )
         agents_.Get( wrapper.message().log_supply_state().unit().id() ).Update( wrapper.message().log_supply_state() ); 
     if( wrapper.message().has_log_supply_quotas() )
-        automats_.Get( wrapper.message().log_supply_quotas().automat().id() ).Update( wrapper.message().log_supply_quotas() ); 
-
+    {
+        if( wrapper.message().log_supply_quotas().supplied().has_automat() )
+            automats_.Get( wrapper.message().log_supply_quotas().supplied().automat().id() ).Update( wrapper.message().log_supply_quotas() );
+        else
+            formations_.Get( wrapper.message().log_supply_quotas().supplied().formation().id() ).Update( wrapper.message().log_supply_quotas() );
+    }
     if( wrapper.message().has_log_medical_handling_creation() )
         CreateUpdate< LogConsignMedical >( logConsignsMedical_, wrapper.message().log_medical_handling_creation().request().id(),  wrapper.message().log_medical_handling_creation() ); 
     if( wrapper.message().has_log_medical_handling_destruction() )

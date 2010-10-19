@@ -22,7 +22,7 @@ message MsgControlStart {
         play  = 0;
         replay = 1;
     }
-   required Common.MsgExercise exercise     = 1; 
+   required Common.MsgExercise  exercise                  = 1;
    required GameMode            mode                      = 2;
    optional bool	            use_after_action_analysis = 3;
    optional bool	            use_external_systems 	  = 4;

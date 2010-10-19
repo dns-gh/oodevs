@@ -20,8 +20,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyDotationConsign )
 // Name: PHY_SupplyRepairConsign::PHY_SupplyDotationConsign
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-PHY_SupplyDotationConsign::PHY_SupplyDotationConsign( MIL_AutomateLOG& supplyingAutomate, PHY_SupplyDotationState& supplyState )
-    : PHY_SupplyConsign_ABC( supplyingAutomate, supplyState.GetSuppliedAutomate(), supplyingAutomate )
+PHY_SupplyDotationConsign::PHY_SupplyDotationConsign( MIL_AutomateLOG& supplyingAutomate, PHY_SupplyDotationState& supplyState
+        , MIL_Automate& stockSupplier, bool bExternalTransfert)
+    : PHY_SupplyConsign_ABC( supplyingAutomate, supplyState.GetSuppliedAutomate(), supplyingAutomate, stockSupplier, bExternalTransfert )
     , pSupplyState_        ( &supplyState )
     , pConvoy_             ( 0 )
 {
@@ -221,7 +222,7 @@ bool PHY_SupplyDotationConsign::Update()
 
     switch( GetState() )
     {
-        case eConvoyWaitingForTransporters  : if( pConvoy_->ReserveTransporters() )  EnterStateConvoyForming                (); break;
+        case eConvoyWaitingForTransporters  : if( pConvoy_->ReserveTransporters( bExternalTransfert_) )  EnterStateConvoyForming                (); break;
         case eConvoyForming                 :                                        EnterStateConvoyGoingToLoadingPoint    (); break;
         case eConvoyGoingToLoadingPoint     :                                        EnterStateConvoyLoading                (); break;
         case eConvoyLoading                 :                                        EnterStateConvoyGoingToUnloadingPoint  (); break;

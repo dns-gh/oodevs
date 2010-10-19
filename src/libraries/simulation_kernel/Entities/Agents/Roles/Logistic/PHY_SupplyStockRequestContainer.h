@@ -32,13 +32,19 @@ class MIL_AutomateLOG;
 class PHY_SupplyStockRequestContainer : private boost::noncopyable
 {
 public:
-    explicit PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate );
-             PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const Common::MsgMissionParameter& asnStocks );
+    explicit PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate );
+             PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const Common::MsgMissionParameter& asnStocks, bool pushedFlow=false );
     virtual  ~PHY_SupplyStockRequestContainer();
+
+    //! @name Accessors
+    //@{
+    bool HasRequests () const;
+    //@}
 
     //! @name Operations
     //@{
     bool Execute ( MIL_AutomateLOG& supplyAutomate, PHY_SupplyStockState*& pStockSupplyState );
+    bool Execute ( MIL_AutomateLOG& supplier, MIL_AutomateLOG& secondSupplier, PHY_SupplyStockState*& pStockSupplyState );
     void AddStock( PHY_DotationStock& stock );
     //@}
 
@@ -47,23 +53,28 @@ private:
     //@{
     typedef std::map< const PHY_DotationCategory*, PHY_SupplyStockRequest > T_RequestMap;
     typedef T_RequestMap::iterator                                          IT_RequestMap;
+    typedef std::map< PHY_SupplyStockRequest* , MIL_AutomateLOG* >          T_RequestAffectationMap;
+    typedef T_RequestAffectationMap::iterator                               IT_RequestAffectationMap;
     //@}
 
 private:
     //! @name Tools
     //@{
-    void AffectRequestsToAutomate( MIL_AutomateLOG& supplyingAutomate );
-    bool ApplyQuotas             ();
+    void AffectRequestsToAutomate( );
+    bool ApplyQuotas             ( MIL_AutomateLOG& supplyingAutomate );
+    bool ApplyQuotas             ( MIL_AutomateLOG& supplier, MIL_AutomateLOG& secondSupplier );
     void ActivateSupply          ( PHY_SupplyStockState*& pStockSupplyState );
     //@}
 
 private:
+    const bool             bManual_;
     const bool             bPushedFlow_;
-          MIL_AutomateLOG& suppliedAutomate_;
+          MIL_Automate   & suppliedAutomate_;
           T_RequestMap     requests_;
           bool             bAtLeastOneExplicitSupplySatisfied_;
           bool             bAtLeastOneSupplySatisfied_;
           bool             bExplicitSupplyFullSatisfied_;
+          T_RequestAffectationMap requestAffectations_;
 };
 
 #endif // __PHY_SupplyStockRequestContainer_h_

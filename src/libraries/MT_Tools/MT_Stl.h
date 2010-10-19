@@ -12,6 +12,7 @@
 
 #include <string>
 #include <functional>
+#include <boost/algorithm/string.hpp>
 #undef Yield
 
 //-------------------------------------------------------------------------
@@ -309,7 +310,7 @@ struct sCaseInsensitiveEqual : public std::binary_function< std::string, std::st
 {
     bool operator () ( const char* lhs, const char* rhs ) const
     {
-        return !::_stricmp( lhs, rhs );
+        return boost::iequals(lhs, rhs);
     }
 
     bool operator () ( const std::string& lhs, const std::string& rhs ) const
@@ -332,7 +333,7 @@ struct sCaseInsensitiveLess
 {
     bool operator () ( const char* lhs, const char* rhs ) const
     {
-        return ::_stricmp( lhs, rhs ) < 0;
+        return boost::ilexicographical_compare(lhs, rhs);
     }
 
     bool operator () ( const std::string& lhs, const std::string& rhs ) const

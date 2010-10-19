@@ -24,7 +24,7 @@
         <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
     <side id="3" name="Les Gentils" type="friend">
       <objects>
@@ -54,7 +54,7 @@
             <unit command-post="false" id="449" name="Peloton AMX30B2 BRENNUS CDP OFF[449]" position="31UCP1825826906" type="Peloton AMX30B2 BRENNUS CDP OFF"/>
             <unit command-post="false" id="450" name="Peloton AMX30B2 BRENNUS CDP SOFF[450]" position="31UCP1928027364" type="Peloton AMX30B2 BRENNUS CDP SOFF"/>
           </automat>
-          <automat engaged="false" id="459" knowledge-group="4" name="TC2 RGT AMX30B2 BRENNUS [459]" type="TC2 RGT AMX30B2 BRENNUS">
+          <automat engaged="false" id="459" knowledge-group="4" name="TC2 RGT AMX30B2 BRENNUS [459]" type="TC2 RGT AMX30B2 BRENNUS" logistic-level="tc2">
             <unit command-post="true" id="460" name="TC2 RGT AMX30B2 BRENNUS[460]" position="31UCP2393826631" type="TC2 RGT AMX30B2 BRENNUS">
               <dotations>
                 <dotation name="F63 Gasoil" quantity="500"/>
@@ -168,7 +168,7 @@
             <point>31TCP2376905150</point>
           </limit>
         </formation>
-        <formation id="775" level="ii" name="Logistique Case 5 [775]">
+        <formation id="775" level="ii" name="Logistique Case 5 [775]" logistic-level="logistic-base">
           <automat engaged="false" id="596" knowledge-group="4" name="Zone Fonctionnelle Maintenance BLT [596]" type="Zone Fonctionnelle Maintenance BLT">
             <unit command-post="true" id="597" name="PC LOG BLD Maintenance" position="31UCP1911252191" type="PC LOG BLD Maintenance"/>
             <unit command-post="false" id="598" name="Section CDT CMM (EVAC)" position="31UCP1959251671" type="Section CDT CMM (EVAC)"/>
@@ -332,65 +332,35 @@
         <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic>
-        <automat id="459">
-          <subordinate id="445" link="tc2"/>
-          <subordinate id="463" link="tc2"/>
-          <subordinate id="466" link="tc2"/>
-          <subordinate id="471" link="tc2"/>
-          <subordinate id="475" link="tc2"/>
-          <subordinate id="486" link="tc2"/>
-          <subordinate id="502" link="tc2"/>
-          <subordinate id="537" link="tc2"/>
-          <subordinate id="543" link="tc2"/>
-          <subordinate id="551" link="tc2"/>
-          <subordinate id="559" link="tc2"/>
-          <subordinate id="561" link="tc2"/>
-          <subordinate id="564" link="tc2"/>
-          <subordinate id="566" link="tc2"/>
-          <subordinate id="572" link="tc2"/>
-          <subordinate id="576" link="tc2"/>
-          <subordinate id="734" link="tc2"/>
-        </automat>
-        <automat id="596">
-          <subordinate id="776" link="maintenance"/>
-        </automat>
-        <automat id="606">
-          <subordinate id="459" link="supply">
-            <quotas>
+      <logistics>
+        <tc2 id="459">
+          <subordinate id="445"/>
+          <subordinate id="463"/>
+          <subordinate id="466"/>
+          <subordinate id="471"/>
+          <subordinate id="475"/>
+          <subordinate id="486"/>
+          <subordinate id="502"/>
+          <subordinate id="537"/>
+          <subordinate id="543"/>
+          <subordinate id="551"/>
+          <subordinate id="559"/>
+          <subordinate id="561"/>
+          <subordinate id="564"/>
+          <subordinate id="566"/>
+          <subordinate id="572"/>
+          <subordinate id="576"/>
+          <subordinate id="734"/>
+          <subordinate id="459"/>
+        </tc2>
+        <logistic-base id="775">
+            <subordinate id="459">
+             <quotas>
               <dotation name="F63 Gasoil" quantity="500"/>
             </quotas>
           </subordinate>
-        </automat>
-        <automat id="728">
-          <subordinate id="865" link="medical"/>
-        </automat>
-        <automat id="776">
-          <subordinate id="459" link="maintenance"/>
-        </automat>
-        <automat id="811">
-          <subordinate id="459" link="medical"/>
-        </automat>
-        <automat id="841">
-          <subordinate id="606" link="supply">
-            <quotas/>
-          </subordinate>
-        </automat>
-        <automat id="865">
-          <subordinate id="811" link="medical"/>
-        </automat>
-        <automat id="885">
-          <subordinate id="596" link="maintenance"/>
-        </automat>
-        <automat id="889">
-          <subordinate id="841" link="supply">
-            <quotas>
-              <dotation name="F63 Gasoil" quantity="500"/>
-            </quotas>
-          </subordinate>
-        </automat>
-        <automat id="908"/>
-      </logistic>
+        </logistic-base>
+      </logistics>
     </side>
   </sides>
   <diplomacies>

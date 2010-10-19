@@ -16,6 +16,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -28,6 +29,7 @@ using namespace kernel;
 Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& level, IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, idManager.GetNextId(), "" )
     , level_( &level )
+    , logisticLevel_(&kernel::LogisticLevel::none_)
 {
     RegisterSelf( *this );
     name_ = tools::translate( "Formation", "Formation [%1]" ).arg( id_ );
@@ -40,13 +42,18 @@ Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& 
 // -----------------------------------------------------------------------------
 Formation::Formation( xml::xistream& xis, Controller& controller, const FormationLevels& levels, IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, 0, "" )
+    , logisticLevel_(&kernel::LogisticLevel::none_)
 {
     std::string level, name;
+    std::string logLevelName("none");
+
     xis >> xml::attribute( "id", (int&)id_ )
         >> xml::attribute( "level", level )
-        >> xml::attribute( "name", name );
+        >> xml::attribute( "name", name )
+        >> xml::optional >> xml::attribute( "logistic-level", logLevelName );
     level_ = levels.Resolve( level.c_str() );
     name_  = name.empty() ? tools::translate( "Formation", "Formation [%1]" ).arg( id_ ) : name.c_str();
+    logisticLevel_ = &kernel::LogisticLevel::Resolve(logLevelName) ;
     idManager.Lock( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -99,6 +106,8 @@ void Formation::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::attribute( "id", long( id_ ) )
         << xml::attribute( "name", name_.ascii() )
         << xml::attribute( "level", level_->GetName().ascii() );
+    if( *logisticLevel_ != kernel::LogisticLevel::none_ )
+    	xos << xml::attribute( "logistic-level", logisticLevel_->GetName());
 }
 
 // -----------------------------------------------------------------------------
@@ -111,4 +120,13 @@ void Formation::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Name" ), name_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::SerializeAttributes
+// Created: AHC 2010-10-07
+// -----------------------------------------------------------------------------
+const kernel::LogisticLevel& Formation::GetLogisticLevel() const
+{
+    return *logisticLevel_;
 }

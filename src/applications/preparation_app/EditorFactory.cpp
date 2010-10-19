@@ -14,6 +14,7 @@
 #include "preparation/LogisticSuperior.h"
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
+#include "preparation/FormationModel.h"
 #include "preparation/StaticModel.h"
 #include "preparation/TeamKarmas.h"
 #include "preparation/IntelligenceKarmas.h"
@@ -54,19 +55,6 @@ EditorFactory::~EditorFactory()
     controllers_.Unregister( *this );
 }
 
-// -----------------------------------------------------------------------------
-// Name: EditorFactory::BuildLogisticEditor
-// Created: SBO 2006-10-26
-// -----------------------------------------------------------------------------
-template< typename T >
-void EditorFactory::BuildLogisticEditor( T& value )
-{
-    if( !selected_ )
-        return;
-    LogisticSuperiorEditor< T >* editor = new LogisticSuperiorEditor< T >( parent_, controllers_, model_.agents_, *selected_ );
-    editor->SetCurrentItem( value );
-    result_ = editor;
-}
 
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call
@@ -74,34 +62,24 @@ void EditorFactory::BuildLogisticEditor( T& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( TC2* const& value )
 {
-    BuildLogisticEditor( *value );
+	if( !selected_ )
+		return;
+	LogisticSuperiorEditor< TC2 >* editor = new LogisticSuperiorEditor< TC2 >( parent_, controllers_, model_.agents_, *selected_ );
+	editor->SetCurrentItem( (TC2&)*value );
+	result_ = editor;
 }
 
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call
 // Created: SBO 2006-10-25
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( MaintenanceSuperior* const& value )
+void EditorFactory::Call( LogisticBaseSuperior* const& value )
 {
-    BuildLogisticEditor( *value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EditorFactory::Call
-// Created: SBO 2006-10-25
-// -----------------------------------------------------------------------------
-void EditorFactory::Call( MedicalSuperior* const& value )
-{
-    BuildLogisticEditor( *value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EditorFactory::Call
-// Created: SBO 2006-10-25
-// -----------------------------------------------------------------------------
-void EditorFactory::Call( SupplySuperior* const& value )
-{
-    BuildLogisticEditor( *value );
+	if( !selected_ )
+		return;
+	LogisticSuperiorEditor< LogisticBaseSuperior >* editor = new LogisticSuperiorEditor< LogisticBaseSuperior >( parent_, controllers_, model_.formations_, *selected_ );
+	editor->SetCurrentItem( (LogisticBaseSuperior&)*value );
+	result_ = editor;
 }
 
 // -----------------------------------------------------------------------------

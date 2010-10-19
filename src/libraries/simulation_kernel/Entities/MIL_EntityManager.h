@@ -204,6 +204,7 @@ private:
     void ProcessMsgUnitChangeSuperior          ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
     void ProcessMsgLogSupplyChangeQuotas       ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
     void ProcessMsgLogSupplyPushFlow           ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
+    void ProcessMsgLogSupplyPullFlow           ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
     void ProcessMsgMagicActionMoveTo           ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
     // LTO begin
     void ProcessMsgKnowledgeGroupUpdate        ( const MsgsClientToSim::MsgKnowledgeMagicAction& message, unsigned int nCtx );

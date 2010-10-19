@@ -274,7 +274,7 @@
       <populations>
         <population attitude="calme" humans="1000" id="457" name="Population standard[457]" position="31UCP0257236725" type="Population standard"/>
       </populations>
-      <logistic/>
+      <logistics/>
     </side>
     <side id="3" name="Les Gentils" type="friend">
       <objects>
@@ -545,7 +545,7 @@
             <unit command-post="false" id="449" name="Peloton AMX30B2 BRENNUS CDP OFF[449]" position="31UCP1825826906" type="Peloton AMX30B2 BRENNUS CDP OFF"/>
             <unit command-post="false" id="450" name="Peloton AMX30B2 BRENNUS CDP SOFF[450]" position="31UCP1928027364" type="Peloton AMX30B2 BRENNUS CDP SOFF"/>
           </automat>
-          <automat engaged="false" id="459" knowledge-group="4" name="TC2 RGT AMX30B2 BRENNUS [459]" type="TC2 RGT AMX30B2 BRENNUS">
+          <automat engaged="false" id="459" knowledge-group="4" name="TC2 RGT AMX30B2 BRENNUS [459]" type="TC2 RGT AMX30B2 BRENNUS" logistic-level="tc2">
             <unit command-post="true" id="460" name="TC2 RGT AMX30B2 BRENNUS[460]" position="31UCP2393826631" type="TC2 RGT AMX30B2 BRENNUS"/>
           </automat>
           <automat engaged="false" id="463" knowledge-group="4" name="Refugies x100 [463]" type="Refugies x100">
@@ -661,9 +661,9 @@
       <populations>
         <population attitude="calme" humans="1000" id="458" name="Population standard [458]" position="31UCP2427337060" type="Population standard"/>
       </populations>
-      <logistic>
-        <automat id="459"/>
-      </logistic>
+      <logistics>
+        <tc2 id="459"/>
+      </logistics>
     </side>
   </sides>
   <diplomacies>

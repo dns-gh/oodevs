@@ -198,7 +198,7 @@
             <unit command-post="false" id="480" name="GLAISE - GEN - Groupe MDK2" position="31UBQ8930111343" type="GLAISE - GEN - Groupe MDK2"/>
             <unit command-post="false" id="481" name="GLAISE - GEN - Groupe MDK2" position="31UBQ8879311154" type="GLAISE - GEN - Groupe MDK2"/>
           </automat>
-          <automat engaged="true" id="482" knowledge-group="2" name="GLAISE - LOG - TC2 [482]" type="GLAISE - LOG - TC2">
+          <automat engaged="true" id="482" knowledge-group="2" name="GLAISE - LOG - TC2 [482]" type="GLAISE - LOG - TC2" logistic-level="tc2">
             <unit command-post="true" id="483" name="GLAISE - LOG - TC2" position="31UBQ8234211670" type="GLAISE - LOG - TC2"/>
           </automat>
           <automat engaged="true" id="484" knowledge-group="2" name="GLAISE - NBC - Groupe Reco [484]" type="GLAISE - NBC - Groupe Reco">
@@ -349,9 +349,9 @@
       <populations>
         <population attitude="calme" humans="1000" id="3622" name="Population standard [3622]" position="31UBQ9527104949" type="Population standard"/>
       </populations>
-      <logistic>
-        <automat id="482"/>
-      </logistic>
+      <logistics>
+        <tc2 id="482"/>
+      </logistics>
     </side>
     <side id="3" name="VERMILLON" type="enemy">
       <objects>
@@ -385,7 +385,7 @@
         <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
   </sides>
   <diplomacies>

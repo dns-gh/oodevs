@@ -69,8 +69,6 @@ public:
     typedef T_ComposanteTypeMap::iterator                                         IT_ComposanteTypeMap;
     typedef T_ComposanteTypeMap::const_iterator                                   CIT_ComposanteTypeMap;
 
-    typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteUse > T_ComposanteUseMap;
-    typedef T_ComposanteUseMap::const_iterator                         CIT_ComposanteUseMap;
    */ //@}
 
 public:
@@ -108,6 +106,8 @@ public:
 
     //$$$ Toute la partie logistique GetXXXUse() devrait être externalisée
 
+    virtual void GetConvoyTransportersUse( T_ComposanteUseMap& composanteUse ) const = 0;
+
     //! @name Logistic - maintenance
     //@{
     virtual void                            PreprocessRandomBreakdowns           ( unsigned int /*nEndDayTimeStep*/ ) const = 0;
@@ -121,8 +121,8 @@ public:
     virtual       void                 GetVisibleVolumes          ( T_ComposanteVolumeSet& volumes         ) const = 0;
     virtual       void                 BuildKnowledgeComposantes  ( T_KnowledgeComposanteVector& knowledge ) const = 0;
     virtual const PHY_Composante_ABC*  GetMajorComposante         () const = 0;
-    virtual       double             GetOperationalState        () const = 0;
-    virtual       double             GetMajorOperationalState   () const = 0;
+    virtual       double               GetOperationalState        () const = 0;
+    virtual       double               GetMajorOperationalState   () const = 0;
     virtual       double             GetMajorComponentWeight  () const = 0;
     //@}
 
@@ -150,9 +150,6 @@ public:
 
     virtual void ApplyInjury                ( MIL_Injury_ABC& injury ) = 0;
     //@}
-
-
-
 
     //! @name Notifications (internal)
     //@{

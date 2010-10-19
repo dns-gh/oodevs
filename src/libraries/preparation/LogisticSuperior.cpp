@@ -10,8 +10,10 @@
 #include "preparation_pch.h"
 #include "LogisticSuperior.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/LogisticLevel.h"
 
 using namespace kernel;
 
@@ -41,37 +43,17 @@ LogisticSuperior::~LogisticSuperior()
 bool LogisticSuperior::IsValidSuperior( const TC2& superior ) const
 {
     const kernel::Automat_ABC* automat = (const Automat_ABC*)superior;
-    return IsSameTeam( *automat ) && automat->GetType().IsTC2();
+    return IsSameTeam( *automat ) && automat->GetLogisticLevel()==kernel::LogisticLevel::tc2_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSuperior::IsValidSuperior
-// Created: SBO 2006-10-26
+// Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-bool LogisticSuperior::IsValidSuperior( const MaintenanceSuperior& superior ) const
+bool LogisticSuperior::IsValidSuperior( const LogisticBaseSuperior& superior ) const
 {
-    const kernel::Automat_ABC* automat = (const Automat_ABC*)superior;
-    return IsSameTeam( *automat ) && automat->GetType().IsLogisticMaintenance();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSuperior::IsValidSuperior
-// Created: SBO 2006-10-26
-// -----------------------------------------------------------------------------
-bool LogisticSuperior::IsValidSuperior( const MedicalSuperior& superior ) const
-{
-    const kernel::Automat_ABC* automat = (const Automat_ABC*)superior;
-    return IsSameTeam( *automat ) && automat->GetType().IsLogisticMedical();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSuperior::IsValidSuperior
-// Created: SBO 2006-10-26
-// -----------------------------------------------------------------------------
-bool LogisticSuperior::IsValidSuperior( const SupplySuperior& superior ) const
-{
-    const kernel::Automat_ABC* automat = (const Automat_ABC*)superior;
-    return IsSameTeam( *automat ) && automat->GetType().IsLogisticSupply();
+    const kernel::Formation_ABC* formation = (const Formation_ABC*)superior;
+    return IsSameTeam( *formation ) && formation->GetLogisticLevel()==kernel::LogisticLevel::logistic_base_;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,3 +64,13 @@ bool LogisticSuperior::IsSameTeam( const kernel::Automat_ABC& automat ) const
 {
     return &entity_.Get< kernel::TacticalHierarchies >().GetTop() == &automat.Get< kernel::TacticalHierarchies >().GetTop();
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSuperior::IsSameTeam
+// Created: AHC 2010-09-29
+// -----------------------------------------------------------------------------
+bool LogisticSuperior::IsSameTeam( const kernel::Formation_ABC& formation ) const
+{
+    return &entity_.Get< kernel::TacticalHierarchies >().GetTop() == &formation.Get< kernel::TacticalHierarchies >().GetTop();
+}
+

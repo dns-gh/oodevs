@@ -56,6 +56,7 @@
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
 #include "Effects/MIL_EffectManager.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "hla/HLA_Federate.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
@@ -127,6 +128,11 @@ namespace
 MIL_Automate* TaskerToAutomat( MIL_EntityManager_ABC& manager, const Tasker& tasker )
 {
     return tasker.has_automat() && tasker.automat().has_id() ? manager.FindAutomate( tasker.automat().id() ) : 0;
+}
+
+MIL_Formation* TaskerToFormation( MIL_EntityManager& manager, const Tasker& tasker )
+{
+    return tasker.has_formation() && tasker.formation().has_id() ? manager.FindFormation( tasker.formation().id() ) : 0;
 }
 
 template< typename Archive >
@@ -613,6 +619,7 @@ void MIL_EntityManager::UpdateDecisions()
 void MIL_EntityManager::UpdateActions()
 {
     profiler_.Start();
+    formationFactory_->Apply( boost::bind( &MIL_Formation::UpdateActions, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateActions, _1 ) );
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateActions, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateActions, _1 ) );
@@ -829,7 +836,10 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
         case MsgsClientToSim::MsgUnitMagicAction::log_supply_push_flow:
             ProcessMsgLogSupplyPushFlow( message, nCtx );
             break;
-        case MsgsClientToSim::MsgUnitMagicAction::log_supply_change_quotas:
+        case MsgsClientToSim::MsgUnitMagicAction_Type_log_supply_pull_flow:
+            ProcessMsgLogSupplyPullFlow( message, nCtx );
+            break;
+        case MsgsClientToSim::MsgUnitMagicAction_Type_log_supply_change_quotas:
             ProcessMsgLogSupplyChangeQuotas( message, nCtx );
             break;
         case MsgsClientToSim::MsgUnitMagicAction::automat_creation:
@@ -1119,14 +1129,20 @@ void MIL_EntityManager::ProcessMsgAutomateChangeKnowledgeGroup( const MsgsClient
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessMsgAutomateChangeLogisticLinks( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
 {
-    client::AutomatChangeLogisticLinksAck ack;
+    client::ChangeLogisticLinksAck ack;
     ack().set_error_code( MsgsSimToClient::HierarchyModificationAck::no_error_hierarchy );
     try
     {        
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
-        if( !pAutomate )
+        MIL_Formation* pFormation = TaskerToFormation( *this, message.tasker() );
+        if( pAutomate )
+            pAutomate->OnReceiveMsgChangeLogisticLinks( message );
+
+        if( pAutomate == 0 && pFormation == 0)
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_invalid_automate );
-        pAutomate->OnReceiveMsgChangeLogisticLinks( message );
+        MIL_AutomateLOG* brainLog = pAutomate!=0 ? pAutomate->GetBrainLogistic() :  pFormation->GetBrainLogistic();
+        if( brainLog )
+            brainLog->OnReceiveMsgChangeLogisticLinks( message );
     }
     catch( NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >& e )
     {
@@ -1136,26 +1152,12 @@ void MIL_EntityManager::ProcessMsgAutomateChangeLogisticLinks( const MsgsClientT
 
     if( ack().error_code() == MsgsSimToClient::HierarchyModificationAck::no_error_hierarchy )
     {
-        if( message.has_parameters() &&
-            message.parameters().elem_size() == 4 )
-        {
-            client::AutomatChangeLogisticLinks resendMessage;
-            resendMessage().mutable_automat()->set_id( message.tasker().automat().id() );
-            const Common::MsgMissionParameter& tc2 = message.parameters().elem( 0 );
-            const Common::MsgMissionParameter& maintenance = message.parameters().elem( 1 );
-            const Common::MsgMissionParameter& sante = message.parameters().elem( 2 );
-            const Common::MsgMissionParameter& supply = message.parameters().elem( 3 );
-
-            if( tc2.has_value() && tc2.value().has_identifier() && tc2.value().identifier() != 0 && tc2.value().identifier() != (unsigned int) -1 )
-                resendMessage().mutable_tc2()->set_id( tc2.value().identifier() );
-            if( maintenance.has_value() && maintenance.value().has_identifier() && maintenance.value().identifier() != 0 && maintenance.value().identifier() != (unsigned int) -1 )
-                resendMessage().mutable_maintenance()->set_id( maintenance.value().identifier() );
-            if( sante.has_value() && sante.value().has_identifier() && sante.value().identifier() != 0 && sante.value().identifier() != (unsigned int) -1 )
-                resendMessage().mutable_health()->set_id( sante.value().identifier() );
-            if( supply.has_value() && supply.value().has_identifier() && supply.value().identifier() != 0 && supply.value().identifier() != (unsigned int) -1 )
-                resendMessage().mutable_supply()->set_id( supply.value().identifier() );
-            resendMessage.Send( NET_Publisher_ABC::Publisher() );
-        }
+        MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
+        MIL_Formation* pFormation = TaskerToFormation( *this, message.tasker() );
+        if( pAutomate )
+            pAutomate->SendLogisticLinks();
+        else
+            pFormation->SendLogisticLinks();
     }
 }
 
@@ -1231,7 +1233,11 @@ void MIL_EntityManager::ProcessMsgLogSupplyChangeQuotas( const MsgsClientToSim::
     ack().set_ack( MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_no_error_quotas );
     try
     {
-        MIL_Automate* pReceiver = TaskerToAutomat( *this, message.tasker() );
+        MIL_Automate* pAutomat = TaskerToAutomat( *this, message.tasker() );
+        MIL_Formation* pFormation = TaskerToFormation( *this, message.tasker() );
+        if( !pAutomat && !pFormation )
+            throw NET_AsnException< MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_receveur_quotas );
+        MIL_AutomateLOG* pReceiver = pAutomat ? pAutomat->GetBrainLogistic() : pFormation->GetBrainLogistic();
         if( !pReceiver )
             throw NET_AsnException< MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_receveur_quotas );
         pReceiver->OnReceiveMsgLogSupplyChangeQuotas( message.parameters() );
@@ -1253,12 +1259,36 @@ void MIL_EntityManager::ProcessMsgLogSupplyPushFlow( const MsgsClientToSim::MsgU
     ack().set_ack( MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_no_error_pushflow );
     try
     {
-        MIL_Automate* pReceiver = TaskerToAutomat( *this, message.tasker() );
-        if( !pReceiver )
+        MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
+        if( pAutomate )
+            pAutomate->OnReceiveMsgLogSupplyPushFlow( message.parameters() );
+        else
             throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_receveur_pushflow );
-        pReceiver->OnReceiveMsgLogSupplyPushFlow( message.parameters() );
     }
     catch( NET_AsnException< MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >& e )
+    {
+        ack().set_ack( e.GetErrorID() );
+    }
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ProcessMsgLogSupplyPushFlow
+// Created: NLD 2005-02-03
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::ProcessMsgLogSupplyPullFlow( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
+{
+    client::LogSupplyPullFlowAck ack;
+    ack().set_ack( MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_no_error_pullflow );
+    try
+    {
+        MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
+        if( pAutomate )
+            pAutomate->OnReceiveMsgLogSupplyPullFlow( message.parameters() );
+        else
+            throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow >( MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_receiver_pullflow );
+    }
+    catch( NET_AsnException< MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow >& e )
     {
         ack().set_ack( e.GetErrorID() );
     }

@@ -18,6 +18,7 @@
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "LogisticBaseStates.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -26,10 +27,12 @@ using namespace kernel;
 // Name: FormationModel constructor
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
-FormationModel::FormationModel( kernel::Controllers& controllers, FormationFactory_ABC& formationFactory )
+FormationModel::FormationModel( kernel::Controllers& controllers, FormationFactory_ABC& formationFactory,
+                               const tools::Resolver< kernel::Automat_ABC>& automatResolver )
     : controllers_( controllers )
     , factory_( formationFactory )
     , levels_( *new FormationLevels() )
+    , automatResolver_ ( automatResolver )
 {
     controllers_.Register( *this );
 }
@@ -96,4 +99,45 @@ void FormationModel::Purge()
 void FormationModel::NotifyDeleted( const Formation_ABC& formation )
 {
     Remove( formation.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationModel::ReadLogisticLink
+// Created: AHC 2010-10-06
+// -----------------------------------------------------------------------------
+template< typename H >
+void FormationModel::ReadLogisticLink( xml::xistream& xis, kernel::Formation_ABC& superior, kernel::Entity_ABC& entity )
+{
+    H* hierarchies = entity.Retrieve< H >();
+    if( hierarchies )
+        hierarchies->Load( xis, &superior );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationModel::ReadLogistic
+// Created: AHC 2010-10-06
+// -----------------------------------------------------------------------------
+void FormationModel::ReadLogistic( xml::xistream& xis )
+{
+    int id;
+    xis >> xml::attribute( "id", id );
+    if( Formation_ABC* entity = tools::Resolver< Formation_ABC >::Find( id ) )
+        xis >> xml::list( "subordinate", *this, &FormationModel::ReadLogisticLink, *entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationModel::ReadLogisticLink
+// Created: AHC 2010-10-06
+// -----------------------------------------------------------------------------
+void FormationModel::ReadLogisticLink( xml::xistream& xis, kernel::Formation_ABC& formation )
+{
+    int id;
+    xis >> xml::attribute( "id", id );
+    Entity_ABC* entity = tools::Resolver< Formation_ABC >::Find( id );
+    if(!entity)
+        entity = automatResolver_.Find( id );
+    if( entity )
+    {
+        ReadLogisticLink< LogisticBaseHierarchies > ( xis, formation, *entity );
+    }
 }

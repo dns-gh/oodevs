@@ -40,11 +40,8 @@ include "bit.lua"
         local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
         self.ePhase = self.ePhase or eRejoindre
-        local TC2 = DEC_Pion_TC2()
-        local pionTC2 = nil
-        if( TC2 ~= nil ) then
-            pionTC2 = DEC_Pion_PionPCDeAutomate( TC2 )
-        else
+        local pionTC2 = DEC_Pion_PcDeTC2()
+        if( TC2 == nil ) then
 do
                 DEC_Trace( "Mission Impossible : pas de TC2" )
                 DEC_Warning( eRC_MissionImpossible )

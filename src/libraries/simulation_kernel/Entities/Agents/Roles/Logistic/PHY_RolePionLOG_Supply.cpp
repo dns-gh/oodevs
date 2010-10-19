@@ -304,7 +304,7 @@ void PHY_RolePionLOG_Supply::NotifySupplyNeeded( const PHY_DotationCategory& dot
     if( bNewNeed )
         MIL_Report::PostEvent( pion_, MIL_Report::eReport_LogisticStockThresholdExceeded, dotationCategory );
 
-    pion_.GetLogAutomate().NotifyStockSupplyNeeded( dotationCategory );
+    pion_.GetAutomate().NotifyStockSupplyNeeded( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------

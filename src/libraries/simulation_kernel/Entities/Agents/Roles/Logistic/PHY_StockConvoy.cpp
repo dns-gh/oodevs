@@ -15,6 +15,7 @@
 #include "PHY_Conveyor.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include <xeumeuleu/xml.hpp>
@@ -94,13 +95,16 @@ void PHY_StockConvoy::save( MIL_CheckPointOutArchive& file, const unsigned int )
 // Name: PHY_StockConvoy::Form
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-bool PHY_StockConvoy::Form()
+bool PHY_StockConvoy::Form(bool bExternalTransfert)
 {
     assert( pConvoyAgentType_ );
     assert( !pPionConvoy_ );
     assert( pConsign_ );
+    assert( pConsign_->GetConvoyer().GetPC() );
 
-    pPionConvoy_ = &pConsign_->GetConvoyingAutomate().CreatePion( *pConvoyAgentType_, pConsign_->GetConvoyingAutomate().GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    pPionConvoy_ = pConsign_->GetConvoyer().SupplyCreatePionConvoy( *pConvoyAgentType_, bExternalTransfert );
+    if(!pPionConvoy_)
+        return false;
     pPionConvoy_->GetRole< PHY_RoleInterface_Supply >().AssignConvoy( *this );
     for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
         it->second->LendTo( *pPionConvoy_ );

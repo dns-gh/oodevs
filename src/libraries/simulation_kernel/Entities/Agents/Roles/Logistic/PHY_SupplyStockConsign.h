@@ -26,7 +26,8 @@ class PHY_SupplyStockConsign : public PHY_SupplyConsign_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_SupplyStockConsign( MIL_AutomateLOG& supplyAutomate, PHY_SupplyStockState& supplyState );
+             PHY_SupplyStockConsign( MIL_AutomateLOG& supplyAutomate, PHY_SupplyStockState& supplyState
+                     , MIL_Automate& stockSupplier, bool bExternalTransfert );
              PHY_SupplyStockConsign();
     virtual ~PHY_SupplyStockConsign();
     //@}

@@ -54,6 +54,7 @@ public:
     //! @name Operations
     //@{
     virtual const kernel::AutomatType& GetType() const;
+    virtual const kernel::LogisticLevel& GetLogisticLevel() const ;
     void Rename( const QString& name );
     //@}
 
@@ -72,7 +73,6 @@ private:
     //! @name Helpers
     //@{
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    virtual void SerializeLogistics ( xml::xostream& xos ) const;
     void CreateDictionary( kernel::Controller& controller );
     void InitializeSymbol() const;
     //@}
@@ -82,6 +82,7 @@ private:
     //@{
     const kernel::AutomatType& type_;
     mutable std::string symbol_;
+    mutable const kernel::LogisticLevel* logisticLevel_;
     //@}
 };
 

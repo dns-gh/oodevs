@@ -19,6 +19,8 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/LogisticLevel.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
@@ -31,6 +33,7 @@ Automat::Automat( const MsgsSimToClient::MsgAutomatCreation& message, Controller
                   const tools::Resolver_ABC< kernel::AutomatType >& resolver )
     : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.nom().c_str() ) )
     , type_( resolver.Get( message.type().id() ) )
+    , logisticLevel_ ( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.automat().id() );
@@ -64,6 +67,8 @@ void Automat::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
     dico.Register( *this, tools::translate( "Automat", "Info/Identifier" ), id_ );
     dico.Register( *this, tools::translate( "Automat", "Info/Name" ), name_ );
+    if(type_.IsTC2())
+        dico.Register( *this, tools::translate( "Automat", "Info/LogisticLevel" ), *logisticLevel_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,4 +107,13 @@ void Automat::InitializeSymbol() const
     const Entity_ABC& team = hierarchies.GetTop();
     const Diplomacies_ABC* diplo = team.Retrieve< Diplomacies_ABC >();
     App6Symbol::SetKarma( symbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetLogisticLevel
+// Created: AHC 2010-10-08
+// -------------------------------------------------------------------------------
+const kernel::LogisticLevel& Automat::GetLogisticLevel() const
+{
+    return *logisticLevel_;
 }

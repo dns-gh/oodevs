@@ -14,6 +14,7 @@
 #include "PHY_SupplyConsign_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -26,9 +27,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyDotationState )
 // Name: PHY_SupplyDotationState::PHY_SupplyDotationState
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-PHY_SupplyDotationState::PHY_SupplyDotationState( MIL_Automate& suppliedAutomate )
+PHY_SupplyDotationState::PHY_SupplyDotationState( MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyer  )
     : PHY_SupplyState_ABC()
     , pSuppliedAutomate_ ( &suppliedAutomate )
+    , pConvoyer_         ( &convoyer )
     , pConsign_          ( 0 )
     , bConsignChanged_   ( true )
     , bRequestsChanged_  ( true )
@@ -123,6 +125,7 @@ void PHY_SupplyDotationState::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_SupplyState_ABC >( *this )
          & pSuppliedAutomate_
+         & pConvoyer_
          & pConsign_
          & requests_;
 }
@@ -309,4 +312,14 @@ void PHY_SupplyDotationState::AddRequest( const PHY_SupplyDotationRequest& reque
 {
     requests_[ &request.GetDotationCategory() ] = request;
     bRequestsChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyDotationState::GetConvoyer
+// Created: AHC 2010-09-28
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG& PHY_SupplyDotationState::GetConvoyer() const
+{
+    assert( pConvoyer_ );
+    return *pConvoyer_;
 }

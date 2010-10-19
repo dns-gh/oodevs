@@ -41,14 +41,9 @@ public:
     template < typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
-    //! @name Accessors
-    //@{
-    virtual const MIL_AutomateLOG& GetLogAutomate() const;
-    virtual       MIL_AutomateLOG& GetLogAutomate();
-    //@}
-
     //! @name Operations
     //@{
+    MIL_AutomateLOG* FindLogisticManager() const;
     void UpdateLogistic(); // Called by the 'PHY_ActionLogistic' action
     //@}
 

@@ -13,7 +13,7 @@
 #include "MIL.h"
 #include "MIL_Entity_ABC.h"
 #include "tools/Resolver.h"
-
+#include "Entities/MIL_VisitableEntity_ABC.h"
 namespace xml
 {
     class xostream;
@@ -30,6 +30,9 @@ class PHY_NatureLevel;
 class FormationFactory_ABC;
 class AutomateFactory_ABC;
 class MIL_Automate;
+class MIL_AutomateLOG;
+class MIL_AgentPion;
+template < typename T > class PHY_ActionLogistic;
 
 // =============================================================================
 /** @class  MIL_Formation
@@ -40,6 +43,7 @@ class MIL_Automate;
 class MIL_Formation : public MIL_Entity_ABC
                     , public tools::Resolver< MIL_Formation >
                     , public tools::Resolver< MIL_Automate >
+                    , public MIL_VisitableEntity_ABC< MIL_AgentPion >
 {
 public:
     //! @name Constructors/Destructor
@@ -70,12 +74,20 @@ public:
     //@{
     MIL_Army_ABC& GetArmy() const;
     unsigned int GetID() const;
+    MIL_AutomateLOG* GetBrainLogistic() const;
+    MIL_AutomateLOG* FindLogisticManager() const;
+    //@}
+
+    //! @name Visitor
+    //@{
+    virtual void Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) const;
     //@}
 
     //! @name Network
     //@{
     void SendCreation() const;
     void SendFullState() const;
+    void SendLogisticLinks() const;
     //@}
 
 private:
@@ -106,6 +118,8 @@ private:
     MIL_Army_ABC* pArmy_;
     MIL_Formation* pParent_;
     const PHY_NatureLevel* pLevel_;
+    std::auto_ptr<MIL_AutomateLOG> pBrainLogistic_;
+    boost::shared_ptr< PHY_ActionLogistic< MIL_AutomateLOG > > pLogisticAction_;
     std::map< std::string, std::string > extensions_;
     //@}
 };

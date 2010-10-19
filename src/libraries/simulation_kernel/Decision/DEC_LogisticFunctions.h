@@ -94,8 +94,8 @@ public:
 
     //! @name Misc
     //@{
-    static DEC_Decision_ABC* PionGetTC2( const MIL_Agent_ABC& );
-    static DEC_Decision_ABC* AutomateGetTC2( const MIL_Automate& );
+    static DEC_Decision_ABC* PionGetPcTC2( const MIL_Agent_ABC& );
+    static DEC_Decision_ABC* AutomateGetPcTC2( const MIL_Automate& );
 
     static void UndoLendCollectionComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack );
     static void UndoLendHaulerComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack );

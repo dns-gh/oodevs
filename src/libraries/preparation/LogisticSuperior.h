@@ -16,6 +16,7 @@ namespace kernel
 {
     class Entity_ABC;
     class Automat_ABC;
+    class Formation_ABC;
 }
 
 // =============================================================================
@@ -36,9 +37,7 @@ public:
     //! @name Operations
     //@{
     bool IsValidSuperior( const TC2& superior ) const;
-    bool IsValidSuperior( const MaintenanceSuperior& superior ) const;
-    bool IsValidSuperior( const MedicalSuperior& superior ) const;
-    bool IsValidSuperior( const SupplySuperior& superior ) const;
+    bool IsValidSuperior( const LogisticBaseSuperior& superior ) const;
     //@}
 
 private:
@@ -51,6 +50,7 @@ private:
     //! @name Helpers
     //@{
     bool IsSameTeam( const kernel::Automat_ABC& automat ) const;
+    bool IsSameTeam( const kernel::Formation_ABC& automat ) const;
     //@}
 
 private:

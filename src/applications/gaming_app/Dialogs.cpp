@@ -14,11 +14,13 @@
 #include "ChangeHumanFactorsDialog.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "LogisticSupplyChangeQuotasDialog.h"
+#include "LogisticSupplyPullFlowDialog.h"
 #include "LogisticSupplyPushFlowDialog.h"
 #include "LogisticSupplyRecompletionDialog.h"
 #include "OrbatAttributesDialog.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
+#include "gaming/TeamsModel.h"
 
 using namespace kernel;
 
@@ -33,6 +35,7 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model,
     new ChangeLogisticLinksDialog( parent, controllers, actionsModel, staticModel, simulation, profile  );
     new LogisticSupplyChangeQuotasDialog( parent, controllers, actionsModel, staticModel, simulation, model, profile  );
     new LogisticSupplyPushFlowDialog( parent, controllers, actionsModel, staticModel, simulation, model.agents_, profile  );
+    new LogisticSupplyPullFlowDialog( parent, controllers, actionsModel, staticModel, simulation, model.agents_, model.teams_, profile  );
     new LogisticSupplyRecompletionDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new ChangeHumanFactorsDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new BriefingDialog( parent, controllers, publisher, handler, config );

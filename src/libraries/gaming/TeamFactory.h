@@ -18,6 +18,7 @@ namespace kernel
 }
 
 class Model;
+class StaticModel;
 
 // =============================================================================
 /** @class  TeamFactory
@@ -30,7 +31,7 @@ class TeamFactory : public TeamFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamFactory( kernel::Controllers& controllers, Model& model );
+             TeamFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticM );
     virtual ~TeamFactory();
     //@}
 
@@ -53,6 +54,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Model& model_;
+    const StaticModel& static_;
     //@}
 };
 

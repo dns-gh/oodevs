@@ -175,7 +175,7 @@ void MagicActionType::Initialize()
     {
         CreateOrderParameter( "Type", "string" );
     }
-    else if( name_ == "log_supply_push_flow" || name_ == "log_supply_change_quotas" )
+    else if( name_ == "log_supply_push_flow" || name_ == "log_supply_pull_flow" || name_ == "log_supply_change_quotas" )
     {
         CreateOrderParameter( "Receiver", "automate" );
         CreateOrderParameter( "Dotations", "list" );

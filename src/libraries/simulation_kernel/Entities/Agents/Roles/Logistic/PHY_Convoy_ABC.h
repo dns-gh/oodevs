@@ -54,15 +54,16 @@ public:
 
     //! @name Operations
     //@{
-    bool ReserveTransporters();
+    bool ReserveTransporters( bool bExternalTransfert );
     double ModifySpeed( double rSpeed ) const;
     //@}
 
     //! @name Accessors
     //@{
-    MIL_AutomateLOG& GetSupplyingAutomate() const;
-    MIL_AutomateLOG& GetConvoyingAutomate() const;
-    const MIL_Automate& GetSuppliedAutomate () const;
+    MIL_AutomateLOG& GetSupplier() const;
+    MIL_AutomateLOG& GetConvoyer() const;
+    const MIL_Automate& GetSupplied () const;
+    MIL_Automate& GetStockSupplier() const;
     unsigned int GetFormingTime() const;
     unsigned int GetLoadingTime() const;
     unsigned int GetUnloadingTime() const;

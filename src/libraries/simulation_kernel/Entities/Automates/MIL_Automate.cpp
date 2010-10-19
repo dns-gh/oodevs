@@ -15,6 +15,15 @@
 #include "Decision/DEC_Representations.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_Formation.h"
+#include "Entities/Actions/PHY_ActionLogistic.h"
+#include "Entities/Agents/MIL_AgentTypePion.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationState.h"
+#include "Entities/Agents/Roles/Logistic/PHY_SupplyDotationRequestContainer.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -27,11 +36,15 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
-#include "Network/NET_ASN_Tools.h"
+#include "Entities/Automates/MIL_DotationSupplyManager.h"
+#include "Entities/Automates/MIL_StockSupplyManager.h"
+#include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Network/NET_AsnException.h"
+#include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "tools/MIL_Tools.h"
 #include "protocol/ClientSenders.h"
+#include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
 
@@ -87,15 +100,15 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pions_                             ()
     , recycledPions_                     ()
     , automates_                         ()
-    , bAutomateModeChanged_              ( true )
-    , pTC2_                              ( 0 )
-    , pNominalTC2_                       ( 0 )
-    , bDotationSupplyNeeded_             ( false )
-    , bDotationSupplyExplicitlyRequested_( false )
-    , dotationSupplyStates_              ()
     , nTickRcDotationSupplyQuerySent_    ( 0 )
     , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
     , pArmySurrenderedTo_                ( 0 )
+    , pTC2_                              ( 0 )
+    , pNominalTC2_                       ( 0 )
+    , pBrainLogistic_                    ( 0 )
+    //, pLogisticAction_                   ( 0 )
+    , pDotationSupplyManager_            ( new MIL_DotationSupplyManager( *this ) )
+    , pStockSupplyManager_               ( new MIL_StockSupplyManager( *this ) )
 {
     Initialize( xis, database, gcPause, gcMult );
     if( pParentFormation_ )
@@ -119,13 +132,15 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
     , pOrderManager_                     ( new MIL_AutomateOrderManager( *this ) )
     , pPionPC_                           ( 0 )
     , bAutomateModeChanged_              ( true )
-    , pTC2_                              ( 0 )
-    , pNominalTC2_                       ( 0 )
-    , bDotationSupplyNeeded_             ( false )
-    , bDotationSupplyExplicitlyRequested_( false )
     , nTickRcDotationSupplyQuerySent_    ( 0 )
     , pKnowledgeBlackBoard_              ( 0 )
     , pArmySurrenderedTo_                ( 0 )
+    , pTC2_                              ( 0 )
+    , pNominalTC2_                       ( 0 )
+    , pBrainLogistic_                    ( 0 )
+    //, pLogisticAction_                   ( 0 )
+    , pDotationSupplyManager_            ( new MIL_DotationSupplyManager( *this ) )
+    , pStockSupplyManager_               ( new MIL_StockSupplyManager( *this ) )
 {
     // NOTHING
 }
@@ -150,12 +165,13 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , bAutomateModeChanged_              ( true )
     , pTC2_                              ( 0 )
     , pNominalTC2_                       ( 0 )
-    , bDotationSupplyNeeded_             ( false )
-    , bDotationSupplyExplicitlyRequested_( false )
-    , dotationSupplyStates_              ( )
+    , pBrainLogistic_                    ( 0 )
+    //, pLogisticAction_                   ( 0 )
     , nTickRcDotationSupplyQuerySent_    ( 0 )
     , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
     , pArmySurrenderedTo_                ( 0 )
+    , pDotationSupplyManager_            ( new MIL_DotationSupplyManager( *this ) )
+    , pStockSupplyManager_               ( new MIL_StockSupplyManager( *this ) )
 {
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( knowledgeGroup );
     if( !pKnowledgeGroup_ )
@@ -187,6 +203,8 @@ MIL_Automate::~MIL_Automate()
         pParentAutomate_->UnregisterAutomate( *this );
     if( pParentFormation_ )
         pParentFormation_->UnregisterAutomate( *this );
+
+    pBrainLogistic_.reset(0);
     delete pOrderManager_;
 }
 
@@ -272,9 +290,6 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> recycledPions_
          >> automates_
          >> bAutomateModeChanged_
-         >> bDotationSupplyNeeded_
-         >> bDotationSupplyExplicitlyRequested_
-         >> dotationSupplyStates_
          >> pKnowledgeBlackBoard_
          >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ )
          >> nTickRcDotationSupplyQuerySent_;
@@ -300,9 +315,6 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
          << recycledPions_
          << automates_
          << bAutomateModeChanged_
-         << bDotationSupplyNeeded_
-         << bDotationSupplyExplicitlyRequested_
-         << dotationSupplyStates_
          << pKnowledgeBlackBoard_
          << pArmySurrenderedTo_
          << nTickRcDotationSupplyQuerySent_;
@@ -330,6 +342,18 @@ void MIL_Automate::Initialize( xml::xistream& xis, DEC_DataBase& database, unsig
     if( !pKnowledgeGroup_ )
         xis.error( "Unknown knowledge group" );
     pKnowledgeGroup_->RegisterAutomate( *this );
+
+    std::string logLevelStr(PHY_LogisticLevel::none_.GetName());
+    xis >> xml::optional() >> xml::attribute("logistic-level", logLevelStr);
+    const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find(logLevelStr);
+    if(logLevel==0 || PHY_LogisticLevel::logistic_base_==*logLevel)
+        xis.error( "Wrong logistic level" );
+    if(PHY_LogisticLevel::tc2_==*logLevel)
+    {
+        pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *logLevel ) );
+        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>(*pBrainLogistic_.get() ) );
+        this->RegisterAction( pLogisticAction_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -435,11 +459,8 @@ void MIL_Automate::ReadOverloading( xml::xistream& /*refMission*/ )
 // -----------------------------------------------------------------------------
 void MIL_Automate::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis )
 {
-    if( sCaseInsensitiveEqual()( xis.attribute< std::string >( "link" ), "tc2" ) )
-    {
-        pTC2_ = &superior;
-        pNominalTC2_ = pTC2_;
-    }
+    pTC2_        = &superior;
+    pNominalTC2_ = pTC2_;
 }
 
 // -----------------------------------------------------------------------------
@@ -450,11 +471,10 @@ void MIL_Automate::WriteLogisticLinksODB( xml::xostream& xos ) const
 {
     if( pTC2_ )
     {
-        xos << xml::start( "automat" )
+        xos << xml::start( "tc2" )
                 << xml::attribute( "id", pTC2_->GetID() )
                 << xml::start( "subordinate" )
                     << xml::attribute( "id", GetID() )
-                    << xml::attribute( "link", "tc2" )
                 << xml::end
             << xml::end;
     }
@@ -529,8 +549,8 @@ void MIL_Automate::UpdateNetwork() const
         GetRole< DEC_AutomateDecision >().SendChangedState( msg );
         msg.Send( NET_Publisher_ABC::Publisher() );
     }
-    for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
-        it->second->SendChangedState();
+    pDotationSupplyManager_->SendChangedState();
+    pStockSupplyManager_->SendChangedState();
 }
 
 // -----------------------------------------------------------------------------
@@ -539,10 +559,10 @@ void MIL_Automate::UpdateNetwork() const
 // -----------------------------------------------------------------------------
 void MIL_Automate::UpdateState()
 {
-    if( !bDotationSupplyNeeded_ || !dotationSupplyStates_.empty() || ( !pTC2_ && !GetNominalTC2() ) )
-        return;
-    PHY_SupplyDotationRequestContainer supplyRequests( *this, bDotationSupplyExplicitlyRequested_ );
-    bDotationSupplyNeeded_ = !supplyRequests.Execute( pTC2_, GetNominalTC2(), dotationSupplyStates_ );
+    if( pBrainLogistic_.get() )
+        pBrainLogistic_->UpdateState();
+    pDotationSupplyManager_->Update();
+    pStockSupplyManager_   ->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -551,10 +571,11 @@ void MIL_Automate::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_Automate::Clean()
 {
-    bDotationSupplyExplicitlyRequested_ = false;
+    if( pBrainLogistic_.get() )
+        pBrainLogistic_->Clean();
     bAutomateModeChanged_ = false;
-    for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
-        it->second->Clean();
+    pDotationSupplyManager_->Clean();
+    pStockSupplyManager_->Clean();
     GetRole< DEC_AutomateDecision >().Clean();
 }
 
@@ -564,17 +585,7 @@ void MIL_Automate::Clean()
 // -----------------------------------------------------------------------------
 void MIL_Automate::NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory )
 {
-    if( bDotationSupplyNeeded_ )
-        return;
-    for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
-        if( it->second->IsSupplying( dotationCategory ) )
-            return;
-    bDotationSupplyNeeded_ = true;
-    // Pas de RC si log non branchée ou si RC envoyé au tick précédent
-    const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-    if( GetTC2() && ( nCurrentTick > ( nTickRcDotationSupplyQuerySent_ + 1 ) || nTickRcDotationSupplyQuerySent_ == 0 ) )
-        MIL_Report::PostEvent( *this, MIL_Report::eReport_DotationSupplyRequest );
-    nTickRcDotationSupplyQuerySent_ = nCurrentTick;
+    pDotationSupplyManager_->NotifyDotationSupplyNeeded( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -583,8 +594,7 @@ void MIL_Automate::NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotat
 // -----------------------------------------------------------------------------
 void MIL_Automate::RequestDotationSupply()
 {
-    bDotationSupplyNeeded_ = true;
-    bDotationSupplyExplicitlyRequested_ = true;
+    pDotationSupplyManager_->RequestDotationSupply();
 }
 
 // -----------------------------------------------------------------------------
@@ -593,16 +603,34 @@ void MIL_Automate::RequestDotationSupply()
 // -----------------------------------------------------------------------------
 void MIL_Automate::NotifyDotationSupplied( const PHY_SupplyDotationState& supplyState )
 {
-    MIL_Report::PostEvent( *this, MIL_Report::eReport_DotationSupplyDone );
-    for( IT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
-    {
-        if( it->second == &supplyState )
-        {
-            dotationSupplyStates_.erase( it );
-            return;
-        }
-    }
-    assert( false );
+    pDotationSupplyManager_->NotifyDotationSupplied( supplyState );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::NotifyStockSupplyNeeded
+// Created: AHC 2010-09-27
+// -----------------------------------------------------------------------------
+void MIL_Automate::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory )
+{
+    pStockSupplyManager_->NotifyStockSupplyNeeded( dotationCategory );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::NotifyDotationSupplied
+// Created: AHC 2010-09-27
+// -----------------------------------------------------------------------------
+void MIL_Automate::NotifyStockSupplied( const PHY_SupplyStockState& supplyState )
+{
+    pStockSupplyManager_->NotifyStockSupplied( supplyState );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::NotifyStockSupplyCanceled
+// Created: AHC 2010-09-278
+// -----------------------------------------------------------------------------
+void MIL_Automate::NotifyStockSupplyCanceled ( const PHY_SupplyStockState& supplyState )
+{
+    pStockSupplyManager_->NotifyStockSupplyCanceled( supplyState );
 }
 
 //-----------------------------------------------------------------------------
@@ -816,6 +844,8 @@ void MIL_Automate::SendCreation( unsigned int context ) const
     asn().mutable_type()->set_id( pType_->GetID() );
     asn().mutable_party()->set_id( GetArmy().GetID() );
     asn().mutable_knowledge_group()->set_id( GetKnowledgeGroup().GetId() );
+    asn().set_logistic_level( pBrainLogistic_.get() ?
+        (Common::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : Common::none );
     asn().set_nom( GetName() );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
     {
@@ -849,8 +879,8 @@ void MIL_Automate::SendFullState() const
     GetRole< DEC_AutomateDecision >().SendFullState( asn );
     asn.Send( NET_Publisher_ABC::Publisher() );
     SendLogisticLinks();
-    for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
-        it->second->SendFullState();
+    pDotationSupplyManager_->SendFullState();
+    pStockSupplyManager_->SendFullState();
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         ( **it ).SendFullState();
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
@@ -875,10 +905,20 @@ void MIL_Automate::SendKnowledge() const
 // -----------------------------------------------------------------------------
 void MIL_Automate::SendLogisticLinks() const
 {
-    client::AutomatChangeLogisticLinks asn;
-    asn().mutable_automat()->set_id( nID_ );
+    client::ChangeLogisticLinks asn;
+    asn().mutable_requester()->mutable_automat()->set_id( nID_ );
+
     if( pTC2_ )
+    {
         asn().mutable_tc2()->set_id( pTC2_->GetID() );
+    }
+    if( pBrainLogistic_.get() && pBrainLogistic_->GetSuperior() )
+    {
+        if( pBrainLogistic_->GetSuperior()->GetAssociatedAutomat() )
+            asn().mutable_logistic_base()->mutable_automat()->set_id( pBrainLogistic_->GetSuperior()->GetID() );
+        else
+            asn().mutable_logistic_base()->mutable_formation()->set_id( pBrainLogistic_->GetSuperior()->GetID() );
+    }
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -1049,7 +1089,7 @@ void MIL_Automate::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::MsgUn
             MIL_Automate* pTC2 = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( tc2Id );
             if( !pTC2 || !pTC2->GetType().IsLogistic() )
                 throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_invalid_automate_tc2 );
-            pTC2_ = static_cast< MIL_AutomateLOG* >( pTC2 );
+            pTC2_ = pTC2->GetBrainLogistic();
         }
     }
 }
@@ -1107,9 +1147,20 @@ void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionPa
 // Name: MIL_Automate::OnReceiveMsgLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgLogSupplyPushFlow( const Common::MsgMissionParameters& /*msg*/ )
+void MIL_Automate::OnReceiveMsgLogSupplyPushFlow( const Common::MsgMissionParameters& msg )
 {
-    throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgsSimToClient::MsgLogSupplyPushFlowAck::error_invalid_receveur_pushflow );
+    assert( pStockSupplyManager_.get() );
+    pStockSupplyManager_->OnReceiveMsgLogSupplyPushFlow( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::OnReceiveMsgLogSupplyPullFlow
+// Created: AHC 2010-09-28
+// -----------------------------------------------------------------------------
+void MIL_Automate::OnReceiveMsgLogSupplyPullFlow    ( const Common::MsgMissionParameters&              msg )
+{
+    assert( pStockSupplyManager_.get() );
+    pStockSupplyManager_->OnReceiveMsgLogSupplyPullFlow( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1128,6 +1179,49 @@ void MIL_Automate::OnReceiveMsgOrder( const Common::MsgAutomatOrder& msg )
 void MIL_Automate::OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder& msg )
 {
     pOrderManager_->OnReceiveFragOrder( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::GetQuota
+// Created: AHC 2010-09-27
+// -----------------------------------------------------------------------------
+double MIL_Automate::GetQuota( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory ) const
+{
+    const MIL_AutomateLOG* pLog = FindLogisticManager();
+    return pLog ? pLog->GetQuota( supplier, dotationCategory ) : 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::ConsumeQuota
+// Created: AHC 2010-09-27
+// -----------------------------------------------------------------------------
+void MIL_Automate::ConsumeQuota( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory, double rQuotaConsumed )
+{
+    MIL_AutomateLOG* pLog = FindLogisticManager();
+    if( pLog )
+        pLog->ConsumeQuota( supplier, dotationCategory, rQuotaConsumed );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::FindLogisticManager
+// Created: AHC 2010-09-27
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG* MIL_Automate::FindLogisticManager() const
+{
+    if( pBrainLogistic_.get() )
+        return pBrainLogistic_.get();
+    return pParentFormation_->FindLogisticManager();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::Apply
+// Created: AHC 2010-09-28
+// -----------------------------------------------------------------------------
+void MIL_Automate::Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) const
+{
+    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+        visitor.Visit( **it );
 }
 
 // -----------------------------------------------------------------------------
@@ -1311,4 +1405,13 @@ void MIL_Automate::UnregisterAutomate( MIL_Automate& automate )
     IT_AutomateVector it = std::find( automates_.begin(), automates_.end(), &automate );
     assert( it != automates_.end() );
     automates_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::GetBrainLogistic
+// Created: AHC 2010-09-24
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG* MIL_Automate::GetBrainLogistic () const
+{
+    return pBrainLogistic_.get();
 }

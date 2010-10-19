@@ -50,7 +50,7 @@ protected:
     //! @name Operations
     //@{
     virtual void Load( xml::xistream& ) {};
-    virtual void SerializeLogistics( xml::xostream& xos ) const;
+    virtual void SerializeLogistics( xml::xostream& xos ) const {}
     virtual void SerializeQuotas( xml::xostream& ) const {};
     //@}
 

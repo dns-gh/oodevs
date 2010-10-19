@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "TeamFactory.h"
+#include "StaticModel.h"
 #include "AgentsModel.h"
 #include "AggregatedPositions.h"
 #include "ConvexHulls.h"
@@ -31,16 +32,18 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/AgentTypes.h"
-
-using namespace kernel;
+#include "LogisticLinks.h"
+#include "LogisticConsigns.h"
+#include "Quotas.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamFactory constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-TeamFactory::TeamFactory( Controllers& controllers, Model& model )
+TeamFactory::TeamFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticM  )
     : controllers_( controllers )
     , model_( model )
+    , static_( staticM )
 {
     // NOTHING
 }
@@ -58,16 +61,16 @@ TeamFactory::~TeamFactory()
 // Name: TeamFactory::CreateTeam
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Team_ABC* TeamFactory::CreateTeam( const MsgsSimToClient::MsgPartyCreation& message )
+kernel::Team_ABC* TeamFactory::CreateTeam( const MsgsSimToClient::MsgPartyCreation& message )
 {
     Team* result = new Team( message, controllers_.controller_ );
-    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
+    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
     result->Attach( *new UrbanKnowledges( *result, controllers_.controller_, model_.urbanKnowledgeFactory_ ) );
     result->Attach< kernel::Diplomacies_ABC > ( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
-    result->Attach< CommunicationHierarchies >( *new TeamHierarchies        ( controllers_.controller_, *result ) );
-    result->Attach< TacticalHierarchies >     ( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
-    result->Attach< IntelligenceHierarchies > ( *new EntityIntelligences    ( controllers_.controller_, *result, 0, model_.teams_ ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new TeamHierarchies        ( controllers_.controller_, *result ) );
+    result->Attach< kernel::TacticalHierarchies >     ( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
+    result->Attach< kernel::IntelligenceHierarchies > ( *new EntityIntelligences    ( controllers_.controller_, *result, 0, model_.teams_ ) );
     result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach<kernel::Dotations_ABC>( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
@@ -82,14 +85,17 @@ Team_ABC* TeamFactory::CreateTeam( const MsgsSimToClient::MsgPartyCreation& mess
 // -----------------------------------------------------------------------------
 kernel::Formation_ABC* TeamFactory::CreateFormation( const MsgsSimToClient::MsgFormationCreation& message )
 {
-    Entity_ABC* superior = message.has_parent()  ? 
-        (Entity_ABC*) &model_.teams_.Resolver< Formation_ABC >::Get( message.parent().id() ) :
-        (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( message.party().id() );
+    kernel::Entity_ABC* superior = message.has_parent()  ?
+        (kernel::Entity_ABC*) &model_.teams_.Resolver< kernel::Formation_ABC >::Get( message.parent().id() ) :
+        (kernel::Entity_ABC*) &model_.teams_.Resolver< kernel::Team_ABC >::Get( message.party().id() );
 
     Formation* result = new Formation( message, controllers_.controller_, model_.static_.levels_ );
-    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
-    result->Attach< TacticalHierarchies >    ( *new FormationHierarchy( controllers_.controller_, *result, superior ) );
-    result->Attach< IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, superior, model_.teams_ ) );
+    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
+    result->Attach< kernel::TacticalHierarchies >    ( *new FormationHierarchy( controllers_.controller_, *result, superior ) );
+    result->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, superior, model_.teams_ ) );
+    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, dico ) );
+    result->Attach( *new Quotas( controllers_.controller_, static_.objectTypes_ ) );
+    result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach< kernel::Dotations_ABC >  ( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );

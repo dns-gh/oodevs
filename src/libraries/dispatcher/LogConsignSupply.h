@@ -14,6 +14,10 @@
 #include "SimpleEntity.h"
 #include "tools/Resolver.h"
 
+namespace Common
+{
+	class ParentEntity;
+}
 namespace MsgsSimToClient
 {
     enum EnumLogSupplyHandlingStatus;
@@ -24,6 +28,7 @@ namespace MsgsSimToClient
 namespace kernel
 {
     class Automat_ABC;
+    class Entity_ABC;
     class Agent_ABC;
     class ModelVisitor_ABC;
 }
@@ -67,14 +72,19 @@ private:
     LogConsignSupply( const LogConsignSupply& );            //!< Copy constructor
     LogConsignSupply& operator=( const LogConsignSupply& ); //!< Assignment operator
     //@}
+    //! @name Tools
+	//@{
+	kernel::Entity_ABC* FindLogEntity(const Common::ParentEntity& msg) const;
+	void FillLogEntityID(Common::ParentEntity& msg, const kernel::Entity_ABC* entity) const;
+	//@}
 
 private:
     const Model&               model_;
     const kernel::Automat_ABC& automat_;
     const unsigned long        nTickCreation_;
 
-    const kernel::Automat_ABC*        pTreatingAutomat_;
-    const kernel::Automat_ABC*        pConvoyingAutomat_;
+    const kernel::Entity_ABC*        pTreatingEntity_;
+    const kernel::Entity_ABC*        pConvoyingEntity_;
     const kernel::Agent_ABC*          pConvoy_;
     MsgsSimToClient::EnumLogSupplyHandlingStatus nState_;
     tools::Resolver< LogSupplyDotation > dotations_;

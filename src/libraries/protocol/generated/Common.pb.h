@@ -85,7 +85,7 @@ class SeqOfDotationStock;
 class MsgDotationQuota;
 class SeqOfDotationQuota;
 class MsgAutomatChangeKnowledgeGroup;
-class MsgAutomatChangeLogisticLinks;
+class MsgChangeLogisticLinks;
 class MsgAutomatChangeSuperior_oid_superior;
 class MsgAutomatChangeSuperior;
 class MsgUnitChangeSuperior;
@@ -770,6 +770,25 @@ inline bool EnumNatureLevel_Parse(
     const ::std::string& name, EnumNatureLevel* value) {
   return ::google::protobuf::internal::ParseNamedEnum<EnumNatureLevel>(
     EnumNatureLevel_descriptor(), name, value);
+}
+enum EnumLogisticLevel {
+  none = 0,
+  tc2 = 1,
+  logistic_base = 2
+};
+bool EnumLogisticLevel_IsValid(int value);
+const EnumLogisticLevel EnumLogisticLevel_MIN = none;
+const EnumLogisticLevel EnumLogisticLevel_MAX = logistic_base;
+
+const ::google::protobuf::EnumDescriptor* EnumLogisticLevel_descriptor();
+inline const ::std::string& EnumLogisticLevel_Name(EnumLogisticLevel value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    EnumLogisticLevel_descriptor(), value);
+}
+inline bool EnumLogisticLevel_Parse(
+    const ::std::string& name, EnumLogisticLevel* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<EnumLogisticLevel>(
+    EnumLogisticLevel_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -5661,14 +5680,14 @@ class MsgAutomatChangeKnowledgeGroup : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgAutomatChangeLogisticLinks : public ::google::protobuf::Message {
+class MsgChangeLogisticLinks : public ::google::protobuf::Message {
  public:
-  MsgAutomatChangeLogisticLinks();
-  virtual ~MsgAutomatChangeLogisticLinks();
+  MsgChangeLogisticLinks();
+  virtual ~MsgChangeLogisticLinks();
   
-  MsgAutomatChangeLogisticLinks(const MsgAutomatChangeLogisticLinks& from);
+  MsgChangeLogisticLinks(const MsgChangeLogisticLinks& from);
   
-  inline MsgAutomatChangeLogisticLinks& operator=(const MsgAutomatChangeLogisticLinks& from) {
+  inline MsgChangeLogisticLinks& operator=(const MsgChangeLogisticLinks& from) {
     CopyFrom(from);
     return *this;
   }
@@ -5682,16 +5701,16 @@ class MsgAutomatChangeLogisticLinks : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgAutomatChangeLogisticLinks& default_instance();
-  void Swap(MsgAutomatChangeLogisticLinks* other);
+  static const MsgChangeLogisticLinks& default_instance();
+  void Swap(MsgChangeLogisticLinks* other);
   
   // implements Message ----------------------------------------------
   
-  MsgAutomatChangeLogisticLinks* New() const;
+  MsgChangeLogisticLinks* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgAutomatChangeLogisticLinks& from);
-  void MergeFrom(const MsgAutomatChangeLogisticLinks& from);
+  void CopyFrom(const MsgChangeLogisticLinks& from);
+  void MergeFrom(const MsgChangeLogisticLinks& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -5714,12 +5733,12 @@ class MsgAutomatChangeLogisticLinks : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.AutomatId automat = 1;
-  inline bool has_automat() const;
-  inline void clear_automat();
-  static const int kAutomatFieldNumber = 1;
-  inline const ::Common::AutomatId& automat() const;
-  inline ::Common::AutomatId* mutable_automat();
+  // required .Common.ParentEntity requester = 1;
+  inline bool has_requester() const;
+  inline void clear_requester();
+  static const int kRequesterFieldNumber = 1;
+  inline const ::Common::ParentEntity& requester() const;
+  inline ::Common::ParentEntity* mutable_requester();
   
   // optional .Common.AutomatId tc2 = 2;
   inline bool has_tc2() const;
@@ -5728,41 +5747,25 @@ class MsgAutomatChangeLogisticLinks : public ::google::protobuf::Message {
   inline const ::Common::AutomatId& tc2() const;
   inline ::Common::AutomatId* mutable_tc2();
   
-  // optional .Common.AutomatId maintenance = 3;
-  inline bool has_maintenance() const;
-  inline void clear_maintenance();
-  static const int kMaintenanceFieldNumber = 3;
-  inline const ::Common::AutomatId& maintenance() const;
-  inline ::Common::AutomatId* mutable_maintenance();
-  
-  // optional .Common.AutomatId health = 4;
-  inline bool has_health() const;
-  inline void clear_health();
-  static const int kHealthFieldNumber = 4;
-  inline const ::Common::AutomatId& health() const;
-  inline ::Common::AutomatId* mutable_health();
-  
-  // optional .Common.AutomatId supply = 5;
-  inline bool has_supply() const;
-  inline void clear_supply();
-  static const int kSupplyFieldNumber = 5;
-  inline const ::Common::AutomatId& supply() const;
-  inline ::Common::AutomatId* mutable_supply();
+  // optional .Common.ParentEntity logistic_base = 3;
+  inline bool has_logistic_base() const;
+  inline void clear_logistic_base();
+  static const int kLogisticBaseFieldNumber = 3;
+  inline const ::Common::ParentEntity& logistic_base() const;
+  inline ::Common::ParentEntity* mutable_logistic_base();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::AutomatId* automat_;
+  ::Common::ParentEntity* requester_;
   ::Common::AutomatId* tc2_;
-  ::Common::AutomatId* maintenance_;
-  ::Common::AutomatId* health_;
-  ::Common::AutomatId* supply_;
+  ::Common::ParentEntity* logistic_base_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -5776,7 +5779,7 @@ class MsgAutomatChangeLogisticLinks : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgAutomatChangeLogisticLinks* default_instance_;
+  static MsgChangeLogisticLinks* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -14953,91 +14956,57 @@ inline ::Common::KnowledgeGroupId* MsgAutomatChangeKnowledgeGroup::mutable_knowl
 
 // -------------------------------------------------------------------
 
-// MsgAutomatChangeLogisticLinks
+// MsgChangeLogisticLinks
 
-// required .Common.AutomatId automat = 1;
-inline bool MsgAutomatChangeLogisticLinks::has_automat() const {
+// required .Common.ParentEntity requester = 1;
+inline bool MsgChangeLogisticLinks::has_requester() const {
   return _has_bit(0);
 }
-inline void MsgAutomatChangeLogisticLinks::clear_automat() {
-  if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
+inline void MsgChangeLogisticLinks::clear_requester() {
+  if (requester_ != NULL) requester_->::Common::ParentEntity::Clear();
   _clear_bit(0);
 }
-inline const ::Common::AutomatId& MsgAutomatChangeLogisticLinks::automat() const {
-  return automat_ != NULL ? *automat_ : *default_instance_->automat_;
+inline const ::Common::ParentEntity& MsgChangeLogisticLinks::requester() const {
+  return requester_ != NULL ? *requester_ : *default_instance_->requester_;
 }
-inline ::Common::AutomatId* MsgAutomatChangeLogisticLinks::mutable_automat() {
+inline ::Common::ParentEntity* MsgChangeLogisticLinks::mutable_requester() {
   _set_bit(0);
-  if (automat_ == NULL) automat_ = new ::Common::AutomatId;
-  return automat_;
+  if (requester_ == NULL) requester_ = new ::Common::ParentEntity;
+  return requester_;
 }
 
 // optional .Common.AutomatId tc2 = 2;
-inline bool MsgAutomatChangeLogisticLinks::has_tc2() const {
+inline bool MsgChangeLogisticLinks::has_tc2() const {
   return _has_bit(1);
 }
-inline void MsgAutomatChangeLogisticLinks::clear_tc2() {
+inline void MsgChangeLogisticLinks::clear_tc2() {
   if (tc2_ != NULL) tc2_->::Common::AutomatId::Clear();
   _clear_bit(1);
 }
-inline const ::Common::AutomatId& MsgAutomatChangeLogisticLinks::tc2() const {
+inline const ::Common::AutomatId& MsgChangeLogisticLinks::tc2() const {
   return tc2_ != NULL ? *tc2_ : *default_instance_->tc2_;
 }
-inline ::Common::AutomatId* MsgAutomatChangeLogisticLinks::mutable_tc2() {
+inline ::Common::AutomatId* MsgChangeLogisticLinks::mutable_tc2() {
   _set_bit(1);
   if (tc2_ == NULL) tc2_ = new ::Common::AutomatId;
   return tc2_;
 }
 
-// optional .Common.AutomatId maintenance = 3;
-inline bool MsgAutomatChangeLogisticLinks::has_maintenance() const {
+// optional .Common.ParentEntity logistic_base = 3;
+inline bool MsgChangeLogisticLinks::has_logistic_base() const {
   return _has_bit(2);
 }
-inline void MsgAutomatChangeLogisticLinks::clear_maintenance() {
-  if (maintenance_ != NULL) maintenance_->::Common::AutomatId::Clear();
+inline void MsgChangeLogisticLinks::clear_logistic_base() {
+  if (logistic_base_ != NULL) logistic_base_->::Common::ParentEntity::Clear();
   _clear_bit(2);
 }
-inline const ::Common::AutomatId& MsgAutomatChangeLogisticLinks::maintenance() const {
-  return maintenance_ != NULL ? *maintenance_ : *default_instance_->maintenance_;
+inline const ::Common::ParentEntity& MsgChangeLogisticLinks::logistic_base() const {
+  return logistic_base_ != NULL ? *logistic_base_ : *default_instance_->logistic_base_;
 }
-inline ::Common::AutomatId* MsgAutomatChangeLogisticLinks::mutable_maintenance() {
+inline ::Common::ParentEntity* MsgChangeLogisticLinks::mutable_logistic_base() {
   _set_bit(2);
-  if (maintenance_ == NULL) maintenance_ = new ::Common::AutomatId;
-  return maintenance_;
-}
-
-// optional .Common.AutomatId health = 4;
-inline bool MsgAutomatChangeLogisticLinks::has_health() const {
-  return _has_bit(3);
-}
-inline void MsgAutomatChangeLogisticLinks::clear_health() {
-  if (health_ != NULL) health_->::Common::AutomatId::Clear();
-  _clear_bit(3);
-}
-inline const ::Common::AutomatId& MsgAutomatChangeLogisticLinks::health() const {
-  return health_ != NULL ? *health_ : *default_instance_->health_;
-}
-inline ::Common::AutomatId* MsgAutomatChangeLogisticLinks::mutable_health() {
-  _set_bit(3);
-  if (health_ == NULL) health_ = new ::Common::AutomatId;
-  return health_;
-}
-
-// optional .Common.AutomatId supply = 5;
-inline bool MsgAutomatChangeLogisticLinks::has_supply() const {
-  return _has_bit(4);
-}
-inline void MsgAutomatChangeLogisticLinks::clear_supply() {
-  if (supply_ != NULL) supply_->::Common::AutomatId::Clear();
-  _clear_bit(4);
-}
-inline const ::Common::AutomatId& MsgAutomatChangeLogisticLinks::supply() const {
-  return supply_ != NULL ? *supply_ : *default_instance_->supply_;
-}
-inline ::Common::AutomatId* MsgAutomatChangeLogisticLinks::mutable_supply() {
-  _set_bit(4);
-  if (supply_ == NULL) supply_ = new ::Common::AutomatId;
-  return supply_;
+  if (logistic_base_ == NULL) logistic_base_ = new ::Common::ParentEntity;
+  return logistic_base_;
 }
 
 // -------------------------------------------------------------------
@@ -19830,6 +19799,10 @@ inline const EnumDescriptor* GetEnumDescriptor< Common::EnumLogMaintenanceRegime
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< Common::EnumNatureLevel>() {
   return Common::EnumNatureLevel_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< Common::EnumLogisticLevel>() {
+  return Common::EnumLogisticLevel_descriptor();
 }
 
 }  // namespace google

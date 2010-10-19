@@ -18,7 +18,7 @@ namespace client
 
 GENERATE_ASN_MSG_SENDER( SimToClient, Common         , UnitChangeSuperior                            , unit_change_superior                              )
 GENERATE_ASN_MSG_SENDER( SimToClient, Common         , AutomatChangeKnowledgeGroup                   , automat_change_knowledge_group                    )
-GENERATE_ASN_MSG_SENDER( SimToClient, Common         , AutomatChangeLogisticLinks                    , automat_change_logistic_links                     )
+GENERATE_ASN_MSG_SENDER( SimToClient, Common         , ChangeLogisticLinks                           , automat_change_logistic_links                     )
 GENERATE_ASN_MSG_SENDER( SimToClient, Common         , AutomatChangeSuperior                         , automat_change_superior                           )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, FormationCreation                             , formation_creation                                )
 GENERATE_ASN_MSG_SENDER( SimToClient, Common         , ChangeDiplomacy                               , change_diplomacy                                  )
@@ -112,7 +112,7 @@ GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, CrowdConcentrationDetecti
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, CrowdFlowDetection                            , crowd_flow_detection                              )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, UnitCreationRequestAck                        , unit_creation_request_ack                         )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, ChangeDiplomacyAck                            , change_diplomacy_ack                              )
-GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, AutomatChangeLogisticLinksAck                 , automat_change_logistic_links_ack                 )
+GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, ChangeLogisticLinksAck                        , automat_change_logistic_links_ack                 )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, UnitOrderAck                                  , unit_order_ack                                    )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, AutomatOrderAck                               , automat_order_ack                                 )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, CrowdOrderAck                                 , crowd_order_ack                                   )
@@ -125,6 +125,7 @@ GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, MagicActionAck           
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, ObjectMagicActionAck                          , object_magic_action_ack                           )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, LogSupplyChangeQuotasAck                      , log_supply_change_quotas_ack                      )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, LogSupplyPushFlowAck                          , log_supply_push_flow_ack                          )
+GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, LogSupplyPullFlowAck                          , log_supply_pull_flow_ack                          )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, FolkGraphUpdate                               , folk_graph_update                                 )
 
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, UrbanCreation                                 , urban_creation                                    )

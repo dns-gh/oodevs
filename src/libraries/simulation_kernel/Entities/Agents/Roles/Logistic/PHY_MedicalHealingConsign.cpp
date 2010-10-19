@@ -18,6 +18,7 @@
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalHealingConsign )
 
@@ -161,7 +162,8 @@ void PHY_MedicalHealingConsign::EnterStateSearchingForHealingArea()
 // -----------------------------------------------------------------------------
 void PHY_MedicalHealingConsign::DoSearchForHealingArea()
 {
-    if( GetPionMedical().GetAutomate().MedicalHandleHumanForHealing( *pHumanState_ ) )
+    MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
+    if( pLogisticManager && pLogisticManager->MedicalHandleHumanForHealing( *pHumanState_ ) )
     {
         SetState( eFinished );
         nTimer_ = 0;
@@ -193,7 +195,8 @@ bool PHY_MedicalHealingConsign::DoWaitingForCollection()
     assert( pHumanState_ );
     assert( !pDoctor_ );
 
-    if( GetPionMedical().GetAutomate().MedicalHandleHumanForCollection( *pHumanState_ ) )
+    MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
+    if( pLogisticManager && pLogisticManager->MedicalHandleHumanForCollection( *pHumanState_ ) )
     {
         pHumanState_ = 0;
         SetState( eFinished );

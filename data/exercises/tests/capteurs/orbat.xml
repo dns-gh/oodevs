@@ -33,7 +33,7 @@
         <knowledge-group id="158" name="Knowledge group [158]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
     <side id="162" name="Capté" type="friend">
       <objects/>
@@ -52,7 +52,7 @@
         <knowledge-group id="165" name="Knowledge group [165]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
     <side id="176" name="Camp 176" type="enemy">
       <objects/>
@@ -67,7 +67,7 @@
         <knowledge-group id="179" name="Knowledge group [179]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
   </sides>
   <diplomacies>

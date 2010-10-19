@@ -19,6 +19,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalEvacuationConsign )
 
@@ -267,7 +268,8 @@ bool PHY_MedicalEvacuationConsign::DoWaitingForCollection()
     assert( !pDoctor_ );
     assert( !pEvacuationAmbulance_ );
 
-    if( GetPionMedical().GetAutomate().MedicalHandleHumanForCollection( *pHumanState_ ) )
+    MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
+    if( pLogisticManager && pLogisticManager->MedicalHandleHumanForCollection( *pHumanState_ ) )
     {
         pHumanState_ = 0;
         SetState( eFinished );

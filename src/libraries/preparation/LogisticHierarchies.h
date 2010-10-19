@@ -13,6 +13,7 @@
 #include "LogisticHierarchies_ABC.h"
 #include "clients_kernel/LogisticHierarchies.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 
@@ -35,7 +36,7 @@ public:
     //! @name Operations
     //@{
     using LogisticHierarchies_ABC< I >::Load;
-    void Load( xml::xistream& xis, const kernel::Automat_ABC* superior );
+    void Load( xml::xistream& xis, const kernel::Entity_ABC* superior );
     //@}
 
 private:
@@ -48,6 +49,7 @@ private:
 protected:
     //! @name Helpers
     //@{
+    void SerializeLogistics( xml::xostream& xos ) const;
     void SetSuperior( const Superior& automat );
     virtual void SetSuperiorInternal( kernel::Entity_ABC* superior );
     void DrawLink( const geometry::Point2f& where, const kernel::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const;

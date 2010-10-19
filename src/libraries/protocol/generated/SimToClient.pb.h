@@ -46,10 +46,11 @@ class MsgCrowdMagicActionAck;
 class MsgChangeDiplomacyAck;
 class HierarchyModificationAck;
 class MsgAutomatChangeKnowledgeGroupAck;
-class MsgAutomatChangeLogisticLinksAck;
+class MsgChangeLogisticLinksAck;
 class MsgAutomatChangeSuperiorAck;
 class MsgUnitChangeSuperiorAck;
 class MsgLogSupplyPushFlowAck;
+class MsgLogSupplyPullFlowAck;
 class MsgLogSupplyChangeQuotasAck;
 class MsgActionCreateFireOrderAck;
 class MsgControlInformation;
@@ -406,6 +407,25 @@ inline bool MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_Parse(
     const ::std::string& name, MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow* value) {
   return ::google::protobuf::internal::ParseNamedEnum<MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow>(
     MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_descriptor(), name, value);
+}
+enum MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow {
+  MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_no_error_pullflow = 0,
+  MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_provider_pullflow = 1,
+  MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_receiver_pullflow = 2
+};
+bool MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_IsValid(int value);
+const MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_EnumLogSupplyPullFlow_MIN = MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_no_error_pullflow;
+const MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_EnumLogSupplyPullFlow_MAX = MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_receiver_pullflow;
+
+const ::google::protobuf::EnumDescriptor* MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_descriptor();
+inline const ::std::string& MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_Name(MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_descriptor(), value);
+}
+inline bool MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_Parse(
+    const ::std::string& name, MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow>(
+    MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_descriptor(), name, value);
 }
 enum MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas {
   MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_no_error_quotas = 0,
@@ -2252,14 +2272,14 @@ class MsgAutomatChangeKnowledgeGroupAck : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgAutomatChangeLogisticLinksAck : public ::google::protobuf::Message {
+class MsgChangeLogisticLinksAck : public ::google::protobuf::Message {
  public:
-  MsgAutomatChangeLogisticLinksAck();
-  virtual ~MsgAutomatChangeLogisticLinksAck();
+  MsgChangeLogisticLinksAck();
+  virtual ~MsgChangeLogisticLinksAck();
   
-  MsgAutomatChangeLogisticLinksAck(const MsgAutomatChangeLogisticLinksAck& from);
+  MsgChangeLogisticLinksAck(const MsgChangeLogisticLinksAck& from);
   
-  inline MsgAutomatChangeLogisticLinksAck& operator=(const MsgAutomatChangeLogisticLinksAck& from) {
+  inline MsgChangeLogisticLinksAck& operator=(const MsgChangeLogisticLinksAck& from) {
     CopyFrom(from);
     return *this;
   }
@@ -2273,16 +2293,16 @@ class MsgAutomatChangeLogisticLinksAck : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgAutomatChangeLogisticLinksAck& default_instance();
-  void Swap(MsgAutomatChangeLogisticLinksAck* other);
+  static const MsgChangeLogisticLinksAck& default_instance();
+  void Swap(MsgChangeLogisticLinksAck* other);
   
   // implements Message ----------------------------------------------
   
-  MsgAutomatChangeLogisticLinksAck* New() const;
+  MsgChangeLogisticLinksAck* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgAutomatChangeLogisticLinksAck& from);
-  void MergeFrom(const MsgAutomatChangeLogisticLinksAck& from);
+  void CopyFrom(const MsgChangeLogisticLinksAck& from);
+  void MergeFrom(const MsgChangeLogisticLinksAck& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -2335,7 +2355,7 @@ class MsgAutomatChangeLogisticLinksAck : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgAutomatChangeLogisticLinksAck* default_instance_;
+  static MsgChangeLogisticLinksAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -2620,6 +2640,116 @@ class MsgLogSupplyPushFlowAck : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static MsgLogSupplyPushFlowAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgLogSupplyPullFlowAck : public ::google::protobuf::Message {
+ public:
+  MsgLogSupplyPullFlowAck();
+  virtual ~MsgLogSupplyPullFlowAck();
+  
+  MsgLogSupplyPullFlowAck(const MsgLogSupplyPullFlowAck& from);
+  
+  inline MsgLogSupplyPullFlowAck& operator=(const MsgLogSupplyPullFlowAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgLogSupplyPullFlowAck& default_instance();
+  void Swap(MsgLogSupplyPullFlowAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgLogSupplyPullFlowAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgLogSupplyPullFlowAck& from);
+  void MergeFrom(const MsgLogSupplyPullFlowAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  typedef MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow EnumLogSupplyPullFlow;
+  static const EnumLogSupplyPullFlow no_error_pullflow = MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_no_error_pullflow;
+  static const EnumLogSupplyPullFlow error_invalid_provider_pullflow = MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_provider_pullflow;
+  static const EnumLogSupplyPullFlow error_invalid_receiver_pullflow = MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_receiver_pullflow;
+  static inline bool EnumLogSupplyPullFlow_IsValid(int value) {
+    return MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_IsValid(value);
+  }
+  static const EnumLogSupplyPullFlow EnumLogSupplyPullFlow_MIN =
+    MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_EnumLogSupplyPullFlow_MIN;
+  static const EnumLogSupplyPullFlow EnumLogSupplyPullFlow_MAX =
+    MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_EnumLogSupplyPullFlow_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  EnumLogSupplyPullFlow_descriptor() {
+    return MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_descriptor();
+  }
+  static inline const ::std::string& EnumLogSupplyPullFlow_Name(EnumLogSupplyPullFlow value) {
+    return MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_Name(value);
+  }
+  static inline bool EnumLogSupplyPullFlow_Parse(const ::std::string& name,
+      EnumLogSupplyPullFlow* value) {
+    return MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_Parse(name, value);
+  }
+  
+  // accessors -------------------------------------------------------
+  
+  // optional .MsgsSimToClient.MsgLogSupplyPullFlowAck.EnumLogSupplyPullFlow ack = 1;
+  inline bool has_ack() const;
+  inline void clear_ack();
+  static const int kAckFieldNumber = 1;
+  inline ::MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow ack() const;
+  inline void set_ack(::MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  int ack_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgLogSupplyPullFlowAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -4084,6 +4214,20 @@ class MsgFormationCreation : public ::google::protobuf::Message {
   inline void set_name(const char* value, size_t size);
   inline ::std::string* mutable_name();
   
+  // required .Common.EnumLogisticLevel logistic_level = 8;
+  inline bool has_logistic_level() const;
+  inline void clear_logistic_level();
+  static const int kLogisticLevelFieldNumber = 8;
+  inline Common::EnumLogisticLevel logistic_level() const;
+  inline void set_logistic_level(Common::EnumLogisticLevel value);
+  
+  // optional .Common.ParentEntity logistic_base_organic = 10;
+  inline bool has_logistic_base_organic() const;
+  inline void clear_logistic_base_organic();
+  static const int kLogisticBaseOrganicFieldNumber = 10;
+  inline const ::Common::ParentEntity& logistic_base_organic() const;
+  inline ::Common::ParentEntity* mutable_logistic_base_organic();
+  
   // optional .MsgsSimToClient.Extension extension = 6;
   inline bool has_extension() const;
   inline void clear_extension();
@@ -4101,12 +4245,14 @@ class MsgFormationCreation : public ::google::protobuf::Message {
   int level_;
   ::std::string* name_;
   static const ::std::string _default_name_;
+  int logistic_level_;
+  ::Common::ParentEntity* logistic_base_organic_;
   ::MsgsSimToClient::Extension* extension_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -4229,6 +4375,13 @@ class MsgAutomatCreation : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::Extension& extension() const;
   inline ::MsgsSimToClient::Extension* mutable_extension();
   
+  // required .Common.EnumLogisticLevel logistic_level = 9;
+  inline bool has_logistic_level() const;
+  inline void clear_logistic_level();
+  static const int kLogisticLevelFieldNumber = 9;
+  inline Common::EnumLogisticLevel logistic_level() const;
+  inline void set_logistic_level(Common::EnumLogisticLevel value);
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -4241,11 +4394,12 @@ class MsgAutomatCreation : public ::google::protobuf::Message {
   ::Common::PartyId* party_;
   ::Common::KnowledgeGroupId* knowledge_group_;
   ::MsgsSimToClient::Extension* extension_;
+  int logistic_level_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -4564,6 +4718,20 @@ class MsgAutomatAttributes : public ::google::protobuf::Message {
   inline ::MsgsSimToClient::RulesOfEngagement_Value roe() const;
   inline void set_roe(::MsgsSimToClient::RulesOfEngagement_Value value);
   
+  // optional .Common.AutomatId tc2_organic = 7;
+  inline bool has_tc2_organic() const;
+  inline void clear_tc2_organic();
+  static const int kTc2OrganicFieldNumber = 7;
+  inline const ::Common::AutomatId& tc2_organic() const;
+  inline ::Common::AutomatId* mutable_tc2_organic();
+  
+  // optional .Common.ParentEntity logistic_base_organic = 8;
+  inline bool has_logistic_base_organic() const;
+  inline void clear_logistic_base_organic();
+  static const int kLogisticBaseOrganicFieldNumber = 8;
+  inline const ::Common::ParentEntity& logistic_base_organic() const;
+  inline ::Common::ParentEntity* mutable_logistic_base_organic();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -4574,11 +4742,13 @@ class MsgAutomatAttributes : public ::google::protobuf::Message {
   int combat_de_rencontre_;
   int etat_operationnel_;
   int roe_;
+  ::Common::AutomatId* tc2_organic_;
+  ::Common::ParentEntity* logistic_base_organic_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -13435,19 +13605,19 @@ class MsgLogSupplyHandlingUpdate : public ::google::protobuf::Message {
   inline const ::Common::AutomatId& consumer() const;
   inline ::Common::AutomatId* mutable_consumer();
   
-  // optional .Common.AutomatId supplier = 3;
+  // optional .Common.ParentEntity supplier = 3;
   inline bool has_supplier() const;
   inline void clear_supplier();
   static const int kSupplierFieldNumber = 3;
-  inline const ::Common::AutomatId& supplier() const;
-  inline ::Common::AutomatId* mutable_supplier();
+  inline const ::Common::ParentEntity& supplier() const;
+  inline ::Common::ParentEntity* mutable_supplier();
   
-  // optional .Common.AutomatId convoy_provider = 4;
+  // optional .Common.ParentEntity convoy_provider = 4;
   inline bool has_convoy_provider() const;
   inline void clear_convoy_provider();
   static const int kConvoyProviderFieldNumber = 4;
-  inline const ::Common::AutomatId& convoy_provider() const;
-  inline ::Common::AutomatId* mutable_convoy_provider();
+  inline const ::Common::ParentEntity& convoy_provider() const;
+  inline ::Common::ParentEntity* mutable_convoy_provider();
   
   // optional .Common.UnitId convoying_unit = 5;
   inline bool has_convoying_unit() const;
@@ -13476,8 +13646,8 @@ class MsgLogSupplyHandlingUpdate : public ::google::protobuf::Message {
   
   ::Common::SupplyRequestId* request_;
   ::Common::AutomatId* consumer_;
-  ::Common::AutomatId* supplier_;
-  ::Common::AutomatId* convoy_provider_;
+  ::Common::ParentEntity* supplier_;
+  ::Common::ParentEntity* convoy_provider_;
   ::Common::UnitId* convoying_unit_;
   int etat_;
   ::MsgsSimToClient::SeqOfDotationQuery* dotations_;
@@ -13979,12 +14149,12 @@ class MsgLogSupplyQuotas : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.AutomatId automat = 1;
-  inline bool has_automat() const;
-  inline void clear_automat();
-  static const int kAutomatFieldNumber = 1;
-  inline const ::Common::AutomatId& automat() const;
-  inline ::Common::AutomatId* mutable_automat();
+  // required .Common.ParentEntity supplied = 1;
+  inline bool has_supplied() const;
+  inline void clear_supplied();
+  static const int kSuppliedFieldNumber = 1;
+  inline const ::Common::ParentEntity& supplied() const;
+  inline ::Common::ParentEntity* mutable_supplied();
   
   // required .Common.SeqOfDotationQuota quotas = 2;
   inline bool has_quotas() const;
@@ -13997,7 +14167,7 @@ class MsgLogSupplyQuotas : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::AutomatId* automat_;
+  ::Common::ParentEntity* supplied_;
   ::Common::SeqOfDotationQuota* quotas_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -20029,12 +20199,12 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck& automat_change_knowledge_group_ack() const;
   inline ::MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck* mutable_automat_change_knowledge_group_ack();
   
-  // optional .MsgsSimToClient.MsgAutomatChangeLogisticLinksAck automat_change_logistic_links_ack = 13;
+  // optional .MsgsSimToClient.MsgChangeLogisticLinksAck automat_change_logistic_links_ack = 13;
   inline bool has_automat_change_logistic_links_ack() const;
   inline void clear_automat_change_logistic_links_ack();
   static const int kAutomatChangeLogisticLinksAckFieldNumber = 13;
-  inline const ::MsgsSimToClient::MsgAutomatChangeLogisticLinksAck& automat_change_logistic_links_ack() const;
-  inline ::MsgsSimToClient::MsgAutomatChangeLogisticLinksAck* mutable_automat_change_logistic_links_ack();
+  inline const ::MsgsSimToClient::MsgChangeLogisticLinksAck& automat_change_logistic_links_ack() const;
+  inline ::MsgsSimToClient::MsgChangeLogisticLinksAck* mutable_automat_change_logistic_links_ack();
   
   // optional .MsgsSimToClient.MsgAutomatChangeSuperiorAck automat_change_superior_ack = 14;
   inline bool has_automat_change_superior_ack() const;
@@ -20211,12 +20381,12 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::Common::MsgUnitChangeSuperior& unit_change_superior() const;
   inline ::Common::MsgUnitChangeSuperior* mutable_unit_change_superior();
   
-  // optional .Common.MsgAutomatChangeLogisticLinks automat_change_logistic_links = 39;
+  // optional .Common.MsgChangeLogisticLinks automat_change_logistic_links = 39;
   inline bool has_automat_change_logistic_links() const;
   inline void clear_automat_change_logistic_links();
   static const int kAutomatChangeLogisticLinksFieldNumber = 39;
-  inline const ::Common::MsgAutomatChangeLogisticLinks& automat_change_logistic_links() const;
-  inline ::Common::MsgAutomatChangeLogisticLinks* mutable_automat_change_logistic_links();
+  inline const ::Common::MsgChangeLogisticLinks& automat_change_logistic_links() const;
+  inline ::Common::MsgChangeLogisticLinks* mutable_automat_change_logistic_links();
   
   // optional .Common.MsgAutomatChangeKnowledgeGroup automat_change_knowledge_group = 40;
   inline bool has_automat_change_knowledge_group() const;
@@ -20827,6 +20997,13 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgControlLocalWeatherDestruction& control_local_weather_destruction() const;
   inline ::MsgsSimToClient::MsgControlLocalWeatherDestruction* mutable_control_local_weather_destruction();
   
+  // optional .MsgsSimToClient.MsgLogSupplyPullFlowAck log_supply_pull_flow_ack = 130;
+  inline bool has_log_supply_pull_flow_ack() const;
+  inline void clear_log_supply_pull_flow_ack();
+  static const int kLogSupplyPullFlowAckFieldNumber = 130;
+  inline const ::MsgsSimToClient::MsgLogSupplyPullFlowAck& log_supply_pull_flow_ack() const;
+  inline ::MsgsSimToClient::MsgLogSupplyPullFlowAck* mutable_log_supply_pull_flow_ack();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -20843,7 +21020,7 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgCrowdMagicActionAck* crowd_magic_action_ack_;
   ::MsgsSimToClient::MsgChangeDiplomacyAck* change_diplomacy_ack_;
   ::MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck* automat_change_knowledge_group_ack_;
-  ::MsgsSimToClient::MsgAutomatChangeLogisticLinksAck* automat_change_logistic_links_ack_;
+  ::MsgsSimToClient::MsgChangeLogisticLinksAck* automat_change_logistic_links_ack_;
   ::MsgsSimToClient::MsgAutomatChangeSuperiorAck* automat_change_superior_ack_;
   ::MsgsSimToClient::MsgUnitChangeSuperiorAck* unit_change_superior_ack_;
   ::MsgsSimToClient::MsgLogSupplyPushFlowAck* log_supply_push_flow_ack_;
@@ -20869,7 +21046,7 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgUnitEnvironmentType* unit_environment_type_;
   ::Common::MsgChangeDiplomacy* change_diplomacy_;
   ::Common::MsgUnitChangeSuperior* unit_change_superior_;
-  ::Common::MsgAutomatChangeLogisticLinks* automat_change_logistic_links_;
+  ::Common::MsgChangeLogisticLinks* automat_change_logistic_links_;
   ::Common::MsgAutomatChangeKnowledgeGroup* automat_change_knowledge_group_;
   ::Common::MsgAutomatChangeSuperior* automat_change_superior_;
   ::MsgsSimToClient::MsgUnitKnowledgeCreation* unit_knowledge_creation_;
@@ -20957,11 +21134,12 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgControlGlobalWeather* control_global_weather_;
   ::MsgsSimToClient::MsgControlLocalWeatherCreation* control_local_weather_creation_;
   ::MsgsSimToClient::MsgControlLocalWeatherDestruction* control_local_weather_destruction_;
+  ::MsgsSimToClient::MsgLogSupplyPullFlowAck* log_supply_pull_flow_ack_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(126 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(127 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -21516,20 +21694,20 @@ inline void MsgAutomatChangeKnowledgeGroupAck::set_error_code(::MsgsSimToClient:
 
 // -------------------------------------------------------------------
 
-// MsgAutomatChangeLogisticLinksAck
+// MsgChangeLogisticLinksAck
 
 // required .MsgsSimToClient.HierarchyModificationAck.ErrorCode error_code = 1;
-inline bool MsgAutomatChangeLogisticLinksAck::has_error_code() const {
+inline bool MsgChangeLogisticLinksAck::has_error_code() const {
   return _has_bit(0);
 }
-inline void MsgAutomatChangeLogisticLinksAck::clear_error_code() {
+inline void MsgChangeLogisticLinksAck::clear_error_code() {
   error_code_ = 0;
   _clear_bit(0);
 }
-inline ::MsgsSimToClient::HierarchyModificationAck_ErrorCode MsgAutomatChangeLogisticLinksAck::error_code() const {
+inline ::MsgsSimToClient::HierarchyModificationAck_ErrorCode MsgChangeLogisticLinksAck::error_code() const {
   return static_cast< ::MsgsSimToClient::HierarchyModificationAck_ErrorCode >(error_code_);
 }
-inline void MsgAutomatChangeLogisticLinksAck::set_error_code(::MsgsSimToClient::HierarchyModificationAck_ErrorCode value) {
+inline void MsgChangeLogisticLinksAck::set_error_code(::MsgsSimToClient::HierarchyModificationAck_ErrorCode value) {
   GOOGLE_DCHECK(::MsgsSimToClient::HierarchyModificationAck_ErrorCode_IsValid(value));
   _set_bit(0);
   error_code_ = value;
@@ -21594,6 +21772,27 @@ inline ::MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow MsgLogSu
 }
 inline void MsgLogSupplyPushFlowAck::set_ack(::MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow value) {
   GOOGLE_DCHECK(::MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_IsValid(value));
+  _set_bit(0);
+  ack_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgLogSupplyPullFlowAck
+
+// optional .MsgsSimToClient.MsgLogSupplyPullFlowAck.EnumLogSupplyPullFlow ack = 1;
+inline bool MsgLogSupplyPullFlowAck::has_ack() const {
+  return _has_bit(0);
+}
+inline void MsgLogSupplyPullFlowAck::clear_ack() {
+  ack_ = 0;
+  _clear_bit(0);
+}
+inline ::MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow MsgLogSupplyPullFlowAck::ack() const {
+  return static_cast< ::MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow >(ack_);
+}
+inline void MsgLogSupplyPullFlowAck::set_ack(::MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow value) {
+  GOOGLE_DCHECK(::MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_IsValid(value));
   _set_bit(0);
   ack_ = value;
 }
@@ -22332,19 +22531,53 @@ inline ::std::string* MsgFormationCreation::mutable_name() {
   return name_;
 }
 
+// required .Common.EnumLogisticLevel logistic_level = 8;
+inline bool MsgFormationCreation::has_logistic_level() const {
+  return _has_bit(5);
+}
+inline void MsgFormationCreation::clear_logistic_level() {
+  logistic_level_ = 0;
+  _clear_bit(5);
+}
+inline Common::EnumLogisticLevel MsgFormationCreation::logistic_level() const {
+  return static_cast< Common::EnumLogisticLevel >(logistic_level_);
+}
+inline void MsgFormationCreation::set_logistic_level(Common::EnumLogisticLevel value) {
+  GOOGLE_DCHECK(Common::EnumLogisticLevel_IsValid(value));
+  _set_bit(5);
+  logistic_level_ = value;
+}
+
+// optional .Common.ParentEntity logistic_base_organic = 10;
+inline bool MsgFormationCreation::has_logistic_base_organic() const {
+  return _has_bit(6);
+}
+inline void MsgFormationCreation::clear_logistic_base_organic() {
+  if (logistic_base_organic_ != NULL) logistic_base_organic_->::Common::ParentEntity::Clear();
+  _clear_bit(6);
+}
+inline const ::Common::ParentEntity& MsgFormationCreation::logistic_base_organic() const {
+  return logistic_base_organic_ != NULL ? *logistic_base_organic_ : *default_instance_->logistic_base_organic_;
+}
+inline ::Common::ParentEntity* MsgFormationCreation::mutable_logistic_base_organic() {
+  _set_bit(6);
+  if (logistic_base_organic_ == NULL) logistic_base_organic_ = new ::Common::ParentEntity;
+  return logistic_base_organic_;
+}
+
 // optional .MsgsSimToClient.Extension extension = 6;
 inline bool MsgFormationCreation::has_extension() const {
-  return _has_bit(5);
+  return _has_bit(7);
 }
 inline void MsgFormationCreation::clear_extension() {
   if (extension_ != NULL) extension_->::MsgsSimToClient::Extension::Clear();
-  _clear_bit(5);
+  _clear_bit(7);
 }
 inline const ::MsgsSimToClient::Extension& MsgFormationCreation::extension() const {
   return extension_ != NULL ? *extension_ : *default_instance_->extension_;
 }
 inline ::MsgsSimToClient::Extension* MsgFormationCreation::mutable_extension() {
-  _set_bit(5);
+  _set_bit(7);
   if (extension_ == NULL) extension_ = new ::MsgsSimToClient::Extension;
   return extension_;
 }
@@ -22497,6 +22730,23 @@ inline ::MsgsSimToClient::Extension* MsgAutomatCreation::mutable_extension() {
   return extension_;
 }
 
+// required .Common.EnumLogisticLevel logistic_level = 9;
+inline bool MsgAutomatCreation::has_logistic_level() const {
+  return _has_bit(7);
+}
+inline void MsgAutomatCreation::clear_logistic_level() {
+  logistic_level_ = 0;
+  _clear_bit(7);
+}
+inline Common::EnumLogisticLevel MsgAutomatCreation::logistic_level() const {
+  return static_cast< Common::EnumLogisticLevel >(logistic_level_);
+}
+inline void MsgAutomatCreation::set_logistic_level(Common::EnumLogisticLevel value) {
+  GOOGLE_DCHECK(Common::EnumLogisticLevel_IsValid(value));
+  _set_bit(7);
+  logistic_level_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // RulesOfEngagement
@@ -22609,6 +22859,40 @@ inline void MsgAutomatAttributes::set_roe(::MsgsSimToClient::RulesOfEngagement_V
   GOOGLE_DCHECK(::MsgsSimToClient::RulesOfEngagement_Value_IsValid(value));
   _set_bit(5);
   roe_ = value;
+}
+
+// optional .Common.AutomatId tc2_organic = 7;
+inline bool MsgAutomatAttributes::has_tc2_organic() const {
+  return _has_bit(6);
+}
+inline void MsgAutomatAttributes::clear_tc2_organic() {
+  if (tc2_organic_ != NULL) tc2_organic_->::Common::AutomatId::Clear();
+  _clear_bit(6);
+}
+inline const ::Common::AutomatId& MsgAutomatAttributes::tc2_organic() const {
+  return tc2_organic_ != NULL ? *tc2_organic_ : *default_instance_->tc2_organic_;
+}
+inline ::Common::AutomatId* MsgAutomatAttributes::mutable_tc2_organic() {
+  _set_bit(6);
+  if (tc2_organic_ == NULL) tc2_organic_ = new ::Common::AutomatId;
+  return tc2_organic_;
+}
+
+// optional .Common.ParentEntity logistic_base_organic = 8;
+inline bool MsgAutomatAttributes::has_logistic_base_organic() const {
+  return _has_bit(7);
+}
+inline void MsgAutomatAttributes::clear_logistic_base_organic() {
+  if (logistic_base_organic_ != NULL) logistic_base_organic_->::Common::ParentEntity::Clear();
+  _clear_bit(7);
+}
+inline const ::Common::ParentEntity& MsgAutomatAttributes::logistic_base_organic() const {
+  return logistic_base_organic_ != NULL ? *logistic_base_organic_ : *default_instance_->logistic_base_organic_;
+}
+inline ::Common::ParentEntity* MsgAutomatAttributes::mutable_logistic_base_organic() {
+  _set_bit(7);
+  if (logistic_base_organic_ == NULL) logistic_base_organic_ = new ::Common::ParentEntity;
+  return logistic_base_organic_;
 }
 
 // -------------------------------------------------------------------
@@ -28393,37 +28677,37 @@ inline ::Common::AutomatId* MsgLogSupplyHandlingUpdate::mutable_consumer() {
   return consumer_;
 }
 
-// optional .Common.AutomatId supplier = 3;
+// optional .Common.ParentEntity supplier = 3;
 inline bool MsgLogSupplyHandlingUpdate::has_supplier() const {
   return _has_bit(2);
 }
 inline void MsgLogSupplyHandlingUpdate::clear_supplier() {
-  if (supplier_ != NULL) supplier_->::Common::AutomatId::Clear();
+  if (supplier_ != NULL) supplier_->::Common::ParentEntity::Clear();
   _clear_bit(2);
 }
-inline const ::Common::AutomatId& MsgLogSupplyHandlingUpdate::supplier() const {
+inline const ::Common::ParentEntity& MsgLogSupplyHandlingUpdate::supplier() const {
   return supplier_ != NULL ? *supplier_ : *default_instance_->supplier_;
 }
-inline ::Common::AutomatId* MsgLogSupplyHandlingUpdate::mutable_supplier() {
+inline ::Common::ParentEntity* MsgLogSupplyHandlingUpdate::mutable_supplier() {
   _set_bit(2);
-  if (supplier_ == NULL) supplier_ = new ::Common::AutomatId;
+  if (supplier_ == NULL) supplier_ = new ::Common::ParentEntity;
   return supplier_;
 }
 
-// optional .Common.AutomatId convoy_provider = 4;
+// optional .Common.ParentEntity convoy_provider = 4;
 inline bool MsgLogSupplyHandlingUpdate::has_convoy_provider() const {
   return _has_bit(3);
 }
 inline void MsgLogSupplyHandlingUpdate::clear_convoy_provider() {
-  if (convoy_provider_ != NULL) convoy_provider_->::Common::AutomatId::Clear();
+  if (convoy_provider_ != NULL) convoy_provider_->::Common::ParentEntity::Clear();
   _clear_bit(3);
 }
-inline const ::Common::AutomatId& MsgLogSupplyHandlingUpdate::convoy_provider() const {
+inline const ::Common::ParentEntity& MsgLogSupplyHandlingUpdate::convoy_provider() const {
   return convoy_provider_ != NULL ? *convoy_provider_ : *default_instance_->convoy_provider_;
 }
-inline ::Common::AutomatId* MsgLogSupplyHandlingUpdate::mutable_convoy_provider() {
+inline ::Common::ParentEntity* MsgLogSupplyHandlingUpdate::mutable_convoy_provider() {
   _set_bit(3);
-  if (convoy_provider_ == NULL) convoy_provider_ = new ::Common::AutomatId;
+  if (convoy_provider_ == NULL) convoy_provider_ = new ::Common::ParentEntity;
   return convoy_provider_;
 }
 
@@ -28721,21 +29005,21 @@ inline ::MsgsSimToClient::SeqOfLogSupplyEquimentAvailability* MsgLogSupplyState:
 
 // MsgLogSupplyQuotas
 
-// required .Common.AutomatId automat = 1;
-inline bool MsgLogSupplyQuotas::has_automat() const {
+// required .Common.ParentEntity supplied = 1;
+inline bool MsgLogSupplyQuotas::has_supplied() const {
   return _has_bit(0);
 }
-inline void MsgLogSupplyQuotas::clear_automat() {
-  if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
+inline void MsgLogSupplyQuotas::clear_supplied() {
+  if (supplied_ != NULL) supplied_->::Common::ParentEntity::Clear();
   _clear_bit(0);
 }
-inline const ::Common::AutomatId& MsgLogSupplyQuotas::automat() const {
-  return automat_ != NULL ? *automat_ : *default_instance_->automat_;
+inline const ::Common::ParentEntity& MsgLogSupplyQuotas::supplied() const {
+  return supplied_ != NULL ? *supplied_ : *default_instance_->supplied_;
 }
-inline ::Common::AutomatId* MsgLogSupplyQuotas::mutable_automat() {
+inline ::Common::ParentEntity* MsgLogSupplyQuotas::mutable_supplied() {
   _set_bit(0);
-  if (automat_ == NULL) automat_ = new ::Common::AutomatId;
-  return automat_;
+  if (supplied_ == NULL) supplied_ = new ::Common::ParentEntity;
+  return supplied_;
 }
 
 // required .Common.SeqOfDotationQuota quotas = 2;
@@ -31944,20 +32228,20 @@ inline ::MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck* MsgSimToClient_Cont
   return automat_change_knowledge_group_ack_;
 }
 
-// optional .MsgsSimToClient.MsgAutomatChangeLogisticLinksAck automat_change_logistic_links_ack = 13;
+// optional .MsgsSimToClient.MsgChangeLogisticLinksAck automat_change_logistic_links_ack = 13;
 inline bool MsgSimToClient_Content::has_automat_change_logistic_links_ack() const {
   return _has_bit(12);
 }
 inline void MsgSimToClient_Content::clear_automat_change_logistic_links_ack() {
-  if (automat_change_logistic_links_ack_ != NULL) automat_change_logistic_links_ack_->::MsgsSimToClient::MsgAutomatChangeLogisticLinksAck::Clear();
+  if (automat_change_logistic_links_ack_ != NULL) automat_change_logistic_links_ack_->::MsgsSimToClient::MsgChangeLogisticLinksAck::Clear();
   _clear_bit(12);
 }
-inline const ::MsgsSimToClient::MsgAutomatChangeLogisticLinksAck& MsgSimToClient_Content::automat_change_logistic_links_ack() const {
+inline const ::MsgsSimToClient::MsgChangeLogisticLinksAck& MsgSimToClient_Content::automat_change_logistic_links_ack() const {
   return automat_change_logistic_links_ack_ != NULL ? *automat_change_logistic_links_ack_ : *default_instance_->automat_change_logistic_links_ack_;
 }
-inline ::MsgsSimToClient::MsgAutomatChangeLogisticLinksAck* MsgSimToClient_Content::mutable_automat_change_logistic_links_ack() {
+inline ::MsgsSimToClient::MsgChangeLogisticLinksAck* MsgSimToClient_Content::mutable_automat_change_logistic_links_ack() {
   _set_bit(12);
-  if (automat_change_logistic_links_ack_ == NULL) automat_change_logistic_links_ack_ = new ::MsgsSimToClient::MsgAutomatChangeLogisticLinksAck;
+  if (automat_change_logistic_links_ack_ == NULL) automat_change_logistic_links_ack_ = new ::MsgsSimToClient::MsgChangeLogisticLinksAck;
   return automat_change_logistic_links_ack_;
 }
 
@@ -32386,20 +32670,20 @@ inline ::Common::MsgUnitChangeSuperior* MsgSimToClient_Content::mutable_unit_cha
   return unit_change_superior_;
 }
 
-// optional .Common.MsgAutomatChangeLogisticLinks automat_change_logistic_links = 39;
+// optional .Common.MsgChangeLogisticLinks automat_change_logistic_links = 39;
 inline bool MsgSimToClient_Content::has_automat_change_logistic_links() const {
   return _has_bit(38);
 }
 inline void MsgSimToClient_Content::clear_automat_change_logistic_links() {
-  if (automat_change_logistic_links_ != NULL) automat_change_logistic_links_->::Common::MsgAutomatChangeLogisticLinks::Clear();
+  if (automat_change_logistic_links_ != NULL) automat_change_logistic_links_->::Common::MsgChangeLogisticLinks::Clear();
   _clear_bit(38);
 }
-inline const ::Common::MsgAutomatChangeLogisticLinks& MsgSimToClient_Content::automat_change_logistic_links() const {
+inline const ::Common::MsgChangeLogisticLinks& MsgSimToClient_Content::automat_change_logistic_links() const {
   return automat_change_logistic_links_ != NULL ? *automat_change_logistic_links_ : *default_instance_->automat_change_logistic_links_;
 }
-inline ::Common::MsgAutomatChangeLogisticLinks* MsgSimToClient_Content::mutable_automat_change_logistic_links() {
+inline ::Common::MsgChangeLogisticLinks* MsgSimToClient_Content::mutable_automat_change_logistic_links() {
   _set_bit(38);
-  if (automat_change_logistic_links_ == NULL) automat_change_logistic_links_ = new ::Common::MsgAutomatChangeLogisticLinks;
+  if (automat_change_logistic_links_ == NULL) automat_change_logistic_links_ = new ::Common::MsgChangeLogisticLinks;
   return automat_change_logistic_links_;
 }
 
@@ -33882,6 +34166,23 @@ inline ::MsgsSimToClient::MsgControlLocalWeatherDestruction* MsgSimToClient_Cont
   return control_local_weather_destruction_;
 }
 
+// optional .MsgsSimToClient.MsgLogSupplyPullFlowAck log_supply_pull_flow_ack = 130;
+inline bool MsgSimToClient_Content::has_log_supply_pull_flow_ack() const {
+  return _has_bit(126);
+}
+inline void MsgSimToClient_Content::clear_log_supply_pull_flow_ack() {
+  if (log_supply_pull_flow_ack_ != NULL) log_supply_pull_flow_ack_->::MsgsSimToClient::MsgLogSupplyPullFlowAck::Clear();
+  _clear_bit(126);
+}
+inline const ::MsgsSimToClient::MsgLogSupplyPullFlowAck& MsgSimToClient_Content::log_supply_pull_flow_ack() const {
+  return log_supply_pull_flow_ack_ != NULL ? *log_supply_pull_flow_ack_ : *default_instance_->log_supply_pull_flow_ack_;
+}
+inline ::MsgsSimToClient::MsgLogSupplyPullFlowAck* MsgSimToClient_Content::mutable_log_supply_pull_flow_ack() {
+  _set_bit(126);
+  if (log_supply_pull_flow_ack_ == NULL) log_supply_pull_flow_ack_ = new ::MsgsSimToClient::MsgLogSupplyPullFlowAck;
+  return log_supply_pull_flow_ack_;
+}
+
 // -------------------------------------------------------------------
 
 // MsgSimToClient
@@ -33961,6 +34262,10 @@ inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::HierarchyModi
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow>() {
   return ::MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow>() {
+  return ::MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas>() {

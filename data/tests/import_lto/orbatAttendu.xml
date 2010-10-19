@@ -16,7 +16,7 @@
         <knowledge-group id="8" name="Groupe de connaissance de Camp #02" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
     <side id="1" name="Camp #01" type="friend">
      <objects>
@@ -46,7 +46,7 @@
         <knowledge-group id="2" name="Groupe de connaissance [1]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
   </sides>
   <diplomacies>

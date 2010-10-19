@@ -89,14 +89,11 @@ end
 function S_Misc_Automate_ALAT_DistancePionPlusLoinAPlotRavitaillement( listePions, direction )
     local _returnValue = 0
     _returnValue = 0
-    local TC2 = DEC_Automate_TC2()
-    local pionTC2 = nil
+    local pionTC2 = DEC_Automate_PcDeTC2()
     local distanceMax = 0
     local distanceBuffer = 0
     local parouilleAlatBuffer = nil
-    if( TC2 ~= nil ) then
-        pionTC2 = DEC_Automate_PionPCDeAutomate( TC2 )
-    else
+    if( pionTC2 == nil ) then
         do return _returnValue end
     end
 
@@ -132,15 +129,10 @@ function S_Misc_Automate_ALAT_TempsPionPourAllerRecompleter( pion )
     local _returnValue = 0
     _returnValue = 0
     local pointDeRecompletement = DEC_Geometrie_CreerPoint()
-    local TC2 = DEC_Automate_TC2()
-    local pionTC2 = nil
+    local pionTC2 = DEC_Automate_PcDeTC2()
     local patrouilleAlat = pion
     if( not S_EstPatrouilleALAT( pion ) ) then
         do return _returnValue end
-    end
-
-    if( TC2 ~= nil ) then
-        pionTC2 = DEC_Automate_PionPCDeAutomate( TC2 )
     end
 
     if( DEC_ConnaissanceObjet_EstValide( patrouilleAlat:GetplotRavitaillementAssigne_() ) ) then

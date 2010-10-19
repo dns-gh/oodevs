@@ -8,19 +8,21 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "SupplyStates.h"
+#include "LogisticBaseStates.h"
 #include "Tools.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "clients_kernel/AutomatType.h"
+
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: SupplyStates constructor
-// Created: SBO 2006-10-24
+// Name: LogisticBaseStates constructor
+// Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-SupplyStates::SupplyStates( Controller& controller, Entity_ABC& entity, const tools::Resolver_ABC< DotationType, std::string >& resolver, PropertiesDictionary& dico )
-    : ::LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >( controller, entity )
+LogisticBaseStates::LogisticBaseStates( Controller& controller, Entity_ABC& entity, 
+                                       const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, PropertiesDictionary& dico )
+    : ::LogisticHierarchies< LogisticBaseSuperior, kernel::LogisticBaseHierarchies >( controller, entity )
     , controller_( controller )
     , resolver_( resolver )
     , item_( 0 )
@@ -29,72 +31,68 @@ SupplyStates::SupplyStates( Controller& controller, Entity_ABC& entity, const to
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyStates destructor
-// Created: SBO 2006-10-24
+// Name: MaintenanceStates destructor
+// Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-SupplyStates::~SupplyStates()
+LogisticBaseStates::~LogisticBaseStates()
 {
-    tools::Resolver< Dotation >::DeleteAll();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyStates::CreateDictionary
-// Created: SBO 2006-10-24
+// Name: MaintenanceStates::CreateDictionary
+// Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner )
+void LogisticBaseStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& )
 {
-    const QString name = tools::translate( "SupplyStates", "Logistic/Supply/Quotas" );
-    item_ = new DotationsItem( controller_, owner, dico, name, *this );
-    dico.Register( *(const kernel::SupplyHierarchies*)this, name + tools::translate( "SupplyStates", "/<Dotations>" ), item_ );
-    dico.Register( *(const kernel::SupplyHierarchies*)this, tools::translate( "SupplyStates", "Logistic/Supply/Superior" ), tc2_, *this, &SupplyStates::SetSuperior );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: SupplyStates::SetSuperior
-// Created: SBO 2006-11-16
-// -----------------------------------------------------------------------------
-void SupplyStates::SetSuperior( const SupplySuperior& automat )
-{
-    ::LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >::SetSuperior( automat );
+    dico.Register( *(const kernel::LogisticBaseHierarchies*)this, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), tc2_, *this, &LogisticBaseStates::SetSuperior );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyStates::Draw
-// Created: SBO 2007-03-27
+// Name: MaintenanceStates::SetSuperior
+// Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-void SupplyStates::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void LogisticBaseStates::SetSuperior( const LogisticBaseSuperior& formation )
+{
+    ::LogisticHierarchies< LogisticBaseSuperior, kernel::LogisticBaseHierarchies >::SetSuperior( formation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MaintenanceStates::Draw
+// Created: AHC 2010-09-29
+// -----------------------------------------------------------------------------
+void LogisticBaseStates::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     const bool displayLinks   = tools.ShouldDisplay( "LogisticLinks" );
     const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsHotpointVisible();
     if( ! displayLinks && ! displayMissing )
         return;
 
-    const kernel::Automat_ABC& automat = static_cast< const kernel::Automat_ABC& >( GetEntity() );
+    const kernel::Formation_ABC& formation = static_cast< const kernel::Formation_ABC& >( GetEntity() );
 
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glLineWidth( 3.f );
-    glColor4f( COLOR_ORANGE );
-    DrawLink( where, tools, 0.5f, displayLinks, displayMissing && automat.GetType().IsLogisticSupply() );
+    glColor4f( COLOR_MAROON );
+    DrawLink( where, tools, 0.5f, displayLinks, displayMissing && formation.GetLogisticLevel()!=kernel::LogisticLevel::none_);
     glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyStates::Load
-// Created: SBO 2007-03-29
+// Name: LogisticBaseStates::Load
+// Created: AHC 2010-10-06
 // -----------------------------------------------------------------------------
-void SupplyStates::Load( xml::xistream& xis )
+void LogisticBaseStates::Load( xml::xistream& xis )
 {
-    xis >> xml::start( "quotas" )
-            >> xml::list( "dotation", *this, &SupplyStates::ReadDotation )
+    xis >> xml::optional >> xml::start( "quotas" )
+            >> xml::list( "dotation", *this, &LogisticBaseStates::ReadDotation )
         >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyStates::ReadDotation
-// Created: SBO 2007-03-29
+// Name: LogisticBaseStates::ReadDotation
+// Created: AHC 2010-10-06
 // -----------------------------------------------------------------------------
-void SupplyStates::ReadDotation( xml::xistream& xis )
+void LogisticBaseStates::ReadDotation( xml::xistream& xis )
 {
     Dotation* dotation = new Dotation( xis, resolver_ );
     item_->AddDotation( *dotation );
@@ -102,18 +100,21 @@ void SupplyStates::ReadDotation( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyStates::SerializeQuotas
-// Created: SBO 2007-03-29
+// Name: LogisticBaseStates::SerializeQuotas
+// Created: AHC 2010-10-06
 // -----------------------------------------------------------------------------
-void SupplyStates::SerializeQuotas( xml::xostream& xos ) const
+void LogisticBaseStates::SerializeQuotas( xml::xostream& xos ) const
 {
     tools::Iterator< const Dotation& > it = tools::Resolver< Dotation >::CreateIterator();
-    xos << xml::start( "quotas" );
-    while( it.HasMoreElements() )
+    if( it.HasMoreElements() )
     {
-        xos << xml::start( "dotation" );
-        it.NextElement().SerializeAttributes( xos );
+        xos << xml::start( "quotas" );
+        while( it.HasMoreElements() )
+        {
+            xos << xml::start( "dotation" );
+            it.NextElement().SerializeAttributes( xos );
+            xos << xml::end;
+        }
         xos << xml::end;
     }
-    xos << xml::end;
 }

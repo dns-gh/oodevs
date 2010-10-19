@@ -54,6 +54,8 @@ public:
 
     kernel::Team_ABC& GetTeam( unsigned long id );
     kernel::Team_ABC* FindTeam( const QString& team );
+    kernel::Formation_ABC& GetFormation( unsigned long id );
+    kernel::Formation_ABC* FindFormation( unsigned long id );
     //@}
 
 private:

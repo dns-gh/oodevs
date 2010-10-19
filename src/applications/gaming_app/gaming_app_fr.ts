@@ -347,18 +347,6 @@
         <translation>Edition des liens logistiques</translation>
     </message>
     <message>
-        <source>Maintenance superior</source>
-        <translation>Supérieur maintenance</translation>
-    </message>
-    <message>
-        <source>Medical superior</source>
-        <translation>Supérieur médical</translation>
-    </message>
-    <message>
-        <source>Supply superior</source>
-        <translation>Supérieur ravitaillement</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -377,6 +365,14 @@
     <message>
         <source>Change Logistic Links</source>
         <translation>Changer les Liens Logistiques</translation>
+    </message>
+    <message>
+        <source>Automat superior</source>
+        <translation>Superieur automate</translation>
+    </message>
+    <message>
+        <source>Formation superior</source>
+        <translation>Supérieur formation</translation>
     </message>
 </context>
 <context>

@@ -6,6 +6,15 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
+//
+// $Created: AGE 2004-11-08 $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Agents/Roles/Composantes/PHY_RoleHLA_Composantes.cpp $
+// $Author: Age $
+// $Modtime: 21/02/05 10:02 $
+// $Revision: 12 $
+// $Workfile: PHY_RoleHLA_Composantes.cpp $
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Composantes.h"
@@ -302,6 +311,15 @@ void PHY_RoleHLA_Composantes::ApplyExplosion( const AttritionCapacity& /*capacit
 // Created: AGE 2004-11-08
 // -----------------------------------------------------------------------------
 void PHY_RoleHLA_Composantes::ApplyInjury( MIL_Injury_ABC& /*injury*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Composantes::GetConvoyTransportersUse
+// Created: AHC 2010-09-28
+// -----------------------------------------------------------------------------
+void PHY_RoleHLA_Composantes::GetConvoyTransportersUse( T_ComposanteUseMap& composanteUse ) const
 {
     // NOTHING
 }

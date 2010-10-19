@@ -18,6 +18,7 @@ namespace kernel
 }
 
 class IdManager;
+class StaticModel;
 
 // =============================================================================
 /** @class  FormationFactory
@@ -30,7 +31,7 @@ class FormationFactory : public FormationFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FormationFactory( kernel::Controllers& controllers, IdManager& idManager );
+             FormationFactory( kernel::Controllers& controllers, const StaticModel& staticModel, IdManager& idManager );
     virtual ~FormationFactory();
     //@}
 
@@ -51,6 +52,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    const StaticModel& staticModel_;
     IdManager& idManager_;
     //@}
 };

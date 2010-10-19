@@ -16,6 +16,11 @@
 
 class DotationRequest;
 
+namespace Common
+{
+	class ParentEntity;
+}
+
 namespace kernel
 {
     class Agent_ABC;
@@ -23,6 +28,8 @@ namespace kernel
     class Controller;
     class Displayer_ABC;
     class DotationType;
+    class Entity_ABC;
+    class Formation_ABC;
 }
 
 namespace MsgsSimToClient
@@ -45,7 +52,7 @@ public:
     //! @name Constructor / Destructor
     //@{
              LogSupplyConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver,
-                               const tools::Resolver_ABC< kernel::Agent_ABC >&   agentResolver,
+                               const tools::Resolver_ABC< kernel::Agent_ABC >&   agentResolver, const tools::Resolver_ABC< kernel::Formation_ABC >&   formationResolver,
                                const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const MsgsSimToClient::MsgLogSupplyHandlingCreation& message );
     virtual ~LogSupplyConsign();
     //@}
@@ -64,18 +71,25 @@ private:
     LogSupplyConsign& operator=( const LogSupplyConsign& );
     //@}
 
+    //! @name Tools
+    //@{
+    kernel::Entity_ABC* FindLogEntity(const Common::ParentEntity& msg);
+    unsigned int FindLogEntityID(const Common::ParentEntity& msg);
+    //@}
+
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& resolver_;
     const tools::Resolver_ABC< kernel::Agent_ABC >&   agentResolver_;
+    const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     unsigned int nID_;
     kernel::Automat_ABC& consumer_;
-    kernel::Automat_ABC* pAutomateLogHandling_;
+    kernel::Entity_ABC*   pLogHandlingEntity_;
     kernel::Agent_ABC*   pPionLogConvoying_;
-    kernel::Automat_ABC* pAutomateLogProvidingConvoyResources_;
+    kernel::Entity_ABC*   pLogProvidingConvoyResourcesEntity_;
     E_LogSupplyHandlingStatus nState_;
     //@}
 };

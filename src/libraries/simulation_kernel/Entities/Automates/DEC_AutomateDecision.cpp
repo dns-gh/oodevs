@@ -412,8 +412,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< float( const DEC_Decision_ABC*, float ) >( boost::bind( &DEC_AutomateFunctions::PionTimeToMoveDistance, _1, _2 ) );
 
     // Logistique
-    brain[ "DEC_Automate_TC2" ] =
-        boost::bind( &DEC_LogisticFunctions::AutomateGetTC2, boost::ref( GetAutomate() ) );
+    brain[ "DEC_Automate_PcDeTC2" ] =
+        boost::bind( &DEC_LogisticFunctions::AutomateGetPcTC2, boost::ref( GetAutomate() ) );
     brain[ "DEC_DemandeDeRavitaillement" ] =
         boost::bind( &DEC_LogisticFunctions::AutomateRequestSupply, boost::ref( GetAutomate() ) );
 

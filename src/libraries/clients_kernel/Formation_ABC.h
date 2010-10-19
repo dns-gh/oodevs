@@ -15,6 +15,7 @@
 namespace kernel
 {
     class HierarchyLevel_ABC;
+    class LogisticLevel;
 
 // =============================================================================
 /** @class  Formation_ABC
@@ -40,6 +41,7 @@ public:
     //! @name Accessors
     //@{
     virtual const HierarchyLevel_ABC& GetLevel() const = 0;
+    virtual const LogisticLevel& GetLogisticLevel() const = 0;
     //@}
 
     //! @name Operations

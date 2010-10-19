@@ -46,6 +46,7 @@
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Logger_ABC.h"
 #include "clients_kernel/Object_ABC.h"
@@ -538,7 +539,10 @@ void AgentServerMsgMgr::OnReceiveMsgLogSupplyState( const MsgsSimToClient::MsgLo
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogSupplyQuotas( const MsgsSimToClient::MsgLogSupplyQuotas& message )
 {
-    GetModel().agents_.GetAutomat( message.automat().id() ).Update( message );
+    if( message.supplied().has_automat() )
+        GetModel().agents_.GetAutomat( message.supplied().automat().id() ).Update( message );
+    else
+        GetModel().teams_.GetFormation( message.supplied().formation().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -557,6 +561,15 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const MsgsS
 void AgentServerMsgMgr::OnReceiveMsgLogSupplyPushFlowAck( const MsgsSimToClient::MsgLogSupplyPushFlowAck& message, unsigned long )
 {
     CheckAcknowledge( logger_, message.ack(), "MsgLogSupplyPushFlowAck" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgLogSupplyPullFlowAck
+// Created: AHC 2010-10-14
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgLogSupplyPullFlowAck( const MsgsSimToClient::MsgLogSupplyPullFlowAck& message, unsigned long )
+{
+    CheckAcknowledge( logger_, message.ack(), "MsgLogSupplyPullFlowAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -982,16 +995,19 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatChangeKnowledgeGroupAck( const MsgsSi
 // Name: AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinks
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinks( const Common::MsgAutomatChangeLogisticLinks& message )
+void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinks( const Common::MsgChangeLogisticLinks& message )
 {
-    GetModel().agents_.GetAutomat( message.automat().id() ).Update( message );
+    if( message.requester().has_automat() )
+        GetModel().agents_.GetAutomat( message.requester().automat().id() ).Update( message );
+    else
+        GetModel().teams_.GetFormation( message.requester().formation().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinksAck
 // Created: AGE 2005-04-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinksAck( const MsgsSimToClient::MsgAutomatChangeLogisticLinksAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgAutomatChangeLogisticLinksAck( const MsgsSimToClient::MsgChangeLogisticLinksAck& message, unsigned long )
 {
     CheckAcknowledge( logger_, message, "AutomatChangeLogisticLinksAck" );
 }
@@ -1702,6 +1718,8 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& from, const 
         OnReceiveMsgAutomatChangeSuperiorAck( wrapper.message().automat_change_superior_ack() , wrapper.context() );
     else if( wrapper.message().has_log_supply_push_flow_ack() )
         OnReceiveMsgLogSupplyPushFlowAck( wrapper.message().log_supply_push_flow_ack() , wrapper.context() );
+    else if( wrapper.message().has_log_supply_pull_flow_ack() )
+        OnReceiveMsgLogSupplyPullFlowAck( wrapper.message().log_supply_pull_flow_ack() , wrapper.context() );
     else if( wrapper.message().has_log_supply_change_quotas_ack() )
         OnReceiveMsgLogRavitaillementChangeQuotaAck(  wrapper.message().log_supply_change_quotas_ack() , wrapper.context() );
     else if( wrapper.message().has_crowd_magic_action_ack() )

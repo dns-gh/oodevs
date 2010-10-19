@@ -405,7 +405,7 @@ bool PHY_RolePionLOG_Maintenance::ConsumePartsForBreakdown( const PHY_Breakdown&
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG& PHY_RolePionLOG_Maintenance::GetAutomate() const
 {
-    return pion_.GetLogAutomate();
+    return *pion_.FindLogisticManager();
 }
 
 // -----------------------------------------------------------------------------
@@ -483,7 +483,7 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& con
 {
     IT_MaintenanceConsigns itTact = consigns_.begin();
     for( const MIL_Automate* pAutomate = &consign.GetComposanteState().GetAutomate(); itTact != consigns_.end(); ++itTact )
-        if( pAutomate == itTact->first || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
+        if( pAutomate == itTact->first ) // TODO || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
             break;
     if( itTact == consigns_.end() )
     {
@@ -534,7 +534,7 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForTransport( PHY_MaintenanceC
 // Name: PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport
 // Created: NLD 2006-03-29
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante )
+int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_ComposantePion& composante ) const
 {
     if( !bSystemEnabled_ || ( composante.GetBreakdown()->AffectMobility() && !HasUsableHauler( composante.GetType() ) ) )
         return std::numeric_limits< int >::min();
@@ -569,7 +569,7 @@ bool PHY_RolePionLOG_Maintenance::HandleComposanteForRepair( PHY_MaintenanceComp
 // Name: PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceComposanteState& composanteState )
+int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( const PHY_MaintenanceComposanteState& composanteState ) const
 {
     if( !bSystemEnabled_ || !HasUsableRepairer( composanteState.GetComposanteBreakdown() ) )
         return std::numeric_limits< int >::min();

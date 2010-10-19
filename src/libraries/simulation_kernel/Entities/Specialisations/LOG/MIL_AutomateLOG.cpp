@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomateLOG.h"
 #include "MIL_AutomateTypeLOG.h"
-#include "Entities/MIL_Formation.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
@@ -27,6 +26,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_SupplyStockConsign.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -34,90 +34,81 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/serialization/set.hpp>
+#include "Entities/Specialisations/LOG/MIL_LogisticVisitors.h"
+#include "Entities/MIL_Formation.h"
+
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateLOG )
-
 using namespace MsgsSimToClient;
 using namespace MsgsClientToSim;
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AutomateLOG* automat, const unsigned int /*version*/ )
 {
-    unsigned int nTypeID = automat->GetType().GetID();
-    unsigned int nID = automat->GetID();
-    archive << nTypeID << nID;
+    archive << automat->pLogLevel_->GetName();
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_AutomateLOG* automat, const unsigned int /*version*/ )
 {
-    unsigned int nTypeID, nID ;
-    archive >> nTypeID >> nID;
-    const MIL_AutomateTypeLOG* pType = dynamic_cast<const MIL_AutomateTypeLOG*>(MIL_AutomateTypeLOG::FindAutomateType( nTypeID ));
-    assert( pType );
-    ::new( automat )MIL_AutomateLOG( *pType , nID);
+    std::string logLevelName;
+    archive >> logLevelName;
+    assert(PHY_LogisticLevel::Find(logLevelName));
+    ::new(automat)MIL_AutomateLOG(*PHY_LogisticLevel::Find(logLevelName));
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG constructor
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
-    : MIL_Automate                ( type, nID, parent, xis, database, gcPause, gcMult )
-    , pMaintenanceSuperior_       ( 0 )
-    , pMedicalSuperior_           ( 0 )
-    , pSupplySuperior_            ( 0 )
-    , stockQuotas_                ()
+MIL_AutomateLOG::MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLevel& logLevel )
+    : pAssociatedAutomate_ ( 0 )
+    , pAssociatedFormation_( &formation )
+    , pCurrentSuperior_    ( 0 )
+    , pNominalSuperior_    ( 0 )
+    , pLogLevel_           ( &logLevel )
+    , stockQuotasSuperior_        ()
+    , stockQuotasNominalSuperior_ ()
     , supplyConsigns_             ()
-    , bStockSupplyNeeded_         ( false )
     , pExplicitStockSupplyState_  ( 0 )
-    , pushedFlowsSupplyStates_    ()
     , bQuotasHaveChanged_         ( false )
-    , nTickRcStockSupplyQuerySent_( 0 )
-    , pLogisticAction_            ( new PHY_ActionLogistic< MIL_AutomateLOG >( *this ) )
 {
-    this->RegisterAction( pLogisticAction_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG constructor
-// Created: LDC 2010-10-06
+// Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult, unsigned int context )
-    : MIL_Automate                ( type, nID, parent, knowledgeGroup, name, database, gcPause, gcMult, context )
-    , pMaintenanceSuperior_       ( 0 )
-    , pMedicalSuperior_           ( 0 )
-    , pSupplySuperior_            ( 0 )
-    , stockQuotas_                ()
+MIL_AutomateLOG::MIL_AutomateLOG( MIL_Automate& automate, const PHY_LogisticLevel& logLevel )
+    : pAssociatedAutomate_ ( &automate )
+    , pAssociatedFormation_( 0 )
+    , pLogLevel_           ( &logLevel )
+    , pCurrentSuperior_    ( 0 )
+    , pNominalSuperior_    ( 0 )
+    , stockQuotasSuperior_        ()
+    , stockQuotasNominalSuperior_ ()
     , supplyConsigns_             ()
-    , bStockSupplyNeeded_         ( false )
     , pExplicitStockSupplyState_  ( 0 )
-    , pushedFlowsSupplyStates_    ()
     , bQuotasHaveChanged_         ( false )
-    , nTickRcStockSupplyQuerySent_( 0 )
-    , pLogisticAction_            ( new PHY_ActionLogistic< MIL_AutomateLOG >( *this ) )
 {
-    // NOTHING
-}    
-
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID )
-    : MIL_Automate(type, nID)
-    , pMaintenanceSuperior_       ( 0 )
-    , pMedicalSuperior_           ( 0 )
-    , pSupplySuperior_            ( 0 )
-    , stockQuotas_                ()
-    , supplyConsigns_             ()
-    , bStockSupplyNeeded_         ( false )
-    , pExplicitStockSupplyState_  ( 0 )
-    , pushedFlowsSupplyStates_    ()
-    , bQuotasHaveChanged_         ( false )
-    , nTickRcStockSupplyQuerySent_( 0 )
-    , pLogisticAction_            ( new PHY_ActionLogistic< MIL_AutomateLOG >( *this ) )
-{
-    this->RegisterAction( pLogisticAction_ );
 }
-
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG constructor
+// Created: AHC 2010-09-28
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG::MIL_AutomateLOG( const PHY_LogisticLevel& level )
+    : pAssociatedAutomate_ ( 0 )
+    , pAssociatedFormation_( 0 )
+    , pLogLevel_           ( &level )
+    , pCurrentSuperior_    ( 0 )
+    , pNominalSuperior_    ( 0 )
+    , stockQuotasSuperior_        ()
+    , stockQuotasNominalSuperior_ ()
+    , supplyConsigns_             ()
+    , pExplicitStockSupplyState_  ( 0 )
+    , bQuotasHaveChanged_         ( false )
+{
+}
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG destructor
 // Created: NLD 2004-12-21
@@ -176,22 +167,35 @@ namespace boost
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_BrainLogistic::Visit
+// Created: NLD 2004-12-28
+// -----------------------------------------------------------------------------
+template< typename T > void MIL_AutomateLOG::Visit( T& visitor ) const
+{
+    assert( pAssociatedFormation_ || pAssociatedAutomate_ );
+    if( pAssociatedFormation_ )
+        pAssociatedFormation_->Apply( visitor );
+    else if( pAssociatedAutomate_ )
+        pAssociatedAutomate_->Apply( visitor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::serialize
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 template < typename Archive >
 void MIL_AutomateLOG::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_Automate >( *this );
-    file & pMaintenanceSuperior_
-         & pMedicalSuperior_
-         & pSupplySuperior_
-         & stockQuotas_
-         & supplyConsigns_
-         & bStockSupplyNeeded_
-         & pExplicitStockSupplyState_
-         & pushedFlowsSupplyStates_
-         & nTickRcStockSupplyQuerySent_;
+    file & supplyConsigns_
+         & pExplicitStockSupplyState_;
+
+   file & pAssociatedAutomate_
+        & pAssociatedFormation_
+        & pCurrentSuperior_
+        & pNominalSuperior_
+        & stockQuotasSuperior_
+        & stockQuotasNominalSuperior_
+        & supplyConsigns_;
 }
 
 // =============================================================================
@@ -204,23 +208,10 @@ void MIL_AutomateLOG::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis )
 {
-    MIL_Automate::ReadLogisticLink( superior, xis );
-
-    std::string strLink;
-    xis >> xml::attribute( "link", strLink );
-
-    if( sCaseInsensitiveEqual()( strLink, "maintenance" ) )
-        pMaintenanceSuperior_ = &superior;
-    else if( sCaseInsensitiveEqual()( strLink, "medical" ) )
-        pMedicalSuperior_ = &superior;
-    else if( sCaseInsensitiveEqual()( strLink, "supply" ) )
-    {
-        pSupplySuperior_ = &superior;
-        xis >> xml::start( "quotas" )
-                >> xml::list( "dotation", *this, &MIL_AutomateLOG::ReadDotation )
-            >> xml::end;
-    }
-
+    pCurrentSuperior_ = pNominalSuperior_ = &superior;
+    xis >> xml::optional >> xml::start( "quotas" )
+            >> xml::list( "dotation", *this, &MIL_AutomateLOG::ReadDotation )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -236,7 +227,7 @@ void MIL_AutomateLOG::ReadDotation( xml::xistream& xis )
     if( !pDotationCategory )
         xis.error( "Unknown dotation type" );
 
-    if( stockQuotas_.find( pDotationCategory ) != stockQuotas_.end() )
+    if( stockQuotasSuperior_.find( pDotationCategory ) != stockQuotasSuperior_.end() )
         xis.error( "Quota already defined" );
 
     unsigned int        nQuantity;
@@ -247,7 +238,7 @@ void MIL_AutomateLOG::ReadDotation( xml::xistream& xis )
     sDotationQuota quota;
     quota.rQuota_          = nQuantity;
     quota.rQuotaThreshold_ = nQuantity * 0.1; //$$ fichier de conf cpp ;)
-    stockQuotas_[ pDotationCategory ] = quota;
+    stockQuotasSuperior_[ pDotationCategory ] = quota;
 }
 
 // -----------------------------------------------------------------------------
@@ -256,52 +247,28 @@ void MIL_AutomateLOG::ReadDotation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::WriteLogisticLinksODB( xml::xostream& xos ) const
 {
-    MIL_Automate::WriteLogisticLinksODB( xos );
+    if( !pNominalSuperior_ )
+        return;
 
-    if( pMaintenanceSuperior_ )
+    xos << xml::start("base-logistique")
+            << xml::attribute( "id", pNominalSuperior_->GetID() )
+            << xml::start ( "subordinate" )
+                << xml::attribute( "id", GetID() );
+    if(!stockQuotasSuperior_.empty())
     {
-        xos << xml::start( "automat" )
-                << xml::attribute( "id", pMaintenanceSuperior_->GetID() )
-                << xml::start ( "subordinate" )
-                    << xml::attribute( "id", GetID() )
-                    << xml::attribute( "link"   , "maintenance" )
-                << xml::end
-            << xml::end;
-    }
-
-    if( pMedicalSuperior_ )
-    {
-        xos << xml::start( "automat" )
-                << xml::attribute( "id", pMedicalSuperior_->GetID() )
-                << xml::start ( "subordinate" )
-                    << xml::attribute( "id", GetID() )
-                    << xml::attribute( "link"   , "medical" )
-                << xml::end
-            << xml::end;
-    }
-
-    if( pSupplySuperior_ )
-    {
-        xos << xml::start( "automat" )
-            << xml::attribute( "id", pSupplySuperior_->GetID() )
-                << xml::start ( "subordinate" )
-                    << xml::attribute( "id", GetID() )
-                    << xml::attribute( "link"   , "supply" );
-
         xos         << xml::start( "quotas" );
-        for( CIT_DotationQuotaMap it = stockQuotas_.begin(); it != stockQuotas_.end(); ++it )
+        for( CIT_DotationQuotaMap it = stockQuotasSuperior_.begin(); it != stockQuotasSuperior_.end(); ++it )
         {
-            const PHY_DotationCategory& dotation = *it->first;
-            xos << xml::start( "dotation" )
-                    << xml::attribute( "name", dotation.GetName()  )
-                    << xml::attribute( "quantity", it->second.rQuota_ )
-                << xml::end; // dotation
+           const PHY_DotationCategory& dotation = *it->first;
+           xos << xml::start( "dotation" )
+                   << xml::attribute( "name", dotation.GetName()  )
+                   << xml::attribute( "quantity", it->second.rQuota_ )
+               << xml::end; // dotation
         }
         xos         << xml::end; // quotas
-
-        xos     << xml::end // subordinate
-            << xml::end; // automat
     }
+         xos << xml::end // subordinate
+        << xml::end; // base-logistique
 }
 
 // =============================================================================
@@ -314,23 +281,9 @@ void MIL_AutomateLOG::WriteLogisticLinksODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 PHY_MaintenanceComposanteState* MIL_AutomateLOG::MaintenanceHandleComposanteForTransport( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
 {
-    int nScore = std::numeric_limits< int >::min();
-    PHY_RoleInterface_Maintenance* pSelectedRoleMaintenance = 0;
-    const T_PionVector& pions = GetPions();
-    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        PHY_RoleInterface_Maintenance* roleMaintenance = (**itPion).RetrieveRole< PHY_RoleInterface_Maintenance >();
-        if( roleMaintenance )
-        {
-            const int nNewScore = roleMaintenance->GetAvailabilityScoreForTransport( composante );
-            if( nNewScore > nScore )
-            {
-                nScore                   = nNewScore;
-                pSelectedRoleMaintenance = roleMaintenance;
-            }
-        }
-    }
-    return pSelectedRoleMaintenance ? pSelectedRoleMaintenance->HandleComposanteForTransport( pion, composante ) : 0;
+    MaintenanceTransportVisitor visitor( composante );
+    Visit( visitor );
+    return visitor.pSelected_ ? visitor.pSelected_->HandleComposanteForTransport( pion, composante ) : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -339,23 +292,9 @@ PHY_MaintenanceComposanteState* MIL_AutomateLOG::MaintenanceHandleComposanteForT
 // -----------------------------------------------------------------------------
 bool MIL_AutomateLOG::MaintenanceHandleComposanteForTransport( PHY_MaintenanceComposanteState& composanteState )
 {
-    int nScore = std::numeric_limits< int >::min();
-    PHY_RoleInterface_Maintenance* pSelectedRoleMaintenance = 0;
-    const T_PionVector& pions = GetPions();
-    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        PHY_RoleInterface_Maintenance* roleMaintenance = (**itPion).RetrieveRole< PHY_RoleInterface_Maintenance >();
-        if( roleMaintenance )
-        {
-            const int nNewScore = roleMaintenance->GetAvailabilityScoreForTransport( composanteState.GetComposante() );
-            if( nNewScore > nScore )
-            {
-                nScore                   = nNewScore;
-                pSelectedRoleMaintenance = roleMaintenance;
-            }
-        }
-    }
-    return pSelectedRoleMaintenance ? pSelectedRoleMaintenance->HandleComposanteForTransport( composanteState ) : false;
+    MaintenanceTransportVisitor visitor( composanteState.GetComposante() );
+    Visit( visitor );
+    return visitor.pSelected_ ? visitor.pSelected_->HandleComposanteForTransport( composanteState ) : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -364,23 +303,9 @@ bool MIL_AutomateLOG::MaintenanceHandleComposanteForTransport( PHY_MaintenanceCo
 // -----------------------------------------------------------------------------
 bool MIL_AutomateLOG::MaintenanceHandleComposanteForRepair( PHY_MaintenanceComposanteState& composanteState )
 {
-    int nScore = std::numeric_limits< int >::min();
-    PHY_RoleInterface_Maintenance* pSelectedRoleMaintenance = 0;
-    const T_PionVector& pions = GetPions();
-    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        PHY_RoleInterface_Maintenance* roleMaintenance = (**itPion).RetrieveRole< PHY_RoleInterface_Maintenance >();
-        if( roleMaintenance )
-        {
-            const int nNewScore = roleMaintenance->GetAvailabilityScoreForRepair( composanteState );
-            if( nNewScore > nScore )
-            {
-                nScore                   = nNewScore;
-                pSelectedRoleMaintenance = roleMaintenance;
-            }
-        }
-    }
-    return pSelectedRoleMaintenance ? pSelectedRoleMaintenance->HandleComposanteForRepair( composanteState ) : false;
+    MaintenanceRepairVisitor visitor( composanteState );
+    Visit( visitor );
+    return visitor.pSelected_ ? visitor.pSelected_->HandleComposanteForRepair( composanteState ) : false;
 }
 
 // =============================================================================
@@ -393,18 +318,9 @@ bool MIL_AutomateLOG::MaintenanceHandleComposanteForRepair( PHY_MaintenanceCompo
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human )
 {
-    const T_PionVector& pions  = GetPions();
-    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        PHY_RoleInterface_Medical* roleMedical = (**itPion).RetrieveRole< PHY_RoleInterface_Medical >();
-        if( roleMedical )
-        {
-            PHY_MedicalHumanState* pState = roleMedical->HandleHumanEvacuatedByThirdParty( pion, human );
-            if( pState )
-                return pState;
-        }
-    }
-    return 0;
+    MedicalThirdPartyEvacuationVisitor visitor( pion, human );
+    Visit( visitor );
+    return visitor.pState_;
 }
 
 // -----------------------------------------------------------------------------
@@ -413,23 +329,9 @@ PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanEvacuatedByThirdParty(
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human )
 {
-    int nScore = std::numeric_limits< int >::min();
-    PHY_RoleInterface_Medical* pSelectedRoleMedical = 0;
-    const T_PionVector& pions = GetPions();
-    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        PHY_RoleInterface_Medical* roleMedical = (**itPion).RetrieveRole< PHY_RoleInterface_Medical >();
-        if( roleMedical )
-        {
-            const int nNewScore = roleMedical->GetAvailabilityScoreForEvacuation( human );
-            if( nNewScore > nScore )
-            {
-                nScore               = nNewScore;
-                pSelectedRoleMedical = roleMedical;
-            }
-        }
-    }
-    return pSelectedRoleMedical ? pSelectedRoleMedical->HandleHumanForEvacuation( pion, human ) : 0;
+    MedicalEvacuationVisitor visitor( human );
+    Visit( visitor );
+    return visitor.pSelected_ ? visitor.pSelected_->HandleHumanForEvacuation( pion, human ) : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -438,23 +340,9 @@ PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanForEvacuation( MIL_Age
 // -----------------------------------------------------------------------------
 bool MIL_AutomateLOG::MedicalHandleHumanForCollection( PHY_MedicalHumanState& humanState )
 {
-    int nScore = std::numeric_limits< int >::min();
-    PHY_RoleInterface_Medical* pSelectedRoleMedical = 0;
-    const T_PionVector& pions = GetPions();
-    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        PHY_RoleInterface_Medical* roleMedical = (**itPion).RetrieveRole< PHY_RoleInterface_Medical >();
-        if( roleMedical )
-        {
-            const int nNewScore = roleMedical->GetAvailabilityScoreForCollection( humanState );
-            if( nNewScore > nScore )
-            {
-                nScore               = nNewScore;
-                pSelectedRoleMedical = roleMedical;
-            }
-        }
-    }
-    return pSelectedRoleMedical ? pSelectedRoleMedical->HandleHumanForCollection( humanState ) : false;
+    MedicalCollectionVisitor visitor( humanState );
+    Visit( visitor );
+    return visitor.pSelected_ ? visitor.pSelected_->HandleHumanForCollection( humanState ) : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -463,27 +351,14 @@ bool MIL_AutomateLOG::MedicalHandleHumanForCollection( PHY_MedicalHumanState& hu
 // -----------------------------------------------------------------------------
 PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalReserveForSorting( PHY_MedicalCollectionAmbulance& ambulance )
 {
-    int nScore = std::numeric_limits< int >::min();
-    PHY_RoleInterface_Medical* pSelectedRoleMedical = 0;
-    const T_PionVector& pions = GetPions();
-    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        PHY_RoleInterface_Medical* roleMedical = (**itPion).RetrieveRole< PHY_RoleInterface_Medical >();
-        if( roleMedical )
-        {
-            const int nNewScore = roleMedical->GetAvailabilityScoreForSorting( ambulance );
-            if( nNewScore > nScore )
-            {
-                nScore               = nNewScore;
-                pSelectedRoleMedical = roleMedical;
-            }
-        }
-    }
-    if( !pSelectedRoleMedical )
+    MedicalSortingVisitor visitor( ambulance );
+    Visit( visitor );
+
+    if( !visitor.pSelected_ )
         return 0;
 
-    pSelectedRoleMedical->ReserveForSorting( ambulance );
-    return pSelectedRoleMedical;
+    visitor.pSelected_->ReserveForSorting( ambulance );
+    return visitor.pSelected_;
 }
 
 // -----------------------------------------------------------------------------
@@ -492,23 +367,9 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalReserveForSorting( PHY_Medica
 // -----------------------------------------------------------------------------
 bool MIL_AutomateLOG::MedicalHandleHumanForHealing( PHY_MedicalHumanState& humanState )
 {
-    int nScore = std::numeric_limits< int >::min();
-    PHY_RoleInterface_Medical* pSelectedRoleMedical = 0;
-    const T_PionVector& pions = GetPions();
-    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        PHY_RoleInterface_Medical* roleMedical = (**itPion).RetrieveRole< PHY_RoleInterface_Medical >();
-        if( roleMedical )
-        {
-            const int nNewScore = roleMedical->GetAvailabilityScoreForHealing( humanState );
-            if( nNewScore > nScore )
-            {
-                nScore               = nNewScore;
-                pSelectedRoleMedical = roleMedical;
-            }
-        }
-    }
-    return pSelectedRoleMedical ? pSelectedRoleMedical->HandleHumanForHealing( humanState ) : false;
+    MedicalHealingVisitor visitor( humanState );
+    Visit( visitor );
+    return visitor.pSelected_ ? visitor.pSelected_->HandleHumanForHealing( humanState ) : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -520,18 +381,9 @@ bool MIL_AutomateLOG::MedicalCanCollectionAmbulanceGo( const PHY_MedicalCollecti
     if( ambulance.IsAnEmergency() )
         return true;
 
-    const T_PionVector& pions  = GetPions();
-    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        PHY_RoleInterface_Medical* roleMedical = (**itPion).RetrieveRole< PHY_RoleInterface_Medical >();
-        if( roleMedical )
-        {
-            if( !roleMedical->CanCollectionAmbulanceGo( ambulance ) )
-                return false;
-        }
-
-    }
-    return true;
+    MedicalCollectionAmbulanceAuthorizedToGoVisitor visitor( ambulance );
+    Visit( visitor );
+    return visitor.bAuthorized_;
 }
 
 // =============================================================================
@@ -542,19 +394,42 @@ bool MIL_AutomateLOG::MedicalCanCollectionAmbulanceGo( const PHY_MedicalCollecti
 // Name: MIL_AutomateLOG::ConsumeQuota
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::ConsumeQuota( const PHY_DotationCategory& dotationCategory, double rQuotaConsumed )
+void MIL_AutomateLOG::ConsumeQuota( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory, double rQuotaConsumed )
 {
-    IT_DotationQuotaMap it = stockQuotas_.find( &dotationCategory );
-    assert( it != stockQuotas_.end() );
+    if(&supplier == pCurrentSuperior_)
+    {
+        IT_DotationQuotaMap it = stockQuotasSuperior_.find( &dotationCategory );
+        assert( it != stockQuotasSuperior_.end() );
 
-    sDotationQuota& quota = it->second;
+        sDotationQuota& quota = it->second;
 
-    rQuotaConsumed = std::min( rQuotaConsumed, quota.rQuota_ );
+        rQuotaConsumed = std::min( rQuotaConsumed, quota.rQuota_ );
 
-    quota.rQuota_ -= rQuotaConsumed;
-    if( quota.rQuota_ <= quota.rQuotaThreshold_ )
-        MIL_Report::PostEvent( *this, MIL_Report::eReport_QuotaAlmostConsumed, dotationCategory );
-    bQuotasHaveChanged_ = true;
+        quota.rQuota_ -= rQuotaConsumed;
+        if( quota.rQuota_ <= quota.rQuotaThreshold_ )
+        {
+            if( pAssociatedAutomate_ )
+                MIL_Report::PostEvent( *pAssociatedAutomate_, MIL_Report::eReport_QuotaAlmostConsumed, dotationCategory );
+        }
+        bQuotasHaveChanged_ = true;
+    }
+    else if ( (pCurrentSuperior_ != pNominalSuperior_) && (&supplier == pNominalSuperior_) )
+    {
+        IT_DotationQuotaMap it = stockQuotasSuperior_.find( &dotationCategory );
+        assert( it != stockQuotasSuperior_.end() );
+
+        sDotationQuota& quota = it->second;
+
+        rQuotaConsumed = std::min( rQuotaConsumed, quota.rQuota_ );
+
+        quota.rQuota_ -= rQuotaConsumed;
+        if( quota.rQuota_ <= quota.rQuotaThreshold_ )
+        {
+            if( pAssociatedAutomate_ )
+                MIL_Report::PostEvent( *pAssociatedAutomate_, MIL_Report::eReport_QuotaAlmostConsumed, dotationCategory );
+        }
+        bQuotasHaveChanged_ = true;
+    }
 }
 
 // =============================================================================
@@ -565,118 +440,68 @@ void MIL_AutomateLOG::ConsumeQuota( const PHY_DotationCategory& dotationCategory
 // Name: MIL_AutomateLOG::SupplyHandleRequest
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::SupplyHandleRequest( PHY_SupplyDotationState& supplyDotationState )
+void MIL_AutomateLOG::SupplyHandleRequest( PHY_SupplyDotationState& supplyDotationState, MIL_Automate& stockSupplier, bool bExternalTransfert  )
 {
-    supplyConsigns_.push_back( new PHY_SupplyDotationConsign( *this, supplyDotationState ) );
+    supplyConsigns_.push_back( new PHY_SupplyDotationConsign( *this, supplyDotationState, stockSupplier, bExternalTransfert ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SupplyHandleRequest
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::SupplyHandleRequest( PHY_SupplyStockState& supplyStockState )
+void MIL_AutomateLOG::SupplyHandleRequest( PHY_SupplyStockState& supplyStockState, MIL_Automate& stockSupplier, bool bExternalTransfert  )
 {
-    supplyConsigns_.push_back( new PHY_SupplyStockConsign( *this, supplyStockState ) );
+    supplyConsigns_.push_back( new PHY_SupplyStockConsign( *this, supplyStockState, stockSupplier, bExternalTransfert ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SupplyGetStockPion
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-PHY_RoleInterface_Supply* MIL_AutomateLOG::SupplyGetStockPion( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const
+MIL_AgentPion* MIL_AutomateLOG::SupplyGetStockPion( const PHY_DotationCategory& dotationCategory, double rRequestedValue, bool bExternalTransfert ) const
 {
-    const T_PionVector& pions  = GetPions();
-    PHY_RoleInterface_Supply* pSelectedStockPion = 0;
-    double             rScore             = 0;
-    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        PHY_RoleInterface_Supply* stockPion = (**itPion).RetrieveRole< PHY_RoleInterface_Supply >();
-        if( stockPion )
-        {
-            const double rNewScore = stockPion->GetStockAvailablity( dotationCategory, rRequestedValue );
-            if( rNewScore > rScore )
-            {
-                rScore             = rNewScore;
-                pSelectedStockPion = stockPion;
-            }
-        }
-    }
-    return pSelectedStockPion;
+    SupplyStockAvailabilityVisitor visitor( dotationCategory, rRequestedValue, bExternalTransfert );
+    Visit( visitor );
+    return visitor.pSelected_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SupplyGetStock
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-double MIL_AutomateLOG::SupplyGetStock( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const
+double MIL_AutomateLOG::SupplyGetStock( const PHY_DotationCategory& dotationCategory, double rRequestedValue, bool bExternalTransfert  ) const
 {
-    const T_PionVector& pions  = GetPions();
-    PHY_RoleInterface_Supply* pSelectedStockPion = 0;
-    double             rScore             = 0;
-    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        PHY_RoleInterface_Supply* stockPion = (**itPion).RetrieveRole< PHY_RoleInterface_Supply >();
-        if( stockPion )
-        {
-            const double rNewScore = stockPion->GetStockAvailablity( dotationCategory, rRequestedValue );
-            if( rNewScore > rScore )
-            {
-                rScore             = rNewScore;
-                pSelectedStockPion = stockPion;
-            }
-        }
-    }
-    if( !pSelectedStockPion )
-        return 0.;
-    return pSelectedStockPion->AddStockReservation( dotationCategory, rRequestedValue );
+    SupplyStockAvailabilityVisitor visitor( dotationCategory, rRequestedValue, bExternalTransfert );
+    Visit( visitor );
+    return visitor.pSelected_ ? visitor.pSelected_->GetRole< PHY_RoleInterface_Supply >().AddStockReservation( dotationCategory, rRequestedValue ) : 0.;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SupplyReturnStock
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-bool MIL_AutomateLOG::SupplyReturnStock( const PHY_DotationCategory& dotationCategory, double rReturnedValue  ) const
+bool MIL_AutomateLOG::SupplyReturnStock( const PHY_DotationCategory& dotationCategory, double rReturnedValue ) const
 {
-    const T_PionVector& pions  = GetPions();
-    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        PHY_RoleInterface_Supply* stockPion = (**itPion).RetrieveRole< PHY_RoleInterface_Supply >();
-        if( stockPion )
-        {
-            if( stockPion->CanContainStock( dotationCategory ) )
-            {
-                stockPion->RemoveStockReservation( dotationCategory, rReturnedValue );
-                return true;
-            }
-        }
-    }
-    return false;
+    SupplyStockContainerVisitor visitor( dotationCategory );
+    Visit( visitor );
+    if( !visitor.pSelected_ )
+        return false;
+    visitor.pSelected_->RemoveStockReservation( dotationCategory, rReturnedValue );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory ) const
+bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory , bool bExternalTransfert ) const
 {
-    pConvoyTransporter     = 0;
-    pConvoyTransporterPion = 0;
+    SupplyConvoyAvailabilityVisitor visitor( dotationCategory, bExternalTransfert );
+    Visit( visitor );
 
-    const T_PionVector& pions  = GetPions();
-    for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        PHY_RoleInterface_Supply* stockPion = (**itPion).RetrieveRole< PHY_RoleInterface_Supply >();
-        if( stockPion )
-        {
-            pConvoyTransporter = stockPion->GetAvailableConvoyTransporter( dotationCategory );
-            if( pConvoyTransporter )
-            {
-                pConvoyTransporterPion = *itPion;
-                return true;
-            }
-        }
-    }
-    return false;
+    pConvoyTransporter     = visitor.pConvoySelected_;
+    pConvoyTransporterPion = visitor.pSelected_;
+    return pConvoyTransporter != 0;
 }
 
 // =============================================================================
@@ -707,14 +532,7 @@ void MIL_AutomateLOG::UpdateLogistic()
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::UpdateState()
 {
-    MIL_Automate::UpdateState();
-
-    // Supply system (TC2->BLD->BLT)
-    if( !bStockSupplyNeeded_ || pExplicitStockSupplyState_ || !pSupplySuperior_ )
-        return;
-
-    PHY_SupplyStockRequestContainer supplyRequests( *this );
-    bStockSupplyNeeded_ = !supplyRequests.Execute( *pSupplySuperior_, pExplicitStockSupplyState_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -723,121 +541,15 @@ void MIL_AutomateLOG::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::Clean()
 {
-    MIL_Automate::Clean();
     bQuotasHaveChanged_ = false;
-    if( pExplicitStockSupplyState_ )
-        pExplicitStockSupplyState_->Clean();
-    for( CIT_SupplyStockStateSet it = pushedFlowsSupplyStates_.begin(); it != pushedFlowsSupplyStates_.end(); ++it )
-        (**it).Clean();
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::IsSupplyInProgress
-// Created: NLD 2005-12-14
-// -----------------------------------------------------------------------------
-bool MIL_AutomateLOG::IsSupplyInProgress( const PHY_DotationCategory& dotationCategory ) const
-{
-    if( pExplicitStockSupplyState_ && pExplicitStockSupplyState_->IsSupplying( dotationCategory ) )
-        return true;
-
-    for( CIT_SupplyStockStateSet it = pushedFlowsSupplyStates_.begin(); it != pushedFlowsSupplyStates_.end(); ++it )
-    {
-        if( (**it).IsSupplying( dotationCategory ) )
-            return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::NotifyStockSupplyNeeded
-// Created: NLD 2005-01-31
-// -----------------------------------------------------------------------------
-void MIL_AutomateLOG::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory )
-{
-    if( bStockSupplyNeeded_ )
-        return;
-
-    if( IsSupplyInProgress( dotationCategory ) )
-        return;
-
-    bStockSupplyNeeded_ = true;
-
-    // Pas de RC si log non branchée ou si RC envoyé au tick précédent
-    const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-    if( GetTC2() && ( nCurrentTick > ( nTickRcStockSupplyQuerySent_ + 1 ) || nTickRcStockSupplyQuerySent_ == 0 ) )
-        MIL_Report::PostEvent( *this, MIL_Report::eReport_StockSupplyRequest );
-    nTickRcStockSupplyQuerySent_ = nCurrentTick;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::RemoveSupplyStockState
-// Created: NLD 2005-12-14
-// -----------------------------------------------------------------------------
-void MIL_AutomateLOG::RemoveSupplyStockState( const PHY_SupplyStockState& supplyState )
-{
-    if( &supplyState == pExplicitStockSupplyState_ )
-    {
-        pExplicitStockSupplyState_ = 0;
-        return;
-    }
-
-    IT_SupplyStockStateSet it = pushedFlowsSupplyStates_.find( const_cast< PHY_SupplyStockState* >( &supplyState ) );
-    assert( it != pushedFlowsSupplyStates_.end() );
-    pushedFlowsSupplyStates_.erase( it );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::NotifyStockSupplied
-// Created: NLD 2005-01-28
-// -----------------------------------------------------------------------------
-void MIL_AutomateLOG::NotifyStockSupplied( const PHY_SupplyStockState& supplyState )
-{
-    MIL_Report::PostEvent( *this, MIL_Report::eReport_StockSupplyDone );
-    RemoveSupplyStockState( supplyState );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::NotifyStockSupplyCanceled
-// Created: NLD 2005-02-11
-// -----------------------------------------------------------------------------
-void MIL_AutomateLOG::NotifyStockSupplyCanceled( const PHY_SupplyStockState& supplyState )
-{
-    MIL_Report::PostEvent( *this, MIL_Report::eReport_StockSupplyCanceled );
-    RemoveSupplyStockState( supplyState );
-    bStockSupplyNeeded_ = true;
-}
 
 // =============================================================================
 // NETWORK
 // =============================================================================
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::GetLogisticAutomate
-// Created: NLD 2005-01-17
-// -----------------------------------------------------------------------------
-MIL_AutomateLOG* MIL_AutomateLOG::GetLogisticAutomate( unsigned int nID )
-{
-    MIL_Automate* pAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nID );
-    if( !pAutomate || !pAutomate->GetType().IsLogistic() )
-        return 0;
-    return static_cast< MIL_AutomateLOG* >( pAutomate );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::UpdateNetwork
-// Created: MIL_AutomateLOG 2005-01-25
-// -----------------------------------------------------------------------------
-void MIL_AutomateLOG::UpdateNetwork() const
-{
-    MIL_Automate::UpdateNetwork();
-    if( pExplicitStockSupplyState_ )
-        pExplicitStockSupplyState_->SendChangedState();
-    for( CIT_SupplyStockStateSet it = pushedFlowsSupplyStates_.begin(); it != pushedFlowsSupplyStates_.end(); ++it )
-        (**it).SendChangedState();
-
-    if( bQuotasHaveChanged_ )
-        SendQuotas();
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SendQuotas
@@ -846,11 +558,16 @@ void MIL_AutomateLOG::UpdateNetwork() const
 void MIL_AutomateLOG::SendQuotas() const
 {
     client::LogSupplyQuotas asn;
-    asn().mutable_automat()->set_id( GetID() );
-    if( !stockQuotas_.empty() )
+
+    if( pAssociatedAutomate_ )
+        asn().mutable_supplied()->mutable_automat()->set_id( pAssociatedAutomate_->GetID() );
+    else
+        asn().mutable_supplied()->mutable_formation()->set_id( pAssociatedFormation_->GetID() );
+
+    if( !stockQuotasSuperior_.empty() )
     {
         unsigned int i = 0;
-        for( CIT_DotationQuotaMap it = stockQuotas_.begin(); it != stockQuotas_.end(); ++it, ++i )
+        for( CIT_DotationQuotaMap it = stockQuotasSuperior_.begin(); it != stockQuotasSuperior_.end(); ++it, ++i )
         {
             Common::MsgDotationQuota& dotQuota = *asn().mutable_quotas()->add_elem();
             dotQuota.mutable_ressource_id()->set_id( it->first->GetMosID() );
@@ -871,11 +588,7 @@ void MIL_AutomateLOG::SendQuotas() const
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::SendFullState() const
 {
-    MIL_Automate::SendFullState();
-    if( pExplicitStockSupplyState_ )
-        pExplicitStockSupplyState_->SendFullState();
-    for( CIT_SupplyStockStateSet it = pushedFlowsSupplyStates_.begin(); it != pushedFlowsSupplyStates_.end(); ++it )
-        (**it).SendFullState();
+    SendLogisticLinks();
     SendQuotas();
 }
 
@@ -885,72 +598,17 @@ void MIL_AutomateLOG::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
-    bool bNewTC2                 = false;
-    bool bNewMaintenanceSuperior = false;
-    bool bNewMedicalSuperior     = false;
-    bool bNewSupplySuperior      = false;
-
-    MIL_AutomateLOG* pNewTC2                 = 0;
-    MIL_AutomateLOG* pNewMaintenanceSuperior = 0;
-    MIL_AutomateLOG* pNewMedicalSuperior     = 0;
-    MIL_AutomateLOG* pNewSupplySuperior      = 0;
-
-    unsigned int tc2Id = msg.parameters().elem( 0 ).value().identifier();
-    if( tc2Id != ( unsigned int ) -1)
+    unsigned int automatId = msg.parameters().elem( 1 ).value().identifier();
+    unsigned int formationId = msg.parameters().elem( 2 ).value().identifier();
+    if( ( automatId == ( unsigned int ) -1 ) && (formationId == ( unsigned int ) -1) )
     {
-        bNewTC2 = true;
-        if( tc2Id != 0 )
-        {
-            pNewTC2 = GetLogisticAutomate( tc2Id );
-            if( !pNewTC2 )
-                throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_tc2 );
-        }
+        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_party_hierarchy );
     }
-
-    unsigned int maintenanceId = msg.parameters().elem( 1 ).value().identifier();
-    if( maintenanceId != ( unsigned int ) -1 )
-    {
-        bNewMaintenanceSuperior = true;
-        if( maintenanceId != 0 )
-        {
-            pNewMaintenanceSuperior = GetLogisticAutomate( maintenanceId );
-            if( !pNewMaintenanceSuperior )
-                throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_maintenance );
-        }
-    }
-
-    unsigned int santeId = msg.parameters().elem( 2 ).value().identifier();
-    if( santeId != ( unsigned int ) -1 )
-    {
-        bNewMedicalSuperior = true;
-        if( santeId != 0 )
-        {
-            pNewMedicalSuperior = GetLogisticAutomate( santeId );
-            if( !pNewMedicalSuperior )
-                throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_sante );
-        }
-    }
-
-    unsigned int supplyId = msg.parameters().elem( 3 ).value().identifier();
-    if( supplyId != ( unsigned int ) -1 )
-    {
-        bNewSupplySuperior = true;
-        if( supplyId != 0 )
-        {
-            pNewSupplySuperior = GetLogisticAutomate( supplyId );
-            if( !pNewSupplySuperior )
-                throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_supply );
-        }
-    }
-
-    if( bNewTC2 )
-        pTC2_ = pNewTC2;
-    if( bNewMaintenanceSuperior )
-        pMaintenanceSuperior_ = pNewMaintenanceSuperior;
-    if( bNewMedicalSuperior )
-        pMedicalSuperior_ = pNewMedicalSuperior;
-    if( bNewSupplySuperior )
-        pSupplySuperior_ = pNewSupplySuperior;
+    pCurrentSuperior_ = automatId!=0 ? GetLogisticAutomate(automatId) : GetLogisticAutomate(formationId);
+    if( !pCurrentSuperior_ )
+        pNominalSuperior_ = 0;
+    if( !pNominalSuperior_ && pCurrentSuperior_ )
+    	pNominalSuperior_ = pCurrentSuperior_;
 }
 
 // -----------------------------------------------------------------------------
@@ -959,41 +617,52 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::Ms
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionParameters& msg )
 {
-    if( !pSupplySuperior_ || GetLogisticAutomate( msg.elem( 0 ).value().automat().id() ) != pSupplySuperior_ )
-        throw NET_AsnException< MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_donneur_quotas );
-
-    for( int i = 0; i < msg.elem( 1 ).value().list_size(); ++i )
+    unsigned int oid_donneur = msg.elem( 0 ).value().has_automat() ?
+        msg.elem( 0 ).value().automat().id() : msg.elem( 0 ).value().formation().id();
+    if( ( !pCurrentSuperior_ && !pNominalSuperior_ ) ||
+         ( GetLogisticAutomate( oid_donneur ) != pCurrentSuperior_ &&
+           GetLogisticAutomate( oid_donneur ) != pNominalSuperior_)
+         )
     {
-        unsigned int type = msg.elem( 1 ).value().list( i ).list( 0 ).identifier();
-        int number = msg.elem( 1 ).value().list( i ).list( 1 ).quantity();
+        throw NET_AsnException< MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_donneur_quotas );
+    }
 
-        if( const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( type ) )
+    if ( GetLogisticAutomate( oid_donneur ) == pCurrentSuperior_ )
+    {
+        for( int i = 0; i < msg.elem( 1 ).value().list_size(); ++i )
         {
-            sDotationQuota& dotationQuota = stockQuotas_[ pDotationCategory ];
-            dotationQuota.rQuota_          = number;
-            dotationQuota.rQuotaThreshold_ = number * 0.1; //$$ fichier de conf cpp ;)
+            unsigned int type = msg.elem( 1 ).value().list( i ).list( 0 ).identifier();
+            int number = msg.elem( 1 ).value().list( i ).list( 1 ).quantity();
+
+            const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( type );
+            if( pDotationCategory )
+            {
+                sDotationQuota& dotationQuota = stockQuotasSuperior_[ pDotationCategory ];
+                dotationQuota.rQuota_          = number;
+                dotationQuota.rQuotaThreshold_ = number * 0.1; //$$ fichier de conf cpp ;)
+            }
+        }
+    }
+    else // nominal superior
+    {
+        for( int i = 0; i < msg.elem( 1 ).value().list_size(); ++i )
+        {
+            unsigned int type = msg.elem( 1 ).value().list( i ).list( 0 ).identifier();
+            int number = msg.elem( 1 ).value().list( i ).list( 1 ).quantity();
+
+            const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( type );
+            if( pDotationCategory )
+            {
+                sDotationQuota& dotationQuota = stockQuotasNominalSuperior_[ pDotationCategory ];
+                dotationQuota.rQuota_          = number;
+                dotationQuota.rQuotaThreshold_ = number * 0.1; //$$ fichier de conf cpp ;)
+            }
         }
     }
     bQuotasHaveChanged_ = true;
+    bQuotasHaveChanged_ = true;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow
-// Created: NLD 2005-02-04
-// -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( const Common::MsgMissionParameters& msg )
-{
-    MIL_AutomateLOG* pSupplier = GetLogisticAutomate( msg.elem( 0 ).value().automat().id() );
-    if( !pSupplier )
-        throw NET_AsnException< MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
-
-    PHY_SupplyStockRequestContainer supplyRequests( *this, msg.elem( 1 ) );
-
-    PHY_SupplyStockState* pSupplyState = 0;
-    supplyRequests.Execute( *pSupplier, pSupplyState );
-    if( pSupplyState )
-        pushedFlowsSupplyStates_.insert( pSupplyState );
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::SendLogisticLinks
@@ -1001,61 +670,193 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( const Common::MsgMissionPar
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::SendLogisticLinks() const
 {
-    client::AutomatChangeLogisticLinks asn;
+    client::ChangeLogisticLinks asn;
 
-    asn().mutable_automat()->set_id( GetID() );
+    if( GetAssociatedAutomat() )
+       asn().mutable_requester()->mutable_automat()->set_id( GetID() );
+   else
+       asn().mutable_requester()->mutable_formation()->set_id( GetID() );
 
-    if( GetTC2() )
+    if( pCurrentSuperior_ )
     {
-//        asn().set_oid_tc2Present( 1 );
-        asn().mutable_tc2()->set_id( GetTC2()->GetID() );
+        if( pCurrentSuperior_->GetAssociatedAutomat() )
+            asn().mutable_logistic_base()->mutable_automat()->set_id( pCurrentSuperior_->GetID() );
+        else
+            asn().mutable_logistic_base()->mutable_formation()->set_id( pCurrentSuperior_->GetID() );
     }
-
-    if( pMaintenanceSuperior_ )
-    {
-//        asn().set_oid_maintenancePresent( 1 );
-        asn().mutable_maintenance()->set_id( pMaintenanceSuperior_->GetID() );
-    }
-    if( pMedicalSuperior_ )
-    {
-//        asn().set_oid_santePresent( 1 );
-        asn().mutable_health()->set_id( pMedicalSuperior_->GetID() );
-    }
-    if( pSupplySuperior_ )
-    {
-//        asn().set_oid_ravitaillementPresent( 1 );
-        asn().mutable_supply()->set_id( pSupplySuperior_->GetID() );
-    }
-
     asn.Send( NET_Publisher_ABC::Publisher() );
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::GetMaintenanceSuperior
+// Name: MIL_AutomateLOG::GetSuperior
 // Created: NLD 2004-12-28
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG* MIL_AutomateLOG::GetMaintenanceSuperior() const
+MIL_AutomateLOG* MIL_AutomateLOG::GetSuperior() const
 {
-    return pMaintenanceSuperior_;
+    return pCurrentSuperior_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::GetMedicalSuperior
 // Created: NLD 2004-12-28
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG* MIL_AutomateLOG::GetMedicalSuperior() const
+MIL_AutomateLOG* MIL_AutomateLOG::GetNominalSuperior() const
 {
-    return pMedicalSuperior_;
+    return pNominalSuperior_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::GetQuota
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-double MIL_AutomateLOG::GetQuota( const PHY_DotationCategory& dotationCategory ) const
+double MIL_AutomateLOG::GetQuota( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory ) const
 {
-    CIT_DotationQuotaMap it = stockQuotas_.find( &dotationCategory );
-    if( it == stockQuotas_.end() )
-        return 0.;
-    return it->second.rQuota_;
+    if( &supplier == pCurrentSuperior_)
+    {
+        CIT_DotationQuotaMap it = stockQuotasSuperior_.find( &dotationCategory );
+        if( it == stockQuotasSuperior_.end() )
+            return 0.;
+        return it->second.rQuota_;
+    }
+    else if( pCurrentSuperior_!=pNominalSuperior_ && &supplier==pNominalSuperior_ )
+    {
+        CIT_DotationQuotaMap it = stockQuotasNominalSuperior_.find( &dotationCategory );
+        if( it == stockQuotasNominalSuperior_.end() )
+            return 0.;
+        return it->second.rQuota_;
+    }
+    return 0;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::GetID
+// Created: AHC 2010-09-24
+// -----------------------------------------------------------------------------
+unsigned int MIL_AutomateLOG::GetID() const
+{
+    assert( pAssociatedFormation_ || pAssociatedAutomate_ );
+    if( pAssociatedFormation_ )
+        return pAssociatedFormation_->GetID();
+    else // if( pAssociatedAutomate_ )
+        return pAssociatedAutomate_->GetID();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::GetArmy
+// Created: AHC 2010-09-27
+// -----------------------------------------------------------------------------
+MIL_Army_ABC& MIL_AutomateLOG::GetArmy     () const
+{
+    assert( pAssociatedFormation_ || pAssociatedAutomate_ );
+    return pAssociatedFormation_ ?
+            pAssociatedFormation_->GetArmy() :
+            pAssociatedAutomate_->GetArmy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::GetPC
+// Created: AHC 2010-09-27
+// -----------------------------------------------------------------------------
+const MIL_AgentPion* MIL_AutomateLOG::GetPC() const
+{
+    PCVisitor visitor;
+    Visit( visitor );
+    return visitor.pSelected_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::SupplyCreatePionConvoy
+// Created: AHC 2010-09-27
+// -----------------------------------------------------------------------------
+MIL_AgentPion* MIL_AutomateLOG::SupplyCreatePionConvoy( const MIL_AgentTypePion& type, bool bExternalTransfert )
+{
+    // Search for the 'chief' automat
+    MIL_Automate* pConvoyAutomate = pAssociatedAutomate_;
+    if( pAssociatedFormation_ )
+    {
+        SupplyConvoyCapacityVisitor visitor( bExternalTransfert );
+        Visit( visitor );
+        if( visitor.pSelected_ )
+            pConvoyAutomate = &visitor.pSelected_->GetAutomate();
+    }
+    if( !pConvoyAutomate )
+        return 0;
+    const MT_Vector2D& location = pConvoyAutomate->GetPionPC().GetRole<PHY_RoleInterface_Location>().GetPosition();
+    return &pConvoyAutomate->CreatePion( type, location );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::GetAssociatedFormation
+// Created: AHC 2010-09-27
+// -----------------------------------------------------------------------------
+MIL_Automate*   MIL_AutomateLOG::GetAssociatedAutomat() const
+{
+    return pAssociatedAutomate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::GetAssociatedFormation
+// Created: AHC 2010-09-27
+// -----------------------------------------------------------------------------
+MIL_Formation*  MIL_AutomateLOG::GetAssociatedFormation() const
+{
+    return pAssociatedFormation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::GetLogisticAutomate
+// Created: NLD 2005-01-17
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG* MIL_AutomateLOG::GetLogisticAutomate( unsigned int nID )
+{
+    MIL_Automate* pAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nID );
+    if( pAutomate)
+        return pAutomate->GetBrainLogistic();
+
+    MIL_Formation* pFormation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( nID );
+    if( pFormation)
+        return pFormation->GetBrainLogistic();
+
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::IsExternalTransaction
+// Indicate if the logistic transaction is internal to a BL or between two
+// Created: AHC 2010-09-28
+// -----------------------------------------------------------------------------
+bool MIL_AutomateLOG::IsExternalTransaction( MIL_Automate& supplied, const MIL_AutomateLOG& supplier )
+{
+    bool bExternaltransfert = true;
+
+    MIL_AutomateLOG* pTC2 = supplied.GetTC2();
+    if( pTC2 && pTC2 == &supplier )
+            bExternaltransfert = false;
+
+    return bExternaltransfert;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::GetLogisticLevel
+// Created: AHC 2010-10-13
+// -----------------------------------------------------------------------------
+const PHY_LogisticLevel& MIL_AutomateLOG::GetLogisticLevel() const
+{
+    return *pLogLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::FillParentEntity
+// Created: AHC 2010-10-13
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::FillParentEntity(Common::ParentEntity& msg)
+{
+	if( pAssociatedAutomate_ )
+		msg.mutable_automat()->set_id(pAssociatedAutomate_->GetID());
+	else if( pAssociatedFormation_ )
+		msg.mutable_formation()->set_id(pAssociatedFormation_->GetID());
+	else
+		msg.mutable_automat()->set_id( 0 );
 }

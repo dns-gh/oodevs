@@ -179,7 +179,10 @@ bool PHY_MedicalCollectionAmbulance::DoLoading()
     if( consigns_.size() == pCompAmbulance_->GetType().GetAmbulanceCollectionCapacity() )
         return true;
 
-    return pMedical_->GetAutomate().MedicalCanCollectionAmbulanceGo( *this );
+    MIL_AutomateLOG* pLogisticManager = pMedical_->GetPion().FindLogisticManager();
+    if( !pLogisticManager )
+        return false;
+    return pLogisticManager->MedicalCanCollectionAmbulanceGo( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -203,11 +206,13 @@ bool PHY_MedicalCollectionAmbulance::DoSearchForSortingArea()
     assert( !pSortingArea_ );
     assert( pMedical_ );
 
-    MIL_AutomateLOG* pMedicalSuperior = pMedical_->GetAutomate().GetMedicalSuperior();
-    if( !pMedicalSuperior )
-        return true;
-
-    pSortingArea_ = static_cast< PHY_RoleInterface_Medical* >( pMedicalSuperior->MedicalReserveForSorting( *this ) );//@TODO delete static cast and use interface in this class
+    MIL_AutomateLOG* pLogisticManager = pMedical_->GetPion().FindLogisticManager();
+    if( !pLogisticManager )
+        return false;
+    MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetSuperior();
+    if( !pLogisticSuperior )
+        return true; // $$$ Bof : pour sortir les human states qui ne seront jamais traités
+    pSortingArea_ = pLogisticSuperior->MedicalReserveForSorting( *this );
     return pSortingArea_ != 0;
 }
 

@@ -9,7 +9,7 @@
 
 package MsgsLauncherToAdmin;
 
-import "Common.proto"; 
+import "Common.proto";  
 import "SimToClient.proto";
 import "AuthenticationToClient.proto";
 import "Version.proto";

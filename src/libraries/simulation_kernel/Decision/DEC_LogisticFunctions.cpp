@@ -23,6 +23,7 @@
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Decision/DEC_LogisticFunctions.h"
 
 using namespace human;
 
@@ -140,7 +141,7 @@ void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DEC_Decision_ABC* pPionW
     assert( pDecTC2 );
     if( !pDecTC2->GetAutomate().GetType().IsLogistic() )
         return;
-    MIL_AutomateLOG& tc2 = static_cast< MIL_AutomateLOG& >( pDecTC2->GetAutomate() );
+    MIL_AutomateLOG& tc2 = *( pDecTC2->GetAutomate().GetBrainLogistic() );
     pPionWounded->GetPion().GetRole< PHY_RoleInterface_Humans >().EvacuateWoundedHumans( tc2 );
 }
 
@@ -441,8 +442,8 @@ DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetSupplyingAutomate( const MIL_A
     const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
     {
-        if( const MIL_Automate* pAutomate = role->ConvoyGetSupplyingAutomate() )
-            return ( const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) );
+        if( const MIL_AgentPion* pSuplier = role->ConvoyGetSupplier() )
+            return ( const_cast< DEC_Decision_ABC* >( &pSuplier->GetDecision() ) );
     }
     return 0;
 }
@@ -456,8 +457,8 @@ DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetConvoyingAutomate( const MIL_A
     const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
     {
-        if( const MIL_Automate* pAutomate = role->ConvoyGetConvoyingAutomate() )
-            return ( const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) );
+        if( const MIL_AgentPion* pConvoyer = role->ConvoyGetConvoyer() )
+            return ( const_cast< DEC_Decision_ABC* > ( &pConvoyer->GetDecision() ) );
     }
     return 0;
 }
@@ -471,8 +472,8 @@ DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetSuppliedAutomate( const MIL_Ag
     const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
     {
-        if( const MIL_Automate* pAutomate = role->ConvoyGetSuppliedAutomate() )
-            return ( const_cast< DEC_AutomateDecision* >( &pAutomate->GetDecision() ) );
+        if( const MIL_AgentPion* pSupplied = role->ConvoyGetSupplied() )
+            return ( const_cast< DEC_Decision_ABC* >( &pSupplied->GetDecision() ) );
     }
     return 0;
 }
@@ -530,10 +531,10 @@ void DEC_LogisticFunctions::UndoLendHaulerComposantes( MIL_Agent_ABC& callerAgen
 // Name: DEC_LogisticFunctions::PionGetTC2
 // Created: JVT 2005-01-17
 // -----------------------------------------------------------------------------
-DEC_Decision_ABC* DEC_LogisticFunctions::PionGetTC2( const MIL_Agent_ABC& agent )
+DEC_Decision_ABC* DEC_LogisticFunctions::PionGetPcTC2( const MIL_Agent_ABC& agent )
 {
    if (MIL_AutomateLOG* pTC2 = agent.GetAutomate().GetTC2() )
-       return ( &pTC2->GetDecision() );
+       return ( &pTC2->GetAssociatedAutomat()->GetPionPC().GetDecision() );
     return 0;
 }
 
@@ -541,9 +542,9 @@ DEC_Decision_ABC* DEC_LogisticFunctions::PionGetTC2( const MIL_Agent_ABC& agent 
 // Name: DEC_LogisticFunctions::AutomateGetTC2
 // Created: JVT 2005-01-17
 // -----------------------------------------------------------------------------
-DEC_Decision_ABC* DEC_LogisticFunctions::AutomateGetTC2( const MIL_Automate& agent )
+DEC_Decision_ABC* DEC_LogisticFunctions::AutomateGetPcTC2( const MIL_Automate& agent )
 {
     if( MIL_AutomateLOG* pTC2 = agent.GetTC2() )
-        return ( &pTC2->GetDecision() );
+        return ( &pTC2->GetAssociatedAutomat()->GetPionPC().GetDecision() );
     return 0;
 }

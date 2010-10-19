@@ -80,6 +80,8 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
 {
     std::string strType;
     xis >> xml::attribute( "type", strType );
+    bool trueTC2 (true);
+    bool falseTC2 (false);
     nType_ = diplomacyConverter_.Convert( strType );
     xis >> xml::start( "communication" )
             >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory ) // LTO
@@ -90,8 +92,9 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
         >> xml::start( "objects" )
             >> xml::list( "object", *this, &MIL_Army::ReadObject, objectFactory )
         >> xml::end
-        >> xml::start( "logistic" )
-            >> xml::list( "automat", *this, &MIL_Army::ReadAutomat, automateFactory  )
+        >> xml::start( "logistics" )
+            >> xml::list( "tc2", *this, &MIL_Army::ReadAutomat, automateFactory, formationFactory, trueTC2  )
+            >> xml::list( "logistic-base", *this, &MIL_Army::ReadAutomat, automateFactory, formationFactory, falseTC2  )
         >> xml::end
         >> xml::start( "populations" )
             >> xml::list( "population", *this, &MIL_Army::ReadPopulation, populationFactory )
@@ -284,7 +287,7 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref(xos) ) );
     xos     << xml::end;
 
-    xos     << xml::start( "logistic" );
+    xos     << xml::start( "logistics" );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteLogisticLinksODB, _1, boost::ref(xos) ) );
     xos     << xml::end;
 
@@ -396,35 +399,62 @@ void MIL_Army::ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& know
 // Name: MIL_Army::ReadAutomat
 // Created: ABL 2007-07-10
 // -----------------------------------------------------------------------------
-void MIL_Army::ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFactory )
+void MIL_Army::ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory, bool isTC2 )
 {
     unsigned int id;
     xis >> xml::attribute( "id", id );
-    MIL_Automate* pSuperior = automateFactory.Find( id );
+
+    MIL_Automate* pAutomateSuperior = automateFactory.Find( id );
+    MIL_Formation* pFormationSuperior = formationFactory.Find( id );
+
+    if( !pAutomateSuperior && !pFormationSuperior )
+        xis.error( "Unknown superior" );
+
+    MIL_AutomateLOG * pSuperior = pAutomateSuperior ? pAutomateSuperior->GetBrainLogistic() :
+            pFormationSuperior->GetBrainLogistic();
     if( !pSuperior )
-        xis.error( "Unknown automat" );
+        xis.error( "Superior isn't a logistic entity" );
+
     if( pSuperior->GetArmy() != *this )
-        xis.error( "Invalid automat (not in specified side)" );
-    if( !pSuperior->GetType().IsLogistic() )
-        xis.error( "Automat isn't a logistic automat" );
-    xis >> xml::list( "subordinate" , *this, &MIL_Army::ReadSubordinate, automateFactory, pSuperior );
+        xis.error( "Invalid superior (not in specified side)" );
+
+    xis >> xml::list( "subordinate" , *this, &MIL_Army::ReadSubordinate, automateFactory, formationFactory, pSuperior, isTC2 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::ReadSubordinate
 // Created: ABL 2007-07-10
 // -----------------------------------------------------------------------------
-void MIL_Army::ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory, MIL_Automate* pSuperior )
+void MIL_Army::ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory,
+        FormationFactory_ABC& formationFactory, MIL_AutomateLOG* pSuperior, bool isTC2 )
 {
     unsigned int nSubordinateID;
     std::string strLink;
     xis >> xml::attribute( "id", nSubordinateID );
-    MIL_Automate* pSubordinate = automateFactory.Find( nSubordinateID );
-    if( !pSubordinate )
-        xis.error( "Unknown automat" );
-    if( pSubordinate->GetArmy() != *this )
-        xis.error( "Invalid automat (not in specified side)" );
-    pSubordinate->ReadLogisticLink( static_cast< MIL_AutomateLOG& >( *pSuperior ), xis );
+    MIL_Automate* pAutomateSubordinate = automateFactory.Find( nSubordinateID );
+    MIL_Formation* pFormationSubordinate = formationFactory.Find( nSubordinateID );
+    if( !pAutomateSubordinate && !pFormationSubordinate )
+        xis.error( "Unknown subordinate" );
+    if( isTC2 )
+    {
+        if(!pAutomateSubordinate)
+            xis.error( "Unknown automate");
+        else if(pAutomateSubordinate->GetArmy() != *this)
+            xis.error( "Invalid subordinate (not in specified side)" );
+        else
+            pAutomateSubordinate->ReadLogisticLink(*pSuperior, xis);
+    }
+    else
+    {
+        MIL_AutomateLOG * pLOGSubordinate = pAutomateSubordinate ? pAutomateSubordinate->GetBrainLogistic() :
+            pFormationSubordinate->GetBrainLogistic();
+        if( !pLOGSubordinate )
+            xis.error( "Invalid subordinate (not logistic entity)" );
+        else if( pLOGSubordinate->GetArmy() != *this )
+            xis.error( "Invalid subordinate (not in specified side)" );
+        else
+            pLOGSubordinate->ReadLogisticLink(*pSuperior, xis);
+    }
 }
 
 // -----------------------------------------------------------------------------

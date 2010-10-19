@@ -921,8 +921,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< void( const DEC_Decision_ABC*, const unsigned int ) >( boost::bind( &DEC_LogisticFunctions::UndoLendCollectionComposantes, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_RecupererRemorqueurs" ] =
         boost::function< void( const DEC_Decision_ABC*, const unsigned int ) >( boost::bind( &DEC_LogisticFunctions::UndoLendHaulerComposantes, boost::ref( GetPion() ), _1, _2 ) );
-    brain[ "DEC_Pion_TC2" ] =
-        boost::bind( &DEC_LogisticFunctions::PionGetTC2, boost::ref( GetPion() ) );
+    brain[ "DEC_Pion_PcDeTC2" ] =
+        boost::bind( &DEC_LogisticFunctions::PionGetPcTC2, boost::ref( GetPion() ) );
     brain[ "DEC_ChangeValeurDotations2" ] =
         boost::function< void( int, const double ) >( boost::bind( &DEC_LogisticFunctions::ChangeDotationsValueUsingTC2, boost::ref( GetPion() ), _1, _2, -1 ) );
     brain[ "DEC_ChangeValeurDotations3" ] =

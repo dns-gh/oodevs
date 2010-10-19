@@ -17,6 +17,7 @@
 namespace MsgsSimToClient
 {
     class MsgFormationCreation;
+    class LogisticLevel;
 }
 
 // =============================================================================
@@ -37,6 +38,7 @@ public:
     //! @name Accessors
     //@{
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
+    virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
 private:
@@ -55,6 +57,7 @@ private:
     //! @name Member data
     //@{
     const kernel::HierarchyLevel_ABC& level_;
+    const kernel::LogisticLevel* logisticLevel_;
     //@}
 };
 

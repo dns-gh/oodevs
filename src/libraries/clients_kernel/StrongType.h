@@ -23,6 +23,7 @@ template< typename T, typename U >
 class StrongType
 {
 public:
+    typedef typename T BaseType;
     //! @name Constructors/Destructor
     //@{
                    StrongType();

@@ -16,6 +16,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
@@ -32,17 +33,19 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& resolver
                                   , const tools::Resolver_ABC< Agent_ABC >& agentResolver
+                                  , const tools::Resolver_ABC< Formation_ABC >&   formationResolver
                                   , const tools::Resolver_ABC< DotationType >& dotationResolver
                                   , const MsgsSimToClient::MsgLogSupplyHandlingCreation& message )
     : controller_           ( controller )
     , resolver_             ( resolver )
     , agentResolver_        ( agentResolver )
+	, formationResolver_    ( formationResolver )
     , dotationResolver_     ( dotationResolver )
     , nID_                  ( message.request().id() )
     , consumer_             ( resolver.Get( message.consumer().id() ) )
-    , pAutomateLogHandling_ ( 0 )
+    , pLogHandlingEntity_ ( 0 )
     , pPionLogConvoying_    ( 0 )
-    , pAutomateLogProvidingConvoyResources_( 0 )
+    , pLogProvidingConvoyResourcesEntity_( 0 )
     , nState_( eLogSupplyHandlingStatus_Termine )
 {
     for( int i = 0; i < message.dotations().elem_size(); ++i )
@@ -61,8 +64,8 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolve
 LogSupplyConsign::~LogSupplyConsign()
 {
     consumer_.Get< LogSupplyConsigns >().RemoveConsign( *this );
-    if( pAutomateLogHandling_ )
-        pAutomateLogHandling_->Get< LogSupplyConsigns >().TerminateConsign( *this );
+    if( pLogHandlingEntity_ )
+    	pLogHandlingEntity_->Get< LogSupplyConsigns >().TerminateConsign( *this );
     if( pPionLogConvoying_ )
         pPionLogConvoying_->Get< LogSupplyConsigns >().TerminateConsign( *this );
     DeleteAll();
@@ -74,13 +77,13 @@ LogSupplyConsign::~LogSupplyConsign()
 // -----------------------------------------------------------------------------
 void LogSupplyConsign::Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate& message )
 {
-    if( message.has_supplier() && ( !pAutomateLogHandling_ || message.supplier().id() != int( pAutomateLogHandling_ ->GetId() ) ) )
+    if( message.has_supplier() && ( !pLogHandlingEntity_ || FindLogEntityID( message.supplier() ) != int( pLogHandlingEntity_ ->GetId() ) ) )
     {
-        if( pAutomateLogHandling_ )
-            pAutomateLogHandling_->Get< LogSupplyConsigns >().TerminateConsign( *this );
-        pAutomateLogHandling_ = resolver_.Find( message.supplier().id() );
-        if( pAutomateLogHandling_ )
-            pAutomateLogHandling_->Get< LogSupplyConsigns >().HandleConsign( *this );
+        if( pLogHandlingEntity_ )
+        	pLogHandlingEntity_->Get< LogSupplyConsigns >().TerminateConsign( *this );
+        pLogHandlingEntity_ = FindLogEntity( message.supplier() );
+        if( pLogHandlingEntity_ )
+        	pLogHandlingEntity_->Get< LogSupplyConsigns >().HandleConsign( *this );
     }
     if( message.has_convoying_unit() && ( !pPionLogConvoying_ || message.convoying_unit().id() != int( pPionLogConvoying_->GetId() ) ) )
     {
@@ -91,7 +94,7 @@ void LogSupplyConsign::Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate
             pPionLogConvoying_->Get< LogSupplyConsigns >().HandleConsign( *this );
     }
     if( message.has_convoy_provider()  )
-        pAutomateLogProvidingConvoyResources_ = resolver_.Find( message.convoy_provider().id() );
+    	pLogProvidingConvoyResourcesEntity_ = FindLogEntity( message.convoy_provider() );
     if( message.has_etat()  )
         nState_ = E_LogSupplyHandlingStatus( message.etat() );
     if( message.has_dotations()  )
@@ -122,8 +125,8 @@ void LogSupplyConsign::Display( kernel::Displayer_ABC& displayer, kernel::Displa
     displayer.Display( consumer_ ).Display( nState_ );
     itemDisplayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
                  .Display( tools::translate( "Logistic", "Consumer:" ), consumer_ )
-                 .Display( tools::translate( "Logistic", "Handler:" ), pAutomateLogHandling_ )
-                 .Display( tools::translate( "Logistic", "Supplier:" ), pAutomateLogProvidingConvoyResources_ )
+                 .Display( tools::translate( "Logistic", "Handler:" ), pLogHandlingEntity_ )
+                 .Display( tools::translate( "Logistic", "Supplier:" ), pLogProvidingConvoyResourcesEntity_ )
                  .Display( tools::translate( "Logistic", "Convoyer:" ), pPionLogConvoying_ )
                  .Display( tools::translate( "Logistic", "State:" ), nState_ );
 }
@@ -134,9 +137,9 @@ void LogSupplyConsign::Display( kernel::Displayer_ABC& displayer, kernel::Displa
 // -----------------------------------------------------------------------------
 void LogSupplyConsign::Draw( const Point2f& , const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( ! pAutomateLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
+    if( ! pLogHandlingEntity_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;
-    const Point2f from = pAutomateLogHandling_->Get< Positions >().GetPosition();
+    const Point2f from = pLogHandlingEntity_->Get< Positions >().GetPosition();
     const Point2f to   = consumer_.Get< Positions >().GetPosition();
     if( ! viewport.IsVisible( Rectangle2f( from, to ) ) )
         return;
@@ -154,4 +157,32 @@ void LogSupplyConsign::Draw( const Point2f& , const kernel::Viewport_ABC& viewpo
         glLineStipple( 1, tools.StipplePattern(0) );
     }
     tools.DrawCurvedArrow( from, to, 0.6f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::FindLogEntity
+// Created: AHC 2010-10-13
+// -----------------------------------------------------------------------------
+kernel::Entity_ABC* LogSupplyConsign::FindLogEntity(const Common::ParentEntity& msg)
+{
+	kernel::Entity_ABC* retval = 0;
+	if( msg.has_automat() )
+		retval = resolver_.Find( msg.automat().id() );
+	else if( msg.has_formation() )
+		retval = formationResolver_.Find( msg.formation().id() );
+	return retval;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogSupplyConsign::FindLogEntityID
+// Created: AHC 2010-10-13
+// -----------------------------------------------------------------------------
+unsigned int LogSupplyConsign::FindLogEntityID(const Common::ParentEntity& msg)
+{
+	unsigned int retval = 0;
+	if( msg.has_automat() )
+		retval = msg.automat().id() ;
+	else if( msg.has_formation() )
+		retval = msg.formation().id() ;
+	return retval;
 }

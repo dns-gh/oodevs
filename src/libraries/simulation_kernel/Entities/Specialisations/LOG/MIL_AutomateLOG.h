@@ -12,12 +12,24 @@
 #ifndef __MIL_AutomateLOG_h_
 #define __MIL_AutomateLOG_h_
 
-#include "Entities/Automates/MIL_Automate.h"
+#include "MIL.h"
+#include "Entities/Actions/PHY_Actor.h"
 
 namespace xml
 {
     class xostream;
     class xistream;
+}
+
+namespace Common
+{
+	class ParentEntity;
+    class MsgMissionParameters;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgUnitMagicAction;
 }
 
 class DEC_DataBase;
@@ -38,14 +50,19 @@ class PHY_SupplyStockRequestContainer;
 class PHY_SupplyDotationRequestContainer;
 class PHY_SupplyConsign_ABC;
 class PHY_ComposantePion;
-
+class MIL_Automate;
+class MIL_Formation;
+class PHY_LogisticLevel;
+class MIL_Army_ABC;
+class MIL_AgentPion;
+class MIL_AgentTypePion;
 template < typename T > class PHY_ActionLogistic;
 
 // =============================================================================
 // @class  MIL_AutomateLOG
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_AutomateLOG : public MIL_Automate
+class MIL_AutomateLOG : public PHY_Actor
 {
 public:
     struct sDotationQuota
@@ -55,8 +72,8 @@ public:
     };
 
 public:
-             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
-             MIL_AutomateLOG( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult, unsigned int context );
+             MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLevel& level);
+             MIL_AutomateLOG( MIL_Automate&  automat, const PHY_LogisticLevel& level);
     virtual ~MIL_AutomateLOG();
 
     //! @name CheckPoints
@@ -73,15 +90,20 @@ public:
     //@{
             void UpdateLogistic();
 
-    virtual void UpdateNetwork() const;
     virtual void UpdateState  ();
     virtual void Clean        ();
     //@}
 
     //! @name Accessors
     //@{
-    MIL_AutomateLOG* GetMaintenanceSuperior() const;
-    MIL_AutomateLOG* GetMedicalSuperior    () const;
+    unsigned int                    GetID() const;
+    MIL_AutomateLOG*                GetSuperior() const;
+    MIL_AutomateLOG*                GetNominalSuperior    () const;
+    MIL_Army_ABC&                   GetArmy     () const;
+    const MIL_AgentPion*            GetPC      () const;
+    MIL_Automate*                   GetAssociatedAutomat() const;
+    MIL_Formation*                  GetAssociatedFormation() const;
+    const PHY_LogisticLevel&        GetLogisticLevel() const;
     //@}
 
     //! @name Maintenance
@@ -103,34 +125,35 @@ public:
 
     //! @name Supply
     //@{
-    void                     SupplyHandleRequest                ( PHY_SupplyDotationState& supplyDotationState );
-    void                     SupplyHandleRequest                ( PHY_SupplyStockState&    supplyStockState    );
-    PHY_RoleInterface_Supply* SupplyGetStockPion                ( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
-    bool                     SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory ) const;
-    double                 SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
+    static bool              IsExternalTransaction              ( MIL_Automate& supplied, const MIL_AutomateLOG& supplier );
+    void                     SupplyHandleRequest                ( PHY_SupplyDotationState& supplyDotationState, MIL_Automate& stockSupplier, bool bExternalTransfert  );
+    void                     SupplyHandleRequest                ( PHY_SupplyStockState&    supplyStockState, MIL_Automate& stockSupplier, bool bExternalTransfert     );
+    MIL_AgentPion*           SupplyGetStockPion                ( const PHY_DotationCategory& dotationCategory, double rRequestedValue, bool bExternalTransfert  ) const;
+    bool                     SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory, bool bExternalTransfert  ) const;
+    double                   SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, double rRequestedValue, bool bExternalTransfert  ) const;
     bool                     SupplyReturnStock                  ( const PHY_DotationCategory& dotationCategory, double rReturnedValue  ) const;
+    MIL_AgentPion*           SupplyCreatePionConvoy             ( const MIL_AgentTypePion& type, bool bExternalTransfert );
 
-    void                     NotifyStockSupplyNeeded            ( const PHY_DotationCategory& dotationCategory );
-    void                     NotifyStockSupplied                ( const PHY_SupplyStockState& supplyState );
-    void                     NotifyStockSupplyCanceled          ( const PHY_SupplyStockState& supplyState );
+
     //@}
 
     //! @name Quotas
     //@{
-    double GetQuota    ( const PHY_DotationCategory& dotationCategory ) const;
-    void     ConsumeQuota( const PHY_DotationCategory& dotationCategory, double rQuotaConsumed );
+    double   GetQuota    ( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory ) const;
+    void     ConsumeQuota( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory, double rQuotaConsumed );
     //@}
 
     //! @name Network
     //@{
     virtual void SendFullState                    () const;
+    virtual void WriteLogisticLinksODB            ( xml::xostream& xos ) const;
     virtual void OnReceiveMsgChangeLogisticLinks  ( const MsgsClientToSim::MsgUnitMagicAction& msg );
     virtual void OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionParameters& msg );
-    virtual void OnReceiveMsgLogSupplyPushFlow    ( const Common::MsgMissionParameters& msg );
+            void FillParentEntity                 (Common::ParentEntity& msg);
     //@}
 
 protected:
-    MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID);
+    MIL_AutomateLOG( const PHY_LogisticLevel& level );
 
 private:
     //! @name Types
@@ -151,16 +174,14 @@ private:
 private:
     //! @name Tools
     //@{
+    template< typename T > void Visit( T& visitor ) const;
     MIL_AutomateLOG* GetLogisticAutomate   ( unsigned int nID );
     void             SendQuotas            () const;
-    bool             IsSupplyInProgress    ( const PHY_DotationCategory& dotationCategory ) const;
-    void             RemoveSupplyStockState( const PHY_SupplyStockState& supplyState );
     //@}
 
     //! @name Tools
     //@{
     virtual void SendLogisticLinks    () const;
-    virtual void WriteLogisticLinksODB( xml::xostream& xos ) const;
     //@}
     //! @name Helpers
     //@{
@@ -168,22 +189,21 @@ private:
     //@}
 
 private:
-    MIL_AutomateLOG* pMaintenanceSuperior_;
-    MIL_AutomateLOG* pMedicalSuperior_;
-    MIL_AutomateLOG* pSupplySuperior_;
+    MIL_Automate*      pAssociatedAutomate_;
+    MIL_Formation*     pAssociatedFormation_;
+    const PHY_LogisticLevel* pLogLevel_;
+
+    MIL_AutomateLOG* pNominalSuperior_;
+    MIL_AutomateLOG* pCurrentSuperior_;
 
     // Supply
     T_SupplyConsignList supplyConsigns_;
 
-    T_DotationQuotaMap    stockQuotas_;
+
+    T_DotationQuotaMap    stockQuotasSuperior_;
+    T_DotationQuotaMap    stockQuotasNominalSuperior_;
     bool                  bQuotasHaveChanged_;
-    bool                  bStockSupplyNeeded_;
     PHY_SupplyStockState* pExplicitStockSupplyState_;
-    T_SupplyStockStateSet pushedFlowsSupplyStates_;
-
-    unsigned int                  nTickRcStockSupplyQuerySent_;
-
-    boost::shared_ptr< PHY_ActionLogistic< MIL_AutomateLOG > > pLogisticAction_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AutomateLOG* pion, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AutomateLOG* pion, const unsigned int /*version*/ );

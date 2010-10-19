@@ -93,3 +93,21 @@ Team_ABC* TeamsModel::FindTeam( const QString& team )
             return it->second;
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::GetFormation
+// Created: AHC 2010-10-11
+// -----------------------------------------------------------------------------
+kernel::Formation_ABC& TeamsModel::GetFormation( unsigned long id )
+{
+    return tools::Resolver< Formation_ABC >::Get( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::FindFormation
+// Created: AHC 2010-10-11
+// -----------------------------------------------------------------------------
+kernel::Formation_ABC* TeamsModel::FindFormation( unsigned long id )
+{
+    return tools::Resolver< Formation_ABC >::Find( id );
+}

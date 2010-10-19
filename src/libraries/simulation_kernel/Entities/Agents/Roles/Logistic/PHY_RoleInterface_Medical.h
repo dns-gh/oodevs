@@ -81,7 +81,7 @@ public:
     virtual void ReserveForSorting( const PHY_MedicalCollectionAmbulance& ambulance ) = 0;
     virtual void CancelReservationForSorting( const PHY_MedicalCollectionAmbulance& ambulance ) = 0;
 
-    virtual int GetAvailabilityScoreForHealing( const PHY_MedicalHumanState& humanState ) = 0;
+    virtual int GetAvailabilityScoreForHealing( const PHY_MedicalHumanState& humanState ) const = 0;
     virtual bool HandleHumanForHealing( PHY_MedicalHumanState& humanState ) = 0;
 
     virtual PHY_MedicalEvacuationAmbulance* GetAvailableEvacuationAmbulance( PHY_MedicalEvacuationConsign& consign ) = 0;
@@ -102,7 +102,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual MIL_AutomateLOG& GetAutomate() const = 0;
     virtual const MIL_AgentPionLOG_ABC& GetPion() const = 0;
     //@}
 private:

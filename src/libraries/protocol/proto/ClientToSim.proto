@@ -68,6 +68,7 @@ message MsgUnitMagicAction {
         automat_creation             = 26;
         formation_creation           = 27;
         crowd_creation               = 28;
+        log_supply_pull_flow         = 29;
     }
    required Common.Tasker               tasker     = 1;
    required Type                        type       = 2;
@@ -139,8 +140,9 @@ message MsgControlCheckPointDeleteRequest {
 
 message MsgControlCheckPointListRequest {}
 
+
 message MsgControlEnableVisionCones {
-    required bool vision_cones = 1;
+   required bool vision_cones = 1;
 }
 
 message MsgClientToSim {
@@ -161,7 +163,7 @@ message MsgClientToSim {
        optional MsgUnitCreationRequest                 unit_creation_request                = 14;
        optional MsgUnitMagicAction                     unit_magic_action                    = 15;
        optional MsgObjectMagicAction                   object_magic_action                  = 16;
-       optional MsgKnowledgeMagicAction                knowledge_magic_action         = 17;
+       optional MsgKnowledgeMagicAction                knowledge_magic_action               = 17;
        optional MsgMagicAction                         magic_action                         = 18;
     }
     optional int32   context = 1;

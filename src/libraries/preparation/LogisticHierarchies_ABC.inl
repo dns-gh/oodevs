@@ -34,21 +34,3 @@ LogisticHierarchies_ABC< I >::~LogisticHierarchies_ABC()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: LogisticHierarchies_ABC::SerializeLogistics
-// Created: AGE 2006-11-21
-// -----------------------------------------------------------------------------
-template< typename I >
-void LogisticHierarchies_ABC< I >::SerializeLogistics( xml::xostream& xos ) const
-{
-    tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
-    while( it.HasMoreElements() )
-    {
-        const kernel::Entity_ABC& entity = it.NextElement();
-        xos << xml::start( "subordinate" )
-                << xml::attribute( "id", long( entity.GetId() ) )
-                << xml::attribute( "link", GetLinkType() );
-        static_cast< const LogisticHierarchies_ABC< I >& >( entity.Get< I >() ).SerializeQuotas( xos );
-        xos << xml::end;
-    }
-}

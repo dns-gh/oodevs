@@ -15,6 +15,8 @@
 #include "MIL.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include <tools/Resolver.h>
+#include "Entities/MIL_VisitableEntity_ABC.h"
+#include "Entities/MIL_VisitableEntity_ABC.h"
 
 namespace Common
 {
@@ -51,13 +53,20 @@ class MIL_Object_ABC;
 class MIL_AgentTypePion;
 class MIL_AutomateOrderManager;
 class PHY_SupplyDotationState;
+class PHY_SupplyStockState;
 class PHY_DotationCategory;
+class MIL_DotationSupplyManager;
+class MIL_StockSupplyManager;
+class MIL_DotationSupplyManager;
+class MIL_StockSupplyManager;
+template < typename T > class PHY_ActionLogistic;
 
 // =============================================================================
 // @class  MIL_Automate
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_Automate : public MIL_Entity_ABC
+                    , public MIL_VisitableEntity_ABC< MIL_AgentPion >
 {
 public:
     //! @name Types
@@ -116,6 +125,15 @@ public:
     DEC_AutomateDecision& GetDecision() ;
     DEC_KnowledgeBlackBoard_Automate& GetKnowledge() const;
     bool IsEngaged() const;
+    // logistics
+    MIL_AutomateLOG*                        GetNominalTC2    () const;
+    MIL_AutomateLOG*                        GetBrainLogistic () const;
+    MIL_AutomateLOG*                        FindLogisticManager() const; // Returns logistic chief
+    //@}
+
+    //! @name Visitor
+    //@{
+    virtual void Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) const;
     //@}
 
     //! @name Operations
@@ -166,6 +184,7 @@ public:
             void SendCreation                      ( unsigned int context = 0 ) const;
     virtual void SendFullState                     () const;
             void SendKnowledge                     () const;
+    virtual void SendLogisticLinks                 () const;
 
             void OnReceiveMsgOrder                 ( const Common::MsgAutomatOrder&                 msg );
             void OnReceiveMsgFragOrder             ( const MsgsClientToSim::MsgFragOrder&           msg );
@@ -179,25 +198,33 @@ public:
     virtual void OnReceiveMsgChangeLogisticLinks   ( const MsgsClientToSim::MsgUnitMagicAction&     msg );
     virtual void OnReceiveMsgLogSupplyChangeQuotas ( const Common::MsgMissionParameters&            msg );
     virtual void OnReceiveMsgLogSupplyPushFlow     ( const Common::MsgMissionParameters&            msg );
+    virtual void OnReceiveMsgLogSupplyPullFlow     ( const Common::MsgMissionParameters&            msg );
     //@}
 
     //! @name Misc
     //@{
-    bool GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const;
-    double GetAlivePionsMaxSpeed() const;
+    bool     GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const;
+    double   GetAlivePionsMaxSpeed  () const;
     //@}
 
     //! @name Dynamic pions
     //@{
     MIL_AgentPion& CreatePion ( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition );
-    void DestroyPion( MIL_AgentPion& pion );
+    void           DestroyPion( MIL_AgentPion& pion );
     //@}
 
     //! @name Logistic : supply
     //@{
-    void NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
-    void NotifyDotationSupplied( const PHY_SupplyDotationState& supplyState );
-    void RequestDotationSupply();
+    void     NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
+    void     NotifyDotationSupplied    ( const PHY_SupplyDotationState& supplyState );
+    void     RequestDotationSupply     ();
+
+    void     NotifyStockSupplyNeeded   ( const PHY_DotationCategory& dotationCategory );
+    void     NotifyStockSupplied       ( const PHY_SupplyStockState& supplyState );
+    void     NotifyStockSupplyCanceled ( const PHY_SupplyStockState& supplyState );
+
+    double   GetQuota                  ( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory ) const;
+    void     ConsumeQuota              ( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory, double rQuotaConsumed );
     //@}
 
     //! @name Tools
@@ -214,10 +241,8 @@ protected:
 
     //! @name Tools
     //@{
-    virtual void SendLogisticLinks() const;
-    void Surrender( const MIL_Army_ABC& amrySurrenderedTo );
-    void CancelSurrender();
-    MIL_AutomateLOG* GetNominalTC2() const;
+            void             Surrender        ( const MIL_Army_ABC& amrySurrenderedTo );
+            void             CancelSurrender  ();
     //@}
 
 private:
@@ -231,20 +256,6 @@ private:
     void ReadAutomatSubordinate( xml::xistream& xis );
     void ReadUnitSubordinate( xml::xistream& xis );
     void ReadExtension( xml::xistream& xis );
-    //@}
-
-    //! @name Serialization
-    //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Automate* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Automate* role, const unsigned int /*version*/ );
-    //@}
-
-protected:
-    //! @name Member data
-    //@{
-    // Logistic
-    MIL_AutomateLOG* pTC2_;
-    MIL_AutomateLOG* pNominalTC2_;
     //@}
 
 private:
@@ -263,16 +274,24 @@ private:
     T_AutomateVector automates_;
     bool bAutomateModeChanged_;
     std::map< std::string, std::string > extensions_;
-    // Logistic : supply
-    bool bDotationSupplyNeeded_;
-    bool bDotationSupplyExplicitlyRequested_;
-    T_SupplyDotationStateMap dotationSupplyStates_;
-    unsigned int nTickRcDotationSupplyQuerySent_;
+    unsigned int             nTickRcDotationSupplyQuerySent_;
+
     // Knowledge
     DEC_KnowledgeBlackBoard_Automate* pKnowledgeBlackBoard_;
     // Surrendered / prisoner
-    const MIL_Army_ABC* pArmySurrenderedTo_;
-    //@}
+    const MIL_Army_ABC*      pArmySurrenderedTo_;
+
+    // Logistic
+    MIL_AutomateLOG*        pTC2_;
+    MIL_AutomateLOG*        pNominalTC2_;
+    std::auto_ptr<MIL_AutomateLOG>  pBrainLogistic_;
+    boost::shared_ptr< PHY_ActionLogistic< MIL_AutomateLOG > > pLogisticAction_;
+    std::auto_ptr<MIL_DotationSupplyManager>     pDotationSupplyManager_;
+    std::auto_ptr<MIL_StockSupplyManager>        pStockSupplyManager_;
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Automate* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Automate* role, const unsigned int /*version*/ );
+
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_Automate )

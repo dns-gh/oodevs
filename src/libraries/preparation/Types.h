@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Automat_ABC;
+    class Formation_ABC;
     class Karma;
 }
 
@@ -23,9 +24,7 @@ struct name##_{};\
 typedef kernel::StrongType< base, name##_ > name;
 
 DECLARE_SUBTYPE( TC2, const kernel::Automat_ABC* );
-DECLARE_SUBTYPE( MaintenanceSuperior, const kernel::Automat_ABC* );
-DECLARE_SUBTYPE( MedicalSuperior, const kernel::Automat_ABC* );
-DECLARE_SUBTYPE( SupplySuperior, const kernel::Automat_ABC* );
+DECLARE_SUBTYPE( LogisticBaseSuperior, const kernel::Formation_ABC* );
 
 DECLARE_SUBTYPE( TeamKarma, const kernel::Karma* );
 DECLARE_SUBTYPE( IntelligenceKarma, const kernel::Karma* );

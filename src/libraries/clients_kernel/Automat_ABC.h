@@ -15,6 +15,7 @@
 namespace kernel
 {
     class AutomatType;
+    class LogisticLevel;
 
 // =============================================================================
 /** @class  Automat_ABC
@@ -40,6 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual const AutomatType& GetType() const = 0;
+    virtual const LogisticLevel& GetLogisticLevel() const = 0;
 
     virtual QString GetTypeName() const;
     virtual void Select( ActionController& controller ) const;

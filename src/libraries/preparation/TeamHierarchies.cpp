@@ -54,7 +54,7 @@ void TeamHierarchies::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void TeamHierarchies::SerializeLogistics( xml::xostream& xos ) const
 {
-    xos << xml::start( "logistic" );
+    xos << xml::start( "logistics" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
     xos << xml::end;

@@ -32,7 +32,7 @@ class DotationQuota : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationQuota( const Model_ABC& model, const Common::MsgDotationQuota& message );
+             DotationQuota(  const Common::MsgDotationQuota& message );
     virtual ~DotationQuota();
     //@}
 

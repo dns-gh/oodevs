@@ -17,13 +17,14 @@
 
 namespace Common
 {
-    class MsgAutomatChangeLogisticLinks;
+    class MsgChangeLogisticLinks;
 }
 
 namespace kernel
 {
     class Controller;
     class Automat_ABC;
+    class Formation_ABC;
     class Displayer_ABC;
     class AutomatType;
     class PropertiesDictionary;
@@ -36,13 +37,14 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class LogisticLinks : public kernel::LogisticLinks_ABC
-                    , public kernel::Updatable_ABC< Common::MsgAutomatChangeLogisticLinks >
+                    , public kernel::Updatable_ABC< Common::MsgChangeLogisticLinks >
                     , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticLinks( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, const kernel::AutomatType& type, kernel::PropertiesDictionary& dictionary );
+             LogisticLinks( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
+                     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, kernel::PropertiesDictionary& dictionary );
     virtual ~LogisticLinks();
     //@}
 
@@ -51,9 +53,9 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
 
     kernel::Automat_ABC* GetTC2() const;
-    kernel::Automat_ABC* GetMaintenance() const;
-    kernel::Automat_ABC* GetMedical() const;
-    kernel::Automat_ABC* GetSupply() const;
+    kernel::Automat_ABC* GetAutomatSuperior() const;
+    kernel::Formation_ABC* GetFormationSuperior() const;
+    kernel::Entity_ABC* GetSuperior() const;
 
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
@@ -67,8 +69,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const Common::MsgAutomatChangeLogisticLinks& message );
+    virtual void DoUpdate( const Common::MsgChangeLogisticLinks& message );
     void DrawLink( const geometry::Point2f& from, kernel::Automat_ABC* to, const kernel::GlTools_ABC& tools, float curve, bool link, bool missing ) const;
+    void DrawLink( const geometry::Point2f& from, kernel::Formation_ABC* to, const kernel::GlTools_ABC& tools, float curve, bool link, bool missing ) const;
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}
 
@@ -76,13 +79,12 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const tools::Resolver_ABC< kernel::Automat_ABC >& resolver_;
-    const kernel::AutomatType& type_;
+    const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
+    const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
 
-    kernel::Automat_ABC* tc2_;
-    kernel::Automat_ABC* maintenanceSuperior_;
-    kernel::Automat_ABC* medicalSuperior_;
-    kernel::Automat_ABC* supplySuperior_;
+    kernel::Automat_ABC*   tc2_;
+    kernel::Automat_ABC*   automatSuperior_;
+    kernel::Formation_ABC* formationSuperior_;
     //@}
 };
 

@@ -42,6 +42,7 @@ class MIL_Object_ABC;
 class MIL_ObjectManager;
 class PopulationFactory_ABC;
 class MIL_Automate;
+class MIL_AutomateLOG;
 
 // =============================================================================
 // @class  MIL_Army
@@ -144,8 +145,9 @@ private:
     void ReadObject( xml::xistream& xis, MIL_ObjectManager& objectFactory );
     void ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& populationFactory );
     void ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory ); // LTO
-    void ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFactory );
-    void ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory, MIL_Automate* pSuperior );
+    void ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory, bool isTC2 );
+    void ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory,
+            FormationFactory_ABC& formationFactory , MIL_AutomateLOG* pSuperior, bool isTC2 );
     void ReadDiplomacy( xml::xistream& xis );
     //@}
 

@@ -18,6 +18,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceTransportConsign )
@@ -109,11 +110,17 @@ bool PHY_MaintenanceTransportConsign::DoSearchForUpperLevel()
     assert( !pCarrier_ );
 
     nTimer_ = 0;
-    MIL_AutomateLOG* pMaintenanceSuperior = GetPionMaintenance().GetAutomate().GetMaintenanceSuperior();
-    if( !pMaintenanceSuperior )
-        return true; // Si pas de supérieur => la 'composante state' ne sera gérée par aucun pion, mais sera toujours active
 
-    if( pMaintenanceSuperior->MaintenanceHandleComposanteForTransport( *pComposanteState_ ) )
+    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
+    if( !pLogisticManager )
+        return false;
+    if( pLogisticManager->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
+    {
+        pComposanteState_ = 0;
+        return true;
+    }
+    MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetSuperior();
+    if( pLogisticSuperior && pLogisticSuperior->MaintenanceHandleComposanteForTransport( *pComposanteState_ ) )
     {
         pComposanteState_ = 0;
         return true;

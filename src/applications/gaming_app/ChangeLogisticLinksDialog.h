@@ -18,9 +18,12 @@
 namespace kernel
 {
     class Controllers;
+    class Entity_ABC;
     class Automat_ABC;
+    class Formation_ABC;
     class Profile_ABC;
     class Time_ABC;
+    class LogisticLevel;
 }
 
 namespace actions
@@ -40,7 +43,10 @@ class StaticModel;
 class ChangeLogisticLinksDialog : public QDialog
                                 , public tools::Observer_ABC
                                 , public tools::ElementObserver_ABC< kernel::Automat_ABC >
+                                , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                                 , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                                , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
+
 {
     Q_OBJECT;
 
@@ -56,6 +62,9 @@ public:
     virtual void NotifyCreated( const kernel::Automat_ABC& agent );
     virtual void NotifyDeleted( const kernel::Automat_ABC& agent );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyCreated( const kernel::Formation_ABC& agent );
+    virtual void NotifyDeleted( const kernel::Formation_ABC& agent );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );
     //@}
 
 private slots:
@@ -83,10 +92,10 @@ private:
     const kernel::Profile_ABC& profile_;
 
     gui::ValuedComboBox< const kernel::Automat_ABC* >* tc2Combo_;
-    gui::ValuedComboBox< const kernel::Automat_ABC* >* maintenanceCombo_;
-    gui::ValuedComboBox< const kernel::Automat_ABC* >* medicalCombo_;
-    gui::ValuedComboBox< const kernel::Automat_ABC* >* supplyCombo_;
-    kernel::SafePointer< kernel::Automat_ABC > selected_;
+    gui::ValuedComboBox< const kernel::Automat_ABC* >* automatSuperiorCombo_;
+    gui::ValuedComboBox< const kernel::Formation_ABC* >* formationSuperiorCombo_; // TODO AHC
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
+    const kernel::LogisticLevel* selectedLevel_;
     //@}
 };
 

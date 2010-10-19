@@ -9,6 +9,8 @@
 //
 // *****************************************************************************
 
+#include "Entities/Agents/MIL_AgentPion.h"
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyRequest_ABC constructor
 // Created: NLD 2005-01-25
@@ -109,7 +111,7 @@ template< typename T >
 void PHY_SupplyRequest_ABC< T >::Cancel()
 {
     assert( pStockPion_ );
-    pStockPion_->RemoveStockReservation( GetDotationCategory(), rTotalConvoyedValue_ );
+    pStockPion_->GetRole< PHY_RoleInterface_Supply >().RemoveStockReservation( GetDotationCategory(), rTotalConvoyedValue_ );
     rTotalConvoyedValue_ = 0;
 }
 
@@ -118,7 +120,7 @@ void PHY_SupplyRequest_ABC< T >::Cancel()
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
 template< typename T > 
-bool PHY_SupplyRequest_ABC< T >::AffectAutomate( MIL_AutomateLOG& supplyingAutomate )
+bool PHY_SupplyRequest_ABC< T >::AffectAutomate( MIL_AutomateLOG& supplyingAutomate, bool bExternaltransfert )
 {
     if( pSupplyingAutomate_ )
     {
@@ -126,12 +128,12 @@ bool PHY_SupplyRequest_ABC< T >::AffectAutomate( MIL_AutomateLOG& supplyingAutom
         return true;
     }
 
-    PHY_RoleInterface_Supply* pStockPion = supplyingAutomate.SupplyGetStockPion( GetDotationCategory(), rTotalRequestedValue_ );
+    MIL_AgentPion* pStockPion = supplyingAutomate.SupplyGetStockPion( GetDotationCategory(), rTotalRequestedValue_, bExternaltransfert );
     if( !pStockPion )
         return false;
 
-    pSupplyingAutomate_ = &supplyingAutomate;
-    pStockPion_         = pStockPion;
+    pSupplyingAutomate_   = &supplyingAutomate;
+    pStockPion_  = pStockPion;
     return true;
 }
 
@@ -182,7 +184,7 @@ void PHY_SupplyRequest_ABC< T >::ReserveStocks()
     assert( pSupplyingAutomate_ );
     assert( pStockPion_ );
     assert( rTotalReservedValue_ == 0. );
-    rTotalReservedValue_ = pStockPion_->AddStockReservation( GetDotationCategory(), rTotalRequestedValue_ );
+    rTotalReservedValue_ = pStockPion_->GetRole< PHY_RoleInterface_Supply >().AddStockReservation( GetDotationCategory(), rTotalRequestedValue_ );
     rTotalConvoyedValue_ = 0.;
     assert( rTotalReservedValue_ > 0. );
 }
@@ -198,7 +200,7 @@ void PHY_SupplyRequest_ABC< T >::CancelMerchandiseOverheadReservation()
     double rNbr = rTotalReservedValue_ - rTotalConvoyedValue_;
     assert( rNbr >= 0. );
     if( rNbr > 0. )
-        pStockPion_->RemoveStockReservation( GetDotationCategory(), rNbr );
+        pStockPion_->GetRole< PHY_RoleInterface_Supply >().RemoveStockReservation( GetDotationCategory(), rNbr );
 }
 
 // =============================================================================
@@ -262,4 +264,12 @@ double PHY_SupplyRequest_ABC< T >::GetTotalReservedValue() const
     return rTotalReservedValue_;
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyRequest_ABC< T >::GetStockPion
+// Created: MGD 2009-02-11
+// -----------------------------------------------------------------------------
+template< typename T >
+MIL_Automate& PHY_SupplyRequest_ABC< T >::GetStockPion() const
+{
+  return pStockPion_->GetAutomate();
+}

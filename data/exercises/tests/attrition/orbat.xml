@@ -13,7 +13,7 @@
             <unit command-post="false" id="16" name="Peloton LECLERC CDP SOFF" position="31UEQ0878323363" type="Peloton LECLERC CDP SOFF"/>
             <unit command-post="false" id="17" name="Peloton d appui direct" position="31UEQ0978523860" type="Peloton d appui direct"/>
           </automat>
-          <automat engaged="true" id="27" knowledge-group="2" name="TC2 GE40 LECLERC [27]" type="TC2 GE40 LECLERC">
+          <automat engaged="true" id="27" knowledge-group="2" name="TC2 GE40 LECLERC [27]" type="TC2 GE40 LECLERC" logistic-level="tc2">
             <unit command-post="true" id="28" name="TC2 GE40 LECLERC" position="31UEQ0878126383" type="TC2 GE40 LECLERC"/>
           </automat>
           <automat engaged="true" id="31" knowledge-group="2" name="Batterie de Tir AUF1 [31]" type="Batterie de Tir AUF1">
@@ -50,12 +50,13 @@
         <knowledge-group id="2" name="Groupe de connaissance [1]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic>
-        <automat id="27">
-          <subordinate id="12" link="tc2"/>
-          <subordinate id="31" link="tc2"/>
-        </automat>
-      </logistic>
+      <logistics>
+        <tc2 id="27">
+          <subordinate id="12"/>
+          <subordinate id="31"/>
+          <subordinate id="27"/>
+        </tc2>
+      </logistics>
     </side>
     <side id="3" name="Camp 2" type="enemy">
       <objects>
@@ -83,7 +84,7 @@
             <unit command-post="false" id="25" name="Section CBT INF AMX10P CDS OFF" position="31UEQ0810617104" type="Section CBT INF AMX10P CDS OFF"/>
             <unit command-post="false" id="26" name="Section CBT INF AMX10P CDS SOFF" position="31UEQ0910817601" type="Section CBT INF AMX10P CDS SOFF"/>
           </automat>
-          <automat engaged="true" id="29" knowledge-group="4" name="TC2 GTIA INF AMX 10P [29]" type="TC2 GTIA INF AMX 10P">
+          <automat engaged="true" id="29" knowledge-group="4" name="TC2 GTIA INF AMX 10P [29]" type="TC2 GTIA INF AMX 10P" logistic-level="tc2">
             <unit command-post="true" id="30" name="TC2 GTIA INF AMX 10P" position="31UEQ0687915479" type="TC2 GTIA INF AMX 10P"/>
           </automat>
         </formation>
@@ -94,11 +95,12 @@
       <populations>
         <population attitude="agressive" humans="10000" id="35" name="Population standard [35]" position="31UEQ0355116745" type="Population standard"/>
       </populations>
-      <logistic>
-        <automat id="29">
-          <subordinate id="21" link="tc2"/>
-        </automat>
-      </logistic>
+      <logistics>
+        <tc2 id="29">
+          <subordinate id="21"/>
+          <subordinate id="29"/>
+        </tc2>
+      </logistics>
     </side>
   </sides>
   <diplomacies>

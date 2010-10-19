@@ -448,14 +448,6 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const Human_ABC& human,
     return functor.result_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Medical::GetAutomate
-// Created: NLD 2004-12-28
-// -----------------------------------------------------------------------------
-MIL_AutomateLOG& PHY_RolePionLOG_Medical::GetAutomate() const
-{
-    return pion_.GetLogAutomate();
-}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::InsertConsigns
@@ -518,7 +510,7 @@ void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
 {
     IT_MedicalConsigns itTact = consigns_.begin();
     for ( const MIL_Automate* pAutomate = &consign.GetHumanState().GetAutomate(); itTact != consigns_.end(); ++itTact )
-        if( pAutomate == itTact->first || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
+        if( pAutomate == itTact->first ) // TODO AHC || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
             break;
     if( itTact == consigns_.end() )
     {
@@ -674,7 +666,7 @@ bool PHY_RolePionLOG_Medical::HandleHumanForHealing( PHY_MedicalHumanState& huma
 // Name: PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing
 // Created: NLD 2005-11-18
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHumanState& humanState )
+int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHumanState& humanState ) const
 {
     if( !bSystemEnabled_ || !bHealingFunctionEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
         return std::numeric_limits< int >::min();

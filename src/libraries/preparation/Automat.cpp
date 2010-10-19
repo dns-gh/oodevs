@@ -21,6 +21,7 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/LogisticLevel.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -32,6 +33,7 @@ using namespace kernel;
 Automat::Automat( const AutomatType& type, Controller& controller, IdManager& idManager )
     : EntityImplementation< Automat_ABC >( controller, idManager.GetNextId(), "" )
     , type_( type )
+    , logisticLevel_(&kernel::LogisticLevel::none_)
 {
     name_ = type.GetName().c_str() + QString( " [%1]" ).arg( id_ );
     RegisterSelf( *this );
@@ -49,6 +51,10 @@ Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManag
     RegisterSelf( *this );
     CreateDictionary( controller );
     idManager.Lock( id_ );
+
+    std::string logLevelName("none");
+    xis >> xml::optional >> xml::attribute( "logistic-level", logLevelName );
+    logisticLevel_ = &kernel::LogisticLevel::Resolve(logLevelName) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -120,6 +126,8 @@ void Automat::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Name" ), name_ );
+    if(type_.IsTC2())
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/LogisticLevel" ), logisticLevel_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,13 +139,15 @@ void Automat::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::attribute( "id", id_ )
         << xml::attribute( "name", name_.ascii() )
         << xml::attribute( "type", type_.GetName() );
+    if( *logisticLevel_ != kernel::LogisticLevel::none_ )
+        xos << xml::attribute( "logistic-level", logisticLevel_->GetName() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::SerializeLogistics
-// Created: SBO 2006-10-26
+// Name: Automat::SerializeAttributes
+// Created: AHC 2010-10-07
 // -----------------------------------------------------------------------------
-void Automat::SerializeLogistics( xml::xostream& xos ) const
+const kernel::LogisticLevel& Automat::GetLogisticLevel() const
 {
-    xos << xml::attribute( "id", id_ );
+    return *logisticLevel_;
 }

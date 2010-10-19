@@ -72,7 +72,7 @@ void protobuf_AddDesc_Version_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\rVersion.proto\022\007Version\"\'\n\017ProtocolVers"
-    "ion\022\024\n\005value\030\001 \002(\t:\0054.2.4", 65);
+    "ion\022\024\n\005value\030\001 \002(\t:\0054.2.5", 65);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Version.proto", &protobuf_RegisterTypes);
   ProtocolVersion::default_instance_ = new ProtocolVersion();
@@ -90,7 +90,7 @@ struct StaticDescriptorInitializer_Version_2eproto {
 
 // ===================================================================
 
-const ::std::string ProtocolVersion::_default_value_("4.2.4");
+const ::std::string ProtocolVersion::_default_value_("4.2.5");
 #ifndef _MSC_VER
 const int ProtocolVersion::kValueFieldNumber;
 #endif  // !_MSC_VER
@@ -158,7 +158,7 @@ bool ProtocolVersion::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string value = 1 [default = "4.2.4"];
+      // required string value = 1 [default = "4.2.5"];
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -197,7 +197,7 @@ void ProtocolVersion::SerializeWithCachedSizes(
     return;
   }
   
-  // required string value = 1 [default = "4.2.4"];
+  // required string value = 1 [default = "4.2.5"];
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->value().data(), this->value().length(),
@@ -214,7 +214,7 @@ void ProtocolVersion::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* ProtocolVersion::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required string value = 1 [default = "4.2.4"];
+  // required string value = 1 [default = "4.2.5"];
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->value().data(), this->value().length(),
@@ -235,7 +235,7 @@ int ProtocolVersion::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string value = 1 [default = "4.2.4"];
+    // required string value = 1 [default = "4.2.5"];
     if (has_value()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(

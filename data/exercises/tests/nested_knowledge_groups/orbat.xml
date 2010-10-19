@@ -49,7 +49,7 @@
         <knowledge-group id="53" name="Group 4" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
     <side id="57" name="Camp Rouge" type="enemy">
       <objects/>
@@ -68,7 +68,7 @@
         <knowledge-group id="60" name="Groupe de connaissance [60]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
   </sides>
   <diplomacies>

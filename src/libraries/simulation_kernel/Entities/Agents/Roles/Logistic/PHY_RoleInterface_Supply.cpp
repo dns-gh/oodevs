@@ -238,33 +238,6 @@ bool PHY_RoleInterface_Supply::ConvoyIsUnloadingDone() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::ConvoyGetSupplyingAutomate
-// Created: NLD 2006-07-31
-// -----------------------------------------------------------------------------
-const MIL_AutomateLOG* PHY_RoleInterface_Supply::ConvoyGetSupplyingAutomate() const
-{
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::ConvoyGetConvoyingAutomate
-// Created: NLD 2006-07-31
-// -----------------------------------------------------------------------------
-const MIL_AutomateLOG* PHY_RoleInterface_Supply::ConvoyGetConvoyingAutomate() const
-{
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::ConvoyGetSuppliedAutomate
-// Created: NLD 2006-07-31
-// -----------------------------------------------------------------------------
-const MIL_Automate* PHY_RoleInterface_Supply::ConvoyGetSuppliedAutomate() const
-{
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Supply::ConvoyEndMission
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
@@ -280,4 +253,40 @@ void PHY_RoleInterface_Supply::ConvoyEndMission()
 void PHY_RoleInterface_Supply::Clean()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Supply::ConvoyGetSupplier
+// Created: AHC 2010-10-13
+// -----------------------------------------------------------------------------
+const MIL_AgentPion* PHY_RoleInterface_Supply::ConvoyGetSupplier    () const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Supply::ConvoyGetSupplier
+// Created: AHC 2010-10-13
+// -----------------------------------------------------------------------------
+const MIL_AgentPion* PHY_RoleInterface_Supply::ConvoyGetConvoyer    () const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Supply::ConvoyGetSupplier
+// Created: AHC 2010-10-13
+// -----------------------------------------------------------------------------
+const MIL_AgentPion* PHY_RoleInterface_Supply::ConvoyGetSupplied    () const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Supply::ConvoyGetSupplier
+// Created: AHC 2010-10-13
+// -----------------------------------------------------------------------------
+const MIL_AgentPion* PHY_RoleInterface_Supply::ConvoyGetStockSupplier() const
+{
+    return 0;
 }

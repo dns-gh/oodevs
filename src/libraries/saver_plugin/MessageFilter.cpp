@@ -85,6 +85,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper )
         wrapper.message().has_automat_change_superior_ack() )
         return false;
     if( wrapper.message().has_log_supply_push_flow_ack() ||
+        wrapper.message().has_log_supply_pull_flow_ack() ||
         wrapper.message().has_log_supply_change_quotas_ack() ||
         wrapper.message().has_formation_creation() ||
         wrapper.message().has_knowledge_group_creation() ||

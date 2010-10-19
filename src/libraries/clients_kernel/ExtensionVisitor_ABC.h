@@ -10,6 +10,9 @@
 #ifndef __ExtensionVisitor_ABC_h_
 #define __ExtensionVisitor_ABC_h_
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  ExtensionVisitor_ABC
     @brief  Extension visitor definition
@@ -32,5 +35,7 @@ public:
     virtual void Visit( const T& extension ) = 0;
     //@}
 };
+
+} // namespace kernel
 
 #endif // __ExtensionVisitor_ABC_h_

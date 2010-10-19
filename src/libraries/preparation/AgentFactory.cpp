@@ -23,8 +23,7 @@
 #include "CommandPostAttributes.h"
 #include "Dotations.h"
 #include "KnowledgeGroupsModel.h"
-#include "MaintenanceStates.h"
-#include "MedicalStates.h"
+#include "LogisticBaseStates.h"
 #include "Model.h"
 #include "Population.h"
 #include "PopulationHierarchies.h"
@@ -32,7 +31,6 @@
 #include "Populations.h"
 #include "StaticModel.h"
 #include "Stocks.h"
-#include "SupplyStates.h"
 #include "TacticalLines.h"
 #include "Tc2States.h"
 #include "clients_kernel/AgentType.h"
@@ -109,12 +107,8 @@ kernel::Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType
     Entity_ABC* kg = FindorCreateKnowledgeGroup( parent );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
     result->Attach< TC2Hierarchies >( *new Tc2States( controllers_.controller_, *result, dico ) );
-    if( type.IsLogisticMaintenance() )
-        result->Attach< MaintenanceHierarchies >( *new MaintenanceStates( controllers_.controller_, *result, dico ) );
-    if( type.IsLogisticMedical() )
-        result->Attach< MedicalHierarchies >( *new MedicalStates( controllers_.controller_, *result, dico ) );
-    if( type.IsLogisticSupply() )
-        result->Attach< SupplyHierarchies >( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+    if( type.IsTC2() )
+        result->Attach< LogisticBaseHierarchies >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico ) );
     result->Attach( *new TacticalLines() );
     result->Polish();
     return result;
@@ -202,12 +196,8 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
     result->Attach< TC2Hierarchies >        ( *new Tc2States( controllers_.controller_, *result, dico ) );
-    if( result->GetType().IsLogisticMaintenance() )
-        result->Attach< MaintenanceHierarchies >( *new MaintenanceStates( controllers_.controller_, *result, dico ) );
-    if( result->GetType().IsLogisticMedical() )
-        result->Attach< MedicalHierarchies >( *new MedicalStates( controllers_.controller_, *result, dico ) );
-    if( result->GetType().IsLogisticSupply() )
-        result->Attach< SupplyHierarchies >( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+    if( result->GetType().IsTC2() )
+        result->Attach< LogisticBaseHierarchies >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico ) );
     result->Attach( *new TacticalLines() );
     if( xis.has_child( "extensions" ) )
     {

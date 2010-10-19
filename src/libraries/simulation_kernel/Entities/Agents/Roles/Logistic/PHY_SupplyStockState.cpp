@@ -14,6 +14,7 @@
 #include "PHY_SupplyConsign_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -26,9 +27,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyStockState )
 // Name: PHY_SupplyStockState::PHY_SupplyStockState
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-PHY_SupplyStockState::PHY_SupplyStockState( MIL_AutomateLOG& suppliedAutomate, bool bPushedFlow )
+PHY_SupplyStockState::PHY_SupplyStockState( MIL_Automate& suppliedAutomate, bool bPushedFlow
+        , MIL_AutomateLOG& convoyer, bool bConsumeQuota  )
     : PHY_SupplyState_ABC()
     , pSuppliedAutomate_ ( &suppliedAutomate )
+    , pConvoyer_         ( &convoyer )
+    , bConsumeQuota_     ( bConsumeQuota )
     , bPushedFlow_       ( bPushedFlow )
     , pConsign_          ( 0 )
     , bConsignChanged_   ( true )
@@ -45,6 +49,8 @@ PHY_SupplyStockState::PHY_SupplyStockState( MIL_AutomateLOG& suppliedAutomate, b
 PHY_SupplyStockState::PHY_SupplyStockState()
     : PHY_SupplyState_ABC()
     , pSuppliedAutomate_ ( 0 )
+    , pConvoyer_         ( 0 )
+    , bConsumeQuota_     ( false )
     , bPushedFlow_       ( false )
     , pConsign_          ( 0 )
     , bConsignChanged_   ( true )
@@ -194,7 +200,7 @@ void PHY_SupplyStockState::Supply() const
     {
         it->second.Supply();
         if( !bPushedFlow_ )
-            pSuppliedAutomate_->ConsumeQuota( it->second.GetDotationCategory(), it->second.GetTotalConvoyedValue() );
+            pSuppliedAutomate_->ConsumeQuota( pConsign_->GetSupplier(), it->second.GetDotationCategory(), it->second.GetTotalConvoyedValue() );
     }
 }
 
@@ -321,7 +327,7 @@ void PHY_SupplyStockState::SetConsign( PHY_SupplyConsign_ABC* pConsign )
 // Name: PHY_SupplyStockState::GetSuppliedAutomate
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG& PHY_SupplyStockState::GetSuppliedAutomate() const
+MIL_Automate& PHY_SupplyStockState::GetSuppliedAutomate() const
 {
     assert( pSuppliedAutomate_ );
     return *pSuppliedAutomate_;
@@ -353,4 +359,14 @@ void PHY_SupplyStockState::AddRequest( const PHY_SupplyStockRequest& request )
 {
     requests_[ &request.GetDotationCategory() ] = request;
     bRequestsChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockState::GetConvoyer
+// Created: AHC 2010-09-28
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG& PHY_SupplyStockState::GetConvoyer() const
+{
+    assert( pConvoyer_ );
+    return *pConvoyer_;
 }

@@ -485,8 +485,8 @@
         </object>
       </objects>
       <tactical>
-        <formation id="93" level="x" name="Test all">
-          <automat engaged="true" id="94" knowledge-group="6" name="Armored battalion combat train [94]" type="Armored battalion combat train">
+        <formation id="93" level="xx" name="Test all">
+          <automat engaged="true" id="94" knowledge-group="6" name="Armored battalion combat train [94]" type="Armored battalion combat train" logistic-level="tc2">
             <unit command-post="true" id="95" name="Teeth arms battalion CT" position="30TXT8335005070" type="Teeth arms battalion CT"/>
           </automat>
           <automat engaged="true" id="96" knowledge-group="6" name="Artillery firing battery [96]" type="Artillery firing battery">
@@ -523,10 +523,10 @@
             <unit command-post="false" id="121" name="Bridging troop" position="30TYT0665806414" type="Bridging troop"/>
             <unit command-post="false" id="122" name="Bridging troop" position="30TYT0617505897" type="Bridging troop"/>
           </automat>
-          <automat engaged="true" id="123" knowledge-group="6" name="Brigade combat train [123]" type="Brigade combat train">
+          <automat engaged="true" id="123" knowledge-group="6" name="Brigade combat train [123]" type="Brigade combat train" logistic-level="tc2">
             <unit command-post="true" id="124" name="Battalion CT" position="30TYT0996107031" type="Battalion CT"/>
           </automat>
-          <automat engaged="true" id="125" knowledge-group="6" name="Combined arms battalion combat train [125]" type="Combined arms battalion combat train">
+          <automat engaged="true" id="125" knowledge-group="6" name="Combined arms battalion combat train [125]" type="Combined arms battalion combat train" logistic-level="tc2">
             <unit command-post="true" id="126" name="Combined arms battalion CT" position="30TYT1282807855" type="Combined arms battalion CT"/>
           </automat>
           <automat engaged="true" id="127" knowledge-group="6" name="Commandos platoon [127]" type="Commandos platoon">
@@ -615,7 +615,7 @@
           <automat engaged="true" id="194" knowledge-group="6" name="Listening station [194]" type="Listening station">
             <unit command-post="true" id="195" name="Listening Station" position="30TYT1676704696" type="Listening Station"/>
           </automat>
-          <automat engaged="true" id="196" knowledge-group="6" name="Logistic combat train [196]" type="Logistic combat train">
+          <automat engaged="true" id="196" knowledge-group="6" name="Logistic combat train [196]" type="Logistic combat train" logistic-level="tc2">
             <unit command-post="true" id="197" name="Logistic CT" position="30TYT1923105196" type="Logistic CT"/>
           </automat>
           <automat engaged="true" id="198" knowledge-group="6" name="LRA infantry company [198]" type="LRA infantry company">
@@ -631,20 +631,6 @@
             <unit command-post="false" id="207" name="LRS troop" position="30TYT2645005349" type="LRS troop"/>
             <unit command-post="false" id="208" name="LRS troop" position="30TYT2667504857" type="LRS troop"/>
             <unit command-post="false" id="209" name="LRS troop" position="30TYT2648504351" type="LRS troop"/>
-          </automat>
-          <automat engaged="true" id="210" knowledge-group="6" name="Maintenance logistic area (corps) [210]" type="Maintenance logistic area (corps)">
-            <unit command-post="true" id="211" name="Maintenance CP  (division)" position="31TBN7272205992" type="Maintenance CP  (division)"/>
-            <unit command-post="false" id="212" name="Maintenance evacuation group" position="31TBN7320205472" type="Maintenance evacuation group"/>
-            <unit command-post="false" id="213" name="Repairs section (corps)" position="31TBN7268104994" type="Repairs section (corps)"/>
-            <unit command-post="false" id="214" name="Mobility repairs section (corps)" position="31TBN7220105513" type="Mobility repairs section (corps)"/>
-            <unit command-post="false" id="215" name="Firing mobility repairs section (corps)" position="31TBN7322205971" type="Firing mobility repairs section (corps)"/>
-          </automat>
-          <automat engaged="true" id="216" knowledge-group="6" name="Maintenance logistic area (division) [216]" type="Maintenance logistic area (division)">
-            <unit command-post="true" id="217" name="Maintenance CP  (division)" position="31TBN7601805650" type="Maintenance CP  (division)"/>
-            <unit command-post="false" id="218" name="Maintenance evacuation group" position="31TBN7649805131" type="Maintenance evacuation group"/>
-            <unit command-post="false" id="219" name="Mobility repairs section (division)" position="31TBN7597704652" type="Mobility repairs section (division)"/>
-            <unit command-post="false" id="220" name="Repairs section (division)" position="31TBN7549705172" type="Repairs section (division)"/>
-            <unit command-post="false" id="221" name="Firing mobility repairs section  (division)" position="31TBN7651905630" type="Firing mobility repairs section  (division)"/>
           </automat>
           <automat engaged="true" id="222" knowledge-group="6" name="Major units CP [222]" type="Major units CP">
             <unit command-post="true" id="223" name="Major units command post" position="30TXT8362200322" type="Major units command post"/>
@@ -666,28 +652,6 @@
             <unit command-post="false" id="237" name="MBT platoon" position="30TXT9011300997" type="MBT platoon"/>
             <unit command-post="false" id="238" name="MBT platoon" position="30TXT8959501478" type="MBT platoon"/>
             <unit command-post="false" id="239" name="MBT platoon" position="30TXT9057802012" type="MBT platoon"/>
-          </automat>
-          <automat engaged="true" id="240" knowledge-group="6" name="Medical logistic area (corps) [240]" type="Medical logistic area (corps)">
-            <unit command-post="true" id="241" name="Medical CP (division)" position="30TXT9330101491" type="Medical CP (division)"/>
-            <unit command-post="false" id="242" name="Medical group VAB" position="30TXT9382001009" type="Medical group VAB"/>
-            <unit command-post="false" id="243" name="Casualty evacuation group" position="30TXT9333700493" type="Casualty evacuation group"/>
-            <unit command-post="false" id="244" name="Logistic decontamination section" position="30TXT9281800974" type="Logistic decontamination section"/>
-            <unit command-post="false" id="245" name="Psychological section" position="30TXT9380201508" type="Psychological section"/>
-            <unit command-post="false" id="246" name="Medical section" position="30TXT9402701017" type="Medical section"/>
-            <unit command-post="false" id="247" name="Chirurgicale section (modular)" position="30TXT9383700510" type="Chirurgicale section (modular)"/>
-            <unit command-post="false" id="248" name="Chirurgicale section HMC" position="30TXT9334400286" type="Chirurgicale section HMC"/>
-            <unit command-post="false" id="249" name="Casualty assessment section" position="30TXT9283600475" type="Casualty assessment section"/>
-          </automat>
-          <automat engaged="true" id="250" knowledge-group="6" name="Medical logistic area (division) [250]" type="Medical logistic area (division)">
-            <unit command-post="true" id="251" name="Medical CP (division)" position="30TXT9733301531" type="Medical CP (division)"/>
-            <unit command-post="false" id="252" name="Medical group VAB" position="30TXT9785101050" type="Medical group VAB"/>
-            <unit command-post="false" id="253" name="Casualty evacuation group" position="30TXT9736800533" type="Casualty evacuation group"/>
-            <unit command-post="false" id="254" name="Logistic decontamination section" position="30TXT9685001014" type="Logistic decontamination section"/>
-            <unit command-post="false" id="255" name="Psychological section" position="30TXT9783401549" type="Psychological section"/>
-            <unit command-post="false" id="256" name="Medical section" position="30TXT9805901057" type="Medical section"/>
-            <unit command-post="false" id="257" name="Chirurgicale section (modular)" position="30TXT9786900551" type="Chirurgicale section (modular)"/>
-            <unit command-post="false" id="258" name="Chirurgicale section HMC" position="30TXT9737600326" type="Chirurgicale section HMC"/>
-            <unit command-post="false" id="259" name="Casualty assessment section" position="30TXT9686800515" type="Casualty assessment section"/>
           </automat>
           <automat engaged="true" id="260" knowledge-group="6" name="Militias [260]" type="Militias">
             <unit command-post="true" id="261" name="Militia" position="30TYT0062002163" type="Militia"/>
@@ -757,36 +721,6 @@
             <unit command-post="false" id="312" name="Strategic Bomber Patrol" position="30TXS9062998128" type="Strategic Bomber Patrol"/>
             <unit command-post="false" id="313" name="Strategic Bomber Patrol" position="30TXS9011098610" type="Strategic Bomber Patrol"/>
           </automat>
-          <automat engaged="true" id="314" knowledge-group="6" name="Supply logistic area  (corps) [314]" type="Supply logistic area  (corps)">
-            <unit command-post="true" id="315" name="Supply CP (division)" position="30TXS9422398843" type="Supply CP (division)"/>
-            <unit command-post="false" id="316" name="Ammo supply group SOFF TT - D" position="30TXS9474198362" type="Ammo supply group SOFF TT - D"/>
-            <unit command-post="false" id="317" name="Ammo supply group OFF TT- D" position="30TXS9425897845" type="Ammo supply group OFF TT- D"/>
-            <unit command-post="false" id="318" name="Water supply group" position="30TXS9374098326" type="Water supply group"/>
-            <unit command-post="false" id="319" name="Ammo supply group" position="30TXS9472398861" type="Ammo supply group"/>
-            <unit command-post="false" id="320" name="Ammo supply group SOFF TD" position="30TXS9494898369" type="Ammo supply group SOFF TD"/>
-            <unit command-post="false" id="321" name="Supply Transportation platoon (PT)" position="30TXS9475997863" type="Supply Transportation platoon (PT)"/>
-            <unit command-post="false" id="322" name="Supply platoon (PR)" position="30TXS9426597638" type="Supply platoon (PR)"/>
-            <unit command-post="false" id="323" name="Supply group 60m3" position="30TXS9375897827" type="Supply group 60m3"/>
-            <unit command-post="false" id="324" name="Magazin section CAP" position="30TXS9353298319" type="Magazin section CAP"/>
-            <unit command-post="false" id="325" name="Supply Transportation platoon" position="30TXS9372298825" type="Supply Transportation platoon"/>
-            <unit command-post="false" id="326" name="Supply group 35m3" position="30TXS9421599050" type="Supply group 35m3"/>
-            <unit command-post="false" id="327" name="Supply group180m3" position="30TXS9492399075" type="Supply group180m3"/>
-          </automat>
-          <automat engaged="true" id="328" knowledge-group="6" name="Supply logistic area  (division) [328]" type="Supply logistic area  (division)">
-            <unit command-post="true" id="329" name="Supply CP (division)" position="30TXS9835099093" type="Supply CP (division)"/>
-            <unit command-post="false" id="330" name="Ammo supply group SOFF TT - D" position="30TXS9886998611" type="Ammo supply group SOFF TT - D"/>
-            <unit command-post="false" id="331" name="Ammo supply group OFF TT- D" position="30TXS9838698095" type="Ammo supply group OFF TT- D"/>
-            <unit command-post="false" id="332" name="Water supply group" position="30TXS9786798576" type="Water supply group"/>
-            <unit command-post="false" id="333" name="Ammo supply group" position="30TXS9885199110" type="Ammo supply group"/>
-            <unit command-post="false" id="334" name="Ammo supply group SOFF TD" position="30TXS9907698619" type="Ammo supply group SOFF TD"/>
-            <unit command-post="false" id="335" name="Supply Transportation platoon (PT)" position="30TXS9888698112" type="Supply Transportation platoon (PT)"/>
-            <unit command-post="false" id="336" name="Supply platoon (PR)" position="30TXS9839397888" type="Supply platoon (PR)"/>
-            <unit command-post="false" id="337" name="Supply group 60m3" position="30TXS9788598077" type="Supply group 60m3"/>
-            <unit command-post="false" id="338" name="Magazin section CAP" position="30TXS9766098568" type="Magazin section CAP"/>
-            <unit command-post="false" id="339" name="Supply Transportation platoon" position="30TXS9785099075" type="Supply Transportation platoon"/>
-            <unit command-post="false" id="340" name="Supply group 35m3" position="30TXS9834399299" type="Supply group 35m3"/>
-            <unit command-post="false" id="341" name="Supply group180m3" position="30TXS9905199324" type="Supply group180m3"/>
-          </automat>
           <automat engaged="true" id="342" knowledge-group="6" name="Teeth Arms Battalion [342]" type="Teeth Arms Battalion">
             <unit command-post="true" id="343" name="Armored squadron CP" position="30TYS0145399100" type="Armored squadron CP"/>
           </automat>
@@ -818,6 +752,76 @@
             <unit command-post="false" id="365" name="Very Short Range Surface To Air Defense Troop" position="30TYT1756600100" type="Very Short Range Surface To Air Defense Troop"/>
             <unit command-post="false" id="366" name="Very Short Range Surface To Air Defense Troop" position="30TYT1855000635" type="Very Short Range Surface To Air Defense Troop"/>
           </automat>
+        <formation id="1000" level="x" name="BLT" logistic-level="logistic-base"> 
+          <automat engaged="true" id="210" knowledge-group="6" name="Maintenance logistic area (corps) [210]" type="Maintenance logistic area (corps)">
+            <unit command-post="true" id="211" name="Maintenance CP  (division)" position="31TBN7272205992" type="Maintenance CP  (division)"/>
+            <unit command-post="false" id="212" name="Maintenance evacuation group" position="31TBN7320205472" type="Maintenance evacuation group"/>
+            <unit command-post="false" id="213" name="Repairs section (corps)" position="31TBN7268104994" type="Repairs section (corps)"/>
+            <unit command-post="false" id="214" name="Mobility repairs section (corps)" position="31TBN7220105513" type="Mobility repairs section (corps)"/>
+            <unit command-post="false" id="215" name="Firing mobility repairs section (corps)" position="31TBN7322205971" type="Firing mobility repairs section (corps)"/>
+          </automat>
+          <automat engaged="true" id="314" knowledge-group="6" name="Supply logistic area  (corps) [314]" type="Supply logistic area  (corps)">
+            <unit command-post="true" id="315" name="Supply CP (division)" position="30TXS9422398843" type="Supply CP (division)"/>
+            <unit command-post="false" id="316" name="Ammo supply group SOFF TT - D" position="30TXS9474198362" type="Ammo supply group SOFF TT - D"/>
+            <unit command-post="false" id="317" name="Ammo supply group OFF TT- D" position="30TXS9425897845" type="Ammo supply group OFF TT- D"/>
+            <unit command-post="false" id="318" name="Water supply group" position="30TXS9374098326" type="Water supply group"/>
+            <unit command-post="false" id="319" name="Ammo supply group" position="30TXS9472398861" type="Ammo supply group"/>
+            <unit command-post="false" id="320" name="Ammo supply group SOFF TD" position="30TXS9494898369" type="Ammo supply group SOFF TD"/>
+            <unit command-post="false" id="321" name="Supply Transportation platoon (PT)" position="30TXS9475997863" type="Supply Transportation platoon (PT)"/>
+            <unit command-post="false" id="322" name="Supply platoon (PR)" position="30TXS9426597638" type="Supply platoon (PR)"/>
+            <unit command-post="false" id="323" name="Supply group 60m3" position="30TXS9375897827" type="Supply group 60m3"/>
+            <unit command-post="false" id="324" name="Magazin section CAP" position="30TXS9353298319" type="Magazin section CAP"/>
+            <unit command-post="false" id="325" name="Supply Transportation platoon" position="30TXS9372298825" type="Supply Transportation platoon"/>
+            <unit command-post="false" id="326" name="Supply group 35m3" position="30TXS9421599050" type="Supply group 35m3"/>
+            <unit command-post="false" id="327" name="Supply group180m3" position="30TXS9492399075" type="Supply group180m3"/>
+          </automat>  
+           <automat engaged="true" id="240" knowledge-group="6" name="Medical logistic area (corps) [240]" type="Medical logistic area (corps)">
+            <unit command-post="true" id="241" name="Medical CP (division)" position="30TXT9330101491" type="Medical CP (division)"/>
+            <unit command-post="false" id="242" name="Medical group VAB" position="30TXT9382001009" type="Medical group VAB"/>
+            <unit command-post="false" id="243" name="Casualty evacuation group" position="30TXT9333700493" type="Casualty evacuation group"/>
+            <unit command-post="false" id="244" name="Logistic decontamination section" position="30TXT9281800974" type="Logistic decontamination section"/>
+            <unit command-post="false" id="245" name="Psychological section" position="30TXT9380201508" type="Psychological section"/>
+            <unit command-post="false" id="246" name="Medical section" position="30TXT9402701017" type="Medical section"/>
+            <unit command-post="false" id="247" name="Chirurgicale section (modular)" position="30TXT9383700510" type="Chirurgicale section (modular)"/>
+            <unit command-post="false" id="248" name="Chirurgicale section HMC" position="30TXT9334400286" type="Chirurgicale section HMC"/>
+            <unit command-post="false" id="249" name="Casualty assessment section" position="30TXT9283600475" type="Casualty assessment section"/>
+          </automat>         
+        </formation>
+        <formation id="2000" level="x" name="BLD" logistic-level="logistic-base">
+         <automat engaged="true" id="216" knowledge-group="6" name="Maintenance logistic area (division) [216]" type="Maintenance logistic area (division)">
+            <unit command-post="true" id="217" name="Maintenance CP  (division)" position="31TBN7601805650" type="Maintenance CP  (division)"/>
+            <unit command-post="false" id="218" name="Maintenance evacuation group" position="31TBN7649805131" type="Maintenance evacuation group"/>
+            <unit command-post="false" id="219" name="Mobility repairs section (division)" position="31TBN7597704652" type="Mobility repairs section (division)"/>
+            <unit command-post="false" id="220" name="Repairs section (division)" position="31TBN7549705172" type="Repairs section (division)"/>
+            <unit command-post="false" id="221" name="Firing mobility repairs section  (division)" position="31TBN7651905630" type="Firing mobility repairs section  (division)"/>
+          </automat>
+          <automat engaged="true" id="250" knowledge-group="6" name="Medical logistic area (division) [250]" type="Medical logistic area (division)">
+            <unit command-post="true" id="251" name="Medical CP (division)" position="30TXT9733301531" type="Medical CP (division)"/>
+            <unit command-post="false" id="252" name="Medical group VAB" position="30TXT9785101050" type="Medical group VAB"/>
+            <unit command-post="false" id="253" name="Casualty evacuation group" position="30TXT9736800533" type="Casualty evacuation group"/>
+            <unit command-post="false" id="254" name="Logistic decontamination section" position="30TXT9685001014" type="Logistic decontamination section"/>
+            <unit command-post="false" id="255" name="Psychological section" position="30TXT9783401549" type="Psychological section"/>
+            <unit command-post="false" id="256" name="Medical section" position="30TXT9805901057" type="Medical section"/>
+            <unit command-post="false" id="257" name="Chirurgicale section (modular)" position="30TXT9786900551" type="Chirurgicale section (modular)"/>
+            <unit command-post="false" id="258" name="Chirurgicale section HMC" position="30TXT9737600326" type="Chirurgicale section HMC"/>
+            <unit command-post="false" id="259" name="Casualty assessment section" position="30TXT9686800515" type="Casualty assessment section"/>
+          </automat>
+          <automat engaged="true" id="328" knowledge-group="6" name="Supply logistic area  (division) [328]" type="Supply logistic area  (division)">
+            <unit command-post="true" id="329" name="Supply CP (division)" position="30TXS9835099093" type="Supply CP (division)"/>
+            <unit command-post="false" id="330" name="Ammo supply group SOFF TT - D" position="30TXS9886998611" type="Ammo supply group SOFF TT - D"/>
+            <unit command-post="false" id="331" name="Ammo supply group OFF TT- D" position="30TXS9838698095" type="Ammo supply group OFF TT- D"/>
+            <unit command-post="false" id="332" name="Water supply group" position="30TXS9786798576" type="Water supply group"/>
+            <unit command-post="false" id="333" name="Ammo supply group" position="30TXS9885199110" type="Ammo supply group"/>
+            <unit command-post="false" id="334" name="Ammo supply group SOFF TD" position="30TXS9907698619" type="Ammo supply group SOFF TD"/>
+            <unit command-post="false" id="335" name="Supply Transportation platoon (PT)" position="30TXS9888698112" type="Supply Transportation platoon (PT)"/>
+            <unit command-post="false" id="336" name="Supply platoon (PR)" position="30TXS9839397888" type="Supply platoon (PR)"/>
+            <unit command-post="false" id="337" name="Supply group 60m3" position="30TXS9788598077" type="Supply group 60m3"/>
+            <unit command-post="false" id="338" name="Magazin section CAP" position="30TXS9766098568" type="Magazin section CAP"/>
+            <unit command-post="false" id="339" name="Supply Transportation platoon" position="30TXS9785099075" type="Supply Transportation platoon"/>
+            <unit command-post="false" id="340" name="Supply group 35m3" position="30TXS9834399299" type="Supply group 35m3"/>
+            <unit command-post="false" id="341" name="Supply group180m3" position="30TXS9905199324" type="Supply group180m3"/>
+          </automat>
+        </formation>
         </formation>
       </tactical>
       <communication>
@@ -825,19 +829,34 @@
         <knowledge-group id="42" name="Groupe de connaissance [42]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic>
-        <automat id="94"/>
-        <automat id="123"/>
-        <automat id="125"/>
-        <automat id="178"/>
-        <automat id="196"/>
+      <logistics>
+        <tc2 id="94"/>
+          <subordinate id="94"/>
+        </tc2>
+        <tc2 id="123">
+          <subordinate id="123"/>
+        </tc2>
+        <tc2 id="125">
+          <subordinate id="125"/>
+        </tc2>
+        <tc2 id="196">
+          <subordinate id="196"/>
+        </tc2>
         <automat id="210"/>
         <automat id="216"/>
         <automat id="240"/>
         <automat id="250"/>
         <automat id="314"/>
         <automat id="328"/>
-      </logistic>
+        <logistic-base id="1000">
+          <subordinate id="2000"/>
+        </logistic-base>
+        <logistic-base id="94">
+          <subordinate id="123"/>
+          <subordinate id="125"/>
+          <subordinate id="196"/>
+        </logistic-base>
+      </logistics>
     </side>
   </sides>
   <diplomacies>

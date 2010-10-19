@@ -142,7 +142,7 @@ public:
     //@}
 
     //$$$ Toute la partie logistique GetXXXUse() devrait être externalisée
-
+    void GetConvoyTransportersUse( T_ComposanteUseMap& composanteUse ) const;
     //! @name Logistic - maintenance
     //@{
     virtual void                            PreprocessRandomBreakdowns           ( unsigned int nEndDayTimeStep ) const;

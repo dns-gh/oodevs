@@ -116,7 +116,7 @@
             <unit command-post="false" id="34" name="Peloton LECLERC CDP OFF" position="31TCM1132490824" type="Peloton . LECLERC CDP OFF"/>
             <unit command-post="false" id="147" name="GEN EBG" position="31TCM1132490825" type="Groupe GEN . EBG"/>
           </automat> 
-          <automat engaged="true" id="58" knowledge-group="2" name="TC2 LOG" type="LOG - TC2 LOG">
+          <automat engaged="true" id="58" knowledge-group="2" name="TC2 LOG" type="LOG - TC2 LOG" logistic-level="tc2">
             <unit command-post="true" id="59" name="TC2" position="31TCM0973787237" type="LOG - TC2"/>
           </automat>
           <automat engaged="true" id="67" knowledge-group="2" name="Compagnie INF AMX 10 P [67]" type="INF - Compagnie CBT AMX 10 P">
@@ -159,8 +159,8 @@
         <knowledge-group id="2" name="Groupe de connaissance [1]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic>
-        <automat id="58"/>
+      <logistics>
+        <tc2 id="58"/>
       </logistic>
     </side>
     <side id="3" name="NeutralGuys" type="neutral">
@@ -179,7 +179,7 @@
       <populations>
         <population attitude="calme" humans="10001" id="66" name="Population standard [66]" position="31TCM0866089404" type="Population standard BM"/>
       </populations>
-      <logistic/>
+      <logistics/>
     </side>
     <side id="13" name="BadGuys" type="enemy">
       <objects>
@@ -220,7 +220,7 @@
       <populations>
         <population attitude="calme" humans="1001" id="77" name="Population bad [77]" position="31TCM0866087404" type="Population standard BM"/>
       </populations>
-      <logistic/>
+      <logistics/>
     </side>
   </sides>
   <diplomacies>

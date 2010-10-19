@@ -11,13 +11,13 @@
 #include "Automat.h"
 #include "Agent.h"
 #include "AutomatOrder.h"
-#include "DotationQuota.h"
 #include "Formation.h"
 #include "KnowledgeGroup.h"
 #include "Model.h"
 #include "Report.h"
 #include "Side.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/bind.hpp>
@@ -38,9 +38,7 @@ Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& m
     , parentAutomat_    ( msg.parent().has_automat() ? &model.Automats().Get( msg.parent().automat().id() ) : 0 )
     , knowledgeGroup_   ( &model.KnowledgeGroups().Get( msg.knowledge_group().id() ) )
     , pTC2_             ( 0 )
-    , pLogMaintenance_  ( 0 )
-    , pLogMedical_      ( 0 )
-    , pLogSupply_       ( 0 )
+    , logisticEntity_   ( model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve(  msg.logistic_level() ) )
     , nAutomatState_    ( Common::debraye )
     , nForceRatioState_ ( MsgsSimToClient::ForceRatio_Value_neutre )
     , nCloseCombatState_( Common::etat_fixe )
@@ -59,6 +57,7 @@ Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& m
     else if( parentAutomat_ )
         parentAutomat_->Register( *this );
     RegisterSelf( *this );
+    RegisterSelf(logisticEntity_);
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +66,6 @@ Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& m
 // -----------------------------------------------------------------------------
 Automat::~Automat()
 {
-    quotas_.DeleteAll();
     if( parentFormation_ )
     {
         MoveChildren( *parentFormation_ );
@@ -133,16 +131,10 @@ void Automat::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& msg )
 // Name: Automat::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Automat::DoUpdate( const Common::MsgAutomatChangeLogisticLinks& msg )
+void Automat::DoUpdate( const Common::MsgChangeLogisticLinks& msg )
 {
     if( msg.has_tc2()  )
         pTC2_ = msg.tc2().id() == 0 ? 0 : &model_.Automats().Get( msg.tc2().id() );
-    if( msg.has_maintenance()  )
-        pLogMaintenance_ = msg.maintenance().id() == 0 ? 0 : &model_.Automats().Get( msg.maintenance().id() );
-    if( msg.has_health()  )
-        pLogMedical_ = msg.health().id() == 0 ? 0 : &model_.Automats().Get( msg.health().id() );
-    if( msg.has_supply()  )
-        pLogSupply_ = msg.supply().id() == 0 ? 0 : &model_.Automats().Get( msg.supply().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,19 +249,6 @@ void Automat::DoUpdate( const MsgsSimToClient::MsgDecisionalState& asnMsg )
     decisionalInfos_.Update( asnMsg );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Automat::DoUpdate
-// Created: NLD 2007-03-29
-// -----------------------------------------------------------------------------
-void Automat::DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas& msg )
-{
-    quotas_.DeleteAll();
-    for( int i = 0; i < msg.quotas().elem_size(); ++i )
-    {
-        DotationQuota* quota = new DotationQuota( model_, msg.quotas().elem( i ) );
-        quotas_.Register( msg.quotas().elem( i ).ressource_id().id(), *quota );
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: Automat::DoUpdate
@@ -280,14 +259,6 @@ void Automat::DoUpdate( const Common::MsgAutomatOrder& message )
     order_.reset();
     if( message.type().id() != 0 )
         order_.reset( new AutomatOrder( message ) );
-}
-
-namespace
-{
-    void SerializeQuota( ::Common::SeqOfDotationQuota& message, const DotationQuota& quota )
-    {
-        quota.Send( *message.add_elem() );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -307,6 +278,7 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
             asn().mutable_parent()->mutable_formation()->set_id( parentFormation_->GetId() );
         if( parentAutomat_ )
             asn().mutable_parent()->mutable_automat()->set_id( parentAutomat_->GetId() );
+        asn().set_logistic_level( Common::EnumLogisticLevel( logisticEntity_.GetLogisticLevel().GetId() ) );
         for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
         {
             MsgsSimToClient::Extension_Entry* entry = asn().mutable_extension()->add_entries();
@@ -315,10 +287,11 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
         }
         asn.Send( publisher );
     }
+    if( logisticEntity_.GetLogisticLevel() != kernel::LogisticLevel::none_ )
     {
         client::LogSupplyQuotas asn;
-        asn().mutable_automat()->set_id( GetId() );
-        quotas_.Apply( boost::bind( &::SerializeQuota, boost::ref( *asn().mutable_quotas() ), _1 ) );
+        asn().mutable_supplied()->mutable_automat()->set_id( GetId() );
+        logisticEntity_.Fill(asn);
         asn.Send( publisher );
     }
 }
@@ -357,16 +330,11 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn.Send( publisher );
     }
     {
-        client::AutomatChangeLogisticLinks asn;
-        asn().mutable_automat()->set_id( GetId() );
+        client::ChangeLogisticLinks asn;
+        asn().mutable_requester()->mutable_automat()->set_id( GetId() );
         if( pTC2_ )
             asn().mutable_tc2()->set_id( pTC2_->GetId() );
-        if( pLogMaintenance_ )
-            asn().mutable_maintenance()->set_id( pLogMaintenance_->GetId() );
-        if( pLogMedical_ )
-            asn().mutable_health()->set_id( pLogMedical_->GetId() );
-        if( pLogSupply_ )
-            asn().mutable_supply()->set_id( pLogSupply_->GetId() );
+        logisticEntity_.Fill(asn);
         asn.Send( publisher );
     }
     if( order_.get() )
@@ -507,4 +475,12 @@ kernel::KnowledgeGroup_ABC& Automat::GetKnowledgeGroup() const
     if( !knowledgeGroup_ )
         throw std::runtime_error( __FUNCTION__ ": automat without a knowledge group." );
     return *knowledgeGroup_;
+}
+// -----------------------------------------------------------------------------
+// Name: Automat::GetLogisticLevel
+// Created: AHC 2010-10-08
+// -----------------------------------------------------------------------------
+const kernel::LogisticLevel& Automat::GetLogisticLevel() const
+{
+    return logisticEntity_.GetLogisticLevel();
 }

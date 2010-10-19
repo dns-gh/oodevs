@@ -41,9 +41,7 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Observer_ABC
                     , public tools::SelectionObserver< kernel::Entity_ABC >
                     , public tools::Caller< TC2* >
-                    , public tools::Caller< MaintenanceSuperior* >
-                    , public tools::Caller< MedicalSuperior* >
-                    , public tools::Caller< SupplySuperior* >
+                    , public tools::Caller< LogisticBaseSuperior* >
                     , public tools::Caller< kernel::KnowledgeGroupType** >
                     , public tools::Caller< TeamKarma* >
                     , public tools::Caller< IntelligenceKarma* >
@@ -64,9 +62,7 @@ public:
     //! @name Operations
     //@{
     virtual void Call( TC2* const& value );
-    virtual void Call( MaintenanceSuperior* const& value );
-    virtual void Call( MedicalSuperior* const& value );
-    virtual void Call( SupplySuperior* const& value );
+    virtual void Call( LogisticBaseSuperior* const& value );
     virtual void Call( kernel::KnowledgeGroupType** const& value );
     virtual void Call( TeamKarma* const& value );
     virtual void Call( IntelligenceKarma* const& value );
@@ -87,8 +83,6 @@ private:
 
     //! @name Helpers
     //@{
-    template< typename T >
-    void BuildLogisticEditor( T& value );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     //@}
 

@@ -15,6 +15,7 @@
 #include "LogSupplyConsign.h"
 #include "Model.h"
 #include "StaticModel.h"
+#include "TeamsModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -55,7 +56,7 @@ LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const M
 // -----------------------------------------------------------------------------
 LogSupplyConsign* LogisticConsignFactory::CreateSupplyConsign( const MsgsSimToClient::MsgLogSupplyHandlingCreation& message )
 {
-    return new LogSupplyConsign( controllers_.controller_, model_.agents_, model_.agents_, static_.objectTypes_, message );
+    return new LogSupplyConsign( controllers_.controller_, model_.agents_, model_.agents_, model_.teams_, static_.objectTypes_, message );
 }
 
 // -----------------------------------------------------------------------------

@@ -13,6 +13,7 @@
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Automat.h"
+#include "actions/Formation.h"
 #include "actions/ParameterList.h"
 #include "actions/UnitMagicAction.h"
 #include "gaming/Dotation.h"
@@ -22,12 +23,15 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "protocol/simulationsenders.h"
+#include <boost/bind.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -47,6 +51,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     , automats_( automats )
     , profile_( profile )
     , selected_( controllers )
+    , selectedAutomat_( false )
 {
     setCaption( tr( "Push supply flow" ) );
     QVBoxLayout* layout = new QVBoxLayout( this );
@@ -102,10 +107,27 @@ void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Automat_ABC& agent, 
 {
     if( profile_.CanBeOrdered( agent ) )
     {
-        const kernel::AutomatType& type = agent.GetType();
-        if( type.IsLogisticSupply() )
+        if( agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
         {
             selected_ = &agent;
+            selectedAutomat_ = true;
+            menu.InsertItem( "Command", tr( "Push supply flow" ), this, SLOT( Show() ) );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::NotifyContextMenu
+// Created: AHC 2010-10-13
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Formation_ABC& agent, ContextMenu& menu )
+{
+    if( profile_.CanBeOrdered( agent ) )
+    {
+        if( agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
+        {
+            selected_ = &agent;
+            selectedAutomat_ = false;
             menu.InsertItem( "Command", tr( "Push supply flow" ), this, SLOT( Show() ) );
         }
     }
@@ -126,7 +148,7 @@ void LogisticSupplyPushFlowDialog::Show()
     while( it.HasMoreElements() )
     {
         const Automat_ABC& automat = it.NextElement();
-        if( &automat != selected_ )
+        if( (const Entity_ABC*)&automat != selected_ )
         {
             const kernel::AutomatType& type = automat.GetType();
             if( type.IsLogisticSupply() && &automat.Get< kernel::TacticalHierarchies >().GetTop() == &team )
@@ -165,7 +187,18 @@ void LogisticSupplyPushFlowDialog::Validate()
     UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, tr( "Log Supply Push Flow" ), true );
 
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *new parameters::Automat( it.NextElement(), *selected_, controllers_.controller_ ) );
+    if( selectedAutomat_ )
+    {
+    	assert( dynamic_cast<const Automat_ABC*>( (const Entity_ABC*)selected_) );
+    	action->AddParameter( *new parameters::Automat( it.NextElement(), *dynamic_cast<const Automat_ABC*>( (const Entity_ABC*)selected_),
+    			controllers_.controller_ ) );
+    }
+    else
+    {
+    	assert( dynamic_cast<const Formation_ABC*>( (const Entity_ABC*)selected_) );
+    	action->AddParameter( *new parameters::Formation( it.NextElement(), *dynamic_cast<const Formation_ABC*>( (const Entity_ABC*)selected_),
+    			controllers_.controller_ ) );
+    }
 
     parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
 
@@ -206,8 +239,27 @@ void LogisticSupplyPushFlowDialog::Reject()
     selected_ = 0;
 }
 
+namespace
+{
+
+	struct SupplyStatesVisitor : kernel::ExtensionVisitor_ABC<SupplyStates>
+	{
+		SupplyStatesVisitor( LogisticSupplyPushFlowDialog& dlg, void (LogisticSupplyPushFlowDialog::*pFunc)(const SupplyStates&) )
+				: dlg_(dlg), pFunc_ ( pFunc ) {}
+
+		void Visit( const SupplyStates& extension )
+		{
+			(dlg_.*pFunc_)(extension);
+		}
+	private:
+		LogisticSupplyPushFlowDialog& dlg_;
+		void (LogisticSupplyPushFlowDialog::*pFunc_)(const SupplyStates&);
+
+	};
+}
+
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyPushFlowDialog::OnSelectionChanged
+// Name: formation::OnSelectionChanged
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::OnSelectionChanged()
@@ -216,37 +268,34 @@ void LogisticSupplyPushFlowDialog::OnSelectionChanged()
     dotationTypes_.clear();
     dotationTypes_.append( "" );
     if( selected_ )
-        AddDotation( *selected_ );
+    {
+    	SupplyStatesVisitor visitor( *this, &LogisticSupplyPushFlowDialog::AddDotation );
+    	selected_->Get< kernel::TacticalHierarchies >().Accept<SupplyStates>(visitor);
+    }
+	table_->setNumRows( 0 );
+    if( ! dotationTypes_.empty() )
+    	AddItem();
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog::AddDotation
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::AddDotation( const kernel::Entity_ABC& entity )
+void LogisticSupplyPushFlowDialog::AddDotation( const SupplyStates& states )
 {
-    const SupplyStates* states = entity.Retrieve< SupplyStates >();
-    if( states )
-    {
-        tools::Iterator< const Dotation& > it = states->CreateIterator();
-        while( it.HasMoreElements() )
-        {
-            const Dotation& dotation = it.NextElement();
-            const QString type = dotation.type_->GetCategory().c_str();
-            Dotation& supply = supplies_[ type ];
-            if( ! supply.type_ )
-            {
-                dotationTypes_.append( type );
-                supply.type_ = dotation.type_;
-            }
-            supply.quantity_ += dotation.quantity_;
-        }
-        table_->setNumRows( 0 );
-        AddItem();
-    }
-    tools::Iterator< const Entity_ABC& > it( entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator() );
-    while( it.HasMoreElements() )
-        AddDotation( it.NextElement() );
+	tools::Iterator< const Dotation& > it = states.CreateIterator();
+	while( it.HasMoreElements() )
+	{
+		const Dotation& dotation = it.NextElement();
+		const QString type = dotation.type_->GetCategory().c_str();
+		Dotation& supply = supplies_[ type ];
+		if( ! supply.type_ )
+		{
+			dotationTypes_.append( type );
+			supply.type_ = dotation.type_;
+		}
+		supply.quantity_ += dotation.quantity_;
+	}
 }
 
 // -----------------------------------------------------------------------------

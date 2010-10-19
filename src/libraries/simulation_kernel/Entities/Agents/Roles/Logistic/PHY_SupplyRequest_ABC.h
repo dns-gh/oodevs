@@ -16,6 +16,8 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "protocol/SimulationSenders.h"
 
+class MIL_AgentPion;
+
 class PHY_DotationCategory;
 
 // =============================================================================
@@ -36,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    bool AffectAutomate( MIL_AutomateLOG& supplyingAutomate );
+    bool AffectAutomate( MIL_AutomateLOG& supplyingAutomate, bool bExternaltransfert );
     bool HasReachedSupplyThreshold() const;
     void ReserveStocks();
 
@@ -52,6 +54,7 @@ public:
     //@{
     const PHY_DotationCategory& GetDotationCategory   () const;
           MIL_AutomateLOG*      GetSupplyingAutomate  () const;
+          MIL_Automate&         GetStockPion          () const;
           double              GetTotalRequestedValue() const;
           double              GetTotalReservedValue () const;
           double              GetTotalConvoyedValue () const;
@@ -79,7 +82,7 @@ protected:
 
 protected:
     T_RequestVector      requests_;
-    PHY_RoleInterface_Supply* pStockPion_;
+    MIL_AgentPion*       pStockPion_;
     double             rTotalRequestedValue_;
     MIL_AutomateLOG*     pSupplyingAutomate_;
     double             rTotalReservedValue_;

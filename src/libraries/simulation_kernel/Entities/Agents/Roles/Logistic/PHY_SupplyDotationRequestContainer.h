@@ -14,6 +14,8 @@
 
 #include "PHY_SupplyDotationRequest.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Automates/MIL_DotationSupplyManager.h"
+
 
 class PHY_DotationCategory;
 class PHY_Dotation;
@@ -32,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    bool Execute    ( MIL_AutomateLOG* pFirstSupplyingAutomate, MIL_AutomateLOG* pSecondSupplyingAutomate, MIL_Automate::T_SupplyDotationStateMap& dotationSupplies );
+    bool Execute    ( MIL_AutomateLOG* pFirstSupplyingAutomate, MIL_AutomateLOG* pSecondSupplyingAutomate, MIL_DotationSupplyManager::T_SupplyDotationStateMap& dotationSupplies );
     void AddDotation( PHY_Dotation& dotation );
     //@}
 
@@ -49,7 +51,7 @@ private:
     void AffectRequestsToAutomate( MIL_AutomateLOG& supplyingAutomate );
     bool IsEnoughSatisfied       () const;
     bool IsFullSatisfied         () const;
-    void ActivateSupply          ( MIL_Automate::T_SupplyDotationStateMap& dotationSupplies );
+    void ActivateSupply          ( MIL_DotationSupplyManager::T_SupplyDotationStateMap& dotationSupplies );
     //@}
 
 private:

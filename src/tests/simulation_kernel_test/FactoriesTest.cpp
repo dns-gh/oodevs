@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE( FactoriesTest_ArmyFactory )
          "    <tactical/>"
          "    <communication/>"
          "    <populations/>"
-         "    <logistic/>"
+         "    <logistics/>"
          "</side>" );
      xis >> xml::start( "side" );
      armyFactory.Create( xis );

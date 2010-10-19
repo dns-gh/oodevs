@@ -58,6 +58,7 @@ namespace MsgsSimToClient
     class MsgLogSupplyQuotas;
     class MsgLogSupplyChangeQuotasAck;
     class MsgLogSupplyPushFlowAck;
+    class MsgLogSupplyPullFlowAck;
     class MsgObjectCreation;
     class MsgObjectUpdate;
     class MsgObjectDestruction;
@@ -87,7 +88,7 @@ namespace MsgsSimToClient
     class MsgChangeDiplomacyAck;
     class MsgAutomatChangeSuperiorAck;
     class MsgAutomatChangeKnowledgeGroupAck;
-    class MsgAutomatChangeLogisticLinksAck;
+    class MsgChangeLogisticLinksAck;
     class MsgReport;
     class MsgInvalidateReport;
     class MsgTrace;
@@ -141,7 +142,7 @@ namespace Common
     class MsgUnitChangeSuperior;
     class MsgAutomatChangeSuperior;
     class MsgAutomatChangeKnowledgeGroup;
-    class MsgAutomatChangeLogisticLinks;
+    class MsgChangeLogisticLinks;
     class MsgCrowdOrder;
     class MsgTextMessage;
 }
@@ -348,6 +349,7 @@ private:
     void OnReceiveMsgLogSupplyQuotas                    ( const MsgsSimToClient::MsgLogSupplyQuotas&                message );
     void OnReceiveMsgLogRavitaillementChangeQuotaAck    ( const MsgsSimToClient::MsgLogSupplyChangeQuotasAck&       message, unsigned long nCtx );
     void OnReceiveMsgLogSupplyPushFlowAck               ( const MsgsSimToClient::MsgLogSupplyPushFlowAck&           message, unsigned long nCtx );
+    void OnReceiveMsgLogSupplyPullFlowAck               ( const MsgsSimToClient::MsgLogSupplyPullFlowAck&           message, unsigned long nCtx);
 
     // Limas / Limits
     void OnReceiveMsgLimitCreationRequestAck    ( const MsgsMessengerToClient::MsgLimitCreationRequestAck&    message);
@@ -412,8 +414,8 @@ private:
     void OnReceiveMsgAutomatChangeSuperiorAck       ( const MsgsSimToClient::MsgAutomatChangeSuperiorAck&       message, unsigned long nCtx );
     void OnReceiveMsgAutomatChangeKnowledgeGroup    ( const Common::MsgAutomatChangeKnowledgeGroup&             message );
     void OnReceiveMsgAutomatChangeKnowledgeGroupAck ( const MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck& message, unsigned long nCtx );
-    void OnReceiveMsgAutomatChangeLogisticLinks     ( const Common::MsgAutomatChangeLogisticLinks&              message );
-    void OnReceiveMsgAutomatChangeLogisticLinksAck  ( const MsgsSimToClient::MsgAutomatChangeLogisticLinksAck&  message, unsigned long nCtx );
+    void OnReceiveMsgAutomatChangeLogisticLinks     ( const Common::MsgChangeLogisticLinks&                     message );
+    void OnReceiveMsgAutomatChangeLogisticLinksAck  ( const MsgsSimToClient::MsgChangeLogisticLinksAck&         message, unsigned long nCtx );
 
     // RC
     void OnReceiveMsgCR              ( const MsgsSimToClient::MsgReport&           message );

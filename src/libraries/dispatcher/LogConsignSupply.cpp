@@ -11,6 +11,7 @@
 #include "LogConsignSupply.h"
 #include "Model.h"
 #include "Automat.h"
+#include "Formation.h"
 #include "Agent.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
@@ -28,8 +29,8 @@ LogConsignSupply::LogConsignSupply( const Model& model, const MsgsSimToClient::M
     , model_            ( model )
     , automat_          ( model.Automats().Get( msg.consumer().id() ) )
     , nTickCreation_    ( msg.tick_creation() )
-    , pTreatingAutomat_ ( 0 )
-    , pConvoyingAutomat_( 0 )
+    , pTreatingEntity_  ( 0 )
+    , pConvoyingEntity_ ( 0 )
     , pConvoy_          ( 0 )
     , nState_           ( MsgsSimToClient::convoi_deplacement_vers_point_chargement )
 {
@@ -52,9 +53,9 @@ LogConsignSupply::~LogConsignSupply()
 void LogConsignSupply::Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate& msg )
 {
     if( msg.has_supplier() )
-        pTreatingAutomat_ = ( msg.supplier().id() == 0 ) ? 0 : &model_.Automats().Get( msg.supplier().id() );
+    	pTreatingEntity_ = FindLogEntity( msg.supplier() );
     if( msg.has_convoy_provider() )
-        pConvoyingAutomat_ = ( msg.convoy_provider().id() == 0 ) ? 0 : &model_.Automats().Get( msg.convoy_provider().id() );
+    	pConvoyingEntity_ = FindLogEntity( msg.convoy_provider() );
     if( msg.has_convoying_unit() )
         pConvoy_ = ( msg.convoying_unit().id() == 0 ) ? 0 : &model_.Agents().Get( msg.convoying_unit().id() );
     if( msg.has_etat() )
@@ -112,8 +113,8 @@ void LogConsignSupply::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 //    asn().set_etatPresent( 1 );
 //    asn().set_dotationsPresent( 1 );
 
-    asn().mutable_supplier()->set_id( pTreatingAutomat_ ? pTreatingAutomat_->GetId() : 0 );
-    asn().mutable_convoy_provider()->set_id( pConvoyingAutomat_ ? pConvoyingAutomat_->GetId() : 0 );
+    FillLogEntityID( *asn().mutable_supplier(), pTreatingEntity_ );
+    FillLogEntityID( *asn().mutable_convoy_provider(), pConvoyingEntity_ );
     asn().mutable_convoying_unit()->set_id( pConvoy_ ? pConvoy_->GetId() : 0 );
     asn().set_etat( nState_ );
     {
@@ -144,4 +145,32 @@ void LogConsignSupply::SendDestruction( ClientPublisher_ABC& publisher ) const
 void LogConsignSupply::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignSupply::FindLogEntity
+// Created: AHC 2010-10-13
+// -----------------------------------------------------------------------------
+kernel::Entity_ABC* LogConsignSupply::FindLogEntity(const Common::ParentEntity& msg) const
+{
+	kernel::Entity_ABC* retval = 0;
+	if( msg.has_automat() )
+		retval = model_.Automats().Find( msg.automat().id() );
+	else if( msg.has_formation() )
+		retval = model_.Formations().Find( msg.formation().id() );
+	return retval;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignSupply::FillLogEntityID
+// Created: AHC 2010-10-13
+// -----------------------------------------------------------------------------
+void LogConsignSupply::FillLogEntityID(Common::ParentEntity& msg, const kernel::Entity_ABC* entity) const
+{
+	if( entity == 0 )
+		msg.mutable_automat()->set_id( 0 );
+	else if( dynamic_cast<const kernel::Automat_ABC*>( entity) )
+		msg.mutable_automat()->set_id( entity->GetId() );
+	else if( dynamic_cast<const kernel::Formation_ABC*>( entity) )
+		msg.mutable_formation()->set_id( entity->GetId() );
 }

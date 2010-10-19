@@ -52,9 +52,10 @@ public:
     virtual       bool             ConvoyUnload              () const;
     virtual       bool             ConvoyIsLoadingDone       () const;
     virtual       bool             ConvoyIsUnloadingDone     () const;
-    virtual const MIL_AutomateLOG* ConvoyGetSupplyingAutomate() const;
-    virtual const MIL_AutomateLOG* ConvoyGetConvoyingAutomate() const;
-    virtual const MIL_Automate*    ConvoyGetSuppliedAutomate () const;
+    virtual const MIL_AgentPion*   ConvoyGetSupplier    () const;
+    virtual const MIL_AgentPion*   ConvoyGetConvoyer    () const;
+    virtual const MIL_AgentPion*   ConvoyGetSupplied    () const;
+    virtual const MIL_AgentPion*   ConvoyGetStockSupplier() const;
     virtual       void             ConvoyEndMission          ();
 
     virtual void Execute(moving::SpeedComputer_ABC& algorithm) const;

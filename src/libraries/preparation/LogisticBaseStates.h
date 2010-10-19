@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __SupplyStates_h_
-#define __SupplyStates_h_
+#ifndef __LogisticBaseStates_h__
+#define __LogisticBaseStates_h__
 
 #include "Types.h"
 #include "LogisticHierarchies.h"
@@ -23,39 +23,40 @@ class Dotation;
 class DotationsItem;
 
 // =============================================================================
-/** @class  SupplyStates
-    @brief  SupplyStates
+/** @class  LogisticBaseStates
+    @brief  LogisticBaseStates
 */
-// Created: SBO 2006-10-24
+// Created: AHC 2010-09-29
 // =============================================================================
-class SupplyStates : public LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >
+class LogisticBaseStates : public LogisticHierarchies< LogisticBaseSuperior, kernel::LogisticBaseHierarchies >
                    , public tools::Resolver< Dotation >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyStates( kernel::Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico );
-    virtual ~SupplyStates();
+             LogisticBaseStates( kernel::Controller& controller, kernel::Entity_ABC& entity, 
+                 const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico );
+    virtual ~LogisticBaseStates();
     //@}
 
     //! @name Operations
-    //@
-    void SetSuperior( const SupplySuperior& automat );
+    //@{
+    void SetSuperior( const LogisticBaseSuperior& superior );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    SupplyStates( const SupplyStates& );            //!< Copy constructor
-    SupplyStates& operator=( const SupplyStates& ); //!< Assignment operator
+    LogisticBaseStates( const LogisticBaseStates& );            //!< Copy constructor
+    LogisticBaseStates& operator=( const LogisticBaseStates& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
+    virtual void CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner );
     virtual void Load( xml::xistream& xis );
     void ReadDotation( xml::xistream& xis );
-    virtual void CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner );
     virtual void SerializeQuotas( xml::xostream& xos ) const;
     //@}
 
@@ -68,4 +69,4 @@ private:
     //@}
 };
 
-#endif // __SupplyStates_h_
+#endif // __LogisticBaseStates_h__

@@ -19,7 +19,7 @@ namespace xml
 
 namespace kernel
 {
-    class Automat_ABC;
+    class Entity_ABC;
 
 // =============================================================================
 /** @class  LogisticHierarchiesBase
@@ -40,52 +40,22 @@ public:
     //! @name Operations
     //@{
     virtual QString GetLinkType() const = 0;
-    virtual void Load( xml::xistream& xis, const Automat_ABC* superior ) = 0;
+    virtual void Load( xml::xistream& xis, const Entity_ABC* superior ) = 0;
     //@}
 };
 
-class MaintenanceHierarchies : public LogisticHierarchiesBase
+class LogisticBaseHierarchies : public LogisticHierarchiesBase
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceHierarchies() {};
-    virtual ~MaintenanceHierarchies() {};
+             LogisticBaseHierarchies() {};
+    virtual ~LogisticBaseHierarchies() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual QString GetLinkType() const { return "maintenance"; };
-    //@}
-};
-
-class MedicalHierarchies : public LogisticHierarchiesBase
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             MedicalHierarchies() {};
-    virtual ~MedicalHierarchies() {};
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual QString GetLinkType() const { return "medical"; };
-    //@}
-};
-
-class SupplyHierarchies : public LogisticHierarchiesBase
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             SupplyHierarchies() {};
-    virtual ~SupplyHierarchies() {};
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual QString GetLinkType() const { return "supply"; };
+    virtual QString GetLinkType() const { return "logistic-base"; };
     //@}
 };
 

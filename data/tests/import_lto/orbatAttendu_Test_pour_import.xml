@@ -40,7 +40,7 @@
         <knowledge-group id="18" name="Groupe de connaissance de Camp Rouge" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
     <side id="1" name="Camp Bleu" type="friend">
       <objects>
@@ -81,7 +81,7 @@
         <knowledge-group id="2" name="Groupe de connaissance de Camp Bleu" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
   </sides>
   <diplomacies>

@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+ #include  <boost/type_traits/remove_const.hpp>
+
 // -----------------------------------------------------------------------------
 // Name: LogisticHierarchies constructor
 // Created: SBO 2006-10-24
@@ -34,9 +36,10 @@ LogisticHierarchies< Superior, I >::~LogisticHierarchies()
 // Created: SBO 2006-11-16
 // -----------------------------------------------------------------------------
 template< typename Superior, typename I >
-void LogisticHierarchies< Superior, I >::Load( xml::xistream& xis, const kernel::Automat_ABC* superior )
+void LogisticHierarchies< Superior, I >::Load( xml::xistream& xis, const kernel::Entity_ABC* superior )
 {
-    SetSuperior( superior );
+    assert( dynamic_cast<Superior::BaseType>(superior) );
+    SetSuperior( static_cast<Superior::BaseType>(superior) );
     Load( xis );
 }
 
@@ -45,10 +48,10 @@ void LogisticHierarchies< Superior, I >::Load( xml::xistream& xis, const kernel:
 // Created: SBO 2006-10-26
 // -----------------------------------------------------------------------------
 template< typename Superior, typename I >
-void LogisticHierarchies< Superior, I >::SetSuperior( const Superior& automat )
+void LogisticHierarchies< Superior, I >::SetSuperior( const Superior& entity )
 {
-    const kernel::Automat_ABC* superior = automat; 
-    LogisticHierarchies_ABC< I >::SetSuperior( const_cast< kernel::Automat_ABC* >( superior ) );
+    const kernel::Entity_ABC* superior = entity;
+    LogisticHierarchies_ABC< I >::SetSuperior( const_cast< kernel::Entity_ABC* >( superior ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +61,8 @@ void LogisticHierarchies< Superior, I >::SetSuperior( const Superior& automat )
 template< typename Superior, typename I >
 void LogisticHierarchies< Superior, I >::SetSuperiorInternal( kernel::Entity_ABC* superior )
 {
-    tc2_ = static_cast< kernel::Automat_ABC* >( superior );
+    assert( superior==0 || dynamic_cast< boost::remove_const<typename Superior::BaseType>::type >( superior ) );
+    tc2_ = static_cast< boost::remove_const<typename Superior::BaseType>::type >( superior );
     LogisticHierarchies_ABC< I >::SetSuperiorInternal( superior );
 }
 
@@ -74,3 +78,22 @@ void LogisticHierarchies< Superior, I >::DrawLink( const geometry::Point2f& wher
     else if( ! tc2_ && displayMissings )
         tools.DrawCircle( geometry::Point2f( where.X(), where.Y() + 150 ), 300.0 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogisticHierarchies::SerializeLogistics
+// Created: AGE 2006-11-21
+// -----------------------------------------------------------------------------
+template< typename Superior, typename I >
+void LogisticHierarchies< Superior, I >::SerializeLogistics( xml::xostream& xos ) const
+{    
+    if(!tc2_)
+        return;
+    xos << xml::start( GetLinkType().ascii() )
+            << xml::attribute( "id", tc2_->GetId() )
+            << xml::start( "subordinate" )
+                << xml::attribute( "id", GetEntity().GetId());
+                SerializeQuotas( xos );
+            xos << xml::end
+        << xml::end;
+}
+

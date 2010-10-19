@@ -32,9 +32,9 @@ includedFiles["sources/appui/log/pions/missions/Convoyer.bms"] = true
         local Activate = Activate
         self.ePhase = self.ePhase or eTestConvoyerStep_DeplacementVersPointChargement
         self.eEtat = self.eEtat or eActionEnCours
-        self.pionPCRavitaillant = self.pionPCRavitaillant or DEC_Pion_PionPCDeAutomate( DEC_Ravitaillement_Convoi_AutomateRavitaillant() )
-        self.pionPCRavitaille = self.pionPCRavitaille or DEC_Pion_PionPCDeAutomate( DEC_Ravitaillement_Convoi_AutomateRavitaille() )
-        self.pionPCConvoyant = self.pionPCConvoyant or DEC_Pion_PionPCDeAutomate( DEC_Ravitaillement_Convoi_AutomateConvoyant() )
+        self.pionPCRavitaillant = self.pionPCRavitaillant or DEC_Ravitaillement_Convoi_Ravitailleur()
+        self.pionPCRavitaille = self.pionPCRavitaille or DEC_Ravitaillement_Convoi_Ravitaille()
+        self.pionPCConvoyant = self.pionPCConvoyant or DEC_Ravitaillement_Convoi_Convoyeur()
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
         Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end

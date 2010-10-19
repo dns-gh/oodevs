@@ -21,7 +21,7 @@ message ObjectKnowledgeIdList              { repeated ObjectKnowledgeId elem = 1
 message PartyId                            { required uint32              id = 1; }
 message PartyIdList                        { repeated PartyId           elem = 1; }
 message CrowdId                            { required uint32              id = 1; }
-message CrowdIdList                        { repeated CrowdId           elem = 1; }
+message CrowdIdList                        { repeated CrowdId      elem = 1; }
 message CrowdKnowledgeId                   { required uint32              id = 1; }
 message CrowdConcentrationId               { required uint32              id = 1; }
 message CrowdConcentrationKnowledgeId      { required uint32              id = 1; }
@@ -37,7 +37,7 @@ message UrbanObjectKnowledgeId             { required uint32              id = 1
 message Tasker {
     optional AutomatId    automat    = 1;
     optional FormationId  formation  = 2;
-    optional CrowdId      crowd      = 3;
+    optional CrowdId crowd           = 3;
     optional UnitId       unit       = 4;
 }
 
@@ -166,12 +166,10 @@ message MsgAutomatChangeKnowledgeGroup {
    required KnowledgeGroupId knowledge_group = 3;
 }
 
-message MsgAutomatChangeLogisticLinks {
-   required AutomatId automat     = 1;
-   optional AutomatId tc2         = 2;
-   optional AutomatId maintenance = 3;
-   optional AutomatId health      = 4;
-   optional AutomatId supply      = 5;
+message MsgChangeLogisticLinks {
+   required ParentEntity requester     = 1;
+   optional AutomatId tc2              = 2;
+   optional ParentEntity logistic_base = 3;
 }
 
 message MsgAutomatChangeSuperior_oid_superior {
@@ -250,6 +248,7 @@ enum EnumDispatcherState {
     available                                       = 0;
     unavailable                                     = 1;
 }
+        
 
 enum EnumMeetingEngagementStatus {
    none_meeting                                     = 0;
@@ -339,6 +338,13 @@ enum EnumNatureLevel {
    xxxxx            = 11;
 }
 
+enum EnumLogisticLevel {
+   none          = 0;
+   tc2           = 1;
+   logistic_base = 2;
+}
+
+
 // Control messages
 message MsgControlStop   {}
 message MsgControlPause  {}
@@ -402,11 +408,11 @@ message MsgLocation {
 message MsgLine         { required MsgLocation location = 1; }
 message MsgLocationList { repeated MsgLocation     elem = 1; }
 message MsgPath         { required MsgLocation location = 1; }
-message MsgPathList     { repeated MsgPath         elem = 1; }
+message MsgPathList     { repeated MsgPath      elem = 1; }
 message MsgPoint        { required MsgLocation location = 1; }
-message MsgPointList    { repeated MsgPoint        elem = 1; }
+message MsgPointList    { repeated MsgPoint     elem = 1; }
 message MsgPolygon      { required MsgLocation location = 1; }
-message MsgPolygonList  { repeated MsgPolygon      elem = 1; }
+message MsgPolygonList  { repeated MsgPolygon   elem = 1; }
 
 // Order parameters
 message MsgLogMedicalPriorities {
@@ -541,7 +547,7 @@ message MsgMissionParameter {
         optional MsgDateTime                 dateTime                    = 28;
         optional MsgLogMaintenancePriorities logMaintenancePriorities    = 29;
         optional MsgLogMedicalPriorities     logMedicalPriorities        = 30;
-        optional string                      aCharStr                    = 31;
+        optional string                     aCharStr                    = 31;
         optional MsgMissionObjective         missionObjective            = 32;
         optional MsgMissionObjectiveList     missionObjectiveList        = 33;
         optional MsgLine                     line                        = 34;
@@ -550,8 +556,8 @@ message MsgMissionParameter {
         optional UrbanObjectId               urbanBlock                  = 37;
         optional PartyId                     party                        = 38;
         optional FormationId                 formation                   = 39;
-        optional uint32                      identifier                  = 40;
-        optional int32                       quantity                    = 41;
+        optional uint32                     identifier                  = 40;
+        optional int32                      quantity                    = 41;
         optional KnowledgeGroupId            knowledgeGroup              = 42;
         repeated Value                       list                        = 43;
     }
@@ -564,29 +570,29 @@ message MsgMissionParameters {
 }
 
 message MsgUnitOrder {
-    required UnitId               tasker         = 1;
-    required MissionType          type           = 2;
-    optional MsgMissionParameters parameters     = 3;
-    optional string               label          = 4;
-    optional MsgLocation          symbolLocation = 5;
+    required UnitId               tasker          = 1;
+    required MissionType          type            = 2;
+    optional MsgMissionParameters parameters      = 3;
+    optional string               label           = 4;
+    optional MsgLocation          symbolLocation  = 5;
     optional MsgDateTime          start_time     = 6;
 }
 
 message MsgAutomatOrder {
-    required AutomatId            tasker         = 1;
-    required MissionType          type           = 2;
-    optional MsgMissionParameters parameters     = 3;
-    optional string               label          = 4;
-    optional MsgLocation          symbolLocation = 5;
+    required AutomatId            tasker          = 1;
+    required MissionType          type            = 2;
+    optional MsgMissionParameters parameters      = 3;
+    optional string               label           = 4;
+    optional MsgLocation          symbolLocation  = 5;
     optional MsgDateTime          start_time     = 6;
 }
 
 message MsgCrowdOrder {
-    required CrowdId              tasker         = 1;
-    required MissionType          type           = 2;
-    optional MsgMissionParameters parameters     = 3;
-    optional string               label          = 4;
-    optional MsgLocation          symbolLocation = 5;
+    required CrowdId              tasker          = 1;
+    required MissionType          type            = 2;
+    optional MsgMissionParameters parameters      = 3;
+    optional string               label           = 4;
+    optional MsgLocation          symbolLocation  = 5;
     optional MsgDateTime          start_time     = 6;
 }
 
@@ -667,12 +673,12 @@ message ObjectAttributeLogistic {
 }
 
 message ObjectAttributeInteractionHeight {
-   required float                       height              = 1;
+   required float height = 1;
 }
 
 message ObjectAttributeObstacle {
-   required ObstacleType.DemolitionTargetType type            = 1;
-   optional bool                              activated       = 2;
+   required ObstacleType.DemolitionTargetType type      = 1;
+   optional bool                              activated = 2;
    optional int32                             activation_time = 3;
 }
 
@@ -771,8 +777,8 @@ message ObjectAttributes {
    optional ObjectAttributeStock             stock               = 14;
    optional ObjectAttributeNBCType           nbc_agent           = 15;   
    optional ObjectAttributeEffectDelay       effect_delay        = 16;
-   optional ObjectAttributeSealOff           seal_off            = 17;
-   optional ObjectAttributeResourceNetwork   resource_networks   = 18;     //not in scipio V1.stab
+   optional ObjectAttributeSealOff           seal_off             = 17;
+   optional ObjectAttributeResourceNetwork   resource_networks    = 18;     //not in scipio V1.stab
 }
 
 

@@ -17,6 +17,7 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalSortingConsign )
 
@@ -132,7 +133,8 @@ void PHY_MedicalSortingConsign::EnterStateSearchingForHealingArea()
 // -----------------------------------------------------------------------------
 void PHY_MedicalSortingConsign::DoSearchForHealingArea()
 {
-    if( GetPionMedical().GetAutomate().MedicalHandleHumanForHealing( *pHumanState_ ) )
+    MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
+    if( pLogisticManager && pLogisticManager->MedicalHandleHumanForHealing( *pHumanState_ ) )
     {
         SetState( eFinished );
         nTimer_ = 0;
@@ -164,11 +166,22 @@ bool PHY_MedicalSortingConsign::DoWaitingForCollection()
     assert( pHumanState_ );
     assert( !pDoctor_ );
 
-    if( GetPionMedical().GetAutomate().MedicalHandleHumanForCollection( *pHumanState_ ) )
+    MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
+    if(pLogisticManager)
     {
-        pHumanState_ = 0;
-        SetState( eFinished );
-        return true;
+        MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetSuperior();
+        if(pLogisticSuperior && pLogisticSuperior->MedicalHandleHumanForCollection( *pHumanState_ ) )
+        {
+            pHumanState_ = 0;
+            SetState( eFinished );
+            return true;
+        }
+        else if( pLogisticManager->MedicalHandleHumanForCollection( *pHumanState_ ) )
+        {
+            pHumanState_ = 0;
+            SetState( eFinished );
+            return true;
+        }
     }
     return false;
 }

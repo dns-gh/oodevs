@@ -13,9 +13,12 @@
 #include "FormationHierarchies.h"
 #include "TacticalLines.h"
 #include "EntityIntelligences.h"
+#include "LogisticBaseStates.h"
 #include "FormationPositions.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "StaticModel.h"
 
 using namespace kernel;
 
@@ -23,8 +26,9 @@ using namespace kernel;
 // Name: FormationFactory constructor
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
-FormationFactory::FormationFactory( Controllers& controllers, IdManager& idManager )
+FormationFactory::FormationFactory( Controllers& controllers, const StaticModel& staticModel, IdManager& idManager )
     : controllers_( controllers )
+    , staticModel_( staticModel )
     , idManager_  ( idManager )
 {
     // NOTHING
@@ -46,11 +50,13 @@ FormationFactory::~FormationFactory()
 kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, const kernel::HierarchyLevel_ABC& level, const QString& name )
 {
     Formation* formation = new Formation( controllers_.controller_, level, idManager_ );
+    PropertiesDictionary& dico = formation->Get< PropertiesDictionary >();
     if( !name.isEmpty() )
         formation->Rename( name );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
+    formation->Attach< kernel::LogisticBaseHierarchies>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
     formation->Attach( *new TacticalLines() );
     formation->Polish();
     return formation;
@@ -63,9 +69,11 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, con
 kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Entity_ABC& parent, const FormationLevels& levels )
 {
     Formation* formation = new Formation( xis, controllers_.controller_, levels, idManager_ );
+    PropertiesDictionary& dico = formation->Get< PropertiesDictionary >();
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
+    formation->Attach< kernel::LogisticBaseHierarchies>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
     formation->Attach( *new TacticalLines() );
     formation->Polish();
     return formation;

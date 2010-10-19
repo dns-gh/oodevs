@@ -13,6 +13,7 @@
 #include "MIL_AgentPionLOG_ABC.h"
 #include "MIL_AutomateLOG.h"
 #include "Entities/Automates/MIL_AutomateType.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
@@ -84,19 +85,10 @@ void MIL_AgentPionLOG_ABC::UpdateLogistic()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOG_ABC::GetLogAutomate
-// Created: NLD 2004-12-27
+// Name: MIL_AgentPionLOG_ABC::FindLogisticManager
+// Created: AHC 2010-09-27
 // -----------------------------------------------------------------------------
-const MIL_AutomateLOG& MIL_AgentPionLOG_ABC::GetLogAutomate() const
+MIL_AutomateLOG* MIL_AgentPionLOG_ABC::FindLogisticManager() const
 {
-    return static_cast< const MIL_AutomateLOG& >( MIL_AgentPion::GetAutomate() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOG_ABC::GetLogAutomate
-// Created: NLD 2004-12-27
-// -----------------------------------------------------------------------------
-MIL_AutomateLOG& MIL_AgentPionLOG_ABC::GetLogAutomate()
-{
-    return static_cast< MIL_AutomateLOG& >( MIL_AgentPion::GetAutomate() );
+    return GetAutomate().FindLogisticManager();
 }

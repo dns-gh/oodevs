@@ -29,6 +29,7 @@ class PHY_SupplyStockRequestContainer;
 class PHY_StockConvoy;
 class MIL_AutomateLOG;
 class MIL_AgentPionLOG_ABC;
+class MIL_AgentPion;
 
 //@TODO make multiple interface/role with specifics methods for convoy and for stockage
 // =============================================================================
@@ -108,9 +109,10 @@ public:
     virtual bool ConvoyUnload() const;
     virtual bool ConvoyIsLoadingDone() const;
     virtual bool ConvoyIsUnloadingDone() const;
-    virtual const MIL_AutomateLOG* ConvoyGetSupplyingAutomate() const;
-    virtual const MIL_AutomateLOG* ConvoyGetConvoyingAutomate() const;
-    virtual const MIL_Automate* ConvoyGetSuppliedAutomate () const;
+    virtual const MIL_AgentPion* ConvoyGetSupplier    () const;
+    virtual const MIL_AgentPion* ConvoyGetConvoyer    () const;
+    virtual const MIL_AgentPion* ConvoyGetSupplied    () const;
+    virtual const MIL_AgentPion* ConvoyGetStockSupplier() const;
     virtual void ConvoyEndMission();
 
     //@}

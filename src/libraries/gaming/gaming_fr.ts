@@ -285,6 +285,10 @@
         <source>Info/Name</source>
         <translation>Info/Nom</translation>
     </message>
+    <message>
+        <source>Info/LogisticLevel</source>
+        <translation>Info/NiveauLogistique</translation>
+    </message>
 </context>
 <context>
     <name>AutomatHierarchies</name>
@@ -358,6 +362,10 @@
     <message>
         <source>Info/Name</source>
         <translation>Info/Nom</translation>
+    </message>
+    <message>
+        <source>Info/LogisticLevel</source>
+        <translation>Info/NiveauLogistique</translation>
     </message>
 </context>
 <context>
@@ -510,36 +518,12 @@
         <translation>Liens logistiques/TC2</translation>
     </message>
     <message>
-        <source>Logistic links/Maintenance superior</source>
-        <translation>Liens logistiques/Supérieur maintenance</translation>
-    </message>
-    <message>
-        <source>Logistic links/Medical superior</source>
-        <translation>Liens logistiques/Supérieur médical</translation>
-    </message>
-    <message>
-        <source>Logistic links/Supply superior</source>
-        <translation>Liens logistiques/Supérieur ravitaillement</translation>
-    </message>
-    <message>
         <source>Logistic links</source>
         <translation>Liens logistiques</translation>
     </message>
     <message>
         <source>TC2:</source>
         <translation>TC2:</translation>
-    </message>
-    <message>
-        <source>Maintenance superior:</source>
-        <translation>Supérieur maintenance:</translation>
-    </message>
-    <message>
-        <source>Medical superior:</source>
-        <translation>Supérieur médical:</translation>
-    </message>
-    <message>
-        <source>Supply superior:</source>
-        <translation>Supérieur ravitaillement:</translation>
     </message>
     <message>
         <source>Equipment:</source>
@@ -556,6 +540,22 @@
     <message>
         <source>Supplier:</source>
         <translation>Fournisseur:</translation>
+    </message>
+    <message>
+        <source>Logistic links/Automat superior</source>
+        <translation>Lien logistique/Supérieur automate</translation>
+    </message>
+    <message>
+        <source>Logistic links/Formation superior</source>
+        <translation>Lien logistique/Supérieur formation</translation>
+    </message>
+    <message>
+        <source>Automat superior:</source>
+        <translation>Supérieur automate:</translation>
+    </message>
+    <message>
+        <source>Formation superior:</source>
+        <translation>Supérieur formation:</translation>
     </message>
 </context>
 <context>

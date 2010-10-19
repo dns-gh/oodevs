@@ -13,7 +13,7 @@
             <unit command-post="false" id="177" name="Section CBT INF AMX10P CDS OFF" position="30TYT1203955698" type="Section CBT INF AMX10P CDS OFF"/>
             <unit command-post="false" id="178" name="Section CBT INF AMX10P CDS SOFF" position="30TYT1184956395" type="Section CBT INF AMX10P CDS SOFF"/>
           </automat>
-          <automat engaged="false" id="188" knowledge-group="158" name="TC2 BAT ART 32AUF1 [188]" type="TC2 BAT ART 32AUF1">
+          <automat engaged="false" id="188" knowledge-group="158" name="TC2 BAT ART 32AUF1 [188]" type="TC2 BAT ART 32AUF1" logistic-level="tc2">
             <unit command-post="true" id="189" name="TC2 BAT ART 32AUF1" position="30TYT1343550026" type="TC2 BAT ART 32AUF1"/>
           </automat>
         </formation>
@@ -22,8 +22,8 @@
         <knowledge-group id="158" name="Knowledge group [158]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic>
-        <automat id="188"/>
+      <logistics>
+        <tc2 id="188"/>
       </logistic>
     </side>
     <side id="3" name="Enemy" type="enemy">
@@ -43,7 +43,7 @@
         <knowledge-group id="165" name="Knowledge group [165]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
   </sides>
   <diplomacies>

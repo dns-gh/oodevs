@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomateTypeLOG.h"
 #include "MIL_AutomateLOG.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_Tools.h"
 #include <boost/bind.hpp>
@@ -52,7 +53,7 @@ bool MIL_AutomateTypeLOG::IsLogistic() const
 // -----------------------------------------------------------------------------
 MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const
 {
-    return *new MIL_AutomateLOG( *this, nID, parent, xis, database, gcPause, gcMult );
+    return *new MIL_Automate( *this, nID, parent, xis, database, gcPause, gcMult );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,8 +62,9 @@ MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( unsigned int nID, MIL_En
 // -----------------------------------------------------------------------------
 MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult, unsigned int context ) const
 {
-    return *new MIL_AutomateLOG( *this, nID, parent, knowledgeGroup, name, database, gcPause, gcMult, context );
-}    
+    return *new MIL_Automate( *this, nID, parent, knowledgeGroup, name, database, gcPause, gcMult, context );
+}  
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeLOG::Create

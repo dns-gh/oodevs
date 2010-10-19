@@ -15,6 +15,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
 #include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
@@ -152,39 +153,6 @@ bool PHY_RolePionLOGConvoy_Supply::ConvoyIsUnloadingDone() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplyingAutomate
-// Created: NLD 2006-07-31
-// -----------------------------------------------------------------------------
-const MIL_AutomateLOG* PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplyingAutomate() const
-{
-    if( !pConvoy_ )
-        return 0;
-    return &pConvoy_->GetSupplyingAutomate();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetConvoyingAutomate
-// Created: NLD 2006-07-31
-// -----------------------------------------------------------------------------
-const MIL_AutomateLOG* PHY_RolePionLOGConvoy_Supply::ConvoyGetConvoyingAutomate() const
-{
-    if( !pConvoy_ )
-        return 0;
-    return &pConvoy_->GetConvoyingAutomate();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetSuppliedAutomate
-// Created: NLD 2006-07-31
-// -----------------------------------------------------------------------------
-const MIL_Automate* PHY_RolePionLOGConvoy_Supply::ConvoyGetSuppliedAutomate() const
-{
-    if( !pConvoy_ )
-        return 0;
-    return &pConvoy_->GetSuppliedAutomate();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply::ConvoyEndMission
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
@@ -214,4 +182,50 @@ void PHY_RolePionLOGConvoy_Supply::NotifyComposanteChanged( PHY_ComposantePion& 
         return;
 
     pConvoy_->NotifyConveyorDestroyed( composante );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplier
+// Created: NLD 2006-07-31
+// Deprecated by MGD : Give the first PC in the brainlogistic and not the exact supplier
+// -----------------------------------------------------------------------------
+const MIL_AgentPion* PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplier() const
+{
+    if( !pConvoy_ )
+        return 0;
+    return pConvoy_->GetSupplier().GetPC();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetStockSupplier
+// Created: MGD 2009-02-11
+// Give the PC corresponding to sector supplier automata s
+// -----------------------------------------------------------------------------
+const MIL_AgentPion* PHY_RolePionLOGConvoy_Supply::ConvoyGetStockSupplier() const
+{
+    if( !pConvoy_ )
+        return 0;
+    return &pConvoy_->GetStockSupplier().GetPionPC();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetConvoyer
+// Created: NLD 2006-07-31
+// -----------------------------------------------------------------------------
+const MIL_AgentPion* PHY_RolePionLOGConvoy_Supply::ConvoyGetConvoyer() const
+{
+    if( !pConvoy_ )
+        return 0;
+    return &pion_.GetAutomate().GetPionPC(); // Pion PC de l'automate fournissant les moyens au convoi (= l'automate de ce pion)
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplied
+// Created: NLD 2006-07-31
+// -----------------------------------------------------------------------------
+const MIL_AgentPion* PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplied() const
+{
+    if( !pConvoy_ )
+        return 0;
+    return &pConvoy_->GetSupplied().GetPionPC();
 }

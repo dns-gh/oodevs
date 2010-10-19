@@ -53,6 +53,10 @@
         <source>Info/Name</source>
         <translation>Info/Nom</translation>
     </message>
+    <message>
+        <source>Info/LogisticLevel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CrossingSiteAttribute</name>
@@ -196,19 +200,10 @@
     </message>
 </context>
 <context>
-    <name>MaintenanceStates</name>
+    <name>LogisticBaseStates</name>
     <message>
-        <source>Logistic/Maintenance/Superior</source>
-        <translation>Logistique/Maintenance/Supérieur
-</translation>
-    </message>
-</context>
-<context>
-    <name>MedicalStates</name>
-    <message>
-        <source>Logistic/Medical/Superior</source>
-        <translation>Logistique/Santé/Supérieur
-</translation>
+        <source>Logistic/LogisticBase/Superior</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -564,21 +559,6 @@ Détail: %1.</translation>
     <message>
         <source>Info/Logistic route attributes/Equipped</source>
         <translation>Info/Attributs de l&apos;itinéraire logistique/Equipé</translation>
-    </message>
-</context>
-<context>
-    <name>SupplyStates</name>
-    <message>
-        <source>Logistic/Supply/Quotas</source>
-        <translation>Logistique/Ravitaillement/Quotas</translation>
-    </message>
-    <message>
-        <source>/&lt;Dotations&gt;</source>
-        <translation>/&lt;Dotations&gt;</translation>
-    </message>
-    <message>
-        <source>Logistic/Supply/Superior</source>
-        <translation>Logistique/Ravitaillement/Supérieur</translation>
     </message>
 </context>
 <context>

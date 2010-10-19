@@ -12,13 +12,14 @@
 
 #include "Automat_ABC.h"
 #include "DecisionalState.h"
+#include "LogisticEntity.h"
 
 namespace Common
 {
     enum EnumAutomatMode;
     enum EnumMeetingEngagementStatus;
     enum EnumOperationalStatus;
-    class MsgAutomatChangeLogisticLinks;
+    class MsgChangeLogisticLinks;
     class MsgAutomatChangeSuperior;
     class MsgAutomatChangeKnowledgeGroup;
     class MsgAutomatOrder;
@@ -31,7 +32,6 @@ namespace MsgsSimToClient
 
     class MsgAutomatCreation;
     class MsgDecisionalState;
-    class MsgLogSupplyQuotas;
     class MsgAutomatAttributes;
 }
 
@@ -54,8 +54,7 @@ class Automat : public Automat_ABC
               , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatCreation >
               , public kernel::Updatable_ABC< MsgsSimToClient::MsgDecisionalState >
               , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatAttributes >
-              , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyQuotas >
-              , public kernel::Updatable_ABC< Common::MsgAutomatChangeLogisticLinks >
+              , public kernel::Updatable_ABC< Common::MsgChangeLogisticLinks >
               , public kernel::Updatable_ABC< Common::MsgAutomatChangeSuperior >
               , public kernel::Updatable_ABC< Common::MsgAutomatChangeKnowledgeGroup >
               , public kernel::Updatable_ABC< Common::MsgAutomatOrder >
@@ -72,6 +71,7 @@ public:
     virtual const kernel::AutomatType& GetType() const;
     virtual bool IsEngaged() const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
     //! @name Operations
@@ -79,8 +79,7 @@ public:
     virtual void DoUpdate( const MsgsSimToClient::MsgAutomatCreation&    msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgDecisionalState&    msg );
     virtual void DoUpdate( const MsgsSimToClient::MsgAutomatAttributes&  msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas&    msg );
-    virtual void DoUpdate( const Common::MsgAutomatChangeLogisticLinks&  msg );
+    virtual void DoUpdate( const Common::MsgChangeLogisticLinks&         msg );
     virtual void DoUpdate( const Common::MsgAutomatChangeSuperior&       msg );
     virtual void DoUpdate( const Common::MsgAutomatChangeKnowledgeGroup& msg );
     virtual void DoUpdate( const Common::MsgAutomatOrder&                msg );
@@ -130,16 +129,13 @@ private:
     dispatcher::Formation_ABC* parentFormation_;
     dispatcher::Automat_ABC* parentAutomat_;
     dispatcher::KnowledgeGroup_ABC* knowledgeGroup_;
-    tools::Resolver< DotationQuota > quotas_;
     Common::EnumAutomatMode nAutomatState_;
     MsgsSimToClient::ForceRatio_Value nForceRatioState_;
     Common::EnumMeetingEngagementStatus nCloseCombatState_;
     Common::EnumOperationalStatus nOperationalState_;
     MsgsSimToClient::RulesOfEngagement_Value nRoe_;
     kernel::Automat_ABC* pTC2_;
-    kernel::Automat_ABC* pLogMaintenance_;
-    kernel::Automat_ABC* pLogMedical_;
-    kernel::Automat_ABC* pLogSupply_;
+    LogisticEntity       logisticEntity_;
     std::auto_ptr< AutomatOrder > order_;
     DecisionalState decisionalInfos_;
     tools::Resolver< dispatcher::Agent_ABC >   agents_;

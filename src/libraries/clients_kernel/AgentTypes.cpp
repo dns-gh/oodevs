@@ -367,6 +367,7 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "change_formation_superior", MsgsClientToSim::MsgUnitMagicAction::change_formation_superior ) );
     RegisterActionType( *new MagicActionType( "change_logistic_links", MsgsClientToSim::MsgUnitMagicAction::change_logistic_links ) );
     RegisterActionType( *new MagicActionType( "log_supply_push_flow", MsgsClientToSim::MsgUnitMagicAction::log_supply_push_flow ) );
+    RegisterActionType( *new MagicActionType( "log_supply_pull_flow", MsgsClientToSim::MsgUnitMagicAction::log_supply_pull_flow ) );
     RegisterActionType( *new MagicActionType( "log_supply_change_quotas", MsgsClientToSim::MsgUnitMagicAction::log_supply_change_quotas ) );
 
     // Knowledge Magic Actions

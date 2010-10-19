@@ -17,12 +17,15 @@
 // Name: PHY_SupplyConsign_ABC constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_SupplyConsign_ABC::PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate )
+PHY_SupplyConsign_ABC::PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate
+        , MIL_Automate& stockSupplier, bool bExternalTransfert )
     : pSupplyingAutomate_( &supplyingAutomate )
     , pSuppliedAutomate_ ( &suppliedAutomate  )
     , pConvoyingAutomate_( &convoyingAutomate )
     , nTimer_            ( 0 )
     , bHasChanged_       ( true )
+    , pStockSupplier_    ( &stockSupplier )
+    , bExternalTransfert_( bExternalTransfert )
 {
     // NOTHING
 }
@@ -61,8 +64,8 @@ void PHY_SupplyConsign_ABC::SendFullState( client::LogSupplyHandlingUpdate& asn 
     assert( pSuppliedAutomate_ );
 
     asn().set_etat( (MsgsSimToClient::EnumLogSupplyHandlingStatus ) nState_  );
-    asn().mutable_supplier()->set_id( pSupplyingAutomate_->GetID() );
-    asn().mutable_convoy_provider()->set_id( pConvoyingAutomate_->GetID() );
+    pSupplyingAutomate_->FillParentEntity(*asn().mutable_supplier());
+    pConvoyingAutomate_->FillParentEntity(*asn().mutable_convoy_provider());
     asn().mutable_convoying_unit()->set_id( 0 );
 }
 
@@ -83,8 +86,8 @@ void PHY_SupplyConsign_ABC::SendChangedState( client::LogSupplyHandlingUpdate& a
 void PHY_SupplyConsign_ABC::SendDefaultState( client::LogSupplyHandlingUpdate& asn )
 {
     asn().mutable_convoying_unit()->set_id( 0 );
-    asn().mutable_convoy_provider()->set_id( 0 );
-    asn().mutable_supplier()->set_id( 0 );
+    asn().mutable_convoy_provider()->mutable_automat()->set_id( 0 );
+    asn().mutable_supplier()->mutable_automat()->set_id( 0 );
     asn().set_etat( MsgsSimToClient::termine );
 }
 
@@ -126,31 +129,41 @@ bool PHY_SupplyConsign_ABC::HasChanged() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyConsign_ABC::GetSupplyingAutomate
+// Name: PHY_SupplyConsign_ABC::GetSupplier
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG& PHY_SupplyConsign_ABC::GetSupplyingAutomate() const
+MIL_AutomateLOG& PHY_SupplyConsign_ABC::GetSupplier() const
 {
     assert( pSupplyingAutomate_ );
     return *pSupplyingAutomate_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyConsign_ABC::GetSuppliedAutomate
+// Name: PHY_SupplyConsign_ABC::GetSupplied
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-const MIL_Automate& PHY_SupplyConsign_ABC::GetSuppliedAutomate() const
+const MIL_Automate& PHY_SupplyConsign_ABC::GetSupplied() const
 {
     assert( pSuppliedAutomate_ );
     return *pSuppliedAutomate_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_SupplyConsign_ABC::GetConvoyingAutomate
+// Name: PHY_SupplyConsign_ABC::GetConvoyer
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG& PHY_SupplyConsign_ABC::GetConvoyingAutomate() const
+MIL_AutomateLOG& PHY_SupplyConsign_ABC::GetConvoyer() const
 {
     assert( pConvoyingAutomate_ );
     return *pConvoyingAutomate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyConsign_ABC::GetSupplier
+// Created: MGD 2009-02-11
+// -----------------------------------------------------------------------------
+MIL_Automate& PHY_SupplyConsign_ABC::GetStockSupplier() const
+{
+    assert( pStockSupplier_ );
+    return *pStockSupplier_;
 }

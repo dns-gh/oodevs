@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: DotationQuota constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-DotationQuota::DotationQuota( const Model_ABC& /*model*/, const Common::MsgDotationQuota& message )
+DotationQuota::DotationQuota( const Common::MsgDotationQuota& message )
    : nDotationType_( message.ressource_id().id() )
    , nQuota_       ( message.quota_disponible() )
 {

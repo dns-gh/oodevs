@@ -20,6 +20,7 @@ namespace kernel
     class Formation_ABC;
     class Team_ABC;
     class FormationLevels;
+    class Automat_ABC;
 }
 
 namespace xml
@@ -44,7 +45,8 @@ class FormationModel : public tools::Resolver< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             FormationModel( kernel::Controllers& controllers, FormationFactory_ABC& formationFactory );
+    FormationModel( kernel::Controllers& controllers, FormationFactory_ABC& formationFactory, 
+        const tools::Resolver< kernel::Automat_ABC>& automatResolver );
     virtual ~FormationModel();
     //@}
 
@@ -53,6 +55,13 @@ public:
     kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, unsigned int levelId, const QString& name = "" );
     void Create( xml::xistream& xis, kernel::Entity_ABC& parent, Model& model, std::string& loadingErrors );
     void Purge();
+    //@}
+    
+    //! @name Delayed initialization
+    //@{
+    void ReadLogistic( xml::xistream& xis );
+    template< typename H >
+    void ReadLogisticLink( xml::xistream& xis, kernel::Formation_ABC& source, kernel::Entity_ABC& destination );
     //@}
 
 private:
@@ -65,6 +74,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
+    void ReadLogisticLink( xml::xistream& xis, kernel::Formation_ABC& automat );
     //@}
 
 private:
@@ -78,6 +88,7 @@ public:
     //! @name Member data
     //@{
     kernel::FormationLevels& levels_;
+    const tools::Resolver< kernel::Automat_ABC>& automatResolver_;
     //@}
 };
 

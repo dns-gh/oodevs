@@ -83,11 +83,11 @@ void MIL_AgentTypePionLOG_ABC::RegisterFunctions( directia::brain::Brain& brain,
         boost::bind( &DEC_LogisticFunctions::ConvoyIsLoadingDone, boost::cref( agent ) );
     brain[ "DEC_Ravitaillement_Convoi_DechargementEffectue" ] =
         boost::bind( &DEC_LogisticFunctions::ConvoyIsUnloadingDone, boost::cref( agent ) );
-    brain[ "DEC_Ravitaillement_Convoi_AutomateRavitaillant" ] =
+    brain[ "DEC_Ravitaillement_Convoi_Ravitailleur" ] =
         boost::bind( &DEC_LogisticFunctions::ConvoyGetSupplyingAutomate, boost::cref( agent ) );
-    brain[ "DEC_Ravitaillement_Convoi_AutomateConvoyant" ] =
+    brain[ "DEC_Ravitaillement_Convoi_Convoyeur" ] =
         boost::bind( &DEC_LogisticFunctions::ConvoyGetConvoyingAutomate, boost::cref( agent ) );
-    brain[ "DEC_Ravitaillement_Convoi_AutomateRavitaille" ] =
+    brain[ "DEC_Ravitaillement_Convoi_Ravitaille" ] =
         boost::bind( &DEC_LogisticFunctions::ConvoyGetSuppliedAutomate, boost::cref( agent ) );
     brain[ "DEC_Ravitaillement_Convoi_FinMission" ] =
         boost::bind( &DEC_LogisticFunctions::ConvoyEndMission, boost::ref( agent ) );

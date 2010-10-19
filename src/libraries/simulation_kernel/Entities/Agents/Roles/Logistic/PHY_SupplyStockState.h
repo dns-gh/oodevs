@@ -27,7 +27,7 @@ class PHY_SupplyStockState : public PHY_SupplyState_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_SupplyStockState( MIL_AutomateLOG& suppliedAutomate, bool bPushedFlow );
+             PHY_SupplyStockState( MIL_Automate& suppliedAutomate, bool bPushedFlow, MIL_AutomateLOG& convoyer, bool bConsumeQuota );
              PHY_SupplyStockState();
     virtual ~PHY_SupplyStockState();
     //@}
@@ -41,7 +41,8 @@ public:
     //@{
     bool IsPushedFlow() const;
     bool IsSupplying( const PHY_DotationCategory& dotationCategory ) const;
-    MIL_AutomateLOG& GetSuppliedAutomate() const;
+    MIL_Automate& GetSuppliedAutomate() const;
+    MIL_AutomateLOG& GetConvoyer() const;
     //@}
 
     //! @name Types
@@ -88,8 +89,10 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_AutomateLOG* pSuppliedAutomate_;
-    const bool bPushedFlow_;
+    MIL_Automate* pSuppliedAutomate_;
+    MIL_AutomateLOG*     pConvoyer_;
+    const bool           bConsumeQuota_;
+    const bool           bPushedFlow_;
     PHY_SupplyConsign_ABC* pConsign_;
     bool bConsignChanged_;
     bool bRequestsChanged_;

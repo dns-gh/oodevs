@@ -18,7 +18,11 @@
 namespace kernel
 {
     class Automat_ABC;
+    class Formation_ABC;
+    class Entity_ABC;
     class Controllers;
+    class Controller;
+    class OrderParameter;
     class Entity_ABC;
     class Profile_ABC;
     class Time_ABC;
@@ -27,11 +31,13 @@ namespace kernel
 namespace actions
 {
     class ActionsModel;
+    class Parameter_ABC;
 }
 
 class Dotation;
 class Model;
 class StaticModel;
+class SupplyStates;
 
 // =============================================================================
 /** @class  LogisticSupplyChangeQuotasDialog
@@ -42,6 +48,7 @@ class StaticModel;
 class LogisticSupplyChangeQuotasDialog : public QDialog
                                        , public tools::Observer_ABC
                                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                                       , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
     Q_OBJECT;
 
@@ -55,6 +62,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );
     //@}
 
 private slots:
@@ -77,7 +85,7 @@ private:
     //! @name Helpers
     //@{
     void AddItem();
-    void AddDotation( const kernel::Entity_ABC& entity );
+    void AddDotation( const SupplyStates& states );
     //@}
 
     //! @name Types
@@ -86,6 +94,20 @@ private:
     //@}
 
 private:
+    struct SelectedHolder
+    {
+        SelectedHolder(kernel::Controllers& controllers);
+        const kernel::Entity_ABC* Selected () const;
+        operator const kernel::Entity_ABC* () const;
+        void Set( const kernel::Automat_ABC& agent );
+        void Set( const kernel::Formation_ABC& agent );
+        actions::Parameter_ABC* GetParameter(const kernel::OrderParameter& parameter, kernel::Controller& controller);
+        void Reset();
+
+    private:
+        kernel::SafePointer< kernel::Automat_ABC > selectedAutomat_;
+        kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;
+    };
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
@@ -95,9 +117,9 @@ private:
     const Model& model_;
     const kernel::Profile_ABC& profile_;
 
-    gui::ValuedComboBox< const kernel::Automat_ABC* >* targetCombo_;
+    gui::ValuedComboBox< const kernel::Entity_ABC* >* targetCombo_;
     QTable* table_;
-    kernel::SafePointer< kernel::Automat_ABC > selected_;
+    SelectedHolder selected_;
     QStringList dotationTypes_;
     T_Supplies supplies_;
     //@}

@@ -47,7 +47,7 @@ PHY_SupplyDotationRequestContainer::~PHY_SupplyDotationRequestContainer()
 // Name: PHY_SupplyDotationRequestContainer::Execute
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-bool PHY_SupplyDotationRequestContainer::Execute( MIL_AutomateLOG* pFirstSupplyingAutomate, MIL_AutomateLOG* pSecondSupplyingAutomate, MIL_Automate::T_SupplyDotationStateMap& dotationSupplies )
+bool PHY_SupplyDotationRequestContainer::Execute( MIL_AutomateLOG* pFirstSupplyingAutomate, MIL_AutomateLOG* pSecondSupplyingAutomate, MIL_DotationSupplyManager::T_SupplyDotationStateMap& dotationSupplies )
 {
     if( requests_.empty() )
         return true;
@@ -83,11 +83,14 @@ void PHY_SupplyDotationRequestContainer::AddDotation( PHY_Dotation& dotation )
 void PHY_SupplyDotationRequestContainer::AffectRequestsToAutomate( MIL_AutomateLOG& supplyingAutomate )
 {
     bExplicitSupplyFullSatisfied_ = true;
+
+    bool bExternaltransfert = MIL_AutomateLOG::IsExternalTransaction( suppliedAutomate_, supplyingAutomate);
+
     for( IT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
     {
         PHY_SupplyDotationRequest& request = it->second;
 
-        if( request.AffectAutomate( supplyingAutomate ) )
+        if( request.AffectAutomate( supplyingAutomate, bExternaltransfert ) )
         {
             bAtLeastOneSupplySatisfied_ = true;
             if( request.HasReachedSupplyThreshold() )
@@ -102,7 +105,7 @@ void PHY_SupplyDotationRequestContainer::AffectRequestsToAutomate( MIL_AutomateL
 // Name: PHY_SupplyDotationRequestContainer::ActivateSupply
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
-void PHY_SupplyDotationRequestContainer::ActivateSupply( MIL_Automate::T_SupplyDotationStateMap& dotationSupplies )
+void PHY_SupplyDotationRequestContainer::ActivateSupply( MIL_DotationSupplyManager::T_SupplyDotationStateMap& dotationSupplies )
 {
     for( IT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
     {
@@ -113,8 +116,9 @@ void PHY_SupplyDotationRequestContainer::ActivateSupply( MIL_Automate::T_SupplyD
         PHY_SupplyDotationState*& pSupplyState = dotationSupplies[ request.GetSupplyingAutomate() ];
         if( !pSupplyState )
         {
-            pSupplyState = new PHY_SupplyDotationState( suppliedAutomate_ );
-            request.GetSupplyingAutomate()->SupplyHandleRequest( *pSupplyState );
+            pSupplyState = new PHY_SupplyDotationState( suppliedAutomate_, *request.GetSupplyingAutomate() );
+            request.GetSupplyingAutomate()->SupplyHandleRequest( *pSupplyState, request.GetStockPion(),
+                    MIL_AutomateLOG::IsExternalTransaction( suppliedAutomate_, *request.GetSupplyingAutomate() ) );
         }
         request.ReserveStocks();
         pSupplyState->AddRequest( request );

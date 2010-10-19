@@ -227,30 +227,40 @@ PHY_Convoy_ABC::~PHY_Convoy_ABC()
 // Name: PHY_Convoy_ABC::GetSupplyingAutomate
 // Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG& PHY_Convoy_ABC::GetSupplyingAutomate() const
+MIL_AutomateLOG& PHY_Convoy_ABC::GetSupplier() const
 {
     assert( pConsign_ );
-    return pConsign_->GetSupplyingAutomate();
+    return pConsign_->GetSupplier();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::GetConvoyingAutomate
+// Name: PHY_Convoy_ABC::GetConvoyer
 // Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG& PHY_Convoy_ABC::GetConvoyingAutomate() const
+MIL_AutomateLOG& PHY_Convoy_ABC::GetConvoyer() const
 {
     assert( pConsign_ );
-    return pConsign_->GetConvoyingAutomate();
+    return pConsign_->GetConvoyer();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::GetSuppliedAutomate
+// Name: PHY_Convoy_ABC::GetSupplied
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
-const MIL_Automate& PHY_Convoy_ABC::GetSuppliedAutomate() const
+const MIL_Automate& PHY_Convoy_ABC::GetSupplied() const
 {
     assert( pConsign_ );
-    return pConsign_->GetSuppliedAutomate();
+    return pConsign_->GetSupplied();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::GetStockSupplier
+// Created: MGD 2009-02-11
+// -----------------------------------------------------------------------------
+MIL_Automate& PHY_Convoy_ABC::GetStockSupplier() const
+{
+    assert( pConsign_ );
+    return pConsign_->GetStockSupplier();
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +278,7 @@ void PHY_Convoy_ABC::UnlockConvoy()
 // Name: PHY_Convoy_ABC::ReserveTransporters
 // Created: NLD 2005-12-14
 // -----------------------------------------------------------------------------
-bool PHY_Convoy_ABC::ReserveTransporters()
+bool PHY_Convoy_ABC::ReserveTransporters( bool bExternalTransfert)
 {
     assert( pConsign_ );
 
@@ -297,7 +307,7 @@ bool PHY_Convoy_ABC::ReserveTransporters()
         {
             PHY_ComposantePion* pConveyorComp = 0;
             MIL_AgentPion*      pConveyorPion = 0;
-            if( !pConsign_->GetConvoyingAutomate().SupplyGetAvailableConvoyTransporter( pConveyorComp, pConveyorPion, dotationCategory ) )
+            if( !pConsign_->GetConvoyer().SupplyGetAvailableConvoyTransporter( pConveyorComp, pConveyorPion, dotationCategory, bExternalTransfert ) )
                 break; // No more convoys
             PHY_Conveyor* pConveyor = new PHY_Conveyor( *pConveyorComp, *pConveyorPion );
             if( ! conveyors_.insert( std::make_pair( pConveyorComp, pConveyor ) ).second )

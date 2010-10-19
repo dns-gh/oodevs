@@ -14,6 +14,7 @@
 #include "Team_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
@@ -31,6 +32,7 @@ Formation::Formation( const Model_ABC& model, const MsgsSimToClient::MsgFormatio
     , name_  ( msg.name() )
     , team_  ( model.Sides().Get( msg.party().id() ) )
     , level_ ( levels.Get( msg.level() ) )
+    , logisticEntity_   ( model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve( msg.logistic_level() ) )
     , parent_( msg.has_parent() ? &model.Formations().Get( msg.parent().id() ) : 0 )
 {
     if( msg.has_extension() )
@@ -40,6 +42,7 @@ Formation::Formation( const Model_ABC& model, const MsgsSimToClient::MsgFormatio
         parent_->Register( *this );
     else
         team_.Register( *this );
+    RegisterSelf(logisticEntity_);
 }
 
 // -----------------------------------------------------------------------------
@@ -116,6 +119,8 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
     message().mutable_party()->set_id( team_.GetId() );
     message().set_name( name_ );
     message().set_level( Common::EnumNatureLevel( level_.GetId() ) );
+    message().set_logistic_level( Common::EnumLogisticLevel( logisticEntity_.GetLogisticLevel().GetId() ) );
+
     if( parent_ )
         message().mutable_parent()->set_id( parent_->GetId() );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
@@ -125,15 +130,29 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
         entry->set_value( it->second );
     }
     message.Send( publisher );
+
+    if( logisticEntity_.GetLogisticLevel() != kernel::LogisticLevel::none_ )
+    {
+        client::LogSupplyQuotas asn;
+        asn().mutable_supplied()->mutable_formation()->set_id( GetId() );
+        logisticEntity_.Fill(asn);
+        asn.Send( publisher );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Formation::SendFullUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Formation::SendFullUpdate( ClientPublisher_ABC& ) const
+void Formation::SendFullUpdate( ClientPublisher_ABC& publisher) const
 {
-    // NOTHING
+    if( logisticEntity_.GetLogisticLevel() != kernel::LogisticLevel::none_) 
+    {
+        client::ChangeLogisticLinks asn;
+        asn().mutable_requester()->mutable_formation()->set_id( GetId() );
+        logisticEntity_.Fill(asn);
+        asn.Send( publisher );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -231,4 +250,22 @@ void Formation::Remove( dispatcher::Automat_ABC& automat )
 const tools::Resolver< dispatcher::Automat_ABC >& Formation::GetAutomates() const
 {
     return automats_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetLogisticLevel
+// Created: AHC 2010-10-08
+// -----------------------------------------------------------------------------
+const kernel::LogisticLevel& Formation::GetLogisticLevel() const
+{
+    return logisticEntity_.GetLogisticLevel();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::DoUpdate
+// Created: AHC 2010-10-08
+// -----------------------------------------------------------------------------
+void Formation::DoUpdate( const Common::MsgChangeLogisticLinks& )
+{
+    // NOTHING
 }

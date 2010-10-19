@@ -20,8 +20,7 @@ Lima.cpp \
 Limit.cpp \
 LocalWeather.cpp \
 LogisticAttribute.cpp \
-MaintenanceStates.cpp \
-MedicalStates.cpp \
+LogisticBaseStates.cpp \
 MedicalTreatmentAttribute.cpp \
 MineAttribute.cpp \
 NBCAttribute.cpp \
@@ -34,7 +33,6 @@ ScoresModel.cpp \
 Stocks.cpp \
 SuccessFactorsModel.cpp \
 SupplyRouteAttribute.cpp \
-SupplyStates.cpp \
 TacticalLine_ABC.cpp \
 Tc2States.cpp \
 Team.cpp \

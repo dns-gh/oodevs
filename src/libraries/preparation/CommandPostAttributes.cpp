@@ -10,9 +10,7 @@
 #include "preparation_pch.h"
 #include "CommandPostAttributes.h"
 #include "Tc2States.h"
-#include "MaintenanceStates.h"
-#include "MedicalStates.h"
-#include "SupplyStates.h"
+#include "LogisticBaseStates.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
@@ -44,11 +42,7 @@ void CommandPostAttributes::Draw( const geometry::Point2f& where, const kernel::
     const kernel::Entity_ABC& superior = entity_.Get< kernel::TacticalHierarchies >().GetUp();
     if( const Tc2States* tc2 = static_cast< const Tc2States* >( superior.Retrieve< kernel::TC2Hierarchies >() ) )
         tc2->Draw( where, viewport, tools );
-    if( const MaintenanceStates* maintenance = static_cast< const MaintenanceStates* >( superior.Retrieve< kernel::MaintenanceHierarchies >() ) )
-        maintenance->Draw( where, viewport, tools );
-    if( const MedicalStates* medical = static_cast< const MedicalStates* >( superior.Retrieve< kernel::MedicalHierarchies >() ) )
-        medical->Draw( where, viewport, tools );
-    if( const SupplyStates* supply = static_cast< const SupplyStates* >( superior.Retrieve< kernel::SupplyHierarchies >() ) )
-        supply->Draw( where, viewport, tools );
+    if( const LogisticBaseStates* bl = static_cast< const LogisticBaseStates* >( superior.Retrieve< kernel::LogisticBaseHierarchies >() ) )
+        bl->Draw( where, viewport, tools );
 }
 

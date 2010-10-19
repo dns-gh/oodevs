@@ -13,6 +13,7 @@
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/LogisticLevel.h"
 
 using namespace kernel;
 
@@ -23,6 +24,7 @@ using namespace kernel;
 Formation::Formation( const MsgsSimToClient::MsgFormationCreation& message, Controller& controller, const tools::Resolver_ABC< HierarchyLevel_ABC >& resolver  )
     : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ) )
     , level_( resolver.Get( message.level() ) )
+    , logisticLevel_ ( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( level_.GetName() ).arg( message.formation().id() );
@@ -65,4 +67,14 @@ void Formation::CreateDictionary( kernel::Controller& controller )
     const Formation& self = *this;
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Identifier" ), self.id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Name" ), self.name_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/LogisticLevel" ), *logisticLevel_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetLogisticLevel
+// Created: AHC 2010-10-08
+// -------------------------------------------------------------------------------
+const kernel::LogisticLevel& Formation::GetLogisticLevel() const
+{
+    return *logisticLevel_;
 }

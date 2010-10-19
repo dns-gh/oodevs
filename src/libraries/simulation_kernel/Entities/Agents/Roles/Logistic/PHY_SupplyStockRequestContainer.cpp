@@ -16,6 +16,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "protocol/protocol.h"
 
@@ -23,13 +24,14 @@
 // Name: PHY_SupplyStockRequestContainer constructor
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate )
+PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate )
     : suppliedAutomate_                  ( suppliedAutomate )
     , requests_                          ()
     , bAtLeastOneExplicitSupplySatisfied_( false )
     , bAtLeastOneSupplySatisfied_        ( false )
     , bExplicitSupplyFullSatisfied_      ( false )
     , bPushedFlow_                       ( false )
+    , bManual_                           ( false )
 {
     const MIL_Automate::T_PionVector& pions = suppliedAutomate.GetPions();
     for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
@@ -41,13 +43,14 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
 // Name: PHY_SupplyStockRequestContainer constructor
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const Common::MsgMissionParameter& asnStocks )
+PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const Common::MsgMissionParameter& asnStocks, bool pushedFlow )
     : suppliedAutomate_                  ( suppliedAutomate )
     , requests_                          ()
     , bAtLeastOneExplicitSupplySatisfied_( false )
     , bAtLeastOneSupplySatisfied_        ( false )
     , bExplicitSupplyFullSatisfied_      ( false )
-    , bPushedFlow_                       ( true )
+    , bPushedFlow_                       ( pushedFlow )
+    , bManual_                           ( true )
 {
     if( !asnStocks.has_value() || asnStocks.value().list_size() == 0 )
         return;
@@ -137,17 +140,42 @@ PHY_SupplyStockRequestContainer::~PHY_SupplyStockRequestContainer()
 // Name: PHY_SupplyStockRequestContainer::Execute
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-bool PHY_SupplyStockRequestContainer::Execute( MIL_AutomateLOG& supplyingAutomate, PHY_SupplyStockState*& pStockSupplyState )
+bool PHY_SupplyStockRequestContainer::Execute( MIL_AutomateLOG& supplier, PHY_SupplyStockState*& pStockSupplyState )
 {
     if( requests_.empty() )
         return true;
 
-    if( !bPushedFlow_ && !ApplyQuotas() )
+    if( !ApplyQuotas(supplier) )
         return false;
 
-    AffectRequestsToAutomate( supplyingAutomate );
+    AffectRequestsToAutomate( );
 
-    if( ( bPushedFlow_ && bAtLeastOneSupplySatisfied_ ) || ( !bPushedFlow_ && bAtLeastOneExplicitSupplySatisfied_ ) )
+    if( ( bManual_ && bAtLeastOneSupplySatisfied_ ) || ( !bManual_ && bAtLeastOneExplicitSupplySatisfied_ ) )
+        ActivateSupply( pStockSupplyState );
+
+    return bExplicitSupplyFullSatisfied_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockRequestContainer::Execute
+// Created: AHC 2010-09-27
+// -----------------------------------------------------------------------------
+bool PHY_SupplyStockRequestContainer::Execute( MIL_AutomateLOG& supplier, MIL_AutomateLOG& secondSupplier, PHY_SupplyStockState*& pStockSupplyState )
+{
+    if( requests_.empty() )
+        return true;
+
+    bool quotaPassed = true;
+    if (&supplier == &secondSupplier)
+        quotaPassed = ApplyQuotas(supplier);
+    else
+        quotaPassed = ApplyQuotas(supplier, secondSupplier);
+    if( !bManual_ &&  !quotaPassed)
+        return false;
+
+    AffectRequestsToAutomate( );
+
+    if( ( bManual_ && bAtLeastOneSupplySatisfied_ ) || ( !bManual_ && bAtLeastOneExplicitSupplySatisfied_ ) )
         ActivateSupply( pStockSupplyState );
 
     return bExplicitSupplyFullSatisfied_;
@@ -170,14 +198,17 @@ void PHY_SupplyStockRequestContainer::AddStock( PHY_DotationStock& stock )
 // Name: PHY_SupplyStockRequestContainer::AffectRequestsToAutomate
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_SupplyStockRequestContainer::AffectRequestsToAutomate( MIL_AutomateLOG& supplyingAutomate )
+void PHY_SupplyStockRequestContainer::AffectRequestsToAutomate( )
 {
-    bExplicitSupplyFullSatisfied_ = true;
+    bExplicitSupplyFullSatisfied_ = false;
+
     for( IT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
     {
         PHY_SupplyStockRequest& request = it->second;
+        MIL_AutomateLOG& supplier = *(requestAffectations_[&request]);
+        bool bExternaltransfert = MIL_AutomateLOG::IsExternalTransaction( suppliedAutomate_, supplier);
 
-        if( request.AffectAutomate( supplyingAutomate ) )
+        if( request.AffectAutomate( supplier, bExternaltransfert ) )
         {
             bAtLeastOneSupplySatisfied_ = true;
             if( request.HasReachedSupplyThreshold() )
@@ -192,15 +223,64 @@ void PHY_SupplyStockRequestContainer::AffectRequestsToAutomate( MIL_AutomateLOG&
 // Name: PHY_SupplyStockRequestContainer::ApplyQuotas
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-bool PHY_SupplyStockRequestContainer::ApplyQuotas()
+bool PHY_SupplyStockRequestContainer::ApplyQuotas(MIL_AutomateLOG& supplier)
 {
     for( IT_RequestMap it = requests_.begin(); it != requests_.end(); )
     {
-        it->second.ApplyQuota( suppliedAutomate_.GetQuota( *it->first ) );
-        if( it->second.GetTotalRequestedValue() == 0. )
-            it = requests_.erase( it );
-        else
+        bool removed=false;
+        if( !bManual_ )
+        {
+            it->second.ApplyQuota( suppliedAutomate_.GetQuota(supplier, *it->first ) );
+            if( it->second.GetTotalRequestedValue() == 0. )
+            {
+                it = requests_.erase( it );
+                removed = true;
+            }
+        }
+        if( !removed )
+        {
+            requestAffectations_[&(it->second)] = &supplier;
             ++it;
+        }
+    }
+    return !requests_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockRequestContainer::ApplyQuotas
+// Created: AHC 2010-09-27
+// -----------------------------------------------------------------------------
+bool PHY_SupplyStockRequestContainer::ApplyQuotas( MIL_AutomateLOG& supplier, MIL_AutomateLOG& secondSupplier )
+{
+    for( IT_RequestMap it = requests_.begin(); it != requests_.end(); )
+    {
+        if( !bManual_ )
+        {
+            it->second.ApplyQuota( suppliedAutomate_.GetQuota(supplier, *it->first ) );
+            if( it->second.GetTotalRequestedValue() == 0. )
+            {
+                it->second.ApplyQuota( suppliedAutomate_.GetQuota(secondSupplier, *it->first ) );
+                if( it->second.GetTotalRequestedValue() == 0. )
+                {
+                    it = requests_.erase( it );
+                }
+                else
+                {
+                    requestAffectations_[&(it->second)] = &secondSupplier;
+                    ++it;
+                }
+            }
+            else
+            {
+                requestAffectations_[&(it->second)] = &supplier;
+                ++it;
+            }
+        }
+        else
+        {
+            requestAffectations_[&(it->second)] = &supplier;
+             ++it;
+        }
     }
     return !requests_.empty();
 }
@@ -220,8 +300,14 @@ void PHY_SupplyStockRequestContainer::ActivateSupply( PHY_SupplyStockState*& pSt
 
         if( !pStockSupplyState )
         {
-            pStockSupplyState = new PHY_SupplyStockState( suppliedAutomate_, bPushedFlow_ );
-            request.GetSupplyingAutomate()->SupplyHandleRequest( *pStockSupplyState );
+            MIL_AutomateLOG* pConvoyer = 0;
+            if( !bPushedFlow_ )
+                pConvoyer = suppliedAutomate_.FindLogisticManager();
+            if( !pConvoyer )
+                pConvoyer = request.GetSupplyingAutomate();
+            assert( pConvoyer );
+            pStockSupplyState = new PHY_SupplyStockState( suppliedAutomate_, bPushedFlow_, *pConvoyer, !bManual_ );
+            request.GetSupplyingAutomate()->SupplyHandleRequest( *pStockSupplyState, request.GetStockPion(), MIL_AutomateLOG::IsExternalTransaction( suppliedAutomate_, *pConvoyer ) );
         }
 
         request.ReserveStocks();
@@ -230,4 +316,13 @@ void PHY_SupplyStockRequestContainer::ActivateSupply( PHY_SupplyStockState*& pSt
 
     if( pStockSupplyState )
         pStockSupplyState->SendMsgCreation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SupplyStockRequestContainer::HasRequests
+// Created: AHC 2010-09-28
+// -----------------------------------------------------------------------------
+bool PHY_SupplyStockRequestContainer::HasRequests () const
+{
+    return requests_.size()!=0;
 }

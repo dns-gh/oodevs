@@ -18,6 +18,7 @@
 class MIL_Automate;
 class PHY_SupplyConsign_ABC;
 class PHY_DotationCategory;
+class MIL_AutomateLOG;
 
 // =============================================================================
 // @class  PHY_SupplyDotationState
@@ -26,7 +27,7 @@ class PHY_DotationCategory;
 class PHY_SupplyDotationState : public PHY_SupplyState_ABC
 {
 public:
-    explicit PHY_SupplyDotationState( MIL_Automate& suppliedAutomate );
+    explicit PHY_SupplyDotationState( MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyer  );
              PHY_SupplyDotationState();
     virtual ~PHY_SupplyDotationState();
 
@@ -44,6 +45,7 @@ public:
     //@{
     void AddRequest( const PHY_SupplyDotationRequest& request );
     const MIL_Automate& GetSuppliedAutomate() const;
+    MIL_AutomateLOG& GetConvoyer() const;
     bool IsSupplying( const PHY_DotationCategory& dotationCategory ) const;
 
     void GetMerchandiseToConvoy( T_MerchandiseToConvoyMap& container ) const;
@@ -83,6 +85,7 @@ public:
 
 private:
     MIL_Automate* pSuppliedAutomate_;
+    MIL_AutomateLOG*     pConvoyer_;
     PHY_SupplyConsign_ABC* pConsign_;
     bool bConsignChanged_;
     bool bRequestsChanged_;

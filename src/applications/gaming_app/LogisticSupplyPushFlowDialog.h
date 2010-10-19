@@ -20,6 +20,7 @@ namespace kernel
     class Automat_ABC;
     class Controllers;
     class Entity_ABC;
+    class Formation_ABC;
     class Profile_ABC;
     class Time_ABC;
 }
@@ -31,6 +32,7 @@ namespace actions
 
 class Dotation;
 class StaticModel;
+class SupplyStates;
 
 // =============================================================================
 /** @class  LogisticSupplyPushFlowDialog
@@ -42,6 +44,7 @@ class StaticModel;
 class LogisticSupplyPushFlowDialog : public QDialog
                                    , public tools::Observer_ABC
                                    , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                                   , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
     Q_OBJECT;
 
@@ -55,6 +58,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );
     //@}
 
 private slots:
@@ -77,7 +81,7 @@ private:
     //! @name Helpers
     //@{
     void AddItem();
-    void AddDotation( const kernel::Entity_ABC& entity );
+    void AddDotation( const SupplyStates& states );
     //@}
 
     //! @name Types
@@ -97,7 +101,8 @@ private:
 
     gui::ValuedComboBox< const kernel::Automat_ABC* >* targetCombo_;
     QTable* table_;
-    kernel::SafePointer< kernel::Automat_ABC > selected_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
+    bool selectedAutomat_;
     QStringList dotationTypes_;
     T_Supplies supplies_;
     //@}

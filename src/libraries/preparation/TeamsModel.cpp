@@ -172,8 +172,9 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model, std::string& loadin
     xis >> xml::start( "tactical" )
             >> xml::list( "formation", model.formations_, &FormationModel::Create, *team, model, loadingErrors )
         >> xml::end;
-    xis >> xml::start( "logistic" )
-            >> xml::list( "automat", model.agents_, &AgentsModel::ReadLogistic )
+    xis >> xml::start( "logistics" )
+            >> xml::list( "tc2", model.agents_, &AgentsModel::ReadLogistic )
+            >> xml::list( "logistic-base", model.formations_, &FormationModel::ReadLogistic )
         >> xml::end;
     xis >> xml::start( "objects" )
             >> xml::list( "object", static_cast< Team& >( *team ), &Team::CreateObject, loadingErrors  )

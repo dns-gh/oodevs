@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Formation.h"
+#include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army_ABC.h"
@@ -16,7 +17,9 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
+#include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "MT_Tools/MT_Logger.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/map.hpp>
 #include <boost/bind.hpp>
@@ -46,6 +49,18 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
         >> xml::optional >> xml::start( "extensions" )
             >> xml::list( "entry", *this, &MIL_Formation::ReadExtension )
         >> xml::end;
+
+    std::string logLevelStr(PHY_LogisticLevel::none_.GetName());
+    xis >> xml::optional() >> xml::attribute("logistic-level", logLevelStr);
+    const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find(logLevelStr);
+    if(logLevel==0 || PHY_LogisticLevel::tc2_==*logLevel)
+        xis.error( "Wrong logistic level" );
+    if(PHY_LogisticLevel::logistic_base_==*logLevel)
+    {
+        pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *logLevel ) );
+        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>(*pBrainLogistic_.get() ) );
+        this->RegisterAction( pLogisticAction_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -215,6 +230,8 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_Formation::WriteLogisticLinksODB( xml::xostream& xos ) const
 {
+    if( pBrainLogistic_.get() )
+        pBrainLogistic_->WriteLogisticLinksODB( xos );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteLogisticLinksODB, _1, boost::ref( xos ) ) );
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::WriteLogisticLinksODB, _1, boost::ref( xos ) ) );
 }
@@ -232,6 +249,8 @@ void MIL_Formation::SendCreation() const
     asn().mutable_party()->set_id( pArmy_->GetID() );
     asn().set_name( GetName() );
     asn().set_level( pLevel_->GetAsnID() );
+    asn().set_logistic_level( pBrainLogistic_.get() ?
+        (Common::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : Common::none );
     if( pParent_ )
         asn().mutable_parent()->set_id( pParent_->GetID() );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
@@ -253,6 +272,8 @@ void MIL_Formation::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_Formation::SendFullState() const
 {
+    SendLogisticLinks();
+
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1 ) );
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendFullState, _1 ) );
 }
@@ -310,3 +331,67 @@ void MIL_Formation::UnregisterFormation( MIL_Formation& formation )
 {
    tools::Resolver< MIL_Formation >::Remove( formation.GetID() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::pBrainLogistic_
+// Created: AHC 2010-09-27
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG* MIL_Formation::GetBrainLogistic() const
+{
+    return pBrainLogistic_.get();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::FindLogisticManager
+// Created: AHC 2010-09-27
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG* MIL_Formation::FindLogisticManager() const
+{
+   if( pBrainLogistic_.get() )
+       return pBrainLogistic_.get();
+   else if( pParent_ )
+       return pParent_->FindLogisticManager();
+   return 0;
+}
+
+namespace
+{
+    struct VisitorApplyer
+    {
+        VisitorApplyer( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor) : visitor_(visitor){}
+        void operator()(const MIL_Formation& f) const
+        {
+            f.Apply( visitor_ );
+        }
+        void operator()(const MIL_Automate& f) const
+        {
+            f.Apply( visitor_ );
+        }
+        MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::Apply
+// Created: AHC 2010-09-28
+// -----------------------------------------------------------------------------
+void MIL_Formation::Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) const
+{
+    VisitorApplyer applyer(visitor);
+    tools::Resolver< MIL_Formation >::Apply(applyer);
+    tools::Resolver< MIL_Automate >::Apply(applyer);
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::SendLogisticLinks
+// Created: AHC 2010-10-13
+// -----------------------------------------------------------------------------
+void MIL_Formation::SendLogisticLinks() const
+{
+    if( pBrainLogistic_.get() )
+    {
+        pBrainLogistic_->SendFullState();
+    }
+}
+

@@ -11,10 +11,12 @@
 #define __Formation_h_
 
 #include "Formation_ABC.h"
+#include "LogisticEntity.h"
 
 namespace Common
 {
     enum EnumNatureLevel;
+    class MsgChangeLogisticLinks;
 }
 
 namespace MsgsSimToClient
@@ -34,6 +36,7 @@ namespace dispatcher
 // Created: NLD 2006-09-19
 // =============================================================================
 class Formation : public dispatcher::Formation_ABC
+    , public kernel::Updatable_ABC< Common::MsgChangeLogisticLinks >
 {
 public:
     //! @name Constructors/Destructor
@@ -49,6 +52,7 @@ public:
     virtual dispatcher::Team_ABC& GetTeam() const;
     virtual const tools::Resolver< dispatcher::Formation_ABC >& GetFormations() const;
     virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomates() const;
+    virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
     //! @name Operations
@@ -56,6 +60,8 @@ public:
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
+
+    virtual void DoUpdate( const Common::MsgChangeLogisticLinks&  msg );
 
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
@@ -83,11 +89,12 @@ private:
 private:
     //! @name Member data
     //@{
-    const Model_ABC& model_;
-    const std::string name_;
-    dispatcher::Team_ABC& team_;
-    const kernel::HierarchyLevel_ABC& level_;
-    dispatcher::Formation_ABC* parent_;
+    const Model_ABC&                            model_;
+    const std::string                           name_;
+    dispatcher::Team_ABC&                       team_;
+    const kernel::HierarchyLevel_ABC&           level_;
+    LogisticEntity                              logisticEntity_;
+    dispatcher::Formation_ABC*                  parent_;
     tools::Resolver< dispatcher::Formation_ABC > formations_;
     tools::Resolver< dispatcher::Automat_ABC > automats_;
     std::map< std::string, std::string > extensions_;

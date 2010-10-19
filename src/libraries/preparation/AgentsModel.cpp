@@ -12,9 +12,7 @@
 #include "AgentFactory_ABC.h"
 #include "Agent.h"
 #include "Automat.h"
-#include "MaintenanceStates.h"
-#include "MedicalStates.h"
-#include "SupplyStates.h"
+#include "LogisticBaseStates.h"
 #include "Tc2States.h"
 #include "LimitsModel.h"
 #include "AgentsModelChecker.h"
@@ -280,15 +278,10 @@ void AgentsModel::ReadLogistic( xml::xistream& xis )
 void AgentsModel::ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& automat )
 {
     int id;
-    std::string linkType;
-    xis >> xml::attribute( "id", id )
-        >> xml::attribute( "link", linkType );
+    xis >> xml::attribute( "id", id );
     if( Entity_ABC* entity = tools::Resolver< Automat_ABC >::Find( id ) )
     {
-        ReadLogisticLink< TC2Hierarchies >        ( xis, linkType, automat, *entity );
-        ReadLogisticLink< MedicalHierarchies >    ( xis, linkType, automat, *entity );
-        ReadLogisticLink< MaintenanceHierarchies >( xis, linkType, automat, *entity );
-        ReadLogisticLink< SupplyHierarchies >     ( xis, linkType, automat, *entity );
+        ReadLogisticLink< TC2Hierarchies >          ( xis, automat, *entity );
     }
 }
 
@@ -297,10 +290,10 @@ void AgentsModel::ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& aut
 // Created: SBO 2007-03-29
 // -----------------------------------------------------------------------------
 template< typename H >
-void AgentsModel::ReadLogisticLink( xml::xistream& xis, const std::string& type, kernel::Automat_ABC& superior, kernel::Entity_ABC& entity )
+void AgentsModel::ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& superior, kernel::Entity_ABC& entity )
 {
     H* hierarchies = entity.Retrieve< H >();
-    if( hierarchies && hierarchies->GetLinkType().ascii() == type )
+    if( hierarchies )
         hierarchies->Load( xis, &superior );
 }
 

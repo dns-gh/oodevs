@@ -20,6 +20,7 @@ namespace kernel
 {
     class Controller;
     class PropertiesDictionary;
+    class LogisticLevel;
 }
 
 namespace MsgsSimToClient
@@ -48,6 +49,7 @@ public:
     //! @name Operations
     //@{
     virtual const kernel::AutomatType& GetType() const;
+    virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
     //! @name Extensions
@@ -73,6 +75,7 @@ private:
     //@{
     kernel::AutomatType& type_;
     mutable std::string symbol_;
+    const kernel::LogisticLevel* logisticLevel_;
     //@}
 };
 

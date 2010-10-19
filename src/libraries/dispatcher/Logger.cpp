@@ -44,6 +44,6 @@ void Logger::Update()
     if( currentTime > nextMemoryDump_ )
     {
         nextMemoryDump_ = static_cast< int >( currentTime ) + 60;
-        MT_LOG_INFO_MSG( "Memory: " << ( monitor_.GetMemory() / 1048576.) << " MB / " << ( monitor_.GetVirtualMemory() / 1048576.) << " MB (VM)" );
+        //MT_LOG_INFO_MSG( "Memory: " << ( monitor_.GetMemory() / 1048576.) << " MB / " << ( monitor_.GetVirtualMemory() / 1048576.) << " MB (VM)" );
     }
 }
