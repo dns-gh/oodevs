@@ -67,12 +67,8 @@ void Fire::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().set_type( type_ );
     asn().mutable_ammunition()->set_id( munition_.id() );
 
-    Common::MsgCoordLatLong coord;
-    if( asn().target().has_position() )
-    {
-        *asn().mutable_target()->mutable_position() = coord;
-        coord = positionCible_;
-    }
+    if( positionCible_.IsInitialized() )
+        *asn().mutable_target()->mutable_position() = positionCible_;
     else
     {
         if( oid_cible_ )
