@@ -115,7 +115,6 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
         }
     }
     pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( *object, message.location(), static_.coordinateConverter_ ) );
-    object->InstanciateDecoration();
     pTerrainObject->Update( message );
     pTerrainObject->Polish();
     if( !Find( id ) )
