@@ -71,18 +71,18 @@ class MIL_Automate : public MIL_Entity_ABC
 public:
     //! @name Types
     //@{
-    typedef std::vector< MIL_AgentPion* >    T_PionVector;
-    typedef T_PionVector::iterator          IT_PionVector;
+    typedef std::vector< MIL_AgentPion* >  T_PionVector;
+    typedef T_PionVector::iterator         IT_PionVector;
     typedef T_PionVector::const_iterator   CIT_PionVector;
     typedef T_PionVector::reverse_iterator RIT_PionVector;
 
-    typedef std::vector< MIL_Automate* >       T_AutomateVector;
-    typedef T_AutomateVector::iterator        IT_AutomateVector;
+    typedef std::vector< MIL_Automate* >     T_AutomateVector;
+    typedef T_AutomateVector::iterator       IT_AutomateVector;
     typedef T_AutomateVector::const_iterator CIT_AutomateVector;
 
     typedef std::map< const MIL_AutomateLOG*, PHY_SupplyDotationState* > T_SupplyDotationStateMap;
-    typedef T_SupplyDotationStateMap::iterator                          IT_SupplyDotationStateMap;
-    typedef T_SupplyDotationStateMap::const_iterator                   CIT_SupplyDotationStateMap;
+    typedef T_SupplyDotationStateMap::iterator                           IT_SupplyDotationStateMap;
+    typedef T_SupplyDotationStateMap::const_iterator                     CIT_SupplyDotationStateMap;
     //@}
 
 public:
@@ -98,33 +98,33 @@ public:
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-    void WriteODB( xml::xostream& xos ) const;
+            void WriteODB             ( xml::xostream& xos ) const;
     virtual void WriteLogisticLinksODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Initialize
     //@{
-    void ReadOverloading ( xml::xistream& xis );
+            void ReadOverloading ( xml::xistream& xis );
     virtual void ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis );
     //@}
 
     //! @name Accessors
     //@{
-    unsigned int GetID() const;
-    const MIL_AutomateType& GetType() const;
-    MIL_Army_ABC& GetArmy() const;
-    MIL_KnowledgeGroup& GetKnowledgeGroup() const;
-    MIL_AutomateLOG* GetTC2() const;
-    const MIL_AutomateOrderManager& GetOrderManager() const;
-    MIL_AutomateOrderManager& GetOrderManager();
-    MIL_AgentPion& GetPionPC() const;
-    const T_PionVector& GetPions() const; // Including pion PC
-    const T_AutomateVector& GetAutomates() const;
-    MIL_Automate* GetParentAutomate() const;
-    const DEC_AutomateDecision& GetDecision() const;
-    DEC_AutomateDecision& GetDecision() ;
-    DEC_KnowledgeBlackBoard_Automate& GetKnowledge() const;
-    bool IsEngaged() const;
+          unsigned int                      GetID            () const;
+    const MIL_AutomateType&                 GetType          () const;
+          MIL_Army_ABC&                     GetArmy          () const;
+          MIL_KnowledgeGroup&               GetKnowledgeGroup() const;
+          MIL_AutomateLOG*                  GetTC2           () const;
+    const MIL_AutomateOrderManager&         GetOrderManager  () const;
+          MIL_AutomateOrderManager&         GetOrderManager  ();
+          MIL_AgentPion&                    GetPionPC        () const;
+    const T_PionVector&                     GetPions         () const; // Including pion PC
+    const T_AutomateVector&                 GetAutomates     () const;
+          MIL_Automate*                     GetParentAutomate() const;
+    const DEC_AutomateDecision&             GetDecision      () const;
+          DEC_AutomateDecision&             GetDecision      () ;
+          DEC_KnowledgeBlackBoard_Automate& GetKnowledge     () const;
+          bool                              IsEngaged        () const;
     // logistics
     MIL_AutomateLOG*                        GetNominalTC2    () const;
     MIL_AutomateLOG*                        GetBrainLogistic () const;
@@ -139,22 +139,22 @@ public:
     //! @name Operations
     //@{
     bool CheckComposition() const;
-    void RegisterPion( MIL_AgentPion& pion );
+    void RegisterPion  ( MIL_AgentPion& pion, bool registerPC = true );
     void UnregisterPion( MIL_AgentPion& pion );
-    void RegisterAutomate( MIL_Automate& automate );
+    void RegisterAutomate  ( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );
-    void UpdateDecision( float duration );
-    void UpdateKnowledges( int currentTimeStep );
-    void CleanKnowledges();
-    virtual void UpdateNetwork() const;
-    virtual void UpdateState();
-    virtual void Clean();
+            void UpdateDecision  ( float duration );
+            void UpdateKnowledges( int currentTimeStep );
+            void CleanKnowledges ();
+    virtual void UpdateNetwork   () const;
+    virtual void UpdateState     ();
+    virtual void Clean           ();
 
     template< typename T > void ApplyOnHierarchy( T& functor )
     {
-        functor( *this );
+        functor(*this);
         for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
-            ( **it ).ApplyOnHierarchy( functor );
+            (**it).ApplyOnHierarchy( functor );
         for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
             functor( **it );
     }
@@ -165,11 +165,11 @@ public:
 
     //! @name Prisoners
     //@{
-    bool IsSurrendered() const;
+          bool      IsSurrendered           () const;
     const MIL_Army_ABC* GetArmySurrenderedTo() const;
-    bool NotifyCaptured( const MIL_AgentPion& pionTakingPrisoner );
-    bool NotifyReleased();
-    bool NotifyImprisoned( const MIL_Object_ABC& camp );
+          bool      NotifyCaptured          ( const MIL_AgentPion& pionTakingPrisoner );
+          bool      NotifyReleased          ();
+          bool      NotifyImprisoned        ( const MIL_Object_ABC& camp );
     //@}
 
     //! @name Refugees $$$$ A revoir
@@ -204,7 +204,7 @@ public:
     //! @name Misc
     //@{
     bool     GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const;
-    double   GetAlivePionsMaxSpeed  () const;
+    double GetAlivePionsMaxSpeed  () const;
     //@}
 
     //! @name Dynamic pions
@@ -215,9 +215,9 @@ public:
 
     //! @name Logistic : supply
     //@{
-    void     NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
-    void     NotifyDotationSupplied    ( const PHY_SupplyDotationState& supplyState );
-    void     RequestDotationSupply     ();
+    void NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
+    void NotifyDotationSupplied    ( const PHY_SupplyDotationState& supplyState );
+    void RequestDotationSupply     ();
 
     void     NotifyStockSupplyNeeded   ( const PHY_DotationCategory& dotationCategory );
     void     NotifyStockSupplied       ( const PHY_SupplyStockState& supplyState );
@@ -229,7 +229,7 @@ public:
 
     //! @name Tools
     //@{
-    void Engage();
+    void Engage   ();
     void Disengage();
     //@}
 
@@ -254,7 +254,7 @@ private:
     //! @name Helpers
     //@{
     void ReadAutomatSubordinate( xml::xistream& xis );
-    void ReadUnitSubordinate( xml::xistream& xis );
+    void ReadUnitSubordinate   ( xml::xistream& xis );
     void ReadExtension( xml::xistream& xis );
     //@}
 
@@ -262,24 +262,24 @@ private:
     //! @name Member data
     //@{
     const MIL_AutomateType* pType_;
-    const unsigned int nID_;
-    MIL_Formation* pParentFormation_;
-    MIL_Automate* pParentAutomate_;
-    bool bEngaged_;
-    MIL_KnowledgeGroup* pKnowledgeGroup_;
+    const unsigned int      nID_;
+          MIL_Formation*    pParentFormation_;
+          MIL_Automate*     pParentAutomate_;
+          bool              bEngaged_;
+    MIL_KnowledgeGroup*       pKnowledgeGroup_;
     MIL_AutomateOrderManager* pOrderManager_;
-    MIL_AgentPion* pPionPC_;
-    T_PionVector pions_; // Including pion PC
-    T_PionVector recycledPions_; // Dynamic pions
-    T_AutomateVector automates_;
-    bool bAutomateModeChanged_;
+    MIL_AgentPion*            pPionPC_;
+    T_PionVector              pions_; // Including pion PC
+    T_PionVector              recycledPions_; // Dynamic pions
+    T_AutomateVector          automates_;
+    bool                     bAutomateModeChanged_;
     std::map< std::string, std::string > extensions_;
-    unsigned int             nTickRcDotationSupplyQuerySent_;
+    unsigned int                     nTickRcDotationSupplyQuerySent_;
 
     // Knowledge
     DEC_KnowledgeBlackBoard_Automate* pKnowledgeBlackBoard_;
     // Surrendered / prisoner
-    const MIL_Army_ABC*      pArmySurrenderedTo_;
+    const MIL_Army_ABC*             pArmySurrenderedTo_;
 
     // Logistic
     MIL_AutomateLOG*        pTC2_;
