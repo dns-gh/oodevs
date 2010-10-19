@@ -11,6 +11,7 @@
 #define __OrderParameter_h_
 
 #include "OrderParameterValue.h"
+#include <set>
 
 namespace xml
 {
@@ -67,6 +68,7 @@ public:
     virtual void Accept( OrderParameterValueVisitor_ABC& visitor ) const;
     virtual void Accept( ChoicesVisitor_ABC& visitor ) const;
     void AddChoice( const std::string& choice );
+    std::string CompatibleType( const std::string& type ) const;
     //@}
 
 private:
@@ -80,6 +82,8 @@ private:
     //@{
     typedef std::map< unsigned int, OrderParameterValue > T_OrderParameterValues;
     typedef T_OrderParameterValues::const_iterator      CIT_OrderParameterValues;
+    typedef std::set< std::string >     T_Aliases;
+    typedef T_Aliases::const_iterator CIT_Aliases;
     //@}
 
 private:
@@ -91,7 +95,7 @@ private:
     unsigned int minOccurs_;
     unsigned int maxOccurs_;
     T_OrderParameterValues values_;
-    std::vector< std::string > choices_;
+    T_Aliases aliases_;
     //@}
 };
 

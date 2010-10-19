@@ -30,25 +30,6 @@ namespace actions
         class ParameterList;
     }
 
-    class LocationCompositeVisitor : public kernel::ChoicesVisitor_ABC
-    {
-    public:
-        LocationCompositeVisitor(){}
-        ~LocationCompositeVisitor(){}
-
-        virtual void Visit( const std::string& type )
-        {
-            choices_.push_back( type );
-        }
-        bool Ok( const std::string& type )
-        {
-            return find( choices_.begin(), choices_.end(), type ) != choices_.end();
-        }
-    private:
-        typedef std::vector< const std::string > T_CHOICES;
-        T_CHOICES choices_;
-    };
-
 // =============================================================================
 /** @class  ActionParameterFactory
     @brief  ActionParameterFactory

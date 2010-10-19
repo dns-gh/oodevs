@@ -206,38 +206,16 @@ namespace
 // -----------------------------------------------------------------------------
 actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const
 {
-    std::string expected = boost::algorithm::to_lower_copy( parameter.GetType() );
     std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) );
-    if( type != expected )
-    {
-        if( expected == "locationcomposite" )
-        {
-            LocationCompositeVisitor visitor;
-            parameter.Accept( visitor );
-            if( !visitor.Ok( type ) )
-                ThrowUnexpected( parameter, xis );
-        }
-        else
-        {
-            if( type == "phaselinelist" )
-                type = "phaseline";
-            else if( type == "direction" )
-                type = "heading";
-            else if( type == "intelligencelist" )
-                type = "intelligence";
-            if( type != expected )
-                ThrowUnexpected( parameter, xis );
-        }
-    }
+    type = parameter.CompatibleType( type );
+    if( type == "" )
+        ThrowUnexpected( parameter, xis );
     std::auto_ptr< actions::Parameter_ABC > param;
-
     bool found = DoCreateParameter( parameter, xis, entity, type, param );
     if( found == false )
         found = DoCreateParameter( parameter, xis, type, param );
-
     if( found == false )
         throw std::runtime_error( "Unknown parameter type '" + type + "'" );
-
     param->Set( true ); // $$$$ SBO 2007-10-11: ...
     return param.release();
 }
@@ -248,15 +226,13 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
 // -----------------------------------------------------------------------------
 actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis ) const
 {
-    std::string expected = boost::algorithm::to_lower_copy( parameter.GetType() );
     std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) );
-    if( type != expected )
+    type = parameter.CompatibleType( type );
+    if( type == "" )
         ThrowUnexpected( parameter, xis );
     std::auto_ptr< actions::Parameter_ABC > param;
-
     if( DoCreateParameter( parameter, xis, type, param ) == false )
         throw std::runtime_error( "Unknown parameter type '" + type + "'" );
-
     param->Set( true ); // $$$$ SBO 2007-10-11: ...
     return param.release();
 }

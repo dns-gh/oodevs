@@ -140,7 +140,7 @@ void OrderParameter::ReadChoice( xml::xistream& xis )
 {
     std::string type;
     xis >> xml::attribute( "type", type );
-    choices_.push_back( boost::algorithm::to_lower_copy( type ) );
+    aliases_.insert( boost::algorithm::to_lower_copy( type ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +169,7 @@ void OrderParameter::Accept( OrderParameterValueVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void OrderParameter::Accept( ChoicesVisitor_ABC& visitor ) const
 {
-    for( std::vector< std::string >::const_iterator it = choices_.begin(); it != choices_.end(); ++it )
+    for( CIT_Aliases it = aliases_.begin(); it != aliases_.end(); ++it )
         visitor.Visit( *it );
 }
 
@@ -179,7 +179,7 @@ void OrderParameter::Accept( ChoicesVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void OrderParameter::AddChoice( const std::string& choice )
 {
-    choices_.push_back( choice );
+    aliases_.insert( choice );
 }
 
 // -----------------------------------------------------------------------------
@@ -189,4 +189,23 @@ void OrderParameter::AddChoice( const std::string& choice )
 bool OrderParameter::IsList() const
 {
     return ( maxOccurs_ != 1 || minOccurs_ != 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::IsCompatible
+// Created: PHC 2010-10-18
+// -----------------------------------------------------------------------------
+std::string OrderParameter::CompatibleType( const std::string& type ) const
+{
+    if( type == type_ )
+        return type;
+    if( std::find( aliases_.begin(), aliases_.end(), type ) != aliases_.end() )
+        return type;
+    if( type == "phaselinelist" )
+        return "phaseline";
+    if( type == "direction" )
+        return "heading";
+    if( type == "intelligencelist" )
+        return "intelligence";
+    return "";
 }
