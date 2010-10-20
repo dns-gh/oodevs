@@ -28,7 +28,7 @@ SessionConfig::SessionConfig()
     : sessionConfigFile_( "session.xml" )
     , hasCheckPoint_( false )
 {
-    po::options_description desc( "Exercise options" );
+    po::options_description desc( "Session options" );
     desc.add_options()
         ( "session",    po::value< std::string >( &sessionName_ ), "specify session name" )
         ( "checkpoint", po::value< std::string >( &strCheckPointName_ ), "specify checkpoint to load"               )
