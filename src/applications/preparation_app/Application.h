@@ -15,7 +15,6 @@
 namespace kernel
 {
     class Controllers;
-    class Workers;
 }
 
 class MainWindow;
@@ -62,7 +61,6 @@ private:
     kernel::Controllers* controllers_;
     StaticModel* staticModel_;
     Model* model_;
-    kernel::Workers* workers_;
     MainWindow* mainWindow_;
     const QString license_;
     //@}

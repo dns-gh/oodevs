@@ -14,7 +14,6 @@
 #include "preparation/StaticModel.h"
 #include "preparation/Model.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Workers.h"
 #include "ENT/ENT_Tr.h"
 #include "preparation/Tools.h"
 #include <qsettings.h>
@@ -90,7 +89,6 @@ void Application::Initialize( int argc, char** argv )
 {
     config_      = new Config( argc, argv );
     controllers_ = new kernel::Controllers();
-    workers_     = new kernel::Workers();
     staticModel_ = new StaticModel( *controllers_ );
     model_       = new Model( *controllers_, *staticModel_ );
     mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *config_, license_ );
