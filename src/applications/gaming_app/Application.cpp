@@ -139,6 +139,6 @@ void Application::UpdateData()
     catch( std::exception& e )
     {
         network_->Disconnect();
-        QMessageBox::critical( 0, tools::translate( "Application", "SWORD" ), e.what(), QMessageBox::Abort, QMessageBox::Abort );
+        QMessageBox::critical( 0, tools::translate( "Application", "SWORD" ), e.what() );
     }
 }
