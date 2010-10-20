@@ -14,12 +14,6 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "protocol/Protocol.h"
 
-using namespace kernel;
-
-namespace MsgsSimToClient
-{
-    class MsgDecisionalState;
-}
 // -----------------------------------------------------------------------------
 // Name: DecisionalStates constructor
 // Created: AGE 2007-05-31
@@ -49,12 +43,12 @@ DecisionalStates::~DecisionalStates()
 // -----------------------------------------------------------------------------
 void DecisionalStates::DoUpdate( const MsgsSimToClient::MsgDecisionalState& message )
 {
-    static const std::string contact( "Contact" );
+    static const std::string contact   ( "Contact" );
     static const std::string sauvegarde( "eEtatDec_Sauvegarde" );
-    static const std::string echelon( "Echelon" );
+    static const std::string echelon   ( "Echelon" );
     static const std::string first     ( "eEtatEchelon_Premier" );
     static const std::string eclairage ( "eEtatEchelon_Eclairage" );
-    static const std::string etat   ( "EtatOps" );
+    static const std::string etat      ( "EtatOps" );
     static const std::string none      ( "eEtatDestruction_None" );
 
     // $$$$ AGE 2007-05-31:
@@ -75,18 +69,18 @@ void DecisionalStates::DoUpdate( const MsgsSimToClient::MsgDecisionalState& mess
 // Name: DecisionalStates::Draw
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void DecisionalStates::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void DecisionalStates::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() && tools.ShouldDisplay( "DecisionalState" ) )
     {
         if( drawSauvegarde_ )
-            tools.DrawSvg( "sauvegarde.svg", where, ratio_ );
+            tools.DrawSvg( "sauvegarde.svg", where, ratio_ * tools.GetAdaptiveZoomFactor() );
         if( drawEclairage_ )
-            tools.DrawSvg( "eclairage.svg", where, ratio_ );
+            tools.DrawSvg( "eclairage.svg", where, ratio_ * tools.GetAdaptiveZoomFactor() );
         if( draw1stEchelon_ )
-            tools.DrawSvg( "1stechelon.svg", where, ratio_ );
+            tools.DrawSvg( "1stechelon.svg", where, ratio_ * tools.GetAdaptiveZoomFactor() );
         if( drawEtatOps_ )
-            tools.DrawSvg( "opstatehs.svg", where, ratio_ );
+            tools.DrawSvg( "opstatehs.svg", where, ratio_ * tools.GetAdaptiveZoomFactor() );
     }
 }
 
@@ -94,7 +88,7 @@ void DecisionalStates::Draw( const geometry::Point2f& where, const Viewport_ABC&
 // Name: DecisionalStates::DisplayInTooltip
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void DecisionalStates::DisplayInTooltip( Displayer_ABC& displayer ) const
+void DecisionalStates::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
     for( CIT_Values it = values_.begin(); it != values_.end(); ++it )
         displayer.Display( it->first + ": ", it->second );
