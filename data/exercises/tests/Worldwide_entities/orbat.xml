@@ -829,7 +829,7 @@
         <knowledge-group id="42" name="Groupe de connaissance [42]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic>
+      <logistics>
         <tc2 id="94"/>
           <subordinate id="94"/>
         </tc2>
@@ -856,7 +856,7 @@
           <subordinate id="125"/>
           <subordinate id="196"/>
         </logistic-base>
-      </logistic>
+      </logistics>
     </side>
   </sides>
   <diplomacies>

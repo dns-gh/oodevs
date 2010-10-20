@@ -194,9 +194,9 @@
         <knowledge-group id="270" name="Groupe de connaissance [270]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic>
+      <logistics>
         <tc2 id="482"/>
-      </logistic>
+      </logistics>
     </side>
     <side id="3" name="VERMILLON" type="enemy">
       <objects/>
@@ -215,7 +215,7 @@
         <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
   </sides>
   <diplomacies>

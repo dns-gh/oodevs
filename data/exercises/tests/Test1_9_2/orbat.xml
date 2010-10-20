@@ -349,9 +349,9 @@
       <populations>
         <population attitude="calme" humans="1000" id="3622" name="Population standard [3622]" position="31UBQ9527104949" type="Population standard"/>
       </populations>
-      <logistic>
+      <logistics>
         <tc2 id="482"/>
-      </logistic>
+      </logistics>
     </side>
     <side id="3" name="VERMILLON" type="enemy">
       <objects>
@@ -385,7 +385,7 @@
         <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
   </sides>
   <diplomacies>

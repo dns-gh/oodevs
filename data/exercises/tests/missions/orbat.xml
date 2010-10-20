@@ -29,7 +29,7 @@
         <knowledge-group id="3" name="Knowledge group [3]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
     <side id="4" name="blue" type="friend">
       <objects/>
@@ -47,12 +47,12 @@
         <knowledge-group id="6" name="Knowledge group [6]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic>
+      <logistics>
         <tc2 id="12">
           <subordinate id="7"/>
           <subordinate id="12"/>
         </tc2>
-      </logistic>
+      </logistics>
     </side>
   </sides>
   <diplomacies>

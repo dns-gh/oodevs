@@ -24,7 +24,7 @@
         <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
     <side id="3" name="Les Gentils" type="friend">
       <objects>
@@ -332,7 +332,7 @@
         <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic>
+      <logistics>
         <tc2 id="459">
           <subordinate id="445"/>
           <subordinate id="463"/>
@@ -360,7 +360,7 @@
             </quotas>
           </subordinate>
         </logistic-base>
-      </logistic>
+      </logistics>
     </side>
   </sides>
   <diplomacies>
