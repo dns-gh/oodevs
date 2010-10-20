@@ -23,7 +23,6 @@ include "bit.lua"
     activate = function( self )
         local Activate = Activate
         self.pionTC2 = self.pionTC2 or DEC_Automate_PcDeTC2()
-
         for _,x in pairs( DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
@@ -215,7 +214,6 @@ node "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX"
         self.listePionsPourHeliporterPlots = {}
         self.listePionsASoutenirRav = {}
         self.listePionsASoutenirIMEX = {}
-
         --[[//les pions qui ont la mission IMEX
 ]]self.listePionsIMEX = S_Cherche_Automate_Filtre_TypeMission( self._namedParams.listePionsHMLog, "T_Mission_Pion_ALAT_IMEX" )
         --[[// les pions qui ont la mission de transport de plot

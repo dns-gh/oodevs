@@ -16,8 +16,7 @@ include "bit.lua"
 
     activate = function( self )
         local Activate = Activate
-        self.pionTC2 = self.TC2 or DEC_Automate_PcTC2()        
-
+        self.pionTC2 = self.pionTC2 or DEC_Automate_PcDeTC2()
         for _,x in pairs( DEC_Automate_PionsAvecPC() or {} ) do
         local _continue = true
 do
@@ -194,13 +193,12 @@ node "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX"
         self.pointDebarquement = self.pointDebarquement or DEC_Geometrie_CreerPoint()
         local distanceBuffer = 0
         local bCreerPlots = false
-        local pionTC2 = DEC_Automate_PcDeTC2()
+        local pionTC2 = DEC_Automate_PcTC2()
         self.listePionsIMEX = {}
         self.listePionsTransportPlots = {}
         self.listePionsPourHeliporterPlots = {}
         self.listePionsASoutenirRav = {}
         self.listePionsASoutenirIMEX = {}
-
         self.listePionsIMEX = S_Cherche_Automate_Filtre_TypeMission( self._namedParams.listePionsHMLog, "T_Mission_Pion_ALAT_IMEX" )
         self.listePionsTransportPlots = S_Cherche_Automate_Filtre_TypeMission( self._namedParams.listePionsHMLog, "T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" )
         self.listePionsPourHeliporterPlots = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_PionsNonEnCoursExtraction( self._namedParams.listePionsHMLog ), self.listePionsTransportPlots )

@@ -39,7 +39,6 @@ include "bit.lua"
         self.positionPlotRavitaillement = self.positionPlotRavitaillement or DEC_Geometrie_CreerPoint()
         self.ePhase = self.ePhase or eRejoindre
         local pionTC2 = DEC_Pion_PcDeTC2()
-
         --[[// Si on n'a pas de TC2 ni de plot de ravitaillement attribué
 ]]if( not DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) and pionTC2 == nil ) then
             do return end
@@ -214,7 +213,6 @@ node "BEH_Log_Pion_ALAT_GererPlotsRavitaillement"
         --[[//dependances des comportements
 ]]Activate( self.activations.BEH_Log_Pion_ALAT_Recompletement, 0, {} )
         Activate( self.activations.BEH_Mot_Pion_ALAT_AffecterVariablesDEtat, 0, {} )
-
         for _,x in pairs( S_Obj_ListeObjetsValides( myself.plotsRavitaillement_ ) or {} ) do
         local _continue = true
 do

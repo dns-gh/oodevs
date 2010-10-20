@@ -16,7 +16,6 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/fonctions/Fonctions
     local _returnValue = 0
     local pointDeRecompletement = DEC_Geometrie_CreerPoint()
     local pionTC2 = DEC_Pion_PcDeTC2()
-
     if( DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) ) then
         do
             local positionPlotRavitaillement = S_Geometrie_BarycentreZone( DEC_ConnaissanceObjet_Localisation( myself.plotRavitaillementAssigne_ ) )

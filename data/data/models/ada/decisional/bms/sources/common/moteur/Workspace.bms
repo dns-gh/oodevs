@@ -13,7 +13,7 @@ includedFiles["sources/common/moteur/Workspace.bms"] = true
 ]]--[[/*liste*//*elt*/]]--[[/*liste*//*elt*/]]--[[/*T_Point*//*T_ListePoints*//*nIdx*/// Le point retourné doit être détruit par l'utilisateur quand il n'est plus utile
 ]]--[[/*T_ListePointsS_TypeObject_ToString*/]]--[[/*T_ListePoints*//*T_Point a ajouter*/]]--[[/*T_ListePoints*//*T_Point a enlever*/]]--[[// Debug                            
 ]]--[[/*T_Point*/]]--[[/*T_Direction*/]]--[[/*T_Itineraire*/]]--[[// Logistique                       
-]]--[[/*T_Pion pion interrogé*/]]--[[/*T_Pion pion possèdant les blessés à transférer*//*T_Automate tc2 destinataire*/]]--[[/*T_Pion*/]]--[[/*T_Pion*/]]--[[// Objets                           
+]]--[[/*T_Pion pion interrogé*/]]--[[/*T_Pion pion possèdant les blessés à transférer*//*T_Pion pc du tc2 destinataire*/]]--[[/*T_Pion*/]]--[[/*T_Pion*/]]--[[// Objets                           
 ]]--[[// B                                   DEC_TypeObjet_PeutEtreContourne  ( I /*E_TypeObject*/ );
 ]]--[[// B                                   DEC_TypeObjet_PeutEtreValorise   ( I /*E_TypeObject*/ );
 ]]--[[// B                                   DEC_TypeObjet_PeutEtreDeManoeuvre( I /*E_TypeObject*/ );

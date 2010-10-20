@@ -15,12 +15,7 @@ includedFiles["sources/appui/alat/pions/common/fonctions/Fonctions - Misc.bms"] 
 ]]function S_Misc_Pion_ALAT_TempsPourAllerRecompleter( )
     local _returnValue = 0
     local pointDeRecompletement = DEC_Geometrie_CreerPoint()
-    local TC2 = DEC_Pion_TC2()
-    local pionTC2 = nil
-    if( TC2 ~= nil ) then
-        pionTC2 = DEC_Pion_PionPCDeAutomate( TC2 )
-    end
-
+    local pionTC2 = DEC_Pion_PcDeTC2()
     if( DEC_ConnaissanceObjet_EstValide( myself.plotRavitaillementAssigne_ ) ) then
         do
             local positionPlotRavitaillement = S_Geometrie_BarycentreZone( DEC_ConnaissanceObjet_Localisation( myself.plotRavitaillementAssigne_ ) )

@@ -68,11 +68,10 @@ include "bit.lua"
         --[[//MAJ de la liste des pions a suivre
 ]]self.listePionsASuivre = S_Liste_Pion_ALAT_UnitesASuivre( self.listePionsAPotentiellementExtraire )
         --[[// Obtention du TC2 de myself.
-]]--[[// ---------------------------                
-]]
-        local pionTC2 = DEC_Pion_PcDeTC2()
+]]--[[// ---------------------------     
+]]local pionTC2 = DEC_Pion_PcDeTC2()
         if( TC2 == nil ) then
-do
+            do
                 DEC_Trace( "Mission Impossible : pas de TC2" )
                 DEC_Warning( eRC_MissionImpossible )
                                 self:SendFeedback( eActionImpossible )
