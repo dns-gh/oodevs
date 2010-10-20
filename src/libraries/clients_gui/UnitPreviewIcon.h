@@ -19,7 +19,9 @@ namespace kernel
     class AutomatType;
     class Formation_ABC;
     class Automat_ABC;
+    class Team_ABC;
     class Entity_ABC;
+    class Agent_ABC;
 }
 
 namespace gui
@@ -38,6 +40,8 @@ class UnitPreviewIcon : public QHBox
                       , public tools::SelectionObserver_ABC
                       , public tools::SelectionObserver_Base< kernel::Formation_ABC >
                       , public tools::SelectionObserver_Base< kernel::Automat_ABC >
+                      , public tools::SelectionObserver_Base< kernel::Team_ABC >
+                      , public tools::SelectionObserver_Base< kernel::Agent_ABC >
 {
     Q_OBJECT;
 
@@ -79,6 +83,9 @@ private:
     virtual void AfterSelection();
     virtual void Select( const kernel::Formation_ABC& element );
     virtual void Select( const kernel::Automat_ABC& element );
+    virtual void Select( const kernel::Team_ABC& element );    
+    virtual void Select( const kernel::Agent_ABC& element );
+
     virtual void mouseMoveEvent( QMouseEvent* event );
     //@}
 

@@ -19,7 +19,12 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Diplomacies_ABC.h"
+#include "clients_kernel/Karma.h"
+#include "clients_kernel/App6Symbol.h"
 #include "tools/App6Symbol.h"
 
 using namespace kernel;
@@ -97,6 +102,15 @@ void UnitPreviewIcon::AfterSelection()
 
 // -----------------------------------------------------------------------------
 // Name: UnitPreviewIcon::Select
+// Created: NLD 2010-10-13
+// -----------------------------------------------------------------------------
+void UnitPreviewIcon::Select( const kernel::Team_ABC& element )
+{
+    selectedParent_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitPreviewIcon::Select
 // Created: SBO 2007-10-16
 // -----------------------------------------------------------------------------
 void UnitPreviewIcon::Select( const kernel::Formation_ABC& element )
@@ -114,30 +128,46 @@ void UnitPreviewIcon::Select( const kernel::Automat_ABC& element )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UnitPreviewIcon::Select
+// Created: NLD 2010-10-13
+// -----------------------------------------------------------------------------
+void UnitPreviewIcon::Select( const kernel::Agent_ABC& element )
+{
+   selectedParent_ = &element;
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: UnitPreviewIcon::UpdateSymbol
 // Created: SBO 2007-10-16
 // -----------------------------------------------------------------------------
 void UnitPreviewIcon::UpdateSymbol()
 {
-    if( selectedParent_ )
+    if( symbol_.empty() )
     {
-        std::string symbol = selectedParent_->Get< TacticalHierarchies >().GetSymbol();
-        symbol = tools::app6::MergeSymbol( symbol_, symbol );
+        QPixmap blank( 128, 128 );
+        blank.fill( Qt::white );
+        icon_->setPixmap( blank );
+    }
+    else
+    {
         QImage img;
-        SymbolIcon icon( symbol, level_ );
-        icon.SetColor( colorStrategy_.FindColor( *selectedParent_ ) );
+        if( selectedParent_ )
+        {
+            const TacticalHierarchies* pHierarchy = selectedParent_->Retrieve< TacticalHierarchies >();
+            if( pHierarchy )
+                kernel::App6Symbol::SetKarma( symbol_, pHierarchy->GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
+        }
+        SymbolIcon icon( symbol_, level_ );
+        if( selectedParent_ )
+            icon.SetColor( colorStrategy_.FindColor( *selectedParent_ ) );
+                
         icon.SetSize( 128 );
         img = icons_.GetSymbol( icon );
         if( !img.isNull() )
             icon_->setPixmap( img );
         else
             QTimer::singleShot( 100, this, SLOT( UpdateSymbol() ) );
-    }
-    else
-    {
-        QPixmap blank( 128, 128 );
-        blank.fill( Qt::white );
-        icon_->setPixmap( blank );
     }
 }
 

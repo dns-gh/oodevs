@@ -54,9 +54,13 @@ void App6Symbol::SetKarma( std::string& symbol, const kernel::Karma& karma )
     if( karmaChars_.empty() ) // $$$$ SBO 2007-02-26:
         Initialize();
     std::string::size_type pos = symbol.find_last_of( '/' );
-    if( symbol.empty() )
-        return;
-    symbol[ pos != std::string::npos ? pos + 2 : 1 ] = karmaChars_[karma];
+    if( pos != std::string::npos )
+    {
+        if( symbol.size() > pos+2 )
+            symbol[pos + 2] = karmaChars_[karma];
+    }
+    else if( symbol.size() > 2 )
+        symbol[1] = karmaChars_[karma];
 }
 
 namespace

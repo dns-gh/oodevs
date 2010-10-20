@@ -78,9 +78,10 @@ void IconsRenderPass::RenderIcon( const T_IconTask& task )
     tools_.SetCurrentColor( symbol.color_.red() / 255.f, symbol.color_.green() / 255.f, symbol.color_.blue() / 255.f );
     const float thickness = viewport_.Width() * 1.5f / iconSide_;
     const geometry::Point2f center( 300, 100 );
-    tools_.DrawApp6Symbol( symbol.symbol_, center, 1.f, thickness );
+    if( ! symbol.symbol_.empty() )
+        tools_.DrawApp6Symbol( symbol.symbol_, center, 1.f, thickness );
     if( ! symbol.level_.empty() )
-        tools_.DrawApp6Symbol( symbol.level_, center, 1.f, thickness );
+	    tools_.DrawApp6Symbol( symbol.level_, center, 1.f, thickness );
 
     glFlush();
     QImage image( iconSide_, iconSide_, 32 );
