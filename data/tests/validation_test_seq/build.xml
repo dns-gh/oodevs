@@ -68,17 +68,10 @@
             <arg value="launch.sh"/>
             <arg value="${scripts_dir}"/>
             <arg value="${reports_dir}"/>
-        </exec>
-    </target>
-    
-    <target name="reports" description="imports log files from launched exercises to reports directory.">
-        <exec executable="bash.exe">
-            <arg value="reports.sh"/>
             <arg value="${target_exercise}"/>
-            <arg value="${reports_dir}"/>
         </exec>
     </target>
     
-    <target name="all" depends="realclean, deploy, launch, reports"/>
+    <target name="all" depends="realclean, deploy, launch"/>
     
 </project>

@@ -1,22 +1,16 @@
 target_exercise=$1
-reports_dir=$2
+testname=$2
+reports_dir=$3
 
 mkdir -p $reports_dir
 
-for line in `find $target_exercise -name '*Dispatcher.log'`
-do 
-    cp $line $reports_dir/`echo $line | cut -d "/" -f 5`_dispatcher.log
-done
+echo "simulation errors :" `grep -r "Error" ${target_exercise}/$testname | grep -r "Sim.log" | wc -l`
+echo "dispatcher errors :" `grep -r "Error" ${target_exercise}/$testname | grep -r "Dispatcher.log" | wc -l`
+echo "mission impossible:" `grep -r "mission impossible" ${target_exercise}/$testname | wc -l`
 
-for line in `find $target_exercise -name '*Sim.log'`
-do 
-    cp $line $reports_dir/`echo $line | cut -d "/" -f 5`_sim.log
-done
-
-for line in `find $target_exercise -name '*Messages.log'`
-do 
-    cp $line $reports_dir/`echo $line | cut -d "/" -f 5`_messages.log
-done
-
-echo "Errors:" `grep -r "Error" $reports_dir | wc -l`
-echo "mission impossible:" `grep -r "mission impossible" $reports_dir | wc -l`
+echo $testname >> $reports_dir/reports.log
+echo "-----" >> $reports_dir/reports.log
+echo "simulation errors :" `grep -r "Error" ${target_exercise}/$testname | grep -r "Sim.log" | wc -l` >> $reports_dir/reports.log
+echo "dispatcher errors :" `grep -r "Error" ${target_exercise}/$testname | grep -r "Dispatcher.log" | wc -l` >> $reports_dir/reports.log
+echo "mission impossible:" `grep -r "mission impossible" ${target_exercise}/$testname | wc -l` >> $reports_dir/reports.log
+echo "-----" >> $reports_dir/reports.log
