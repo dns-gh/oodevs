@@ -57,10 +57,10 @@ private:
 private:
     //! @name Member data
     //@{
-    Config* config_;
-    kernel::Controllers* controllers_;
-    StaticModel* staticModel_;
-    Model* model_;
+    std::auto_ptr< Config > config_;
+    std::auto_ptr< kernel::Controllers > controllers_;
+    std::auto_ptr< StaticModel > staticModel_;
+    std::auto_ptr< Model > model_;
     MainWindow* mainWindow_;
     const QString license_;
     //@}

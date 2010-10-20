@@ -17,6 +17,10 @@
         <source>Preparation</source>
         <translation>Préparation</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
 </context>
 <context>
     <name>CommunicationListView</name>

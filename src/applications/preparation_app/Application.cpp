@@ -21,8 +21,6 @@
 
 namespace
 {
-    struct CatchMeIfYouCan {};
-
     QString ReadLang()
     {
         QSettings settings;
@@ -70,15 +68,7 @@ Application::~Application()
 // -----------------------------------------------------------------------------
 void Application::Initialize()
 {
-    try
-    {
-        Initialize( argc(), argv() );
-    }
-    catch( std::exception& e )
-    {
-        QMessageBox::critical( 0, tools::translate( "Application", "SWORD" ), e.what() );
-        throw CatchMeIfYouCan();
-    }
+    Initialize( argc(), argv() );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,11 +77,11 @@ void Application::Initialize()
 // -----------------------------------------------------------------------------
 void Application::Initialize( int argc, char** argv )
 {
-    config_      = new Config( argc, argv );
-    controllers_ = new kernel::Controllers();
-    staticModel_ = new StaticModel( *controllers_ );
-    model_       = new Model( *controllers_, *staticModel_ );
-    mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *config_, license_ );
+    config_.reset( new Config( argc, argv ) );
+    controllers_.reset( new kernel::Controllers() );
+    staticModel_.reset( new StaticModel( *controllers_ ) );
+    model_.reset( new Model( *controllers_, *staticModel_ ) );
+    mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *config_, license_ );
     mainWindow_->show();
 
     // Make sure the application exits when the main window is closed.

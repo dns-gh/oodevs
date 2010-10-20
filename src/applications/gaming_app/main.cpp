@@ -32,7 +32,6 @@ int main( int argc, char** argv )
 
     QApplication::setStyle( "windowsxp" );
     Application app( argc, argv, expiration );
-
     BugTrap::Setup( tools::translate( "Application", "SWORD" ).ascii() )
             .SetEmail( tools::translate( "Application", "sword@masagroup.net" ).ascii() )
             .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );
@@ -43,10 +42,13 @@ int main( int argc, char** argv )
     }
     catch( std::exception& e )
     {
+        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), e.what() );
+    }
+    catch( std::runtime_error& e )
+    {
         QMessageBox::critical( 0, tools::translate( "Application", "Unhandled error" ), e.what() );
         throw;
     }
-
     return 0;
 }
 

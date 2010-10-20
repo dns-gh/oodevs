@@ -24,24 +24,17 @@ namespace po  = boost::program_options;
 // -----------------------------------------------------------------------------
 Config::Config( int argc, char** argv )
 {
-    po::options_description desc( "Replayer options" );
+    po::options_description desc( "Gaming options" );
     desc.add_options()
         ( "host",  po::value< std::string >( &host_ ), "specify host to join" )
         ( "login", po::value< std::string >( &login_ ), "specify login" )
     ;
     AddOptions( desc );
 
-    try
-    {
-        Parse( argc, argv );
-        isLoginInCommandLine_ = IsSet( "login" );
-        if( isLoginInCommandLine_ && login_ == "anonymous" )
-            login_ = "";
-    }
-    catch( ... )
-    {
-        // NOTHING
-    }
+    Parse( argc, argv );
+    isLoginInCommandLine_ = IsSet( "login" );
+    if( isLoginInCommandLine_ && login_ == "anonymous" )
+        login_ = "";
 }
 
 // -----------------------------------------------------------------------------

@@ -33,8 +33,6 @@ using namespace kernel;
 
 namespace
 {
-    struct CatchMeIfYouCan {};
-
     QString ReadLang()
     {
         QSettings settings;
@@ -73,9 +71,7 @@ Application::Application( int argc, char** argv, const QString& expiration )
 // -----------------------------------------------------------------------------
 Application::~Application()
 {
-    delete network_;
-    delete workers_;
-    delete config_;
+    // NOTHING
 }
 
 
@@ -85,15 +81,7 @@ Application::~Application()
 // -----------------------------------------------------------------------------
 void Application::Initialize()
 {
-    try
-    {
-        Initialize( argc(), argv() );
-    }
-    catch( std::exception& e )
-    {
-        QMessageBox::critical( 0, tools::translate( "Application", "SWORD" ), e.what() );
-        throw CatchMeIfYouCan();
-    }
+    Initialize( argc(), argv() );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,17 +90,17 @@ void Application::Initialize()
 // -----------------------------------------------------------------------------
 void Application::Initialize( int argc, char** argv )
 {
-    config_      = new Config( argc, argv );
-    controllers_ = new Controllers();
-    logger_      = new LoggerProxy();
-    services_    = new Services( controllers_->controller_, *logger_ );
-    simulation_  = new Simulation( controllers_->controller_ );
-    workers_     = new Workers();
-    network_     = new Network( *services_, *simulation_, *logger_ );
+    config_.reset( new Config( argc, argv ) );
+    controllers_.reset( new Controllers() );
+    logger_.reset( new LoggerProxy() );
+    services_.reset( new Services( controllers_->controller_, *logger_ ) );
+    simulation_.reset( new Simulation( controllers_->controller_ ) );
+    workers_.reset( new Workers() );
+    network_.reset( new Network( *services_, *simulation_, *logger_ ) );
     RcEntityResolver_ABC* rcResolver = new RcEntityResolver( this, *controllers_ );
-    staticModel_ = new ::StaticModel( *controllers_, *rcResolver, *simulation_ );
-    model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *rcResolver );
-    profile_     = new Profile( *controllers_, network_->GetMessageMgr(), config_->GetLogin(), config_->IsLoginInCommandLine() );
+    staticModel_.reset( new ::StaticModel( *controllers_, *rcResolver, *simulation_ ) );
+    model_.reset( new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *rcResolver ) );
+    profile_.reset( new Profile( *controllers_, network_->GetMessageMgr(), config_->GetLogin(), config_->IsLoginInCommandLine() ) );
     network_->GetMessageMgr().SetElements( *model_, *profile_ );
     mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *network_, *profile_, *config_, *logger_, expiration_ );
     mainWindow_->show();
@@ -120,7 +108,7 @@ void Application::Initialize( int argc, char** argv )
     connect( this, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
     networkTimer_ = new QTimer( this );
     connect( networkTimer_, SIGNAL( timeout()), SLOT( UpdateData() ) );
-    networkTimer_->start(10);
+    networkTimer_->start( 10 );
 
     config_->Connect( *network_ );
 }

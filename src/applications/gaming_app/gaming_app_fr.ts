@@ -274,6 +274,10 @@
         <source> - Planning mode on</source>
         <translation type="unfinished"> - Mode Planification</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
 </context>
 <context>
     <name>BorrowingsListView</name>

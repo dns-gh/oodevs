@@ -71,16 +71,16 @@ private:
 private:
     //! @name Member data
     //@{
-    Config* config_;
-    kernel::Controllers* controllers_;
-    StaticModel* staticModel_;
-    Model* model_;
-    Services* services_;
-    Simulation* simulation_;
-    Profile* profile_;
-    kernel::Workers* workers_;
-    LoggerProxy* logger_;
-    Network* network_;
+    std::auto_ptr< Config > config_;
+    std::auto_ptr< kernel::Controllers > controllers_;
+    std::auto_ptr< StaticModel > staticModel_;
+    std::auto_ptr< Model > model_;
+    std::auto_ptr< Services > services_;
+    std::auto_ptr< Simulation > simulation_;
+    std::auto_ptr< Profile > profile_;
+    std::auto_ptr< kernel::Workers > workers_;
+    std::auto_ptr< LoggerProxy > logger_;
+    std::auto_ptr< Network > network_;
     MainWindow* mainWindow_;
     QTimer* networkTimer_;
     const QString expiration_;
