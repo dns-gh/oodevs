@@ -236,7 +236,7 @@ void PHY_InjuredHuman::UpdateInjuredHumanInfo( float currentTime )
     {
         if( lifeExpectancy != -1 && (*it)->CanInjuryBeDeadly() )
         {
-            lifeExpectancy  = min( (*it)->GetLifeExpectancy() , lifeExpectancy );
+            lifeExpectancy  = std::min( (*it)->GetLifeExpectancy(), lifeExpectancy );
             iter = it;
         }
         else if( (*it)->CanInjuryBeDeadly() )

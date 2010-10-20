@@ -10,6 +10,7 @@
 #include "script_plugin_pch.h"
 #include "Event.h"
 #include "Condition_ABC.h"
+#include <iterator>
 
 using namespace plugins::script;
 

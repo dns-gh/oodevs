@@ -14,6 +14,7 @@
 #include "MT_Line.h"
 #include "MT_Droite.h"
 #include "MT_Circle.h"
+#include <iterator>
 
 //-----------------------------------------------------------------------------
 // Name: MT_Polyline constructor

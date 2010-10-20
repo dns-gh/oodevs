@@ -229,65 +229,8 @@ inline class_mem_fun_void_const_t< Class, Param > class_mem_fun_void_const( void
 }
 //@}
 
-
-//-------------------------------------------------------------------------
-/** @name Fonction "identité" manquant à la STL de Visual ( bon d'accord c'est pas standard ) */
-//-------------------------------------------------------------------------
-//@{
 namespace std
 {
-    //-----------------------------------------------------------------------------
-    // Name: identity
-    // Created: JVT 03-09-15
-    //-----------------------------------------------------------------------------
-    template < class type >
-    struct identity : public unary_function< type, type >
-    {
-        const type& operator() ( const type& x ) const
-        {
-            return x;
-        }
-    };
-
-    //-----------------------------------------------------------------------------
-    // Name: project1st
-    // Created: JVT 03-09-15
-    //-----------------------------------------------------------------------------
-    template < class Arg1, class Arg2 >
-    struct project1st : public binary_function< Arg1, Arg2, Arg1 >
-    {
-        const Arg1& operator () ( const Arg1& x, const Arg2& y ) const
-        {
-            return x;
-        }
-    };
-
-    //-----------------------------------------------------------------------------
-    // Name: project2nd
-    // Created: JVT 03-09-15
-    //-----------------------------------------------------------------------------
-    template < class Arg1, class Arg2 >
-    struct project2nd : public binary_function< Arg1, Arg2, Arg2 >
-    {
-        const Arg2& operator () ( const Arg1& x, const Arg2& y ) const
-        {
-            return y;
-        }
-    };
-
-    //-----------------------------------------------------------------------------
-    // Name: select1st
-    // Created: JVT 03-09-15
-    //-----------------------------------------------------------------------------
-    template < class Pair >
-    struct select1st : public unary_function< Pair, typename Pair::first_type >
-    {
-        const typename Pair::first_type& operator () ( const Pair& x ) const
-        {
-            return x.first;
-        }
-    };
-
     //-----------------------------------------------------------------------------
     // Name: select2nd
     // Created: JVT 03-09-15
@@ -301,7 +244,6 @@ namespace std
         }
     };
 };
-//@}
 
 //-------------------------------------------------------------------------
 /** @name Comparaison de chaînes de caractère */

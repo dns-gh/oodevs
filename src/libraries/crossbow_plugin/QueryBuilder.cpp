@@ -14,6 +14,7 @@
 #include <boost/lexical_cast.hpp>
 #include <algorithm>
 #include <functional>
+#include <iterator>
 
 using namespace plugins::crossbow;
 
