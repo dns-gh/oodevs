@@ -67,25 +67,38 @@ namespace
             else
                 bfs::copy_file( *it, to / it->filename() );
     }
-}
 
-void CreateExercise( const bfs::path& inputPath, const bfs::path& outputPath, const bfs::path& orderFile )
-{
-    bfs::create_directory( outputPath );
-    bfs::create_directory( outputPath / bfs::basename( orderFile ) );
-    recursive_copy( inputPath, outputPath / bfs::basename( orderFile ) );
-    bfs::create_directory( outputPath / bfs::basename( orderFile ) / "scripts" );
-    bfs::create_directory( outputPath / bfs::basename( orderFile ) / "scripts" / "resources" );
-    bfs::copy_file( orderFile, outputPath / bfs::basename( orderFile ) / "scripts/resources" / orderFile.filename() );
-    bfs::path session = bfs::path( outputPath / bfs::basename( orderFile ) / "sessions/default/session.xml" );
-    bfs::remove( session );
-    xml::xifstream xis( orderFile.string().substr( 0, orderFile.string().length() - 3 ) + "config" );
-    xsl::xftransform xft( "resources/validation_test/session.xsl", session.string() );
-    xft << xis;
-    xml::xifstream xis2( orderFile.string() );
-    xsl::xftransform xft2( "resources/validation_test/transformation.xsl",
-                           bfs::path( outputPath / bfs::basename( orderFile ) / "scripts" / bfs::basename( orderFile ) ).string() + ".lua" );
-    xft2 << xsl::parameter( "profilename", bfs::basename( orderFile ) ) << xis2;
+    void CreateExercise( const bfs::path& inputPath, const bfs::path& outputPath, const bfs::path& orderFile )
+    {
+        bfs::create_directory( outputPath );
+        bfs::create_directory( outputPath / bfs::basename( orderFile ) );
+        recursive_copy( inputPath, outputPath / bfs::basename( orderFile ) );
+        bfs::create_directory( outputPath / bfs::basename( orderFile ) / "scripts" );
+        bfs::create_directory( outputPath / bfs::basename( orderFile ) / "scripts" / "resources" );
+        bfs::copy_file( orderFile, outputPath / bfs::basename( orderFile ) / "scripts/resources" / orderFile.filename() );
+        bfs::path session = bfs::path( outputPath / bfs::basename( orderFile ) / "sessions/default/session.xml" );
+        bfs::remove( session );
+        xml::xifstream xis( orderFile.string().substr( 0, orderFile.string().length() - 3 ) + "config" );
+        xsl::xftransform xft( "resources/validation_test/session.xsl", session.string() );
+        xft << xis;
+        xml::xifstream xis2( orderFile.string() );
+        xsl::xftransform xft2( "resources/validation_test/transformation.xsl",
+            bfs::path( outputPath / bfs::basename( orderFile ) / "scripts" / bfs::basename( orderFile ) ).string() + ".lua" );
+        xft2 << xsl::parameter( "profilename", bfs::basename( orderFile ) ) << xis2;
+    }
+
+    void launchExercises( const bfs::path& exercisesRoot )
+    {
+        bfs::directory_iterator end_it;
+        for( bfs::directory_iterator it( exercisesRoot ); it != end_it; ++it )
+        {
+            std::cout << "executing " << it->filename() << std::endl;
+            const std::string command( ".\\..\\..\\out\\applications\\simulation_app\\vc80\\Release\\simulation_app.exe --root-dir=../../data --exercise=validation_test_seq/" + 
+                                 it->filename() + " --session=default" );
+            system( command.c_str() );
+
+        }
+    }
 }
 
 int main( int argc, char* argv[] )
@@ -102,6 +115,7 @@ int main( int argc, char* argv[] )
             throw std::runtime_error( "Unable to remove " + outputPath.string() );
         BOOST_FOREACH( const bfs::path& path, orderFiles )
             CreateExercise( inputPath, outputPath, path );
+        launchExercises( outputPath );
     }
     catch ( std::exception& e )
     {
