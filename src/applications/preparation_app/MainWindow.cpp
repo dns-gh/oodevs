@@ -138,6 +138,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , menu_         ( 0 )
     , fileToolBar_  ( 0 )
     , needsSaving_  ( false )
+    , loading_      ( false )
 {
     setIcon( MAKE_PIXMAP( csword ) );
 
