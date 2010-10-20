@@ -135,7 +135,7 @@ void TacticalLinePositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( ! viewport.IsVisible( boundingBox_ ) )
-        return
+        return;
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glLineWidth( 5.f );
         tools.DrawLines( pointList_ );

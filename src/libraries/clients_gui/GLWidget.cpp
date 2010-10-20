@@ -279,10 +279,10 @@ void GlWidget::DrawTextLabel( const std::string& content, const geometry::Point2
     color[ 3 ] = __min( 0.1f, Zoom() * 300 );
     glColor4fv( color );
     glBegin( GL_POLYGON );
-    glVertex3f( leftBottom.X(), leftBottom.Y(), 0 );
-    glVertex3f( leftBottom.X(), rightTop.Y(), 0 );
-    glVertex3f( rightTop.X(), rightTop.Y(), 0 );
-    glVertex3f( rightTop.X(), leftBottom.Y(), 0 );
+        glVertex3f( leftBottom.X(), leftBottom.Y(), 0 );
+        glVertex3f( leftBottom.X(), rightTop.Y(), 0 );
+        glVertex3f( rightTop.X(), rightTop.Y(), 0 );
+        glVertex3f( rightTop.X(), leftBottom.Y(), 0 );
     glEnd();
 
     // $$$$ JSR 2010-06-14: Changing font attributes does not seem to work with this version of Qt:
@@ -452,13 +452,13 @@ void GlWidget::DrawConvexPolygon( const T_PointVector& points, bool selected ) c
         glEnable( GL_LINE_SMOOTH );
         glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
         glPushAttrib( GL_CURRENT_BIT );
-        float color[4];
-        glGetFloatv( GL_CURRENT_COLOR, color );
-        color[ 0 ] = 0.55f;
-        color[ 1 ] = 0.92f;
-        color[ 2 ] = 1.f;
-        glColor4fv( color );
-        glDrawArrays( GL_POLYGON, 0, points.size() );
+            float color[4];
+            glGetFloatv( GL_CURRENT_COLOR, color );
+            color[ 0 ] = 0.55f;
+            color[ 1 ] = 0.92f;
+            color[ 2 ] = 1.f;
+            glColor4fv( color );
+            glDrawArrays( GL_POLYGON, 0, points.size() );
         glPopAttrib();
         glDrawArrays( GL_LINE_LOOP, 0, points.size() );
     }
@@ -513,60 +513,59 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const u
     glMatrixMode(GL_MODELVIEW);
     glLineWidth( 1 );
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    color[ 3 ] = baseAlpha * 0.6f;
-    glColor4fv( color );
-    glVertexPointer( 2, GL_FLOAT, 0, ( const void* )( &footprintPoints.front() ) );
-    glDrawArrays( GL_LINE_LOOP, 0, footprintPoints.size() );
-    Polygon2f::T_Vertices face;
+        color[ 3 ] = baseAlpha * 0.6f;
+        glColor4fv( color );
+        glVertexPointer( 2, GL_FLOAT, 0, ( const void* )( &footprintPoints.front() ) );
+        glDrawArrays( GL_LINE_LOOP, 0, footprintPoints.size() );
+        Polygon2f::T_Vertices face;
 
-    //calculating roof geometry:
-    for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
-    {
-        Point2f point = roofPoints[ i ];
-        float deltaX = ( point.X() - center_.X() ) * rZoom_ * height;
-        float deltaY = ( point.Y() - center_.Y() ) * rZoom_ * height;
-        point.Set( point.X() + deltaX, point.Y() + deltaY );
-        ( Point2f& ) roofPoints[ i ] = point;
-    }
+        //calculating roof geometry:
+        for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
+        {
+            Point2f point = roofPoints[ i ];
+            float deltaX = ( point.X() - center_.X() ) * rZoom_ * height;
+            float deltaY = ( point.Y() - center_.Y() ) * rZoom_ * height;
+            point.Set( point.X() + deltaX, point.Y() + deltaY );
+            ( Point2f& ) roofPoints[ i ] = point;
+        }
 
-    //drawing faces:
-    for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
-    {
-        face.clear();
-        unsigned int next = i + 1;
-        if( i == roofPoints.size() - 1 )
-            next = 0;
-        face.push_back( footprintPoints[ i ] );
-        face.push_back( roofPoints[ i ] );
-        face.push_back( roofPoints[ next ] );
-        face.push_back( footprintPoints[ next ] );
-        glVertexPointer( 2, GL_FLOAT, 0, ( const void* )( &face.front() ) );
-        glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        glDrawArrays( GL_POLYGON, 0, face.size() );
-        glPopAttrib();
-        glDrawArrays( GL_LINE_LOOP, 0, face.size() );
-    }
-    if( decoration->Selected() )
-        color[ 3 ] = __min ( 1, baseAlpha * 1.6f);
-    else
-        color[ 3 ] = baseAlpha;
-    glColor4fv( color );
-    glVertexPointer( 2, GL_FLOAT, 0, ( const void* )( &roofPoints.front() ) );
-    glDrawArrays( GL_POLYGON, 0, roofPoints.size() );
-    glPopAttrib();
+        //drawing faces:
+        for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
+        {
+            face.clear();
+            unsigned int next = i + 1;
+            if( i == roofPoints.size() - 1 )
+                next = 0;
+            face.push_back( footprintPoints[ i ] );
+            face.push_back( roofPoints[ i ] );
+            face.push_back( roofPoints[ next ] );
+            face.push_back( footprintPoints[ next ] );
+            glVertexPointer( 2, GL_FLOAT, 0, ( const void* )( &face.front() ) );
+            glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+                glDrawArrays( GL_POLYGON, 0, face.size() );
+            glPopAttrib();
+            glDrawArrays( GL_LINE_LOOP, 0, face.size() );
+        }
+        if( decoration->Selected() )
+            color[ 3 ] = __min ( 1, baseAlpha * 1.6f);
+        else
+            color[ 3 ] = baseAlpha;
+        glColor4fv( color );
+        glVertexPointer( 2, GL_FLOAT, 0, ( const void* )( &roofPoints.front() ) );
+        glDrawArrays( GL_POLYGON, 0, roofPoints.size() );
 
-    if( decoration->Selected() )
-    {
-        UpdateStipple();
-        glLineWidth( 1.5 );
-        color[ 0 ] = 1.f - color[ 0 ];
-        color[ 1 ] = 1.f - color[ 1 ];
-        color[ 2 ] = 1.f - color[ 2 ];
-        color[ 3 ] = 0.9f;
-    }
-    glColor4fv( color );
-    glDrawArrays( GL_LINE_LOOP, 0, roofPoints.size() );
-    glDisable (GL_LINE_STIPPLE);
+        if( decoration->Selected() )
+        {
+            UpdateStipple();
+            glLineWidth( 1.5 );
+            color[ 0 ] = 1.f - color[ 0 ];
+            color[ 1 ] = 1.f - color[ 1 ];
+            color[ 2 ] = 1.f - color[ 2 ];
+            color[ 3 ] = 0.9f;
+        }
+        glColor4fv( color );
+        glDrawArrays( GL_LINE_LOOP, 0, roofPoints.size() );
+        glDisable (GL_LINE_STIPPLE);
     glPopAttrib();
     if( decoration->Name().length() > 0 )
         ( ( GlWidget& ) ( *this ) ).DrawTextLabel( decoration->Name(), roofPolygon.BoundingBoxCenter(), 13 );
@@ -828,15 +827,15 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
     const float scaleRatio = ( expectedWidth / svgWidth );
 
     gl::Initialize();
-    glEnable( GL_LINE_SMOOTH );
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    glMatrixMode( GL_MODELVIEW );
-    glPushMatrix();
-        glTranslatef( center.X(), center.Y(), 0.0f );
-        glScalef( scaleRatio, -scaleRatio, 1 );
-        glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
-        Base().PrintApp6( symbol, style, viewport_, int( windowWidth_ * thickness ), int( windowHeight_ * thickness ) );
-    glPopMatrix();
+    glEnable( GL_LINE_SMOOTH );
+        glMatrixMode( GL_MODELVIEW );
+        glPushMatrix();
+            glTranslatef( center.X(), center.Y(), 0.0f );
+            glScalef( scaleRatio, -scaleRatio, 1 );
+            glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
+            Base().PrintApp6( symbol, style, viewport_, int( windowWidth_ * thickness ), int( windowHeight_ * thickness ) );
+        glPopMatrix();
     glPopAttrib();
 }
 
@@ -865,12 +864,12 @@ void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /*= 
     size *= factor;
     glPushMatrix();
     glPushAttrib( GL_TEXTURE_BIT );
-    Base().BindIcon( xpm );
-    const Point2f iconTranslation = iconLayout_.IconLocation( xpm );
-    glTranslatef( where.X()+ iconTranslation.X()*factor, where.Y() + iconTranslation.Y()*factor, 0.f );
-    glScalef( size, size, size );
-    Base().DrawBillboardRect();
-    glPopMatrix();
+        Base().BindIcon( xpm );
+        const Point2f iconTranslation = iconLayout_.IconLocation( xpm );
+        glTranslatef( where.X()+ iconTranslation.X()*factor, where.Y() + iconTranslation.Y()*factor, 0.f );
+        glScalef( size, size, size );
+        Base().DrawBillboardRect();
+        glPopMatrix();
     glPopAttrib();
 }
 
