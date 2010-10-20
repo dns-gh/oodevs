@@ -27,9 +27,9 @@ int main( int argc, char* argv[] )
             .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );
     QApplication::setStyle( "windows" );
     QApplication::setDesktopSettingsAware( false );
-    Application app( argc, argv );
     try
     {
+        Application app( argc, argv );
         app.exec();
     }
     catch( std::exception& e )

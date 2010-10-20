@@ -40,7 +40,6 @@ Application::Application( int argc, char** argv )
 {
     CreateTranslators();
 
-    // Child processe status
     mainWindow_ = new MainWindow( *controllers_ );
     mainWindow_->show();
     setMainWidget( mainWindow_ );

@@ -41,12 +41,13 @@ namespace
 // Created: RDS 2008-08-20
 // -----------------------------------------------------------------------------
 MessageDialog::MessageDialog( QWidget* parent, const QString& title, const QString& message, int button1, int button2 )
-    : QDialog( parent, title, true, WStyle_Customize | WStyle_DialogBorder )
+    : QDialog( parent, title, true, WStyle_DialogBorder )
 {
+    setCaption( title );
     if( parent )
         setPalette( parent->palette() );
 
-    QFont font( "Century Gothic", 14, QFont::Bold );
+    QFont font( "Century Gothic", 13, QFont::Bold );
     font.setItalic( true );
     setFont( font );
 

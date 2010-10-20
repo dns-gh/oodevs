@@ -13,6 +13,7 @@
 #include "Config.h"
 #include "HomePage.h"
 #include "LinkInterpreter.h"
+#include "MessageDialog.h"
 #include "NetworkExerciseLister.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/Tools.h"
@@ -44,7 +45,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , config_( GetConfig() )
     , interpreter_( new LinkInterpreter( this, controllers ) )
-    , launcher_( new frontend::Launcher( controllers, *config_ ) )
     , exerciseLister_( new NetworkExerciseLister( this, controllers, *config_ ) )
     , networkTimer_( new QTimer( this ) )
 {
@@ -58,8 +58,20 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
     setCentralWidget( pages_ );
     CenterWindow();
 
-    connect( networkTimer_, SIGNAL( timeout() ), SLOT( Update() ) );
-    networkTimer_->start( 100 );
+    try
+    {
+        launcher_.reset( new frontend::Launcher( controllers, *config_ ) );
+        connect( networkTimer_, SIGNAL( timeout() ), SLOT( Update() ) );
+        networkTimer_->start( 100 );
+    }
+    catch( std::exception& e )
+    {
+        MessageDialog message( this, tools::translate( "ProcessDialogs", "Failed to start launcher service" )
+                                   , tools::translate( "ProcessDialogs", "%1.\nYou will not be able to start a multiplayer session. Do you want to start anyway?" ).arg( e.what() )
+                                   , QMessageBox::Yes, QMessageBox::No );
+        if( message.exec() == QMessageBox::No )
+            throw;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -132,7 +144,8 @@ void MainWindow::Maximize()
 // -----------------------------------------------------------------------------
 void MainWindow::Update()
 {
-    launcher_->Update();
+    if( launcher_.get() )
+        launcher_->Update();
 }
 
 // -----------------------------------------------------------------------------

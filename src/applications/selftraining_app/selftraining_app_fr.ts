@@ -405,6 +405,15 @@
         <source>Running training session detected. Close ?</source>
         <translation>Des sessions d&apos;entraînement sont en cours. Voulez-vous les arrêter ?</translation>
     </message>
+    <message>
+        <source>Failed to start launcher service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1.
+You will not be able to start a multiplayer session. Do you want to start anyway?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QuitPage</name>
