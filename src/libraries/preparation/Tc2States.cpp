@@ -64,8 +64,8 @@ void Tc2States::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC
         return;
 
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-    glLineWidth( 3.f );
-    glColor4f( COLOR_YELLOW );
-    DrawLink( where, tools, 0.5f, displayLinks, displayMissing );
+        glLineWidth( 3.f );
+        glColor4f( COLOR_YELLOW );
+        DrawLink( where, tools, 0.5f, displayLinks, displayMissing );
     glPopAttrib();
 }

@@ -50,8 +50,8 @@ void WeatherLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
 
     // $$$$ SBO 2006-12-21: viewport
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    glColor4f( 1, 0, 0, 0.5f );
-    glLineWidth( 5.f );
+        glColor4f( 1, 0, 0, 0.5f );
+        glLineWidth( 5.f );
         tools_.DrawLine( topLeft_, topRight );
         tools_.DrawLine( topRight, bottomRight_ );
         tools_.DrawLine( bottomRight_, bottomLeft );

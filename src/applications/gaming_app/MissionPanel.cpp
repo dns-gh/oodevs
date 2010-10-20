@@ -381,9 +381,9 @@ void MissionPanel::Draw( Viewport_ABC& viewport )
     if( pMissionInterface_ && isVisible() )
     {
         glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        glLineWidth( 2.f );
-        glColor4f( COLOR_PARAM );
-        pMissionInterface_->Draw( tools_, viewport );
+            glLineWidth( 2.f );
+            glColor4f( COLOR_PARAM );
+            pMissionInterface_->Draw( tools_, viewport );
         glPopAttrib();
     }
 }

@@ -141,25 +141,24 @@ template< typename T >
 void SvgLocationDrawer::DrawShape( const T& shape )
 {
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-    glLineWidth( 1 );
-
-    std::string color = color_.name().ascii();
-    const geometry::BoundingBox box( viewport_.Left(), viewport_.Bottom(), viewport_.Right(), viewport_.Top() );
-    context_->SetViewport( box, 320, 200 ); // $$$$ AGE 2006-09-04:
-    svg::Color svgColor( color_.name().ascii() );
-    context_->PushProperty( svg::RenderingContext_ABC::color, svgColor );
-    style_.Draw( shape, *context_, *tools_ );
-    context_->PopProperty( svg::RenderingContext_ABC::color );
-
-    if( overlined_ )
-    {
         glLineWidth( 1 );
-        glColor3f( complement_.red()   / 255.f,
-                   complement_.green() / 255.f,
-                   complement_.blue()  / 255.f );
-        DrawOverlined( shape );
-    }
 
+        std::string color = color_.name().ascii();
+        const geometry::BoundingBox box( viewport_.Left(), viewport_.Bottom(), viewport_.Right(), viewport_.Top() );
+        context_->SetViewport( box, 320, 200 ); // $$$$ AGE 2006-09-04:
+        svg::Color svgColor( color_.name().ascii() );
+        context_->PushProperty( svg::RenderingContext_ABC::color, svgColor );
+        style_.Draw( shape, *context_, *tools_ );
+        context_->PopProperty( svg::RenderingContext_ABC::color );
+
+        if( overlined_ )
+        {
+            glLineWidth( 1 );
+            glColor3f( complement_.red()   / 255.f,
+                       complement_.green() / 255.f,
+                       complement_.blue()  / 255.f );
+            DrawOverlined( shape );
+        }
     glPopAttrib();
 }
 

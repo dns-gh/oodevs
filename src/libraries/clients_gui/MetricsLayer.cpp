@@ -56,34 +56,35 @@ void MetricsLayer::Paint( kernel::Viewport_ABC& )
                 geometry::Point2f start = *(it - 1 );
                 geometry::Point2f end = *it ;
                 glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-                glLineWidth( 4 );
-                glColor4f( COLOR_WHITE );
-                tools_.DrawLine( start, end );
-                glLineWidth( 2 );
-                glColor4f( COLOR_BLACK );
-                tools_.DrawLine( start, end );
+                    glLineWidth( 4 );
+                    glColor4f( COLOR_WHITE );
+                    tools_.DrawLine( start, end );
+                    glLineWidth( 2 );
+                    glColor4f( COLOR_BLACK );
+                    tools_.DrawLine( start, end );
+                glPopAttrib();
             }
         }
         start_ =  metricPoints_.front();
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-        glColor4f( COLOR_WHITE );
-        glLineWidth( 2 );
-        DrawAngle();
-        glLineWidth( 4 );
-        tools_.DrawLine( metricPoints_.back(), end_ );
-        glLineWidth( 2 );
-        glColor4f( COLOR_BLACK );
+            glColor4f( COLOR_WHITE );
+            glLineWidth( 2 );
+            DrawAngle();
+            glLineWidth( 4 );
+            tools_.DrawLine( metricPoints_.back(), end_ );
+            glLineWidth( 2 );
+            glColor4f( COLOR_BLACK );
 
-        const geometry::Point2f middle( 0.5f * ( metricPoints_.front().X() + end_.X() ), 0.5f * ( metricPoints_.front().Y() + end_.Y() ) );
-        const QString message = tools::translate( "Règle GL", "2D: %1m\n3D: %2m\n%3°" ).arg( ComputeRuleDistance( false ), 0, 'f', 1 ).arg( ComputeRuleDistance( true ), 0, 'f', 1 ).arg( ComputeAngle(), 0, 'f', 1 );
-        if( !tooltip_.get() )
-        {
-            std::auto_ptr< kernel::GlTooltip_ABC > tooltip( tools_.CreateTooltip() );
-            tooltip_ = tooltip;
-        }
-        // $$$$ SBO 2008-03-19: GlTooltip_ABC maybe should be a Displayer_ABC...
-        static_cast< kernel::Displayer_ABC& >( *tooltip_ ).Start( Styles::bold ).Add( message.ascii() ).End();
-        tooltip_->Draw( middle );
+            const geometry::Point2f middle( 0.5f * ( metricPoints_.front().X() + end_.X() ), 0.5f * ( metricPoints_.front().Y() + end_.Y() ) );
+            const QString message = tools::translate( "Règle GL", "2D: %1m\n3D: %2m\n%3°" ).arg( ComputeRuleDistance( false ), 0, 'f', 1 ).arg( ComputeRuleDistance( true ), 0, 'f', 1 ).arg( ComputeAngle(), 0, 'f', 1 );
+            if( !tooltip_.get() )
+            {
+                std::auto_ptr< kernel::GlTooltip_ABC > tooltip( tools_.CreateTooltip() );
+                tooltip_ = tooltip;
+            }
+            // $$$$ SBO 2008-03-19: GlTooltip_ABC maybe should be a Displayer_ABC...
+            static_cast< kernel::Displayer_ABC& >( *tooltip_ ).Start( Styles::bold ).Add( message.ascii() ).End();
+            tooltip_->Draw( middle );
         glPopAttrib();
     }
 }

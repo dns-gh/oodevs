@@ -58,18 +58,17 @@ void GridLayer::Paint( const geometry::Rectangle2f& v )
     {
         geometry::Rectangle2f viewport = v.Intersect( extent_ );
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-
-        float gridSize = gridSize_;
-        if( gridSize < 2 * tools_.Pixels() )
-            gridSize = 2 * tools_.Pixels();
-        glColor4f( 1.0f, 1.0f, 1.0f, 0.3f );
-        glLineWidth( 1.0 );
-            for( float x = Displace( viewport.Left() ); x < viewport.Right(); x += gridSize )
-                tools_.DrawLine( geometry::Point2f( x, viewport.Top() ),
-                                    geometry::Point2f( x, viewport.Bottom() ) );
-            for( float y = Displace( viewport.Bottom() ); y < viewport.Top(); y += gridSize )
-                tools_.DrawLine( geometry::Point2f( viewport.Left(),  y  ),
-                                    geometry::Point2f( viewport.Right(), y ) );
+            float gridSize = gridSize_;
+            if( gridSize < 2 * tools_.Pixels() )
+                gridSize = 2 * tools_.Pixels();
+            glColor4f( 1.0f, 1.0f, 1.0f, 0.3f );
+            glLineWidth( 1.0 );
+                for( float x = Displace( viewport.Left() ); x < viewport.Right(); x += gridSize )
+                    tools_.DrawLine( geometry::Point2f( x, viewport.Top() ),
+                                        geometry::Point2f( x, viewport.Bottom() ) );
+                for( float y = Displace( viewport.Bottom() ); y < viewport.Top(); y += gridSize )
+                    tools_.DrawLine( geometry::Point2f( viewport.Left(),  y  ),
+                                        geometry::Point2f( viewport.Right(), y ) );
         glPopAttrib();
     }
 }

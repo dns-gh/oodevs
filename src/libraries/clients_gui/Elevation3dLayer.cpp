@@ -106,7 +106,7 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
     if( frustum != lastFrustum_ )
     {
         glPushAttrib( GL_TEXTURE_BIT );
-        textures_->Accept( visitor_->Compiler( frustum, 1 ) );
+            textures_->Accept( visitor_->Compiler( frustum, 1 ) );
         glPopAttrib();
     }
 
@@ -120,11 +120,11 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
     }
 
     glPushAttrib( GL_CURRENT_BIT | GL_TEXTURE_BIT );
-    glPushMatrix();
-        glScalef( 1.f, 1.f, zRatio_ );
-        glColor3f( 1, 1, 1 );
-        textures_->Accept( visitor_->Compiled( frustum ) );
-    glPopMatrix();
+        glPushMatrix();
+            glScalef( 1.f, 1.f, zRatio_ );
+            glColor3f( 1, 1, 1 );
+            textures_->Accept( visitor_->Compiled( frustum ) );
+        glPopMatrix();
     glPopAttrib();
 
     if( program_.get() )

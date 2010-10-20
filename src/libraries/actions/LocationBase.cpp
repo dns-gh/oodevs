@@ -212,16 +212,16 @@ void LocationBase::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& v
     GLfloat color[4];
     glGetFloatv( GL_CURRENT_COLOR, color );
     glPushAttrib( GL_LINE_BIT );
-    if( selected )
-    {
-        glPushAttrib( GL_CURRENT_BIT );
-        glColor4f( 0, 0, 0, color[3] * 0.5f );
-        glLineWidth( 6.f );
+        if( selected )
+        {
+            glPushAttrib( GL_CURRENT_BIT );
+                glColor4f( 0, 0, 0, color[3] * 0.5f );
+                glLineWidth( 6.f );
+                Draw( tools );
+            glPopAttrib();
+        }
+        glLineWidth( 2.f );
         Draw( tools );
-        glPopAttrib();
-    }
-    glLineWidth( 2.f );
-    Draw( tools );
     glPopAttrib();
 }
 

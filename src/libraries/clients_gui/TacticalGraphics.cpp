@@ -95,16 +95,16 @@ void TacticalGraphics::Draw( const std::string& symbol, const kernel::Location_A
     {
         kernel::SimpleLocationDrawer drawer( tools );
         glPushAttrib( GL_LINE_BIT );
-        if( overlined )
-        {
-            glPushAttrib( GL_CURRENT_BIT );
-            glColor4f( 0, 0, 0, 0.5f );
-            glLineWidth( 6.f );
+            if( overlined )
+            {
+                glPushAttrib( GL_CURRENT_BIT );
+                    glColor4f( 0, 0, 0, 0.5f );
+                    glLineWidth( 6.f );
+                    location.Accept( drawer );
+                glPopAttrib();
+            }
+            glLineWidth( 2.f );
             location.Accept( drawer );
-            glPopAttrib();
-        }
-        glLineWidth( 2.f );
-        location.Accept( drawer );
         glPopAttrib();
     }
 }

@@ -122,26 +122,26 @@ void FolkLayer::Paint( const Rectangle2f& viewport )
     if( ! box_.Intersect( viewport ).IsEmpty() )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_TEXTURE_BIT );
-        glLineWidth( 1 );
-        if( gl::HasMultiTexturing() )
-        {
-            gl::glActiveTexture( gl::GL_TEXTURE1 );
-            glBindTexture( GL_TEXTURE_1D, 0 );
-            glDisable( GL_TEXTURE_1D );
+            glLineWidth( 1 );
+            if( gl::HasMultiTexturing() )
+            {
+                gl::glActiveTexture( gl::GL_TEXTURE1 );
+                glBindTexture( GL_TEXTURE_1D, 0 );
+                glDisable( GL_TEXTURE_1D );
+                glDisable( GL_TEXTURE_2D );
+                gl::glActiveTexture( gl::GL_TEXTURE0 );
+            }
+            glDisable( GL_TEXTURE_GEN_S );
+            glDisable( GL_TEXTURE_GEN_T );
+            glEnable( GL_TEXTURE_1D );
             glDisable( GL_TEXTURE_2D );
-            gl::glActiveTexture( gl::GL_TEXTURE0 );
-        }
-        glDisable( GL_TEXTURE_GEN_S );
-        glDisable( GL_TEXTURE_GEN_T );
-        glEnable( GL_TEXTURE_1D );
-        glDisable( GL_TEXTURE_2D );
-        glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
-        glColor4f( 1, 1, 1, GetAlpha() );
-        glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&graph_.front()) );
-        glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-        glTexCoordPointer( 1, GL_FLOAT, 0, (const void*)(&coordinates_.front()) );
-        glDrawArrays( GL_LINES, 0, graph_.size() );
-        glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+            glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
+            glColor4f( 1, 1, 1, GetAlpha() );
+            glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&graph_.front()) );
+            glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+            glTexCoordPointer( 1, GL_FLOAT, 0, (const void*)(&coordinates_.front()) );
+            glDrawArrays( GL_LINES, 0, graph_.size() );
+            glDisableClientState( GL_TEXTURE_COORD_ARRAY );
         glPopAttrib();
         glDisable( GL_TEXTURE_1D );
     }
