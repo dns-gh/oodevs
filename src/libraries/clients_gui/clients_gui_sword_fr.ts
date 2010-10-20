@@ -11,8 +11,8 @@
         <translation>sword-ot@masagroup.net</translation>
       </message>
       <message>
-        <source>© 2008 MASA Group</source>
-        <translation>© 2008 MASA Group</translation>
+        <source>Â© 2008 MASA Group</source>
+        <translation>Â© 2008 MASA Group</translation>
       </message>
       <message>
         <source>www.masagroup.net</source>
@@ -22,6 +22,5 @@
         <source>images/gui/splash_swordot.jpg</source>
         <translation>images/gui/splash_swordot.jpg</translation>
       </message>
-    </message>
-</context>
+    </context>
 </TS>
