@@ -11,10 +11,10 @@
 #define __Gui_HierarchyListView_ABC_h_
 
 #include "ListView.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "tools/ElementObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
@@ -22,7 +22,6 @@ namespace kernel
     class Hierarchies;
     class Entity_ABC;
     class Profile_ABC;
-    class TacticalHierarchies;
     class Symbol_ABC;
 }
 
@@ -45,7 +44,7 @@ class HierarchyListView_ABC : public ListView< HierarchyListView_ABC >
                             , public tools::ElementObserver_ABC< kernel::Profile_ABC >
                             , public tools::ElementObserver_ABC< kernel::Symbol_ABC >
 {
-   Q_OBJECT;
+   Q_OBJECT
 
 public:
     //! @name Constants
@@ -56,16 +55,14 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             HierarchyListView_ABC( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& symbols );
+             HierarchyListView_ABC( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, EntitySymbols& symbols );
     virtual ~HierarchyListView_ABC();
-
-    QSize sizeHint() const;
     //@}
 
     //! @name Operations
     //@{
+    QSize sizeHint() const;
     virtual void Display( const kernel::Entity_ABC& entity, ValuedListItem* item );
-
     //@}
 
 private:
@@ -93,8 +90,8 @@ protected:
     virtual void NotifyDeleted( const kernel::Hierarchies& hierarchies );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
     virtual void NotifyUpdated( const kernel::Symbol_ABC& symbol );
-    virtual void focusInEvent ( QFocusEvent * );
-    virtual void DisplayIcon( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
+    virtual void focusInEvent( QFocusEvent* );
+    virtual void DisplayIcon( const kernel::Entity_ABC& entity, ValuedListItem* item );
     //@}
 
 private:
@@ -103,13 +100,11 @@ private:
     ValuedListItem* FindOrCreate( const kernel::Entity_ABC* entity );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyActivated( const kernel::Entity_ABC& element );
-    void UpdateItem( gui::ValuedListItem* item );
-
+    void UpdateItem( ValuedListItem* item );
     virtual QDragObject* dragObject();
     virtual void dropEvent( QDropEvent* pEvent );
     virtual void dragEnterEvent( QDragEnterEvent* pEvent );
     virtual void dragMoveEvent( QDragMoveEvent *pEvent );
-
     bool Drop( const kernel::Entity_ABC& entity, ValuedListItem& target );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     static void SetVisible( QListViewItem* item, bool visible );
@@ -121,7 +116,7 @@ private:
     kernel::Controllers& controllers_;
     ItemFactory_ABC& factory_;
     const kernel::Profile_ABC& profile_;
-    gui::EntitySymbols& symbols_;
+    EntitySymbols& symbols_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QTimer* timer_;
     //@}

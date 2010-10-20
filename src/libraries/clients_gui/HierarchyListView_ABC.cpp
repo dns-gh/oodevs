@@ -12,20 +12,19 @@
 #include "clients_gui_pch.h"
 #include "HierarchyListView_ABC.h"
 #include "moc_HierarchyListView_ABC.cpp"
-
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/ActionController.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/Hierarchies.h"
-#include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "ValuedListItem.h"
-#include "ItemFactory_ABC.h"
 #include "EntitySymbols.h"
+#include "ItemFactory_ABC.h"
 #include "ListItemToolTip.h"
 #include "ValuedDragObject.h"
+#include "ValuedListItem.h"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
 
 #pragma warning( disable : 4355 )
 
@@ -36,7 +35,7 @@ using namespace gui;
 // Name: HierarchyListView_ABC constructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile, gui::EntitySymbols& symbols )
+HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile, EntitySymbols& symbols )
     : ListView< HierarchyListView_ABC >( pParent, *this, factory, "HierarchyListView" )
     , controllers_( controllers )
     , factory_    ( factory )
@@ -76,7 +75,7 @@ HierarchyListView_ABC::~HierarchyListView_ABC()
 // Name: HierarchyListView_ABC::NotifyCreated
 // Created: AGE 2006-10-04
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::NotifyCreated( const kernel::Hierarchies& hierarchy )
+void HierarchyListView_ABC::NotifyCreated( const Hierarchies& hierarchy )
 {
     NotifyUpdated( hierarchy );
 }
@@ -85,7 +84,7 @@ void HierarchyListView_ABC::NotifyCreated( const kernel::Hierarchies& hierarchy 
 // Name: HierarchyListView_ABC::NotifyUpdated
 // Created: AGE 2006-10-04
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::NotifyUpdated( const kernel::Hierarchies& hierarchy )
+void HierarchyListView_ABC::NotifyUpdated( const Hierarchies& hierarchy )
 {
     const Entity_ABC& entity = hierarchy.GetEntity();
     Display( entity, FindOrCreate( &entity ) );
@@ -95,7 +94,7 @@ void HierarchyListView_ABC::NotifyUpdated( const kernel::Hierarchies& hierarchy 
 // Name: HierarchyListView_ABC::NotifyDeleted
 // Created: AGE 2006-10-04
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::NotifyDeleted( const kernel::Hierarchies& hierarchy )
+void HierarchyListView_ABC::NotifyDeleted( const Hierarchies& hierarchy )
 {
     const Entity_ABC& entity = hierarchy.GetEntity();
     delete FindItem( &entity, firstChild() );
@@ -112,10 +111,12 @@ ValuedListItem* HierarchyListView_ABC::FindOrCreate( const Entity_ABC* entity )
     const Hierarchies* hierarchy = RetrieveHierarchy( *entity );
     const Entity_ABC* superior = hierarchy ? hierarchy->GetSuperior() : 0;
     ValuedListItem* superiorItem = FindOrCreate( superior );
-    ValuedListItem* item         = superiorItem ? FindChild  ( entity, superiorItem )
-                                                : FindSibling( entity, firstChild() );
-    if( ! item )
+    ValuedListItem* item = superiorItem ? FindChild( entity, superiorItem ) : FindSibling( entity, firstChild() );
+    if( !item )
+    {
         item = superiorItem ? factory_.CreateItem( superiorItem ) : factory_.CreateItem( this );
+        UpdateItem( item );
+    }
     return item;
 }
 
@@ -130,10 +131,8 @@ void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* i
     item->setDropEnabled( true );
     item->setDragEnabled( true );
     item->SetToolTip( QString( "%1 [%2]" ).arg( entity.GetName() ).arg( entity.GetId() ) );
-
     if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
         DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy->CreateSubordinateIterator(), item ) );
-
     DisplayIcon( entity, item );
     SetVisible( item, isVisible );
 }
@@ -142,7 +141,7 @@ void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* i
 // Name: HierarchyListView_ABC::DisplayIcon
 // Created: AGE 2006-11-24
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::DisplayIcon( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
+void HierarchyListView_ABC::DisplayIcon( const Entity_ABC& entity, ValuedListItem* item )
 {
     QPixmap pixmap = symbols_.GetSymbol( entity );
     if( pixmap.isNull() )
@@ -169,20 +168,20 @@ void HierarchyListView_ABC::SetVisible( QListViewItem* item, bool visible )
 // Name: HierarchyListView_ABC::OnSelectionChange
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::OnSelectionChange( QListViewItem* i )
+void HierarchyListView_ABC::OnSelectionChange( QListViewItem* item )
 {
-    if( ValuedListItem* item = (ValuedListItem*)( i ) )
-        item->Select( controllers_.actions_ );
+    if( item )
+        static_cast< ValuedListItem* >( item )->Select( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: HierarchyListView_ABC::OnContextMenuRequested
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int )
+void HierarchyListView_ABC::OnContextMenuRequested( QListViewItem* item, const QPoint& pos, int )
 {
-    if( ValuedListItem* item = (ValuedListItem*)( i ) )
-        item->ContextMenu( controllers_.actions_, pos );
+    if( item )
+        static_cast< ValuedListItem* >( item )->ContextMenu( controllers_.actions_, pos );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,7 +190,8 @@ void HierarchyListView_ABC::OnContextMenuRequested( QListViewItem* i, const QPoi
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::OnRequestCenter()
 {
-    if( ValuedListItem* item = (ValuedListItem*)( selectedItem() ) )
+    ValuedListItem* item = static_cast< ValuedListItem* >( selectedItem() );
+    if( item )
         item->Activate( controllers_.actions_ );
 }
 
@@ -250,7 +250,7 @@ void HierarchyListView_ABC::dragEnterEvent( QDragEnterEvent* pEvent )
 // Name: HierarchyListView_ABC::dragMoveEvent
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::dragMoveEvent( QDragMoveEvent *pEvent )
+void HierarchyListView_ABC::dragMoveEvent( QDragMoveEvent* pEvent )
 {
     pEvent->accept( ValuedDragObject::Provides< const Entity_ABC >( pEvent ) );
 }
@@ -264,8 +264,7 @@ void HierarchyListView_ABC::dropEvent( QDropEvent* pEvent )
     if( const Entity_ABC* entity = ValuedDragObject::GetValue< const Entity_ABC >( pEvent ) )
     {
         QPoint position = viewport()->mapFromParent( pEvent->pos() );
-        ValuedListItem* targetItem = (ValuedListItem*)itemAt( position );
-
+        ValuedListItem* targetItem = static_cast< ValuedListItem* >( itemAt( position ) );
         if( !entity || !targetItem || !Drop( *entity, *targetItem ) )
             pEvent->ignore();
         else
@@ -307,7 +306,7 @@ void HierarchyListView_ABC::NotifyActivated( const Entity_ABC& element )
 // Name: HierarchyListView_ABC::NotifyUpdated
 // Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::NotifyUpdated( const kernel::Profile_ABC& )
+void HierarchyListView_ABC::NotifyUpdated( const Profile_ABC& )
 {
     Update();
 }
@@ -316,7 +315,7 @@ void HierarchyListView_ABC::NotifyUpdated( const kernel::Profile_ABC& )
 // Name: HierarchyListView_ABC::NotifyUpdated
 // Created: AGE 2006-11-24
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::NotifyUpdated( const kernel::Symbol_ABC& symbol )
+void HierarchyListView_ABC::NotifyUpdated( const Symbol_ABC& symbol )
 {
     const Entity_ABC& entity = symbol.GetEntity();
     ValuedListItem* item = FindItem( &entity, firstChild() );
@@ -330,18 +329,18 @@ void HierarchyListView_ABC::NotifyUpdated( const kernel::Symbol_ABC& symbol )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::Update()
 {
-    UpdateItem( static_cast< gui::ValuedListItem* >( firstChild() ) );
+    UpdateItem( static_cast< ValuedListItem* >( firstChild() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: HierarchyListView_ABC::UpdateItem
 // Created: SBO 2010-08-03
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::UpdateItem( gui::ValuedListItem* root )
+void HierarchyListView_ABC::UpdateItem( ValuedListItem* root )
 {
     while( root )
     {
-        UpdateItem( static_cast< gui::ValuedListItem* >( root->firstChild() ) );
+        UpdateItem( static_cast< ValuedListItem* >( root->firstChild() ) );
         if( root->IsA< const Entity_ABC >() )
         {
             const Entity_ABC& entity = *root->GetValue< const Entity_ABC >();
@@ -349,7 +348,7 @@ void HierarchyListView_ABC::UpdateItem( gui::ValuedListItem* root )
             DisplayIcon( entity, root );
             SetVisible( root, isVisible );
         }
-        root = static_cast< gui::ValuedListItem* >( root->nextSibling() );
+        root = static_cast< ValuedListItem* >( root->nextSibling() );
     }
 }
 
