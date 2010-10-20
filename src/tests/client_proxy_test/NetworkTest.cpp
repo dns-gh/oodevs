@@ -26,7 +26,7 @@
 namespace
 {
     const std::string    defaultHost    = "127.0.0.1";
-    const unsigned short defaultPort    = 10001;
+    const unsigned short defaultPort    = 10101;
     const std::string    defaultProfile = "Supervisor";
     const unsigned int   timeOut        = 1000;
 

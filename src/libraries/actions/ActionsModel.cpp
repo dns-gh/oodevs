@@ -110,6 +110,18 @@ Action_ABC* ActionsModel::CreateAgentCreationAction( const kernel::AgentType& ty
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::CreateFormationCreationAction
+// Created: LDC 2010-10-20
+// -----------------------------------------------------------------------------
+Action_ABC* ActionsModel::CreateFormationCreationAction( int level, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes )
+{
+    Action_ABC* action = factory_.CreateFormationCreationAction( level, selected, controller, agentTypes );
+    Register( action->GetId(), *action );
+    return action;
+}
+    
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------

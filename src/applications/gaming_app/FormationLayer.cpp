@@ -9,23 +9,29 @@
 
 #include "gaming_app_pch.h"
 #include "FormationLayer.h"
+#include "AutomatCreationListener.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTiming.h"
 #include "actions/ActionTasker.h"
 #include "clients_gui/ValuedDragObject.h"
+#include "gaming/AgentServerMsgMgr.h"
 #include "gaming/StaticModel.h"
+#include "protocol/simulationsenders.h"
+#include <time.h>
 
 // -----------------------------------------------------------------------------
 // Name: FormationLayer constructor
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-FormationLayer::FormationLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation )
+FormationLayer::FormationLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel )
     : gui::FormationLayer( controllers, tools, strategy, view, profile )
     , selected_( controllers )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
+    , messageManager_( messageManager )
+    , agentsModel_( agentsModel )
 {
     // NOTHING
 }
@@ -76,11 +82,15 @@ void FormationLayer::NotifySelected( const kernel::Formation_ABC* formation )
 // Name: FormationLayer::RequestCreation
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-void FormationLayer::RequestCreation( const geometry::Point2f& /*point*/, const kernel::AutomatType& type )
+void FormationLayer::RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type )
 {
     actions::Action_ABC* action = actionsModel_.CreateAutomatCreationAction( type , *selected_, controllers_.controller_, static_.types_ );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->Polish();
-    actionsModel_.Publish( *action );
+    int context = (int)clock();
+    boost::shared_ptr< MsgsSimToClient::Listener > listener( new AutomatCreationListener( point, type, context,
+        agentsModel_, controllers_.controller_, static_.types_, static_.coordinateConverter_, actionsModel_ ) );
+    messageManager_.RegisterListener( listener );
+    actionsModel_.Publish( *action, context );
 }

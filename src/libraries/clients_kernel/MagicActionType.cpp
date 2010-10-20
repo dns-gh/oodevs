@@ -107,6 +107,11 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Ammo", "list" );
         CreateOrderParameter( "Stocks", "list" );
     }
+    else if( name_ == "formation_creation" )
+    {
+        CreateOrderParameter( "Level", "numeric" );
+        CreateOrderParameter( "Name", "string" );
+    }
     else if( name_ == "unit_creation" )
     {
         CreateOrderParameter( "UnitType", "identifier" );

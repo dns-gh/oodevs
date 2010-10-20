@@ -104,6 +104,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , surfaceFactory_( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanObjects_.GetUrbanBlockMap() ) )
     , notes_( *new NotesModel( controllers.controller_ ))
     , meteo_( *new MeteoModel( static_.coordinateConverter_ ) )
+    , formations_( *new kernel::FormationLevels() )
 {
     // NOTHING
 }
@@ -114,6 +115,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &formations_;
     delete &meteo_;
     delete &notes_;
     delete &surfaceFactory_;

@@ -18,6 +18,7 @@
 #include "Identifier.h"
 #include "KnowledgeGroupMagicAction.h"
 #include "MagicAction.h"
+#include "Numeric.h"
 #include "ObjectMagicAction.h"
 #include "Parameter_ABC.h"
 #include "ParameterFactory_ABC.h"
@@ -628,3 +629,18 @@ actions::Action_ABC* ActionFactory::CreateAgentCreationAction( const kernel::Age
     action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter, location ) );
     return action;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateFormationCreationAction
+// Created: LDC 2010-10-20
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateFormationCreationAction( int level, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes )
+{
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( agentTypes ).Get( "formation_creation" );
+    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Formation Creation" ), true );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), static_cast<float>( level ) ) );
+    action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
+    return action;
+}
+    

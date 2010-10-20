@@ -355,6 +355,7 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "change_human_factors", MsgsClientToSim::MsgUnitMagicAction::change_human_factors ) );
     RegisterActionType( *new MagicActionType( "partial_recovery", MsgsClientToSim::MsgUnitMagicAction::partial_recovery ) );
     RegisterActionType( *new MagicActionType( "unit_creation", MsgsClientToSim::MsgUnitMagicAction::unit_creation ) );
+    RegisterActionType( *new MagicActionType( "formation_creation", MsgsClientToSim::MsgUnitMagicAction::formation_creation ) );
     RegisterActionType( *new MagicActionType( "automat_creation", MsgsClientToSim::MsgUnitMagicAction::automat_creation ) );
     RegisterActionType( *new MagicActionType( "fire_order", MsgsClientToSim::MsgUnitMagicAction::create_fire_order ) );
     RegisterActionType( *new MagicActionType( "population_total_destruction", MsgsClientToSim::MsgUnitMagicAction::crowd_total_destruction ) );

@@ -13,6 +13,7 @@
 #include "ChangeDiplomacyDialog.h"
 #include "ChangeHumanFactorsDialog.h"
 #include "ChangeLogisticLinksDialog.h"
+#include "CreateFormationDialog.h"
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "LogisticSupplyPullFlowDialog.h"
 #include "LogisticSupplyPushFlowDialog.h"
@@ -20,15 +21,14 @@
 #include "OrbatAttributesDialog.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
+#include "gaming/StaticModel.h"
 #include "gaming/TeamsModel.h"
-
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Dialogs constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config )
+Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config )
     : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, actionsModel, staticModel, simulation, profile );
@@ -39,7 +39,7 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model,
     new LogisticSupplyRecompletionDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new ChangeHumanFactorsDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new BriefingDialog( parent, controllers, publisher, handler, config );
-    new OrbatAttributesDialog( parent, controllers );
+    new CreateFormationDialog( parent, controllers, model.formations_, profile, actionsModel, staticModel.types_ );
 }
 
 // -----------------------------------------------------------------------------

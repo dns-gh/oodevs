@@ -839,6 +839,14 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
             else
                 throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_unit );
             break;
+        case MsgsClientToSim::MsgUnitMagicAction::formation_creation :
+            if( MIL_Army_ABC*  pArmy = armyFactory_->Find( id ) )
+                ProcessMsgFormationCreationRequest( message, pArmy, 0 );
+            else if( MIL_Formation* pFormation = FindFormation( id ) )
+                ProcessMsgFormationCreationRequest( message, 0, pFormation );
+            else
+                throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_unit );
+            break;
         default:
             if( MIL_Automate* pAutomate = FindAutomate( id ) )
                 pAutomate->OnReceiveMsgUnitMagicAction( message, *armyFactory_ );
@@ -893,6 +901,15 @@ void MIL_EntityManager::ProcessMsgAutomatCreationRequest( const MsgsClientToSim:
     {
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_unit );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ProcessMsgFormationCreationRequest
+// Created: LDC 2010-10-20
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::ProcessMsgFormationCreationRequest( const MsgsClientToSim::MsgUnitMagicAction& message, MIL_Army_ABC* army, MIL_Entity_ABC* formation )
+{
+
 }
 
 // -----------------------------------------------------------------------------

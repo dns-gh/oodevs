@@ -211,6 +211,7 @@ private:
     void ProcessMsgMagicActionCreateFireOrder  ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
     // LTO end
     void ProcessMsgAutomatCreationRequest      ( const MsgsClientToSim::MsgUnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx );
+    void ProcessMsgFormationCreationRequest    ( const MsgsClientToSim::MsgUnitMagicAction&      message, MIL_Army_ABC* army, MIL_Entity_ABC* formation );
     //@}
 
     //! @name types

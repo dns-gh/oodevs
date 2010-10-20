@@ -14,10 +14,11 @@
 
 namespace kernel
 {
-    class Controllers;
-    class Workers;
     class AgentKnowledgeConverter_ABC;
+    class Controllers;
+    class FormationLevels;
     class ObjectKnowledgeConverter_ABC;
+    class Workers;
 }
 
 namespace actions
@@ -133,6 +134,7 @@ public:
     SurfaceFactory&       surfaceFactory_;
     NotesModel&           notes_;
     MeteoModel&           meteo_;
+    kernel::FormationLevels& formations_;
     //@}
 
 private:
