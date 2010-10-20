@@ -491,7 +491,7 @@ elseif switch_1 == eFinMission then
     destroy = function( self )
                 DEC_DetruireObjetSansDelais( self.posteControle )
         DEC_Trace( "fin du blocage" )
-        DEC_ConnaisssanceObjet_ResetDensitePopulationSortante( self.posteControle )
+        DEC_ConnaissanceObjet_ResetDensitePopulationSortante( self.posteControle )
     end,
 
 --[[// *****************************************************************************

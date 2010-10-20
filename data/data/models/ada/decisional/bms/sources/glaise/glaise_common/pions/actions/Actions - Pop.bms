@@ -121,7 +121,7 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Pop.bms"] = 
 ]]--[[//---------------------------------------------------------------------
 ]]        end
 
-        DEC_ConnaisssanceObjet_ChangeDensitePopulationSortante( self._namedParams.posteControle, self._namedParams.permeabilite )
+        DEC_ConnaisanceObjet_ChangeDensitePopulationSortante( self._namedParams.posteControle, self._namedParams.permeabilite )
         --[[//---------------------------------------------------------------------
 ]]--[[// Reprise après focus loss
 ]]--[[//---------------------------------------------------------------------        
@@ -139,13 +139,13 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Pop.bms"] = 
                 DEC_Trace( "Pause animation du site" )
         DEC_PauseAction( self.actionAnimer )
         self.bInit = true
-        DEC_ConnaisssanceObjet_ResetDensitePopulationSortante( self._namedParams.posteControle )
+        DEC_ConnaissanceObjet_ResetDensitePopulationSortante( self._namedParams.posteControle )
     end,
 
     destroy = function( self )
                 DEC_Trace( "Site non anime" )
         self.actionAnimer = DEC_StopAction( self.actionAnimer )
-        DEC_ConnaisssanceObjet_ResetDensitePopulationSortante( self._namedParams.posteControle )
+        DEC_ConnaissanceObjet_ResetDensitePopulationSortante( self._namedParams.posteControle )
     end,
 
 }
