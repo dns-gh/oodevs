@@ -161,9 +161,9 @@ void load_construct_data( Archive& /*archive*/, MIL_EntityManager* role, const u
 // -----------------------------------------------------------------------------
 MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
     : time_                         ( time )
-    , profilerManager_              ( profiler )
     , hla_                          ( hla )
     , effectManager_                ( effects )
+    , profilerManager_              ( profiler )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0. )
     , rAutomatesDecisionTime_       ( 0. )
@@ -234,7 +234,6 @@ MIL_EntityManager::~MIL_EntityManager()
     MIL_LimaFunction              ::Terminate();
     UrbanType                     ::Terminate();
     PHY_ResourceNetworkType       ::Terminate();
-    delete pObjectManager_;
 }
 
 // -----------------------------------------------------------------------------
@@ -314,7 +313,6 @@ void MIL_EntityManager::CreateUrbanObjects( UrbanModel& urbanModel, const MIL_Co
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::CreateUrbanObject( const urban::TerrainObject_ABC& object )
 {
-    assert( pObjectManager_ );
     pObjectManager_->CreateUrbanObject( object );
 }
 
@@ -462,8 +460,6 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
 {
-    //@TODO MGD REMOVE
-    assert( pObjectManager_ );
     pObjectManager_->CreateObject( xis, army );
 }
 
@@ -473,7 +469,6 @@ void MIL_EntityManager::CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, ObstacleType_DemolitionTargetType obstacleType )
 {
-    assert( pObjectManager_ );
     return pObjectManager_->CreateObject( army, type, pLocalisation, obstacleType );
 }
 
@@ -483,7 +478,6 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const std::
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
 {
-    assert( pObjectManager_ );
     return pObjectManager_->CreateObject( type, army, localisation );
 }
 
@@ -493,7 +487,6 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Ar
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_EntityManager::CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& name )
 {
-    assert( pObjectManager_ );
     return pObjectManager_->CreateDistantObject( type, army, localisation, name );
 }
 
@@ -522,7 +515,6 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& /*type*/, MI
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_EntityManager::FindObject( unsigned int nID ) const
 {
-    assert( pObjectManager_ );
     return pObjectManager_->Find( nID );
 }
 
@@ -532,7 +524,6 @@ MIL_Object_ABC* MIL_EntityManager::FindObject( unsigned int nID ) const
 // -----------------------------------------------------------------------------
 const MIL_ObjectType_ABC& MIL_EntityManager::FindObjectType( const std::string& type ) const
 {
-    assert( pObjectManager_ );
     return pObjectManager_->FindType( type );
 }
 
@@ -632,7 +623,6 @@ void MIL_EntityManager::UpdateActions()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateEffects()
 {
-    assert( pObjectManager_ );
     profiler_.Start();
     pObjectManager_->ProcessEvents();
     effectManager_.Update();
@@ -653,7 +643,6 @@ void MIL_EntityManager::UpdateStates()
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateNetwork, _1 ) );
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateNetwork, _1 ) );
-    assert( pObjectManager_ );
     pObjectManager_->UpdateStates();
     rStatesTime_ = profiler_.Stop();
 }
@@ -1047,7 +1036,6 @@ void MIL_EntityManager::OnReceiveMsgUnitCreationRequest( const MsgsClientToSim::
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::MsgObjectMagicAction& message, unsigned int nCtx )
 {
-    assert( pObjectManager_ );
     pObjectManager_->OnReceiveMsgObjectMagicAction( message, nCtx, *armyFactory_ );
 }
 
@@ -1082,7 +1070,6 @@ void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const MsgMagicAction& messa
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgChangeResourceLinks( const MsgsClientToSim::MsgMagicAction& message, unsigned int nCtx )
 {
-    assert( pObjectManager_ );
     pObjectManager_->OnReceiveMsgChangeResourceLinks( message, nCtx );
 }
 
@@ -1431,16 +1418,13 @@ void MIL_EntityManager::ChannelPopulations( const TER_Localisation& localisation
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    // $$$$ NLD 2007-01-11: A voir
-    delete pObjectManager_;
-    pObjectManager_ = 0;
-
     ArmyFactory_ABC * armyFactory;
     FormationFactory_ABC * formationFactory;
     AutomateFactory_ABC * automateFactory;
     AgentFactory_ABC * agentFactory;
     PopulationFactory_ABC * populationFactory;
     KnowledgeGroupFactory_ABC * knowledgeGroupFactory; // LTO
+    MIL_ObjectManager* objectManager;
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          >> knowledgeGroupFactory; // LTO
     knowledgeGroupFactory_.reset( knowledgeGroupFactory );
@@ -1449,7 +1433,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
          >> agentFactory
          >> automateFactory
          >> populationFactory
-         >> pObjectManager_
+         >> objectManager
          >> rKnowledgesTime_
          >> rAutomatesDecisionTime_
          >> rPionsDecisionTime_
@@ -1464,6 +1448,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     agentFactory_.reset( agentFactory );
     automateFactory_.reset( automateFactory );
     populationFactory_.reset( populationFactory );
+    pObjectManager_.reset( objectManager );
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
@@ -1482,6 +1467,7 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
     const AutomateFactory_ABC * const tempAutomateFactory = automateFactory_.get();
     const PopulationFactory_ABC * const populationFactory = populationFactory_.get();
     const KnowledgeGroupFactory_ABC* const knowledgeGroupFactory = knowledgeGroupFactory_.get();
+    const MIL_ObjectManager* const objectManager = pObjectManager_.get();
 
     file //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          << knowledgeGroupFactory; // LTO
@@ -1490,7 +1476,7 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
          << tempAgentFactory
          << tempAutomateFactory
          << populationFactory
-         << pObjectManager_
+         << objectManager
          << rKnowledgesTime_
          << rAutomatesDecisionTime_
          << rPionsDecisionTime_

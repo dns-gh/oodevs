@@ -256,14 +256,24 @@ private:
 private:
     const MIL_Time_ABC& time_;
     HLA_Federate*       hla_;
-    MIL_ProfilerMgr&    profilerManager_;
     MIL_EffectManager&  effectManager_;
-    MIL_ObjectManager*  pObjectManager_;
 
+    // Profiling
+    MIL_ProfilerMgr& profilerManager_;
+    MT_Profiler profiler_;
+    unsigned int nRandomBreakdownsNextTimeStep_;
+    double rKnowledgesTime_;
+    double rAutomatesDecisionTime_;
+    double rPionsDecisionTime_;
+    double rPopulationsDecisionTime_;
+    double rActionsTime_;
+    double rEffectsTime_;
+    double rStatesTime_;
+
+    std::auto_ptr< MIL_IDManager > idManager_;
+    std::auto_ptr< MIL_ObjectManager > pObjectManager_;
     T_IntelligenceMap intelligences_;
 
-    // ID Manager
-    std::auto_ptr< MIL_IDManager > idManager_;
     // Factories
     std::auto_ptr< PopulationFactory_ABC >      populationFactory_;
     std::auto_ptr< AgentFactory_ABC >           agentFactory_;
@@ -271,18 +281,7 @@ private:
     std::auto_ptr< FormationFactory_ABC >       formationFactory_;
     std::auto_ptr< KnowledgeGroupFactory_ABC >  knowledgeGroupFactory_;
     std::auto_ptr< ArmyFactory_ABC >            armyFactory_;
-
-    // Profiling
-    MT_Profiler   profiler_;
-    double      rKnowledgesTime_;
-    double      rAutomatesDecisionTime_;
-    double      rPionsDecisionTime_;
-    double      rPopulationsDecisionTime_;
-    double      rActionsTime_;
-    double      rEffectsTime_;
-    double      rStatesTime_;
-
-    unsigned int  nRandomBreakdownsNextTimeStep_;
+    
     unsigned int  gcPause_;
     unsigned int  gcMult_;
     bool          infiniteDotations_;
