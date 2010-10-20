@@ -9,26 +9,28 @@
 
 #include "gaming_pch.h"
 #include "Profile.h"
-#include "AvailableProfile.h"
-#include "Tools.h"
-#include "Model.h"
-#include "TeamsModel.h"
+#include "AgentKnowledges.h"
 #include "AgentsModel.h"
-#include "Simulation.h"
+#include "AvailableProfile.h"
+#include "Model.h"
 #include "Services.h"
+#include "Simulation.h"
+#include "TeamsModel.h"
+#include "Tools.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Knowledge_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/IntelligenceHierarchies.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/IntelligenceHierarchies.h"
+#include "clients_kernel/Knowledge_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
 #include "protocol/ProtocolVersionChecker.h"
-#include "protocol/authenticationsenders.h"
+#include "protocol/ServerPublisher_ABC.h"
+#include "protocol/AuthenticationSenders.h"
 #include <boost/bind.hpp>
 
 using namespace kernel;
@@ -47,7 +49,7 @@ Profile::Profile( Controllers& controllers, Publisher_ABC& publisher, const std:
 {
     controller_.Register( *this );
     if( !isLoginSet )
-        password_ += ( char ) 0x7f; // set as invalid password (fix for mantis 0003178)
+        password_ += static_cast< char >( 0x7f ); // set as invalid password (fix for mantis 0003178)
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +83,7 @@ void Profile::Login( const std::string& login, const std::string& password ) con
     login_ = login;
     password_ = password;
     Login();
-    controller_.Update( *(kernel::Profile_ABC*)this );
+    controller_.Update( *static_cast< Profile_ABC* >( const_cast< Profile* >( this ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,23 +106,21 @@ void Profile::ReadList( const T& idList, T_Ids& ids )
 // -----------------------------------------------------------------------------
 void Profile::Update( const MsgsAuthenticationToClient::MsgAuthenticationResponse& message )
 {
-    if( message.error_code() == MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_too_many_connections )
-    {
+    if( message.error_code() == MsgsAuthenticationToClient::MsgAuthenticationResponse::too_many_connections )
         throw std::exception( tools::translate( "Profile", "Too many connections" ).ascii() );
-    }
     else
     {
-        loggedIn_ = ( message.error_code() == MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_success );
+        loggedIn_ = ( message.error_code() == MsgsAuthenticationToClient::MsgAuthenticationResponse::success );
         if( message.has_profile() )
         {
             Update( message.profile() );
-            controller_.Update( *(Profile_ABC*)this );
+            controller_.Update( *static_cast< Profile_ABC* >( this ) );
         }
         controller_.Update( *this );
-    if( !loggedIn_ && message.has_profiles() )
-        for( int i = 0; i < message.profiles().elem_size(); ++i )
-            controller_.Update( AvailableProfile( message.profiles().elem(i) ) );
-}
+        if( !loggedIn_ && message.has_profiles() )
+            for( int i = 0; i < message.profiles().elem_size(); ++i )
+                controller_.Update( AvailableProfile( message.profiles().elem( i ) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +134,7 @@ void Profile::Update( const Model& model, const MsgsAuthenticationToClient::MsgP
         Update( message.profile() );
         ResolveEntities( model );
         controller_.Update( *this );
-        controller_.Update( *(kernel::Profile_ABC*)this );
+        controller_.Update( *static_cast< Profile_ABC* >(this ) );
     }
 }
 
@@ -193,10 +193,10 @@ void Profile::ResolveEntities( const Model& model )
 {
     readWriteEntities_.clear();
     readEntities_.clear();
-    ResolveEntities< kernel::Team_ABC >      ( model.teams_ , readTeams_      , writeTeams_ );
-    ResolveEntities< kernel::Formation_ABC > ( model.teams_ , readFormations_ , writeFormations_ );
-    ResolveEntities< kernel::Automat_ABC >   ( model.agents_, readAutomats_   , writeAutomats_ );
-    ResolveEntities< kernel::Population_ABC >( model.agents_, readPopulations_, writePopulations_ );
+    ResolveEntities< Team_ABC >      ( model.teams_ , readTeams_      , writeTeams_ );
+    ResolveEntities< Formation_ABC > ( model.teams_ , readFormations_ , writeFormations_ );
+    ResolveEntities< Automat_ABC >   ( model.agents_, readAutomats_   , writeAutomats_ );
+    ResolveEntities< Population_ABC >( model.agents_, readPopulations_, writePopulations_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -239,7 +239,7 @@ bool Profile::IsVisible( const Entity_ABC& entity ) const
 // Name: Profile::IsKnowledgeVisible
 // Created: HBD 2010-08-03
 // -----------------------------------------------------------------------------
-bool Profile::IsKnowledgeVisible( const kernel::Knowledge_ABC& entity ) const
+bool Profile::IsKnowledgeVisible( const Knowledge_ABC& entity ) const
 {
     return IsInHierarchy( entity.GetOwner(), readEntities_, false );
 }
@@ -257,7 +257,7 @@ bool Profile::CanBeOrdered( const Entity_ABC& entity ) const
 // Name: Profile::CanDoMagic
 // Created: AGE 2006-10-13
 // -----------------------------------------------------------------------------
-bool Profile::CanDoMagic( const kernel::Entity_ABC& entity ) const
+bool Profile::CanDoMagic( const Entity_ABC& entity ) const
 {
     return simulation_ && supervision_ && CanBeOrdered( entity );
 }
@@ -270,18 +270,64 @@ bool Profile::IsInHierarchy( const Entity_ABC& entity, const T_Entities& entitie
 {
     if( entities.find( &entity ) != entities.end() )
         return true;
-
-    if( const Hierarchies* hierarchies = FindHierarchies( entity ) )
-    {
-        for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
-        {
-            const Entity_ABC& possibleSuperior = **it;
-            if( IsInHierarchy( entity, *hierarchies, possibleSuperior, childOnly ) )
-                return true;
-        }
+    const TacticalHierarchies* tactical = entity.Retrieve< TacticalHierarchies >();
+    const CommunicationHierarchies* communication = entity.Retrieve< CommunicationHierarchies >();
+    const IntelligenceHierarchies* intelligence = entity.Retrieve< IntelligenceHierarchies >();
+    if( !tactical && !communication && !intelligence )
+        return true;
+    if( IsInSpecificHierarchy( entity, tactical, entities, childOnly ) ||
+        IsInSpecificHierarchy( entity, intelligence, entities, childOnly ) )
+        return true;
+    if( childOnly )
+        return IsInSpecificHierarchy( entity, communication, entities, childOnly );
+    if( !communication || communication->IsJammed() ) // Vérifier si le brouillage doit intervenir ici
         return false;
+    for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
+    {
+        const CommunicationHierarchies* profileHierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
+        if( profileHierarchy && !profileHierarchy->IsJammed() && AreInSameKnowledgeGroup( *communication, *profileHierarchy ) )
+            return true;
     }
-    return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::AreInSameKnowledgeGroup
+// Created: JSR 2010-10-20
+// -----------------------------------------------------------------------------
+bool Profile::AreInSameKnowledgeGroup( const CommunicationHierarchies& hierarchy1, const CommunicationHierarchies& hierarchy2 )
+{
+    const AgentKnowledges* entityKnowledges1 = 0;
+    const AgentKnowledges* entityKnowledges2 = 0;
+    for( const Entity_ABC* superior1 = hierarchy1.GetSuperior(); superior1; superior1 = superior1->Get< CommunicationHierarchies >().GetSuperior() )
+    {
+        entityKnowledges1 = superior1->Retrieve< AgentKnowledges >();
+        if( entityKnowledges1 )
+        {
+            for( const Entity_ABC* superior2 = hierarchy2.GetSuperior(); superior2; superior2 = superior2->Get< CommunicationHierarchies >().GetSuperior() )
+            {
+                entityKnowledges2 = superior2->Retrieve< AgentKnowledges >();
+                if( entityKnowledges2 )
+                    return entityKnowledges2 == entityKnowledges1;
+            }
+            return false;
+        }
+    }
+    return &hierarchy1.GetTop() == &hierarchy2.GetTop();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::IsInSpecificHierarchy
+// Created: JSR 2010-10-20
+// -----------------------------------------------------------------------------
+bool Profile::IsInSpecificHierarchy( const Entity_ABC& entity, const Hierarchies* hierarchy, const T_Entities& entities, bool childOnly )
+{
+    if( !hierarchy )
+        return false;
+    for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
+        if( IsInHierarchy( entity, *hierarchy, **it, childOnly ) )
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -294,23 +340,8 @@ bool Profile::IsInHierarchy( const Entity_ABC& entity, const Hierarchies& hierar
         return true;
     if( childOnly )
         return false;
-
     const Hierarchies* otherHierarchies = hierarchy.RetrieveHierarchies( other );
     return otherHierarchies && otherHierarchies->IsSubordinateOf( entity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::FindHierarchies
-// Created: AGE 2006-10-20
-// -----------------------------------------------------------------------------
-const kernel::Hierarchies* Profile::FindHierarchies( const kernel::Entity_ABC& entity )
-{
-    const Hierarchies* result = entity.Retrieve< TacticalHierarchies >();
-    if( ! result )
-        result = entity.Retrieve< CommunicationHierarchies >();
-    if( ! result )
-        result = entity.Retrieve< IntelligenceHierarchies >();
-    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -371,7 +402,7 @@ void Profile::NotifyDeleted( const Team_ABC& team )
 // Name: Profile::NotifyCreated
 // Created: AGE 2006-10-20
 // -----------------------------------------------------------------------------
-void Profile::NotifyCreated( const kernel::Formation_ABC& formation )
+void Profile::NotifyCreated( const Formation_ABC& formation )
 {
     Add( formation, readFormations_, writeFormations_ );
 }
@@ -380,7 +411,7 @@ void Profile::NotifyCreated( const kernel::Formation_ABC& formation )
 // Name: Profile::NotifyDeleted
 // Created: AGE 2006-10-20
 // -----------------------------------------------------------------------------
-void Profile::NotifyDeleted( const kernel::Formation_ABC& formation )
+void Profile::NotifyDeleted( const Formation_ABC& formation )
 {
     Remove( formation );
 }
@@ -393,8 +424,7 @@ void Profile::Add( const Entity_ABC& entity, const T_Ids& readIds, const T_Ids& 
 {
     const unsigned long id = entity.GetId();
     const bool canBeOrdered = std::find( readWriteIds.begin(), readWriteIds.end(), id ) != readWriteIds.end();
-    const bool isVisible    = canBeOrdered  || std::find( readIds.begin(), readIds.end(), id ) != readIds.end();
-
+    const bool isVisible = canBeOrdered  || std::find( readIds.begin(), readIds.end(), id ) != readIds.end();
     if( canBeOrdered )
         readWriteEntities_.insert( &entity );
     if( isVisible )
@@ -418,7 +448,7 @@ void Profile::Remove( const Entity_ABC& entity )
 void Profile::Clean()
 {
     login_ = "";
-    password_ = ( char ) 0x7f; // mantis 0003178
+    password_ = static_cast< char >( 0x7f ); // mantis 0003178
     supervision_ = false;
     loggedIn_ = false;
     readEntities_.clear();

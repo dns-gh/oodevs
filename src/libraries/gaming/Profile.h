@@ -13,31 +13,31 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
-#include "protocol/ServerPublisher_ABC.h"
 
 namespace kernel
 {
+    class Automat_ABC;
+    class CommunicationHierarchies;
     class Controller;
     class Controllers;
-    class Automat_ABC;
-    class Team_ABC;
-    class Population_ABC;
     class Hierarchies;
     class Formation_ABC;
     class Knowledge_ABC;
+    class Population_ABC;
+    class Team_ABC;
 }
 
 namespace MsgsAuthenticationToClient
 {
     class MsgAuthenticationResponse;
-    class MsgProfileUpdate;
     class MsgProfile;
+    class MsgProfileUpdate;
 }
 
+class Model;
+class Publisher_ABC;
 class Services;
 class Simulation;
-class Publisher_ABC;
-class Model;
 
 // =============================================================================
 /** @class  Profile
@@ -107,7 +107,6 @@ private:
     void ResolveEntities( const Model& model );
     template< typename Entity >
     void ResolveEntities( const tools::Resolver_ABC< Entity >& resolver, const T_Ids& readIds, const T_Ids& readWriteIds );
-
     template< typename T >
     void ReadList( const T& idList, T_Ids& ids );
     virtual void NotifyCreated( const kernel::Automat_ABC& automat );
@@ -120,12 +119,12 @@ private:
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Services& services );
-
     void Add( const kernel::Entity_ABC& entity, const T_Ids& readIds, const T_Ids& readWriteIds );
     void Remove( const kernel::Entity_ABC& entity );
     static bool IsInHierarchy( const kernel::Entity_ABC& entity, const T_Entities& entities, bool childOnly );
+    static bool IsInSpecificHierarchy( const kernel::Entity_ABC& entity, const kernel::Hierarchies* hierarchy, const T_Entities& entities, bool childOnly );
     static bool IsInHierarchy( const kernel::Entity_ABC& entity, const kernel::Hierarchies& hierarchy, const kernel::Entity_ABC& other, bool childOnly );
-    static const kernel::Hierarchies* FindHierarchies( const kernel::Entity_ABC& entity );
+    static bool AreInSameKnowledgeGroup( const kernel::CommunicationHierarchies& hierarchy1, const kernel::CommunicationHierarchies& hierarchy2 );
     //@}
 
 private:
