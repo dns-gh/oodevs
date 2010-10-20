@@ -24,7 +24,7 @@ class MT_Converter
     MT_COPYNOTALLOWED( MT_Converter )
 
 public:
-             MT_Converter( const VALUE& nullValue );
+    explicit MT_Converter( const VALUE& nullValue );
     virtual ~MT_Converter();
 
     //! @name Operations
@@ -54,8 +54,10 @@ private:
     template< typename Archive > friend void load_construct_data( Archive& archive, MT_Converter< KEY, VALUE, CMP >* element, const unsigned int /*version*/ );
     //@}
 
-private:
+public:
     const VALUE nullValue_;
+
+private:
     const KEY   nullKey_;
     T_Map       map_;
 };

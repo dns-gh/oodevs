@@ -217,9 +217,6 @@
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Tools_pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Interpolation.cpp">
-      <Filter>Source Files\Function Interpolation</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_GaussianRandom.cpp">
       <Filter>Source Files\Random</Filter>
     </ClCompile>
