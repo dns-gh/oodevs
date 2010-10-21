@@ -11,6 +11,7 @@
 #include <boost/foreach.hpp>
 #include <boost/program_options.hpp>
 #include <xeuseuleu/xsl.hpp>
+#include <fstream>
 #include <iostream>
 
 namespace bpo = boost::program_options;
@@ -25,7 +26,8 @@ namespace
             ( "help"            , "produce help message" )
             ( "orders-directory", bpo::value< std::string >(), "set orders directory" )
             ( "input"           , bpo::value< std::string >(), "set input exercise directory" )
-            ( "output"          , bpo::value< std::string >(), "set output exercise directory" );
+            ( "output"          , bpo::value< std::string >(), "set output exercise directory" )
+            ( "simulation-app"  , bpo::value< std::string >(), "set simulation_app path" );
         bpo::variables_map vm;
         bpo::store( bpo::command_line_parser( argc, argv ).options( desc ).run(), vm );
         bpo::notify( vm );
@@ -40,6 +42,8 @@ namespace
             throw std::invalid_argument( "Invalid application option argument: missing input exercise directory" );
         if( !vm.count( "output" ) )
             throw std::invalid_argument( "Invalid application option argument: missing output exercise directory" );
+        if( !vm.count( "simulation-app" ) )
+            throw std::invalid_argument( "Invalid application option argument: missing simulation_app path" );
         return vm;
     }
 
@@ -87,17 +91,62 @@ namespace
         xft2 << xsl::parameter( "profilename", bfs::basename( orderFile ) ) << xis2;
     }
 
-    void launchExercises( const bfs::path& exercisesRoot )
+    void launchExercises( const bfs::path& exercisesRoot, const std::string& simulationApp )
+    {
+        bfs::directory_iterator end_it;
+        
+        for( bfs::directory_iterator it( exercisesRoot ); it != end_it; ++it )
+        {
+            std::cout << "executing " << it->filename() << "..." << std::endl;
+            const std::string command( simulationApp + " --root-dir=../../data --exercise=" +
+                                       exercisesRoot.filename() + "/" + it->filename() + " --session=default" );
+            system( command.c_str() );
+        }
+    }
+
+    void report( const bfs::path& exercisesRoot, const std::string& logName, int& nbError, int& nbMissionImpossible )
     {
         bfs::directory_iterator end_it;
         for( bfs::directory_iterator it( exercisesRoot ); it != end_it; ++it )
         {
-            std::cout << "executing " << it->filename() << std::endl;
-            const std::string command( ".\\..\\..\\out\\applications\\simulation_app\\vc80\\Release\\simulation_app.exe --root-dir=../../data --exercise=validation_test_seq/" + 
-                                 it->filename() + " --session=default" );
-            system( command.c_str() );
-
+            bfs::path logFile( it->path() / "sessions/default" / logName );
+            std::ifstream file( logFile.string().c_str() );
+            if( !file )
+            {
+                std::cerr << "Warning : Unable to open " << logFile << std::endl;
+                return;
+            }
+            std::string line;
+            int numLine = 0;
+            while( std::getline( file, line ) )
+            {
+                ++numLine;
+                if( line.find( "Error" ) != std::string::npos )
+                {
+                    ++nbError;
+                    std::cout << logName << " error : " << it->filename() << " : line " << numLine << std::endl;
+                }
+                else if( line.find( "mission impossible" ) != std::string::npos )
+                {
+                    ++nbMissionImpossible;
+                    std::cout << logName << " mission impossible : " << it->filename() << " : line " << numLine << std::endl;
+                }
+            }
         }
+    }
+
+    int reports( const bfs::path& exercisesRoot )
+    {
+        int nbError = 0;
+        int nbMissionImpossible = 0;
+        report( exercisesRoot, "Dispatcher.log", nbError, nbMissionImpossible );
+        report( exercisesRoot, "Sim.log", nbError, nbMissionImpossible );
+        report( exercisesRoot, "Messages.log", nbError, nbMissionImpossible );
+        std::cout << " Errors : " << nbError << std::endl;
+        std::cout << " Missions impossible : " << nbMissionImpossible << std::endl;
+        if( nbError + nbMissionImpossible != 0 )
+            return EXIT_FAILURE;
+        return EXIT_SUCCESS;
     }
 }
 
@@ -109,18 +158,22 @@ int main( int argc, char* argv[] )
         const bfs::path ordersPath = bfs::path( vm[ "orders-directory" ].as< std::string >() );
         const bfs::path inputPath = bfs::path( vm[ "input" ].as< std::string >() );
         const bfs::path outputPath = bfs::path( vm[ "output" ].as< std::string >() );
+        const std::string simulationApp( vm[ "simulation-app" ].as< std::string >() );
+
         std::set< bfs::path > orderFiles;
         findOrdersFiles( ordersPath, orderFiles );
+
         if( bfs::exists( outputPath ) && !bfs::remove_all( outputPath ) )
             throw std::runtime_error( "Unable to remove " + outputPath.string() );
+
         BOOST_FOREACH( const bfs::path& path, orderFiles )
             CreateExercise( inputPath, outputPath, path );
-        launchExercises( outputPath );
+        launchExercises( outputPath, simulationApp );
+        return reports( outputPath );
     }
     catch ( std::exception& e )
     {
         std::cerr << e.what() << std::endl;
         return EXIT_FAILURE;
     }
-    return EXIT_SUCCESS;
 }
