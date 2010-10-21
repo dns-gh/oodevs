@@ -481,6 +481,10 @@
         </build-app>
     </target>
 
+    <target name="application.validation_test" description="build validation_test executable">
+        <build-app name="validation_test" subsystem="console" depends="boost,xerces,xalan" root="../src/tests"/>
+    </target>
+
     <!--
     ============================================================================
     data
@@ -803,7 +807,17 @@
             </condition>
         </fail>	
     </target>
-    
+
+    <target name="test-validation" description="Sequential launch of generated exercises from ord files on simulation_app"
+            depends="application.simulation_app, application.validation_test">
+        <exec executable="${out.dir}/release/applications/validation_test/validation_test.exe" dir="${run.dir}" failonerror="true" timeout="600000">
+            <arg value="--orders-directory=../../../doc/03-Unit_Testing"/>
+            <arg value="--input=../../data/exercises/Poseidon VA"/>
+            <arg value="--output=../../data/exercises/validation_test_seq"/>
+            <arg value="--simulation-app=${out.dir}/release/applications/simulation_app/simulation_app.exe"/>
+        </exec>
+    </target>
+
     <!--
     ============================================================================
     package
