@@ -111,6 +111,7 @@ void MagicActionType::Initialize()
     {
         CreateOrderParameter( "Level", "numeric" );
         CreateOrderParameter( "Name", "string" );
+        CreateOrderParameter( "LogLevel", "string" );
     }
     else if( name_ == "unit_creation" )
     {

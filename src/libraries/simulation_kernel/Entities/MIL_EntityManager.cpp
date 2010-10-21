@@ -122,6 +122,8 @@ namespace
             return tasker.crowd().id();
         if( tasker.has_formation() )
             return tasker.formation().id();
+        if( tasker.has_party() )
+            return tasker.party().id();
         throw std::exception( "Misformed tasker in protocol message" );
     }
 }
@@ -907,9 +909,31 @@ void MIL_EntityManager::ProcessMsgAutomatCreationRequest( const MsgsClientToSim:
 // Name: MIL_EntityManager::ProcessMsgFormationCreationRequest
 // Created: LDC 2010-10-20
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessMsgFormationCreationRequest( const MsgsClientToSim::MsgUnitMagicAction& message, MIL_Army_ABC* army, MIL_Entity_ABC* formation )
+void MIL_EntityManager::ProcessMsgFormationCreationRequest( const MsgsClientToSim::MsgUnitMagicAction& message, MIL_Army_ABC* army, MIL_Formation* formation )
 {
-
+    client::MagicActionAck ack;
+    ack().set_error_code( MsgsSimToClient::MsgMagicActionAck::no_error );
+    if( !army )
+    {
+        if( !formation )
+        {
+            ack().set_error_code( MsgsSimToClient::MsgMagicActionAck::error_invalid_attribute );
+            return;
+        }
+        army = &(formation->GetArmy());
+    }
+    if( !message.has_parameters() || message.parameters().elem_size() != 3 || !message.parameters().elem( 0 ).has_value() || !message.parameters().elem( 0 ).value().has_areal() )
+    {
+        ack().set_error_code( MsgsSimToClient::MsgMagicActionAck::error_invalid_attribute );
+        return;
+    }
+    const ::Common::MsgMissionParameters& parameters = message.parameters();
+    int level = static_cast< int >( parameters.elem( 0 ).value().areal() );
+    std::string name = ( parameters.elem( 1 ).has_value() && parameters.elem( 1 ).value().has_acharstr() ) ? parameters.elem( 1 ).value().acharstr() : std::string();
+    std::string logLevel = ( parameters.elem( 2 ).has_value() && parameters.elem( 2 ).value().has_acharstr() ) ? parameters.elem( 2 ).value().acharstr() : std::string();;
+    MIL_Formation& newFormation = formationFactory_->Create( level, name, logLevel, *army, formation );
+    ack.Send( NET_Publisher_ABC::Publisher() );
+    newFormation.SendCreation();
 }
 
 // -----------------------------------------------------------------------------

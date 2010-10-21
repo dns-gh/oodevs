@@ -22,6 +22,8 @@ namespace xml
     class xostream;
 }
 
+class MIL_Army_ABC;
+
 // =============================================================================
 /** @class  MIL_Entity_ABC
     @brief  MIL Entity definition
@@ -42,6 +44,7 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName() const;
+    virtual MIL_Army_ABC& GetArmy() const = 0;
     //@}
 
     //! @name CheckPoints

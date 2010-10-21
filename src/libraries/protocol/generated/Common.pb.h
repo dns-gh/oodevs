@@ -2985,6 +2985,13 @@ class Tasker : public ::google::protobuf::Message {
   inline const ::Common::UnitId& unit() const;
   inline ::Common::UnitId* mutable_unit();
   
+  // optional .Common.PartyId party = 5;
+  inline bool has_party() const;
+  inline void clear_party();
+  static const int kPartyFieldNumber = 5;
+  inline const ::Common::PartyId& party() const;
+  inline ::Common::PartyId* mutable_party();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -2993,11 +3000,12 @@ class Tasker : public ::google::protobuf::Message {
   ::Common::FormationId* formation_;
   ::Common::CrowdId* crowd_;
   ::Common::UnitId* unit_;
+  ::Common::PartyId* party_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -14483,6 +14491,23 @@ inline ::Common::UnitId* Tasker::mutable_unit() {
   _set_bit(3);
   if (unit_ == NULL) unit_ = new ::Common::UnitId;
   return unit_;
+}
+
+// optional .Common.PartyId party = 5;
+inline bool Tasker::has_party() const {
+  return _has_bit(4);
+}
+inline void Tasker::clear_party() {
+  if (party_ != NULL) party_->::Common::PartyId::Clear();
+  _clear_bit(4);
+}
+inline const ::Common::PartyId& Tasker::party() const {
+  return party_ != NULL ? *party_ : *default_instance_->party_;
+}
+inline ::Common::PartyId* Tasker::mutable_party() {
+  _set_bit(4);
+  if (party_ == NULL) party_ = new ::Common::PartyId;
+  return party_;
 }
 
 // -------------------------------------------------------------------

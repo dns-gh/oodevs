@@ -40,6 +40,7 @@ message Tasker {
     optional FormationId  formation  = 2;
     optional CrowdId crowd           = 3;
     optional UnitId       unit       = 4;
+    optional PartyId party           = 5;
 }
 
 message ParentEntity {

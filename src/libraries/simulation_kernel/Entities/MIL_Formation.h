@@ -50,6 +50,7 @@ public:
     //@{
              MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory );
              MIL_Formation( const std::string& name );
+             MIL_Formation( int level, const std::string& name, std::string logLevelStr, MIL_Army_ABC& army, MIL_Formation* parent );
     virtual ~MIL_Formation();
     //@}
 
@@ -72,7 +73,7 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_Army_ABC& GetArmy() const;
+    virtual MIL_Army_ABC& GetArmy() const;
     unsigned int GetID() const;
     MIL_AutomateLOG* GetBrainLogistic() const;
     MIL_AutomateLOG* FindLogisticManager() const;

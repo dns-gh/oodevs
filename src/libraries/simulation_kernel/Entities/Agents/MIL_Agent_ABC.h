@@ -47,7 +47,6 @@ public:
     //! @name Accessors
     //@{
                   unsigned int        GetID              () const;
-    virtual       MIL_Army_ABC&       GetArmy      () const = 0;
     virtual       MIL_KnowledgeGroup& GetKnowledgeGroup  () const = 0;
     virtual const MIL_AgentType_ABC&  GetType      () const = 0;
     virtual bool                      IsDead       () const = 0;

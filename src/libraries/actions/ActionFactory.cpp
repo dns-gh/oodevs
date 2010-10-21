@@ -610,7 +610,7 @@ actions::Action_ABC* ActionFactory::CreateAutomatCreationAction( const kernel::A
         }
     }
     action->AddParameter( *new parameters::Identifier( it.NextElement(), knowledgeGroup ) );
-    action->AddParameter( *new parameters::String( it.NextElement(), tools::translate( "ActionFactory", "New Automat" ).ascii() ) );
+    action->AddParameter( *new parameters::String( it.NextElement(), tools::translate( "ActionFactory", "" ).ascii() ) );
     return action;
 }
 
@@ -640,6 +640,7 @@ actions::Action_ABC* ActionFactory::CreateFormationCreationAction( int level, co
     UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Formation Creation" ), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Numeric( it.NextElement(), static_cast<float>( level ) ) );
+    action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
     action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
     return action;
 }

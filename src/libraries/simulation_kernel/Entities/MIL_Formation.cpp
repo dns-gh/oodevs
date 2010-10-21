@@ -9,22 +9,27 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Formation.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
+#include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/MIL_Army_ABC.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
-#include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "MT_Tools/MT_Logger.h"
-#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "tools/MIL_IDManager.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/map.hpp>
 #include <boost/bind.hpp>
 
 class MIL_Intelligence;
+namespace
+{
+    MIL_IDManager idManager_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation constructor
@@ -56,6 +61,39 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
     if(logLevel==0 || PHY_LogisticLevel::tc2_==*logLevel)
         xis.error( "Wrong logistic level" );
     if(PHY_LogisticLevel::logistic_base_==*logLevel)
+    {
+        pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *logLevel ) );
+        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>(*pBrainLogistic_.get() ) );
+        this->RegisterAction( pLogisticAction_ );
+    }
+    idManager_.Lock( nID_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation constructor
+// Created: LDC 2010-10-21
+// -----------------------------------------------------------------------------
+MIL_Formation::MIL_Formation( int level, const std::string& name, std::string logLevelStr, MIL_Army_ABC& army, MIL_Formation* parent )
+    : MIL_Entity_ABC( name ) 
+    , nID_    ( idManager_.GetFreeId() )
+    , pArmy_  ( &army )
+    , pParent_( parent )
+    , pLevel_ ( 0 )
+{
+    pLevel_ = PHY_NatureLevel::Find( level );
+    if( !pLevel_ )
+        throw std::runtime_error( "Unknown level" );
+    if( pParent_ )
+        pParent_->RegisterFormation( *this );
+    else
+        pArmy_->RegisterFormation( *this );
+
+    if( logLevelStr.empty() )
+        logLevelStr = PHY_LogisticLevel::none_.GetName();
+    const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find( logLevelStr );
+    if( logLevel==0 || PHY_LogisticLevel::tc2_==*logLevel )
+        throw std::runtime_error( "Wrong logistic level" );
+    if( PHY_LogisticLevel::logistic_base_==*logLevel )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *logLevel ) );
         pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>(*pBrainLogistic_.get() ) );
@@ -184,6 +222,7 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
    file >> const_cast< unsigned int& >( nID_ )
         >> pArmy_
         >> pParent_;
+   idManager_.Lock( nID_ );
    unsigned int nLevel;
    file >> nLevel;
    pLevel_ = PHY_NatureLevel::Find( nLevel );

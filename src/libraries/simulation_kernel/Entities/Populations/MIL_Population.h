@@ -72,7 +72,7 @@ public:
     double GetDefaultFlowDensity() const;
     const MIL_PopulationAttitude& GetDefaultAttitude() const;
     const MIL_PopulationAttitude& GetAttitude() const;
-    const MIL_Army& GetArmy() const;
+    virtual MIL_Army_ABC& GetArmy() const;
     const DEC_PopulationKnowledge& GetKnowledge() const;
     bool IsDead() const;
     bool HasDoneMagicMove() const;

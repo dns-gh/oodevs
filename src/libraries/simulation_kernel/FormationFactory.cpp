@@ -61,6 +61,17 @@ MIL_Formation& FormationFactory::Create( xml::xistream& xis, MIL_Army_ABC& army,
 }
 
 // -----------------------------------------------------------------------------
+// Name: FormationFactory::Create
+// Created: LDC 2010-10-21
+// -----------------------------------------------------------------------------
+MIL_Formation& FormationFactory::Create( int level, const std::string& name, const std::string& logLevelStr, MIL_Army_ABC& army, MIL_Formation* parent )
+{
+    MIL_Formation& formation = *new MIL_Formation( level, name, logLevelStr, army, parent );
+    Register( formation.GetID(), formation );
+    return formation;
+}
+
+// -----------------------------------------------------------------------------
 // Name: FormationFactory::load
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------

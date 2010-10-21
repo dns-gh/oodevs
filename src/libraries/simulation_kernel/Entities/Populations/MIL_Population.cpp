@@ -1154,7 +1154,7 @@ MIL_PopulationOrderManager& MIL_Population::GetOrderManager()
 // Name: MIL_Population::GetArmy
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------
-const MIL_Army& MIL_Population::GetArmy() const
+MIL_Army_ABC& MIL_Population::GetArmy() const
 {
     assert( pArmy_ );
     return *pArmy_;
