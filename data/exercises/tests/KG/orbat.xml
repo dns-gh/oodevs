@@ -62,7 +62,7 @@
         <knowledge-group id="20" name="Knowledge group [20]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
     <side id="2" name="Army 2" type="enemy">
       <objects>
@@ -116,7 +116,7 @@
         <knowledge-group id="21" name="Knowledge group [21]" type="Standard"/>
       </communication>
       <populations/>
-      <logistic/>
+      <logistics/>
     </side>
   </sides>
   <diplomacies>
