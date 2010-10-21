@@ -585,6 +585,16 @@ void MIL_MissionParameterFactory::SetUrbanBlockParameter( boost::shared_ptr< MIL
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetUrbanBlockListParameter
+// Created: MGD 2010-10-19
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetUrbanBlockListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Knowledge_Urban > >& urbanBlockList )
+{
+    boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), urbanBlockList ) );
+    pMission->SetParameter( parameter, listParam );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::SetDirectionParameter
 // Created: PSN 2010-06-15
 // -----------------------------------------------------------------------------

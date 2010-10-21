@@ -52,6 +52,7 @@ public:
     static bool IsPointInPionFuseau( const MIL_Automate& callerAutomate, MT_Vector2D* pPoint, DEC_Decision_ABC* pPion );
     static bool MakePionRelievePion( const MIL_Automate& callerAutomate, DEC_Decision_ABC* relieving, DEC_Decision_ABC* relieved );
     static boost::shared_ptr< MT_Vector2D > GetPionPosition( const DEC_Decision_ABC* pion );
+    static double GetPerceptionForPion( const DEC_Decision_ABC* pion, boost::shared_ptr< MT_Vector2D >, boost::shared_ptr< MT_Vector2D > );
     static bool CanPionRelievePion( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* relieving, const DEC_Decision_ABC* relieved );
     static bool CanPionConstructObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, const std::string& type );
     static bool CanPionBypassObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );

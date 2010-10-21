@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PointListParameter.h"
+#include "MIL_MissionParameterFactory.h"
 #include "simulation_orders/MIL_ParameterType_PointList.h"
 #include "Network/NET_ASN_Tools.h"
 #include "tools/MIL_Tools.h"
@@ -78,5 +79,35 @@ bool MIL_PointListParameter::ToPointList( Common::MsgPointList& asn ) const
 bool MIL_PointListParameter::ToPointList( std::vector< boost::shared_ptr< MT_Vector2D > >& value ) const
 {
     value = pointList_;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PointListParameter::ToList
+// Created: DDA 2010-10-19
+// -----------------------------------------------------------------------------
+bool MIL_PointListParameter::ToList( std::vector< Common::MsgMissionParameter_Value >& result ) const
+{
+    for(std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = pointList_.begin(); it != pointList_.end(); ++it )
+    {
+        Common::MsgMissionParameter_Value param;
+        Common::MsgPoint* point = param.mutable_point();
+        NET_ASN_Tools::WritePoint( *(*it), *point );
+        result.push_back( param );
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PointListParameter::ToList
+// Created: DDA 2010-10-19
+// -----------------------------------------------------------------------------
+bool MIL_PointListParameter::ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& result ) const
+{
+    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = pointList_.begin(); it != pointList_.end(); ++it )
+    {
+        boost::shared_ptr<MIL_MissionParameter_ABC> param = MIL_MissionParameterFactory::Create( *(*it) );
+        result.push_back( param );
+    }
     return true;
 }

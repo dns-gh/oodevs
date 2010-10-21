@@ -11,8 +11,10 @@
 #include "MIL_ListParameter.h"
 #include "MIL_MissionParameterFactory.h"
 #include "knowledge/DEC_KnowledgeResolver_ABC.h"
+#include "knowledge/DEC_Knowledge_Urban.h"
 #include "simulation_orders/MIL_ParameterType_LocationCompositeList.h"
 #include "protocol/protocol.h"
+#include "urban/TerrainObject_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ListParameter constructor
@@ -24,6 +26,21 @@ MIL_ListParameter::MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver,
     for( ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >::const_iterator it = list.begin(); it != list.end(); ++it )
     {
         list_.push_back( *it );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ListParameter constructor
+// Created: MGD 2010-10-19
+// -----------------------------------------------------------------------------
+MIL_ListParameter::MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const std::vector< boost::shared_ptr< DEC_Knowledge_Urban > >& urbanBlockList )
+    : resolver_ (resolver )
+{
+    for( std::vector< boost::shared_ptr< DEC_Knowledge_Urban > >::const_iterator it = urbanBlockList.begin(); it != urbanBlockList.end(); it++ )
+    {
+        Common::MsgMissionParameter_Value block;
+        block.mutable_urbanblock()->set_id( (*it)->GetTerrainObjectKnown().GetId() );
+        list_.push_back( block );
     }
 }
 

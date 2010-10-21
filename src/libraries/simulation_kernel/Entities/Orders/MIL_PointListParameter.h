@@ -37,6 +37,8 @@ public:
     //@{
     virtual bool ToPointList( Common::MsgPointList& ) const;
     virtual bool ToPointList( std::vector< boost::shared_ptr< MT_Vector2D > >& ) const;
+    virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const;
+    virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const;
     //@}
 
 private:

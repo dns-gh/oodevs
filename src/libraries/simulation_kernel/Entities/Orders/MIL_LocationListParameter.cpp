@@ -8,10 +8,15 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+#include "MIL_MissionParameterFactory.h"
 #include "MIL_LocationListParameter.h"
 #include "simulation_orders/MIL_ParameterType_LocationList.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "Network/NET_ASN_Tools.h"
+#include "protocol/protocol.h"
+
+
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LocationListParameter constructor
@@ -67,5 +72,35 @@ bool MIL_LocationListParameter::ToLocationList( Common::MsgLocationList& asn ) c
 bool MIL_LocationListParameter::ToLocationList( std::vector< boost::shared_ptr< TER_Localisation > >& value ) const
 {
     value = locationList_;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LocationListParameter::ToList
+// Created: DDA 2010-10-19
+// -----------------------------------------------------------------------------
+bool MIL_LocationListParameter::ToList( std::vector< Common::MsgMissionParameter_Value >& result ) const
+{
+    for(std::vector< boost::shared_ptr< TER_Localisation > >::const_iterator it = locationList_.begin(); it != locationList_.end(); ++it )
+    {
+        Common::MsgMissionParameter_Value param;
+        Common::MsgLocation* location = param.mutable_location();
+        NET_ASN_Tools::WriteLocation( *(*it), *location );
+        result.push_back( param );
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LocationListParameter::ToList
+// Created: DDA 2010-10-19
+// -----------------------------------------------------------------------------
+bool MIL_LocationListParameter::ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& result ) const
+{
+    for( std::vector< boost::shared_ptr< TER_Localisation > >::const_iterator it = locationList_.begin(); it != locationList_.end(); ++it )
+    {
+        boost::shared_ptr<MIL_MissionParameter_ABC> param = MIL_MissionParameterFactory::Create( *it );
+        result.push_back( param );
+    }
     return true;
 }

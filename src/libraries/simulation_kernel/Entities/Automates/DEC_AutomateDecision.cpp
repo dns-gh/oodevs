@@ -394,6 +394,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< bool ( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::IsPionNeutralized, this, _1 ) );
     brain[ "DEC_Automate_PionPosition" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetPionPosition, _1 ) );
+    brain[ "DEC_Automate_PerceptionPourPion" ] =
+        boost::function< double ( DEC_Decision_ABC*, boost::shared_ptr< MT_Vector2D >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_AutomateFunctions::GetPerceptionForPion, _1, _2, _3 ) );
     brain[ "DEC_Automate_PionRelevePion" ] =
         boost::function< bool( DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::MakePionRelievePion, boost::cref( GetAutomate() ), _1, _2 ) );
     brain[ "DEC_Automate_PionPeutReleverPion" ] =

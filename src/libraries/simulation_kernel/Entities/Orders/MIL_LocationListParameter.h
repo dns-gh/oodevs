@@ -39,6 +39,9 @@ public:
     //@{
     virtual bool ToLocationList( Common::MsgLocationList& ) const;
     virtual bool ToLocationList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
+
+    virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const;
+    virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const;
     //@}
 
 private:

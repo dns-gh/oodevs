@@ -28,6 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list );
+             MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const std::vector< boost::shared_ptr< DEC_Knowledge_Urban > >& urbanBlockList );
     virtual ~MIL_ListParameter();
     //@}
 

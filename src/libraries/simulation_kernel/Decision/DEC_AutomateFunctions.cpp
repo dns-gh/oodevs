@@ -19,6 +19,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "DEC_KnowledgeUrbanFunctions.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::IsParentAutomateEngaged
@@ -270,6 +271,16 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::GetPionPosition( const D
 {
     assert( pion );
     return pion->GetPion().GetRole< PHY_RoleInterface_Location >().GetSharedPosition();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::GetPerceptionForPion
+// Created: DDA 2010-10-13
+// -----------------------------------------------------------------------------
+double DEC_AutomateFunctions::GetPerceptionForPion( const DEC_Decision_ABC* pPion, boost::shared_ptr< MT_Vector2D > pPoint, boost::shared_ptr< MT_Vector2D > pTarget)
+{
+    assert( pPion );
+    return DEC_KnowledgeUrbanFunctions::GetPerception( pPion->GetPion(), pPoint, pTarget );
 }
 
 // -----------------------------------------------------------------------------
