@@ -656,18 +656,12 @@ node "BEH_Mot_Pion_ABC_AffecterVariablesDEtat"
 
     activate = function( self )
         local Activate = Activate
-        --[[//////////////// BMS OPTIM  ///////////////////
-]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
-            do return end
-        end
-
-         do
-            local _continue = true
-            local switch_1 = --[[////////////// FIN OPTIM  /////////////////////
-]]--[[//-----------------------------------------------------------------------------
+        --[[//-----------------------------------------------------------------------------
 ]]--[[// En fonction du moral...
 ]]--[[//-----------------------------------------------------------------------------
-]]DEC_FacteurHumain_Moral()
+]]         do
+            local _continue = true
+            local switch_1 = DEC_FacteurHumain_Moral()
             local cases_switch_1 = {}
                 if switch_1 == eMoral_Fanatique then
                     --[[//-----------------------------------------------------------------------------
