@@ -124,12 +124,12 @@ namespace
                 if( line.find( "Error" ) != std::string::npos )
                 {
                     ++nbError;
-                    std::cout << logName << " error : " << it->filename() << " : line " << numLine << std::endl;
+                    std::cout << it->filename() << ", " << logName << ", line " << numLine << " : error" << std::endl;
                 }
                 else if( line.find( "mission impossible" ) != std::string::npos )
                 {
                     ++nbMissionImpossible;
-                    std::cout << logName << " mission impossible : " << it->filename() << " : line " << numLine << std::endl;
+                    std::cout << it->filename() << ", " << logName << ", line " << numLine << " : mission impossible" << std::endl;
                 }
             }
         }
