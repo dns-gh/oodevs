@@ -561,7 +561,12 @@ bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_ObjectType_ABC&
 bool PHY_RoleAction_Objects::EnoughtDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion ) const
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( objectType );
-    const PHY_DotationCategory* pDotationCategory = type.GetCapacity< BuildableCapacity >()->GetDotationCategory();
+    const BuildableCapacity* capacity = type.GetCapacity< BuildableCapacity >();
+    if ( capacity == 0   )
+        return true;
+    const PHY_DotationCategory* pDotationCategory = capacity->GetDotationCategory();
+    if ( pDotationCategory  == 0 )
+        return true;
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
     pion.Execute( *dotationComputer );
     return dotationComputer->GetDotationValue( *pDotationCategory ) > 0;

@@ -1156,7 +1156,7 @@
       <parameter dia-name="objectives" name="area" optional="false" type="Polygon"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="true" type="GenObject"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.AnimerPosteDeControle" dia-type="net.masagroup.sword.france.military.platoon.stabilisation.AnimerPosteDeControle" id="2101" name="STABILISATION Animer Poste De Controle">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.tasks.AnimerPosteDeControle" dia-type="net.masagroup.sword.france.military.platoon.stabilisation.tasks.AnimerPosteDeControle" id="2101" name="STABILISATION Animer Poste De Controle">
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Objets a animer" optional="false" type="GenObject"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Fixer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Fixer" id="2116" name="MELEE Fixer unite">
