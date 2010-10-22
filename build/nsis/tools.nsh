@@ -306,8 +306,10 @@ FunctionEnd
 ;------------------------------------------------------------------------------
 !macro OT.ChooseLanguage
 
+    ifSilent +2 0
     Push ""
     Push ${LANG_ENGLISH}
+    ifSilent +7 0
     Push English
     Push ${LANG_FRENCH}
     Push Français
