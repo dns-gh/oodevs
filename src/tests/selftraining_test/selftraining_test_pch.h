@@ -18,10 +18,6 @@
 
 #define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
 
-#define MOCKPP_ENABLE_DEFAULT_FORMATTER
-#include <mockpp/chaining/CountedChainableMethod.h>
-#include <mockpp/chaining/ChainingMockObjectSupport.h>
-
 std::string BOOST_RESOLVE( const std::string& filename );
 
 #include <boost/date_time/gregorian/gregorian.hpp>
