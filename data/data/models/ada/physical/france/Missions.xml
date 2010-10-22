@@ -968,7 +968,7 @@
       <parameter dia-name="allie" max-occurs="unbounded" min-occurs="1" name="Illuminateur allie" optional="true" type="Agent"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Surveiller" dia-type="net.masagroup.sword.france.military.platoon.tasks.Surveiller" id="2070" name="MELEE Surveiller">
-      <parameter dia-name="objectives" name="Objectif a surveiller" optional="false" type="LocationComposite">
+      <parameter dia-name="objective" name="Objectif a surveiller" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
