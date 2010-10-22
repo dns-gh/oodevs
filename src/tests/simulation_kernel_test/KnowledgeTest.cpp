@@ -163,13 +163,10 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
         MOCK_EXPECT( jammedAgent, GetKnowledge ).returns( boost::ref( pionBlackboard ) );
         MOCK_EXPECT( jammedAgent.GetRole< MockPHY_RoleInterface_Perceiver >(), ExecutePerceptions );
         MockRoleLocation* mockJammedRoleLocation = new MockRoleLocation();
-        MOCK_EXPECT( mockJammedRoleLocation, HasDoneMagicMove ).at_least( 1 ).returns( false );
-        MOCK_EXPECT( mockJammedRoleLocation, GetPosition ).at_least( 1 ).returns( position );
         mockAgentJammed1.RegisterRole( *mockJammedRoleLocation );
         groupJammed1.UpdateKnowledges( 1 );
         group2->UpdateKnowledges( 1 );
         jammedAgent.verify();
-        mockJammedRoleLocation->verify();
     //}
     //{
         // TestKnowledgeIsNotPropagatedWhenSourceIsJammed
@@ -189,8 +186,12 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     //}
     //{
         // TestKnowledgeIsPropagatedWhenSourceIsNotJammed
+        MOCK_EXPECT( mockJammedRoleLocation, HasDoneMagicMove ).at_least( 1 ).returns( false );
+        MOCK_EXPECT( mockJammedRoleLocation, GetPosition ).at_least( 1 ).returns( position );
         group1->UpdateKnowledges( 200 );
         groupJammed1.UpdateKnowledges( 200 );
+        mockJammedRoleLocation->verify();
+
         MOCK_EXPECT( mockAgent, CreateKnowledge ).once().returns( knowledge );
 //        MOCK_EXPECT( mockAgentJammed1, CreateKnowledge ).once().returns( knowledgeJammed1 );
         group2->UpdateKnowledges( 200 );
