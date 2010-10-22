@@ -20,11 +20,12 @@
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Fixer unite"/>
+        <mission name="MELEE Freiner"/>
+        <mission name="MELEE Harceler"/>
         <mission name="MELEE Illuminer"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Neutraliser"/>
-        <mission name="MELEE Ratisser un Bloc Urbain"/>
-        <mission name="MELEE Ratisser une Zone"/>
+        <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="MELEE Reconnaitre un Bloc Urbain"/>
         <mission name="MELEE Recueillir"/>
@@ -138,8 +139,7 @@
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Interdire"/>
-        <mission name="MELEE Ratisser un Bloc Urbain"/>
-        <mission name="MELEE Ratisser une Zone"/>
+        <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="MELEE Reconnaitre un Bloc Urbain"/>
         <mission name="MELEE Relever"/>
@@ -223,7 +223,11 @@
         <mission name="TEST MoveAlongAgentList"/>
         <mission name="TEST MoveAlongAgentKnowledgeList"/>
         <mission name="TEST MoveAlongObjectKnowledgeList"/>
-        <mission name="TEST MoveToCompositeLocationList"/>
+        <mission name="TEST MoveToPointList"/>
+        <mission name="TEST MoveToPolygonList"/>
+        <mission name="TEST MoveToAgentList"/>
+        <mission name="TEST MoveToAgentKnowledgeList"/>
+        <mission name="TEST MoveToObjectKnowledgeList"/>
         <mission name="TEST MoveToWithLima">
           <fragorder name="Deboucher"/>
         </mission>
@@ -317,12 +321,14 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE ActiverObstacles"/>
+        <mission name="GENIE Appui Mobilite"/>
         <mission name="GENIE Contourner obstacle"/>
         <mission name="GENIE Degager Obstacles"/>
         <mission name="GENIE Depolluer zone"/>
         <mission name="GENIE OuvrirItineraire"/>
-        <mission name="GENIE Realiser Travaux"/>
         <mission name="GENIE Realiser Camps"/>
+        <mission name="GENIE Realiser Travaux"/>
+        <mission name="GENIE Reprendre Travaux"/>
         <mission name="GENIE Retablir Itineraire"/>
         <mission name="Animer"/>
       </missions>
@@ -6649,12 +6655,15 @@
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="MELEE Appuyer"/>
         <mission name="MELEE Attaquer"/>
         <mission name="MELEE Controler Secteur"/>
+        <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
-        <mission name="MELEE Fixer"/>
+        <mission name="MELEE Harceler"/>
         <mission name="MELEE Neutraliser"/>
-        <mission name="MELEE Interdire un Bloc Urbain"/>
+        <mission name="MELEE Interdire"/>
+        <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre un itinéraire"/>
         <mission name="MELEE S'emparer"/>
       </missions>
@@ -9945,6 +9954,12 @@
       <fragorders>
         <fragorder name="Population Changer Attitude"/>
       </fragorders>
+    </population>
+    <population dia-type="net.masagroup.sword.military.crowd.roles.Crowd" file="BMCrowd.bms" name="net.masagroup.sword.military.crowd.roles.Crowd">
+      <missions>
+        <mission name="COMMUNES Faire Mouvement"/>
+      </missions>
+      <fragorders/>
     </population>
   </populations>
 </models>
