@@ -121,10 +121,11 @@ private:
     virtual void NotifyUpdated( const Services& services );
     void Add( const kernel::Entity_ABC& entity, const T_Ids& readIds, const T_Ids& readWriteIds );
     void Remove( const kernel::Entity_ABC& entity );
+    bool IsKnowledgeVisibleByEntity( const kernel::Knowledge_ABC& knowledge, const kernel::Entity_ABC& entity ) const;
     static bool IsInHierarchy( const kernel::Entity_ABC& entity, const T_Entities& entities, bool childOnly );
     static bool IsInSpecificHierarchy( const kernel::Entity_ABC& entity, const kernel::Hierarchies* hierarchy, const T_Entities& entities, bool childOnly );
     static bool IsInHierarchy( const kernel::Entity_ABC& entity, const kernel::Hierarchies& hierarchy, const kernel::Entity_ABC& other, bool childOnly );
-    static bool AreInSameKnowledgeGroup( const kernel::CommunicationHierarchies& hierarchy1, const kernel::CommunicationHierarchies& hierarchy2 );
+    static bool AreInSameKnowledgeGroup( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2, bool compareTop );
     //@}
 
 private:

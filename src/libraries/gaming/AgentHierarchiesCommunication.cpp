@@ -100,5 +100,5 @@ bool AgentHierarchiesCommunication::CanCommunicate() const
 // -----------------------------------------------------------------------------
 bool AgentHierarchiesCommunication::IsJammed() const
 {
-    return false;
+    return jammed_;
 }

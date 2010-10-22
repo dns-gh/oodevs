@@ -25,6 +25,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Knowledge_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
@@ -239,9 +240,38 @@ bool Profile::IsVisible( const Entity_ABC& entity ) const
 // Name: Profile::IsKnowledgeVisible
 // Created: HBD 2010-08-03
 // -----------------------------------------------------------------------------
-bool Profile::IsKnowledgeVisible( const Knowledge_ABC& entity ) const
+bool Profile::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
 {
-    return IsInHierarchy( entity.GetOwner(), readEntities_, false );
+    if( const Entity_ABC* knownEntity = knowledge.GetEntity() )
+        if( IsInHierarchy( *knownEntity, readEntities_, false ) )
+            return true;
+    for( CIT_Entities it = readEntities_.begin(); it != readEntities_.end(); ++it )
+        if( IsKnowledgeVisibleByEntity( knowledge, **it ) )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::IsKnowledgeVisibleByEntity
+// Created: JSR 2010-10-20
+// -----------------------------------------------------------------------------
+bool Profile::IsKnowledgeVisibleByEntity( const kernel::Knowledge_ABC& knowledge, const kernel::Entity_ABC& entity ) const
+{
+    if( AreInSameKnowledgeGroup( knowledge.GetOwner(), entity, false ) )
+        return true;
+    const CommunicationHierarchies* communication = entity.Retrieve< CommunicationHierarchies >();
+    if( !communication )
+        return true;
+    const AgentKnowledges* knowledgeToCheckGroup = 0;
+    for( const Entity_ABC* superior = &knowledge.GetOwner(); superior && !knowledgeToCheckGroup; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
+        knowledgeToCheckGroup = superior->Retrieve< AgentKnowledges >();
+    if( !knowledgeToCheckGroup && &knowledge.GetOwner() == &communication->GetTop() && !communication->IsJammed() )
+        return true;
+    if( &communication->GetTop() == &entity )
+        if( const CommunicationHierarchies* c = knowledge.GetOwner().Retrieve< CommunicationHierarchies >() )
+            if( c && c->GetSuperior() == &entity )
+                return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -275,17 +305,17 @@ bool Profile::IsInHierarchy( const Entity_ABC& entity, const T_Entities& entitie
     const IntelligenceHierarchies* intelligence = entity.Retrieve< IntelligenceHierarchies >();
     if( !tactical && !communication && !intelligence )
         return true;
-    if( IsInSpecificHierarchy( entity, tactical, entities, childOnly ) ||
+    if( ( IsInSpecificHierarchy( entity, tactical, entities, childOnly ) && !( communication && communication->IsJammed() ) ) ||
         IsInSpecificHierarchy( entity, intelligence, entities, childOnly ) )
         return true;
-    if( childOnly )
+    if( childOnly || entity.GetTypeName() == KnowledgeGroup_ABC::typeName_ )
         return IsInSpecificHierarchy( entity, communication, entities, childOnly );
-    if( !communication || communication->IsJammed() ) // Vérifier si le brouillage doit intervenir ici
-        return false;
     for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
     {
-        const CommunicationHierarchies* profileHierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
-        if( profileHierarchy && !profileHierarchy->IsJammed() && AreInSameKnowledgeGroup( *communication, *profileHierarchy ) )
+        const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
+        if( hierarchy && tactical && hierarchy->GetSuperior() == 0 && tactical->IsSubordinateOf( **it ) )
+            return true;
+        if( AreInSameKnowledgeGroup( entity, **it, true ) )
             return true;
     }
     return false;
@@ -295,16 +325,20 @@ bool Profile::IsInHierarchy( const Entity_ABC& entity, const T_Entities& entitie
 // Name: Profile::AreInSameKnowledgeGroup
 // Created: JSR 2010-10-20
 // -----------------------------------------------------------------------------
-bool Profile::AreInSameKnowledgeGroup( const CommunicationHierarchies& hierarchy1, const CommunicationHierarchies& hierarchy2 )
+bool Profile::AreInSameKnowledgeGroup( const Entity_ABC& entity1, const Entity_ABC& entity2, bool compareTop )
 {
+    const CommunicationHierarchies* hierarchy1 = entity1.Retrieve< CommunicationHierarchies >();
+    const CommunicationHierarchies* hierarchy2 = entity2.Retrieve< CommunicationHierarchies >();
+    if( !hierarchy1 || !hierarchy2 )
+        return false;
     const AgentKnowledges* entityKnowledges1 = 0;
     const AgentKnowledges* entityKnowledges2 = 0;
-    for( const Entity_ABC* superior1 = hierarchy1.GetSuperior(); superior1; superior1 = superior1->Get< CommunicationHierarchies >().GetSuperior() )
+    for( const Entity_ABC* superior1 = &entity1; superior1; superior1 = superior1->Get< CommunicationHierarchies >().GetSuperior() )
     {
         entityKnowledges1 = superior1->Retrieve< AgentKnowledges >();
         if( entityKnowledges1 )
         {
-            for( const Entity_ABC* superior2 = hierarchy2.GetSuperior(); superior2; superior2 = superior2->Get< CommunicationHierarchies >().GetSuperior() )
+            for( const Entity_ABC* superior2 = &entity2; superior2; superior2 = superior2->Get< CommunicationHierarchies >().GetSuperior() )
             {
                 entityKnowledges2 = superior2->Retrieve< AgentKnowledges >();
                 if( entityKnowledges2 )
@@ -313,7 +347,7 @@ bool Profile::AreInSameKnowledgeGroup( const CommunicationHierarchies& hierarchy
             return false;
         }
     }
-    return &hierarchy1.GetTop() == &hierarchy2.GetTop();
+    return compareTop ? &hierarchy1->GetTop() == &hierarchy2->GetTop() : false;
 }
 
 // -----------------------------------------------------------------------------

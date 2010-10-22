@@ -204,6 +204,7 @@ private:
     bool                    hasBeenUpdated_;
     bool                    isJammed_;
     const MIL_Agent_ABC*    jammedPion_;
+    bool createdByJamming_;
     static MIL_IDManager idManager_;
     //@}
 };

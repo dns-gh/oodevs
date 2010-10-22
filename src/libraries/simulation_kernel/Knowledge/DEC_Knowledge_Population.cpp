@@ -500,5 +500,5 @@ void DEC_Knowledge_Population::CopyFrom( const DEC_Knowledge_Population& knowled
     bIsRecon_ = knowledge.bIsRecon_;
     bReconAttributesValid_ = knowledge.bReconAttributesValid_;
     rDominationState_ = knowledge.rDominationState_;
-    bDecStateUpdated_ = knowledge.bDecStateUpdated_;
+    bDecStateUpdated_ = true;
 }

@@ -11,17 +11,19 @@
 #include "ProfileFilter.h"
 #include "AgentKnowledges.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
-#include "clients_kernel/AgentKnowledge_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
-#include "clients_kernel/Controller.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ProfileFilter constructor
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-ProfileFilter::ProfileFilter( kernel::Controllers& controllers, const kernel::Profile_ABC& forward )
+ProfileFilter::ProfileFilter( Controllers& controllers, const Profile_ABC& forward )
      : controller_  ( controllers.controller_ )
      , forward_     ( forward )
      , entity_      ( controllers )
@@ -54,17 +56,17 @@ QString ProfileFilter::GetLogin() const
 // Name: ProfileFilter::IsVisible
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsVisible( const kernel::Entity_ABC& entity ) const
+bool ProfileFilter::IsVisible( const Entity_ABC& entity ) const
 {
     return ( IsInKnowledgeGroup( entity ) || IsObjectOfSameTeam( entity ) || IsInHierarchy( entity ) ) && forward_.IsVisible( entity );
 }
 
 namespace
 {
-    bool IsVisibleFromTeam( const kernel::Knowledge_ABC& knowledge, const kernel::Entity_ABC* entity )
+    bool IsVisibleFromTeam( const Knowledge_ABC& knowledge, const Entity_ABC* entity )
     {
-        const kernel::CommunicationHierarchies& communications = knowledge.GetOwner().Get< kernel::CommunicationHierarchies >();
-        return ( communications.GetSuperior() == entity && !communications.IsJammed() );
+        const CommunicationHierarchies& communications = knowledge.GetOwner().Get< CommunicationHierarchies >();
+        return communications.GetSuperior() == entity && !communications.IsJammed();
     }
 }
 
@@ -72,27 +74,24 @@ namespace
 // Name: ProfileFilter::IsKnowledgeVisible
 // Created: HBD 2010-08-03
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge ) const
+bool ProfileFilter::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
 {
     if( !forward_.IsKnowledgeVisible( knowledge ) )
         return false;
-    const AgentKnowledges* filteredGroup = 0;
-    const AgentKnowledges* knowldegeToCheckGroup = 0;
     if( !entity_ )
         return true;
-    for( const kernel::Entity_ABC* superior = &cHierarchies_->GetEntity(); superior && !filteredGroup; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
+    const AgentKnowledges* filteredGroup = 0;
+    const AgentKnowledges* knowledgeToCheckGroup = 0;
+    for( const Entity_ABC* superior = &cHierarchies_->GetEntity(); superior && !filteredGroup; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
         filteredGroup = superior->Retrieve< AgentKnowledges >();
-    for( const kernel::Entity_ABC* superior = &knowledge.GetOwner(); superior && !knowldegeToCheckGroup; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
-        knowldegeToCheckGroup = superior->Retrieve< AgentKnowledges >();
-    if ( filteredGroup == knowldegeToCheckGroup && filteredGroup )
+    for( const Entity_ABC* superior = &knowledge.GetOwner(); superior && !knowledgeToCheckGroup; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
+        knowledgeToCheckGroup = superior->Retrieve< AgentKnowledges >();
+    if( filteredGroup == knowledgeToCheckGroup && filteredGroup )
         return true;
-    if ( !knowldegeToCheckGroup && &knowledge.GetOwner() == &cHierarchies_->GetTop() && !cHierarchies_->IsJammed() )
+    if( !knowledgeToCheckGroup && &knowledge.GetOwner() == &cHierarchies_->GetTop() && !cHierarchies_->IsJammed() )
         return true;
-    if ( &cHierarchies_->GetTop() == entity_ )
+    if( &cHierarchies_->GetTop() == entity_ )
         return IsVisibleFromTeam( knowledge, entity_ );
-    if( !cHierarchies_->IsJammed() )
-        if ( const kernel::CommunicationHierarchies* c = knowledge.Retrieve< kernel::CommunicationHierarchies >() )
-            return ( knowledge.IsVisible( &cHierarchies_->GetTop() == &c->GetTop() ) );
     return false;
 }
 
@@ -100,7 +99,7 @@ bool ProfileFilter::IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge )
 // Name: ProfileFilter::CanBeOrdered
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-bool ProfileFilter::CanBeOrdered( const kernel::Entity_ABC& entity ) const
+bool ProfileFilter::CanBeOrdered( const Entity_ABC& entity ) const
 {
     return IsInHierarchy( entity ) && forward_.CanBeOrdered( entity );
 }
@@ -109,7 +108,7 @@ bool ProfileFilter::CanBeOrdered( const kernel::Entity_ABC& entity ) const
 // Name: ProfileFilter::CanDoMagic
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-bool ProfileFilter::CanDoMagic( const kernel::Entity_ABC& entity ) const
+bool ProfileFilter::CanDoMagic( const Entity_ABC& entity ) const
 {
     return IsInHierarchy( entity ) && forward_.CanDoMagic( entity );
 }
@@ -127,13 +126,13 @@ bool ProfileFilter::IsSupervision() const
 // Name: ProfileFilter::SetFilter
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-void ProfileFilter::SetFilter( const kernel::Entity_ABC& entity )
+void ProfileFilter::SetFilter( const Entity_ABC& entity )
 {
     entity_ = & entity;
-    tHierarchies_ = entity.Retrieve< kernel::TacticalHierarchies >();
-    cHierarchies_ = entity.Retrieve< kernel::CommunicationHierarchies >();
-    iHierarchies_ = entity.Retrieve< kernel::IntelligenceHierarchies >();
-    controller_.Update( *(Profile_ABC*)this );
+    tHierarchies_ = entity.Retrieve< TacticalHierarchies >();
+    cHierarchies_ = entity.Retrieve< CommunicationHierarchies >();
+    iHierarchies_ = entity.Retrieve< IntelligenceHierarchies >();
+    controller_.Update( *static_cast< Profile_ABC* >( this ) );
     controller_.Update( *this );
 }
 
@@ -147,7 +146,7 @@ void ProfileFilter::RemoveFilter()
     tHierarchies_ = 0;
     cHierarchies_ = 0;
     iHierarchies_ = 0;
-    controller_.Update( *(Profile_ABC*)this );
+    controller_.Update( *static_cast< Profile_ABC* >( this ) );
     controller_.Update( *this );
 }
 
@@ -155,7 +154,7 @@ void ProfileFilter::RemoveFilter()
 // Name: ProfileFilter::GetFilter
 // Created: SBO 2009-03-04
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* ProfileFilter::GetFilter() const
+const Entity_ABC* ProfileFilter::GetFilter() const
 {
     return entity_;
 }
@@ -164,23 +163,19 @@ const kernel::Entity_ABC* ProfileFilter::GetFilter() const
 // Name: ProfileFilter::IsInHierarchy
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsInHierarchy( const kernel::Entity_ABC& entity ) const
+bool ProfileFilter::IsInHierarchy( const Entity_ABC& entity ) const
 {
     if( ! entity_ || entity_ == &entity )
         return true;
-
-    const kernel::TacticalHierarchies*      t = entity.Retrieve< kernel::TacticalHierarchies >();
-    const kernel::CommunicationHierarchies* c = entity.Retrieve< kernel::CommunicationHierarchies >();
-    const kernel::IntelligenceHierarchies*  i = entity.Retrieve< kernel::IntelligenceHierarchies >();
-
-    if( ( t && t->IsSubordinateOf( *entity_ ) )
+    const TacticalHierarchies* t = entity.Retrieve< TacticalHierarchies >();
+    const CommunicationHierarchies* c = entity.Retrieve< CommunicationHierarchies >();
+    const IntelligenceHierarchies* i = entity.Retrieve< IntelligenceHierarchies >();
+    if( ( t && t->IsSubordinateOf( *entity_ ) && !( c && c->IsJammed() )  )
      || ( c && c->IsSubordinateOf( *entity_ ) )
      || ( i && i->IsSubordinateOf( *entity_ ) ) )
         return true;
-
     if( cHierarchies_ && cHierarchies_->IsSubordinateOf( entity ) )
          return true;
-
     return IsKnown( t, c, i, entity );
 }
 
@@ -191,10 +186,10 @@ bool ProfileFilter::IsInHierarchy( const kernel::Entity_ABC& entity ) const
 template< typename D, typename U >
 bool ProfileFilter::IsChildSubordinateOf( const D& down, const U& /*up*/ ) const
 {
-    tools::Iterator< const kernel::Entity_ABC& > children = down.CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = down.CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
-        const kernel::Entity_ABC& child = children.NextElement();
+        const Entity_ABC& child = children.NextElement();
         if( child.Retrieve< U >() && IsInHierarchy( child ) )
             return true;
     }
@@ -205,17 +200,16 @@ bool ProfileFilter::IsChildSubordinateOf( const D& down, const U& /*up*/ ) const
 // Name: ProfileFilter::IsKnown
 // Created: LDC 2010-03-25
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsKnown( const kernel::TacticalHierarchies* t, const kernel::CommunicationHierarchies* c, const kernel::IntelligenceHierarchies* i, const kernel::Entity_ABC& entity ) const
+bool ProfileFilter::IsKnown( const TacticalHierarchies* t, const CommunicationHierarchies* c, const IntelligenceHierarchies* i, const Entity_ABC& entity ) const
 {
     if( ( tHierarchies_ && tHierarchies_->IsSubordinateOf( entity ) )
      || ( iHierarchies_ && iHierarchies_->IsSubordinateOf( entity ) ) )
         return true;
-
-    if( ! t && tHierarchies_ )
+    if( !t && tHierarchies_ )
         return ( c && IsChildSubordinateOf( *c, *tHierarchies_ ) ) || ( i && IsChildSubordinateOf( *i, *tHierarchies_ ) );
-    if( ! c && cHierarchies_ )
+    if( !c && cHierarchies_ )
         return ( t && IsChildSubordinateOf( *t, *cHierarchies_ ) ) || ( i && IsChildSubordinateOf( *i, *cHierarchies_ ) );
-    if( ! i && iHierarchies_ )
+    if( !i && iHierarchies_ )
         return ( t && IsChildSubordinateOf( *t, *iHierarchies_ ) ) || ( c && IsChildSubordinateOf( *c, *iHierarchies_ ) );
     return false;
 }
@@ -224,48 +218,49 @@ bool ProfileFilter::IsKnown( const kernel::TacticalHierarchies* t, const kernel:
 // Name: ProfileFilter::IsInKnowledgeGroup
 // Created: LDC 2010-03-25
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsInKnowledgeGroup( const kernel::Entity_ABC& other ) const
+bool ProfileFilter::IsInKnowledgeGroup( const Entity_ABC& other ) const
 {
-    if( ! entity_ || entity_ == &other )
+    if( !entity_ || entity_ == &other )
         return true;
-    const kernel::CommunicationHierarchies* pHierarchy = other.Retrieve< kernel::CommunicationHierarchies >();
-    const kernel::CommunicationHierarchies* selfHierarchy = entity_->Retrieve< kernel::CommunicationHierarchies >();
+    const CommunicationHierarchies* pHierarchy = other.Retrieve< CommunicationHierarchies >();
+    const CommunicationHierarchies* selfHierarchy = entity_->Retrieve< CommunicationHierarchies >();
     if( !pHierarchy || pHierarchy->IsJammed() || !selfHierarchy || selfHierarchy->IsJammed() )
         return false;
     const AgentKnowledges* entityKnowledges = 0;
-    for( const kernel::Entity_ABC* superior = pHierarchy->GetSuperior(); superior; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
+    const AgentKnowledges* selfKnowledges = 0;
+    for( const Entity_ABC* superior = pHierarchy->GetSuperior(); superior; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
     {
         entityKnowledges = superior->Retrieve< AgentKnowledges >();
         if( entityKnowledges )
         {
-            for( const kernel::Entity_ABC* selfSuperior = selfHierarchy->GetSuperior(); selfSuperior; selfSuperior = selfSuperior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
+            for( const Entity_ABC* selfSuperior = selfHierarchy->GetSuperior(); selfSuperior; selfSuperior = selfSuperior->Get< CommunicationHierarchies >().GetSuperior() )
             {
-                const AgentKnowledges* selfKnowledges = selfSuperior->Retrieve< AgentKnowledges >();
+                selfKnowledges = selfSuperior->Retrieve< AgentKnowledges >();
                 if( selfKnowledges )
-                    return( selfKnowledges ==  entityKnowledges );
+                    return selfKnowledges ==  entityKnowledges;
             }
             return false;
         }
     }
-    return &(pHierarchy->GetTop()) == &(selfHierarchy->GetTop());
+    return &pHierarchy->GetTop() == &selfHierarchy->GetTop();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProfileFilter::IsObjectOfSameTeam
 // Created: LDC 2010-03-26
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsObjectOfSameTeam( const kernel::Entity_ABC& entity ) const
+bool ProfileFilter::IsObjectOfSameTeam( const Entity_ABC& entity ) const
 {
-    if( ! entity_ || entity_ == &entity )
+    if( !entity_ || entity_ == &entity || entity.GetTypeName() != Object_ABC::typeName_ )
         return false;
-    const kernel::TacticalHierarchies* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
+    const TacticalHierarchies* hierarchy = entity.Retrieve< TacticalHierarchies >();
     if( !hierarchy )
         return false;
-    if( hierarchy->GetSuperior() == &(hierarchy->GetTop()) )
+    if( hierarchy->GetSuperior() == &hierarchy->GetTop() )
     {
-        const kernel::TacticalHierarchies* tacticalSuperior = entity_->Retrieve< kernel::TacticalHierarchies >();
+        const TacticalHierarchies* tacticalSuperior = entity_->Retrieve< TacticalHierarchies >();
         if( tacticalSuperior )
-            return hierarchy->GetSuperior() == &( tacticalSuperior->GetTop() );
+            return hierarchy->GetSuperior() == &tacticalSuperior->GetTop();
     }
     return false;
 }

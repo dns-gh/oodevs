@@ -11,14 +11,12 @@
 #define __ProfileFilter_h_
 
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
     class Entity_ABC;
     class Controllers;
-    class Hierarchies;
     class TacticalHierarchies;
     class CommunicationHierarchies;
     class IntelligenceHierarchies;
@@ -48,7 +46,6 @@ public:
     virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
     virtual bool CanDoMagic( const kernel::Entity_ABC& entity ) const;
     virtual bool IsSupervision() const;
-
     void SetFilter( const kernel::Entity_ABC& entity );
     void RemoveFilter();
     const kernel::Entity_ABC* GetFilter() const;

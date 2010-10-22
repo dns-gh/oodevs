@@ -57,6 +57,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
     , hasBeenUpdated_     ( false )
     , isJammed_           ( false )
     , jammedPion_         ( 0 )
+    , createdByJamming_   ( false )
 {
     idManager_.Lock( id_ );
     army_->RegisterKnowledgeGroup( *this );
@@ -78,6 +79,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , hasBeenUpdated_     ( true )
     , isJammed_           ( false )
     , jammedPion_         ( 0 )
+    , createdByJamming_   ( false )
 {
     idManager_.Lock( id_ );
     if( parent_ )
@@ -105,6 +107,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , hasBeenUpdated_     ( false )
     , isJammed_           ( false )
     , jammedPion_         ( 0 )
+    , createdByJamming_   ( false )
 {
     // NOTHING
 }
@@ -124,6 +127,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const 
     , hasBeenUpdated_     ( true )
     , isJammed_           ( true )
     , jammedPion_         ( &pion )
+    , createdByJamming_   ( true )
 {
     if( parent )
     {
@@ -285,7 +289,13 @@ void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
     if( jammedPion_ )
         jammedPion_->GetKnowledge().Update(currentTimeStep);
     assert( knowledgeBlackBoard_ );
-    knowledgeBlackBoard_->Update(currentTimeStep);
+    if( createdByJamming_ )
+    {
+        knowledgeBlackBoard_->SendChangedState();
+        createdByJamming_ = false;
+    }
+    else
+        knowledgeBlackBoard_->Update(currentTimeStep);
 }
 
 // -----------------------------------------------------------------------------

@@ -807,7 +807,7 @@ const MT_Vector2D& DEC_Knowledge_Agent::GetPosition() const
 bool DEC_Knowledge_Agent::IsInUrbanBlock( const urban::TerrainObject_ABC& urban ) const
 {
     const MT_Vector2D& pos = GetPosition();
-    return urban.GetFootprint()->IsInside( geometry::Point2f( static_cast< float >( pos.rX_ ), static_cast< float >( pos.rY_ ) ) );
+    return urban.IsInside( geometry::Point2f( static_cast< float >( pos.rX_ ), static_cast< float >( pos.rY_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1037,4 +1037,7 @@ void DEC_Knowledge_Agent::CopyFrom( const DEC_Knowledge_Agent& agent )
     nTimeExtrapolationEnd_ = agent.nTimeExtrapolationEnd_;
     bLocked_ = agent.bLocked_;
     bValid_ = agent.bValid_;
+    bRelevanceUpdated_ = true;
+    bMaxPerceptionLevelUpdated_ = true;
+    bCurrentPerceptionLevelUpdated_ = true;
 }

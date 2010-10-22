@@ -36,12 +36,6 @@ class Object : public kernel::EntityImplementation< kernel::Object_ABC >
              , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
 {
 public:
-    //! @name Static
-    //@{
-    static const QString typeName_;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              Object( const MsgsSimToClient::MsgObjectCreation& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
@@ -59,7 +53,6 @@ public:
     //! @name Accessors
     //@{
     const kernel::ObjectType& GetType() const;
-    virtual QString GetTypeName() const;
     bool IsReservedObstacle() const;
     bool IsReservedObstacleActivated() const;
     //@}
