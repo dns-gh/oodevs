@@ -28,6 +28,7 @@ namespace kernel
     class Displayer_ABC;
     class AutomatType;
     class PropertiesDictionary;
+    class LogisticLevel;
 }
 
 // =============================================================================
@@ -44,7 +45,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticLinks( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
-                     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, kernel::PropertiesDictionary& dictionary );
+                     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const kernel::LogisticLevel& currentLevel,
+                     kernel::PropertiesDictionary& dictionary );
     virtual ~LogisticLinks();
     //@}
 
@@ -53,8 +55,6 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
 
     kernel::Automat_ABC* GetTC2() const;
-    kernel::Automat_ABC* GetAutomatSuperior() const;
-    kernel::Formation_ABC* GetFormationSuperior() const;
     kernel::Entity_ABC* GetSuperior() const;
 
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
@@ -70,8 +70,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const Common::MsgChangeLogisticLinks& message );
-    void DrawLink( const geometry::Point2f& from, kernel::Automat_ABC* to, const kernel::GlTools_ABC& tools, float curve, bool link, bool missing ) const;
-    void DrawLink( const geometry::Point2f& from, kernel::Formation_ABC* to, const kernel::GlTools_ABC& tools, float curve, bool link, bool missing ) const;
+    void DrawLink( const geometry::Point2f& from, kernel::Entity_ABC* to, const kernel::GlTools_ABC& tools, float curve, bool link, bool missing ) const;
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}
 
@@ -81,10 +80,10 @@ private:
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
     const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
+    const kernel::LogisticLevel& currentLevel_;
 
     kernel::Automat_ABC*   tc2_;
-    kernel::Automat_ABC*   automatSuperior_;
-    kernel::Formation_ABC* formationSuperior_;
+    kernel::Entity_ABC*    superior_;
     //@}
 };
 

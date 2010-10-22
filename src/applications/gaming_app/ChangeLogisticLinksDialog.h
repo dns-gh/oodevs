@@ -92,8 +92,7 @@ private:
     const kernel::Profile_ABC& profile_;
 
     gui::ValuedComboBox< const kernel::Automat_ABC* >* tc2Combo_;
-    gui::ValuedComboBox< const kernel::Automat_ABC* >* automatSuperiorCombo_;
-    gui::ValuedComboBox< const kernel::Formation_ABC* >* formationSuperiorCombo_; // TODO AHC
+    gui::ValuedComboBox< const kernel::Entity_ABC* >* superiorCombo_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     const kernel::LogisticLevel* selectedLevel_;
     //@}

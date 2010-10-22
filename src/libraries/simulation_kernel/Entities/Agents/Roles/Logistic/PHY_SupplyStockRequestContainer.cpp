@@ -256,24 +256,21 @@ bool PHY_SupplyStockRequestContainer::ApplyQuotas( MIL_AutomateLOG& supplier, MI
     {
         if( !bManual_ )
         {
-            it->second.ApplyQuota( suppliedAutomate_.GetQuota(supplier, *it->first ) );
-            if( it->second.GetTotalRequestedValue() == 0. )
+            if( suppliedAutomate_.GetQuota(supplier, *it->first ) !=0 )
+            {
+                it->second.ApplyQuota( suppliedAutomate_.GetQuota(supplier, *it->first ) );
+                requestAffectations_[&(it->second)] = &supplier;
+                ++it;
+            }
+            else if( suppliedAutomate_.GetQuota(secondSupplier, *it->first )!=0)
             {
                 it->second.ApplyQuota( suppliedAutomate_.GetQuota(secondSupplier, *it->first ) );
-                if( it->second.GetTotalRequestedValue() == 0. )
-                {
-                    it = requests_.erase( it );
-                }
-                else
-                {
-                    requestAffectations_[&(it->second)] = &secondSupplier;
-                    ++it;
-                }
+                requestAffectations_[&(it->second)] = &secondSupplier;
+                ++it;
             }
             else
             {
-                requestAffectations_[&(it->second)] = &supplier;
-                ++it;
+                it = requests_.erase( it );
             }
         }
         else

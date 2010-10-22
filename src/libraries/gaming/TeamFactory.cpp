@@ -93,7 +93,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const MsgsSimToClient::MsgF
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::TacticalHierarchies >    ( *new FormationHierarchy( controllers_.controller_, *result, superior ) );
     result->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, superior, model_.teams_ ) );
-    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, dico ) );
+    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, result->GetLogisticLevel(), dico ) );
     result->Attach( *new Quotas( controllers_.controller_, static_.objectTypes_ ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );

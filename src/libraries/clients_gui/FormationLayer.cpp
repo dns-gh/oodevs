@@ -12,6 +12,7 @@
 #include "ColorStrategy_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
 
 using namespace gui;
@@ -48,7 +49,7 @@ void FormationLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_AB
     if( tools_.ShouldDisplay( "Formations" ) && EntityLayer< kernel::Formation_ABC >::ShouldDisplay( formation ) )
     {
 //        viewport.SetHotpoint( position );
-        entity.Draw( geometry::Point2f(), viewport, tools_ );
+        entity.Draw( entity.Get< kernel::Positions >().GetPosition(), viewport, tools_ );
     }
 }
 
