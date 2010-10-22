@@ -885,7 +885,6 @@
         <update name="models/military"/>
         <update name="masalife" version="vm_sharing" />
         <update name="masalife" version="vm_sharing" package="bmc" todir="${bin.dir}"/>
-        <!--<update name="masalife_vm_sharing" package="directia4_${platform}_plugins" todir="${run.dir}"/>-->
         <update name="hla"/>
         <update name="hla" package="federation_app_${platform}" todir="${bin.dir}"/>
         <update name="tools"/>
