@@ -801,7 +801,7 @@
                     <equals arg1="${test-data-reports.worldwide}" arg2="${test-data-reports.france}"/>
                 </not>
             </condition>
-        </fail>	
+        </fail>
     </target>
 
     <!--
@@ -877,7 +877,7 @@
         <update name="geocoord"/>
         <update name="terrain" modules="terrain,graphics,pathfind,vmap,geodata,gdal_ogr" version="2.0"/>
         <update name="terrain" modules="urban"/>
-		<update name="terrain" package="terraintools_${platform}.zip"/> 
+        <update name="terrain" package="terraintools_${platform}.zip"/> 
         <update name="qt" version="3.3.8"/>
         <update name="boost"/>
         <update name="boost" package="geometry" todir="${include.dir}"/>
@@ -897,7 +897,7 @@
         <update name="svgl"/>
         <update name="zlib"/>
         <update name="bugtrap"/>
-		<update name="shapelib"/>
+        <update name="shapelib"/>
         <update name="gdal"/>
         <update name="turtle"/>
         <update name="protobuf"/>
