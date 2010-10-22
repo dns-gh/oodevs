@@ -125,7 +125,7 @@ kernel::Automat_ABC* AgentFactory::Create( const MsgsSimToClient::MsgAutomatCrea
         superior = & (( tools::Resolver< kernel::Automat_ABC >&)  ( model_.agents_ )).Get( message.parent().automat().id() );
     result->Attach< kernel::TacticalHierarchies >     ( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach( *new AutomatLives( *result ) );
-    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, dico ) );
+    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, result->GetLogisticLevel(), dico ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
     result->Attach< kernel::Positions >( *new AggregatedPositions( *result ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dico ) );

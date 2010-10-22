@@ -549,6 +549,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
     WriteSettings();
     WriteOptions();
+    Close();
     QMainWindow::closeEvent( pEvent );
 }
 

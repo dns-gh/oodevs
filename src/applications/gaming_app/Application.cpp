@@ -97,9 +97,9 @@ void Application::Initialize( int argc, char** argv )
     simulation_.reset( new Simulation( controllers_->controller_ ) );
     workers_.reset( new Workers() );
     network_.reset( new Network( *services_, *simulation_, *logger_ ) );
-    RcEntityResolver_ABC* rcResolver = new RcEntityResolver( this, *controllers_ );
-    staticModel_.reset( new ::StaticModel( *controllers_, *rcResolver, *simulation_ ) );
-    model_.reset( new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *rcResolver ) );
+    rcResolver_.reset( new RcEntityResolver( *controllers_ ) );
+    staticModel_.reset( new ::StaticModel( *controllers_, *rcResolver_.get(), *simulation_ ) );
+    model_.reset( new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *rcResolver_.get() ) );
     profile_.reset( new Profile( *controllers_, network_->GetMessageMgr(), config_->GetLogin(), config_->IsLoginInCommandLine() ) );
     network_->GetMessageMgr().SetElements( *model_, *profile_ );
     mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *network_, *profile_, *config_, *logger_, expiration_ );

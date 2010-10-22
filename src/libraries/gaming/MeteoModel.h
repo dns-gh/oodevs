@@ -69,9 +69,9 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::CoordinateConverter_ABC& converter_;
-    std::auto_ptr< weather::PHY_Meteo > pGlobalMeteo_;
     T_MeteoList                         meteos_;
+    kernel::CoordinateConverter_ABC&    converter_;
+    std::auto_ptr< weather::PHY_Meteo > pGlobalMeteo_;
     //@}
 };
 

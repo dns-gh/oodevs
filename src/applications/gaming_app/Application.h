@@ -27,6 +27,7 @@ class Profile;
 class Config;
 class LoggerProxy;
 class Services;
+class RcEntityResolver_ABC;
 
 // =============================================================================
 /** @class  Application
@@ -73,6 +74,7 @@ private:
     //@{
     std::auto_ptr< Config > config_;
     std::auto_ptr< kernel::Controllers > controllers_;
+    std::auto_ptr< RcEntityResolver_ABC > rcResolver_;
     std::auto_ptr< StaticModel > staticModel_;
     std::auto_ptr< Model > model_;
     std::auto_ptr< Services > services_;

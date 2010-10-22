@@ -30,8 +30,7 @@ namespace kernel
 */
 // Created: SBO 2006-09-18
 // =============================================================================
-class RcEntityResolver : public QObject
-                       , public RcEntityResolver_ABC
+class RcEntityResolver : public RcEntityResolver_ABC
                        , public tools::Resolver< kernel::Agent_ABC >
                        , public tools::Resolver< kernel::ObjectKnowledge_ABC >
                        , public tools::Resolver< kernel::AgentKnowledge_ABC >
@@ -45,7 +44,7 @@ class RcEntityResolver : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             RcEntityResolver( QObject* parent, kernel::Controllers& controllers );
+             RcEntityResolver( kernel::Controllers& controllers );
     virtual ~RcEntityResolver();
     //@}
 

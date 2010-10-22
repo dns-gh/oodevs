@@ -24,9 +24,8 @@ using namespace gui;
 // Name: RcEntityResolver constructor
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-RcEntityResolver::RcEntityResolver( QObject* parent, Controllers& controllers )
-    : QObject( parent )
-    , controllers_( controllers )
+RcEntityResolver::RcEntityResolver(Controllers& controllers )
+    : controllers_( controllers )
 {
     controllers_.Register( *this );
 }

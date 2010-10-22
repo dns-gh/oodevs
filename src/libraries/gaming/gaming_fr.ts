@@ -542,20 +542,12 @@
         <translation>Fournisseur:</translation>
     </message>
     <message>
-        <source>Logistic links/Automat superior</source>
-        <translation>Lien logistique/Supérieur automate</translation>
+        <source>Logistic links/Superior</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic links/Formation superior</source>
-        <translation>Lien logistique/Supérieur formation</translation>
-    </message>
-    <message>
-        <source>Automat superior:</source>
-        <translation>Supérieur automate:</translation>
-    </message>
-    <message>
-        <source>Formation superior:</source>
-        <translation>Supérieur formation:</translation>
+        <source>Superior:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
