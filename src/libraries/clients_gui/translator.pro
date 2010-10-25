@@ -47,6 +47,8 @@ ObstaclePrototype_ABC.cpp \
 OptionsPanel.cpp \
 PopulationListView.cpp \
 PopulationPanel.cpp \
+PopulationsPanel.cpp \
+PopulationTypesListView.cpp \
 PreferencesDialog.cpp \
 PreferencesList.cpp \
 PresetDialog.cpp \

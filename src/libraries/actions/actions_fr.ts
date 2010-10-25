@@ -41,6 +41,14 @@
         <translation>Création d'automate</translation>
     </message>
     <message>
+        <source>Crowd Creation</source>
+        <translation>Création de foule</translation>
+    </message>
+    <message>
+        <source>Formation Creation</source>
+        <translation>Création de formation</translation>
+    </message>
+    <message>
         <source>Unit Creation</source>
         <translation>Création d&apos;unité</translation>
     </message>

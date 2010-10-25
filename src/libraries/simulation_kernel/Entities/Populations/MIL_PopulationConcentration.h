@@ -36,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis );
-     MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position );
+     MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, unsigned int nHumans = 0 );
     virtual ~MIL_PopulationConcentration();
     //@}
 

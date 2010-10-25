@@ -28,6 +28,8 @@ MOCK_BASE_CLASS( MockArmy, MIL_Army_ABC )
     MOCK_METHOD( UnregisterFormation, 1 );
     MOCK_METHOD( RegisterObject, 1 );
     MOCK_METHOD( UnregisterObject, 1 );
+    MOCK_METHOD( RegisterPopulation, 1 );
+    MOCK_METHOD( UnregisterPopulation, 1 );
 
     MOCK_METHOD( UpdateKnowledges, 1 );
     MOCK_METHOD( CleanKnowledges, 0 );

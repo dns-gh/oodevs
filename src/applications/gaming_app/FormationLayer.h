@@ -22,6 +22,7 @@ namespace kernel
 {
     class Automat_ABC;
     class AutomatType;
+    class PopulationType;
     class Time_ABC;
 }
 
@@ -64,6 +65,7 @@ private:
     //@{
     virtual void NotifySelected( const kernel::Formation_ABC* formation );
     void RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type );
+    void RequestCreation( const geometry::Point2f& point, const kernel::PopulationType& type );
     //@}
 
 private:

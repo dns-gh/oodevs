@@ -16,8 +16,6 @@ ModelBuilder.cpp \
 ObjectCreationPanel.cpp \
 OrbatAttributesPanel.cpp \
 PopulationListView.cpp \
-PopulationTypesListView.cpp \
-PopulationsPanel.cpp \
 PositionEditor.cpp \
 ProfileDialog.cpp \
 ProfileEditor.cpp \

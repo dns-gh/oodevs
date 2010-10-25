@@ -22,6 +22,7 @@ class DEC_Knowledge_Object;
 class DEC_KnowledgeBlackBoard_Army;
 class MIL_KnowledgeGroup;
 class MIL_Formation;
+class MIL_Population;
 class KnowledgeVisitor_ABC;
 
 namespace Common
@@ -72,6 +73,9 @@ public:
 
     virtual void RegisterObject( MIL_Object_ABC& object ) = 0;
     virtual void UnregisterObject( MIL_Object_ABC& object ) = 0;
+    
+    virtual void RegisterPopulation( MIL_Population& population ) = 0;
+    virtual void UnregisterPopulation( MIL_Population& population ) = 0;
     //@}
 
     virtual void UpdateKnowledges(int currentTimeStep) = 0;

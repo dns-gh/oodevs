@@ -25,7 +25,6 @@ namespace kernel
 namespace gui
 {
     class ItemFactory_ABC;
-}
 
 // =============================================================================
 /** @class  PopulationTypesListView
@@ -71,5 +70,6 @@ private:
     const tools::Resolver_ABC< kernel::PopulationType >& types_;
     //@}
 };
+}
 
 #endif // __PopulationTypesListView_h_

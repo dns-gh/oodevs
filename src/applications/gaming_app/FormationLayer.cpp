@@ -51,7 +51,8 @@ FormationLayer::~FormationLayer()
 // -----------------------------------------------------------------------------
 bool FormationLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& /*point*/ )
 {
-    return selected_ && gui::ValuedDragObject::Provides< const kernel::AutomatType >( event );
+    return selected_ && ( gui::ValuedDragObject::Provides< const kernel::AutomatType >( event )
+                         || gui::ValuedDragObject::Provides< const kernel::PopulationType >( event ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -61,11 +62,18 @@ bool FormationLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometr
 bool FormationLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
     if( selected_ )
+    {
         if( const kernel::AutomatType* droppedItem = gui::ValuedDragObject::GetValue< const kernel::AutomatType >( event ) )
         {
             RequestCreation( point, *droppedItem );
             return true;
         }
+        if( const kernel::PopulationType* droppedItem = gui::ValuedDragObject::GetValue< const kernel::PopulationType >( event ) )
+        {
+            RequestCreation( point, *droppedItem );
+            return true;
+        }
+    }
     return false;
 }
 
@@ -102,4 +110,17 @@ void FormationLayer::RequestCreation( const geometry::Point2f& point, const kern
         agentsModel_, controllers_.controller_, static_.types_, static_.coordinateConverter_, actionsModel_ ) );
     messageManager_.RegisterListener( listener );
     actionsModel_.Publish( *action, context );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationLayer::RequestCreation
+// Created: LDC 2010-10-22
+// -----------------------------------------------------------------------------
+void FormationLayer::RequestCreation( const geometry::Point2f& point, const kernel::PopulationType& type )
+{
+    actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( type, point, *selected_, controllers_.controller_, static_.types_, static_.coordinateConverter_ );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+    action->Attach( *new actions::ActionTasker( selected_, false ) );
+    action->Polish();
+    actionsModel_.Publish( *action );
 }

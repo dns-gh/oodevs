@@ -9,11 +9,11 @@
 
 #include "preparation_app_pch.h"
 #include "CreationPanels.h"
-#include "PopulationsPanel.h"
 #include "preparation/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
-#include "clients_gui/UnitsPanel.h"
 #include "clients_gui/IntelligencesPanel.h"
+#include "clients_gui/PopulationsPanel.h"
+#include "clients_gui/UnitsPanel.h"
 
 using namespace kernel;
 
@@ -25,7 +25,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     : Panels( parent )
 {
     AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
-    AddPanel( new PopulationsPanel( this, *this, controllers, ( tools::Resolver< PopulationType >&)( staticModel.types_ ), factory ) );
+    AddPanel( new gui::PopulationsPanel( this, *this, controllers, ( tools::Resolver< PopulationType >&)( staticModel.types_ ), factory ) );
     AddPanel( new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
 }
 

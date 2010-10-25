@@ -46,13 +46,27 @@ PopulationFactory::~PopulationFactory()
 // Name: PopulationFactory::Create
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
-MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army& army )
+MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army_ABC& army )
 {
     std::string strType( xis.attribute< std::string >( "type" ) );
     const MIL_PopulationType* pType = MIL_PopulationType::Find( strType );
     if( !pType )
         xis.error( "Unknown population type" );
     MIL_Population& population = *new MIL_Population( xis, *pType, army, database_, gcPause_, gcMult_ );
+    Register( population.GetID(), population );
+    return population;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFactory::Create
+// Created: LDC 2010-10-22
+// -----------------------------------------------------------------------------
+MIL_Population& PopulationFactory::Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Formation& formation )
+{
+    const MIL_PopulationType* pType = MIL_PopulationType::Find( type );
+    if( !pType )
+        throw std::runtime_error( "Unknown population type" );
+    MIL_Population& population = *new MIL_Population( *pType, formation, point, number, name, database_, gcPause_, gcMult_ );
     Register( population.GetID(), population );
     return population;
 }

@@ -120,7 +120,17 @@ Action_ABC* ActionsModel::CreateFormationCreationAction( int level, const kernel
     return action;
 }
     
-
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::CreateCrowdCreationAction
+// Created: LDC 2010-10-22
+// -----------------------------------------------------------------------------
+Action_ABC* ActionsModel::CreateCrowdCreationAction( const kernel::PopulationType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter )
+{
+    Action_ABC* action = factory_.CreateCrowdCreationAction( type, point, selected, controller, agentTypes, coordinateConverter );
+    Register( action->GetId(), *action );
+    return action;
+}
+    
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11

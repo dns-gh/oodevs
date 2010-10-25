@@ -118,6 +118,13 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "UnitType", "identifier" );
         CreateOrderParameter( "Location", "point" );
     }
+    else if( name_ == "crowd_creation" )
+    {
+        CreateOrderParameter( "PopulationType", "identifier" );
+        CreateOrderParameter( "Location", "point" );
+        CreateOrderParameter( "Number", "numeric" );
+        CreateOrderParameter( "Name", "string" );
+    }
     else if( name_ == "population_kill" || name_ == "population_resurrect" )
     {
         CreateOrderParameter( "Number", "quantity" );

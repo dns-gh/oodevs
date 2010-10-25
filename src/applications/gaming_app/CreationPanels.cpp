@@ -12,9 +12,10 @@
 #include "gaming/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_gui/UnitsPanel.h"
-#include "clients_gui/IntelligencesPanel.h"
 #include "clients_gui/DrawerPanel.h"
+#include "clients_gui/IntelligencesPanel.h"
+#include "clients_gui/PopulationsPanel.h"
+#include "clients_gui/UnitsPanel.h"
 #include "gaming/DrawingsModel.h"
 #include "gaming/Services.h"
 #include "protocol/simulationsenders.h"
@@ -42,6 +43,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, drawings ) );
     AddPanel( new FireCreationPanel( this, *this, controllers, actionsModel, simulation, staticModel ) );
     AddPanel( weather_ = new WeatherCreationPanel( this, *this, controllers, actionsModel, staticModel, simulation, paramLayer, tools ) );
+    AddPanel( crowds_ = new gui::PopulationsPanel( this, *this, controllers, staticModel.types_, factory ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,10 +76,12 @@ void CreationPanels::NotifyUpdated( const Services& services )
         Add( units_ );
         Add( objects_ );
         Add( intel_ );
+        Add( crowds_ );
     } else
     {
         Remove( units_ );
         Remove( objects_ );
         Remove( intel_ );
+        Remove( crowds_ );
     }
 }

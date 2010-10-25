@@ -15,14 +15,16 @@
 #include "MIL_PopulationAttitude.h"
 #include "DEC_PopulationDecision.h"
 #include "DEC_PopulationKnowledge.h"
-#include "Entities/MIL_Army.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
+#include "Entities/MIL_Formation.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Representations.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "tools/MIL_IDManager.h"
 #include "tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
@@ -31,6 +33,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Population )
 
 namespace
 {
+    MIL_IDManager idManager_;
     template< typename R >
     void SaveRole( const MIL_Population& population, MIL_CheckPointOutArchive& file )
     {
@@ -60,7 +63,7 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
 // Name: MIL_Population constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
     : MIL_Entity_ABC          ( xis )
     , pType_                  ( &type )
     , nID_                    ( xis.attribute< unsigned int >( "id" ) )
@@ -74,6 +77,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     , bHasDoneMagicMove_      ( false )
     , bBlinded_               ( false )
 {
+    idManager_.Lock( nID_ );
     std::string strAttitude;
     xis >> xml::attribute( "attitude", strAttitude );
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( strAttitude );
@@ -117,6 +121,37 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population constructor
+// Created: LDC 2010-10-22
+// -----------------------------------------------------------------------------
+MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Formation& formation, const MT_Vector2D& point, int number, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+    : MIL_Entity_ABC          ( name )
+    , pType_                  ( &type )
+    , nID_                    ( idManager_.GetFreeId() )
+    , pArmy_                  ( &formation.GetArmy() )
+    , pDefaultAttitude_       ( 0 )
+    , nPeopleCount_           ( number )
+    , pKnowledge_             ( 0 )
+    , orderManager_           ( *this )
+    , bPionMaxSpeedOverloaded_( false )
+    , rOverloadedPionMaxSpeed_( 0. )
+    , bHasDoneMagicMove_      ( false )
+    , bBlinded_               ( false )
+{
+    pDefaultAttitude_ = MIL_PopulationAttitude::Find( "calme" );
+    pKnowledge_ = new DEC_PopulationKnowledge( *this );
+    RegisterRole( *new DEC_PopulationDecision( *this, database, gcPause, gcMult ) );
+    RegisterRole( *new DEC_Representations() );
+    SendCreation();
+    MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, point, number );
+    concentrations_.push_back( pConcentration );
+    nPeopleCount_ = pConcentration->GetNbrAliveHumans();
+    pArmy_->RegisterPopulation( *this );    
+    vBarycenter.reset( new MT_Vector2D() );
+    UpdateBarycenter();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population destructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
@@ -153,7 +188,8 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> const_cast< unsigned int& >( nID_ )
-         >> const_cast< MIL_Army*& >( pArmy_ );
+         >> const_cast< MIL_Army_ABC*& >( pArmy_ );
+    idManager_.Lock( nID_ );
     unsigned int nAttitudeID;
     file >> nAttitudeID;
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );

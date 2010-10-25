@@ -446,6 +446,20 @@
     </message>
 </context>
 <context>
+    <name>PopulationTypesListView</name>
+    <message>
+        <source>Population type</source>
+        <translation>Type de population</translation>
+    </message>
+</context>
+<context>
+    <name>PopulationsPanel</name>
+    <message>
+        <source>Populations</source>
+        <translation>Populations</translation>
+    </message>
+</context>
+<context>
     <name>PreferencesList</name>
     <message>
         <source>Category</source>

@@ -35,12 +35,13 @@ namespace xml
 class DEC_DataBase;
 class DEC_PopulationDecision;
 class DEC_PopulationKnowledge;
+class MIL_Formation;
 class MIL_PopulationType;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
 class MIL_PopulationElement_ABC;
 class MIL_PopulationAttitude;
-class MIL_Army;
+class MIL_Army_ABC;
 class MIL_Agent_ABC;
 class MIL_AgentPion;
 class PHY_Volume;
@@ -56,7 +57,8 @@ class MIL_Population : public MIL_Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             MIL_Population( const MIL_PopulationType& type, MIL_Formation& formation, const MT_Vector2D& point, int number, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~MIL_Population();
     //@}
 
@@ -218,7 +220,7 @@ private:
 private:
     const MIL_PopulationType* pType_;
     const unsigned int nID_;
-    MIL_Army* pArmy_;
+    MIL_Army_ABC* pArmy_;
     const MIL_PopulationAttitude* pDefaultAttitude_;
     unsigned int nPeopleCount_;
     T_ConcentrationVector concentrations_;

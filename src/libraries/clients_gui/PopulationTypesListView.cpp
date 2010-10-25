@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "PopulationTypesListView.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/PopulationType.h"
@@ -16,6 +16,7 @@
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
 
+using namespace gui;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------

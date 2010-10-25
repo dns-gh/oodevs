@@ -23,7 +23,7 @@ namespace xml
 
 class DEC_DataBase;
 class DEC_Model_ABC;
-class MIL_Army;
+class MIL_Army_ABC;
 class MIL_Population;
 class MIL_PopulationAttitude;
 class PHY_Volume;
@@ -58,7 +58,7 @@ public:
 
     //! @name Operations
     //@{
-    MIL_Population& InstanciatePopulation( xml::xistream& xis, MIL_Army& army, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const;
+    MIL_Population& InstanciatePopulation( xml::xistream& xis, MIL_Army_ABC& army, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const;
     //@}
 
     //! @name Effects

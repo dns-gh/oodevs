@@ -23,12 +23,13 @@ namespace kernel
 
 namespace gui
 {
-    class UnitsPanel;
-    class ItemFactory_ABC;
-    class ParametersLayer;
-    class SymbolIcons;
     class ColorStrategy_ABC;
     class IntelligencesPanel;
+    class ItemFactory_ABC;
+    class ParametersLayer;
+    class PopulationsPanel;
+    class SymbolIcons;
+    class UnitsPanel;
 }
 
 namespace actions
@@ -79,6 +80,7 @@ private:
     ObjectCreationPanel* objects_;
     gui::IntelligencesPanel* intel_;
     WeatherCreationPanel* weather_;
+    gui::PopulationsPanel* crowds_;
     //@}
 };
 

@@ -7,12 +7,13 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "PopulationsPanel.h"
 #include "PopulationTypesListView.h"
 #include "clients_kernel/Controllers.h"
 #include "preparation/Tools.h"
 
+using namespace gui;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------

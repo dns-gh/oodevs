@@ -18,7 +18,8 @@ namespace xml
     class xistream;
 }
 
-class MIL_Army;
+class MIL_Army_ABC;
+
 // =============================================================================
 /** @class  PopulationFactory_ABC
     @brief  PopulationFactory_ABC
@@ -36,7 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_Population& Create( xml::xistream& xis, MIL_Army& army ) = 0;
+    virtual MIL_Population& Create( xml::xistream& xis, MIL_Army_ABC& army ) = 0;
+    virtual MIL_Population& Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Formation& formation ) = 0;
     //@}
 
     //! @name CheckPoint

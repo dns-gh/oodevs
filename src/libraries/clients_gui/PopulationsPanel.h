@@ -25,9 +25,7 @@ namespace gui
 {
     class PanelStack_ABC;
     class ItemFactory_ABC;
-}
-
-class PopulationTypesListView;
+    class PopulationTypesListView;
 
 // =============================================================================
 /** @class  PopulationsPanel
@@ -65,5 +63,6 @@ private:
     PopulationTypesListView* list_;
     //@}
 };
+}
 
 #endif // __PopulationsPanel_h_
