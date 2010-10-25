@@ -62,9 +62,9 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const MsgsCl
     : model_       ( model )
     , clients_     ( clients )
     , strLogin_    ( message.profile().login() )
-    , strPassword_ ( message.profile().has_password()  ? message.profile().password() : "" )
+    , strPassword_ ( message.profile().has_password() ? message.profile().password() : "" )
     , bSupervision_( message.profile().supervisor() )
-    , role_        ( message.profile().has_role()   ? message.profile().role().id() : -1 )
+    , role_        ( message.profile().has_role() ? message.profile().role().id() : -1 )
 {
     ReadRights( message.profile() );
     SendCreation( clients_ );
@@ -152,21 +152,21 @@ namespace
 // -----------------------------------------------------------------------------
 void Profile::ReadRights( const MsgsAuthenticationToClient::MsgProfile& message )
 {
-    if( message.has_read_only_automates()  )
+    if( message.has_read_only_automates() )
         SetRights( message.read_only_automates(), readOnlyAutomats_, model_.Automats() );
-    if( message.has_read_only_camps()  )
+    if( message.has_read_only_camps() )
         SetRights( message.read_only_camps(), readOnlySides_, model_.Sides() );
-    if( message.has_read_only_formations()  )
+    if( message.has_read_only_formations() )
         SetRights( message.read_only_formations(), readOnlyFormations_, model_.Formations() );
-    if( message.has_read_only_crowds()  )
+    if( message.has_read_only_crowds() )
         SetRights( message.read_only_crowds(), readOnlyPopulations_, model_.Populations() );
-    if( message.has_read_write_automates()  )
+    if( message.has_read_write_automates() )
         SetRights( message.read_write_automates(), readWriteAutomats_, model_.Automats() );
-    if( message.has_read_write_camps()  )
+    if( message.has_read_write_camps() )
         SetRights( message.read_write_camps(), readWriteSides_, model_.Sides() );
-    if( message.has_read_write_formations()  )
+    if( message.has_read_write_formations() )
         SetRights( message.read_write_formations(), readWriteFormations_, model_.Formations() );
-    if( message.has_read_write_crowds()  )
+    if( message.has_read_write_crowds() )
         SetRights( message.read_write_crowds(), readWritePopulations_, model_.Populations() );
 }
 
@@ -314,6 +314,8 @@ void Profile::Send( MsgsAuthenticationToClient::MsgProfileDescription& message )
     message.set_login( strLogin_ );
     message.set_password( !strPassword_.empty() );
     message.set_supervisor( bSupervision_ );
+    if( role_ != -1 )
+        message.mutable_role()->set_id( role_ );
 }
 
 // -----------------------------------------------------------------------------

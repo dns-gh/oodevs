@@ -1366,6 +1366,13 @@ class MsgProfileDescription : public ::google::protobuf::Message {
   inline bool supervisor() const;
   inline void set_supervisor(bool value);
   
+  // optional .MsgsAuthenticationToClient.RoleType role = 4;
+  inline bool has_role() const;
+  inline void clear_role();
+  static const int kRoleFieldNumber = 4;
+  inline const ::MsgsAuthenticationToClient::RoleType& role() const;
+  inline ::MsgsAuthenticationToClient::RoleType* mutable_role();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -1374,11 +1381,12 @@ class MsgProfileDescription : public ::google::protobuf::Message {
   static const ::std::string _default_login_;
   bool password_;
   bool supervisor_;
+  ::MsgsAuthenticationToClient::RoleType* role_;
   friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
   friend void protobuf_AssignDesc_AuthenticationToClient_2eproto();
   friend void protobuf_ShutdownFile_AuthenticationToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -2464,6 +2472,23 @@ inline bool MsgProfileDescription::supervisor() const {
 inline void MsgProfileDescription::set_supervisor(bool value) {
   _set_bit(2);
   supervisor_ = value;
+}
+
+// optional .MsgsAuthenticationToClient.RoleType role = 4;
+inline bool MsgProfileDescription::has_role() const {
+  return _has_bit(3);
+}
+inline void MsgProfileDescription::clear_role() {
+  if (role_ != NULL) role_->::MsgsAuthenticationToClient::RoleType::Clear();
+  _clear_bit(3);
+}
+inline const ::MsgsAuthenticationToClient::RoleType& MsgProfileDescription::role() const {
+  return role_ != NULL ? *role_ : *default_instance_->role_;
+}
+inline ::MsgsAuthenticationToClient::RoleType* MsgProfileDescription::mutable_role() {
+  _set_bit(3);
+  if (role_ == NULL) role_ = new ::MsgsAuthenticationToClient::RoleType;
+  return role_;
 }
 
 // -------------------------------------------------------------------

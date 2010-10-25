@@ -95,9 +95,10 @@ message MsgProfileDescriptionList {
 }
 
 message MsgProfileDescription {
-    required string login      = 1;
-    required bool   password   = 2;
-    required bool   supervisor = 3;
+    required string   login      = 1;
+    required bool     password   = 2;
+    required bool     supervisor = 3;
+    optional RoleType role       = 4;
 }
 
 message MsgAuthenticationToClient {
