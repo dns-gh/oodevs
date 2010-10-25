@@ -20,10 +20,10 @@
 // Name: Population constructor
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-Population::Population( const kernel::PopulationType& type, kernel::Controller& controller, IdManager& idManager )
+Population::Population( const kernel::PopulationType& type, int number, kernel::Controller& controller, IdManager& idManager )
     : kernel::EntityImplementation< kernel::Population_ABC >( controller, idManager.GetNextId(), "" )
     , type_( type )
-    , livingHumans_( 1000 ) // $$$$ SBO 2006-11-08: hard coded
+    , livingHumans_( number )
     , attitude_( ePopulationAttitude_Calme )
 {
     RegisterSelf( *this );

@@ -198,9 +198,9 @@ Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 // Name: AgentsModel::CreatePopulation
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void AgentsModel::CreatePopulation( Entity_ABC& parent, const PopulationType& type, const geometry::Point2f& position )
+void AgentsModel::CreatePopulation( Entity_ABC& parent, const PopulationType& type, int number, const geometry::Point2f& position )
 {
-    Population_ABC* popu = agentFactory_.Create( parent, type, parameters_.Clip( position ) );
+    Population_ABC* popu = agentFactory_.Create( parent, type, number, parameters_.Clip( position ) );
     tools::Resolver< Population_ABC >::Register( popu->GetId(), *popu );
 }
 

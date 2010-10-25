@@ -15,6 +15,7 @@
 #include "actions/ActionTiming.h"
 #include "actions/ActionTasker.h"
 #include "clients_gui/ValuedDragObject.h"
+#include "clients_kernel/PopulationPrototype.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/StaticModel.h"
 #include "protocol/simulationsenders.h"
@@ -52,7 +53,7 @@ FormationLayer::~FormationLayer()
 bool FormationLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& /*point*/ )
 {
     return selected_ && ( gui::ValuedDragObject::Provides< const kernel::AutomatType >( event )
-                         || gui::ValuedDragObject::Provides< const kernel::PopulationType >( event ) );
+                         || gui::ValuedDragObject::Provides< const kernel::PopulationPrototype >( event ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -68,7 +69,7 @@ bool FormationLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f
             RequestCreation( point, *droppedItem );
             return true;
         }
-        if( const kernel::PopulationType* droppedItem = gui::ValuedDragObject::GetValue< const kernel::PopulationType >( event ) )
+        if( const kernel::PopulationPrototype* droppedItem = gui::ValuedDragObject::GetValue< const kernel::PopulationPrototype >( event ) )
         {
             RequestCreation( point, *droppedItem );
             return true;
@@ -116,9 +117,9 @@ void FormationLayer::RequestCreation( const geometry::Point2f& point, const kern
 // Name: FormationLayer::RequestCreation
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-void FormationLayer::RequestCreation( const geometry::Point2f& point, const kernel::PopulationType& type )
+void FormationLayer::RequestCreation( const geometry::Point2f& point, const kernel::PopulationPrototype& type )
 {
-    actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( type, point, *selected_, controllers_.controller_, static_.types_, static_.coordinateConverter_ );
+    actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( *(type.type_), type.number_, point, *selected_, controllers_.controller_, static_.types_, static_.coordinateConverter_ );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->Polish();

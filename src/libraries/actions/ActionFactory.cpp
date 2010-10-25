@@ -650,7 +650,7 @@ actions::Action_ABC* ActionFactory::CreateFormationCreationAction( int level, co
 // Name: ActionFactory::CreateCrowdCreationAction
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateCrowdCreationAction( const kernel::PopulationType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter ) const
+actions::Action_ABC* ActionFactory::CreateCrowdCreationAction( const kernel::PopulationType& type, int number, const geometry::Point2f& point, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter ) const
 {
     kernel::Point location;
     location.AddPoint( point );
@@ -659,7 +659,7 @@ actions::Action_ABC* ActionFactory::CreateCrowdCreationAction( const kernel::Pop
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::String( it.NextElement(), type.GetName() ) );
     action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter, location ) );
-    action->AddParameter( *new parameters::Numeric( it.NextElement(), 1000 ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), number ) );
     action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
     return action;
 }

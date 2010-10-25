@@ -9,9 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "PopulationTypesListView.h"
+#include "moc_PopulationTypesListView.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/PopulationType.h"
-#include "clients_gui/ValuedDragObject.h"
 #include "preparation/Tools.h"
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
@@ -76,14 +76,14 @@ void PopulationTypesListView::NotifyUpdated( const kernel::ModelUnLoaded& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationTypesListView::dragObject
+// Name: PopulationTypesListView::startDrag
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-QDragObject* PopulationTypesListView::dragObject()
+void PopulationTypesListView::startDrag()
 {
     gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
     if( !pItem )
-        return 0;
+        return;
     const PopulationType* pType = pItem->GetValue< const PopulationType >();
-    return new gui::ValuedDragObject( pType, this );
+    emit StartDrag( pType );
 }

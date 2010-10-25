@@ -12,11 +12,14 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "clients_gui/InfoPanel_ABC.h"
+#include "clients_kernel/PopulationPrototype.h"
 
 namespace kernel
 {
     class Controllers;
+    class Formation_ABC;
     class ModelLoaded;
     class PopulationType;
 }
@@ -36,7 +39,10 @@ namespace gui
 class PopulationsPanel : public gui::InfoPanel_ABC
                        , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                       , public tools::SelectionObserver_ABC
+                       , public tools::SelectionObserver_Base< kernel::Formation_ABC >
 {
+    Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
@@ -54,6 +60,15 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    virtual void AfterSelection();
+    virtual void BeforeSelection();
+    virtual void Select( const kernel::Formation_ABC& element );
+    //@}
+
+private slots:
+    //!@name Slots
+    //@{
+    void OnStartDrag( const kernel::PopulationType* type );
     //@}
 
 private:
@@ -61,6 +76,9 @@ private:
     //@{
     kernel::Controllers& controllers_;
     PopulationTypesListView* list_;
+    QLineEdit* number_;
+    const kernel::Formation_ABC* selectedFormation_;
+    kernel::PopulationPrototype prototype_;
     //@}
 };
 }

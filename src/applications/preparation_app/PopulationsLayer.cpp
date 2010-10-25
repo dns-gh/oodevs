@@ -9,8 +9,9 @@
 
 #include "preparation_app_pch.h"
 #include "PopulationsLayer.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/PopulationPrototype.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
@@ -47,7 +48,7 @@ PopulationsLayer::~PopulationsLayer()
 // -----------------------------------------------------------------------------
 bool PopulationsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
 {
-    return ( gui::ValuedDragObject::Provides< const PopulationType >     ( event ) && selectedEntity_ )
+    return ( gui::ValuedDragObject::Provides< const PopulationPrototype >( event ) && selectedEntity_ )
         || ( gui::ValuedDragObject::Provides< const PopulationPositions >( event ) && selectedPopulation_ );
 }
 
@@ -57,11 +58,11 @@ bool PopulationsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geome
 // -----------------------------------------------------------------------------
 bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
-    if( selectedEntity_ && gui::ValuedDragObject::Provides< const PopulationType >( event ) )
+    if( selectedEntity_ && gui::ValuedDragObject::Provides< const PopulationPrototype >( event ) )
     {
-        if( const PopulationType* droppedItem = gui::ValuedDragObject::GetValue< const PopulationType >( event ) )
+        if( const PopulationPrototype* droppedItem = gui::ValuedDragObject::GetValue< const kernel::PopulationPrototype >( event ) )
         {
-            model_.agents_.CreatePopulation( *selectedEntity_.ConstCast(), *droppedItem, point );
+            model_.agents_.CreatePopulation( *selectedEntity_.ConstCast(), *(droppedItem->type_), droppedItem->number_, point );
             return true;
         }
     }

@@ -458,6 +458,10 @@
         <source>Populations</source>
         <translation>Populations</translation>
     </message>
+    <message>
+        <source>Number:</source>
+        <translation>Nombre:</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesList</name>

@@ -43,7 +43,7 @@ class Population : public kernel::EntityImplementation< kernel::Population_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Population( const kernel::PopulationType& type, kernel::Controller& controller, IdManager& idManager );
+             Population( const kernel::PopulationType& type, int number, kernel::Controller& controller, IdManager& idManager );
              Population( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const tools::Resolver_ABC< kernel::PopulationType, std::string >& types );
     virtual ~Population();
     //@}

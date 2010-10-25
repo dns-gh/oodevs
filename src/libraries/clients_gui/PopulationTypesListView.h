@@ -37,6 +37,7 @@ class PopulationTypesListView : public gui::ListView< PopulationTypesListView >
                               , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                               , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
+    Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
@@ -47,6 +48,12 @@ public:
     //! @name Operations
     //@{
     void Display( const kernel::PopulationType& type, gui::ValuedListItem* );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void StartDrag( const kernel::PopulationType* );
     //@}
 
 private:
@@ -60,7 +67,7 @@ private:
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
-    virtual QDragObject* dragObject();
+    virtual void startDrag();
     //@}
 
 private:
@@ -70,6 +77,7 @@ private:
     const tools::Resolver_ABC< kernel::PopulationType >& types_;
     //@}
 };
+
 }
 
 #endif // __PopulationTypesListView_h_
