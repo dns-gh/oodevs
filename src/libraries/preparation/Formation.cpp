@@ -120,6 +120,7 @@ void Formation::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Name" ), name_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/LogisticLevel" ), logisticLevel_ );
 }
 
 // -----------------------------------------------------------------------------

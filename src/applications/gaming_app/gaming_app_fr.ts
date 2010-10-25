@@ -371,12 +371,8 @@
         <translation>Changer les Liens Logistiques</translation>
     </message>
     <message>
-        <source>Automat superior</source>
-        <translation>Superieur automate</translation>
-    </message>
-    <message>
-        <source>Formation superior</source>
-        <translation>Supérieur formation</translation>
+        <source>Superior</source>
+        <translation>Supérieur</translation>
     </message>
 </context>
 <context>

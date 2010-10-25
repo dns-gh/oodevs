@@ -55,7 +55,7 @@
     </message>
     <message>
         <source>Info/LogisticLevel</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Niveau logistique</translation>
     </message>
 </context>
 <context>
@@ -115,6 +115,10 @@
     <message>
         <source>Formation [%1]</source>
         <translation>Formation [%1]</translation>
+    </message>
+    <message>
+        <source>Info/LogisticLevel</source>
+        <translation>Info/Niveau logistique</translation>
     </message>
 </context>
 <context>
@@ -203,7 +207,7 @@
     <name>LogisticBaseStates</name>
     <message>
         <source>Logistic/LogisticBase/Superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique/Base logistique/Supérieur</translation>
     </message>
 </context>
 <context>
