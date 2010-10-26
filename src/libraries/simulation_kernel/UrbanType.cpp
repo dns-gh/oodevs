@@ -44,7 +44,7 @@ void UrbanType::Terminate()
 UrbanType::UrbanType( xml::xistream& xis )
     : staticModel_( new urban::StaticModel() )
 {
-    staticModel_->Load( xis, "" );
+    staticModel_->Load( xis );
 }
 
 // -----------------------------------------------------------------------------
