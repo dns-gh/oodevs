@@ -508,7 +508,7 @@
         <attribute name="dir"/>
         <sequential>
             <delete dir="@{dir}"/>
-            <update name="masalife" version="vm_sharing" package="@{database}" todir="@{dir}"/>
+            <update name="masalife/brain" version="vm_sharing" package="@{database}" todir="@{dir}"/>
         </sequential>
     </macrodef>
 
