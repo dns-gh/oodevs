@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentExtensions_h_
-#define __AgentExtensions_h_
+#ifndef __ObjectExtensions_h_
+#define __ObjectExtensions_h_
 
 #include "Displayable_ABC.h"
 #include "Extension_ABC.h"
@@ -44,4 +44,4 @@ namespace kernel
 
 #undef DECLARE_EXTENSION
 
-#endif // __AgentExtensions_h_
+#endif // __ObjectExtensions_h_
