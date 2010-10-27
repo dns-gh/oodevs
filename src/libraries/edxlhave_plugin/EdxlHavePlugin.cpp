@@ -20,7 +20,6 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/protocol.h"
-
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::edxl;

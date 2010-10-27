@@ -9,15 +9,12 @@
 
 #include "edxlhave_plugin_pch.h"
 #include "Publisher.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
 #include "RestClient.h"
 #include "ResponseHandler_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-
-
-#pragma warning( push, 1 )
+#pragma warning( push, 0 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 
@@ -32,7 +29,7 @@ Publisher::Publisher( xml::xistream& xis )
     : log_ ( false )
     , useSsl_ ( false )
 {
-	std::string type;
+    std::string type;
     xis >> xml::start( "services" ) >> xml::attribute( "host", host_ ) 
                                     >> xml::optional >> xml::attribute( "log", log_ )
                                     >> xml::optional >> xml::attribute( "type", type )
@@ -46,11 +43,11 @@ Publisher::Publisher( xml::xistream& xis )
         MT_LOG_INFO_MSG( "Edxl-Have service loaded on : " << host_ << std::endl 
                           << " - initialize : " << getURI_ << std::endl
                           << " - update : " << postURI_ )
-	if ( type == "https" )
-	{
-		MT_LOG_INFO_MSG( " - connecting using SSL" )
-		useSsl_ = true;
-	}
+    if ( type == "https" )
+    {
+        MT_LOG_INFO_MSG( " - connecting using SSL" )
+        useSsl_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -74,9 +71,9 @@ void Publisher::PullSituation( const std::string& message, ResponseHandler_ABC& 
 
         RestClient client( host_, getURI_, useSsl_ );
             
-		client.DoGet( message, result );
-		if( client.GetStatus() != 200 || result.size() == 0 )
-			throw std::exception( "Content of url reports from webService is empty" );
+        client.DoGet( message, result );
+        if( client.GetStatus() != 200 || result.size() == 0 )
+            throw std::exception( "Content of url reports from webService is empty" );
 
         boost::recursive_mutex::scoped_lock locker( mutex_ );
         handler.Handle( xml::xistringstream( result ) );
@@ -103,8 +100,8 @@ void Publisher::PushReport( const std::string& message )
             
             RestClient client( host_, postURI_, useSsl_ );
 
-			boost::recursive_mutex::scoped_lock locker( mutex_ );
-			client.DoPost( message, result );
+            boost::recursive_mutex::scoped_lock locker( mutex_ );
+            client.DoPost( message, result );
 
             if ( log_ )
                 MT_LOG_INFO_MSG( message )
