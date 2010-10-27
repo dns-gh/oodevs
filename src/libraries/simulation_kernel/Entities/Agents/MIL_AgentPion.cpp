@@ -47,6 +47,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
+#include "Entities/Agents/Units/Humans/MIL_Injury_Wound.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
@@ -841,6 +842,21 @@ void  MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveMsgCreateWound
+// Created: LDC 2010-07-02
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveMsgCreateWound( const Common::MsgMissionParameters& msg )
+{
+    if( msg.elem( 0 ).has_value() && msg.elem( 1 ).has_value() ) // injury_id && injury_type
+    {
+        MIL_Injury_Wound* injury = new MIL_Injury_Wound( msg.elem( 0 ).value().identifier() );
+        injury->SetInjuryCategory( ( MIL_MedicalTreatmentType::E_InjuryCategories ) msg.elem( 1 ).value().identifier() );
+        GetRole< PHY_RolePion_Composantes >().ApplyInjury( *injury );
+    }
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgUnitMagicAction
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
@@ -880,6 +896,9 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitM
         break;
     case MsgsClientToSim::MsgUnitMagicAction::partial_recovery:
         OnReceiveMsgResupply( msg.parameters() );
+        break;
+    case MsgsClientToSim::MsgUnitMagicAction::create_wound:
+        OnReceiveMsgCreateWound( msg.parameters() );
         break;
     default:
         assert( false );

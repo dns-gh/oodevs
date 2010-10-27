@@ -16,7 +16,10 @@
 #include "AgentManipulator.h"
 #include "AutomatManipulator.h"
 #include "KnowledgeManipulator.h"
+#include "ObjectManipulator.h"
+#include "ObjectKnowledgeManipulator.h"
 #include "PopulationManipulator.h"
+#include "PopulationKnowledgeManipulator.h"
 #include "SimulationCommands.h"
 #include "ClientCommands.h"
 #include "ScriptCommands.h"
@@ -56,6 +59,7 @@ ScriptPlugin::ScriptPlugin( Model_ABC& model, const kernel::StaticModel& staticM
     , factory_     ( new ExtensionFactory( *controller_, *converter_, publisher ) )
     , time_        ( -1 )
     , reset_       ( true )
+    , loaded_    ( false )
     , tickDuration_( 10 )
 {
     model_.RegisterFactory( *factory_ );
@@ -65,7 +69,10 @@ ScriptPlugin::ScriptPlugin( Model_ABC& model, const kernel::StaticModel& staticM
     registrables_.Add( new AgentManipulator::Registrar() );
     registrables_.Add( new AutomatManipulator::Registrar() );
     registrables_.Add( new KnowledgeManipulator::Registrar() );
+    registrables_.Add( new ObjectManipulator::Registrar() );
+    registrables_.Add( new ObjectKnowledgeManipulator::Registrar() );
     registrables_.Add( new PopulationManipulator::Registrar() );
+    registrables_.Add( new PopulationKnowledgeManipulator::Registrar() );
     registrables_.Add( new SimulationCommands( publisher, *converter_ ) );
     registrables_.Add( new ClientCommands( clients, resolver ) );
     registrables_.Add( new ScriptCommands( *controller_ ) );
@@ -91,6 +98,11 @@ void ScriptPlugin::Receive( const MsgSimToClient& wrapper )
     if( wrapper.message().has_control_information() )
         if( wrapper.message().control_information().has_tick_duration() )
             tickDuration_ = wrapper.message().control_information().tick_duration();
+    if( wrapper.message().has_control_send_current_state_begin() )
+    {
+        loaded_ = true;
+        Update();
+    }
     if( wrapper.message().has_control_end_tick() )
         controller_->Update( events::TickEnded( wrapper.message().control_end_tick().current_tick(), tickDuration_ ) );
 }
@@ -142,21 +154,26 @@ void ScriptPlugin::OnReceiveClientToMessenger( const std::string&, const MsgClie
 // -----------------------------------------------------------------------------
 void ScriptPlugin::Update()
 {
-    if( reset_ )
+    if( loaded_ && reset_ )
     {
         pending_.clear();
         scripts_.clear();
         reset_ = false;
         LoadScripts();
     }
-    ApplyPendings();
-    long newTime = clock();
-    if( time_ > 0 )
+
+    if ( loaded_ )
     {
-        const float delta = float( newTime - time_ ) / float( CLOCKS_PER_SEC );
-        controller_->Update( events::TimeFlowed( delta ) );
+        ApplyPendings();
+
+        long newTime = clock();
+        if( time_ > 0 )
+        {
+            const float delta = float( newTime - time_ ) / float( CLOCKS_PER_SEC );
+            controller_->Update( events::TimeFlowed( delta ) );
+        }
+        time_ = newTime;
     }
-    time_ = newTime;
 }
 
 // -----------------------------------------------------------------------------

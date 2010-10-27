@@ -21,11 +21,9 @@ using namespace kernel;
 // Name: MedicalTreatmentAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( kernel::PropertiesDictionary& dico )
-    : beds_                 ( 0 )
-    , availableBeds_        ( 0 )
-    , doctors_              ( 0 )
-    , availableDoctors_     ( 0 )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes, kernel::PropertiesDictionary& dico )
+    : doctors_  ( 0 )
+    , resolver_ ( treatmentTypes )
 {
     CreateDictionary( dico );
 }
@@ -34,16 +32,15 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( kernel::PropertiesDictiona
 // Name: MedicalTreatmentAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes, kernel::PropertiesDictionary& dictionary )
-    : beds_                 ( 0 )
-    , availableBeds_        ( 0 )
-    , doctors_              ( 0 )
-    , availableDoctors_     ( 0 )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes, kernel::PropertiesDictionary& dico )
+    : doctors_  ( 0 )
+    , resolver_ ( treatmentTypes )
 {
-    xis >> xml::attribute( "beds", beds_ ) >> xml::attribute( "availableBeds", availableBeds_ )
-        >> xml::attribute( "doctors", doctors_ ) >> xml::attribute( "availableDoctors", availableDoctors_ );
-    xis >> xml::list( "type", *this, &MedicalTreatmentAttribute::ReadTreatment, treatmentTypes );
-    CreateDictionary( dictionary );
+    xis >> xml::attribute( "doctors", doctors_ )
+        >> xml::optional >> xml::attribute( "reference", referenceID_ );
+    xis >> xml::start( "bed-capacities" )
+        >> list( "bed-capacity", *this, &MedicalTreatmentAttribute::ReadBedCapacity );
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,11 +56,48 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 // Name: MedicalTreatmentAttribute::ReadTreatment
 // Created: JCR 2009-04-15
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::ReadTreatment( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentResolver )
+void MedicalTreatmentAttribute::ReadBedCapacity( xml::xistream& xis )
 {
-    std::string type = content( xis, "type", std::string() );
-    const MedicalTreatmentType& treatment = treatmentResolver.Get( type );
-    AddMedicalTreatment( treatment );
+    std::string type = xis.content( "type", std::string() );
+    unsigned baseline = xis.attribute< unsigned >( "baseline" );
+
+    UpdateTreatmentCapacity ( type, baseline );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::UpdateTreatmentCapacity
+// Created: JCR 2010-06-07
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::UpdateTreatmentCapacity( const std::string& type, unsigned beds )
+{
+    try
+    {
+        const MedicalTreatmentType* treatment = resolver_.Find( type );
+        if( treatment )
+            capacities_[ type ] = beds;
+    }
+    catch ( std::exception& /*e*/ )
+    {
+        // LOG_ Unknown treatment type
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::SetDoctors
+// Created: JCR 2010-06-07
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::SetDoctors( unsigned n )
+{
+    doctors_ = n;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::SetReferenceID
+// Created: JCR 2010-06-07
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::SetReferenceID( const std::string& id )
+{
+    referenceID_ = id;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,11 +107,13 @@ void MedicalTreatmentAttribute::ReadTreatment( xml::xistream& xis, const tools::
 void MedicalTreatmentAttribute::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment" ) )
-        .Display( tools::translate( "MedicalTreatment", "Medical Treatment types:" ), treatmentTypes_ )
-        .Display( tools::translate( "MedicalTreatment", "Total number of beds:" ), beds_ )
-        .Display( tools::translate( "MedicalTreatment", "Number of available beds:" ), availableBeds_ )
-        .Display( tools::translate( "MedicalTreatment", "Total number of doctors:" ), doctors_ )
-        .Display( tools::translate( "MedicalTreatment", "Number of available doctors:" ), availableDoctors_ );
+             .Display( tools::translate( "MedicalTreatment", "Total number of doctors:" ), doctors_ );
+    displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment" ) )
+             .Display( tools::translate( "MedicalTreatment", "Hospital ID:" ), referenceID_ );
+
+    displayer.Group( tools::translate( "MedicalTreatment", "Bed Capacities:" ) );
+    for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+        displayer.Display( std::string( it->first + ":" ).c_str(), it->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,21 +122,7 @@ void MedicalTreatmentAttribute::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment" ) )
-        .Display( tools::translate( "MedicalTreatment", "Total number of beds:" ), beds_ )
-        .Display( tools::translate( "MedicalTreatment", "Number of available beds:" ), availableBeds_ )
-        .Display( tools::translate( "MedicalTreatment", "Total number of doctors:" ), doctors_ )
-        .Display( tools::translate( "MedicalTreatment", "Number of available doctors:" ), availableDoctors_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute::SetAgent
-// Created: SBO 2006-09-15
-// -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::AddMedicalTreatment( const kernel::MedicalTreatmentType& type )
-{
-    if( std::find( treatmentTypes_.begin(), treatmentTypes_.end(), &type ) == treatmentTypes_.end() )
-        treatmentTypes_.push_back( &type );
+    Display( displayer );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,14 +131,17 @@ void MedicalTreatmentAttribute::AddMedicalTreatment( const kernel::MedicalTreatm
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "medical-treatment" );
-    xos << xml::attribute( "beds", beds_ )
-        << xml::attribute( "availableBeds", availableBeds_ )
-        << xml::attribute( "doctors", doctors_ )
-        << xml::attribute( "availableDoctors", availableDoctors_ );
-    for( T_MedicalTreatments::const_iterator it = treatmentTypes_.begin(); it != treatmentTypes_.end(); ++it )
-        xos << xml::content( "type", (*it)->GetName() );
-    xos << xml::end;
+    xos << xml::start( "medical-treatment" )
+        << xml::attribute( "doctors", doctors_ );
+    if( !referenceID_.empty() )
+        xos << xml::attribute( "reference", referenceID_ );
+    xos << xml::start( "bed-capacities" );
+    for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+        xos << xml::start( "bed-capacity" )
+            << xml::attribute( "type", it->first ) << xml::attribute( "baseline", it->second )
+            << xml::end;
+    xos << xml::end
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,8 +150,8 @@ void MedicalTreatmentAttribute::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
-    dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Medical Treatment type" ), beds_ );
-    dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Medical Treatment type" ), availableBeds_ );
-    dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Medical Treatment type" ), doctors_ );
-    dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Medical Treatment type" ), availableDoctors_ );
+    dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ), doctors_ );
+    dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ), referenceID_ );
+    for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+        dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", std::string( "Info/Medical Treatment attributes/" + it->first ).c_str() ), it->second );
 }

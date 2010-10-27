@@ -60,7 +60,7 @@ void ToxicCloudAttribute::CreateTexture()
 // -----------------------------------------------------------------------------
 void ToxicCloudAttribute::UpdateTexture() const
 {
-    static const float step = 510; // meters
+    static const float step = 510. / 2.; // meters
     const float range = ( 1.f + float( boundaries_.second - boundaries_.first ) ) / float( boundaries_.second + boundaries_.first );
     for ( CIT_QuantityCloud it = cloud_.begin(); it != cloud_.end(); ++it )
     {
@@ -68,10 +68,10 @@ void ToxicCloudAttribute::UpdateTexture() const
         glColor4d( std::min( 1., 2. * it->second * range ), std::max( 0., 2. * ( 1.f - it->second * range ) ), 0., 0.5f );
         glBegin( GL_QUADS );
             glTexCoord1f( 0.125f );
-            glVertex3f( p.X(), p.Y(), 200 );
-            glVertex3f( p.X(), p.Y() + step, 200 );
+            glVertex3f( p.X() - step, p.Y() - step, 200 );
+            glVertex3f( p.X() - step, p.Y() + step, 200 );
             glVertex3f( p.X() + step, p.Y() + step, 200 );
-            glVertex3f( p.X() + step, p.Y(), 200 );
+            glVertex3f( p.X() + step, p.Y() - step, 200 );
         glEnd();
     }
 }

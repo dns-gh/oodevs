@@ -138,13 +138,13 @@ public:
         eDecontaminationCapacity,
         eDetectionCapacity,
         eExtinguishableCapacity,
-        eHealableCapacity,
         eImprovableCapacity,
         eInteractionHeightCapacity,
         eInteractWithEnemyCapacity,
         eInterferenceCapacity,
         eIntoxicationCapacity,
         eLogisticCapacity,
+        eMedicalCapacity,
         eMobilityCapacity,
         eOccupableCapacity,
         ePropagationCapacity,
@@ -295,14 +295,14 @@ public:
         typedef NullType FieldsHolderType;
     };
 
-    class ADN_CapacityInfos_Healable
+    class ADN_CapacityInfos_Medical
         : public ADN_TypeCapacity_Infos
     {
     public:
         static const std::string TAG;
         static const std::string DISPLAY_NAME;
 
-        ADN_CapacityInfos_Healable();
+        ADN_CapacityInfos_Medical();
 
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );

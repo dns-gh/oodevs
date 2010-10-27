@@ -570,8 +570,13 @@ void Gl3dWidget::keyPressEvent( QKeyEvent* event  )
             zRatio_ *= 1.1f;
         else if( event->key() == Qt::Key_Minus )
             zRatio_ *= 0.9f;
+        else if( event->key() == Qt::Key_Asterisk )
+            zRatio_ = 1.0f;
         else if( event->key() == Qt::Key_Home )
+        {
             CenterView();
+            zRatio_ = 5.0f;
+        }
         else if( event->key() == Qt::Key_Left )
             Rotate( Vector3f( 0, 0, 1 ), 0.02f * speedFactor );
         else if( event->key() == Qt::Key_Right )

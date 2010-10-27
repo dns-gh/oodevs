@@ -34,7 +34,7 @@ class MedicalTreatmentPrototype : public gui::MedicalTreatmentPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalTreatmentPrototype( QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver, actions::parameters::ParameterList*& attributesList );
+    MedicalTreatmentPrototype( QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& resolver, actions::parameters::ParameterList*& attributesList );
     virtual ~MedicalTreatmentPrototype();
     //@}
 

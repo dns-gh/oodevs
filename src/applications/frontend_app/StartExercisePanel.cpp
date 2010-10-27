@@ -18,7 +18,7 @@
 #include "frontend/CrossbowPluginConfigPanel.h"
 #include "frontend/DisPluginConfigPanel.h"
 #include "frontend/HlaPluginConfigPanel.h"
-// #include "frontend/EdxlHavePluginConfigPanel.h"
+#include "frontend/EdxlHavePluginConfigPanel.h"
 #include "frontend/TimelinePluginConfigPanel.h"
 #include "frontend/StartExercise.h"
 #include "tools/GeneralConfig.h"
@@ -70,7 +70,7 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
 
     AddPlugin< frontend::DisPluginConfigPanel >( tabs, tr( "DIS Export" ) );
     AddPlugin< frontend::HlaPluginConfigPanel >( tabs, tr( "HLA Export" ) );
-    // AddPlugin< frontend::EdxlHavePluginConfigPanel >( tabs, tr( "EDXL-HAVE Export" ) );
+    AddPlugin< frontend::EdxlHavePluginConfigPanel >( tabs, tr( "EDXL-HAVE Export" ) );
     AddPlugin< frontend::TimelinePluginConfigPanel >( tabs, tr( "ERP/Timeline Export" ) );
     AddPlugin< frontend::CrossbowPluginConfigPanel >( tabs, tr( "DB Export" ) );
 

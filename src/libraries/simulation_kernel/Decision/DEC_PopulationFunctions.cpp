@@ -13,6 +13,8 @@
 #include "DEC_PopulationFunctions.h"
 #include "DEC_FunctionsTools.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -56,6 +58,40 @@ void DEC_PopulationFunctions::SetAttitude( MIL_Population& callerPopulation, uns
 unsigned int DEC_PopulationFunctions::GetAttitude( const MIL_Population& callerPopulation )
 {
     return callerPopulation.GetAttitude().GetID() ;
+}
+
+namespace 
+{
+    class PopulationVisitor : public MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >
+    {
+    public:
+        explicit PopulationVisitor( std::vector< boost::shared_ptr< TER_Localisation > >& locations )
+            : locations_ ( locations ) 
+        {
+            // NOTHING
+        }
+
+        void Visit( const MIL_PopulationElement_ABC& element )
+        {
+            boost::shared_ptr< TER_Localisation > location( new TER_Localisation( element.GetLocation() ) );
+            locations_.push_back( location );
+        }
+    private:
+        std::vector< boost::shared_ptr< TER_Localisation > >& locations_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetCurrentLocations
+// Created: JCR 2010-09-15
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< TER_Localisation > > DEC_PopulationFunctions::GetCurrentLocations( const MIL_Population& callerPopulation )
+{
+    std::vector< boost::shared_ptr< TER_Localisation > > locations;
+    PopulationVisitor       visitor( locations );
+
+    callerPopulation.Apply( visitor );
+    return locations;
 }
 
 // -----------------------------------------------------------------------------

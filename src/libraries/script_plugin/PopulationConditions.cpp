@@ -52,6 +52,7 @@ void PopulationConditions::RegisterIn( directia::brain::Brain& brain )
 {
     brain[ "events.populations" ] = this;
     brain.Register( "PopulationEnters", &PopulationConditions::PopulationEnters );
+    brain.Register( "PopulationKnowledgeCreated", &PopulationConditions::PopulationKnowledgeCreated );
 }
 
 namespace directia
@@ -137,3 +138,13 @@ boost::shared_ptr< Condition_ABC > PopulationConditions::PopulationEnters( const
 {
     return boost::shared_ptr< Condition_ABC >( new ::Enters( zone, controller_, converter_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConditions::PopulationKnowledgeCreated
+// Created: DSO 2010-07-27
+// -----------------------------------------------------------------------------
+boost::shared_ptr< Condition_ABC > PopulationConditions::PopulationKnowledgeCreated()
+{
+    return boost::shared_ptr< Condition_ABC >( new SimpleEntityCondition< events::PopulationKnowledgeCreated >( controller_ ) );
+}
+

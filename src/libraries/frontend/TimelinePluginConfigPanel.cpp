@@ -49,6 +49,8 @@ TimelinePluginConfigPanel::TimelinePluginConfigPanel( QWidget* parent, const too
     : PluginConfig_ABC( parent )
     , config_( config )
 {
+    setMargin( 5 );
+    setBackgroundOrigin( QWidget::WindowOrigin );
     box_ = Style( new QGroupBox( 1, Horizontal, tools::translate( "TimelinePluginConfigPanel", "Enable Timeline exchange" ), this ) );
     box_->setCheckable( true );
     box_->setChecked( false );

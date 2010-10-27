@@ -13,9 +13,24 @@
 #include "MIL.h"
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
-#include "MIL_MedicalTreatmentType.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/serialization/export.hpp>
+#include <map>
+#include <list>
+#include <vector>
+
+class MIL_MedicalTreatmentType;
+
+namespace xml
+{
+    class xistream;
+}
+
+namespace Common
+{
+    class ObjectAttributeMedicalTreatment;
+    class ObjectAttributeMedicalTreatmentBedCapacity;
+}
 
 // =============================================================================
 /** @class  MedicalTreatmentAttribute
@@ -28,14 +43,44 @@ class MedicalTreatmentAttribute
     , public UpdatableAttribute_ABC
 {
 public:
-    typedef std::pair< float , int >                                             T_PatientDiagnosis; //Patient entry time, Category of injury (UA or UR)
-    typedef std::list< T_PatientDiagnosis >                                      T_PatientDiagnosisList;
-    typedef T_PatientDiagnosisList::const_iterator                               CIT_PatientDiagnosisList;
-    typedef T_PatientDiagnosisList::iterator                                     IT_PatientDiagnosisList;
+    typedef std::pair< float, int >                                      T_PatientDiagnosis; // Patient entry time, Category of injury (UA or UR)
+    typedef std::list< T_PatientDiagnosis >                              T_PatientDiagnosisList;
+    typedef T_PatientDiagnosisList::const_iterator                     CIT_PatientDiagnosisList;
+    typedef T_PatientDiagnosisList::iterator                            IT_PatientDiagnosisList;
     typedef std::map< int, boost::shared_ptr< T_PatientDiagnosisList > > T_MedicalTreatmentMap;
-    typedef T_MedicalTreatmentMap::const_iterator                                CIT_MedicalTreatmentMap;
-    typedef T_MedicalTreatmentMap::iterator                                      IT_MedicalTreatmentMap;
+    typedef T_MedicalTreatmentMap::const_iterator                      CIT_MedicalTreatmentMap;
+    typedef T_MedicalTreatmentMap::iterator                             IT_MedicalTreatmentMap;
 
+    //! @name Types
+    //@{
+    class MedicalCapacity
+    {
+    public:
+        typedef std::vector< unsigned int > InjuryCategory; // None, UA, UR, Dead : E_InjuryCategories
+
+        MedicalCapacity() : baseline_( 0 ), occupied_( 4, 0 ), emergency_( 0 ), time_ ( 0 ), type_ ( 0 ) {}
+
+        void        Update( const Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity );
+        void        Update( const Common::MsgMissionParameter_Value& capacity );
+        void        Send( Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity ) const;
+        unsigned    Update( unsigned doctors, float delay );
+
+        //! @name CheckPoints
+        //@{ 
+        BOOST_SERIALIZATION_SPLIT_MEMBER()
+        void load( MIL_CheckPointInArchive&, const unsigned int );
+        void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+        //@}
+
+        unsigned        baseline_;
+        InjuryCategory  occupied_;
+        unsigned        emergency_;
+        float           time_;
+        const MIL_MedicalTreatmentType* type_;
+    };
+
+    typedef std::vector< MedicalCapacity > T_TreatmentCapacityVector;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -56,7 +101,6 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
@@ -67,6 +111,7 @@ public:
     void Register( MIL_Object_ABC& object ) const;
     void SendFullState( Common::ObjectAttributes& asn ) const;
     void SendUpdate( Common::ObjectAttributes& asn ) const;
+    void OnUpdate( const Common::MsgMissionParameter_Value& attribute );
     void WriteODB( xml::xostream& xos ) const;
     //@}
 
@@ -77,37 +122,42 @@ public:
 
     //! @name Get
     //@{
-    const T_MedicalTreatmentMap& GetMap() const;
-    int GetBeds() const;
-    int GetAvailableBeds() const;
     int GetDoctors() const;
     int GetAvailableDoctors() const;
     //@}
 
     //! @name Operators
     //@{
-    void FlagPatient( float time , int injuryID , int injuryCategory );
-    void FreeDoctors( float time );
-    void FreeBeds( float time );
-    bool CanTreatPatient( int injuryID );
+    void RegisterPatients( unsigned injuryID, unsigned category, unsigned n );
+    bool CanTreatPatient( unsigned injuryID ) const;
+    void Update( float time );
     //@}
 
-    //! @name Update Functions
+
+private:
+    //! @name
     //@{
-    void UpdateAvailableBeds( bool bEmergencyPlan , float emergencyBedsRate );
-    void UpdateAvailableDoctors( bool bEmergencyPlan , bool bBusinessHours , float emergencyDoctorsRate , float nightDoctorsRate );
+    void InitializeBedCapacity( xml::xistream& xis );
+    void Update( const Common::ObjectAttributeMedicalTreatment& asn );
+    //@}
+
+private:
+    //! @name Enumerate MsgMissionParameter_Values
+    //@{
+    enum { eAttributeId, eExternalReferenceId, eDoctors, eStatus, eBedCapacities };
+    enum { eTypeId, eBaseLineCount, eAvailableCount, eEmergencyCount };
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_MedicalTreatmentMap medicalTreatmentMap_;
-    int                   beds_;
-    int                   availableBeds_;
-    int                   doctors_;
-    int                   availableDoctors_;
-    int                   initialBeds_;
-    int                   initialDoctors_;
+    T_MedicalTreatmentMap     medicalTreatmentMap_;
+    int                       doctors_;
+    int                       availableDoctors_;
+    int                       initialDoctors_;
+    T_TreatmentCapacityVector capacities_;
+    std::string               referenceID_;
+    int                       status_;
     //@}
 };
 

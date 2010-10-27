@@ -96,6 +96,7 @@ QWidget* GameConfigPanel::CreateSimulationPanel( QWidget* parent )
             QHBox* frequencyBox = new QHBox( checkpoints_ );
             new QLabel( tools::translate( "GameConfigPanel", "Frequency:" ), frequencyBox );
             checkFrequency_ = new QTimeEdit( frequencyBox );
+            checkFrequency_->setDisplay ( QTimeEdit::Hours | QTimeEdit::Minutes | QTimeEdit::Seconds  );
             checkFrequency_->setTime( QTime().addSecs( 3600 ) );
         }
         {

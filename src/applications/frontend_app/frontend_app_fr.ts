@@ -427,6 +427,10 @@ Description: %3</translation>
         <source>ERP/Timeline Export</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>EDXL-HAVE Export</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TerrainCreationPanel</name>

@@ -93,15 +93,6 @@ void BurnCapacity::Instanciate( MIL_Object_ABC& object ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: BurnCapacity::Update
-// Created: RFT 2008-05-22
-// -----------------------------------------------------------------------------
-void BurnCapacity::Update( MIL_Object_ABC& /*object*/, float /*time*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: AttritionCapacity::ProcessAgentMovingInside
 // Created: RFT 2008-05-30
 // -----------------------------------------------------------------------------

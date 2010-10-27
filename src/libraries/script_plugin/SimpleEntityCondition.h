@@ -19,7 +19,9 @@ namespace dispatcher
     class AgentKnowledge;
     class Automat;
     class Object_ABC;
+    class ObjectKnowledge;
     class Population;
+    class PopulationKnowledge;
 }
 
 namespace plugins
@@ -39,7 +41,9 @@ public:
     static void Trigger( BaseCondition& that, const dispatcher::AgentKnowledge& entity );
     static void Trigger( BaseCondition& that, const dispatcher::Automat& entity );
     static void Trigger( BaseCondition& that, const dispatcher::Object_ABC& entity );
+    static void Trigger( BaseCondition& that, const dispatcher::ObjectKnowledge& entity );
     static void Trigger( BaseCondition& that, const dispatcher::Population& entity );
+    static void Trigger( BaseCondition& that, const dispatcher::PopulationKnowledge& entity );
 };
 
 // =============================================================================
@@ -86,7 +90,15 @@ public:
     {
         EntityConditionBase::Trigger( *this, entity );
     }
+    void Trigger( const dispatcher::ObjectKnowledge& entity )
+    {
+        EntityConditionBase::Trigger( *this, entity );
+    }
     void Trigger( const dispatcher::Population& entity )
+    {
+        EntityConditionBase::Trigger( *this, entity );
+    }
+     void Trigger( const dispatcher::PopulationKnowledge& entity )
     {
         EntityConditionBase::Trigger( *this, entity );
     }

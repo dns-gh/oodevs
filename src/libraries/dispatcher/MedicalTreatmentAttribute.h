@@ -11,7 +11,8 @@
 #define __MedicalTreatmentAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
-#include <list>
+#include "protocol/protocol.h"
+#include <vector>
 
 namespace dispatcher
 {
@@ -24,6 +25,20 @@ namespace dispatcher
 // =============================================================================
 class MedicalTreatmentAttribute : public ObjectAttribute_ABC
 {
+private:
+    struct MedicalCapacity
+    {
+        MedicalCapacity() : typeId_ ( -1 ), baseline_ ( 0 ), available_ ( 0 ), emergency_ ( 0 ) {}
+
+        void Update( const Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity );
+        void Send( Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity ) const;
+
+        unsigned baseline_;
+        unsigned available_;
+        unsigned emergency_;
+        int typeId_;
+    };
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -38,13 +53,26 @@ public:
     //@}
 
 private:
+    //! @name 
+    //@{
+    void Update( const Common::ObjectAttributeMedicalTreatment& message );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< MedicalCapacity >  T_TreatmentCapacityVector;
+    typedef Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus EnumMedicalTreatmentStatus;
+    //@}
+
+private:
     //! @name Data members
     //@{
-    int              beds_;
-    int              availableBeds_;
-    int              doctors_;
-    int              availableDoctors_;
-    std::list< int > medicalTreatmentList_; // XML reference - no resolved by dispatcher
+    std::string                	referenceID_;
+    EnumMedicalTreatmentStatus  status_;
+    T_TreatmentCapacityVector  	capacities_;
+    int              			doctors_;
+    int              			availableDoctors_;
     //@}
 };
 

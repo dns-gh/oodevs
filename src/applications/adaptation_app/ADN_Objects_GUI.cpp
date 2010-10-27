@@ -267,9 +267,9 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eExtinguishableCapacityPresent ] = & extinguishable->GetConnector();
     }
 
-    ADN_GroupBox* healable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Healable" ), hBox );
+    ADN_GroupBox* medical = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Healable" ), hBox );
     {
-        vInfosConnectors[ eHealableCapacityPresent ] = & healable->GetConnector();
+        vInfosConnectors[ eMedicalCapacityPresent ] = & medical->GetConnector();
     }
 
     ADN_GroupBox* interference = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Interference" ), hBox );

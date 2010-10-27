@@ -24,7 +24,9 @@ namespace dispatcher
     class AgentKnowledge;
     class Automat;
     class Object;
+    class ObjectKnowledge;
     class Population;
+    class PopulationKnowledge;
     class SimulationPublisher_ABC;
 }
 
@@ -42,7 +44,9 @@ class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Ag
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::AgentKnowledge >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Automat >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Object >
+                       , public dispatcher::ExtensionFactory_ABC< dispatcher::ObjectKnowledge >
                        , public dispatcher::ExtensionFactory_ABC< dispatcher::Population >
+                       , public dispatcher::ExtensionFactory_ABC< dispatcher::PopulationKnowledge >
 {
 public:
     //! @name Constructors/Destructor
@@ -57,7 +61,9 @@ public:
     virtual void Create( dispatcher::AgentKnowledge& entity );
     virtual void Create( dispatcher::Automat& entity );
     virtual void Create( dispatcher::Object& entity );
+    virtual void Create( dispatcher::ObjectKnowledge& entity );
     virtual void Create( dispatcher::Population& entity );
+    virtual void Create( dispatcher::PopulationKnowledge& entity );
     //@}
 
 private:

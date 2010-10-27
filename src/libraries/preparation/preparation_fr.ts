@@ -213,10 +213,6 @@
 <context>
     <name>MedicalTreatment</name>
     <message>
-        <source>Number of available beds:</source>
-        <translation>Nombre de lits disponibles:</translation>
-    </message>
-    <message>
         <source></source>
         <translation></translation>
     </message>
@@ -225,27 +221,27 @@
         <translation>Nombre total de médecins :</translation>
     </message>
     <message>
-        <source>Number of available doctors:</source>
-        <translation>Nombre de médecins disponibles :</translation>
-    </message>
-    <message>
         <source>Medical Treatment</source>
         <translation>Traitement médical</translation>
     </message>
     <message>
-        <source>Total number of beds:</source>
-        <translation>Nombre total de lits:</translation>
+        <source>Hospital ID:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Medical Treatment types:</source>
-        <translation>Types de traitements médicaux :</translation>
+        <source>Bed Capacities:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MedicalTreatmentAttribute</name>
     <message>
-        <source>Info/Medical Treatment attributes/Medical Treatment type</source>
-        <translation>Info/Attributs de Traitement Médical/Type de Traitement Médical</translation>
+        <source>Info/Medical Treatment attributes/Doctors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Medical Treatment attributes/Hospital ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

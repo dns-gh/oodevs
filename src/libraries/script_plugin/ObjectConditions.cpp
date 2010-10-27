@@ -42,6 +42,7 @@ void ObjectConditions::RegisterIn( directia::brain::Brain& brain )
 {
     brain[ "events.objects"] = this;
     brain.Register( "ObjectDestroyed", &ObjectConditions::ObjectDestroyed );
+	brain.Register( "ObjectKnowledgeCreated", &ObjectConditions::ObjectKnowledgeCreated );
 }
 
 namespace directia
@@ -58,3 +59,13 @@ boost::shared_ptr< Condition_ABC > ObjectConditions::ObjectDestroyed()
 {
     return boost::shared_ptr< Condition_ABC >( new SimpleEntityCondition< events::ObjectDestroyed >( controller_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectConditions::ObjectDestroyed
+// Created: DSO 2010-07-27
+// -----------------------------------------------------------------------------
+boost::shared_ptr< Condition_ABC > ObjectConditions::ObjectKnowledgeCreated()
+{
+    return boost::shared_ptr< Condition_ABC >( new SimpleEntityCondition< events::ObjectKnowledgeCreated >( controller_ ) );
+}
+

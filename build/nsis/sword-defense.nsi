@@ -112,10 +112,10 @@ Section "!${PRODUCT_NAME}"
     
     ; terrain dependencies	
     File "${RUNDIR}\comerr32.dll" 
-	File "${RUNDIR}\gssapi32.dll"
+    File "${RUNDIR}\gssapi32.dll"
     File "${RUNDIR}\gdal*.dll"
     File "${RUNDIR}\gdal_SDE.dll"
-	File /nonfatal "${RUNDIR}\geos_c.dll"
+    File /nonfatal "${RUNDIR}\geos_c.dll"
     File "${RUNDIR}\k5sprt32.dll"
     File "${RUNDIR}\krb5_32.dll"
     File "${RUNDIR}\libeay32.dll"
@@ -134,8 +134,8 @@ Section "!${PRODUCT_NAME}"
     !endif  
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
-	;projection settings( used in crossbow)
-	SetOutPath "$INSTDIR\applications\projection_data"
+    ;projection settings (used in crossbow)
+    SetOutPath "$INSTDIR\applications\projection_data"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r "${RUNDIR}\projection_data\*"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL

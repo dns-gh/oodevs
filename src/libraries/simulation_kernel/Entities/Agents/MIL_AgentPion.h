@@ -169,6 +169,7 @@ private:
     void OnReceiveMsgDestroyAll();
     void OnReceiveMsgDestroyComponent();
     void OnReceiveMsgRecoverHumansTransporters();
+    void OnReceiveMsgCreateWound( const Common::MsgMissionParameters& asn );
     //@}
 
     //! @name Serialization

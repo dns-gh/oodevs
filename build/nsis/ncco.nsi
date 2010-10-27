@@ -129,18 +129,19 @@ Section "!${APP_NAME}"
     File "${RUNDIR}\ogr_SDE.dll"  
     File "${RUNDIR}\proj.dll"
     
-	; evaluation licence
+    ; evaluation licence
     !ifdef EVALUATION
         File "${RUNDIR}\evaluation.lic"
     !endif
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-	
-	;projection settings( used in crossbow)
-	SetOutPath "$INSTDIR\applications\projection_data"
+
+    ;projection settings( used in crossbow)
+    SetOutPath "$INSTDIR\applications\projection_data"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r "${RUNDIR}\projection_data\*"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL	       
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
+    SetOutPath "$INSTDIR\applications"
     CreateDirectory "$SMPROGRAMS\${APP_NAME}"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\$(OT_ADAPTATION).lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\$(OT_FRONTEND).lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"

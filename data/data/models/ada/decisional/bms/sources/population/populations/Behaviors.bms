@@ -73,6 +73,7 @@ node "BEH_Default"
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Default, {value} ) end,
     activations =
     {
+        { "BEH_Pop_ReagirFaceAPropagande", { "done_BEH_Pop_ReagirFaceAPropagande" } },
         { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
 
@@ -115,6 +116,7 @@ if( GetStateVariable( "VE_Domination" ) == 1 and rCourage == 0 ) then
         end
 
         DEC_Population_ChangeEtatDomination( GetStateVariable( "VE_Domination" ) * GetStateVariable( "VE_Courage" ) )
+        Activate( self.activations.BEH_Pop_ReagirFaceAPropagande, 1, {} )
         --[[// =============================================================================
 ]]--[[// Reception d'un ordre de l'ANIBAS
 ]]--[[// =============================================================================
@@ -439,9 +441,111 @@ do
 
     end,
 
+--[[// *****************************************************************************
+]]--[[// BEH_Pop_ReagirFaceAPropagande
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Pop_ReagirFaceAPropagande"
+{
+    feedbacks = { { { "done_BEH_Pop_ReagirFaceAPropagande" }, "BEH_Pop_ReagirFaceAPropagande" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_ReagirFaceAPropagande, {value} ) end,
+    activations =
+    {
+        { "BEH_Pop_DiminueAgressivite", { "done_BEH_Pop_DiminueAgressivite" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Look at close propaganda objects
+]]--[[//-----------------------------------------------------------------------------
+]]local locations = DEC_Population_Positions()
+        local it = 0
+        while it < #( locations ) do
+            local _continue = true
+do
+                local location = DEC_UserTypeList_GetAt( locations, it )
+                local leaflets = DEC_Connaissances_ObjetsDansZone( location, S_TypeObject_ToString( eTypeObjectLeaflet ) )
+                for _,leaflet in pairs( leaflets or {} ) do
+                local _continue = true
+do
+                        local ptPOP = DEC_Geometrie_CalculerBarycentreLocalisation( location )
+                        local locLeaflet = DEC_ConnaissanceObjet_Localisation( leaflet )
+                        local ptLeaflet = DEC_Geometrie_CalculerBarycentreLocalisation( locLeaflet )
+                        if( S_Geometrie_EstProchePosition( ptPOP, ptLeaflet, 300 ) ) then
+                            StartActivateOverride( self, self.activations.BEH_Pop_DiminueAgressivite, 1, { leaflet, } )
+                        end
+
+                    end
+
+                end
+
+            end
+        it = it + 1
+        end
+
+    end,
+
+}
+
+node "BEH_Pop_DiminueAgressivite"
+{
+    feedbacks = { { { "done_BEH_Pop_DiminueAgressivite" }, "BEH_Pop_DiminueAgressivite" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Pop_DiminueAgressivite, {value} ) end,
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ptLeaflet = self.params[1]
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.attitude = self.attitude or DEC_Population_Attitude()
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "=== New leaflet perceived " )
+                DEC_Trace( " == UPDATE population attitude" )
+                 do
+                    local _continue = true
+                    local switch_1 = self.attitude
+                    local cases_switch_1 = {}
+                        if switch_1 == eAttitudePopulation_Calme then
+                                                    --[[/*NOTHING*/]]DEC_Trace( "=== was Calme ===" )
+                            _continue = false
+                                                cases_switch_1[1] = true
+elseif switch_1 == eAttitudePopulation_Agitee then
+                                                    DEC_Trace( "=== was Agitee ===" )
+                            S_ChangerAttitude( eAttitudePopulation_Calme )
+                            _continue = false
+                                                cases_switch_1[2] = true
+elseif switch_1 == eAttitudePopulation_Excitee then
+                                                    DEC_Trace( "=== was Excitee ===" )
+                            S_ChangerAttitude( eAttitudePopulation_Agitee )
+                            _continue = false
+                                                cases_switch_1[3] = true
+elseif switch_1 == eAttitudePopulation_Agressive then
+                                                    DEC_Trace( "=== was Agressive ===" )
+                            S_ChangerAttitude( eAttitudePopulation_Excitee )
+                            _continue = false
+                                                cases_switch_1[4] = true
+                        end
+                    end
+
+            end
+        end
+
+    end,
+
 }
 
 connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Default, "BEH_Pop_ReagirFaceAPropagande", nodes.BEH_Pop_ReagirFaceAPropagande }
 connections[ #connections + 1 ] = { nodes.BEH_Default, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
 connections[ #connections + 1 ] = { nodes.BEH_Pop_DegraderInstallations, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
 connections[ #connections + 1 ] = { nodes.BEH_Pop_DegraderInstallations, "ACT_Pop_DegraderInstallations", nodes.ACT_Pop_DegraderInstallations }
@@ -450,6 +554,7 @@ connections[ #connections + 1 ] = { nodes.BEH_Pop_PAPPion, "ACT_Pop_PAPPion", no
 connections[ #connections + 1 ] = { nodes.BEH_Pop_PAPPions, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
 connections[ #connections + 1 ] = { nodes.BEH_Pop_PAPPions, "ACT_Pop_PAPPions", nodes.ACT_Pop_PAPPions }
 connections[ #connections + 1 ] = { nodes.BEH_Pop_RalentissementPions, "ACT_Pop_RalentissementPions", nodes.ACT_Pop_RalentissementPions }
+connections[ #connections + 1 ] = { nodes.BEH_Pop_ReagirFaceAPropagande, "BEH_Pop_DiminueAgressivite", nodes.BEH_Pop_DiminueAgressivite }
 connections[ #connections + 1 ] = { nodes.BEH_Pop_RejoindreInstallation, "BEH_Pop_RejoindrePoint", nodes.BEH_Pop_RejoindrePoint }
 connections[ #connections + 1 ] = { nodes.BEH_Pop_RejoindrePoint, "ACT_Pop_RejoindrePoint", nodes.ACT_Pop_RejoindrePoint }
 connections[ #connections + 1 ] = { nodes.BEH_Pop_RepondreALaPriseAPartie, "BEH_Pop_PAPPion", nodes.BEH_Pop_PAPPion }

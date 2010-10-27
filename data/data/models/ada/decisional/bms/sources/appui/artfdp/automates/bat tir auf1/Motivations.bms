@@ -16,3 +16,5 @@ includedFiles["sources/appui/artfdp/automates/bat tir auf1/Motivations.bms"] = t
 ]]--[[// Motivations des automates
 ]]include "Common/Pions/Motivations V3/Etats.bms"
 
+include "Appui/ArtFdp/Etats.bms"
+

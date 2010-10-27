@@ -322,24 +322,16 @@
         <translation>Type de traitement médical:</translation>
     </message>
     <message>
-        <source>Beds:</source>
-        <translation>Lits:</translation>
-    </message>
-    <message>
-        <source>Initial available beds:</source>
-        <translation>Nombre initial de lits disponibles:</translation>
-    </message>
-    <message>
         <source>Doctors:</source>
         <translation>Médecins:</translation>
     </message>
     <message>
-        <source>Initial available doctors:</source>
-        <translation>Nombre initial de médecins disponibles:</translation>
+        <source>Hospital ID:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Type</source>
-        <translation>Type</translation>
+        <source>Bed Capacities:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

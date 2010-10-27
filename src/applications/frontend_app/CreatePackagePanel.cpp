@@ -415,6 +415,9 @@ QListViewItem* CreatePackagePanel::BuildExerciseData( const std::string& exercis
         terrainItem->insertItem( new QListViewItem( terrainItem, std::string( "data/terrains/" + terrain + "/Pathfind" ).c_str() ) );
     }
 
+    QStringList propagations( frontend::commands::ListPropagations( config_ ) );
+    BuildCategory( dataItem, propagations, "data", "propagations" );
+    
     if( ! population.empty() )
     {
         QListViewItem* populationItem = InsertValidatedEntry( dataItem, "data/population/" + population, config_.GetRootDir() );

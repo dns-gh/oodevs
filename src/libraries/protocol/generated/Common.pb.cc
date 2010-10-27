@@ -393,9 +393,13 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* ObjectAttributeFire_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   ObjectAttributeFire_reflection_ = NULL;
+const ::google::protobuf::Descriptor* ObjectAttributeMedicalTreatmentBedCapacity_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  ObjectAttributeMedicalTreatmentBedCapacity_reflection_ = NULL;
 const ::google::protobuf::Descriptor* ObjectAttributeMedicalTreatment_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   ObjectAttributeMedicalTreatment_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_descriptor_ = NULL;
 const ::google::protobuf::Descriptor* ObjectAttributeNBCType_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   ObjectAttributeNBCType_reflection_ = NULL;
@@ -2462,11 +2466,29 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeFire));
-  ObjectAttributeMedicalTreatment_descriptor_ = file->message_type(121);
+  ObjectAttributeMedicalTreatmentBedCapacity_descriptor_ = file->message_type(121);
+  static const int ObjectAttributeMedicalTreatmentBedCapacity_offsets_[4] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatmentBedCapacity, type_id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatmentBedCapacity, baseline_count_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatmentBedCapacity, available_count_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatmentBedCapacity, emergency_count_),
+  };
+  ObjectAttributeMedicalTreatmentBedCapacity_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      ObjectAttributeMedicalTreatmentBedCapacity_descriptor_,
+      ObjectAttributeMedicalTreatmentBedCapacity::default_instance_,
+      ObjectAttributeMedicalTreatmentBedCapacity_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatmentBedCapacity, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatmentBedCapacity, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(ObjectAttributeMedicalTreatmentBedCapacity));
+  ObjectAttributeMedicalTreatment_descriptor_ = file->message_type(122);
   static const int ObjectAttributeMedicalTreatment_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatment, type_id_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatment, beds_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatment, available_beds_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatment, external_reference_id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatment, bed_capacities_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatment, facility_status_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatment, doctors_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeMedicalTreatment, available_doctors_),
   };
@@ -2481,7 +2503,8 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeMedicalTreatment));
-  ObjectAttributeNBCType_descriptor_ = file->message_type(122);
+  ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_descriptor_ = ObjectAttributeMedicalTreatment_descriptor_->enum_type(0);
+  ObjectAttributeNBCType_descriptor_ = file->message_type(123);
   static const int ObjectAttributeNBCType_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeNBCType, agent_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeNBCType, concentration_),
@@ -2498,7 +2521,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeNBCType));
-  ObjectAttributeSealOff_descriptor_ = file->message_type(123);
+  ObjectAttributeSealOff_descriptor_ = file->message_type(124);
   static const int ObjectAttributeSealOff_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributeSealOff, level_),
   };
@@ -2513,7 +2536,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributeSealOff));
-  ObjectAttributes_descriptor_ = file->message_type(124);
+  ObjectAttributes_descriptor_ = file->message_type(125);
   static const int ObjectAttributes_offsets_[18] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributes, construction_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ObjectAttributes, obstacle_),
@@ -2545,7 +2568,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributes));
-  MsgNote_descriptor_ = file->message_type(125);
+  MsgNote_descriptor_ = file->message_type(126);
   static const int MsgNote_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNote, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNote, number_),
@@ -2563,7 +2586,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgNote));
-  MsgWeatherAttributes_descriptor_ = file->message_type(126);
+  MsgWeatherAttributes_descriptor_ = file->message_type(127);
   static const int MsgWeatherAttributes_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgWeatherAttributes, temperature_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgWeatherAttributes, wind_speed_),
@@ -2872,6 +2895,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     ObjectAttributeFire_descriptor_, &ObjectAttributeFire::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    ObjectAttributeMedicalTreatmentBedCapacity_descriptor_, &ObjectAttributeMedicalTreatmentBedCapacity::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     ObjectAttributeMedicalTreatment_descriptor_, &ObjectAttributeMedicalTreatment::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     ObjectAttributeNBCType_descriptor_, &ObjectAttributeNBCType::default_instance());
@@ -3138,6 +3163,8 @@ void protobuf_ShutdownFile_Common_2eproto() {
   delete ObjectAttributeToxicCloud_reflection_;
   delete ObjectAttributeFire::default_instance_;
   delete ObjectAttributeFire_reflection_;
+  delete ObjectAttributeMedicalTreatmentBedCapacity::default_instance_;
+  delete ObjectAttributeMedicalTreatmentBedCapacity_reflection_;
   delete ObjectAttributeMedicalTreatment::default_instance_;
   delete ObjectAttributeMedicalTreatment_reflection_;
   delete ObjectAttributeNBCType::default_instance_;
@@ -3429,128 +3456,137 @@ void protobuf_AddDesc_Common_2eproto() {
     "y\"O\n\031ObjectAttributeToxicCloud\0222\n\nquanti"
     "ties\030\001 \002(\0132\036.Common.MsgLocatedQuantityLi"
     "st\"5\n\023ObjectAttributeFire\022\020\n\010class_id\030\001 "
-    "\002(\005\022\014\n\004heat\030\002 \002(\005\"\204\001\n\037ObjectAttributeMed"
-    "icalTreatment\022\017\n\007type_id\030\001 \003(\r\022\014\n\004beds\030\002"
-    " \002(\005\022\026\n\016available_beds\030\003 \002(\005\022\017\n\007doctors\030"
-    "\004 \002(\005\022\031\n\021available_doctors\030\005 \002(\005\"r\n\026Obje"
-    "ctAttributeNBCType\022#\n\005agent\030\001 \002(\0132\024.Comm"
-    "on.NBCAgentType\022\025\n\rconcentration\030\002 \002(\005\022\034"
-    "\n\024source_life_duration\030\003 \002(\005\"\'\n\026ObjectAt"
-    "tributeSealOff\022\r\n\005level\030\001 \002(\005\"\344\007\n\020Object"
-    "Attributes\0229\n\014construction\030\001 \001(\0132#.Commo"
-    "n.ObjectAttributeConstruction\0221\n\010obstacl"
-    "e\030\002 \001(\0132\037.Common.ObjectAttributeObstacle"
-    "\022)\n\004mine\030\003 \001(\0132\033.Common.ObjectAttributeM"
-    "ine\022:\n\ractivity_time\030\004 \001(\0132#.Common.Obje"
-    "ctAttributeActivityTime\022-\n\006bypass\030\005 \001(\0132"
-    "\035.Common.ObjectAttributeBypass\0221\n\010logist"
-    "ic\030\006 \001(\0132\037.Common.ObjectAttributeLogisti"
-    "c\022\'\n\003nbc\030\007 \001(\0132\032.Common.ObjectAttributeN"
-    "BC\022:\n\rcrossing_site\030\010 \001(\0132#.Common.Objec"
-    "tAttributeCrossingSite\0228\n\014supply_route\030\t"
-    " \001(\0132\".Common.ObjectAttributeSupplyRoute"
-    "\0226\n\013toxic_cloud\030\n \001(\0132!.Common.ObjectAtt"
-    "ributeToxicCloud\022)\n\004fire\030\013 \001(\0132\033.Common."
-    "ObjectAttributeFire\022B\n\021medical_treatment"
-    "\030\014 \001(\0132\'.Common.ObjectAttributeMedicalTr"
-    "eatment\022D\n\022interaction_height\030\r \001(\0132(.Co"
-    "mmon.ObjectAttributeInteractionHeight\022+\n"
-    "\005stock\030\016 \001(\0132\034.Common.ObjectAttributeSto"
-    "ck\0221\n\tnbc_agent\030\017 \001(\0132\036.Common.ObjectAtt"
-    "ributeNBCType\0228\n\014effect_delay\030\020 \001(\0132\".Co"
-    "mmon.ObjectAttributeEffectDelay\0220\n\010seal_"
-    "off\030\021 \001(\0132\036.Common.ObjectAttributeSealOf"
-    "f\022A\n\021resource_networks\030\022 \001(\0132&.Common.Ob"
-    "jectAttributeResourceNetwork\"L\n\007MsgNote\022"
-    "\014\n\004name\030\001 \002(\t\022\016\n\006number\030\002 \002(\t\022\023\n\013descrip"
-    "tion\030\003 \002(\t\022\016\n\006parent\030\004 \002(\r\"\220\002\n\024MsgWeathe"
-    "rAttributes\022\023\n\013temperature\030\001 \002(\005\022\022\n\nwind"
-    "_speed\030\002 \002(\005\022*\n\016wind_direction\030\003 \002(\0132\022.C"
-    "ommon.MsgHeading\022\023\n\013cloud_floor\030\004 \002(\005\022\025\n"
-    "\rcloud_ceiling\030\005 \002(\005\022\025\n\rcloud_density\030\006 "
-    "\002(\005\0224\n\rprecipitation\030\007 \002(\0162\035.Common.Enum"
-    "PrecipitationType\022*\n\010lighting\030\010 \002(\0162\030.Co"
-    "mmon.EnumLightingType*m\n\022EnumDotationFam"
-    "ily\022\014\n\010munition\020\000\022\r\n\tcarburant\020\001\022\014\n\010expl"
-    "osif\020\002\022\010\n\004mine\020\003\022\013\n\007barbele\020\004\022\t\n\005piece\020\005"
-    "\022\n\n\006ration\020\006*Q\n\024EnumAmmunitionFamily\022\010\n\004"
-    "obus\020\000\022\017\n\013missile_sol\020\001\022\017\n\013missile_air\020\002"
-    "\022\r\n\tmitraille\020\003*w\n\025EnumPrecipitationType"
-    "\022\030\n\024pas_de_precipitation\020\000\022\021\n\rtempete_sa"
-    "ble\020\001\022\016\n\nbrouillard\020\002\022\013\n\007crachin\020\003\022\t\n\005pl"
-    "uie\020\004\022\t\n\005neige\020\005**\n\022EnumFireEffectType\022\t"
-    "\n\005smoke\020\000\022\t\n\005light\020\001*(\n\014UnitFireType\022\n\n\006"
-    "direct\020\000\022\014\n\010indirect\020\001*\245\002\n\020EnumLightingT"
-    "ype\022\023\n\017jour_sans_nuage\020\000\022\024\n\020jour_peu_nua"
-    "geux\020\001\022\034\n\030jour_moyennement_nuageux\020\002\022\026\n\022"
-    "jour_assez_nuageux\020\003\022\025\n\021jour_tres_nuageu"
-    "x\020\004\022\024\n\020nuit_pleine_lune\020\005\022\034\n\030nuit_trois_"
-    "quart_de_lune\020\006\022\022\n\016nuit_demi_lune\020\007\022\026\n\022n"
-    "uit_quart_de_lune\020\010\022\026\n\022nuit_nouvelle_lun"
-    "e\020\t\022\r\n\teclairant\020\n\022\022\n\016global_weather\020\013*\264"
-    "\003\n EnumLogMaintenanceHandlingStatus\022\033\n\027d"
-    "eplacement_vers_chaine\020\000\022$\n attente_disp"
-    "onibilite_remorqueur\020\001\022 \n\034remorqueur_dep"
-    "lacement_aller\020\002\022\031\n\025remorqueur_chargemen"
-    "t\020\003\022!\n\035remorqueur_deplacement_retour\020\004\022\033"
-    "\n\027remorqueur_dechargement\020\005\022\034\n\030diagnosti"
-    "que_maintenance\020\006\0220\n,attente_prise_en_ch"
-    "arge_par_niveau_superieur\020\007\022 \n\034attente_d"
-    "isponibilite_pieces\020\010\022$\n attente_disponi"
-    "bilite_reparateur\020\t\022\016\n\nreparation\020\n\022\017\n\013r"
-    "etour_pion\020\013\022\027\n\023termine_maintenance\020\014*\364\005"
-    "\n\034EnumLogMedicalHandlingStatus\022*\n&attent"
-    "e_disponibilite_ambulance_releve\020\000\022&\n\"am"
-    "bulance_releve_deplacement_aller\020\001\022\037\n\033am"
-    "bulance_releve_chargement\020\002\022/\n+attente_c"
-    "hargement_complet_ambulance_releve\020\003\022\'\n#"
-    "ambulance_releve_deplacement_retour\020\004\022!\n"
-    "\035ambulance_releve_dechargement\020\005\0223\n/atte"
-    "nte_disponibilite_medecin_pour_diagnosti"
-    "que\020\006\022\020\n\014diagnostique\020\007\022\031\n\025recherche_sec"
-    "teur_tri\020\010\022*\n&attente_disponibilite_mede"
-    "cin_pour_tri\020\t\022\007\n\003tri\020\n\022\032\n\026recherche_sec"
-    "teur_soin\020\013\022+\n\'attente_disponibilite_med"
-    "ecin_pour_soin\020\014\022\010\n\004soin\020\r\022\023\n\017hospitalis"
-    "ation\020\016\022-\n)attente_disponibilite_ambulan"
-    "ce_ramassage\020\017\022\"\n\036ambulance_ramassage_ch"
-    "argement\020\020\0222\n.attente_chargement_complet"
-    "_ambulance_ramassage\020\021\022)\n%ambulance_rama"
-    "ssage_deplacement_aller\020\022\022$\n ambulance_r"
-    "amassage_dechargement\020\023\022\013\n\007termine\020\024*_\n\022"
-    "EnumUnitVisibility\022\r\n\tinvisible\020\000\022\014\n\010det"
-    "ected\020\001\022\016\n\nrecognized\020\002\022\016\n\nidentified\020\003\022"
-    "\014\n\010recorded\020\004*H\n\023EnumSimulationState\022\013\n\007"
-    "running\020\000\022\n\n\006paused\020\001\022\013\n\007stopped\020\002\022\013\n\007lo"
-    "ading\020\003*5\n\023EnumDispatcherState\022\r\n\tavaila"
-    "ble\020\000\022\017\n\013unavailable\020\001*l\n\033EnumMeetingEng"
-    "agementStatus\022\020\n\014none_meeting\020\000\022\020\n\014etat_"
-    "esquive\020\001\022\r\n\tetat_fixe\020\002\022\032\n\026etat_poursui"
-    "te_mission\020\003*[\n\025EnumOperationalStatus\022\026\n"
-    "\022detruit_totalement\020\000\022\030\n\024detruit_tactiqu"
-    "ement\020\001\022\020\n\014operationnel\020\002*+\n\017EnumAutomat"
-    "Mode\022\013\n\007embraye\020\000\022\013\n\007debraye\020\001*F\n\021EnumCr"
-    "owdAttitude\022\t\n\005calme\020\000\022\n\n\006agitee\020\001\022\013\n\007ex"
-    "citee\020\002\022\r\n\tagressive\020\003*8\n\021EnumUnitTiredn"
-    "ess\022\n\n\006normal\020\000\022\013\n\007fatigue\020\001\022\n\n\006epuise\020\002"
-    "*@\n\016EnumUnitMorale\022\r\n\tfanatique\020\000\022\007\n\003bon"
-    "\020\001\022\t\n\005moyen\020\002\022\013\n\007mauvais\020\003*@\n\022EnumUnitEx"
-    "perience\022\013\n\007veteran\020\000\022\017\n\013experimente\020\001\022\014"
-    "\n\010conscrit\020\002*8\n\rEnumHumanRank\022\014\n\010officie"
-    "r\020\000\022\020\n\014sous_officer\020\001\022\007\n\003mdr\020\002*X\n\rEnumDi"
-    "plomacy\022\021\n\runknown_diplo\020\000\022\020\n\014friend_dip"
-    "lo\020\001\022\017\n\013enemy_diplo\020\002\022\021\n\rneutral_diplo\020\003"
-    "*\210\001\n\016EnumHumanWound\022\016\n\nnon_blesse\020\000\022\010\n\004m"
-    "ort\020\001\022\024\n\020blesse_urgence_1\020\002\022\024\n\020blesse_ur"
-    "gence_2\020\003\022\024\n\020blesse_urgence_3\020\004\022\032\n\026bless"
-    "e_urgence_extreme\020\005*Y\n\037EnumLogMaintenanc"
-    "eRegimeTravail\022\014\n\010regime_1\020\000\022\014\n\010regime_2"
-    "\020\001\022\014\n\010regime_3\020\002\022\014\n\010regime_4\020\003*\204\001\n\017EnumN"
-    "atureLevel\022\024\n\020none_naturelevel\020\000\022\005\n\001o\020\001\022"
-    "\006\n\002oo\020\002\022\007\n\003ooo\020\003\022\005\n\001i\020\004\022\006\n\002ii\020\005\022\007\n\003iii\020\006"
-    "\022\005\n\001x\020\007\022\006\n\002xx\020\010\022\007\n\003xxx\020\t\022\010\n\004xxxx\020\n\022\t\n\005xx"
-    "xxx\020\013*9\n\021EnumLogisticLevel\022\010\n\004none\020\000\022\007\n\003"
-    "tc2\020\001\022\021\n\rlogistic_base\020\002", 15664);
+    "\002(\005\022\014\n\004heat\030\002 \002(\005\"\207\001\n*ObjectAttributeMed"
+    "icalTreatmentBedCapacity\022\017\n\007type_id\030\001 \002("
+    "\005\022\026\n\016baseline_count\030\002 \001(\r\022\027\n\017available_c"
+    "ount\030\003 \001(\r\022\027\n\017emergency_count\030\004 \001(\r\"\332\002\n\037"
+    "ObjectAttributeMedicalTreatment\022\035\n\025exter"
+    "nal_reference_id\030\001 \001(\t\022J\n\016bed_capacities"
+    "\030\002 \003(\01322.Common.ObjectAttributeMedicalTr"
+    "eatmentBedCapacity\022[\n\017facility_status\030\003 "
+    "\001(\0162B.Common.ObjectAttributeMedicalTreat"
+    "ment.EnumMedicalTreatmentStatus\022\017\n\007docto"
+    "rs\030\004 \001(\r\022\031\n\021available_doctors\030\005 \001(\r\"C\n\032E"
+    "numMedicalTreatmentStatus\022\n\n\006normal\020\000\022\r\n"
+    "\ton_divert\020\001\022\n\n\006closed\020\002\"r\n\026ObjectAttrib"
+    "uteNBCType\022#\n\005agent\030\001 \002(\0132\024.Common.NBCAg"
+    "entType\022\025\n\rconcentration\030\002 \002(\005\022\034\n\024source"
+    "_life_duration\030\003 \002(\005\"\'\n\026ObjectAttributeS"
+    "ealOff\022\r\n\005level\030\001 \002(\005\"\344\007\n\020ObjectAttribut"
+    "es\0229\n\014construction\030\001 \001(\0132#.Common.Object"
+    "AttributeConstruction\0221\n\010obstacle\030\002 \001(\0132"
+    "\037.Common.ObjectAttributeObstacle\022)\n\004mine"
+    "\030\003 \001(\0132\033.Common.ObjectAttributeMine\022:\n\ra"
+    "ctivity_time\030\004 \001(\0132#.Common.ObjectAttrib"
+    "uteActivityTime\022-\n\006bypass\030\005 \001(\0132\035.Common"
+    ".ObjectAttributeBypass\0221\n\010logistic\030\006 \001(\013"
+    "2\037.Common.ObjectAttributeLogistic\022\'\n\003nbc"
+    "\030\007 \001(\0132\032.Common.ObjectAttributeNBC\022:\n\rcr"
+    "ossing_site\030\010 \001(\0132#.Common.ObjectAttribu"
+    "teCrossingSite\0228\n\014supply_route\030\t \001(\0132\".C"
+    "ommon.ObjectAttributeSupplyRoute\0226\n\013toxi"
+    "c_cloud\030\n \001(\0132!.Common.ObjectAttributeTo"
+    "xicCloud\022)\n\004fire\030\013 \001(\0132\033.Common.ObjectAt"
+    "tributeFire\022B\n\021medical_treatment\030\014 \001(\0132\'"
+    ".Common.ObjectAttributeMedicalTreatment\022"
+    "D\n\022interaction_height\030\r \001(\0132(.Common.Obj"
+    "ectAttributeInteractionHeight\022+\n\005stock\030\016"
+    " \001(\0132\034.Common.ObjectAttributeStock\0221\n\tnb"
+    "c_agent\030\017 \001(\0132\036.Common.ObjectAttributeNB"
+    "CType\0228\n\014effect_delay\030\020 \001(\0132\".Common.Obj"
+    "ectAttributeEffectDelay\0220\n\010seal_off\030\021 \001("
+    "\0132\036.Common.ObjectAttributeSealOff\022A\n\021res"
+    "ource_networks\030\022 \001(\0132&.Common.ObjectAttr"
+    "ibuteResourceNetwork\"L\n\007MsgNote\022\014\n\004name\030"
+    "\001 \002(\t\022\016\n\006number\030\002 \002(\t\022\023\n\013description\030\003 \002"
+    "(\t\022\016\n\006parent\030\004 \002(\r\"\220\002\n\024MsgWeatherAttribu"
+    "tes\022\023\n\013temperature\030\001 \002(\005\022\022\n\nwind_speed\030\002"
+    " \002(\005\022*\n\016wind_direction\030\003 \002(\0132\022.Common.Ms"
+    "gHeading\022\023\n\013cloud_floor\030\004 \002(\005\022\025\n\rcloud_c"
+    "eiling\030\005 \002(\005\022\025\n\rcloud_density\030\006 \002(\005\0224\n\rp"
+    "recipitation\030\007 \002(\0162\035.Common.EnumPrecipit"
+    "ationType\022*\n\010lighting\030\010 \002(\0162\030.Common.Enu"
+    "mLightingType*m\n\022EnumDotationFamily\022\014\n\010m"
+    "unition\020\000\022\r\n\tcarburant\020\001\022\014\n\010explosif\020\002\022\010"
+    "\n\004mine\020\003\022\013\n\007barbele\020\004\022\t\n\005piece\020\005\022\n\n\006rati"
+    "on\020\006*Q\n\024EnumAmmunitionFamily\022\010\n\004obus\020\000\022\017"
+    "\n\013missile_sol\020\001\022\017\n\013missile_air\020\002\022\r\n\tmitr"
+    "aille\020\003*w\n\025EnumPrecipitationType\022\030\n\024pas_"
+    "de_precipitation\020\000\022\021\n\rtempete_sable\020\001\022\016\n"
+    "\nbrouillard\020\002\022\013\n\007crachin\020\003\022\t\n\005pluie\020\004\022\t\n"
+    "\005neige\020\005**\n\022EnumFireEffectType\022\t\n\005smoke\020"
+    "\000\022\t\n\005light\020\001*(\n\014UnitFireType\022\n\n\006direct\020\000"
+    "\022\014\n\010indirect\020\001*\245\002\n\020EnumLightingType\022\023\n\017j"
+    "our_sans_nuage\020\000\022\024\n\020jour_peu_nuageux\020\001\022\034"
+    "\n\030jour_moyennement_nuageux\020\002\022\026\n\022jour_ass"
+    "ez_nuageux\020\003\022\025\n\021jour_tres_nuageux\020\004\022\024\n\020n"
+    "uit_pleine_lune\020\005\022\034\n\030nuit_trois_quart_de"
+    "_lune\020\006\022\022\n\016nuit_demi_lune\020\007\022\026\n\022nuit_quar"
+    "t_de_lune\020\010\022\026\n\022nuit_nouvelle_lune\020\t\022\r\n\te"
+    "clairant\020\n\022\022\n\016global_weather\020\013*\264\003\n EnumL"
+    "ogMaintenanceHandlingStatus\022\033\n\027deplaceme"
+    "nt_vers_chaine\020\000\022$\n attente_disponibilit"
+    "e_remorqueur\020\001\022 \n\034remorqueur_deplacement"
+    "_aller\020\002\022\031\n\025remorqueur_chargement\020\003\022!\n\035r"
+    "emorqueur_deplacement_retour\020\004\022\033\n\027remorq"
+    "ueur_dechargement\020\005\022\034\n\030diagnostique_main"
+    "tenance\020\006\0220\n,attente_prise_en_charge_par"
+    "_niveau_superieur\020\007\022 \n\034attente_disponibi"
+    "lite_pieces\020\010\022$\n attente_disponibilite_r"
+    "eparateur\020\t\022\016\n\nreparation\020\n\022\017\n\013retour_pi"
+    "on\020\013\022\027\n\023termine_maintenance\020\014*\364\005\n\034EnumLo"
+    "gMedicalHandlingStatus\022*\n&attente_dispon"
+    "ibilite_ambulance_releve\020\000\022&\n\"ambulance_"
+    "releve_deplacement_aller\020\001\022\037\n\033ambulance_"
+    "releve_chargement\020\002\022/\n+attente_chargemen"
+    "t_complet_ambulance_releve\020\003\022\'\n#ambulanc"
+    "e_releve_deplacement_retour\020\004\022!\n\035ambulan"
+    "ce_releve_dechargement\020\005\0223\n/attente_disp"
+    "onibilite_medecin_pour_diagnostique\020\006\022\020\n"
+    "\014diagnostique\020\007\022\031\n\025recherche_secteur_tri"
+    "\020\010\022*\n&attente_disponibilite_medecin_pour"
+    "_tri\020\t\022\007\n\003tri\020\n\022\032\n\026recherche_secteur_soi"
+    "n\020\013\022+\n\'attente_disponibilite_medecin_pou"
+    "r_soin\020\014\022\010\n\004soin\020\r\022\023\n\017hospitalisation\020\016\022"
+    "-\n)attente_disponibilite_ambulance_ramas"
+    "sage\020\017\022\"\n\036ambulance_ramassage_chargement"
+    "\020\020\0222\n.attente_chargement_complet_ambulan"
+    "ce_ramassage\020\021\022)\n%ambulance_ramassage_de"
+    "placement_aller\020\022\022$\n ambulance_ramassage"
+    "_dechargement\020\023\022\013\n\007termine\020\024*_\n\022EnumUnit"
+    "Visibility\022\r\n\tinvisible\020\000\022\014\n\010detected\020\001\022"
+    "\016\n\nrecognized\020\002\022\016\n\nidentified\020\003\022\014\n\010recor"
+    "ded\020\004*H\n\023EnumSimulationState\022\013\n\007running\020"
+    "\000\022\n\n\006paused\020\001\022\013\n\007stopped\020\002\022\013\n\007loading\020\003*"
+    "5\n\023EnumDispatcherState\022\r\n\tavailable\020\000\022\017\n"
+    "\013unavailable\020\001*l\n\033EnumMeetingEngagementS"
+    "tatus\022\020\n\014none_meeting\020\000\022\020\n\014etat_esquive\020"
+    "\001\022\r\n\tetat_fixe\020\002\022\032\n\026etat_poursuite_missi"
+    "on\020\003*[\n\025EnumOperationalStatus\022\026\n\022detruit"
+    "_totalement\020\000\022\030\n\024detruit_tactiquement\020\001\022"
+    "\020\n\014operationnel\020\002*+\n\017EnumAutomatMode\022\013\n\007"
+    "embraye\020\000\022\013\n\007debraye\020\001*F\n\021EnumCrowdAttit"
+    "ude\022\t\n\005calme\020\000\022\n\n\006agitee\020\001\022\013\n\007excitee\020\002\022"
+    "\r\n\tagressive\020\003*8\n\021EnumUnitTiredness\022\n\n\006n"
+    "ormal\020\000\022\013\n\007fatigue\020\001\022\n\n\006epuise\020\002*@\n\016Enum"
+    "UnitMorale\022\r\n\tfanatique\020\000\022\007\n\003bon\020\001\022\t\n\005mo"
+    "yen\020\002\022\013\n\007mauvais\020\003*@\n\022EnumUnitExperience"
+    "\022\013\n\007veteran\020\000\022\017\n\013experimente\020\001\022\014\n\010conscr"
+    "it\020\002*8\n\rEnumHumanRank\022\014\n\010officier\020\000\022\020\n\014s"
+    "ous_officer\020\001\022\007\n\003mdr\020\002*X\n\rEnumDiplomacy\022"
+    "\021\n\runknown_diplo\020\000\022\020\n\014friend_diplo\020\001\022\017\n\013"
+    "enemy_diplo\020\002\022\021\n\rneutral_diplo\020\003*\210\001\n\016Enu"
+    "mHumanWound\022\016\n\nnon_blesse\020\000\022\010\n\004mort\020\001\022\024\n"
+    "\020blesse_urgence_1\020\002\022\024\n\020blesse_urgence_2\020"
+    "\003\022\024\n\020blesse_urgence_3\020\004\022\032\n\026blesse_urgenc"
+    "e_extreme\020\005*Y\n\037EnumLogMaintenanceRegimeT"
+    "ravail\022\014\n\010regime_1\020\000\022\014\n\010regime_2\020\001\022\014\n\010re"
+    "gime_3\020\002\022\014\n\010regime_4\020\003*\204\001\n\017EnumNatureLev"
+    "el\022\024\n\020none_naturelevel\020\000\022\005\n\001o\020\001\022\006\n\002oo\020\002\022"
+    "\007\n\003ooo\020\003\022\005\n\001i\020\004\022\006\n\002ii\020\005\022\007\n\003iii\020\006\022\005\n\001x\020\007\022"
+    "\006\n\002xx\020\010\022\007\n\003xxx\020\t\022\010\n\004xxxx\020\n\022\t\n\005xxxxx\020\013*9\n"
+    "\021EnumLogisticLevel\022\010\n\004none\020\000\022\007\n\003tc2\020\001\022\021\n"
+    "\rlogistic_base\020\002", 16016);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Common.proto", &protobuf_RegisterTypes);
   AutomatId::default_instance_ = new AutomatId();
@@ -3678,6 +3714,7 @@ void protobuf_AddDesc_Common_2eproto() {
   MsgLocatedQuantityList::default_instance_ = new MsgLocatedQuantityList();
   ObjectAttributeToxicCloud::default_instance_ = new ObjectAttributeToxicCloud();
   ObjectAttributeFire::default_instance_ = new ObjectAttributeFire();
+  ObjectAttributeMedicalTreatmentBedCapacity::default_instance_ = new ObjectAttributeMedicalTreatmentBedCapacity();
   ObjectAttributeMedicalTreatment::default_instance_ = new ObjectAttributeMedicalTreatment();
   ObjectAttributeNBCType::default_instance_ = new ObjectAttributeNBCType();
   ObjectAttributeSealOff::default_instance_ = new ObjectAttributeSealOff();
@@ -3809,6 +3846,7 @@ void protobuf_AddDesc_Common_2eproto() {
   MsgLocatedQuantityList::default_instance_->InitAsDefaultInstance();
   ObjectAttributeToxicCloud::default_instance_->InitAsDefaultInstance();
   ObjectAttributeFire::default_instance_->InitAsDefaultInstance();
+  ObjectAttributeMedicalTreatmentBedCapacity::default_instance_->InitAsDefaultInstance();
   ObjectAttributeMedicalTreatment::default_instance_->InitAsDefaultInstance();
   ObjectAttributeNBCType::default_instance_->InitAsDefaultInstance();
   ObjectAttributeSealOff::default_instance_->InitAsDefaultInstance();
@@ -36219,9 +36257,349 @@ void ObjectAttributeFire::Swap(ObjectAttributeFire* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int ObjectAttributeMedicalTreatment::kTypeIdFieldNumber;
-const int ObjectAttributeMedicalTreatment::kBedsFieldNumber;
-const int ObjectAttributeMedicalTreatment::kAvailableBedsFieldNumber;
+const int ObjectAttributeMedicalTreatmentBedCapacity::kTypeIdFieldNumber;
+const int ObjectAttributeMedicalTreatmentBedCapacity::kBaselineCountFieldNumber;
+const int ObjectAttributeMedicalTreatmentBedCapacity::kAvailableCountFieldNumber;
+const int ObjectAttributeMedicalTreatmentBedCapacity::kEmergencyCountFieldNumber;
+#endif  // !_MSC_VER
+
+ObjectAttributeMedicalTreatmentBedCapacity::ObjectAttributeMedicalTreatmentBedCapacity() {
+  SharedCtor();
+}
+
+void ObjectAttributeMedicalTreatmentBedCapacity::InitAsDefaultInstance() {
+}
+
+ObjectAttributeMedicalTreatmentBedCapacity::ObjectAttributeMedicalTreatmentBedCapacity(const ObjectAttributeMedicalTreatmentBedCapacity& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void ObjectAttributeMedicalTreatmentBedCapacity::SharedCtor() {
+  _cached_size_ = 0;
+  type_id_ = 0;
+  baseline_count_ = 0u;
+  available_count_ = 0u;
+  emergency_count_ = 0u;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+ObjectAttributeMedicalTreatmentBedCapacity::~ObjectAttributeMedicalTreatmentBedCapacity() {
+  SharedDtor();
+}
+
+void ObjectAttributeMedicalTreatmentBedCapacity::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* ObjectAttributeMedicalTreatmentBedCapacity::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return ObjectAttributeMedicalTreatmentBedCapacity_descriptor_;
+}
+
+const ObjectAttributeMedicalTreatmentBedCapacity& ObjectAttributeMedicalTreatmentBedCapacity::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_Common_2eproto();  return *default_instance_;
+}
+
+ObjectAttributeMedicalTreatmentBedCapacity* ObjectAttributeMedicalTreatmentBedCapacity::default_instance_ = NULL;
+
+ObjectAttributeMedicalTreatmentBedCapacity* ObjectAttributeMedicalTreatmentBedCapacity::New() const {
+  return new ObjectAttributeMedicalTreatmentBedCapacity;
+}
+
+void ObjectAttributeMedicalTreatmentBedCapacity::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    type_id_ = 0;
+    baseline_count_ = 0u;
+    available_count_ = 0u;
+    emergency_count_ = 0u;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool ObjectAttributeMedicalTreatmentBedCapacity::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int32 type_id = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+              input, &type_id_));
+        _set_bit(0);
+        if (input->ExpectTag(16)) goto parse_baseline_count;
+        break;
+      }
+      
+      // optional uint32 baseline_count = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_baseline_count:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
+              input, &baseline_count_));
+        _set_bit(1);
+        if (input->ExpectTag(24)) goto parse_available_count;
+        break;
+      }
+      
+      // optional uint32 available_count = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_available_count:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
+              input, &available_count_));
+        _set_bit(2);
+        if (input->ExpectTag(32)) goto parse_emergency_count;
+        break;
+      }
+      
+      // optional uint32 emergency_count = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_emergency_count:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
+              input, &emergency_count_));
+        _set_bit(3);
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void ObjectAttributeMedicalTreatmentBedCapacity::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    ObjectAttributeMedicalTreatmentBedCapacity::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // required int32 type_id = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->type_id(), output);
+  }
+  
+  // optional uint32 baseline_count = 2;
+  if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->baseline_count(), output);
+  }
+  
+  // optional uint32 available_count = 3;
+  if (_has_bit(2)) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->available_count(), output);
+  }
+  
+  // optional uint32 emergency_count = 4;
+  if (_has_bit(3)) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->emergency_count(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* ObjectAttributeMedicalTreatmentBedCapacity::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required int32 type_id = 1;
+  if (_has_bit(0)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->type_id(), target);
+  }
+  
+  // optional uint32 baseline_count = 2;
+  if (_has_bit(1)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->baseline_count(), target);
+  }
+  
+  // optional uint32 available_count = 3;
+  if (_has_bit(2)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->available_count(), target);
+  }
+  
+  // optional uint32 emergency_count = 4;
+  if (_has_bit(3)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->emergency_count(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int ObjectAttributeMedicalTreatmentBedCapacity::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int32 type_id = 1;
+    if (has_type_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->type_id());
+    }
+    
+    // optional uint32 baseline_count = 2;
+    if (has_baseline_count()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->baseline_count());
+    }
+    
+    // optional uint32 available_count = 3;
+    if (has_available_count()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->available_count());
+    }
+    
+    // optional uint32 emergency_count = 4;
+    if (has_emergency_count()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->emergency_count());
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void ObjectAttributeMedicalTreatmentBedCapacity::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const ObjectAttributeMedicalTreatmentBedCapacity* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const ObjectAttributeMedicalTreatmentBedCapacity*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void ObjectAttributeMedicalTreatmentBedCapacity::MergeFrom(const ObjectAttributeMedicalTreatmentBedCapacity& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      set_type_id(from.type_id());
+    }
+    if (from._has_bit(1)) {
+      set_baseline_count(from.baseline_count());
+    }
+    if (from._has_bit(2)) {
+      set_available_count(from.available_count());
+    }
+    if (from._has_bit(3)) {
+      set_emergency_count(from.emergency_count());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void ObjectAttributeMedicalTreatmentBedCapacity::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void ObjectAttributeMedicalTreatmentBedCapacity::CopyFrom(const ObjectAttributeMedicalTreatmentBedCapacity& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ObjectAttributeMedicalTreatmentBedCapacity::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  
+  return true;
+}
+
+void ObjectAttributeMedicalTreatmentBedCapacity::Swap(ObjectAttributeMedicalTreatmentBedCapacity* other) {
+  if (other != this) {
+    std::swap(type_id_, other->type_id_);
+    std::swap(baseline_count_, other->baseline_count_);
+    std::swap(available_count_, other->available_count_);
+    std::swap(emergency_count_, other->emergency_count_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata ObjectAttributeMedicalTreatmentBedCapacity::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = ObjectAttributeMedicalTreatmentBedCapacity_descriptor_;
+  metadata.reflection = ObjectAttributeMedicalTreatmentBedCapacity_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+const ::google::protobuf::EnumDescriptor* ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_descriptor_;
+}
+bool ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#ifndef _MSC_VER
+const ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus ObjectAttributeMedicalTreatment::normal;
+const ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus ObjectAttributeMedicalTreatment::on_divert;
+const ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus ObjectAttributeMedicalTreatment::closed;
+const ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus ObjectAttributeMedicalTreatment::EnumMedicalTreatmentStatus_MIN;
+const ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus ObjectAttributeMedicalTreatment::EnumMedicalTreatmentStatus_MAX;
+#endif  // _MSC_VER
+const ::std::string ObjectAttributeMedicalTreatment::_default_external_reference_id_;
+#ifndef _MSC_VER
+const int ObjectAttributeMedicalTreatment::kExternalReferenceIdFieldNumber;
+const int ObjectAttributeMedicalTreatment::kBedCapacitiesFieldNumber;
+const int ObjectAttributeMedicalTreatment::kFacilityStatusFieldNumber;
 const int ObjectAttributeMedicalTreatment::kDoctorsFieldNumber;
 const int ObjectAttributeMedicalTreatment::kAvailableDoctorsFieldNumber;
 #endif  // !_MSC_VER
@@ -36240,10 +36618,10 @@ ObjectAttributeMedicalTreatment::ObjectAttributeMedicalTreatment(const ObjectAtt
 
 void ObjectAttributeMedicalTreatment::SharedCtor() {
   _cached_size_ = 0;
-  beds_ = 0;
-  available_beds_ = 0;
-  doctors_ = 0;
-  available_doctors_ = 0;
+  external_reference_id_ = const_cast< ::std::string*>(&_default_external_reference_id_);
+  facility_status_ = 0;
+  doctors_ = 0u;
+  available_doctors_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -36252,6 +36630,9 @@ ObjectAttributeMedicalTreatment::~ObjectAttributeMedicalTreatment() {
 }
 
 void ObjectAttributeMedicalTreatment::SharedDtor() {
+  if (external_reference_id_ != &_default_external_reference_id_) {
+    delete external_reference_id_;
+  }
   if (this != default_instance_) {
   }
 }
@@ -36272,13 +36653,17 @@ ObjectAttributeMedicalTreatment* ObjectAttributeMedicalTreatment::New() const {
 }
 
 void ObjectAttributeMedicalTreatment::Clear() {
-  if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
-    beds_ = 0;
-    available_beds_ = 0;
-    doctors_ = 0;
-    available_doctors_ = 0;
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (_has_bit(0)) {
+      if (external_reference_id_ != &_default_external_reference_id_) {
+        external_reference_id_->clear();
+      }
+    }
+    facility_status_ = 0;
+    doctors_ = 0u;
+    available_doctors_ = 0u;
   }
-  type_id_.Clear();
+  bed_capacities_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -36289,72 +36674,75 @@ bool ObjectAttributeMedicalTreatment::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated uint32 type_id = 1;
+      // optional string external_reference_id = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_type_id:
-        ::google::protobuf::uint32 value;
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &value));
-        add_type_id(value);
-        if (input->ExpectTag(8)) goto parse_type_id;
-        if (input->ExpectTag(16)) goto parse_beds;
+        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+              input, this->mutable_external_reference_id()));
+        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+          this->external_reference_id().data(), this->external_reference_id().length(),
+          ::google::protobuf::internal::WireFormat::PARSE);
+        if (input->ExpectTag(18)) goto parse_bed_capacities;
         break;
       }
       
-      // required int32 beds = 2;
+      // repeated .Common.ObjectAttributeMedicalTreatmentBedCapacity bed_capacities = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_beds:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &beds_));
-        _set_bit(1);
-        if (input->ExpectTag(24)) goto parse_available_beds;
+       parse_bed_capacities:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+              input, add_bed_capacities()));
+        if (input->ExpectTag(18)) goto parse_bed_capacities;
+        if (input->ExpectTag(24)) goto parse_facility_status;
         break;
       }
       
-      // required int32 available_beds = 3;
+      // optional .Common.ObjectAttributeMedicalTreatment.EnumMedicalTreatmentStatus facility_status = 3;
       case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
         }
-       parse_available_beds:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &available_beds_));
-        _set_bit(2);
+       parse_facility_status:
+        int value;
+        DO_(::google::protobuf::internal::WireFormatLite::ReadEnum(input, &value));
+        if (::Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_IsValid(value)) {
+          set_facility_status(static_cast< ::Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus >(value));
+        } else {
+          mutable_unknown_fields()->AddVarint(3, value);
+        }
         if (input->ExpectTag(32)) goto parse_doctors;
         break;
       }
       
-      // required int32 doctors = 4;
+      // optional uint32 doctors = 4;
       case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
         }
        parse_doctors:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
               input, &doctors_));
         _set_bit(3);
         if (input->ExpectTag(40)) goto parse_available_doctors;
         break;
       }
       
-      // required int32 available_doctors = 5;
+      // optional uint32 available_doctors = 5;
       case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
         }
        parse_available_doctors:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
               input, &available_doctors_));
         _set_bit(4);
         if (input->ExpectAtEnd()) return true;
@@ -36385,30 +36773,35 @@ void ObjectAttributeMedicalTreatment::SerializeWithCachedSizes(
     return;
   }
   
-  // repeated uint32 type_id = 1;
-  for (int i = 0; i < this->type_id_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(
-      1, this->type_id(i), output);
+  // optional string external_reference_id = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->external_reference_id().data(), this->external_reference_id().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->external_reference_id(), output);
   }
   
-  // required int32 beds = 2;
-  if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->beds(), output);
+  // repeated .Common.ObjectAttributeMedicalTreatmentBedCapacity bed_capacities = 2;
+  for (int i = 0; i < this->bed_capacities_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      2, this->bed_capacities(i), output);
   }
   
-  // required int32 available_beds = 3;
+  // optional .Common.ObjectAttributeMedicalTreatment.EnumMedicalTreatmentStatus facility_status = 3;
   if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->available_beds(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      3, this->facility_status(), output);
   }
   
-  // required int32 doctors = 4;
+  // optional uint32 doctors = 4;
   if (_has_bit(3)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->doctors(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->doctors(), output);
   }
   
-  // required int32 available_doctors = 5;
+  // optional uint32 available_doctors = 5;
   if (_has_bit(4)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->available_doctors(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->available_doctors(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -36419,30 +36812,37 @@ void ObjectAttributeMedicalTreatment::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* ObjectAttributeMedicalTreatment::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // repeated uint32 type_id = 1;
-  for (int i = 0; i < this->type_id_size(); i++) {
+  // optional string external_reference_id = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->external_reference_id().data(), this->external_reference_id().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->external_reference_id(), target);
+  }
+  
+  // repeated .Common.ObjectAttributeMedicalTreatmentBedCapacity bed_capacities = 2;
+  for (int i = 0; i < this->bed_capacities_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteUInt32ToArray(1, this->type_id(i), target);
+      WriteMessageNoVirtualToArray(
+        2, this->bed_capacities(i), target);
   }
   
-  // required int32 beds = 2;
-  if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->beds(), target);
-  }
-  
-  // required int32 available_beds = 3;
+  // optional .Common.ObjectAttributeMedicalTreatment.EnumMedicalTreatmentStatus facility_status = 3;
   if (_has_bit(2)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->available_beds(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      3, this->facility_status(), target);
   }
   
-  // required int32 doctors = 4;
+  // optional uint32 doctors = 4;
   if (_has_bit(3)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->doctors(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->doctors(), target);
   }
   
-  // required int32 available_doctors = 5;
+  // optional uint32 available_doctors = 5;
   if (_has_bit(4)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->available_doctors(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->available_doctors(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -36455,44 +36855,41 @@ void ObjectAttributeMedicalTreatment::SerializeWithCachedSizes(
 int ObjectAttributeMedicalTreatment::ByteSize() const {
   int total_size = 0;
   
-  if (_has_bits_[1 / 32] & (0xffu << (1 % 32))) {
-    // required int32 beds = 2;
-    if (has_beds()) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional string external_reference_id = 1;
+    if (has_external_reference_id()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->beds());
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->external_reference_id());
     }
     
-    // required int32 available_beds = 3;
-    if (has_available_beds()) {
+    // optional .Common.ObjectAttributeMedicalTreatment.EnumMedicalTreatmentStatus facility_status = 3;
+    if (has_facility_status()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->available_beds());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->facility_status());
     }
     
-    // required int32 doctors = 4;
+    // optional uint32 doctors = 4;
     if (has_doctors()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->doctors());
     }
     
-    // required int32 available_doctors = 5;
+    // optional uint32 available_doctors = 5;
     if (has_available_doctors()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->available_doctors());
     }
     
   }
-  // repeated uint32 type_id = 1;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->type_id_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->type_id(i));
-    }
-    total_size += 1 * this->type_id_size() + data_size;
+  // repeated .Common.ObjectAttributeMedicalTreatmentBedCapacity bed_capacities = 2;
+  total_size += 1 * this->bed_capacities_size();
+  for (int i = 0; i < this->bed_capacities_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->bed_capacities(i));
   }
   
   if (!unknown_fields().empty()) {
@@ -36518,13 +36915,13 @@ void ObjectAttributeMedicalTreatment::MergeFrom(const ::google::protobuf::Messag
 
 void ObjectAttributeMedicalTreatment::MergeFrom(const ObjectAttributeMedicalTreatment& from) {
   GOOGLE_CHECK_NE(&from, this);
-  type_id_.MergeFrom(from.type_id_);
-  if (from._has_bits_[1 / 32] & (0xffu << (1 % 32))) {
-    if (from._has_bit(1)) {
-      set_beds(from.beds());
+  bed_capacities_.MergeFrom(from.bed_capacities_);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      set_external_reference_id(from.external_reference_id());
     }
     if (from._has_bit(2)) {
-      set_available_beds(from.available_beds());
+      set_facility_status(from.facility_status());
     }
     if (from._has_bit(3)) {
       set_doctors(from.doctors());
@@ -36549,16 +36946,18 @@ void ObjectAttributeMedicalTreatment::CopyFrom(const ObjectAttributeMedicalTreat
 }
 
 bool ObjectAttributeMedicalTreatment::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000001e) != 0x0000001e) return false;
   
+  for (int i = 0; i < bed_capacities_size(); i++) {
+    if (!this->bed_capacities(i).IsInitialized()) return false;
+  }
   return true;
 }
 
 void ObjectAttributeMedicalTreatment::Swap(ObjectAttributeMedicalTreatment* other) {
   if (other != this) {
-    type_id_.Swap(&other->type_id_);
-    std::swap(beds_, other->beds_);
-    std::swap(available_beds_, other->available_beds_);
+    std::swap(external_reference_id_, other->external_reference_id_);
+    bed_capacities_.Swap(&other->bed_capacities_);
+    std::swap(facility_status_, other->facility_status_);
     std::swap(doctors_, other->doctors_);
     std::swap(available_doctors_, other->available_doctors_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);

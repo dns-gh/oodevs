@@ -111,6 +111,10 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
         <source>Flat database (manage no geometry information):</source>
         <translation type="unfinished">Export vers base de données (informations no géométriques)</translation>
     </message>
+    <message>
+        <source>Connection URL:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisPluginConfigPanel</name>

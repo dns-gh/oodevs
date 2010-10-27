@@ -77,11 +77,12 @@ enum MsgUnitMagicAction_Type {
   MsgUnitMagicAction_Type_automat_creation = 26,
   MsgUnitMagicAction_Type_formation_creation = 27,
   MsgUnitMagicAction_Type_crowd_creation = 28,
-  MsgUnitMagicAction_Type_log_supply_pull_flow = 29
+  MsgUnitMagicAction_Type_log_supply_pull_flow = 29,
+  MsgUnitMagicAction_Type_create_wound = 30
 };
 bool MsgUnitMagicAction_Type_IsValid(int value);
 const MsgUnitMagicAction_Type MsgUnitMagicAction_Type_Type_MIN = MsgUnitMagicAction_Type_move_to;
-const MsgUnitMagicAction_Type MsgUnitMagicAction_Type_Type_MAX = MsgUnitMagicAction_Type_log_supply_pull_flow;
+const MsgUnitMagicAction_Type MsgUnitMagicAction_Type_Type_MAX = MsgUnitMagicAction_Type_create_wound;
 
 const ::google::protobuf::EnumDescriptor* MsgUnitMagicAction_Type_descriptor();
 inline const ::std::string& MsgUnitMagicAction_Type_Name(MsgUnitMagicAction_Type value) {
@@ -748,6 +749,7 @@ class MsgUnitMagicAction : public ::google::protobuf::Message {
   static const Type formation_creation = MsgUnitMagicAction_Type_formation_creation;
   static const Type crowd_creation = MsgUnitMagicAction_Type_crowd_creation;
   static const Type log_supply_pull_flow = MsgUnitMagicAction_Type_log_supply_pull_flow;
+  static const Type create_wound = MsgUnitMagicAction_Type_create_wound;
   static inline bool Type_IsValid(int value) {
     return MsgUnitMagicAction_Type_IsValid(value);
   }

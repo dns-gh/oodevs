@@ -658,9 +658,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Workable::WriteArchive( xml::xostream& 
 }
 
 
-//! @name ADN_CapacityInfos_Healable
+//! @name ADN_CapacityInfos_Medical
 //@{
-ADN_Objects_Data::ADN_CapacityInfos_Healable::ADN_CapacityInfos_Healable()
+ADN_Objects_Data::ADN_CapacityInfos_Medical::ADN_CapacityInfos_Medical()
     : emergencyBedsRate_ ( 0 )
     , emergencyDoctorsRate_ ( 0 )
     , nightDoctorsRate_ ( 0 )
@@ -669,14 +669,14 @@ ADN_Objects_Data::ADN_CapacityInfos_Healable::ADN_CapacityInfos_Healable()
     emergencyDoctorsRate_.SetParentNode( *this );
     nightDoctorsRate_.SetParentNode( *this );
 }
-void ADN_Objects_Data::ADN_CapacityInfos_Healable::ReadArchive( xml::xistream& xis )
+void ADN_Objects_Data::ADN_CapacityInfos_Medical::ReadArchive( xml::xistream& xis )
 {
     ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
     xis >> xml::attribute( "emergency-plan-beds", emergencyBedsRate_ );
     xis >> xml::attribute( "emergency-plan-doctors", emergencyDoctorsRate_ );
     xis >> xml::attribute( "night-doctors", nightDoctorsRate_ );
 }
-void ADN_Objects_Data::ADN_CapacityInfos_Healable::WriteArchive( xml::xostream& xos )
+void ADN_Objects_Data::ADN_CapacityInfos_Medical::WriteArchive( xml::xostream& xos )
 {
     xos << xml::attribute( "emergency-plan-beds", emergencyBedsRate_ );
     xos << xml::attribute( "emergency-plan-doctors", emergencyDoctorsRate_ );
@@ -1094,7 +1094,7 @@ INIT_DATA( ADN_CapacityInfos_Decontamination,  "Decontamination",   "decontamina
 INIT_DATA( ADN_CapacityInfos_Delay,            "Delay",             "delay" );
 INIT_DATA( ADN_CapacityInfos_Detection,        "Detection",         "detection" ); // LTO
 INIT_DATA( ADN_CapacityInfos_Extinguishable,   "Extinguishable",    "extinguishable" );
-INIT_DATA( ADN_CapacityInfos_Healable,         "Healable",          "healable" );
+INIT_DATA( ADN_CapacityInfos_Medical,          "Medical",           "medical" );
 INIT_DATA( ADN_CapacityInfos_InteractionHeight,"InteractionHeight", "interaction-height" );
 INIT_DATA( ADN_CapacityInfos_InteractWithEnemy,"InteractWithEnemy", "interact-with-enemy" );
 INIT_DATA( ADN_CapacityInfos_Interference,     "Interference",      "interference" );
@@ -1172,7 +1172,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_Delay::TAG ].reset( new ADN_CapacityInfos_Delay() );
     capacities_[ ADN_CapacityInfos_Detection::TAG ].reset( new ADN_CapacityInfos_Detection() ); // LTO
     capacities_[ ADN_CapacityInfos_Extinguishable::TAG ].reset( new ADN_CapacityInfos_Extinguishable() );
-    capacities_[ ADN_CapacityInfos_Healable::TAG ].reset( new ADN_CapacityInfos_Healable() );
+    capacities_[ ADN_CapacityInfos_Medical::TAG ].reset( new ADN_CapacityInfos_Medical() );
     capacities_[ ADN_CapacityInfos_InteractionHeight::TAG ].reset( new ADN_CapacityInfos_InteractionHeight() );
     capacities_[ ADN_CapacityInfos_InteractWithEnemy::TAG ].reset( new ADN_CapacityInfos_InteractWithEnemy() );
     capacities_[ ADN_CapacityInfos_Interference::TAG ].reset( new ADN_CapacityInfos_Interference() );

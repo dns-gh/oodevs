@@ -14,10 +14,14 @@
 #include "Knowledge/DEC_Knowledge_ObjectAttributeMedicalTreatment.h"
 #include "MIL.h"
 #include "MIL_AgentServer.h"
-#include "MIL_Random.h"
 #include "MIL_MedicalTreatmentType.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/bind.hpp>
+#include <numeric>
+
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MedicalTreatmentAttribute )
 
@@ -26,14 +30,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MedicalTreatmentAttribute )
 // Created: RFT 2008-05-30
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute::MedicalTreatmentAttribute()
-    : medicalTreatmentMap_()
-    , beds_               ( 0 )
-    , availableBeds_      ( 0 )
-    , doctors_            ( 0 )
-    , availableDoctors_   ( 0 )
-    , initialBeds_        ( 0 )
-    , initialDoctors_     ( 0 )
-
+    : capacities_   ( MIL_MedicalTreatmentType::RegisteredCount() )
+    , status_       ( Common::ObjectAttributeMedicalTreatment::normal )
+    , doctors_      ( 0 )
+    , availableDoctors_ ( 0 )
+    , initialDoctors_ ( 0 )
 {
     // NOTHING
 }
@@ -43,13 +44,34 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute()
 // Created: RFT 2008-06-05
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis )
-    : medicalTreatmentMap_()
+    : capacities_   ( MIL_MedicalTreatmentType::RegisteredCount() )
+    , status_       ( Common::ObjectAttributeMedicalTreatment::normal )
 {
-    std::string typeName( xis.attribute< std::string >( "medical-treatment", std::string() ) );
+    xis >> xml::attribute( "doctors", doctors_ )
+        >> xml::optional >> xml::attribute( "reference", referenceID_ )
+        >> xml::start( "bed-capacities" )
+            >> xml::list( "bed-capacity", *this, &MedicalTreatmentAttribute::InitializeBedCapacity )
+        >> xml::end;
+    initialDoctors_ = doctors_;
+    availableDoctors_ = doctors_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::InitializeBedCapacity
+// Created: JCR 2010-06-05
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::InitializeBedCapacity( xml::xistream& xis )
+{
+    const std::string typeName( xml::attribute< std::string >( xis, "type" ) );
+
     const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( typeName );
     if( !pType )
         xis.error( "Unknown 'Medical treatment type' '" + typeName + "' for medical treatment attribute" );
-    medicalTreatmentMap_.insert( std::make_pair( pType->GetID(), new T_PatientDiagnosisList() ) );
+    MedicalCapacity& capacity = capacities_[ pType->GetID() ];
+    
+    capacity.type_ = pType;
+    capacity.baseline_ = xml::attribute< unsigned >( xis, "baseline" );
+    // capacity.occupied_ = xml::attribute< unsigned >( xis, "occupied" );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,22 +79,27 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis )
 // Created: RFT 2008-06-05
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Common::MsgMissionParameter_Value& attributes )
-    : beds_             ( attributes.list( 2 ).quantity() )
-    , availableBeds_    ( attributes.list( 3 ).quantity() )
-    , doctors_          ( attributes.list( 4 ).quantity() )
-    , availableDoctors_ ( attributes.list( 5 ).quantity() )
-    , initialBeds_      ( attributes.list( 2 ).quantity() )
-    , initialDoctors_   ( attributes.list( 4 ).quantity() )
+    : doctors_          ( attributes.list( eDoctors ).quantity() ) // Doctors
+    , availableDoctors_ ( 0 )
+    , initialDoctors_   ( 0 )
+    , referenceID_      ( attributes.list( eExternalReferenceId ).acharstr() ) // ExternalReferenceId
+    , capacities_       ( MIL_MedicalTreatmentType::RegisteredCount() )
+    , status_           ( Common::ObjectAttributeMedicalTreatment::normal )
 {
-    const Common::MsgMissionParameter_Value& treatments = attributes.list( 1 );
-    for( int i = 0; i < treatments.list_size(); ++i )
+    const Common::MsgMissionParameter_Value& capacities = attributes.list( eBedCapacities );
+    for( int i = 0; i < capacities.list_size(); ++i )
     {
-        const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( treatments.list( i ).identifier() );
+        const Common::MsgMissionParameter_Value& value = capacities.list( i );
+        const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( value.list( eTypeId ).identifier() );
         if( !pType )
             throw std::runtime_error( "Unknown Medical treatment type for medical treatment attribute" );
-        medicalTreatmentMap_.insert( std::make_pair( pType->GetID(), new T_PatientDiagnosisList() ) );
+        MedicalCapacity& capacity = capacities_[ pType->GetID() ];
+        
+        capacity.baseline_ = value.list( eBaseLineCount ).quantity();
+        // TODO $$$$ : capacity.occupied_ = capacity.baseline_ - value.list( 2 ).quantity();
+        // capacity.emergency_ = value.list( 3 ).quantity();
     }
-    InitializePatientDiagnosisList( beds_ - availableBeds_ , doctors_ - availableDoctors_ );
+    // InitializePatientDiagnosisList( beds_ - availableBeds_ , doctors_ - availableDoctors_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,40 +112,18 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute InitializePatientDiagnosisList
-// Created: RFT 2008-05-30
-// -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::InitializePatientDiagnosisList( int occupiedBeds , int occupiedDoctors )
-{
-    IT_MedicalTreatmentMap it           = medicalTreatmentMap_.begin();
-    IT_PatientDiagnosisList iter        = it->second->begin();
-    float time = float( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() );
-
-    for( int i = 0 ; i < occupiedDoctors ; i++ )
-    {
-        it->second->push_back( std::make_pair( time - ( float ) MIL_Random::rand_ii( 0 , MIL_MedicalTreatmentType::Find( it->first )->GetTreatmentTime( iter->second ) ) , ( int ) MIL_Random::rand32_ii( 0 , 1 ) ) );
-    }
-
-    for( int i = 0 ; i < occupiedBeds - occupiedDoctors ; i++ )
-    {
-        it->second->push_back( std::make_pair( time - ( float ) MIL_Random::rand_ii( 0 , MIL_MedicalTreatmentType::Find( it->first )->GetHospitalisationTime( iter->second ) ) , ( int ) MIL_Random::rand32_ii( 0 , 1 ) ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute::operator=
 // Created: RFT 2008-05-30
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute& MedicalTreatmentAttribute::operator=( const MedicalTreatmentAttribute& rhs )
 {
-    medicalTreatmentMap_ = rhs.medicalTreatmentMap_;
-    beds_                = rhs.beds_;
-    availableBeds_       = rhs.availableBeds_;
-    doctors_             = rhs.doctors_;
-    availableDoctors_    = rhs.availableDoctors_;
-    initialBeds_         = rhs.initialBeds_;
-    initialDoctors_      = rhs.initialDoctors_;
-
+    // medicalTreatmentMap_;
+    doctors_ = rhs.doctors_;
+    availableDoctors_ = rhs.availableDoctors_;
+    initialDoctors_ = rhs.initialDoctors_;
+    capacities_ = rhs.capacities_;
+    referenceID_ = rhs.referenceID_;
+    status_ = rhs.status_;
     return *this;
 }
 
@@ -128,30 +133,13 @@ MedicalTreatmentAttribute& MedicalTreatmentAttribute::operator=( const MedicalTr
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
-    int typeID;
-    int sizeOfList, injuryCategory, sizeOfMap;
-    float time;
-
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    ar >> sizeOfMap;
-    for ( int i = 0 ; i < sizeOfMap ; i++ )
-    {
-        ar >> typeID;
-        ar >> sizeOfList;
-
-        T_PatientDiagnosisList *list = new T_PatientDiagnosisList( sizeOfList );
-
-        const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( typeID );
-        if( !pType )
-            throw std::runtime_error( "There is at least n unknown 'Medical treatment type' for medical treatment attribute" );
-        for ( int j = 0 ; j < sizeOfList ; j ++ )
-        {
-            ar >> time;
-            ar >> injuryCategory;
-            list->push_back( std::make_pair( time, injuryCategory ) );
-        }
-        medicalTreatmentMap_.insert( std::make_pair( typeID, list ) );
-    }
+    ar >> doctors_
+       >> availableDoctors_
+       >> initialDoctors_
+       >> referenceID_
+       >> status_;
+    ar >> capacities_;
 }
 
 // -----------------------------------------------------------------------------
@@ -160,21 +148,13 @@ void MedicalTreatmentAttribute::load( MIL_CheckPointInArchive& ar, const unsigne
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
-    int sizeOfMap  = medicalTreatmentMap_.size();
-    int sizeOfList = 0;
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    ar << sizeOfMap;
-    for( CIT_MedicalTreatmentMap it = medicalTreatmentMap_.begin(); it != medicalTreatmentMap_.end(); ++it )
-    {
-        ar << it->first;
-        sizeOfList = it->second->size();
-        ar << sizeOfList;
-        for( CIT_PatientDiagnosisList iter = it->second->begin() ; iter != it->second->end() ; ++iter )
-        {
-            ar << iter->first;
-            ar << iter->second;
-        }
-    }
+    ar << doctors_
+       << availableDoctors_
+       << initialDoctors_
+       << referenceID_
+       << status_;
+    ar << capacities_;
 }
 
 // -----------------------------------------------------------------------------
@@ -187,27 +167,184 @@ void MedicalTreatmentAttribute::Instanciate( DEC_Knowledge_Object& object ) cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute::Register
-// Created: JSR 2010-03-15
+// Name: MedicalTreatmentAttribute::Update
+// Created: JCR 2010-06-05
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::Register( MIL_Object_ABC& object ) const
 {
     object.SetAttribute< MedicalTreatmentAttribute, MedicalTreatmentAttribute >( *this );
 }
 
+/* -----------------------------------------------------------------------------
+// MedicalTreatmentAttribute::MedicalCapacity
+// ---------------------------------------------------------------------------*/
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::load
+// Created: JCR 2010-06-05
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::MedicalCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
+{
+    int type;
+
+    ar >> baseline_
+       >> occupied_
+       >> emergency_
+       >> time_;
+    ar >> type;
+    if( type >= 0 )
+        type_ = MIL_MedicalTreatmentType::Find( type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::save
+// Created: JCR 2010-06-05
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::MedicalCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
+{
+    ar << baseline_
+       << occupied_
+       << emergency_
+       << time_;
+    int type = -1;
+    if( type_ )
+        type = type_->GetID();
+    ar << type;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::Update
+// Created: JCR 2010-06-05
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::MedicalCapacity::Update( const Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity )
+{
+    if( capacity.has_type_id() )
+        type_ = MIL_MedicalTreatmentType::Find( capacity.type_id() );
+    if ( type_ )
+    {
+        if( capacity.has_baseline_count() )
+            baseline_ = capacity.baseline_count();
+        if( capacity.has_available_count() ) // UA
+            occupied_[ 1 ] = static_cast< unsigned int >( std::max( 0, (int)baseline_ - (int)capacity.available_count() ) );
+        if( capacity.has_emergency_count() )
+            emergency_ = capacity.emergency_count();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::Update
+// Created: JCR 2010-10-08
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::MedicalCapacity::Update( const Common::MsgMissionParameter_Value& capacity )
+{
+    if( capacity.list( eTypeId ).has_identifier() )
+        type_ = MIL_MedicalTreatmentType::Find( capacity.list( eTypeId ).identifier()  );
+    if ( type_ )
+    {
+        if( capacity.list( eBaseLineCount ).has_quantity() )
+            baseline_ = capacity.list( eBaseLineCount ).quantity();
+        if( capacity.list( eAvailableCount ).has_quantity() ) // UA
+            occupied_[ 1 ] = static_cast< unsigned int >( std::max( 0, (int)baseline_ - (int)capacity.list( eAvailableCount ).quantity() ) );
+        if( capacity.list( eEmergencyCount ).has_quantity() )
+            emergency_ = capacity.list( eEmergencyCount ).quantity();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::Send
+// Created: JCR 2010-06-05
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::MedicalCapacity::Send( Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity ) const
+{
+    if( type_ )
+    {
+        capacity.set_type_id( type_->GetID() );
+        capacity.set_baseline_count( baseline_ );
+        capacity.set_available_count( baseline_ - std::accumulate( occupied_.begin(), occupied_.end(), 0 ) );
+        capacity.set_emergency_count( emergency_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::OnUpdate
+// Created: JCR 2010-06-11
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::OnUpdate( const Common::MsgMissionParameter_Value& parameters )
+{
+    // JCR TODO : Check if value is available ?
+    if ( parameters.list( eDoctors ).has_quantity() )
+        doctors_ = parameters.list( eDoctors ).quantity(); // 
+    
+    // JCR TODO : Check if value is available ?
+    if ( parameters.list( eStatus ).has_enumeration() )
+        status_ = parameters.list( eStatus ).enumeration(); 
+
+    const Common::MsgMissionParameter_Value& capacities = parameters.list( eBedCapacities );
+    for( int i = 0; i < capacities.list_size(); ++i )
+    {
+        const Common::MsgMissionParameter_Value& value = capacities.list( i );
+
+        if( value.list( eTypeId ).has_identifier() ) 
+        {
+            const unsigned int typeId = value.list( eTypeId ).identifier();
+            if( capacities_.size() <= typeId )
+                throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( typeId ) );
+            capacities_[ typeId ].Update( value );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::Update
+// Created: JCR 2010-06-04
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::Update( const Common::ObjectAttributeMedicalTreatment& message )
+{
+    if ( message.has_doctors() )
+        doctors_ = message.doctors();
+    if ( message.has_available_doctors() )
+        availableDoctors_ = message.available_doctors();
+    else
+        availableDoctors_ = doctors_;
+    if ( message.has_external_reference_id() )
+        referenceID_ = message.external_reference_id();
+    if( message.has_facility_status() )
+        status_ = message.facility_status();
+    int size = static_cast< int >( capacities_.size() );
+    if( message.bed_capacities_size() > size )
+        capacities_.resize( message.bed_capacities_size() );
+    for( int i = 0 ; i < message.bed_capacities_size(); ++i )
+	{
+        const Common::ObjectAttributeMedicalTreatmentBedCapacity& bed_capacity = message.bed_capacities( i );
+        if( bed_capacity.has_type_id() )
+        {
+		    if( capacities_.size() <= static_cast< unsigned int >( bed_capacity.type_id() ) )
+	            throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( bed_capacity.type_id() ) );
+            capacities_[ bed_capacity.type_id() ].Update( bed_capacity );
+        }
+    }
+
+    NotifyAttributeUpdated( eOnUpdate );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute::SendFullState
 // Created: RFT 2008-06-18
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::SendFullState( Common::ObjectAttributes& asn ) const
-{
-    asn.mutable_medical_treatment()->set_available_beds    ( availableBeds_ );
-    asn.mutable_medical_treatment()->set_available_doctors ( availableDoctors_ );
-    asn.mutable_medical_treatment()->set_beds              ( beds_ );
-    asn.mutable_medical_treatment()->set_doctors           ( doctors_ );
-    //Get the list of the ID of each medical treatment
-    for( CIT_MedicalTreatmentMap iter = medicalTreatmentMap_.begin() ; iter != medicalTreatmentMap_.end() ; ++iter )
-        asn.mutable_medical_treatment()->add_type_id( MIL_MedicalTreatmentType::Find( iter->first )->GetID() );
+void MedicalTreatmentAttribute::SendFullState( Common::ObjectAttributes& message ) const
+{ 
+    message.mutable_medical_treatment()->set_doctors                ( doctors_ );
+    message.mutable_medical_treatment()->set_available_doctors      ( availableDoctors_ );
+    message.mutable_medical_treatment()->set_external_reference_id  ( referenceID_ );
+    message.mutable_medical_treatment()->set_facility_status        ( static_cast< Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus >( status_ ) );
+    
+    if( capacities_.size() > 0 )
+    {
+        for ( T_TreatmentCapacityVector::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+            it->Send( *message.mutable_medical_treatment()->add_bed_capacities() );
+        if ( message.medical_treatment().bed_capacities().size() != capacities_.size() )
+            throw std::runtime_error( std::string( __FUNCTION__  )+ " Medical treatment not properly encoded" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -229,175 +366,95 @@ void MedicalTreatmentAttribute::SendUpdate( Common::ObjectAttributes& asn ) cons
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "medical-traitement" );
-        for( CIT_MedicalTreatmentMap it = medicalTreatmentMap_.begin(); it != medicalTreatmentMap_.end(); ++it )
+    xos << xml::start( "medical-treatement" );
+        for( unsigned i = 0; i < capacities_.size(); ++i )
         {
-            xos << xml::content( "type" , it->first );
-            xos << xml::attribute( "patients-data" , it->second );
+            xos << xml::start( "bed-capacity" )
+                    << xml::attribute( "type" , capacities_[ i ].type_->GetName() )
+                    // << xml::attribute( "occupied" , capacities_[ i ].occupied_ )
+                    << xml::attribute( "baseline" , capacities_[ i ].baseline_ )
+                << xml::end;
         }
-    xos << xml::end;
+    xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute::GetMap
-// Created: RFT 2008-06-09
+// Name: MedicalTreatmentAttribute::RegisterPatients
+// Created: JCR 2010-06-05
 // -----------------------------------------------------------------------------
-const MedicalTreatmentAttribute::T_MedicalTreatmentMap& MedicalTreatmentAttribute::GetMap() const
+void MedicalTreatmentAttribute::RegisterPatients( unsigned injuryID, unsigned category, unsigned n )
 {
-    return medicalTreatmentMap_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: OccupancyAttribute::FlagPatient
-// Created: RFT 2008-06-09
-// -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::FlagPatient( float time , int injuryID , int injuryCategory )
-{
-    IT_MedicalTreatmentMap it = medicalTreatmentMap_.find( injuryID );
-    if( it != medicalTreatmentMap_.end() )
-    {
-        availableDoctors_ --;
-        availableBeds_ --;
-        it->second->push_back( std::make_pair( time, injuryCategory ));
-    }
+    if( capacities_.size() <= injuryID )
+        throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( injuryID ) );
+    if( capacities_[ injuryID ].occupied_.size() < category )
+        throw std::runtime_error( std::string( __FUNCTION__ ) + " Unknown category id: " + boost::lexical_cast< std::string >( category ) );
+    capacities_[ injuryID ].occupied_[ category ] += n;
+    NotifyAttributeUpdated( 1 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: OccupancyAttribute::CanTreatPatient
 // Created: RFT 2008-06-09
 // -----------------------------------------------------------------------------
-bool MedicalTreatmentAttribute::CanTreatPatient( int injuryID )
+bool MedicalTreatmentAttribute::CanTreatPatient( unsigned injuryID ) const
 {
-    IT_MedicalTreatmentMap it = medicalTreatmentMap_.find( injuryID );
-    if( it != medicalTreatmentMap_.end() )
-        return true;
-    else
-        return false;
+    if( capacities_.size() <= injuryID )
+        throw std::runtime_error( std::string( __FUNCTION__ ) + " Unknown injury id: " + boost::lexical_cast< std::string >( injuryID ) );
+    return ( capacities_[ injuryID ].baseline_ - std::accumulate( capacities_[ injuryID ].occupied_.begin(), capacities_[ injuryID ].occupied_.end(), 0 ) ) > 0;
 }
 
-// -----------------------------------------------------------------------------
-// Name: OccupancyAttribute::FreeDoctors
-// Created: RFT 2008-06-09
-// -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::FreeDoctors( float time )
+namespace
 {
-    // For each different type of injury the structure can take care of
-    for( CIT_MedicalTreatmentMap it = medicalTreatmentMap_.begin(); it != medicalTreatmentMap_.end(); ++it )
+    // Uniform distribution
+    class AssignDoctors
     {
-        for ( CIT_PatientDiagnosisList iter = it->second->begin() ; iter != it->second->end() ; ++iter )
-        {
-            if( time == iter->first + MIL_MedicalTreatmentType::Find( it->first )->GetTreatmentTime( iter->second ) )
-                availableDoctors_ ++;
-        }
-    }
-}
+    public:
+        AssignDoctors( int doctors, int size ) : doctors_( doctors ), size_ ( size ) {}
 
-// -----------------------------------------------------------------------------
-// Name: OccupancyAttribute::FreeBeds
-// Created: RFT 2008-06-09
-// -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::FreeBeds( float time )
-{
-    // For each different type of injury the structure can take care of
-    for( IT_MedicalTreatmentMap it = medicalTreatmentMap_.begin(); it != medicalTreatmentMap_.end(); ++it )
-    {
-        for ( IT_PatientDiagnosisList iter = it->second->begin() ; iter != it->second->end() ; )
+        unsigned operator()( const MedicalTreatmentAttribute::MedicalCapacity& capacity )
         {
-            if( time == iter->first + MIL_MedicalTreatmentType::Find( it->first )->GetHospitalisationTime( iter->second ) )
+            unsigned extract = 0;
+            if( capacity.baseline_ > 0 )
             {
-                availableBeds_ ++;
-                iter = it->second->erase( iter );
+                extract = doctors_ / size_;
+                doctors_ -= extract;
             }
-            else
-                ++iter;
+            --size_;
+            return extract;
         }
-    }
+    private:
+        int doctors_;
+        int size_;
+    };
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute::UpdateAvailableBeds
-// Created: RFT 2008-05-22
+// Name: MedicalTreatmentAttribute::Update
+// Created: JCR 2010-06-05
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::UpdateAvailableBeds( bool bEmergencyPlan , float emergencyBedsRate )
+unsigned MedicalTreatmentAttribute::MedicalCapacity::Update( unsigned doctors, float delay )
 {
-    if( bEmergencyPlan ) //Emergency plan
+    int i = 0;
+    for ( InjuryCategory::iterator it = occupied_.begin(); type_ && it != occupied_.end(); ++it )
     {
-        availableBeds_ += ( int ) ( initialBeds_ * ( emergencyBedsRate - 1 ) );
-        beds_           = ( int ) ( initialBeds_ * emergencyBedsRate );
+        float rmfactor = delay * type_->GetHospitalisationTime( i++ ) * (float)doctors;
+        *it -= static_cast< unsigned >( float( *it ) * rmfactor );
     }
-
-    else //Normal case
-    {
-        if( beds_ - initialBeds_ > availableBeds_ )//If the number of beds decreases more than the number of available beds
-        {
-            beds_         -= availableBeds_;
-            availableBeds_ = 0;
-        }
-        else
-        {
-            availableBeds_ -= ( beds_ - initialBeds_ );//If the number of beds decreases less than the number of available beds
-            beds_           = initialBeds_;
-        }
-    }
+    return doctors;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute::UpdateAvailableDoctors
-// Created: RFT 2008-05-22
+// Name: MedicalTreatmentAttribute::Update
+// Created: JCR 2010-06-05
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::UpdateAvailableDoctors( bool bEmergencyPlan , bool bBusinessHours , float emergencyDoctorsRate , float nightDoctorsRate )
+void MedicalTreatmentAttribute::Update( float delay )
 {
-    if( !bEmergencyPlan && bBusinessHours )//Normal case and Day
-    {
-        if( doctors_ - initialDoctors_ > availableDoctors_ )
-        {
-            doctors_         -= availableDoctors_;
-            availableDoctors_ = 0;
-        }
-        else
-        {
-            availableDoctors_ -= ( doctors_ - initialDoctors_ );
-            doctors_           = initialDoctors_;
-        }
-    }
+    std::vector< unsigned > lockedDoctors( capacities_.size(), 0 );
 
-    else if( !bEmergencyPlan && !bBusinessHours )//Normal case and Night
-    {
-        if( doctors_ - ( int ) ( initialDoctors_* nightDoctorsRate ) > availableDoctors_ )
-        {
-            doctors_         -= availableDoctors_;
-            availableDoctors_ = 0;
-        }
-        else
-        {
-            availableDoctors_ -= ( int ) ( initialDoctors_* ( nightDoctorsRate - 1 ) );
-            doctors_           = ( int ) ( initialDoctors_* nightDoctorsRate );
-        }
-    }
-
-    else if( bEmergencyPlan )//Emergency plan
-    {
-        availableDoctors_ += ( int ) ( initialDoctors_ * ( emergencyDoctorsRate - 1 ) );
-        doctors_           = ( int ) ( initialDoctors_ * emergencyDoctorsRate );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: OccupancyAttribute::GetBeds
-// Created: RFT 2008-06-09
-// -----------------------------------------------------------------------------
-int MedicalTreatmentAttribute::GetBeds() const
-{
-    return beds_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: OccupancyAttribute::GetAvailableBeds
-// Created: RFT 2008-06-09
-// -----------------------------------------------------------------------------
-int MedicalTreatmentAttribute::GetAvailableBeds() const
-{
-    return availableBeds_;
+    std::transform( capacities_.begin(), capacities_.end(), lockedDoctors.begin(), AssignDoctors( doctors_, capacities_.size() ) );
+    std::transform( capacities_.begin(), capacities_.end(), lockedDoctors.begin(), lockedDoctors.begin(),
+        boost::bind( &MedicalTreatmentAttribute::MedicalCapacity::Update, _1, _2, delay ) );
+    NotifyAttributeUpdated( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------

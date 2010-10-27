@@ -14,7 +14,9 @@
 #include "MIL_Injury_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
-#include "MIL_AgentServer.h"
+#include "Entities/Objects/MedicalTreatmentAttribute.h"
+#include "MIL_Singletons.h"
+#include "MIL_Time_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_InjuredHuman )
 
@@ -26,9 +28,9 @@ PHY_InjuredHuman::PHY_InjuredHuman()
     : lifeExpectancy_   ( 0 )
     , injuryCategory_   ( MIL_MedicalTreatmentType::eNone )
     , injuryID_         ( 0 )
-    , isTreated_        ( false )
     , pComposantePion_  ( 0 )
-    , timeOfLastUpdate_ ( static_cast< float >( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() ) )
+    , timeOfLastUpdate_ ( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
+    , treatment_        ( 0 )
 {
     // NOTHING
 }
@@ -41,10 +43,10 @@ PHY_InjuredHuman::PHY_InjuredHuman( const PHY_InjuredHuman& rhs )
     : lifeExpectancy_   ( rhs.lifeExpectancy_ )
     , injuryCategory_   ( rhs.injuryCategory_ )
     , injuryID_         ( rhs.injuryID_ )
-    , isTreated_        ( false )
     , injuriesList_     ( rhs.injuriesList_ )
     , pComposantePion_  ( rhs.pComposantePion_ )
-    , timeOfLastUpdate_ ( static_cast< float >( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() ) )
+    , timeOfLastUpdate_ ( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
+    , treatment_        ( rhs.treatment_ )
 {
     // NOTHING
 }
@@ -54,17 +56,14 @@ PHY_InjuredHuman::PHY_InjuredHuman( const PHY_InjuredHuman& rhs )
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 PHY_InjuredHuman::PHY_InjuredHuman( MIL_Injury_ABC& injury , const PHY_ComposantePion& composantePion )
-    : lifeExpectancy_   ( 0 )
-    , injuryCategory_   ( MIL_MedicalTreatmentType::eNone )
-    , injuryID_         ( 0 )
-    , isTreated_        ( false )
+    : lifeExpectancy_   ( injury.SetLifeExpectancy() )
+    , injuryCategory_   ( injury.GetInjuryCategory() )
+    , injuryID_         ( injury.GetInjuryID() )
     , pComposantePion_  ( &composantePion )
-    , timeOfLastUpdate_ ( static_cast< float >( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() ) )
+    , timeOfLastUpdate_ ( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
+    , treatment_        ( 0 )
 {
     AddInjury( injury );
-    lifeExpectancy_ = injury.SetLifeExpectancy();
-    injuryCategory_ = injury.GetInjuryCategory();
-    injuryID_       = injury.GetInjuryID();
 }
 
 // -----------------------------------------------------------------------------
@@ -72,17 +71,14 @@ PHY_InjuredHuman::PHY_InjuredHuman( MIL_Injury_ABC& injury , const PHY_Composant
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 PHY_InjuredHuman::PHY_InjuredHuman( MIL_Injury_ABC& injury )
-    : lifeExpectancy_   ( 0 )
-    , injuryCategory_   ( MIL_MedicalTreatmentType::eNone )
-    , injuryID_         ( 0 )
-    , isTreated_        ( false )
+    : lifeExpectancy_   ( injury.SetLifeExpectancy() )
+    , injuryCategory_   ( injury.GetInjuryCategory() )
+    , injuryID_         ( injury.GetInjuryID() )
     , pComposantePion_  ( 0 )
-    , timeOfLastUpdate_ ( static_cast< float >( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() ) )
+    , timeOfLastUpdate_ ( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
+    , treatment_        ( 0 )
 {
     AddInjury( injury );
-    lifeExpectancy_ = injury.SetLifeExpectancy();
-    injuryCategory_ = injury.GetInjuryCategory();
-    injuryID_       = injury.GetInjuryID();
 }
 
 // -----------------------------------------------------------------------------
@@ -90,12 +86,10 @@ PHY_InjuredHuman::PHY_InjuredHuman( MIL_Injury_ABC& injury )
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 PHY_InjuredHuman::~PHY_InjuredHuman()
-
 {
-    while( ! injuriesList_.empty() )
-        injuriesList_.pop_front();
-    if( pComposantePion_ )
-        delete( pComposantePion_ );
+    /* UnregisterPatient() ? */
+    if( treatment_ )
+        treatment_->RegisterPatients( injuryID_, injuryCategory_, -1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,9 +101,7 @@ void PHY_InjuredHuman::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> lifeExpectancy_
          >> injuryCategory_
          >> injuryID_
-         >> isTreated_;
-    for( IT_InjuriesList it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
-         file >> (*it);
+         >> treatment_;
     file >> const_cast< PHY_ComposantePion*& >( pComposantePion_ )
          >> timeOfLastUpdate_;
 }
@@ -123,11 +115,13 @@ void PHY_InjuredHuman::save( MIL_CheckPointOutArchive& file, const unsigned int 
     file << lifeExpectancy_
          << injuryCategory_
          << injuryID_
-         << isTreated_;
-    for( CIT_InjuriesList it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
-         file << (*it);
-    file << pComposantePion_
-         << timeOfLastUpdate_;
+         << treatment_
+         << pComposantePion_;
+    // $$$$ LDC TODO: Serialise injuries, change MIL_Injury_ABC and subclasses so they are serialised correctly.
+//         << injuriesList_.size();
+//    for( CIT_InjuriesList it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
+//         file << (*it);
+    file << timeOfLastUpdate_;
 }
 
 // -----------------------------------------------------------------------------
@@ -202,12 +196,19 @@ const PHY_ComposantePion* PHY_InjuredHuman::GetComposantePion() const
 // -----------------------------------------------------------------------------
 void PHY_InjuredHuman::Update()
 {
-    if( IsAlive() && !isTreated_ ) //If the Injured Human isn't dead, update its parameters
+    //If the Injured Human isn't dead, update its parameters
+    if( IsAlive() && !treatment_ )
     {
-        const float currentTime = static_cast< float >( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() );
-        UpdateInjuriesInfo( currentTime ); //Update the characteristics of all injuries
-        UpdateInjuredHumanInfo( currentTime ); //Update the characteristics of the main injury (the one which will cause death first)
-        timeOfLastUpdate_ = currentTime; //Record the time of the last update
+        const float currentTime = static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() );
+
+        //Update the characteristics of all injuries
+        UpdateInjuriesInfo( currentTime );
+
+        //Update the characteristics of the main injury (the one which will cause death first)
+        UpdateInjuredHumanInfo( currentTime );
+
+        //Record the time of the last update
+        timeOfLastUpdate_ = currentTime;
     }
 }
 
@@ -259,7 +260,7 @@ void PHY_InjuredHuman::UpdateInjuredHumanInfo( float currentTime )
 // Name: PHY_InjuredHuman IsAlive
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-bool PHY_InjuredHuman::IsAlive()
+bool PHY_InjuredHuman::IsAlive() const
 {
     for( CIT_InjuriesList it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
         if( (*it)->GetInjuryCategory() == MIL_MedicalTreatmentType::eDead )
@@ -280,9 +281,11 @@ void PHY_InjuredHuman::AddInjury( MIL_Injury_ABC& injury )
 // Name: PHY_InjuredHuman TreatInjuredHuman
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-void PHY_InjuredHuman::TreatInjuredHuman()
+void PHY_InjuredHuman::TreatInjuredHuman( MedicalTreatmentAttribute& attr )
 {
-    isTreated_ = true; //This function is used to record an injured human is receiving his medical treatment in a medical structure
+    // This function is used to record an injured human is receiving his medical treatment in a medical structure
+    treatment_ = &attr;
+    attr.RegisterPatients( injuryID_, injuryCategory_, 1 );
 }
 
 // -----------------------------------------------------------------------------

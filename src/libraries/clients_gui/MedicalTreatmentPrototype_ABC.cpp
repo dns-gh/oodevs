@@ -21,28 +21,26 @@ using namespace gui;
 // Name: MedicalTreatmentPrototype_ABC constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-MedicalTreatmentPrototype_ABC::MedicalTreatmentPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType >& resolver )
+MedicalTreatmentPrototype_ABC::MedicalTreatmentPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType, std::string >& resolver )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "MedicalTreatmentPrototype_ABC", "MedicalTreatment parameters" ) )
     , resolver_( resolver )
 {
-    new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "MedicalTreatment Type:" ), this );
-    treatmentTypes_ = new QListView( this );
-    treatmentTypes_->setSelectionMode( QListView::Multi );
-    treatmentTypes_->setMinimumHeight( 5 * treatmentTypes_->height() ); // 5 visible lines
-    treatmentTypes_->addColumn( tools::translate( "MedicalTreatmentPrototype_ABC", "Type" ) );
-    FillTypes();
-
-    new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Beds:" ), this );
-    beds_ = new QSpinBox( 0, 1000, 1, this );
-
-    new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Initial available beds:" ), this );
-    availableBeds_ = new QSpinBox( 0, 1000, 1, this );
-
-    new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Doctors:" ), this );
-    doctors_ = new QSpinBox( 0, 1000, 1, this );
-
-    new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Initial available doctors:" ), this );
-    availableDoctors_ = new QSpinBox( 0, 1000, 1, this );
+    QVBox* vbox = new QVBox( this, tools::translate( "MedicalTreatmentPrototype_ABC", "MedicalTreatment Type:" ) );
+    {
+        QHBox* canvas = new QHBox( vbox );
+        new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Hospital ID:" ), canvas );
+        referenceID_ = new QLineEdit( canvas );
+    }
+    {
+        QHBox* canvas = new QHBox( vbox );
+        new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Doctors:" ), canvas );
+        doctors_ = new QSpinBox( 0, 1000, 1, canvas );
+    }
+    {
+        QVBox* bedCapacities = new QVBox( vbox );
+        new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Bed Capacities:" ), bedCapacities );
+        FillCapacityTypes( bedCapacities );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -58,15 +56,14 @@ MedicalTreatmentPrototype_ABC::~MedicalTreatmentPrototype_ABC()
 // Name: MedicalTreatmentPrototype_ABC::FillTypes
 // Created: AGE 2006-08-11
 // -----------------------------------------------------------------------------
-void MedicalTreatmentPrototype_ABC::FillTypes()
+void MedicalTreatmentPrototype_ABC::FillCapacityTypes( QWidget* parent )
 {
-    treatmentTypes_->clear();
+    capacities_.clear();
     tools::Iterator< const MedicalTreatmentType& > it( resolver_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const MedicalTreatmentType& element = it.NextElement();
-        ValuedListItem* item = new ValuedListItem( treatmentTypes_ );
-        item->SetNamed( element );
+        capacities_.push_back( new Capacity( parent, element.GetName() ) );
     }
 }
 
@@ -76,7 +73,6 @@ void MedicalTreatmentPrototype_ABC::FillTypes()
 // -----------------------------------------------------------------------------
 void MedicalTreatmentPrototype_ABC::showEvent( QShowEvent* e )
 {
-    FillTypes();
     QGroupBox::showEvent( e );
 }
 
@@ -86,6 +82,5 @@ void MedicalTreatmentPrototype_ABC::showEvent( QShowEvent* e )
 // -----------------------------------------------------------------------------
 bool MedicalTreatmentPrototype_ABC::CheckValidity() const
 {
-    return beds_->value() >= availableBeds_->value() &&
-           doctors_->value() >= availableDoctors_->value();
+    return referenceID_->text().length() > 0;
 }

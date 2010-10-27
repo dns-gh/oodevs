@@ -18,11 +18,13 @@
 #include "LogisticSupplyPullFlowDialog.h"
 #include "LogisticSupplyPushFlowDialog.h"
 #include "LogisticSupplyRecompletionDialog.h"
+#include "MedicalCapacityUpdateDialog.h"
 #include "OrbatAttributesDialog.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
 #include "gaming/TeamsModel.h"
+#include "gaming/StaticModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: Dialogs constructor
@@ -38,6 +40,7 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new LogisticSupplyPullFlowDialog( parent, controllers, actionsModel, staticModel, simulation, model.agents_, model.teams_, profile  );
     new LogisticSupplyRecompletionDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new ChangeHumanFactorsDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
+    new MedicalCapacityUpdateDialog( parent, controllers, actionsModel, staticModel, simulation, publisher, profile );
     new BriefingDialog( parent, controllers, publisher, handler, config );
     new CreateFormationDialog( parent, controllers, model.formations_, profile, actionsModel, staticModel.types_ );
 }

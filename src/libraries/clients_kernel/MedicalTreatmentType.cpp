@@ -45,7 +45,7 @@ unsigned long MedicalTreatmentType::GetId() const
 // Name: MedicalTreatmentType::GetName
 // Created: RFT 2006-04-04
 // -----------------------------------------------------------------------------
-std::string MedicalTreatmentType::GetName() const
+const std::string& MedicalTreatmentType::GetName() const
 {
     return name_;
 }

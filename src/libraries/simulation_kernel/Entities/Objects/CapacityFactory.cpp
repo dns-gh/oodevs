@@ -24,7 +24,7 @@
 #include "DetectionCapacity.h"
 #include "ExtinguishableCapacity.h"
 #include "FirePropagationCapacity.h"
-#include "HealableCapacity.h"
+#include "MedicalCapacity.h"
 #include "InteractIfEquippedCapacity.h"
 #include "InteractWithEnemyCapacity.h"
 #include "InterferenceCapacity.h"
@@ -78,7 +78,7 @@ namespace
         const std::string model( xis.attribute< std::string >( "model", std::string() ) );
         if( model == "input" )
             prototype.AddCapacity< PropagationCapacity_ABC >( new InputPropagationCapacity( xis ) );
-        if( model == "fire" )
+        else if( model == "fire" )
             prototype.AddCapacity< PropagationCapacity_ABC >( new FirePropagationCapacity( xis, propagation ) );
     }
 }
@@ -100,7 +100,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "decontamination", boost::bind( &AddBuilder< DecontaminationCapacity >::Add, _1, _2 ) );
     DoRegister( "delay", boost::bind( &AddBuilder< DelayCapacity >::Add, _1, _2 ) );
     DoRegister( "extinguishable", boost::bind( &AddBuilder< ExtinguishableCapacity >::Add, _1, _2 ) );
-    DoRegister( "healable", boost::bind( &AddBuilder< HealableCapacity >::Add, _1, _2 ) );
+    DoRegister( "medical", boost::bind( &AddBuilder< MedicalCapacity >::Add, _1, _2 ) );
     DoRegister( "heuristic", boost::bind( &AddBuilder< TerrainHeuristicCapacity >::Add, _1, _2 ) );
     DoRegister( "interact-with-enemy", boost::bind( &AddBuilder< InteractWithEnemyCapacity >::Add, _1, _2 ) );
     DoRegister( "interference", boost::bind( &AddBuilder< InterferenceCapacity >::Add, _1, _2 ) );

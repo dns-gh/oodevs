@@ -74,6 +74,11 @@ private:
     void AddAttribute( ObjectAttribute_ABC* attribute );
     //@}
 
+    //! @name 
+    //@{
+    void Send( Common::ObjectAttributes& attributes ) const;
+    //@}
+
 private:
     //! @name Types
     //@{

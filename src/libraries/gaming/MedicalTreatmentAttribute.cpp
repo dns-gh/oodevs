@@ -13,7 +13,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/MedicalTreatmentType.h"
 #include "Tools.h"
-
+#include <boost/lexical_cast.hpp>
 
 using namespace kernel;
 
@@ -24,10 +24,6 @@ using namespace kernel;
 MedicalTreatmentAttribute::MedicalTreatmentAttribute( Controller& controller, const tools::Resolver_ABC< MedicalTreatmentType >& resolver )
     : controller_           ( controller )
     , resolver_             ( resolver )
-    , typeList_             ( 0 )
-    , nMedicalTreatmentType_( 0 )
-    , beds_                 ( 0 )
-    , availableBeds_        ( 0 )
     , doctors_              ( 0 )
     , availableDoctors_     ( 0 )
 {
@@ -44,25 +40,88 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute::UpdateData
-// Created: AGE 2006-02-15
+// Name: MedicalTreatmentAttribute::FillData
+// Created: JCR 2010-06-28
 // -----------------------------------------------------------------------------
-template< typename T >
-void MedicalTreatmentAttribute::UpdateData( const T& message )
+void MedicalTreatmentAttribute::FillCapacities( std::vector< MedicalTreatmentCapacity >& data ) const
 {
-    if( message.has_medical_treatment()  )
+    std::vector< MedicalTreatmentCapacity > value( capacities_ );
+    data.swap( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::GetReferenceId
+// Created: JCR 2010-06-28
+// -----------------------------------------------------------------------------
+const std::string& MedicalTreatmentAttribute::GetReferenceId() const
+{
+    return referenceID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::GetDoctors
+// Created: JCR 2010-07-09
+// -----------------------------------------------------------------------------
+int MedicalTreatmentAttribute::GetDoctors() const
+{
+    return doctors_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::GetAvailableDoctors
+// Created: JCR 2010-07-09
+// -----------------------------------------------------------------------------
+int MedicalTreatmentAttribute::GetAvailableDoctors() const
+{
+    return availableDoctors_;
+}
+
+namespace 
+{
+    void UpdateCapacity( const kernel::MedicalTreatmentType& type, const Common::ObjectAttributeMedicalTreatmentBedCapacity& message, MedicalTreatmentCapacity& capacity )
     {
-        beds_             = message.medical_treatment().beds();
-        availableBeds_    = message.medical_treatment().available_beds();
-        doctors_          = message.medical_treatment().doctors();
-        availableDoctors_ = message.medical_treatment().available_doctors();
-
-        nMedicalTreatmentType_ = message.medical_treatment().type_id_size();
-        for( int i = 0 ; i < nMedicalTreatmentType_ ; i++ )
-            typeList_.push_back( & resolver_.Get( message.medical_treatment().type_id( i ) ) );
-
-        controller_.Update( *(MedicalTreatmentAttribute_ABC*)this );
+        capacity.type_ = &type;
+        capacity.name_ = type.GetName();
+        if( message.has_available_count() )
+            capacity.available_ = message.available_count();
+        if( message.has_baseline_count() )
+        {
+            capacity.baseline_ = message.baseline_count();
+            capacity.available_ = std::min( capacity.available_, capacity.baseline_ );
+        }
+        if( message.has_emergency_count() )
+            capacity.emergency_ = message.emergency_count();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::MedicalTreatmentAttribute::UpdateData
+// Created: JCR 2010-10-07
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::UpdateData( const Common::ObjectAttributeMedicalTreatment& message )
+{
+    if ( message.has_doctors() )
+        doctors_ = message.doctors();
+    if ( message.has_available_doctors() )
+        availableDoctors_ = message.available_doctors();
+    if ( message.has_external_reference_id() )
+        referenceID_ = message.external_reference_id();
+    if( message.has_facility_status() )
+        status_ = message.facility_status();
+    if( message.bed_capacities_size() > capacities_.size() )
+        capacities_.swap( T_TreatmentCapacities( message.bed_capacities_size() ) );
+    for( int i = 0 ; i < message.bed_capacities_size(); i++ )
+	{
+        const Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity = message.bed_capacities( i );
+        if( capacity.has_type_id() )
+        {
+            const kernel::MedicalTreatmentType* type = resolver_.Find( capacity.type_id() );
+            if ( !type )
+	            throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( capacity.type_id() ) );
+            ::UpdateCapacity( *type, capacity, capacities_[ capacity.type_id() ] );
+        }
+    }
+    controller_.Update( *(MedicalTreatmentAttribute_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +130,8 @@ void MedicalTreatmentAttribute::UpdateData( const T& message )
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    UpdateData( message.attributes() );
+    if( message.attributes().has_medical_treatment() )
+        UpdateData( message.attributes().medical_treatment() );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +140,8 @@ void MedicalTreatmentAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowle
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    UpdateData( message.attributes() );
+    if( message.attributes().has_medical_treatment() )
+        UpdateData( message.attributes().medical_treatment() );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +150,8 @@ void MedicalTreatmentAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    UpdateData( message.attributes() );
+    if( message.attributes().has_medical_treatment() )
+        UpdateData( message.attributes().medical_treatment() );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,19 +160,20 @@ void MedicalTreatmentAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreati
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::Display( Displayer_ABC& displayer ) const
 {
-    Displayer_ABC& sub = displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment services" ) )
-        .Item( tools::translate( "MedicalTreatment", "Medical Treatment type:" ) )
-                .Start( nMedicalTreatmentType_ );
+    displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment" ) )
+         .Display( tools::translate( "MedicalTreatment", "Total number of doctors:" ), doctors_ )
+         .Display( tools::translate( "MedicalTreatment", "Number of available doctors:" ), availableDoctors_ );
 
-    for ( CIT_MedicalTreatmentTypeList it = typeList_.begin(); it != typeList_.end(); ++it )
-        sub.Add( " " ).Add( (*it)->GetName() );
-    sub.End();
+    displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment" ) )
+         .Display( tools::translate( "MedicalTreatment", "Hospital ID:" ), referenceID_ );
 
-    displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment capacity" ) )
-        .Display( tools::translate( "MedicalTreatment", "Total number of beds:" ), beds_ )
-        .Display( tools::translate( "MedicalTreatment", "Number of available beds:" ), availableBeds_ )
-        .Display( tools::translate( "MedicalTreatment", "Total number of doctors:" ), doctors_ )
-        .Display( tools::translate( "MedicalTreatment", "Number of available doctors:" ), availableDoctors_ );
+    displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment services (Available(Baseline)):" ) );
+    for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+    {
+        if ( it->type_ )
+            displayer.Display( std::string( it->name_ + ": " ).c_str(),
+                           std::string( boost::lexical_cast<std::string>( it->available_ ) + " (" + boost::lexical_cast<std::string>( it->baseline_ ) + ")" ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

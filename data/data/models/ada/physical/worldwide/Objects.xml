@@ -341,4 +341,12 @@
     <interaction-height height="100"/>
     <intoxication max-toxic="1"/>
   </object>
+  <object geometry="point" name="Hospital" symbol="G*GEHOSP--****X" type="hospital">
+    <decontamination/>
+    <medical night-doctors-rate="2">
+      <emergency-plan beds-rate="1" doctors-rate="1"/>
+    </medical>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <workable max-animator="3"/>
+  </object>
 </objects>

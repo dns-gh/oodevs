@@ -200,7 +200,7 @@ void Mission::SendAutomatMission( dispatcher::SimulationPublisher_ABC& publisher
     asn().mutable_tasker()->set_id( automatTaskee_->GetId());
     asn().mutable_type()->set_id( type_.GetId());
     if( type_.Count() > 0 )
-        for( int i = 0; i < type_.Count(); ++i )
+        for( unsigned int i = 0; i < type_.Count(); ++i )
             asn().mutable_parameters()->add_elem();
     Serialize( *asn().mutable_parameters() );
     asn.Send( publisher );
@@ -216,7 +216,7 @@ void Mission::SendAgentMission( dispatcher::SimulationPublisher_ABC& publisher )
     asn().mutable_tasker()->set_id( agentTaskee_->GetId() );
     asn().mutable_type()->set_id( type_.GetId() );
     if( type_.Count() > 0 )
-        for (unsigned int i = 0; i < type_.Count(); ++i)
+        for ( unsigned int i = 0; i < type_.Count(); ++i)
             asn().mutable_parameters()->add_elem();
     Serialize( *asn().mutable_parameters() );
     asn.Send( publisher );

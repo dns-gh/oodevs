@@ -53,7 +53,7 @@ public:
         eContaminationCapacity_MaxToxic,
         eDecontaminationCapacityPresent,
         eExtinguishableCapacityPresent,
-        eHealableCapacityPresent,
+        eMedicalCapacityPresent,
         eImprovableCapacityPresent,
         eImprovableCapacity_Dotation,
         eInterferenceCapacityPresent,

@@ -105,6 +105,7 @@ public:
     //! @name Accessors
     //@{
     virtual unsigned int              GetID() const;
+    const std::string&                GetName() const;
     const urban::TerrainObject_ABC&   GetObject();
     const urban::TerrainObject_ABC&   GetObject() const;
     //@}

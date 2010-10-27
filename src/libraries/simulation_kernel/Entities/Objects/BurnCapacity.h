@@ -52,7 +52,6 @@ public:
     //! @name virtual
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const;
-    virtual void Update( MIL_Object_ABC& object, float time );
     //@}
 
     //! @name MIL_InteractiveContainer_ABC

@@ -214,6 +214,8 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
         boost::function< void ( int ) >(boost::bind( &DEC_PopulationFunctions::SetAttitude, boost::ref( GetPopulation() ), _1 ) );
     brain[ "DEC_Population_Attitude" ] =
         boost::function< int() >(boost::bind( &DEC_PopulationFunctions::GetAttitude, boost::ref( GetPopulation() ) ) );
+    brain[ "DEC_Population_Positions" ] =
+        boost::function< std::vector< boost::shared_ptr< TER_Localisation > >() >(boost::bind( &DEC_PopulationFunctions::GetCurrentLocations, boost::cref( GetPopulation() ) ) );
 
     // Etats decisionnel
     brain[ "DEC_Population_ChangeEtatDomination" ] =

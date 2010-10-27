@@ -21,6 +21,7 @@
 #include "ObstacleAttribute.h"
 #include "CrossingSiteAttribute.h"
 #include "SupplyRouteAttribute.h"
+#include "MedicalTreatmentAttribute.h"
 #include "SpawnCapacity.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -116,6 +117,15 @@ Object::~Object()
 unsigned int Object::GetID() const
 {
     return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::GetName
+// Created: JCR 2010-07-07
+// -----------------------------------------------------------------------------
+const std::string& Object::GetName() const
+{
+    return name_;
 }
 
 // -----------------------------------------------------------------------------
@@ -360,6 +370,9 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode Object::OnUpdate( const MsgMi
             break;
         case MsgObjectMagicAction_Attribute_supply_route:
             GetAttribute< SupplyRouteAttribute >().OnUpdate( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_medical_treatment:
+            GetAttribute< MedicalTreatmentAttribute >().OnUpdate( attribute );
             break;
         default:
             break;

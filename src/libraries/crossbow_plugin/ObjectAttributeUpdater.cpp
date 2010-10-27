@@ -279,31 +279,30 @@ namespace
 {
         
     // TODO all bed Capacities
-    /* TODO $$$$ MIGRATION HS
-    void UpdateBedCapacities( RowManipulator& row,  const ASN1T_ObjectAttributeMedicalTreatment& medical_treatment )
+    void UpdateBedCapacities( RowManipulator& row,  const Common::ObjectAttributeMedicalTreatment& medical_treatment )
     {
         int available = 0;
         bool availableUpdated = false;
         int baseline = 0;
         bool baselineUpdated = false;
         
-        for ( int i = 0; i < (int)medical_treatment.bed_capacities.n; ++i ) 
+        for ( int i = 0; i < medical_treatment.bed_capacities_size(); ++i ) 
         {
-            const ASN1T_ObjectAttributeMedicalTreatmentBedCapacity& capacity = medical_treatment.bed_capacities.elem[ i ];
+            const Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity = medical_treatment.bed_capacities( i );
             
             // $$$$ JCR - HACK : Do not take into account NegativeFlowIsolation which is a subset of MedicalSurgical and the last registered element!! 
             // $$$$ TODO: ADD this information in the MedicalTreatment definition and the ASN message.
-            if ( capacity.type_id == 7 ) // SKIP
+            if ( capacity.type_id() == 7 ) // SKIP
                 continue;
-            if( capacity.m.available_countPresent )
+            if( capacity.has_available_count() )
             {
                 availableUpdated = true;
-                available += capacity.available_count;
+                available += capacity.available_count();
             }
-            if( capacity.m.baseline_countPresent )
+            if( capacity.has_baseline_count() )
             {
                 baselineUpdated = true;
-                baseline += capacity.baseline_count;
+                baseline += capacity.baseline_count();
             }
         }
         if( baselineUpdated )
@@ -311,7 +310,6 @@ namespace
         if( availableUpdated )
             row.SetField( "available_beds", FieldVariant( available ) ); // int
     }
-    $$$$ TODO */
 }
 
 // -----------------------------------------------------------------------------
@@ -325,10 +323,10 @@ void ObjectAttributeUpdater::Update( const Common::ObjectAttributeMedicalTreatme
     RowManipulator row( *table, session_, objectId_ );
     
     if( medical_treatment.has_doctors() )
-        row.SetField( "doctors", FieldVariant( medical_treatment.doctors() ) ); // int
+        row.SetField( "doctors", FieldVariant( static_cast< int >( medical_treatment.doctors() ) ) ); // int
     if( medical_treatment.has_available_doctors() )
-        row.SetField( "available_doctors", FieldVariant( medical_treatment.available_doctors() ) ); // int
-    // $$$$ TODO UpdateBedCapacities( row, medical_treatment );
+        row.SetField( "available_doctors", FieldVariant( static_cast< int >( medical_treatment.available_doctors() ) ) ); // int
+    UpdateBedCapacities( row, medical_treatment );
 }
 
 // -----------------------------------------------------------------------------

@@ -90,6 +90,10 @@ include "Population/Asymetriques/Common/Pion/Missions/CommettreAttentatContreIns
 
 include "Population/Asymetriques/Common/Pion/Missions/CommettreExactions.bms"
 
+include "Population/Asymetriques/Common/Pion/Missions/ExecuteBombingAttack.bms"
+
+include "Population/Asymetriques/Common/Pion/Missions/ActivateBomb.bms"
+
 
 --[[//=============================================================================
 ]]--[[// BEH_DEFAULT

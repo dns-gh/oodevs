@@ -414,6 +414,15 @@ unsigned int UrbanObjectWrapper::GetID() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetName
+// Created: JCR 2010-10-22
+// -----------------------------------------------------------------------------
+const std::string& UrbanObjectWrapper::GetName() const
+{
+    return object_->GetName();
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::GetObject
 // Created: SLG 2010-06-21
 // -----------------------------------------------------------------------------

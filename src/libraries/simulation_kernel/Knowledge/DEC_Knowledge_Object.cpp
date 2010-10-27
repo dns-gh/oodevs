@@ -50,7 +50,8 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
     , pObjectKnown_            ( &objectKnown )
     , pObjectType_             ( &objectKnown.GetType() )
     , nID_                     ( idManager_.GetFreeId() )
-    , nAttributesUpdated_      ( eAttr_AllAttributes )
+	, name_                    ( objectKnown.GetName() )
+	, nAttributesUpdated_      ( eAttr_AllAttributes )
     , pOwnerArmy_              ( objectKnown.GetArmy() )
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
@@ -73,6 +74,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_KnowledgeGroup& groupKnowi
     , pObjectKnown_            ( &objectKnown )
     , pObjectType_             ( &objectKnown.GetType() )
     , nID_                     ( idManager_.GetFreeId() )
+    , name_                    ( objectKnown.GetName() )
     , nAttributesUpdated_      ( eAttr_AllAttributes )
     , pOwnerArmy_              ( objectKnown.GetArmy() )
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
@@ -96,6 +98,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
     , pObjectKnown_            ( 0 )
     , pObjectType_             ( 0 )
     , nID_                     ( 0 )
+    , name_                    ( "unknown" )
     , nAttributesUpdated_      ( 0 )
     , pOwnerArmy_              ( 0 )
     , pCurrentPerceptionLevel_ ( 0 )
@@ -119,6 +122,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, co
     , pObjectKnown_                    ( copy.pObjectKnown_ )
     , pObjectType_                     ( copy.pObjectType_ )
     , nID_                             ( copy.idManager_.GetFreeId() )
+    , name_                            ( copy.name_ )
     , nAttributesUpdated_              ( copy.nAttributesUpdated_ )
     , pOwnerArmy_                      ( copy.pOwnerArmy_ )
     , localisation_                    ( copy.localisation_ )
@@ -158,6 +162,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
     file >> const_cast< MIL_Army_ABC*& >( pArmyKnowing_ )
          >> pObjectKnown_
          >> const_cast< unsigned int& >( nID_ )
+         >> name_
          >> attributes
          >> nAttributesUpdated_
          >> const_cast< MIL_Army_ABC*& >( pOwnerArmy_ )
@@ -205,6 +210,7 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
     file << pArmyKnowing_;
     file << pObjectKnown_;
     file << nID_;
+    file << name_;
     file << attributes_;
     file << nAttributesUpdated_;
     file << pOwnerArmy_;
@@ -595,6 +601,15 @@ double DEC_Knowledge_Object::GetMaxInteractionHeight() const
 // =============================================================================
 // OEPRATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetName() const
+// Created: JCR 2010-07-07
+// -----------------------------------------------------------------------------
+const std::string& DEC_Knowledge_Object::GetName() const
+{
+    return name_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::Recon

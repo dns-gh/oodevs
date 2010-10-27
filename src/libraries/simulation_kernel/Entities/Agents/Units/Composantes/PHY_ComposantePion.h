@@ -31,6 +31,7 @@ class MIL_PopulationType;
 class MIL_PopulationAttitude;
 class MIL_Time_ABC;
 class MIL_ToxicEffectManipulator;
+class PHY_InjuredHuman;
 class PHY_AttritionData;
 class PHY_Breakdown;
 class PHY_FireDamages_Agent;
@@ -158,7 +159,8 @@ public:
     double GetMaxRangeToIndirectFire        ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     double GetMinRangeToIndirectFire        ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     double GetMaxRangeToFire                ( const MIL_Agent_ABC& pion, double rWantedPH ) const;
-    //@}
+	PHY_InjuredHuman* GetInjury() const;
+	//@}
 
     //! @name Accessors
     //@{

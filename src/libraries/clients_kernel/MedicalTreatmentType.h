@@ -33,7 +33,7 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    std::string GetName() const;
+    const std::string& GetName() const;
     //@}
 
 private:

@@ -22,6 +22,7 @@ class MIL_ToxicEffectManipulator;
 class MIL_AutomateLOG;
 class MIL_Time_ABC;
 class MIL_Injury_ABC;
+class PHY_InjuredHuman;
 
 // =============================================================================
 // @class  HumansComposante_ABC
@@ -49,10 +50,11 @@ public:
     virtual void ApplyPoisonous    ( const MIL_ToxicEffectManipulator& contamination ) = 0;
     virtual void ApplyInjury       ( MIL_Injury_ABC& injury ) = 0;
     virtual void ApplyWounds       ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages ) = 0;
-    virtual unsigned int WoundHumans       ( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound ) = 0;
-    virtual unsigned int HealHumans        ( const PHY_HumanRank& rank, unsigned int nNbrToChange ) = 0;
+    virtual unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound ) = 0;
+    virtual unsigned int HealHumans ( const PHY_HumanRank& rank, unsigned int nNbrToChange ) = 0;
     virtual void HealAllHumans     () = 0;
 
+    virtual PHY_InjuredHuman* GetInjury() = 0;
     virtual double GetOperationalState() const = 0;
     virtual bool     IsViable           () const = 0;
     //@}

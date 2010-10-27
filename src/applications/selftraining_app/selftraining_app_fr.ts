@@ -526,6 +526,14 @@ You will not be able to start a multiplayer session. Do you want to start anyway
         <source>Advanced</source>
         <translation>Avancé</translation>
     </message>
+    <message>
+        <source>EDXL-HAVE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERP/Timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScenarioPage</name>

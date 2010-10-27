@@ -12,9 +12,11 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/OptionalValue.h"
 #include "tools/Resolver_ABC.h"
+#include "MedicalTreatmentCapacity.h"
 #include "protocol/Protocol.h"
-#include <list>
+#include <vector>
 
 namespace kernel
 {
@@ -34,17 +36,19 @@ class MedicalTreatmentAttribute : public kernel::MedicalTreatmentAttribute_ABC
                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
 {
-private:
-    typedef std::list< const kernel::MedicalTreatmentType* > T_MedicalTreatmentTypeList;
-    typedef T_MedicalTreatmentTypeList::const_iterator       CIT_MedicalTreatmentTypeList;
-    typedef T_MedicalTreatmentTypeList::iterator             IT_MedicalTreatmentTypeList;
-
-
 public:
     //! @name Constructors/Destructor
     //@{
              MedicalTreatmentAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver );
     virtual ~MedicalTreatmentAttribute();
+    //@}
+
+    //! @name Accessors
+    //@{
+    int GetDoctors() const;
+    int GetAvailableDoctors() const;
+    const std::string& GetReferenceId() const;
+    void FillCapacities( std::vector< MedicalTreatmentCapacity >& data ) const;
     //@}
 
     //! @name Operations
@@ -60,13 +64,22 @@ private:
     MedicalTreatmentAttribute& operator=( const MedicalTreatmentAttribute& ); //!< Assignment operator
     //@}
 
+    //! @name 
+    //@{
+    void UpdateData( const Common::ObjectAttributeMedicalTreatment& message );
+    //@}
+
     //! @name Helpers
     //@{
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectCreation& message );
-    template< typename T >
-    void UpdateData( const T& message );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< MedicalTreatmentCapacity > T_TreatmentCapacities;
     //@}
 
 public:
@@ -74,12 +87,11 @@ public:
     //@{
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver_;
-    T_MedicalTreatmentTypeList typeList_;
-    int nMedicalTreatmentType_;
-    int beds_;
-    int availableBeds_;
     int doctors_;
     int availableDoctors_;
+    int                     status_;
+    std::string             referenceID_;
+    T_TreatmentCapacities   capacities_;
     //@}
 };
 

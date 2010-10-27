@@ -41,6 +41,7 @@
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_CommunicationFunctions.h"
+#include "Decision/DEC_MedicalTreatmentFunctions.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendCollectionComposantes.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendHaulerComposantes.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionConstructObject.h"
@@ -265,6 +266,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_ConnaissanceObjet_NiveauValorisation" ] = &DEC_KnowledgeObjectFunctions::GetValorizationLevel;
     brain[ "DEC_ConnaissanceObjet_Localisation" ] = &DEC_KnowledgeObjectFunctions::GetLocalisation;
     brain[ "DEC_ConnaissanceObjet_Type" ] = &DEC_KnowledgeObjectFunctions::GetType;
+    brain[ "DEC_ConnaissanceObjet_Name" ] = &DEC_KnowledgeObjectFunctions::GetName;
     brain[ "DEC_ConnaissanceObjet_NiveauAnimation" ] = &DEC_KnowledgeObjectFunctions::GetAnimationLevel;
     brain[ "DEC_ConnaissanceObjet_LargeurSiteFranchissement" ] = &DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth;
     brain[ "DEC_ConnaissanceObjet_EstReconnu" ] = &DEC_KnowledgeObjectFunctions::IsRecon;    
@@ -867,10 +869,19 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< void( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::AllowAmmunition, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Pion_AutoriserToutesMunitions" ] =
         boost::bind( &DEC_FireFunctions::AllowAllAmmunitions,        boost::ref( GetPion() ) );
-     //
+    
+    //
     brain[ "DEC_Fire_GetRangeToExtinguish" ] =
         boost::function< float ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_DynamicFireFunctions::GetRangeToExtinguish, boost::cref( GetPion() ), _1 ) );
 
+
+    // Hospitals
+    brain[ "DEC_DeterminerHopital" ] =
+        boost::function< boost::shared_ptr< DEC_Knowledge_Object > ( boost::shared_ptr< DEC_Knowledge_Agent >, T_KnowledgeObjectDiaIDVector ) >( boost::bind( &DEC_MedicalTreatmentFunctions::DetermineHospital, boost::cref( GetPion() ), _1, _2 ) );
+    brain[ "DEC_CanHospitalTreatWound" ] =
+        boost::function< bool ( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MedicalTreatmentFunctions::CanHospitalTreatWound, boost::cref( GetPion() ), _1, _2 ) );
+    brain[ "DEC_DebarqueBlesseDansHopital" ] =
+        boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MedicalTreatmentFunctions::TakeCareOfThePatient, boost::cref( GetPion() ), _1, _2 ) );
 
     // RC
     brain[ "DEC_RC1" ] =

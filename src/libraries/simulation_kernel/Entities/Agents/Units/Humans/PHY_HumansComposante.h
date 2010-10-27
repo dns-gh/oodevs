@@ -22,11 +22,13 @@ class PHY_ComposantePion;
 class PHY_ComposanteState;
 class PHY_FireDamages_Agent;
 class PHY_RoleInterface_Composantes;
+class PHY_InjuredHuman;
 class PHY_MedicalHumanState;
 class MIL_ToxicEffectManipulator;
 class MIL_AutomateLOG;
 class MIL_Time_ABC;
 class MIL_Injury_ABC;
+class PHY_InjuredHuman;
 
 // =============================================================================
 // @class  PHY_HumansComposante
@@ -54,6 +56,7 @@ public:
     void ApplyContamination( const MIL_ToxicEffectManipulator& contamination );
     void ApplyPoisonous    ( const MIL_ToxicEffectManipulator& contamination );
     void ApplyInjury       ( MIL_Injury_ABC& injury );
+    PHY_InjuredHuman* GetInjury();
     void ApplyWounds       ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
     unsigned int WoundHumans       ( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound );
     unsigned int HealHumans        ( const PHY_HumanRank& rank, unsigned int nNbrToChange );
@@ -93,6 +96,7 @@ private:
     PHY_ComposantePion* pComposante_;
     std::vector< Human_ABC* > humans_;
     unsigned int nNbrUsableHumans_;
+    PHY_InjuredHuman*   injury_;
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_HumansComposante )

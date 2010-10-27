@@ -211,7 +211,7 @@ void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, 
     else 
         throw std::runtime_error( "mission parameter not supported : " + parameter.GetType() + " with value " + value );
 
-    /* TODO
+    /* JCR: TODO
     case T_MissionParameter_value_atlasNature:
     case T_MissionParameter_value_populationKnowledge:
     case T_MissionParameter_value_plannedWork:

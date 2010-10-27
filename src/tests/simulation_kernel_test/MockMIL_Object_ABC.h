@@ -48,6 +48,7 @@ public:
     MOCK_METHOD( SendDestruction, 0 );
     MOCK_METHOD( SendFullState, 0 );
     MOCK_METHOD( GetID, 0 );
+    MOCK_METHOD( GetName, 0 );
     MOCK_METHOD( Update, 1 );
     MOCK_METHOD( Instanciate, 1 );
     MOCK_METHOD( Finalize, 0 );

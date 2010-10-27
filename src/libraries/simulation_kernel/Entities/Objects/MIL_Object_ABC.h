@@ -172,6 +172,7 @@ public:
 
     //! @name Accessors
     //@{
+    virtual const std::string& GetName() const = 0;
     virtual unsigned int GetID() const = 0;
     const MIL_ObjectType_ABC& GetType() const;
     const MIL_Army_ABC* GetArmy() const;

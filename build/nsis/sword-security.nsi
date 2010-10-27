@@ -132,20 +132,20 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\msvcr71.dll"
     File "${RUNDIR}\ogr_SDE.dll"
     File "${RUNDIR}\proj.dll"
-    
-	; evaluation licence
+
+    ; evaluation licence
     !ifdef EVALUATION
         File "${RUNDIR}\evaluation.lic"
     !endif
-    
+
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
       
     ;projection settings( used in crossbow)
-	SetOutPath "$INSTDIR\applications\projection_data"
+    SetOutPath "$INSTDIR\applications\projection_data"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r "${RUNDIR}\projection_data\*"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL	   
-	
+
     ; resources: sql deployment
     SetOutPath "$INSTDIR\applications\resources\sql"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL

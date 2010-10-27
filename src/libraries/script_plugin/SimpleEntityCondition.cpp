@@ -13,12 +13,16 @@
 #include "KnowledgeManipulator.h"
 #include "AutomatManipulator.h"
 #include "ObjectManipulator.h"
+#include "ObjectKnowledgeManipulator.h"
 #include "PopulationManipulator.h"
+#include "PopulationKnowledgeManipulator.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentKnowledge.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Object_ABC.h"
+#include "dispatcher/ObjectKnowledge.h"
 #include "dispatcher/Population.h"
+#include "dispatcher/PopulationKnowledge.h"
 
 using namespace plugins::script;
 
@@ -66,10 +70,34 @@ void EntityConditionBase::Trigger( BaseCondition& that, const dispatcher::Object
 
 // -----------------------------------------------------------------------------
 // Name: EntityConditionBase::Trigger
+// Created: DSO 2010-07-27
+// -----------------------------------------------------------------------------
+void EntityConditionBase::Trigger( BaseCondition& that, const dispatcher::ObjectKnowledge& entity )
+{
+    const ObjectKnowledgeManipulator* k = entity.Retrieve< ObjectKnowledgeManipulator >();
+    const ObjectManipulator* o = entity.GetEntity() ? entity.GetEntity()->Retrieve< ObjectManipulator >() : 0;
+    if( k && o )
+        that.Trigger( k, o );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityConditionBase::Trigger
 // Created: SBO 2008-11-18
 // -----------------------------------------------------------------------------
 void EntityConditionBase::Trigger( BaseCondition& that, const dispatcher::Population& entity )
 {
     if( const PopulationManipulator* manipulator = entity.Retrieve< PopulationManipulator >() )
         that.Trigger( manipulator );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityConditionBase::Trigger
+// Created: DSO 2010-07-27
+// -----------------------------------------------------------------------------
+void EntityConditionBase::Trigger( BaseCondition& that, const dispatcher::PopulationKnowledge& entity )
+{
+    const PopulationKnowledgeManipulator* k = entity.Retrieve< PopulationKnowledgeManipulator >();
+    const PopulationManipulator* p = entity.GetEntity() ? entity.GetEntity()->Retrieve< PopulationManipulator >() : 0;
+    if( k && p )
+        that.Trigger( k, p );
 }

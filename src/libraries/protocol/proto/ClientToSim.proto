@@ -69,6 +69,7 @@ message MsgUnitMagicAction {
         formation_creation           = 27;
         crowd_creation               = 28;
         log_supply_pull_flow         = 29;
+        create_wound                 = 30;
     }
    required Common.Tasker               tasker     = 1;
    required Type                        type       = 2;

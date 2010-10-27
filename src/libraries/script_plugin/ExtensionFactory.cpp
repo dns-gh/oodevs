@@ -13,7 +13,9 @@
 #include "dispatcher/AgentKnowledge.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Object.h"
+#include "dispatcher/ObjectKnowledge.h"
 #include "dispatcher/Population.h"
+#include "dispatcher/PopulationKnowledge.h"
 #include "AgentNotifier.h"
 #include "AgentManipulator.h"
 #include "KnowledgeNotifier.h"
@@ -22,8 +24,12 @@
 #include "AutomatManipulator.h"
 #include "ObjectNotifier.h"
 #include "ObjectManipulator.h"
+#include "ObjectKnowledgeNotifier.h"
+#include "ObjectKnowledgeManipulator.h"
 #include "PopulationNotifier.h"
 #include "PopulationManipulator.h"
+#include "PopulationKnowledgeNotifier.h"
+#include "PopulationKnowledgeManipulator.h"
 
 using namespace plugins::script;
 
@@ -90,10 +96,30 @@ void ExtensionFactory::Create( dispatcher::Object& entity )
 
 // -----------------------------------------------------------------------------
 // Name: ExtensionFactory::Create
+// Created: SBO 2008-08-13
+// -----------------------------------------------------------------------------
+void ExtensionFactory::Create( dispatcher::ObjectKnowledge& entity )
+{
+    entity.Attach( *new ObjectKnowledgeNotifier   ( controller_, entity ) );
+    entity.Attach( *new ObjectKnowledgeManipulator( converter_, entity ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtensionFactory::Create
 // Created: SBO 2008-11-18
 // -----------------------------------------------------------------------------
 void ExtensionFactory::Create( dispatcher::Population& entity )
 {
     entity.Attach( *new PopulationNotifier( controller_, entity ) );
     entity.Attach( *new PopulationManipulator( entity ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtensionFactory::Create
+// Created: SBO 2008-08-13
+// -----------------------------------------------------------------------------
+void ExtensionFactory::Create( dispatcher::PopulationKnowledge& entity )
+{
+    entity.Attach( *new PopulationKnowledgeNotifier   ( controller_, entity ) );
+    entity.Attach( *new PopulationKnowledgeManipulator( converter_, entity ) );
 }

@@ -13,7 +13,7 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "tools/Resolver_ABC.h"
-#include <set>
+#include <map>
 
 namespace kernel
 {
@@ -39,7 +39,7 @@ class MedicalTreatmentAttribute : public kernel::MedicalTreatmentAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MedicalTreatmentAttribute( kernel::PropertiesDictionary& dico );
+    explicit MedicalTreatmentAttribute( const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes, kernel::PropertiesDictionary& dico );
              MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes, kernel::PropertiesDictionary& dico );
     virtual ~MedicalTreatmentAttribute();
     //@}
@@ -53,7 +53,9 @@ public:
 
     //! @name Modifiers
     //@{
-    void AddMedicalTreatment( const kernel::MedicalTreatmentType& type );
+    void SetDoctors( unsigned n );
+    void SetReferenceID( const std::string& id );
+    void UpdateTreatmentCapacity( const std::string& type, unsigned beds );
     //@}
 
 private:
@@ -65,24 +67,23 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadTreatment( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes );
+    void ReadBedCapacity( xml::xistream& xis );
     void CreateDictionary( kernel::PropertiesDictionary& dico );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< const kernel::MedicalTreatmentType* > T_MedicalTreatments;
+    typedef std::map< std::string, unsigned > T_TreatmentCapacities;
     //@}
 
 public:
     //! @name Member data
     //@{
-    T_MedicalTreatments     treatmentTypes_;
-    int                     beds_;
-    int                     availableBeds_;
+    const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& resolver_;
     int                     doctors_;
-    int                     availableDoctors_;
+    std::string             referenceID_;
+    T_TreatmentCapacities   capacities_;
     //@}
 };
 

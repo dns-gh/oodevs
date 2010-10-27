@@ -757,12 +757,24 @@ message ObjectAttributeFire {
    required int32                       heat                = 2;
 }
 
+message ObjectAttributeMedicalTreatmentBedCapacity {
+    required int32 type_id = 1;  // Cf. Data/MedicalTreatment.xml
+    optional uint32 baseline_count = 2;
+    optional uint32 available_count = 3;
+    optional uint32 emergency_count = 4;
+}
+
 message ObjectAttributeMedicalTreatment {
-   repeated uint32 type_id           = 1;
-   required int32  beds              = 2;
-   required int32  available_beds    = 3;
-   required int32  doctors           = 4;
-   required int32  available_doctors = 5;
+    enum EnumMedicalTreatmentStatus {
+        normal = 0;
+        on_divert = 1;
+        closed = 2;
+    }
+    optional string external_reference_id = 1;
+    repeated ObjectAttributeMedicalTreatmentBedCapacity bed_capacities = 2;
+    optional EnumMedicalTreatmentStatus facility_status = 3;
+    optional uint32 doctors = 4;
+    optional uint32 available_doctors = 5;
 }
 
 message ObjectAttributeNBCType {

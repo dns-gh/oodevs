@@ -15,6 +15,7 @@
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
+#include "Entities/Agents/Units/Humans/PHY_InjuredHuman.h"
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
@@ -31,6 +32,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_HumansComposante )
 PHY_HumansComposante::PHY_HumansComposante( const MIL_Time_ABC& time, PHY_ComposantePion& composante, unsigned int nNbrMdr )
     : pComposante_     ( &composante )
     , nNbrUsableHumans_( 0 )
+    , injury_          ( 0 )
 {
     while ( nNbrMdr-- )
         humans_.push_back( new PHY_Human( time, *this ) );
@@ -43,6 +45,7 @@ PHY_HumansComposante::PHY_HumansComposante( const MIL_Time_ABC& time, PHY_Compos
 PHY_HumansComposante::PHY_HumansComposante()
     : pComposante_     ( 0 )
     , nNbrUsableHumans_( 0 )
+    , injury_          ( 0 )
 {
     // NOTHING
 }
@@ -53,7 +56,8 @@ PHY_HumansComposante::PHY_HumansComposante()
 // -----------------------------------------------------------------------------
 PHY_HumansComposante::~PHY_HumansComposante()
 {
-    // NOTHING
+    if( injury_ )
+        delete injury_;
 }
 
 // -----------------------------------------------------------------------------
@@ -209,10 +213,33 @@ void PHY_HumansComposante::ApplyPoisonous( const MIL_ToxicEffectManipulator& con
 // Name: PHY_HumansComposante::ApplyInjury
 // Created: RFT
 // -----------------------------------------------------------------------------
-void PHY_HumansComposante::ApplyInjury( MIL_Injury_ABC& /*injury*/ )
+void PHY_HumansComposante::ApplyInjury( MIL_Injury_ABC& injury )
 {
-    // NOTHING
+    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
+    {
+        if( injury.IsInjured( GetComposante() ) )
+        {
+            //on doit supprimer aussi le human du human vector et il va devenir un InjuredHuman
+            //qui doit avoir une existence propre (mise a jour, que les autres sachent qu ils existent, position, peut etre une faculte de deplacement, ...)
+        }
+    }
+    if( injury_ )
+        delete injury_;
+    injury_ = new PHY_InjuredHuman( injury );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::GetInjury
+// Created: LDC 2010-07-02
+// -----------------------------------------------------------------------------
+PHY_InjuredHuman* PHY_HumansComposante::GetInjury()
+{
+    return injury_;
+}
+
+// =============================================================================
+// COMPOSANTE NOTIFICATIONS
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::NotifyComposanteHandledByMaintenance

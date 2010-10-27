@@ -643,32 +643,24 @@
 <context>
     <name>MedicalTreatment</name>
     <message>
-        <source>Medical Treatment services</source>
-        <translation>Services de traitement médical</translation>
-    </message>
-    <message>
-        <source>Medical Treatment type:</source>
-        <translation>Type de traitement médical:</translation>
-    </message>
-    <message>
-        <source>Medical Treatment capacity</source>
-        <translation>Capacité de traitement médical</translation>
-    </message>
-    <message>
-        <source>Total number of beds:</source>
-        <translation>Nombre total de lits:</translation>
-    </message>
-    <message>
-        <source>Number of available beds:</source>
-        <translation>Nombre de lits disponibles:</translation>
-    </message>
-    <message>
         <source>Total number of doctors:</source>
         <translation>Nombre total de médecins:</translation>
     </message>
     <message>
         <source>Number of available doctors:</source>
         <translation>Nombre de médecins disponibles:</translation>
+    </message>
+    <message>
+        <source>Medical Treatment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hospital ID:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical Treatment services (Available(Baseline)):</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

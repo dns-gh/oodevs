@@ -73,6 +73,7 @@ private:
     unsigned int GetMission() const;
     void Teleport( const dispatcher::Position& position );
     void RecoverAll();
+    void Wound( int wound, int type );
     //@}
 
 private:

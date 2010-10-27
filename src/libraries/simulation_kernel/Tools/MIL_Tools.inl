@@ -35,6 +35,16 @@ double MIL_Tools::ConvertSpeedSimToMos( double v )
     return v * rConvertionFactor;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Tools::MIL_Tools::ConvertSecondsToSim
+// Created: JCR 2010-10-26
+// -----------------------------------------------------------------------------
+inline
+double MIL_Tools::ConvertSecondsToSim( double v, const MIL_Time_ABC& time )
+{
+    return v / time.GetTickDuration();
+}
+
 //-----------------------------------------------------------------------------
 // Name: MIL_Tools::ConvertSecondsToSim
 // Created: JVT 03-01-08
@@ -42,7 +52,7 @@ double MIL_Tools::ConvertSpeedSimToMos( double v )
 inline
 double MIL_Tools::ConvertSecondsToSim( double v )  // s    -> DeltaT
 {
-    return v / MIL_AgentServer::GetWorkspace().GetTimeStepDuration();
+    return ConvertSecondsToSim( v, MIL_AgentServer::GetWorkspace() );
 }
 
 //-----------------------------------------------------------------------------

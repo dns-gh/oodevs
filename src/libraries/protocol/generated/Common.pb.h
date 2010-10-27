@@ -155,6 +155,7 @@ class MsgLocatedQuantity;
 class MsgLocatedQuantityList;
 class ObjectAttributeToxicCloud;
 class ObjectAttributeFire;
+class ObjectAttributeMedicalTreatmentBedCapacity;
 class ObjectAttributeMedicalTreatment;
 class ObjectAttributeNBCType;
 class ObjectAttributeSealOff;
@@ -275,6 +276,25 @@ inline bool ResourceNetwork_Link_TargetKind_Parse(
     const ::std::string& name, ResourceNetwork_Link_TargetKind* value) {
   return ::google::protobuf::internal::ParseNamedEnum<ResourceNetwork_Link_TargetKind>(
     ResourceNetwork_Link_TargetKind_descriptor(), name, value);
+}
+enum ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus {
+  ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_normal = 0,
+  ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_on_divert = 1,
+  ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_closed = 2
+};
+bool ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_IsValid(int value);
+const ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_EnumMedicalTreatmentStatus_MIN = ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_normal;
+const ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_EnumMedicalTreatmentStatus_MAX = ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_closed;
+
+const ::google::protobuf::EnumDescriptor* ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_descriptor();
+inline const ::std::string& ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_Name(ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_descriptor(), value);
+}
+inline bool ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_Parse(
+    const ::std::string& name, ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus>(
+    ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_descriptor(), name, value);
 }
 enum EnumDotationFamily {
   munition = 0,
@@ -13072,6 +13092,117 @@ class ObjectAttributeFire : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class ObjectAttributeMedicalTreatmentBedCapacity : public ::google::protobuf::Message {
+ public:
+  ObjectAttributeMedicalTreatmentBedCapacity();
+  virtual ~ObjectAttributeMedicalTreatmentBedCapacity();
+  
+  ObjectAttributeMedicalTreatmentBedCapacity(const ObjectAttributeMedicalTreatmentBedCapacity& from);
+  
+  inline ObjectAttributeMedicalTreatmentBedCapacity& operator=(const ObjectAttributeMedicalTreatmentBedCapacity& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ObjectAttributeMedicalTreatmentBedCapacity& default_instance();
+  void Swap(ObjectAttributeMedicalTreatmentBedCapacity* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ObjectAttributeMedicalTreatmentBedCapacity* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ObjectAttributeMedicalTreatmentBedCapacity& from);
+  void MergeFrom(const ObjectAttributeMedicalTreatmentBedCapacity& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 type_id = 1;
+  inline bool has_type_id() const;
+  inline void clear_type_id();
+  static const int kTypeIdFieldNumber = 1;
+  inline ::google::protobuf::int32 type_id() const;
+  inline void set_type_id(::google::protobuf::int32 value);
+  
+  // optional uint32 baseline_count = 2;
+  inline bool has_baseline_count() const;
+  inline void clear_baseline_count();
+  static const int kBaselineCountFieldNumber = 2;
+  inline ::google::protobuf::uint32 baseline_count() const;
+  inline void set_baseline_count(::google::protobuf::uint32 value);
+  
+  // optional uint32 available_count = 3;
+  inline bool has_available_count() const;
+  inline void clear_available_count();
+  static const int kAvailableCountFieldNumber = 3;
+  inline ::google::protobuf::uint32 available_count() const;
+  inline void set_available_count(::google::protobuf::uint32 value);
+  
+  // optional uint32 emergency_count = 4;
+  inline bool has_emergency_count() const;
+  inline void clear_emergency_count();
+  static const int kEmergencyCountFieldNumber = 4;
+  inline ::google::protobuf::uint32 emergency_count() const;
+  inline void set_emergency_count(::google::protobuf::uint32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 type_id_;
+  ::google::protobuf::uint32 baseline_count_;
+  ::google::protobuf::uint32 available_count_;
+  ::google::protobuf::uint32 emergency_count_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ObjectAttributeMedicalTreatmentBedCapacity* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class ObjectAttributeMedicalTreatment : public ::google::protobuf::Message {
  public:
   ObjectAttributeMedicalTreatment();
@@ -13123,56 +13254,82 @@ class ObjectAttributeMedicalTreatment : public ::google::protobuf::Message {
   
   // nested types ----------------------------------------------------
   
+  typedef ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus EnumMedicalTreatmentStatus;
+  static const EnumMedicalTreatmentStatus normal = ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_normal;
+  static const EnumMedicalTreatmentStatus on_divert = ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_on_divert;
+  static const EnumMedicalTreatmentStatus closed = ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_closed;
+  static inline bool EnumMedicalTreatmentStatus_IsValid(int value) {
+    return ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_IsValid(value);
+  }
+  static const EnumMedicalTreatmentStatus EnumMedicalTreatmentStatus_MIN =
+    ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_EnumMedicalTreatmentStatus_MIN;
+  static const EnumMedicalTreatmentStatus EnumMedicalTreatmentStatus_MAX =
+    ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_EnumMedicalTreatmentStatus_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  EnumMedicalTreatmentStatus_descriptor() {
+    return ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_descriptor();
+  }
+  static inline const ::std::string& EnumMedicalTreatmentStatus_Name(EnumMedicalTreatmentStatus value) {
+    return ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_Name(value);
+  }
+  static inline bool EnumMedicalTreatmentStatus_Parse(const ::std::string& name,
+      EnumMedicalTreatmentStatus* value) {
+    return ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_Parse(name, value);
+  }
+  
   // accessors -------------------------------------------------------
   
-  // repeated uint32 type_id = 1;
-  inline int type_id_size() const;
-  inline void clear_type_id();
-  static const int kTypeIdFieldNumber = 1;
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >& type_id() const
-      ;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >* mutable_type_id();
-  inline ::google::protobuf::uint32 type_id(int index) const;
-  inline void set_type_id(int index, ::google::protobuf::uint32 value);
-  inline void add_type_id(::google::protobuf::uint32 value);
+  // optional string external_reference_id = 1;
+  inline bool has_external_reference_id() const;
+  inline void clear_external_reference_id();
+  static const int kExternalReferenceIdFieldNumber = 1;
+  inline const ::std::string& external_reference_id() const;
+  inline void set_external_reference_id(const ::std::string& value);
+  inline void set_external_reference_id(const char* value);
+  inline void set_external_reference_id(const char* value, size_t size);
+  inline ::std::string* mutable_external_reference_id();
   
-  // required int32 beds = 2;
-  inline bool has_beds() const;
-  inline void clear_beds();
-  static const int kBedsFieldNumber = 2;
-  inline ::google::protobuf::int32 beds() const;
-  inline void set_beds(::google::protobuf::int32 value);
+  // repeated .Common.ObjectAttributeMedicalTreatmentBedCapacity bed_capacities = 2;
+  inline int bed_capacities_size() const;
+  inline void clear_bed_capacities();
+  static const int kBedCapacitiesFieldNumber = 2;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::ObjectAttributeMedicalTreatmentBedCapacity >& bed_capacities() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::ObjectAttributeMedicalTreatmentBedCapacity >* mutable_bed_capacities();
+  inline const ::Common::ObjectAttributeMedicalTreatmentBedCapacity& bed_capacities(int index) const;
+  inline ::Common::ObjectAttributeMedicalTreatmentBedCapacity* mutable_bed_capacities(int index);
+  inline ::Common::ObjectAttributeMedicalTreatmentBedCapacity* add_bed_capacities();
   
-  // required int32 available_beds = 3;
-  inline bool has_available_beds() const;
-  inline void clear_available_beds();
-  static const int kAvailableBedsFieldNumber = 3;
-  inline ::google::protobuf::int32 available_beds() const;
-  inline void set_available_beds(::google::protobuf::int32 value);
+  // optional .Common.ObjectAttributeMedicalTreatment.EnumMedicalTreatmentStatus facility_status = 3;
+  inline bool has_facility_status() const;
+  inline void clear_facility_status();
+  static const int kFacilityStatusFieldNumber = 3;
+  inline ::Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus facility_status() const;
+  inline void set_facility_status(::Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus value);
   
-  // required int32 doctors = 4;
+  // optional uint32 doctors = 4;
   inline bool has_doctors() const;
   inline void clear_doctors();
   static const int kDoctorsFieldNumber = 4;
-  inline ::google::protobuf::int32 doctors() const;
-  inline void set_doctors(::google::protobuf::int32 value);
+  inline ::google::protobuf::uint32 doctors() const;
+  inline void set_doctors(::google::protobuf::uint32 value);
   
-  // required int32 available_doctors = 5;
+  // optional uint32 available_doctors = 5;
   inline bool has_available_doctors() const;
   inline void clear_available_doctors();
   static const int kAvailableDoctorsFieldNumber = 5;
-  inline ::google::protobuf::int32 available_doctors() const;
-  inline void set_available_doctors(::google::protobuf::int32 value);
+  inline ::google::protobuf::uint32 available_doctors() const;
+  inline void set_available_doctors(::google::protobuf::uint32 value);
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > type_id_;
-  ::google::protobuf::int32 beds_;
-  ::google::protobuf::int32 available_beds_;
-  ::google::protobuf::int32 doctors_;
-  ::google::protobuf::int32 available_doctors_;
+  ::std::string* external_reference_id_;
+  static const ::std::string _default_external_reference_id_;
+  ::google::protobuf::RepeatedPtrField< ::Common::ObjectAttributeMedicalTreatmentBedCapacity > bed_capacities_;
+  int facility_status_;
+  ::google::protobuf::uint32 doctors_;
+  ::google::protobuf::uint32 available_doctors_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
@@ -19458,93 +19615,188 @@ inline void ObjectAttributeFire::set_heat(::google::protobuf::int32 value) {
 
 // -------------------------------------------------------------------
 
-// ObjectAttributeMedicalTreatment
+// ObjectAttributeMedicalTreatmentBedCapacity
 
-// repeated uint32 type_id = 1;
-inline int ObjectAttributeMedicalTreatment::type_id_size() const {
-  return type_id_.size();
+// required int32 type_id = 1;
+inline bool ObjectAttributeMedicalTreatmentBedCapacity::has_type_id() const {
+  return _has_bit(0);
 }
-inline void ObjectAttributeMedicalTreatment::clear_type_id() {
-  type_id_.Clear();
+inline void ObjectAttributeMedicalTreatmentBedCapacity::clear_type_id() {
+  type_id_ = 0;
+  _clear_bit(0);
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-ObjectAttributeMedicalTreatment::type_id() const {
+inline ::google::protobuf::int32 ObjectAttributeMedicalTreatmentBedCapacity::type_id() const {
   return type_id_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-ObjectAttributeMedicalTreatment::mutable_type_id() {
-  return &type_id_;
-}
-inline ::google::protobuf::uint32 ObjectAttributeMedicalTreatment::type_id(int index) const {
-  return type_id_.Get(index);
-}
-inline void ObjectAttributeMedicalTreatment::set_type_id(int index, ::google::protobuf::uint32 value) {
-  type_id_.Set(index, value);
-}
-inline void ObjectAttributeMedicalTreatment::add_type_id(::google::protobuf::uint32 value) {
-  type_id_.Add(value);
+inline void ObjectAttributeMedicalTreatmentBedCapacity::set_type_id(::google::protobuf::int32 value) {
+  _set_bit(0);
+  type_id_ = value;
 }
 
-// required int32 beds = 2;
-inline bool ObjectAttributeMedicalTreatment::has_beds() const {
+// optional uint32 baseline_count = 2;
+inline bool ObjectAttributeMedicalTreatmentBedCapacity::has_baseline_count() const {
   return _has_bit(1);
 }
-inline void ObjectAttributeMedicalTreatment::clear_beds() {
-  beds_ = 0;
+inline void ObjectAttributeMedicalTreatmentBedCapacity::clear_baseline_count() {
+  baseline_count_ = 0u;
   _clear_bit(1);
 }
-inline ::google::protobuf::int32 ObjectAttributeMedicalTreatment::beds() const {
-  return beds_;
+inline ::google::protobuf::uint32 ObjectAttributeMedicalTreatmentBedCapacity::baseline_count() const {
+  return baseline_count_;
 }
-inline void ObjectAttributeMedicalTreatment::set_beds(::google::protobuf::int32 value) {
+inline void ObjectAttributeMedicalTreatmentBedCapacity::set_baseline_count(::google::protobuf::uint32 value) {
   _set_bit(1);
-  beds_ = value;
+  baseline_count_ = value;
 }
 
-// required int32 available_beds = 3;
-inline bool ObjectAttributeMedicalTreatment::has_available_beds() const {
+// optional uint32 available_count = 3;
+inline bool ObjectAttributeMedicalTreatmentBedCapacity::has_available_count() const {
   return _has_bit(2);
 }
-inline void ObjectAttributeMedicalTreatment::clear_available_beds() {
-  available_beds_ = 0;
+inline void ObjectAttributeMedicalTreatmentBedCapacity::clear_available_count() {
+  available_count_ = 0u;
   _clear_bit(2);
 }
-inline ::google::protobuf::int32 ObjectAttributeMedicalTreatment::available_beds() const {
-  return available_beds_;
+inline ::google::protobuf::uint32 ObjectAttributeMedicalTreatmentBedCapacity::available_count() const {
+  return available_count_;
 }
-inline void ObjectAttributeMedicalTreatment::set_available_beds(::google::protobuf::int32 value) {
+inline void ObjectAttributeMedicalTreatmentBedCapacity::set_available_count(::google::protobuf::uint32 value) {
   _set_bit(2);
-  available_beds_ = value;
+  available_count_ = value;
 }
 
-// required int32 doctors = 4;
+// optional uint32 emergency_count = 4;
+inline bool ObjectAttributeMedicalTreatmentBedCapacity::has_emergency_count() const {
+  return _has_bit(3);
+}
+inline void ObjectAttributeMedicalTreatmentBedCapacity::clear_emergency_count() {
+  emergency_count_ = 0u;
+  _clear_bit(3);
+}
+inline ::google::protobuf::uint32 ObjectAttributeMedicalTreatmentBedCapacity::emergency_count() const {
+  return emergency_count_;
+}
+inline void ObjectAttributeMedicalTreatmentBedCapacity::set_emergency_count(::google::protobuf::uint32 value) {
+  _set_bit(3);
+  emergency_count_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// ObjectAttributeMedicalTreatment
+
+// optional string external_reference_id = 1;
+inline bool ObjectAttributeMedicalTreatment::has_external_reference_id() const {
+  return _has_bit(0);
+}
+inline void ObjectAttributeMedicalTreatment::clear_external_reference_id() {
+  if (external_reference_id_ != &_default_external_reference_id_) {
+    external_reference_id_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& ObjectAttributeMedicalTreatment::external_reference_id() const {
+  return *external_reference_id_;
+}
+inline void ObjectAttributeMedicalTreatment::set_external_reference_id(const ::std::string& value) {
+  _set_bit(0);
+  if (external_reference_id_ == &_default_external_reference_id_) {
+    external_reference_id_ = new ::std::string;
+  }
+  external_reference_id_->assign(value);
+}
+inline void ObjectAttributeMedicalTreatment::set_external_reference_id(const char* value) {
+  _set_bit(0);
+  if (external_reference_id_ == &_default_external_reference_id_) {
+    external_reference_id_ = new ::std::string;
+  }
+  external_reference_id_->assign(value);
+}
+inline void ObjectAttributeMedicalTreatment::set_external_reference_id(const char* value, size_t size) {
+  _set_bit(0);
+  if (external_reference_id_ == &_default_external_reference_id_) {
+    external_reference_id_ = new ::std::string;
+  }
+  external_reference_id_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ObjectAttributeMedicalTreatment::mutable_external_reference_id() {
+  _set_bit(0);
+  if (external_reference_id_ == &_default_external_reference_id_) {
+    external_reference_id_ = new ::std::string;
+  }
+  return external_reference_id_;
+}
+
+// repeated .Common.ObjectAttributeMedicalTreatmentBedCapacity bed_capacities = 2;
+inline int ObjectAttributeMedicalTreatment::bed_capacities_size() const {
+  return bed_capacities_.size();
+}
+inline void ObjectAttributeMedicalTreatment::clear_bed_capacities() {
+  bed_capacities_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Common::ObjectAttributeMedicalTreatmentBedCapacity >&
+ObjectAttributeMedicalTreatment::bed_capacities() const {
+  return bed_capacities_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Common::ObjectAttributeMedicalTreatmentBedCapacity >*
+ObjectAttributeMedicalTreatment::mutable_bed_capacities() {
+  return &bed_capacities_;
+}
+inline const ::Common::ObjectAttributeMedicalTreatmentBedCapacity& ObjectAttributeMedicalTreatment::bed_capacities(int index) const {
+  return bed_capacities_.Get(index);
+}
+inline ::Common::ObjectAttributeMedicalTreatmentBedCapacity* ObjectAttributeMedicalTreatment::mutable_bed_capacities(int index) {
+  return bed_capacities_.Mutable(index);
+}
+inline ::Common::ObjectAttributeMedicalTreatmentBedCapacity* ObjectAttributeMedicalTreatment::add_bed_capacities() {
+  return bed_capacities_.Add();
+}
+
+// optional .Common.ObjectAttributeMedicalTreatment.EnumMedicalTreatmentStatus facility_status = 3;
+inline bool ObjectAttributeMedicalTreatment::has_facility_status() const {
+  return _has_bit(2);
+}
+inline void ObjectAttributeMedicalTreatment::clear_facility_status() {
+  facility_status_ = 0;
+  _clear_bit(2);
+}
+inline ::Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus ObjectAttributeMedicalTreatment::facility_status() const {
+  return static_cast< ::Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus >(facility_status_);
+}
+inline void ObjectAttributeMedicalTreatment::set_facility_status(::Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus value) {
+  GOOGLE_DCHECK(::Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_IsValid(value));
+  _set_bit(2);
+  facility_status_ = value;
+}
+
+// optional uint32 doctors = 4;
 inline bool ObjectAttributeMedicalTreatment::has_doctors() const {
   return _has_bit(3);
 }
 inline void ObjectAttributeMedicalTreatment::clear_doctors() {
-  doctors_ = 0;
+  doctors_ = 0u;
   _clear_bit(3);
 }
-inline ::google::protobuf::int32 ObjectAttributeMedicalTreatment::doctors() const {
+inline ::google::protobuf::uint32 ObjectAttributeMedicalTreatment::doctors() const {
   return doctors_;
 }
-inline void ObjectAttributeMedicalTreatment::set_doctors(::google::protobuf::int32 value) {
+inline void ObjectAttributeMedicalTreatment::set_doctors(::google::protobuf::uint32 value) {
   _set_bit(3);
   doctors_ = value;
 }
 
-// required int32 available_doctors = 5;
+// optional uint32 available_doctors = 5;
 inline bool ObjectAttributeMedicalTreatment::has_available_doctors() const {
   return _has_bit(4);
 }
 inline void ObjectAttributeMedicalTreatment::clear_available_doctors() {
-  available_doctors_ = 0;
+  available_doctors_ = 0u;
   _clear_bit(4);
 }
-inline ::google::protobuf::int32 ObjectAttributeMedicalTreatment::available_doctors() const {
+inline ::google::protobuf::uint32 ObjectAttributeMedicalTreatment::available_doctors() const {
   return available_doctors_;
 }
-inline void ObjectAttributeMedicalTreatment::set_available_doctors(::google::protobuf::int32 value) {
+inline void ObjectAttributeMedicalTreatment::set_available_doctors(::google::protobuf::uint32 value) {
   _set_bit(4);
   available_doctors_ = value;
 }
@@ -20239,6 +20491,10 @@ inline const EnumDescriptor* GetEnumDescriptor< ::Common::MsgAtlasNature_AtlasNa
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Common::ResourceNetwork_Link_TargetKind>() {
   return ::Common::ResourceNetwork_Link_TargetKind_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus>() {
+  return ::Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< Common::EnumDotationFamily>() {

@@ -24,9 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeMedicalTreatment )
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeMedicalTreatment::DEC_Knowledge_ObjectAttributeMedicalTreatment()
     : attr_            ( 0 )
-    , availableBeds_   ( 0 )
     , availableDoctors_( 0 )
-    , beds_            ( 0 )
     , doctors_         ( 0 )
 {
     // NOTHING
@@ -38,9 +36,7 @@ DEC_Knowledge_ObjectAttributeMedicalTreatment::DEC_Knowledge_ObjectAttributeMedi
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeMedicalTreatment::DEC_Knowledge_ObjectAttributeMedicalTreatment( const MedicalTreatmentAttribute& attr )
     : attr_            ( &attr )
-    , availableBeds_   ( 0 )
     , availableDoctors_( 0 )
-    , beds_            ( 0 )
     , doctors_         ( 0 )
 {
     // NOTHING
@@ -65,27 +61,13 @@ DEC_Knowledge_ObjectAttributeMedicalTreatment::~DEC_Knowledge_ObjectAttributeMed
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeMedicalTreatment::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    int availableBeds, availableDoctors, beds, doctors, listSize, nID;
     file >> boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file >> const_cast< MedicalTreatmentAttribute*& >( attr_ );
-    file >> availableBeds
-         >> availableDoctors
-         >> beds
-         >> doctors
-         >> listSize;
-    availableBeds_ = availableBeds;
-    availableDoctors_ = availableDoctors;
-    beds_ = beds;
-    doctors_ = doctors;
-    //First we make sure the list containing all the medical treatment ids is empty
-    for( IT_MedicalTreatmentTypeList it = medicalTreatmentList_.begin() ; it != medicalTreatmentList_.end() ; )
-        it = medicalTreatmentList_.erase( it );
-    //Then we fill it
-    for( int i = 0 ; i < listSize ; i++ )
-    {
-        file >> nID;
-        medicalTreatmentList_.push_back( nID );
-    }
+    /* file >> availableDoctors_
+         >> doctors_
+    	 >> referenceID_
+         >> status_; */
+//    file >> capacities_;
 }
 
 // -----------------------------------------------------------------------------
@@ -94,20 +76,14 @@ void DEC_Knowledge_ObjectAttributeMedicalTreatment::load( MIL_CheckPointInArchiv
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeMedicalTreatment::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    int nID;
-    int listSize = medicalTreatmentList_.size();
     file << boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this )
-         << const_cast< MedicalTreatmentAttribute*& >( attr_ )
-         << availableBeds_
-         << availableDoctors_
-         << beds_
+         << const_cast< MedicalTreatmentAttribute*& >( attr_ );
+         /* << availableDoctors_
          << doctors_
-         << listSize;
-    for( CIT_MedicalTreatmentTypeList iter = medicalTreatmentList_.begin() ; iter != medicalTreatmentList_.end() ; ++iter )
-    {
-        nID = *iter;
-        file << nID;
-    }
+         << referenceID_
+		 << status_;
+*/
+//    file << capacities_;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,18 +101,17 @@ void DEC_Knowledge_ObjectAttributeMedicalTreatment::Register( DEC_Knowledge_Obje
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeMedicalTreatment::UpdateAttributes()
 {
+    // JCR 2010-10-07: Automatically updated through the real object attributes.
+
+/*
     if( !attr_ )
         return;
-    availableBeds_ = attr_->GetAvailableBeds();
     availableDoctors_ = attr_->GetAvailableDoctors();
-    beds_ = attr_->GetBeds();
     doctors_ = attr_->GetDoctors();
-    //First we empty the list containing all the medical treatment ids
-    for( IT_MedicalTreatmentTypeList it = medicalTreatmentList_.begin() ; it != medicalTreatmentList_.end() ; )
-        it = medicalTreatmentList_.erase( it );
+ */  
     //Then we fill it by recovering the ids from the attribute
-    for( MedicalTreatmentAttribute::CIT_MedicalTreatmentMap iter = attr_->GetMap().begin() ; iter != attr_->GetMap().end() ; ++iter )
-        medicalTreatmentList_.push_back( MIL_MedicalTreatmentType::Find( iter->first )->GetID() );
+    // for( MedicalTreatmentAttribute::CIT_MedicalTreatmentMap iter = attr_->GetMap().begin() ; iter != attr_->GetMap().end() ; ++iter )
+    //    medicalTreatmentList_.push_back( MIL_MedicalTreatmentType::Find( iter->first )->GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,21 +138,15 @@ void DEC_Knowledge_ObjectAttributeMedicalTreatment::UpdateOnPerception( const DE
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeMedicalTreatment::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& /*collision*/ )
 {
-    // NOTHING
+    UpdateAttributes();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeMedicalTreatment::BuildMsgSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeMedicalTreatment::Send( Common::ObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeMedicalTreatment::Send( Common::ObjectAttributes& message ) const
 {
-    asn.mutable_medical_treatment()->set_available_beds( availableBeds_ );
-    asn.mutable_medical_treatment()->set_available_doctors( availableDoctors_ );
-    asn.mutable_medical_treatment()->set_beds( beds_ );
-    asn.mutable_medical_treatment()->set_doctors( doctors_ );
-    // Get the list of the ID of each medical treatment
-    if( attr_ )
-        for( MedicalTreatmentAttribute::CIT_MedicalTreatmentMap iter = attr_->GetMap().begin() ; iter != attr_->GetMap().end() ; ++iter )
-            asn.mutable_medical_treatment()->add_type_id( MIL_MedicalTreatmentType::Find( iter->first )->GetID() );
+ 	if( attr_ )
+        attr_->SendFullState( message );
 }

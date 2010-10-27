@@ -59,6 +59,7 @@ private:
     //! @name Helpers
     //@{
     boost::shared_ptr< Condition_ABC > ObjectDestroyed();
+    boost::shared_ptr< Condition_ABC > ObjectKnowledgeCreated();
     //@}
 
 private:

@@ -19,6 +19,8 @@
 #include "frontend/CheckpointConfigPanel.h"
 #include "frontend/CreateSession.h"
 #include "frontend/CrossbowPluginConfigPanel.h"
+#include "frontend/EdxlHavePluginConfigPanel.h"
+#include "frontend/TimelinePluginConfigPanel.h"
 #include "frontend/DisPluginConfigPanel.h"
 #include "frontend/EditExercise.h"
 #include "frontend/HlaPluginConfigPanel.h"
@@ -173,6 +175,8 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
                 AddPlugin< frontend::DisPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "DIS" ) );
                 AddPlugin< frontend::HlaPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "HLA" ) );
                 AddPlugin< frontend::CrossbowPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "Crossbow" ) );
+                AddPlugin< frontend::EdxlHavePluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "EDXL-HAVE" ) );
+                AddPlugin< frontend::TimelinePluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "ERP/Timeline" ) );
             }
         }
     }

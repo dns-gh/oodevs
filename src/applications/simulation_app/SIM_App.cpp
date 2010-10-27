@@ -58,7 +58,7 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
     logger_ = new MT_FileLogger( startupConfig_.BuildSessionChildFile( "Sim.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true );
     MT_LOG_REGISTER_LOGGER( *logger_ );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    MT_LOG_STARTUP_MESSAGE( "CSword(tm) Simulation - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ );
+    MT_LOG_STARTUP_MESSAGE( "Sword(tm) Simulation - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ );
     MT_LOG_STARTUP_MESSAGE( ( "Starting simulation - " + boost::posix_time::to_simple_string( boost::posix_time::second_clock::local_time() ) ).c_str() );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     if( startupConfig_.UseNetworkLogger() )

@@ -35,6 +35,7 @@ public:
     // Effects
     static void SetAttitude( MIL_Population& callerPopulation, unsigned int attitudeId );
     static unsigned int GetAttitude( const MIL_Population& callerPopulation );
+    static std::vector< boost::shared_ptr< TER_Localisation > > GetCurrentLocations ( const MIL_Population& callerPopulation );
 
     // Knowledge agents
     static int GetKnowledgeAgentRoePopulation ( unsigned int agentId );
@@ -47,6 +48,7 @@ public:
     static float GetKnowledgeObjectDistance( const MIL_Population& callerPopulation, int knowledgeId ) ;
     static boost::shared_ptr<MT_Vector2D> GetKnowledgeObjectClosestPoint( const MIL_Population& callerPopulation, int knowledgeId ) ;
     static int IsEnemy( const MIL_Population& callerPopulation, int knowledgeId );
+    
 
     // Etat decisionnel
     static void NotifyDominationStateChanged( MIL_Population& callerPopulation, double dominationState );

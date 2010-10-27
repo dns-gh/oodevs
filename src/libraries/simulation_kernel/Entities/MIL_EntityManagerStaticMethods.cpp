@@ -154,7 +154,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< MIL_KnowledgeGroupType         >( xis, config, "knowledge-groups"   );
     InitializeType< MIL_NbcAgentType               >( xis, config, "nbc"                );
     InitializeType< MIL_FireClass                  >( xis, config, "fire"               );
-    InitializeType< MIL_MedicalTreatmentType       >( xis, config, "medical-treatment"  );
+    InitializeMedicalTreatment( xis, config, time );
     InitializeType< PHY_SupplyResourcesAlarms      >( xis, config, "supply"             );
     InitializeType< PHY_Convoy_ABC                 >( xis, config, "supply"             );
     InitializeType< PHY_MedicalResourcesAlarms     >( xis, config, "health"             );
@@ -236,4 +236,23 @@ void MIL_EntityManagerStaticMethods::InitializeWeapons( xml::xistream& xis, MIL_
     xml::xifstream xisWeapons( strFile );
     config.AddFileToCRC( strFile );
     PHY_WeaponType::Initialize( time, xisWeapons );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManagerStaticMethods::InitializeMedicalTreatment
+// Created: JCR 2010-10-26
+// -----------------------------------------------------------------------------
+void MIL_EntityManagerStaticMethods::InitializeMedicalTreatment( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time )
+{
+    std::string strFile;
+    xis >> xml::start( "medical-treatment" )
+            >> xml::attribute( "file", strFile )
+        >> xml::end;
+
+    strFile = config.BuildPhysicalChildFile( strFile );
+
+    xml::xifstream xisType( strFile );
+    config.AddFileToCRC( strFile );
+
+    MIL_MedicalTreatmentType::Initialize( xisType, time );//verfifier tous les initialize
 }

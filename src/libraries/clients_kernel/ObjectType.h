@@ -56,6 +56,7 @@ public:
     bool HasBuildableDensity() const;
     bool HasLogistic() const;
     bool HasSpawn() const;
+    bool HasMedicalCapacity() const;
     bool CanBeReservedObstacle() const;
     bool CanBeValorized() const;
     bool CanBeBypassed() const;

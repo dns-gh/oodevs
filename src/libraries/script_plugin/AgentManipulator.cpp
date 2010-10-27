@@ -58,6 +58,7 @@ void AgentManipulator::Registrar::RegisterIn( directia::brain::Brain& brain )
 
     brain.Register( "Teleport",   &AgentManipulator::Teleport );
     brain.Register( "RecoverAll", &AgentManipulator::RecoverAll );
+	brain.Register( "Wound", &AgentManipulator::Wound );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,5 +169,26 @@ void AgentManipulator::RecoverAll()
     message().mutable_tasker()->mutable_unit()->set_id( agent_.GetId() );
     message().set_type( MsgsClientToSim::MsgUnitMagicAction_Type_recover_all );
     message().mutable_parameters();
+    message.Send( publisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentManipulator::Wound
+// Created: LDC 2010-07-02
+// -----------------------------------------------------------------------------
+void AgentManipulator::Wound( int injury, int type )
+{
+    simulation::UnitMagicAction message;
+    message().mutable_tasker()->mutable_unit()->set_id( agent_.GetId() );
+    message().set_type( MsgsClientToSim::MsgUnitMagicAction_Type_create_wound );
+
+    Common::MsgMissionParameter& paramInjury = *message().mutable_parameters()->add_elem();
+    paramInjury.set_null_value( false );
+    paramInjury.mutable_value()->set_identifier( injury );
+
+    Common::MsgMissionParameter& paramType = *message().mutable_parameters()->add_elem();
+    paramType.set_null_value( false );
+    paramType.mutable_value()->set_identifier( type );
+    
     message.Send( publisher_ );
 }

@@ -65,3 +65,4 @@ include "Emergency/Pions/Common/Missions/OrganizeDistribution.bms"
 
 include "Emergency/Pions/Common/Missions/Supply.bms"
 
+include "Emergency/Pions/Common/Missions/FollowPopulation.bms"

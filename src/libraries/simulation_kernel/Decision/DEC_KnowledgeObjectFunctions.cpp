@@ -298,6 +298,19 @@ std::string DEC_KnowledgeObjectFunctions::GetType( boost::shared_ptr< DEC_Knowle
     return "";
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::GetName
+// Created: JCR 2010-07-07
+// -----------------------------------------------------------------------------
+std::string DEC_KnowledgeObjectFunctions::GetName( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+        return pKnowledge->GetName();
+    return "";
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth
 // Created: NLD 2004-05-13

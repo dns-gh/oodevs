@@ -12,50 +12,76 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_MedicalTreatmentFunctions.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MedicalCapacity.h"
+#include "simulation_terrain/TER_Localisation.h"
+
+namespace
+{
+    PHY_InjuredHuman* GetWound( DEC_Knowledge_Agent& wounded )
+    {
+        PHY_InjuredHuman* injuredHuman = wounded.GetAgentKnown().GetRole< PHY_RolePion_Composantes >().GetMajorComposante()->GetInjury();
+        return injuredHuman;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MedicalTreatmentFunctions::TakeCareOfThePatient
 // Created: RFT 2008
 // -----------------------------------------------------------------------------
-void DEC_MedicalTreatmentFunctions::TakeCareOfThePatient( MIL_AgentPion& /*callerAgent*/ )
+void DEC_MedicalTreatmentFunctions::TakeCareOfThePatient( const MIL_Agent_ABC& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Agent > patient, boost::shared_ptr< DEC_Knowledge_Object > knowledge )
 {
-    //Deposer le malade dans une structure medicale (hopital ou autre)
+    MIL_Object_ABC* pHospital = knowledge->GetObjectKnown();
+    PHY_InjuredHuman* injuredHuman = GetWound( *patient );
+    if( injuredHuman )
+        pHospital->Get< MedicalCapacity >().ReceivePatient( *injuredHuman );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_MedicalTreatmentFunctions::PutPatientInTransport
-// Created: RFT 2008
+// Name: DEC_MedicalTreatmentFunctions::DetermineHospital
+// Created: LDC 2010-07-01
 // -----------------------------------------------------------------------------
-void DEC_MedicalTreatmentFunctions::PutPatientInTransport( MIL_AgentPion& /*callerAgent*/ )
+boost::shared_ptr< DEC_Knowledge_Object > DEC_MedicalTreatmentFunctions::DetermineHospital( const MIL_Agent_ABC& caller, boost::shared_ptr< DEC_Knowledge_Agent > patient, std::vector< boost::shared_ptr< DEC_Knowledge_Object > > hospitals )
 {
-    //Mettre le malade dans le transport (ambulance, camion de pompier ou autre)
+    typedef std::vector< boost::shared_ptr< DEC_Knowledge_Object > >::const_iterator const_iterator;
+
+    PHY_InjuredHuman* injuredHuman = GetWound( *patient );
+    double bestDistance = std::numeric_limits< double >::max();
+    boost::shared_ptr< DEC_Knowledge_Object > pBestHospital;
+    if( injuredHuman )
+    {
+        const MT_Vector2D& callerPosition = caller.GetRole< PHY_RoleInterface_Location >().GetPosition();
+        for( const_iterator it = hospitals.begin(); it != hospitals.end(); ++it )
+        {
+            MIL_Object_ABC* pHospital = (*it)->GetObjectKnown();
+            if( pHospital && pHospital->Get< MedicalCapacity >().CanTreat( *pHospital, *injuredHuman ) )
+            {
+                double distance = pHospital->GetLocalisation().ComputeBarycenter().Distance( callerPosition );
+                if( bestDistance > distance )
+                {
+                    bestDistance = distance;
+                    pBestHospital = *it;
+                }
+            }
+        }
+    }
+    return pBestHospital;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_MedicalTreatmentFunctions::GetMedicalTreatmentTypes
-// Created: RFT 2008
+// Name: DEC_MedicalTreatmentFunctions::CanHospitalTreatWound
+// Created: LDC 2010-07-01
 // -----------------------------------------------------------------------------
-int DEC_MedicalTreatmentFunctions::GetMedicalTreatmentTypes( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledge )
+bool DEC_MedicalTreatmentFunctions::CanHospitalTreatWound( const MIL_Agent_ABC& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Agent > patient, boost::shared_ptr< DEC_Knowledge_Object > hospital )
 {
-    assert( knowledge );
-    MIL_Object_ABC* pObject = knowledge->GetObjectKnown();
-    if( !pObject || pObject->IsMarkedForDestruction() )
-        return 0;
-    callerAgent.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
-    int id = 0;
-    //ICI donner la liste des ID des services medicaux que l on peut traiter
-    //call.GetResult().SetValue( ( int ) object.GetAttribute< MedicalTreatmentAttribute >().GetMap.GetID() );
-    return id;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_MedicalTreatmentFunctions::DoDiagnosis
-// Created: RFT 2008
-// -----------------------------------------------------------------------------
-void DEC_MedicalTreatmentFunctions::DoDiagnosis( MIL_AgentPion& /*callerAgent*/ )
-{
-    //Pour un injuredHUman, regarder le nom de sa blessure ou son ID
+    PHY_InjuredHuman* injuredHuman = GetWound( *patient );
+    if ( !injuredHuman )
+        return false;
+    return hospital->GetObjectKnown()->Get< MedicalCapacity >().CanTreat( *hospital->GetObjectKnown(), *injuredHuman );
 }

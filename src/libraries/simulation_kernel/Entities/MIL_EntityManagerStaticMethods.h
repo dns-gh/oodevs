@@ -48,6 +48,7 @@ protected:
     template < typename T >
     static void InitializeType       ( xml::xistream& xis, MIL_Config& config, const std::string& strSection );
     static void InitializeMedical    ( xml::xistream& xis, MIL_Config& config );
+    static void InitializeMedicalTreatment( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
     static void InitializeComposantes( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
     static void InitializeWeapons    ( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
     static void InitializeSensors    ( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );

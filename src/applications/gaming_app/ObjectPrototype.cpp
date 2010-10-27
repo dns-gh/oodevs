@@ -107,7 +107,7 @@ namespace
         container.push_back( new NBCPrototype( parent, resolver, toxic, attributesList ) );
     }
 
-    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver, ParameterList*& attributesList )
+    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& resolver, ParameterList*& attributesList )
     {
         container.push_back( new MedicalTreatmentPrototype( parent, resolver, attributesList ) );
     }
@@ -133,7 +133,7 @@ namespace
 
         factory->Register( "logistic"       , boost::bind( &LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( attributesList ) ) );
 
-        factory->Register( "healable"       , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
+        factory->Register( "medical"       , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "propagation"    , boost::bind( &PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
 
         factory->Register( "contamination"  , boost::bind( &ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );

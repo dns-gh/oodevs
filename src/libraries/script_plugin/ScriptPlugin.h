@@ -117,6 +117,7 @@ private:
     long time_;
     bool reset_;
     unsigned int tickDuration_;
+    bool loaded_;
     //@}
 };
 

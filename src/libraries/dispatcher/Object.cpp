@@ -119,8 +119,7 @@ void Object::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().set_name( GetName() );
     asn().mutable_party()->set_id( side_.GetId() );
     localisation_.Send( *asn().mutable_location() );
-    std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
+    Send( *asn().mutable_attributes() );
     asn.Send( publisher );
 }
 
@@ -134,9 +133,18 @@ void Object::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().mutable_object()->set_id( GetId() );
     if( optionals_.localisationPresent )
         localisation_.Send( *asn().mutable_location() );
-    std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
+    Send( *asn().mutable_attributes() );
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::Send
+// Created: JCR 2010-10-08
+// -----------------------------------------------------------------------------
+void Object::Send( Common::ObjectAttributes& attributes ) const
+{
+    std::for_each( attributes_.begin(), attributes_.end(),
+        boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( attributes ) ) );
 }
 
 // -----------------------------------------------------------------------------

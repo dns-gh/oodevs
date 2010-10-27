@@ -185,6 +185,19 @@ namespace frontend
             return ListDirectories( dir, &IsValidOrder );
         }
 
+        bool IsValidPropagation( const bfs::path& child )
+        {
+            return bfs::is_directory( child ) 
+                   && bfs::exists( child / "propagation" ) && bfs::is_directory( child / "propagation" )        
+                   && bfs::exists( child / "propagation.xml" );
+        }
+
+        QStringList ListPropagations( const tools::GeneralConfig& config )
+        {
+            std::string  dir( ( bfs::path( config.GetRootDir(), bfs::native ) / "data/propagations" ).native_directory_string() );
+            return ListDirectories( dir, &IsValidPropagation );
+        }
+
         bool IsOther( const bfs::path& child )
         {
             return bfs::is_directory( child ) && child.leaf() != "sessions" && child.leaf() != ".svn";

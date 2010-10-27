@@ -146,6 +146,15 @@ bool ObjectType::HasSpawn() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectType::HasMedicalCapacity
+// Created: JCR 2010-06-06
+// -----------------------------------------------------------------------------
+bool ObjectType::HasMedicalCapacity() const
+{
+    return( capacities_.find( "medical" ) != capacities_.end() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectType::CanBeReservedObstacle
 // Created: AGE 2006-10-17
 // -----------------------------------------------------------------------------

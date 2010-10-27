@@ -73,7 +73,7 @@ namespace
         container.push_back( new NBCPrototype( parent, resolver, toxic, object ) );
     }
 
-    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType >& resolver, Object_ABC*& object )
+    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType, std::string >& resolver, Object_ABC*& object )
     {
         container.push_back( new MedicalTreatmentPrototype( parent, resolver, object ) );
     }
@@ -112,7 +112,7 @@ namespace
         factory->Register( "interact-with-enemy", boost::bind( &::InteractWithEnemyAttribute, _2, _3, boost::ref( object ) ) );
         factory->Register( "interference"       , boost::bind( &::InterferenceAttribute, _2, _3, boost::ref( object ) ) );
 
-        factory->Register( "healable"           , boost::bind( &::MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
+        factory->Register( "medical"            , boost::bind( &::MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
         factory->Register( "propagation"        , boost::bind( &::PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( config ), boost::ref( object ) ) );
 
         factory->Register( "contamination"      , boost::bind( &::ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );

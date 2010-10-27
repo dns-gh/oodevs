@@ -159,7 +159,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Decontamination >( ADN_Objects_GUI::eDecontaminationCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Extinguishable >( ADN_Objects_GUI::eExtinguishableCapacityPresent );
-    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Healable >( ADN_Objects_GUI::eHealableCapacityPresent );
+    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Medical >( ADN_Objects_GUI::eMedicalCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Interference >( ADN_Objects_GUI::eInterferenceCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_InteractWithEnemy >( ADN_Objects_GUI::eInteractWithEnemyCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Occupable >( ADN_Objects_GUI::eOccupableCapacityPresent );

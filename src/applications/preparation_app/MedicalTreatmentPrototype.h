@@ -15,7 +15,12 @@
 namespace kernel
 {
     class Object_ABC;
+    class ObjectType;
+    // class ShapeObject;
+    // class ShapeObjectLoader_ABC;
+    class Team_ABC;
 }
+// class TeamsModel;
 
 // =============================================================================
 /** @class  MedicalTreatmentPrototype
@@ -28,14 +33,19 @@ class MedicalTreatmentPrototype : public gui::MedicalTreatmentPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalTreatmentPrototype( QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver, kernel::Object_ABC*& creation );
+             MedicalTreatmentPrototype( QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& resolver, kernel::Object_ABC*& creation );
     virtual ~MedicalTreatmentPrototype();
     //@}
 
     //! @name Operations
     //@{
     virtual void Commit();
-    //@}
+/*  JCR: TODO $$$$: to be activated 
+    virtual bool CanLoad();
+    virtual void CommitShapeObject( const kernel::ShapeObject& importObject );
+    virtual kernel::ShapeObjectLoader_ABC* LoadObjects( const std::string& filename, const kernel::CoordinateConverter_ABC& coordinatesConverter );
+*/  
+  	//@}
 
 private:
     //! @name Copy/Assignment

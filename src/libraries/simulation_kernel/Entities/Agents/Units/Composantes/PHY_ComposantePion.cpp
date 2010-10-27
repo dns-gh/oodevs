@@ -424,6 +424,16 @@ void PHY_ComposantePion::ApplyInjury( MIL_Injury_ABC& injury )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetInjury
+// Created: LDC 2010-07-02
+// -----------------------------------------------------------------------------
+PHY_InjuredHuman* PHY_ComposantePion::GetInjury() const
+{
+    assert( pHumans_ );
+    return pHumans_->GetInjury();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetDangerosity
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------

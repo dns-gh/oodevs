@@ -59,3 +59,5 @@ include "Emergency/Pions/Common/Missions/OrganiseShelter.bms"
 
 include "Emergency/Pions/Common/Missions/OrganizeDistribution.bms"
 
+include "Emergency/Pions/Common/Missions/FollowPopulation.bms"
+

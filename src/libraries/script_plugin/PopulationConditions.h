@@ -61,6 +61,7 @@ private:
     //! @name Helpers
     //@{
     boost::shared_ptr< Condition_ABC > PopulationEnters( const dispatcher::Zone& zone );
+    boost::shared_ptr< Condition_ABC > PopulationKnowledgeCreated();
     //@}
 
 private:

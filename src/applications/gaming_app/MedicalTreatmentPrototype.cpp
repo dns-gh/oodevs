@@ -22,9 +22,9 @@ using namespace gui;
 // Name: MedicalTreatmentPrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-MedicalTreatmentPrototype::MedicalTreatmentPrototype( QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType >& resolver, actions::parameters::ParameterList*& attributesList )
+MedicalTreatmentPrototype::MedicalTreatmentPrototype( QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType, std::string >& resolver, actions::parameters::ParameterList*& attributesList )
     : MedicalTreatmentPrototype_ABC( parent, resolver )
-    , attributesList_( attributesList )
+    , attributesList_ ( attributesList )
 {
     // NOTHING
 }
@@ -44,15 +44,22 @@ MedicalTreatmentPrototype::~MedicalTreatmentPrototype()
 // -----------------------------------------------------------------------------
 void MedicalTreatmentPrototype::Commit()
 {
-    /*
-    if( treatmentTypes_ != 0 )
+    actions::parameters::ParameterList& list = attributesList_->AddList( "MedicalTreatment" );
+    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_medical_treatment );
+    list.AddString( "ExternalReferenceId", referenceID_->text().ascii() );
+    list.AddQuantity( "Doctors", doctors_->value() );
+    list.AddIdentifier( "Status", 0 ); // JCR TODO : Check status available ?
+
+    int i = 0;
+    actions::parameters::ParameterList& capacities = list.AddList( "BedCapacities" );
+    for( CIT_Capacities it = capacities_.begin(); it != capacities_.end(); ++it, ++i )
     {
-        msg_.mutable_attributes()->mutable_medical_treatment()->set_beds              ( beds_->value() );
-        msg_.mutable_attributes()->mutable_medical_treatment()->set_available_beds    ( availableBeds_->value() );
-        msg_.mutable_attributes()->mutable_medical_treatment()->set_doctors           ( doctors_->value() );
-        msg_.mutable_attributes()->mutable_medical_treatment()->set_available_doctors ( availableDoctors_->value() );
-        for( int i = 0 ; i < 1; i++)
-            msg_.mutable_attributes()->mutable_medical_treatment()->mutable_type_id()->add_elem( type_->GetValue()->GetId() );
+        const int value = it->baseline_->value();
+        actions::parameters::ParameterList& bed = capacities.AddList( "BedCapacity" );
+
+        bed.AddIdentifier( "TypeId", i );
+        bed.AddQuantity( "BaseLineCount", value );
+        bed.AddQuantity( "AvailableCount", value );
+        bed.AddQuantity( "EmergencyCount", 0 );
     }
-    */
 }

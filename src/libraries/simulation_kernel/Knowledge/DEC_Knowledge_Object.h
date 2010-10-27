@@ -101,6 +101,7 @@ public:
     bool IsReservedObstacle() const;
     bool IsReservedObstacleActivated() const;
     unsigned int GetID() const;
+    const std::string&  GetName() const;
     MIL_Object_ABC* GetObjectKnown() const;
     const MIL_ObjectType_ABC& GetType() const;
     const TER_Localisation& GetLocalisation() const;
@@ -199,6 +200,7 @@ private:
     MIL_Object_ABC* pObjectKnown_; // Objet réel (peut ne plus exister...)
     const MIL_ObjectType_ABC* pObjectType_;
     const unsigned int  nID_;
+    std::string         name_;
     T_ObjectAttributeVector attributes_;
     int nAttributesUpdated_;
     // Attributes

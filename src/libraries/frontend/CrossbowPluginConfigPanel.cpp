@@ -12,6 +12,7 @@
 #include "CreateSession.h"
 #include "tools/GeneralConfig.h"
 #include "clients_gui/Tools.h"
+#include <qvbox.h>
 #include <qlineedit.h>
 #include <qspinbox.h>
 #include <qgroupbox.h>
@@ -44,14 +45,17 @@ CrossbowPluginConfigPanel::CrossbowPluginConfigPanel( QWidget* parent, const too
     box_ = Style( new QGroupBox( 2, Horizontal, tools::translate( "CrossbowPluginConfigPanel", "Enable Crossbow export" ), this ) );
     box_->setCheckable( true );
     box_->setChecked( false );
+    QVBox* box = Style( new QVBox( box_ ) );
     {
-        Style( new QLabel( tools::translate( "CrossbowPluginConfigPanel", "Feature database (manage geometry information):" ), box_ ) );
-        featureDb_ = Style( new QLineEdit( "sde://user:password@host:port/sword_crossbow_db.sword", box_ ) );
+        QGroupBox* geometry = new QGroupBox( 1, Horizontal, tools::translate( "CrossbowPluginConfigPanel", "Feature database (manage geometry information):" ), box );
+        Style( new QLabel( tools::translate( "CrossbowPluginConfigPanel", "Connection URL:" ), geometry ) );
+        featureDb_ = Style( new QLineEdit( "sde://user:password@host:port/sword_crossbow_db.sword", geometry ) );
         QToolTip::add( featureDb_, tools::translate( "CrossbowPluginConfigPanel", "GDB: filename.{gdb|mdb}\nSDE connection: sde://user:password@host:port/db_name.sword" ) );
     }
     {
-        Style( new QLabel( tools::translate( "CrossbowPluginConfigPanel", "Flat database (manage no geometry information):" ), box_ ) );
-        flatDb_ = Style( new QLineEdit( "postgres://user:password@host:port/sword_crossbow_db.sword", box_ ) );
+        QGroupBox* flat = new QGroupBox( 1, Horizontal, tools::translate( "CrossbowPluginConfigPanel", "Flat database (manage no geometry information):" ), box );
+        Style( new QLabel( tools::translate( "CrossbowPluginConfigPanel", "Connection URL:" ), flat ) );
+        flatDb_ = Style( new QLineEdit( "postgres://user:password@host:port/sword_crossbow_db.sword", flat ) );
     }
 }
 
