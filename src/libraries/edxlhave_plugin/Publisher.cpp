@@ -14,7 +14,7 @@
 #include <boost/lexical_cast.hpp>
 #include "RestClient.h"
 #include "ResponseHandler_ABC.h"
-#include "MT/MT_Logger/MT_Logger_lib.h"
+#include "MT_Tools/MT_Logger.h"
 
 
 #pragma warning( push, 1 )
