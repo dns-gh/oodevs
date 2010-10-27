@@ -67,6 +67,7 @@ ADN_Equipement_GUI.cpp \
 ADN_Equipement_Postures_GUI.cpp \
 ADN_Equipement_Wizard.cpp \
 ADN_FragOrder_Wizard.cpp \
+ADN_FragOrder_WizardSecondPage.cpp \
 ADN_GUI_ABC.cpp \
 ADN_GuiTools.cpp \
 ADN_Health_Data.cpp \

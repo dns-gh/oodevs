@@ -1561,6 +1561,21 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
+    <name>ADN_FragOrder_WizardSecondPage</name>
+    <message>
+        <source>Add for all Units</source>
+        <translation type="unfinished">Ajouter à chaque unité</translation>
+    </message>
+    <message>
+        <source>Add for all Automata</source>
+        <translation type="unfinished">Ajouter à chaque automate</translation>
+    </message>
+    <message>
+        <source>Add for all Populations</source>
+        <translation type="unfinished">Ajouter à chaque population</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Health_GUI</name>
     <message>
         <source>Contamination</source>
