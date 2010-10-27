@@ -80,7 +80,7 @@ void TimelinePlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 // Name: TimelinePlugin::NotifyClientAuthenticated
 // Created: JCR 2010-05-31
 // -----------------------------------------------------------------------------
-void TimelinePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile )
+void TimelinePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& /*profile*/ )
 {
     // NOTHING
 }
@@ -89,7 +89,7 @@ void TimelinePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC&
 // Name: TimelinePlugin::NotifyClientLeft
 // Created: JCR 2010-05-31
 // -----------------------------------------------------------------------------
-void TimelinePlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& client )
+void TimelinePlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
 {
     // NOTHING
 }

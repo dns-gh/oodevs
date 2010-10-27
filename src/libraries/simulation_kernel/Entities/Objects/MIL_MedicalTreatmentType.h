@@ -89,6 +89,11 @@ private:
     //@}
 
 private:
+    //! @name Assignement
+    //@{
+    MIL_MedicalTreatmentType& operator=( const MIL_MedicalTreatmentType& );
+    //@}
+
     //! @name Helpers
     //@{
     static void ReadMedicalTreatment( xml::xistream& xis, const MIL_Time_ABC& time, std::set< unsigned int >& ids );
@@ -97,14 +102,20 @@ private:
     //@}
 
 private:
+    //! @name Data
+    //@{
     const std::string   name_;
     unsigned int        nID_;
     int                 deathThreshold_;
     const MIL_Time_ABC& time_;
     T_InjuryTreatments  treatments_;
+    //@}
     
 
+    //! @name Static data
+    //@{
     static T_MedicalTreatmentTypeMap    types_;
+    //@}
 };
 
 #endif // __MIL_MedicalTreatmentType_h_

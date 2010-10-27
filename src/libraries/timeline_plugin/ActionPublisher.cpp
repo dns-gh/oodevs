@@ -21,6 +21,7 @@
 #include "actions/ActionFactory.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/noncopyable.hpp>
 
 using namespace plugins::timeline;
 
@@ -36,7 +37,7 @@ namespace
 
 namespace
 {
-    class Publisher : public Publisher_ABC
+    class Publisher : public Publisher_ABC, private boost::noncopyable
     {
     public:
         explicit Publisher( dispatcher::SimulationPublisher_ABC& sim ) : sim_( sim ) {}
@@ -79,7 +80,6 @@ ActionPublisher::~ActionPublisher()
 {
     // NOTHING
 }
-    
 
 // -----------------------------------------------------------------------------
 // Name: ActionPublisher::Execute

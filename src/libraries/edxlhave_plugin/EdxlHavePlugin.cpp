@@ -81,7 +81,7 @@ void EdxlHavePlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 // Name: EdxlHavePlugin::NotifyClientAuthenticated
 // Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
-void EdxlHavePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile )
+void EdxlHavePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, dispatcher::Profile_ABC& /*profile*/ )
 {
     // NOTHING
 }
@@ -90,7 +90,7 @@ void EdxlHavePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC&
 // Name: EdxlHavePlugin::NotifyClientLeft
 // Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
-void EdxlHavePlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& client )
+void EdxlHavePlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
 {
     // NOTHING
 }
