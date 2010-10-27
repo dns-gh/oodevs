@@ -1599,7 +1599,7 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
 // Name: DEC_GeometryFunctions::GetCrossroads
 // Created: MGD 2009-08-19
 // -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::GetCrossroads( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
+void DEC_GeometryFunctions::GetCrossroads( directia::brain::Brain& brain, MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
     pion.GetRole< PHY_RoleInterface_TerrainAnalysis >().GetCrossroads( points );

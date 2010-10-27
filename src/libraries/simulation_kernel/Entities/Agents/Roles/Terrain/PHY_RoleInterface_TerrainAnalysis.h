@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void GetCrossroads( std::vector< boost::shared_ptr< MT_Vector2D > >& points ) const = 0;
+    virtual void GetCrossroads( std::vector< boost::shared_ptr< MT_Vector2D > >& points ) = 0;
     //@}
 
 private:

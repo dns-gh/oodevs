@@ -32,9 +32,9 @@ PHY_WeaponType::T_WeaponTypeMap PHY_WeaponType::weaponTypes_;
 
 struct PHY_WeaponType::LoadingWrapper
 {
-    void ReadWeapon( xml::xistream& xis, const MIL_Time_ABC& time, double timeFactor )
+    void ReadWeapon( xml::xistream& xis, const MIL_Time_ABC& time )
     {
-        PHY_WeaponType::ReadWeapon( xis, time, timeFactor );
+        PHY_WeaponType::ReadWeapon( xis, time );
     }
 };
 
@@ -42,12 +42,12 @@ struct PHY_WeaponType::LoadingWrapper
 // Name: PHY_WeaponType::Initialize
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::Initialize( const MIL_Time_ABC& time, xml::xistream& xis, double timeFactor )
+void PHY_WeaponType::Initialize( const MIL_Time_ABC& time, xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing weapon types" );
     LoadingWrapper loader;
     xis >> xml::start( "weapons" )
-            >> xml::list( "weapon-system", loader, &LoadingWrapper::ReadWeapon, time, timeFactor )
+            >> xml::list( "weapon-system", loader, &LoadingWrapper::ReadWeapon, time )
         >> xml::end;
 }
 
@@ -55,7 +55,7 @@ void PHY_WeaponType::Initialize( const MIL_Time_ABC& time, xml::xistream& xis, d
 // Name: PHY_WeaponType::ReadWeapon
 // Created: ABL 2007-07-20
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::ReadWeapon( xml::xistream& xis, const MIL_Time_ABC& time, double timeFactor )
+void PHY_WeaponType::ReadWeapon( xml::xistream& xis, const MIL_Time_ABC& time )
 {
     std::string strLauncher;
     std::string strAmmunition;
@@ -66,7 +66,7 @@ void PHY_WeaponType::ReadWeapon( xml::xistream& xis, const MIL_Time_ABC& time, d
     const PHY_WeaponType*& pWeaponType = weaponTypes_[ std::make_pair( strLauncher, strAmmunition ) ];
     if( pWeaponType )
         xis.error( "Weapon " + strLauncher + "/" + strAmmunition + " already registered" );
-    pWeaponType = new PHY_WeaponType( time, strLauncher, strAmmunition, xis, timeFactor );
+    pWeaponType = new PHY_WeaponType( time, strLauncher, strAmmunition, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +84,7 @@ void PHY_WeaponType::Terminate()
 // Name: PHY_WeaponType constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_WeaponType::PHY_WeaponType( const MIL_Time_ABC& time, const std::string& strLauncher, const std::string& strAmmunition, xml::xistream& xis, double timeFactor )
+PHY_WeaponType::PHY_WeaponType( const MIL_Time_ABC& time, const std::string& strLauncher, const std::string& strAmmunition, xml::xistream& xis )
     : time_               ( time )
     , pLauncherType_      ( PHY_LauncherType::FindLauncherType( strLauncher ) )
     , pDotationCategory_  ( PHY_DotationType::FindDotationCategory( strAmmunition ) )
@@ -113,6 +113,7 @@ PHY_WeaponType::PHY_WeaponType( const MIL_Time_ABC& time, const std::string& str
      || ! tools::DecodeTime( reloadingTime, rReloadingDuration_ ) )
         xis.error( "Invalid burst or reloading durations" );
 
+    const double timeFactor = time.GetTickDuration();
     rBurstDuration_     /= timeFactor;
     rReloadingDuration_ /= timeFactor;
 

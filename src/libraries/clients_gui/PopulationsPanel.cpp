@@ -13,7 +13,9 @@
 #include "PopulationTypesListView.h"
 #include "ValuedDragObject.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/PopulationPrototype.h"
+#include "clients_kernel/Team_ABC.h"
 #include "preparation/Tools.h"
 
 using namespace gui;
@@ -26,7 +28,7 @@ using namespace kernel;
 PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory )
     : InfoPanel_ABC( parent, panel, tools::translate( "PopulationsPanel", "Populations" ), "PopulationsPanel" )
     , controllers_( controllers )
-    , selectedFormation_( 0 )
+    , selected_( 0 )
 {
     list_ = new PopulationTypesListView( this, controllers_, types, factory );
     connect( list_, SIGNAL( StartDrag( const kernel::PopulationType* ) ), this, SLOT( OnStartDrag( const kernel::PopulationType* ) ) );
@@ -61,7 +63,7 @@ void PopulationsPanel::NotifyUpdated( const kernel::ModelLoaded& )
 // -----------------------------------------------------------------------------
 void PopulationsPanel::OnStartDrag( const PopulationType* type )
 {
-    if( !selectedFormation_ ||!type )
+    if( !selected_ ||!type )
         return;
     prototype_.type_ = type;
     prototype_.number_ = number_->text().toInt();
@@ -75,7 +77,7 @@ void PopulationsPanel::OnStartDrag( const PopulationType* type )
 // -----------------------------------------------------------------------------
 void PopulationsPanel::BeforeSelection()
 {
-    selectedFormation_ = 0;
+    selected_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -93,5 +95,14 @@ void PopulationsPanel::AfterSelection()
 // -----------------------------------------------------------------------------
 void PopulationsPanel::Select( const kernel::Formation_ABC& element )
 {
-    selectedFormation_ = &element;
+    selected_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationsPanel::Select
+// Created: LDC 2010-10-26
+// -----------------------------------------------------------------------------
+void PopulationsPanel::Select( const kernel::Team_ABC& element )
+{
+    selected_ = &element;
 }

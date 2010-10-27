@@ -50,7 +50,7 @@ public:
         xml::xistringstream xisLauncher( "<launchers><launcher name='gun' indirect-fire='true'/></launchers>" );
         PHY_LauncherType::Initialize( xisLauncher );
         xml::xistringstream xisWeapon( "<weapons><weapon-system launcher='gun' munition='ammo'><burst munition='1' duration='1s'/><reloading munition='1' duration='1s'/><indirect-fire average-speed='100' min-range='0' max-range='1000'/></weapon-system></weapons>" );
-        PHY_WeaponType::Initialize( time_, xisWeapon, 1 );
+        PHY_WeaponType::Initialize( time_, xisWeapon );
         xml::xistringstream xisVolumes( "<volumes><volume name='Big'/></volumes>");
         PHY_Volume::Initialize( xisVolumes );
         xml::xistringstream xisCapacity( "<category capacity='1' logistic-threshold='50'/>" );

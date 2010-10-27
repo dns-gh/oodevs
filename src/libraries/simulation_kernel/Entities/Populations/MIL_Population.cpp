@@ -124,11 +124,11 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
 // Name: MIL_Population constructor
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Formation& formation, const MT_Vector2D& point, int number, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
     : MIL_Entity_ABC          ( name )
     , pType_                  ( &type )
     , nID_                    ( idManager_.GetFreeId() )
-    , pArmy_                  ( &formation.GetArmy() )
+    , pArmy_                  ( &army )
     , pDefaultAttitude_       ( 0 )
     , nPeopleCount_           ( number )
     , pKnowledge_             ( 0 )

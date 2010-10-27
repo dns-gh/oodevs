@@ -12,7 +12,6 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 
@@ -39,8 +38,9 @@ PHY_RolePion_TerrainAnalysis::~PHY_RolePion_TerrainAnalysis()
 // Name: PHY_RolePion_TerrainAnalysis::GetCrossroads
 // Created: MGD 2010-04-20
 // -----------------------------------------------------------------------------
-void PHY_RolePion_TerrainAnalysis::GetCrossroads( std::vector< boost::shared_ptr< MT_Vector2D > >& points ) const
+void PHY_RolePion_TerrainAnalysis::GetCrossroads( std::vector< boost::shared_ptr< MT_Vector2D > >& points )
 {
+    NotifyHasMove( lastPos_ ); // $$$$ LDC : Force recompute in case fuseau has changed.
     for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::const_iterator it = crossroadsBuffer_.begin(); it != crossroadsBuffer_.end(); it++ )
         points.push_back( it->second );
 }
@@ -53,8 +53,10 @@ void PHY_RolePion_TerrainAnalysis::NotifyHasMove( const MT_Vector2D& newPos )
 {
     const double range = std::max( pion_.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance(), 3000. );
     const double squareRange = range * range;
-    if( lastPos_.SquareDistance( newPos ) > squareRange * 0.25 )
+    const MIL_Fuseau& fuseau = pion_.GetOrderManager().GetFuseau();
+    if( fuseau_ != fuseau || lastPos_.SquareDistance( newPos ) > squareRange * 0.25 )
     {
+        fuseau_ = fuseau;
         //Remove old points out of range
         for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::iterator it = crossroadsBuffer_.begin(); it != crossroadsBuffer_.end(); )
         {
@@ -68,12 +70,11 @@ void PHY_RolePion_TerrainAnalysis::NotifyHasMove( const MT_Vector2D& newPos )
         for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = temp.begin(); it != temp.end(); it++ )
             crossroadsBuffer_.insert( std::pair< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >( **it, *it ) );
         //Remove outside fuseau
-        const MIL_Fuseau& fuseau = pion_.GetOrderManager().GetFuseau();
-        if( !fuseau.IsNull() )
+        if( !fuseau_.IsNull() )
         {
             for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::iterator it = crossroadsBuffer_.begin(); it != crossroadsBuffer_.end(); )
             {
-                if( fuseau.IsInside( it->first ) )
+                if( !fuseau_.IsInside( it->first ) )
                     it = crossroadsBuffer_.erase( it );
                 else
                     ++it;

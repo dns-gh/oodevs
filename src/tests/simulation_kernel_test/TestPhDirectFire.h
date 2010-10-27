@@ -54,7 +54,7 @@ public:
             "<reloading duration='20s' munition='30'/><direct-fire><hit-probabilities target='Heavy'><hit-probability distance='0' percentage='1'/>"
             "<hit-probability distance='1000' percentage='0.9'/><hit-probability distance='1500' percentage='0.8'/></hit-probabilities></direct-fire>"
             "</weapon-system></weapons>" );
-        PHY_WeaponType::Initialize( time_, xisWeapon, 1 );
+        PHY_WeaponType::Initialize( time_, xisWeapon );
     }
 
     virtual ~TestPhDirectFire()

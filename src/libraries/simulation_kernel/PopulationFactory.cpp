@@ -61,12 +61,12 @@ MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army_ABC& arm
 // Name: PopulationFactory::Create
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-MIL_Population& PopulationFactory::Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Formation& formation )
+MIL_Population& PopulationFactory::Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& army )
 {
     const MIL_PopulationType* pType = MIL_PopulationType::Find( type );
     if( !pType )
         throw std::runtime_error( "Unknown population type" );
-    MIL_Population& population = *new MIL_Population( *pType, formation, point, number, name, database_, gcPause_, gcMult_ );
+    MIL_Population& population = *new MIL_Population( *pType, army, point, number, name, database_, gcPause_, gcMult_ );
     Register( population.GetID(), population );
     return population;
 }

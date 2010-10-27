@@ -56,6 +56,7 @@
 #include "SimulationLighting.h"
 #include "StatusBar.h"
 #include "TacticalList.h"
+#include "TeamLayer.h"
 #include "TimelinePanel.h"
 #include "UserProfileDialog.h"
 #include "WeatherLayer.h"
@@ -66,6 +67,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Team_ABC.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
@@ -412,7 +414,8 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     gui::Layer_ABC& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     gui::Layer_ABC& defaultLayer         = *new gui::DefaultLayer( controllers_ );
     gui::Layer_ABC& logoLayer            = *new gui::LogoLayer( *glProxy_, QImage( config_.BuildResourceChildFile( "logo.png" ).c_str() ), 0.7f );
-    gui::Layer_ABC& formationLayer       = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model_.agents_);
+    gui::Layer_ABC& formationLayer       = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model_.agents_ );
+    gui::Layer_ABC& teamLayer            = *new ::TeamLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
     gui::Layer_ABC& folkLayer            = *new ::FolkLayer( controllers_.controller_, staticModel_.coordinateConverter_, model_.folk_ );
     gui::Layer_ABC& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     gui::Layer_ABC& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
@@ -435,6 +438,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( populationKnowledges );                                                                     populationKnowledges.SetPasses( "main,miniviews" );
     glProxy_->Register( agentKnowledges );                                                                          agentKnowledges     .SetPasses( "main,miniviews" );
     glProxy_->Register( formationLayer );                                                                           formationLayer      .SetPasses( "main,miniviews" );
+    glProxy_->Register( teamLayer );                                                                                teamLayer           .SetPasses( "main,miniviews" );
     glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main,miniviews" );
     glProxy_->Register( populations );              preferences.AddLayer( tr( "Populations" ), populations );       populations         .SetPasses( "main,miniviews" );
     glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );                  agents              .SetPasses( "main,miniviews" );
@@ -457,6 +461,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     forward_->Register( agents );
     forward_->Register( automats );
     forward_->Register( formationLayer ); 
+    forward_->Register( teamLayer ); 
     forward_->Register( populations );
     forward_->Register( objectsLayer );
     forward_->Register( intelligences );

@@ -851,7 +851,9 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
             break;
         case MsgsClientToSim::MsgUnitMagicAction::crowd_creation:
             if( MIL_Formation* pFormation = FindFormation( id ) )
-                ProcessMsgCrowdCreationRequest( message, *pFormation );
+                ProcessMsgCrowdCreationRequest( message, pFormation->GetArmy() );
+            else if( MIL_Army_ABC*  pArmy = armyFactory_->Find( id ) )
+                ProcessMsgCrowdCreationRequest( message, *pArmy );
             else
                 throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_unit );
             break;
@@ -946,7 +948,7 @@ void MIL_EntityManager::ProcessMsgFormationCreationRequest( const MsgsClientToSi
 // Name: MIL_EntityManager::ProcessMsgCrowdCreationRequest
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessMsgCrowdCreationRequest( const MsgsClientToSim::MsgUnitMagicAction& message, MIL_Formation& formation )
+void MIL_EntityManager::ProcessMsgCrowdCreationRequest( const MsgsClientToSim::MsgUnitMagicAction& message, MIL_Army_ABC& army )
 {
     client::MagicActionAck ack;
     ack().set_error_code( MsgsSimToClient::MsgMagicActionAck::no_error );
@@ -971,7 +973,7 @@ void MIL_EntityManager::ProcessMsgCrowdCreationRequest( const MsgsClientToSim::M
     MIL_Tools::ConvertCoordMosToSim( location.coordinates().elem( 0 ), point );
     int number = static_cast< int >( parameters.elem( 2 ).value().areal() );
     std::string name = ( parameters.elem( 3 ).has_value() && parameters.elem( 3 ).value().has_acharstr() ) ? parameters.elem( 3 ).value().acharstr() : std::string();
-    populationFactory_->Create( type, point, number, name, formation );
+    populationFactory_->Create( type, point, number, name, army );
 }
 
 // -----------------------------------------------------------------------------

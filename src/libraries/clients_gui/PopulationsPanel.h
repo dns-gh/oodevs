@@ -19,9 +19,11 @@
 namespace kernel
 {
     class Controllers;
+    class Entity_ABC;
     class Formation_ABC;
     class ModelLoaded;
     class PopulationType;
+    class Team_ABC;
 }
 
 namespace gui
@@ -41,6 +43,7 @@ class PopulationsPanel : public gui::InfoPanel_ABC
                        , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                        , public tools::SelectionObserver_ABC
                        , public tools::SelectionObserver_Base< kernel::Formation_ABC >
+                       , public tools::SelectionObserver_Base< kernel::Team_ABC >
 {
     Q_OBJECT;
 public:
@@ -63,6 +66,7 @@ private:
     virtual void AfterSelection();
     virtual void BeforeSelection();
     virtual void Select( const kernel::Formation_ABC& element );
+    virtual void Select( const kernel::Team_ABC& element );
     //@}
 
 private slots:
@@ -77,7 +81,7 @@ private:
     kernel::Controllers& controllers_;
     PopulationTypesListView* list_;
     QLineEdit* number_;
-    const kernel::Formation_ABC* selectedFormation_;
+    const kernel::Entity_ABC* selected_;
     kernel::PopulationPrototype prototype_;
     //@}
 };

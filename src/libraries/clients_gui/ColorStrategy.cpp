@@ -208,6 +208,15 @@ void ColorStrategy::SelectColor( const TacticalLine_ABC& line )
 
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy::SelectColor
+// Created: LDC 2010-10-26
+// -----------------------------------------------------------------------------
+void ColorStrategy::SelectColor( const kernel::Team_ABC& )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectColor
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Intelligence_ABC& intelligence )

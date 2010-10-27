@@ -20,6 +20,7 @@ namespace kernel
     class Population_ABC;
     class Knowledge_ABC;
     class TacticalLine_ABC;
+    class Team_ABC;
     class Intelligence_ABC;
 }
 
@@ -53,6 +54,7 @@ public:
     virtual void SelectColor( const kernel::Population_ABC& population ) = 0;
     virtual void SelectColor( const kernel::Knowledge_ABC& knowledge ) = 0;
     virtual void SelectColor( const kernel::TacticalLine_ABC& line ) = 0;
+    virtual void SelectColor( const kernel::Team_ABC& team ) = 0;
     virtual void SelectColor( const kernel::Intelligence_ABC& intelligence ) = 0;
     virtual void SelectColor( const Drawing_ABC& drawing ) = 0;
     virtual void SelectColor( const TerrainObjectProxy& proxy ) = 0;

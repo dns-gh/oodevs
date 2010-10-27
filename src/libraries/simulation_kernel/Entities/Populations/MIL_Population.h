@@ -58,7 +58,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
-             MIL_Population( const MIL_PopulationType& type, MIL_Formation& formation, const MT_Vector2D& point, int number, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~MIL_Population();
     //@}
 

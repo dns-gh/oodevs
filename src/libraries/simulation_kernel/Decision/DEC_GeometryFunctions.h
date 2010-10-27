@@ -147,7 +147,7 @@ public:
     static bool GetInterceptionPoint( const MT_Vector2D& vToInterceptPosition, const MT_Vector2D& vToInterceptSpeed, const MT_Vector2D& vInterceptingPosition, double rInterceptingSpeed, MT_Vector2D& result );
 
     // Terrain keypoint
-    static void GetCrossroads( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table ); 
+    static void GetCrossroads( directia::brain::Brain& brain, MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table ); 
     // BMArea
     static boost::shared_ptr< MT_Vector2D > ComputeBarycenter( const TER_Localisation* localisation );
     //@}

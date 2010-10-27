@@ -212,7 +212,7 @@ private:
     // LTO end
     void ProcessMsgAutomatCreationRequest      ( const MsgsClientToSim::MsgUnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx );
     void ProcessMsgFormationCreationRequest    ( const MsgsClientToSim::MsgUnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation );
-    void ProcessMsgCrowdCreationRequest        ( const MsgsClientToSim::MsgUnitMagicAction&      message, MIL_Formation& formation );
+    void ProcessMsgCrowdCreationRequest        ( const MsgsClientToSim::MsgUnitMagicAction&      message, MIL_Army_ABC& army );
     //@}
 
     //! @name types

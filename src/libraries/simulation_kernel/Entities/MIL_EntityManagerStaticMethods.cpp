@@ -235,5 +235,5 @@ void MIL_EntityManagerStaticMethods::InitializeWeapons( xml::xistream& xis, MIL_
     strFile = config.BuildPhysicalChildFile( strFile );
     xml::xifstream xisWeapons( strFile );
     config.AddFileToCRC( strFile );
-    PHY_WeaponType::Initialize( time, xisWeapons, MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
+    PHY_WeaponType::Initialize( time, xisWeapons );
 }
