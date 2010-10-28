@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PolygonListParameter.h"
+#include "MIL_MissionParameterFactory.h"
 #include "simulation_orders/MIL_ParameterType_PolygonList.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "Network/NET_ASN_Tools.h"
@@ -101,5 +102,35 @@ bool MIL_PolygonListParameter::ToPolygonList( Common::MsgPolygonList& asn ) cons
 bool MIL_PolygonListParameter::ToPolygonList( std::vector< boost::shared_ptr< TER_Localisation > >& value ) const
 {
     value = polygonList_;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LocationListParameter::ToList
+// Created: MGD 2010-10-28
+// -----------------------------------------------------------------------------
+bool MIL_PolygonListParameter::ToList( std::vector< Common::MsgMissionParameter_Value >& result ) const
+{
+    for(std::vector< boost::shared_ptr< TER_Localisation > >::const_iterator it = polygonList_.begin(); it != polygonList_.end(); ++it )
+    {
+        Common::MsgMissionParameter_Value param;
+        Common::MsgLocation* location = param.mutable_location();
+        NET_ASN_Tools::WriteLocation( *(*it), *location );
+        result.push_back( param );
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PolygonListParameter::ToList
+// Created: MGD 2010-10-28
+// -----------------------------------------------------------------------------
+bool MIL_PolygonListParameter::ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& result ) const
+{
+    for( std::vector< boost::shared_ptr< TER_Localisation > >::const_iterator it = polygonList_.begin(); it != polygonList_.end(); ++it )
+    {
+        boost::shared_ptr<MIL_MissionParameter_ABC> param = MIL_MissionParameterFactory::Create( *it );
+        result.push_back( param );
+    }
     return true;
 }

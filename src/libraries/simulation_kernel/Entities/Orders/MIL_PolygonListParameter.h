@@ -38,6 +38,8 @@ public:
     //@{
     virtual bool ToPolygonList( Common::MsgPolygonList& ) const;
     virtual bool ToPolygonList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
+    virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const;
+    virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const;
     //@}
 
     //! @name Modifiers
