@@ -672,15 +672,20 @@ ADN_Objects_Data::ADN_CapacityInfos_Medical::ADN_CapacityInfos_Medical()
 void ADN_Objects_Data::ADN_CapacityInfos_Medical::ReadArchive( xml::xistream& xis )
 {
     ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    xis >> xml::attribute( "emergency-plan-beds", emergencyBedsRate_ );
-    xis >> xml::attribute( "emergency-plan-doctors", emergencyDoctorsRate_ );
-    xis >> xml::attribute( "night-doctors", nightDoctorsRate_ );
+
+    xis >> xml::attribute( "night-doctors-rate", nightDoctorsRate_ )
+        >> xml::start( "emergency-plan" )
+            >> xml::attribute( "doctors-rate", emergencyDoctorsRate_ )
+            >> xml::attribute( "beds-rate", emergencyBedsRate_ )
+        >> xml::end;
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Medical::WriteArchive( xml::xostream& xos )
 {
-    xos << xml::attribute( "emergency-plan-beds", emergencyBedsRate_ );
-    xos << xml::attribute( "emergency-plan-doctors", emergencyDoctorsRate_ );
-    xos << xml::attribute( "night-doctors", nightDoctorsRate_ );
+    xos << xml::attribute( "night-doctors-rate", nightDoctorsRate_ )
+        << xml::start( "emergency-plan" )
+            << xml::attribute( "doctors-rate", emergencyDoctorsRate_ )
+            << xml::attribute( "beds-rate", emergencyBedsRate_ )
+        << xml::end;
 }
 //@}
 

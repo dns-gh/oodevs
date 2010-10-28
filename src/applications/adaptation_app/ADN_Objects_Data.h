@@ -296,12 +296,9 @@ public:
     };
 
     class ADN_CapacityInfos_Medical
-        : public ADN_TypeCapacity_Infos
+        : public ADN_CapacityInfos_Default< eMedicalCapacity >
     {
     public:
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
-
         ADN_CapacityInfos_Medical();
 
         void ReadArchive( xml::xistream& xis );
@@ -309,9 +306,9 @@ public:
 
     public:
         typedef NullType FieldsHolderType;
-        ADN_Type_Double emergencyBedsRate_;
-        ADN_Type_Double emergencyDoctorsRate_;
-        ADN_Type_Double nightDoctorsRate_;
+        ADN_Type_Int emergencyBedsRate_;
+        ADN_Type_Int emergencyDoctorsRate_;
+        ADN_Type_Int nightDoctorsRate_;
     };
 
     class ADN_CapacityInfos_Improvable

@@ -2630,10 +2630,6 @@ du tireur</translation>
         <translation>Eteignable</translation>
     </message>
     <message>
-        <source>Healable</source>
-        <translation>Soignable</translation>
-    </message>
-    <message>
         <source>Interference</source>
         <translation>Interférence</translation>
     </message>
@@ -2759,6 +2755,26 @@ du tireur</translation>
     </message>
     <message>
         <source>SealOff</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Doctor night rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emergency doctor rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emergency bed rate</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
