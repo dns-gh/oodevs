@@ -21,10 +21,18 @@
 
 Name "${PRODUCT_NAME}"
 !ifdef EVALUATION
-    OutFile "${DISTDIR}\${PRODUCT_NAME}_${APP_VERSION_MAJOR}_eval.exe"
+    !define PRODUCT_EVALUATION "_eval"    
 !else
-    OutFile "${DISTDIR}\${PRODUCT_NAME}_${APP_VERSION_MAJOR}.exe"
+    !define PRODUCT_EVALUATION ""    
 !endif
+!ifdef MASADEMO
+    !define PRODUCT_MASA "_InterneMasa"    
+!else
+    !define PRODUCT_MASA ""    
+!endif
+
+    OutFile "${DISTDIR}\${PRODUCT_NAME}_${APP_VERSION_MAJOR}${PRODUCT_EVALUATION}${PRODUCT_MASA}.exe"
+
 
 !insertmacro UNATTENDED_UNINSTALL
 
@@ -158,8 +166,8 @@ Section "!${PRODUCT_NAME}"
     CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_ADAPTATION).lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_FRONTEND).lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
-    ; CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_SELF_TRAINING).lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
-    ;create shortcut for uninstaller always use ${UNINST_EXE} instead of uninstall.exe
+    ;    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_SELF_TRAINING).lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+    ;    create shortcut for uninstaller always use ${UNINST_EXE} instead of uninstall.exe
     CreateShortcut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_UNINSTALL).lnk" "${UNINST_EXE}"
 
     !insertmacro OT.AddUninstallEntry
@@ -186,7 +194,10 @@ SectionGroupEnd
 SectionGroup "Exercises" s_exo
     !insertmacro OT.AddExercise "bruxelles" "bruxelles" "s_exo1"
     !insertmacro OT.AddExercise "lehavre" "lehavre" "s_exo2"
-    ;!insertmacro OT.AddExercise "montereycross" "montereycross" "s_exo3"
+    !ifdef MASADEMO
+        !insertmacro OT.AddExercise "montereycross" "montereycross" "s_exo3"
+    !endif    
+    
 SectionGroupEnd
 
 ;--------------------------------
@@ -194,7 +205,9 @@ SectionGroup "Terrains" s_ter
 
     !insertmacro OT.AddTerrain "bruxelles" "s_ter1"
     !insertmacro OT.AddTerrain "lehavre" "s_ter2"
-    ;!insertmacro OT.AddTerrain "montereycross" "s_ter3"
+    !ifdef MASADEMO
+        !insertmacro OT.AddTerrain "montereycross" "s_ter3"
+    !endif    
 
 SectionGroupEnd
 
@@ -203,7 +216,9 @@ SectionGroup "Populations" s_pop
 
     !insertmacro OT.AddPopulation "bruxelles" "s_pop1"
     !insertmacro OT.AddPopulation "lehavre" "s_pop2"
-    ;!insertmacro OT.AddPopulation "montereycross" "s_pop3"
+    !ifdef MASADEMO
+        !insertmacro OT.AddPopulation "montereycross" "s_pop3"
+    !endif    
 
 SectionGroupEnd
 
@@ -249,7 +264,7 @@ Function .onInit
     ; Set section names
     SectionSetText ${s_mod} $(OT_SECTION_MODELS)
     SectionSetText ${s_decmod} $(OT_SECTION_DECISIONAL_MODELS)
-    ;SectionSetText ${s_decmodsrc} $(OT_SECTION_DECISIONAL_MODELS_SOURCES)
+    ;            SectionSetText ${s_decmodsrc} $(OT_SECTION_DECISIONAL_MODELS_SOURCES)
     SectionSetText ${s_phymod} $(OT_SECTION_PHYSICAL_MODELS)
     SectionSetText ${s_exo} $(OT_SECTION_EXERCISES)
     SectionSetText ${s_ter} $(OT_SECTION_TERRAINS)
@@ -280,7 +295,9 @@ Function .onSelChange
     !insertmacro OT.CheckDependency "s_exo2" "s_ter2"
     !insertmacro OT.CheckDependency "s_ter2" "s_pop2"
     
-    ;!insertmacro OT.CheckDependency "s_exo3" "s_ter3"
-    ;!insertmacro OT.CheckDependency "s_ter3" "s_pop3"
-     
+    !ifdef MASADEMO
+        !insertmacro OT.CheckDependency "s_exo3" "s_ter3"
+        !insertmacro OT.CheckDependency "s_ter3" "s_pop3"
+    !endif
+    
 FunctionEnd

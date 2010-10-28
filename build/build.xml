@@ -811,7 +811,7 @@
     package
     ============================================================================
     -->
-    <target name="package" description="package the installers" depends="package.defense,package.france,package.security,package.debug"/>
+    <target name="package" description="package the installers" depends="package.defense,package.france,package.security,package.security.demo,package.debug,package.exo"/>
 
     <!-- standard packages -->
     <target name="package.defense" description="package the standard installer: worldwide, no license">
@@ -828,6 +828,17 @@
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DAPP_MODEL=worldwide"/>
+            <arg value="/DPRODUCT_SUFFIX=security"/>
+            <arg value="/X!include sword-security.nsh"/>
+        </nsis>
+    </target>
+
+    <target name="package.security.demo" description="Create the security installer with all demo exercices">
+        <nsis name="sword-security" script="sword-security.nsi" nsh="config.nsh">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DAPP_MODEL=worldwide"/>
+            <arg value="/DMASADEMO=1"/>
             <arg value="/DPRODUCT_SUFFIX=security"/>
             <arg value="/X!include sword-security.nsh"/>
         </nsis>
@@ -867,6 +878,15 @@
         <zip destfile="${dist.dir}/SWORD_debug_${version.major}.zip">
             <fileset dir="${out.dir}/pdb" includes="*.pdb"/>
         </zip>
+    </target>
+
+    <target name="package.exo" description="package des exercices">
+        <nsis name="sword" script="exo-pack.nsi" nsh="config.nsh">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DAPP_MODEL=france"/>
+            <arg value="/X!include sword-defense.nsh"/>
+        </nsis>
     </target>
 
     <!--
