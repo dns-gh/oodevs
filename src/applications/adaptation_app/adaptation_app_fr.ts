@@ -2364,7 +2364,7 @@ du tireur</translation>
     </message>
     <message>
         <source>FragOrders</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordres de conduite</translation>
     </message>
 </context>
 <context>
@@ -2759,11 +2759,11 @@ du tireur</translation>
     </message>
     <message>
         <source>Medical</source>
-        <translation type="unfinished"></translation>
+        <translation>Médical</translation>
     </message>
     <message>
         <source>Doctor night rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Fréquence de rotation des médecins de nuit</translation>
     </message>
     <message>
         <source></source>
@@ -2771,11 +2771,11 @@ du tireur</translation>
     </message>
     <message>
         <source>Emergency doctor rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Fréquence de rotation des médecins en phase d&apos;alerte</translation>
     </message>
     <message>
         <source>Emergency bed rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Fréquence de rotation des lits en phase d&apos;alerte</translation>
     </message>
 </context>
 <context>
