@@ -78,7 +78,6 @@ private:
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     QPixmap lock_, commandPost_, scisors_;
-    kernel::Controllers& controllers_; // LTO
     //@}
 };
 

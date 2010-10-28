@@ -40,6 +40,7 @@ TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& contr
     , lock_( MAKE_PIXMAP( lock ) )
     , commandPost_( MAKE_PIXMAP( commandpost ) )
 {
+    controllers_.Register( *this );
     addColumn( "HiddenPuce", 15 );
     setColumnAlignment( 1, Qt::AlignCenter );
     controllers.Update( *this );
@@ -51,7 +52,7 @@ TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& contr
 // -----------------------------------------------------------------------------
 TacticalListView::~TacticalListView()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -40,6 +40,7 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
     , lock_( MAKE_PIXMAP( lock ) )
     , commandPost_( MAKE_PIXMAP( commandpost ) )
 {
+    controllers_.Register( *this );
     addColumn( "HiddenPuce", 15 );
     setColumnAlignment( 1, Qt::AlignCenter );
     connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
@@ -53,7 +54,7 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
 // -----------------------------------------------------------------------------
 TacticalListView::~TacticalListView()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

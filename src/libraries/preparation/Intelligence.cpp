@@ -29,7 +29,6 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Intelligence::Intelligence( Controller& controller, IdManager& idManager, const std::string& symbol, const HierarchyLevel_ABC& level, bool mounted, const Karma& karma )
     : EntityImplementation< Intelligence_ABC >( controller, idManager.GetNextId(), "" )
-    , controller_( controller )
     , symbol_    ( symbol )
     , level_     ( &level )
     , mounted_   ( mounted )
@@ -46,7 +45,6 @@ Intelligence::Intelligence( Controller& controller, IdManager& idManager, const 
 // -----------------------------------------------------------------------------
 Intelligence::Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, const tools::Resolver_ABC< HierarchyLevel_ABC, QString >& levels )
     : EntityImplementation< Intelligence_ABC >( controller, idManager.GetNextId(), xis.attribute< std::string >( "name" ).c_str() )
-    , controller_( controller )
     , symbol_    ( xis.attribute< std::string >( "nature" ) )
     , level_     ( &levels.Get( xis.attribute< std::string >( "level" ).c_str() ) )
     , mounted_   ( xis.attribute< bool >( "embarked" ) ) // $$$$ AGE 2008-01-16: odb : embarked => mounted

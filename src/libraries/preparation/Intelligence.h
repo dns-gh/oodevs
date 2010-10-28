@@ -78,7 +78,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
     std::string symbol_;
     const kernel::HierarchyLevel_ABC* level_;
     IntelligenceKarma karma_;

@@ -62,7 +62,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
 
     // $$$$ AGE 2006-08-11: L'initialisation du reste est delayée... C'est pas terrible
 
-    controllers.Register( *this );
+    controllers_.Register( *this );
 
     connect( objectTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
 }
@@ -73,7 +73,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
 // -----------------------------------------------------------------------------
 ObjectPrototype_ABC::~ObjectPrototype_ABC()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

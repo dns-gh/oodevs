@@ -25,6 +25,7 @@ UserProfileUnitRights::UserProfileUnitRights( QWidget* parent, Controllers& cont
     : HierarchyListView< TacticalHierarchies >( parent, controllers, factory, profile, icons )
     , UserProfileRights_ABC( this )
 {
+    controllers_.Register( *this );
     connect( this, SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( QListViewItem*, const QPoint&, int ) ) );
 }
 
@@ -34,7 +35,7 @@ UserProfileUnitRights::UserProfileUnitRights( QWidget* parent, Controllers& cont
 // -----------------------------------------------------------------------------
 UserProfileUnitRights::~UserProfileUnitRights()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

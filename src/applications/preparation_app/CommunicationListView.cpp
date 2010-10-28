@@ -31,6 +31,7 @@ CommunicationListView::CommunicationListView( QWidget* parent, Controllers& cont
     , factory_( factory )
     , modelBuilder_( modelBuilder )
 {
+    controllers_.Register( *this );
     connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
 }
 
@@ -40,7 +41,7 @@ CommunicationListView::CommunicationListView( QWidget* parent, Controllers& cont
 // -----------------------------------------------------------------------------
 CommunicationListView::~CommunicationListView()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

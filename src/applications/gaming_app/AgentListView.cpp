@@ -42,8 +42,8 @@ AgentListView::AgentListView( QWidget* pParent, kernel::Controllers& controllers
     , lock_( MAKE_PIXMAP( lock ) )
     , scisors_( MAKE_PIXMAP( scisors ) ) // LTO
     , commandPost_( MAKE_PIXMAP( commandpost ) )
-    , controllers_( controllers ) // LTO
 {
+    controllers_.Register( *this );
     addColumn( "HiddenPuce", 15 );
     setColumnAlignment( 1, Qt::AlignCenter );
 }
@@ -54,7 +54,7 @@ AgentListView::AgentListView( QWidget* pParent, kernel::Controllers& controllers
 // -----------------------------------------------------------------------------
 AgentListView::~AgentListView()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
