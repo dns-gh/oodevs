@@ -26,6 +26,7 @@
 #include "MIL_DotationTypeParameter.h"
 #include "MIL_EnumerationParameter.h"
 #include "MIL_EquipmentTypeParameter.h"
+#include "MIL_LimaListParameter.h"
 #include "MIL_ListParameter.h"
 #include "MIL_LocationParameter.h"
 #include "MIL_LocationListParameter.h"
@@ -167,8 +168,9 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         ptr = new MIL_NullParameter();
     else if( message.has_missionobjectivelist() )
         ptr = new MIL_MissionObjectiveListParameter( message.missionobjectivelist() );
+    else if( message.has_limasorder() )
+        ptr = new MIL_LimaListParameter( message.limasorder() ); // group LimaList and Lima type  before updating protobuff
 //        else if( message.has_value_line() ||
-//            message.has_value_limasOrder() ||
 //            message.has_value_intelligenceList() )
         // $$$$ LDC : These types are exclusively managed by the OrderContext.
     else if( message.list_size() > 0 ) // $$$$ LDC: Actually a list size of 0 may be a list too.

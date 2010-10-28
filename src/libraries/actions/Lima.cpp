@@ -152,6 +152,19 @@ void Lima::CommitTo( Common::MsgLimaOrder& message ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Lima::CommitTo
+// Created: MGD 2010-10-27
+// -----------------------------------------------------------------------------
+void Lima::CommitTo( Common::MsgMissionParameter& message ) const
+{
+    message.set_null_value( !IsSet() );
+    if( IsSet() )
+    {
+        CommitTo( *message.mutable_value()->mutable_limasorder()->add_elem() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: Lima::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------

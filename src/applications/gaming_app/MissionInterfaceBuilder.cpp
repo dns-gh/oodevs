@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "MissionInterfaceBuilder.h"
 #include "actions_gui/MissionInterface_ABC.h"
+#include "actions_gui/LimaParameter.h"
 #include "actions_gui/LimitParameter.h"
 #include "actions_gui/ParamAgent.h"
 #include "actions_gui/ParamAgentList.h"
@@ -114,6 +115,7 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
     builderFunctors_["enumeration"]           = &MissionInterfaceBuilder::BuildEnumeration;
 
     builderFunctors_["limit"]                 = &MissionInterfaceBuilder::BuildLimit;
+    builderFunctors_["phaseline"]             = &MissionInterfaceBuilder::BuildLima;
     builderFunctors_["phaselinelist"]         = &MissionInterfaceBuilder::BuildLimaList;
 
     builderFunctors_["dotationlist"]          = &MissionInterfaceBuilder::BuildDotationTypeList;
@@ -479,6 +481,15 @@ actions::gui::Param_ABC& MissionInterfaceBuilder::BuildEnumeration( const OrderP
 actions::gui::Param_ABC& MissionInterfaceBuilder::BuildLimit( const OrderParameter& parameter ) const
 {
     return *new actions::gui::LimitParameter( missionInterface_, parameter, converter_, controllers_.controller_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildLima
+// Created: MGD 2010-10-27
+// -----------------------------------------------------------------------------
+actions::gui::Param_ABC& MissionInterfaceBuilder::BuildLima( const OrderParameter& parameter ) const
+{
+    return *new actions::gui::LimaParameter( missionInterface_, parameter, converter_, simulation_.GetDateTime() );
 }
 
 // -----------------------------------------------------------------------------

@@ -113,6 +113,7 @@ private:
     actions::gui::Param_ABC& BuildEnumeration          ( const kernel::OrderParameter& parameter ) const;
 
     actions::gui::Param_ABC& BuildLimit                ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC& BuildLima                 ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildLimaList             ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildDotationTypeList     ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildIntelligenceList     ( const kernel::OrderParameter& parameter ) const;

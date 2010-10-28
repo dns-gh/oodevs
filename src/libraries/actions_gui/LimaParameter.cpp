@@ -37,6 +37,21 @@ LimaParameter::LimaParameter( QObject* parent, const QString& name, const kernel
 }
 
 // -----------------------------------------------------------------------------
+// Name: LimaParameter constructor
+// Created: MGD 2010-10-27
+// -----------------------------------------------------------------------------
+LimaParameter::LimaParameter( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const QDateTime& currentDate )
+: QObject( parent )
+, Param_ABC( parameter.GetName().c_str() )
+, converter_  ( converter )
+, currentDate_( currentDate )
+, line_       ( 0 )
+, schedule_   ( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: LimaParameter destructor
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
@@ -81,24 +96,28 @@ QWidget* LimaParameter::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 // Name: LimaParameter::Draw
 // Created: SBO 2007-05-02
+// Modified: MGD 2010-10-27
 // -----------------------------------------------------------------------------
 void LimaParameter::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    glPushAttrib( GL_CURRENT_BIT );
-        glColor4f( 1, 0, 0, 0.5f );
-        line_->Interface().Apply( &kernel::Drawable_ABC::Draw, point, viewport, tools ); // $$$$ SBO 2007-05-02:
-        // $$$$ AGE 2007-05-09: pourquoi pas juste Draw ??
-        glColor3f( 0.7f, 0, 0 );
-        QStringList functions;
-        for( unsigned int i = 0; i < functions_->count(); ++i )
-            if( functions_->isSelected( i ) )
-                functions.append( tools::ToShortString( (kernel::E_FuncLimaType)i ) );
-        const geometry::Point2f position = line_->Get< kernel::Positions >().GetPosition();
-        const geometry::Vector2f lineFeed = geometry::Vector2f( 0, -18.f * tools.Pixels() ); // $$$$ SBO 2007-05-15: hard coded \n
-        if( ! functions.isEmpty() )
-            tools.Print( functions.join( ", " ).ascii(), position + lineFeed, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
-        schedule_->Draw( position + lineFeed * 2.f, viewport, tools );
-    glPopAttrib();
+    if( line_ )
+    {
+        glPushAttrib( GL_CURRENT_BIT );
+            glColor4f( 1, 0, 0, 0.5f );
+            line_->Interface().Apply( &kernel::Drawable_ABC::Draw, point, viewport, tools ); // $$$$ SBO 2007-05-02:
+            // $$$$ AGE 2007-05-09: pourquoi pas juste Draw ??
+            glColor3f( 0.7f, 0, 0 );
+            QStringList functions;
+            for( unsigned int i = 0; i < functions_->count(); ++i )
+                if( functions_->isSelected( i ) )
+                    functions.append( tools::ToShortString( (kernel::E_FuncLimaType)i ) );
+            const geometry::Point2f position = line_->Get< kernel::Positions >().GetPosition();
+            const geometry::Vector2f lineFeed = geometry::Vector2f( 0, -18.f * tools.Pixels() ); // $$$$ SBO 2007-05-15: hard coded \n
+            if( ! functions.isEmpty() )
+                tools.Print( functions.join( ", " ).ascii(), position + lineFeed, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
+            schedule_->Draw( position + lineFeed * 2.f, viewport, tools );
+        glPopAttrib();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -117,8 +136,11 @@ void LimaParameter::MenuItemValidated( int index )
 // -----------------------------------------------------------------------------
 void LimaParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu )
 {
-    if( entity.IsLimit() || !line_ || line_ != &entity )
+    if( entity.IsLimit() )
         return;
+    if( !line_ || line_ != &entity )
+        line_ = &entity;
+
     QPopupMenu* limaMenu = new QPopupMenu( menu );
     for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
     {

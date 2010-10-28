@@ -317,6 +317,24 @@ bool MIL_BaseParameter::ToPopulationKnowledge( Common::CrowdKnowledgeId& ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToLima
+// Created: MGD 2010-10-27
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToLima( Common::MsgLimasOrder& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToLimaList
+// Created: MGD 2010-10-27
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToLimaList( Common::MsgLimasOrder& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::ToString
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
@@ -601,6 +619,25 @@ bool MIL_BaseParameter::ToList( std::vector< Common::MsgMissionParameter_Value >
 // Created: LDC 2010-09-21
 // -----------------------------------------------------------------------------
 bool MIL_BaseParameter::ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToLima
+// Created: MGD 2010-10-27
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToLima( boost::shared_ptr< TER_Localisation >& ) const
+{
+    return false;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToLimaList
+// Created: MGD 2010-10-27
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const
 {
     return false;
 }

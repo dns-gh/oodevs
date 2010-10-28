@@ -14,6 +14,11 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include <qlistbox.h>
 
+namespace Common
+{
+    class MsgMissionParameter;
+}
+
 namespace kernel
 {
     class TacticalLine_ABC;
@@ -42,6 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LimaParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, const QDateTime& currentDate, const kernel::TacticalLine_ABC& line );
+             LimaParameter( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const QDateTime& currentDate );
     virtual ~LimaParameter();
     //@}
 

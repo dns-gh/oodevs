@@ -24,6 +24,8 @@
 #include "MIL_ParameterType_GenObject.h"
 #include "MIL_ParameterType_GenObjectList.h"
 #include "MIL_ParameterType_IndirectFire.h"
+#include "MIL_ParameterType_Lima.h"
+#include "MIL_ParameterType_LimaList.h"
 #include "MIL_ParameterType_Location.h"
 #include "MIL_ParameterType_LocationComposite.h"
 #include "MIL_ParameterType_LocationCompositeList.h"
@@ -121,6 +123,8 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType< MIL_ParameterType_UrbanBlock            >( std::string("UrbanBlock") );
     RegisterParameterType< MIL_ParameterType_LocationComposite     >( std::string("LocationComposite") );
     RegisterParameterType< MIL_ParameterType_LocationCompositeList >( std::string("LocationCompositeList") );
+    RegisterParameterType< MIL_ParameterType_Lima                  >();
+    RegisterParameterType< MIL_ParameterType_LimaList              >();
 }
 
 // =============================================================================

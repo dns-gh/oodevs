@@ -72,6 +72,8 @@ public:
     virtual bool ToPopulationKnowledge( Common::CrowdKnowledgeId& asn ) const;
     virtual bool ToUrbanBlock( Common::UrbanObjectId& ) const;
     virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const;
+    virtual bool ToLima( Common::MsgLimasOrder& ) const;
+    virtual bool ToLimaList( Common::MsgLimasOrder& ) const;
 
     virtual bool ToString( std::string& ) const;
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const;
@@ -104,6 +106,8 @@ public:
     virtual bool ToObjectiveList( std::vector< boost::shared_ptr< DEC_Objective > >& ) const;
     virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const;
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const;
+    virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const;
+    virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
 
     virtual void Append( boost::shared_ptr< TER_Localisation > pLocation );
     virtual void Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject );

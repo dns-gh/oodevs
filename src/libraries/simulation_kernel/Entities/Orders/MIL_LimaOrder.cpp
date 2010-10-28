@@ -12,6 +12,7 @@
 #include "MIL_LimaFunction.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include "MT_Tools/MT_Line.h"
 #include "protocol/protocol.h"
 
@@ -23,14 +24,15 @@ unsigned int MIL_LimaOrder::nNextID_ = 0;
 // -----------------------------------------------------------------------------
 MIL_LimaOrder::MIL_LimaOrder( const Common::MsgLimaOrder& asn )
     : nID_          ( ++nNextID_ )
-    , points_       ()
     , functions_    ()
     , bFlag_        ( false )
     , bScheduleFlag_( false )
 {
     NET_ASN_Tools::ReadTick( asn.horaire(), nSchedule_);
 
-    if( !NET_ASN_Tools::ReadLine( asn.lima(), points_ ) )
+    T_PointVector points;
+    localisation_ = boost::shared_ptr< TER_Localisation >( new TER_Localisation( TER_Localisation::eLine, points ) );
+    if( !NET_ASN_Tools::ReadLine( asn.lima(), *localisation_ ) )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_lima );
 
     for( int i = 0; i < asn.fonctions_size(); ++i )
@@ -54,18 +56,16 @@ MIL_LimaOrder::~MIL_LimaOrder()
 //-----------------------------------------------------------------------------
 // Name: MIL_LimaOrder::Intersect2D
 // Created: JVT 02-12-05
+// Modified: MGD 2010-10-28
 //-----------------------------------------------------------------------------
 bool MIL_LimaOrder::Intersect2D( const MT_Line& line, MT_Vector2D& vPos ) const      //$$$ devrait prendre un set en paramètre (plusieurs intersections possibles)
 {
-    CIT_PointVector itPoint = points_.begin();
-    const MT_Vector2D* pLastPoint = &*itPoint;
-    for( ++itPoint; itPoint != points_.end(); ++itPoint )
+    TER_DistanceLess cmp( MT_Vector2D( 0,0 ) );
+    T_PointSet collisions( cmp );
+    if( localisation_->Intersect2D( line, collisions ) )
     {
-        const MT_Vector2D* pCurPoint = &*itPoint;
-        MT_Line lineLima( *pLastPoint, *pCurPoint );
-        if( lineLima.Intersect2D( line, vPos ) == eDoIntersect )
-            return true;
-        pLastPoint = pCurPoint;
+        vPos = *collisions.begin();
+        return true;
     }
     return false;
 }
@@ -101,7 +101,7 @@ bool MIL_LimaOrder::Intersect2D( const T_PointVector& polyline, T_PointSet& inte
 // -----------------------------------------------------------------------------
 void MIL_LimaOrder::Serialize( Common::MsgLimaOrder& asn ) const
 {
-    NET_ASN_Tools::WriteLine( points_, *asn.mutable_lima() );
+    NET_ASN_Tools::WriteLine( *localisation_, *asn.mutable_lima() );
     NET_ASN_Tools::WriteTick( nSchedule_, *asn.mutable_horaire() );
 
     for( CIT_LimaFunctions it = functions_.begin(); it != functions_.end(); ++it )
@@ -123,7 +123,16 @@ bool MIL_LimaOrder::HasFunction( const MIL_LimaFunction& function ) const
 // -----------------------------------------------------------------------------
 const T_PointVector& MIL_LimaOrder::GetPoints() const
 {
-    return points_;
+    return localisation_->GetPoints();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::GetLocalisation
+// Created: MGD 2010-10-28
+// -----------------------------------------------------------------------------
+boost::shared_ptr< TER_Localisation > MIL_LimaOrder::GetLocalisation() const
+{
+    return localisation_;
 }
 
 // -----------------------------------------------------------------------------

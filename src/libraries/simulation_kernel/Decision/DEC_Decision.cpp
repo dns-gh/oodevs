@@ -797,6 +797,28 @@ bool LocationCompositeListFunctionBM( directia::brain::Brain& brain, directia::t
     return false;
 }
 
+bool PhaseLineFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    boost::shared_ptr< TER_Localisation > value;
+    if( element.ToLima( value ) && value.get() )
+    {
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.LimaStatique" ], name, value, false );
+        return true;
+    }
+    return false;
+}
+
+bool PhaseLineListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    std::vector< boost::shared_ptr< TER_Localisation > > value;
+    if( element.ToLimaList( value ) )
+    {
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.LimaStatique" ], name, value, true );
+        return true;
+    }
+    return false;
+}
+
 std::map< std::string, T_Function > functors;
 std::map< std::string, T_FunctionBM > functorsBM;
 
@@ -866,6 +888,9 @@ void InitFunctions()
         functorsBM[ "UrbanBlock" ] = UrbanBlockFunctionBM;
         functorsBM[ "LocationComposite" ] = LocationCompositeFunctionBM;
         functorsBM[ "LocationCompositeList" ] = LocationCompositeListFunctionBM;
+        functorsBM[ "PhaseLine" ] = PhaseLineFunctionBM;
+        functorsBM[ "PhaseLineList" ] = PhaseLineListFunctionBM;
+
     }
 }
 

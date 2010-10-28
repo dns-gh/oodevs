@@ -19,6 +19,7 @@ namespace Common
 
 class MT_Line;
 class MIL_LimaFunction;
+class TER_Localisation;
 struct ASN1T_LimaOrder;
 
 // =============================================================================
@@ -58,6 +59,7 @@ public:
     const T_PointVector&   GetPoints   () const;
     const T_LimaFunctions& GetFunctions() const;
           unsigned int     GetSchedule () const;
+    boost::shared_ptr< TER_Localisation > GetLocalisation() const;
     //@}
 
     //! @name Geometry $$$ BULLSHIT
@@ -73,7 +75,7 @@ public:
 
 private:
     unsigned int            nID_;
-    T_PointVector   points_;
+    boost::shared_ptr< TER_Localisation > localisation_;
     T_LimaFunctions functions_;
     bool            bFlag_;
     bool            bScheduleFlag_;

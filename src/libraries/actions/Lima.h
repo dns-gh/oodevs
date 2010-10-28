@@ -52,6 +52,7 @@ public:
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
 
     void CommitTo( Common::MsgLimaOrder& message ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
     void Clean( Common::MsgLimaOrder& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
