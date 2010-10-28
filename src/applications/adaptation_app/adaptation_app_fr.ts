@@ -1564,15 +1564,15 @@ Arrêt moteur allumé</translation>
     <name>ADN_FragOrder_WizardSecondPage</name>
     <message>
         <source>Add for all Units</source>
-        <translation type="unfinished">Ajouter à chaque unité</translation>
+        <translation>Ajouter à chaque unité</translation>
     </message>
     <message>
         <source>Add for all Automata</source>
-        <translation type="unfinished">Ajouter à chaque automate</translation>
+        <translation>Ajouter à chaque automate</translation>
     </message>
     <message>
         <source>Add for all Populations</source>
-        <translation type="unfinished">Ajouter à chaque population</translation>
+        <translation>Ajouter à chaque population</translation>
     </message>
 </context>
 <context>

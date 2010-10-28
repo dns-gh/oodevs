@@ -23,15 +23,15 @@ ADN_FragOrder_WizardSecondPage::ADN_FragOrder_WizardSecondPage( QWizard* pParent
     QHBox* box1 = new QHBox( groupbox );
     addForAllUnits_ = new QCheckBox( box1 );
     QLabel* label1 = new QLabel( box1 );
-    label1->setText( tr( "Add for all Units" ) );
+    label1->setText(  qApp->translate( "ADN_FragOrder_WizardSecondPage",  "Add for all Units" ) );
     QHBox* box2 = new QHBox( groupbox );
     addForAllAutomata_ = new QCheckBox( box2 );
-    QLabel* label2 = new QLabel( box2,  tr("Add for all Automata") );
-    label2->setText( tr( "Add for all Automata" ) );
+    QLabel* label2 = new QLabel( box2,qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Automata") );
+    label2->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage",  "Add for all Automata" ) );
     QHBox* box3 = new QHBox( groupbox );
     addForAllPops_ = new QCheckBox( box3 );
-    QLabel* label3 = new QLabel( box3,  tr("Add for all Populations") );
-    label3->setText( tr( "Add for all Populations" ) );
+    QLabel* label3 = new QLabel( box3, qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Populations") );
+    label3->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Populations" ) );
 }
 
 // -----------------------------------------------------------------------------
