@@ -34,33 +34,7 @@ OutFile "${DISTDIR}\${PRODUCT_NAME}_${PRODUCT_SUFFIX}_${APP_VERSION_MAJOR}.exe"
 Section "!${PRODUCT_NAME}"
     SectionIn RO
 SectionEnd
-
-SectionGroup "Additional components"
     
-    !insertmacro OT.AddOptionalComponent "Terrain"
-    
-SectionGroupEnd
-
-;--------------------------------
-SectionGroup "Models" s_mod
-
-    !insertmacro OT.AddDecisionalModels "ada"
-    !if "${APP_MODEL}" == "france"
-        !insertmacro OT.AddPhysicalModels "ada" "france" "s_phymod1"
-        !insertmacro OT.AddPhysicalModels "ada" "scipio-1.9.2" "s_phymod2"
-        !insertmacro OT.AddPhysicalModels "ada" "worldwide" "s_phymod3"
-    !else if "${APP_MODEL}" == "Scipio-V1.Stab"
-        !insertmacro OT.AddPhysicalModels "ada" "france" "s_phymod1"
-        !insertmacro OT.AddPhysicalModels "ada" "scipio-1.9.2" "s_phymod2"
-    !else
-        !insertmacro OT.AddPhysicalModels "ada" "${APP_MODEL}" "s_phymod1"
-    !endif
-
-    ; Sample propagation model
-    Section "Propagations"
-        SetOutPath "${INSTDATADIR}\data\propagations"
-        File /r /x ".svn" "${DATADIR}\data\propagations\test"
-    SectionEnd
 SectionGroupEnd
 
 ;--------------------------------
