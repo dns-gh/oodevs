@@ -105,6 +105,10 @@ public:
         result = param_;
         return true;
     }
+    virtual bool ToLima( Common::MsgLimasOrder& ) const
+    { throw; }
+    virtual bool ToLimaList( Common::MsgLimasOrder& ) const
+    { throw; }
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const
     { throw; }
     virtual bool ToDirection( boost::shared_ptr< MT_Vector2D >& ) const
@@ -166,6 +170,10 @@ public:
     virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const
     { throw; }
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const
+    { throw; }
+    virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const
+    { throw; }
+    virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const
     { throw; }
     virtual void Append( boost::shared_ptr< TER_Localisation > pLocation )
     { throw; }
