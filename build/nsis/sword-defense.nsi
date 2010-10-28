@@ -397,6 +397,7 @@ Function .onSelChange
         !insertmacro OT.CheckDependency "s_exo19" "s_ter6"
         !insertmacro OT.CheckDependency "s_exo20" "s_ter7"
         !insertmacro OT.CheckDependency "s_exo21" "s_ter8"
+        !insertmacro OT.CheckDependency "s_exo22" "s_ter9"
     !else if "${APP_MODEL}" == "france"
         !insertmacro OT.CheckDependency "s_exo1" "s_ter4"
         !insertmacro OT.CheckDependency "s_exo2" "s_ter7"
@@ -433,6 +434,7 @@ Function .onSelChange
         !insertmacro OT.CheckDependency "s_exo31" "s_ter8"
         !insertmacro OT.CheckDependency "s_exo32" "s_ter8"
         !insertmacro OT.CheckDependency "s_exo33" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo34" "s_ter9"
     !endif
      
 FunctionEnd
