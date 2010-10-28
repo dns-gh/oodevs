@@ -731,6 +731,27 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestEquipments, Fixture )
     task->Commit();
 }
 
+namespace
+{
+    MsgSimToClient MakeHumanVariation( int variation[8], unsigned long id )
+    {
+        MsgSimToClient result;
+        MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        attributes.mutable_unit()->set_id( id );
+        HumanDotations_HumanDotation& personnel = *attributes.mutable_dotation_eff_personnel()->add_elem();
+        personnel.set_rang( Common::officier );
+        personnel.set_nb_total( variation[0] );
+        personnel.set_nb_operationnels( variation[1] );
+        personnel.set_nb_morts( variation[2] );
+        personnel.set_nb_blesses( variation[3] );
+        personnel.set_nb_blesses_mentaux( variation[4] );
+        personnel.set_nb_contamines_nbc( variation[5] );
+        personnel.set_nb_dans_chaine_sante( variation[6] );
+        personnel.set_nb_utilises_pour_maintenance( variation[7] );
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Facade_TestHumans
 // Created: AGE 2004-12-15
@@ -738,17 +759,18 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestEquipments, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestHumans, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='humans' states='operational,nbc' ranks='troopers' id='humans'/>"
+                             "    <extract function='humans' states='dead' ranks='officer' id='humans'/>"
                              "    <reduce type='int' function='sum' input='humans' id='sum'/>"
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    BOOST_TODO;
-//    MockPublisher publisher;
-//    double expectedResult[] = { 0, -54, 0, 0, -100 };
-//    MakeExpectation( publisher.Send_mocker, expectedResult, 0.01 );
-//    task->Commit( publisher );
-//    publisher.verify();
+    int variation[8] = { 0, 0, 1, 0, 0, 0, 0, 0 };
+    task->Receive( BeginTick() );
+    task->Receive( MakeHumanVariation( variation, 42 ) );
+    task->Receive( EndTick() );
+    double expectedResult[] = { 1 };
+    MakeExpectation( publisher, expectedResult );
+    task->Commit();
 }
 
 // -----------------------------------------------------------------------------

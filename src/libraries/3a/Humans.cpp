@@ -26,7 +26,7 @@ Humans::Humans()
 namespace
 {
     const unsigned nHumanStates = 8;
-    typedef int (HumanDotations_HumanDotation::*HumanDotationsMemberFn)()const;
+    typedef google::protobuf::int32 (HumanDotations_HumanDotation::*HumanDotationsMemberFn)()const;
     HumanDotationsMemberFn humanData[8] =
     {
         &HumanDotations_HumanDotation::nb_total,
@@ -102,10 +102,9 @@ int Humans::Extract( const MsgUnitAttributes& attributes )
         if( ( rankMask_ & ( 1 << humans.rang() ) ) != 0 )
         {
             int quantity = 0;
-            HumanDotationsMemberFn *data = humanData;
-            for( unsigned i = 0; i < nHumanStates; ++i, ++data )
+            for( unsigned i = 0; i < nHumanStates; ++i )
                 if( ( stateMask_ & ( 1 << i ) ) != 0 )
-                    quantity += (humans.*data[i])();
+                    quantity += (humans.*humanData[i])();
             humans_[ humans.rang() ] += quantity;
         }
     }
