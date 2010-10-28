@@ -129,7 +129,7 @@ void ActionsToolbar::SetFilter( const actions::ActionsFilter_ABC& filter )
 // -----------------------------------------------------------------------------
 void ActionsToolbar::Load()
 {
-    const std::string rootDir = config_.BuildExerciseChildFile( "orders" );
+    const std::string rootDir = config_.BuildExerciseChildFile( "orders.ord" );
     const QString filename = QFileDialog::getOpenFileName( rootDir.c_str(), tr( "Actions files (*.ord)" ), topLevelWidget(), 0, tr( "Load" ) );
     if( filename.isEmpty() )
         return;
