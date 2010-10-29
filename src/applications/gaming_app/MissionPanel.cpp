@@ -272,13 +272,20 @@ int MissionPanel::AddFragOrders( const Decisions_ABC& decisions, ContextMenu& me
             const FragOrder& element = it.NextElement();
             list[ element.GetType().IsMissionRequired() ? mission->GetName().c_str() : "" ].insert( &element );
         }
+        it = decisions.GetFragOrders();
+        while( it.HasMoreElements() )
+        {
+            const FragOrder& element = it.NextElement();
+            if( element.GetType().IsMissionRequired() && element.GetType().IsAvailableFor( *selectedEntity_ ) )
+                list[ "" ].insert( &element );
+        }
     }
     {
         tools::Iterator< const FragOrder& > it = decisions.GetFragOrders();
         while( it.HasMoreElements() )
         {
             const FragOrder& element = it.NextElement();
-            if( element.GetType().IsAvailableFor( *selectedEntity_ ) )
+            if( !element.GetType().IsMissionRequired() && element.GetType().IsAvailableFor( *selectedEntity_ ) )
                 list[ "" ].insert( &element );
         }
     }

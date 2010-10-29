@@ -48,7 +48,7 @@ Mission* MissionFactory::CreateAgentMission( const std::string& name )
     MissionType* type = unitMissions_.Find( name );
     if( !type )
         throw std::runtime_error( "unknown agent mission '" + name + "'" );
-    return AddFragOrders( new Mission( *type ) );
+    return new Mission( *type );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ Mission* MissionFactory::CreateAutomatMission( const std::string& name )
     MissionType* type = automatMissions_.Find( name );
     if( !type )
         throw std::runtime_error( "unknown automat mission '" + name + "'" );
-    return AddFragOrders( new Mission( *type ) );
+    return new Mission( *type );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,23 +85,4 @@ FragOrder* MissionFactory::CreateFragOrder( const std::string& name )
     if( !type )
         throw std::runtime_error( "unknown frag order '" + name + "'" );
     return new FragOrder( *type );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionFactory::AddFragOrders
-// Created: AGE 2006-04-05
-// -----------------------------------------------------------------------------
-Mission* MissionFactory::AddFragOrders( Mission* mission )
-{
-    tools::Iterator< const FragOrderType& > it = fragOrders_.CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const FragOrderType& type = it.NextElement();
-        if( !type.IsMissionRequired() )
-        {
-            FragOrder* newOrder = CreateFragOrder( type.GetName() );
-            static_cast< tools::Resolver< FragOrder >* >( mission )->Register( newOrder->GetId(), *newOrder );
-        }
-    }
-    return mission;
 }

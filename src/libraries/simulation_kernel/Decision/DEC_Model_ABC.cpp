@@ -71,6 +71,9 @@ void DEC_Model_ABC::InitializeMissions( xml::xistream& xis, const std::map< std:
     availableFragOrdersPerMission_.clear();
     xis >> xml::optional >> xml::start( "missions" )
                            >> xml::list( "mission", *this, &DEC_Model_ABC::ReadMission, missionTypes )
+                      >> xml::end
+        >> xml::optional >> xml::start( "fragorders" )
+                      >> xml::list( "fragorder", *this, &DEC_Model_ABC::ReadFragOrder )
                       >> xml::end;
 }
 

@@ -50,11 +50,6 @@ private:
     MissionFactory& operator=( const MissionFactory& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    Mission* AddFragOrders( Mission* mission );
-    //@}
-
 private:
     //! @name Member data
     //@{
