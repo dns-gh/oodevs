@@ -880,11 +880,31 @@
         </zip>
     </target>
 
-    <target name="package.exo" description="package des exercices">
+    <target name="package.exo" description="package the exercices installers" depends="package.exo.defense.france,package.exo.defense.worldwide,package.exo.defense.scipio,package.exo.security.worldwide"/>
+
+    <target name="package.exo.defense.worldwide" description="package des exercices france defense">
         <nsis name="sword" script="exo-pack.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DAPP_MODEL=france"/>
+            <arg value="/DAPP_MODEL=defense-worldwide"/>
+            <arg value="/X!include sword-defense.nsh"/>
+        </nsis>
+    </target>
+
+    <target name="package.exo.defense.france" description="package des exercices france defense">
+        <nsis name="sword" script="exo-pack.nsi" nsh="config.nsh">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DAPP_MODEL=defense-france"/>
+            <arg value="/X!include sword-defense.nsh"/>
+        </nsis>
+    </target>
+
+    <target name="package.exo.defense.scipio" description="package des exercices france defense">
+        <nsis name="sword" script="exo-pack.nsi" nsh="config.nsh">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DAPP_MODEL=defense-scipio"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>

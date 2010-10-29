@@ -32,48 +32,42 @@ OutFile "${DISTDIR}\${PRODUCT_NAME}_${PRODUCT_SUFFIX}_${APP_VERSION_MAJOR}.exe"
 
 ;--------------------------------
 Section "!${PRODUCT_NAME}"
-    SectionIn RO
 SectionEnd
     
+;--------------------------------
+SectionGroup "Models" s_mod
+
+    !insertmacro OT.AddDecisionalModels "ada"
+    !if "${APP_MODEL}" == "defense-worldwide"
+        !insertmacro OT.AddPhysicalModels "ada" "worldwide" "s_phymod1"
+    !else if "${APP_MODEL}" == "defense-france"
+        !insertmacro OT.AddPhysicalModels "ada" "france" "s_phymod1"
+    !else if "${APP_MODEL}" == "defense-scipio"
+        !insertmacro OT.AddPhysicalModels "ada" "scipio-1.9.2" "s_phymod2"
+    !else if "${APP_MODEL}" == "security-worldwide"
+        !insertmacro OT.AddPhysicalModels "ada" "worldwide" "s_phymod1"
+    !endif
+
+    ; Sample propagation model
+    Section "Propagations"
+        SetOutPath "${INSTDATADIR}\data\propagations"
+        File /r /x ".svn" "${DATADIR}\data\propagations\test"
+    SectionEnd
+SectionGroupEnd    
 
 ;--------------------------------
 SectionGroup "Exercises" s_exo
 
     !ifdef STRESS
         !insertmacro OT.AddExercise "Charge" "Cabourg" "s_exo1"
-    !else if "${APP_MODEL}" == "worldwide"
+    !else if "${APP_MODEL}" == "defense-worldwide"
         !insertmacro OT.AddExercise "Egypt" "Nord egypt" "s_exo1"
         !insertmacro OT.AddExercise "Paris" "Paris_Est" "s_exo2"
         !insertmacro OT.AddExercise "Scripting demo" "test" "s_exo3"
         !insertmacro OT.AddExercise "9_cases" "Angers_x9" "s_exo4"
         !insertmacro OT.AddExercise "Musoria Border Defense" "Paris_Est" "s_exo5"
         !insertmacro OT.AddExercise "tutorials\Generalities" "Paris_Est" "s_exo6"
-    !else if "${APP_MODEL}" == "Scipio-V1.Stab"
-        ; Exercises
-        !insertmacro OT.AddExercise "esag" "Angers" "s_exo1"
-        !insertmacro OT.AddExercise "CENTORSEM" "Paris_Est" "s_exo2"
-        !insertmacro OT.AddExercise "puma" "larochelle" "s_exo3"
-        !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo17"
-        !insertmacro OT.AddExercise "Ares" "Blois" "s_exo18"
-        !insertmacro OT.AddExercise "Porto - 1.9.2" "Porto" "s_exo19"
-        !insertmacro OT.AddExercise "BMDrosoville" "Drosoville" "s_exo20"
-        !insertmacro OT.AddExercise "tests\test1_increment1_v1stab" "Mailly" "s_exo21"
-        !insertmacro OT.AddExercise "Poseidon VA" "Poseidon" "s_exo22"
-        ; Tutorials
-        !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
-        !insertmacro OT.AddExercise "tutorials\02 - Jeu" "Paris_Est" "s_exo5"
-        !insertmacro OT.AddExercise "tutorials\03 - Mission" "Paris_Est" "s_exo6"
-        !insertmacro OT.AddExercise "tutorials\04 - ABC" "Paris_Est" "s_exo7"
-        !insertmacro OT.AddExercise "tutorials\05 - Infanterie" "Paris_Est" "s_exo8"
-        !insertmacro OT.AddExercise "tutorials\06 - Genie" "Paris_Est" "s_exo9"
-        !insertmacro OT.AddExercise "tutorials\07 - Artillerie" "Paris_Est" "s_exo10"
-        !insertmacro OT.AddExercise "tutorials\071 - NRBC" "Paris_Est" "s_exo11"
-        !insertmacro OT.AddExercise "tutorials\072 - ALAT" "Paris_Est" "s_exo12"
-        !insertmacro OT.AddExercise "tutorials\073 - LOG" "Paris_Est" "s_exo13"
-        !insertmacro OT.AddExercise "tutorials\08 - Fonctions Avancees" "Paris_Est" "s_exo14"
-        !insertmacro OT.AddExercise "tutorials\09 - Rejeu et AAA" "Paris_Est" "s_exo15"
-        !insertmacro OT.AddExercise "tutorials\10 - Preparation" "Paris_Est" "s_exo16"
-     !else if "${APP_MODEL}" == "france"
+    !else if "${APP_MODEL}" == "defense-france"
         ; Exercises
         !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo1"
         !insertmacro OT.AddExercise "BMDrosoville" "Drosoville" "s_exo2"
@@ -118,6 +112,35 @@ SectionGroup "Exercises" s_exo
         File "${DATADIR}\tests\import_lto\*.xml"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         SectionEnd
+     !else if "${APP_MODEL}" == "defense-scipio"
+        ; Exercises
+        !insertmacro OT.AddExercise "esag" "Angers" "s_exo1"
+        !insertmacro OT.AddExercise "CENTORSEM" "Paris_Est" "s_exo2"
+        !insertmacro OT.AddExercise "puma" "larochelle" "s_exo3"
+        !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo17"
+        !insertmacro OT.AddExercise "Ares" "Blois" "s_exo18"
+        !insertmacro OT.AddExercise "Porto - 1.9.2" "Porto" "s_exo19"
+        !insertmacro OT.AddExercise "BMDrosoville" "Drosoville" "s_exo20"
+        !insertmacro OT.AddExercise "tests\test1_increment1_v1stab" "Mailly" "s_exo21"
+        !insertmacro OT.AddExercise "Poseidon VA" "Poseidon" "s_exo22"
+        ; Tutorials
+        !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
+        !insertmacro OT.AddExercise "tutorials\02 - Jeu" "Paris_Est" "s_exo5"
+        !insertmacro OT.AddExercise "tutorials\03 - Mission" "Paris_Est" "s_exo6"
+        !insertmacro OT.AddExercise "tutorials\04 - ABC" "Paris_Est" "s_exo7"
+        !insertmacro OT.AddExercise "tutorials\05 - Infanterie" "Paris_Est" "s_exo8"
+        !insertmacro OT.AddExercise "tutorials\06 - Genie" "Paris_Est" "s_exo9"
+        !insertmacro OT.AddExercise "tutorials\07 - Artillerie" "Paris_Est" "s_exo10"
+        !insertmacro OT.AddExercise "tutorials\071 - NRBC" "Paris_Est" "s_exo11"
+        !insertmacro OT.AddExercise "tutorials\072 - ALAT" "Paris_Est" "s_exo12"
+        !insertmacro OT.AddExercise "tutorials\073 - LOG" "Paris_Est" "s_exo13"
+        !insertmacro OT.AddExercise "tutorials\08 - Fonctions Avancees" "Paris_Est" "s_exo14"
+        !insertmacro OT.AddExercise "tutorials\09 - Rejeu et AAA" "Paris_Est" "s_exo15"
+        !insertmacro OT.AddExercise "tutorials\10 - Preparation" "Paris_Est" "s_exo16"
+ 
+     !else if "${APP_MODEL}" == "security-worldwide"
+        
+     !else if "${APP_MODEL}" == "security-masa"        
     !endif
 
 SectionGroupEnd
@@ -125,12 +148,20 @@ SectionGroupEnd
 ;--------------------------------
 SectionGroup "Terrains" s_ter
 
-    !if "${APP_MODEL}" == "worldwide"
+    !if "${APP_MODEL}" == "defense-worldwide"
         !insertmacro OT.AddTerrain "Nord egypt" "s_ter1"
         !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
         !insertmacro OT.AddTerrain "test" "s_ter3"
         !insertmacro OT.AddTerrain "Angers_x9" "s_ter4"
-    !else if "${APP_MODEL}" == "Scipio-V1.Stab"
+    !else if "${APP_MODEL}" == "defense-france"
+        !insertmacro OT.AddTerrain "Nord egypt" "s_ter1"
+        !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
+        !insertmacro OT.AddTerrain "Malaisie" "s_ter3"
+        !insertmacro OT.AddTerrain "Cabourg" "s_ter4"
+        !insertmacro OT.AddTerrain "Drosoville" "s_ter7"
+        !insertmacro OT.AddTerrain "Angers_x9" "s_ter8"
+        !insertmacro OT.AddTerrain "PoseidonVALite" "s_ter9"        
+    !else if "${APP_MODEL}" == "defense-scipio"
         !insertmacro OT.AddTerrain "Angers" "s_ter1"
         !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
         !insertmacro OT.AddTerrain "larochelle" "s_ter3"
@@ -140,39 +171,7 @@ SectionGroup "Terrains" s_ter
         !insertmacro OT.AddTerrain "Drosoville" "s_ter7"
         !insertmacro OT.AddTerrain "Mailly" "s_ter8"
         !insertmacro OT.AddTerrain "PoseidonVALite" "s_ter9"        
-    !else if "${APP_MODEL}" == "france"
-        !insertmacro OT.AddTerrain "Nord egypt" "s_ter1"
-        !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
-        !insertmacro OT.AddTerrain "Malaisie" "s_ter3"
-        !insertmacro OT.AddTerrain "Cabourg" "s_ter4"
-        !insertmacro OT.AddTerrain "Drosoville" "s_ter7"
-        !insertmacro OT.AddTerrain "Angers_x9" "s_ter8"
-        !insertmacro OT.AddTerrain "PoseidonVALite" "s_ter9"        
     !endif
-
-SectionGroupEnd
-
-;--------------------------------
-Section "Documentation" s_doc
-
-    !insertmacro OT.AddDocumentation
-
-SectionEnd
-
-SectionGroup "Shortcuts" s_sc
-
-    ;--------------------------------
-    Section "Desktop" s_desktop
-        SetOutPath "$INSTDIR\applications"
-        CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
-    SectionEnd
-    
-    ;--------------------------------
-    Section "Quick Launch" s_quick
-        SetOutPath "$INSTDIR\applications"
-        StrCmp $QUICKLAUNCH $TEMP +2
-        CreateShortCut "$QUICKLAUNCH\${PRODUCT_NAME}.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
-    SectionEnd
 
 SectionGroupEnd
 
@@ -213,7 +212,7 @@ Function .onInstSuccess
 FunctionEnd
 
 Function un.onInit
-    !insertmacro MULTIUSER_UNINIT
+    ;!insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
 Function .onSelChange
