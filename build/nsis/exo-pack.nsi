@@ -188,7 +188,7 @@ SectionGroupEnd
 
 ;--------------------------------
 SectionGroup "Populations" s_pop
-    if "${EXO_PACK}" == "security-worldwide"   
+    !if "${EXO_PACK}" == "security-worldwide"   
         !insertmacro OT.AddPopulation "bruxelles" "s_pop1"
         !insertmacro OT.AddPopulation "lehavre" "s_pop2"
     !else if "${EXO_PACK}" == "security-masa"             
