@@ -24,9 +24,10 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
+#include "meteo/PHY_Lighting.h"
+#include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/PHY_Precipitation.h"
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
-#include "meteo/PHY_Lighting.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Simulation_kernel/UrbanModel.h"
 #include "Simulation_kernel/UrbanType.h"
@@ -588,13 +589,13 @@ const double PHY_SensorTypeAgent::ReconnoissanceDistance() const
 // Name: PHY_SensorTypeAgent::RayTrace
 // Created: LMT 2010-07-02
 // -----------------------------------------------------------------------------
-const double PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const MT_Vector2D& vTarget  ) const
+const double PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const MT_Vector2D& vTarget, double sensorHeight ) const
 {
     if( vSource.Distance( vTarget ) > GetMaxDistance() )
         return 0.;
 
-    const MT_Vector3D vSource3D( vSource.rX_, vSource.rY_, 0 );
-    const MT_Vector3D vTarget3D( vTarget.rX_, vTarget.rY_, 0 );
+    const MT_Vector3D vSource3D( vSource.rX_, vSource.rY_, sensorHeight + MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( vSource.rX_, vSource.rY_ ) );
+    const MT_Vector3D vTarget3D( vTarget.rX_, vTarget.rY_, MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( vTarget.rX_, vTarget.rY_ ) );
 
     double rVisionNRJ = rDetectionDist_;
     bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ );

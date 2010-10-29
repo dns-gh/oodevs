@@ -173,7 +173,7 @@ namespace
         {
             const PHY_SensorTypeAgent* sensorTypeAgent = sensor.GetType().GetTypeAgent();
             if( sensorTypeAgent )
-                energy_ = std::max( energy_, sensorTypeAgent->RayTrace( point_, target_ ) );
+                energy_ = std::max( energy_, sensorTypeAgent->RayTrace( point_, target_, sensor.GetHeight() ) );
         }
         double GetEnergy() const
         {

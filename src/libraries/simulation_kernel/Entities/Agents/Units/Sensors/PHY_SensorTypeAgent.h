@@ -73,7 +73,7 @@ public:
     const double             ComputeIdentificationDist( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
     const double             ComputeRecognitionDist   ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
     const double             ComputeDetectionDist     ( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target ) const;
-    const double             RayTrace                 ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget     ) const;
+    const double             RayTrace                 ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double sensorHeight ) const;
     //@}
 
 public:
