@@ -35,7 +35,6 @@ Section "!${PRODUCT_NAME}"
     SectionIn RO
 SectionEnd
     
-SectionGroupEnd
 
 ;--------------------------------
 SectionGroup "Exercises" s_exo
