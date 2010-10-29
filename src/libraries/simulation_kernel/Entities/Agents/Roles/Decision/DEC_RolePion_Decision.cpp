@@ -834,7 +834,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     //Keypoint
     brain[ "DEC_Crossroads" ] =
         boost::function< void( const directia::tools::binders::ScriptRef& ) >( boost::bind( &DEC_GeometryFunctions::GetCrossroads, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) ;
-    
+    brain[ "DEC_FindSafetyPositions" ] =
+        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( float, float ) >( boost::bind( &DEC_GeometryFunctions::FindSafetyPositionsWithinCircle, boost::ref( GetPion() ), _1, _2 ) ) ;
 
     // Fire
     brain[ "DEC_Tir_PorteeMaxPourTirerSurUnite" ] =

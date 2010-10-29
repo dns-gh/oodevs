@@ -97,7 +97,17 @@ TerrainData& TER_PathFindManager::DefaultTerrainData()
 // Name: TER_PathFindManager::DefaultTerrainData
 // Created: RPD 2009-08-18
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFindManager::FindCrossroadsWithinCircle( const MT_Vector2D& center, float rRadius )
+std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFindManager::FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius )
 {
-    return threads_.back()->FindCrossroadsWithinCircle( center, rRadius );
+    return threads_.back()->FindCrossroadsWithinCircle( center, radius );
 }
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > > TER_PathFindManager::FindSafetyPositionsWithinCircle
+// Created: LDC 2010-10-28
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFindManager::FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance )
+{
+    return threads_.back()->FindSafetyPositionsWithinCircle( center, radius, safetyDistance );
+}
+    

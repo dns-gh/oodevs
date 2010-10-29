@@ -36,7 +36,16 @@ public:
     //! @name Operations
     //@{
     virtual void GetCrossroads( std::vector< boost::shared_ptr< MT_Vector2D > >& points );
+    virtual void FindSafetyPositionsWithinCircle( std::vector< boost::shared_ptr< MT_Vector2D > >& points, float radius, float safetyDistance );
     virtual void NotifyHasMove( const MT_Vector2D& newPos );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void CheckFuseau();
+    void UpdateCrossroads();
+    void UpdateSafety( float radius, float safetyDistance );
     //@}
 
 private:
@@ -52,7 +61,12 @@ private:
     MIL_Agent_ABC& pion_;
     MT_Vector2D lastPos_;
     std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > > crossroadsBuffer_;
+    std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > > safetyBuffer_;
     MIL_Fuseau fuseau_;
+    float cacheRadius_;
+    float cacheSafety_;
+    bool crossroadsCacheValid_;
+    bool safetyCacheValid_;
     //@}
 };
 

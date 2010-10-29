@@ -1608,6 +1608,17 @@ void DEC_GeometryFunctions::GetCrossroads( directia::brain::Brain& brain, MIL_Ag
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::FindSafetyPositionsWithinCircle
+// Created: LDC 2010-10-27
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::FindSafetyPositionsWithinCircle( MIL_AgentPion& pion, float radius, float safetyDistance )
+{
+    std::vector< boost::shared_ptr< MT_Vector2D > > points;
+    pion.GetRole< PHY_RoleInterface_TerrainAnalysis >().FindSafetyPositionsWithinCircle( points, radius, safetyDistance );
+    return points;
+}    
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeBarycenter
 // Created: MGD 2009-10-30
 // -----------------------------------------------------------------------------

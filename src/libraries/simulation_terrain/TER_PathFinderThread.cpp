@@ -214,12 +214,25 @@ void TER_PathFinderThread::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter,
 // Name: TER_PathFinderThread::FindCrossroadsWithinCircle
 // Created: RPD 2009-08-18
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindCrossroadsWithinCircle( const MT_Vector2D& vCenter, float rRadius )
+std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius )
 {
-    std::vector< pathfind::Node< TerrainData >* > result = pPathfinder_->FindCrossroadsWithinCircle( MakePoint( vCenter ), rRadius );
+    std::vector< pathfind::Node< TerrainData >* > result = pPathfinder_->FindCrossroadsWithinCircle( MakePoint( center ), radius );
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
     for( std::vector< pathfind::Node< TerrainData >* >::const_iterator it = result.begin(); it != result.end(); ++it )
         points.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( static_cast< double >( (*it)->X() ), static_cast< double >( (*it)->Y() ) ) ) );
+    return points;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindSafetyPositionsWithinCircle
+// Created: LDC 2010-10-28
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance )
+{
+    std::vector< geometry::Point2f > result = pPathfinder_->FindSafetyPositionsWithinCircle( MakePoint( center ), radius, safetyDistance );
+    std::vector< boost::shared_ptr< MT_Vector2D > > points;
+    for( std::vector< geometry::Point2f >::const_iterator it = result.begin(); it != result.end(); ++it )
+        points.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( static_cast< double >( it->X() ), static_cast< double >( it->Y() ) ) ) );
     return points;
 }
 

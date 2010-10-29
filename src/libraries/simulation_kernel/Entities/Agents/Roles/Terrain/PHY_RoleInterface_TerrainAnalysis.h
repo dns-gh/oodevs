@@ -38,6 +38,7 @@ public:
     //! @name Operations
     //@{
     virtual void GetCrossroads( std::vector< boost::shared_ptr< MT_Vector2D > >& points ) = 0;
+    virtual void FindSafetyPositionsWithinCircle( std::vector< boost::shared_ptr< MT_Vector2D > >& points, float radius, float safetyDistance ) = 0;
     //@}
 
 private:
