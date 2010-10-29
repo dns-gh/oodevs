@@ -812,12 +812,7 @@
     ============================================================================
     -->
     <!-- <target name="package" description="package the installers" depends="package.defense,package.france,package.security,package.security.demo,package.debug,package.app,package.exo"/> -->
-    <target name="package" description="package the installers" depends="dist.clean,package.app,package.exo,package.debug"/> 
-    
-    <target name="dist.clean" description="clean intermediate build artifacts">
-        <delete dir="${dist.dir}"/>        
-    </target>
-
+    <target name="package" description="package the installers" depends="package.app,package.exo,package.debug"/>     
     
     <!-- standard packages -->
     <target name="package.defense" description="package the standard installer: worldwide, no license">
