@@ -37,7 +37,6 @@ SectionEnd
 ;--------------------------------
 SectionGroup "Models" s_mod
 
-    !insertmacro OT.AddDecisionalModels "ada"
     !if "${EXO_PACK}" == "defense-worldwide"
         !insertmacro OT.AddPhysicalModels "ada" "worldwide" "s_phymod1"
     !else if "${EXO_PACK}" == "defense-france"

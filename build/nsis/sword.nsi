@@ -220,14 +220,15 @@ Function .onInit
     !insertmacro OT.CheckRunning
     !insertmacro OT.ChooseLanguage
 
-    ; Set section names
-    SectionSetText ${s_mod} $(OT_SECTION_MODELS)
-    SectionSetText ${s_decmod} $(OT_SECTION_DECISIONAL_MODELS)
-    ;SectionSetText ${s_decmodsrc} $(OT_SECTION_DECISIONAL_MODELS_SOURCES)
-    SectionSetText ${s_doc} $(OT_SECTION_DOCUMENTATION)
-    SectionSetText ${s_sc} $(OT_SECTION_SHORTCUTS)
-    SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)
-    SectionSetText ${s_quick} $(OT_SECTION_QUICKLAUNCH_SHORTCUT)
+    ; Set section names    
+    !if "${APP_PACK}" == "runtime"
+        SectionSetText ${s_decmod} $(OT_SECTION_DECISIONAL_MODELS)        
+        ;SectionSetText ${s_decmodsrc} $(OT_SECTION_DECISIONAL_MODELS_SOURCES)
+        SectionSetText ${s_doc} $(OT_SECTION_DOCUMENTATION)
+        SectionSetText ${s_sc} $(OT_SECTION_SHORTCUTS)
+        SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)
+        SectionSetText ${s_quick} $(OT_SECTION_QUICKLAUNCH_SHORTCUT)
+    !endif
     
     !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
