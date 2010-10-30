@@ -177,6 +177,14 @@ SectionGroup "Additional components"
     !endif
 SectionGroupEnd
 
+;--------------------------------
+SectionGroup "Models" s_mod
+
+    !insertmacro OT.AddDecisionalModels "ada"
+    ;!insertmacro OT.AddDecisionalModelSources "ada"
+
+
+SectionGroupEnd
 
 
 ;--------------------------------
@@ -222,7 +230,8 @@ Function .onInit
 
     ; Set section names    
     !if "${APP_PACK}" == "runtime"
-        SectionSetText ${s_decmod} $(OT_SECTION_DECISIONAL_MODELS)        
+        SectionSetText ${s_mod} $(OT_SECTION_DECISIONAL_MODELS)        
+        SectionSetText ${s_decmod} $(OT_SECTION_DECISIONAL_MODELS)                
         ;SectionSetText ${s_decmodsrc} $(OT_SECTION_DECISIONAL_MODELS_SOURCES)
         SectionSetText ${s_doc} $(OT_SECTION_DOCUMENTATION)
         SectionSetText ${s_sc} $(OT_SECTION_SHORTCUTS)

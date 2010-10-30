@@ -211,15 +211,16 @@ SectionEnd
 ;--------------------------------
 Function .onInit
 
-    ;!insertmacro OT.CheckRunning
-    ;!insertmacro OT.ChooseLanguage
+    !insertmacro OT.CheckRunning
+    !insertmacro OT.ChooseLanguage
 
     ; Set section names
-    SectionSetText ${s_phymod} $(OT_SECTION_PHYSICAL_MODELS)
+    ;SectionSetText ${s_phymod} $(OT_SECTION_PHYSICAL_MODELS)
+    SectionSetText ${s_mod} $(OT_SECTION_PHYSICAL_MODELS)
     SectionSetText ${s_exo} $(OT_SECTION_EXERCISES)
     SectionSetText ${s_ter} $(OT_SECTION_TERRAINS)
     
-    ;!insertmacro MULTIUSER_INIT
+    !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
 FunctionEnd
 
@@ -229,7 +230,7 @@ Function .onInstSuccess
 FunctionEnd
 
 Function un.onInit
-    ;!insertmacro MULTIUSER_UNINIT
+    !insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
 Function .onSelChange
