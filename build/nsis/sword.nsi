@@ -117,22 +117,24 @@ Section "!${PRODUCT_NAME}"
     File "resources\*.ico"
     
     ; terrain dependencies	
-    File "${RUNDIR}\comerr32.dll" 
-    File "${RUNDIR}\gssapi32.dll"
-    File "${RUNDIR}\gdal*.dll"
-    File "${RUNDIR}\gdal_SDE.dll"
-    File /nonfatal "${RUNDIR}\geos_c.dll"
-    File "${RUNDIR}\k5sprt32.dll"
-    File "${RUNDIR}\krb5_32.dll"
-    File "${RUNDIR}\libeay32.dll"
-    File "${RUNDIR}\libiconv-2.dll"
-    File "${RUNDIR}\libintl-8.dll"
-    File "${RUNDIR}\libexpat.dll"
-    File "${RUNDIR}\libpq.dll"
-    File "${RUNDIR}\libxslt.dll"
-    File "${RUNDIR}\msvcr71.dll"
-    File "${RUNDIR}\ogr_SDE.dll"  
-    File "${RUNDIR}\proj.dll"
+    !if "${APP_PACK}" == "prepa"
+        File "${RUNDIR}\comerr32.dll" 
+        File "${RUNDIR}\gssapi32.dll"
+        File "${RUNDIR}\gdal*.dll"
+        File "${RUNDIR}\gdal_SDE.dll"
+        File /nonfatal "${RUNDIR}\geos_c.dll"
+        File "${RUNDIR}\k5sprt32.dll"
+        File "${RUNDIR}\krb5_32.dll"
+        File "${RUNDIR}\libeay32.dll"
+        File "${RUNDIR}\libiconv-2.dll"
+        File "${RUNDIR}\libintl-8.dll"
+        File "${RUNDIR}\libexpat.dll"
+        File "${RUNDIR}\libpq.dll"
+        File "${RUNDIR}\libxslt.dll"
+        File "${RUNDIR}\msvcr71.dll"
+        File "${RUNDIR}\ogr_SDE.dll"  
+        File "${RUNDIR}\proj.dll"
+    !endif
     
     ; evaluation licence
     !ifdef EVALUATION
@@ -170,9 +172,9 @@ Section "!${PRODUCT_NAME}"
 SectionEnd
 
 SectionGroup "Additional components"
-    
-    !insertmacro OT.AddOptionalComponent "Terrain"
-    
+    !if "${APP_PACK}" == "prepa"
+        !insertmacro OT.AddOptionalComponent "Terrain"
+    !endif
 SectionGroupEnd
 
 
@@ -205,7 +207,9 @@ SectionGroupEnd
 Section "Uninstall"
 
     !insertmacro OT.KillRunning
-    !insertmacro OT.UninstallAdditionalComponent "Terrain"
+    !if "${APP_PACK}" == "prepa"
+        !insertmacro OT.UninstallAdditionalComponent "Terrain"
+    !endif    
     !insertmacro OT.Uninstall
 
 SectionEnd
