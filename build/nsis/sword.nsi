@@ -171,20 +171,21 @@ Section "!${PRODUCT_NAME}"
 
 SectionEnd
 
+!if "${APP_PACK}" == "prepa"
 SectionGroup "Additional components"
-    !if "${APP_PACK}" == "prepa"
         !insertmacro OT.AddOptionalComponent "Terrain"
-    !endif
 SectionGroupEnd
+!endif
+
+
 
 ;--------------------------------
+!if "${APP_PACK}" == "runtime"
 SectionGroup "Models" s_mod
-
-    !insertmacro OT.AddDecisionalModels "ada"
-    ;!insertmacro OT.AddDecisionalModelSources "ada"
-
-
+        !insertmacro OT.AddDecisionalModels "ada"
+        ;!insertmacro OT.AddDecisionalModelSources "ada"
 SectionGroupEnd
+!endif
 
 
 ;--------------------------------
@@ -229,15 +230,13 @@ Function .onInit
     !insertmacro OT.ChooseLanguage
 
     ; Set section names    
-    !if "${APP_PACK}" == "runtime"
-        SectionSetText ${s_mod} $(OT_SECTION_MODELS)        
-        SectionSetText ${s_decmod} $(OT_SECTION_DECISIONAL_MODELS)                
-        ;SectionSetText ${s_decmodsrc} $(OT_SECTION_DECISIONAL_MODELS_SOURCES)
-        SectionSetText ${s_doc} $(OT_SECTION_DOCUMENTATION)
-        SectionSetText ${s_sc} $(OT_SECTION_SHORTCUTS)
-        SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)
-        SectionSetText ${s_quick} $(OT_SECTION_QUICKLAUNCH_SHORTCUT)
-    !endif
+    SectionSetText ${s_mod} $(OT_SECTION_MODELS)        
+    SectionSetText ${s_decmod} $(OT_SECTION_DECISIONAL_MODELS)                
+    ;SectionSetText ${s_decmodsrc} $(OT_SECTION_DECISIONAL_MODELS_SOURCES)
+    SectionSetText ${s_doc} $(OT_SECTION_DOCUMENTATION)
+    SectionSetText ${s_sc} $(OT_SECTION_SHORTCUTS)
+    SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)
+    SectionSetText ${s_quick} $(OT_SECTION_QUICKLAUNCH_SHORTCUT)
     
     !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL

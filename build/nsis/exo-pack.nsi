@@ -31,8 +31,8 @@ OutFile "${DISTDIR}\${PRODUCT_NAME}_${PRODUCT_SUFFIX}_${APP_VERSION_MAJOR}.exe"
 !include "version.nsh"
 
 ;--------------------------------
-Section "!${PRODUCT_NAME}"
-SectionEnd
+;Section "!${PRODUCT_NAME}"
+;SectionEnd
     
 ;--------------------------------
 SectionGroup "Models" s_mod
