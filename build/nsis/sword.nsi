@@ -34,13 +34,13 @@ OutFile "${DISTDIR}\${PRODUCT_NAME}_${PRODUCT_SUFFIX}_${APP_VERSION_MAJOR}${PROD
 Section "!${PRODUCT_NAME}"
     SectionIn RO
 
-    ; resources: localization
+    ;---- resources: localization ----
     SetOutPath "$INSTDIR\applications\resources\locales"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${RUNDIR}\*.qm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
  
-    ; resources: documentation
+    ;---- resources: documentation ----
     SetOutPath "$INSTDIR\applications\resources\help\en"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${DOCDIR}\en\*.chm"
@@ -51,14 +51,17 @@ Section "!${PRODUCT_NAME}"
     File "${DOCDIR}\fr\*.chm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
-    ; readme / changelog files
+    ;---- readme / changelog files ----
     SetOutPath "$INSTDIR\doc"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${DOCDIR}\en\readme.txt" ; no language support
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
+    ;---- Application ----
     SetOutPath "$INSTDIR\applications"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    
+    ;-- Specifique PACK RUNTIME --
     !if "${APP_PACK}" == "runtime"
         File "${OUTDIR}\release\applications\dispatcher_app\*.exe"
         File "${OUTDIR}\release\applications\gaming_app\*.exe"
@@ -66,59 +69,68 @@ Section "!${PRODUCT_NAME}"
         File "${OUTDIR}\release\applications\replayer_app\*.exe"
         File "${OUTDIR}\release\applications\selftraining_app\*.exe"
         File "${OUTDIR}\release\applications\package_app\*.exe"
+        File "${RUNDIR}\gradients.xml"
+        File "${RUNDIR}\preferences.xml"
+        File "${RUNDIR}\functions.xml"
+        File "${RUNDIR}\SSLEAY32.dll"
+        File "${RUNDIR}\TAO.dll"
+        File "${RUNDIR}\TAO_CosNaming.dll"
+        File "${RUNDIR}\TAO_IORTable.dll"
+        File "${RUNDIR}\TAO_PortableServer.dll"
+        File "${RUNDIR}\TAO_RTEvent.dll"
+        File "${RUNDIR}\TAO_RTSched.dll"
+        File "${RUNDIR}\TAO_Strategies.dll"
+        File "${RUNDIR}\TAO_Svc_Utils.dll"
+        File "${RUNDIR}\ace.dll"
+        File "${RUNDIR}\libFedTime.dll"
+        File "${RUNDIR}\libRTI-NG.dll"
+        File "${RUNDIR}\librtiInternalIntercept.dll"
+        File /x "qt-*d.dll" "${RUNDIR}\qt-*.dll"
+        File "${RUNDIR}\userDdm.dll"
+        File /x "*D.dll" "${RUNDIR}\xerces*.dll"
+        File /x "*D.dll" "${RUNDIR}\Xalan*.dll"
+        File "${RUNDIR}\zlib1.dll"
+        File "${RUNDIR}\bugtrap.dll"
+        File "${RUNDIR}\shapelib.dll"
+        File "${RUNDIR}\dispatcher-${PLATFORM}-mt.dll"
+        File "${RUNDIR}\directia-${PLATFORM}-mt-4_6.dll"
+        File "${RUNDIR}\lua-${PLATFORM}-mt-5_1_4.dll"
+        File "${RUNDIR}\library_${PLATFORM}-mt.dll"
+        File "${RUNDIR}\qsgistyle.dll"
+        File "${RUNDIR}\plugin_military_base_${PLATFORM}-mt.dll"
+        File "${RUNDIR}\plugin_terrain_analysis_${PLATFORM}-mt.dll"
+        File "${RUNDIR}\terrain_analysis_${PLATFORM}-mt.dll"
+        File "${RUNDIR}\terrain_interface_${PLATFORM}-mt.dll"
+        File "${RUNDIR}\plugin_masalife_brain_${PLATFORM}-mt.plugin"
+        File "${RUNDIR}\plugin_knowledge_${PLATFORM}-mt.plugin"
+        File "${RUNDIR}\plugin_communication_${PLATFORM}-mt.plugin"
+        File "${RUNDIR}\plugin_services_${PLATFORM}-mt.plugin"
+        File "${RUNDIR}\plugin_default_engine_${PLATFORM}-mt.plugin"
+        File "${RUNDIR}\plugin_eventmanager_${PLATFORM}-mt-4_6.plugin"
+        File "${RUNDIR}\plugin_motivation_${PLATFORM}-mt-4_6.plugin"
+    
+        File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
+        File "resources\*.ico"
+
+    ;-- Specifique PACK PREPA --
     !else if "${APP_PACK}" == "prepa"
-        File "${OUTDIR}\release\applications\selftraining_app\*.exe"
+        ;File "${OUTDIR}\release\applications\selftraining_app\*.exe"
         File "${OUTDIR}\release\applications\adaptation_app\*.exe"
         File "${OUTDIR}\release\applications\preparation_app\*.exe"
-        File "${OUTDIR}\release\applications\package_app\*.exe"
-    !else if "${APP_PACK}" == "dev"
-    !endif
-        
-    File "${RUNDIR}\gradients.xml"
-    File "${RUNDIR}\preferences.xml"
-    File "${RUNDIR}\functions.xml"
-    File "${RUNDIR}\SSLEAY32.dll"
-    File "${RUNDIR}\TAO.dll"
-    File "${RUNDIR}\TAO_CosNaming.dll"
-    File "${RUNDIR}\TAO_IORTable.dll"
-    File "${RUNDIR}\TAO_PortableServer.dll"
-    File "${RUNDIR}\TAO_RTEvent.dll"
-    File "${RUNDIR}\TAO_RTSched.dll"
-    File "${RUNDIR}\TAO_Strategies.dll"
-    File "${RUNDIR}\TAO_Svc_Utils.dll"
-    File "${RUNDIR}\ace.dll"
-    File "${RUNDIR}\libFedTime.dll"
-    File "${RUNDIR}\libRTI-NG.dll"
-    File "${RUNDIR}\librtiInternalIntercept.dll"
-    File /x "qt-*d.dll" "${RUNDIR}\qt-*.dll"
-    File "${RUNDIR}\userDdm.dll"
-    File /x "*D.dll" "${RUNDIR}\xerces*.dll"
-    File /x "*D.dll" "${RUNDIR}\Xalan*.dll"
-    File "${RUNDIR}\zlib1.dll"
-    File "${RUNDIR}\bugtrap.dll"
-    File "${RUNDIR}\shapelib.dll"
-    File "${RUNDIR}\dispatcher-${PLATFORM}-mt.dll"
-    File "${RUNDIR}\directia-${PLATFORM}-mt-4_6.dll"
-    File "${RUNDIR}\lua-${PLATFORM}-mt-5_1_4.dll"
-    File "${RUNDIR}\library_${PLATFORM}-mt.dll"
-    File "${RUNDIR}\qsgistyle.dll"
-    File "${RUNDIR}\plugin_military_base_${PLATFORM}-mt.dll"
-    File "${RUNDIR}\plugin_terrain_analysis_${PLATFORM}-mt.dll"
-    File "${RUNDIR}\terrain_analysis_${PLATFORM}-mt.dll"
-    File "${RUNDIR}\terrain_interface_${PLATFORM}-mt.dll"
-    File "${RUNDIR}\plugin_masalife_brain_${PLATFORM}-mt.plugin"
-    File "${RUNDIR}\plugin_knowledge_${PLATFORM}-mt.plugin"
-    File "${RUNDIR}\plugin_communication_${PLATFORM}-mt.plugin"
-    File "${RUNDIR}\plugin_services_${PLATFORM}-mt.plugin"
-    File "${RUNDIR}\plugin_default_engine_${PLATFORM}-mt.plugin"
-    File "${RUNDIR}\plugin_eventmanager_${PLATFORM}-mt-4_6.plugin"
-    File "${RUNDIR}\plugin_motivation_${PLATFORM}-mt-4_6.plugin"
+        ;File "${OUTDIR}\release\applications\package_app\*.exe"
 
-    File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
-    File "resources\*.ico"
-    
-    ; terrain dependencies	
-    !if "${APP_PACK}" == "prepa"
+        File "${RUNDIR}\bugtrap.dll"
+        File /x "qt-*d.dll" "${RUNDIR}\qt-*.dll"
+        File /x "*D.dll" "${RUNDIR}\xerces*.dll"
+        File /x "*D.dll" "${RUNDIR}\Xalan*.dll"
+        File "${RUNDIR}\gradients.xml"
+        File "${RUNDIR}\preferences.xml"
+        
+        File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
+        File "resources\*.ico"
+
+
+        ; terrain dependencies	
         File "${RUNDIR}\comerr32.dll" 
         File "${RUNDIR}\gssapi32.dll"
         File "${RUNDIR}\gdal*.dll"
@@ -135,8 +147,11 @@ Section "!${PRODUCT_NAME}"
         File "${RUNDIR}\msvcr71.dll"
         File "${RUNDIR}\ogr_SDE.dll"  
         ;----Missing File----    File "${RUNDIR}\proj.dll"
+
+    ;-- Specifique PACK DEV --
+    !else if "${APP_PACK}" == "dev"
     !endif
-    
+            
     ; evaluation licence
     !ifdef EVALUATION
         File "${RUNDIR}\evaluation.lic"
@@ -156,6 +171,7 @@ Section "!${PRODUCT_NAME}"
         CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_SELF_TRAINING).lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     !else if "${APP_PACK}" == "prepa"
         CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_ADAPTATION).lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
+        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_PREPARATION).lnk" "$INSTDIR\applications\preparation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
     !else if "${APP_PACK}" == "dev"
     !endif
     ;create shortcut for uninstaller always use ${UNINST_EXE} instead of uninstall.exe
@@ -195,6 +211,7 @@ Section "Documentation" s_doc
 
 SectionEnd
 
+!if "${APP_PACK}" == "runtime"
 SectionGroup "Shortcuts" s_sc
 
     ;--------------------------------
@@ -211,6 +228,8 @@ SectionGroup "Shortcuts" s_sc
     SectionEnd
 
 SectionGroupEnd
+!endif
+
 
 ;--------------------------------
 Section "Uninstall"

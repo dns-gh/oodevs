@@ -68,6 +68,9 @@ LangString OT_FRONTEND ${LANG_FRENCH} "${PRODUCT_NAME}"
 LangString OT_ADAPTATION ${LANG_ENGLISH} "Adaptation"
 LangString OT_ADAPTATION ${LANG_FRENCH} "Adaptation"
 
+LangString OT_PREPARATION ${LANG_ENGLISH} "Preparation"
+LangString OT_PREPARATION ${LANG_FRENCH} "Preparation"
+
 LangString OT_SELF_TRAINING ${LANG_ENGLISH} "Self Training"
 LangString OT_SELF_TRAINING ${LANG_FRENCH} "Auto Formation"
 
