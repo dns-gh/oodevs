@@ -139,7 +139,6 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\libxslt.dll"
     File "${RUNDIR}\msvcr71.dll"
     File "${RUNDIR}\ogr_SDE.dll"
-    File "${RUNDIR}\proj.dll"
 
     ; evaluation licence
     !ifdef EVALUATION
