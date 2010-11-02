@@ -263,7 +263,16 @@ float DEC_AgentFunctions::GetDetectionDistance( MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanConstructObject( const MIL_Agent_ABC& callerAgent, const std::string& type )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type );
+    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanConstructObjectWithLoaded
+// Created: MGD 2010-11-02
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::CanConstructObjectWithLoaded( const MIL_Agent_ABC& callerAgent, const std::string& type )
+{
+    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, true );
 }
 
 // -----------------------------------------------------------------------------

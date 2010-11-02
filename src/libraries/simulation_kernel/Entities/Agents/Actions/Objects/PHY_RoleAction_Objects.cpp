@@ -517,10 +517,10 @@ void PHY_RoleAction_Objects::StopOccupyingObject( boost::shared_ptr< DEC_Knowled
 // Name: PHY_RoleAction_Objects::CanConstructWithReinforcement
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const std::string& strType ) const
+bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const std::string& strType, bool bWithLoaded ) const
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eConstruct, type );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eConstruct, type, bWithLoaded );
     return capabilityComputer.HasCapability();
 }
 
@@ -530,7 +530,7 @@ bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const std::string& s
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Objects::CanBypassWithReinforcement( const MIL_ObjectType_ABC& object ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eBypass, object );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eBypass, object, false );
     return capabilityComputer.HasCapability();
 }
 
@@ -540,7 +540,7 @@ bool PHY_RoleAction_Objects::CanBypassWithReinforcement( const MIL_ObjectType_AB
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eDestroy, object );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eDestroy, object, false );
     return capabilityComputer.HasCapability();
 }
 
@@ -550,7 +550,7 @@ bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_ObjectType_A
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_ObjectType_ABC& object ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eMine, object );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eMine, object, false );
     return capabilityComputer.HasCapability();
 }
 

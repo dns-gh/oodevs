@@ -624,7 +624,7 @@ void PHY_ComposantePion::NotifyRepairedByMaintenance()
 // Name: PHY_ComposantePion::CanBeUsed
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanBeUsed() const
+bool PHY_ComposantePion::CanBeUsed( bool bWithLoaded ) const
 {
     if( bUsedForLogistic_ )
         return false;
@@ -636,7 +636,7 @@ bool PHY_ComposantePion::CanBeUsed() const
     const surrender::PHY_RoleInterface_Surrender* roleSurrendered = pRole_->GetPion().RetrieveRole< surrender::PHY_RoleInterface_Surrender >();
     if( roleSurrendered && roleSurrendered->IsSurrendered() )
         return false;
-    if( bLoadable_ )
+    if( bLoadable_ && !bWithLoaded )
     {
         const transport::PHY_RoleAction_Loading* roleLoading = pRole_->GetPion().RetrieveRole< transport::PHY_RoleAction_Loading >();
         return !roleLoading || !roleLoading->IsLoaded();
@@ -1184,10 +1184,10 @@ bool PHY_ComposantePion::CanBeTransported() const
 // Name: PHY_ComposantePion::CanConstruct
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanConstruct( const MIL_ObjectType_ABC& objectType ) const
+bool PHY_ComposantePion::CanConstruct( const MIL_ObjectType_ABC& objectType, bool bWithLoaded ) const
 {
     assert( pType_ );
-    return pType_->CanConstruct( objectType ) && CanBeUsed() && pState_->IsUsable();
+    return pType_->CanConstruct( objectType ) && CanBeUsed( bWithLoaded ) && pState_->IsUsable();
 }
 
 // -----------------------------------------------------------------------------

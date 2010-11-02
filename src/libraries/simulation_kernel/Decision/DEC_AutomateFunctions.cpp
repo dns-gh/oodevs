@@ -194,7 +194,7 @@ bool DEC_AutomateFunctions::IsPionInAutomate( const MIL_Automate& automate, cons
 bool DEC_AutomateFunctions::CanPionConstructObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, const std::string& type )
 {
     assert( pion && IsPionInAutomate( callerAutomate, pion->GetPion() ) );
-    return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type );
+    return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, false );
 }
 
 // -----------------------------------------------------------------------------

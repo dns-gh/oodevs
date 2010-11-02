@@ -22,10 +22,11 @@
 // Name: PHY_RoleAction_Objects_CapabilityComputer constructor
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Objects_CapabilityComputer::PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation, const MIL_ObjectType_ABC& objectType )
+PHY_RoleAction_Objects_CapabilityComputer::PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation, const MIL_ObjectType_ABC& objectType, bool bWithLoaded )
     : nOperation_    ( nOperation )
     , objectType_    ( objectType )
     , bHasCapability_( false )
+    , bWithLoaded_( bWithLoaded )
 {
     CollectData( pion );
 }
@@ -66,7 +67,7 @@ void PHY_RoleAction_Objects_CapabilityComputer::operator() ( PHY_ComposantePion&
         return;
     switch( nOperation_ )
     {
-        case eConstruct: bHasCapability_ = composante.CanConstruct( objectType_ ); break;
+        case eConstruct: bHasCapability_ = composante.CanConstruct( objectType_, bWithLoaded_ ); break;
         case eDestroy  : bHasCapability_ = composante.CanDestroy( objectType_ ); break;
         case eMine     : bHasCapability_ = composante.CanMine( objectType_ ); break;
         case eDemine   : bHasCapability_ = composante.CanDemine( objectType_ ); break;

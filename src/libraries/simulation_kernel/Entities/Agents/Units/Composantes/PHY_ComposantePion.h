@@ -194,7 +194,7 @@ public:
 
     //! @name Objects
     //@{
-    bool CanConstruct( const MIL_ObjectType_ABC& objectType ) const;
+    bool CanConstruct( const MIL_ObjectType_ABC& objectType, bool bWithLoaded ) const;
     bool CanDestroy( const MIL_ObjectType_ABC& objectType ) const;
     bool CanMine( const MIL_ObjectType_ABC& objectType ) const;
     bool CanDemine( const MIL_ObjectType_ABC& objectType ) const;
@@ -257,7 +257,7 @@ private:
     //@{
     void ApplyFire              ( const PHY_AttritionData& attritionData, double urbanProtection, PHY_FireDamages_Agent& fireDamages );
     void ApplyNewComposanteState( const PHY_ComposanteState& pNewState, const PHY_ComposanteState& oldState );
-    bool CanBeUsed              () const;
+    bool CanBeUsed              ( bool bWithLoaded = false ) const;
     bool CanBeUsedForMove       () const;
     void ManageEndMaintenance   ();
     //@}

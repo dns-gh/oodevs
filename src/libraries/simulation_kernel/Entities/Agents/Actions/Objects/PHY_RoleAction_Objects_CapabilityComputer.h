@@ -28,7 +28,7 @@ class PHY_RoleAction_Objects_CapabilityComputer : public OnComponentFunctor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation, const MIL_ObjectType_ABC& objectType );
+             PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation, const MIL_ObjectType_ABC& objectType, bool bWithLoaded );
     virtual ~PHY_RoleAction_Objects_CapabilityComputer();
     //@}
 
@@ -50,6 +50,7 @@ private:
     const E_Operation nOperation_;
     const MIL_ObjectType_ABC& objectType_;
     bool bHasCapability_;
+    bool bWithLoaded_;
     //@}
 };
 
