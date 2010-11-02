@@ -25,13 +25,15 @@ using namespace tools;
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 SessionConfig::SessionConfig()
-    : sessionConfigFile_( "session.xml" )
-    , hasCheckPoint_( false )
+    : sessionConfigFile_       ( "session.xml" )
+    , hasCheckPoint_           ( false )
+    , keyFramesFrequency_      ( 100 )
+    , replayFragmentsFrequency_( 150 )
 {
     po::options_description desc( "Session options" );
     desc.add_options()
-        ( "session",    po::value< std::string >( &sessionName_ ), "specify session name" )
-        ( "checkpoint", po::value< std::string >( &strCheckPointName_ ), "specify checkpoint to load"               )
+        ( "session", po::value< std::string >( &sessionName_ ), "specify session name" )
+        ( "checkpoint", po::value< std::string >( &strCheckPointName_ ), "specify checkpoint to load" )
     ;
     AddOptions( desc );
 }
@@ -125,4 +127,22 @@ bool SessionConfig::HasCheckpoint() const
 std::string SessionConfig::GetCheckpointDirectory() const
 {
     return GetCheckpointDirectory( strCheckPointName_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionConfig::GetKeyFramesFrequency
+// Created: JSR 2010-11-02
+// -----------------------------------------------------------------------------
+unsigned int SessionConfig::GetKeyFramesFrequency() const
+{
+    return keyFramesFrequency_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: SessionConfig::GetReplayFragmentsFrequency
+// Created: JSR 2010-11-02
+// -----------------------------------------------------------------------------
+unsigned int SessionConfig::GetReplayFragmentsFrequency() const
+{
+    return replayFragmentsFrequency_;
 }

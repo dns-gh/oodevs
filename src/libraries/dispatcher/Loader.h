@@ -13,9 +13,9 @@
 namespace dispatcher
 {
     class Config;
-    class ReplayModel_ABC;
     class MessageHandler_ABC;
     class MessageLoader;
+    class ReplayModel_ABC;
 
 // =============================================================================
 /** @class  Loader
@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     void Start();
-    void SkipToFrame( unsigned count );
+    void SkipToFrame( unsigned int count );
     bool Tick();
 
     unsigned GetCurrentTick() const;
@@ -49,18 +49,14 @@ private:
     Loader& operator=( const Loader& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    bool RequiresKeyFrame( unsigned frame );
-    //@}
-
 private:
     //! @name Member data
     //@{
-    ReplayModel_ABC&               model_;
-    MessageHandler_ABC&            handler_;
+    ReplayModel_ABC& model_;
+    MessageHandler_ABC& handler_;
     std::auto_ptr< MessageLoader > loader_;
-    unsigned currentFrame_;
+    unsigned int currentFrame_;
+    unsigned int currentKeyFrame_;
     //@}
 };
 

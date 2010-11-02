@@ -41,6 +41,7 @@ public:
 
     //! @name Operations
     //@{
+    void CreateNewFragment( bool first = false );
     void StartFrame       ( const Savable_ABC& message );
     void SaveUpdateMessage( const Savable_ABC& message );
     void EndFrame         ( const Savable_ABC& message );
@@ -57,17 +58,23 @@ private:
     //! @name Helpers
     //@{
     void Flush();
+    void TerminateFragment();
+    void GenerateInfoFile();
     //@}
 
 private:
     //! @name Member data
     //@{
+    std::string recorderDirectory_;
     dispatcher::Frame current_;
     std::ofstream index_;
     std::ofstream keyIndex_;
     std::ofstream key_;
     std::ofstream update_;
-    unsigned frameCount_;
+    unsigned int frameCount_;
+    unsigned int fragmentFirstFrame_;
+    unsigned int currentFolder_;
+    static const std::string currentFolderName_;
     //@}
 };
 

@@ -39,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool         LoadFrame   ( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback() ) = 0;
-    virtual unsigned int LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback() ) = 0;
+    virtual bool LoadFrame   ( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback() ) = 0;
+    virtual void LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback() ) = 0;
     virtual unsigned int GetTickNumber() const = 0;
     //@}
 };

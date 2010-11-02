@@ -34,7 +34,8 @@ public:
 
     //! @name Member data
     //@{
-    unsigned offset_, size_;
+    unsigned int offset_;
+    unsigned int size_;
     //@}
 };
 
@@ -55,8 +56,9 @@ class KeyFrame
 
     //! @name Member data
     //@{
-    unsigned offset_, size_;
-    unsigned frameNumber_;
+    unsigned int offset_;
+    unsigned int size_;
+    unsigned int frameNumber_;
     //@}
 };
 

@@ -69,10 +69,12 @@ private:
 private:
     //! @name Member data
     //@{
+    const dispatcher::Config& config_;
     dispatcher::Model_ABC& model_;
     std::auto_ptr< Saver > saver_;
     std::string encodingBuffer_;
-    unsigned frameCount_;
+    unsigned int frameCount_;
+    unsigned int keyFrameIndex_;
     MessageFilter filter_;
     //@}
 };

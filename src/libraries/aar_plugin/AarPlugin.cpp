@@ -102,7 +102,6 @@ void AarPlugin::OnReceive( const std::string& client, const MsgsClientToAar::Msg
 // -----------------------------------------------------------------------------
 void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const MsgsClientToAar::MsgPlotRequest& request )
 {
-    messages_->ReloadIndices();
     try
     {
         if( boost::starts_with( request.request(), "indicator://" ) )

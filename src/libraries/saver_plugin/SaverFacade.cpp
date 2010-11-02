@@ -11,11 +11,15 @@
 #include "Saver.h"
 #include "Savable_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include "dispatcher/Config.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Visitors.h"
 #include "tools/OutputBinaryWrapper.h"
+#pragma warning( push )
+#pragma warning( disable : 4244 )
 #include <google/protobuf/Message.h>
 #include <google/protobuf/Descriptor.h>
+#pragma warning( pop )
 #include "protocol/protocol.h"
 
 using namespace plugins::saver;
@@ -25,9 +29,11 @@ using namespace plugins::saver;
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
 SaverFacade::SaverFacade( dispatcher::Model_ABC& model, const dispatcher::Config& config )
-    : model_     ( model )
-    , saver_     ( new Saver( config ) )
-    , frameCount_( 0 )
+    : config_       ( config )
+    , model_        ( model )
+    , saver_        ( new Saver( config ) )
+    , frameCount_   ( 0 )
+    , keyFrameIndex_( 0 )
 {
     // NOTHING
 }
@@ -144,9 +150,15 @@ namespace
 // -----------------------------------------------------------------------------
 void SaverFacade::StartFrame( const MsgsSimToClient::MsgSimToClient& message )
 {
-    if( ( frameCount_ % 100 ) == 0 )
+    if( frameCount_ && frameCount_ % config_.GetReplayFragmentsFrequency() == 0 )
+        saver_->CreateNewFragment();
+    if( frameCount_ % config_.GetReplayFragmentsFrequency() == 0 || keyFrameIndex_ % config_.GetKeyFramesFrequency() == 0 )
+    {
         saver_->SaveKeyFrame( ModelMessage( model_, encodingBuffer_, frameCount_ == 0 ) );
+        keyFrameIndex_ = 0;
+    }
     ++frameCount_;
+    ++keyFrameIndex_;
     saver_->StartFrame( Message( SerializeToString( message, encodingBuffer_ ) ) );
 }
 

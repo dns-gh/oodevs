@@ -21,10 +21,11 @@ using namespace dispatcher;
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
 Loader::Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config )
-    : model_       ( model )
-    , handler_     ( handler )
-    , loader_      ( new MessageLoader( config, false ) )
-    , currentFrame_( 0 )
+    : model_          ( model )
+    , handler_        ( handler )
+    , loader_         ( new MessageLoader( config, false ) )
+    , currentFrame_   ( 0 )
+    , currentKeyFrame_( 0 )
 {
     // NOTHING
 }
@@ -36,17 +37,6 @@ Loader::Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Confi
 Loader::~Loader()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Loader::RequiresKeyFrame
-// Created: AGE 2007-04-24
-// -----------------------------------------------------------------------------
-bool Loader::RequiresKeyFrame( unsigned frame )
-{
-    unsigned key = frame / 100;
-    unsigned currentKey = currentFrame_ / 100;
-    return !frame || key != currentKey || frame < currentFrame_;
 }
 
 // -----------------------------------------------------------------------------
@@ -66,15 +56,18 @@ void Loader::Start()
 // Name: Loader::SkipToFrame
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void Loader::SkipToFrame( unsigned frame )
+void Loader::SkipToFrame( unsigned int frame )
 {
-    const bool requiresKeyFrame = RequiresKeyFrame( frame );
+    unsigned int keyFrame = loader_->FindKeyFrame( frame );
+    const bool requiresKeyFrame = keyFrame == 0  || currentKeyFrame_ != keyFrame || frame < currentFrame_;
     if( requiresKeyFrame )
     {
         model_.StartSynchronisation();
-        currentFrame_ = loader_->LoadKeyFrame( frame, handler_ );
+        loader_->LoadKeyFrame( keyFrame, handler_ );
+        currentFrame_ = keyFrame;
+        currentKeyFrame_ = keyFrame;
     }
-    while( currentFrame_+1 < frame && Tick() )
+    while( currentFrame_ + 1 < frame && Tick() )
         ;
     if( requiresKeyFrame )
         model_.EndSynchronisation();
@@ -88,13 +81,18 @@ void Loader::SkipToFrame( unsigned frame )
 // -----------------------------------------------------------------------------
 bool Loader::Tick()
 {
-    loader_->ReloadIndices();
+    bool ret = false;
+    bool needSync = currentFrame_ == 0 && !model_.IsSynching();
+    if( needSync )
+        model_.StartSynchronisation();
     if( loader_->LoadFrame( currentFrame_, handler_ ) )
     {
         ++currentFrame_;
-        return true;
+        ret = true;
     }
-    return false;
+    if( needSync )
+        model_.EndSynchronisation();
+    return ret;
 }
 
 // -----------------------------------------------------------------------------

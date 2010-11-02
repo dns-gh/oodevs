@@ -14,6 +14,7 @@
 #include "MessageLoader_ABC.h"
 #include <tools/thread/ThreadPool.h>
 #include <boost/shared_ptr.hpp>
+#include <boost/filesystem/path.hpp>
 #include <vector>
 #include <fstream>
 
@@ -40,19 +41,20 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool         LoadFrame   ( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback() );
-    virtual unsigned int LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback() );
-
-    void Synchronize();
-    void ReloadIndices();
-    unsigned int GetTickNumber() const;
+    virtual bool LoadFrame   ( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback() );
+    virtual void LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback = T_Callback() );
+    virtual unsigned int GetTickNumber() const;
+    unsigned int FindKeyFrame( unsigned int frameNumber );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< Frame >    T_Frames;
+    typedef std::vector< Frame > T_Frames;
     typedef std::vector< KeyFrame > T_KeyFrames;
+    typedef T_KeyFrames::const_iterator CIT_KeyFrames;
+    typedef std::map< std::string, std::pair< unsigned int, unsigned int > > T_FragmentsInfos;
+    typedef T_FragmentsInfos::const_iterator CIT_FragmentsInfos;
     //@}
 
 private:
@@ -64,26 +66,48 @@ private:
 
     //! @name Helpers
     //@{
-    void LoadIndices();
+    void ScanData();
+    void AddFolder( const std::string& folderName );
+    bool OpenFile( std::ifstream& stream, const std::string& folder, const std::string& file ) const;
+    bool SwitchToFragment( unsigned int frameNumber );
     void Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback );
+    void LoadFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback );
+    void LoadKeyFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback );
     void LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler, const T_Callback& callback );
-    void LoadSimToClientMessage( unsigned char*& input, MessageHandler_ABC& handler );
+    void LoadSimToClientMessage( char*& input, MessageHandler_ABC& handler );
     //@}
 
 private:
+    //! @name Static member data
+    //@{
+    static const std::string infoFileName_;
+    static const std::string indexFileName_;
+    static const std::string keyIndexFileName_;
+    static const std::string keyFileName_;
+    static const std::string updateFileName_;
+    static boost::mutex filesAccessMutex_;
+    //@}
+    
+private:
     //! @name Member data
     //@{
+    const Config& config_;
+    unsigned int tickCount_;
+    bool initReady_;
+    mutable boost::mutex dataAccessMutex_;
+    boost::mutex initMutex_;
+    boost::condition_variable initCondition_;
+    std::auto_ptr< boost::thread > folderObserver_;
+    std::auto_ptr< tools::thread::ThreadPool > disk_;
+    std::auto_ptr< tools::thread::ThreadPool > cpu_;
+    T_FragmentsInfos fragmentsInfos_;
+    std::string currentOpenFolder_;
     std::ifstream index_;
     std::ifstream keyIndex_;
     std::ifstream updates_;
     std::ifstream keys_;
-
     T_Frames frames_;
     T_KeyFrames keyFrames_;
-
-    std::auto_ptr< tools::thread::ThreadPool > disk_;
-    std::auto_ptr< tools::thread::ThreadPool > cpu_;
-
     bool synchronisation_;
     //@}
 };

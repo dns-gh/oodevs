@@ -43,6 +43,9 @@ public:
     virtual bool HasCheckpoint() const;
     virtual std::string GetCheckpointDirectory() const;
 
+    unsigned int GetKeyFramesFrequency() const;
+    unsigned int GetReplayFragmentsFrequency() const;
+
     virtual void Parse( int argc, char** argv );
     //@}
 
@@ -59,6 +62,8 @@ private:
     std::string sessionName_;
     bool hasCheckPoint_;
     std::string strCheckPointName_;
+    unsigned int keyFramesFrequency_;
+    unsigned int replayFragmentsFrequency_;
     //@}
 };
 
