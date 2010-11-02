@@ -882,31 +882,10 @@
     </target>
 
     <!-- Package Application -->
-    <target name="package.app" description="package the application installers" depends="package.runtime,package.prepa,package.dev"/>
-
-    <target name="package.runtime" description="package des applications runtime">
+    <target name="package.app" description="package des applications runtime">
         <nsis name="sword" script="sword.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DAPP_PACK=runtime"/>
-            <arg value="/X!include sword-defense.nsh"/>
-        </nsis>
-    </target>
-
-    <target name="package.prepa" description="package des applications prepa">
-        <nsis name="sword" script="sword.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DAPP_PACK=prepa"/>
-            <arg value="/X!include sword-defense.nsh"/>
-        </nsis>
-    </target>
-
-    <target name="package.dev" description="package des applications dev">
-        <nsis name="sword" script="sword.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DAPP_PACK=dev"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
