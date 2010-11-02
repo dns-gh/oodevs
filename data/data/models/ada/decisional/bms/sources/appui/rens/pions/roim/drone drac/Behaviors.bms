@@ -41,6 +41,8 @@ hauteur = 1,
 objectifEsquive = 1,
 }
 
+--[[//missions génériques
+]]include "Common/Pions/MissionsGeneriques.bms"
 
 --[[// Commun Rens
 ]]include "Appui/Rens/Behaviors.bms"
