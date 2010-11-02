@@ -171,14 +171,14 @@ namespace
                 geometry::Point2f vTargetPoint( static_cast< float >( targetPosition.rX_ ), static_cast< float >( targetPosition.rY_ ) );
 
                 geometry::Point2f center( ( vSourcePoint.X() + vTargetPoint.X() ) * 0.5f, ( vSourcePoint.Y() + vTargetPoint.Y() ) * 0.5f );
-                std::vector< const urban::TerrainObject_ABC* > list;
+                std::set< const urban::TerrainObject_ABC* > list;
                 UrbanModel::GetSingleton().GetModel().GetListWithinSegment( vSourcePoint, vTargetPoint, list );
                 double worstFactor = 1.f;
                 const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
                 const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
                 if( !list.empty() )
                 {
-                    for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; it++ )
+                    for( std::set< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; it++ )
                     {
                         if( perceiverUrbanBlock == 0 || !( &perceiverUrbanBlock->GetObject() == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
                         {

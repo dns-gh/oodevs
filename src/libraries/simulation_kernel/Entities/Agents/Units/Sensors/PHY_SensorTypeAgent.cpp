@@ -502,12 +502,12 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
     geometry::Point2f vSourcePoint( static_cast< float >( vSource.rX_ ), static_cast< float >( vSource.rY_ ) );
     geometry::Point2f vTargetPoint( static_cast< float >( vTarget.rX_ ), static_cast< float >( vTarget.rY_ ) );
 
-    std::vector< const urban::TerrainObject_ABC* > list;
+    std::set< const urban::TerrainObject_ABC* > list;
     UrbanModel::GetSingleton().GetModel().GetListWithinSegment( vSourcePoint, vTargetPoint, list );
 
     if( !list.empty() )
     {
-        for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
+        for( std::set< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
         {
             const urban::TerrainObject_ABC& object = **it;
 
@@ -538,10 +538,14 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
                         intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
 
                     double rDistanceModificator = urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
+                    double occupationFactor = std::sqrt( architecture->GetOccupation() );
+                    double referenceDistance = 200; // $$$$ LDC Hard coded 200m. reference distance
+                    double distanceFactor = ( intersectionDistance / referenceDistance ) * occupationFactor * ( 1 - rDistanceModificator );
+                    rVisionNRJ *= distanceFactor;
                     if( rDistanceModificator <= epsilon )
                         rVisionNRJ = -1 ;
                     else
-                        rVisionNRJ += intersectionDistance * ( 1 - 1 / rDistanceModificator );
+                        rVisionNRJ -= intersectionDistance;
                 }
             }
         }
