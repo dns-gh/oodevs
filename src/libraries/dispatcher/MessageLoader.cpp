@@ -225,7 +225,7 @@ namespace
 // Name: MessageLoader::SwitchToFragment
 // Created: JSR 2010-10-28
 // -----------------------------------------------------------------------------
-bool MessageLoader::SwitchToFragment( unsigned int frameNumber )
+bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
 {
     if( frameNumber > tickCount_ )
         frameNumber = tickCount_;

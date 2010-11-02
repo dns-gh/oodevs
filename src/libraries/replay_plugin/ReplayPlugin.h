@@ -92,7 +92,8 @@ private:
     dispatcher::Model_ABC& model_;
     dispatcher::ClientPublisher_ABC& clients_;
     dispatcher::Loader& loader_;
-    unsigned factor_;
+    unsigned int factor_;
+    unsigned int tickNumber_;
     bool running_;
     int skipToFrame_;
     MT_TimerManager manager_;

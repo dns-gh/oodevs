@@ -69,7 +69,7 @@ private:
     void ScanData();
     void AddFolder( const std::string& folderName );
     bool OpenFile( std::ifstream& stream, const std::string& folder, const std::string& file ) const;
-    bool SwitchToFragment( unsigned int frameNumber );
+    bool SwitchToFragment( unsigned int& frameNumber );
     void Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback );
     void LoadFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback );
     void LoadKeyFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback );

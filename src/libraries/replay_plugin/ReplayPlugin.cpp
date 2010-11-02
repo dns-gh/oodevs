@@ -32,6 +32,7 @@ ReplayPlugin::ReplayPlugin( Model_ABC& model, ClientPublisher_ABC& clients, tool
     , clients_    ( clients )
     , loader_     ( loader )
     , factor_     ( 1 )
+    , tickNumber_ ( 0 )
     , running_    ( false )
     , skipToFrame_( -1 )
     , factory_    ( new ReplayExtensionFactory( replayModel ) )
@@ -109,10 +110,9 @@ void ReplayPlugin::NotifyClientLeft( ClientPublisher_ABC& )
 void ReplayPlugin::OnTimer()
 {
     if( running_ )
-    {
         loader_.Tick();
+    if( running_ || tickNumber_ != loader_.GetTickNumber() )
         SendReplayInfo( clients_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +121,8 @@ void ReplayPlugin::OnTimer()
 // -----------------------------------------------------------------------------
 void ReplayPlugin::SendReplayInfo( ClientPublisher_ABC& client )
 {
-    model_.SendReplayInfo( client, loader_.GetTickNumber(), running_ ? Common::running : Common::paused, factor_ );
+    tickNumber_ = loader_.GetTickNumber();
+    model_.SendReplayInfo( client, tickNumber_, running_ ? Common::running : Common::paused, factor_ );
 }
 
 // -----------------------------------------------------------------------------
