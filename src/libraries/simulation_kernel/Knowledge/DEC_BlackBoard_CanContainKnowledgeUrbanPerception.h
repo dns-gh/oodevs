@@ -62,7 +62,7 @@ public:
     boost::shared_ptr< DEC_Knowledge_UrbanPerception > GetKnowledgeUrbanPerception( const urban::TerrainObject_ABC& associatedUrban ) const;
 
     template < class UnaryFunction >
-    void ApplyOnKnowledgesUrbanPerception( UnaryFunction fct ) const
+    void ApplyOnKnowledgesUrbanPerception( UnaryFunction& fct ) const
     {
         for( CIT_KnowledgeUrbanPerceptionMap itKnowledge = knowledgeUrbanPerceptionMap_.begin(); itKnowledge != knowledgeUrbanPerceptionMap_.end(); )
         {

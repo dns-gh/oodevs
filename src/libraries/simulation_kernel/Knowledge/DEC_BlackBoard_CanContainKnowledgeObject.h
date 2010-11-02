@@ -61,7 +61,7 @@ public:
     bool HasKnowledgeObject( const MIL_Object_ABC& objectKnown ) const;
 
     template < class UnaryFunction >
-    void ApplyOnKnowledgesObject( UnaryFunction fct ) const
+    void ApplyOnKnowledgesObject( UnaryFunction& fct ) const
     {
         for( CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); )
         {
@@ -72,7 +72,7 @@ public:
     }
 
     template < class UnaryFunction >
-    void ApplyOnKnowledgesObjectRef( UnaryFunction fct ) const
+    void ApplyOnKnowledgesObjectRef( UnaryFunction& fct ) const
     {
         for( CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); )
         {

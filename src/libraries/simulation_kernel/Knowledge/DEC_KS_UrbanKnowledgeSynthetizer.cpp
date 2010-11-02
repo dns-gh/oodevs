@@ -60,7 +60,8 @@ DEC_KS_UrbanKnowledgeSynthetizer::~DEC_KS_UrbanKnowledgeSynthetizer()
 // -----------------------------------------------------------------------------
 void DEC_KS_UrbanKnowledgeSynthetizer::Prepare()
 {
-    pBlackBoard_->GetKnowledgeUrbanContainer().ApplyOnKnowledgesUrbanRef( std::mem_fun_ref( &DEC_Knowledge_Urban::Prepare ) );
+    std::mem_fun_ref_t< void, DEC_Knowledge_Urban > functorUrban = std::mem_fun_ref( &DEC_Knowledge_Urban::Prepare );
+    pBlackBoard_->GetKnowledgeUrbanContainer().ApplyOnKnowledgesUrbanRef( functorUrban );
 }
 
 // -----------------------------------------------------------------------------

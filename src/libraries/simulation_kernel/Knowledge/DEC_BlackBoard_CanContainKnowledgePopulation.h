@@ -60,7 +60,7 @@ public:
     DEC_Knowledge_Population* GetKnowledgePopulationFromID( unsigned int nID ) const;
 
     template < class UnaryFunction >
-    void ApplyOnKnowledgesPopulation( UnaryFunction fct ) const
+    void ApplyOnKnowledgesPopulation( UnaryFunction& fct ) const
     {
         for( CIT_KnowledgePopulationMap itKnowledge = knowledgePopulationMap_.begin(); itKnowledge != knowledgePopulationMap_.end(); )
         {

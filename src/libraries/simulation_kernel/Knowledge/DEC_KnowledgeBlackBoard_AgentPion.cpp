@@ -133,10 +133,14 @@ void DEC_KnowledgeBlackBoard_AgentPion::SendFullState() const
 //    pKnowledgeObjectCollisionContainer_;
 //    knowledgeRapForLocal_
 
-    pKnowledgeAgentPerceptionContainer_     ->ApplyOnKnowledgesAgentPerception     ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception     ::SendStateToNewClient ) );
-    pKnowledgeObjectPerceptionContainer_    ->ApplyOnKnowledgesObjectPerception    ( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception    ::SendStateToNewClient ) );
-    pKnowledgePopulationPerceptionContainer_->ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::SendStateToNewClient ) );
-    pKnowledgeUrbanPerceptionContainer_    ->ApplyOnKnowledgesUrbanPerception    ( std::mem_fun_ref( & DEC_Knowledge_UrbanPerception    ::SendStateToNewClient ) );
+    std::const_mem_fun_ref_t< void, DEC_Knowledge_AgentPerception > functorAgent = std::mem_fun_ref( &DEC_Knowledge_AgentPerception::SendStateToNewClient );
+    pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functorAgent );
+    std::const_mem_fun_ref_t< void, DEC_Knowledge_ObjectPerception > functorObject = std::mem_fun_ref( &DEC_Knowledge_ObjectPerception::SendStateToNewClient );
+    pKnowledgeObjectPerceptionContainer_->ApplyOnKnowledgesObjectPerception( functorObject );
+    std::const_mem_fun_ref_t< void, DEC_Knowledge_PopulationPerception > functorPopulation = std::mem_fun_ref( &DEC_Knowledge_PopulationPerception::SendStateToNewClient );
+    pKnowledgePopulationPerceptionContainer_->ApplyOnKnowledgesPopulationPerception( functorPopulation );
+    std::mem_fun_ref_t< void, DEC_Knowledge_UrbanPerception > functorUrban = std::mem_fun_ref( &DEC_Knowledge_UrbanPerception::SendStateToNewClient );
+    pKnowledgeUrbanPerceptionContainer_->ApplyOnKnowledgesUrbanPerception    ( functorUrban );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,9 +152,12 @@ void DEC_KnowledgeBlackBoard_AgentPion::SendChangedState() const
 //    pKnowledgeObjectCollisionContainer_;
 //    knowledgeRapForLocal_
 
-    pKnowledgeAgentPerceptionContainer_     ->ApplyOnKnowledgesAgentPerception     ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception     ::UpdateOnNetwork ) );
-    pKnowledgeObjectPerceptionContainer_    ->ApplyOnKnowledgesObjectPerception    ( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception    ::UpdateOnNetwork ) );
-    pKnowledgePopulationPerceptionContainer_->ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::UpdateOnNetwork ) );
+    std::const_mem_fun_ref_t< void, DEC_Knowledge_AgentPerception > functorAgent = std::mem_fun_ref( & DEC_Knowledge_AgentPerception::UpdateOnNetwork );
+    pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functorAgent );
+    std::const_mem_fun_ref_t< void, DEC_Knowledge_ObjectPerception > functorObject = std::mem_fun_ref( &DEC_Knowledge_ObjectPerception::UpdateOnNetwork );
+    pKnowledgeObjectPerceptionContainer_->ApplyOnKnowledgesObjectPerception( functorObject );
+    std::const_mem_fun_ref_t< void, DEC_Knowledge_PopulationPerception > functorPopulation = std::mem_fun_ref( &DEC_Knowledge_PopulationPerception::UpdateOnNetwork );
+    pKnowledgePopulationPerceptionContainer_->ApplyOnKnowledgesPopulationPerception( functorPopulation );
 }
 
 // -----------------------------------------------------------------------------

@@ -62,7 +62,7 @@ public:
     DEC_Knowledge_ObjectCollision* GetKnowledgeObjectCollision ( const MIL_Object_ABC& objectCollision ) const;
 
     template < class UnaryFunction >
-    void ApplyOnKnowledgesObjectCollision( UnaryFunction fct ) const
+    void ApplyOnKnowledgesObjectCollision( UnaryFunction& fct ) const
     {
         for( CIT_KnowledgeObjectCollisionMap itKnowledge = knowledgeObjectCollisionMap_.begin(); itKnowledge != knowledgeObjectCollisionMap_.end(); )
         {

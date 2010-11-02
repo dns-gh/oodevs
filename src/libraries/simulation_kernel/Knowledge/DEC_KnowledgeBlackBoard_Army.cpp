@@ -87,8 +87,10 @@ void DEC_KnowledgeBlackBoard_Army::serialize( Archive& archive, const unsigned i
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_Army::SendFullState() const
 {
-    pKnowledgeObjectContainer_->ApplyOnKnowledgesObjectRef( std::mem_fun_ref( & DEC_Knowledge_Object::SendStateToNewClient ) );
-    pKnowledgeUrbanContainer_->ApplyOnKnowledgesUrbanRef( std::mem_fun_ref( & DEC_Knowledge_Urban::SendStateToNewClient ) );
+    std::mem_fun_ref_t< void, DEC_Knowledge_Object > functorObject = std::mem_fun_ref( &DEC_Knowledge_Object::SendStateToNewClient );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObjectRef( functorObject );
+    std::mem_fun_ref_t< void, DEC_Knowledge_Urban > functorUrban = std::mem_fun_ref( &DEC_Knowledge_Urban::SendStateToNewClient );
+    pKnowledgeUrbanContainer_->ApplyOnKnowledgesUrbanRef( functorUrban );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,8 +99,10 @@ void DEC_KnowledgeBlackBoard_Army::SendFullState() const
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_Army::SendChangedState() const
 {
-    pKnowledgeObjectContainer_->ApplyOnKnowledgesObjectRef( std::mem_fun_ref( & DEC_Knowledge_Object::UpdateOnNetwork ) );
-    pKnowledgeUrbanContainer_->ApplyOnKnowledgesUrbanRef( std::mem_fun_ref( & DEC_Knowledge_Urban::UpdateOnNetwork ) );
+    std::mem_fun_ref_t< void, DEC_Knowledge_Object > functorObject = std::mem_fun_ref( &DEC_Knowledge_Object::UpdateOnNetwork );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObjectRef( functorObject );
+    std::mem_fun_ref_t< void, DEC_Knowledge_Urban > functorUrban = std::mem_fun_ref( &DEC_Knowledge_Urban::UpdateOnNetwork );
+    pKnowledgeUrbanContainer_->ApplyOnKnowledgesUrbanRef( functorUrban );
 }
 
 

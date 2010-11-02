@@ -62,7 +62,7 @@ public:
     DEC_Knowledge_ObjectPerception* GetKnowledgeObjectPerception( const MIL_Object_ABC& associatedObject ) const;
 
     template < class UnaryFunction >
-    void ApplyOnKnowledgesObjectPerception( UnaryFunction fct ) const
+    void ApplyOnKnowledgesObjectPerception( UnaryFunction& fct ) const
     {
         for( CIT_KnowledgeObjectPerceptionMap itKnowledge = knowledgeObjectPerceptionMap_.begin(); itKnowledge != knowledgeObjectPerceptionMap_.end(); )
         {

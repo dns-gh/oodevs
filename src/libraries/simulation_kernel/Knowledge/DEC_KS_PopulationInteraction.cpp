@@ -71,7 +71,8 @@ void DEC_KS_PopulationInteraction::serialize( Archive& archive, const unsigned i
 void DEC_KS_PopulationInteraction::Prepare()
 {
     assert( pBlackBoard_ );
-    pBlackBoard_->GetKnowledgePopulationCollisionContainer().ApplyOnKnowledgesPopulationCollision( std::mem_fun_ref( &DEC_Knowledge_PopulationCollision::Prepare ) );
+    std::mem_fun_ref_t< void, DEC_Knowledge_PopulationCollision > populationFunctor = std::mem_fun_ref( &DEC_Knowledge_PopulationCollision::Prepare );
+    pBlackBoard_->GetKnowledgePopulationCollisionContainer().ApplyOnKnowledgesPopulationCollision( populationFunctor );
 }
 
 // -----------------------------------------------------------------------------

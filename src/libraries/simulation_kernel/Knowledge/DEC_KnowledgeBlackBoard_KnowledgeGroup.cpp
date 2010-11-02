@@ -105,10 +105,15 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const 
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState() const
 {
-    pKnowledgeAgentContainer_->ApplyOnKnowledgesAgent( boost::bind( &DEC_Knowledge_Agent::SendStateToNewClient, _1 ) );
-    pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( boost::bind( &DEC_Knowledge_Population::SendStateToNewClient, _1 ) );
+    boost::function< void( DEC_Knowledge_Agent& ) > agentFunctor = boost::bind( &DEC_Knowledge_Agent::SendStateToNewClient, _1 );
+    pKnowledgeAgentContainer_->ApplyOnKnowledgesAgent( agentFunctor );
+    boost::function< void( DEC_Knowledge_Population& ) > populationFunctor = boost::bind( &DEC_Knowledge_Population::SendStateToNewClient, _1 );
+    pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( populationFunctor );
     if( pKnowledgeObjectContainer_ )
-        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( boost::bind( &DEC_Knowledge_Object::SendStateToNewClient, _1 ) );
+    {
+        boost::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > objectFunctor = boost::bind( &DEC_Knowledge_Object::SendStateToNewClient, _1 );
+        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( objectFunctor );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -117,10 +122,15 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState() const
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendChangedState() const
 {
-    pKnowledgeAgentContainer_->ApplyOnKnowledgesAgent( boost::bind( &DEC_Knowledge_Agent::UpdateOnNetwork, _1 ) );
-    pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( boost::bind( &DEC_Knowledge_Population::UpdateOnNetwork, _1 ) );
+    boost::function< void( DEC_Knowledge_Agent& ) > agentFunctor = boost::bind( &DEC_Knowledge_Agent::UpdateOnNetwork, _1 );
+    pKnowledgeAgentContainer_->ApplyOnKnowledgesAgent( agentFunctor );
+    boost::function< void( DEC_Knowledge_Population& ) > populationFunctor = boost::bind( &DEC_Knowledge_Population::UpdateOnNetwork, _1 );
+    pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( populationFunctor );
     if( pKnowledgeObjectContainer_ )
-        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( boost::bind( &DEC_Knowledge_Object::UpdateOnNetwork, _1 ) );
+    {
+        boost::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > objectFunctor = boost::bind( &DEC_Knowledge_Object::UpdateOnNetwork, _1 );
+        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( objectFunctor );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -611,5 +621,8 @@ DEC_Knowledge_Population& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledg
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::UpdateKnowledgeObjectContainer()
 {
     if( pKnowledgeObjectContainer_ )
-        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( boost::bind( &DEC_Knowledge_Object::UpdateRelevance, _1 ) );
+    {
+        boost::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > objectFunctor = boost::bind( &DEC_Knowledge_Object::UpdateRelevance, _1 );
+        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( objectFunctor );
+    }
 }

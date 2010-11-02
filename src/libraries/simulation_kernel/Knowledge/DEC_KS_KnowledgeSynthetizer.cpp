@@ -56,10 +56,12 @@ DEC_KS_KnowledgeSynthetizer::~DEC_KS_KnowledgeSynthetizer()
 void DEC_KS_KnowledgeSynthetizer::Prepare()
 {
     // Agent
-    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( & DEC_Knowledge_Agent::Prepare, _1 ) );
+    boost::function< void( DEC_Knowledge_Agent& ) > agentFunctor = boost::bind( & DEC_Knowledge_Agent::Prepare, _1 );
+    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( agentFunctor );
 
     // Population
-    pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( boost::bind( & DEC_Knowledge_Population::Prepare, _1 ) );
+    boost::function< void( DEC_Knowledge_Population& ) > populationFunctor = boost::bind( & DEC_Knowledge_Population::Prepare, _1 );
+    pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( populationFunctor );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,10 +75,13 @@ void DEC_KS_KnowledgeSynthetizer::Talk( int currentTimeStep )
     pBlackBoard_->ApplyOnKnowledgesPerception( currentTimeStep );
 
     // Extrapolation
-    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( & DEC_Knowledge_Agent::Extrapolate, _1 ) );
+    boost::function< void( DEC_Knowledge_Agent& ) > agentFunctorExtrapolate = boost::bind( & DEC_Knowledge_Agent::Extrapolate, _1 );
+    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( agentFunctorExtrapolate );
     // Relevance
-    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( &DEC_Knowledge_Agent::UpdateRelevance, _1, currentTimeStep ) );
-    pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( boost::bind( &DEC_Knowledge_Population::UpdateRelevance, _1 ) );
+    boost::function< void( DEC_Knowledge_Agent& ) > agentFunctorRelevance = boost::bind( &DEC_Knowledge_Agent::UpdateRelevance, _1, currentTimeStep );
+    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( agentFunctorRelevance );
+    boost::function< void( DEC_Knowledge_Population& ) > populationFunctor = boost::bind( &DEC_Knowledge_Population::UpdateRelevance, _1 );
+    pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( populationFunctor );
     pBlackBoard_->UpdateKnowledgeObjectContainer();
 }
 

@@ -26,6 +26,7 @@
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
+#include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_Perception )
 
@@ -128,9 +129,12 @@ void DEC_KS_Perception::serialize( Archive& archive, const unsigned int )
 void DEC_KS_Perception::Prepare()
 {
     assert( pBlackBoard_ );
-    pBlackBoard_->GetKnowledgeAgentPerceptionContainer     ().ApplyOnKnowledgesAgentPerception     ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception     ::Prepare ) );
-    pBlackBoard_->GetKnowledgeObjectPerceptionContainer    ().ApplyOnKnowledgesObjectPerception    ( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception    ::Prepare ) );
-    pBlackBoard_->GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::Prepare ) );
+    std::mem_fun_ref_t< void, DEC_Knowledge_AgentPerception > agentFunctor = std::mem_fun_ref( &DEC_Knowledge_AgentPerception::Prepare );
+    pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( agentFunctor );
+    std::mem_fun_ref_t< void, DEC_Knowledge_ObjectPerception > objectFunctor = std::mem_fun_ref( &DEC_Knowledge_ObjectPerception::Prepare );
+    pBlackBoard_->GetKnowledgeObjectPerceptionContainer().ApplyOnKnowledgesObjectPerception( objectFunctor );
+    std::mem_fun_ref_t< void, DEC_Knowledge_PopulationPerception > populationFunctor = std::mem_fun_ref( &DEC_Knowledge_PopulationPerception::Prepare );
+    pBlackBoard_->GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( populationFunctor );
 }
 
 // -----------------------------------------------------------------------------
@@ -362,7 +366,8 @@ void DEC_KS_Perception::Talk( int /*currentTimeStep*/ )
 
     if( bMakePerceptionsAvailable_ )
     {
-        pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( std::bind2nd( std::mem_fun_ref( & DEC_Knowledge_AgentPerception::MakeAvailable ), 0) );
+        boost::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( &DEC_Knowledge_AgentPerception::MakeAvailable, _1, 0 );
+        pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functorAgent );
         bMakePerceptionsAvailable_ = false;
     }
 
@@ -409,7 +414,8 @@ bool DEC_KS_Perception::HasDelayedPerceptions() const
 {
     bool bHasDelayedPerceptions = false;
     assert( pBlackBoard_ );
-    pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( sDelayedPerceptionFinder( bHasDelayedPerceptions ) );
+    sDelayedPerceptionFinder agentFunctor( bHasDelayedPerceptions );
+    pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( agentFunctor );
     return bHasDelayedPerceptions;
 }
 

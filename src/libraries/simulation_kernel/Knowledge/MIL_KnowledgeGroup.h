@@ -157,13 +157,13 @@ public:
     DEC_Knowledge_Population& CreateKnowledgePopulation( MIL_Population& perceived );
 
     template < class UnaryFunction >
-    void ApplyOnKnowledgesAgent( UnaryFunction fct ) const
+    void ApplyOnKnowledgesAgent( UnaryFunction& fct ) const
     {
         GetKnowledge().ApplyOnKnowledgesAgent( fct );
     }
 
     template < class UnaryFunction >
-    void ApplyOnKnowledgesPopulation( UnaryFunction fct ) const
+    void ApplyOnKnowledgesPopulation( UnaryFunction& fct ) const
     {
         GetKnowledge().ApplyOnKnowledgesPopulation( fct );
     }

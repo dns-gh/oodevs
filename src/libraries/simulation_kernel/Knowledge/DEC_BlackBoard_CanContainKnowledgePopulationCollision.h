@@ -62,7 +62,7 @@ public:
     DEC_Knowledge_PopulationCollision* GetKnowledgePopulationCollision ( const MIL_Population& populationCollision ) const;
 
     template < class UnaryFunction >
-    void ApplyOnKnowledgesPopulationCollision( UnaryFunction fct ) const
+    void ApplyOnKnowledgesPopulationCollision( UnaryFunction& fct ) const
     {
         for( CIT_KnowledgePopulationCollisionMap itKnowledge = knowledgePopulationCollisionMap_.begin(); itKnowledge != knowledgePopulationCollisionMap_.end(); )
         {

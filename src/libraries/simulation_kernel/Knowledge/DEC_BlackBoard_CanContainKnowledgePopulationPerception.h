@@ -59,7 +59,7 @@ public:
     DEC_Knowledge_PopulationPerception* GetKnowledgePopulationPerception( const MIL_Population& associatedPopulation ) const;
 
     template < class UnaryFunction >
-    void ApplyOnKnowledgesPopulationPerception( UnaryFunction fct ) const
+    void ApplyOnKnowledgesPopulationPerception( UnaryFunction& fct ) const
     {
         for( CIT_KnowledgePopulationPerceptionMap itKnowledge = knowledgePopulationPerceptionMap_.begin(); itKnowledge != knowledgePopulationPerceptionMap_.end(); )
         {

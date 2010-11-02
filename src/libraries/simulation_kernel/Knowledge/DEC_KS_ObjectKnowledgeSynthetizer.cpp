@@ -66,7 +66,8 @@ DEC_KS_ObjectKnowledgeSynthetizer::~DEC_KS_ObjectKnowledgeSynthetizer()
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectKnowledgeSynthetizer::Prepare()
 {
-    pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObjectRef( std::mem_fun_ref( &DEC_Knowledge_Object::Prepare ) );
+    std::mem_fun_ref_t< void, DEC_Knowledge_Object > objectFunctor = std::mem_fun_ref( &DEC_Knowledge_Object::Prepare );
+    pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObjectRef( objectFunctor );
 }
 
 // -----------------------------------------------------------------------------
@@ -227,7 +228,8 @@ void DEC_KS_ObjectKnowledgeSynthetizer::Talk( int /*currentTimeStep*/ )
     ProcessKnowledgesObjectToForget();
 
     // Relevance
-    pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( boost::bind( &DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance, this, _1 ) );
+    boost::function< void( boost::shared_ptr< DEC_Knowledge_Object > ) > objectFunctor = boost::bind( &DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgeRelevance, this, _1 );
+    pBlackBoard_->GetKnowledgeObjectContainer().ApplyOnKnowledgesObject( objectFunctor );
 }
 
 // -----------------------------------------------------------------------------

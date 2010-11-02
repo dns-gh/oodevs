@@ -73,7 +73,8 @@ void DEC_KS_ObjectInteraction::serialize( Archive& archive, const unsigned int )
 void DEC_KS_ObjectInteraction::Prepare()
 {
     assert( pBlackBoard_ );
-    pBlackBoard_->GetKnowledgeObjectCollisionContainer().ApplyOnKnowledgesObjectCollision( std::mem_fun_ref( &DEC_Knowledge_ObjectCollision::Prepare ) );
+    std::mem_fun_ref_t< void, DEC_Knowledge_ObjectCollision > objectFunctor = std::mem_fun_ref( &DEC_Knowledge_ObjectCollision::Prepare );
+    pBlackBoard_->GetKnowledgeObjectCollisionContainer().ApplyOnKnowledgesObjectCollision( objectFunctor );
 }
 
 // -----------------------------------------------------------------------------

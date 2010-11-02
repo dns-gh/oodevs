@@ -60,7 +60,7 @@ public:
     DEC_Knowledge_AgentPerception* GetKnowledgeAgentPerception( const MIL_Agent_ABC& associatedAgent ) const;
 
     template < class UnaryFunction >
-    void ApplyOnKnowledgesAgentPerception( UnaryFunction fct ) const
+    void ApplyOnKnowledgesAgentPerception( UnaryFunction& fct ) const
     {
         for( CIT_KnowledgeAgentPerceptionMap itKnowledge = unitKnowledgePerceptionMap_.begin(); itKnowledge != unitKnowledgePerceptionMap_.end(); )
         {
