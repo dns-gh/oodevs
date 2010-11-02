@@ -83,7 +83,9 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgContr
         weather::MeteoData* weather = new weather::MeteoData( msg.weather().id(), vUpLeft, vDownRight, msg.attributes(), *this, *converter_ );
         model_.AddExtensions( *weather );
         RegisterMeteo( *weather );
+        weather->Update( msg.attributes() );
     }
+
 }
 
 

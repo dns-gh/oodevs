@@ -77,12 +77,14 @@ void Population::DoUpdate( const MsgsSimToClient::MsgCrowdUpdate& msg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationCreation& msg )
 {
-    if( ! FindConcentration( msg.concentration().id() ) )
+    PopulationConcentration* element = (PopulationConcentration*) FindConcentration( msg.concentration().id() );
+    if( !element  )
     {
-        PopulationConcentration* element = new PopulationConcentration( *this, msg );
+        element = new PopulationConcentration( *this, msg );
         static_cast< Model* >( &model_ )->AddExtensions( *element ); // $$$$ SBO 2010-06-10: use population part factory or something
         tools::Resolver< kernel::PopulationConcentration_ABC >::Register( element->GetId(), *element );
     }
+    element->Update( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,12 +115,14 @@ void Population::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationDestructi
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgCrowdFlowCreation& msg )
 {
-    if( !FindFlow( msg.flow().id() ) )
+    PopulationFlow* element = ( PopulationFlow* ) FindFlow( msg.flow().id() );
+    if( !element )
     {
-        PopulationFlow* element = new PopulationFlow( *this, msg );
+       element = new PopulationFlow( *this, msg );
         static_cast< Model& >( model_ ).AddExtensions( *element ); // $$$$ SBO 2010-06-10: use population part factory or something
         tools::Resolver< kernel::PopulationFlow_ABC >::Register( element->GetId(), *element );
     }
+   element->Update( msg );
 }
 
 // -----------------------------------------------------------------------------
