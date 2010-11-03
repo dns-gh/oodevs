@@ -14,6 +14,7 @@
 #include "actions/ParameterList.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/Tools.h"
+#include <boost/noncopyable.hpp>
 
 using namespace actions::gui;
 
@@ -52,7 +53,8 @@ void ParamLocationCompositeList::CommitTo( actions::ParameterContainer_ABC& acti
 
 namespace
 {
-    class ChoiceVisitor : public kernel::ChoicesVisitor_ABC
+    class ChoiceVisitor : private boost::noncopyable
+                        , public kernel::ChoicesVisitor_ABC
     {
     public:
         ChoiceVisitor( kernel::OrderParameter& parameter )

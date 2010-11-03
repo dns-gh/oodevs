@@ -40,14 +40,14 @@ int main( int argc, char** argv )
         app.Initialize();
         app.exec();
     }
-    catch( std::exception& e )
-    {
-        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), e.what() );
-    }
     catch( std::runtime_error& e )
     {
         QMessageBox::critical( 0, tools::translate( "Application", "Unhandled error" ), e.what() );
         throw;
+    }
+    catch( std::exception& e )
+    {
+        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), e.what() );
     }
     return 0;
 }

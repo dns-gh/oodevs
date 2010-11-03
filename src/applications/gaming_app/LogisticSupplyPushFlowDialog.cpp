@@ -32,6 +32,7 @@
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "protocol/simulationsenders.h"
 #include <boost/bind.hpp>
+#include <boost/noncopyable.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -242,7 +243,8 @@ void LogisticSupplyPushFlowDialog::Reject()
 namespace
 {
 
-	struct SupplyStatesVisitor : kernel::ExtensionVisitor_ABC<SupplyStates>
+    struct SupplyStatesVisitor : private boost::noncopyable
+                               , public kernel::ExtensionVisitor_ABC<SupplyStates>
 	{
 		SupplyStatesVisitor( LogisticSupplyPushFlowDialog& dlg, void (LogisticSupplyPushFlowDialog::*pFunc)(const SupplyStates&) )
 				: dlg_(dlg), pFunc_ ( pFunc ) {}
