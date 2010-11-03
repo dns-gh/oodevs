@@ -137,9 +137,9 @@ void DEC_Decision< T >::UpdateDecision( float duration )
         pBrain_->SelectActions         ();
         pBrain_->TriggerSelectedActions( duration );
     }
-    catch( std::runtime_error& )
+    catch( std::runtime_error& e )
     {
-        HandleUpdateDecisionError();
+        HandleUpdateDecisionError( e );
     }
 }
 
@@ -184,10 +184,10 @@ void DEC_Decision< T >::CleanStateAfterCrash()
 // Created: LDC 2009-03-02
 // -----------------------------------------------------------------------------
 template< class T >
-void DEC_Decision< T >::HandleUpdateDecisionError()
+void DEC_Decision< T >::HandleUpdateDecisionError( const std::exception& error )
 {
     assert( pEntity_ );
-    LogCrash();
+    LogCrash( error );
     CleanStateAfterCrash();
     MIL_Report::PostEvent( *pEntity_, MIL_Report::eReport_MissionImpossible_ );
     pEntity_->GetOrderManager().CancelMission();
@@ -218,9 +218,10 @@ void DEC_Decision< T >::RemoveCallback( unsigned int actionId )
 // Created: LDC 2009-03-02
 // -----------------------------------------------------------------------------
 template< class T >
-void DEC_Decision< T >::LogCrash()
+void DEC_Decision< T >::LogCrash( const std::exception& e ) const
 {
     MT_LOG_ERROR_MSG( "Entity " << pEntity_->GetID() << "('" << pEntity_->GetName() << "') : Mission '" << pEntity_->GetOrderManager().GetMissionName() << "' impossible" );
+    MT_LOG_ERROR_MSG( e.what() );
 }
 
 // -----------------------------------------------------------------------------
