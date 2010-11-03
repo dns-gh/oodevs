@@ -61,6 +61,7 @@
         <object-cost type="movement forbidden area" value="10000"/>
         <object-cost type="mortar deployment area" value="10"/>
         <object-cost type="installation" value="0"/>
+        <object-cost type="urban block" value="10000"/>
       </object-costs>
     </rule>
     <rule type="movement" flying="false" autonomous="false" inherits="base">
@@ -193,6 +194,7 @@
         <object-cost type="movement forbidden area" value="10000"/>
         <object-cost type="mortar deployment area" value="10"/>
         <object-cost type="installation" value="0"/>
+        <object-cost type="urban block" value="10000"/>
       </object-costs>
     </rule>
     <rule type="movement" flying="true" autonomous="false" inherits="base"/>
