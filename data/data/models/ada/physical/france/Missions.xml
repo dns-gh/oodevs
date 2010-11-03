@@ -2130,5 +2130,7 @@
       <parameter dia-name="nbIT_" name="Intervention Type" optional="false" type="Numeric"/>
       <parameter dia-name="agentKnowledge_" name="Cible" optional="false" type="AgentKnowledge"/>
     </fragorder>
+    <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Embarquer" id="394" name="Embarquer"/>
+    <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Debarquer" id="395" name="Debarquer"/>
   </fragorders>
 </missions>
