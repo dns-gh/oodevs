@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __CreateExerciceWidget_h_
-#define __CreateExerciceWidget_h_
+#ifndef __ExerciseCreationDialog_h_
+#define __ExerciseCreationDialog_h_
 
 #include <boost/noncopyable.hpp>
 
@@ -18,21 +18,21 @@ namespace tools
 }
 
 // =============================================================================
-/** @class  CreateExerciceWidget
-    @brief  CreateExerciceWidget
+/** @class  ExerciseCreationDialog
+    @brief  ExerciseCreationDialog
 */
 // Created: FDS 2010-11-02
 // =============================================================================
-class CreateExerciceWidget : public QDialog
-                           , private boost::noncopyable
+class ExerciseCreationDialog : public QDialog
+                             , private boost::noncopyable
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             CreateExerciceWidget( QWidget* parent, const tools::GeneralConfig& config );
-    virtual ~CreateExerciceWidget();
+             ExerciseCreationDialog( QWidget* parent, const tools::GeneralConfig& config );
+    virtual ~ExerciseCreationDialog();
     //@}
 
     //! @name Accessors
@@ -45,16 +45,18 @@ private slots:
     //@{
     void OnAccept();
     void OnCancel();
+    void OnFileChanged();
     //@}
 
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
-    QLineEdit* editName_;
-    QComboBox* editTerrainList_;
-    QComboBox* editModelList_;
+    const tools::GeneralConfig&  config_;
+    QLineEdit*                   exerciseName_;
+    QComboBox*                   editTerrainList_;
+    QComboBox*                   editModelList_;
+    QButton*                     ok_;
     //@}
 };
 
-#endif // __CreateExerciceWidget_h_
+#endif // __ExerciseCreationDialog_h_

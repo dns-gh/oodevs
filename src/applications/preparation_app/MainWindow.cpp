@@ -13,7 +13,7 @@
 
 #include "AgentsLayer.h"
 #include "CommunicationListView.h"
-#include "CreateExerciceWidget.h"
+#include "ExerciseCreationDialog.h"
 #include "CreationPanels.h"
 #include "Dialogs.h"
 #include "ExerciseDialog.h"
@@ -364,10 +364,10 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
 // -----------------------------------------------------------------------------
 void MainWindow::New()
 {
-    static CreateExerciceWidget* createExerciceWidget_ = new CreateExerciceWidget( this, config_ );
-    if( createExerciceWidget_->exec() == QDialog::Accepted )
+    static ExerciseCreationDialog* exerciseCreationDialog_ = new ExerciseCreationDialog( this, config_ );
+    if( exerciseCreationDialog_->exec() == QDialog::Accepted )
     {    
-        QString filename = createExerciceWidget_->GetFileName();
+        QString filename = exerciseCreationDialog_->GetFileName();
         if( filename.isEmpty() )
             return;
         if( filename.startsWith( "//" ) )

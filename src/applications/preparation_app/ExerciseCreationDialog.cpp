@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "CreateExerciceWidget.h"
-#include "moc_CreateExerciceWidget.cpp"
+#include "ExerciseCreationDialog.h"
+#include "moc_ExerciseCreationDialog.cpp"
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
 #include "tools/GeneralConfig.h"
@@ -23,14 +23,15 @@
 namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
-// Name: CreateExerciceWidget constructor
+// Name: ExerciseCreationDialog constructor
 // Created: FDS 2010-11-02
 // -----------------------------------------------------------------------------
-CreateExerciceWidget::CreateExerciceWidget( QWidget* parent, const tools::GeneralConfig& config )
+ExerciseCreationDialog::ExerciseCreationDialog( QWidget* parent, const tools::GeneralConfig& config )
     : QDialog( parent, "ExerciseCreate" )
     , config_( config )
 {
-    setModal( true );
+//    setModal( true );
+    setMinimumWidth(150);
     setCaption( tr( "Exercise Creation" ) );
     QGridLayout* grid = new QGridLayout( this, 4, 2, 0, 5 );
     grid->setMargin( 5 );
@@ -41,13 +42,14 @@ CreateExerciceWidget::CreateExerciceWidget( QWidget* parent, const tools::Genera
     grid->setRowStretch( 4, 1 );
     {
         QGroupBox* box = new QHGroupBox( tr( "Name" ), this );
-        new QLabel( tr( "Name:" ), box );
-        editName_ = new QLineEdit( "", box );
+        //new QLabel( tr( "Name:" ), box );
+        exerciseName_ = new QLineEdit( "", box );
+        connect( exerciseName_, SIGNAL( textChanged( const QString& ) ), SLOT( OnFileChanged() ) );
         grid->addMultiCellWidget( box, 0, 0, 0, 2 );
     }
     {
         QGroupBox* box = new QHGroupBox( tr( "Terrain" ), this );
-        new QLabel( tr( "Name:" ), box );
+        //new QLabel( tr( "Name:" ), box );
         editTerrainList_ = new QComboBox( box );
         grid->addMultiCellWidget( box, 1, 1, 0, 2 );
         editTerrainList_->clear();
@@ -55,7 +57,7 @@ CreateExerciceWidget::CreateExerciceWidget( QWidget* parent, const tools::Genera
     }
     {
         QGroupBox* box = new QHGroupBox( tr( "Model" ), this );
-        new QLabel( tr( "Name:" ), box );
+        //new QLabel( tr( "Name:" ), box );
         editModelList_ = new QComboBox( box );
         grid->addMultiCellWidget( box, 2, 2, 0, 2 );
 
@@ -70,38 +72,36 @@ CreateExerciceWidget::CreateExerciceWidget( QWidget* parent, const tools::Genera
     }
     {
         QHBox* box = new QHBox( this );
-        QButton* ok = new QPushButton( tr( "Ok" ), box );
+        ok_ = new QPushButton( tr( "Ok" ), box );
+        ok_->setEnabled( false );
         QButton* cancel = new QPushButton( tr( "Cancel" ), box );
         grid->addWidget( box, 4, 2 );
-        connect( ok, SIGNAL( clicked() ), this, SLOT( OnAccept() ) );
+        connect( ok_, SIGNAL( clicked() ), this, SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), this, SLOT( OnCancel() ) );
     }
+    adjustSize();
 }
 
 // -----------------------------------------------------------------------------
-// Name: CreateExerciceWidget destructor
+// Name: ExerciseCreationDialog destructor
 // Created: FDS 2010-11-02
 // -----------------------------------------------------------------------------
-CreateExerciceWidget::~CreateExerciceWidget()
+ExerciseCreationDialog::~ExerciseCreationDialog()
 {
     // NOTHING        
 }
 
 // -----------------------------------------------------------------------------
-// Name: CreateExerciceWidget::OnAccept
+// Name: ExerciseCreationDialog::OnAccept
 // Created: FDS 2010-11-02
 // -----------------------------------------------------------------------------
-void CreateExerciceWidget::OnAccept()
+void ExerciseCreationDialog::OnAccept()
 {
     try
     {
-        if( editName_->text().isEmpty() )
-            throw tr( "Exercise name is empty!" );
-        if( bfs::exists( config_.GetExerciseFile( editName_->text().ascii() ) ) )
-            throw tr( "Exercise already exist!" );
         const std::string terrain = editTerrainList_->currentText().ascii();
         const QStringList model = QStringList::split( "/", editModelList_->currentText() );
-        frontend::CreateExercise( config_, editName_->text().ascii(), terrain, model.front().ascii(), model.back().ascii() );
+        frontend::CreateExercise( config_, exerciseName_->text().ascii(), terrain, model.front().ascii(), model.back().ascii() );
         accept();
     }
     catch( const QString& message )
@@ -111,20 +111,29 @@ void CreateExerciceWidget::OnAccept()
 }
 
 // -----------------------------------------------------------------------------
-// Name: CreateExerciceWidget::OnCancel
+// Name: ExerciseCreationDialog::OnCancel
 // Created: FDS 2010-11-02
 // -----------------------------------------------------------------------------
-void CreateExerciceWidget::OnCancel()
+void ExerciseCreationDialog::OnCancel()
 {
-    editName_->setText( "" );
+    exerciseName_->setText( "" );
     reject();
 }
 
 // -----------------------------------------------------------------------------
-// Name: CreateExerciceWidget::GetFileName
+// Name: ExerciseCreationDialog::GetFileName
 // Created: FDS 2010-11-03
 // -----------------------------------------------------------------------------
-QString CreateExerciceWidget::GetFileName() const
+QString ExerciseCreationDialog::GetFileName() const
 {
-    return config_.GetExerciseFile( editName_->text().ascii() ).c_str();
+    return config_.GetExerciseFile( exerciseName_->text().ascii() ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseCreationDialog::OnFileChanged
+// Created: FDS 2010-11-03
+// -----------------------------------------------------------------------------
+void ExerciseCreationDialog::OnFileChanged()
+{
+    ok_->setDisabled( exerciseName_->text().isEmpty() ||  bfs::exists( config_.GetExerciseFile( exerciseName_->text().ascii() ) ) || editTerrainList_->count() == 0 || editModelList_->count() == 0 );
 }
