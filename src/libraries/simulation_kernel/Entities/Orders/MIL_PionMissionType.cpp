@@ -48,7 +48,7 @@ void MIL_PionMissionType::Initialize( xml::xistream& xis )
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
 MIL_PionMissionType::MIL_PionMissionType( unsigned int nID, xml::xistream& xis )
-    : MIL_MissionType_ABC( nID, xis )
+    : MIL_MissionType_ABC( nID, 5, xis )
     , strDIABehavior_    ()
 {
     xis >> xml::attribute( "dia-behavior", strDIABehavior_ );

@@ -15,6 +15,7 @@
 #include "protocol/protocol.h"
 #include "simulation_orders/MIL_MissionParameter_ABC.h"
 #include "MIL_MissionParameterFactory.h"
+#include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -22,12 +23,13 @@
 // Name: MIL_OrderType_ABC constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_OrderType_ABC::MIL_OrderType_ABC( unsigned int nID, xml::xistream& xis )
+MIL_OrderType_ABC::MIL_OrderType_ABC( unsigned int nID, unsigned int contextLength, xml::xistream& xis )
     : nID_    ( nID )
     , strName_( xis.attribute< std::string >( "name" ) )
     , diaType_( xis.attribute< std::string >( "dia-type" ) )
 {
-    xis >> xml::list( "parameter", *this, &MIL_OrderType_ABC::ReadParameter );
+    unsigned int index = 0; // MGD 2010-10-03 : Hack to hide context, @TODO remove with context deletion
+    xis >> xml::list( "parameter", boost::bind( &MIL_OrderType_ABC::ReadParameter, this, _1, boost::ref(index), contextLength ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,9 +46,11 @@ MIL_OrderType_ABC::MIL_OrderType_ABC()
 // Name: MIL_OrderType_ABC::ReadParameter
 // Created: ABL 2007-07-25
 // -----------------------------------------------------------------------------
-void MIL_OrderType_ABC::ReadParameter( xml::xistream& xis )
+void MIL_OrderType_ABC::ReadParameter( xml::xistream& xis, unsigned int& index, unsigned int contextLength )
 {
-    parameters_.push_back( new MIL_OrderTypeParameter( *this, xis ) );
+    index++;
+    if( index > contextLength )
+        parameters_.push_back( new MIL_OrderTypeParameter( *this, xis ) );
 }
 
 //-----------------------------------------------------------------------------

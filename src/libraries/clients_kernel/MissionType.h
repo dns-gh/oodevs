@@ -14,7 +14,6 @@
 
 namespace kernel
 {
-    class OrderContext;
 
 // =============================================================================
 /** @class  MissionType
@@ -28,7 +27,6 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MissionType( xml::xistream& xis );
-             MissionType( xml::xistream& xis, const OrderContext& context );
     virtual ~MissionType();
     //@}
 

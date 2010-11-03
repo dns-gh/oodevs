@@ -23,7 +23,6 @@ namespace dispatcher
 namespace kernel
 {
     class OrderType;
-    class OrderContext;
 }
 
 namespace plugins
@@ -70,7 +69,7 @@ private:
     //@{
     void Load( const std::string& filename );
     void ReadMissions( xml::xistream& xis, const std::string& name, T_OrderTypes& missions );
-    void ReadMissionType( xml::xistream& xis, T_OrderTypes& missions, const kernel::OrderContext& context );
+    void ReadMissionType( xml::xistream& xis, T_OrderTypes& missions );
     void ReadFragOrderType( xml::xistream& xis );
     //@}
 

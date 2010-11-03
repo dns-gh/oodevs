@@ -14,7 +14,6 @@
 
 namespace kernel
 {
-    class OrderContext;
 
 // =============================================================================
 /** @class  MagicActionType

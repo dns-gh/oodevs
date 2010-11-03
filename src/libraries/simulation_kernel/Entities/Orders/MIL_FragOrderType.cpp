@@ -63,7 +63,7 @@ void MIL_FragOrderType::ReadFragorder( xml::xistream& xis )
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
 MIL_FragOrderType::MIL_FragOrderType( unsigned int nID, xml::xistream& xis )
-    : MIL_OrderType_ABC        ( nID, xis )
+    : MIL_OrderType_ABC        ( nID, 0, xis )
     , bAvailableWithoutMission_( false )
     , bAvailableForAllMissions_( false )
 {

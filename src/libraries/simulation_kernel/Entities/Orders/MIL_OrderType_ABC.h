@@ -37,7 +37,7 @@ class MIL_OrderType_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_OrderType_ABC( unsigned int nID, xml::xistream& xis );
+             MIL_OrderType_ABC( unsigned int nID, unsigned int contextLength, xml::xistream& xis );
     virtual ~MIL_OrderType_ABC();
     //@}
 
@@ -69,7 +69,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadParameter( xml::xistream& xis );
+    void MIL_OrderType_ABC::ReadParameter( xml::xistream& xis, unsigned int& index, unsigned int contextLength );
     //@}
 
 private:

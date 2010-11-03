@@ -17,6 +17,7 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_AiEngine_Data.h"
 #include "ADN_Tr.h"
+#include <boost/bind.hpp>
 #include <xeuseuleu/xsl.hpp>
 
 IdentifierFactory ADN_Missions_Data::idFactory_;
@@ -336,9 +337,10 @@ ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
 // Name: ADN_Missions_Data::Mission::ReadArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input )
+void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, unsigned int contextLength )
 {
     std::string doctrineDesc, usageDesc;
+    unsigned int index = 0;
     input >> xml::attribute( "name", strName_ )
         >> xml::attribute( "dia-type", diaType_ )
         >> xml::optional >> xml::attribute( "dia-behavior", diaBehavior_ )
@@ -348,7 +350,7 @@ void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input )
             >> xml::optional >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
             >> xml::optional >> xml::start( "usage" ) >> usageDesc >> xml::end
         >> xml::end
-        >> xml::list( "parameter", *this, &ADN_Missions_Data::Mission::ReadParameter );
+        >> xml::list( "parameter", boost::bind( &ADN_Missions_Data::Mission::ReadParameter, this , _1,  boost::ref( index ), contextLength ) );
     doctrineDescription_ = doctrineDesc;
     usageDescription_ = usageDesc;
 }
@@ -357,11 +359,15 @@ void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input )
 // Name: ADN_Missions_Data::Mission::ReadParameter
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::Mission::ReadParameter( xml::xistream& input )
+void ADN_Missions_Data::Mission::ReadParameter( xml::xistream& input, unsigned int& index, unsigned int contextLength )
 {
-    std::auto_ptr< MissionParameter > spNew( new MissionParameter() );
-    spNew->ReadArchive( input );
-    parameters_.AddItem( spNew.release() );
+    index++;
+    if( index > contextLength )
+    {
+        std::auto_ptr< MissionParameter > spNew( new MissionParameter() );
+        spNew->ReadArchive( input );
+        parameters_.AddItem( spNew.release() );
+    }
 }
 
 namespace
@@ -380,7 +386,7 @@ namespace
 // Name: ADN_Missions_Data::Mission::WriteArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std::string& type )
+void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std::string& type, const T_MissionParameter_Vector& context )
 {
     output << xml::start( "mission" );
     const QString typeName = type == "units" ? "Pion" : (type == "automats" ? "Automate" : "Population");
@@ -415,6 +421,11 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
         if( ! usageDescription_.GetData().empty() )
             output << xml::start( "usage" ) << xml::cdata( usageDescription_.GetData() ) << xml::end;
         output << xml::end;
+    }
+    if( ! context.empty() )
+    {
+        for( unsigned i = 0; i < context.size(); ++i )
+            context[i]->WriteArchive( output );
     }
     for( unsigned int i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
@@ -630,18 +641,37 @@ void ADN_Missions_Data::Load()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 {
+    // MGD 2010-10-03 : Hack to hide context @TODO remove with context deletion
+    xml::xistringstream unitContextFlow(
+        "<context>"
+        "   <parameter dia-name='dangerDirection_' name='direction dangereuse' optional='false' type='Heading'/>"
+        "   <parameter dia-name='phaseLines_' max-occurs='unbounded' min-occurs='1' name='Limas' optional='true' type='PhaseLine'/>"
+        "   <parameter dia-name='boundaryLimit1_' name='Limit 1' optional='true' type='Limit'/>"
+        "   <parameter dia-name='boundaryLimit2_' name='Limit 2' optional='true' type='Limit'/>"
+        "   <parameter dia-name='intelligences_' max-occurs='unbounded' min-occurs='1' name='Renseignements' optional='true' type='Intelligence'/>"
+        "</context>" );
+    xml::xistringstream automatContextFlow(
+        "<context>"
+        "<parameter dia-name='dangerDirection_' name='direction dangereuse' optional='false' type='Heading'/>"
+        "<parameter dia-name='phaseLines_' max-occurs='unbounded' min-occurs='1' name='Limas' optional='true' type='PhaseLine'/>"
+        "<parameter dia-name='boundaryLimit1_' name='Limit 1' optional='false' type='Limit'/>"
+        "<parameter dia-name='boundaryLimit2_' name='Limit 2' optional='false' type='Limit'/>"
+        "<parameter dia-name='intelligences_' max-occurs='unbounded' min-occurs='1' name='Renseignements' optional='true' type='Intelligence'/>"
+        "</context>" );
+    xml::xistringstream crowContextFlow( "<context></context>" );
+    ReadContext( unitContextFlow, unitContext_ );
+    ReadContext( automatContextFlow, automatContext_ );
+    ReadContext( crowContextFlow, populationContext_ );
+
     input >> xml::start( "missions" )
             >> xml::start( "units" )
-                >> xml::list( "context", *this, &ADN_Missions_Data::ReadContext, unitContext_ )
-                >> xml::list( "mission", *this, &ADN_Missions_Data::ReadMission, unitMissions_, (const bool&)false )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( unitMissions_ ), (const bool&)false, unitContext_.size() ) )
             >> xml::end
             >> xml::start( "automats" )
-                >> xml::list( "context", *this, &ADN_Missions_Data::ReadContext, automatContext_ )
-                >> xml::list( "mission", *this, &ADN_Missions_Data::ReadMission, automatMissions_, (const bool&)true )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( automatMissions_ ), (const bool&)false, automatContext_.size() ) )
             >> xml::end
             >> xml::start( "populations" )
-                >> xml::list( "context", *this, &ADN_Missions_Data::ReadContext, populationContext_ )
-                >> xml::list( "mission", *this, &ADN_Missions_Data::ReadMission, populationMissions_, (const bool&)false )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( populationMissions_ ), (const bool&)false, populationContext_.size() ) )
             >> xml::end
             >> xml::start( "fragorders" )
                 >> xml::list( "fragorder", *this, &ADN_Missions_Data::ReadFragOrder )
@@ -664,10 +694,10 @@ void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
 // Name: ADN_Missions_Data::ReadMission
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, const bool& isAutomat )
+void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, const bool& isAutomat, unsigned int contextLength )
 {
     std::auto_ptr< ADN_Missions_Data::Mission > spNew( new Mission( xis.attribute< unsigned int >( "id" ), isAutomat ) );
-    spNew->ReadArchive( xis );
+    spNew->ReadArchive( xis, contextLength );
     missions.AddItem( spNew.release() );
 }
 
@@ -677,7 +707,9 @@ void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missi
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::ReadContext( xml::xistream& input, T_MissionParameter_Vector& context )
 {
-    input >> xml::list( "parameter", *this, &ADN_Missions_Data::ReadContextParameter, context );
+    input >> xml::start("context")
+            >> xml::list( "parameter", *this, &ADN_Missions_Data::ReadContextParameter, context )
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -697,15 +729,8 @@ namespace
     void WriteMissions( xml::xostream& output, const std::string& name, const ADN_Missions_Data::T_MissionParameter_Vector& context, const ADN_Missions_Data::T_Mission_Vector& missions )
     {
         output << xml::start( name );
-        if( ! context.empty() )
-        {
-            output << xml::start( "context" );
-            for( unsigned i = 0; i < context.size(); ++i )
-                context[i]->WriteArchive( output );
-            output << xml::end;
-        }
         for( unsigned int i = 0; i < missions.size(); ++i )
-            missions[i]->WriteArchive( output, name );
+            missions[i]->WriteArchive( output, name, context );
         output << xml::end;
     }
 }

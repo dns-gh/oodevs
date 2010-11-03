@@ -35,7 +35,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_MissionType_ABC( unsigned int nID, xml::xistream& xis );
+             MIL_MissionType_ABC( unsigned int nID, unsigned int contextLength, xml::xistream& xis );
     virtual ~MIL_MissionType_ABC();
     //@}
 

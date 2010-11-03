@@ -22,7 +22,6 @@
 #include "MagicActionType.h"
 #include "MissionFactory.h"
 #include "MissionType.h"
-#include "OrderContext.h"
 #include "PopulationType.h"
 #include "SensorType.h"
 #include "SymbolFactory.h"
@@ -151,8 +150,7 @@ void AgentTypes::ReadOrderTypes( xml::xistream& xis )
 void AgentTypes::ReadMissions( xml::xistream& xis, const std::string& name, T_MissionResolver& missions )
 {
     xis >> xml::start( name );
-    OrderContext context( xis );
-    xis     >> xml::list( "mission", *this, &AgentTypes::ReadMissionType, missions, context )
+    xis     >> xml::list( "mission", *this, &AgentTypes::ReadMissionType, missions )
         >> xml::end;
 }
 
@@ -160,9 +158,9 @@ void AgentTypes::ReadMissions( xml::xistream& xis, const std::string& name, T_Mi
 // Name: AgentTypes::ReadMissionType
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void AgentTypes::ReadMissionType( xml::xistream& xis, T_MissionResolver& missions, const OrderContext& context )
+void AgentTypes::ReadMissionType( xml::xistream& xis, T_MissionResolver& missions )
 {
-    MissionType* mission = new MissionType( xis, context );
+    MissionType* mission = new MissionType( xis );
     tools::Resolver< MissionType >::Register( mission->GetId(), *mission );
     missions.Register( mission->GetName(), *mission );
 }

@@ -14,8 +14,8 @@
 // Name: MIL_MissionType_ABC constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_MissionType_ABC::MIL_MissionType_ABC( unsigned int nID, xml::xistream& xis )
-    : MIL_OrderType_ABC( nID, xis )
+MIL_MissionType_ABC::MIL_MissionType_ABC( unsigned int nID, unsigned int contextLength, xml::xistream& xis )
+    : MIL_OrderType_ABC( nID, contextLength, xis )
 {
     // NOTHING
 }

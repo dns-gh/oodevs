@@ -28,7 +28,6 @@ namespace kernel
     class PopulationType;
     class Mission;
     class MissionType;
-    class OrderContext;
     class MissionFactory;
     class FragOrderType;
     class MagicOrderType;
@@ -105,7 +104,7 @@ private:
     void ReadSensor( xml::xistream& xis );
     void ReadModel( xml::xistream& xis, const T_Resolver& missionResolver,  tools::Resolver< DecisionalModel, std::string >& models );
     void ReadMissions( xml::xistream& xis, const std::string& name, T_MissionResolver& missions );
-    void ReadMissionType( xml::xistream& xis, T_MissionResolver& missions, const OrderContext& context );
+    void ReadMissionType( xml::xistream& xis, T_MissionResolver& missions );
     void ReadFragOrderType( xml::xistream& xis );
 
     void RegisterActionType( MagicActionType& actionType );

@@ -127,9 +127,9 @@ public:
         std::string GetItemName();
         Mission* CreateCopy();
 
-        void ReadArchive ( xml::xistream& input );
-        void ReadParameter( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, const std::string& type );
+        void ReadArchive ( xml::xistream& input, unsigned int contextLength );
+        void ReadParameter( xml::xistream& input, unsigned int& index, unsigned int contextLength );
+        void WriteArchive( xml::xostream& output, const std::string& type, const T_MissionParameter_Vector& context );
 
     public:
         ADN_Type_Int              id_;
@@ -208,7 +208,7 @@ public:
 private:
     void ReadArchive( xml::xistream& input );
     void ReadFragOrder( xml::xistream& input );
-    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, const bool& automat );
+    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, const bool& automat, unsigned int contextLength );
     void ReadContext( xml::xistream& input, T_MissionParameter_Vector& context );
     void ReadContextParameter( xml::xistream& input, T_MissionParameter_Vector& context );
     void WriteArchive( xml::xostream& output );

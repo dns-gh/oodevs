@@ -10,7 +10,6 @@
 #include "clients_kernel_pch.h"
 #include "MissionType.h"
 #include "OrderParameter.h"
-#include "OrderContext.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -22,17 +21,6 @@ using namespace kernel;
 MissionType::MissionType( xml::xistream& xis )
     : OrderType( xis )
 {
-    Read( xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionType constructor
-// Created: SBO 2007-04-23
-// -----------------------------------------------------------------------------
-MissionType::MissionType( xml::xistream& xis, const OrderContext& context )
-    : OrderType( xis )
-{
-    context.AddParameters( *this );
     Read( xis );
 }
 

@@ -11,7 +11,6 @@
 #include "OrderTypes.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/FragOrderType.h"
-#include "clients_kernel/OrderContext.h"
 #include "dispatcher/Config.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -69,8 +68,7 @@ void OrderTypes::Load( const std::string& missions )
 void OrderTypes::ReadMissions( xml::xistream& xis, const std::string& name, T_OrderTypes& missions )
 {
     xis >> xml::start( name );
-    kernel::OrderContext context( xis );
-    xis     >> xml::list( "mission", *this, &OrderTypes::ReadMissionType, missions, context )
+    xis     >> xml::list( "mission", *this, &OrderTypes::ReadMissionType, missions )
         >> xml::end;
 }
 
@@ -78,9 +76,9 @@ void OrderTypes::ReadMissions( xml::xistream& xis, const std::string& name, T_Or
 // Name: OrderTypes::ReadMissionType
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void OrderTypes::ReadMissionType( xml::xistream& xis, T_OrderTypes& missions, const kernel::OrderContext& context )
+void OrderTypes::ReadMissionType( xml::xistream& xis, T_OrderTypes& missions )
 {
-    kernel::MissionType* mission = new kernel::MissionType( xis, context );
+    kernel::MissionType* mission = new kernel::MissionType( xis );
     missions[mission->GetName()] = mission;
 }
 
