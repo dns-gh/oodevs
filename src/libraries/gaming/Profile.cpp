@@ -308,8 +308,25 @@ bool Profile::IsInHierarchy( const Entity_ABC& entity, const T_Entities& entitie
     if( ( IsInSpecificHierarchy( entity, tactical, entities, childOnly ) && !( communication && communication->IsJammed() ) ) ||
         IsInSpecificHierarchy( entity, intelligence, entities, childOnly ) )
         return true;
-    if( childOnly || entity.GetTypeName() == KnowledgeGroup_ABC::typeName_ )
+    if( childOnly )
         return IsInSpecificHierarchy( entity, communication, entities, childOnly );
+    if( entity.GetTypeName() == KnowledgeGroup_ABC::typeName_ )
+    {
+        if( IsInSpecificHierarchy( entity, communication, entities, childOnly ) )
+            return true;
+        if( communication )
+            for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
+            {
+                const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
+                if( !hierarchy )
+                {
+                    const TacticalHierarchies* tacticalHierarchies = ( *it )->Retrieve< kernel::TacticalHierarchies >();
+                    if( tacticalHierarchies && communication->IsSubordinateOf( tacticalHierarchies->GetTop() ) )
+                        return true;
+                }
+            }
+        return false;
+    }
     for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
     {
         const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
@@ -329,25 +346,31 @@ bool Profile::AreInSameKnowledgeGroup( const Entity_ABC& entity1, const Entity_A
 {
     const CommunicationHierarchies* hierarchy1 = entity1.Retrieve< CommunicationHierarchies >();
     const CommunicationHierarchies* hierarchy2 = entity2.Retrieve< CommunicationHierarchies >();
-    if( !hierarchy1 || !hierarchy2 )
-        return false;
-    const AgentKnowledges* entityKnowledges1 = 0;
-    const AgentKnowledges* entityKnowledges2 = 0;
-    for( const Entity_ABC* superior1 = &entity1; superior1; superior1 = superior1->Get< CommunicationHierarchies >().GetSuperior() )
+    if( hierarchy1 && hierarchy2 )
     {
-        entityKnowledges1 = superior1->Retrieve< AgentKnowledges >();
-        if( entityKnowledges1 )
+        const AgentKnowledges* entityKnowledges1 = 0;
+        const AgentKnowledges* entityKnowledges2 = 0;
+        for( const Entity_ABC* superior1 = &entity1; superior1; superior1 = superior1->Get< CommunicationHierarchies >().GetSuperior() )
         {
-            for( const Entity_ABC* superior2 = &entity2; superior2; superior2 = superior2->Get< CommunicationHierarchies >().GetSuperior() )
+            entityKnowledges1 = superior1->Retrieve< AgentKnowledges >();
+            if( entityKnowledges1 )
             {
-                entityKnowledges2 = superior2->Retrieve< AgentKnowledges >();
-                if( entityKnowledges2 )
-                    return entityKnowledges2 == entityKnowledges1;
+                for( const Entity_ABC* superior2 = &entity2; superior2; superior2 = superior2->Get< CommunicationHierarchies >().GetSuperior() )
+                {
+                    entityKnowledges2 = superior2->Retrieve< AgentKnowledges >();
+                    if( entityKnowledges2 )
+                        return entityKnowledges2 == entityKnowledges1;
+                }
+                return false;
             }
-            return false;
         }
+        return compareTop ? &hierarchy1->GetTop() == &hierarchy2->GetTop() : false;
     }
-    return compareTop ? &hierarchy1->GetTop() == &hierarchy2->GetTop() : false;
+    else if( compareTop && !hierarchy2 )
+        if( const TacticalHierarchies* tacticalHierarchies1 = entity1.Retrieve< kernel::TacticalHierarchies >() )
+            if( const TacticalHierarchies* tacticalHierarchies2 = entity2.Retrieve< kernel::TacticalHierarchies >() )
+                return &tacticalHierarchies1->GetTop() == &tacticalHierarchies2->GetTop();
+    return false;
 }
 
 // -----------------------------------------------------------------------------
