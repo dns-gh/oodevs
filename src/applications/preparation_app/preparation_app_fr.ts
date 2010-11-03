@@ -64,12 +64,16 @@
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Exercise name is empty !</source>
+        <source>Exercise name is empty!</source>
         <translation>Le nom de l&apos;exercice est vide !</translation>
     </message>
     <message>
-        <source>Exercise already exist !</source>
+        <source>Exercise already exist!</source>
         <translation>L&apos;exercice existe déjà !</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
     </message>
 </context>
 <context>

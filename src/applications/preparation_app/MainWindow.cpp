@@ -364,25 +364,20 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
 // -----------------------------------------------------------------------------
 void MainWindow::New()
 {
-    // Exercice creation in a new dialog
-    CreateExerciceWidget* createExerciceWidget_ = new CreateExerciceWidget( this, config_ );
-    createExerciceWidget_->setModal(true);
-    createExerciceWidget_->exec();  
-    
-    // Get the filename of the exercise created
-    QString filename = createExerciceWidget_->getFileName();
-
-    // Load the exercise 
-    if( filename.isEmpty() )
-        return;
-
-    if( filename.startsWith( "//" ) )
-        filename.replace( "/", "\\" );
-    config_.LoadExercise( filename.ascii() );
-    if( Load() )
-    {
-        SetWindowTitle( true );
-        LoadExercise();
+    static CreateExerciceWidget* createExerciceWidget_ = new CreateExerciceWidget( this, config_ );
+    if( createExerciceWidget_->exec() == QDialog::Accepted )
+    {    
+        QString filename = createExerciceWidget_->GetFileName();
+        if( filename.isEmpty() )
+            return;
+        if( filename.startsWith( "//" ) )
+            filename.replace( "/", "\\" );
+        config_.LoadExercise( filename.ascii() );
+        if( Load() )
+        {
+            SetWindowTitle( true );
+            LoadExercise();
+        }
     }
 }
 

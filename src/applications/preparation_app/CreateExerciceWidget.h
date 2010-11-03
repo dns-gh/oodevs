@@ -10,10 +10,8 @@
 #ifndef __CreateExerciceWidget_h_
 #define __CreateExerciceWidget_h_
 
-namespace kernel
-{
-    class Controllers;
-}
+#include <boost/noncopyable.hpp>
+
 namespace tools
 {
     class GeneralConfig;
@@ -26,37 +24,37 @@ namespace tools
 // Created: FDS 2010-11-02
 // =============================================================================
 class CreateExerciceWidget : public QDialog
+                           , private boost::noncopyable
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    CreateExerciceWidget(QWidget* parent, const tools::GeneralConfig& config  );
+             CreateExerciceWidget( QWidget* parent, const tools::GeneralConfig& config );
     virtual ~CreateExerciceWidget();
     //@}
-private:
-    //! @name Copy/Assignment
+
+    //! @name Accessors
     //@{
-    CreateExerciceWidget( const CreateExerciceWidget& );            //!< Copy constructor
-    CreateExerciceWidget& operator=( const CreateExerciceWidget& ); //!< Assignment operator
+    QString GetFileName() const;
     //@}
+
 private slots:
     //! @name Slots
     //@{
     void OnAccept();
     void OnCancel();
     //@}
-public:    
-    //! @name Helpers
-    //@{
-    QString getFileName();
-    //@}
+
 private:
+    //! @name Member data
+    //@{
     const tools::GeneralConfig& config_;
     QLineEdit* editName_;
     QComboBox* editTerrainList_;
     QComboBox* editModelList_;
+    //@}
 };
 
 #endif // __CreateExerciceWidget_h_
