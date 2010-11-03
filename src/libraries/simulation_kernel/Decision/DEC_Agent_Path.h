@@ -23,6 +23,7 @@ class DEC_Rep_PathPoint;
 class DEC_PathType;
 class MIL_LimaOrder;
 class MIL_AgentPion;
+class MIL_Object_ABC;
 class DEC_Agent_PathClass;
 
 //*****************************************************************************
