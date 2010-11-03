@@ -13,6 +13,7 @@
 #include "PHY_RoleAction_Loading.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "protocol/ClientSenders.h"
 
 #include "simulation_kernel/AlgorithmsFactories.h"
@@ -157,14 +158,14 @@ int PHY_RoleAction_Loading::Load()
             return eErrorNoCarried;
         nEndTimeStep_ = (unsigned int)rLoadingTime + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         nState_       = eLoading;
-    }
+        MIL_Report::PostEvent( pion_, MIL_Report::eReport_EmbarkmentStarted );    }
 
     if( nState_ == eLoading )
     {
         if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nEndTimeStep_ )
         {
             nState_      = eNothing;
-            SetLoadedState();
+            MIL_Report::PostEvent( pion_, MIL_Report::eReport_EmbarkmentFinished );            SetLoadedState();
             return eEnd;
         }
         return eRunning;
@@ -192,14 +193,14 @@ int PHY_RoleAction_Loading::Unload()
             return eErrorNoCarried;
         nEndTimeStep_ = (unsigned int)rUnloadingTime + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         nState_       = eUnloading;
-    }
+        MIL_Report::PostEvent( pion_, MIL_Report::eReport_DisembarkmentStarted );    }
 
     if( nState_ == eUnloading )
     {
         if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nEndTimeStep_ )
         {
             nState_      = eNothing;
-            SetUnloadedState();
+            MIL_Report::PostEvent( pion_, MIL_Report::eReport_DisembarkmentFinished );            SetUnloadedState();
             return eEnd;
         }
         return eRunning;
@@ -281,7 +282,7 @@ double PHY_RoleAction_Loading::GetUnloadingTime() const
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Loading::IsLoaded() const
 {
-    return bIsLoaded_;
+    return bIsLoaded_ && ( nState_ == eNothing );
 }
 
 // -----------------------------------------------------------------------------

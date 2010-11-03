@@ -1015,6 +1015,23 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeTrafficableLocalisation
+// @return a position which the agent can reach when the point is in an urban block
+// Created: LMT 2010-11-03
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTrafficableLocalisation( MIL_AgentPion& pion, const MT_Vector2D& point )
+{
+    std::vector< boost::shared_ptr< MT_Vector2D > > result;
+    double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+    const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( point );
+    if( terrainObject )
+    {
+        DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( *terrainObject, false, result );
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::IsUrbanBlockTrafficable
 // Created: LDC 2010-08-10
 // -----------------------------------------------------------------------------
@@ -1031,21 +1048,20 @@ bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, d
     return true;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable
 // Created: LMT 2010-10-18
 // -----------------------------------------------------------------------------
-bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point )
+bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point, bool loadedWeight )
 {
-    double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+    double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( loadedWeight );
     const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( point );
     if( terrainObject )
     {
         const urban::Architecture* architecture = terrainObject->Retrieve< urban::Architecture >();
         if( architecture )
         {
-           return( architecture->GetTrafficability() > myWeight );
+           return( architecture->GetTrafficability() >= myWeight );
         }
     }
     return true;

@@ -44,7 +44,7 @@ public:
     virtual const PHY_Volume*          GetSignificantVolume       ( const PHY_SensorTypeAgent& sensorType ) const;
     virtual       void                 GetVisibleVolumes          ( T_ComposanteVolumeSet& volumes         ) const;
     virtual       void                 BuildKnowledgeComposantes  ( T_KnowledgeComposanteVector& knowledge ) const;
-    virtual       double             GetMajorComponentWeight    () const { return 0; };
+    virtual       double               GetMajorComponentWeight    ( bool loadedWeight = false ) const { return 0; };
     virtual const PHY_Composante_ABC*  GetMajorComposante         () const;
 
     void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
