@@ -4,6 +4,7 @@ SOURCES = Application.cpp \
 CommunicationListView.cpp \
 DotationsEditor.cpp \
 ExerciseDialog.cpp \
+CreateExerciceWidget.cpp \
 ExportDialog.cpp \
 ExportFilter.cpp \
 FileToolbar.cpp \

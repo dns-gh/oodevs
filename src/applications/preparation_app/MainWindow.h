@@ -87,7 +87,7 @@ public:
 public slots:
     //! @name Slots
     //@{
-    bool New();
+    void New();
     void Open();
     void Close();
     bool Save();

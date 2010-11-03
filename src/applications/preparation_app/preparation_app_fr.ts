@@ -34,6 +34,45 @@
     </message>
 </context>
 <context>
+    <name>CreateExerciceWidget</name>
+    <message>
+        <source>Exercise Creation</source>
+        <translation>Création d&apos;exercice</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nom:</translation>
+    </message>
+    <message>
+        <source>Terrain</source>
+        <translation>Terrain</translation>
+    </message>
+    <message>
+        <source>Model</source>
+        <translation>Modèle</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Exercise name is empty !</source>
+        <translation>Le nom de l&apos;exercice est vide !</translation>
+    </message>
+    <message>
+        <source>Exercise already exist !</source>
+        <translation>L&apos;exercice existe déjà !</translation>
+    </message>
+</context>
+<context>
     <name>DotationsEditor</name>
     <message>
         <source>Dotations editor</source>
@@ -180,10 +219,6 @@
 <context>
     <name>FileToolbar</name>
     <message>
-        <source>New</source>
-        <translation>Nouveau</translation>
-    </message>
-    <message>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
@@ -198,6 +233,10 @@
     <message>
         <source>Standard</source>
         <translation>Standard</translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

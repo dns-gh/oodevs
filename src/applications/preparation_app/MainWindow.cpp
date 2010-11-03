@@ -13,6 +13,7 @@
 
 #include "AgentsLayer.h"
 #include "CommunicationListView.h"
+#include "CreateExerciceWidget.h"
 #include "CreationPanels.h"
 #include "Dialogs.h"
 #include "ExerciseDialog.h"
@@ -359,34 +360,56 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::New
-// Created: AGE 2006-05-03
+// Created: FDS 2010-11-03
 // -----------------------------------------------------------------------------
-bool MainWindow::New()
+void MainWindow::New()
 {
-    QString filename = QFileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (exercise.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
+    // Exercice creation in a new dialog
+    CreateExerciceWidget* createExerciceWidget_ = new CreateExerciceWidget( this, config_ );
+    createExerciceWidget_->setModal(true);
+    createExerciceWidget_->exec();  
+    
+    // Get the filename of the exercise created
+    QString filename = createExerciceWidget_->getFileName();
+
+    // Load the exercise 
     if( filename.isEmpty() )
-        return false;
+        return;
+
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
     config_.LoadExercise( filename.ascii() );
     if( Load() )
     {
         SetWindowTitle( true );
-        return true;
+        LoadExercise();
     }
-    return false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::Open
-// Created: SBO 2006-10-05
+// Created: FDS 2010-11-03
 // -----------------------------------------------------------------------------
 void MainWindow::Open()
 {
     if( model_.IsLoaded() && !CheckSaving())
         return;
-    if( New() )
+
+    // Open exercise file dialog 
+    QString filename = QFileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (exercise.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
+    
+    // Load exercise
+    if( filename.isEmpty() )
+        return;
+
+    if( filename.startsWith( "//" ) )
+        filename.replace( "/", "\\" );
+    config_.LoadExercise( filename.ascii() );
+    if( Load() )
+    {
+        SetWindowTitle( true );
         LoadExercise();
+    }
 }
 
 // -----------------------------------------------------------------------------
