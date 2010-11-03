@@ -252,6 +252,92 @@ elseif switch_1 == ePhase_CDT then
 }
 
 --[[//-----------------------------------------------------------------------------	
+]]--[[// *****************************************************************************
+]]--[[// ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition"
+{
+    feedbacks = { { { "done_ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition" }, "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition, {value} ) end,
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.position = self.params[3]
+    end,
+
+    select = function( self )
+        self.missionPion = self.missionPion or nil--[[//-----------------------------------------------------------------------------
+]]--[[// Cree la Mission
+]]--[[//-----------------------------------------------------------------------------	
+]]
+        if( ModuleBegins() ) then
+            do
+                 do
+                    local _continue = true
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition" )
+                            self.missionPion = misMRT
+                            _continue = false
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition" )
+                            self.missionPion = misCDT
+                            _continue = false
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self:SendFeedback( eActionImpossible )
+            do return end
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+            end
+--[[//DEC_Debug(  "Assigne mission 'Assurer Mise En Oeuvre' à " + DEC_GetSzName( pion )  );
+]]        else
+            self:SendFeedback( eActionEffectuee )
+            do return end
+        end
+
+        --[[// Infos globales	    
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//Insertion des données des deux zones d'implantation de tir dans les paramètres de la mission
+]]
+        DEC_AssignMissionParameter( self.missionPion, "positionImplantation_", self._namedParams.position )
+        DEC_AssignMissionParameter( self.missionPion, "presenceContreBatterie_", false )
+        
+        --[[// Marquage échelon
+]]F_Pion_SeteEtatEchelon( self._namedParams.pion, eEtatEchelon_Premier )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Envoie la mission si l'on se trouve dans la conduite
+]]--[[//-----------------------------------------------------------------------------
+]]if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self:SendFeedback( eActionEffectuee )
+        do return end
+
+    end,
+
+}
+
+--[[//-----------------------------------------------------------------------------
 ]]--[[//Ajout LLS pour Batterie de reco + tir pour version artillerie pour SCIPIO version SIC
 ]]--[[//23/10/2008
 ]]--[[// *****************************************************************************

@@ -30,6 +30,8 @@ if connections then
         end
         if entry[3] ~= nil or type( entry[2] ) ~= "string" then
             actualConnections[#actualConnections + 1] = entry
+        else
+            DEC_Warning( "Missing connection target link:" + entry[2] + ", " + entry[3] );
         end
     end
 end

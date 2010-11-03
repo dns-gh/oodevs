@@ -21,3 +21,8 @@ include "Appui/ArtFdp/Automates/Bat Tir LRM/Missions/Se Deployer/SeDeployer MRT.
 
 include "Appui/ArtFdp/Automates/Bat Tir LRM/Missions/Se Deployer/SeDeployer CDT.bms"
 
+
+include "Appui/ArtFdp/Automates/Common/Missions/DefendreUneZone/DefendreUneZone MRT.bms"
+
+include "Appui/ArtFdp/Automates/Common/Missions/DefendreUneZone/DefendreUneZone CDT.bms"
+

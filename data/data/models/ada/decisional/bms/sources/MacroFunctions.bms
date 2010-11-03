@@ -590,11 +590,13 @@ assignMission[ "zoneAControler_" ] = DEC_AssignMissionLocationParameter
 assignMission[ "zoneRegroupement_" ] = DEC_AssignMissionLocationParameter
 assignMission[ "zone_" ] = DEC_AssignMissionLocationParameter
 assignMission[ "zonesAcquisition_" ] = DEC_AssignMissionLocationListParameter
+assignMission[ "positionImplantation_" ] = DEC_AssignMissionPointParameter
+assignMission[ "presenceContreBatterie_" ] = DEC_AssignMissionBoolParameter
 end
 
 function DEC_AssignMissionParameter( missionPion, parameter, value )
     if not assignMission[ parameter ] then initializeAssignMissions() end
-    if not assignMission[ parameter ] then error( "No assignment for "..tostring( parameter )..": "..tostring( DEC_AssignMissionPionParameter ).."?" ) end
+    if not assignMission[ parameter ] then error( "No assignment for "..tostring( parameter )..": "..tostring( DEC_AssignMissionPionParameter ).."? : ".. tostring( value ) ) end
     return assignMission[ parameter ](missionPion, parameter, value )
 end
 
