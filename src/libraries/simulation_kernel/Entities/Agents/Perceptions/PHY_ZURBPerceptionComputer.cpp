@@ -146,114 +146,31 @@ const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::GetLevelWithDelay( unsign
 
 namespace
 {
-    class SensorFunctor : private boost::noncopyable
+    class CollateSensorFunctor
     {
     public:
-        SensorFunctor(const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target )
-            : perceiver_( perceiver ), target_( target ), distanceId_( 0 ), distanceRec_( 0 ), distanceDet_( 0 ), delay_( std::numeric_limits< int >::max() )
-        {}
-        ~SensorFunctor()
-        {}
-        double GetIdentificationDistance()      { return distanceId_;   }
-        double GetRecognitionDistance()         { return distanceRec_;  }
-        double GetDetectionDistance()           { return distanceDet_;  }
-        unsigned int GetDelay()                 { return delay_;        }
-
+        CollateSensorFunctor( std::set<const PHY_SensorTypeAgent*>& sensors ) : sensors_( sensors ) {}
         void operator() ( const PHY_Sensor& sensor )
         {
             const PHY_SensorTypeAgent* sensorTypeAgent = sensor.GetType().GetTypeAgent();
             if( sensorTypeAgent )
-            {
-                MT_Vector2D targetPosition = target_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-                MT_Vector2D perceiverPosition = perceiver_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-
-                geometry::Point2f vSourcePoint( static_cast< float >( perceiverPosition.rX_ ), static_cast< float >( perceiverPosition.rY_ ) );
-                geometry::Point2f vTargetPoint( static_cast< float >( targetPosition.rX_ ), static_cast< float >( targetPosition.rY_ ) );
-
-                geometry::Point2f center( ( vSourcePoint.X() + vTargetPoint.X() ) * 0.5f, ( vSourcePoint.Y() + vTargetPoint.Y() ) * 0.5f );
-                std::set< const urban::TerrainObject_ABC* > list;
-                UrbanModel::GetSingleton().GetModel().GetListWithinSegment( vSourcePoint, vTargetPoint, list );
-                double worstFactor = 1.f;
-                const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
-                const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
-                if( !list.empty() )
-                {
-                    for( std::set< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; it++ )
-                    {
-                        if( perceiverUrbanBlock == 0 || !( &perceiverUrbanBlock->GetObject() == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
-                        {
-                            const urban::TerrainObject_ABC& object = **it;
-                            const geometry::Polygon2f* footPrint = object.GetFootprint();
-                            std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( geometry::Segment2f( vSourcePoint, vTargetPoint ) );
-                            if( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
-                            {
-                                float perceiverUrbanBlockHeight = 2; //2 = SensorHeight
-                                float objectHeight = 2; //2 = SensorHeight
-                                double urbanFactor = sensorTypeAgent->GetUrbanBlockFactor( object );
-                                const urban::Architecture* architecture = object.Retrieve< urban::Architecture >();
-                                if( perceiverUrbanBlock )
-                                {
-                                    const urban::Architecture* perceiverUrbanBlockArchitecture = perceiverUrbanBlock->GetObject().Retrieve< urban::Architecture >();
-                                    if( perceiverUrbanBlockArchitecture )
-                                        perceiverUrbanBlockHeight += perceiverUrbanBlockArchitecture->GetHeight();
-                                }
-                                if( architecture )
-                                    objectHeight += architecture->GetHeight();
-                                urbanFactor *= static_cast< double >( perceiverUrbanBlockHeight / objectHeight );
-                                if( architecture )
-                                    urbanFactor = 1. + architecture->GetOccupation() * ( urbanFactor -1. ) ;
-
-                                worstFactor = std::min( worstFactor, urbanFactor );
-                            }
-                        }
-                    }
-                }
-
-                distanceId_     = std::max( distanceId_, worstFactor * sensorTypeAgent->ComputeIdentificationDist( perceiver_, target_ ) );
-                distanceRec_    = std::max( distanceRec_, worstFactor * sensorTypeAgent->ComputeRecognitionDist( perceiver_, target_ ) );
-                distanceDet_    = std::max( distanceDet_, worstFactor * sensorTypeAgent->ComputeDetectionDist( perceiver_, target_ ) );
-                delay_          = std::min( delay_, sensorTypeAgent->GetDelay() );
-            }
+                sensors_.insert( sensorTypeAgent );
         }
     private:
-        const MIL_Agent_ABC& perceiver_;
-        const MIL_Agent_ABC& target_;
-        double distanceId_;
-        double distanceRec_;
-        double distanceDet_;
-        unsigned int delay_;
-
+        std::set<const PHY_SensorTypeAgent*>& sensors_;
     };
 
-    class Functor : public OnComponentFunctor_ABC
+    class CollateSensorComponentFunctor : public OnComponentFunctor_ABC
     {
-        public:
-            Functor( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target )
-                : perceiver_( perceiver ), target_( target )
-            {}
-            ~Functor()
-            {}
-
+    public:
         void operator() ( PHY_ComposantePion& composante )
         {
             if( !composante.CanPerceive() )
                 return;
-            SensorFunctor dataFunctor( perceiver_, target_ );
+            CollateSensorFunctor dataFunctor( sensors_ );
             composante.ApplyOnSensors( dataFunctor );
-            distances_.identificationDist = std::max( distances_.identificationDist, dataFunctor.GetIdentificationDistance() );
-            distances_.recognitionDist = std::max( distances_.recognitionDist, dataFunctor.GetRecognitionDistance() );
-            distances_.detectionDist = std::max( distances_.detectionDist, dataFunctor.GetDetectionDistance() );
-
-            delay_ = std::min( delay_, dataFunctor.GetDelay() );
         }
-        PHY_ZURBPerceptionComputer::Distances GetDistances(){ return distances_; }
-        unsigned int GetDelay(){ return delay_; }
-
-    private:
-        const MIL_Agent_ABC& perceiver_;
-        const MIL_Agent_ABC& target_;
-        PHY_ZURBPerceptionComputer::Distances distances_;
-        unsigned int delay_;
+        std::set<const PHY_SensorTypeAgent*> sensors_;
     };
 }
 
@@ -264,10 +181,66 @@ namespace
 const PHY_ZURBPerceptionComputer::BestSensorsParameters PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_ABC& target ) const
 {
     BestSensorsParameters sensorsParameters;
-    Functor dataFunctor( perceiver_, target );
+    sensorsParameters.delay = std::numeric_limits< int >::max();
+
+    MT_Vector2D targetPosition = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    MT_Vector2D perceiverPosition = perceiver_.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    geometry::Point2f vSourcePoint( static_cast< float >( perceiverPosition.rX_ ), static_cast< float >( perceiverPosition.rY_ ) );
+    geometry::Point2f vTargetPoint( static_cast< float >( targetPosition.rX_ ), static_cast< float >( targetPosition.rY_ ) );
+    geometry::Segment2f segment( vSourcePoint, vTargetPoint );
+
+    std::set< const urban::TerrainObject_ABC* > list;
+    UrbanModel::GetSingleton().GetModel().GetListWithinSegment( vSourcePoint, vTargetPoint, list );
+    const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+    const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
+
+    CollateSensorComponentFunctor dataFunctor;
     std::auto_ptr< OnComponentComputer_ABC > dataComputer( perceiver_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
     const_cast< MIL_Agent_ABC&>( perceiver_ ).Execute( *dataComputer );
-    sensorsParameters.distances = dataFunctor.GetDistances();
-    sensorsParameters.delay = dataFunctor.GetDelay();
+
+    for( std::set<const PHY_SensorTypeAgent*>::const_iterator itSensor = dataFunctor.sensors_.begin(); itSensor != dataFunctor.sensors_.end(); ++itSensor )
+    {
+        double worstFactor = 1.;
+        if( !list.empty() )
+        {
+            for( std::set< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; it++ )
+            {
+                if( perceiverUrbanBlock == 0 || !( &perceiverUrbanBlock->GetObject() == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
+                {
+                    const urban::TerrainObject_ABC& object = **it;
+                    const geometry::Polygon2f* footPrint = object.GetFootprint();
+                    std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( segment );
+                    if( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
+                    {
+                        float perceiverUrbanBlockHeight = 2; //2 = SensorHeight
+                        float objectHeight = 2; //2 = SensorHeight
+                        double urbanFactor = (*itSensor)->GetUrbanBlockFactor( object );
+                        const urban::Architecture* architecture = object.Retrieve< urban::Architecture >();
+                        if( perceiverUrbanBlock )
+                        {
+                            const urban::Architecture* perceiverUrbanBlockArchitecture = perceiverUrbanBlock->GetObject().Retrieve< urban::Architecture >();
+                            if( perceiverUrbanBlockArchitecture )
+                                perceiverUrbanBlockHeight += perceiverUrbanBlockArchitecture->GetHeight();
+                        }
+                        if( architecture )
+                            objectHeight += architecture->GetHeight();
+                        urbanFactor *= static_cast< double >( perceiverUrbanBlockHeight / objectHeight );
+                        if( architecture )
+                            urbanFactor = 1. + architecture->GetOccupation() * ( urbanFactor -1. ) ;
+
+                        worstFactor = std::min( worstFactor, urbanFactor );
+                    }
+                }
+            }
+        }
+        sensorsParameters.distances.identificationDist = std::max( sensorsParameters.distances.identificationDist,
+            worstFactor * (*itSensor)->ComputeIdentificationDist( perceiver_, target ) );
+        sensorsParameters.distances.recognitionDist = std::max( sensorsParameters.distances.recognitionDist,
+            worstFactor * (*itSensor)->ComputeRecognitionDist( perceiver_, target ) );
+        sensorsParameters.distances.detectionDist = std::max( sensorsParameters.distances.detectionDist,
+            worstFactor * (*itSensor)->ComputeDetectionDist( perceiver_, target ) );
+
+        sensorsParameters.delay = std::min( sensorsParameters.delay, (*itSensor)->GetDelay() );
+    }
     return sensorsParameters;
 }
