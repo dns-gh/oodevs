@@ -58,6 +58,7 @@ public:
     void CreateAutomat( const MsgsSimToClient::MsgAutomatCreation& message );
     kernel::Automat_ABC& GetAutomat( unsigned long id );
     kernel::Automat_ABC* FindAutomat( unsigned long id );
+    void DestroyAutomat( const MsgsSimToClient::MsgAutomatDestruction& message );
 
     void CreateAgent( const MsgsSimToClient::MsgUnitCreation& message );
     kernel::Agent_ABC& GetAgent( unsigned long id ) const;
@@ -69,6 +70,7 @@ public:
     void CreatePopulation( const MsgsSimToClient::MsgCrowdCreation& message );
     kernel::Population_ABC& GetPopulation( unsigned long id );
     kernel::Population_ABC* FindPopulation( unsigned long id );
+    void DestroyCrowd( const MsgsSimToClient::MsgCrowdDestruction& message );
 
     void Purge();
     //@}

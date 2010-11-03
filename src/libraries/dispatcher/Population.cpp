@@ -210,9 +210,11 @@ void Population::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // Name: Population::SendDestruction
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void Population::SendDestruction( ClientPublisher_ABC& ) const
+void Population::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    client::CrowdDestruction asn;
+    asn().mutable_crowd()->set_id( GetId() );
+    asn.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

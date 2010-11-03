@@ -27,6 +27,7 @@ namespace MsgsSimToClient
     class MsgObjectDetection;
     class MsgCrowdConcentrationDetection;
     class MsgCrowdFlowDetection;
+    class MsgCrowdDestruction;
     class MsgDebugPoints;
     class MsgControlDatetimeChangeAck;
     class MsgControlInformation;
@@ -35,7 +36,9 @@ namespace MsgsSimToClient
     class MsgControlEndTick;
     class MsgControlSendCurrentStateEnd;
     class MsgAutomatCreation;
+    class MsgAutomatDestruction;
     class MsgFormationCreation;
+    class MsgFormationDestruction;
     class MsgUnitCreation;
     class MsgUnitDestruction;
     class MsgPartyCreation;
@@ -293,6 +296,7 @@ private:
     void OnReceiveMsgControlBeginTick            ( const MsgsSimToClient::MsgControlBeginTick&                  message );
     void OnReceiveMsgControlEndTick              ( const MsgsSimToClient::MsgControlEndTick&                    message );
     void OnReceiveMsgAutomatCreation             ( const MsgsSimToClient::MsgAutomatCreation&                   message );
+    void OnReceiveMsgAutomatDestruction          ( const MsgsSimToClient::MsgAutomatDestruction&                message );
     void OnReceiveMsgUnitCreation                ( const MsgsSimToClient::MsgUnitCreation&                      message );
     void OnReceiveMsgUnitDestruction             ( const MsgsSimToClient::MsgUnitDestruction&                   message );
     void OnReceiveMsgChangeDiplomacy             ( const Common::MsgChangeDiplomacy&                            message );
@@ -313,8 +317,9 @@ private:
     // Side/Formation/Knowledge Group creation
     void OnReceiveMsgKnowledgeGroupCreation   ( const MsgsSimToClient::MsgKnowledgeGroupCreation&    message );
     void OnReceiveMsgKnowledgeGroupDestruction( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message );
-    void OnReceiveMsgPartyCreation             ( const MsgsSimToClient::MsgPartyCreation&              message );
-    void OnReceiveMsgFormationCreation        ( const MsgsSimToClient::MsgFormationCreation&                  message );
+    void OnReceiveMsgPartyCreation            ( const MsgsSimToClient::MsgPartyCreation&             message );
+    void OnReceiveMsgFormationCreation        ( const MsgsSimToClient::MsgFormationCreation&         message );
+    void OnReceiveMsgFormationDestruction     ( const MsgsSimToClient::MsgFormationDestruction&      message );
 
     // LTO begin
     void OnReceiveMsgKnowledgeGroupMagicActionAck( const MsgsSimToClient::MsgKnowledgeGroupMagicActionAck&   message, unsigned long nCtx );
@@ -434,6 +439,7 @@ private:
 
     // Population
     void OnMsgCrowdCreation                ( const MsgsSimToClient::MsgCrowdCreation&                 message );
+    void OnMsgCrowdDestruction             ( const MsgsSimToClient::MsgCrowdDestruction&              message );
     void OnMsgCrowdUpdate                  ( const MsgsSimToClient::MsgCrowdUpdate&                   message );
     void OnMsgCrowdConcentrationCreation   ( const MsgsSimToClient::MsgCrowdConcentrationCreation&    message );
     void OnMsgCrowdConcentrationDestruction( const MsgsSimToClient::MsgCrowdConcentrationDestruction& message );

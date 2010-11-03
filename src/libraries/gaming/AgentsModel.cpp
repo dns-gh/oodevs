@@ -119,6 +119,26 @@ void AgentsModel::DestroyAgent( const MsgsSimToClient::MsgUnitDestruction& msg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentsModel::DestroyAutomat
+// Created: LDC 2010-11-02
+// -----------------------------------------------------------------------------
+void AgentsModel::DestroyAutomat( const MsgsSimToClient::MsgAutomatDestruction& message )
+{
+    delete tools::Resolver< Automat_ABC >::Find( message.automat().id() );
+    tools::Resolver< Automat_ABC >::Remove( message.automat().id() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::DestroyCrowd
+// Created: LDC 2010-11-02
+// -----------------------------------------------------------------------------
+void AgentsModel::DestroyCrowd( const MsgsSimToClient::MsgCrowdDestruction& message )
+{
+    delete tools::Resolver< Population_ABC >::Find( message.crowd().id() );
+    tools::Resolver< Population_ABC >::Remove( message.crowd().id() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentsModel::FindAllAgent
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------

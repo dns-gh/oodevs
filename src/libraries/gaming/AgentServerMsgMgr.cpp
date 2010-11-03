@@ -1902,7 +1902,12 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& from, const 
         OnMsgCrowdFlowDestruction         ( wrapper.message().crowd_flow_destruction() );
     else if( wrapper.message().has_crowd_flow_update() )
         OnMsgCrowdFlowUpdate              ( wrapper.message().crowd_flow_update() );
-
+    else if( wrapper.message().has_formation_destruction() )
+        OnReceiveMsgFormationDestruction  ( wrapper.message().formation_destruction() );
+    else if( wrapper.message().has_automat_destruction() )
+        OnReceiveMsgAutomatDestruction    ( wrapper.message().automat_destruction() );
+    else if( wrapper.message().has_crowd_destruction() )
+        OnMsgCrowdDestruction             ( wrapper.message().crowd_destruction() );
     else
         OnReceiveMsgSimToClient2( from, wrapper );
 }
@@ -2191,4 +2196,31 @@ void AgentServerMsgMgr::OnReceiveMsgSendCurrentStateEnd( const MsgsSimToClient::
 void AgentServerMsgMgr::RegisterListener( boost::shared_ptr< MsgsSimToClient::Listener >& listener )
 {
     listeners_.insert( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgFormationDestruction
+// Created: LDC 2010-11-02
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgFormationDestruction( const MsgsSimToClient::MsgFormationDestruction&      message )
+{
+    GetModel().teams_.DestroyFormation( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnMsgCrowdDestruction
+// Created: LDC 2010-11-02
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnMsgCrowdDestruction( const MsgsSimToClient::MsgCrowdDestruction&              message )
+{
+    GetModel().agents_.DestroyCrowd( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomatDestruction
+// Created: LDC 2010-11-02
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgAutomatDestruction( const MsgsSimToClient::MsgAutomatDestruction&                message )
+{
+    GetModel().agents_.DestroyAutomat( message );
 }

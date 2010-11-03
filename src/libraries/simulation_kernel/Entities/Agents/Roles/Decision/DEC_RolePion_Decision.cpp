@@ -387,6 +387,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
                             boost::bind( &DEC_AgentFunctions::HasLoadable, boost::ref( GetPion() ) );
     brain[ "DEC_Agent_EstEmbarque" ] =
                             boost::bind( &DEC_AgentFunctions::IsLoaded, boost::ref( GetPion() ) );
+    brain[ "DEC_Agent_EstDebarque" ] =
+                            boost::bind( &DEC_AgentFunctions::IsUnloaded, boost::ref( GetPion() ) );
     brain[ "DEC_Agent_DureeEmbarquement" ] =
                             boost::bind( &DEC_AgentFunctions::GetLoadingTime, boost::ref( GetPion() ) );
     brain[ "DEC_Agent_DureeDebarquement" ] =

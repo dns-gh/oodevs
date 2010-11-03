@@ -1253,6 +1253,18 @@ message MsgControlLocalWeatherDestruction {
    required Common.WeatherId weather = 1;
 }
 
+message MsgFormationDestruction {
+   required Common.FormationId formation = 1;
+}
+
+message MsgAutomatDestruction {
+   required Common.AutomatId automat = 1;
+}
+
+message MsgCrowdDestruction {
+   required Common.CrowdId crowd = 1;
+}
+
 // Message container
 message MsgSimToClient {
     message Content {
@@ -1383,6 +1395,9 @@ message MsgSimToClient {
         optional MsgControlLocalWeatherCreation		            control_local_weather_creation                 = 125;
         optional MsgControlLocalWeatherDestruction		        control_local_weather_destruction              = 126;
         optional MsgLogSupplyPullFlowAck                        log_supply_pull_flow_ack                       = 130;
+        optional MsgFormationDestruction                        formation_destruction                          = 131;
+        optional MsgAutomatDestruction                          automat_destruction                            = 132;
+        optional MsgCrowdDestruction                            crowd_destruction                              = 133;
     }
     optional int32   context = 1;
     required Content message = 2;

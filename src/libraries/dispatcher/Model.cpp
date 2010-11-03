@@ -199,6 +199,8 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
         knowledgeGroups_.Get( wrapper.message().knowledge_group_update().knowledge_group().id() ).Update( wrapper.message().knowledge_group_update() );
     if( wrapper.message().has_formation_creation() )
         CreateUpdate< Formation >( formations_, wrapper.message().formation_creation().formation().id(), wrapper.message().formation_creation(), staticModel_.levels_ ); 
+    if( wrapper.message().has_formation_destruction() )
+        Destroy( formations_, wrapper.message().formation_destruction().formation().id(), wrapper.message().formation_destruction() ); 
     if( wrapper.message().has_unit_creation() )
         CreateUpdate< Agent >( agents_, wrapper.message().unit_creation().unit().id(), wrapper.message().unit_creation(), staticModel_.types_ ); 
     if( wrapper.message().has_unit_environment_type() )
@@ -207,6 +209,8 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
         Destroy( agents_, wrapper.message().unit_destruction().unit().id(), wrapper.message().unit_destruction() ); 
     if( wrapper.message().has_automat_creation() )
         CreateUpdate< Automat >( automats_, wrapper.message().automat_creation().automat().id(), wrapper.message().automat_creation() );
+    if( wrapper.message().has_automat_destruction() )
+        Destroy( automats_, wrapper.message().automat_destruction().automat().id(), wrapper.message().automat_destruction() );
     if( wrapper.message().has_unit_attributes() )
         agents_.Get( wrapper.message().unit_attributes().unit().id() ).Update( wrapper.message().unit_attributes() ); 
     if( wrapper.message().has_automat_attributes() )
@@ -300,6 +304,8 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
 
     if( wrapper.message().has_crowd_creation() )
         CreateUpdate< Population >( populations_, wrapper.message().crowd_creation().crowd().id(), wrapper.message().crowd_creation() );
+    if( wrapper.message().has_crowd_destruction() )
+        Destroy( populations_, wrapper.message().crowd_destruction().crowd().id(), wrapper.message().crowd_destruction() );
     if( wrapper.message().has_crowd_update() )
         populations_.Get( wrapper.message().crowd_update().crowd().id() ).Update( wrapper.message().crowd_update() ); 
     if( wrapper.message().has_crowd_concentration_creation() )

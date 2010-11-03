@@ -62,6 +62,7 @@ public:
 
     // Embarquement / débarquement
     static bool IsLoaded( const MIL_Agent_ABC& callerAgent );
+    static bool IsUnloaded( const MIL_Agent_ABC& callerAgent );
     static bool HasLoadable( const MIL_Agent_ABC& callerAgent );
     static double GetLoadingTime( const MIL_Agent_ABC& callerAgent );
     static double GetUnloadingTime( const MIL_Agent_ABC& callerAgent );

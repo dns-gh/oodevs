@@ -349,9 +349,11 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // Name: Automat::SendDestruction
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void Automat::SendDestruction( ClientPublisher_ABC& ) const
+void Automat::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    client::AutomatDestruction asn;
+    asn().mutable_automat()->set_id( GetId() );
+    asn.Send( publisher );
 }
 
 namespace

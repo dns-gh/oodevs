@@ -360,6 +360,15 @@ bool DEC_AgentFunctions::IsLoaded( const MIL_Agent_ABC& callerAgent )
     return callerAgent.GetRole< transport::PHY_RoleAction_Loading >().IsLoaded();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsUnloaded
+// Created: LDC 2010-11-02
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsUnloaded( const MIL_Agent_ABC& callerAgent )
+{
+    return callerAgent.GetRole< transport::PHY_RoleAction_Loading >().IsUnloaded();
+}
+
 namespace
 {
     class HasLoadableComputer : public OnComponentComputer_ABC

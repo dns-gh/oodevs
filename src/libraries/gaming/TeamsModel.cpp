@@ -74,6 +74,16 @@ void TeamsModel::CreateFormation( const MsgsSimToClient::MsgFormationCreation& m
 }
 
 // -----------------------------------------------------------------------------
+// Name: TeamsModel::DestroyFormation
+// Created: LDC 2010-11-02
+// -----------------------------------------------------------------------------
+void TeamsModel::DestroyFormation( const MsgsSimToClient::MsgFormationDestruction& message )
+{
+    delete tools::Resolver< Formation_ABC >::Find( message.formation().id() );
+    tools::Resolver< Formation_ABC >::Remove( message.formation().id() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TeamsModel::GetTeam
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------

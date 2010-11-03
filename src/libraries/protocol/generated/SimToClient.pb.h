@@ -211,6 +211,9 @@ class MsgControlLocalWeatherAck;
 class MsgControlGlobalWeather;
 class MsgControlLocalWeatherCreation;
 class MsgControlLocalWeatherDestruction;
+class MsgFormationDestruction;
+class MsgAutomatDestruction;
+class MsgCrowdDestruction;
 class MsgSimToClient;
 class MsgSimToClient_Content;
 
@@ -20062,6 +20065,267 @@ class MsgControlLocalWeatherDestruction : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgFormationDestruction : public ::google::protobuf::Message {
+ public:
+  MsgFormationDestruction();
+  virtual ~MsgFormationDestruction();
+  
+  MsgFormationDestruction(const MsgFormationDestruction& from);
+  
+  inline MsgFormationDestruction& operator=(const MsgFormationDestruction& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgFormationDestruction& default_instance();
+  void Swap(MsgFormationDestruction* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgFormationDestruction* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgFormationDestruction& from);
+  void MergeFrom(const MsgFormationDestruction& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.FormationId formation = 1;
+  inline bool has_formation() const;
+  inline void clear_formation();
+  static const int kFormationFieldNumber = 1;
+  inline const ::Common::FormationId& formation() const;
+  inline ::Common::FormationId* mutable_formation();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::FormationId* formation_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgFormationDestruction* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgAutomatDestruction : public ::google::protobuf::Message {
+ public:
+  MsgAutomatDestruction();
+  virtual ~MsgAutomatDestruction();
+  
+  MsgAutomatDestruction(const MsgAutomatDestruction& from);
+  
+  inline MsgAutomatDestruction& operator=(const MsgAutomatDestruction& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgAutomatDestruction& default_instance();
+  void Swap(MsgAutomatDestruction* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgAutomatDestruction* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgAutomatDestruction& from);
+  void MergeFrom(const MsgAutomatDestruction& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.AutomatId automat = 1;
+  inline bool has_automat() const;
+  inline void clear_automat();
+  static const int kAutomatFieldNumber = 1;
+  inline const ::Common::AutomatId& automat() const;
+  inline ::Common::AutomatId* mutable_automat();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::AutomatId* automat_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgAutomatDestruction* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgCrowdDestruction : public ::google::protobuf::Message {
+ public:
+  MsgCrowdDestruction();
+  virtual ~MsgCrowdDestruction();
+  
+  MsgCrowdDestruction(const MsgCrowdDestruction& from);
+  
+  inline MsgCrowdDestruction& operator=(const MsgCrowdDestruction& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgCrowdDestruction& default_instance();
+  void Swap(MsgCrowdDestruction* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgCrowdDestruction* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgCrowdDestruction& from);
+  void MergeFrom(const MsgCrowdDestruction& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.CrowdId crowd = 1;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 1;
+  inline const ::Common::CrowdId& crowd() const;
+  inline ::Common::CrowdId* mutable_crowd();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::CrowdId* crowd_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgCrowdDestruction* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgSimToClient_Content : public ::google::protobuf::Message {
  public:
   MsgSimToClient_Content();
@@ -21004,6 +21268,27 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgLogSupplyPullFlowAck& log_supply_pull_flow_ack() const;
   inline ::MsgsSimToClient::MsgLogSupplyPullFlowAck* mutable_log_supply_pull_flow_ack();
   
+  // optional .MsgsSimToClient.MsgFormationDestruction formation_destruction = 131;
+  inline bool has_formation_destruction() const;
+  inline void clear_formation_destruction();
+  static const int kFormationDestructionFieldNumber = 131;
+  inline const ::MsgsSimToClient::MsgFormationDestruction& formation_destruction() const;
+  inline ::MsgsSimToClient::MsgFormationDestruction* mutable_formation_destruction();
+  
+  // optional .MsgsSimToClient.MsgAutomatDestruction automat_destruction = 132;
+  inline bool has_automat_destruction() const;
+  inline void clear_automat_destruction();
+  static const int kAutomatDestructionFieldNumber = 132;
+  inline const ::MsgsSimToClient::MsgAutomatDestruction& automat_destruction() const;
+  inline ::MsgsSimToClient::MsgAutomatDestruction* mutable_automat_destruction();
+  
+  // optional .MsgsSimToClient.MsgCrowdDestruction crowd_destruction = 133;
+  inline bool has_crowd_destruction() const;
+  inline void clear_crowd_destruction();
+  static const int kCrowdDestructionFieldNumber = 133;
+  inline const ::MsgsSimToClient::MsgCrowdDestruction& crowd_destruction() const;
+  inline ::MsgsSimToClient::MsgCrowdDestruction* mutable_crowd_destruction();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -21135,11 +21420,14 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgControlLocalWeatherCreation* control_local_weather_creation_;
   ::MsgsSimToClient::MsgControlLocalWeatherDestruction* control_local_weather_destruction_;
   ::MsgsSimToClient::MsgLogSupplyPullFlowAck* log_supply_pull_flow_ack_;
+  ::MsgsSimToClient::MsgFormationDestruction* formation_destruction_;
+  ::MsgsSimToClient::MsgAutomatDestruction* automat_destruction_;
+  ::MsgsSimToClient::MsgCrowdDestruction* crowd_destruction_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(127 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(130 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -32022,6 +32310,69 @@ inline ::Common::WeatherId* MsgControlLocalWeatherDestruction::mutable_weather()
 
 // -------------------------------------------------------------------
 
+// MsgFormationDestruction
+
+// required .Common.FormationId formation = 1;
+inline bool MsgFormationDestruction::has_formation() const {
+  return _has_bit(0);
+}
+inline void MsgFormationDestruction::clear_formation() {
+  if (formation_ != NULL) formation_->::Common::FormationId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::FormationId& MsgFormationDestruction::formation() const {
+  return formation_ != NULL ? *formation_ : *default_instance_->formation_;
+}
+inline ::Common::FormationId* MsgFormationDestruction::mutable_formation() {
+  _set_bit(0);
+  if (formation_ == NULL) formation_ = new ::Common::FormationId;
+  return formation_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgAutomatDestruction
+
+// required .Common.AutomatId automat = 1;
+inline bool MsgAutomatDestruction::has_automat() const {
+  return _has_bit(0);
+}
+inline void MsgAutomatDestruction::clear_automat() {
+  if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::AutomatId& MsgAutomatDestruction::automat() const {
+  return automat_ != NULL ? *automat_ : *default_instance_->automat_;
+}
+inline ::Common::AutomatId* MsgAutomatDestruction::mutable_automat() {
+  _set_bit(0);
+  if (automat_ == NULL) automat_ = new ::Common::AutomatId;
+  return automat_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgCrowdDestruction
+
+// required .Common.CrowdId crowd = 1;
+inline bool MsgCrowdDestruction::has_crowd() const {
+  return _has_bit(0);
+}
+inline void MsgCrowdDestruction::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::CrowdId& MsgCrowdDestruction::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
+}
+inline ::Common::CrowdId* MsgCrowdDestruction::mutable_crowd() {
+  _set_bit(0);
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
+  return crowd_;
+}
+
+// -------------------------------------------------------------------
+
 // MsgSimToClient_Content
 
 // optional .MsgsSimToClient.MsgUnitOrderAck unit_order_ack = 1;
@@ -34181,6 +34532,57 @@ inline ::MsgsSimToClient::MsgLogSupplyPullFlowAck* MsgSimToClient_Content::mutab
   _set_bit(126);
   if (log_supply_pull_flow_ack_ == NULL) log_supply_pull_flow_ack_ = new ::MsgsSimToClient::MsgLogSupplyPullFlowAck;
   return log_supply_pull_flow_ack_;
+}
+
+// optional .MsgsSimToClient.MsgFormationDestruction formation_destruction = 131;
+inline bool MsgSimToClient_Content::has_formation_destruction() const {
+  return _has_bit(127);
+}
+inline void MsgSimToClient_Content::clear_formation_destruction() {
+  if (formation_destruction_ != NULL) formation_destruction_->::MsgsSimToClient::MsgFormationDestruction::Clear();
+  _clear_bit(127);
+}
+inline const ::MsgsSimToClient::MsgFormationDestruction& MsgSimToClient_Content::formation_destruction() const {
+  return formation_destruction_ != NULL ? *formation_destruction_ : *default_instance_->formation_destruction_;
+}
+inline ::MsgsSimToClient::MsgFormationDestruction* MsgSimToClient_Content::mutable_formation_destruction() {
+  _set_bit(127);
+  if (formation_destruction_ == NULL) formation_destruction_ = new ::MsgsSimToClient::MsgFormationDestruction;
+  return formation_destruction_;
+}
+
+// optional .MsgsSimToClient.MsgAutomatDestruction automat_destruction = 132;
+inline bool MsgSimToClient_Content::has_automat_destruction() const {
+  return _has_bit(128);
+}
+inline void MsgSimToClient_Content::clear_automat_destruction() {
+  if (automat_destruction_ != NULL) automat_destruction_->::MsgsSimToClient::MsgAutomatDestruction::Clear();
+  _clear_bit(128);
+}
+inline const ::MsgsSimToClient::MsgAutomatDestruction& MsgSimToClient_Content::automat_destruction() const {
+  return automat_destruction_ != NULL ? *automat_destruction_ : *default_instance_->automat_destruction_;
+}
+inline ::MsgsSimToClient::MsgAutomatDestruction* MsgSimToClient_Content::mutable_automat_destruction() {
+  _set_bit(128);
+  if (automat_destruction_ == NULL) automat_destruction_ = new ::MsgsSimToClient::MsgAutomatDestruction;
+  return automat_destruction_;
+}
+
+// optional .MsgsSimToClient.MsgCrowdDestruction crowd_destruction = 133;
+inline bool MsgSimToClient_Content::has_crowd_destruction() const {
+  return _has_bit(129);
+}
+inline void MsgSimToClient_Content::clear_crowd_destruction() {
+  if (crowd_destruction_ != NULL) crowd_destruction_->::MsgsSimToClient::MsgCrowdDestruction::Clear();
+  _clear_bit(129);
+}
+inline const ::MsgsSimToClient::MsgCrowdDestruction& MsgSimToClient_Content::crowd_destruction() const {
+  return crowd_destruction_ != NULL ? *crowd_destruction_ : *default_instance_->crowd_destruction_;
+}
+inline ::MsgsSimToClient::MsgCrowdDestruction* MsgSimToClient_Content::mutable_crowd_destruction() {
+  _set_bit(129);
+  if (crowd_destruction_ == NULL) crowd_destruction_ = new ::MsgsSimToClient::MsgCrowdDestruction;
+  return crowd_destruction_;
 }
 
 // -------------------------------------------------------------------

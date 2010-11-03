@@ -159,9 +159,11 @@ void Formation::SendFullUpdate( ClientPublisher_ABC& publisher) const
 // Name: Formation::SendDestruction
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void Formation::SendDestruction( ClientPublisher_ABC& ) const
+void Formation::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    client::FormationDestruction asn;
+    asn().mutable_formation()->set_id( GetId() );
+    asn.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

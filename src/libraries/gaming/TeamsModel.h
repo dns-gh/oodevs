@@ -10,14 +10,8 @@
 #ifndef __TeamsModel_h_
 #define __TeamsModel_h_
 
-#include "protocol/Protocol.h"
+#include "protocol/Simulation.h"
 #include "tools/Resolver.h"
-
-namespace MsgsSimToClient
-{
-    class MsgPartyCreation;
-    class MsgFormationCreation;
-}
 
 namespace kernel
 {
@@ -51,6 +45,7 @@ public:
 
     void CreateTeam( const MsgsSimToClient::MsgPartyCreation& message );
     void CreateFormation( const MsgsSimToClient::MsgFormationCreation& message );
+    void DestroyFormation( const MsgsSimToClient::MsgFormationDestruction& message );
 
     kernel::Team_ABC& GetTeam( unsigned long id );
     kernel::Team_ABC* FindTeam( const QString& team );

@@ -94,7 +94,8 @@ public:
 
     //! @name Accessors
     //@{
-    bool     IsLoaded        () const;
+    bool IsLoaded() const;
+    bool IsUnloaded() const;
     double GetLoadingTime  () const;
     double GetUnloadingTime() const;
     //@}

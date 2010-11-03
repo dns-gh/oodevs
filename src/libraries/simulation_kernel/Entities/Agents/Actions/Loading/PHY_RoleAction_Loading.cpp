@@ -285,6 +285,15 @@ bool PHY_RoleAction_Loading::IsLoaded() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Loading::IsUnloaded
+// Created: LDC 2010-11-02
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Loading::IsUnloaded() const
+{
+    return !bIsLoaded_ && ( nState_ == eNothing );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading::GetInitialReturnCode
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
