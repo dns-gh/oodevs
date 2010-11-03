@@ -77,12 +77,13 @@ void Population::DoUpdate( const MsgsSimToClient::MsgCrowdUpdate& msg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationCreation& msg )
 {
-    PopulationConcentration* element = (PopulationConcentration*) FindConcentration( msg.concentration().id() );
+    kernel::PopulationConcentration_ABC* element = const_cast< kernel::PopulationConcentration_ABC* >( FindConcentration( msg.concentration().id() ) );
     if( !element  )
     {
-        element = new PopulationConcentration( *this, msg );
-        static_cast< Model* >( &model_ )->AddExtensions( *element ); // $$$$ SBO 2010-06-10: use population part factory or something
-        tools::Resolver< kernel::PopulationConcentration_ABC >::Register( element->GetId(), *element );
+        PopulationConcentration* concentration = new PopulationConcentration( *this, msg );
+        static_cast< Model* >( &model_ )->AddExtensions( *concentration ); // $$$$ SBO 2010-06-10: use population part factory or something
+        tools::Resolver< kernel::PopulationConcentration_ABC >::Register( concentration->GetId(), *concentration );
+        element = concentration;
     }
     element->Update( msg );
 }
@@ -115,12 +116,13 @@ void Population::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationDestructi
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const MsgsSimToClient::MsgCrowdFlowCreation& msg )
 {
-    PopulationFlow* element = ( PopulationFlow* ) FindFlow( msg.flow().id() );
+    kernel::PopulationFlow_ABC* element = const_cast < kernel::PopulationFlow_ABC* > ( FindFlow( msg.flow().id() ) );
     if( !element )
     {
-       element = new PopulationFlow( *this, msg );
-        static_cast< Model& >( model_ ).AddExtensions( *element ); // $$$$ SBO 2010-06-10: use population part factory or something
-        tools::Resolver< kernel::PopulationFlow_ABC >::Register( element->GetId(), *element );
+        PopulationFlow* flow = new PopulationFlow( *this, msg );
+        static_cast< Model& >( model_ ).AddExtensions( *flow ); // $$$$ SBO 2010-06-10: use population part factory or something
+        tools::Resolver< kernel::PopulationFlow_ABC >::Register( flow->GetId(), *flow );
+        element = flow;
     }
    element->Update( msg );
 }
