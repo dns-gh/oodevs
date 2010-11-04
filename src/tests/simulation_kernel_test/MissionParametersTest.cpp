@@ -856,6 +856,11 @@ BOOST_AUTO_TEST_CASE( TestMIL_CompositeLocationParameter )
 {
     std::string missionDefinition(
         "<mission dia-behavior='whatever' dia-type='T_whatever' id='42' name='a mission'>"
+            "<parameter dia-name='dangerDirection_' name='direction dangereuse' optional='false' type='Heading'/>"
+            "<parameter dia-name='phaseLines_' max-occurs='unbounded' min-occurs='1' name='Limas' optional='true' type='PhaseLine'/>"
+            "<parameter dia-name='boundaryLimit1_' name='Limit 1' optional='true' type='Limit'/>"
+            "<parameter dia-name='boundaryLimit2_' name='Limit 2' optional='true' type='Limit'/>"
+            "<parameter dia-name='intelligences_' max-occurs='unbounded' min-occurs='1' name='Renseignements' optional='true' type='Intelligence'/>"    
             "<parameter dia-name='objectif' name='Objectif' type='LocationComposite'>"
                 "<choice>"
                     "<parameter type='Point'/>"
