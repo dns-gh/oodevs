@@ -668,7 +668,7 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
                 >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( unitMissions_ ), (const bool&)false, unitContext_.size() ) )
             >> xml::end
             >> xml::start( "automats" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( automatMissions_ ), (const bool&)false, automatContext_.size() ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( automatMissions_ ), (const bool&)true, automatContext_.size() ) )
             >> xml::end
             >> xml::start( "populations" )
                 >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( populationMissions_ ), (const bool&)false, populationContext_.size() ) )
