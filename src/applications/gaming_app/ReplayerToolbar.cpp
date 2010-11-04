@@ -52,7 +52,7 @@ ReplayerToolbar::~ReplayerToolbar()
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
 {
-    if( simulation.GetTickCount() != unsigned( -1 ) )
+    if( simulation.GetTickCount() != static_cast< unsigned int >( -1 ) )
     {
         if( ! slider_ )
         {
@@ -68,7 +68,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
             connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMoved( int ) ) );
         }
         userMove_ = false;
-        slider_->setMaxValue( simulation.GetTickCount() - 1 );
+        slider_->setMaxValue( simulation.GetTickCount() );
         slider_->setTickInterval( slider_->maxValue() / 20 );
         slider_->setValue( simulation.GetCurrentTick() );
         OnSliderMoved( simulation.GetCurrentTick() );

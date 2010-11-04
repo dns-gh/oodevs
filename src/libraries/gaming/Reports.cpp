@@ -49,9 +49,15 @@ Reports::~Reports()
 void Reports::DoUpdate( const MsgsSimToClient::MsgReport& message )
 {
     // $$$$ AGE 2007-04-20: limiter le nombre de reports ?
-    Report* report = reportFactory_.CreateReport( agent_, message );
-    Register( message.report().id(), *report );
-    controller_.Create( *report );
+    // $$$$ JSR 2010-11-04: hack temporaire : On n'insère pas le report si son ID existe déjà -> problème en replay après reprise sur sauvegarde.
+    // Les id des reports ne sont pas sérialisés dans le checkpoint, on repart de 0 dans la sim après la reprise.
+    // Bug Mantis associé : 4425
+    if( !Find( message.report().id() ) )
+    {
+        Report* report = reportFactory_.CreateReport( agent_, message );
+        Register( message.report().id(), *report );
+        controller_.Create( *report );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -50,7 +50,7 @@ private:
 
     //! @name Helpers
     //@{
-    bool IsNotDestruction( const MsgsSimToClient::MsgSimToClient& asnMsg ) const;
+    bool IsDestruction( const MsgsSimToClient::MsgSimToClient& asnMsg ) const;
     //@}
 
 private:

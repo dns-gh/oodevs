@@ -11,7 +11,9 @@
 #include "Savable_ABC.h"
 #include "dispatcher/Config.h"
 #include "tools/OutputBinaryWrapper.h"
+#include "tools/InputBinaryWrapper.h"
 #include "MT_Tools/MT_Logger.h"
+#include "protocol/protocol.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 )
 #include <boost/filesystem/convenience.hpp>
@@ -33,13 +35,9 @@ Saver::Saver( const dispatcher::Config& config )
     , frameCount_        ( 0 )
     , fragmentFirstFrame_( 0 )
     , currentFolder_     ( 0 )
+    , hasCheckpoint_     ( config.HasCheckpoint() )
 {
-    const bfs::path recorderDirectory( recorderDirectory_, bfs::native );
-    MT_LOG_INFO_MSG( "Recorder enabled - data stored in " << recorderDirectory.native_file_string() );
-    if( bfs::exists( recorderDirectory ) )
-        bfs::remove_all( recorderDirectory );
-    bfs::create_directories( recorderDirectory );
-    CreateNewFragment( true );
+    MT_LOG_INFO_MSG( "Recorder enabled - data stored in " << bfs::path( recorderDirectory_, bfs::native ).native_file_string() );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,6 +52,47 @@ Saver::~Saver()
 
 namespace
 {
+    unsigned int UpdateFragments( const boost::filesystem::path& recorderDirectory, unsigned int frameCount )
+    {
+        unsigned int ret = 0;
+        for( bfs::directory_iterator it( recorderDirectory ); it !=  bfs::directory_iterator(); ++it )
+            if( bfs::is_directory( it->status() ) )
+            {
+                const bfs::path infoFile = it->path() / "info";
+                if( bfs::exists( infoFile ) )
+                {
+                    try
+                    {
+                        std::ifstream stream;
+                        stream.open( infoFile.string().c_str(), std::ios_base::binary | std::ios_base::in );
+                        tools::InputBinaryWrapper wrapper( stream );
+                        unsigned int start;
+                        unsigned int end;
+                        wrapper >> start;
+                        wrapper >> end;
+                        stream.close();
+                        if( start >= frameCount )
+                            bfs::remove_all( it->path() );
+                        else if( frameCount > start && frameCount <= end )
+                        {
+                            std::ofstream stream;
+                            stream.open( infoFile.string().c_str(), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc );
+                            tools::OutputBinaryWrapper wrapper( stream );
+                            wrapper << start;
+                            wrapper << frameCount - 1;
+                            stream.close();
+                            ret = boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1;
+                        }
+                    }
+                    catch( const std::exception & )
+                    {
+                        // NOTHING
+                    }
+                }
+            }
+        return ret;
+    }
+
     std::string CreateFolderName( unsigned int frame )
     {
         std::string foldername;
@@ -62,6 +101,26 @@ namespace
         foldername.append( number );
         return foldername;
     }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Saver::ControlInformation
+// Created: JSR 2010-11-03
+// -----------------------------------------------------------------------------
+void Saver::ControlInformation( const MsgsSimToClient::MsgControlInformation& controlInformation )
+{
+    frameCount_ = controlInformation.current_tick();
+    fragmentFirstFrame_ = frameCount_;
+    const bfs::path recorderDirectory( recorderDirectory_, bfs::native );
+    if( bfs::exists( recorderDirectory ) )
+    {
+        if( hasCheckpoint_ )
+            currentFolder_ = UpdateFragments( recorderDirectory, frameCount_ );
+        else
+            bfs::remove_all( recorderDirectory );
+    }
+    CreateNewFragment( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,6 +147,16 @@ void Saver::CreateNewFragment( bool first /*= false*/ )
 void Saver::StartFrame( const Savable_ABC& message )
 {
     SaveUpdateMessage( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Saver::SaveUpdateMessage
+// Created: AGE 2007-04-10
+// -----------------------------------------------------------------------------
+void Saver::SaveUpdateMessage( const Savable_ABC& message )
+{
+    tools::OutputBinaryWrapper wrapper( update_ );
+    message.Serialize( wrapper );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +224,7 @@ void Saver::TerminateFragment()
 // Name: Saver::GenerateInfoFile
 // Created: JSR 2010-10-27
 // -----------------------------------------------------------------------------
-void Saver::GenerateInfoFile()
+void Saver::GenerateInfoFile() const
 {
     const bfs::path currentDirectory = bfs::path( recorderDirectory_, bfs::native ) / currentFolderName_;
     std::ofstream info;
@@ -164,14 +233,4 @@ void Saver::GenerateInfoFile()
     wrapper << fragmentFirstFrame_;
     wrapper << frameCount_ - 1;
     info.close();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Saver::SaveUpdateMessage
-// Created: AGE 2007-04-10
-// -----------------------------------------------------------------------------
-void Saver::SaveUpdateMessage( const Savable_ABC& message )
-{
-    tools::OutputBinaryWrapper wrapper( update_ );
-    message.Serialize( wrapper );
 }

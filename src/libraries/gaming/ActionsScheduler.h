@@ -33,6 +33,7 @@ class Simulation;
 // =============================================================================
 class ActionsScheduler : public QObject // $$$$ AGE 2008-05-19: why ?
                        , public tools::Observer_ABC
+                       , public tools::ElementObserver_ABC< Simulation >
                        , public tools::ElementObserver_ABC< Simulation::sStartTick >
 {
 public:
@@ -58,6 +59,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Simulation::sStartTick& tick );
     //@}
 

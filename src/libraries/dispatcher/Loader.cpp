@@ -71,7 +71,7 @@ void Loader::SkipToFrame( unsigned int frame )
         ;
     if( requiresKeyFrame )
         model_.EndSynchronisation();
-    if( currentFrame_ < frame )
+    if( currentFrame_ < frame || frame == 0 )
         Tick();
 }
 

@@ -46,10 +46,10 @@ SimulationDispatcher::~SimulationDispatcher()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: SimulationDispatcher::IsNotDestruction
+// Name: SimulationDispatcher::IsDestruction
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool SimulationDispatcher::IsNotDestruction( const MsgsSimToClient::MsgSimToClient& wrapper ) const
+bool SimulationDispatcher::IsDestruction( const MsgsSimToClient::MsgSimToClient& wrapper ) const
 {
     if( wrapper.message().has_unit_knowledge_destruction() ||
         wrapper.message().has_object_destruction() ||
@@ -66,8 +66,8 @@ bool SimulationDispatcher::IsNotDestruction( const MsgsSimToClient::MsgSimToClie
         wrapper.message().has_stop_unit_fire() ||
         wrapper.message().has_stop_crowd_fire() ||
         wrapper.message().has_invalidate_report() )
-        return false;
-    return true;
+        return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,10 +76,10 @@ bool SimulationDispatcher::IsNotDestruction( const MsgsSimToClient::MsgSimToClie
 // -----------------------------------------------------------------------------
 void SimulationDispatcher::Receive( const MsgsSimToClient::MsgSimToClient& asnMsg )
 {
-    if( synching_ && IsNotDestruction( asnMsg ) )
-        return;
-
-    clientsPublisher_.Send( asnMsg );
+    if( !synching_ || IsDestruction( asnMsg )
+        || ( asnMsg.message().has_control_begin_tick() && asnMsg.message().control_begin_tick().current_tick() == 0 )
+        || ( asnMsg.message().has_control_end_tick() && asnMsg.message().control_end_tick().current_tick() == 0 ) )
+        clientsPublisher_.Send( asnMsg );
 }
 
 namespace

@@ -44,6 +44,16 @@ ActionsScheduler::~ActionsScheduler()
 
 // -----------------------------------------------------------------------------
 // Name: ActionsScheduler::NotifyUpdated
+// Created: JSR 2010-11-04
+// -----------------------------------------------------------------------------
+void ActionsScheduler::NotifyUpdated( const Simulation& )
+{
+    if( simulation_.IsInitialized() && simulation_.GetCurrentTick() == 0 )
+        currentTime_ = simulation_.GetDateTime();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsScheduler::NotifyUpdated
 // Created: SBO 2007-07-13
 // -----------------------------------------------------------------------------
 void ActionsScheduler::NotifyUpdated( const Simulation::sStartTick& )

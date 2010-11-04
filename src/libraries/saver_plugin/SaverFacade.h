@@ -61,7 +61,6 @@ private:
 
     //! @name Helpers
     //@{
-    void SaveUpdate( const MsgsSimToClient::MsgSimToClient& message );
     void StartFrame( const MsgsSimToClient::MsgSimToClient& message );
     void EndFrame( const MsgsSimToClient::MsgSimToClient& message );
     //@}
@@ -73,9 +72,11 @@ private:
     dispatcher::Model_ABC& model_;
     std::auto_ptr< Saver > saver_;
     std::string encodingBuffer_;
-    unsigned int frameCount_;
-    unsigned int keyFrameIndex_;
     MessageFilter filter_;
+    unsigned int keyFrameIndex_;
+    unsigned int fragmentIndex_;
+    bool firstTick_;
+    bool infoInitialized_;
     //@}
 };
 

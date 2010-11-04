@@ -62,6 +62,7 @@ MessageLoader::~MessageLoader()
 // -----------------------------------------------------------------------------
 bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback /*= T_Callback()*/ )
 {
+    ++frameNumber;
     if( disk_.get() )
     {
         boost::mutex::scoped_lock lock( dataAccessMutex_ );
@@ -90,6 +91,7 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
 void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback /*= T_Callback()*/ )
 {
     synchronisation_ = frameNumber != 0;
+    ++frameNumber;
     if( disk_.get() )
     {
         boost::mutex::scoped_lock lock( dataAccessMutex_ );
@@ -131,12 +133,13 @@ unsigned int MessageLoader::GetTickNumber() const
 // -----------------------------------------------------------------------------
 unsigned int MessageLoader::FindKeyFrame( unsigned int frameNumber )
 {
+    ++frameNumber;
     if( !SwitchToFragment( frameNumber ) )
         return 0;
     unsigned int ret = keyFrames_.begin()->frameNumber_;
     for( CIT_KeyFrames it = keyFrames_.begin(); it != keyFrames_.end() && it->frameNumber_ <= frameNumber; ++it )
         ret = it->frameNumber_;
-    return ret;
+    return ret - 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +200,7 @@ void MessageLoader::AddFolder( const std::string& folderName )
 bool MessageLoader::OpenFile( std::ifstream& stream, const std::string& folder, const std::string& file ) const
 {
     const bfs::path dir = bfs::path( config_.GetRecordDirectory(), bfs::native ) / folder / file;
-    if( !bfs::exists( dir )  )
+    if( !bfs::exists( dir ) )
         return false;
     stream.open( dir.string().c_str(), std::ios_base::binary | std::ios_base::in );
     return true;

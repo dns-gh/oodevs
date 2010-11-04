@@ -18,6 +18,11 @@ namespace dispatcher
     class Config;
 }
 
+namespace MsgsSimToClient
+{
+    class MsgControlInformation;
+}
+
 namespace plugins
 {
 namespace saver
@@ -41,11 +46,12 @@ public:
 
     //! @name Operations
     //@{
-    void CreateNewFragment( bool first = false );
-    void StartFrame       ( const Savable_ABC& message );
-    void SaveUpdateMessage( const Savable_ABC& message );
-    void EndFrame         ( const Savable_ABC& message );
-    void SaveKeyFrame     ( const Savable_ABC& message );
+    void ControlInformation( const MsgsSimToClient::MsgControlInformation& controlInformation );
+    void CreateNewFragment ( bool first = false );
+    void StartFrame        ( const Savable_ABC& message );
+    void SaveUpdateMessage ( const Savable_ABC& message );
+    void EndFrame          ( const Savable_ABC& message );
+    void SaveKeyFrame      ( const Savable_ABC& message );
     //@}
 
 private:
@@ -59,12 +65,13 @@ private:
     //@{
     void Flush();
     void TerminateFragment();
-    void GenerateInfoFile();
+    void GenerateInfoFile() const;
     //@}
 
 private:
     //! @name Member data
     //@{
+    static const std::string currentFolderName_;
     std::string recorderDirectory_;
     dispatcher::Frame current_;
     std::ofstream index_;
@@ -74,7 +81,7 @@ private:
     unsigned int frameCount_;
     unsigned int fragmentFirstFrame_;
     unsigned int currentFolder_;
-    static const std::string currentFolderName_;
+    bool hasCheckpoint_;
     //@}
 };
 
