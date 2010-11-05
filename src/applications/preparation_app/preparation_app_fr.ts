@@ -57,6 +57,37 @@
     </message>
 </context>
 <context>
+    <name>ExerciseCreationDialog</name>
+    <message>
+        <source>Exercise Creation</source>
+        <translation>Création d'exercice</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Terrain</source>
+        <translation>Terrain</translation>
+    </message>
+    <message>
+        <source>Model</source>
+        <translation>Modèle</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+</context>
+<context>
     <name>ExerciseDialog</name>
     <message>
         <source>Exercise</source>
