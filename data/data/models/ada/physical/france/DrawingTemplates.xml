@@ -92,7 +92,7 @@
             </marker-mid>
         </template>
     </category>
-    <category name='Taches'>
+    <category name='Tâches'>
         <template name='Reconnaître' type="line">
             <segment unit='%'>
                 <path fill='none' stroke='currentColor' stroke-width='4px' d='M0,0 L0.55,0.1 L0.45,-0.1 L1,0'/>
@@ -230,7 +230,7 @@
             </marker-end>
         </template>
     </category>
-    <category name="Objects tactiques graphiques" hidden="true">
+    <category name="Objets tactiques graphiques" hidden="true">
         <description>Objets et obstacles</description>
         <template code="G*MPOS----****X" name="Abattis" type="polygon">
             <marker-start unit='%'>
@@ -452,7 +452,7 @@
                 </g>
             </marker-start>
         </template>
-        <template code="G*MPNDP---****X" name="Point de decontamination" type="polygon">
+        <template code="G*MPNDP---****X" name="Point de décontamination" type="polygon">
             <segment>
                 <line stroke='currentColor' stroke-width='4px' x2='1'/>
             </segment>
@@ -482,7 +482,7 @@
                 </g>
             </marker-start>
         </template>
-        <template code="G*MPBCL---****X" name="Site de franchissment" type="line">
+        <template code="G*MPBCL---****X" name="Site de franchissement" type="line">
             <marker-start unit='%'>
                 <g stroke='currentColor' stroke-width='4px'>
                     <line y1='-0.15' y2='0' x1='-0.15' x2='0'/>
@@ -511,14 +511,14 @@
                 </g>
             </marker>
         </template>
-        <template code="G*MPOGZ---****X" name="General obstacle zone" type="polygon">
+        <template code="G*MPOGZ---****X" name="Zone d'obstacle" type="polygon">
             <segment unit="%">
                 <g stroke="currentColor" stroke-width="4px" fill="none">
                     <path d="M0,0 L0.05,0 L0.1,-0.05 L0.15,0 L0.25,0 L0.3,-0.05 L0.35,0 L0.45,0 L0.5,-0.05 L0.55,0 L0.65,0 L0.7,-0.05 L0.75,0 L0.85,0 L0.9,-0.05 L0.95,0 L1,0"/>
                 </g>
             </segment>
         </template>
-        <template code="G*MPSP----****X" name="Obstacle free area" type="polygon">
+        <template code="G*MPSP----****X" name="Zone sans obstacle" type="polygon">
             <segment unit="%">
                 <g stroke="currentColor" stroke-width="4px" fill="none">
                     <path d="M0,0 L0.05,0 L0.1,0.05 L0.15,0 L0.25,0 L0.3,0.05 L0.35,0 L0.45,0 L0.5,0.05 L0.55,0 L0.65,0 L0.7,0.05 L0.75,0 L0.85,0 L0.9,0.05 L0.95,0 L1,0"/>
@@ -598,7 +598,7 @@
                 </g>
             </marker>
         </template>
-        <template code="G*ZD***********" name="Zone dispercante" type="polygon">
+        <template code="G*ZD***********" name="Zone dispersante" type="polygon">
             <segment unit="%">
                 <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
             </segment>
@@ -610,7 +610,7 @@
                 </g>
             </marker>
         </template>
-        <template code="O*VPA-----*****" name="Arson/Fire" type="point">
+        <template code="O*VPA-----*****" name="Incendie" type="point">
             <segment/>
             <marker-start unit="m">
                 <g fill="none" stroke="currentColor" stroke-width="4px">
@@ -648,7 +648,7 @@
                 </g>
             </marker-start>
         </template>
-        <template code="G*MPSF----****X" name="Point de sureté" type="point">
+        <template code="G*MPSF----****X" name="Point de sûreté" type="point">
             <segment/>
             <marker-start unit="m">
                 <g fill="#ffffff" fill-opacity="0.5" stroke="currentColor" stroke-width="4px" transform="translate(-200,-200)">

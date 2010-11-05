@@ -29,7 +29,7 @@ StartReplay::StartReplay( const tools::GeneralConfig& config, const QString& exe
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument ( session );
-    portArg_ = "--port="  + boost::lexical_cast< std::string >( port );
+    portArg_ = boost::lexical_cast< std::string >( port );
     AddArgument( portArg_.c_str() );
 }
 
