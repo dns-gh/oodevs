@@ -83,6 +83,8 @@ namespace
                             stream.close();
                             ret = boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1;
                         }
+                        else
+                            ret = std::max( ret, boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1 );
                     }
                     catch( const std::exception & )
                     {

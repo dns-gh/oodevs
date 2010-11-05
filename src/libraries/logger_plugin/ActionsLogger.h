@@ -94,6 +94,7 @@ private:
     template< typename T >
     void LogAction( const T& message );
     void Commit() const;
+    void LoadOrdersIfCheckpoint();
     //@}
 
 private:
@@ -109,6 +110,7 @@ private:
     std::auto_ptr< actions::ParameterFactory_ABC > parameters_;
     std::auto_ptr< actions::ActionFactory_ABC > factory_;
     std::auto_ptr< actions::ActionsModel > actions_;
+    bool ordersLoaded_;
     //@}
 };
 

@@ -51,7 +51,7 @@ Config::~Config()
 void Config::Parse( int argc, char** argv )
 {
     tools::SessionConfig::Parse( argc, argv );
-    int port;
+    unsigned short port;
     xml::xifstream xisGame( GetSessionFile() );
     xisGame >> xml::start( "session" )
                 >> xml::start( "config" )
@@ -63,14 +63,9 @@ void Config::Parse( int argc, char** argv )
                         >> xml::start( "plugins" )
                             >> xml::optional >>xml::start( "recorder" )
                                 >> xml::optional >> xml::attribute( "fragmentfreq", replayFragmentsFrequency_ )
-                                >> xml::optional >> xml::attribute( "keyframesfreq", keyFramesFrequency_ )
-                            >> xml::end
-                        >> xml::end
-                    >> xml::end
-                >> xml::end
-            >> xml::end;
+                                >> xml::optional >> xml::attribute( "keyframesfreq", keyFramesFrequency_ );
     if( ! networkClientsParameters_ )
-        networkClientsParameters_ = static_cast< unsigned short >( port );
+        networkClientsParameters_ = port;
 }
 
 // -----------------------------------------------------------------------------

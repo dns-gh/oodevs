@@ -22,6 +22,12 @@
 #include "protocol/protocol.h"
 #include "protocol/Publisher_ABC.h"
 #include "tools/SessionConfig.h"
+#pragma warning( push, 0 )
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+#pragma warning( pop )
+
+namespace bfs = boost::filesystem;
 
 using namespace plugins;
 using namespace logger;
@@ -53,6 +59,7 @@ ActionsLogger::ActionsLogger( const tools::SessionConfig& config, const dispatch
     , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, *controller_ ) )
     , factory_          ( new actions::ActionFactory( *controller_, *parameters_, *entities_, staticModel, simulation ) )
     , actions_          ( new actions::ActionsModel( *factory_, *publisher_ ) )
+    , ordersLoaded_     ( !config_.HasCheckpoint() )
 {
     // NOTHING
 }
@@ -73,6 +80,7 @@ ActionsLogger::~ActionsLogger()
 template< typename T >
 void ActionsLogger::LogAction( const T& message )
 {
+    LoadOrdersIfCheckpoint();
     actions::Action_ABC* action = factory_->CreateAction( message );
     actions_->Register( action->GetId(), *action );
     Commit();
@@ -85,6 +93,21 @@ void ActionsLogger::LogAction( const T& message )
 void ActionsLogger::Commit() const
 {
     actions_->Save( config_.BuildSessionChildFile( "actions.ord" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsLogger::LoadOrdersIfCheckpoint
+// Created: JSR 2010-11-05
+// -----------------------------------------------------------------------------
+void ActionsLogger::LoadOrdersIfCheckpoint()
+{
+    if( !ordersLoaded_ && config_.HasCheckpoint()  )
+    {
+        std::string actionsPath( config_.BuildSessionChildFile( "actions.ord" ) );
+        ordersLoaded_ = true;
+        if( bfs::exists( bfs::path( actionsPath ) ) )
+            actions_->Load( actionsPath );
+    }
 }
 
 // -----------------------------------------------------------------------------
