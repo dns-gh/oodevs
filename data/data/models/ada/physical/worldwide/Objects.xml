@@ -349,4 +349,19 @@
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <workable max-animator="3"/>
   </object>
+  <object geometry="" name="Weapons Cache" symbol="" type="weapon cache">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable>
+        <resources>
+          <dotation count="1" name="standard explosive"/>
+        </resources>
+      </buildable>
+      <improvable>
+        <resources>
+          <dotation count="1" name="standard explosive"/>
+        </resources>
+      </improvable>
+    </constructor>
+  </object>
+  <object geometry="" name="Leaflet" symbol="" type="leaflet"/>
 </objects>

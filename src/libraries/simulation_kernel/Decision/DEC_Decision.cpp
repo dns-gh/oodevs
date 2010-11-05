@@ -315,6 +315,13 @@ void RegisterTelepathyFunctions( directia::brain::Brain& brain )
     brain.Register( "SetporteeAction_", &DEC_Decision_ABC::SetPorteeAction );
     brain.Register( "GetrNiveauAlerteRavitaillement_", &DEC_Decision_ABC::GetNiveauAlerteRavitaillement );
     brain.Register( "Getpoint_", &DEC_PathPoint::GetPos );
+    // brain.Register( "Getmunitions_", &DEC_Decision_ABC::GetMunition );
+    brain.Register( "Setmunitions_", &DEC_Decision_ABC::SetMunition );
+    brain.Register( "Getmunitions_", &DEC_Decision_ABC::GetMunition );
+    brain.Register( "SetnbIT_", &DEC_Decision_ABC::SetNbIt );
+    brain.Register( "GetnbIT_", &DEC_Decision_ABC::GetNbIt );
+    brain.Register( "Setcible_", &DEC_Decision_ABC::SetTarget );
+    brain.Register( "Getcible_", &DEC_Decision_ABC::GetTarget );
 }
 
 // -----------------------------------------------------------------------------

@@ -98,8 +98,8 @@
   <report id="73" message="supporting"/>
   <report id="74" message="non operational"/>
   <report id="75" message="operational"/>
-  <report id="76" message="Safety posture on"/>
-  <report id="77" message="Safety posture off"/>
+  <report id="76" message="standard posture"/>
+  <report id="77" message="safety posture"/>
   <report id="78" message="on phase line. Type: %1">
     <parameter type="Enumeration">
       <value id="0" name="departure line"/>
@@ -353,7 +353,7 @@
     <parameter type="Numeric"/>
     <parameter type="Numeric"/>
   </report>
-  <report id="258" message="bombing"/>
+  <report id="258" message="carrying out bombing"/>
   <report id="259" message="mission started : %1">
     <parameter type="String"/>
   </report>
@@ -465,4 +465,14 @@
   <report id="3012" message="enemy fire"/>
   <report id="3013" message="sustaining enemy fire"/>
   <report id="3014" message="UAV must be deployed first"/>
+  <report id="3015" message="need technical backup"/>
+  <report id="3016" message="need %1 firetrucks backup to fight fire of class %2">
+    <parameter type="Numeric"/>
+    <parameter type="Numeric"/>
+  </report>
+  <report id="3017" message="fire of class %1 identified">
+    <parameter type="Numeric"/>
+  </report>
+  <report id="3018" message="need police backup"/>
+  <report id="3018" message="need medical backup"/>
 </reports>

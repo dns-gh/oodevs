@@ -1743,6 +1743,36 @@
       <parameter dia-name="intelligences_" max-occurs="unbounded" min-occurs="1" name="Renseignements" optional="true" type="Intelligence"/>
       <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
     </mission>
+    <mission dia-behavior="MIS_Pion_ASY_ActivateBomb" dia-type="T_Mission_Pion_ASY_ActivateBomb" id="405" name="Asymetric - activate a dirty bomb">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the target, activates the bomb and moves to the meeting point.]]></usage>
+      </descriptions>
+      <parameter dia-name="knowledge_" name="Target Bomb" optional="false" type="ObjectKnowledge"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_ASY_ExecuteBombingAttack" dia-type="T_Mission_Pion_ASY_ExecuteBombingAttack" id="406" name="Asymetric - carry out a dirty bombing attack">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the target, carries out the attack and moves to the meeting point.]]></usage>
+      </descriptions>
+      <parameter dia-name="location_" name="Location" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_Emergency_FollowPopulation" dia-type="T_Mission_Pion_Emergency_FollowPopulation" id="407" name="Emergency - follow population">
+      <descriptions>
+        <doctrine><![CDATA[Follow the head of a blob population]]></doctrine>
+        <usage><![CDATA[Follow the head of a blob population]]></usage>
+      </descriptions>
+      <parameter dia-name="population_" name="Population" optional="false" type="PopulationKnowledge"/>
+      <parameter dia-name="destination_" name="Target Destination" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_Emergency_EvacuateWounded" dia-type="T_Mission_Pion_Emergency_EvacuateWounded" id="408" name="Emergency - evacuate wounded">
+      <parameter dia-name="wounded_" name="Wounded" optional="false" type="Agent"/>
+      <parameter dia-name="hospitals_" name="Hospitals" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="garage_" name="Garage" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_JOINT_AIR_Loiter" dia-type="T_Mission_Pion_JOINT_AIR_Loiter" id="410" name="Joint Air - Loiter">
+      <parameter dia-name="itineraire_" name="path" optional="false" type="Path"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SoutenirEnMesureDe" dia-type="T_Mission_Automate_SoutenirEnMesureDe" id="187" mrt-dia-behavior="MIS_Automate_MRT_SoutenirEnMesureDe" name="prepare to">
@@ -2067,7 +2097,7 @@
       <parameter dia-name="intelligences_" max-occurs="unbounded" min-occurs="1" name="Renseignements" optional="true" type="Intelligence"/>
       <parameter dia-name="zoneDeploiement_" name="Deployment area" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement" dia-type="T_Mission_Automate_ASS_ReconnaitreZonesDeploiement" id="217" mrt-dia-behavior="MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement" name="Field Artillery - recon deployment area">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement" dia-type="T_Mission_Automate_ASS_ReconnaitreZonesDeploiement" id="217" mrt-dia-behavior="MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement" name="Field Artillery - recon deployment areas">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3108,6 +3138,12 @@
       <parameter dia-name="intelligences_" max-occurs="unbounded" min-occurs="1" name="Renseignements" optional="true" type="Intelligence"/>
       <parameter dia-name="zones_" max-occurs="unbounded" min-occurs="1" name="Areas" optional="false" type="Location"/>
     </mission>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_DefendreUneZone" dia-type="T_Mission_Automate_ASS_DefendreUneZone" id="409" mrt-dia-behavior="MIS_Automate_MRT_ASS_DefendreUneZone" name="Field Artillery - defend area">
+      <descriptions>
+        <doctrine><![CDATA[Operate fire units on provided locations and forward fire requests]]></doctrine>
+      </descriptions>
+      <parameter dia-name="zoneDeploiement_" name="deployment area" optional="false" type="Location"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="MIS_Population_FaireMouvement" dia-type="T_Mission_Population_FaireMouvement" id="342" name="Population - move">
@@ -3279,5 +3315,13 @@
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_AutoriserToutesMunitions" id="393" name="Pion Autoriser Toutes Munitions"/>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ExecuteAirStrike" id="411" name="Execute an air strike">
+      <parameter dia-name="zoneCible_" name="zone" optional="false" type="Polygon"/>
+    </fragorder>
+    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AppliquerFeuxDansZone" id="412" name="Fire in area">
+      <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
+      <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Numeric"/>
+      <parameter dia-name="zoneCible_" name="Target" optional="false" type="Polygon"/>
+    </fragorder>
   </fragorders>
 </missions>

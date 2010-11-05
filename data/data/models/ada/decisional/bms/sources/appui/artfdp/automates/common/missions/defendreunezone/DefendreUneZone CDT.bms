@@ -112,7 +112,7 @@ node "BEH_Eni_Pion_ASS_AppliquerFeux"
         if( ModuleBegins() ) then
             do
                 local mission = DEC_GetMission( myself )
-                self.listePoints = DEC_Geometrie_PositionsParRapportALocalisation( self.sPions, self._namedParams.ordre:Getcible_(), DEC_GetDirectionEnnemi( mission ), 1000 )
+                self.listePoints = DEC_Geometrie_PositionsParRapportALocalisation( self.sPions, self._namedParams.ordre:GetzoneCible_(), DEC_GetDirectionEnnemi( mission ), 1000 )
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion erreur
 ]]--[[//-----------------------------------------------------------------------------
@@ -166,37 +166,37 @@ node "ACT_MOT_Automate_ASS_DemandeAppliqerFeux"
     end,
 
     select = function( self )
-                if( ModuleBegins() ) then
+         if( ModuleBegins() ) then
             do
                  do
                     local _continue = true
                     local switch_1 = self._namedParams.pASS:GetType()
                     local cases_switch_1 = {}
-                        if switch_1 == "SectionASS_Tir" then
-                                                    local section = self._namedParams.pASS
-                            section:Setmunitions_( self._namedParams.order:Getmunitions_() )
-                            section:SetnbIT_( self._namedParams.order:GetnbIT_() )
-                            section:Setcible_( self._namedParams.position )
-                            _continue = false
-                                                cases_switch_1[1] = true
-elseif switch_1 == "SectionASS_LRM" then
-                                                    local section = self._namedParams.pASS
-                            section:Setmunitions_( self._namedParams.order:Getmunitions_() )
-                            section:SetnbIT_( self._namedParams.order:GetnbIT_() )
-                            section:Setcible_( self._namedParams.position )
-                            _continue = false
-                                                cases_switch_1[2] = true
-                        end
+                    if switch_1 == "SectionASS_Tir" then
+                        local section = self._namedParams.pASS
+                        section:Setmunitions_( self._namedParams.order:Getmunitions_() )
+                        section:SetnbIT_( self._namedParams.order:GetnbIT_() )
+                        section:Setcible_( self._namedParams.position )
+                        _continue = false
+                        cases_switch_1[1] = true
+
+                    elseif switch_1 == "SectionASS_LRM" then
+                        local section = self._namedParams.pASS
+                        section:Setmunitions_( self._namedParams.order:Getmunitions_() )
+                        section:SetnbIT_( self._namedParams.order:GetnbIT_() )
+                        section:Setcible_( self._namedParams.position )
+                        _continue = false
+                        cases_switch_1[2] = true
                     end
+                end
 
                 self._namedParams.pASS:SetStateVariable( "VE_AppliquerLesFeux", 1 )
             end
         end
-
     end,
 
     deselect = function( self )
-                self._namedParams.pASS:SetStateVariable( "VE_AppliquerLesFeux", 0 )
+        self._namedParams.pASS:SetStateVariable( "VE_AppliquerLesFeux", 0 )
     end,
 
 }

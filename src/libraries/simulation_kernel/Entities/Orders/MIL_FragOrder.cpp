@@ -88,6 +88,7 @@ void MIL_FragOrder::Register( directia::brain::Brain& brain )
     brain.Register( "GetpionARenforcer_", &MIL_FragOrder::GetPionARenforcer );
     brain.Register( "GetpionRenforce_", &MIL_FragOrder::GetPionRenforce );
     brain.Register( "GetpointCible_", &MIL_FragOrder::GetPointCible );
+    brain.Register( "GetzoneCible_", &MIL_FragOrder::GetZoneCible );
     brain.Register( "GetporteeAction_", &MIL_FragOrder::GetPorteeAction );
     brain.Register( "GetsiteFranchissementOriginal_", &MIL_FragOrder::GetSiteFranchissementOriginal );
     brain.Register( "GetsiteFranchissementVariante_", &MIL_FragOrder::GetSiteFranchissementVariante );
@@ -139,6 +140,21 @@ namespace
             {
                 DEC_Decision_ABC* result = 0;
                 if( parameters[i]->ToAgent( result ) )
+                    return result;
+            }
+        }
+        throw std::runtime_error( std::string( "Unknown parameter: " ) + name );
+    }
+
+    boost::shared_ptr< TER_Localisation > GetLocationParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
+    {
+        unsigned int parametersNumber = parameters.size();
+        for (unsigned int i = 0; i < parametersNumber; ++i )
+        {
+            if( type.GetParameterName( i ) == name )
+            {
+                boost::shared_ptr< TER_Localisation > result;
+                if( parameters[i]->ToPolygon( result ) )
                     return result;
             }
         }
@@ -377,6 +393,16 @@ boost::shared_ptr< MT_Vector2D > MIL_FragOrder::GetPointCible() const
 {
     static const std::string parameterName( "pointCible_" );
     return GetPointParameter( parameterName, parameters_, type_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > MIL_FragOrder::GetZoneCible
+// Created: JCR 2010-11-04
+// -----------------------------------------------------------------------------
+boost::shared_ptr< TER_Localisation > MIL_FragOrder::GetZoneCible() const
+{
+    static const std::string parameterName( "zoneCible_" );
+    return GetLocationParameter( parameterName, parameters_, type_ );
 }
 
 // -----------------------------------------------------------------------------

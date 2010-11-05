@@ -108,6 +108,14 @@ public:
     virtual boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const double time, bool bBoundOnPath ) const;
     virtual boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const double time, bool bBoundOnPath ) const;
 
+    virtual void SetMunition( const PHY_DotationCategory* );
+    virtual const PHY_DotationCategory* GetMunition();
+    virtual void SetNbIt( int value );
+    virtual int GetNbIt();
+    virtual void SetTarget( boost::shared_ptr< MT_Vector2D > );
+    virtual boost::shared_ptr< MT_Vector2D > GetTarget();
+
+
     virtual void ClearListeEnisTirAutorise();
     virtual void ClearListePionsCoordination();
     virtual void ClearPlotsRavitaillement();

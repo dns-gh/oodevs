@@ -21,6 +21,8 @@ class MIL_Automate;
 class MIL_Mission_ABC;
 class PHY_Action_ABC;
 class MT_Vector2D;
+class PHY_DotationCategory;
+class MT_Vector2D;
 
 namespace directia
 {
@@ -113,6 +115,13 @@ public:
     virtual void ClearListeEnisTirAutorise() = 0;
     virtual void ClearListePionsCoordination() = 0;
     virtual void ClearPlotsRavitaillement() = 0;
+
+    virtual void SetMunition( const PHY_DotationCategory* ) = 0;
+    virtual const PHY_DotationCategory* GetMunition() = 0;
+    virtual void SetNbIt( int value ) = 0;
+    virtual int GetNbIt() = 0;
+    virtual void SetTarget( boost::shared_ptr< MT_Vector2D > ) = 0;
+    virtual boost::shared_ptr< MT_Vector2D >  GetTarget() = 0;
 
     void SetVariableInt( const std::string& name, int value );
     template< typename T > void SetVariable( const std::string& name, T value );

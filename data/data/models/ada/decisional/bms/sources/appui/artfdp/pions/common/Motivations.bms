@@ -71,7 +71,9 @@ node "ActivatedByMOT_AppliquerLesFeux"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_Pion_ASS_AppliquerFeux, GetMotivation( "MOT_AppliquerLesFeux" ), {} )
+]]
+        StartActivateOverride( self, self.activations.BEH_MOT_Pion_ASS_AppliquerFeux, GetMotivation( "MOT_AppliquerLesFeux" ), {} )
+    
     end,
 
 }

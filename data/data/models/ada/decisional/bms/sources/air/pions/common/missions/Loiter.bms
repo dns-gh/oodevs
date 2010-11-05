@@ -127,7 +127,7 @@ do
                         local repOrdre_Tir = repOrdreCond
                         Activate( self.activations.ACT_Info_Trace, 1, { "Ordre : Execute Air Strike", } )
                         Activate( self.activations.ACT_RC, 1, { eRC_ReceptionOrdreDeFeu, } )
-                        StartActivateOverride( self, self.activations.BEH_Eni_Pion_AIR_ExecuteAirStrike, 10, { repOrdre_Tir:Getzone_(), } )
+                        StartActivateOverride( self, self.activations.BEH_Eni_Pion_AIR_ExecuteAirStrike, 10, { repOrdre_Tir:GetzoneCible_(), } )
                     end
                 end
 

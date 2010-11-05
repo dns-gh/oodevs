@@ -836,6 +836,66 @@ boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::GetLastPointOfPath( const do
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Decision::SetMunition
+// Created: JCR 2010-11-04
+// -----------------------------------------------------------------------------
+template< class T >
+void DEC_Decision< T >::SetMunition( const PHY_DotationCategory* value )
+{
+    SetVariable( "myself.munitions_", value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::GetMunition
+// Created: JCR 2010-11-04
+// -----------------------------------------------------------------------------
+template< class T >
+const PHY_DotationCategory* DEC_Decision< T >::GetMunition()
+{
+    return GetVariable< const PHY_DotationCategory* >( "myself.munitions_" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::SetNbIt
+// Created: JCR 2010-11-04
+// -----------------------------------------------------------------------------
+template< class T >
+void DEC_Decision< T >::SetNbIt( int value )
+{
+    SetVariable( "myself.nbIT_", value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::GetNbIt
+// Created: JCR 2010-11-04
+// -----------------------------------------------------------------------------
+template< class T >
+int DEC_Decision< T >::GetNbIt()
+{
+    return GetScalarVariable< int >( "myself.nbIT_" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::SetTarget
+// Created: JCR 2010-11-04
+// -----------------------------------------------------------------------------
+template< class T >
+void DEC_Decision< T >::SetTarget( boost::shared_ptr< MT_Vector2D > value )
+{
+    SetVariable( "myself.cible_", value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::SetTarget
+// Created: JCR 2010-11-04
+// -----------------------------------------------------------------------------
+template< class T >
+boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::GetTarget()
+{
+    return GetVariable< boost::shared_ptr< MT_Vector2D > >( "myself.cible_" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: boost::shared_ptr< MT_Vector2D > DEC_Decision::ExtrapolatePosition
 // Created: LDC 2009-11-04
 // -----------------------------------------------------------------------------

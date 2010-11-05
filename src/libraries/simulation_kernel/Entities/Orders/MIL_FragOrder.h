@@ -24,6 +24,7 @@ class MIL_MissionParameter_ABC;
 class MIL_ParameterType_MedicalPriorities;
 class MIL_ParameterType_MaintenancePriorities;
 class MT_Vector2D;
+class TER_Localisation;
 class PHY_ComposanteTypePion;
 class PHY_DotationCategory;
 class PHY_HumanWound;
@@ -88,6 +89,7 @@ public:
     boost::shared_ptr< DEC_Knowledge_Agent > GetAgentKnowledge() const;
     DEC_Decision_ABC* GetAgent() const;
     boost::shared_ptr< MT_Vector2D > GetPointCible() const;
+    boost::shared_ptr< TER_Localisation > GetZoneCible() const;
     int GetPorteeAction() const;
     int GetSiteFranchissementOriginal() const;
     int GetSiteFranchissementVariante() const;

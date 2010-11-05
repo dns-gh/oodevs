@@ -48,6 +48,8 @@ node "MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition"
 --[[// Gere la disponibilite aux feux
 ]]        end
 
+        DEC_Trace( "MOT_AppliquerLesFeux: "..tostring( GetMotivation( "MOT_AppliquerLesFeux" ) ) )
+
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
         Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
@@ -76,7 +78,7 @@ elseif switch_1 == eFinMission then
                     if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
                             DEC_FinMission()
-                                                        self:SendFeedback( eActionEffectuee )
+                            self:SendFeedback( eActionEffectuee )
                             Halt( self )
                             do return end
 

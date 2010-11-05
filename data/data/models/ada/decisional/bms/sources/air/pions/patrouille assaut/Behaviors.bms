@@ -47,3 +47,5 @@ etat_ROE = 1,
 ]]--[[//========
 ]]include "Air/Pions/Common/Missions/Effectuer Raid.bms"
 
+include "Air/Pions/Common/Missions/Loiter.bms"
+
