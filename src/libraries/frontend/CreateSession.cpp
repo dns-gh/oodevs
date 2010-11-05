@@ -107,7 +107,8 @@ void CreateSession::SetDefaultValues()
         setter_->SetValue( "session/config/dispatcher/network/@client", "localhost:" +  // $$$$ AGE 2007-10-09:
                             boost::lexical_cast< std::string >( SimulationPort( 1 ) ) );
         setter_->SetValue( "session/config/dispatcher/network/@server", DispatcherPort( 1 ) );
-        setter_->SetValue( "session/config/dispatcher/plugins/recorder", "" ); // $$$$ AGE 2008-02-22:
+        setter_->SetValue( "session/config/dispatcher/plugins/recorder/@fragmentfreq", 200 );
+        setter_->SetValue( "session/config/dispatcher/plugins/recorder/@keyframesfreq", 100 );
     }
     {
         setter_->SetValue( "session/config/gaming/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09:

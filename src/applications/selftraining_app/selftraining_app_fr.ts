@@ -534,6 +534,10 @@ You will not be able to start a multiplayer session. Do you want to start anyway
         <source>ERP/Timeline</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Session</source>
+        <translation>Session</translation>
+    </message>
 </context>
 <context>
     <name>ScenarioPage</name>

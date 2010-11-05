@@ -25,6 +25,8 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Config::Config()
     : networkClientsParameters_( 0 )
+    , keyFramesFrequency_      ( 100 )
+    , replayFragmentsFrequency_( 150 )
 {
     po::options_description desc( "Dispatcher/replayer options" );
     desc.add_options()
@@ -58,11 +60,17 @@ void Config::Parse( int argc, char** argv )
                             >> xml::attribute( "client", networkSimulationParameters_ )
                             >> xml::attribute( "server", port )
                         >> xml::end
+                        >> xml::start( "plugins" )
+                            >> xml::optional >>xml::start( "recorder" )
+                                >> xml::optional >> xml::attribute( "fragmentfreq", replayFragmentsFrequency_ )
+                                >> xml::optional >> xml::attribute( "keyframesfreq", keyFramesFrequency_ )
+                            >> xml::end
+                        >> xml::end
                     >> xml::end
                 >> xml::end
             >> xml::end;
     if( ! networkClientsParameters_ )
-        networkClientsParameters_ = unsigned short( port );
+        networkClientsParameters_ = static_cast< unsigned short >( port );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,3 +90,20 @@ unsigned short Config::GetNetworkClientsParameters() const
     return networkClientsParameters_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Config::GetKeyFramesFrequency
+// Created: JSR 2010-11-02
+// -----------------------------------------------------------------------------
+unsigned int Config::GetKeyFramesFrequency() const
+{
+    return keyFramesFrequency_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Config::GetReplayFragmentsFrequency
+// Created: JSR 2010-11-02
+// -----------------------------------------------------------------------------
+unsigned int Config::GetReplayFragmentsFrequency() const
+{
+    return replayFragmentsFrequency_;
+}

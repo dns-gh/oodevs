@@ -176,7 +176,8 @@ void SaverFacade::StartFrame( const MsgsSimToClient::MsgSimToClient& message )
 {
     if( firstTick_ && config_.HasCheckpoint() )
         firstTick_ = false;
-    if( fragmentIndex_ == config_.GetReplayFragmentsFrequency() )
+    unsigned int freq = config_.GetReplayFragmentsFrequency();
+    if( freq != 0 && fragmentIndex_ == freq )
     {
         saver_->CreateNewFragment();
         fragmentIndex_ = 0;

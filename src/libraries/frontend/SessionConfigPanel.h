@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __AdvancedConfigPanel_h_
-#define __AdvancedConfigPanel_h_
+#ifndef __SessionConfigPanel_h_
+#define __SessionConfigPanel_h_
 
 #include "PluginConfig_ABC.h"
 
@@ -17,25 +17,26 @@ namespace tools
     class GeneralConfig;
 }
 
-class QCheckBox;
+class QLineEdit;
 class QSpinBox;
+class QTextEdit;
 
 namespace frontend
 {
 
 // =============================================================================
-/** @class  AdvancedConfigPanel
-    @brief  AdvancedConfigPanel
+/** @class  SessionConfigPanel
+    @brief  SessionConfigPanel
 */
-// Created: JSR 2010-07-15
+// Created: JSR 2010-11-05
 // =============================================================================
-class AdvancedConfigPanel : public PluginConfig_ABC
+class SessionConfigPanel : public PluginConfig_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AdvancedConfigPanel( QWidget* parent, const tools::GeneralConfig& config );
-    virtual ~AdvancedConfigPanel();
+             SessionConfigPanel( QWidget* parent, const tools::GeneralConfig& config );
+    virtual ~SessionConfigPanel();
     //@}
 
     //! @name Operations
@@ -46,23 +47,20 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    AdvancedConfigPanel( const AdvancedConfigPanel& );            //!< Copy constructor
-    AdvancedConfigPanel& operator=( const AdvancedConfigPanel& ); //!< Assignment operator
+    SessionConfigPanel( const SessionConfigPanel& );            //!< Copy constructor
+    SessionConfigPanel& operator=( const SessionConfigPanel& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    QSpinBox* stepSpin_;
-    QSpinBox* factorSpin_;
-    QSpinBox* endtickSpin_;
-    QCheckBox* pausedCheckBox_;
-    QSpinBox* pathThreads_;
-    QSpinBox* fragmentsFrequency_;
+    QLineEdit* sessionName_;
+    QTextEdit* sessionComment_;
+    QSpinBox* exerciseNumber_;
     //@}
 };
 
 }
 
-#endif // __AdvancedConfigPanel_h_
+#endif // __SessionConfigPanel_h_

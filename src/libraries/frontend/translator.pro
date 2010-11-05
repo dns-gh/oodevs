@@ -10,6 +10,7 @@ DisPluginConfigPanel.cpp \
 HlaPluginConfigPanel.cpp \
 JoinExercise.cpp \
 RandomPluginConfigPanel.cpp \
+SessionConfigPanel.cpp \
 SpawnCommand.cpp \
 StartExercise.cpp \
 

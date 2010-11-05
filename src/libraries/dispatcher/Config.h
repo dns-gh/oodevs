@@ -38,6 +38,8 @@ public:
     //@{
     const std::string& GetNetworkSimulationParameters() const;
     unsigned short GetNetworkClientsParameters() const;
+    unsigned int GetKeyFramesFrequency() const;
+    unsigned int GetReplayFragmentsFrequency() const;
     //@}
 
 private:
@@ -45,6 +47,8 @@ private:
     //@{
     std::string networkSimulationParameters_;
     unsigned short networkClientsParameters_;
+    unsigned int keyFramesFrequency_;
+    unsigned int replayFragmentsFrequency_;
     //@}
 };
 

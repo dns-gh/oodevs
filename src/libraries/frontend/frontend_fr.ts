@@ -2,14 +2,6 @@
 <context>
     <name>AdvancedConfigPanel</name>
     <message>
-        <source>Session name:</source>
-        <translation>Nom de la session:</translation>
-    </message>
-    <message>
-        <source>Session comments:</source>
-        <translation>Commentaires de la session:</translation>
-    </message>
-    <message>
         <source>Time</source>
         <translation>Temps</translation>
     </message>
@@ -34,16 +26,16 @@
         <translation>Nombre de threads:</translation>
     </message>
     <message>
-        <source>Exercise number:</source>
-        <translation>Numéro de l&apos;exercice:</translation>
-    </message>
-    <message>
-        <source>Exercise</source>
-        <translation>Exercice</translation>
-    </message>
-    <message>
         <source>  Paused at startup</source>
         <translation>  Démarrage en pause</translation>
+    </message>
+    <message>
+        <source>Recorder</source>
+        <translation>Enregistreur</translation>
+    </message>
+    <message>
+        <source>Fragmentation frequency: </source>
+        <translation>Fréquence de fragmentation: </translation>
     </message>
 </context>
 <context>
@@ -222,6 +214,21 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     <message>
         <source>Set as default</source>
         <translation>Définir par défaut</translation>
+    </message>
+</context>
+<context>
+    <name>SessionConfigPanel</name>
+    <message>
+        <source>Session name:</source>
+        <translation>Nom de la session:</translation>
+    </message>
+    <message>
+        <source>Session comments:</source>
+        <translation>Commentaires de la session:</translation>
+    </message>
+    <message>
+        <source>Exercise number:</source>
+        <translation>Numéro de l&apos;exercice:</translation>
     </message>
 </context>
 <context>
