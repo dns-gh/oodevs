@@ -6,6 +6,9 @@
         <mission name="Joint Air - Air strike"/>
         <mission name="move"/>
         <mission name="follow"/>
+        <mission name="Joint Air - Loiter">
+          <fragorder name="Execute an air strike"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2773,6 +2776,8 @@
         <mission name="follow"/>
         <mission name="move"/>
         <mission name="park"/>
+        <mission name="Emergency - alert"/>
+        <mission name="Emergency - follow population"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2801,6 +2806,7 @@
         <mission name="follow"/>
         <mission name="move"/>
         <mission name="park"/>
+        <mission name="Emergency - evacuate wounded"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2858,6 +2864,7 @@
         <mission name="Emergency - supply"/>
         <mission name="move"/>
         <mission name="park"/>
+        <mission name="Emergency - follow population"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2881,6 +2888,176 @@
     <unit dia-type="HS_Disturbance" file="Emergency\Pions\Disturbance\Model.bms" name="HS - Disturbance">
       <missions>
         <mission name="Emergency - riot"/>
+        <mission name="move"/>
+        <mission name="park"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.bms" name="Journalist">
+      <missions>
+        <mission name="Asymetric - infiltrate"/>
+        <mission name="Asymetric - report information"/>
+        <mission name="move"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.bms" name="Attack Helicopter Patrol">
+      <missions>
+        <mission name="Army Aviation - cover">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - destroy flying enemy">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - recon">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - escort">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - screen">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - recon enemy positions">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - recon in force">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - monitor">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="move">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="follow">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="go through decontamination process">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="park">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="adopt transportation posture">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="deny population crossing">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="report information on populations">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - resupply">
+          <fragorder name="Army Aviation - Change mission type"/>
+          <fragorder name="Cancel maneuver"/>
+        </mission>
+        <mission name="withdraw">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - support (in contact)">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - assault">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - destroy (in a specific area)">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - delay">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="StrategicBomberPatrol" file="Air\Pions\Patrouille Assaut\model.bms" name="UAV">
+      <missions>
+        <mission name="move"/>
+        <mission name="follow"/>
+        <mission name="Joint Air - Loiter"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" name="Terrorist Engineer">
+      <missions>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="go through decontamination process"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="follow"/>
+        <mission name="Engineer - perform work"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" name="Motorized Inf platoon">
+      <missions>
+        <mission name="withdraw"/>
+        <mission name="move"/>
+        <mission name="cross"/>
+        <mission name="follow"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="adopt transportation posture"/>
+        <mission name="go through decontamination process"/>
+        <mission name="Armor - support"/>
+        <mission name="Armor - attack">
+          <fragorder name="Cross departure line"/>
+        </mission>
+        <mission name="Armor - interdict"/>
+        <mission name="Armor - control"/>
+        <mission name="Armor - cover"/>
+        <mission name="Armor - escort"/>
+        <mission name="Armor - fix"/>
+        <mission name="Armor - flank-guard"/>
+        <mission name="Armor - screen"/>
+        <mission name="Armor - recon in force (an axis)"/>
+        <mission name="Armor - recon in force"/>
+        <mission name="Armor - destroy"/>
+        <mission name="Armor - relieve"/>
+        <mission name="Armor - seize"/>
+        <mission name="Armor - support (dynamic)"/>
+        <mission name="Armor - monitor"/>
+        <mission name="Armor - delay"/>
+        <mission name="Armor - escort units"/>
+        <mission name="Armor - support (from a position)"/>
+        <mission name="canalize populations"/>
+        <mission name="control populations (in an area)"/>
+        <mission name="filtrate populations"/>
+        <mission name="deny population crossing"/>
+        <mission name="report information on populations"/>
+        <mission name="secure area (against populations assault)"/>
+        <mission name="Armor - open a route"/>
+        <mission name="Armor - report information"/>
+        <mission name="prepare to"/>
+        <mission name="prepare to (take up position)"/>
+        <mission name="Armor - operate a checkpoint"/>
+        <mission name="Armor - operate an identification point"/>
+        <mission name="Armor - recon"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3398,7 +3575,7 @@
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco COBRA\Model.bms" name="Firefinder reconnaissance battery">
       <missions>
-        <mission name="Field Artillery - recon deployment area"/>
+        <mission name="Field Artillery - recon deployment areas"/>
         <mission name="move"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
@@ -4188,6 +4365,9 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
+        <mission name="Field Artillery - defend area">
+          <fragorder name="Fire in area"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -4207,7 +4387,7 @@
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco TRF1\Model.bms" name="Recconnaissance battery">
       <missions>
-        <mission name="Field Artillery - recon deployment area"/>
+        <mission name="Field Artillery - recon deployment areas"/>
         <mission name="move"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
@@ -4343,6 +4523,128 @@
         <fragorder name="Change ROE"/>
         <fragorder name="Change population ROE"/>
       </fragorders>
+    </automat>
+    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.bms" name="Attack Helicopter Company">
+      <missions>
+        <mission name="Army Aviation - recon">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - screen">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - monitor">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="move">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="go through decontamination process">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="resupply">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - attack">
+          <fragorder name="Army Aviation - Change mission type"/>
+          <fragorder name="Cancel maneuver"/>
+        </mission>
+        <mission name="Army Aviation - destroy">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - delay">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - block">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - attack (flying enemy)">
+          <fragorder name="Army Aviation - Change mission type"/>
+          <fragorder name="Cancel maneuver"/>
+        </mission>
+        <mission name="Army Aviation - support">
+          <fragorder name="Army Aviation - Change mission type"/>
+          <fragorder name="Cancel maneuver"/>
+        </mission>
+        <mission name="Army Aviation - cover">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - destroy (in an area)">
+          <fragorder name="Army Aviation - Change mission type"/>
+          <fragorder name="Cancel maneuver"/>
+        </mission>
+        <mission name="Army Aviation - escort">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - assist flying unit in rearward maneuver">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="park">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="adopt transportation posture">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - resupply">
+          <fragorder name="Army Aviation - Change mission type"/>
+          <fragorder name="Cancel maneuver"/>
+        </mission>
+        <mission name="withdraw"/>
+      </missions>
+      <fragorders/>
+    </automat>
+    <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" name="Transport Helicopter Company">
+      <missions>
+        <mission name="Army Aviation - heliport">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+          <fragorder name="Modify Disembarking point"/>
+        </mission>
+        <mission name="Army Aviation - helitransport">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+          <fragorder name="Modify Disembarking point"/>
+        </mission>
+        <mission name="move">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="go through decontamination process">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="resupply">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="park">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="adopt transportation posture">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="Army Aviation - resupply">
+          <fragorder name="Army Aviation - Change mission type"/>
+          <fragorder name="Cancel maneuver"/>
+        </mission>
+        <mission name="withdraw"/>
+      </missions>
+      <fragorders/>
     </automat>
   </automats>
   <populations>
