@@ -167,7 +167,8 @@ void NodeElement::Consume( bool& isFunctional )
         if( consumptionCritical_ )
             isFunctional = false;
     }
-    immediateStock_ -= consumption;
+    else
+        immediateStock_ -= consumption;
 }
 
 // -----------------------------------------------------------------------------
