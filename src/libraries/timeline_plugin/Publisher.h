@@ -11,7 +11,10 @@
 #define __plugins_timeline_Publisher_h_
 
 #include "Publisher_ABC.h"
+#pragma warning( push, 0 )
 #include <boost/thread/recursive_mutex.hpp>
+#pragma pop
+
 
 namespace xml
 {

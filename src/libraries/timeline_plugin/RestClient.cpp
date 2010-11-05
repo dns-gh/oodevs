@@ -59,7 +59,7 @@ void RestClient::DoPost( const std::string& message, std::string& response )
 // Name: RestClient::DoGet
 // Created: JCR 2010-05-31
 // -----------------------------------------------------------------------------
-void RestClient::DoGet( const std::string& message, std::string& response )
+void RestClient::DoGet( const std::string& /*message*/, std::string& response )
 {
     boost::asio::streambuf request;
     std::ostream request_stream( &request );

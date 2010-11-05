@@ -14,9 +14,6 @@
 #include "MT_Tools/MT_Logger.h"
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push, 0 )
-#include <boost/date_time/posix_time/posix_time.hpp>
-#pragma warning( pop )
 
 using boost::asio::ip::tcp;
 using namespace plugins::timeline;
@@ -83,8 +80,12 @@ void Publisher::PullSituation( const std::string& message, const std::string& ti
         if( client.GetStatus() != 200 || result.size() == 0 )
             throw std::exception( "Content of url reports from webService is empty" );
 
-        boost::recursive_mutex::scoped_lock locker( mutex_ );
-        handler.Handle( xml::xistringstream( result ) );
+        {
+            boost::recursive_mutex::scoped_lock locker( mutex_ );
+            xml::xistringstream xis( result );
+            handler.Handle( xis );
+        }
+
         if( log_ )
             MT_LOG_INFO_MSG( result )
         if( log_ )
