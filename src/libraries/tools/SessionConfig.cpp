@@ -126,3 +126,12 @@ std::string SessionConfig::GetCheckpointDirectory() const
 {
     return GetCheckpointDirectory( strCheckPointName_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SessionConfig::BuildOnLocalCheckpointChildFile
+// Created: HBD 2010-11-03
+// -----------------------------------------------------------------------------
+std::string SessionConfig::BuildOnLocalCheckpointChildFile( const std::string& checkpoint, const std::string& file ) const
+{
+   return BuildDirectoryFile( BuildDirectoryFile ( BuildSessionChildFile( "checkpoints" ), checkpoint ), file );
+}

@@ -35,6 +35,7 @@ namespace MsgsSimToClient
     class MsgControlBeginTick;
     class MsgControlEndTick;
     class MsgControlSendCurrentStateEnd;
+    class MsgControlCheckPointSaveEnd;
     class MsgAutomatCreation;
     class MsgAutomatDestruction;
     class MsgFormationCreation;
@@ -290,7 +291,7 @@ private:
     void OnReceiveMsgControlMeteoGlobalAck       ();
     void OnReceiveMsgControlMeteoLocalAck        ();
     void OnReceiveMsgCheckPointSaveBegin         ();
-    void OnReceiveMsgCheckPointSaveEnd           ();
+    void OnReceiveMsgCheckPointSaveEnd           ( const MsgsSimToClient::MsgControlCheckPointSaveEnd&          message );
     void OnReceiveMsgCheckPointSetFrequencyAck   ();
     void OnReceiveMsgCheckPointSaveNowAck        ();
     void OnReceiveMsgControlBeginTick            ( const MsgsSimToClient::MsgControlBeginTick&                  message );

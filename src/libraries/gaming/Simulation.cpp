@@ -184,9 +184,13 @@ void Simulation::BeginCheckPoint()
 // Name: Simulation::EndCheckPoint
 // Created: SBO 2007-03-09
 // -----------------------------------------------------------------------------
-void Simulation::EndCheckPoint()
+void Simulation::EndCheckPoint( const MsgsSimToClient::MsgControlCheckPointSaveEnd& message )
 {
     checkPoint_.start_ = false;
+    if ( message.has_name() )
+        checkPoint_.name_ = message.name();
+    else
+        checkPoint_.name_ = "";
     controller_.Update( checkPoint_ );
     controller_.Update( *this );
 }

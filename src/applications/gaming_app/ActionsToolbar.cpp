@@ -16,7 +16,6 @@
 #include "actions/ActionTasker.h"
 #include "clients_gui/BooleanOptionButton.h"
 #include "clients_kernel/Controllers.h"
-#include "gaming/Simulation.h"
 #include "gaming/Services.h"
 #include "tools/SessionConfig.h"
 #include "icons.h"
@@ -256,4 +255,21 @@ void ActionsToolbar::NotifyUpdated( const Simulation& simulation )
 void ActionsToolbar::NotifyUpdated( const Services& services )
 {
     hasReplay_ = services.HasService< replay::Service >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsToolbar::NotifyUpdated
+// Created: HBD 2010-11-03
+// -----------------------------------------------------------------------------
+void ActionsToolbar::NotifyUpdated( const Simulation::sCheckPoint& checkPoint )
+{
+    if( !checkPoint.name_.empty() )
+        try 
+        {
+            actions_.Save( config_.BuildOnLocalCheckpointChildFile( checkPoint.name_, "timeline.ord" ) );
+        } 
+        catch( ... )
+        {
+            // NOTHING
+        }
 }

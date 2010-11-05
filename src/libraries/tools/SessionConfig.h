@@ -39,6 +39,7 @@ public:
     virtual std::string GetRecordDirectory() const;
     virtual std::string GetCheckpointsDirectory() const;
     virtual std::string GetCheckpointDirectory( const std::string& checkpoint ) const;
+    virtual std::string BuildOnLocalCheckpointChildFile( const std::string& checkpoint, const std::string& file ) const;
 
     virtual bool HasCheckpoint() const;
     virtual std::string GetCheckpointDirectory() const;

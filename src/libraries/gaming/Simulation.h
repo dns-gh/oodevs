@@ -31,7 +31,7 @@ class Simulation : public kernel::Time_ABC
 public:
     struct sStartTick{};
     struct sEndTick{};
-    struct sCheckPoint { bool start_; };
+    struct sCheckPoint { bool start_; std::string name_; };
 
 public:
     //! @name Constructors/Destructor
@@ -59,7 +59,7 @@ public:
     void ChangeSpeed( int timeFactor );
 
     void BeginCheckPoint();
-    void EndCheckPoint();
+    void EndCheckPoint( const MsgsSimToClient::MsgControlCheckPointSaveEnd& message );
     //@}
 
     //! @name Accessors

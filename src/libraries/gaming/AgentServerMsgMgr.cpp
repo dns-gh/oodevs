@@ -675,9 +675,9 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveBegin()
 // Name: AgentServerMsgMgr::OnReceiveMsgCheckPointSaveEnd
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveEnd()
+void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveEnd( const MsgsSimToClient::MsgControlCheckPointSaveEnd& message )
 {
-    simulation_.EndCheckPoint();
+    simulation_.EndCheckPoint( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1751,7 +1751,7 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& from, const 
     else if( wrapper.message().has_control_checkpoint_save_begin() )
         OnReceiveMsgCheckPointSaveBegin();
     else if( wrapper.message().has_control_checkpoint_save_end() )
-        OnReceiveMsgCheckPointSaveEnd();
+        OnReceiveMsgCheckPointSaveEnd( wrapper.message().control_checkpoint_save_end() );
     else if( wrapper.message().has_control_checkpoint_set_frequency_ack() )
         OnReceiveMsgCheckPointSetFrequencyAck ();
     else if( wrapper.message().has_control_checkpoint_save_now_ack() )

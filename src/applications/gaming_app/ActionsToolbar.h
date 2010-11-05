@@ -11,6 +11,7 @@
 #define __ActionsToolbar_h_
 
 #include "tools/ElementObserver_ABC.h"
+#include "gaming/Simulation.h"
 
 namespace kernel
 {
@@ -29,7 +30,6 @@ namespace actions
 }
 
 class Services;
-class Simulation;
 
 // =============================================================================
 /** @class  ActionsToolbar
@@ -41,6 +41,7 @@ class ActionsToolbar : public QHBox
                      , public tools::Observer_ABC
                      , public tools::ElementObserver_ABC< Simulation >
                      , public tools::ElementObserver_ABC< Services >
+                     , public tools::ElementObserver_ABC< Simulation::sCheckPoint >
 {
     Q_OBJECT;
 
@@ -68,6 +69,7 @@ private:
     void PurgeConfirmed( int result );
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Services& services );
+    virtual void NotifyUpdated( const Simulation::sCheckPoint& checkPoint );
     //@}
 
 private slots:
