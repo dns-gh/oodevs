@@ -16,12 +16,12 @@
     <object id="13" type="cobra deployment area"/>
     <object id="14" type="mrls deployment area"/>
     <object id="15" type="crossing site"/>
-    <object id="16" type="nbc cloud"/>
+    <object id="16" type="nbc cloud (external model)"/>
     <object id="17" type="logistic support area"/>
     <object id="18" type="decontamination site"/>
     <object id="19" type="jamming area"/>
     <object id="20" type="rota area"/>
-    <object id="21" type="nbc zone"/>
+    <object id="21" type="nbc zone (external model)"/>
     <object id="22" type="landing area"/>
     <object id="23" type="trail"/>
     <object id="24" type="platform"/>
@@ -40,4 +40,13 @@
     <object id="37" type="installation"/>
     <object id="38" type="fire"/>
     <object id="39" type="emergency shelter"/>
+    <object id="40" type="distribution point"/>
+    <object id="41" type="nbc cloud"/>
+    <object id="42" type="nbc zone"/>
+    <object id="43" type="dirty bomb"/>
+    <object id="44" type="hospital"/>
+    <object id="45" type="weapon cache"/>
+	<object id="46" type="leaflet"/>
+    <object id="40" type="sensors"/>
+    <object id="41" type="sensorsDetectionZone"/>
 </objects>

@@ -465,4 +465,14 @@
   <report id="3012" message="tir sur camp ennemi"/>
   <report id="3013" message="tire par camp ennemi"/>
   <report id="3014" message="le drone doit être mis en oeuvre"/>
+  <report id="3015" message="demande un renfort technique"/>
+  <report id="3016" message="demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
+    <parameter type="Numeric"/>
+    <parameter type="Numeric"/>
+  </report>
+  <report id="3017" message="feu de classe %1 identifié">
+    <parameter type="Numeric"/>
+  </report>
+  <report id="3018" message="demande un renfort de police"/>
+  <report id="3019" message="demande un renfort médical"/>
 </reports>
