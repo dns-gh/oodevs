@@ -1748,6 +1748,11 @@
         <doctrine><![CDATA[TBC]]></doctrine>
         <usage><![CDATA[Unit moves to the target, activates the bomb and moves to the meeting point.]]></usage>
       </descriptions>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="intelligences_" max-occurs="unbounded" min-occurs="1" name="Renseignements" optional="true" type="Intelligence"/>
       <parameter dia-name="knowledge_" name="Target Bomb" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASY_ExecuteBombingAttack" dia-type="T_Mission_Pion_ASY_ExecuteBombingAttack" id="406" name="Asymetric - carry out a dirty bombing attack">
@@ -1755,6 +1760,11 @@
         <doctrine><![CDATA[TBC]]></doctrine>
         <usage><![CDATA[Unit moves to the target, carries out the attack and moves to the meeting point.]]></usage>
       </descriptions>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="intelligences_" max-occurs="unbounded" min-occurs="1" name="Renseignements" optional="true" type="Intelligence"/>
       <parameter dia-name="location_" name="Location" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Emergency_FollowPopulation" dia-type="T_Mission_Pion_Emergency_FollowPopulation" id="407" name="Emergency - follow population">
@@ -1762,16 +1772,25 @@
         <doctrine><![CDATA[Follow the head of a blob population]]></doctrine>
         <usage><![CDATA[Follow the head of a blob population]]></usage>
       </descriptions>
-      <parameter dia-name="population_" name="Population" optional="false" type="PopulationKnowledge"/>
-      <parameter dia-name="destination_" name="Target Destination" optional="false" type="Point"/>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="intelligences_" max-occurs="unbounded" min-occurs="1" name="Renseignements" optional="true" type="Intelligence"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Emergency_EvacuateWounded" dia-type="T_Mission_Pion_Emergency_EvacuateWounded" id="408" name="Emergency - evacuate wounded">
-      <parameter dia-name="wounded_" name="Wounded" optional="false" type="Agent"/>
-      <parameter dia-name="hospitals_" name="Hospitals" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="garage_" name="Garage" optional="false" type="Point"/>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="intelligences_" max-occurs="unbounded" min-occurs="1" name="Renseignements" optional="true" type="Intelligence"/>
     </mission>
     <mission dia-behavior="MIS_Pion_JOINT_AIR_Loiter" dia-type="T_Mission_Pion_JOINT_AIR_Loiter" id="410" name="Joint Air - Loiter">
-      <parameter dia-name="itineraire_" name="path" optional="false" type="Path"/>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="intelligences_" max-occurs="unbounded" min-occurs="1" name="Renseignements" optional="true" type="Intelligence"/>
     </mission>
   </units>
   <automats>
@@ -3142,6 +3161,11 @@
       <descriptions>
         <doctrine><![CDATA[Operate fire units on provided locations and forward fire requests]]></doctrine>
       </descriptions>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="intelligences_" max-occurs="unbounded" min-occurs="1" name="Renseignements" optional="true" type="Intelligence"/>
       <parameter dia-name="zoneDeploiement_" name="deployment area" optional="false" type="Location"/>
     </mission>
   </automats>
