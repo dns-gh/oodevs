@@ -1807,6 +1807,8 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="intelligences_" max-occurs="unbounded" min-occurs="1" name="Renseignements" optional="true" type="Intelligence"/>
+      <parameter dia-name="units" max-occurs="unbounded" min-occurs="1" name="units" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="positions" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Flee" dia-type="net.masagroup.sword.test.military.platoon.tasks.Flee" id="2032" name="TEST Flee">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2543,6 +2545,12 @@
       <parameter dia-name="intelligences_" max-occurs="unbounded" min-occurs="1" name="Renseignements" optional="true" type="Intelligence"/>
       <parameter dia-name="objective" max-occurs="unbounded" min-occurs="1" name="unite alliée" optional="false" type="Agent"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="postions pour recueillir" optional="false" type="Point"/>
+    </mission> 
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Barrer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Barrer" id="2123" name="MELEE Barrer">
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Point de menace" optional="false" type="Point"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObject"/>
+      <parameter dia-name="directionPoints" max-occurs="unbounded" min-occurs="1" name="Points de menace" optional="true" type="Point"/>
     </mission>
   </units>
   <automats>
@@ -4201,6 +4209,13 @@
           <parameter type="UrbanBlock"/>
         </choice>
       </parameter>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObject"/>
+      <parameter dia-name="meetingPoint" max-occurs="unbounded" min-occurs="1" name="Position de regroupement" optional="true" type="Point"/>
+    </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Barrer" dia-type="net.masagroup.sword.france.military.company.tasks.Barrer" id="1034" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Barrer" name="MELEE Barrer">
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Numeric"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Points de menace" optional="false" type="Point"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="GenObject"/>
       <parameter dia-name="meetingPoint" max-occurs="unbounded" min-occurs="1" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
