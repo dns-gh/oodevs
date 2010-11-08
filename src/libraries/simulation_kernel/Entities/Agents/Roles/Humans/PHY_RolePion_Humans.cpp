@@ -487,9 +487,6 @@ void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& asn ) const
         const PHY_HumanRank&           rank      = *itRank->second;
         const T_HumanData&             humanData = humansData_[ rank.GetID() ];
 
-        if( !humanData.bHasChanged_ )
-            continue;
-
         MsgsSimToClient::HumanDotations_HumanDotation& personnel = *asn().mutable_dotation_eff_personnel()->add_elem();
 
         personnel.set_rang                         ( rank.GetAsnID() );
