@@ -115,22 +115,11 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
 
         TER_Agent_ABC::T_AgentPtrVector allTargets;
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle(vTargetPosition, 500., allTargets );
-
-        std::vector< TER_Object_ABC* > objects;
-        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vTargetPosition, rInterventionTypeFired * rDispersionX_ , objects );
-
+        
         std::vector< const urban::TerrainObject_ABC* > urbanList;
         UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( vTargetPosition.rX_ ), static_cast< float >( vTargetPosition.rY_ ) ),
                                                                    static_cast< float >( rInterventionTypeFired * rDispersionX_ ), urbanList );
-
-        for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
-        {
-            MIL_Object_ABC& object = *static_cast< MIL_Object_ABC* >( *it );
-            StructuralCapacity* capacity = object.Retrieve< StructuralCapacity >();
-            if( capacity )
-                capacity->ApplyIndirectFire( object, attritionSurface, dotationCategory_ );
-        }
-
+        
         for( TER_Agent_ABC::CIT_AgentPtrVector itAllTarget = allTargets.begin(); itAllTarget != allTargets.end(); ++itAllTarget )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itAllTarget ).GetAgent();
@@ -151,6 +140,18 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
                 targetRoleProtection.UseAmmunition( dotationCategory_ );
                 return;
             }
+        }
+
+        std::vector< TER_Object_ABC* > objects;
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vTargetPosition, rInterventionTypeFired * rDispersionX_ , objects );
+
+        
+        for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
+        {
+            MIL_Object_ABC& object = *static_cast< MIL_Object_ABC* >( *it );
+            StructuralCapacity* capacity = object.Retrieve< StructuralCapacity >();
+            if( capacity )
+                capacity->ApplyIndirectFire( object, attritionSurface, dotationCategory_ );
         }
 
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )

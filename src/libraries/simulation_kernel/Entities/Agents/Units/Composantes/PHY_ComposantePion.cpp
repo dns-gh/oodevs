@@ -296,14 +296,7 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, doub
     ApplyHumansWounds( *pNewState, fireDamages );
     if( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
         pNewState = &PHY_ComposanteState::undamaged_;
-    if( *pNewState < *pState_ )
-    {
-        pState_ = pNewState;
-        if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
-            pBreakdown_ = new PHY_Breakdown( pType_->GetAttritionBreakdownType() );
-        ManageEndMaintenance();
-        pRole_->NotifyComposanteChanged( *this, oldState );
-    }
+    ApplyNewComposanteState( *pNewState, oldState );
     fireDamages.NotifyComposanteStateChanged( *this, oldState, *pState_ );
 }
 
