@@ -81,10 +81,10 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectMagicOrdersInterface::SendObjectMagic
+// Name: ObjectMagicOrdersInterface::SendObjectUpdateMagic
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::SendObjectMagic( ParameterList& attribute )
+void ObjectMagicOrdersInterface::SendObjectUpdateMagic( ParameterList& attribute )
 {
     if( selectedEntity_ )
     {
@@ -112,7 +112,7 @@ void ObjectMagicOrdersInterface::BuildObject()
     list.AddQuantity( "Number", 0 );
     list.AddNumeric( "Density", 0 );
     list.AddQuantity( "Percentage", 100 );
-    SendObjectMagic( list );
+    SendObjectUpdateMagic( list );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,13 +121,14 @@ void ObjectMagicOrdersInterface::BuildObject()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::DestroyObject()
 {
-    ParameterList& list = *new ParameterList( OrderParameter( "Construction", "list", false ) );
-    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_construction );
-    list.AddIdentifier( "Type", 0 );
-    list.AddQuantity( "Number", 0 );
-    list.AddNumeric( "Density", 0 );
-    list.AddQuantity( "Percentage", 0 );
-    SendObjectMagic( list );
+    if( selectedEntity_ )
+    {
+        // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "destroy_object" );
+        ObjectMagicAction* action = new ObjectMagicAction( selectedEntity_, actionType, controllers_.controller_, true );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+        action->RegisterAndPublish( actionsModel_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +143,7 @@ void ObjectMagicOrdersInterface::MineObject()
     list.AddQuantity( "Number", 0 );
     list.AddNumeric( "Density", 0 );
     list.AddQuantity( "Percentage", 100 );
-    SendObjectMagic( list );
+    SendObjectUpdateMagic( list );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +158,7 @@ void ObjectMagicOrdersInterface::SweepMineObject()
     list.AddQuantity( "Number", 0 );
     list.AddNumeric( "Density", 0 );
     list.AddQuantity( "Percentage", 0 );
-    SendObjectMagic( list );
+    SendObjectUpdateMagic( list );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,7 +171,7 @@ void ObjectMagicOrdersInterface::ActivateReservedObstacle()
     list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_obstacle );
     list.AddIdentifier( "TargetType", Common::ObstacleType_DemolitionTargetType_reserved );
     list.AddBool( "Activation", true );
-    SendObjectMagic( list );
+    SendObjectUpdateMagic( list );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +184,7 @@ void ObjectMagicOrdersInterface::DeactivateReservedObstacle()
     list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_obstacle );
     list.AddIdentifier( "TargetType", Common::ObstacleType_DemolitionTargetType_reserved );
     list.AddBool( "Activation", false );
-    SendObjectMagic( list );
+    SendObjectUpdateMagic( list );
 }
 
 // -----------------------------------------------------------------------------

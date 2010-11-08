@@ -85,7 +85,7 @@ private:
     //! @name Helpers
     //@{
     int  AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
-    void SendObjectMagic( actions::parameters::ParameterList& attribute );
+    void SendObjectUpdateMagic( actions::parameters::ParameterList& attribute );
     //@}
 
 private:
