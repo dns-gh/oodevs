@@ -20,7 +20,7 @@ using namespace extractors;
 // -----------------------------------------------------------------------------
 Humans::Humans()
 {
-    humans_.resize( 3 );
+    // NOTHING
 }
 
 namespace
@@ -85,7 +85,7 @@ Humans::Humans( xml::xistream& xis )
     : rankMask_ ( ReadRanks( xis ) )
     , stateMask_( ReadStates( xis ) )
 {
-    humans_.resize( 3 );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -94,22 +94,16 @@ Humans::Humans( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 int Humans::Extract( const MsgUnitAttributes& attributes )
 {
+    int result = 0;
     unsigned size = attributes.dotation_eff_personnel().elem_size();
     while( size > 0 )
     {
         --size;
         const HumanDotations_HumanDotation& humans = attributes.dotation_eff_personnel().elem( size );
         if( ( rankMask_ & ( 1 << humans.rang() ) ) != 0 )
-        {
-            int quantity = 0;
             for( unsigned i = 0; i < nHumanStates; ++i )
                 if( ( stateMask_ & ( 1 << i ) ) != 0 )
-                    quantity += (humans.*humanData[i])();
-            humans_[ humans.rang() ] += quantity;
-        }
+                    result += (humans.*humanData[i])();
     }
-    int result = 0;
-    for( std::vector< int >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-        result += *it;
     return result;
 }

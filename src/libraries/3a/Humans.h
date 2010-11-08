@@ -56,7 +56,6 @@ public:
 private:
     //! @name Member data
     //@{
-    std::vector< int > humans_;
     int rankMask_;
     int stateMask_;
     //@}
