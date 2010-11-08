@@ -107,6 +107,7 @@ namespace
     {
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( GetId, 0 );
+        MOCK_METHOD( GetTeam, 0 );
 
 //        MOCK_METHOD_EXT( GetEntity, 0, const kernel::Entity_ABC*(), GetBaseEntity ); // $$$$ SBO 2009-10-30: refactor interface
 //        MOCK_METHOD_EXT( GetOwner, 0, const kernel::Entity_ABC&(), GetBaseOwner ); // $$$$ SBO 2009-10-30: refactor interface
@@ -138,11 +139,9 @@ namespace
     {
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( GetId, 0 );
-
-//        MOCK_METHOD_EXT( GetEntity, 0, const kernel::Entity_ABC*(), GetBaseEntity ); // $$$$ SBO 2009-10-30: refactor interface
-//        MOCK_METHOD_EXT( GetOwner, 0, const kernel::Entity_ABC&(), GetBaseOwner ); // $$$$ SBO 2009-10-30: refactor interface
-        MOCK_METHOD_EXT( GetEntity, 0, const kernel::Object_ABC*(), GetObjectEntity );
-        MOCK_METHOD_EXT( GetOwner, 0, const kernel::Team_ABC&(), GetTeam );
+        MOCK_METHOD( GetTeam, 0 );
+        MOCK_METHOD( GetOwner, 0 );
+        MOCK_METHOD( GetEntity, 0 );
         MOCK_METHOD( Display, 1 );
         MOCK_METHOD( DisplayInList, 1 );
     };
@@ -559,7 +558,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectKnowledge )
     MOCK_EXPECT( knowledge, GetId ).returns( 15 );
     MockObjectKnowledgeConverter converter;
     MOCK_EXPECT( converter, FindObjectKnowledgeFromObjectWithEntity ).with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
-    MOCK_EXPECT( knowledge, GetObjectEntity ).returns( &object );
+    MOCK_EXPECT( knowledge, GetEntity ).returns( &object );
 
     kernel::Controller controller;
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "objectknowledge", input,

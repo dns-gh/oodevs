@@ -29,6 +29,9 @@ class extension : public kernel::Extension_ABC                                  
 public:                                                                                     \
              extension() {};                                                                \
     virtual ~extension() {};                                                                \
+                                                                                            \
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& ) {}            \
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& ) {}                     \
 };
 
 namespace kernel

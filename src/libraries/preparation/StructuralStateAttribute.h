@@ -11,7 +11,7 @@
 #define __StructuralStateAttribute_h_
 
 #include "Overridable_ABC.h"
-#include "clients_kernel/ObjectExtensions.h"
+#include "clients_kernel/UrbanExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
