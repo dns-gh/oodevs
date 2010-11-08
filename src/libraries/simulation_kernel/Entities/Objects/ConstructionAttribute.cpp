@@ -144,7 +144,7 @@ bool ConstructionAttribute::Update( const ConstructionAttribute& rhs )
     if( constructionPercentage_.NeedToBeSent() )
         NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
 
-    return NeedUpdate();
+    return NeedUpdate( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,9 +208,9 @@ void ConstructionAttribute::SendFullState( Common::ObjectAttributes& asn ) const
     if( dotation_ )
     {
         asn.mutable_construction()->mutable_resource()->set_id( dotation_->GetMosID() );
-        asn.mutable_construction()->set_dotation_nbr( nCurrentNbrDotation_ );
-        asn.mutable_construction()->set_percentage( unsigned int( constructionPercentage_.Send() * 100. ) );
+        asn.mutable_construction()->set_dotation_nbr( nCurrentNbrDotation_ );        
     }
+    asn.mutable_construction()->set_percentage( unsigned int( constructionPercentage_.Send() * 100. ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,11 +219,10 @@ void ConstructionAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    if( NeedUpdate( eOnCreation ) | NeedUpdate( eOnUpdate ) )
+    if( NeedUpdate( eOnUpdate ) )
     {
-        asn.mutable_construction()->set_dotation_nbr( nCurrentNbrDotation_ );
-        asn.mutable_construction()->set_percentage( unsigned int( constructionPercentage_.Send() * 100. ) );
-        Reset( eOnUpdate | eOnHLAUpdate );
+        SendFullState( asn );
+        Reset( eOnUpdate );
     }
 }
 

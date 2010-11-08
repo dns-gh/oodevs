@@ -132,10 +132,10 @@ void DelayAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void DelayAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    if( NeedUpdate() )
+    if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
-        Reset();
+        Reset( eOnUpdate );
     }
 }
 

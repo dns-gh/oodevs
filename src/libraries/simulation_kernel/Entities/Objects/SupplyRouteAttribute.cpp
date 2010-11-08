@@ -169,7 +169,7 @@ void SupplyRouteAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void SupplyRouteAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    if( NeedUpdate() )
+    if( NeedUpdate( eOnUpdate ) )
     {
         asn.mutable_supply_route()->set_equipped( bEquipped_ );
         Reset( eOnUpdate );
@@ -190,7 +190,7 @@ void SupplyRouteAttribute::Deserialize( const AttributeIdentifier& attributeID, 
             bEquipped_ = true;
         else
             bEquipped_ = false;
-        NotifyAttributeUpdated( eOnUpdate );
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
     }
 }
 
@@ -211,7 +211,7 @@ void SupplyRouteAttribute::Serialize( HLA_UpdateFunctor& functor ) const
 void SupplyRouteAttribute::Equip()
 {
     bEquipped_ = true;
-    NotifyAttributeUpdated( eOnUpdate );
+    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
 }
 //
 // -----------------------------------------------------------------------------
@@ -290,5 +290,5 @@ bool SupplyRouteAttribute::Update( const SupplyRouteAttribute& rhs )
         NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
         rFlow_ = rhs.rFlow_;
     }
-    return NeedUpdate();
+    return NeedUpdate( eOnUpdate );
 }

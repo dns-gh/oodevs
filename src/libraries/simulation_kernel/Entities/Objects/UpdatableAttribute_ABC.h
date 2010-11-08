@@ -10,6 +10,8 @@
 #ifndef __UpdatableAttribute_ABC_h_
 #define __UpdatableAttribute_ABC_h_
 
+//$$$ NLD - Comment faire simple quand on peut faire compliquer => Virer les flags
+
 // =============================================================================
 /** @class  UpdatableAttribute_ABC
     @brief  UpdatableAttribute_ABC
@@ -22,17 +24,16 @@ public:
     //! @name Type
     //@{
     enum E_UpdateType {
-        eOnCreation  = 0x01,
         eOnUpdate    = 0x02,
         eOnHLAUpdate = 0x04,
-        eUpdateAll   = 0xFF
+        eUpdateAll   = eOnHLAUpdate | eOnUpdate
     };
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UpdatableAttribute_ABC() : xToUpdate_ ( 0 ) {}
+             UpdatableAttribute_ABC() : xToUpdate_ ( eUpdateAll ) {}
     virtual ~UpdatableAttribute_ABC() {}
     //@}
 
@@ -49,20 +50,20 @@ protected:
         xToUpdate_ &= ( xToUpdate_ ^ update );
     }
 
-    virtual void Reset() const
+    /*virtual void Reset() const
     {
         xToUpdate_ = 0;
-    }
+    }*/
 
     virtual void NotifyAttributeUpdated( int update ) const
     {
         xToUpdate_ |= update;
     }
 
-    virtual bool NeedUpdate() const
+    /*virtual bool NeedUpdate() const
     {
         return xToUpdate_ != 0;
-    }
+    }*/
 
     virtual bool NeedUpdate( E_UpdateType type ) const
     {

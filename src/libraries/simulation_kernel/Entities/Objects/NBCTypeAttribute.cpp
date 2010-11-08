@@ -109,7 +109,7 @@ NBCTypeAttribute& NBCTypeAttribute::operator=( const NBCTypeAttribute& rhs )
     length_           = rhs.length_;
     propagationAngle_ = rhs.propagationAngle_;
 
-    NotifyAttributeUpdated( eOnCreation );
+    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
     return *this;
 }
 
@@ -176,10 +176,10 @@ void NBCTypeAttribute::SendFullState( Common::ObjectAttributes& /*message*/ ) co
 // -----------------------------------------------------------------------------
 void NBCTypeAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    if( NeedUpdate() )
+    if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
-        Reset();
+        Reset( eOnUpdate );
     }
 }
 
@@ -228,7 +228,7 @@ void NBCTypeAttribute::UpdateConcentration( int concentration )
 {
     if( concentration != concentration_ )
     {
-        NotifyAttributeUpdated( eOnUpdate );
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
         concentration_ = concentration;
     }
 }

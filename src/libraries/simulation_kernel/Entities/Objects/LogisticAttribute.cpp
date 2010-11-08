@@ -128,9 +128,13 @@ void LogisticAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // Name: LogisticAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void LogisticAttribute::SendUpdate( Common::ObjectAttributes& /*asn*/ ) const
+void LogisticAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    // NOTHING
+    if( NeedUpdate( eOnUpdate ) )
+    {
+        SendFullState( asn );
+        Reset( eOnUpdate );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -152,6 +156,7 @@ bool LogisticAttribute::Update( const LogisticAttribute& rhs )
     if( pTC2_ != rhs.pTC2_ )
     {        
         pTC2_ = rhs.pTC2_;
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
         return true;
     }
     return false;

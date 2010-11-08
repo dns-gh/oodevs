@@ -11,6 +11,7 @@
 #define __LogisticAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include "UpdatableAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -27,6 +28,7 @@ class MIL_AutomateLOG;
 // Created: JCR 2008-05-30
 // =============================================================================
 class LogisticAttribute : public ObjectAttribute_ABC
+                        , private UpdatableAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor

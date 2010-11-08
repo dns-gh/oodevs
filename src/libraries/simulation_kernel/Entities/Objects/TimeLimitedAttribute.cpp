@@ -159,9 +159,9 @@ void TimeLimitedAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void TimeLimitedAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    if( NeedUpdate() )
+    if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
-        Reset();
+        Reset( eOnUpdate );
     }
 }

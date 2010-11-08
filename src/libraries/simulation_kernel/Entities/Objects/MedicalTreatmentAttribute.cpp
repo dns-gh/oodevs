@@ -327,7 +327,7 @@ void MedicalTreatmentAttribute::Update( const Common::ObjectAttributeMedicalTrea
         }
     }
 
-    NotifyAttributeUpdated( eOnUpdate );
+    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
 }
 
 // -----------------------------------------------------------------------------
@@ -356,10 +356,10 @@ void MedicalTreatmentAttribute::SendFullState( Common::ObjectAttributes& message
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    if( NeedUpdate() )
+    if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
-        Reset();
+        Reset( eOnUpdate );
     }
 }
 
@@ -392,7 +392,7 @@ void MedicalTreatmentAttribute::RegisterPatients( unsigned injuryID, unsigned ca
     if( capacities_[ injuryID ].occupied_.size() < category )
         throw std::runtime_error( std::string( __FUNCTION__ ) + " Unknown category id: " + boost::lexical_cast< std::string >( category ) );
     capacities_[ injuryID ].occupied_[ category ] += n;
-    NotifyAttributeUpdated( 1 );
+    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
 }
 
 // -----------------------------------------------------------------------------
@@ -457,7 +457,7 @@ void MedicalTreatmentAttribute::Update( float delay )
     std::transform( capacities_.begin(), capacities_.end(), lockedDoctors.begin(), AssignDoctors( doctors_, capacities_.size() ) );
     std::transform( capacities_.begin(), capacities_.end(), lockedDoctors.begin(), lockedDoctors.begin(),
         boost::bind( &MedicalTreatmentAttribute::MedicalCapacity::Update, _1, _2, delay ) );
-    NotifyAttributeUpdated( eOnUpdate );
+    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
 }
 
 // -----------------------------------------------------------------------------
@@ -518,7 +518,6 @@ bool MedicalTreatmentAttribute::Update( const MedicalTreatmentAttribute& rhs )
     {
         NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
         status_ = rhs.status_;
-    }
-    
-    return NeedUpdate();
+    }    
+    return NeedUpdate( eOnUpdate );
 }

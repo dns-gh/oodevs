@@ -175,9 +175,9 @@ void MineAttribute::SendFullState( Common::ObjectAttributes& asn ) const
     if( dotation_ )
     {
         asn.mutable_mine()->mutable_resource()->set_id( dotation_->GetMosID() );
-        asn.mutable_mine()->set_percentage( unsigned int( miningPercentage_.Send() * 100. ) );
         asn.mutable_mine()->set_dotation_nbr( nCurrentNbrDotation_ );
     }
+    asn.mutable_mine()->set_percentage( unsigned int( miningPercentage_.Send() * 100. ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,11 +186,10 @@ void MineAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void MineAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    if( NeedUpdate() )
+    if( NeedUpdate( eOnUpdate ) )
     {
-        asn.mutable_mine()->set_percentage( unsigned int( miningPercentage_.Send() * 100. ) );
-        asn.mutable_mine()->set_dotation_nbr( nCurrentNbrDotation_ );
-        Reset( eOnUpdate | eOnHLAUpdate );
+        SendFullState( asn );
+        Reset( eOnUpdate );
     }
 }
 
@@ -325,5 +324,5 @@ bool MineAttribute::Update( const MineAttribute& rhs )
     if( miningPercentage_.NeedToBeSent() )
         NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
 
-    return NeedUpdate();
+    return NeedUpdate( eOnUpdate );
 }

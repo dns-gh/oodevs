@@ -107,7 +107,7 @@ FireAttribute& FireAttribute::operator=( const FireAttribute& rhs )
     pClass_ = rhs.pClass_;
     width_ = rhs.width_;
     length_ = rhs.length_;
-    NotifyAttributeUpdated( eOnCreation );
+    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
     return *this;
 }
 
@@ -178,10 +178,10 @@ void FireAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void FireAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    if( NeedUpdate() )
+    if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
-        Reset();
+        Reset( eOnUpdate );
     }
 }
 
@@ -227,7 +227,7 @@ void FireAttribute::UpdateHeat( int heat, unsigned int time )
 {
     if( heat != heat_ )
     {
-        NotifyAttributeUpdated( eOnUpdate );
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
         heat_ = heat;
     }
     timeOfLastUpdate_ = time;
@@ -296,5 +296,5 @@ bool FireAttribute::Update( const FireAttribute& rhs )
         length_ = rhs.length_;
     }
     timeOfLastUpdate_ = rhs.timeOfLastUpdate_;
-    return NeedUpdate();
+    return NeedUpdate( eOnUpdate );
 }

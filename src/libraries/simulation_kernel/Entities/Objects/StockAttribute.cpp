@@ -190,10 +190,10 @@ void StockAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void StockAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    if( NeedUpdate( eOnCreation ) | NeedUpdate( eOnUpdate) )
+    if( NeedUpdate( eOnUpdate) )
     {
         Send( *asn.mutable_stock() );
-        Reset();
+        Reset( eOnUpdate );
     }
 }
 
@@ -206,7 +206,7 @@ void StockAttribute::OnUpdate( const Common::ObjectAttributes& asn )
     if( asn.has_stock() )
     {
         // Shold not be called
-        NotifyAttributeUpdated( eOnUpdate );
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
     }
 }
 

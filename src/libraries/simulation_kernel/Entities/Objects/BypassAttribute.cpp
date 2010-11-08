@@ -107,10 +107,10 @@ void BypassAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void BypassAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    if( NeedUpdate( ) )
+    if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
-        Reset( eOnUpdate | eOnHLAUpdate );
+        Reset( eOnUpdate );
     }
 }
 
@@ -189,5 +189,5 @@ bool BypassAttribute::Update( const BypassAttribute& rhs )
     bypassPercentage_.Set( rhs.bypassPercentage_.Get() );
     if( bypassPercentage_.NeedToBeSent() )
         NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
-    return NeedUpdate();
+    return NeedUpdate( eOnUpdate );
 }

@@ -144,10 +144,10 @@ void CrossingSiteAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void CrossingSiteAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    if( NeedUpdate( eOnCreation ) )
+    if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
-        Reset();
+        Reset( eOnUpdate );
     }
 }
 
@@ -241,5 +241,5 @@ bool CrossingSiteAttribute::Update( const CrossingSiteAttribute& rhs )
         NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
         bBanksToFitOut_ = rhs.bBanksToFitOut_;
     }
-    return NeedUpdate();
+    return NeedUpdate( eOnUpdate );
 }

@@ -183,10 +183,10 @@ void NBCAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void NBCAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    if( NeedUpdate() )
+    if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
-        Reset();
+        Reset( eOnUpdate );
     }
 }
 
@@ -334,5 +334,5 @@ bool NBCAttribute::Update( const NBCAttribute& rhs )
         NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
         danger_ = rhs.danger_;
     }
-    return NeedUpdate();
+    return NeedUpdate( eOnUpdate );
 }

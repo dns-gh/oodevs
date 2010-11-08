@@ -80,7 +80,7 @@ void SealOffAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void SealOffAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    if( NeedUpdate( eOnCreation ) | NeedUpdate( eOnUpdate ) )
+    if( NeedUpdate( eOnUpdate ) )
     {
         asn.mutable_seal_off()->set_level( unsigned int( rSealOffLevel_ * 100 ) );
         Reset( eOnUpdate );

@@ -163,7 +163,7 @@ void ObstacleAttribute::Activate()
     {
         bActivated_ = true;
         activationTime_ = 0;
-        NotifyAttributeUpdated( eOnUpdate );
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
     }
 }
 
@@ -202,12 +202,12 @@ void ObstacleAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
-    if( NeedUpdate() )
+    if( NeedUpdate( eOnUpdate ) )
     {
         asn.mutable_obstacle()->set_activated( bActivated_ );
         asn.mutable_obstacle()->set_type( Common::ObstacleType_DemolitionTargetType_reserved );
         asn.mutable_obstacle()->set_activation_time( activationTime_ );
-        Reset();
+        Reset( eOnUpdate );
     }
 }
 
@@ -243,7 +243,7 @@ void ObstacleAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attri
     if( attribute.list_size() > 2 && bActivated_ != attribute.list( 2 ).abool() )
     {
         bActivated_ = attribute.list( 2 ).abool();
-        NotifyAttributeUpdated( eOnUpdate );
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
     }
 }
 
@@ -268,5 +268,5 @@ bool ObstacleAttribute::Update( const ObstacleAttribute& rhs )
         NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
         activationTime_ = rhs.activationTime_;
     }
-    return NeedUpdate();
+    return NeedUpdate( eOnUpdate );
 }
