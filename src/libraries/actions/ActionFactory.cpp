@@ -34,6 +34,7 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/EntityResolver_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/MagicActionType.h"
@@ -45,6 +46,7 @@
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
@@ -412,6 +414,10 @@ actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis, b
         target = entities_.FindAutomat( targetid );
     if( !target )
         target = entities_.FindPopulation( targetid );
+    if( !target )
+        target = entities_.FindFormation( targetid );
+    if( !target )
+        target = entities_.FindTeam( targetid );
     if( !target )
         throw TargetNotFound( targetid );
 

@@ -108,7 +108,7 @@ void FormationLayer::RequestCreation( const geometry::Point2f& point, const kern
     action->Polish();
     int context = (int)clock();
     boost::shared_ptr< MsgsSimToClient::Listener > listener( new AutomatCreationListener( point, type, context,
-        agentsModel_, controllers_.controller_, static_.types_, static_.coordinateConverter_, actionsModel_ ) );
+        agentsModel_, controllers_.controller_, static_.types_, static_.coordinateConverter_, actionsModel_, simulation_ ) );
     messageManager_.RegisterListener( listener );
     actionsModel_.Publish( *action, context );
 }

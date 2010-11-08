@@ -9,7 +9,10 @@
 
 #include "gaming_app_pch.h"
 #include "AutomatCreationListener.h"
+#include "actions/Action_ABC.h"
 #include "actions/ActionsModel.h"
+#include "actions/ActionTasker.h"
+#include "actions/ActionTiming.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/AutomatType.h"
@@ -22,7 +25,7 @@
 // -----------------------------------------------------------------------------
 AutomatCreationListener::AutomatCreationListener( const geometry::Point2f& point, const kernel::AutomatType& type, int context,
                  tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, kernel::Controller& controller, kernel::AgentTypes& agentTypes,
-                 kernel::CoordinateConverter_ABC& coordinateConverter, actions::ActionsModel& actionsModel )
+                 kernel::CoordinateConverter_ABC& coordinateConverter, actions::ActionsModel& actionsModel, const kernel::Time_ABC& time )
     : point_( point)
     , type_( type )
     , context_ ( context )
@@ -31,6 +34,7 @@ AutomatCreationListener::AutomatCreationListener( const geometry::Point2f& point
     , agentTypes_( agentTypes )
     , coordinateConverter_( coordinateConverter )
     , actionsModel_( actionsModel )
+    , time_( time )
 {
     // NOTHING
 }
@@ -65,6 +69,8 @@ bool AutomatCreationListener::OnMessageReceived( const MsgsSimToClient::MsgSimTo
         for( unsigned int i = 0; i < number; ++i )
         {
             actions::Action_ABC* action = actionsModel_.CreateAgentCreationAction( agentType, point_, *automat, controller_, agentTypes_, coordinateConverter_ );
+            action->Attach( *new actions::ActionTiming( controller_, time_ ) );
+            action->Attach( *new actions::ActionTasker( automat, false ) );
             actionsModel_.Publish( *action );
         }
     }

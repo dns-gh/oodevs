@@ -10,7 +10,10 @@
 #include "gaming_app_pch.h"
 #include "CreateFormationDialog.h"
 #include "moc_CreateFormationDialog.cpp"
+#include "actions/Action_ABC.h"
 #include "actions/ActionsModel.h"
+#include "actions/ActionTasker.h"
+#include "actions/ActionTiming.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/FormationLevels.h"
@@ -22,7 +25,7 @@
 // Name: CreateFormationDialog constructor
 // Created: LDC 2010-10-12
 // -----------------------------------------------------------------------------
-CreateFormationDialog::CreateFormationDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::FormationLevels& levels, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, kernel::AgentTypes& agentTypes )
+CreateFormationDialog::CreateFormationDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::FormationLevels& levels, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, kernel::AgentTypes& agentTypes, const kernel::Time_ABC& time )
     : QDialog( parent )
     , controllers_( controllers )
     , profile_( profile )
@@ -30,6 +33,7 @@ CreateFormationDialog::CreateFormationDialog( QWidget* parent, kernel::Controlle
     , actionsModel_( actionsModel )
     , currentEntity_( 0 )
     , agentTypes_( agentTypes )
+    , time_( time )
 {
     controllers_.Register( *this );
 }
@@ -85,5 +89,7 @@ void CreateFormationDialog::NotifyContextMenu( const kernel::Entity_ABC& entity,
 void CreateFormationDialog::OnCreateFormation( int level )
 {
     actions::Action_ABC* action = actionsModel_.CreateFormationCreationAction( level, *currentEntity_, controllers_.controller_, agentTypes_ );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, time_ ) );
+    action->Attach( *new actions::ActionTasker( currentEntity_, false ) );
     actionsModel_.Publish( *action );
 }

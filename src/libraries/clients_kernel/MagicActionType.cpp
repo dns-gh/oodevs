@@ -120,7 +120,7 @@ void MagicActionType::Initialize()
     }
     else if( name_ == "crowd_creation" )
     {
-        CreateOrderParameter( "PopulationType", "identifier" );
+        CreateOrderParameter( "PopulationType", "string" );
         CreateOrderParameter( "Location", "point" );
         CreateOrderParameter( "Number", "numeric" );
         CreateOrderParameter( "Name", "string" );

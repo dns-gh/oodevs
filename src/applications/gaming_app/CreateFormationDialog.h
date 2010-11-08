@@ -28,6 +28,7 @@ namespace kernel
     class HierarchyLevel_ABC;
     class Profile_ABC;
     class Team_ABC;
+    class Time_ABC;
 }
 
 // =============================================================================
@@ -47,7 +48,7 @@ class CreateFormationDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-    CreateFormationDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::FormationLevels& levels, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, kernel::AgentTypes& agentTypes );
+             CreateFormationDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::FormationLevels& levels, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, kernel::AgentTypes& agentTypes, const kernel::Time_ABC& time );
     virtual ~CreateFormationDialog();
     //@}
 
@@ -84,6 +85,7 @@ private:
     actions::ActionsModel& actionsModel_;
     const kernel::Entity_ABC* currentEntity_;
     kernel::AgentTypes& agentTypes_;
+    const kernel::Time_ABC& time_;
     //@}
 };
 

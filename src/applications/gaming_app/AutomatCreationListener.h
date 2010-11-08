@@ -26,6 +26,7 @@ namespace kernel
     class AutomatType;
     class Controller;
     class CoordinateConverter_ABC;
+    class Time_ABC;
 }
 
 // =============================================================================
@@ -42,7 +43,7 @@ public:
     //@{
              AutomatCreationListener( const geometry::Point2f& point, const kernel::AutomatType& type, int context,
                  tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, kernel::Controller& controller, kernel::AgentTypes& agentTypes,
-                 kernel::CoordinateConverter_ABC& coordinateConverter, actions::ActionsModel& actionsModel );
+                 kernel::CoordinateConverter_ABC& coordinateConverter, actions::ActionsModel& actionsModel, const kernel::Time_ABC& time );
     virtual ~AutomatCreationListener();
     //@}
 
@@ -73,6 +74,7 @@ private:
     kernel::AgentTypes& agentTypes_;
     kernel::CoordinateConverter_ABC& coordinateConverter_;
     actions::ActionsModel& actionsModel_;
+    const kernel::Time_ABC& time_;
     //@}
 };
 
