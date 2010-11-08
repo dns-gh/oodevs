@@ -11,6 +11,7 @@
 #include "Application.h"
 #include "MainWindow.h"
 #include "Config.h"
+#include "ErrorEvent.h"
 #include "preparation/StaticModel.h"
 #include "preparation/Model.h"
 #include "clients_kernel/Controllers.h"
@@ -86,4 +87,49 @@ void Application::Initialize( int argc, char** argv )
 
     // Make sure the application exits when the main window is closed.
     connect( this, SIGNAL( lastWindowClosed() ), this, SLOT( quit() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::notify
+// Created: HBD 2010-11-08
+// -----------------------------------------------------------------------------
+bool Application::notify( QObject* pReceiver, QEvent* pEvent )
+{
+    try
+    {
+        if( ErrorEvent* pErrorEvent = dynamic_cast< ErrorEvent* >( pEvent ) )
+        {
+            DisplayError( pErrorEvent->reason_ );
+            return true;
+        }
+        return QApplication::notify( pReceiver, pEvent );
+    }
+    catch( std::exception& e )
+    {
+        DisplayError( e.what() );
+    }
+    catch( ... )
+    {
+        DisplayError( tr("Unknown exception caught" ) );
+    }
+    return true;
+}
+
+namespace
+{
+    bool active = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::DisplayError
+// Created: HBD 2010-11-08
+// -----------------------------------------------------------------------------
+void Application::DisplayError( const QString& text ) const
+{
+     if( ! active )
+    {
+        active = true;
+        QMessageBox::critical( activeWindow(),  tools::translate( "Application", "SWORD" ), text, "Ok" );
+        active = false;
+     }
 }

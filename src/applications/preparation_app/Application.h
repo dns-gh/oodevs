@@ -39,6 +39,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool notify( QObject* receiver, QEvent* e );
     void Initialize();
     //@}
 
@@ -52,6 +53,7 @@ private:
     //! @name Helpers
     //@{
     void Initialize( int argc, char** argv );
+    void DisplayError( const QString& text ) const;
     //@}
 
 private:
