@@ -24,7 +24,6 @@
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Illuminer"/>
         <mission name="MELEE Interdire"/>
-        <mission name="MELEE Barrer"/>
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
@@ -88,7 +87,6 @@
         <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Freiner"/>
         <mission name="MELEE Interdire"/>
-        <mission name="MELEE Barrer"/>
         <mission name="MELEE Jalonner"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="MELEE Reconnaitre un Bloc Urbain"/>
@@ -143,7 +141,6 @@
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Interdire"/>
-        <mission name="MELEE Barrer"/>
         <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
         <mission name="MELEE Reconnaitre un Bloc Urbain"/>
@@ -252,7 +249,6 @@
         <mission name="TEST Search"/>
         <mission name="TEST StayClose"/>
         <mission name="TEST Support"/>
-        <mission name="TEST TakeCover"/>
         <mission name="TEST ValorizeObjects"/>
         <mission name="TEST WaitTransport"/>
       </missions>
@@ -6673,7 +6669,6 @@
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Attaquer"/>
-        <mission name="MELEE Barrer"/>
         <mission name="MELEE Controler Secteur"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
