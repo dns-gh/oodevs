@@ -135,7 +135,7 @@
     </target>
 
     <target name="library.simulation_kernel" description="build simulation_kernel static library" depends="library.tools,library.protocol,library.simulation_terrain,library.simulation_orders,library.meteo,library.resource_network">
-        <build-lib name="simulation_kernel" pattern="lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="simulation_kernel" pattern="lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" suffix="-gd" excludes="**/DEC_Knowledge_ObjectAttributeProxy_ABC.h">
             <includepath path="${libraries.dir}/simulation_kernel"/> <!-- pour MIL.h -->
             <defineset define="USE_DLL"/> <!-- folk use dll -->
         </build-lib>
