@@ -11,10 +11,12 @@
 #include "protocol/authenticationsenders.h"
 #include "protocol/clientsenders.h"
 #include "protocol/simulationsenders.h"
+#include "protocol/simulation.h"
 #include "protocol/aarsenders.h"
 #include "protocol/replaysenders.h"
 #include "protocol/dispatchersenders.h"
 #include "protocol/messengersenders.h"
+#include "protocol/ProtocolVersionChecker.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
 #include <google/protobuf/Descriptor.h>
@@ -85,6 +87,7 @@ void LoggerApplication::ConnectionSucceeded( const std::string& endpoint )
 {
     endpoint_ = endpoint;
     authentication::AuthenticationRequest message;
+    message().mutable_version()->set_value( ProtocolVersionChecker::GetCurrentProtocolVersion() );
     message().set_login( login_.c_str() );
     message().set_password( password_.c_str() );
     message.Send( *this );
@@ -138,7 +141,7 @@ void LoggerApplication::OnReceiveMsgAuthenticationToClient( const std::string& /
 // Name: LoggerApplication::OnReceiveMsgDispatcherToClient
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::OnReceiveMsgDispatcherToClient( const std::string& /*from*/, const MsgsDispatcherToClient::MsgDispatcherToClient& /*wrapper*/ )
+void LoggerApplication::OnReceiveMsgDispatcherToClient( const std::string& /*from*/, const MsgsDispatcherToClient::MsgDispatcherToClient& wrapper )
 {
     DumpTime();
     file_ << "Dispatcher message received" << std::endl << std::flush;
@@ -193,13 +196,16 @@ void LoggerApplication::LogMessage( const MsgsSimToClient::MsgSimToClient& wrapp
     if( bVerbose_ )
     {
         DumpTime();
-        typedef std::vector< const google::protobuf::FieldDescriptor* > T_Fields;
+        file_ << "Received " << wrapper.message().DebugString() << std::endl;
+        
+        /*typedef std::vector< const google::protobuf::FieldDescriptor* > T_Fields;
         T_Fields fields;
         const google::protobuf::Reflection* reflect = wrapper.message().GetReflection();
-        reflect->ListFields( wrapper, &fields );
+        reflect->ListFields( wrapper.message(), &fields );
         BOOST_FOREACH( const T_Fields::value_type& field, fields )
             if( reflect->HasField( wrapper.message(), field ) )
                 file_ << "Received " << wrapper.GetDescriptor()->full_name() << " of type: " << field->name() << std::endl;
+                */
     }
 }
 
