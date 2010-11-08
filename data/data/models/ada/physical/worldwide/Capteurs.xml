@@ -951,7 +951,7 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-			<object detection-distance="300" type="mines">
+        <object detection-distance="300" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="0.5"/>
