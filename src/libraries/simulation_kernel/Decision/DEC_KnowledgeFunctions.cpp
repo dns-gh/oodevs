@@ -177,10 +177,10 @@ void DEC_KnowledgeFunctions::GetUrbanBlockKnowledge( directia::brain::Brain& bra
 
 }
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle
+// Name: DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCircle
 // Created: DDA 2010-03-16
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table, boost::shared_ptr< MT_Vector2D > center, float radius )
+T_KnowledgeUrbanVector DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCircle( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D >& center, float radius )
 {
     //Urban
     T_KnowledgeUrbanVector urbansKn;
@@ -194,8 +194,7 @@ void DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle( directia::brain::Br
             result.push_back( (*it) );
     }
 
-
-    knowledgeCreateFunction( table, brain[ "net.masagroup.sword.military.world.UrbanBlock" ], result, true );
+    return result;
 
 }
 
