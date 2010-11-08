@@ -11,12 +11,15 @@
 #include "FireAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeFire.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "MIL_AgentServer.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( FireAttribute )
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< FireAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< FireAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: FireAttribute constructor
@@ -146,7 +149,7 @@ void FireAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 // -----------------------------------------------------------------------------
 void FireAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeFire( *this ) );
+    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< FireAttribute >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -264,4 +267,34 @@ unsigned int FireAttribute::GetWidth() const
 unsigned int FireAttribute::GetLength() const
 {
     return length_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::Update
+// Created: NLD 2010-10-26
+// -----------------------------------------------------------------------------
+bool FireAttribute::Update( const FireAttribute& rhs )
+{
+    if( pClass_ != rhs.pClass_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        pClass_ = rhs.pClass_;
+    }
+    if( heat_ != rhs.heat_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        heat_ = rhs.heat_;
+    }
+    if( width_ != rhs.width_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        width_ = rhs.width_;
+    }
+    if( length_ != rhs.length_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        length_ = rhs.length_;
+    }
+    timeOfLastUpdate_ = rhs.timeOfLastUpdate_;
+    return NeedUpdate();
 }

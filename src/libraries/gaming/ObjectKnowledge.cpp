@@ -18,6 +18,7 @@
 #include "clients_kernel/ObjectIcons.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Viewport_ABC.h"
@@ -38,8 +39,19 @@ ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const MsgsSimToClient
     , objectResolver_( objectResolver )
     , type_          ( & typeResolver.Get( message.type().id() ) )
     , pRealObject_   ( objectResolver_.Find( message.object().id() ) )
+    , pTeam_         ( 0 )
 {
     RegisterSelf( *this );
+
+    //$$ NLD - 2010-11-03 - Ce bloc sucks
+    if( pRealObject_ )
+    {
+        const Hierarchies* hierarchies = pRealObject_->Retrieve< TacticalHierarchies >();
+        if( ! hierarchies )
+            hierarchies = pRealObject_->Retrieve< CommunicationHierarchies >();
+        const Entity_ABC& tmp = hierarchies ? hierarchies->GetTop() : *pRealObject_;
+        pTeam_ = dynamic_cast< const kernel::Team_ABC* >( &tmp );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -116,15 +128,6 @@ QString ObjectKnowledge::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::GetTypeName
-// Created: SBO 2006-10-12
-// -----------------------------------------------------------------------------
-QString ObjectKnowledge::GetTypeName() const
-{
-    return typeName_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::GetEntity
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
@@ -134,12 +137,12 @@ const Object_ABC* ObjectKnowledge::GetEntity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::GetRecognizedEntity
-// Created: SBO 2006-12-08
+// Name: ObjectKnowledge::GetTeam
+// Created: NLD 2010-11-03
 // -----------------------------------------------------------------------------
-const Entity_ABC* ObjectKnowledge::GetRecognizedEntity() const
+const Team_ABC* ObjectKnowledge::GetTeam() const
 {
-    return pRealObject_;
+    return pTeam_;
 }
 
 // -----------------------------------------------------------------------------

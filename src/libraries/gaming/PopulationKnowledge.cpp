@@ -19,6 +19,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
 
@@ -35,7 +36,15 @@ PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group, Contr
     , converter_ ( converter )
     , popu_      ( resolver.Get( message.crowd().id() ) )
     , domination_( 0 )
+    , pTeam_     ( 0 )
 {
+    //$$ NLD - 2010-11-03 - Ce bloc sucks
+    const Hierarchies* hierarchies = popu_.Retrieve< TacticalHierarchies >();
+    if( ! hierarchies )
+        hierarchies = popu_.Retrieve< CommunicationHierarchies >();
+    const Entity_ABC& tmp = hierarchies ? hierarchies->GetTop() : popu_;
+    pTeam_ = dynamic_cast< const kernel::Team_ABC* >( &tmp );
+
     RegisterSelf( *this );
 }
 
@@ -183,12 +192,12 @@ const kernel::Population_ABC* PopulationKnowledge::GetEntity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::GetRecognizedEntity
-// Created: SBO 2006-12-08
+// Name: PopulationKnowledge::GetTeam
+// Created: NLD 2010-11-03
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* PopulationKnowledge::GetRecognizedEntity() const
+const Team_ABC* PopulationKnowledge::GetTeam() const
 {
-    return &popu_;
+    return pTeam_;
 }
 
 // -----------------------------------------------------------------------------

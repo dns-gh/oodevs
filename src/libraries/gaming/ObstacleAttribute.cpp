@@ -86,15 +86,6 @@ void ObstacleAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& messag
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObstacleAttribute::DoUpdate
-// Created: SBO 2007-02-08
-// -----------------------------------------------------------------------------
-void ObstacleAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
-{
-    UpdateData( message.attributes() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::UpdateData
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------

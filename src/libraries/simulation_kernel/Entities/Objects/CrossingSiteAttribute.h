@@ -80,6 +80,7 @@ public:
     //! @name Copy
     //@{
     CrossingSiteAttribute& operator=( const CrossingSiteAttribute& ); //!< Assignment operator
+    bool Update( const CrossingSiteAttribute& rhs );
     //@}
 
 private:

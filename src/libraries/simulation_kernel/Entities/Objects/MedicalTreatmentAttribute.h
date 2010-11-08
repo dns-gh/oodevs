@@ -77,6 +77,17 @@ public:
         unsigned        emergency_;
         float           time_;
         const MIL_MedicalTreatmentType* type_;
+
+        bool operator==( const MedicalCapacity& rhs ) const
+        {
+            return baseline_ == rhs.baseline_ &&
+                   occupied_ == rhs.occupied_ &&
+                   emergency_ ==  rhs.emergency_ &&
+                   time_ == rhs.time_ && 
+                   type_ == rhs.type_;
+
+        }
+
     };
 
     typedef std::vector< MedicalCapacity > T_TreatmentCapacityVector;
@@ -118,6 +129,7 @@ public:
     //! @name Operations
     //@{
     MedicalTreatmentAttribute& operator=( const MedicalTreatmentAttribute& ); //!< Assignment operator
+    bool Update( const MedicalTreatmentAttribute& rhs );
     //@}
 
     //! @name Get

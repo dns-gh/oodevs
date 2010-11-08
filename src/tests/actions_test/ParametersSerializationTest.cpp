@@ -109,7 +109,6 @@ namespace
         MOCK_METHOD( GetId, 0 );
 
 //        MOCK_METHOD_EXT( GetEntity, 0, const kernel::Entity_ABC*(), GetBaseEntity ); // $$$$ SBO 2009-10-30: refactor interface
-        MOCK_METHOD( GetRecognizedEntity, 0 );
 //        MOCK_METHOD_EXT( GetOwner, 0, const kernel::Entity_ABC&(), GetBaseOwner ); // $$$$ SBO 2009-10-30: refactor interface
         MOCK_METHOD_EXT( GetEntity, 0, const kernel::Population_ABC*(), GetPopulationEntity );
         MOCK_METHOD_EXT( GetOwner, 0, const kernel::KnowledgeGroup_ABC&(), GetKnowledgeGroup );
@@ -141,7 +140,6 @@ namespace
         MOCK_METHOD( GetId, 0 );
 
 //        MOCK_METHOD_EXT( GetEntity, 0, const kernel::Entity_ABC*(), GetBaseEntity ); // $$$$ SBO 2009-10-30: refactor interface
-        MOCK_METHOD( GetRecognizedEntity, 0 );
 //        MOCK_METHOD_EXT( GetOwner, 0, const kernel::Entity_ABC&(), GetBaseOwner ); // $$$$ SBO 2009-10-30: refactor interface
         MOCK_METHOD_EXT( GetEntity, 0, const kernel::Object_ABC*(), GetObjectEntity );
         MOCK_METHOD_EXT( GetOwner, 0, const kernel::Team_ABC&(), GetTeam );

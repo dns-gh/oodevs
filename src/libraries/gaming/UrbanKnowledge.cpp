@@ -112,15 +112,6 @@ QString UrbanKnowledge::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanKnowledge::GetTypeName
-// Created: MGD 2009-12-10
-// -----------------------------------------------------------------------------
-QString UrbanKnowledge::GetTypeName() const
-{
-    return typeName_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanKnowledge::GetEntity
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
@@ -130,12 +121,12 @@ const Entity_ABC* UrbanKnowledge::GetEntity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanKnowledge::GetRecognizedEntity
-// Created: MGD 2009-12-10
+// Name: UrbanKnowledge::GetTeam
+// Created: NLD 2009-11-03
 // -----------------------------------------------------------------------------
-const Entity_ABC* UrbanKnowledge::GetRecognizedEntity() const
+const Team_ABC* UrbanKnowledge::GetTeam() const
 {
-    return 0;//pRealUrban_;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

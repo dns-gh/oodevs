@@ -1168,7 +1168,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectCreation( const MsgsSimToClient::MsgOb
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    GetModel().objects_.GetObject( message.object().id() ).Update( message );
+    GetModel().objects_.UpdateObject( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -2223,4 +2223,26 @@ void AgentServerMsgMgr::OnMsgCrowdDestruction( const MsgsSimToClient::MsgCrowdDe
 void AgentServerMsgMgr::OnReceiveMsgAutomatDestruction( const MsgsSimToClient::MsgAutomatDestruction&                message )
 {
     GetModel().agents_.DestroyAutomat( message );
+}
+
+//=============================================================================
+// STATISTICS
+//=============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::GetNbMessagesReceived
+// Created: NLD 2010-10-20
+// -----------------------------------------------------------------------------
+unsigned long AgentServerMsgMgr::GetNbMessagesReceived() const
+{
+    return dispatcher_.GetNbMessagesReceived();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::GetNbMessagesSent
+// Created: NLD 2010-10-20
+// -----------------------------------------------------------------------------
+unsigned long AgentServerMsgMgr::GetNbMessagesSent() const
+{
+    return sender_.GetNbMessagesSent();
 }

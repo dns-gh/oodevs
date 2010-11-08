@@ -10,8 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "LogisticAttribute.h"
 #include "Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeLogistic.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyRecon.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -21,6 +21,9 @@
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( LogisticAttribute )
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyRecon< LogisticAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyRecon< LogisticAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: LogisticAttribute constructor
@@ -100,7 +103,7 @@ template < typename Archive > void LogisticAttribute::serialize( Archive& file, 
 // -----------------------------------------------------------------------------
 void LogisticAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeLogistic( *this ) );
+    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyRecon< LogisticAttribute >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,6 +141,20 @@ LogisticAttribute& LogisticAttribute::operator=( const LogisticAttribute& rhs )
 {
     pTC2_ = rhs.pTC2_;
     return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticAttribute::Update
+// Created: NLD 2010-10-26
+// -----------------------------------------------------------------------------
+bool LogisticAttribute::Update( const LogisticAttribute& rhs )
+{
+    if( pTC2_ != rhs.pTC2_ )
+    {        
+        pTC2_ = rhs.pTC2_;
+        return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

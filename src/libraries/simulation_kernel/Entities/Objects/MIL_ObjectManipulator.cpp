@@ -313,7 +313,7 @@ bool MIL_ObjectManipulator::IsFullyMined() const
 // -----------------------------------------------------------------------------
 bool MIL_ObjectManipulator::IsBypassed() const
 {
-    return !object_.IsMarkedForDestruction() && object_.GetAttribute< BypassAttribute >().GetState() >= 1.;
+    return !object_.IsMarkedForDestruction() && object_.GetAttribute< BypassAttribute >().IsBypassed();
 }
 
 // -----------------------------------------------------------------------------

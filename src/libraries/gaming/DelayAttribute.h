@@ -11,24 +11,12 @@
 #define __DelayAttribute_h_
 
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
-
-namespace MsgsSimToClient
-{
-    class MsgObjectUpdate;
-    class MsgObjectCreation;
-}
 
 namespace kernel
 {
     class Controller;
     class Displayer_ABC;
-}
-
-namespace xml
-{
-    class xistream;
 }
 
 // =============================================================================
@@ -38,8 +26,6 @@ namespace xml
 // Created: JSR 2010-07-06
 // =============================================================================
 class DelayAttribute : public kernel::DelayAttribute_ABC
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
 {
 public:
     //! @name Constructors/Destructor
@@ -65,7 +51,7 @@ private:
     //! @name Updatable_ABC
     //@{
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectCreation& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
     template< typename T >
     void UpdateData( const T& message );
     //@}

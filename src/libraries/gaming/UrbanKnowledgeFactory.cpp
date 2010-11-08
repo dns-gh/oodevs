@@ -14,6 +14,7 @@
 #include "Model.h"
 #include "clients_kernel/Controllers.h"
 #include "AgentsModel.h"
+#include "TeamsModel.h"
 #include "UrbanPerceptions.h"
 #include "UrbanModel.h"
 #include "StaticModel.h"

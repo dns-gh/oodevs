@@ -55,6 +55,8 @@ public:
     const MIL_Agent_ABC& GetAgentColliding() const;
     const MT_Vector2D& GetPosition() const;
     bool IsValid() const;
+    
+    template< typename T > const T* GetAttribute() const;
     //@}
 
 private:
@@ -68,5 +70,18 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectCollision )
+
+// =============================================================================
+// Implementation
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectCollision::GetAttribute
+// Created: NLD 2004-05-04
+// -----------------------------------------------------------------------------
+template< typename T > const T* DEC_Knowledge_ObjectCollision::GetAttribute() const
+{
+    return pObject_ ? pObject_->RetrieveAttribute< T >() : 0;
+}
 
 #endif // __DEC_Knowledge_ObjectCollision_h_

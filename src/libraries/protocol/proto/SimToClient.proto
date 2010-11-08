@@ -719,7 +719,7 @@ message MsgObjectCreation {
    required string                     name       = 3;
    required Common.PartyId             party      = 4;
    required Common.MsgLocation         location   = 5;
-   required Common.ObjectAttributes    attributes = 6;
+   required Common.ObjectAttributes    attributes = 6; //$$$ NLD - 2010-10-27 - A VIRER
 }
 
 message MsgObjectDestruction  {
@@ -737,13 +737,13 @@ message MsgObjectKnowledgeCreation {
    required Common.PartyId             party           = 2;
    required Common.ObjectId            object          = 3;
    required Common.ObjectType          type            = 4;
-   required Common.ObjectAttributes    attributes      = 5;
+   required Common.ObjectAttributes    attributes      = 5; //$$$ NLD - 2010-10-27 - A VIRER 
    optional Common.KnowledgeGroupId    knowledge_group = 6;
 }
 
 message MsgObjectKnowledgeUpdate {
    required Common.ObjectKnowledgeId   knowledge           = 1;
-   required Common.PartyId             party               = 2;
+   required Common.PartyId             party               = 2; //$$$ NLD - 2010-11-03 - A priori attribut inutile (historique du a Thales MOS)
    optional Common.ObjectId            object              = 3;
    optional int32                      relevance           = 4;
    optional Common.MsgLocation         location            = 5;
@@ -755,7 +755,7 @@ message MsgObjectKnowledgeUpdate {
 
 message MsgObjectKnowledgeDestruction {
    required Common.ObjectKnowledgeId knowledge = 1;
-   required Common.PartyId           party     = 2;
+   required Common.PartyId           party     = 2; //$$$ NLD - 2010-11-03 - A priori attribut inutile (historique du a Thales MOS)
 }
 
 message MsgUrbanKnowledgeCreation {
@@ -766,7 +766,7 @@ message MsgUrbanKnowledgeCreation {
 
 message MsgUrbanKnowledgeUpdate {
     required Common.UrbanObjectKnowledgeId knowledge            = 1;
-    required Common.PartyId                party                = 2;
+    required Common.PartyId                party                = 2; //$$$ NLD - 2010-11-03 - A priori attribut inutile (historique du a Thales MOS)
     required Common.UrbanObjectId          urban_block          = 3; 
     optional int32                         progress             = 4;
     optional int32                         max_progress         = 5;
@@ -776,7 +776,7 @@ message MsgUrbanKnowledgeUpdate {
 
 message MsgUrbanKnowledgeDestruction {
     required Common.UrbanObjectKnowledgeId knowledge = 1;
-    required Common.PartyId                party     = 2;
+    required Common.PartyId                party     = 2; //$$$ NLD - 2010-11-03 - A priori attribut inutile (historique du a Thales MOS)
 }
 
 message MsgLogMedicalHandlingCreation {

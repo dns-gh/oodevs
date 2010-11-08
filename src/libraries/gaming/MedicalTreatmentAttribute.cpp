@@ -145,16 +145,6 @@ void MedicalTreatmentAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute::DoUpdate
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
-{
-    if( message.attributes().has_medical_treatment() )
-        UpdateData( message.attributes().medical_treatment() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute::Display
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------

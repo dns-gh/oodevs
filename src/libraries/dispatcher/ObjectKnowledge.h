@@ -12,12 +12,8 @@
 
 #include "Localisation.h"
 #include "ObjectKnowledge_ABC.h"
+#include "ObjectAttributeContainer.h"
 #include <boost/ptr_container/ptr_vector.hpp>
-
-namespace Common
-{
-    class ObjectAttributes;
-}
 
 namespace MsgsSimToClient
 {
@@ -68,7 +64,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
+    virtual const kernel::Team_ABC* GetTeam() const;
     virtual const kernel::Object_ABC* GetEntity() const;
     virtual const kernel::Team_ABC& GetOwner() const;
     virtual QString GetTypeName() const;
@@ -77,12 +73,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    template< typename T >
-    void CreateOrUpdate( const Common::ObjectAttributes& message );
-    template< typename T >
-    void CreateOrUpdate( const Common::ObjectAttributes& message, const Model_ABC& model );
-    void Initialize( const Model_ABC& model, const Common::ObjectAttributes& message );
-    void AddAttribute( ObjectAttribute_ABC* attribute );
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;
     //@}
@@ -101,16 +91,11 @@ private:
     };
     //@}
 
-    //! @name Types
-    //@{
-    typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
-    //@}
-
 private:
     //! @name Member data
     //@{
     const Model_ABC& model_;
-    const kernel::Team_ABC& team_;
+    const kernel::Team_ABC& owner_;
     const kernel::Object_ABC* pObject_;
     const std::string nType_;
     const kernel::KnowledgeGroup_ABC* knowledgeGroup_;
@@ -119,7 +104,7 @@ private:
     Localisation localisation_;
     bool bPerceived_;
     std::vector< const kernel::Automat_ABC* > automatPerceptions_;
-    T_ObjectAttributes attributes_;
+    ObjectAttributeContainer attributes_;
     T_Optionals optionals_;
     //@}
 };

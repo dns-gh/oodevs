@@ -154,12 +154,7 @@ private:
     //@{
     enum E_AttributeUpdate
     {
-        eAttrUpdate_ConstructionPercentage    = 0x01,
-        eAttrUpdate_MiningPercentage          = 0x02,
-        eAttrUpdate_BypassPercentage          = 0x04,
-        eAttrUpdate_ReservedObstacleActivated = 0x08,
         eAttrUpdate_Localisation              = 0x10,
-        eAttrUpdate_SpecificAttributes        = 0x20,
         eAttrUpdate_All                       = 0xFF
     };
     //@}

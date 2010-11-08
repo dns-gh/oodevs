@@ -11,9 +11,7 @@
 #define __CrossingSiteAttribute_h_
 
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/OptionalValue.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
 namespace kernel
@@ -29,9 +27,6 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class CrossingSiteAttribute : public kernel::CrossingSiteAttribute_ABC
-                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
-                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
-                             , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
 {
 public:
     //! @name Constructors/Destructor
@@ -57,7 +52,6 @@ private:
     //@{
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectCreation& message );
     template< typename T >
     void UpdateData( const T& message );
     //@}

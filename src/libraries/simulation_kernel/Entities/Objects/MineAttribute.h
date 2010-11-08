@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "Network/NetworkBufferedPercentageValue.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -87,6 +88,7 @@ public:
     //! @name Copy
     //@{
     MineAttribute& operator=( const MineAttribute& ); //!< Assignment operator
+    bool Update( const MineAttribute& rhs );
     //@}
 
 private:
@@ -95,9 +97,7 @@ private:
     const PHY_DotationCategory* dotation_;
     unsigned int nFullNbrDotation_;
     unsigned int nCurrentNbrDotation_;
-    double rMiningPercentage_;
-    unsigned int nMinesActivityTime_;
-    unsigned int nDeathTimeStep_;
+    mutable NetworkBufferedPercentageValue< double > miningPercentage_;
     //@}
 };
 

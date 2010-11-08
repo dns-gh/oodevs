@@ -15,11 +15,12 @@
 #include "MIL.h"
 #include "Tristate.h"
 #include "DEC_Knowledge_ABC.h"
-#include "DEC_Knowledge_ObjectAttribute_ABC.h"
+#include "DEC_Knowledge_IObjectAttributeProxy.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "tools/Extendable.h"
 #include "tools/MIL_IDManager.h"
+#include "DEC_Knowledge_ObjectAttributeProxy_ABC.h"
 
 namespace MsgsSimToClient
 {
@@ -43,7 +44,7 @@ class MIL_ObjectType_ABC;
 // Created: NLD 2004-03-11
 // =============================================================================
 class DEC_Knowledge_Object : public DEC_Knowledge_ABC
-                           , private tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >
+                           , public tools::Extendable< DEC_Knowledge_IObjectAttributeProxy >
 {
 public:
     //! @name Constructors/Destructor
@@ -79,6 +80,7 @@ public:
     bool IsValid() const;
     void Invalidate();
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const;
+    bool IsReconBy( const MIL_AgentType_ABC& agentType ) const;
     //@}
 
     //! @name Relevance management
@@ -110,13 +112,9 @@ public:
     double GetMaxInteractionHeight() const;
     E_Tristate IsAnEnemy ( const MIL_Army_ABC& army ) const;
     E_Tristate IsAFriend ( const MIL_Army_ABC& army ) const;
-    //@}
 
-    //! @name Extension
-    //@{
-    template< typename Extension > void Attach( Extension& extension );
-    template< typename Extension > void AttachExtension( Extension& extension );
-    template< typename Extension > const Extension* Retrieve() const;
+    template< typename T > 
+    const T* RetrieveAttribute() const;
     //@}
 
 protected:
@@ -126,32 +124,25 @@ protected:
     {
         eAttr_Nothing                   = 0x00000000,
         eAttr_Localisation              = 0x00000001,
-        eAttr_EtatOps                   = 0x00000002,
-        eAttr_ConstructionPercentage    = 0x00000004,
-        eAttr_MiningPercentage          = 0x00000008,
-        eAttr_BypassPercentage          = 0x00000010,
-        eAttr_ReservedObstacleActivated = 0x00000020,
         eAttr_RealObject                = 0x00000040,
         eAttr_PerceptionSources         = 0x00000080,
         eAttr_Relevance                 = 0x00000100,
         eAttr_CurrentPerceptionLevel    = 0x00000200,
         eAttr_MaxPerceptionLevel        = 0x00000400,
-        eAttr_Specific                  = 0x00000800,
-        eAttr_Dotations                 = 0x00001000,
+        eAttr_Attributes                = 0x00000800,
         eAttr_AllAttributes             = 0xFFFFFFFF
     };
     //@}
 
-protected:
+private:
     //! @name Tools
     //@{
     void NotifyAttributeUpdated( E_Attributes nAttribute );
     bool IsAttributeUpdated( E_Attributes nAttribute ) const;
-    bool IsReconBy( const MIL_AgentType_ABC& agentType ) const;
     const MIL_Army_ABC& GetArmyKnowing() const;
+
     //@}
 
-private:
     //! @name Internal updaters
     //@{
     void UpdateLocalisations();
@@ -159,6 +150,7 @@ private:
     void UpdatePerceptionSources( const DEC_Knowledge_ObjectPerception& perception );
     void UpdateCurrentPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );
     bool UpdateMaxPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );
+    template< typename Functor> void UpdateAttributes( Functor functor );
     //@}
 
     //! @name Internal network senders
@@ -186,10 +178,6 @@ private:
 
     typedef std::set< const MIL_AgentType_ABC* > T_AgentTypeSet;
     typedef T_AgentTypeSet::const_iterator     CIT_AgentTypeSet;
-
-    typedef std::vector< DEC_Knowledge_ObjectAttribute_ABC* > T_ObjectAttributeVector;
-    typedef T_ObjectAttributeVector::iterator                IT_ObjectAttributeVector;
-    typedef T_ObjectAttributeVector::const_iterator         CIT_ObjectAttributeVector;
     //@}
 
 private:
@@ -201,7 +189,6 @@ private:
     const MIL_ObjectType_ABC* pObjectType_;
     const unsigned int  nID_;
     std::string         name_;
-    T_ObjectAttributeVector attributes_;
     int nAttributesUpdated_;
     // Attributes
     const MIL_Army_ABC* pOwnerArmy_;
@@ -223,35 +210,27 @@ private:
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_Object )
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::Attach
-// Created: JCR 2008-08-12
-// -----------------------------------------------------------------------------
-template< typename Extension >
-void DEC_Knowledge_Object::Attach( Extension& extension )
-{
-    attributes_.push_back( &extension );
-    tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >::Attach( extension );
+// =============================================================================
+// Implementation
+// =============================================================================
+template< typename Functor> 
+void DEC_Knowledge_Object::UpdateAttributes( Functor functor )
+{    
+    for( std::vector< DEC_Knowledge_IObjectAttributeProxy* >::const_iterator it = extensions_.Container().begin(); it != extensions_.Container().end(); ++it )
+    {
+        if( *it && functor( *it ) )
+            NotifyAttributeUpdated( eAttr_Attributes );
+    }
 }
 
-// -----------------------------------------------------------------------------
-// Name: template< typename Extension >  void DEC_Knowledge_Object::AttachExtension
-// Created: LDC 2009-07-16
-// -----------------------------------------------------------------------------
-template< typename Extension >
-void DEC_Knowledge_Object::AttachExtension( Extension& extension )
+template< typename T > 
+const T* DEC_Knowledge_Object::RetrieveAttribute() const
 {
-    tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >::Attach( extension );
+    const DEC_Knowledge_ObjectAttributeProxy_ABC< T >* pAttr = Retrieve< DEC_Knowledge_ObjectAttributeProxy_ABC< T > >();
+    if( !pAttr )
+        return 0;
+    return pAttr->GetAttribute();
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Object::Retrieve
-// Created: JCR 2008-08-12
-// -----------------------------------------------------------------------------
-template< typename Extension >
-const Extension* DEC_Knowledge_Object::Retrieve() const
-{
-    return tools::Extendable< DEC_Knowledge_ObjectAttribute_ABC >::Retrieve< Extension >();
-}
 
 #endif // __DEC_Knowledge_Object_h_

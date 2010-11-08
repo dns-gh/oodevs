@@ -72,15 +72,6 @@ void SupplyRouteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& mes
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyRouteAttribute::DoUpdate
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-void SupplyRouteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
-{
-    UpdateData( message.attributes() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::Display
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------

@@ -211,12 +211,12 @@ void AgentKnowledge::Accept( kernel::ModelVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledge::GetRecognizedEntity
+// Name: AgentKnowledge::GetTeam
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* AgentKnowledge::GetRecognizedEntity() const
+const kernel::Team_ABC* AgentKnowledge::GetTeam() const
 {
-    return &agent_;
+    return team_;
 }
 
 // -----------------------------------------------------------------------------

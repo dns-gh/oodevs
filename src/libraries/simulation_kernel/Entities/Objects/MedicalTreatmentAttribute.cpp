@@ -11,7 +11,7 @@
 #include "MedicalTreatmentAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeMedicalTreatment.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "MIL.h"
 #include "MIL_AgentServer.h"
 #include "MIL_MedicalTreatmentType.h"
@@ -24,6 +24,9 @@
 
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MedicalTreatmentAttribute )
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< MedicalTreatmentAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< MedicalTreatmentAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute constructor
@@ -163,7 +166,7 @@ void MedicalTreatmentAttribute::save( MIL_CheckPointOutArchive& ar, const unsign
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeMedicalTreatment() );
+    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< MedicalTreatmentAttribute >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -342,7 +345,7 @@ void MedicalTreatmentAttribute::SendFullState( Common::ObjectAttributes& message
     {
         for ( T_TreatmentCapacityVector::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
             it->Send( *message.mutable_medical_treatment()->add_bed_capacities() );
-        if ( message.medical_treatment().bed_capacities().size() != capacities_.size() )
+        if ( message.medical_treatment().bed_capacities().size() != (int)capacities_.size() )
             throw std::runtime_error( std::string( __FUNCTION__  )+ " Medical treatment not properly encoded" );
     }
 }
@@ -473,4 +476,49 @@ int MedicalTreatmentAttribute::GetDoctors() const
 int MedicalTreatmentAttribute::GetAvailableDoctors() const
 {
     return availableDoctors_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::Update
+// Created: NLD 2010-10-26
+// -----------------------------------------------------------------------------
+bool MedicalTreatmentAttribute::Update( const MedicalTreatmentAttribute& rhs )
+{
+    if( medicalTreatmentMap_ != rhs.medicalTreatmentMap_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        medicalTreatmentMap_ = rhs.medicalTreatmentMap_;
+    }
+    if( doctors_ != rhs.doctors_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        doctors_ = rhs.doctors_;
+    }
+    if( availableDoctors_ != rhs.availableDoctors_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        availableDoctors_ = rhs.availableDoctors_;
+    }
+    if( initialDoctors_ != rhs.initialDoctors_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        initialDoctors_ = rhs.initialDoctors_;
+    }
+    if( capacities_ != rhs.capacities_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        capacities_ = rhs.capacities_;
+    }
+    if( referenceID_ != rhs.referenceID_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        referenceID_ = rhs.referenceID_;
+    }
+    if( status_ != rhs.status_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        status_ = rhs.status_;
+    }
+    
+    return NeedUpdate();
 }

@@ -22,8 +22,10 @@
 #include "Entities/Objects/SupplyRouteAttribute.h"
 #include "Entities/Objects/StockAttribute.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
+#include "Entities/Objects/CrossingSiteAttribute.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects_DataComputer.h"
 #include "Entities/Agents/Actions/Objects/Operation.h"
@@ -319,7 +321,7 @@ std::string DEC_KnowledgeObjectFunctions::GetName( boost::shared_ptr< DEC_Knowle
 float DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        if( const DEC_Knowledge_ObjectAttributeCrossingSite* attribute = pKnowledge->Retrieve< DEC_Knowledge_ObjectAttributeCrossingSite >() )
+        if( const CrossingSiteAttribute* attribute = pKnowledge->RetrieveAttribute< CrossingSiteAttribute >() )
             return float( attribute->GetWidth() );
     return 0.f;
 }

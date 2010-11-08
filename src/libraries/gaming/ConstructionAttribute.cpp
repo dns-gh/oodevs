@@ -94,15 +94,6 @@ void ConstructionAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& me
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConstructionAttribute::DoUpdate
-// Created: SBO 2007-02-08
-// -----------------------------------------------------------------------------
-void ConstructionAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
-{
-    UpdateData( message.attributes() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ConstructionAttribute::UpdateData
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------

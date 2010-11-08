@@ -90,15 +90,6 @@ void StockAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: StockAttribute::DoUpdate
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-void StockAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
-{
-    UpdateData( message.attributes() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: StockAttribute::Display
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------

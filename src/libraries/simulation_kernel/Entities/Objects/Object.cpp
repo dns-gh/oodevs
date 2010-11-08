@@ -395,8 +395,7 @@ void Object::SendCreation() const
     asn().mutable_type()->set_id( GetType().GetName() );
     asn().mutable_party()->set_id( GetArmy()->GetID() );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
-    std::for_each( attributes_.begin(), attributes_.end(),
-                    boost::bind( &ObjectAttribute_ABC::SendFullState, _1, boost::ref( *asn().mutable_attributes() ) ) );
+    asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation ne doit PAS envoyer les attributs
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -429,9 +428,14 @@ void Object::UpdateState()
 // -----------------------------------------------------------------------------
 void Object::SendFullState() const
 {
-//    NotifyAttributeUpdated( eAttrUpdate_All );
-    xAttrToUpdate_ |= eAttrUpdate_Localisation;
-    SendMsgUpdate();
+    if( pView_ && pView_->HideObject() )
+        return;
+    client::ObjectUpdate asn;
+    asn().mutable_object()->set_id( id_ );
+    NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
+    std::for_each( attributes_.begin(), attributes_.end(),
+                   boost::bind( &ObjectAttribute_ABC::SendFullState, _1, boost::ref( *asn().mutable_attributes() ) ) );        
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -457,9 +461,6 @@ void Object::SendMsgUpdate() const
         || attr.has_nbc_agent() || attr.has_effect_delay() || attr.has_resource_networks() )
         asn.Send( NET_Publisher_ABC::Publisher() );
     xAttrToUpdate_ = 0;
-    if( asn().has_location() )
-        asn().mutable_location()->Clear();
-    asn().mutable_attributes()->Clear();
 }
 
 // -----------------------------------------------------------------------------

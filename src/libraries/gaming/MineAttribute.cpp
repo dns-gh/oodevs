@@ -97,15 +97,6 @@ void MineAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MineAttribute::DoUpdate
-// Created: SBO 2007-02-08
-// -----------------------------------------------------------------------------
-void MineAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
-{
-    UpdateData( message.attributes() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MineAttribute::UpdateData
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------

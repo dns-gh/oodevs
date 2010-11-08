@@ -74,15 +74,6 @@ void NBCAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: NBCAttribute::DoUpdate
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-void NBCAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
-{
-    UpdateData( message.attributes() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: NBCAttribute::Display
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------

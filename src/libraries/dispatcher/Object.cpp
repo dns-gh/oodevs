@@ -41,8 +41,8 @@ Object::Object( Model_ABC& model, const MsgsSimToClient::MsgObjectCreation& msg,
     , type_                 ( types.Get( msg.type().id() ) )
     , localisation_         ( msg.location() )
     , side_                 ( model.Sides().Get( msg.party().id() ) )
+    , attributes_           ( model )
 {
-    Initialize( model, msg.attributes() );
     side_.Register( *this );
     RegisterSelf( *this );
     optionals_.localisationPresent = 0;
@@ -57,41 +57,6 @@ Object::~Object()
     side_.Remove( *this );
 }
 
-#define MSG_ASN_CREATION( ASN, CLASS ) \
-    if( attributes.has_##ASN##()  ) \
-        AddAttribute( new CLASS( attributes ) )
-
-// -----------------------------------------------------------------------------
-// Name: Object::Initialize
-// Created: JCR 2008-06-08
-// -----------------------------------------------------------------------------
-void Object::Initialize( Model_ABC& model, const Common::ObjectAttributes& attributes )
-{
-    MSG_ASN_CREATION( construction      , ConstructionAttribute );
-    MSG_ASN_CREATION( obstacle          , ObstacleAttribute );
-    MSG_ASN_CREATION( mine              , MineAttribute );
-    if( attributes.has_logistic() )
-        AddAttribute( new LogisticAttribute( model, attributes ) );
-    MSG_ASN_CREATION( bypass            , BypassAttribute );
-    MSG_ASN_CREATION( crossing_site     , CrossingSiteAttribute );
-    MSG_ASN_CREATION( supply_route      , SupplyRouteAttribute );
-    MSG_ASN_CREATION( nbc               , NBCAttribute );
-    MSG_ASN_CREATION( toxic_cloud       , ToxicCloudAttribute );
-    MSG_ASN_CREATION( fire              , FireAttribute );
-    MSG_ASN_CREATION( medical_treatment , MedicalTreatmentAttribute );
-    MSG_ASN_CREATION( effect_delay      , DelayAttribute );
-    MSG_ASN_CREATION( resource_networks , ResourceNetworkAttribute );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::AddAttribute
-// Created: JCR 2008-06-08
-// -----------------------------------------------------------------------------
-void Object::AddAttribute( ObjectAttribute_ABC* attribute )
-{
-    attributes_.push_back( attribute );
-}
-
 // -----------------------------------------------------------------------------
 // Name: Object::DoUpdate
 // Created: NLD 2006-09-26
@@ -103,8 +68,7 @@ void Object::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& msg )
         localisation_.Update( msg.location() );
         optionals_.localisationPresent = 1;
     }
-    std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Update, _1, boost::cref( msg.attributes() ) ) );
+    attributes_.Update( msg.attributes() );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +83,7 @@ void Object::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().set_name( GetName() );
     asn().mutable_party()->set_id( side_.GetId() );
     localisation_.Send( *asn().mutable_location() );
-    Send( *asn().mutable_attributes() );
+    asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation ne doit PAS envoyer les attributs
     asn.Send( publisher );
 }
 
@@ -133,18 +97,8 @@ void Object::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().mutable_object()->set_id( GetId() );
     if( optionals_.localisationPresent )
         localisation_.Send( *asn().mutable_location() );
-    Send( *asn().mutable_attributes() );
+    attributes_.Send( *asn().mutable_attributes() );
     asn.Send( publisher );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::Send
-// Created: JCR 2010-10-08
-// -----------------------------------------------------------------------------
-void Object::Send( Common::ObjectAttributes& attributes ) const
-{
-    std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( attributes ) ) );
 }
 
 // -----------------------------------------------------------------------------

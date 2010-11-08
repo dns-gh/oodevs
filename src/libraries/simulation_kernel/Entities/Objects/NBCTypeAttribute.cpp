@@ -11,11 +11,14 @@
 #include "NBCTypeAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeNBCType.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( NBCTypeAttribute )
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< NBCTypeAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< NBCTypeAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: NBCTypeAttribute constructor
@@ -144,7 +147,7 @@ void NBCTypeAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) 
 // -----------------------------------------------------------------------------
 void NBCTypeAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeNBCType( *this ) );
+    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< NBCTypeAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

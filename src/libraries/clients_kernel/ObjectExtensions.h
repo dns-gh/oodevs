@@ -12,13 +12,23 @@
 
 #include "Displayable_ABC.h"
 #include "Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 
-#define DECLARE_EXTENSION( extension )                                          \
-class extension : public kernel::Extension_ABC, public kernel::Displayable_ABC  \
-{                                                                               \
-public:                                                                         \
-             extension() {};                                                    \
-    virtual ~extension() {};                                                    \
+namespace MsgsSimToClient
+{
+    class MsgObjectKnowledgeUpdate;
+    class MsgObjectUpdate;
+}
+
+#define DECLARE_EXTENSION( extension )                                                      \
+class extension : public kernel::Extension_ABC                                              \
+                , public kernel::Displayable_ABC                                            \
+                , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate > \
+                , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >          \
+{                                                                                           \
+public:                                                                                     \
+             extension() {};                                                                \
+    virtual ~extension() {};                                                                \
 };
 
 namespace kernel
@@ -39,7 +49,6 @@ namespace kernel
     DECLARE_EXTENSION( OccupantAttribute_ABC )
     DECLARE_EXTENSION( DelayAttribute_ABC )
     DECLARE_EXTENSION( SealOffAttribute_ABC )
-    DECLARE_EXTENSION( StructuralStateAttribute_ABC )
 }
 
 #undef DECLARE_EXTENSION

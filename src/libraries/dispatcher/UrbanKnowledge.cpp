@@ -150,12 +150,13 @@ void UrbanKnowledge::Accept( kernel::ModelVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanKnowledge::GetRecognizedEntity
+// Name: UrbanKnowledge::GetTeam
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* UrbanKnowledge::GetRecognizedEntity() const
+const kernel::Team_ABC* UrbanKnowledge::GetTeam() const
 {
-    return pUrban_;
+    //$$$$ Useless method in dispatcher ...
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

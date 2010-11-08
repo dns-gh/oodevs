@@ -72,7 +72,7 @@ public:
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     virtual void Accept ( kernel::ModelVisitor_ABC& visitor ) const;
 
-    virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
+    virtual const kernel::Team_ABC* GetTeam() const;
     virtual const kernel::Population_ABC*     GetEntity() const;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;

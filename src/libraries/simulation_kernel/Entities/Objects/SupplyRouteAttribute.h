@@ -74,6 +74,7 @@ public:
     //! @name Copy
     //@{
     SupplyRouteAttribute& operator=( const SupplyRouteAttribute& ); //!< Assignment operator
+    bool Update( const SupplyRouteAttribute& rhs );
     //@}
 
 private:

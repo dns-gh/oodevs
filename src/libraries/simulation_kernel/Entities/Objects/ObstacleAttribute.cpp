@@ -11,13 +11,16 @@
 #include "ObstacleAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeObstacle.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ObstacleAttribute )
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< ObstacleAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< ObstacleAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute constructor
@@ -170,7 +173,7 @@ void ObstacleAttribute::Activate()
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeObstacle( *this ) );
+    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< ObstacleAttribute >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -242,4 +245,28 @@ void ObstacleAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attri
         bActivated_ = attribute.list( 2 ).abool();
         NotifyAttributeUpdated( eOnUpdate );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::Update
+// Created: NLD 2010-10-26
+// -----------------------------------------------------------------------------
+bool ObstacleAttribute::Update( const ObstacleAttribute& rhs )
+{
+    if( obstacle_ != rhs.obstacle_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        obstacle_ = rhs.obstacle_;
+    }
+    if( bActivated_ != rhs.bActivated_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        bActivated_ = rhs.bActivated_;
+    }
+    if( activationTime_ != rhs.activationTime_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        activationTime_ = rhs.activationTime_;
+    }
+    return NeedUpdate();
 }

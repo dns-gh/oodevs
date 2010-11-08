@@ -80,19 +80,3 @@ QPixmap EntitySymbols::GetSymbol( const kernel::Intelligence_ABC& entity, const 
     icon.SetSize( size );
     return icons_.GetSymbol( icon );
 }
-
-// -----------------------------------------------------------------------------
-// Name: EntitySymbols::GetSymbol
-// Created: SBO 2007-02-26
-// -----------------------------------------------------------------------------
-QPixmap EntitySymbols::GetSymbol( const kernel::Knowledge_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ )
-{
-    std::string level = "";
-    if( const kernel::Entity_ABC* realOne = entity.GetRecognizedEntity() )
-        if( const kernel::TacticalHierarchies* hierarchies = entity.GetEntity()->Retrieve< kernel::TacticalHierarchies >() )
-            level = hierarchies->GetLevel();
-    SymbolIcon icon( entity.GetSymbol(), level );
-    icon.SetColor( strategy_.FindColor( entity ) );
-    icon.SetSize( size );
-    return icons_.GetSymbol( icon );
-}

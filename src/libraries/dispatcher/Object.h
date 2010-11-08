@@ -12,6 +12,7 @@
 
 #include "Localisation.h"
 #include "Object_ABC.h"
+#include "ObjectAttributeContainer.h"
 #include "tools/Resolver.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
@@ -68,22 +69,7 @@ private:
     Object& operator=( const Object& ); //!< Assignment operator
     //@}
 
-    //! @name Attributes
-    //@{
-    void Initialize( Model_ABC& model, const Common::ObjectAttributes& attribute );
-    void AddAttribute( ObjectAttribute_ABC* attribute );
-    //@}
-
-    //! @name 
-    //@{
-    void Send( Common::ObjectAttributes& attributes ) const;
-    //@}
-
 private:
-    //! @name Types
-    //@{
-    typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
-    //@}
 
     //! @name Types
     //@{
@@ -97,7 +83,7 @@ private:
     const kernel::ObjectType& type_;
     Localisation localisation_;
     dispatcher::Team_ABC& side_;
-    T_ObjectAttributes attributes_;
+    ObjectAttributeContainer attributes_;
     T_Optionals optionals_;
 };
 

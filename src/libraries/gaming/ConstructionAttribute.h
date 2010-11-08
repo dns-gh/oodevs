@@ -10,12 +10,9 @@
 #ifndef __ConstructionAttribute_h_
 #define __ConstructionAttribute_h_
 
-#include "clients_kernel/Types.h"
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
 namespace kernel
@@ -32,15 +29,12 @@ namespace kernel
 // Created: SBO 2007-02-08
 // =============================================================================
 class ConstructionAttribute : public kernel::ConstructionAttribute_ABC
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
-                     , public kernel::Drawable_ABC
+                            , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-            ConstructionAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType >& resolver );
+             ConstructionAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType >& resolver );
     virtual ~ConstructionAttribute();
     //@}
 
@@ -63,7 +57,6 @@ private:
     //@{
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectCreation& message );
     template< typename T >
     void UpdateData( const T& message );
     //@}

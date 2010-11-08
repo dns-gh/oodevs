@@ -59,6 +59,7 @@ public:
     //! @name Copy
     //@{
     LogisticAttribute& operator=( const LogisticAttribute& ); //!< Assignment operator
+    bool Update( const LogisticAttribute& rhs );
     //@}
 
 private:

@@ -10,14 +10,17 @@
 #include "simulation_kernel_pch.h"
 #include "SupplyRouteAttribute.h"
 #include "Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeSupplyRoute.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "protocol/protocol.h"
 #include <hla/HLA_UpdateFunctor.h>
 #include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( SupplyRouteAttribute )
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< SupplyRouteAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< SupplyRouteAttribute > )
 
 using namespace hla;
 
@@ -135,7 +138,7 @@ void SupplyRouteAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void SupplyRouteAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeSupplyRoute( *this ) );
+    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< SupplyRouteAttribute >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -254,4 +257,38 @@ double SupplyRouteAttribute::GetLength() const
 double SupplyRouteAttribute::GetFlow() const
 {
     return rFlow_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyRouteAttribute::Update
+// Created: NLD 2010-10-26
+// -----------------------------------------------------------------------------
+bool SupplyRouteAttribute::Update( const SupplyRouteAttribute& rhs )
+{
+    if( bEquipped_ != rhs.bEquipped_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        bEquipped_ = rhs.bEquipped_;
+    }
+    if( rWeightSupported_ != rhs.rWeightSupported_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        rWeightSupported_ = rhs.rWeightSupported_;
+    }
+    if( rWidth_ != rhs.rWidth_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        rWidth_ = rhs.rWidth_;
+    }
+    if( rLength_ != rhs.rLength_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        rLength_ = rhs.rLength_;
+    }
+    if( rFlow_ != rhs.rFlow_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        rFlow_ = rhs.rFlow_;
+    }
+    return NeedUpdate();
 }

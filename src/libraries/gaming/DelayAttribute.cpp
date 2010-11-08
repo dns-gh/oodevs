@@ -77,7 +77,7 @@ void DelayAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 // Name: DelayAttribute::DoUpdate
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
+void DelayAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }

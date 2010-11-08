@@ -15,7 +15,6 @@
 #include "NBCAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeInputToxicCloud.h"
 #include "simulation_terrain/TER_World.h"
 #include "protocol/protocol.h"
 #include <geodata/Feature_ABC.h>

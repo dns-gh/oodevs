@@ -1,0 +1,66 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+#ifndef __dispatcher_ObjectAttributeContainer_h__
+#define __dispatcher_ObjectAttributeContainer_h__
+
+#include <boost/ptr_container/ptr_vector.hpp>
+
+namespace Common
+{
+    class ObjectAttributes;
+}
+
+namespace dispatcher
+{
+    class ObjectAttribute_ABC;
+    class Model_ABC;
+
+// =============================================================================
+/** @class  Object_ABC
+    @brief  Object_ABC
+*/
+// Created: SBO 2010-06-07
+// =============================================================================
+class ObjectAttributeContainer
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    ObjectAttributeContainer( const Model_ABC& model );
+    ~ObjectAttributeContainer();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Update( const Common::ObjectAttributes& message );
+    void Send  ( Common::ObjectAttributes& message ) const;
+    //@}
+
+private:
+    //! @name Tools
+    //@{
+    template< typename T > void CreateOrUpdate( const Common::ObjectAttributes& message );
+    template< typename T > void CreateOrUpdate( const Common::ObjectAttributes& message, const Model_ABC& model );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
+    //@}
+
+private:
+    const Model_ABC& model_;
+    T_ObjectAttributes attributes_;
+};
+
+}
+
+#endif // __dispatcher_ObjectAttributeContainer_h__

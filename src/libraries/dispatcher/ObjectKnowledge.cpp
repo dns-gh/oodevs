@@ -39,7 +39,7 @@ using namespace dispatcher;
 ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
     : dispatcher::ObjectKnowledge_ABC( message.knowledge().id() )
     , model_                         ( model )
-    , team_                          ( model.Sides().Get( message.party().id() ) )
+    , owner_                         ( model.Sides().Get( message.party().id() ) )
     , pObject_                       ( model.Objects().Find( message.object().id() ) )
     , nType_                         ( message.type().id() )
     , knowledgeGroup_                ( message.has_knowledge_group() ? &model.KnowledgeGroups().Get( message.knowledge_group().id() ) : 0 )
@@ -47,14 +47,14 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient:
     , bPerceived_                    ( false )
     , automatPerceptions_            ()
     , typename_                      ( "objectKnowledge" )
+    , attributes_                    ( model )
 {
     optionals_.realObjectPresent = pObject_ != 0;
     optionals_.relevancePresent = 0;
     optionals_.locationPresent = 0;
     optionals_.perceivedPresent = 0;
     optionals_.specific_attributesPresent = 0;
-    optionals_.automat_perceptionPresent = 0;
-    Initialize( model, message.attributes() );
+    optionals_.automat_perceptionPresent = 0;    
     RegisterSelf( *this );
 }
 
@@ -65,75 +65,6 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient:
 ObjectKnowledge::~ObjectKnowledge()
 {
     // NOTHING
-}
-
-#define CHECK_MSG_ATTRIBUTE_CREATION( MSG, CLASS ) \
-    if( attributes.has_##MSG##()  )                \
-        AddAttribute( new CLASS( attributes ) )
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::CreateOrUpdate
-// Created: SBO 2010-06-09
-// -----------------------------------------------------------------------------
-template< typename T >
-void ObjectKnowledge::CreateOrUpdate( const Common::ObjectAttributes& message )
-{
-    T_ObjectAttributes::iterator it;
-    for( it = attributes_.begin(); it != attributes_.end(); ++it )
-        if( dynamic_cast< T* >( &*it ) )
-        {
-            it->Update( message );
-            break;
-        }
-    if( it == attributes_.end() )
-        AddAttribute( new T( message ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::CreateOrUpdate
-// Created: SBO 2010-06-09
-// -----------------------------------------------------------------------------
-template< typename T >
-void ObjectKnowledge::CreateOrUpdate( const Common::ObjectAttributes& message, const Model_ABC& model )
-{
-    T_ObjectAttributes::iterator it;
-    for( it = attributes_.begin(); it != attributes_.end(); ++it )
-        if( dynamic_cast< T* >( &*it ) )
-        {
-            it->Update( message );
-            break;
-        }
-    if( it == attributes_.end() )
-        AddAttribute( new T( model, message ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::Initialize
-// Created: JCR 2008-06-08
-// -----------------------------------------------------------------------------
-void ObjectKnowledge::Initialize( const Model_ABC& model, const Common::ObjectAttributes& attributes )
-{
-    CHECK_MSG_ATTRIBUTE_CREATION( construction      , ConstructionAttribute );
-    CHECK_MSG_ATTRIBUTE_CREATION( obstacle          , ObstacleAttribute );
-    CHECK_MSG_ATTRIBUTE_CREATION( mine              , MineAttribute );
-    if( attributes.has_logistic() )
-        AddAttribute( new LogisticAttribute( model, attributes ) );
-    CHECK_MSG_ATTRIBUTE_CREATION( bypass            , BypassAttribute );
-    CHECK_MSG_ATTRIBUTE_CREATION( crossing_site     , CrossingSiteAttribute );
-    CHECK_MSG_ATTRIBUTE_CREATION( supply_route      , SupplyRouteAttribute );
-    CHECK_MSG_ATTRIBUTE_CREATION( nbc               , NBCAttribute );
-    CHECK_MSG_ATTRIBUTE_CREATION( fire              , FireAttribute );
-    CHECK_MSG_ATTRIBUTE_CREATION( medical_treatment , MedicalTreatmentAttribute );
-    CHECK_MSG_ATTRIBUTE_CREATION( effect_delay      , DelayAttribute );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::AddAttribute
-// Created: JCR 2008-06-08
-// -----------------------------------------------------------------------------
-void ObjectKnowledge::AddAttribute( ObjectAttribute_ABC* attribute )
-{
-    attributes_.push_back( attribute );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,30 +110,8 @@ void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate&
         pObject_ = model_.Objects().Find( message.object().id() );
         optionals_.realObjectPresent = 1;
     }
-    if( message.attributes().has_construction() )
-        CreateOrUpdate< ConstructionAttribute >( message.attributes() );
-    if( message.attributes().has_obstacle() )
-        CreateOrUpdate< ObstacleAttribute >( message.attributes() );
-    if( message.attributes().has_mine() )
-        CreateOrUpdate< MineAttribute >( message.attributes() );
-    if( message.attributes().has_logistic() )
-        CreateOrUpdate< LogisticAttribute >( message.attributes(), model_ );
-    if( message.attributes().has_mine() )
-        CreateOrUpdate< MineAttribute >( message.attributes() );
-    if( message.attributes().has_bypass() )
-        CreateOrUpdate< BypassAttribute >( message.attributes() );
-    if( message.attributes().has_crossing_site() )
-        CreateOrUpdate< CrossingSiteAttribute >( message.attributes() );
-    if( message.attributes().has_supply_route() )
-        CreateOrUpdate< SupplyRouteAttribute >( message.attributes() );
-    if( message.attributes().has_nbc() )
-        CreateOrUpdate< NBCAttribute >( message.attributes() );
-    if( message.attributes().has_fire() )
-        CreateOrUpdate< FireAttribute >( message.attributes() );
-    if( message.attributes().has_medical_treatment() )
-        CreateOrUpdate< MedicalTreatmentAttribute >( message.attributes() );
-    if( message.attributes().has_effect_delay() )
-        CreateOrUpdate< DelayAttribute >( message.attributes() );
+
+    attributes_.Update( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
@@ -213,14 +122,13 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectKnowledgeCreation asn;
     asn().mutable_knowledge()->set_id( GetId() );
-    asn().mutable_party()->set_id( team_.GetId() );
+    asn().mutable_party()->set_id( owner_.GetId() );
     if( knowledgeGroup_ )
         asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
     if( optionals_.realObjectPresent )
         asn().mutable_object()->set_id( pObject_ ? pObject_->GetId() : 0 );
     asn().mutable_type()->set_id( nType_ );  // $$$$ _RC_ PHC 2010-07-07: ???
-    std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
+    asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation 
     asn.Send( publisher );
 }
 
@@ -232,7 +140,7 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectKnowledgeUpdate message;
     message().mutable_knowledge()->set_id( GetId() );
-    message().mutable_party()->set_id( team_.GetId() );
+    message().mutable_party()->set_id( owner_.GetId() );
     if( knowledgeGroup_ )
         message().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
     if( optionals_.realObjectPresent )
@@ -249,8 +157,7 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             Common::AutomatId& data = *message().mutable_perceiving_automats()->add_elem();
             data.set_id( (*it)->GetId() );
         }
-    std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *message().mutable_attributes() ) ) );
+    attributes_.Send( *message().mutable_attributes() );
     message.Send( publisher );
 }
 
@@ -262,7 +169,7 @@ void ObjectKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectKnowledgeDestruction asn;
     asn().mutable_knowledge()->set_id( GetId() );
-    asn().mutable_party()->set_id( team_.GetId());
+    asn().mutable_party()->set_id( owner_.GetId());
     asn.Send( publisher );
 }
 
@@ -276,12 +183,13 @@ void ObjectKnowledge::Accept( kernel::ModelVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::GetRecognizedEntity
+// Name: ObjectKnowledge::GetTeam
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* ObjectKnowledge::GetRecognizedEntity() const
+const kernel::Team_ABC* ObjectKnowledge::GetTeam() const
 {
-    return pObject_;
+    //$$$$ Useless method in dispatcher ...
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -299,7 +207,7 @@ const kernel::Object_ABC* ObjectKnowledge::GetEntity() const
 // -----------------------------------------------------------------------------
 const kernel::Team_ABC& ObjectKnowledge::GetOwner() const
 {
-    return team_;
+    return owner_;
 }
 
 // -----------------------------------------------------------------------------

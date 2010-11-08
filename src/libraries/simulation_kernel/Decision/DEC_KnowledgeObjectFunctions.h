@@ -12,7 +12,6 @@
 
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeCrossingSite.h"
 
 class MIL_Agent_ABC;
 class DEC_Knowledge_Object;

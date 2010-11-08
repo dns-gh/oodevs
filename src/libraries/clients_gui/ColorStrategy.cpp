@@ -165,8 +165,8 @@ QColor ColorStrategy::FindColor( const Intelligence_ABC& intelligence )
 // -----------------------------------------------------------------------------
 QColor ColorStrategy::FindColor( const Knowledge_ABC& knowledge )
 {
-    if( const Entity_ABC* realEntity = knowledge.GetRecognizedEntity() )
-        return FindColor( *realEntity );
+    if( const Team_ABC* team = knowledge.GetTeam() )
+        return FindColor( *team );
     return QColor( 255, 220, 000 );
 }
 

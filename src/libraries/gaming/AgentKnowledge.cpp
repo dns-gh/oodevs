@@ -129,13 +129,22 @@ const kernel::Agent_ABC* AgentKnowledge::GetEntity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledge::GetRecognizedEntity
+// Name: AgentKnowledge::GetTeam
+// Created: NLD 2010-11-03
+// -----------------------------------------------------------------------------
+const kernel::Team_ABC* AgentKnowledge::GetTeam() const
+{
+    return team_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::IsRecognized
 // Created: SBO 2006-12-08
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* AgentKnowledge::GetRecognizedEntity() const
+bool AgentKnowledge::IsRecognized() const
 {
     E_PerceptionResult perception = nMaxPerceptionLevel_.IsSet() ? nMaxPerceptionLevel_ : eDetection;
-    return ( team_ && perception > eDetection ) ? &realAgent_ : 0;
+    return perception > eDetection;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +162,7 @@ const kernel::KnowledgeGroup_ABC& AgentKnowledge::GetOwner() const
 // -----------------------------------------------------------------------------
 QString AgentKnowledge::GetName() const
 {
-    if( GetRecognizedEntity() )
+    if( IsRecognized() )
         return realAgent_.GetName();
     return tools::translate( "AgentKnowledge", "Unknown unit" );
 }

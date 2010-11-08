@@ -65,6 +65,11 @@ public:
     double Get() const;
     //@}
 
+    //! @name Copy
+    //@{
+    bool Update( const InteractionHeightAttribute& rhs );
+    //@}
+
 private:
     //! @name Member data
     //@{

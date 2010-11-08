@@ -182,12 +182,13 @@ void PopulationKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::GetRecognizedEntity
+// Name: PopulationKnowledge::GetTeam
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* PopulationKnowledge::GetRecognizedEntity() const
+const kernel::Team_ABC* PopulationKnowledge::GetTeam() const
 {
-    return &population_;
+    //$$$$ Useless method in dispatcher ...
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

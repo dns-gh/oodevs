@@ -11,7 +11,6 @@
 #define __MedicalTreatmentAttribute_h_
 
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 #include "tools/Resolver_ABC.h"
 #include "MedicalTreatmentCapacity.h"
@@ -32,9 +31,6 @@ namespace kernel
 // Created: RFT 2008-02-14
 // =============================================================================
 class MedicalTreatmentAttribute : public kernel::MedicalTreatmentAttribute_ABC
-                    , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
-                    , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
-                    , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
 {
 public:
     //! @name Constructors/Destructor
@@ -73,7 +69,6 @@ private:
     //@{
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectCreation& message );
     //@}
 
 private:

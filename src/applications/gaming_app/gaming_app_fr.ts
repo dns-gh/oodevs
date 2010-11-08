@@ -2401,14 +2401,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 <context>
     <name>ProfilingPanel</name>
     <message>
-        <source>Incoming: </source>
-        <translation>Entrant: </translation>
-    </message>
-    <message>
-        <source>Outgoing: </source>
-        <translation>Sortant: </translation>
-    </message>
-    <message>
         <source>Network</source>
         <translation>Réseau</translation>
     </message>
@@ -2443,6 +2435,26 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Pathfinds</source>
         <translation>Calculs d&apos;itinéraires</translation>
+    </message>
+    <message>
+        <source>Incoming bytes: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incoming messages: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nb messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outgoing bytes: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outgoing messages: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

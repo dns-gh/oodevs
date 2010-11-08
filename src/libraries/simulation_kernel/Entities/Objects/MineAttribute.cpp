@@ -12,14 +12,17 @@
 #include "Object.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeMine.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "hla/HLA_UpdateFunctor.h"
 #include "protocol/protocol.h"
 #include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MineAttribute )
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< MineAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< MineAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: MineAttribute constructor
@@ -29,9 +32,7 @@ MineAttribute::MineAttribute()
     : dotation_           ( 0 )
     , nFullNbrDotation_   ( 0 )
     , nCurrentNbrDotation_( 0 )
-    , rMiningPercentage_  ( 0 )
-    , nMinesActivityTime_ ( 0 )
-    , nDeathTimeStep_     ( 0 )
+    , miningPercentage_   ( 0., 0.05, 0., 1.)
 {
     // NOTHING
 }
@@ -44,9 +45,7 @@ MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, unsigned int
     : dotation_           ( &dotation )
     , nFullNbrDotation_   ( nDefaultMaxNbrDotation )
     , nCurrentNbrDotation_( nDefaultMaxNbrDotation )
-    , rMiningPercentage_  ( 1. )
-    , nMinesActivityTime_ ( 0 )
-    , nDeathTimeStep_     ( 0 )
+    , miningPercentage_   ( 0., 0.05, 0., 1.)
 {
     // NOTHING
 }
@@ -59,18 +58,14 @@ MineAttribute::MineAttribute( const Common::MsgMissionParameter_Value& attribute
     : dotation_           ( 0 )
     , nFullNbrDotation_   ( 0 )
     , nCurrentNbrDotation_( 0 )
-    , rMiningPercentage_  ( 0 )
-    , nMinesActivityTime_ ( 0 )
-    , nDeathTimeStep_     ( 0 )
+    , miningPercentage_   ( 0., 0.05, 0., 1.)
 {
     dotation_ = PHY_DotationType::FindDotationCategory( attributes.list( 1 ).identifier() );
     if( !dotation_ )
         throw std::runtime_error( "Unknown 'Dotation Type' for mine attribute" );
     nCurrentNbrDotation_ = attributes.list( 2 ).quantity();
     nFullNbrDotation_ = static_cast< unsigned int >( attributes.list( 3 ).areal() );
-    rMiningPercentage_ = attributes.list( 4 ).quantity();
-    //nMinesActivityTime_;
-    //nDeathTimeStep_;
+    miningPercentage_.Set( attributes.list( 4 ).quantity() );
 }
 
 
@@ -83,8 +78,8 @@ void MineAttribute::Load( xml::xistream& xis )
     assert( dotation_ != 0 );
     const double completion = xis.attribute< double >( "completion", 1.f );
     if( completion > 0. && completion <= 1. )
-        rMiningPercentage_ = completion;
-    nCurrentNbrDotation_ = static_cast< unsigned int >( rMiningPercentage_ * nFullNbrDotation_ );
+        miningPercentage_.Set( completion );
+    nCurrentNbrDotation_ = static_cast< unsigned int >( miningPercentage_.Get() * nFullNbrDotation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +98,7 @@ MineAttribute::~MineAttribute()
 MineAttribute& MineAttribute::operator=( const MineAttribute& rhs )
 {
     nCurrentNbrDotation_ = rhs.nCurrentNbrDotation_;
-    rMiningPercentage_ = rhs.rMiningPercentage_;
+    miningPercentage_ = rhs.miningPercentage_;
     nFullNbrDotation_ = rhs.nFullNbrDotation_;
     dotation_ = rhs.dotation_;
     return *this;
@@ -119,8 +114,10 @@ void MineAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar >> dotation
        >> nFullNbrDotation_
-       >> nCurrentNbrDotation_
-       >> rMiningPercentage_;
+       >> nCurrentNbrDotation_;
+    double tmp;
+    ar >> tmp;
+    miningPercentage_.Set( tmp );
     dotation_ = PHY_DotationType::FindDotationCategory( dotation );
 }
 
@@ -137,7 +134,7 @@ void MineAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
        ar << "";
     ar << nFullNbrDotation_
        << nCurrentNbrDotation_
-       << rMiningPercentage_;
+       << (double)miningPercentage_.Get();
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +144,7 @@ void MineAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 void MineAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "mine" )
-            << xml::attribute( "completion", rMiningPercentage_ )
+            << xml::attribute( "completion", miningPercentage_.Get() )
         << xml::end;
 }
 
@@ -157,7 +154,7 @@ void MineAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MineAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeMine( *this ) );
+    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< MineAttribute >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +175,7 @@ void MineAttribute::SendFullState( Common::ObjectAttributes& asn ) const
     if( dotation_ )
     {
         asn.mutable_mine()->mutable_resource()->set_id( dotation_->GetMosID() );
-        asn.mutable_mine()->set_percentage( unsigned int( rMiningPercentage_ * 100. ) );
+        asn.mutable_mine()->set_percentage( unsigned int( miningPercentage_.Send() * 100. ) );
         asn.mutable_mine()->set_dotation_nbr( nCurrentNbrDotation_ );
     }
 }
@@ -191,7 +188,7 @@ void MineAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate() )
     {
-        asn.mutable_mine()->set_percentage( unsigned int( rMiningPercentage_ * 100. ) );
+        asn.mutable_mine()->set_percentage( unsigned int( miningPercentage_.Send() * 100. ) );
         asn.mutable_mine()->set_dotation_nbr( nCurrentNbrDotation_ );
         Reset( eOnUpdate | eOnHLAUpdate );
     }
@@ -216,9 +213,11 @@ void MineAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribute
 // -----------------------------------------------------------------------------
 void MineAttribute::Set( double percentage )
 {
-    rMiningPercentage_ = std::max( 0., std::min( 1., percentage ) );
-    nCurrentNbrDotation_ = (unsigned int)( rMiningPercentage_ * nFullNbrDotation_ );
-    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    miningPercentage_.Set( percentage );
+    unsigned int tmp = (unsigned int)( miningPercentage_.Get() * nFullNbrDotation_ );
+    if( nCurrentNbrDotation_ != tmp || miningPercentage_.NeedToBeSent() )
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    nCurrentNbrDotation_ = tmp;
 }
 
 // -----------------------------------------------------------------------------
@@ -227,7 +226,7 @@ void MineAttribute::Set( double percentage )
 // -----------------------------------------------------------------------------
 void MineAttribute::Update( double rDeltaPercentage )
 {
-    Set( rMiningPercentage_ + rDeltaPercentage );
+    Set( miningPercentage_.Get() + rDeltaPercentage );
 }
 
 // -----------------------------------------------------------------------------
@@ -236,7 +235,7 @@ void MineAttribute::Update( double rDeltaPercentage )
 // -----------------------------------------------------------------------------
 unsigned int MineAttribute::GetDotationNeededForConstruction( double rDeltaPercentage ) const
 {
-    const double rNewPercentage = std::max( 0., std::min( 1., rMiningPercentage_ + rDeltaPercentage ) );
+    const double rNewPercentage = std::max( 0., std::min( 1., miningPercentage_.Get() + rDeltaPercentage ) );
     return (unsigned int)( rNewPercentage * nFullNbrDotation_ ) - nCurrentNbrDotation_;
 }
 
@@ -246,7 +245,7 @@ unsigned int MineAttribute::GetDotationNeededForConstruction( double rDeltaPerce
 // -----------------------------------------------------------------------------
 unsigned int MineAttribute::GetDotationRecoveredWhenDestroying( double rDeltaPercentage ) const
 {
-    const double rNewPercentage = std::max( 0., std::min( 1., rMiningPercentage_ - rDeltaPercentage ) );
+    const double rNewPercentage = std::max( 0., std::min( 1., miningPercentage_.Get() - rDeltaPercentage ) );
     return nCurrentNbrDotation_ - (unsigned int)( rNewPercentage * nFullNbrDotation_ );
 }
 
@@ -256,7 +255,7 @@ unsigned int MineAttribute::GetDotationRecoveredWhenDestroying( double rDeltaPer
 // -----------------------------------------------------------------------------
 void MineAttribute::Serialize( HLA_UpdateFunctor& functor ) const
 {
-    functor.Serialize( "valorisation", NeedUpdate( eOnHLAUpdate ), rMiningPercentage_ );
+    functor.Serialize( "valorisation", NeedUpdate( eOnHLAUpdate ), miningPercentage_.Get() );
     Reset( eOnHLAUpdate );
 }
 
@@ -280,7 +279,7 @@ void MineAttribute::Deserialize( const hla::AttributeIdentifier& attributeID, hl
 // -----------------------------------------------------------------------------
 double MineAttribute::GetState() const
 {
-    return rMiningPercentage_;
+    return miningPercentage_.Get();
 }
 
 // -----------------------------------------------------------------------------
@@ -299,4 +298,32 @@ unsigned int MineAttribute::GetCurrentDotations() const
 unsigned int MineAttribute::GetDotationType() const
 {
     return dotation_ ? dotation_->GetMosID() : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MineAttribute::Update
+// Created: NLD 2010-10-26
+// -----------------------------------------------------------------------------
+bool MineAttribute::Update( const MineAttribute& rhs )
+{
+    if( dotation_ != rhs.dotation_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        dotation_ = rhs.dotation_;
+    }
+    if( nFullNbrDotation_ != rhs.nFullNbrDotation_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        nFullNbrDotation_ = rhs.nFullNbrDotation_;
+    }
+    if( nCurrentNbrDotation_ != rhs.nCurrentNbrDotation_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        nCurrentNbrDotation_ = rhs.nCurrentNbrDotation_;
+    }
+    miningPercentage_.Set( rhs.miningPercentage_.Get() );
+    if( miningPercentage_.NeedToBeSent() )
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+
+    return NeedUpdate();
 }

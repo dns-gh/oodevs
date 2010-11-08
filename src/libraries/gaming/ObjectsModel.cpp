@@ -56,6 +56,17 @@ void ObjectsModel::CreateObject( const MsgsSimToClient::MsgObjectCreation& messa
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectsModel::UpdateObject
+// Created: NLD 2010-11-02
+// -----------------------------------------------------------------------------
+void ObjectsModel::UpdateObject( const MsgsSimToClient::MsgObjectUpdate& message )
+{    
+    Object_ABC& object = GetObject( message.object().id() );
+    objectFactory_.RegisterAttributes( object, message.attributes() );
+    object.Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectsModel::GetObject
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------

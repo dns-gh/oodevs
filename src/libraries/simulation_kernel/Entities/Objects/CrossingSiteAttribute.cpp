@@ -10,12 +10,15 @@
 #include "simulation_kernel_pch.h"
 #include "CrossingSiteAttribute.h"
 #include "Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeCrossingSite.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyRecon.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( CrossingSiteAttribute )
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyRecon< CrossingSiteAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyRecon< CrossingSiteAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute constructor
@@ -111,7 +114,7 @@ void CrossingSiteAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void CrossingSiteAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeCrossingSite( *this ) );
+    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyRecon< CrossingSiteAttribute >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -210,4 +213,33 @@ double CrossingSiteAttribute::GetSpeed() const
 bool CrossingSiteAttribute::IsBanksToFitOut() const
 {
     return bBanksToFitOut_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CrossingSiteAttribute::Update
+// Created: NLD 2010-10-26
+// -----------------------------------------------------------------------------
+bool CrossingSiteAttribute::Update( const CrossingSiteAttribute& rhs )
+{
+    if( rWidth_ != rhs.rWidth_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        rWidth_ = rhs.rWidth_;
+    }
+    if( rDepth_ != rhs.rDepth_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        rDepth_ = rhs.rDepth_;
+    }
+    if( rCurrentSpeed_ != rhs.rCurrentSpeed_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        rCurrentSpeed_ = rhs.rCurrentSpeed_;
+    }
+    if( bBanksToFitOut_ != rhs.bBanksToFitOut_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        bBanksToFitOut_ = rhs.bBanksToFitOut_;
+    }
+    return NeedUpdate();
 }

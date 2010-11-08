@@ -74,6 +74,7 @@ public:
     //@{
     NBCTypeAttribute( const NBCTypeAttribute& ); //!< Copy operator
     NBCTypeAttribute& operator=( const NBCTypeAttribute& ); //!< Assignment operator
+    bool Update( const NBCTypeAttribute& rhs );
     //@}
 
 private:

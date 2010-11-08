@@ -12,7 +12,6 @@
 #include "Object.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeConstruction.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "hla/HLA_UpdateFunctor.h"
 #include <hla/AttributeIdentifier.h>
@@ -163,7 +162,7 @@ void StockAttribute::WriteODB( xml::xostream& xos ) const
 // Name: StockAttribute::Send
 // Created: JCR 2009-06-05
 // -----------------------------------------------------------------------------
-void StockAttribute::Send( Common::ObjectAttributeStock& attribute, bool send_max ) const
+void StockAttribute::Send( Common::ObjectAttributeStock& attribute ) const
 {
     int i = 0;
     for( CIT_DotationProgress it = stock_.begin(); it != stock_.end(); ++it, ++i )
@@ -171,8 +170,7 @@ void StockAttribute::Send( Common::ObjectAttributeStock& attribute, bool send_ma
         Common::StockResource* resource = attribute.add_resources();
         resource->mutable_resource()->set_id( it->first->GetType().GetID() );
         resource->set_current( it->second.first );
-        if( send_max )
-            resource->set_maximum( it->second.second );
+    resource->set_maximum( it->second.second );
     }
 }
 
@@ -183,7 +181,7 @@ void StockAttribute::Send( Common::ObjectAttributeStock& attribute, bool send_ma
 void StockAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
     if( stock_.size() > 0 )
-        Send( *asn.mutable_stock(), true );
+        Send( *asn.mutable_stock() );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +192,7 @@ void StockAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnCreation ) | NeedUpdate( eOnUpdate) )
     {
-        Send( *asn.mutable_stock(), false );
+        Send( *asn.mutable_stock() );
         Reset();
     }
 }

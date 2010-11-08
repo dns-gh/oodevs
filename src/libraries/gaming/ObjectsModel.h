@@ -16,6 +16,7 @@
 namespace MsgsSimToClient
 {
     class MsgObjectCreation;
+    class MsgObjectUpdate;
 }
 
 class ObjectFactory_ABC;
@@ -45,6 +46,7 @@ public:
     void Purge();
 
     void CreateObject( const MsgsSimToClient::MsgObjectCreation& message );
+    void UpdateObject( const MsgsSimToClient::MsgObjectUpdate& message );
     kernel::Object_ABC& GetObject( unsigned long id );
     kernel::Object_ABC* FindObject( unsigned long id );
     void DeleteObject( unsigned long id );

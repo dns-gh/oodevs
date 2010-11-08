@@ -10,19 +10,12 @@
 #ifndef __StructuralStateAttribute_h_
 #define __StructuralStateAttribute_h_
 
-#include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/UrbanExtensions.h"
 
 namespace kernel
 {
     class Controller;
     class PropertiesDictionary;
-}
-
-namespace MsgsSimToClient
-{
-    class MsgUrbanCreation;
-    class MsgUrbanUpdate;
 }
 
 // =============================================================================
@@ -32,8 +25,6 @@ namespace MsgsSimToClient
 // Created: JSR 2010-09-01
 // =============================================================================
 class StructuralStateAttribute : public kernel::StructuralStateAttribute_ABC
-                               , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanUpdate >
-                               , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanCreation >
 {
 public:
     //! @name Constructors/Destructor

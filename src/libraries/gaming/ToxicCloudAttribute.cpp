@@ -122,7 +122,7 @@ void ToxicCloudAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& mess
 // Name: ToxicCloudAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
+void ToxicCloudAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }

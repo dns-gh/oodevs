@@ -60,9 +60,8 @@ public:
     //! @name Operations
     //@{
     virtual QString GetName() const;
-    virtual QString GetTypeName() const;
     virtual const kernel::Entity_ABC* GetEntity() const;
-    virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
+    virtual const kernel::Team_ABC*   GetTeam() const;
     virtual const kernel::Team_ABC&   GetOwner() const;
 
     virtual void Display( kernel::Displayer_ABC& displayer ) const;

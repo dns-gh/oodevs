@@ -85,15 +85,6 @@ void BypassAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message 
 }
 
 // -----------------------------------------------------------------------------
-// Name: BypassAttribute::DoUpdate
-// Created: SBO 2007-02-08
-// -----------------------------------------------------------------------------
-void BypassAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
-{
-    UpdateData( message.attributes() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: BypassAttribute::UpdateData
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------

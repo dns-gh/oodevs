@@ -71,15 +71,6 @@ void CrossingSiteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& me
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrossingSiteAttribute::DoUpdate
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-void CrossingSiteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
-{
-    UpdateData( message.attributes() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute::Display
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------

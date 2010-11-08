@@ -87,12 +87,12 @@ void ActivityTimeAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& me
     UpdateData( message.attributes() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ActivityTimeAttribute::DoUpdate
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
+void ActivityTimeAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
+

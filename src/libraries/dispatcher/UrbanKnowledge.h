@@ -57,7 +57,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
+    virtual const kernel::Team_ABC* GetTeam() const;
     virtual const Entity_ABC* GetEntity() const;
     virtual const kernel::Team_ABC& GetOwner() const;
     //@}

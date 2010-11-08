@@ -69,15 +69,6 @@ void LogisticAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& messag
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticAttribute::DoUpdate
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-void LogisticAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
-{
-    UpdateData( message.attributes() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticAttribute::Display
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------

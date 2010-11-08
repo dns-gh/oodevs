@@ -91,7 +91,7 @@ public:
 
     //@{
     void LoadDotation( xml::xistream& xis );
-    void Send( Common::ObjectAttributeStock& attribute, bool send_max ) const;
+    void Send( Common::ObjectAttributeStock& attribute ) const;
     //@}
 
 private:

@@ -72,6 +72,7 @@ public:
     //@{
     FireAttribute( const FireAttribute& ); //!< Copy operator
     FireAttribute& operator=( const FireAttribute& ); //!< Assignment operator
+    bool Update( const FireAttribute& rhs );    
     //@}
 
 private:

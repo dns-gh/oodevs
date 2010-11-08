@@ -13,16 +13,19 @@
 #include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "DEC_Knowledge_ObjectCollision.h"
-#include "DEC_Knowledge_ObjectAttributeConstruction.h"
-#include "DEC_Knowledge_ObjectAttributeBypass.h"
-#include "DEC_Knowledge_ObjectAttributeObstacle.h"
-#include "DEC_Knowledge_ObjectAttributeInteractionHeight.h"
+#include "DEC_Knowledge_ObjectAttributeProxy_ABC.h"
+#include "DEC_Knowledge_ObjectMagicPerception.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/AvoidanceCapacity.h"
 #include "Entities/Objects/ActivableCapacity.h"
 #include "Entities/Objects/ContaminationCapacity.h"
+#include "Entities/Objects/BypassAttribute.h"
+#include "Entities/Objects/InteractionHeightAttribute.h"
+#include "Entities/Objects/ConstructionAttribute.h"
+#include "Entities/Objects/ObstacleAttribute.h"
+
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -158,12 +161,10 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
     std::string name;
     file >> name;
     pObjectType_ = &MIL_ObjectFactory::FindType( name );
-    T_ObjectAttributeVector attributes;
     file >> const_cast< MIL_Army_ABC*& >( pArmyKnowing_ )
          >> pObjectKnown_
          >> const_cast< unsigned int& >( nID_ )
          >> name_
-         >> attributes
          >> nAttributesUpdated_
          >> const_cast< MIL_Army_ABC*& >( pOwnerArmy_ )
          >> localisation_
@@ -181,8 +182,6 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
          >> previousPerceptionPerAutomateSet_
          >> nTimeLastUpdate_
          >> rRelevance_;
-    for ( IT_ObjectAttributeVector it = attributes.begin(); it != attributes.end(); ++it )
-        (*it)->Register( *this );
 
     // récupération des noms des types
     unsigned int nSize;
@@ -193,6 +192,12 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
         file >> nID;
         reconByAgentTypes_.insert( MIL_AgentTypePion::Find( nID ) );
     }
+
+    // Attributes
+    std::vector< DEC_Knowledge_IObjectAttributeProxy* > attributes;
+    file >> attributes;
+    for( std::vector< DEC_Knowledge_IObjectAttributeProxy* >::const_iterator it = attributes.begin(); it != attributes.end(); ++it )
+        (*it)->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +216,6 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
     file << pObjectKnown_;
     file << nID_;
     file << name_;
-    file << attributes_;
     file << nAttributesUpdated_;
     file << pOwnerArmy_;
     file << localisation_;
@@ -231,6 +235,15 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
         unsigned int id = (*it)->GetID();
         file << id;
     }
+
+    // Attributes
+    std::vector< DEC_Knowledge_IObjectAttributeProxy* > attributes;
+    for( std::vector< DEC_Knowledge_IObjectAttributeProxy* >::const_iterator it = extensions_.Container().begin(); it != extensions_.Container().end(); ++it )
+    {
+        if( *it )
+            attributes.push_back( *it );
+    }
+    file << attributes;
 }
 
 // -----------------------------------------------------------------------------
@@ -317,15 +330,6 @@ bool DEC_Knowledge_Object::UpdateMaxPerceptionLevel( const PHY_PerceptionLevel& 
     return false;
 }
 
-namespace
-{
-    template< typename Container, typename Functor>
-    void UpdateAttributes( Container& container, Functor functor )
-    {
-        std::for_each( container.begin(), container.end(), functor );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::Update
 // Created: NLD 2004-05-03
@@ -338,8 +342,8 @@ void DEC_Knowledge_Object::Update( const PHY_PerceptionLevel& currentPerceptionL
     UpdateMaxPerceptionLevel( currentPerceptionLevel );
     // $$$$ NLD 2007-02-07: currentPerceptionLevel peut valoir notSeen_ ?
     UpdateLocalisations();  // Updaté même quand 'NotPerceived', pour les objets pouvant bouger
-    if( currentPerceptionLevel > PHY_PerceptionLevel::notSeen_ )
-        UpdateAttributes( attributes_, boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::UpdateOnPerceptionLevel, _1, boost::ref( currentPerceptionLevel ) ) );
+    DEC_Knowledge_ObjectMagicPerception param( *this, currentPerceptionLevel );
+    UpdateAttributes( boost::bind( &DEC_Knowledge_IObjectAttributeProxy::UpdateOnPerceptionLevel, _1, boost::ref( *this ), boost::ref( param ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -356,8 +360,7 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectPerception& percept
     //      => Pas de eNotPerceived aux ticks suivant la perte de contact
     UpdateLocalisations();// Updaté même quand 'NotPerceived', pour les objets pouvant bouger
     UpdatePerceptionSources( perception );
-    if( pObjectKnown_ && currentPerceptionLevel > PHY_PerceptionLevel::notSeen_ )
-        UpdateAttributes( attributes_, boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::UpdateOnPerception, _1, boost::ref( perception ) ) );
+    UpdateAttributes( boost::bind( &DEC_Knowledge_IObjectAttributeProxy::UpdateOnPerception, _1, boost::ref( *this ), boost::ref( perception ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -401,7 +404,7 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
         else
             UpdateLocalisationPartially( collision );
     }
-    UpdateAttributes( attributes_, boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::UpdateOnCollision, _1, boost::ref( collision ) ) );
+    UpdateAttributes( boost::bind( &DEC_Knowledge_IObjectAttributeProxy::UpdateOnCollision, _1, boost::ref( *this ), boost::ref( collision ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -424,7 +427,6 @@ void DEC_Knowledge_Object::UpdateRelevance()
     if( pObjectKnown_ && pObjectKnown_->IsMarkedForDestruction() )
     {
         pObjectKnown_ = 0;
-        attributes_.clear();
         NotifyAttributeUpdated( eAttr_RealObject );
     }
     // Si plus d'objet réel associé est si l'emplacement de l'objet est vu
@@ -491,13 +493,17 @@ void DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel( MsgsSimToClient::MsgO
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::BuildMsgAttributes( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
-    assert( pObjectType_ );
-    asn.mutable_attributes();
-    if( *pMaxPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
-        UpdateAttributes( attributes_,
-                      boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::Send, _1, boost::ref( *asn.mutable_attributes() ) ) );
-    if( pObjectType_ && pObjectType_->GetCapacity< ContaminationCapacity >() && !IsRecon() && asn.attributes().has_nbc() )
-        asn.mutable_attributes()->mutable_nbc()->set_danger_level( -1 );
+    // $$$$ NLD 2010-10-26: Bullshit, mais faut ce qu'il faut pour réparer le mer(d)ge des objets
+    if( nAttributesUpdated_ == eAttr_AllAttributes )
+    {
+        for( std::vector< DEC_Knowledge_IObjectAttributeProxy* >::const_iterator it = extensions_.Container().begin(); it != extensions_.Container().end(); ++it )
+            if( *it )
+                (*it)->SendFullState( *asn.mutable_attributes() );
+    }
+    else if( IsAttributeUpdated( eAttr_Attributes ) )
+        for( std::vector< DEC_Knowledge_IObjectAttributeProxy* >::const_iterator it = extensions_.Container().begin(); it != extensions_.Container().end(); ++it )
+            if( *it )
+                (*it)->SendChangedState( *asn.mutable_attributes() );
 }
 
 // -----------------------------------------------------------------------------
@@ -545,19 +551,16 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::SendMsgCreation() const
 {
+    assert( pArmyKnowing_ );
+
     client::ObjectKnowledgeCreation asn;
     asn().mutable_knowledge()->set_id( nID_ );
-    asn().mutable_object()->set_id( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
-    assert( pArmyKnowing_ );
+    asn().mutable_object()->set_id( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );    
     asn().mutable_party()->set_id( pArmyKnowing_->GetID() );
     if( pGroupKnowing_ )
         asn().mutable_knowledge_group()->set_id( pGroupKnowing_->GetId() );
     asn().mutable_type()->set_id( pObjectType_->GetName().c_str() );
-    std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
-
-    if( pObjectType_ && pObjectType_->GetCapacity< ContaminationCapacity >() && !IsRecon() && asn().mutable_attributes()->has_nbc() )
-        asn().mutable_attributes()->mutable_nbc()->set_danger_level( -1 );
+    asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation ne doit PAS envoyer les attributs
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -592,7 +595,7 @@ void DEC_Knowledge_Object::SendStateToNewClient()
 // -----------------------------------------------------------------------------
 double DEC_Knowledge_Object::GetMaxInteractionHeight() const
 {
-    const DEC_Knowledge_ObjectAttributeInteractionHeight* height = Retrieve< DEC_Knowledge_ObjectAttributeInteractionHeight >();
+    const InteractionHeightAttribute* height = RetrieveAttribute< InteractionHeightAttribute >();
     if( height )
         return height->Get();
     return 0;
@@ -618,8 +621,6 @@ const std::string& DEC_Knowledge_Object::GetName() const
 void DEC_Knowledge_Object::Recon( const MIL_Agent_ABC& agent )
 {
     reconByAgentTypes_.insert( &agent.GetType() );
-    NotifyAttributeUpdated( eAttr_Specific );
-    UpdateOnNetwork();
 }
 
 // -----------------------------------------------------------------------------
@@ -628,7 +629,7 @@ void DEC_Knowledge_Object::Recon( const MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Object::IsBypassed() const
 {
-    const DEC_Knowledge_ObjectAttributeBypass* bypass = Retrieve< DEC_Knowledge_ObjectAttributeBypass >();
+    const BypassAttribute* bypass = RetrieveAttribute< BypassAttribute >();
     if( bypass )
         return bypass->IsBypassed();
     return false;
@@ -640,7 +641,7 @@ bool DEC_Knowledge_Object::IsBypassed() const
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Object::IsConstructed() const
 {
-    const DEC_Knowledge_ObjectAttributeConstruction* construction = Retrieve< DEC_Knowledge_ObjectAttributeConstruction >();
+    const ConstructionAttribute* construction = RetrieveAttribute< ConstructionAttribute >();
     if( construction )
         return construction->IsConstructed();
     return false;
@@ -660,7 +661,7 @@ bool DEC_Knowledge_Object::IsReservedObstacle() const
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Object::IsReservedObstacleActivated() const
 {
-    const DEC_Knowledge_ObjectAttributeObstacle* activable = Retrieve< DEC_Knowledge_ObjectAttributeObstacle >();
+    const ObstacleAttribute* activable = RetrieveAttribute< ObstacleAttribute >();
     if( activable )
         return activable->IsActivated();
     return false;
@@ -836,7 +837,6 @@ E_Tristate DEC_Knowledge_Object::IsAFriend( const MIL_Army_ABC& army ) const
 {
     return army.IsAFriend( GetArmy() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::GetCurrentPerceptionLevel

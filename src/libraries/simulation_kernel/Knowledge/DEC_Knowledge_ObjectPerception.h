@@ -65,6 +65,8 @@ public:
     const MIL_Agent_ABC& GetAgentPerceiving() const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
     bool IsPerceived() const;
+
+    template< typename T > const T* GetAttribute() const;
     //@}
 
 private:
@@ -78,5 +80,22 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectPerception )
+
+// =============================================================================
+// Implementation
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectPerception::GetAttribute
+// Created: NLD 2004-05-04
+// -----------------------------------------------------------------------------
+template< typename T > const T* DEC_Knowledge_ObjectPerception::GetAttribute() const
+{
+    assert( pCurrentPerceptionLevel_ );
+    if( !pObjectPerceived_ || *pCurrentPerceptionLevel_ <= PHY_PerceptionLevel::notSeen_ )
+        return 0;
+ 
+    return pObjectPerceived_->RetrieveAttribute< T >();
+}
 
 #endif // __DEC_Knowledge_ObjectPerception_h_

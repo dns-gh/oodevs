@@ -10,12 +10,15 @@
 #include "simulation_kernel_pch.h"
 #include "InteractionHeightAttribute.h"
 #include "Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeInteractionHeight.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InteractionHeightAttribute )
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< InteractionHeightAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< InteractionHeightAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: InteractionHeightAttribute constructor
@@ -73,7 +76,7 @@ void InteractionHeightAttribute::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void InteractionHeightAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeInteractionHeight( *this ) );
+    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< InteractionHeightAttribute >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,4 +115,18 @@ void InteractionHeightAttribute::WriteODB( xml::xostream& xos ) const
 double InteractionHeightAttribute::Get() const
 {
     return height_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InteractionHeightAttribute::Update
+// Created: NLD 2010-10-26
+// -----------------------------------------------------------------------------
+bool InteractionHeightAttribute::Update( const InteractionHeightAttribute& rhs )
+{
+    if( height_ != rhs.height_ )
+    {
+        height_ = rhs.height_;
+        return true;
+    }
+    return false;
 }

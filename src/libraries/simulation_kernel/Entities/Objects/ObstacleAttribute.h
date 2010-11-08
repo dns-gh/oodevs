@@ -71,6 +71,7 @@ public:
     //@{
     virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute ); //<! Update from asn msg
     ObstacleAttribute& operator=( const ObstacleAttribute& ); //!< Assignment operator
+    bool Update( const ObstacleAttribute& rhs );
     //@}
 
 private:

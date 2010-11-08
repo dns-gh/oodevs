@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "Network/NetworkBufferedPercentageValue.h"
 #include <boost/serialization/export.hpp>
 
 namespace hla
@@ -102,13 +103,13 @@ public:
     double GetState() const;
     bool NeedDestruction() const;
     unsigned int GetMaxDotation() const;
-    unsigned int GetCurrentDotation() const;
-    unsigned int GetDotationType() const;
+    bool IsConstructed() const;
     //@}
 
     //! @name Copy
     //@{
     ConstructionAttribute& operator=( const ConstructionAttribute& ); //!< Assignment operator
+    bool Update( const ConstructionAttribute& rhs );
     //@}
 
 private:
@@ -121,12 +122,10 @@ private:
 private:
     //! @name Member data
     //@{
-    T_DotationProgress base_;
-    T_DotationProgress improvement_;
     const PHY_DotationCategory* dotation_;
     unsigned int nFullNbrDotation_;
     unsigned int nCurrentNbrDotation_;
-    double rConstructionPercentage_;
+    mutable NetworkBufferedPercentageValue< double > constructionPercentage_;
     bool bBuildByGen_;
     //@}
 };

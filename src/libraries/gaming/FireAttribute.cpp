@@ -71,15 +71,6 @@ void FireAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireAttribute::DoUpdate
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-void FireAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
-{
-    UpdateData( message.attributes() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: FireAttribute::Display
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------

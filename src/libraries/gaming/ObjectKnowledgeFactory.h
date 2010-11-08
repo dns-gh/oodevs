@@ -10,10 +10,13 @@
 #ifndef __ObjectKnowledgeFactory_h_
 #define __ObjectKnowledgeFactory_h_
 
+#include "ObjectAttributesFactory.h"
+
 namespace Common
 {
     class ObjectAttributes;
 }
+
 namespace MsgsSimToClient
 {
     class MsgObjectKnowledgeCreation;
@@ -21,10 +24,8 @@ namespace MsgsSimToClient
 
 namespace kernel
 {
-    class Controllers;
-    class KnowledgeGroup_ABC;
+    class Controllers;    
     class ObjectKnowledge_ABC;
-    class Team_ABC;
 }
 
 class Model;
@@ -49,7 +50,7 @@ public:
     //! @name Operations
     //@{
     virtual kernel::ObjectKnowledge_ABC* Create( const kernel::Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message );
-    void Register( kernel::ObjectKnowledge_ABC& knowledge, const Common::ObjectAttributes& attributes ) const;
+    void RegisterAttributes( kernel::ObjectKnowledge_ABC& result, const Common::ObjectAttributes& attributes ) const;
     //@}
 
 private:
@@ -61,7 +62,8 @@ private:
 
 private:
     //! @name Member data
-    //@{
+    //@{    
+    const ObjectAttributesFactory attributesFactory_;
     kernel::Controllers& controllers_;
     Model& model_;
     const StaticModel& static_;

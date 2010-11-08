@@ -1,0 +1,132 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#ifndef __DEC_Knowledge_ObjectAttributeProxy_ABC_h_
+#define __DEC_Knowledge_ObjectAttributeProxy_ABC_h_
+
+#include "DEC_Knowledge_IObjectAttributeProxy.h"
+
+// =============================================================================
+// Created: NLD 2010-10-26
+// =============================================================================
+template< typename T >
+class DEC_Knowledge_ObjectAttributeProxy_ABC : public DEC_Knowledge_IObjectAttributeProxy
+{
+public:
+    DEC_Knowledge_ObjectAttributeProxy_ABC();
+    virtual ~DEC_Knowledge_ObjectAttributeProxy_ABC();
+
+    //! @name Accessors
+    //@{
+    const T* GetAttribute() const { return pAttribute_; }
+    //@}
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( Common::ObjectAttributes& asn ) const;
+    virtual void SendFullState   ( Common::ObjectAttributes& asn ) const;
+    //@}
+
+    //! @name Serialization
+    //@{
+    template< typename Archive > void serialize( Archive& ar, const unsigned int )
+    {
+        ar & boost::serialization::base_object< DEC_Knowledge_IObjectAttributeProxy >( *this )
+           & pAttribute_;
+
+    }
+    virtual void Register( DEC_Knowledge_Object& knowledge );
+    //@}
+
+protected:
+    //! @name Tools
+    //@{
+    template< typename Source > bool UpdateAttributeFromSource( const Source& source );
+    //@}
+
+private:    
+    T* pAttribute_;
+};
+
+// =============================================================================
+// Implementation
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectAttributeProxy_ABC constructor
+// Created: NLD 2010-10-27
+// -----------------------------------------------------------------------------
+template< typename T > 
+DEC_Knowledge_ObjectAttributeProxy_ABC< T >::DEC_Knowledge_ObjectAttributeProxy_ABC()
+    : pAttribute_( 0 )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectAttributeProxy_ABC destructor
+// Created: NLD 2010-10-27
+// -----------------------------------------------------------------------------
+template< typename T > 
+DEC_Knowledge_ObjectAttributeProxy_ABC< T >::~DEC_Knowledge_ObjectAttributeProxy_ABC()
+{
+    delete pAttribute_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectAttributeProxy_ABC::UpdateAttributeFromSource
+// Created: NLD 2010-10-27
+// -----------------------------------------------------------------------------
+template< typename T > 
+template< typename Source > 
+bool DEC_Knowledge_ObjectAttributeProxy_ABC< T >::UpdateAttributeFromSource( const Source& source )
+{
+    const T* pNewData = source.GetAttribute< T >();
+    if( !pNewData )
+        return false;
+
+    if( !pAttribute_ )
+        pAttribute_ = new T();
+    return pAttribute_->Update( *pNewData );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectAttributeProxy_ABC::SendChangedState
+// Created: NLD 2010-10-27
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_Knowledge_ObjectAttributeProxy_ABC< T >::SendChangedState( Common::ObjectAttributes& asn ) const
+{
+    const T* pData = GetAttribute();
+    if( pData )
+        pData->SendUpdate( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectAttributeProxy_ABC::SendFullState
+// Created: NLD 2010-10-27
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_Knowledge_ObjectAttributeProxy_ABC< T >::SendFullState( Common::ObjectAttributes& asn ) const
+{
+    const T* pData = GetAttribute();
+    if( pData )
+        pData->SendFullState( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectAttributeProxy_ABC::Register
+// Created: NLD 2010-11-03
+// -----------------------------------------------------------------------------
+template< typename T > 
+void DEC_Knowledge_ObjectAttributeProxy_ABC< T >::Register( DEC_Knowledge_Object& knowledge )
+{
+    knowledge.Attach( *this );
+}
+
+#endif // __DEC_Knowledge_ObjectAttributeProxy_ABC_h_

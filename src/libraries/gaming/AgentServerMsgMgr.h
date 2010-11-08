@@ -261,6 +261,12 @@ public:
     void RegisterListener( boost::shared_ptr< MsgsSimToClient::Listener >& listener );
     //@}
 
+    //! @name Statistics
+    //@{
+    unsigned long GetNbMessagesReceived() const;
+    unsigned long GetNbMessagesSent    () const;
+    //@}
+
 private:
     //! @name Message callbacks
     //@{

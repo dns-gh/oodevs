@@ -10,8 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "NBCAttribute.h"
 #include "Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeNBC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyRecon.h"
 #include "hla/HLA_UpdateFunctor.h"
 #include "MIL_NbcAgentType.h"
 #include "protocol/protocol.h"
@@ -20,6 +20,9 @@
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( NBCAttribute )
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute > )
 
 using namespace hla;
 
@@ -147,7 +150,7 @@ void NBCAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
 // -----------------------------------------------------------------------------
 void NBCAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeNBC( *this ) );
+    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -308,4 +311,28 @@ std::string NBCAttribute::WriteAgents() const
     for( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
         strAgents += (*it)->GetName() + '\n';
     return strAgents;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NBCAttribute::Update
+// Created: NLD 2010-10-26
+// -----------------------------------------------------------------------------
+bool NBCAttribute::Update( const NBCAttribute& rhs )
+{
+    if( agents_ != rhs.agents_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        agents_ = rhs.agents_;
+    }
+    if( nForm_ != rhs.nForm_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        nForm_ = rhs.nForm_;
+    }
+    if( danger_ != rhs.danger_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        danger_ = rhs.danger_;
+    }
+    return NeedUpdate();
 }

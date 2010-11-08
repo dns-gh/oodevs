@@ -106,6 +106,7 @@ public:
     //! @name Copy
     //@{
     NBCAttribute& operator=( const NBCAttribute& ); //!< Assignment operator
+    bool Update( const NBCAttribute& rhs );
     //@}
 
 private:

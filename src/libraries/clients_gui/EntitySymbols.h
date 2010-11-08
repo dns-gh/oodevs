@@ -41,7 +41,6 @@ public:
     //@{
     virtual QPixmap GetSymbol( const kernel::Entity_ABC& entity, const QSize& size = QSize( 32, 32 ) );
     virtual QPixmap GetSymbol( const kernel::Intelligence_ABC& entity, const QSize& size = QSize( 32, 32 ) );
-    virtual QPixmap GetSymbol( const kernel::Knowledge_ABC& entity, const QSize& size = QSize( 32, 32 ) );
     //@}
 
 private:

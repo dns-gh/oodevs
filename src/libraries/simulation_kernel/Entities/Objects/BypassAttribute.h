@@ -10,8 +10,10 @@
 #ifndef __BypassAttribute_h_
 #define __BypassAttribute_h_
 
+#include "MIL.h"
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "Network/NetworkBufferedPercentageValue.h"
 #include <boost/serialization/export.hpp>
 
 namespace hla
@@ -38,7 +40,9 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name From ObjectAttribute_ABC
@@ -54,20 +58,20 @@ public:
 
     //! @name Accessors
     //@{
-    void     Update( double progress );
-    double GetState() const;
-    bool     IsBypassed() const;
+    void Update    ( double progress );
+    bool IsBypassed() const;
     //@}
 
     //! @name Copy
     //@{
     BypassAttribute& operator=( const BypassAttribute& ); //!< Assignment operator
+    bool Update( const BypassAttribute& rhs );
     //@}
 
 private:
     //! @name Member data
     //@{
-    double rBypass_;
+    mutable NetworkBufferedPercentageValue< double > bypassPercentage_;
     //@}
 };
 

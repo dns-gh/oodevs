@@ -10,20 +10,23 @@
 #include "simulation_kernel_pch.h"
 #include "BypassAttribute.h"
 #include "Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeBypass.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "hla/HLA_UpdateFunctor.h"
 #include "protocol/protocol.h"
 #include <hla/AttributeIdentifier.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BypassAttribute )
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< BypassAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< BypassAttribute > )
+
 // -----------------------------------------------------------------------------
 // Name: BypassAttribute constructor
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 BypassAttribute::BypassAttribute()
-    : rBypass_ ( 0. )
+    : bypassPercentage_( 0., 0.05, 0., 1.)
 {
     // NOTHING
 }
@@ -33,7 +36,7 @@ BypassAttribute::BypassAttribute()
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
 BypassAttribute::BypassAttribute( const Common::MsgMissionParameter_Value& attributes )
-    : rBypass_ ( attributes.list( 1 ).quantity() / 100. )
+    : bypassPercentage_( attributes.list( 1 ).quantity() / 100., 0.05, 0., 1.)
 {
     // NOTHING
 }
@@ -49,14 +52,26 @@ BypassAttribute::~BypassAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: BypassAttribute::serialize
-// Created: JCR 2008-05-30
+// Name: BypassAttribute::load
+// Created: JCR 2008-09-15
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void BypassAttribute::serialize( Archive& file, const unsigned int )
+void BypassAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    file & rBypass_;
+    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    double tmp;
+    ar >> tmp;
+    bypassPercentage_.Set( tmp );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BypassAttribute::save
+// Created: JCR 2008-09-15
+// -----------------------------------------------------------------------------
+void BypassAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
+{
+    std::string emptyString;
+    ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    ar << (double)bypassPercentage_.Get();
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +80,7 @@ void BypassAttribute::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void BypassAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeBypass( *this ) );
+    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< BypassAttribute >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +98,7 @@ void BypassAttribute::Register( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void BypassAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 {
-    asn.mutable_bypass()->set_percentage( unsigned int( rBypass_ * 100. ) );
+    asn.mutable_bypass()->set_percentage( unsigned int( bypassPercentage_.Send() * 100. ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +110,7 @@ void BypassAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
     if( NeedUpdate( ) )
     {
         SendFullState( asn );
-        Reset( );
+        Reset( eOnUpdate | eOnHLAUpdate );
     }
 }
 
@@ -107,8 +122,8 @@ void BypassAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribu
 {
     if( attribute.list_size() > 1 )
     {
-        rBypass_ = attribute.list( 1 ).quantity() / 100.;
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        if( bypassPercentage_.Set( attribute.list( 1 ).quantity() / 100. ) )
+            NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
     }
 }
 
@@ -118,8 +133,8 @@ void BypassAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribu
 // -----------------------------------------------------------------------------
 void BypassAttribute::Update( double progress )
 {
-    rBypass_ += progress;
-    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    if( bypassPercentage_.Set( bypassPercentage_.Get() + progress ) )
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,26 +143,17 @@ void BypassAttribute::Update( double progress )
 // -----------------------------------------------------------------------------
 BypassAttribute& BypassAttribute::operator=( const BypassAttribute& rhs )
 {
-    rBypass_ = rhs.rBypass_;
+    bypassPercentage_ = rhs.bypassPercentage_;
     return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: BypassAttribute::GetState
-// Created: JCR 2008-06-05
-// -----------------------------------------------------------------------------
-double BypassAttribute::GetState() const
-{
-    return rBypass_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: BypassAttribute::GetState
+// Name: BypassAttribute::IsBypassed
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
 bool BypassAttribute::IsBypassed() const
 {
-    return rBypass_ >= 1.;
+    return bypassPercentage_.Get() >= 1.;
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +162,7 @@ bool BypassAttribute::IsBypassed() const
 // -----------------------------------------------------------------------------
 void BypassAttribute::Serialize( HLA_UpdateFunctor& functor ) const
 {
-    functor.Serialize( "contournement", NeedUpdate( eOnHLAUpdate ), rBypass_ );
+    functor.Serialize( "contournement", NeedUpdate( eOnHLAUpdate ), bypassPercentage_.Get() );
     Reset( eOnHLAUpdate );
 }
 
@@ -168,7 +174,20 @@ void BypassAttribute::Deserialize( const hla::AttributeIdentifier& attributeID, 
 {
     if( attributeID == "contournement" )
     {
-        deserializer >> rBypass_;
-        NotifyAttributeUpdated( eOnUpdate );
+        double bypass;
+        deserializer >> bypass;
+        bypassPercentage_.Set( bypass );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: BypassAttribute::Update
+// Created: NLD 2010-10-26
+// -----------------------------------------------------------------------------
+bool BypassAttribute::Update( const BypassAttribute& rhs )
+{
+    bypassPercentage_.Set( rhs.bypassPercentage_.Get() );
+    if( bypassPercentage_.NeedToBeSent() )
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    return NeedUpdate();
 }

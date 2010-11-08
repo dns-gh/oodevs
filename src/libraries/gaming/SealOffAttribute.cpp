@@ -85,15 +85,6 @@ void SealOffAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message
 }
 
 // -----------------------------------------------------------------------------
-// Name: SealOffAttribute::DoUpdate
-// Created: MGD 2010-08-24
-// -----------------------------------------------------------------------------
-void SealOffAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
-{
-    UpdateData( message.attributes() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: SealOffAttribute::UpdateData
 // Created: MGD 2010-08-24
 // -----------------------------------------------------------------------------

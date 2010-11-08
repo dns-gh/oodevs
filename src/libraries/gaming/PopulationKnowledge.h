@@ -20,8 +20,7 @@
 
 namespace kernel
 {
-    class CoordinateConverter_ABC;
-    class Team_ABC;
+    class CoordinateConverter_ABC;    
     class Displayer_ABC;
     class PopulationKnowledge_ABC;
 }
@@ -58,7 +57,7 @@ public:
     //@{
     virtual QString GetName() const;
     virtual const kernel::Population_ABC* GetEntity() const;
-    virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
+    virtual const kernel::Team_ABC* GetTeam() const;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;
 
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
@@ -95,6 +94,7 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
 
     const kernel::Population_ABC& popu_;
+    const kernel::Team_ABC* pTeam_;
     unsigned int domination_;
     //@}
 };

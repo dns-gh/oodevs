@@ -11,7 +11,6 @@
 #define __ToxicCloudAttribute_h_
 
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include <geometry/Types.h>
@@ -41,9 +40,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class ToxicCloudAttribute : public kernel::ToxicCloudAttribute_ABC
-                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
-                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
-                         , public kernel::Drawable_ABC
+                          , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -67,7 +64,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectCreation& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );   
     template< typename T >
     void UpdateData( const T& message );
     void UpdateToxicCloud( const Common::MsgLocatedQuantityList& cloud );
