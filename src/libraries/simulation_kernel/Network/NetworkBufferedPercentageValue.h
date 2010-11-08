@@ -116,7 +116,7 @@ bool NetworkBufferedPercentageValue< T >::NeedToBeSent() const
         return false;            
     if( currentValue_ == minValue_ || currentValue_ == maxValue_ )
         return true;
-    return std::abs( lastSentValue_ - currentValue_ ) > threshold_;
+    return std::abs( lastSentValue_ - currentValue_ ) >= threshold_;
 }
 
 // -----------------------------------------------------------------------------
