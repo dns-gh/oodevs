@@ -57,21 +57,27 @@ private:
     kernel::Controllers& controllers_;
     const Network& network_;
     const Simulation& simulation_;
-    StatisticsWidget* networkReceived_;
-    StatisticsWidget* networkSent_;
+    StatisticsWidget* networkBytesReceived_;
+    StatisticsWidget* networkBytesSent_;
+    StatisticsWidget* networkMsgsReceived_;    
+    StatisticsWidget* networkMsgsSent_;
     StatisticsWidget* memory_;
     StatisticsWidget* virtualMemory_;
     StatisticsWidget* shortPathfinds_;
     StatisticsWidget* longPathfinds_;
-    QLabel* networkTotalReceived_;
-    QLabel* networkTotalSent_;
+    QLabel* networkTotalBytesReceived_;
+    QLabel* networkTotalBytesSent_;
+    QLabel* networkTotalMsgsReceived_;
+    QLabel* networkTotalMsgsSent_;
     QLabel* memoryUsage_;
     QLabel* virtualMemoryUsage_;
     QLabel* shortPathfindsCount_;
     QLabel* longPathfindsCount_;
 
-    unsigned long previousTotalReceived_;
-    unsigned long previousTotalSent_;
+    unsigned long previousTotalBytesReceived_;
+    unsigned long previousTotalBytesSent_;
+    unsigned long previousTotalMsgsReceived_;
+    unsigned long previousTotalMsgsSent_;
     unsigned int ticks_;
     //@}
 };

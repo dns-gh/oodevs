@@ -47,6 +47,11 @@ public:
     }
     //@}
 
+    //! @name Statistics
+    //@{
+    virtual unsigned long GetNbMessagesReceived() const = 0;
+    //@}
+
 protected:
     //! @name Operations
     //@{

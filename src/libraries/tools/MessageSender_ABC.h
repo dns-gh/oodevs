@@ -50,6 +50,11 @@ public:
 
     virtual void Send( const std::string& endpoint, unsigned long tag, const Message& message ) = 0;
     //@}
+
+    //! @name Statistics
+    //@{
+    virtual unsigned long GetNbMessagesSent() const = 0;
+    //@}
 };
 
 }

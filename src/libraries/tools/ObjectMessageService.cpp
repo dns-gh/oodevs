@@ -21,6 +21,7 @@ using namespace tools;
 // Created: AGE 2007-03-07
 // -----------------------------------------------------------------------------
 ObjectMessageService::ObjectMessageService()
+    : nbMessagesReceived_( 0 )
 {
     // NOTHING
 }
@@ -78,6 +79,7 @@ void ObjectMessageService::OnError( const std::string& endpoint, const std::stri
 // -----------------------------------------------------------------------------
 void ObjectMessageService::OnMessage( const std::string& endpoint, Message& message )
 {
+    ++ nbMessagesReceived_;
     unsigned long tag;
     message >> tag;
     CIT_Callbacks it = callbacks_.find( tag );

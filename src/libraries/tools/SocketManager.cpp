@@ -19,8 +19,9 @@ using namespace tools;
 // Created: AGE 2007-09-05
 // -----------------------------------------------------------------------------
 SocketManager::SocketManager( MessageCallback_ABC& message, ConnectionCallback_ABC& connection )
-    : message_   ( message )
-    , connection_( connection )
+    : message_       ( message )
+    , connection_    ( connection )
+    , nbMessagesSent_( 0 )
 {
     // NOTHING
 }
@@ -91,4 +92,6 @@ void SocketManager::Send( const std::string& endpoint, unsigned long tag, const 
     if( it == sockets_.end() )
         throw std::runtime_error( "Not connected to " + endpoint );
     it->second->Send( tag, message );
+    ++nbMessagesSent_;
 }
+

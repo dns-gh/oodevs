@@ -45,6 +45,8 @@ public:
     //! @name Operations
     //@{
     using MessageDispatcher_ABC::RegisterMessage;
+    
+    virtual unsigned long GetNbMessagesReceived() const { return nbMessagesReceived_; };
 
     void RegisterErrorCallback( const T_Callback& error );
 
@@ -77,6 +79,7 @@ private:
     //@{
     T_Callbacks callbacks_;
     T_Callback error_;
+    unsigned long nbMessagesReceived_;
     //@}
 };
 

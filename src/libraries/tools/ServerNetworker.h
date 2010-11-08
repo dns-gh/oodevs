@@ -66,6 +66,12 @@ public:
     using MessageDispatcher_ABC::RegisterMessage;
     //@}
 
+    //! @name Statistics
+    //@{
+    virtual unsigned long GetNbMessagesSent() const;
+    virtual unsigned long GetNbMessagesReceived() const;
+    //@}
+
 protected:
     //! @name Operations
     //@{

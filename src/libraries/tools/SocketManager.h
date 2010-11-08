@@ -44,6 +44,11 @@ public:
     void Disconnect( const std::string& endpoint );
     //@}
 
+    //! @name Statistics
+    //@{
+    virtual unsigned long GetNbMessagesSent() const { return nbMessagesSent_; }
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -64,6 +69,7 @@ private:
     MessageCallback_ABC& message_;
     ConnectionCallback_ABC& connection_;
     T_Sockets sockets_;
+    unsigned long nbMessagesSent_;
     //@}
 };
 

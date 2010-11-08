@@ -170,3 +170,25 @@ ObjectMessageCallback_ABC* ClientNetworker::Retrieve( unsigned long id )
 {
     return messageService_->Retrieve( id );
 }
+
+// =============================================================================
+// STATISTICS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ClientNetworker::GetNbMessagesReceived
+// Created: NLD 2010-10-20
+// -----------------------------------------------------------------------------
+unsigned long ClientNetworker::GetNbMessagesReceived() const
+{
+    return messageService_->GetNbMessagesReceived();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientNetworker::GetNbMessagesSent
+// Created: NLD 2010-10-20
+// -----------------------------------------------------------------------------
+unsigned long ClientNetworker::GetNbMessagesSent() const
+{
+    return sockets_->GetNbMessagesSent();
+}
