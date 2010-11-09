@@ -30,6 +30,10 @@ OutFile "${DISTDIR}\${PRODUCT_NAME}_${PRODUCT_SUFFIX}_${APP_VERSION_MAJOR}.exe"
 
 !include "version.nsh"
 
+;-------------------------------
+;Intall directory definition 
+!define MULTIUSER_INSTALLMODE_INSTDIR INSTDATADIR
+
 ;--------------------------------
 ;Section "!${PRODUCT_NAME}"
 ;SectionEnd
@@ -46,12 +50,9 @@ SectionGroup "Models" s_mod
     !else if "${EXO_PACK}" == "security-worldwide"
         !insertmacro OT.AddPhysicalModels "ada" "worldwide" "s_phymod1"
     !endif
+    
+    !insertmacro OT.AddPropagation "propagation"
 
-    ; Sample propagation model
-    Section "Propagations"
-        SetOutPath "${INSTDATADIR}\data\propagations"
-        File /r /x ".svn" "${DATADIR}\data\propagations\test"
-    SectionEnd
 SectionGroupEnd    
 
 ;--------------------------------
@@ -105,12 +106,8 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "tests\Meteo" "Angers_x9" "s_exo32"
         !insertmacro OT.AddExercise "tests\embrayerAuto" "Paris_Est" "s_exo33"
         ;Test import scenario
-        Section "SCENARIO"
-        SetOutPath "${INSTDATADIR}\data\import_lto"
-        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File "${DATADIR}\tests\import_lto\*.xml"
-        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        SectionEnd
+        !insertmacro OT.AddLTOExercise "SCENARIO"
+                
      !else if "${EXO_PACK}" == "defense-scipio"
         ; Exercises
         ;!insertmacro OT.AddExercise "esag" "Angers" "s_exo1"
@@ -230,7 +227,7 @@ Function .onInstSuccess
 FunctionEnd
 
 Function un.onInit
-    !insertmacro MULTIUSER_UNINIT
+    ;!insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
 Function .onSelChange

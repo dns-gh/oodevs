@@ -93,7 +93,7 @@
 !macro OT.AddPhysicalModels DataSet Localization SectionId
 
     Section "Physical - ${Localization}" ${SectionId}
-        SetOutPath "${INSTDATADIR}\data\models\${DataSet}\physical\${Localization}"
+        SetOutPath "${INSTDIR}\data\models\${DataSet}\physical\${Localization}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\physical\${Localization}\*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
@@ -107,7 +107,7 @@
 !macro OT.AddExercise ExerciseName TerrainName SectionId
     
     Section "${ExerciseName} - ${TerrainName}" ${SectionId}
-        SetOutPath "${INSTDATADIR}\exercises\${ExerciseName}"
+        SetOutPath "${INSTDIR}\exercises\${ExerciseName}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /x ".svn" "${DATADIR}\exercises\${ExerciseName}\*.xml"
         File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\scripts"
@@ -126,7 +126,7 @@
     
     Section "${TerrainName}" ${SectionId}
         ;SectionIn RO
-        SetOutPath "${INSTDATADIR}\data\terrains\${TerrainName}"
+        SetOutPath "${INSTDIR}\data\terrains\${TerrainName}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DATADIR}\data\terrains\${TerrainName}\*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
@@ -141,12 +141,41 @@
 
     Section "${PopulationName}" ${SectionId}
         ;SectionIn RO
-        SetOutPath "${INSTDATADIR}\data\population\${PopulationName}"
+        SetOutPath "${INSTDIR}\data\population\${PopulationName}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DATADIR}\data\population\${PopulationName}\*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
 
+!macroend
+
+
+;------------------------------------------------------------------------------
+; Adds Propagation Section
+;------------------------------------------------------------------------------
+!macro OT.AddPropagation PropagationName
+
+    ; Sample propagation model
+    Section "${PropagationName}"
+        SetOutPath "${INSTDIR}\data\propagations"
+        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+        File /r /x ".svn" "${DATADIR}\data\propagations\test"
+        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+    SectionEnd
+!macroend
+
+
+;------------------------------------------------------------------------------
+; Adds LTO Extension
+;------------------------------------------------------------------------------
+!macro OT.AddLTOExercise SectionName
+    ; Sample LTO EXERCICE
+    Section "${SectionName}"
+    SetOutPath "${INSTDATADIR}\data\import_lto"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File "${DATADIR}\tests\import_lto\*.xml"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    SectionEnd
 !macroend
 
 ;------------------------------------------------------------------------------

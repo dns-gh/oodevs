@@ -9,6 +9,8 @@
     <property name="input" value="src"/>
     <property name="testName" value="testings"/>
     <property name="data" value="../../data/models/ada/physical/scipio-1.9.2"/>
+    <property name="dataFrance" value="../../data/models/ada/physical/france"/>
+    <property name="dataWorldWide" value="../../data/models/ada/physical/worldwide"/>
     <property name="reportDir" value="./reports"/>
     <property name="reportFile" value="${reportDir}/${timenow}_generation_report.csv"/>
     <property name="exercises" value="../../exercises"/>
@@ -24,7 +26,10 @@
         <delete dir="reports"/>
     </target>
 
-    <target name="generate" depends="clean">
+    <target name="generate" depends="clean,generate-1.9.2,generate-worldwide,generate-france" />
+    
+
+    <target name="generate-1.9.2" depends="">
         <copy todir="${output}/${testName}">
             <fileset dir="${input}/${testName}" excludes=".svn"/>
         </copy>
@@ -40,6 +45,41 @@
             <arg value="${output}/scripts"/>
         </exec>
     </target>
+
+    <target name="generate-france" depends="">
+        <copy todir="${output}/${testName}">
+            <fileset dir="${input}/${testName}" excludes=".svn"/>
+        </copy>
+        <xslt in="${dataFrance}/pions.xml" style="xsl/transformation.xsl" out="${reportFile}">
+            <param name="output" expression="${output}/scripts"/>
+            <param name="missionsPath" expression="${dataFrance}/Missions.xml"/>
+            <param name="modelesPath"  expression="${dataFrance}/Modeles.xml"/>
+            <param name="reportFile"  expression="${reportFile}"/>
+        </xslt>
+        <xslt in="${dataFrance}/pions.xml" style="xsl/model.xsl" out="${output}/${testName}/scripts/resources/model.lua"/>
+        <exec executable="bash.exe">
+            <arg value="MissingParameter.sh"/>
+            <arg value="${output}/scripts/france"/>
+        </exec>
+    </target>
+
+    <target name="generate-worldwide" depends="">
+        <copy todir="${output}/${testName}">
+            <fileset dir="${input}/${testName}" excludes=".svn"/>
+        </copy>
+        <xslt in="${dataWorldWide}/pions.xml" style="xsl/transformation.xsl" out="${reportFile}">
+            <param name="output" expression="${output}/scripts"/>
+            <param name="missionsPath" expression="${dataWorldWide}/Missions.xml"/>
+            <param name="modelesPath"  expression="${dataWorldWide}/Modeles.xml"/>
+            <param name="reportFile"  expression="${reportFile}"/>
+        </xslt>
+        <xslt in="${dataWorldWide}/pions.xml" style="xsl/model.xsl" out="${output}/${testName}/scripts/resources/model.lua"/>
+        <exec executable="bash.exe">
+            <arg value="MissingParameter.sh"/>
+            <arg value="${output}/scripts/worldwide"/>
+        </exec>
+    </target>
+
 
     <target name="deploy" depends="generate">
         <exec executable="bash.exe">
