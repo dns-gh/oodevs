@@ -499,7 +499,6 @@ void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& asn ) const
         personnel.set_nb_dans_chaine_sante         ( humanData.nNbrInLogisticMedical_ );
         personnel.set_nb_utilises_pour_maintenance ( humanData.nNbrInLogisticMaintenance_ );
     }
-    assert( unsigned int( asn().dotation_eff_personnel().elem_size() ) == nNbrHumansDataChanged_ );
     SendLogisticChangedState();
 }
 
