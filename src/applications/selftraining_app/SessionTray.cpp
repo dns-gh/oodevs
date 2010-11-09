@@ -12,6 +12,7 @@
 #include "TrayIcon.h"
 #include "TrayMenu.h"
 #include "clients_gui/Tools.h"
+#include "tools/GeneralConfig.h"
 
 // -----------------------------------------------------------------------------
 // Name: SessionTray constructor
@@ -19,7 +20,7 @@
 // -----------------------------------------------------------------------------
 SessionTray::SessionTray( QWidget *parent )
     : trayMenu_ ( *new TrayMenu( parent ) )
-    , trayIcon_ ( *new TrayIcon( QPixmap( "resources/images/selftraining/csword.png" ), tools::translate( "SessionTray", "Show window" ), &trayMenu_ ) )
+    , trayIcon_ ( *new TrayIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ), tools::translate( "SessionTray", "Show window" ), &trayMenu_ ) )
 {
     trayIcon_.show();
     QObject::connect( &trayIcon_, SIGNAL( clicked( const QPoint& ) ), parent, SLOT( Maximize() ) );
@@ -32,4 +33,6 @@ SessionTray::SessionTray( QWidget *parent )
 SessionTray::~SessionTray()
 {
     trayIcon_.hide();
+    delete &trayMenu_;
+    delete &trayIcon_;
 }

@@ -28,6 +28,7 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Controllers.h"
+#include "tools/GeneralConfig.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 
@@ -44,7 +45,7 @@ namespace
             : QMessageBox( title, "", QMessageBox::Warning, QMessageBox::Yes, QMessageBox::No | QMessageBox::Default, QMessageBox::NoButton )
             , callback_( callback )
         {
-            setIcon( MAKE_PIXMAP( csword ) );
+            setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
             hide();
         }
 

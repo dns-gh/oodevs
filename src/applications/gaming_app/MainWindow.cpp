@@ -153,7 +153,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     , onPlanif_     ( false )
 
 {
-    setIcon( MAKE_PIXMAP( csword ) );
+    setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
     planifName_ = tools::translate( "Application", "SWORD" ) + tr( " - Not connected" );
     setCaption( planifName_ );
 

@@ -123,7 +123,7 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
     , profile_    ( profile )
     , icons_      ( icons )
     , selected_   ( controllers )
-    , csword_     ( MAKE_PIXMAP( csword ) )
+    , csword_     ( "resources/images/gui/logo32x32.png" )
     , background_ ( "resources/images/gaming/status_background.png" )
     , boost_      ( "resources/images/gaming/status_boost.png" )
     , warning_    ( "resources/images/gaming/status_warning.png" )
@@ -160,7 +160,7 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
         reinforcing_->setBackgroundOrigin( QWidget::AncestorOrigin );
         icon_ = new QLabel( box );
         icon_->setFixedSize( 90, 65 );
-        icon_->setPixmap( MAKE_PIXMAP( csword ) );
+        icon_->setPixmap( csword_ );
         icon_->setAlignment( Qt::AlignCenter );
         icon_->setBackgroundOrigin( QWidget::AncestorOrigin );
         experience_ = new QLabel( box );

@@ -16,6 +16,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/NBCAgent.h"
+#include "tools/GeneralConfig.h"
 #include "icons.h"
 #include <qimage.h>
 #include <qpainter.h>
@@ -103,14 +104,16 @@ InfoEventsWidget::~InfoEventsWidget()
 // -----------------------------------------------------------------------------
 void InfoEventsWidget::InitializeEvents( QWidget* parent )
 {
+    const QPixmap defaultIcon( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() );
+
     events_["jammed"]         = CreateEvent( parent, MAKE_PIXMAP( brouillage )     , tools::translate( "InfoEventsWidget", "Communication: jammed" ) );
     events_["silenceEmitted"] = CreateEvent( parent, MAKE_PIXMAP( talkie_interdit ), tools::translate( "InfoEventsWidget", "Communication: radio emitter silence" ) );
     events_["silenceReceived"]= CreateEvent( parent, MAKE_PIXMAP( talkie_interdit ), tools::translate( "InfoEventsWidget", "Communication: radio receiver silence" ) );
     events_["radar"]          = CreateEvent( parent, MAKE_PIXMAP( radars_on )      , tools::translate( "InfoEventsWidget", "Communication: radar enabled" ) );
-    events_["stealth"]        = CreateEvent( parent, MAKE_PIXMAP( csword )         , tools::translate( "InfoEventsWidget", "Communication: stealth mode" ) );
+    events_["stealth"]        = CreateEvent( parent, defaultIcon                   , tools::translate( "InfoEventsWidget", "Communication: stealth mode" ) );
     events_["nbc suit"]       = CreateEvent( parent, MAKE_PIXMAP( nbc )            , tools::translate( "InfoEventsWidget", "NBC: suit on" ) );
     events_["contamination"]  = CreateEvent( parent, MAKE_PIXMAP( nbc )            , "" );
-    events_["refugees"]       = CreateEvent( parent, MAKE_PIXMAP( csword )         , tools::translate( "InfoEventsWidget", "Refugees handled" ) );
+    events_["refugees"]       = CreateEvent( parent, defaultIcon                   , tools::translate( "InfoEventsWidget", "Refugees handled" ) );
 }
 
 // -----------------------------------------------------------------------------

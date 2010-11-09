@@ -37,7 +37,7 @@ namespace
             : QMessageBox( title, "", QMessageBox::Question, QMessageBox::Yes, QMessageBox::No | QMessageBox::Default, QMessageBox::NoButton )
             , callback_( callback )
         {
-            setIcon( MAKE_PIXMAP( csword ) );
+            setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
             hide();
         }
 

@@ -141,7 +141,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , needsSaving_  ( false )
     , loading_      ( false )
 {
-    setIcon( MAKE_PIXMAP( csword ) );
+    setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
 
     lighting_ = new LightingProxy( this );
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_, *pRevolver_ );

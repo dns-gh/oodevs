@@ -33,16 +33,17 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QStri
     setMaximumSize( sizeHint_ );
     setMinimumSize( sizeHint_ );
 
-    QVBox* box = new QVBox( this );
+    QVBox* vbox = new QVBox( this );
+    vbox->setMinimumSize( sizeHint_ );
+    QVBox* box = new QVBox( vbox );
     box->setBackgroundPixmap( pixmap );
-    box->setMinimumSize( sizeHint_ );
-    box->layout()->setAlignment( Qt::AlignBottom | Qt::AlignRight );
-    QHBox* hbox = new QHBox( box );
+    QHBox* hbox = new QHBox( vbox );
+    hbox->setMaximumHeight( 50 );
     QString message;
     message = QString( "%1 - %2<br>%3 <a href=\"http://%4\">%5</a>" )
             .arg( tools::translate( "Application", "SWORD" ) )
             .arg( line )
-            .arg( tools::translate( "Application", "© 2008 MASA Group" ) )
+            .arg( tools::translate( "Application", "© 2010 MASA Group" ) )
             .arg( tools::translate( "Application", "www.masagroup.net" ) )
             .arg( tools::translate( "Application", "www.masagroup.net" ) );
 
@@ -50,8 +51,6 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QStri
         message += tr( "<br>License will expire on " ) + license;
     RichLabel* label = factory.CreateLabel( message, hbox );
     label->setAlignment( Qt::SingleLine | Qt::AlignCenter );
-    label->setBackgroundPixmap( pixmap );
-    label->setBackgroundOrigin( QWidget::AncestorOrigin );
     QPushButton* button = new QPushButton( tr( "Close" ), hbox );
     connect( button, SIGNAL( clicked() ), this, SLOT( accept() ) );
 }

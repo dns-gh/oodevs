@@ -26,6 +26,7 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/Tools.h"
 #include "clients_gui/HelpSystem.h"
+#include "tools/GeneralConfig.h"
 
 #include <qapplication.h>
 #include <qaction.h>
@@ -42,7 +43,7 @@ MainWindow::MainWindow()
 {
     config_->Parse( qApp->argc(), qApp->argv() );
     setCaption( tools::translate( "Application", "SWORD" ) );
-    setIcon( MAKE_PIXMAP( csword ) );
+    setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
     setMinimumSize( 800, 600 );
 
     menu_ = new MainMenu( this );

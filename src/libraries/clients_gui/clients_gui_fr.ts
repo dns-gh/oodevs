@@ -17,16 +17,16 @@
         <translation>SWORD</translation>
     </message>
     <message>
-        <source>&#xa9; 2008 MASA Group</source>
-        <translation>© 2008 MASA Group</translation>
-    </message>
-    <message>
         <source>www.masagroup.net</source>
         <translation>www.masagroup.net</translation>
     </message>
     <message>
         <source>images/gui/splash_swordot.jpg</source>
         <translation>images/gui/splash_swordot.jpg</translation>
+    </message>
+    <message>
+        <source>&#xa9; 2010 MASA Group</source>
+        <translation type="unfinished">© 2010 MASA Group</translation>
     </message>
 </context>
 <context>
@@ -681,16 +681,16 @@
 <context>
     <name>gui::AboutDialog</name>
     <message>
-        <source>About</source>
-        <translation>A propos</translation>
-    </message>
-    <message>
         <source>&lt;br&gt;License will expire on </source>
         <translation>&lt;br&gt;La licence expire le </translation>
     </message>
     <message>
         <source>Close</source>
         <translation>Fermer</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

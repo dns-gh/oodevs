@@ -19,6 +19,7 @@
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "frontend/Launcher.h"
+#include "tools/GeneralConfig.h"
 #include "tools/Version.h"
 
 #include <qapplication.h>
@@ -49,7 +50,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
     , networkTimer_( new QTimer( this ) )
 {
     setCaption( tools::translate( "Application", "SWORD" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );
-    setIcon( MAKE_PIXMAP( csword ) );
+    setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
     setFixedWidth( 800 );
     setMinimumHeight( 600 );
     SetStyle();
