@@ -68,6 +68,8 @@ namespace
 Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, QDialog& exportDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog, gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help )
     : QMenuBar      ( pParent )
     , saveMenuItem_ ( 0 )
+    , exerciceMenuItem_ ( 0 )
+    , profileMenuItem_ ( 0 )
 {
     QPopupMenu* menu = new QPopupMenu( this );
     menu->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , CTRL + Key_N );
@@ -86,7 +88,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "View/Edit..." ), &profileDialog, SLOT( exec() ) );
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "Creation wizard..." ), &profileWizardDialog, SLOT( exec() ) );
-    insertItem( tools::translate( "Menu", "&Profiles" ), menu );
+    profileMenuItem_ = insertItem( tools::translate( "Menu", "&Profiles" ), menu );
 
     menu = new QPopupMenu( this );
     QPopupMenu* subMenu = new QPopupMenu( menu );
@@ -136,10 +138,11 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu->insertItem( tools::translate( "Menu", "Properties..." ), &exerciseDialog, SLOT( exec() ) );
     menu->insertItem( tools::translate( "Menu", "Scores..." ), &scoreDialog, SLOT( exec() ) );
     menu->insertItem( tools::translate( "Menu", "Success factors..." ), &successFactorDialog, SLOT( exec() ) );
-    insertItem( tools::translate( "Menu", "&Exercise" ), menu );
+    exerciceMenuItem_ = insertItem( tools::translate( "Menu", "&Exercise" ), menu );
 
     menu = pParent->createDockWindowMenu();
     insertItem( tools::translate( "Menu", "&Windows" ), menu );
+    menu->setDisabled( true );
 
     menu = new QPopupMenu( this );
     menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Key_F1 );
@@ -164,4 +167,14 @@ Menu::~Menu()
 void Menu::EnableSaveItem( bool status )
 {
     setItemEnabled( saveMenuItem_, status );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu::EnableItems
+// Created: SLG 2010-11-09
+// -----------------------------------------------------------------------------
+void Menu::EnableItems( bool status )
+{
+    setItemEnabled( exerciceMenuItem_, status );
+    setItemEnabled( profileMenuItem_  , status );
 }

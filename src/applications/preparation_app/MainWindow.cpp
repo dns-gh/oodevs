@@ -263,6 +263,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
     menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *exportDialog, *scoreDialog, *successFactorDialog, *exerciseDialog, *factory, expiration, *help );
+    menu_->EnableItems( false );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
@@ -377,6 +378,7 @@ void MainWindow::New()
         {
             SetWindowTitle( true );
             LoadExercise();
+            menu_->EnableItems( true );
         }
     }
 }
@@ -404,6 +406,7 @@ void MainWindow::Open()
     {
         SetWindowTitle( true );
         LoadExercise();
+        menu_->EnableItems( true );
     }
 }
 
@@ -452,6 +455,7 @@ void MainWindow::Close()
     staticModel_.Purge();
     selector_->Close();
     SetWindowTitle( false );
+    menu_->EnableItems( false );
 }
 
 // -----------------------------------------------------------------------------

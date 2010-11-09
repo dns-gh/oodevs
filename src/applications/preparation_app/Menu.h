@@ -49,12 +49,15 @@ public:
     //! @name Operations
     //@{
     void EnableSaveItem( bool status );
+    void EnableItems( bool status );
     //@}
 
     private:
     //! @name Member data
     //@{
-    int                     saveMenuItem_;
+    int saveMenuItem_;
+    int exerciceMenuItem_;
+    int profileMenuItem_;
     //@}
 };
 
