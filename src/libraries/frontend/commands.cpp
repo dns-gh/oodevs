@@ -102,10 +102,7 @@ namespace frontend
             return bfs::is_directory( session )
                 && bfs::exists      ( session / "record" )
                 && bfs::is_directory( session / "record" )
-                && bfs::exists( session / "record" / "index" )
-                && bfs::exists( session / "record" / "keyindex" )
-                && bfs::exists( session / "record" / "update" )
-                && bfs::exists( session / "record" / "key" );
+                && bfs::exists( session / "record" / "current" );
         }
 
         QStringList ListSessions( const tools::GeneralConfig& config, const std::string& exercise )
