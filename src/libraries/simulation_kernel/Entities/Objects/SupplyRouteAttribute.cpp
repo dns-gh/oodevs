@@ -11,7 +11,6 @@
 #include "SupplyRouteAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "protocol/protocol.h"
 #include <hla/HLA_UpdateFunctor.h>
 #include <hla/AttributeIdentifier.h>
@@ -138,7 +137,7 @@ void SupplyRouteAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void SupplyRouteAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< SupplyRouteAttribute >() );
+    object.Attach( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

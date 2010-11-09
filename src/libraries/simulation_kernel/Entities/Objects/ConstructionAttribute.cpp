@@ -13,7 +13,6 @@
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "hla/HLA_UpdateFunctor.h"
 #include "protocol/protocol.h"
 #include <hla/AttributeIdentifier.h>
@@ -94,7 +93,7 @@ void ConstructionAttribute::Load( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< ConstructionAttribute >() );
+    object.Attach( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

@@ -14,6 +14,7 @@
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
 #include "Network/NetworkBufferedPercentageValue.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/serialization/export.hpp>
 
 namespace hla
@@ -30,6 +31,9 @@ namespace hla
 class BypassAttribute : public ObjectAttribute_ABC
                       , public UpdatableAttribute_ABC
 {
+public:
+    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< BypassAttribute > T_KnowledgeProxyType;
+
 public:
     //! @name Constructors/Destructor
     //@{

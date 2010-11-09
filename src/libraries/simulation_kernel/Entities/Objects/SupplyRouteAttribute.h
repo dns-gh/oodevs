@@ -12,6 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -28,6 +29,9 @@ namespace xml
 class SupplyRouteAttribute : public ObjectAttribute_ABC
                            , public UpdatableAttribute_ABC
 {
+public:
+    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< SupplyRouteAttribute > T_KnowledgeProxyType;
+
 public:
     //! @name Constructors/Destructor
     //@{

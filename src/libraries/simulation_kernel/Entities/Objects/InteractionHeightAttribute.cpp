@@ -11,7 +11,6 @@
 #include "InteractionHeightAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -76,7 +75,7 @@ void InteractionHeightAttribute::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void InteractionHeightAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< InteractionHeightAttribute >() );
+    object.Attach( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

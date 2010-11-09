@@ -11,7 +11,6 @@
 #include "NBCTypeAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -147,7 +146,7 @@ void NBCTypeAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) 
 // -----------------------------------------------------------------------------
 void NBCTypeAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< NBCTypeAttribute >() );
+    object.Attach( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

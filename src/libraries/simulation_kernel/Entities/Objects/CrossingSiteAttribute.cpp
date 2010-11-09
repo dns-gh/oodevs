@@ -11,7 +11,6 @@
 #include "CrossingSiteAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyRecon.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -114,7 +113,7 @@ void CrossingSiteAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void CrossingSiteAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyRecon< CrossingSiteAttribute >() );
+    object.Attach( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

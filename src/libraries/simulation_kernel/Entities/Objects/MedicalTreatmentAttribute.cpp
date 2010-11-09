@@ -11,7 +11,6 @@
 #include "MedicalTreatmentAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "MIL.h"
 #include "MIL_AgentServer.h"
 #include "MIL_MedicalTreatmentType.h"
@@ -166,7 +165,7 @@ void MedicalTreatmentAttribute::save( MIL_CheckPointOutArchive& ar, const unsign
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< MedicalTreatmentAttribute >() );
+    object.Attach( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

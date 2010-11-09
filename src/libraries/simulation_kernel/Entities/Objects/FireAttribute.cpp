@@ -11,7 +11,6 @@
 #include "FireAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "MIL_AgentServer.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
@@ -149,7 +148,7 @@ void FireAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 // -----------------------------------------------------------------------------
 void FireAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< FireAttribute >() );
+    object.Attach( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

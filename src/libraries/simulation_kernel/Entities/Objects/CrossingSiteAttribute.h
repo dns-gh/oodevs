@@ -12,6 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyRecon.h"
 #include <boost/serialization/export.hpp>
 
 namespace Common
@@ -24,6 +25,7 @@ namespace xml
     class xistream;
 }
 
+
 // =============================================================================
 /** @class  CrossingSiteAttribute
     @brief  CrossingSiteAttribute
@@ -33,6 +35,9 @@ namespace xml
 class CrossingSiteAttribute : public ObjectAttribute_ABC
                             , public UpdatableAttribute_ABC
 {
+public:
+    typedef DEC_Knowledge_ObjectAttributeProxyRecon< CrossingSiteAttribute > T_KnowledgeProxyType;
+
 public:
     //! @name Constructors/Destructor
     //@{

@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/serialization/export.hpp>
 #include <map>
@@ -42,6 +43,9 @@ class MedicalTreatmentAttribute
     : public ObjectAttribute_ABC
     , public UpdatableAttribute_ABC
 {
+public:
+    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< MedicalTreatmentAttribute > T_KnowledgeProxyType;
+
 public:
     typedef std::pair< float, int >                                      T_PatientDiagnosis; // Patient entry time, Category of injury (UA or UR)
     typedef std::list< T_PatientDiagnosis >                              T_PatientDiagnosisList;

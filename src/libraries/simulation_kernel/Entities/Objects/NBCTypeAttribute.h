@@ -14,6 +14,7 @@
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
 #include "MIL_NBCType.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/serialization/export.hpp>
 
@@ -26,6 +27,9 @@
 class NBCTypeAttribute : public ObjectAttribute_ABC
                        , public UpdatableAttribute_ABC
 {
+public:
+    typedef DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< NBCTypeAttribute > T_KnowledgeProxyType;
+
 public:
     //! @name Constructors/Destructor
     //@{

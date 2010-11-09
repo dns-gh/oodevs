@@ -13,6 +13,7 @@
 #include "ToxicAttribute_ABC.h"
 #include "MIL_ToxicEffectManipulator.h"
 #include "UpdatableAttribute_ABC.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyRecon.h"
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/split_member.hpp>
 
@@ -40,6 +41,9 @@ class HLA_UpdateFunctor;
 class NBCAttribute : public ObjectAttribute_ABC
                    , public UpdatableAttribute_ABC
 {
+public:
+    typedef DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute > T_KnowledgeProxyType;
+
 public:
     //! @name Types
     //@{

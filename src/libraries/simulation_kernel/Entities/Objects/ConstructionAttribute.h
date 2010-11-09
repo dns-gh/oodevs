@@ -14,6 +14,7 @@
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
 #include "Network/NetworkBufferedPercentageValue.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/serialization/export.hpp>
 
 namespace hla
@@ -37,6 +38,9 @@ class PHY_DotationCategory;
 class ConstructionAttribute : public ObjectAttribute_ABC
                             , private UpdatableAttribute_ABC
 {
+public:
+    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< ConstructionAttribute > T_KnowledgeProxyType;
+
 public:
     //! @name Constructors/Destructor
     //@{

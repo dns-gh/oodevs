@@ -11,7 +11,6 @@
 #include "BypassAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "hla/HLA_UpdateFunctor.h"
 #include "protocol/protocol.h"
 #include <hla/AttributeIdentifier.h>
@@ -80,7 +79,7 @@ void BypassAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) c
 // -----------------------------------------------------------------------------
 void BypassAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< BypassAttribute >() );
+    object.Attach( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

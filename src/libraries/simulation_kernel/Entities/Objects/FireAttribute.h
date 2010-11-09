@@ -14,6 +14,7 @@
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
 #include "MIL_FireClass.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/serialization/export.hpp>
 
@@ -27,6 +28,9 @@ class FireAttribute
     : public ObjectAttribute_ABC
     , public UpdatableAttribute_ABC
 {
+public:
+    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< FireAttribute > T_KnowledgeProxyType;
+
 public:
     //! @name Constructors/Destructor
     //@{

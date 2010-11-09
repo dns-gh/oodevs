@@ -11,6 +11,7 @@
 #define __InteractionHeightAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -26,6 +27,9 @@ namespace xml
 // =============================================================================
 class InteractionHeightAttribute : public ObjectAttribute_ABC
 {
+public:
+    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< InteractionHeightAttribute > T_KnowledgeProxyType;
+
 public:
     //! @name Constructors/Destructor
     //@{

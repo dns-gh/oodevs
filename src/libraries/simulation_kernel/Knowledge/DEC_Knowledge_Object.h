@@ -20,7 +20,6 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "tools/Extendable.h"
 #include "tools/MIL_IDManager.h"
-#include "DEC_Knowledge_ObjectAttributeProxy_ABC.h"
 
 namespace MsgsSimToClient
 {
@@ -226,7 +225,7 @@ void DEC_Knowledge_Object::UpdateAttributes( Functor functor )
 template< typename T > 
 const T* DEC_Knowledge_Object::RetrieveAttribute() const
 {
-    const DEC_Knowledge_ObjectAttributeProxy_ABC< T >* pAttr = Retrieve< DEC_Knowledge_ObjectAttributeProxy_ABC< T > >();
+    const T::T_KnowledgeProxyType* pAttr = Retrieve< T::T_KnowledgeProxyType >();
     if( !pAttr )
         return 0;
     return pAttr->GetAttribute();

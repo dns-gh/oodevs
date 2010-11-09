@@ -11,7 +11,6 @@
 #include "LogisticAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyRecon.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -103,7 +102,7 @@ template < typename Archive > void LogisticAttribute::serialize( Archive& file, 
 // -----------------------------------------------------------------------------
 void LogisticAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyRecon< LogisticAttribute >() );
+    object.Attach( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

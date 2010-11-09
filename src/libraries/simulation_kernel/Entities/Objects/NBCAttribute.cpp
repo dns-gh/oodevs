@@ -11,7 +11,7 @@
 #include "NBCAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyRecon.h"
+
 #include "hla/HLA_UpdateFunctor.h"
 #include "MIL_NbcAgentType.h"
 #include "protocol/protocol.h"
@@ -150,7 +150,7 @@ void NBCAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
 // -----------------------------------------------------------------------------
 void NBCAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute >() );
+    object.Attach( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

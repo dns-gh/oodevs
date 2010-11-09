@@ -12,6 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyRecon.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -30,6 +31,9 @@ class MIL_AutomateLOG;
 class LogisticAttribute : public ObjectAttribute_ABC
                         , private UpdatableAttribute_ABC
 {
+public:
+    typedef DEC_Knowledge_ObjectAttributeProxyRecon< LogisticAttribute > T_KnowledgeProxyType;
+
 public:
     //! @name Constructors/Destructor
     //@{
