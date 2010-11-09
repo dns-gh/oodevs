@@ -314,7 +314,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *paramLayer, profile );
     ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
     FolkToolbar* folkToolbar = new FolkToolbar( this, controllers, model.folk_ );
-    IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );
+    IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this, config_ );
     IndicatorPlotFactory* plotFactory = new IndicatorPlotFactory( this, controllers_, publisher, *indicatorExportDialog );
     AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, *paramLayer, staticModel_, *plotFactory );
 

@@ -21,6 +21,10 @@
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
+    <message>
+        <source>Unknown exception caught</source>
+        <translation>Exception inconnue</translation>
+    </message>
 </context>
 <context>
     <name>CommunicationListView</name>
@@ -60,7 +64,7 @@
     <name>ExerciseCreationDialog</name>
     <message>
         <source>Exercise Creation</source>
-        <translation>Création d'exercice</translation>
+        <translation>Création d&apos;exercice</translation>
     </message>
     <message>
         <source>Name</source>

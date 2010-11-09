@@ -12,6 +12,7 @@
 #include "moc_IndicatorExportDialog.cpp"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Tools.h"
+#include "tools/SessionConfig.h"
 #include <boost/foreach.hpp>
 #include <fstream>
 #include <string>
@@ -20,8 +21,9 @@
 // Name: IndicatorExportDialog constructor
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
-IndicatorExportDialog::IndicatorExportDialog( QWidget* parent )
+IndicatorExportDialog::IndicatorExportDialog( QWidget* parent, tools::SessionConfig& config )
     : QDialog( parent, "IndicatorExportDialog" )
+    , config_ ( config )
 {
     setCaption( tools::translate( "Scores", "Export data" ) );
     QGridLayout* grid = new QGridLayout( this, 2, 2, 0, 5 );
@@ -108,33 +110,40 @@ void IndicatorExportDialog::OnFileChanged( const QString& text )
 // -----------------------------------------------------------------------------
 void IndicatorExportDialog::OnAccept()
 {
-    std::ofstream file( file_->text().ascii() );
-    const std::string sep = separator_->text().ascii();
-    if( header_->isChecked() )
+    try
     {
-        file << tools::translate( "Indicators", "Time" );
-        BOOST_FOREACH( const T_Requests::value_type& request, requests_ )
-            file << sep << request->GetName();
-        file << std::endl;
-    }
-    unsigned int hasData = requests_.size();
-    unsigned int index = 0;
-    while( hasData )
-    {
-        file << index;
-        BOOST_FOREACH( const T_Requests::value_type& request, requests_ )
+        std::ofstream file( config_.BuildSessionChildFile( file_->text().ascii() ).c_str() );
+        const std::string sep = separator_->text().ascii();
+        if( header_->isChecked() )
         {
-            const unsigned int size = request->Result().size();
-            file << sep;
-            if( index < size )
-                file << request->Result()[index];
-            else if( index == size )
-                --hasData;
+            file << tools::translate( "Indicators", "Time" );
+            BOOST_FOREACH( const T_Requests::value_type& request, requests_ )
+                file << sep << request->GetName();
+            file << std::endl;
         }
-        file << std::endl;
-        ++index;
+        unsigned int hasData = requests_.size();
+        unsigned int index = 0;
+        while( hasData )
+        {
+            file << index;
+            BOOST_FOREACH( const T_Requests::value_type& request, requests_ )
+            {
+                const unsigned int size = request->Result().size();
+                file << sep;
+                if( index < size )
+                    file << request->Result()[index];
+                else if( index == size )
+                    --hasData;
+            }
+            file << std::endl;
+            ++index;
+        }
+        file.close();
+        requests_.clear();
+        accept();
     }
-    file.close();
-    requests_.clear();
-    accept();
+    catch ( exception* e)
+    {
+        QMessageBox::critical( this, tr( "Can not save indicator file :" ), tr("Error message")  + e->what() );    	
+    }
 }

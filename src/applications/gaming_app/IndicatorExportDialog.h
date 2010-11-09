@@ -10,6 +10,12 @@
 #ifndef __IndicatorExportDialog_h_
 #define __IndicatorExportDialog_h_
 
+namespace tools
+{
+    class SessionConfig;
+};
+
+
 class IndicatorRequest;
 
 // =============================================================================
@@ -25,7 +31,7 @@ class IndicatorExportDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IndicatorExportDialog( QWidget* parent );
+    explicit IndicatorExportDialog( QWidget* parent, tools::SessionConfig& config );
     virtual ~IndicatorExportDialog();
     //@}
 
@@ -58,6 +64,7 @@ private:
 private:
     //! @name Member data
     //@{
+    tools::SessionConfig& config_;
     T_Requests requests_;
     QLineEdit* file_;
     QLineEdit* separator_;

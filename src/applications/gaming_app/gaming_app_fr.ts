@@ -691,6 +691,17 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>IndicatorExportDialog</name>
+    <message>
+        <source>Can not save indicator file :</source>
+        <translation>Impossible de sauver le fichier des indicateurs</translation>
+    </message>
+    <message>
+        <source>Error message</source>
+        <translation>Message d&apos;erreur</translation>
+    </message>
+</context>
+<context>
     <name>IndicatorPlot</name>
     <message>
         <source>Value</source>
