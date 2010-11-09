@@ -94,7 +94,7 @@ void PHY_RolePion_TerrainAnalysis::UpdateCrossroads()
     //for a changed shared_ptr while the position remains the same.
     for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::iterator it = crossroadsBuffer_.begin(); it != crossroadsBuffer_.end(); )
     {
-        if( it->second->SquareDistance( lastPos_ ) < squareRange )
+        if( it->second->SquareDistance( lastPos_ ) > squareRange )
             it = crossroadsBuffer_.erase( it );
         else
             ++it;
@@ -129,7 +129,7 @@ void PHY_RolePion_TerrainAnalysis::UpdateSafety( float radius, float safetyDista
     //for a changed shared_ptr while the position remains the same.
     for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::iterator it = safetyBuffer_.begin(); it != safetyBuffer_.end(); )
     {
-        if( it->second->SquareDistance( lastPos_ ) < squareRange )
+        if( it->second->SquareDistance( lastPos_ ) > squareRange )
             it = safetyBuffer_.erase( it );
         else
             ++it;
