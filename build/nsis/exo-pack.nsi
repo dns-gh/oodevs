@@ -30,10 +30,6 @@ OutFile "${DISTDIR}\${PRODUCT_NAME}_${PRODUCT_SUFFIX}_${APP_VERSION_MAJOR}.exe"
 
 !include "version.nsh"
 
-;-------------------------------
-;Intall directory definition 
-!define MULTIUSER_INSTALLMODE_INSTDIR INSTDATADIR
-
 ;--------------------------------
 ;Section "!${PRODUCT_NAME}"
 ;SectionEnd
@@ -217,7 +213,8 @@ Function .onInit
     SectionSetText ${s_exo} $(OT_SECTION_EXERCISES)
     SectionSetText ${s_ter} $(OT_SECTION_TERRAINS)
     
-    !insertmacro MULTIUSER_INIT
+    ;!insertmacro MULTIUSER_INIT
+    !insertmacro MUI_PAGE_DIRECTORY    
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
 FunctionEnd
 

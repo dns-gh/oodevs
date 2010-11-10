@@ -43,6 +43,11 @@ XPStyle on
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME "InstallDir"
 !define MULTIUSER_INSTALLMODE_INSTDIR "${COMPANY_NAME}\${PRODUCT_NAME}"
 
+!define MUI_DIRECTORYPAGE_VARIABLE          "${INSTDATADIR}"   ;selected by user 
+!define MUI_DIRECTORYPAGE_TEXT_DESTINATION  "Data "     ;descriptive text 
+!define MUI_DIRECTORYPAGE_TEXT_TOP          "Data"  ; GUI page title 
+
+
 !include "MultiUser.nsh"
 !include "MUI.nsh"
 
