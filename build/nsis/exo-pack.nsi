@@ -213,8 +213,7 @@ Function .onInit
     SectionSetText ${s_exo} $(OT_SECTION_EXERCISES)
     SectionSetText ${s_ter} $(OT_SECTION_TERRAINS)
     
-    ;!insertmacro MULTIUSER_INIT
-    !insertmacro MUI_PAGE_DIRECTORY    
+    !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
 FunctionEnd
 
