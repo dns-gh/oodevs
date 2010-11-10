@@ -1,0 +1,107 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+#ifndef __Model_h_
+#define __Model_h_
+
+#include "client_proxy/SwordMessageHandler_ABC.h"
+#include <map>
+#include <wiseinterfacetypes.h>
+
+class Agent;
+class Automat;
+class BoundaryLimit;
+class CWISEDriver;
+class FireEngagement;
+class Formation;
+class Obstacle;
+class Party;
+class PhaseLine;
+class Simulation;
+class SwordMessagePublisher_ABC;
+class TaskFactory;
+
+// =============================================================================
+/** @class  Model
+    @brief  Model
+*/
+// Created: SEB 2010-10-13
+// =============================================================================
+class Model : public SwordMessageHandler_ABC
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+             Model( CWISEDriver& driver, const WISE_HANDLE& database, SwordMessagePublisher_ABC& publisher );
+    virtual ~Model();
+    //@}
+
+    //! @name Simulation message handlers
+    //@{
+    virtual void OnReceiveMessage( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void OnReceiveMessage( const MsgsMessengerToClient::MsgMessengerToClient& message );
+    //@}
+
+    //! @name Driver message handlers
+    //@{
+    void OnReceiveEvent( const WISE_HANDLE& handle );
+    //@}
+
+    //! @name Resolvers
+    //@{
+    const Party* ResolveParty( const unsigned long& id ) const;
+    const Formation* ResolveFormation( const unsigned long& id ) const;
+    const Automat* ResolveAutomat( const unsigned long& id ) const;
+    const Agent* ResolveAgent( const unsigned long& id ) const;
+    const Obstacle* ResolveObstacle( const unsigned long& id ) const;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    Model( const Model& );            //!< Copy constructor
+    Model& operator=( const Model& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void Reset();
+    template< class Entity, class Message >
+    void Create( std::map< unsigned long, Entity* >& entities, const Message& message );
+    template< class Event, class Message >
+    void CreateEvent( std::map< unsigned long, Event* >& events, const Message& message );
+    template< class Entity, class Message >
+    void Update( std::map< unsigned long, Entity* >& entities, unsigned long id, const Message& message );
+    template< class Entity >
+    void Clear( std::map< unsigned long, Entity* >& entities );
+    template< class Entity >
+    void Destroy( std::map< unsigned long, Entity* >& entities, unsigned long id );
+    timeb GetTime();
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    CWISEDriver& driver_;
+    WISE_HANDLE database_;
+    std::auto_ptr< Simulation > simulation_;
+    std::auto_ptr< TaskFactory > taskFactory_;
+    std::map< unsigned long, Party* > parties_;
+    std::map< unsigned long, Formation* > formations_;
+    std::map< unsigned long, Automat* > automats_;
+    std::map< unsigned long, Agent* > agents_;
+    std::map< unsigned long, BoundaryLimit* > boundaryLimits_;
+    std::map< unsigned long, PhaseLine* > phaseLines_;
+    std::map< unsigned long, Obstacle* > obstacles_;
+    std::map< unsigned long, FireEngagement* > fireEngagements_;
+    //@}
+};
+
+#endif // __Model_h_

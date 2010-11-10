@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<templatedatabase>
+
+  <info author="Unknown" copyright="" description="Template Database for MASA Group.SWORD." modified="2010-10-27T20:20:18.612Z" version="1.0.0.0"/>
+
+  <datatypes>
+    <integers>
+      <integer defaultvalue="0" description="Identifies an agent (platoon/section aggregated unit)" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="AgentIdentifier" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="long"/>
+      <integer defaultvalue="0" description="Identifies an agent ammunition type" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="AmmunitionType" sign="signed" size="int32" usemax="false" usemin="false" wisetype="long"/>
+      <integer defaultvalue="0" description="Identifies an automat (company/squadron commanding unit)" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="AutomatIdentifier" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="long"/>
+      <integer defaultvalue="0" endian="big" format="" keytype="none" maxvalue="255" minvalue="0" name="Byte" sign="unsigned" size="int8" usemax="false" usemin="false" wisetype="byte"/>
+      <integer defaultvalue="0" description="Generic type used to describe an element count" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="Count" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="long"/>
+      <integer defaultvalue="0" description="Identifies an agent equipment type" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="EquipmentType" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="long"/>
+      <integer defaultvalue="0" description="Identifies a formation" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="FormationIdentifier" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="long"/>
+      <integer defaultvalue="0" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="Handle" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="handle"/>
+      <integer defaultvalue="0" description="Describes a heading between 0 and 360 degrees" endian="big" format="" keytype="none" maxvalue="65535" minvalue="0" name="Heading" sign="unsigned" size="int16" unit="degrees" usemax="false" usemin="false" wisetype="long"/>
+      <integer defaultvalue="0" description="Identifies a party" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="PartyIdentifier" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="long"/>
+      <integer defaultvalue="0" description="Identifies an agent resource type" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="ResourceType" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="long"/>
+      <integer defaultvalue="0" description="Type used for defining simulation acceleration factor" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="SimulationAccelerationFactor" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="long"/>
+    </integers>
+    <floats/>
+    <strings>
+      <string chartype="Byte" defaultvalue="" description="ISO date time (20100101T101010)" format="" keytype="none" maxlength="0" name="ISODateTime" type="NULL" wisetype="string"/>
+      <string chartype="Byte" defaultvalue="" format="" keytype="none" maxlength="0" name="NullString" type="NULL" wisetype="string"/>
+    </strings>
+    <enums>
+      <enum datatype="Byte" defaultvalue="0" description="Party alignment (friend, enemy, neutral)" name="Alignment">
+        <enumerator name="Enemy" value="1"/>
+        <enumerator name="Friendly" value="0"/>
+        <enumerator name="Neutral" value="2"/>
+      </enum>
+      <enum datatype="Byte" defaultvalue="0" description="Boolean type" name="Boolean">
+        <enumerator name="False" value="0"/>
+        <enumerator name="True" value="1"/>
+      </enum>
+      <enum datatype="Byte" defaultvalue="0" description="Defines relationship between parties" name="Diplomacy">
+        <enumerator name="Enemy" value="2"/>
+        <enumerator name="Friend" value="1"/>
+        <enumerator name="Neutral" value="3"/>
+        <enumerator name="Unknown" value="0"/>
+      </enum>
+      <enum datatype="Byte" defaultvalue="0" description="Defines echelon level of a formation" name="Echelon">
+        <enumerator name="i" value="3"/>
+        <enumerator name="ii" value="4"/>
+        <enumerator name="iii" value="5"/>
+        <enumerator name="o" value="0"/>
+        <enumerator name="oo" value="1"/>
+        <enumerator name="ooo" value="2"/>
+        <enumerator name="x" value="6"/>
+        <enumerator name="xx" value="7"/>
+        <enumerator name="xxx" value="8"/>
+        <enumerator name="xxxx" value="9"/>
+        <enumerator name="xxxxx" value="10"/>
+      </enum>
+      <enum datatype="Byte" defaultvalue="0" description="Defines fire type (direct/indirect)" name="FireType">
+        <enumerator name="AreaOfEffect" value="1"/>
+        <enumerator name="Direct" value="0"/>
+      </enum>
+      <enum datatype="Byte" defaultvalue="0" description="Defines geometry type" name="GeometryType">
+        <enumerator name="Circle" value="0"/>
+        <enumerator name="Ellipse" value="1"/>
+        <enumerator name="Line" value="2"/>
+        <enumerator name="Point" value="5"/>
+        <enumerator name="Polygon" value="4"/>
+        <enumerator name="Rectangle" value="3"/>
+        <enumerator name="Sector" value="6"/>
+      </enum>
+      <enum datatype="Byte" defaultvalue="0" description="Defines agent operational state" name="OperationalState">
+        <enumerator name="Destroyed" value="0"/>
+        <enumerator name="Operational" value="2"/>
+        <enumerator name="TacticallyDestroyed" value="1"/>
+      </enum>
+      <enum datatype="Byte" defaultvalue="0" description="Defines perception level" name="PerceptionLevel">
+        <enumerator name="Detected" value="1"/>
+        <enumerator name="Identified" value="3"/>
+        <enumerator name="Invisible" value="0"/>
+        <enumerator name="Recognized" value="2"/>
+        <enumerator name="Recorded" value="4"/>
+      </enum>
+      <enum datatype="Byte" defaultvalue="0" description="Defines personnel rank (officer, nco, private)" name="PersonnelRank">
+        <enumerator name="NonCommissionedOfficer" value="1"/>
+        <enumerator name="Officer" value="0"/>
+        <enumerator name="Private" value="2"/>
+      </enum>
+    </enums>
+    <arrays>
+      <array elementtype="EquipmentDamageReport" keytype="none" name="EquipmentDamageReportList" netformat="" type="Dynamic">
+        <dimension index="0" lowbound="0" size="0"/>
+      </array>
+      <array elementtype="Equipment" keytype="none" name="EquipmentList" netformat="" type="Dynamic">
+        <dimension index="0" lowbound="0" size="0"/>
+      </array>
+      <array elementtype="PersonnelDamageReport" keytype="none" name="PersonnelDamageReportList" netformat="" type="Dynamic">
+        <dimension index="0" lowbound="0" size="0"/>
+      </array>
+      <array elementtype="Personnel" keytype="none" name="PersonnelList" netformat="" type="Dynamic">
+        <dimension index="0" lowbound="0" size="0"/>
+      </array>
+      <array elementtype="Resource" keytype="none" name="ResourceList" netformat="" type="Dynamic">
+        <dimension index="0" lowbound="0" size="0"/>
+      </array>
+    </arrays>
+    <composites>
+      <composite name="Equipment" netformat="">
+        <field datatype="EquipmentType" defaultvalue="0" index="0" name="Type"/>
+        <field datatype="Count" defaultvalue="" index="1" name="AvailableCount"/>
+        <field datatype="Count" defaultvalue="" index="2" name="UnavailableCount"/>
+        <field datatype="Count" defaultvalue="" index="3" name="RepairableCount"/>
+        <field datatype="Count" defaultvalue="" index="4" name="InMaintenanceCount"/>
+        <field datatype="Count" defaultvalue="" index="5" name="CapturedCount"/>
+      </composite>
+      <composite name="EquipmentDamageReport" netformat="">
+        <field datatype="EquipmentType" defaultvalue="0" description="Identifies the type of equipment subject of the report" index="0" name="Type"/>
+        <field datatype="Count" defaultvalue="" description="Number of equipments available" index="1" name="AvailableCount"/>
+        <field datatype="Count" defaultvalue="" description="Number of equipments unavailable" index="2" name="UnavailableCount"/>
+        <field datatype="Count" defaultvalue="" description="Number of equipments repairable" index="3" name="RepairableCount"/>
+      </composite>
+      <composite name="Personnel" netformat="">
+        <field datatype="PersonnelRank" defaultvalue="0" index="0" name="Rank"/>
+        <field datatype="Count" defaultvalue="" index="1" name="TotalCount"/>
+        <field datatype="Count" defaultvalue="" index="2" name="AvailableCount"/>
+        <field datatype="Count" defaultvalue="" index="3" name="DeadCount"/>
+        <field datatype="Count" defaultvalue="" index="4" name="WoundedCount"/>
+        <field datatype="Count" defaultvalue="" index="5" name="MentalDiseasedCount"/>
+        <field datatype="Count" defaultvalue="" index="6" name="ContaminatedCount"/>
+        <field datatype="Count" defaultvalue="" index="7" name="InTreatmentCount"/>
+        <field datatype="Count" defaultvalue="" index="8" name="AssignedToMaintenanceCount"/>
+      </composite>
+      <composite name="PersonnelDamageReport" netformat="">
+        <field datatype="PersonnelRank" defaultvalue="0" description="Personnel rank subject of report" index="0" name="Rank"/>
+        <field datatype="Count" defaultvalue="" description="Number of alive personnel of the specified rank" index="1" name="AliveCount"/>
+        <field datatype="Count" defaultvalue="" description="Number of dead personnel of the specified rank" index="2" name="DeadCount"/>
+        <field datatype="Count" defaultvalue="" description="Number of wounded personnel with priority 1 of the specified rank" index="3" name="WoundedPriority1Count"/>
+        <field datatype="Count" defaultvalue="" description="Number of wounded personnel with priority 2 of the specified rank" index="4" name="WoundedPriority2Count"/>
+        <field datatype="Count" defaultvalue="" description="Number of wounded personnel with priority 3 of the specified rank" index="5" name="WoundedPriority3Count"/>
+        <field datatype="Count" defaultvalue="" description="Number of wounded personnel with highest priority of the specified rank" index="6" name="WoundedHighestPriorityCount"/>
+      </composite>
+      <composite name="Resource" netformat="">
+        <field datatype="ResourceType" defaultvalue="0" index="0" name="Type"/>
+        <field datatype="Count" defaultvalue="" index="1" name="AvailableQuantity"/>
+      </composite>
+    </composites>
+    <unions/>
+  </datatypes>
+
+  <objects>
+    <object description="Basic agent representing an aggregated unit (platoon/section level)" sharingmode="publish" type="Agent">
+      <attribute defaultvalue="0" description="Height above the ellipsoid" name="Altitude" wisetype="long"/>
+      <attribute datatype="EquipmentList" defaultvalue="" description="List of equipments with their current state" name="Equipments" wisetype="grouplist"/>
+      <attribute datatype="Heading" defaultvalue="0" description="Direction in which the agent is currently heading to in degrees clockwise from North" name="Heading" wisetype="long"/>
+      <attribute datatype="AgentIdentifier" defaultvalue="0" description="Identifies the agent" keyvalue="true" local="false" name="Identifier" wisetype="long"/>
+      <attribute datatype="Boolean" defaultvalue="0" description="Whether agent is currently mounted or not" name="Mounted" wisetype="byte"/>
+      <attribute datatype="NullString" defaultvalue="" description="Name of the agent from the orbat" keyvalue="true" local="false" name="Name" wisetype="string"/>
+      <attribute datatype="OperationalState" defaultvalue="0" description="Operational state of the agent (destroyed, tactically destroy or operational)" name="OperationalState" wisetype="byte"/>
+      <attribute datatype="PersonnelList" defaultvalue="" description="List of personnel with their current state" name="Personnel" wisetype="grouplist"/>
+      <attribute defaultvalue="0.000000 0.000000 0.000000" description="WGS84 + height above the ground" name="Position" wisetype="vec3"/>
+      <attribute datatype="ResourceList" defaultvalue="" description="List of resources with the current amount available" name="Resources" wisetype="grouplist"/>
+      <attribute defaultvalue="0" description="Agent speed in km/h" name="Speed" wisetype="long"/>
+      <attribute defaultvalue="0" description="References agent's superior unit in the orbat" keyvalue="true" local="false" name="Superior" wisetype="handle"/>
+      <attribute defaultvalue="0" description="Identifies the type of agent (Id from physical model)" name="Type" wisetype="long"/>
+    </object>
+    <object description="Aggregated commanding unit controlling a set of agents (company/squadron level)" sharingmode="publish" type="Automat">
+      <attribute datatype="AutomatIdentifier" defaultvalue="0" description="Identifies the automat" keyvalue="true" local="false" name="Identifier" wisetype="long"/>
+      <attribute datatype="NullString" defaultvalue="" description="Name of the automat from the orbat" keyvalue="true" local="false" name="Name" wisetype="string"/>
+      <attribute defaultvalue="0" description="References automat's party " keyvalue="true" local="false" name="Party" wisetype="handle"/>
+      <attribute defaultvalue="0" description="References automat's superior unit in the orbat (can be automat or formation)" keyvalue="true" local="false" name="Superior" wisetype="handle"/>
+      <attribute defaultvalue="0" description="Identifies the type of automat (Id from physical model)" name="Type" wisetype="long"/>
+    </object>
+    <object description="Control measure describing a boundary limit as a list of points" sharingmode="publish" type="BoundaryLimit">
+      <attribute defaultvalue="0" description="Boundary limit unique identifier" keyvalue="true" local="false" name="Identifier" wisetype="long"/>
+      <attribute defaultvalue="" description="Boundary limit name" name="Name" wisetype="string"/>
+      <attribute defaultvalue="" description="List of points constituting the boundary limit" name="Points" wisetype="vec3list"/>
+      <attribute defaultvalue="0" description="References boundary limit's superior in orbat (can be formation or automat)" name="Superior" wisetype="handle"/>
+    </object>
+    <object description="Organisational unit containing automats and formations" sharingmode="publish" type="Formation">
+      <attribute datatype="Echelon" defaultvalue="0" description="Describes formation echelon" name="Echelon" wisetype="byte"/>
+      <attribute datatype="FormationIdentifier" defaultvalue="0" description="Identifies the formation" keyvalue="true" local="false" name="Identifier" wisetype="long"/>
+      <attribute datatype="NullString" defaultvalue="" description="Formation name" keyvalue="true" local="false" name="Name" wisetype="string"/>
+      <attribute defaultvalue="0" description="References owning party" name="Party" wisetype="handle"/>
+      <attribute defaultvalue="0" description="References parent formation" name="Superior" wisetype="handle"/>
+    </object>
+    <object description="Represents a man-made obstacle or terrain modification" type="Obstacle">
+      <attribute datatype="GeometryType" defaultvalue="0" name="Geometry" wisetype="byte"/>
+      <attribute defaultvalue="0" description="Obstacle identifier" keyvalue="true" local="false" name="Identifier" wisetype="long"/>
+      <attribute defaultvalue="" description="Obstacle name" name="Name" wisetype="string"/>
+      <attribute defaultvalue="0" description="References owning party" name="Party" wisetype="handle"/>
+      <attribute defaultvalue="" description="List of points constituting obstacle location" name="Points" wisetype="vec3list"/>
+      <attribute defaultvalue="0" description="Obstacle type (from Object.xml)" name="Type" wisetype="long"/>
+    </object>
+    <object description="Party description" sharingmode="publish" type="Party">
+      <attribute datatype="Alignment" defaultvalue="0" description="Party alignement (friendly, enemy, neutral)" keyvalue="true" local="false" name="Alignment" wisetype="byte"/>
+      <attribute datatype="PartyIdentifier" defaultvalue="0" description="Party unique identifier" keyvalue="true" local="false" name="Identifier" wisetype="long"/>
+      <attribute defaultvalue="" description="Party name" keyvalue="true" local="false" name="Name" wisetype="string"/>
+    </object>
+    <object description="Defines diplomacy relationship between parties" type="PartyDiplomacy">
+      <attribute defaultvalue="0" description="Type of relationship between parties" name="Diplomacy" wisetype="byte"/>
+      <attribute defaultvalue="0" description="Identifies party from which diplomacy is to be define regarding to PartyTo" name="PartyFrom" wisetype="handle"/>
+      <attribute defaultvalue="0" description="Identifies party to which diplomacy is to be define regarding to PartyFrom" name="PartyTo" wisetype="handle"/>
+    </object>
+    <object description="Control measure describing a phase line as a list of points" sharingmode="publish" type="PhaseLine">
+      <attribute defaultvalue="0" description="Phase line unique identifier" keyvalue="true" local="false" name="Identifier" wisetype="long"/>
+      <attribute defaultvalue="" description="Phase line name" name="Name" wisetype="string"/>
+      <attribute defaultvalue="" description="List of points constituting the phase line" name="Points" wisetype="vec3list"/>
+      <attribute defaultvalue="0" description="References phase line's superior in orbat (can be formation or automat)" name="Superior" wisetype="handle"/>
+    </object>
+    <object description="Control measure describing a route as a list of way points" sharingmode="publish" type="Route">
+      <attribute defaultvalue="" description="List of waypoints constituting the route" name="WayPoints" wisetype="vec3list"/>
+    </object>
+    <object description="Information about simulation state" sharingmode="publish" type="Simulation">
+      <attribute datatype="SimulationAccelerationFactor" defaultvalue="0" description="Simulation acceleration factor" name="AccelerationFactor" sharingmode="publish" wisetype="long"/>
+      <attribute datatype="ISODateTime" defaultvalue="" description="Current simulated date and time" name="DateTime" sharingmode="publish" wisetype="string"/>
+      <attribute datatype="ISODateTime" defaultvalue="" description="Simulated date and time when starting the exercise" name="InitialDateTime" sharingmode="publish" wisetype="string"/>
+      <attribute datatype="Boolean" defaultvalue="0" description="True if simulation is running, False if paused." name="Running" sharingmode="publish" wisetype="byte"/>
+      <attribute defaultvalue="0" description="Current simulation tick (usually one tick is 10 simulated seconds)" name="Tick" sharingmode="publish" wisetype="long"/>
+    </object>
+  </objects>
+
+  <events>
+    <event description="Triggered when an agent is detected by another one" sharingmode="publish" type="AgentDetection">
+      <attribute datatype="PerceptionLevel" defaultvalue="0" description="Best perception level achieved by observer on target" name="BestPerceptionLevel" wisetype="byte"/>
+      <attribute datatype="PerceptionLevel" defaultvalue="0" description="Current perception level of observer on target" name="CurrentPerceptionLevel" wisetype="byte"/>
+      <attribute defaultvalue="0" description="Detecting agent" name="Observer" wisetype="handle"/>
+      <attribute defaultvalue="0" description="Detected agent" name="Target" wisetype="handle"/>
+    </event>
+    <event description="Triggered when a fire engagement occurs. Contains the resulting damage report" sharingmode="publish" type="FireEngagement">
+      <attribute datatype="AmmunitionType" defaultvalue="0" description="Type of ammunition used for shooting" name="Ammunition" sharingmode="publish" wisetype="long"/>
+      <attribute datatype="EquipmentDamageReportList" defaultvalue="" description="Damage caused on equipments" name="EquipmentDamages" sharingmode="publish" wisetype="grouplist"/>
+      <attribute datatype="PersonnelDamageReportList" defaultvalue="" description="Damage caused on personnel" name="PersonnelDamages" sharingmode="publish" wisetype="grouplist"/>
+      <attribute defaultvalue="0" description="Firing agent" name="Shooter" sharingmode="publish" wisetype="handle"/>
+      <attribute defaultvalue="0" description="Target agent if any (direct fire only)" name="Target" sharingmode="publish" wisetype="handle"/>
+      <attribute datatype="FireType" defaultvalue="0" description="Type of fire: direct or area of effet" name="Type" sharingmode="publish" wisetype="byte"/>
+    </event>
+    <event description="Triggered when an obstacle is detected by an agent" sharingmode="publish" type="ObstacleDetection">
+      <attribute defaultvalue="0" description="References detecting agent" name="Observer" wisetype="handle"/>
+      <attribute datatype="PerceptionLevel" defaultvalue="0" description="Current perception level of observer on target" name="PerceptionLevel" wisetype="byte"/>
+      <attribute defaultvalue="0" description="References detected obstacle" name="Target" wisetype="handle"/>
+    </event>
+    <event description="Simulation acceleration factor modification request" sharingmode="subscribe" type="SimulationAccelerationFactorUpdate">
+      <attribute datatype="SimulationAccelerationFactor" defaultvalue="0" name="AccelerationFactor" wisetype="long"/>
+    </event>
+    <event description="Simulation state modification request (pause/resume)" sharingmode="subscribe" type="SimulationStateUpdate">
+      <attribute datatype="Boolean" defaultvalue="0" name="Running" wisetype="byte"/>
+    </event>
+    <event description="Task creation (mission, fragmentary order, magic action)" type="TaskCreation">
+      <attribute defaultvalue="" description="References a list of task parameters (control measures) such as boundary limits, locations..." name="ControlMeasures" wisetype="handlelist"/>
+      <attribute defaultvalue="0" description="Identifies the type of task to be executed (from Missions.xml)" name="Identifier" wisetype="long"/>
+      <attribute defaultvalue="" description="Name of the task" name="Name" wisetype="string"/>
+      <attribute defaultvalue="0" description="Unit (agent or automat) executing the task" name="Tasker" wisetype="handle"/>
+    </event>
+  </events>
+
+  <notes/>
+
+</templatedatabase>
