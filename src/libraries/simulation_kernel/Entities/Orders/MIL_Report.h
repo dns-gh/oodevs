@@ -11,7 +11,7 @@
 #define __MIL_Report_h_
 
 #include "MIL_MissionParameterFactory.h"
-#include "MT_Tools/MT_IdentifierManager.h"
+#include "Tools/MIL_IDManager.h"
 
 namespace xml
 {
@@ -487,7 +487,7 @@ private:
     T_ParameterVector parameters_;
     static T_ReportMap reports_;
     static T_DiaEventVector diaEvents_;
-    static MT_IdentifierManager ids_;
+    static MIL_IDManager ids_;
     //@}
 };
 

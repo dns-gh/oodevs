@@ -19,7 +19,7 @@
 
 MIL_Report::T_ReportMap      MIL_Report::reports_;
 MIL_Report::T_DiaEventVector MIL_Report::diaEvents_( MIL_Report::eNbrReport );
-MT_IdentifierManager         MIL_Report::ids_;
+MIL_IDManager                MIL_Report::ids_;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Report::Initialize
@@ -136,6 +136,7 @@ MIL_Report::MIL_Report( unsigned int id, xml::xistream& xis )
 {
     xis >> xml::attribute( "message", strMessage_ );
     xis >> xml::list( "parameter", *this, &MIL_Report::ReadParameter );
+    ids_.Lock( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,7 +175,7 @@ bool MIL_Report::DoSend( unsigned int nSenderId, E_Type nType, const DEC_Knowled
         return false;
     }
     client::Report asn;
-    asn().mutable_report()->set_id( std::numeric_limits< unsigned int >::max() - ids_.GetFreeIdentifier() ); // descending order
+    asn().mutable_report()->set_id( std::numeric_limits< unsigned int >::max() - ids_.GetFreeId() ); // descending order
     asn().mutable_type()->set_id( nID_ );
     // $$$$ _RC_ PHC 2010-07-07: Besoin de récuperer model...
     MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *asn().mutable_source(), nSenderId );
