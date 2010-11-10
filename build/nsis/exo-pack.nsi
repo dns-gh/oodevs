@@ -223,7 +223,7 @@ Function .onInstSuccess
 FunctionEnd
 
 Function un.onInit
-    ;!insertmacro MULTIUSER_UNINIT
+    !insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
 Function .onSelChange

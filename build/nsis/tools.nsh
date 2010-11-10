@@ -171,7 +171,7 @@
 !macro OT.AddLTOExercise SectionName
     ; Sample LTO EXERCICE
     Section "${SectionName}"
-    SetOutPath "${INSTDATADIR}\data\import_lto"
+    SetOutPath "${INSTDIR}\data\import_lto"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${DATADIR}\tests\import_lto\*.xml"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
