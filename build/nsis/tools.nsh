@@ -18,39 +18,39 @@
     !ifndef PLATFORM
         !define PLATFORM "vc80"
     !endif
-    
+
     !ifndef RUNDIR
         !define RUNDIR "..\..\run\${PLATFORM}"
     !endif
-    
+
     !ifndef DATADIR
         !define DATADIR "..\..\data"
     !endif
-    
+
     !ifndef LIBDIR
         !define LIBDIR "..\..\lib\${PLATFORM}"
     !endif
-    
+
     !ifndef OUTDIR
         !define OUTDIR "..\..\out\${PLATFORM}"
     !endif
-    
+
     !ifndef DISTDIR
         !define DISTDIR "."
     !endif
-    
+
     !ifndef DOCDIR
         !define DOCDIR "..\..\doc"
     !endif
-        
+
     !ifndef LIBRARIESDIR
         !define LIBRARIESDIR "..\..\src\libraries"
     !endif
-    
+
     !ifndef APPLICATIONSDIR
         !define APPLICATIONSDIR "..\..\src\applications"
     !endif
-    
+
     !ifndef INSTDATADIR
         !define INSTDATADIR "$DOCUMENTS\${PRODUCT_NAME}"
     !endif
@@ -61,7 +61,6 @@
 ; Adds Decisional Models Section
 ;------------------------------------------------------------------------------
 !macro OT.AddDecisionalModels DataSet
-
     Section "Decisional" s_decmod
         SetOutPath "${INSTDATADIR}\data\models\${DataSet}\decisional"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
@@ -72,42 +71,36 @@
         File "${DATADIR}\data\models\${DataSet}\decisional\directia5\models\net.masagroup.military_Libs"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
-    
 !macroend
 
 ;------------------------------------------------------------------------------
 ; Adds Decisional Model Sources Section
 ;------------------------------------------------------------------------------
 !macro OT.AddDecisionalModelSources DataSet
-
     Section "Sources" s_decmodsrc
         SetOutPath "${INSTDATADIR}\data\models\${DataSet}\decisional"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional\Sources"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
-    
 !macroend
 
 ;------------------------------------------------------------------------------
 ; Adds Physical Models Section
 ;------------------------------------------------------------------------------
 !macro OT.AddPhysicalModels DataSet Localization SectionId
-
     Section "Physical - ${Localization}" ${SectionId}
         SetOutPath "${INSTDATADIR}\data\models\${DataSet}\physical\${Localization}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\physical\${Localization}\*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
-    
 !macroend
 
 ;------------------------------------------------------------------------------
 ; Adds Exercise Section
 ;------------------------------------------------------------------------------
 !macro OT.AddExercise ExerciseName TerrainName SectionId
-    
     Section "${ExerciseName} - ${TerrainName}" ${SectionId}
         SetOutPath "${INSTDATADIR}\exercises\${ExerciseName}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
@@ -118,14 +111,12 @@
         File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\sessions"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
-    
 !macroend
 
 ;------------------------------------------------------------------------------
 ; Adds Terrain Section
 ;------------------------------------------------------------------------------
 !macro OT.AddTerrain TerrainName SectionId
-    
     Section "${TerrainName}" ${SectionId}
         ;SectionIn RO
         SetOutPath "${INSTDATADIR}\data\terrains\${TerrainName}"
@@ -133,7 +124,6 @@
         File /r /x ".svn" "${DATADIR}\data\terrains\${TerrainName}\*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
-    
 !macroend
 
 ;------------------------------------------------------------------------------
@@ -156,7 +146,6 @@
 ; Adds Propagation Section
 ;------------------------------------------------------------------------------
 !macro OT.AddPropagation PropagationName
-
     ; Sample propagation model
     Section "${PropagationName}"
         SetOutPath "${INSTDATADIR}\data\propagations"
@@ -202,7 +191,7 @@
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English\Trainee User Guide.lnk" "$INSTDIR\doc\en\Trainee_User_Guide.pdf"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English\Reference Guide.lnk" "$INSTDIR\doc\en\Reference_Guide.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    
+
     SetOutPath "$INSTDIR\doc\fr"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DOCDIR}\fr\final\Guide_de_Reference.pdf"
@@ -217,7 +206,7 @@
 !macroend
 
 ;------------------------------------------------------------------------------
-; Checks dependency between two sections 
+; Checks dependency between two sections
 ;------------------------------------------------------------------------------
 !macro OT.CheckDependency FromSection ToSection
 
@@ -230,11 +219,11 @@
         SectionGetFlags ${${ToSection}} $0
         IntOp $0 $0 | ${SF_SELECTED}
         SectionSetFlags ${${ToSection}} $0
-        
+
     notset${ID}:
     Pop $0
     !undef ID
-    
+
 !macroend
 
 ;------------------------------------------------------------------------------
@@ -288,7 +277,7 @@ Function un.KillRunningApplication
         Pop $R0
         Processes::KillProcess "$9"
     notrunning:
-    
+
 FunctionEnd
 
 !macro OT._KillRunning ApplicationName
@@ -312,15 +301,15 @@ FunctionEnd
     !insertmacro OT._KillRunning "gaming_app.exe"
     !insertmacro OT._KillRunning "preparation_app.exe"
     !insertmacro OT._KillRunning "replayer_app.exe"
-	!insertmacro OT._KillRunning "detection_app.exe"
-	!insertmacro OT._KillRunning "raster_app.exe"
-	!insertmacro OT._KillRunning "generation_app.exe"
-	!insertmacro OT._KillRunning "terrain_workshop_app.exe"
-    
+    !insertmacro OT._KillRunning "detection_app.exe"
+    !insertmacro OT._KillRunning "raster_app.exe"
+    !insertmacro OT._KillRunning "generation_app.exe"
+    !insertmacro OT._KillRunning "terrain_workshop_app.exe"
+
 !macroend
 
 ;------------------------------------------------------------------------------
-; Check for running installer 
+; Check for running installer
 ;------------------------------------------------------------------------------
 !macro OT.CheckRunning
 
@@ -329,7 +318,7 @@ FunctionEnd
     StrCmp $R0 0 +3
         MessageBox MB_OK|MB_ICONEXCLAMATION "$(OT_ALREADY_RUNNING)"
         Abort
-        
+
 !macroend
 
 ;------------------------------------------------------------------------------
@@ -360,8 +349,8 @@ FunctionEnd
         SetOutPath "$INSTDIR\installation files"
         File "${OUTDIR}\terraintools_${PLATFORM}.zip"
         WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}" "RootDirectory" "$INSTDIR\${ComponentName}\applications"
-		nsisunz::Unzip "$INSTDIR\installation files\terraintools_${PLATFORM}.zip" "$INSTDIR\${ComponentName}"
-;	    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_TN_TOOLS)\$(OT_GEN).lnk" "$INSTDIR\applications\generation_app.exe" ""  ;"$INSTDIR\applications\sword-ot.ico"
+        nsisunz::Unzip "$INSTDIR\installation files\terraintools_${PLATFORM}.zip" "$INSTDIR\${ComponentName}"
+;        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_TN_TOOLS)\$(OT_GEN).lnk" "$INSTDIR\applications\generation_app.exe" ""  ;"$INSTDIR\applications\sword-ot.ico"
 ;    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_TN_TOOLS)\$(OT_WKP).lnk" "$INSTDIR\applications\terrain_workshop_app.exe" "" ;"$INSTDIR\applications\sword-ot.ico"
     SectionEnd
 
@@ -372,9 +361,9 @@ FunctionEnd
 ;------------------------------------------------------------------------------
 !macro OT.UninstallAdditionalComponent ComponentName
 
-		RMDir /r $INSTDIR\${ComponentName}"
-		${locate::RMDirEmpty} "$INSTDIR\${ComponentName}" "/M=*.* /G=1 /B=1" $R1
-        DeleteRegKey ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}"
+    RMDir /r $INSTDIR\${ComponentName}"
+    ${locate::RMDirEmpty} "$INSTDIR\${ComponentName}" "/M=*.* /G=1 /B=1" $R1
+    DeleteRegKey ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}"
 
 !macroend
 
@@ -386,14 +375,14 @@ FunctionEnd
     !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
     !insertmacro UNINSTALL.LOG_UNINSTALL_ALL
     !insertmacro UNINSTALL.LOG_END_UNINSTALL
-    
+
     ${locate::RMDirEmpty} "$INSTDIR" "/M=*.* /G=1 /B=1" $R1
     ${locate::RMDirEmpty} "${INSTDATADIR}" "/M=*.* /G=1 /B=1" $R1
     ${locate::Unload}
-    
+
     Delete "${UNINST_DAT}"
     Delete "${UNINST_EXE}"
-    
+
     Delete "$DESKTOP\${PRODUCT_NAME}.lnk"
     Delete "$QUICKLAUNCH\${PRODUCT_NAME}.lnk"
     RmDir /r "$SMPROGRAMS\${PRODUCT_NAME}"
@@ -401,7 +390,7 @@ FunctionEnd
     ; TODO: prompt keep / delete preferences
     DeleteRegKey ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}"
     DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}"
-    
+
     ; unregister .otpak extension association
     DeleteRegKey HKCR ".otpak"
 

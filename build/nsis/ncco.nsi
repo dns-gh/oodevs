@@ -56,7 +56,7 @@ Section "!${APP_NAME}"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${RUNDIR}\*.qm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    
+
     ; resources: documentation
     SetOutPath "$INSTDIR\applications\resources\help\en"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
@@ -110,9 +110,9 @@ Section "!${APP_NAME}"
     File "${RUNDIR}\directia-${PLATFORM}-mt-4_5.dll"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File "*.ico"
-    
-	; terrain dependencies	
-    File "${RUNDIR}\comerr32.dll" 
+
+	; terrain dependencies
+    File "${RUNDIR}\comerr32.dll"
 	File "${RUNDIR}\gssapi32.dll"
     File "${RUNDIR}\gdal*.dll"
     File "${RUNDIR}\gdal_SDE.dll"
@@ -126,8 +126,8 @@ Section "!${APP_NAME}"
     File "${RUNDIR}\libpq.dll"
     File "${RUNDIR}\libxslt.dll"
     File "${RUNDIR}\msvcr71.dll"
-    File "${RUNDIR}\ogr_SDE.dll"  
-    
+    File "${RUNDIR}\ogr_SDE.dll"
+
     ; evaluation licence
     !ifdef EVALUATION
         File "${RUNDIR}\evaluation.lic"
@@ -160,9 +160,9 @@ Section "!${APP_NAME}"
 SectionEnd
 
 SectionGroup "Additional components"
-    
+
     !insertmacro OT.AddOptionalComponent "Terrain"
-    
+
 SectionGroupEnd
 
 ;--------------------------------
@@ -171,10 +171,10 @@ SectionGroup "Models" s_mod
     !insertmacro OT.AddDecisionalModels "ada"
 
     SectionGroup "Physical" s_phymod
-    
+
         !insertmacro OT.AddPhysicalModels "ada" "worldwide" "s_phy1"
         !insertmacro OT.AddPhysicalModels "ada" "france" "s_phy2"
-    
+
     SectionGroupEnd
 
 SectionGroupEnd
@@ -210,13 +210,13 @@ Section "Documentation" s_doc
     File /r /x ".svn" "${DOCDIR}\en\*.pdf"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\User Guide.lnk" "$INSTDIR\doc\en\User Guide.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    
+
     SetOutPath "$INSTDIR\doc\fr"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DOCDIR}\fr\*.pdf"
     CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Guide Utilisateur.lnk" "$INSTDIR\doc\fr\Guide Utilisateur.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    
+
 SectionEnd
 
 SectionGroup "Shortcuts" s_sc
@@ -226,7 +226,7 @@ SectionGroup "Shortcuts" s_sc
         SetOutPath "$INSTDIR\applications"
         CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
-    
+
     ;--------------------------------
     Section "Quick Launch" s_quick
         SetOutPath "$INSTDIR\applications"
@@ -262,7 +262,7 @@ Function .onInit
     SectionSetText ${s_sc} $(OT_SECTION_SHORTCUTS)
     SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)
     SectionSetText ${s_quick} $(OT_SECTION_QUICKLAUNCH_SHORTCUT)
-    
+
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
 FunctionEnd
 
@@ -275,5 +275,5 @@ Function .onSelChange
 
     !insertmacro OT.CheckDependency "s_exo1" "s_ter1"
     !insertmacro OT.CheckDependency "s_exo2" "s_ter2"
-     
+
 FunctionEnd
