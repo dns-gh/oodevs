@@ -332,6 +332,8 @@ void PHY_SensorTypeAgent::ReadUrbanBlockModifier( xml::xistream& xis, unsigned i
         >> xml::attribute( "value", rFactor );
     if( rFactor < 0 || rFactor > 1 )
         xis.error( "urbanBlock-modifier: value not in [0..1]" );
+    if( !UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( materialType ) )
+        xis.error( "material type doesn't exist" );
     ++visionUrbanBlockMaterial;
 }
 
