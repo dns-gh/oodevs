@@ -10,6 +10,8 @@
 #ifndef __RichListItem_h_
 #define __RichListItem_h_
 
+#include <qlistview.h>
+
 namespace gui
 {
     class SimplerRichText;

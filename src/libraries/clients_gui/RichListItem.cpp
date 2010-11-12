@@ -21,7 +21,7 @@ using namespace gui;
 RichListItem::RichListItem( QListView * parent )
     : QListViewItem( parent )
     , font_( parent->font() )
-    , fontColor_( Qt::black )
+    , fontColor_( parent->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
 {
     // NOTHING
@@ -35,7 +35,7 @@ RichListItem::RichListItem( QListView * parent )
 RichListItem::RichListItem( QListView * parent, QListViewItem * after )
     : QListViewItem( parent, after )
     , font_( parent->font() )
-    , fontColor_( Qt::black )
+    , fontColor_( parent->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
 {
     // NOTHING
@@ -49,7 +49,7 @@ RichListItem::RichListItem( QListView * parent, QListViewItem * after )
 RichListItem::RichListItem( QListView * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
     : QListViewItem( parent )
     , font_( parent->font() )
-    , fontColor_( Qt::black )
+    , fontColor_( parent->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
 {
     AddColumns( label1, label2, label3, label4, label5, label6, label7, label8 );
@@ -62,7 +62,7 @@ RichListItem::RichListItem( QListView * parent, QString label1, QString label2 /
 RichListItem::RichListItem( QListView * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
     : QListViewItem( parent, after )
     , font_( parent->font() )
-    , fontColor_( Qt::black )
+    , fontColor_( parent->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
 {
     AddColumns( label1, label2, label3, label4, label5, label6, label7, label8 );
@@ -75,7 +75,7 @@ RichListItem::RichListItem( QListView * parent, QListViewItem * after, QString l
 RichListItem::RichListItem( QListViewItem * parent )
     : QListViewItem( parent )
     , font_( listView()->font() )
-    , fontColor_( Qt::black )
+    , fontColor_( listView()->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
 {
     // NOTHING
@@ -88,7 +88,7 @@ RichListItem::RichListItem( QListViewItem * parent )
 RichListItem::RichListItem( QListViewItem * parent, QListViewItem * after )
     : QListViewItem( parent, after )
     , font_( listView()->font() )
-    , fontColor_( Qt::black )
+    , fontColor_( listView()->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
 {
     // NOTHING
@@ -101,7 +101,7 @@ RichListItem::RichListItem( QListViewItem * parent, QListViewItem * after )
 RichListItem::RichListItem( QListViewItem * parent, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
     : QListViewItem( parent )
     , font_( listView()->font() )
-    , fontColor_( Qt::black )
+    , fontColor_( listView()->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
 {
     AddColumns( label1, label2, label3, label4, label5, label6, label7, label8 );
@@ -114,7 +114,7 @@ RichListItem::RichListItem( QListViewItem * parent, QString label1, QString labe
 RichListItem::RichListItem( QListViewItem * parent, QListViewItem * after, QString label1, QString label2 /*= QString::null*/, QString label3 /*= QString::null*/, QString label4 /*= QString::null*/, QString label5 /*= QString::null*/, QString label6 /*= QString::null*/, QString label7 /*= QString::null*/, QString label8 /*= QString::null*/ )
     : QListViewItem( parent, after )
     , font_( listView()->font() )
-    , fontColor_( Qt::black )
+    , fontColor_( listView()->palette().color( QPalette::Active, QColorGroup::Text ) )
     , even_( InitializeColor() )
 {
     AddColumns( label1, label2, label3, label4, label5, label6, label7, label8 );
