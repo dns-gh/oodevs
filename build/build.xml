@@ -516,7 +516,7 @@
     </macrodef>
 
     <target name="generate-database" description="compile behavior model database">
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/libs/base/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/src"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/libs/base/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/directia.core.bml"/>
         <delete>
             <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
             <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.test/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
