@@ -64,8 +64,8 @@
     Section "Decisional" s_decmod
         SetOutPath "${INSTDATADIR}\data\models\${DataSet}\decisional"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional\bms"
-        File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional\directia5"
+        File /r /x ".svn" /x ".poney" "${DATADIR}\data\models\${DataSet}\decisional\bms"
+        File /r /x ".svn" /x ".poney" "${DATADIR}\data\models\${DataSet}\decisional\directia5"
         File "${DATADIR}\data\models\${DataSet}\decisional\decisional.xml"
         SetOutPath "${INSTDATADIR}\data\models\${DataSet}\decisional\directia5\models\libs\base"
         File "${DATADIR}\data\models\${DataSet}\decisional\directia5\models\net.masagroup.military_Libs"
