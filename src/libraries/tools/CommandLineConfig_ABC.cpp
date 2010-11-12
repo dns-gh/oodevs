@@ -9,6 +9,7 @@
 
 #include "tools_pch.h"
 #include "CommandLineConfig_ABC.h"
+#include "Version.h"
 #include <iostream>
 #include <sstream>
 #pragma warning( push )
@@ -29,6 +30,7 @@ CommandLineConfig_ABC::CommandLineConfig_ABC()
     , values_ ( new po::variables_map() )
 {
     options_->add_options()( "help,h", "display help" );
+    options_->add_options()( "version,v", "display version" );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,6 +57,8 @@ void CommandLineConfig_ABC::Parse( int argc, char** argv )
         ss << *options_;
         throw std::runtime_error( ss.str() );
     }
+    if( values_->count( "version" ) )
+        throw std::runtime_error( tools::AppVersion() );
 }
 
 // -----------------------------------------------------------------------------
