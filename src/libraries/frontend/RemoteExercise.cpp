@@ -86,21 +86,30 @@ bool RemoteExercise::IsHostedBy( const std::string& host ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteExercise::StartSession
+// Name: RemoteExercise::Start
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void RemoteExercise::StartSession( const std::string& session ) const
+void RemoteExercise::Start( const std::string& session ) const
 {
     host_.StartSimulation( name_, session );
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteExercise::StopSession
+// Name: RemoteExercise::Start
+// Created: SBO 2010-11-12
+// -----------------------------------------------------------------------------
+void RemoteExercise::Replay( const std::string& session ) const
+{
+    host_.StartReplay( name_, session );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteExercise::Stop
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void RemoteExercise::StopSession( const std::string& session ) const
+void RemoteExercise::Stop( const std::string& session ) const
 {
-    host_.StopSimulation( name_, session );
+    host_.StopSession( name_, session );
 }
 
 // -----------------------------------------------------------------------------

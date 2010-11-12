@@ -50,8 +50,9 @@ public:
     virtual unsigned int GetPort() const;
     virtual bool IsRunning() const;
     virtual bool IsHostedBy( const std::string& host ) const;
-    virtual void StartSession( const std::string& session ) const;
-    virtual void StopSession( const std::string& session ) const;
+    virtual void Start( const std::string& session ) const;
+    virtual void Replay( const std::string& session ) const;
+    virtual void Stop( const std::string& session ) const;
     //@}
 
     //! @name Operations

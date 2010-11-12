@@ -81,8 +81,12 @@ RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, k
             QVBox* vbox = new QVBox( hbox );
             vbox->setBackgroundOrigin( QWidget::WindowOrigin );
             {
-                QPushButton* button = new QPushButton( tools::translate( "RemoteControlPage", "Start new session" ), vbox );
-                connect( button, SIGNAL( clicked() ), SLOT( OnStartSession() ) );
+                QPushButton* button = new QPushButton( tools::translate( "RemoteControlPage", "Start game" ), vbox );
+                connect( button, SIGNAL( clicked() ), SLOT( OnStart() ) );
+            }
+            {
+                QPushButton* button = new QPushButton( tools::translate( "RemoteControlPage", "Start replay" ), vbox );
+                connect( button, SIGNAL( clicked() ), SLOT( OnReplay() ) );
             }
         }
         tabWidget->addTab( hbox, tools::translate( "RemoteControlPage", "Start" ) );
@@ -100,10 +104,8 @@ RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, k
         {
             QVBox* vbox = new QVBox( hbox );
             vbox->setBackgroundOrigin( QWidget::WindowOrigin );
-            {
-                QPushButton* button = new QPushButton( tools::translate( "RemoteControlPage", "Stop running session" ), vbox );
-                connect( button, SIGNAL( clicked() ), SLOT( OnStopSession() ) );
-            }
+            QPushButton* button = new QPushButton( tools::translate( "RemoteControlPage", "Stop running session" ), vbox );
+            connect( button, SIGNAL( clicked() ), SLOT( OnStop() ) );
         }
         tabWidget->addTab( hbox, tools::translate( "RemoteControlPage", "Control" ) );
     }
@@ -168,21 +170,31 @@ void RemoteControlPage::UpdateExerciseList()
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteControlPage::OnStartSession
+// Name: RemoteControlPage::OnStart
 // Created: SBO 2010-10-25
 // -----------------------------------------------------------------------------
-void RemoteControlPage::OnStartSession()
+void RemoteControlPage::OnStart()
 {
     if( exercise_ )
-        exercise_->StartSession( MULTIPLAYER_SESSION );
+        exercise_->Start( MULTIPLAYER_SESSION );
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteControlPage::OnStopSession
+// Name: RemoteControlPage::OnReplay
+// Created: SBO 2010-10-25
+// -----------------------------------------------------------------------------
+void RemoteControlPage::OnReplay()
+{
+    if( exercise_ )
+        exercise_->Replay( MULTIPLAYER_SESSION );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteControlPage::OnStop
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void RemoteControlPage::OnStopSession()
+void RemoteControlPage::OnStop()
 {
     if( runningExercise_ && runningExercise_->IsRunning() )
-        runningExercise_->StopSession( MULTIPLAYER_SESSION );
+        runningExercise_->Stop( MULTIPLAYER_SESSION );
 }

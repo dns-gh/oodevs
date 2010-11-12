@@ -35,7 +35,8 @@ public:
     //@{
     virtual std::string GetId() const = 0;
     virtual void StartSimulation( const std::string& exercise, const std::string& session ) const = 0;
-    virtual void StopSimulation( const std::string& exercise, const std::string& session ) const = 0;
+    virtual void StartReplay( const std::string& exercise, const std::string& session ) const = 0;
+    virtual void StopSession( const std::string& exercise, const std::string& session ) const = 0;
     //@}
 };
 

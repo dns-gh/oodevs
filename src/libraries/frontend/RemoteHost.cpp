@@ -71,10 +71,24 @@ void RemoteHost::StartSimulation( const std::string& exercise, const std::string
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteHost::StopSimulation
+// Name: RemoteHost::StartReplay
+// Created: SBO 2010-11-12
+// -----------------------------------------------------------------------------
+void RemoteHost::StartReplay( const std::string& exercise, const std::string& /*session*/ ) const
+{
+    launcher::ControlStart message;
+    message().mutable_exercise()->set_name( exercise );
+    message().set_mode( MsgsAdminToLauncher::MsgControlStart::replay );
+    message().set_use_after_action_analysis( true );
+    message().set_use_external_systems( true );
+    message.Send( publisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteHost::StopSession
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void RemoteHost::StopSimulation( const std::string& exercise, const std::string& /*session*/ ) const
+void RemoteHost::StopSession( const std::string& exercise, const std::string& /*session*/ ) const
 {
     launcher::ControlStop message;
     message().mutable_exercise()->set_name( exercise );

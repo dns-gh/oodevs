@@ -25,6 +25,7 @@ namespace kernel
 
 class Config;
 class ExerciseList;
+class QPushButton;
 class QSpinBox;
 
 // =============================================================================
@@ -53,8 +54,9 @@ private slots:
     void ClearRunningSelection();
 
     void UpdateExerciseList();
-    void OnStartSession();
-    void OnStopSession();
+    void OnStart();
+    void OnReplay();
+    void OnStop();
     //@}
 
 private:
