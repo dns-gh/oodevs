@@ -348,10 +348,55 @@ FunctionEnd
         File "${OUTDIR}\terraintools_${PLATFORM}.zip"
         WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}" "RootDirectory" "$INSTDIR\${ComponentName}\applications"
         nsisunz::Unzip "$INSTDIR\installation files\terraintools_${PLATFORM}.zip" "$INSTDIR\${ComponentName}"
-;        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_TN_TOOLS)\$(OT_GEN).lnk" "$INSTDIR\applications\generation_app.exe" ""  ;"$INSTDIR\applications\sword-ot.ico"
-;    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_TN_TOOLS)\$(OT_WKP).lnk" "$INSTDIR\applications\terrain_workshop_app.exe" "" ;"$INSTDIR\applications\sword-ot.ico"
     SectionEnd
 
+!macroend
+
+;------------------------------------------------------------------------------
+; Adds MASA Life IDE
+;------------------------------------------------------------------------------
+!macro OT.AddMasaLifeIde
+
+    Section "MasaLife Brain IDE" s_brain
+    
+        SetOutPath "$INSTDIR\installation files"
+        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+        File "${OUTDIR}\net.masagroup.life.product-win32.win32.x86.zip"
+        CreateDirectory "$INSTDIR\MasaLife Brain IDE"
+        nsisunz::Unzip "$INSTDIR\installation files\net.masagroup.life.product-win32.win32.x86.zip" "$INSTDIR\MasaLife Brain IDE"
+        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MasaLife Brain IDE.lnk" "$INSTDIR\MasaLife Brain IDE\masalife-ide.exe"
+        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+        WriteRegExpandStr "HKLM" "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "BRAIN_CORE" "${INSTDATADIR}\data\models\ada\decisional\directia5\models\directia.core"
+        SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
+        
+        SetOutPath "$INSTDIR\doc\en"
+        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+        File /r /x ".svn" "${DOCDIR}\en\final\MASA Life Brain IDE User Guide.pdf"
+        CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English"
+        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English\MASA Life Brain IDE User Guide.lnk" "$INSTDIR\doc\en\MASA Life Brain IDE User Guide.pdf"
+        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+            
+        SetOutPath "$INSTDIR\doc\fr"
+        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+        File /r /x ".svn" "${DOCDIR}\fr\final\Manuel_Installation_IDE.pdf"
+        CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français"
+        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Manuel d'installation MASA Life IDE.lnk" "$INSTDIR\doc\fr\Manuel_Installation_IDE.pdf"
+        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+       
+    SectionEnd
+    
+!macroend
+
+;------------------------------------------------------------------------------
+; Removes MASA Life IDE
+;------------------------------------------------------------------------------
+!macro OT.RemoveMasaLifeIde
+
+    RMDir /r "$INSTDIR\MasaLife Brain IDE"
+    ${locate::RMDirEmpty} "$INSTDIR\MasaLife Brain IDE" "/M=*.* /G=1 /B=1" $R1
+    DeleteRegValue "HKLM" "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "BRAIN_CORE"
+	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
+    
 !macroend
 
 ;------------------------------------------------------------------------------

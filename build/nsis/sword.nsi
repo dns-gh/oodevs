@@ -162,6 +162,7 @@ SectionEnd
 ;--------------------------------
 SectionGroup "Additional components"
         !insertmacro OT.AddOptionalComponent "Terrain"
+        !insertmacro OT.AddMasaLifeIde
 SectionGroupEnd
 
 ;--------------------------------
@@ -169,7 +170,6 @@ SectionGroup "Models" s_mod
         !insertmacro OT.AddDecisionalModels "ada"
         ;!insertmacro OT.AddDecisionalModelSources "ada"
 SectionGroupEnd
-
 
 ;--------------------------------
 Section "Documentation" s_doc
@@ -201,6 +201,7 @@ Section "Uninstall"
 
     !insertmacro OT.KillRunning
     !insertmacro OT.UninstallAdditionalComponent "Terrain"
+    !insertmacro OT.RemoveMasaLifeIde
     !insertmacro OT.Uninstall
 
 SectionEnd
