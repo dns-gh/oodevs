@@ -202,6 +202,25 @@ void ModelBuilder::OnConfirmDeletion( int result )
         DeleteEntity( *toDelete_ );
 }
 
+namespace
+{
+    void EntityToDelete( std::vector< const Entity_ABC* >& vect )
+    {
+        for( std::vector< const Entity_ABC* >::iterator it = vect.begin(); it != vect.end(); ++it )
+        {
+            if( const kernel::TacticalHierarchies* hierarchies2 = ( *it )->Retrieve< kernel::TacticalHierarchies >() )
+            {
+                tools::Iterator< const Entity_ABC& > it2 = hierarchies2->CreateSubordinateIterator();
+                while( it2.HasMoreElements() )
+                {
+                    std::vector< const Entity_ABC* >::iterator it3 = std::find( vect.begin(), vect.end(), &it2.NextElement() );
+                    if( it3 != vect.end() )
+                        vect.erase( it3 );
+                }
+            }
+        }
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder::DeleteEntity
 // Created: AGE 2006-11-28
@@ -217,8 +236,12 @@ void ModelBuilder::DeleteEntity( const Entity_ABC& entity )
     if( const kernel::CommunicationHierarchies* hierarchies = entity.Retrieve< kernel::CommunicationHierarchies >() )
     {
         tools::Iterator< const Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
+        std::vector< const Entity_ABC* > subordinate; 
         while( it.HasMoreElements() )
-            DeleteEntity( it.NextElement() );
+            subordinate.push_back( &it.NextElement() );
+        EntityToDelete( subordinate );   // $$$$ _RC_ SLG 2010-11-12: supprime les automates d'automates afin d'éviter un crash de la sim
+        for( std::vector< const Entity_ABC* >::iterator it = subordinate.begin(); it != subordinate.end(); ++it )
+            DeleteEntity( **it );
     }
     delete &entity;
 }
