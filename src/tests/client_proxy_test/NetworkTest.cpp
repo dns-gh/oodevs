@@ -61,10 +61,10 @@ namespace
             RegisterMessage( *this, &MockServer::ReceiveClientToReplay );
             AllowConnections();
         }
-        void ReceiveClientToSim( const std::string& endpoint, const MsgsClientToSim::MsgClientToSim& message ) {}
-        void ReceiveClientToAar( const std::string& endpoint, const MsgsClientToAar::MsgClientToAar& message ) {}
-        void ReceiveClientToReplay( const std::string& endpoint, const MsgsClientToReplay::MsgClientToReplay& message ) {}
-        void ReceiveClientToMessenger( const std::string& endpoint, const MsgsClientToMessenger::MsgClientToMessenger& message ) {}
+        void ReceiveClientToSim( const std::string& /*endpoint*/, const MsgsClientToSim::MsgClientToSim& /*message*/ ) {}
+        void ReceiveClientToAar( const std::string& /*endpoint*/, const MsgsClientToAar::MsgClientToAar& /*message*/ ) {}
+        void ReceiveClientToReplay( const std::string& /*endpoint*/, const MsgsClientToReplay::MsgClientToReplay& /*message*/ ) {}
+        void ReceiveClientToMessenger( const std::string& /*endpoint*/, const MsgsClientToMessenger::MsgClientToMessenger& /*message*/ ) {}
 
         void ReceiveClientToAuthentication( const std::string& endpoint, const MsgsClientToAuthentication::MsgClientToAuthentication& message )
         {
