@@ -12,12 +12,18 @@
 
 #include <qapplication.h>
 
+namespace frontend
+{
+    class LauncherClient;
+}
+
 namespace kernel
 {
     class Controllers;
 }
 
-class QMainWindow;
+class Config;
+class Launcher;
 class SessionTray;
 
 // =============================================================================
@@ -28,6 +34,8 @@ class SessionTray;
 // =============================================================================
 class Application : public QApplication
 {
+    Q_OBJECT;
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -35,10 +43,16 @@ public:
     virtual ~Application();
     //@}
 
-public:
     //! @name Operations
     //@{
+    void Initialize();
     void CreateTranslators();
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnTimer();
     //@}
 
 private:
@@ -56,10 +70,13 @@ private:
 private:
     //! @name Member data
     //@{
-    QMainWindow*                         mainWindow_;
-    std::auto_ptr< QPopupMenu >          trayMenu_;
-    std::auto_ptr< SessionTray >         sessionTray_;
+    std::auto_ptr< Config > config_;
     std::auto_ptr< kernel::Controllers > controllers_;
+    std::auto_ptr< Launcher > launcher_;
+    std::auto_ptr< frontend::LauncherClient > launcherClient_;
+    std::auto_ptr< SessionTray > sessionTray_;
+    QMainWindow* mainWindow_;
+    QTimer* timer_;
     //@}
 
 };

@@ -11,6 +11,7 @@
 #define __Process_ABC_h_
 
 #include <boost/enable_shared_from_this.hpp>
+#include <string>
 
 class QString;
 

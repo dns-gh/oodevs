@@ -7,57 +7,71 @@
 //
 // *****************************************************************************
 
-#include "frontend_pch.h"
-#include "Exercise.h"
-#include "clients_kernel/Controller.h"
-#include "protocol/Protocol.h"
-
-using namespace frontend;
+#include "Launcher_dll_pch.h"
+#include "LauncherFacade.h"
+#include "Config.h"
+#include "Launcher.h"
 
 // -----------------------------------------------------------------------------
-// Name: Exercise constructor
-// Created: SBO 2010-10-01
+// Name: LauncherFacade constructor
+// Created: SBO 2010-11-03
 // -----------------------------------------------------------------------------
-Exercise::Exercise( const Common::MsgExercise& message )
-    : name_( message.name() )
-    , port_( message.has_port() ? message.port() : 0 )
-    , running_( message.has_running() ? message.running() : false )
+LauncherFacade::LauncherFacade( int argc, char** argv )
+    : config_( new launcher::Config() )
+{
+    try
+    {
+        config_->Parse( argc, argv );
+        launcher_.reset( new launcher::Launcher( *config_ ) );
+    }
+    catch( std::exception& e )
+    {
+        lastError_ = e.what();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherFacade destructor
+// Created: SBO 2010-11-03
+// -----------------------------------------------------------------------------
+LauncherFacade::~LauncherFacade()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Exercise destructor
-// Created: SBO 2010-10-01
+// Name: LauncherFacade::Update
+// Created: SBO 2010-11-03
 // -----------------------------------------------------------------------------
-Exercise::~Exercise()
+bool LauncherFacade::Update()
 {
-    // NOTHING
+    try
+    {
+        if( IsInitialized() )
+            launcher_->Update();
+        return true;
+    }
+    catch( std::exception& e )
+    {
+        lastError_ = e.what();
+        return false;
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: Exercise::GetName
-// Created: SBO 2010-10-01
+// Name: LauncherFacade::IsInitialized
+// Created: SBO 2010-11-03
 // -----------------------------------------------------------------------------
-std::string Exercise::GetName() const
+bool LauncherFacade::IsInitialized() const
 {
-    return name_;
+    return launcher_.get() != 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Exercise::GetPort
-// Created: SBO 2010-10-01
+// Name: LauncherFacade::GetLastError
+// Created: SBO 2010-11-03
 // -----------------------------------------------------------------------------
-unsigned int Exercise::GetPort() const
+std::string LauncherFacade::GetLastError() const
 {
-    return port_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Exercise::IsRunning
-// Created: SBO 2010-10-01
-// -----------------------------------------------------------------------------
-bool Exercise::IsRunning() const
-{
-    return running_;
+    return lastError_;
 }

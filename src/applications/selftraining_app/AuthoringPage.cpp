@@ -15,9 +15,9 @@
 #include "MenuButton.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
-#include "ProcessWrapper.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
+#include "frontend/ProcessWrapper.h"
 #include "frontend/StartAuthoring.h"
 #include "frontend/StartTerrainWorkshop.h"
 
@@ -29,7 +29,7 @@ AuthoringPage::AuthoringPage( QWidgetStack* pages, Page_ABC& previous, const Con
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
     , config_( config )
     , controllers_( controllers )
-    , progressPage_( new ProgressPage( pages, *this, tools::translate( "AuthoringPage", "Starting Application" ), controllers ) )
+    , progressPage_( new ProgressPage( pages, *this, tools::translate( "AuthoringPage", "Starting Application" ) ) )
 {
     authoring_ = AddLink( tools::translate( "AuthoringPage", "Authoring" ), *this, tools::translate( "AuthoringPage", "Launch Authoring application" ), SLOT( OnAuthoring() ) );
     terrainGen_ = AddLink( tools::translate( "AuthoringPage", "Terrain Gen" ), *new CreateTerrainPage( pages, *this, controllers, config ), tools::translate( "AuthoringPage", "Launch Terrain Generation application" ) );
@@ -82,8 +82,9 @@ void AuthoringPage::show()
 void AuthoringPage::OnAuthoring()
 {
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::StartAuthoring( config_, true ) );
-    boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
+    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
     progressPage_->Attach( process );
+    process->Start();
     progressPage_->show();
 }
 
@@ -97,7 +98,8 @@ void AuthoringPage::OnTerrainWorkshop()
         return;
 
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::StartTerrainWorkshop( config_, true ) );
-    boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
+    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
     progressPage_->Attach( process );
+    process->Start();
     progressPage_->show();
 }

@@ -12,27 +12,45 @@
 #include "moc_BattleCenterJoinPage.cpp"
 #include "Config.h"
 #include "ExerciseList.h"
-#include "NetworkExerciseLister.h"
 #include "Multiplayer.h"
 #include "ProgressPage.h"
-#include "ProcessWrapper.h"
 #include "ProcessDialogs.h"
 #include "frontend/CreateSession.h"
+#include "frontend/Exercise_ABC.h"
+#include "frontend/ExerciseFilter_ABC.h"
 #include "frontend/JoinExercise.h"
+#include "frontend/ProcessWrapper.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/Tools.h"
 #include <qspinbox.h>
+
+namespace
+{
+    struct RunningExerciseFilter : public boost::noncopyable
+                                 , public frontend::ExerciseFilter_ABC
+    {
+        RunningExerciseFilter( const QLineEdit& host, const QSpinBox& port )
+            : host_( host ), port_( port ) {}
+        virtual bool Allows( const frontend::Exercise_ABC& exercise ) const
+        {
+            return exercise.IsHostedBy( QString( "%1:%2" ).arg( host_.text() ).arg( port_.value() ).ascii() )
+                && exercise.IsRunning();
+        }
+        const QLineEdit& host_;
+        const QSpinBox& port_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: BattleCenterJoinPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, NetworkExerciseLister& lister )
-    : ContentPage    ( pages, tools::translate( "BattleCenterJoinPage", "Join" ), previous, eButtonBack | eButtonJoin )
-    , controllers_   ( controllers )
-    , config_        ( config )
-    , exerciseLister_( lister )
-    , progressPage_  ( new ProgressPage( pages, *this, tools::translate( "BattleCenterJoinPage", "Joining host" ), controllers ) )
+BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, frontend::LauncherClient& launcher )
+    : LauncherClientPage( pages, tools::translate( "BattleCenterJoinPage", "Join" ), previous, eButtonBack | eButtonJoin, launcher )
+    , controllers_      ( controllers )
+    , config_           ( config )
+    , progressPage_     ( new ProgressPage( pages, *this, tools::translate( "BattleCenterJoinPage", "Joining host" ) ) )
+    , exercise_         ( 0 )
 {
     QVBox* box = new QVBox( this );
     box->setMargin( 10 );
@@ -43,7 +61,7 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         QLabel* label = new QLabel( tools::translate( "BattleCenterJoinPage", "Host:" ), hbox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
-        host_ = new QLineEdit( tools::translate( "BattleCenterJoinPage", "localhost" ), hbox );
+        host_ = new QLineEdit( tools::translate( "BattleCenterJoinPage", "127.0.0.1" ), hbox );
         label = new QLabel( tools::translate( "BattleCenterJoinPage", "Port:" ), hbox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
         port_ = new QSpinBox( hbox );
@@ -53,8 +71,11 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
         connect( pButton, SIGNAL( clicked() ), SLOT( UpdateExerciseList() ) );
     }
     {
-        exercises_ = new ExerciseList( box, config_, exerciseLister_, "", true, true, true, false );
-        connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), SLOT( SelectExercise( const QString&, const Profile& ) ) );
+        filter_.reset( new RunningExerciseFilter( *host_, *port_ ) );
+        exercises_ = new ExerciseList( box, config_, controllers, "", true, true, true, false );
+        exercises_->SetFilter( *filter_ );
+        connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( SelectExercise( const frontend::Exercise_ABC&, const Profile& ) ) );
+        connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
     }
     EnableButton( eButtonJoin, false );
     AddContent( box );
@@ -73,11 +94,22 @@ BattleCenterJoinPage::~BattleCenterJoinPage()
 // Name: BattleCenterJoinPage::SelectExercise
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-void BattleCenterJoinPage::SelectExercise( const QString& exercise, const Profile& profile )
+void BattleCenterJoinPage::SelectExercise( const frontend::Exercise_ABC& exercise, const Profile& profile )
 {
-    exercise_ = exercise;
+    exercise_ = &exercise;
     profile_ = profile;
-    EnableButton( eButtonJoin, !exercise_.isEmpty() && profile_.IsValid() );
+    EnableButton( eButtonJoin, profile_.IsValid() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BattleCenterJoinPage::ClearSelection
+// Created: SBO 2010-10-28
+// -----------------------------------------------------------------------------
+void BattleCenterJoinPage::ClearSelection()
+{
+    exercise_ = 0;
+    profile_ = Profile::Invalid;
+    EnableButton( eButtonJoin, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,17 +118,18 @@ void BattleCenterJoinPage::SelectExercise( const QString& exercise, const Profil
 // -----------------------------------------------------------------------------
 void BattleCenterJoinPage::OnJoin()
 {
-    if( exercise_.isEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( this ) )
+    if( !exercise_ || !profile_.IsValid() || ! dialogs::KillRunningProcesses( this ) )
         return;
     {
-        frontend::CreateSession action( config_, exercise_.ascii(), MULTIPLAYER_SESSION );
+        frontend::CreateSession action( config_, exercise_->GetName(), MULTIPLAYER_SESSION );
         action.SetDefaultValues();
-        action.SetOption( "session/config/gaming/network/@server", QString( "%1:%2" ).arg( host_->text() ).arg( exerciseLister_.GetPort( exercise_ ) ) );
+        action.SetOption( "session/config/gaming/network/@server", QString( "%1:%2" ).arg( host_->text() ).arg( exercise_->GetPort() ) );
         action.Commit();
     }
-    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::JoinExercise( config_, exercise_, MULTIPLAYER_SESSION.c_str(), profile_.GetLogin(), true ) );
-    boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
+    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::JoinExercise( config_, exercise_->GetName().c_str(), MULTIPLAYER_SESSION.c_str(), profile_.GetLogin(), true ) );
+    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
     progressPage_->Attach( process );
+    process->Start();
     progressPage_->show();
 }
 
@@ -106,5 +139,15 @@ void BattleCenterJoinPage::OnJoin()
 // -----------------------------------------------------------------------------
 void BattleCenterJoinPage::UpdateExerciseList()
 {
-    exerciseLister_.QueryExercises( host_->text().ascii(), static_cast< unsigned int >( port_->value() ), *exercises_ );
+    exercises_->Clear();
+    Connect( host_->text().ascii(), static_cast< unsigned short >( port_->value() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BattleCenterJoinPage::Update
+// Created: SBO 2010-10-26
+// -----------------------------------------------------------------------------
+void BattleCenterJoinPage::Update()
+{
+    exercises_->Update();
 }

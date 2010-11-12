@@ -10,6 +10,20 @@
 #ifndef __ExerciseList_h_
 #define __ExerciseList_h_
 
+#include "tools/ElementObserver_ABC.h"
+
+namespace frontend
+{
+    class Exercise_ABC;
+    class RemoteExercise;
+    class ExerciseFilter_ABC;
+}
+
+namespace kernel
+{
+    class Controllers;
+}
+
 namespace tools
 {
     class GeneralConfig;
@@ -22,7 +36,6 @@ namespace xml
 
 class ProfileList;
 class Profile;
-class ExerciseLister_ABC;
 class QListView;
 class QListViewItem;
 
@@ -33,28 +46,30 @@ class QListViewItem;
 // Created: RDS 2008-08-27
 // =============================================================================
 class ExerciseList : public QVBox
+                   , public tools::Observer_ABC
+                   , public tools::ElementObserver_ABC< frontend::Exercise_ABC >
 {
-
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const ExerciseLister_ABC& lister, const std::string& subDir = "", bool showBrief = true, bool showProfile = true, bool showParams = true, bool enableParams = true );
+             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, kernel::Controllers& controllers, const std::string& subDir = "", bool showBrief = true, bool showProfile = true, bool showParams = true, bool enableParams = true );
     virtual ~ExerciseList();
     //@}
 
     //! @name Operations
     //@{
+    void SetFilter( const frontend::ExerciseFilter_ABC& filter );
     bool Exists( const QString& exercise ) const;
     void ChangeExerciceParameters( const std::string& exercice );
-
     //@}
 
 signals:
     //! @name Signals
     //@{
-    void Select( const QString& exercise, const Profile& profile );
+    void Select( const frontend::Exercise_ABC& exercise, const Profile& profile );
+    void ClearSelection();
     //@}
 
 public slots:
@@ -81,28 +96,36 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifyCreated( const frontend::Exercise_ABC& exercise );
+    virtual void NotifyUpdated( const frontend::Exercise_ABC& exercise );
+    virtual void NotifyDeleted( const frontend::Exercise_ABC& exercise );
+
     virtual void customEvent( QCustomEvent* e );
-    QString BuildExercisePath() const;
+    const frontend::Exercise_ABC* GetSelectedExercise() const;
     void ReadBriefingText( xml::xistream& xis );
     QString GetExerciseDisplayName( const QString& exercise ) const;
-    void AddExerciseEntry( const QString& exercise );
+    void AddExerciseEntry( const frontend::Exercise_ABC& exercise );
+    void UpdateExerciseEntry( const frontend::Exercise_ABC& exercise );
+    void DeleteExerciseEntry( const frontend::Exercise_ABC& exercise );
     //@}
 
 private:
     //! @name Member data
     //@{
     const tools::GeneralConfig&  config_;
+    kernel::Controllers&         controllers_;
     const std::string            subDir_;
     QListView*                   exercises_;
     QLabel*                      briefingImage_;
     QTextEdit*                   briefingText_;
     ProfileList*                 profiles_;
     bool                         showBrief_;
-    const ExerciseLister_ABC&    lister_;
     const QString                language_;
     bool                         parametersChanged_;    
     QComboBox*                   editTerrainList_;
     QComboBox*                   editModelList_;
+    const frontend::ExerciseFilter_ABC* filter_;
+    std::auto_ptr< frontend::ExerciseFilter_ABC > defaultFilter_;
  //@}
 };
 

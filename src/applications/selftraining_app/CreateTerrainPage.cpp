@@ -12,26 +12,24 @@
 #include "moc_CreateTerrainPage.cpp"
 #include "Config.h"
 #include "ProcessDialogs.h"
-#include "ProcessWrapper.h"
 #include "ProgressPage.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "frontend/CreateTerrain.h"
 #include "frontend/commands.h"
-
-using namespace frontend;
+#include "frontend/ProcessWrapper.h"
 
 // -----------------------------------------------------------------------------
 // Name: CreateTerrainPage constructor
 // Created: JSR 2010-06-11
 // -----------------------------------------------------------------------------
-CreateTerrainPage::CreateTerrainPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const ::Config& config )
+CreateTerrainPage::CreateTerrainPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config )
     : ContentPage( pages, tools::translate( "CreateTerrainPage", "Create Terrain" ), previous, eButtonBack | eButtonStart )
     , config_( config )
     , controllers_( controllers )
-    , progressPage_( new ProgressPage( pages, *this, tools::translate( "CreateTerrainPage", "Starting terrain creation" ), controllers ) )
+    , progressPage_( new ProgressPage( pages, *this, tools::translate( "CreateTerrainPage", "Starting terrain creation" ) ) )
 {
-    bool available = CreateTerrain::IsAvailable();
+    const bool available = frontend::CreateTerrain::IsAvailable();
 
     QVBox* mainBox = new QVBox( this );
     mainBox->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -78,8 +76,9 @@ void CreateTerrainPage::OnStart()
         return;
 
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::CreateTerrain( config_, editName_->text(), true ) );
-    boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
+    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
     progressPage_->Attach( process );
+    process->Start();
     progressPage_->show();
 
     Update();
@@ -120,5 +119,5 @@ void CreateTerrainPage::EditNameChanged( const QString& name )
 // -----------------------------------------------------------------------------
 void CreateTerrainPage::Update()
 {
-    existingTerrains_ = commands::ListTerrains( config_ );
+    existingTerrains_ = frontend::commands::ListTerrains( config_ );
 }

@@ -9,7 +9,7 @@
 
 #include "selftraining_app_pch.h"
 #include "CompositeProcessWrapper.h"
-#include "clients_kernel/Controller.h"
+#include "frontend/ProcessObserver_ABC.h"
 #include "frontend/SpawnCommand.h"
 #pragma warning( push )
 #pragma warning( disable : 4127 4244 4511 4512 )
@@ -17,18 +17,14 @@
 #include <boost/bind.hpp>
 #pragma warning( pop )
 
-
-
 // -----------------------------------------------------------------------------
 // Name: CompositeProcessWrapper constructor
 // Created: SBO 2008-10-15
 // -----------------------------------------------------------------------------
-CompositeProcessWrapper::CompositeProcessWrapper( kernel::Controller& controller, boost::shared_ptr< frontend::SpawnCommand > process1, boost::shared_ptr< frontend::SpawnCommand > process2 )
-    : controller_( controller )
-    , current_( process1 )
+CompositeProcessWrapper::CompositeProcessWrapper( frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > process1, boost::shared_ptr< frontend::SpawnCommand > process2 )
+    : observer_( observer )
     , first_( process1 )
     , second_( process2 )
-    , thread_( new boost::thread( boost::bind( &CompositeProcessWrapper::ThreadStart, this ) ) )
 {
     // NOTHING
 }
@@ -39,58 +35,58 @@ CompositeProcessWrapper::CompositeProcessWrapper( kernel::Controller& controller
 // -----------------------------------------------------------------------------
 CompositeProcessWrapper::~CompositeProcessWrapper()
 {
-    try
+    observer_.ProcessStopped();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CompositeProcessWrapper::Start
+// Created: SBO 2010-11-09
+// -----------------------------------------------------------------------------
+void CompositeProcessWrapper::Start()
+{
+    if( first_.get() )
+        first_->Attach( shared_from_this() );
+    if( second_.get() )
+        second_->Attach( shared_from_this() );
+    thread_.reset( new boost::thread( boost::bind( &CompositeProcessWrapper::Run, this ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CompositeProcessWrapper::Run
+// Created: SBO 2008-10-15
+// -----------------------------------------------------------------------------
+void CompositeProcessWrapper::Run()
+{
+    if( first_.get() && second_.get() )
     {
-        if( thread_.get() )
-        {
-            thread_->interrupt();
-            current_.reset();
-            first_.reset();
-            second_.reset();
-            thread_->join();
-        }
-    }
-    catch( ... )
-    {
-        // NOTHING
+        current_ = first_;
+        first_->Start();
+        current_ = second_;
+        second_->Start();
+        while( first_->Wait() && second_->Wait() ) {}
+        current_.reset();
+        first_.reset();
+        second_.reset();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: CompositeProcessWrapper::ThreadStart
-// Created: SBO 2008-10-15
+// Name: CompositeProcessWrapper::Stop
+// Created: SBO 2010-11-09
 // -----------------------------------------------------------------------------
-void CompositeProcessWrapper::ThreadStart()
+void CompositeProcessWrapper::Stop()
 {
-    try
+    if( first_.get() )
     {
-        if( first_.get() )
-        {
-            controller_.Update( shared_from_this() );
-            boost::this_thread::interruption_point();
-            first_->Start();
-            boost::this_thread::interruption_point();
-            first_->Wait();
-            boost::this_thread::interruption_point();
-            controller_.Update( shared_from_this() );
-            boost::this_thread::interruption_point();
-         }
-        if( second_.get() )
-        {
-            current_ = second_;
-            second_->Start();
-            boost::this_thread::interruption_point();
-            controller_.Update( shared_from_this() );
-            boost::this_thread::interruption_point();
-            second_->Wait();
-            boost::this_thread::interruption_point();
-            controller_.Delete( shared_from_this() );
-            boost::this_thread::interruption_point();
-        }
+        first_->Stop();
+        if( thread_.get() )
+            thread_->join();
     }
-    catch( ... )
+    if( second_.get() )
     {
-        // NOTHING
+        second_->Stop();
+        if( thread_.get() )
+            thread_->join();
     }
 }
 

@@ -22,10 +22,17 @@ namespace kernel
     class Controller;
 }
 
+namespace tools
+{
+    class GeneralConfig;
+}
+
 namespace frontend
 {
-    class Exercises;
+    class ConnectionHandler_ABC;
+    class Host_ABC;
     class LauncherPublisher;
+    class Model;
 
 // =============================================================================
 /** @class  LauncherClient
@@ -39,13 +46,13 @@ class LauncherClient : public tools::ClientNetworker
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LauncherClient( kernel::Controller& controller );
+             LauncherClient( const tools::GeneralConfig& config, kernel::Controller& controller );
     virtual ~LauncherClient();
     //@}
 
     //! @name Operations
     //@{
-    void Connect( const std::string& host, unsigned int port );
+    void Connect( const std::string& host, unsigned int port, frontend::ConnectionHandler_ABC& handler );
     bool Connected() const;
     void QueryExerciseList();
     //@}
@@ -61,14 +68,18 @@ private:
     //@{
     virtual void ConnectionSucceeded( const std::string& endpoint );
     virtual void ConnectionError( const std::string& address, const std::string& error );
+    virtual void ConnectionFailed( const std::string& address, const std::string& error );
     void HandleLauncherToAdmin( const std::string& endpoint, const MsgsLauncherToAdmin::MsgLauncherToAdmin& message );
+    void ResetConnection();
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Exercises > exercises_;
+    std::auto_ptr< Model > model_;
     std::auto_ptr< LauncherPublisher > publisher_;
+    Host_ABC* host_;
+    ConnectionHandler_ABC* handler_;
     bool connected_;
     //@}
 };

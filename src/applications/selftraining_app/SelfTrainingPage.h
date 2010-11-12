@@ -12,6 +12,11 @@
 
 #include "MenuPage.h"
 
+namespace frontend
+{
+    class LauncherClient;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -23,7 +28,6 @@ namespace gui
 }
 
 class Config;
-class NetworkExerciseLister;
 
 // =============================================================================
 /** @class  SelfTrainingPage
@@ -36,7 +40,7 @@ class SelfTrainingPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister, gui::LinkInterpreter_ABC& interpreter );
+             SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter );
     virtual ~SelfTrainingPage();
     //@}
 

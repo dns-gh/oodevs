@@ -10,18 +10,19 @@
 #ifndef __LauncherService_h_
 #define __LauncherService_h_
 
-#include <boost/ptr_container/ptr_map.hpp>
 #include "tools/ServerNetworker.h"
+#include <boost/shared_ptr.hpp>
+#include <map>
+#include <string>
 
 namespace MsgsAdminToLauncher
 {
     class MsgConnectionRequest;
 }
 
-namespace frontend
+namespace launcher
 {
-
-class LauncherPublisher;
+    class LauncherPublisher;
 
 // =============================================================================
 /** @class  LauncherService
@@ -54,13 +55,14 @@ private:
     //! @name Helpers
     //@{
     virtual void ConnectionSucceeded( const std::string& endpoint );
+    virtual void ConnectionFailed( const std::string& address, const std::string& error );
     virtual void ConnectionError( const std::string& address, const std::string& error );
     //@}
 
 private:
     //! @name Member data
     //@{
-    boost::ptr_map< std::string, LauncherPublisher* > clients_;
+    std::map< std::string, boost::shared_ptr< LauncherPublisher > > clients_;
     //@}
 };
 

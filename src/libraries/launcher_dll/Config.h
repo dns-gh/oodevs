@@ -3,33 +3,48 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 MASA Group
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ExerciseLister_ABC_h_
-#define __ExerciseLister_ABC_h_
+#ifndef __Config_h_
+#define __Config_h_
+
+#include "tools/GeneralConfig.h"
+#include <boost/noncopyable.hpp>
+
+namespace launcher
+{
 
 // =============================================================================
-/** @class  ExerciseLister_ABC
-    @brief  ExerciseLister_ABC
+/** @class  Config
+    @brief  Config
 */
-// Created: LDC 2008-10-24
+// Created: SBO 2010-11-03
 // =============================================================================
-class ExerciseLister_ABC
+class Config : public tools::GeneralConfig
+             , private boost::noncopyable
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseLister_ABC() {}
-    virtual ~ExerciseLister_ABC() {}
+             Config();
+    virtual ~Config();
     //@}
 
     //! @name Operations
     //@{
-    virtual void ListExercises( QStringList& list ) const = 0;
-    virtual unsigned short GetPort( const QString& exercise ) const = 0;
+    unsigned short GetLauncherPort() const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    unsigned short launcherPort_;
     //@}
 };
 
-#endif // __ExerciseLister_ABC_h_
+}
+
+#endif // __Config_h_

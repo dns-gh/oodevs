@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "frontend_pch.h"
+#include "Launcher_dll_pch.h"
 #include "LauncherService.h"
 #include "LauncherPublisher.h"
 
-using namespace frontend;
+using namespace launcher;
 
 // -----------------------------------------------------------------------------
 // Name: LauncherService constructor
@@ -38,8 +38,18 @@ LauncherService::~LauncherService()
 // -----------------------------------------------------------------------------
 void LauncherService::ConnectionSucceeded( const std::string& endpoint )
 {
-    clients_[ endpoint ] = new LauncherPublisher( *this, endpoint );
+    clients_[ endpoint ] = boost::shared_ptr< LauncherPublisher >( new LauncherPublisher( *this, endpoint ) );
     tools::ServerNetworker::ConnectionSucceeded( endpoint );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherService::ConnectionFailed
+// Created: SBO 2010-11-05
+// -----------------------------------------------------------------------------
+void LauncherService::ConnectionFailed( const std::string& address, const std::string& error )
+{
+    clients_.erase( address );
+    tools::ServerNetworker::ConnectionFailed( address, error );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,5 +68,8 @@ void LauncherService::ConnectionError( const std::string& address, const std::st
 // -----------------------------------------------------------------------------
 LauncherPublisher& LauncherService::ResolveClient( const std::string& endpoint ) const
 {
-    return *clients_.at( endpoint );
+    std::map< std::string, boost::shared_ptr< LauncherPublisher > >::const_iterator it = clients_.find( endpoint );
+    if( it != clients_.end() )
+        return *it->second;
+    throw std::runtime_error( __FUNCTION__ ": client " + endpoint + " does not exist." );
 }

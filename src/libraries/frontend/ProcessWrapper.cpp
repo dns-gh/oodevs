@@ -7,24 +7,25 @@
 //
 // *****************************************************************************
 
-#include "selftraining_app_pch.h"
+#include "frontend_pch.h"
 #include "ProcessWrapper.h"
-#include "clients_kernel/Controller.h"
-#include "frontend/SpawnCommand.h"
+#include "ProcessObserver_ABC.h"
+#include "SpawnCommand.h"
 #pragma warning( push )
 #pragma warning( disable : 4127 4244 4511 4512 )
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 #pragma warning( pop )
 
+using namespace frontend;
+
 // -----------------------------------------------------------------------------
 // Name: ProcessWrapper constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-ProcessWrapper::ProcessWrapper( kernel::Controller& controller, boost::shared_ptr< frontend::SpawnCommand > process )
-    : controller_( controller )
+ProcessWrapper::ProcessWrapper( ProcessObserver_ABC& observer, boost::shared_ptr< SpawnCommand > process )
+    : observer_( observer )
     , process_( process )
-    , thread_( new boost::thread( boost::bind( &ProcessWrapper::ThreadStart, this ) ) )
 {
     // NOTHING
 }
@@ -35,44 +36,44 @@ ProcessWrapper::ProcessWrapper( kernel::Controller& controller, boost::shared_pt
 // -----------------------------------------------------------------------------
 ProcessWrapper::~ProcessWrapper()
 {
-    try
+    observer_.ProcessStopped();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessWrapper::Start
+// Created: SBO 2010-11-10
+// -----------------------------------------------------------------------------
+void ProcessWrapper::Start()
+{
+    process_->Attach( shared_from_this() );
+    thread_.reset( new boost::thread( boost::bind( &ProcessWrapper::Run, this ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessWrapper::Run
+// Created: SBO 2008-10-14
+// -----------------------------------------------------------------------------
+void ProcessWrapper::Run()
+{
+    if( process_.get() )
     {
-        if( thread_.get() )
-        {
-            thread_->interrupt();
-            process_.reset();
-            thread_->join();
-        }
-    }
-    catch( ... )
-    {
-        // NOTHING
+        process_->Start();
+        while( process_->Wait() ) {}
+        process_.reset();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProcessWrapper::ThreadStart
-// Created: SBO 2008-10-14
+// Name: ProcessWrapper::Stop
+// Created: SBO 2010-11-10
 // -----------------------------------------------------------------------------
-void ProcessWrapper::ThreadStart()
+void ProcessWrapper::Stop()
 {
-    try
+    if( process_.get() )
     {
-        if( process_.get() )
-        {
-            controller_.Update( shared_from_this() );
-            boost::this_thread::interruption_point();
-            process_->Start();
-            boost::this_thread::interruption_point();
-            process_->Wait();
-            boost::this_thread::interruption_point();
-            controller_.Delete( shared_from_this() );
-            boost::this_thread::interruption_point();
-        }
-    }
-    catch( ... )
-    {
-        controller_.Delete( shared_from_this() );
+        process_->Stop();
+        if( thread_.get() )
+            thread_->join();
     }
 }
 

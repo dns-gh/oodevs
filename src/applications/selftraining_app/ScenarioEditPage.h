@@ -10,12 +10,12 @@
 #ifndef __ScenarioEditPage_h_
 #define __ScenarioEditPage_h_
 
-#include "ContentPage.h"
-#include "DirectoryExerciseLister.h"
+#include "LauncherClientPage.h"
 
-namespace tools
+namespace frontend
 {
-    class GeneralConfig;
+    class Config;
+    class Exercise_ABC;
 }
 
 namespace kernel
@@ -37,14 +37,14 @@ class QTabWidget;
 */
 // Created: RDS 2008-09-09
 // =============================================================================
-class ScenarioEditPage : public ContentPage
+class ScenarioEditPage : public LauncherClientPage
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers );
+             ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const frontend::Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcher );
     virtual ~ScenarioEditPage();
     //@}
 
@@ -63,7 +63,8 @@ private slots:
     //@{
     virtual void OnEdit();
     void Update();
-    void OnSelect( const QString& exercise, const Profile& profile );
+    void OnSelect( const frontend::Exercise_ABC& exercise, const Profile& profile );
+    void ClearSelection();
     void EditNameChanged( const QString& string );
     void ComboChanged( int index );
     void UpdateEditButton( QWidget* );
@@ -79,12 +80,11 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
+    const frontend::Config& config_;
     kernel::Controllers& controllers_;
-    DirectoryExerciseLister lister_;
     ProgressPage* progressPage_;
     ExerciseList* exercises_;
-    QString exercise_;
+    const frontend::Exercise_ABC* exercise_;
     QTabWidget* mainTabs_;
     CreateExerciceWidget* createExerciceWidget_;
     ImportWidget* importWidget_;

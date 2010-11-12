@@ -9,6 +9,7 @@ CrossbowPluginConfigPanel.cpp \
 DisPluginConfigPanel.cpp \
 HlaPluginConfigPanel.cpp \
 JoinExercise.cpp \
+LauncherClient.cpp \
 RandomPluginConfigPanel.cpp \
 SessionConfigPanel.cpp \
 SpawnCommand.cpp \

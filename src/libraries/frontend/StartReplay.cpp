@@ -9,12 +9,12 @@
 
 #include "frontend_pch.h"
 #include "StartReplay.h"
+#include "ConfigurationManipulator.h"
+#include "SimulationMonitor.h"
 #pragma warning( push )
-#pragma warning( disable: 4127 4511 4512 4702 )
+#pragma warning( disable: 4127 )
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
-
-#include "ClientReplayNetworker.h"
 
 using namespace frontend;
 
@@ -24,13 +24,12 @@ using namespace frontend;
 // -----------------------------------------------------------------------------
 StartReplay::StartReplay( const tools::GeneralConfig& config, const QString& exercise, const QString& session, unsigned port, bool attach )
     : SpawnCommand( config, "replayer_app.exe", attach )
-    , port_ ( port )
+    , configManipulator_( new ConfigurationManipulator( config, exercise.ascii(), session.ascii() ) )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument ( session );
-    portArg_ = boost::lexical_cast< std::string >( port );
-    AddArgument( portArg_.c_str() );
+    AddArgument( QString( "--port=%1" ).arg( port ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,17 +42,17 @@ StartReplay::~StartReplay()
 }
 
 // -----------------------------------------------------------------------------
-// Name: StartReplay::Wait
+// Name: StartReplay::Start
 // Created: RDS 2008-09-26
 // -----------------------------------------------------------------------------
-bool StartReplay::Wait()
+void StartReplay::Start()
 {
-    bool ready = false;
-    ClientReplayNetworker test( ready, "localhost:" +  boost::lexical_cast< std::string >( port_ ), true );
-    while ( !ready )
+    SpawnCommand::Start();
+    const std::string host = configManipulator_->GetValue< std::string >( "session/config/gaming/network/@server" );
+    SimulationMonitor monitor( host );
+    while( !monitor.Connected() && !monitor.TimedOut() )
     {
-        test.Update();
+        monitor.Update();
+        boost::this_thread::sleep( boost::posix_time::milliseconds( 100 ) );
     }
-    return true;
 }
-

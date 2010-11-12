@@ -11,7 +11,7 @@
 #define __SpawnCommand_h_
 
 #include "Process_ABC.h"
-#include <qprocess.h>
+#include <boost/noncopyable.hpp>
 
 namespace tools
 {
@@ -29,6 +29,7 @@ namespace frontend
 // Created: AGE 2007-10-04
 // =============================================================================
 class SpawnCommand : public Process_ABC
+                   , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -40,17 +41,18 @@ public:
     //! @name accessors
     //@{
     bool IsRunning() const;
-    virtual bool Wait();
     virtual void Start();
+    virtual bool Wait();
+    virtual void Stop();
     virtual unsigned int GetPercentage() const;
     virtual QString GetStatus() const;
     virtual std::string GetStartedExercise() const;
+    void Attach( boost::shared_ptr< Process_ABC > process );
     //@}
 
 protected:
     //! @name Operations
     //@{
-    void Stop();
     void AddRootDirArgument();
     void AddExerciseArgument( const QString& exercise );
     void AddSessionArgument ( const QString& session );
@@ -59,12 +61,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SpawnCommand( const SpawnCommand& );            //!< Copy constructor
-    SpawnCommand& operator=( const SpawnCommand& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     struct InternalData; //!< obscure data structure to hide OS implementation
@@ -72,7 +68,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CloseWindows();
+    void StopProcess();
     //@}
 
 protected:
@@ -88,6 +84,8 @@ private:
     std::auto_ptr<InternalData> internal_; //!< obscure data structure to hide OS implementation
     bool                        attach_;   //!< if set to true , kill the attached process on exit
     std::string                 workingDirectory_;
+    bool stopped_;
+    boost::shared_ptr< Process_ABC > attachment_;
     //@}
 };
 

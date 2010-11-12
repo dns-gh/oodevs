@@ -24,12 +24,10 @@ namespace gui
 
 namespace frontend
 {
-    class Launcher_ABC;
+    class LauncherClient;
 }
 
 class Config;
-class NetworkExerciseLister;
-class QTimer;
 class QWidgetStack;
 
 // =============================================================================
@@ -46,7 +44,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MainWindow( kernel::Controllers& controllers );
+             MainWindow( Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient );
     virtual ~MainWindow();
     //@}
 
@@ -54,7 +52,6 @@ public slots:
     //! @name Slots
     //@{
     void Maximize();
-    void Update();
     //@}
 
 protected:
@@ -79,12 +76,8 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Config >                   config_;
     std::auto_ptr< gui::LinkInterpreter_ABC > interpreter_;
-    QWidgetStack*                             pages_;
-    std::auto_ptr< frontend::Launcher_ABC >   launcher_;
-    std::auto_ptr< NetworkExerciseLister >    exerciseLister_;
-    QTimer* networkTimer_;
+    QWidgetStack* pages_;
     //@}
 };
 

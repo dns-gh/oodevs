@@ -12,19 +12,14 @@
 
 #include "frontend/Process_ABC.h"
 
-
 namespace boost
 {
     class thread;
 }
 
-namespace kernel
-{
-    class Controller;
-}
-
 namespace frontend
 {
+    class ProcessObserver_ABC;
     class SpawnCommand;
 }
 
@@ -39,7 +34,7 @@ class CompositeProcessWrapper : public frontend::Process_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CompositeProcessWrapper( kernel::Controller& controller, boost::shared_ptr< frontend::SpawnCommand > process1, boost::shared_ptr< frontend::SpawnCommand > process2 );
+             CompositeProcessWrapper( frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > process1, boost::shared_ptr< frontend::SpawnCommand > process2 );
     virtual ~CompositeProcessWrapper();
     //@}
 
@@ -48,6 +43,8 @@ public:
     virtual unsigned int GetPercentage() const;
     virtual QString GetStatus() const;
     virtual std::string GetStartedExercise() const;
+    void Start();
+    void Stop();
     //@}
 
 private:
@@ -59,13 +56,13 @@ private:
 
     //! @name Helpers
     //@{
-    void ThreadStart();
+    void Run();
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
+    frontend::ProcessObserver_ABC& observer_;
     boost::shared_ptr< frontend::SpawnCommand > current_;
     boost::shared_ptr< frontend::SpawnCommand > first_;
     boost::shared_ptr< frontend::SpawnCommand > second_;

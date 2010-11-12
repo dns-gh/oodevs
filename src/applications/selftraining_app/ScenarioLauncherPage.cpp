@@ -14,18 +14,20 @@
 #include "ExerciseList.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
-#include "ProcessWrapper.h"
 #include "frontend/AdvancedConfigPanel.h"
 #include "frontend/CheckpointConfigPanel.h"
+#include "frontend/Config.h"
 #include "frontend/CreateSession.h"
 #include "frontend/CrossbowPluginConfigPanel.h"
 #include "frontend/EdxlHavePluginConfigPanel.h"
 #include "frontend/TimelinePluginConfigPanel.h"
 #include "frontend/DisPluginConfigPanel.h"
 #include "frontend/EditExercise.h"
+#include "frontend/Exercise_ABC.h"
 #include "frontend/HlaPluginConfigPanel.h"
 #include "frontend/JoinAnalysis.h"
 #include "frontend/JoinExercise.h"
+#include "frontend/ProcessWrapper.h"
 #include "frontend/RandomPluginConfigPanel.h"
 #include "frontend/SessionConfigPanel.h"
 #include "frontend/StartExercise.h"
@@ -33,8 +35,8 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/LinkInterpreter_ABC.h"
 #include "clients_gui/Tools.h"
-#include "tools/GeneralConfig.h"
 #include <boost/foreach.hpp>
+#include <qfileinfo.h>
 #include <qtabbar.h>
 #include <qtabwidget.h>
 #include <xeumeuleu/xml.hpp>
@@ -131,13 +133,13 @@ namespace
 // Name: ScenarioLauncherPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, const QString& title /*= ""*/ )
-    : ContentPage( pages, title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title, previous, eButtonBack | eButtonStart )
+ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const frontend::Config& config, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter, const QString& title /*= ""*/ )
+    : LauncherClientPage( pages, title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title, previous, eButtonBack | eButtonStart, launcher )
     , config_( config )
     , controllers_( controllers )
     , interpreter_( interpreter )
-    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title ), controllers ) )
-    , lister_( config, "" )
+    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title ) ) )
+    , exercise_( 0 )
 {
     QVBox* box = new QVBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -145,9 +147,10 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
     {
         TabWidget* tabs = new TabWidget( box );
         {
-            exercises_ = new ExerciseList( tabs, config_, lister_, "", true, true, true, false );
+            exercises_ = new ExerciseList( tabs, config_, controllers, "", true, true, true, false );
             exercises_->setBackgroundOrigin( QWidget::WindowOrigin );
-            connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( OnSelect( const QString&, const Profile& ) ) );
+            connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC&, const Profile& ) ) );
+            connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
             tabs->addTab( exercises_, tools::translate( "ScenarioLauncherPage", "General" ) );
         }
         {
@@ -159,7 +162,8 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
             tabs->addTab( configBox, tools::translate( "ScenarioLauncherPage", "Settings" ) );
             {
                 frontend::CheckpointConfigPanel* panel = AddPlugin< frontend::CheckpointConfigPanel >( config, tools::translate( "ScenarioLauncherPage", "Checkpoints" ) );
-                connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), panel, SLOT( Select( const QString& ) ) );
+                connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), panel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
+                connect( exercises_, SIGNAL( ClearSelection() ), panel, SLOT( ClearSelection() ) );
                 connect( panel, SIGNAL( CheckpointSelected( const QString&, const QString& ) ), SLOT( OnSelectCheckpoint( const QString&, const QString& ) ) );
                 AddPlugin< frontend::SessionConfigPanel >( config, tools::translate( "ScenarioLauncherPage", "Session" ) );
                 AddPlugin< frontend::RandomPluginConfigPanel >( config, tools::translate( "ScenarioLauncherPage", "Random" ) );
@@ -201,6 +205,8 @@ ScenarioLauncherPage::~ScenarioLauncherPage()
 // -----------------------------------------------------------------------------
 void ScenarioLauncherPage::Update()
 {
+    exercises_->Clear();
+    Connect( "localhost", config_.GetLauncherPort() );
     exercises_->Update();
 }
 
@@ -221,41 +227,45 @@ void ScenarioLauncherPage::OnStart()
 {
     if( !CanBeStarted() || ! dialogs::KillRunningProcesses( this ) )
         return;
-    const std::string target = ReadTargetApplication( config_, exercise_ );
+    const QString exerciseName = exercise_->GetName().c_str();
+    const std::string target = ReadTargetApplication( config_, exerciseName );
     if( target == "gaming" )
     {
         const QString session = session_.isEmpty() ? BuildSessionName().c_str() : session_;
-        CreateSession( exercise_, session );
-        boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exercise_, session, checkpoint_, true ) );
-        boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinExercise( config_, exercise_, session, profile_.GetLogin(), true ) );
-        boost::shared_ptr< frontend::Process_ABC > process( new CompositeProcessWrapper( controllers_.controller_, simulation, client ) );
+        CreateSession( exerciseName, session );
+        boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exerciseName, session, checkpoint_, true ) );
+        boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinExercise( config_, exerciseName, session, profile_.GetLogin(), true ) );
+        boost::shared_ptr< CompositeProcessWrapper > process( new CompositeProcessWrapper( *progressPage_, simulation, client ) );
         progressPage_->Attach( process );
+        process->Start();
         progressPage_->show();
     }
     else if( target == "preparation" )
     {
-        boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, exercise_, true ) );
-        boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
+        boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, exerciseName, true ) );
+        boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
         progressPage_->Attach( process );
+        process->Start();
         progressPage_->show();
     }
     else if( target == "replayer" )
     {
-        const unsigned int port = lister_.GetPort( exercise_ );
-        CreateSession( exercise_, "default" );
-        boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exercise_, "default", port, true ) );
-        boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exercise_, "default", profile_.GetLogin(), port, true ) );
-        boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, replay, client ) );
+        const unsigned int port = exercise_->GetPort();
+        CreateSession( exerciseName, "default" );
+        boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exerciseName, "default", port, true ) );
+        boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exerciseName, "default", profile_.GetLogin(), port, true ) );
+        boost::shared_ptr< CompositeProcessWrapper >  process( new CompositeProcessWrapper( *progressPage_, replay, client ) );
         progressPage_->Attach( process );
+        process->Start();
         progressPage_->show();
     }
     if( target != "gaming" )
     {
-        const QStringList resources = GetResources( config_, exercise_ );
+        const QStringList resources = GetResources( config_, exerciseName );
         if( ! resources.empty() )
         {
             std::string file = *resources.begin();
-            file = ( bfs::path( config_.GetExerciseDir( exercise_.ascii() ), bfs::native ) / file ).native_file_string();
+            file = ( bfs::path( config_.GetExerciseDir( exerciseName.ascii() ), bfs::native ) / file ).native_file_string();
             interpreter_.Interprete( MakeLink( file ).c_str() );
         }
     }
@@ -270,9 +280,6 @@ void ScenarioLauncherPage::CreateSession( const QString& exercise, const QString
     {
         frontend::CreateSession action( config_, exercise.ascii(), session.ascii() );
         action.SetDefaultValues();
-        // force the networklogger to be used
-        action.SetOption( "session/config/simulation/debug/@networklogger", true );
-        action.SetOption( "session/config/simulation/debug/@networkloggerport", 20000 );
         action.Commit();
     }
     {
@@ -285,11 +292,22 @@ void ScenarioLauncherPage::CreateSession( const QString& exercise, const QString
 // Name: ScenarioLauncherPage::OnSelect
 // Created: SBO 2008-10-31
 // -----------------------------------------------------------------------------
-void ScenarioLauncherPage::OnSelect( const QString& exercise, const Profile& profile )
+void ScenarioLauncherPage::OnSelect( const frontend::Exercise_ABC& exercise, const Profile& profile )
 {
-    exercise_ = exercise;
+    exercise_ = &exercise;
     profile_ = profile;
     EnableButton( eButtonStart, CanBeStarted() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioLauncherPage::ClearSelection
+// Created: SBO 2010-10-28
+// -----------------------------------------------------------------------------
+void ScenarioLauncherPage::ClearSelection()
+{
+    exercise_ = 0;
+    profile_ = Profile::Invalid;
+    EnableButton( eButtonStart, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -298,11 +316,14 @@ void ScenarioLauncherPage::OnSelect( const QString& exercise, const Profile& pro
 // -----------------------------------------------------------------------------
 bool ScenarioLauncherPage::CanBeStarted() const
 {
-    const std::string target = ReadTargetApplication( config_, exercise_ );
-    if( target == "gaming" || target == "replayer" )
-        return !exercise_.isEmpty() && profile_.IsValid();
-    if( target == "preparation" )
-        return !exercise_.isEmpty();
+    if( exercise_ )
+    {
+        const std::string target = ReadTargetApplication( config_, exercise_->GetName().c_str() );
+        if( target == "gaming" || target == "replayer" )
+            return profile_.IsValid();
+        if( target == "preparation" )
+            return true;
+    }
     return false;
 }
 

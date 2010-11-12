@@ -12,8 +12,6 @@
 
 #include "Page_ABC.h"
 
-class QGridLayout;
-
 // =============================================================================
 /** @class  ContentPage
     @brief  ContentPage

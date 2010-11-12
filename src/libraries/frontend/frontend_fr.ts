@@ -97,15 +97,15 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     </message>
     <message>
         <source>Feature database (manage geometry information):</source>
-        <translation type="unfinished">Export vers base de données (informations géométriques)</translation>
+        <translation>Export vers base de données (informations géométriques) :</translation>
     </message>
     <message>
         <source>Flat database (manage no geometry information):</source>
-        <translation type="unfinished">Export vers base de données (informations no géométriques)</translation>
+        <translation>Export vers base de données (informations no géométriques) :</translation>
     </message>
     <message>
         <source>Connection URL:</source>
-        <translation type="unfinished"></translation>
+        <translation>URL de connexion :</translation>
     </message>
 </context>
 <context>
@@ -159,6 +159,49 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     <message>
         <source>User interface started</source>
         <translation>Interface utilisateur lancée</translation>
+    </message>
+</context>
+<context>
+    <name>LauncherClient</name>
+    <message>
+        <source>Failed to contact launcher service: %1.</source>
+        <translation>Impossible de joindre le service launcher: %1.</translation>
+    </message>
+    <message>
+        <source>Failed to start exercise: %1.</source>
+        <translation>Impossible de démarrer l&apos;exercice: %1.</translation>
+    </message>
+    <message>
+        <source>Failed to stop exercise: %1.</source>
+        <translation>Impossible d&apos;arrêter l&apos;exercice: %1.</translation>
+    </message>
+    <message>
+        <source>invalid connection</source>
+        <translation>connexion invalide</translation>
+    </message>
+    <message>
+        <source>incompatible protocol version</source>
+        <translation>version du protocol incompatible</translation>
+    </message>
+    <message>
+        <source>exercise already running</source>
+        <translation>l&apos;exercice est déjà démarré</translation>
+    </message>
+    <message>
+        <source>unknown error</source>
+        <translation>erreur inconnue</translation>
+    </message>
+    <message>
+        <source>bad exercise name</source>
+        <translation>nom d&apos;exercice incorrect</translation>
+    </message>
+    <message>
+        <source>invalid checkpoint</source>
+        <translation>point de reprise invalide</translation>
+    </message>
+    <message>
+        <source>exercise not running</source>
+        <translation>l&apos;exercice n&apos;est pas démarré</translation>
     </message>
 </context>
 <context>

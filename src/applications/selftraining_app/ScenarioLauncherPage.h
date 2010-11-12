@@ -10,18 +10,14 @@
 #ifndef __ScenarioLauncherPage_h_
 #define __ScenarioLauncherPage_h_
 
-#include "ContentPage.h"
-#include "DirectoryExerciseLister.h"
+#include "LauncherClientPage.h"
 #include "Profile.h"
 #include <vector>
 
-namespace tools
-{
-    class GeneralConfig;
-}
-
 namespace frontend
 {
+    class Config;
+    class Exercise_ABC;
     class PluginConfig_ABC;
 }
 
@@ -45,7 +41,7 @@ class QTabWidget;
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class ScenarioLauncherPage : public ContentPage
+class ScenarioLauncherPage : public LauncherClientPage
 {
     Q_OBJECT;
 
@@ -53,7 +49,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers
-                                 , const tools::GeneralConfig& config, gui::LinkInterpreter_ABC& interpreter, const QString& title = "" );
+                 , const frontend::Config& config, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter, const QString& title = "" );
     virtual ~ScenarioLauncherPage();
     //@}
 
@@ -61,7 +57,8 @@ private slots:
     //! @name Slots
     //@{
     virtual void OnStart();
-    void OnSelect( const QString& exercise, const Profile& profile );
+    void OnSelect( const frontend::Exercise_ABC& exercise, const Profile& profile );
+    void ClearSelection();
     void OnSelectCheckpoint( const QString& session, const QString& checkpoint );
     //@}
 
@@ -90,17 +87,16 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
-    kernel::Controllers&        controllers_;
-    gui::LinkInterpreter_ABC&   interpreter_;
-    ProgressPage*               progressPage_;
-    ExerciseList*               exercises_;
-    QString                     exercise_;
-    Profile                     profile_;
-    QString                     session_;
-    QString                     checkpoint_;
-    DirectoryExerciseLister     lister_;
-    T_Plugins                   plugins_;
+    const frontend::Config&       config_;
+    kernel::Controllers&          controllers_;
+    gui::LinkInterpreter_ABC&     interpreter_;
+    ProgressPage*                 progressPage_;
+    ExerciseList*                 exercises_;
+    const frontend::Exercise_ABC* exercise_;
+    Profile                       profile_;
+    QString                       session_;
+    QString                       checkpoint_;
+    T_Plugins                     plugins_;
     //@}
 };
 

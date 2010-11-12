@@ -14,11 +14,8 @@
 #include "HomePage.h"
 #include "LinkInterpreter.h"
 #include "MessageDialog.h"
-#include "NetworkExerciseLister.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/Tools.h"
-#include "clients_kernel/Controllers.h"
-#include "frontend/Launcher.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Version.h"
 
@@ -26,28 +23,14 @@
 #include <qwidgetstack.h>
 #include <qpixmap.h>
 #include <qpalette.h>
-#include <qtimer.h>
-
-namespace
-{
-    Config* GetConfig()
-    {
-        Config* config = new Config();
-        config->Parse( qApp->argc(), qApp->argv() );
-        return config;
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( kernel::Controllers& controllers )
+MainWindow::MainWindow( Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
-    , config_( GetConfig() )
     , interpreter_( new LinkInterpreter( this, controllers ) )
-    , exerciseLister_( new NetworkExerciseLister( this, controllers, *config_ ) )
-    , networkTimer_( new QTimer( this ) )
 {
     setCaption( tools::translate( "Application", "SWORD" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
@@ -55,24 +38,9 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
     setMinimumHeight( 600 );
     SetStyle();
     pages_ = new QWidgetStack( this );
-    new HomePage( pages_, *config_, controllers, *exerciseLister_, *interpreter_ );
+    new HomePage( pages_, config, controllers, launcherClient, *interpreter_ );
     setCentralWidget( pages_ );
     CenterWindow();
-
-    try
-    {
-        launcher_.reset( new frontend::Launcher( controllers, *config_ ) );
-        connect( networkTimer_, SIGNAL( timeout() ), SLOT( Update() ) );
-        networkTimer_->start( 100 );
-    }
-    catch( std::exception& e )
-    {
-        MessageDialog message( this, tools::translate( "ProcessDialogs", "Failed to start launcher service" )
-                                   , tools::translate( "ProcessDialogs", "%1.\nYou will not be able to start a multiplayer session. Do you want to start anyway?" ).arg( e.what() )
-                                   , QMessageBox::Yes, QMessageBox::No );
-        if( message.exec() == QMessageBox::No )
-            throw;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -81,8 +49,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers )
 // -----------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
-    networkTimer_->stop();
-    launcher_.reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -137,16 +104,6 @@ void MainWindow::Maximize()
 {
     show();
     setActiveWindow();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::Update
-// Created: SBO 2010-10-01
-// -----------------------------------------------------------------------------
-void MainWindow::Update()
-{
-    if( launcher_.get() )
-        launcher_->Update();
 }
 
 // -----------------------------------------------------------------------------

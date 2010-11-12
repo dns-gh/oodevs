@@ -11,12 +11,8 @@
 #define __ProgressPage_h_
 
 #include "ContentPage.h"
-#include "tools/ElementObserver_ABC.h"
-
-namespace kernel
-{
-    class Controllers;
-}
+#include "frontend/ProcessObserver_ABC.h"
+#include <boost/weak_ptr.hpp>
 
 namespace frontend
 {
@@ -33,21 +29,21 @@ class QTimer;
 // Created: SBO 2008-10-14
 // =============================================================================
 class ProgressPage : public ContentPage
-                   , public tools::Observer_ABC
-                   , public tools::ElementObserver_ABC< boost::shared_ptr< frontend::Process_ABC > >
+                   , public frontend::ProcessObserver_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ProgressPage( QWidgetStack* pages, Page_ABC& previous, const QString& title, kernel::Controllers& controllers );
+             ProgressPage( QWidgetStack* pages, Page_ABC& previous, const QString& title );
     virtual ~ProgressPage();
     //@}
 
     //! @name Operations
     //@{
     void Attach( boost::shared_ptr< frontend::Process_ABC > process );
+    virtual void ProcessStopped();
     //@}
 
 private slots:
@@ -63,17 +59,10 @@ private:
     ProgressPage& operator=( const ProgressPage& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    virtual void NotifyUpdated( const boost::shared_ptr< frontend::Process_ABC >& process );
-    virtual void NotifyDeleted( const boost::shared_ptr< frontend::Process_ABC >& process );
-    //@}
-
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    boost::shared_ptr< frontend::Process_ABC > process_;
+    boost::weak_ptr< frontend::Process_ABC > process_;
     QLabel* label_;
     QProgressBar* progressBar_;
     QTimer* timer_;

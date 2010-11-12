@@ -10,9 +10,10 @@
 #include "selftraining_test_pch.h"
 #include "clients_kernel/Controllers.h"
 #include "frontend/Config.h"
-#include "frontend/Exercises.h"
-#include "frontend/Launcher.h"
+#include "frontend/ConnectionHandler_ABC.h"
+#include "frontend/Exercise_ABC.h"
 #include "frontend/LauncherClient.h"
+#include "launcher_dll/LauncherFacade.h"
 #include "protocol/LauncherSenders.h"
 #include "tools/ElementObserver_ABC.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -30,7 +31,7 @@ namespace
     char* argv = "";
     QApplication dummyApplication( argc, &argv );
 
-    struct Timeout
+    struct Timeout : private boost::noncopyable
     {
         explicit Timeout( unsigned int duration ) : duration_( duration ) { Start(); }
         void Start()
@@ -44,6 +45,24 @@ namespace
         const unsigned int duration_;
         boost::posix_time::ptime start_;
     };
+
+    MOCK_BASE_CLASS( MockConnectionHandler, frontend::ConnectionHandler_ABC )
+    {
+        MOCK_METHOD( OnConnectionSucceeded, 0 );
+        MOCK_METHOD( OnConnectionFailed, 1 );
+        MOCK_METHOD( OnConnectionLost, 1 );
+        MOCK_METHOD( OnError, 1 );
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: FrontendConfigurationMatches
+// Created: SBO 2010-11-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( FrontendConfigurationMatches )
+{
+    frontend::Config frontendConfig;
+    BOOST_REQUIRE_EQUAL( defaultPort, frontendConfig.GetLauncherPort() );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,27 +71,32 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ClientCanConnectToServer )
 {
+    LauncherFacade launcher( qApp->argc(), qApp->argv() );
+    BOOST_REQUIRE( launcher.IsInitialized() );
     kernel::Controllers controllers;
-    frontend::Config config;
-    BOOST_REQUIRE_EQUAL( defaultPort, config.GetLauncherPort() );
-    frontend::Launcher server( controllers, config );
-    frontend::LauncherClient client( controllers.controller_ );
-    client.Connect( defaultHost, defaultPort );
+    frontend::LauncherClient client( frontend::Config(), controllers.controller_ );
+    MockConnectionHandler handler;
+    MOCK_EXPECT( handler, OnConnectionSucceeded ).once();
+    client.Connect( defaultHost, defaultPort, handler );
     Timeout timeout( timeOut );
     while( !client.Connected() && !timeout.Expired() )
+    {
         client.Update();
+        launcher.Update();
+    }
     BOOST_REQUIRE( client.Connected() );
 }
 
 namespace
 {
-    class ExerciseListener : public tools::Observer_ABC
-                           , public tools::ElementObserver_ABC< frontend::Exercises >
+    class ExerciseListener : private boost::noncopyable
+                           , public tools::Observer_ABC
+                           , public tools::ElementObserver_ABC< frontend::Exercise_ABC >
     {
     public:
         explicit ExerciseListener( kernel::Controllers& controllers )
             : controllers_( controllers )
-            , exercises_( 0 )
+            , hasExercise_( false )
         {
             controllers_.Register( *this );
         }
@@ -80,16 +104,16 @@ namespace
         {
             controllers_.Unregister( *this );
         }
-        virtual void NotifyUpdated( const frontend::Exercises& exercises )
+        virtual void NotifyCreated( const frontend::Exercise_ABC& /*exercise*/ )
         {
-            exercises_ = &exercises;
+            hasExercise_ = true;
         }
         bool Check() const
         {
-            return exercises_;
+            return hasExercise_;
         }
         kernel::Controllers& controllers_;
-        const frontend::Exercises* exercises_;
+        bool hasExercise_;
     };
 }
 
@@ -99,15 +123,20 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ClientCanListAvailableExercises )
 {
+    LauncherFacade launcher( qApp->argc(), qApp->argv() );
+    BOOST_REQUIRE( launcher.IsInitialized() );
     kernel::Controllers controllers;
-    frontend::Config config;
-    frontend::Launcher server( controllers, config );
-    frontend::LauncherClient client( controllers.controller_ );
-    client.Connect( defaultHost, defaultPort );
+    frontend::LauncherClient client( frontend::Config(), controllers.controller_ );
+    MockConnectionHandler handler;
+    MOCK_EXPECT( handler, OnConnectionSucceeded ).once();
+    client.Connect( defaultHost, defaultPort, handler );
     Timeout timeout( timeOut );
     {
         while( !client.Connected() && !timeout.Expired() )
+        {
             client.Update();
+            launcher.Update();
+        }
         BOOST_REQUIRE( client.Connected() );
     }
     {
@@ -117,7 +146,7 @@ BOOST_AUTO_TEST_CASE( ClientCanListAvailableExercises )
         while( !listener.Check() && !timeout.Expired() )
         {
             client.Update();
-            server.Update();
+            launcher.Update();
         }
         BOOST_REQUIRE( listener.Check() );
     }

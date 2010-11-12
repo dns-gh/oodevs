@@ -31,10 +31,8 @@ SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe,
     , internal_( new InternalData() )
     , attach_( attach )
     , workingDirectory_( "." )
+    , stopped_( false )
 {
-// $$$$ AGE 2007-10-09:
-//    connect( this, SIGNAL( processExited() ), parent, SLOT( OnExit() ) );
-//    connect( this, SIGNAL( processExited() ), SLOT( deleteLater() ) );
     AddArgument( exe );
 }
 
@@ -45,7 +43,7 @@ SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe,
 SpawnCommand::~SpawnCommand()
 {
     if( attach_ )
-        Stop();
+        StopProcess();
 }
 
 // -----------------------------------------------------------------------------
@@ -112,29 +110,43 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: SpawnCommand::CloseWindows
-// Created: RDS 2008-09-29
+// Name: SpawnCommand::Attach
+// Created: SBO 2010-11-05
 // -----------------------------------------------------------------------------
-void SpawnCommand::CloseWindows()
+void SpawnCommand::Attach( boost::shared_ptr< Process_ABC > process )
 {
-    HANDLE hThreadSnap = INVALID_HANDLE_VALUE;
-    THREADENTRY32 te32;
+    attachment_ = process;
+}
 
-    // Take a snapshot of all running threads
-    hThreadSnap = CreateToolhelp32Snapshot( TH32CS_SNAPTHREAD, internal_->pid_.dwThreadId );
-    if( hThreadSnap == INVALID_HANDLE_VALUE )
-        return;
-    te32.dwSize = sizeof( THREADENTRY32 );
-    if( !Thread32First( hThreadSnap, &te32 ) )
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::StopProcess
+// Created: SBO 2010-11-05
+// -----------------------------------------------------------------------------
+void SpawnCommand::StopProcess()
+{
+    if( internal_.get() && internal_->pid_.hProcess )
     {
-        CloseHandle( hThreadSnap ); // Must clean up the snapshot object!
-        return;
+        HANDLE hThreadSnap = INVALID_HANDLE_VALUE;
+        THREADENTRY32 te32;
+
+        // Take a snapshot of all running threads
+        hThreadSnap = CreateToolhelp32Snapshot( TH32CS_SNAPTHREAD, internal_->pid_.dwThreadId );
+        if( hThreadSnap == INVALID_HANDLE_VALUE )
+            return;
+        te32.dwSize = sizeof( THREADENTRY32 );
+        if( !Thread32First( hThreadSnap, &te32 ) )
+        {
+            CloseHandle( hThreadSnap ); // Must clean up the snapshot object!
+            return;
+        }
+        do
+        {
+            if( te32.th32OwnerProcessID == internal_->pid_.dwProcessId )
+                EnumThreadWindows( te32.th32ThreadID, &::CloseWndProc, 0 );
+        }
+        while( Thread32Next( hThreadSnap, &te32 ) );
+        TerminateProcess( internal_->pid_.hProcess, 1 );
     }
-    do
-    {
-        if( te32.th32OwnerProcessID == internal_->pid_.dwProcessId )
-            EnumThreadWindows( te32.th32ThreadID, &::CloseWndProc, 0 );
-    } while( Thread32Next( hThreadSnap, &te32 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -143,11 +155,7 @@ void SpawnCommand::CloseWindows()
 // -----------------------------------------------------------------------------
 void SpawnCommand::Stop()
 {
-    if( internal_->pid_.hProcess )
-    {
-        CloseWindows();
-        TerminateProcess( internal_->pid_.hProcess, 1 );
-    }
+    stopped_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -156,9 +164,17 @@ void SpawnCommand::Stop()
 // -----------------------------------------------------------------------------
 bool SpawnCommand::Wait()
 {
-    if( internal_->pid_.hProcess )
-        WaitForSingleObject( internal_->pid_.hProcess, INFINITE );
-    return true;
+    if( !stopped_ && internal_->pid_.hProcess )
+    {
+        const DWORD result = WaitForSingleObject( internal_->pid_.hProcess, 100 );
+        if( result != WAIT_OBJECT_0 )
+        {
+            ::Sleep( 100 );
+            return true;
+        }
+    }
+    StopProcess();
+    return false;
 }
 
 // -----------------------------------------------------------------------------

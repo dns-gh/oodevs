@@ -13,6 +13,7 @@
 #include "CheckpointList.h"
 #include "commands.h"
 #include "CreateSession.h"
+#include "Exercise_ABC.h"
 #include "clients_gui/Tools.h"
 #include <qdatetimeedit.h>
 #include <qgroupbox.h>
@@ -40,6 +41,7 @@ namespace
 CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
     : PluginConfig_ABC( parent )
     , config_( config )
+    , exercise_( 0 )
 {
     QVBox* vbox = Style( new QVBox( this ) );
     vbox->setMargin( 5 );
@@ -92,13 +94,13 @@ CheckpointConfigPanel::~CheckpointConfigPanel()
 // Name: CheckpointConfigPanel::Select
 // Created: SBO 2010-04-19
 // -----------------------------------------------------------------------------
-void CheckpointConfigPanel::Select( const QString& exercise )
+void CheckpointConfigPanel::Select( const frontend::Exercise_ABC& exercise )
 {
-    if( exercise_ != exercise )
+    if( exercise_ != &exercise )
     {
-        exercise_ = exercise;
+        exercise_ = &exercise;
         sessions_->clear();
-        sessions_->insertStringList( commands::ListSessionsWithCheckpoint( config_, exercise_.ascii() ) );
+        sessions_->insertStringList( commands::ListSessionsWithCheckpoint( config_, exercise_->GetName().c_str() ) );
         sessions_->setEnabled( sessions_->count() );
         if( !sessions_->count() )
             sessions_->insertItem( tools::translate( "CheckpointConfigPanel", "No session" ) );
@@ -107,12 +109,26 @@ void CheckpointConfigPanel::Select( const QString& exercise )
 }
 
 // -----------------------------------------------------------------------------
+// Name: CheckpointConfigPanel::ClearSelection
+// Created: SBO 2010-10-28
+// -----------------------------------------------------------------------------
+void CheckpointConfigPanel::ClearSelection()
+{
+    exercise_ = 0;
+    sessions_->clear();
+    sessions_->setSelected( 0, true );
+    sessions_->insertItem( tools::translate( "CheckpointConfigPanel", "No session" ) );
+    sessions_->setDisabled( true );
+}
+
+// -----------------------------------------------------------------------------
 // Name: CheckpointConfigPanel::SessionSelected
 // Created: SBO 2010-04-19
 // -----------------------------------------------------------------------------
 void CheckpointConfigPanel::SessionSelected( const QString& session )
 {
-    checkpoints_->Update( exercise_, session );
+    if( exercise_ )
+        checkpoints_->Update( exercise_->GetName().c_str(), session );
 }
 
 // -----------------------------------------------------------------------------

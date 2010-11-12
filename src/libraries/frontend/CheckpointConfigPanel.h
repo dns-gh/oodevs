@@ -25,6 +25,7 @@ namespace tools
 namespace frontend
 {
     class CheckpointList;
+    class Exercise_ABC;
 
 // =============================================================================
 /** @class  CheckpointConfigPanel
@@ -57,7 +58,8 @@ signals:
 public slots:
     //! @name Operations
     //@{
-    void Select( const QString& exercise );
+    void Select( const frontend::Exercise_ABC& exercise );
+    void ClearSelection();
     //@}
 
 private slots:
@@ -84,7 +86,7 @@ private:
     QGroupBox* loadGroup_;
     QListBox* sessions_;
     CheckpointList* checkpoints_;
-    QString exercise_;
+    const frontend::Exercise_ABC* exercise_;
     //@}
 };
 

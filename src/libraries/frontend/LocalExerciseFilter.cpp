@@ -8,37 +8,34 @@
 // *****************************************************************************
 
 #include "frontend_pch.h"
-#include "ClientReplayNetworker.h"
+#include "LocalExerciseFilter.h"
+#include "Exercise_ABC.h"
+
+using namespace frontend;
 
 // -----------------------------------------------------------------------------
-// Name: ClientReplayNetworker constructor
-// Created: HBD 2010-09-13
+// Name: LocalExerciseFilter constructor
+// Created: SBO 2010-10-26
 // -----------------------------------------------------------------------------
-ClientReplayNetworker::ClientReplayNetworker( bool& ready, const std::string& host /*= ""*/, bool retry /*= false*/ )
-    : ClientNetworker( host, retry )
-    , ready_( ready )
-{
-    // NOTHING 
- }
-
-// -----------------------------------------------------------------------------
-// Name: ClientReplayNetworker destructor
-// Created: HBD 2010-09-13
-// -----------------------------------------------------------------------------
-ClientReplayNetworker::~ClientReplayNetworker()
+LocalExerciseFilter::LocalExerciseFilter()
 {
     // NOTHING
 }
 
-
-
 // -----------------------------------------------------------------------------
-// Name: ClientReplayNetworker::ConnectionSucceeded
-// Created: HBD 2010-09-13
+// Name: LocalExerciseFilter destructor
+// Created: SBO 2010-10-26
 // -----------------------------------------------------------------------------
-void ClientReplayNetworker::ConnectionSucceeded( const std::string& /*endpoint*/ )
+LocalExerciseFilter::~LocalExerciseFilter()
 {
-    retry_ = false;
-    Disconnect();
-    ready_ = true;
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocalExerciseFilter::Allows
+// Created: SBO 2010-10-26
+// -----------------------------------------------------------------------------
+bool LocalExerciseFilter::Allows( const Exercise_ABC& exercise ) const
+{
+    return exercise.IsHostedBy( "localhost" ) || exercise.IsHostedBy( "127.0.0.1" );
 }

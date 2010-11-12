@@ -7,25 +7,20 @@
 //
 // *****************************************************************************
 
-#ifndef __ProcessWrapper_h_
-#define __ProcessWrapper_h_
+#ifndef __frontend_ProcessWrapper_h_
+#define __frontend_ProcessWrapper_h_
 
-#include "frontend/Process_ABC.h"
+#include "Process_ABC.h"
 
 namespace boost
 {
     class thread;
 }
 
-namespace kernel
-{
-    class Controller;
-}
-
 namespace frontend
 {
+    class ProcessObserver_ABC;
     class SpawnCommand;
-}
 
 // =============================================================================
 /** @class  ProcessWrapper
@@ -33,12 +28,12 @@ namespace frontend
 */
 // Created: SBO 2008-10-14
 // =============================================================================
-class ProcessWrapper : public frontend::Process_ABC
+class ProcessWrapper : public Process_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ProcessWrapper( kernel::Controller& controller, boost::shared_ptr< frontend::SpawnCommand > process );
+             ProcessWrapper( ProcessObserver_ABC& observer, boost::shared_ptr< SpawnCommand > process );
     virtual ~ProcessWrapper();
     //@}
 
@@ -47,6 +42,8 @@ public:
     virtual unsigned int GetPercentage() const;
     virtual QString GetStatus() const;
     virtual std::string GetStartedExercise() const;
+    void Start();
+    void Stop();
     //@}
 
 private:
@@ -58,16 +55,18 @@ private:
 
     //! @name Helpers
     //@{
-    void ThreadStart();
+    void Run();
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    boost::shared_ptr< frontend::SpawnCommand > process_;
+    ProcessObserver_ABC& observer_;
+    boost::shared_ptr< SpawnCommand > process_;
     std::auto_ptr< boost::thread > thread_;
     //@}
 };
 
-#endif // __ProcessWrapper_h_
+}
+
+#endif // __frontend_ProcessWrapper_h_

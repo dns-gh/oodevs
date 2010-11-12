@@ -15,13 +15,13 @@
 #include "ExportWidget.h"
 #include "ImportWidget.h"
 #include "ProgressPage.h"
-#include "ProcessWrapper.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
-#include "frontend/commands.h"
+#include "frontend/Config.h"
 #include "frontend/EditExercise.h"
+#include "frontend/Exercise_ABC.h"
 #include "frontend/ImportExercise.h"
-#include "tools/GeneralConfig.h"
+#include "frontend/ProcessWrapper.h"
 #include <qtabbar.h>
 #include <qtabwidget.h>
 
@@ -43,12 +43,11 @@ namespace
 // Name: ScenarioEditPage constructor
 // Created: RDS 2008-09-09
 // -----------------------------------------------------------------------------
-ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const tools::GeneralConfig& config, kernel::Controllers& controllers )
-    : ContentPage( pages, tools::translate( "ScenarioEditPage", "Scenario" ), previous, eButtonBack | eButtonEdit )
+ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const frontend::Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
+    : LauncherClientPage( pages, tools::translate( "ScenarioEditPage", "Scenario" ), previous, eButtonBack | eButtonEdit, launcher )
     , config_( config )
     , controllers_( controllers )
-    , lister_( config_, "" )
-    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioEditPage", "Editing exercise" ), controllers ) )
+    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioEditPage", "Editing exercise" ) ) )
 {
     QVBox* box = new QVBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -57,8 +56,9 @@ ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, con
         mainTabs_ = new TabWidget( box );
         connect( mainTabs_, SIGNAL( currentChanged( QWidget* ) ), this, SLOT( UpdateEditButton( QWidget* ) ) );
         {
-            exercises_ = new ExerciseList( mainTabs_, config_, lister_, "", true, false );
-            connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( OnSelect( const QString&, const Profile& ) ) );
+            exercises_ = new ExerciseList( mainTabs_, config_, controllers, "", true, false );
+            connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC&, const Profile& ) ) );
+            connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
             mainTabs_->addTab( exercises_, tools::translate( "ScenarioEditPage", "Edit" ) );
         }
         {
@@ -102,6 +102,8 @@ bool ScenarioEditPage::ExerciceExists( const QString& string )
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::Update()
 {
+    exercises_->Clear();
+    Connect( "localhost", config_.GetLauncherPort() );
     createExerciceWidget_->Update();
     exercises_->Update();
     exportWidget_->Update();
@@ -116,10 +118,10 @@ void ScenarioEditPage::OnEdit()
     switch( mainTabs_->currentPageIndex() )
     {
     case 0: //edit
-        if( !exercise_.isEmpty() )
+        if( exercise_ )
         {
-            exercises_->ChangeExerciceParameters( exercise_.ascii() );
-            Edit( exercise_ );
+            exercises_->ChangeExerciceParameters( exercise_->GetName() );
+            Edit( exercise_->GetName().c_str() );
         }
         break;
     case 1: // create
@@ -143,8 +145,9 @@ void ScenarioEditPage::OnEdit()
 void ScenarioEditPage::Edit( const QString& exercise )
 {
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, exercise, true ) );
-    boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
+    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
     progressPage_->Attach( process );
+    process->Start();
     progressPage_->show();
 }
 
@@ -152,9 +155,19 @@ void ScenarioEditPage::Edit( const QString& exercise )
 // Name: ScenarioEditPage::OnSelect
 // Created: SBO 2010-04-15
 // -----------------------------------------------------------------------------
-void ScenarioEditPage::OnSelect( const QString& exercise, const Profile& )
+void ScenarioEditPage::OnSelect( const frontend::Exercise_ABC& exercise, const Profile& )
 {
-    exercise_ = exercise;
+    exercise_ = &exercise;
+    UpdateEditButton();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::ClearSelection
+// Created: SBO 2010-10-28
+// -----------------------------------------------------------------------------
+void ScenarioEditPage::ClearSelection()
+{
+    exercise_ = 0;
     UpdateEditButton();
 }
 
@@ -186,7 +199,7 @@ void ScenarioEditPage::UpdateEditButton()
     switch( mainTabs_->currentPageIndex() )
     {
     case 0: //edit
-        enable = !exercise_.isEmpty();
+        enable = exercise_ != 0;
         SetButtonText( eButtonEdit, tools::translate( "Page_ABC", "Edit" ) );
         break;
     case 1: // create
@@ -225,8 +238,9 @@ void ScenarioEditPage::UpdateEditButton( QWidget* )
 void ScenarioEditPage::LaunchScenarioImport( const QString& inputScenario, const QString& outputScenario )
 {
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::ImportExercise( config_, inputScenario, outputScenario, true ) );
-    boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
+    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
     progressPage_->Attach( process );
+    process->Start();
     progressPage_->show();
 }
 
@@ -238,7 +252,8 @@ void ScenarioEditPage::LaunchScenarioImport( const QString& inputScenario, const
 void ScenarioEditPage::LaunchPreparation( const QString& outputScenario )
 {
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, outputScenario, true ) );
-    boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
+    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
     progressPage_->Attach( process );
+    process->Start();
     progressPage_->show();
 }

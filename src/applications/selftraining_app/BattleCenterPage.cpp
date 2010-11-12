@@ -12,17 +12,19 @@
 #include "BattleCenterLauncherPage.h"
 #include "BattleCenterJoinPage.h"
 #include "Config.h"
+#include "RemoteControlPage.h"
 #include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: BattleCenterPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-BattleCenterPage::BattleCenterPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister, gui::LinkInterpreter_ABC& interpreter )
+BattleCenterPage::BattleCenterPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
 {
-    AddLink( tools::translate( "BattleCenterPage", "Start" ), *new BattleCenterLauncherPage( pages, *this, controllers, config, interpreter ), tools::translate( "ScenarioPage", "Start multiplayer training session" ) );
-    AddLink( tools::translate( "BattleCenterPage", "Join" ),  *new BattleCenterJoinPage( pages, *this, controllers, config, lister ), tools::translate( "ScenarioPage", "Join multiplayer training session" ) );
+    AddLink( tools::translate( "BattleCenterPage", "Start" ), *new BattleCenterLauncherPage( pages, *this, controllers, config, launcher, interpreter ), tools::translate( "ScenarioPage", "Start multiplayer training session" ) );
+    AddLink( tools::translate( "BattleCenterPage", "Join" ),  *new BattleCenterJoinPage( pages, *this, controllers, config, launcher ), tools::translate( "ScenarioPage", "Join multiplayer training session" ) );
+    AddLink( tools::translate( "BattleCenterPage", "Remote" ),  *new RemoteControlPage( pages, *this, controllers, config, launcher ), tools::translate( "ScenarioPage", "Control remote training sessions" ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -37,6 +37,14 @@
         <source>Unhandled error</source>
         <translation>Erreur inconnue</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Launcher service cannot be started: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AuthoringPage</name>
@@ -84,16 +92,16 @@
         <translation>Hôte: </translation>
     </message>
     <message>
-        <source>localhost</source>
-        <translation>localhost</translation>
-    </message>
-    <message>
         <source>Port:</source>
         <translation>Port: </translation>
     </message>
     <message>
         <source>Update</source>
         <translation>Mise à jour</translation>
+    </message>
+    <message>
+        <source>127.0.0.1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -112,6 +120,10 @@
     <message>
         <source>Join</source>
         <translation>Rejoindre</translation>
+    </message>
+    <message>
+        <source>Remote</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -405,15 +417,6 @@
         <source>Running training session detected. Close ?</source>
         <translation>Des sessions d&apos;entraînement sont en cours. Voulez-vous les arrêter ?</translation>
     </message>
-    <message>
-        <source>Failed to start launcher service</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1.
-You will not be able to start a multiplayer session. Do you want to start anyway?</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QuitPage</name>
@@ -548,6 +551,10 @@ You will not be able to start a multiplayer session. Do you want to start anyway
     <message>
         <source>Start multiplayer training session</source>
         <translation>Démarrer une session d&apos;entraînement multijoueur</translation>
+    </message>
+    <message>
+        <source>Control remote training sessions</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

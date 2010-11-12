@@ -7,40 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __Launcher_ABC_h_
-#define __Launcher_ABC_h_
+#ifndef __ExerciseIdentifierFactory_ABC_h_
+#define __ExerciseIdentifierFactory_ABC_h_
 
-namespace MsgsAdminToLauncher
-{
-    class MsgAdminToLauncher;
-}
+#include <string>
 
 namespace frontend
 {
 
 // =============================================================================
-/** @class  Launcher_ABC
-    @brief  Launcher_ABC
+/** @class  ExerciseIdentifierFactory_ABC
+    @brief  ExerciseIdentifierFactory_ABC
 */
-// Created: SBO 2010-09-29
+// Created: SBO 2010-10-28
 // =============================================================================
-class Launcher_ABC
+class ExerciseIdentifierFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Launcher_ABC() {}
-    virtual ~Launcher_ABC() {}
+             ExerciseIdentifierFactory_ABC() {}
+    virtual ~ExerciseIdentifierFactory_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update() = 0;
-    virtual void HandleAdminToLauncher( const std::string& endpoint, const MsgsAdminToLauncher::MsgAdminToLauncher& message ) = 0;
+    virtual std::string CreateIdentifier( const std::string& exercise ) const = 0;
     //@}
 };
 
 }
 
-#endif // __Launcher_ABC_h_
+#endif // __ExerciseIdentifierFactory_ABC_h_

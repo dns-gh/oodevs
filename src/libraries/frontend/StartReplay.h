@@ -14,6 +14,7 @@
 
 namespace frontend
 {
+    class ConfigurationManipulator;
 
 // =============================================================================
 /** @class  StartReplay
@@ -32,20 +33,13 @@ public:
 
     //! @name operations
     //@{
-    virtual bool Wait() ;
+    virtual void Start();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    StartReplay( const StartReplay& );            //!< Copy constructor
-    StartReplay& operator=( const StartReplay& ); //!< Assignment operator
-    //@}
-
     //! @name data
     //@{
-    std::string portArg_;
-    unsigned int port_;
+    std::auto_ptr< ConfigurationManipulator > configManipulator_;
     //@}
 
 };

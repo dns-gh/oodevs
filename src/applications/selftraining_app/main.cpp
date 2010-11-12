@@ -27,14 +27,19 @@ int main( int argc, char* argv[] )
             .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).ascii() );
     QApplication::setStyle( "windows" );
     QApplication::setDesktopSettingsAware( false );
+    Application app( argc, argv );
     try
     {
-        Application app( argc, argv );
+        app.Initialize();
         app.exec();
+    }
+    catch( std::runtime_error& e )
+    {
+        QMessageBox::critical( 0, tools::translate( "Application", "Unhandled error" ), e.what() );
     }
     catch( std::exception& e )
     {
-        QMessageBox::critical( 0, tools::translate( "Application", "Unhandled error" ), e.what() );
+        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), e.what() );
     }
     return 0;
 }

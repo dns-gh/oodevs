@@ -43,8 +43,8 @@ private:
 private:
     //! @name Member data
     //@{
-    DispatcherFacade dispatcher_;
     bool running_;
+    DispatcherFacade dispatcher_;
     //@}
 };
 

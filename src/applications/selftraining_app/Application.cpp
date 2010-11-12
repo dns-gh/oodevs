@@ -9,16 +9,19 @@
 
 #include "selftraining_app_pch.h"
 #include "Application.h"
+#include "moc_Application.cpp"
+#include "Config.h"
+#include "Launcher.h"
 #include "MainWindow.h"
 #include "MessageDialog.h"
 #include "SessionTray.h"
-#include "TrayIcon.h"
-#include "TrayMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
+#include "frontend/LauncherClient.h"
 #include "frontend/ProcessList.h"
 #include <qsettings.h>
 #include <qtextcodec.h>
+#include <qtimer.h>
 
 namespace
 {
@@ -28,6 +31,12 @@ namespace
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() );
     }
+    std::auto_ptr< Config > GetConfig()
+    {
+        std::auto_ptr< Config > config( new Config() );
+        config->Parse( qApp->argc(), qApp->argv() );
+        return config;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -36,13 +45,46 @@ namespace
 // -----------------------------------------------------------------------------
 Application::Application( int argc, char** argv )
     : QApplication( argc, argv )
+    , config_( GetConfig() )
     , controllers_( new kernel::Controllers() )
+    , launcher_( new Launcher( argc, argv ) )
+    , launcherClient_( new frontend::LauncherClient( *config_, controllers_->controller_ ) )
+    , mainWindow_( 0 )
+    , timer_( new QTimer( this ) )
 {
     CreateTranslators();
+}
 
-    mainWindow_ = new MainWindow( *controllers_ );
-    mainWindow_->show();
+// -----------------------------------------------------------------------------
+// Name: Application destructor
+// Created: SBO 2008-02-21
+// -----------------------------------------------------------------------------
+Application::~Application()
+{
+    launcher_.reset();
+    timer_->stop();
+    launcherClient_.reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::Initialize
+// Created: SBO 2010-10-22
+// -----------------------------------------------------------------------------
+void Application::Initialize()
+{
+    if( ! launcher_->IsInitialized() )
+    {
+        QMessageBox::critical( mainWindow_, tools::translate( "Application", "Error" ), tools::translate( "Application", "Launcher service cannot be started: %1."  ).arg( launcher_->GetLastError().c_str() ) );
+        closeAllWindows();
+    }
+    
+    mainWindow_ = new MainWindow( *config_, *controllers_, *launcherClient_ );
     setMainWidget( mainWindow_ );
+    mainWindow_->show();
+
+    connect( this, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
+    connect( timer_, SIGNAL( timeout() ), SLOT( OnTimer() ) );
+    timer_->start( 10 );
 
     // check for previous instances running
     frontend::ProcessList processes;
@@ -73,15 +115,6 @@ Application::Application( int argc, char** argv )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Application destructor
-// Created: SBO 2008-02-21
-// -----------------------------------------------------------------------------
-Application::~Application()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: Application::CreateTranslators
 // Created: JSR 2010-06-11
 // -----------------------------------------------------------------------------
@@ -106,4 +139,13 @@ void Application::AddTranslator( const char* t, const QString& locale )
     const QString file = QString( "%1_%2" ).arg( t ).arg( locale );
     if( trans->load( file, "." ) || trans->load( file, "resources/locales" ) )
        installTranslator( trans.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::OnTimer
+// Created: SBO 2010-11-04
+// -----------------------------------------------------------------------------
+void Application::OnTimer()
+{
+    launcherClient_->Update();
 }

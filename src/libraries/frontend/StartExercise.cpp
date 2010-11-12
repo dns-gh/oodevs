@@ -9,13 +9,10 @@
 
 #include "frontend_pch.h"
 #include "StartExercise.h"
-#include "ExerciseListener.h"
 #include "ConfigurationManipulator.h"
+#include "SimulationMonitor.h"
 #include "clients_gui/Tools.h"
-
 #include <boost/thread.hpp>
-#include <windows.h>
-#include <winbase.h>
 
 using namespace frontend;
 
@@ -58,6 +55,7 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
     , exercise_ ( exercise.ascii() )
     , session_ ( session.ascii() )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
+    , percentage_( 0 )
 {
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) )
     {
@@ -78,6 +76,7 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
     , exercise_ ( exercise.ascii() )
     , session_ ( session.ascii() )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
+    , percentage_( 0 )
 {
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) )
     {
@@ -110,25 +109,19 @@ void StartExercise::Start()
     if( dispatcher_.get() )
     {
         dispatcher_->Start();
-        Sleep( 3000 );
+        boost::this_thread::sleep( boost::posix_time::milliseconds( 3000 ) );
     }
     SpawnCommand::Start();
-}
-
-// -----------------------------------------------------------------------------
-// Name: StartExercise::Start
-// Created: RDS 2008-08-28
-// -----------------------------------------------------------------------------
-bool StartExercise::Wait()
-{
-    // if possible (i.e the session use a logger), wait for the simulation to start ticking
-    if( configManipulator_->GetValue< bool >( "session/config/simulation/debug/@networklogger" ) )
+    boost::this_thread::sleep( boost::posix_time::milliseconds( 1000 ) );
+    const std::string host = configManipulator_->GetValue< std::string >( "session/config/gaming/network/@server" );
+    SimulationMonitor monitor( host );
+    while( !monitor.Connected() && !monitor.TimedOut() )
     {
-        unsigned int nPort = configManipulator_->GetValue< unsigned int >( "session/config/simulation/debug/@networkloggerport" );
-        listener_.reset( new ExerciseListener( "localhost", nPort ) );
-        return listener_->Wait();
+        monitor.Update();
+        percentage_ = std::min< unsigned int >( percentage_ + 1, 100 );
+        boost::this_thread::sleep( boost::posix_time::milliseconds( 100 ) );
     }
-    return true;
+    percentage_ = 100;
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +130,7 @@ bool StartExercise::Wait()
 // -----------------------------------------------------------------------------
 unsigned int StartExercise::GetPercentage() const
 {
-    return listener_.get() ? listener_->GetPercentage() : 0;
+    return percentage_;
 }
 
 // -----------------------------------------------------------------------------
@@ -157,5 +150,5 @@ QString StartExercise::GetStatus() const
 // -----------------------------------------------------------------------------
 std::string StartExercise::GetStartedExercise() const
 {
-    return ( GetPercentage() == 100 ) ? exercise_ : std::string();
+    return GetPercentage() == 100 ? exercise_ : std::string();
 }

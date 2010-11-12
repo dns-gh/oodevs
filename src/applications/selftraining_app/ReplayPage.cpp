@@ -11,14 +11,13 @@
 #include "ReplayPage.h"
 #include "moc_ReplayPage.cpp"
 #include "ExerciseList.h"
-#include "DirectoryExerciseLister.h"
 #include "CompositeProcessWrapper.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "SessionList.h"
-#include "frontend/commands.h"
-#include "frontend/CommandLineTools.h"
+#include "frontend/Config.h"
 #include "frontend/CreateSession.h"
+#include "frontend/Exercise_ABC.h"
 #include "frontend/StartReplay.h"
 #include "frontend/JoinAnalysis.h"
 #include "clients_gui/Tools.h"
@@ -28,12 +27,11 @@
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config )
-    : ContentPage( pages, tools::translate( "ReplayPage", "Replay" ), previous, eButtonBack | eButtonStart )
+ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, const frontend::Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
+    : LauncherClientPage( pages, tools::translate( "ReplayPage", "Replay" ), previous, eButtonBack | eButtonStart, launcher )
     , config_( config )
     , controllers_( controllers )
-    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ReplayPage", "Starting replay session" ), controllers ) )
-    , lister_( new DirectoryExerciseLister( config ) )
+    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ReplayPage", "Starting replay session" ) ) )
 {
     QVBox* mainBox = new QVBox( this );
     {
@@ -42,12 +40,13 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Control
         hbox->setMargin( 10 );
         hbox->setSpacing( 10 );
         {
-            exercises_ = new ExerciseList( hbox, config, *lister_, "", false, true, false );
-            connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( OnSelectExercise( const QString&, const Profile& ) ) );
+            exercises_ = new ExerciseList( hbox, config, controllers, "", false, true, false );
+            connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( OnSelectExercise( const frontend::Exercise_ABC&, const Profile& ) ) );
+            connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
         }
         {
             sessions_ = new SessionList( hbox, config );
-            connect( sessions_, SIGNAL( Select( const QString& ) ), this, SLOT( OnSelectSession( const QString& ) ) );
+            connect( sessions_, SIGNAL( Select( const QString& ) ), SLOT( OnSelectSession( const QString& ) ) );
         }
     }
     EnableButton( eButtonStart, false );
@@ -69,6 +68,8 @@ ReplayPage::~ReplayPage()
 // -----------------------------------------------------------------------------
 void ReplayPage::Update()
 {
+    exercises_->Clear();
+    Connect( "localhost", config_.GetLauncherPort() );
     exercises_->Update();
 }
 
@@ -76,16 +77,18 @@ void ReplayPage::Update()
 // Name: ReplayPage::StartExercise
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-void ReplayPage::StartExercise( const QString& exercise )
+void ReplayPage::StartExercise()
 {
-    if( exercise.isEmpty() || session_.isEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( this ) )
+    if( !exercise_ || session_.isEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( this ) )
         return;
-    const unsigned int port = lister_->GetPort( exercise );
-    ConfigureSession( exercise, session_ );
-    boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exercise, session_, port, true ) );
-    boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exercise, session_, profile_.GetLogin(), port, true ) );
-    boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, replay, client ) );
+    const QString exerciseName = exercise_->GetName().c_str();
+    const unsigned int port = exercise_->GetPort();
+    ConfigureSession( exerciseName, session_ );
+    boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exerciseName, session_, port, true ) );
+    boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exerciseName, session_, profile_.GetLogin(), port, true ) );
+    boost::shared_ptr< CompositeProcessWrapper >  process( new CompositeProcessWrapper( *progressPage_, replay, client ) );
     progressPage_->Attach( process );
+    process->Start();
     progressPage_->show();
 }
 
@@ -95,24 +98,36 @@ void ReplayPage::StartExercise( const QString& exercise )
 // -----------------------------------------------------------------------------
 void ReplayPage::OnStart()
 {
-    if( exercise_ != "" )
-        StartExercise( exercise_ ) ;
+    StartExercise();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReplayPage::OnSelectExercise
 // Created: RDS 2008-09-02
 // -----------------------------------------------------------------------------
-void ReplayPage::OnSelectExercise( const QString& exercise, const Profile& profile )
+void ReplayPage::OnSelectExercise( const frontend::Exercise_ABC& exercise, const Profile& profile )
 {
-    if( exercise_ != exercise )
+    if( exercise_ != &exercise )
     {
         session_ = "";
-        sessions_->Update( exercise );
+        sessions_->Update( exercise.GetName().c_str() );
     }
-    exercise_ = exercise;
+    exercise_ = &exercise;
     profile_ = profile;
-    EnableButton( eButtonStart, !exercise.isEmpty() && !session_.isEmpty() && profile_.IsValid() );
+    EnableButton( eButtonStart, !session_.isEmpty() && profile_.IsValid() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayPage::ClearSelection
+// Created: SBO 2010-10-28
+// -----------------------------------------------------------------------------
+void ReplayPage::ClearSelection()
+{
+    exercise_ = 0;
+    profile_ = Profile::Invalid;
+    session_ = "";
+    sessions_->Update( "" );
+    EnableButton( eButtonStart, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +137,7 @@ void ReplayPage::OnSelectExercise( const QString& exercise, const Profile& profi
 void ReplayPage::OnSelectSession( const QString& session )
 {
     session_ = session;
-    EnableButton( eButtonStart, !exercise_.isEmpty() && !session_.isEmpty() && profile_.IsValid() );
+    EnableButton( eButtonStart, exercise_ && !session_.isEmpty() && profile_.IsValid() );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,11 +147,6 @@ void ReplayPage::OnSelectSession( const QString& session )
 void ReplayPage::ConfigureSession( const QString& exercise, const QString& session )
 {
     frontend::CreateSession action( config_, exercise.ascii(), session.ascii() );
-    action.SetDefaultValues(); // $$$$ SBO 2008-10-16: erases specific parameters
-    {
-        // force the networklogger to be used
-        action.SetOption( "session/config/simulation/debug/@networklogger"     , true );
-        action.SetOption( "session/config/simulation/debug/@networkloggerport" , 20000 );
-    }
+    action.SetDefaultValues(); // reset specific parameters
     action.Commit();
 }

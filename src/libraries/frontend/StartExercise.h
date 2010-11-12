@@ -14,7 +14,6 @@
 
 namespace frontend
 {
-    class ExerciseListener;
     class ConfigurationManipulator;
 
 // =============================================================================
@@ -36,7 +35,6 @@ public:
     //! @name Operations
     //@{
     virtual void Start();
-    virtual bool Wait();
     virtual unsigned int GetPercentage() const;
     virtual std::string GetStartedExercise() const;
     //@}
@@ -59,8 +57,8 @@ private:
     std::string exercise_;
     std::string session_ ;
     std::auto_ptr< SpawnCommand > dispatcher_;
-    std::auto_ptr< ExerciseListener > listener_;
     std::auto_ptr< ConfigurationManipulator > configManipulator_;
+    unsigned int percentage_;
     //@}
 };
 

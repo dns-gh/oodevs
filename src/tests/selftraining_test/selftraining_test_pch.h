@@ -16,6 +16,8 @@
 #define BOOST_LIB_NAME boost_unit_test_framework
 #include <boost/config/auto_link.hpp>
 
+#include <turtle/mock.hpp>
+#pragma warning( disable : 4505 )
 #define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
 
 std::string BOOST_RESOLVE( const std::string& filename );

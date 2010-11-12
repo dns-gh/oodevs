@@ -18,11 +18,11 @@
 // Name: SelfTrainingPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-SelfTrainingPage::SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers, NetworkExerciseLister& lister, gui::LinkInterpreter_ABC& interpreter )
+SelfTrainingPage::SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
 {
-    AddLink( tools::translate( "SelfTrainingPage", "Single" ), *new ScenarioLauncherPage( pages, *this, controllers, config, interpreter ), tools::translate( "SelfTrainingPage", "Start a single training session" ) );
-    AddLink( tools::translate( "SelfTrainingPage", "Multiplayer" ), *new BattleCenterPage( pages, *this, config, controllers, lister, interpreter ), tools::translate( "SelfTrainingPage", "Start or join a multiplayer training session" ) );
+    AddLink( tools::translate( "SelfTrainingPage", "Single" ), *new ScenarioLauncherPage( pages, *this, controllers, config, launcher, interpreter ), tools::translate( "SelfTrainingPage", "Start a single training session" ) );
+    AddLink( tools::translate( "SelfTrainingPage", "Multiplayer" ), *new BattleCenterPage( pages, *this, config, controllers, launcher, interpreter ), tools::translate( "SelfTrainingPage", "Start or join a multiplayer training session" ) );
 }
 
 // -----------------------------------------------------------------------------

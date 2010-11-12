@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "frontend_pch.h"
+#include "Launcher_dll_pch.h"
 #include "Launcher.h"
 #include "Config.h"
 #include "LauncherPublisher.h"
@@ -16,15 +16,16 @@
 #include "protocol/LauncherSenders.h"
 #include "protocol/ProtocolVersionChecker.h"
 
-using namespace frontend;
+using namespace launcher;
 
 // -----------------------------------------------------------------------------
 // Name: Launcher constructor
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-Launcher::Launcher( kernel::Controllers& controllers, const frontend::Config& config )
-    : server_( new LauncherService( config.GetLauncherPort() ) )
-    , processes_( new ProcessService( controllers, config ) )
+Launcher::Launcher( const Config& config )
+    : config_( config )
+    , server_( new LauncherService( config.GetLauncherPort() ) )
+    , processes_( new ProcessService( config ) )
 {
     server_->RegisterMessage( *this, &Launcher::HandleAdminToLauncher );
 }
@@ -35,7 +36,7 @@ Launcher::Launcher( kernel::Controllers& controllers, const frontend::Config& co
 // -----------------------------------------------------------------------------
 Launcher::~Launcher()
 {
-    // NOTHING
+    server_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +45,8 @@ Launcher::~Launcher()
 // -----------------------------------------------------------------------------
 void Launcher::Update()
 {
-    server_->Update();
+    if( server_.get() )
+        server_->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -54,16 +56,20 @@ void Launcher::Update()
 void Launcher::HandleAdminToLauncher( const std::string& endpoint, const MsgsAdminToLauncher::MsgAdminToLauncher& message )
 {
     if( message.message().has_connection_request() )
-        HandleConnectionRequest( endpoint, message.message().connection_request() );
+        HandleRequest( endpoint, message.message().connection_request() );
     else if( message.message().has_exercise_list_request() )
-        HandleExerciseListRequest( endpoint, message.message().exercise_list_request() );
+        HandleRequest( endpoint, message.message().exercise_list_request() );
+    else if( message.message().has_control_start() )
+        HandleRequest( endpoint, message.message().control_start() );
+    else if( message.message().has_control_stop() )
+        HandleRequest( endpoint, message.message().control_stop() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Launcher::HandleConnectionRequest
+// Name: Launcher::HandleRequest
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-void Launcher::HandleConnectionRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgConnectionRequest& message )
+void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgConnectionRequest& message )
 {
     launcher::ConnectionAck response;
     const bool valid = ProtocolVersionChecker( message.client_version() ).CheckCompatibility();
@@ -78,13 +84,41 @@ void Launcher::HandleConnectionRequest( const std::string& endpoint, const MsgsA
 }
 
 // -----------------------------------------------------------------------------
-// Name: Launcher::HandleExerciseListRequest
+// Name: Launcher::HandleRequest
 // Created: SBO 2010-09-30
 // -----------------------------------------------------------------------------
-void Launcher::HandleExerciseListRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgExercicesListRequest& message )
+void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgExercicesListRequest& /*message*/ )
 {
     launcher::ExercicesListResponse response;
     response().set_error_code( MsgsLauncherToAdmin::MsgExercicesListResponse::success );
     processes_->SendExerciseList( response() );
+    response.Send( server_->ResolveClient( endpoint ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Launcher::HandleRequest
+// Created: SBO 2010-10-06
+// -----------------------------------------------------------------------------
+void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgControlStart& message )
+{
+    launcher::ControlStartAck response;
+    response().mutable_exercise()->set_name( message.exercise().name() );
+    response().mutable_exercise()->set_port( message.exercise().port() );
+    response().set_error_code( processes_->StartExercise( message ) );
+    response().mutable_exercise()->set_running( response().error_code() == MsgsLauncherToAdmin::MsgControlStartAck::success );
+    response.Send( server_->ResolveClient( endpoint ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Launcher::HandleRequest
+// Created: SBO 2010-10-28
+// -----------------------------------------------------------------------------
+void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgControlStop& message )
+{
+    launcher::ControlStopAck response;
+    response().mutable_exercise()->set_name( message.exercise().name() );
+    response().mutable_exercise()->set_port( message.exercise().port() );
+    response().set_error_code( processes_->StopExercise( message ) );
+    response().mutable_exercise()->set_running( false );
     response.Send( server_->ResolveClient( endpoint ) );
 }

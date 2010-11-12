@@ -19,9 +19,8 @@
 // Name: ProgressPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-ProgressPage::ProgressPage( QWidgetStack* pages, Page_ABC& previous, const QString& title, kernel::Controllers& controllers )
+ProgressPage::ProgressPage( QWidgetStack* pages, Page_ABC& previous, const QString& title )
     : ContentPage( pages, title, previous, 0 )
-    , controllers_( controllers )
 {
     QVBox* box = new QVBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -35,7 +34,6 @@ ProgressPage::ProgressPage( QWidgetStack* pages, Page_ABC& previous, const QStri
     AddContent( box );
     timer_ = new QTimer( this );
     connect( timer_, SIGNAL( timeout() ), this, SLOT( UpdateProgress() ) );
-    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +44,6 @@ ProgressPage::~ProgressPage()
 {
     timer_->stop();
     process_.reset();
-    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,9 +63,19 @@ void ProgressPage::Attach( boost::shared_ptr< frontend::Process_ABC > process )
 // -----------------------------------------------------------------------------
 void ProgressPage::UpdateProgress()
 {
-    const unsigned int percentage = process_.get() ? process_->GetPercentage() : 0;
+    unsigned int percentage = 0;
+    std::string message = "";
+    if( ! process_.expired() )
+    {
+        boost::shared_ptr< frontend::Process_ABC > weak( process_ );
+        if( weak.get() )
+        {
+            percentage = weak->GetPercentage();
+            message = weak->GetStatus();
+        }
+    }
+    label_->setText( message.c_str() );
     progressBar_->setProgress( percentage );
-    label_->setText( process_.get() ? process_->GetStatus() : "" );
     setCursor( percentage < 100 ? Qt::WaitCursor : Qt::ArrowCursor );
     if( percentage == 100 )
     {
@@ -78,27 +85,14 @@ void ProgressPage::UpdateProgress()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProgressPage::NotifyUpdated
-// Created: SBO 2008-10-14
+// Name: ProgressPage::ProcessStopped
+// Created: SBO 2010-11-10
 // -----------------------------------------------------------------------------
-void ProgressPage::NotifyUpdated( const boost::shared_ptr< frontend::Process_ABC >& process )
+void ProgressPage::ProcessStopped()
 {
-    if( process.get() == process_.get() )
-        UpdateProgress();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProgressPage::NotifyDeleted
-// Created: SBO 2008-10-15
-// -----------------------------------------------------------------------------
-void ProgressPage::NotifyDeleted( const boost::shared_ptr< frontend::Process_ABC >& process )
-{
-    if( process.get() == process_.get() )
-    {
-        timer_->stop();
-        process_.reset();
-        qApp->mainWidget()->show();
-        qApp->mainWidget()->setActiveWindow();
-        Previous();
-    }
+    timer_->stop();
+    process_.reset();
+    qApp->mainWidget()->show();
+    qApp->mainWidget()->setActiveWindow();
+    Previous();
 }

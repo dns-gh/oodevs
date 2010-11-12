@@ -7,44 +7,38 @@
 //
 // *****************************************************************************
 
-#include "frontend_pch.h"
-#include "Exercises.h"
-#include "Exercise.h"
-#include "clients_kernel/Controller.h"
-#include "protocol/Launcher.h"
+#include "Launcher_dll_pch.h"
+#include "LauncherPublisher.h"
+#include "protocol/LauncherSenders.h"
+#include "tools/MessageSender_ABC.h"
 
-using namespace frontend;
+using namespace launcher;
 
 // -----------------------------------------------------------------------------
-// Name: Exercises constructor
-// Created: SBO 2010-10-01
+// Name: LauncherPublisher constructor
+// Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-Exercises::Exercises( kernel::Controller& controller )
-    : controller_( controller )
+LauncherPublisher::LauncherPublisher( tools::MessageSender_ABC& sender, const std::string& endpoint )
+    : sender_( sender )
+    , endpoint_( endpoint )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Exercises destructor
-// Created: SBO 2010-10-01
+// Name: LauncherPublisher destructor
+// Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-Exercises::~Exercises()
+LauncherPublisher::~LauncherPublisher()
 {
-    DeleteAll();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Exercises::Update
-// Created: SBO 2010-10-01
+// Name: LauncherPublisher::Send
+// Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-void Exercises::Update( const MsgsLauncherToAdmin::MsgExercicesListResponse& message )
+void LauncherPublisher::Send( const MsgsLauncherToAdmin::MsgLauncherToAdmin& message )
 {
-    DeleteAll();
-    for( int i = 0; i < message.exercise().size(); ++i )
-    {
-        Exercise* exercise = new Exercise( message.exercise( i ) );
-        Register( exercise->GetName(), *exercise );
-    }
-    controller_.Update( *this );
+    sender_.Send( endpoint_, message );
 }

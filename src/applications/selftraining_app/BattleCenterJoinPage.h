@@ -10,8 +10,14 @@
 #ifndef __BattleCenterJoinPage_h_
 #define __BattleCenterJoinPage_h_
 
-#include "ContentPage.h"
+#include "LauncherClientPage.h"
 #include "Profile.h"
+
+namespace frontend
+{
+    class Exercise_ABC;
+    class ExerciseFilter_ABC;
+}
 
 namespace kernel
 {
@@ -20,7 +26,6 @@ namespace kernel
 
 class Config;
 class ExerciseList;
-class NetworkExerciseLister;
 class ProgressPage;
 class QSpinBox;
 
@@ -30,14 +35,14 @@ class QSpinBox;
 */
 // Created: SBO 2008-10-14
 // =============================================================================
-class BattleCenterJoinPage : public ContentPage
+class BattleCenterJoinPage : public LauncherClientPage
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, NetworkExerciseLister& lister );
+             BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, frontend::LauncherClient& launcher );
     virtual ~BattleCenterJoinPage();
     //@}
 
@@ -45,7 +50,8 @@ private slots:
     //! @name Slots
     //@{
     virtual void OnJoin();
-    void SelectExercise( const QString& exercise, const Profile& profile );
+    void SelectExercise( const frontend::Exercise_ABC& exercise, const Profile& profile );
+    void ClearSelection();
     void UpdateExerciseList();
     //@}
 
@@ -56,18 +62,23 @@ private:
     BattleCenterJoinPage& operator=( const BattleCenterJoinPage& ); //!< Assignment operator
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Update();
+    //@}
+
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
     const Config& config_;
-    NetworkExerciseLister& exerciseLister_;
     ProgressPage* progressPage_;
     QLineEdit* host_;
     QSpinBox* port_;
     ExerciseList* exercises_;
-    QString exercise_;
+    const frontend::Exercise_ABC* exercise_;
     Profile profile_;
+    std::auto_ptr< frontend::ExerciseFilter_ABC > filter_;
     //@}
 };
 

@@ -11,10 +11,13 @@
 #define __Launcher_h_
 
 #include "Launcher_ABC.h"
+#include <memory>
 
 namespace MsgsAdminToLauncher
 {
     class MsgConnectionRequest;
+    class MsgControlStart;
+    class MsgControlStop;
     class MsgExercicesListRequest;
 }
 
@@ -23,7 +26,7 @@ namespace kernel
     class Controllers;
 }
 
-namespace frontend
+namespace launcher
 {
     class Config;
     class LauncherService;
@@ -41,7 +44,7 @@ class Launcher : public Launcher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Launcher( kernel::Controllers& controllers, const frontend::Config& config );
+    explicit Launcher( const Config& config );
     virtual ~Launcher();
     //@}
 
@@ -60,13 +63,16 @@ private:
 
     //! @name Helpers
     //@{
-    void HandleConnectionRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgConnectionRequest& message );
-    void HandleExerciseListRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgExercicesListRequest& message );
+    void HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgConnectionRequest& message );
+    void HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgExercicesListRequest& message );
+    void HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgControlStart& message );
+    void HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgControlStop& message );
     //@}
 
 private:
     //! @name Member data
     //@{
+    const Config& config_;
     std::auto_ptr< LauncherService > server_;
     std::auto_ptr< ProcessService > processes_;
     //@}

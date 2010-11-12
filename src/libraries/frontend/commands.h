@@ -11,8 +11,8 @@
 #define __commands_h_
 
 #include <boost/function.hpp>
+#include <qstringlist.h>
 
-class QStringList;
 
 namespace tools
 {
@@ -47,6 +47,9 @@ namespace frontend
 
         void        InstallPackageFile( zip::izipfile& archive, const std::string& filename, const std::string& destination );
         void        InstallPackageFile( zip::izipfile& archive, const std::string& destination, boost::function0< void > callback );
+
+        bool ExerciseExists( const tools::GeneralConfig& config, const std::string& exercise );
+        bool CheckpointExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session, const std::string& checkpoint );
     }
 }
 

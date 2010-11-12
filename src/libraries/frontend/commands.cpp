@@ -272,5 +272,17 @@ namespace frontend
                 }
             }
         }
+
+        bool ExerciseExists( const tools::GeneralConfig& config, const std::string& exercise )
+        {
+            const QStringList exercises = ListExercises( config );
+            return exercises.find( exercise.c_str() ) != exercises.end();
+        }
+
+        bool CheckpointExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session, const std::string& checkpoint )
+        {
+            const QStringList checkpoints = ListCheckpoints( config, exercise, session );
+            return checkpoints.find( checkpoint.c_str() ) != checkpoints.end();
+        }
     }
 }
