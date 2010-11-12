@@ -67,8 +67,6 @@
         File /r /x ".svn" /x ".poney" "${DATADIR}\data\models\${DataSet}\decisional\bms"
         File /r /x ".svn" /x ".poney" "${DATADIR}\data\models\${DataSet}\decisional\directia5"
         File "${DATADIR}\data\models\${DataSet}\decisional\decisional.xml"
-        SetOutPath "${INSTDATADIR}\data\models\${DataSet}\decisional\directia5\models\libs\base"
-        File "${DATADIR}\data\models\${DataSet}\decisional\directia5\models\net.masagroup.military_Libs\"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
 !macroend
