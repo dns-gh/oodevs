@@ -42,12 +42,12 @@ public:
         UrbanType::Initialize( xisUrbanType );
         xml::xistringstream xisProtection( "<protections><protection name='protection1' type='humain'><neutralization average-time='10s' variance='1s'/></protection></protections>" );
         PHY_Protection::Initialize( xisProtection );
-        xml::xistringstream xisDotationNature( "<natures><nature type='Solide'/></natures>" );
+        xml::xistringstream xisDotationNature( "<natures><nature type='Solide' id='1'/></natures>" );
         PHY_DotationNature::Initialize( xisDotationNature );
-        xml::xistringstream xisDotations( "<dotations><dotation category='ammo' name='munition' id='1' nature='Solide' package-size='1' package-mass='1' package-volume='1'>"
+        xml::xistringstream xisDotations( "<resources><resource name='ammo' category='munition' id='1' nature='Solide' id-nature='1' package-size='1' package-mass='1' package-volume='1'>"
             "<attritions><attrition destruction='0' protection='protection1' repairable-with-evacuation='0.1' repairable-without-evacuation='0.05'/></attritions>"
-            "<urbanModifiers><urbanModifier material-type='Brique' value='0.4' /></urbanModifiers>"
-            "</dotation></dotations>" );
+            "<urban-modifiers><urban-modifier material-type='Brique' value='0.4' /></urban-modifiers>"
+            "</resource></resources>" );
         PHY_DotationType::Initialize( xisDotations );
         xml::xistringstream xisLauncher( "<launchers><launcher name='gun' indirect-fire='true'/></launchers>" );
         xml::xistringstream xisVolumes( "<volumes><volume name='Big'/></volumes>");

@@ -269,13 +269,13 @@ BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter_ToASN )
     UrbanType::Initialize( xisUrbanType );
     xml::xistringstream xisNat(
         "<natures>"
-        "   <nature type='Solid'/>"
+        "   <nature type='Solid' id='1'/>"
         "</natures>" );
     PHY_DotationNature::Initialize( xisNat );
     xml::xistringstream xis(
-        "<dotations>"
-        "   <dotation category='Food' id='42' name='ration' nature='Solid' package-mass='0.015' package-size='10' package-volume='0.01'/>"
-        "</dotations>" );
+        "<resources>"
+        "   <resource name='Food' id='42' category='ration' nature='Solid' id-nature='1' package-mass='0.015' package-size='10' package-volume='0.01'/>"
+        "</resources>" );
     MockMIL_EntityManager_ABC entityManager;
     PHY_DotationType::Initialize( xis );
     ResourceType asnIn;

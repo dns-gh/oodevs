@@ -43,7 +43,7 @@ public:
         UrbanType::Initialize( xisUrbanType );
         xml::xistringstream xisProtection( "<protections><protection name='protection1' type='humain'><neutralization average-time='10s' variance='1s'/></protection></protections>" );
         PHY_Protection::Initialize( xisProtection );
-        xml::xistringstream xisDotationNature( "<natures><nature type='Solide'/></natures>" );
+        xml::xistringstream xisDotationNature( "<natures><nature type='Solide' id='1'/></natures>" );
         PHY_DotationNature::Initialize( xisDotationNature );
         xml::xistringstream xisDotations( dotations );
         PHY_DotationType::Initialize( xisDotations );

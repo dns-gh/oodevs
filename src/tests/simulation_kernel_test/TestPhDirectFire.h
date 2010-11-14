@@ -38,10 +38,10 @@ public:
         xml::xistringstream xisVolumes( "<volumes><volume name='Heavy'/><volume name='Medium'/><volume name='Small'/><volume name='Personal'/></volumes>");
         PHY_Volume::Initialize( xisVolumes );
 
-        xml::xistringstream xisDotationNature( "<natures><nature type='Solide'/></natures>" );
+        xml::xistringstream xisDotationNature( "<natures><nature type='Solide' id='1'/></natures>" );
         PHY_DotationNature::Initialize( xisDotationNature );
-        xml::xistringstream xisDotations( "<dotations><dotation category='ammo' name='munition' id='1' nature='Solide' package-size='1' package-mass='1' package-volume='1'><attritions>"
-            "<attrition destruction='0' protection='protection1' repairable-with-evacuation='0.1' repairable-without-evacuation='0.05'/></attritions></dotation></dotations>" );
+        xml::xistringstream xisDotations( "<resources><resource name='ammo' category='munition' id='1' nature='Solide' id-nature='1' package-size='1' package-mass='1' package-volume='1'><attritions>"
+            "<attrition destruction='0' protection='protection1' repairable-with-evacuation='0.1' repairable-without-evacuation='0.05'/></attritions></resource></resources>" );
         PHY_DotationType::Initialize( xisDotations );
 
         xml::xistringstream xisLauncher( "<launchers><launcher name='gun'><ph-modifiers posture='Mouvement'>"
