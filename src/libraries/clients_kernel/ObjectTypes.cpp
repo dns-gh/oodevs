@@ -118,7 +118,7 @@ void ObjectTypes::ReadObjectType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadDotations( xml::xistream& xis )
 {
-    xis >> xml::start( "dotations" ) >> xml::list( "dotation", *this, &ObjectTypes::ReadDotation );
+    xis >> xml::start( "resources" ) >> xml::list( "resource", *this, &ObjectTypes::ReadDotation );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ void ObjectTypes::ReadDotations( xml::xistream& xis )
 void ObjectTypes::ReadDotation( xml::xistream& xis )
 {
     DotationType* dotation = new DotationType( xis );
-    Resolver2< DotationType >::Register( dotation->GetId(), dotation->GetCategory(), *dotation );
+    Resolver2< DotationType >::Register( dotation->GetId(), dotation->GetName(), *dotation );
 }
 
 // -----------------------------------------------------------------------------

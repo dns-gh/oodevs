@@ -190,7 +190,7 @@ void MagicActionType::Initialize()
     }
     else if( name_ == "log_supply_push_flow" || name_ == "log_supply_pull_flow" || name_ == "log_supply_change_quotas" )
     {
-        CreateOrderParameter( "Receiver", "automate" );
+        CreateOrderParameter( "Receiver", "RegisterObjectNames" );
         CreateOrderParameter( "Dotations", "list" );
     }
     else if( name_ == "create_object" )

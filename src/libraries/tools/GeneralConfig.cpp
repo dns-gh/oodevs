@@ -68,7 +68,6 @@ void GeneralConfig::ResolveRelativePath( const std::string& root, std::string& p
 void GeneralConfig::Parse( int argc, char** argv )
 {
     CommandLineConfig_ABC::Parse( argc, argv );
-    // $$$$ NLD 2007-01-10: gerer exerciseName_ = poseidon/exercise.xml
     ResolveRelativePath( rootDir_, terrainsDir_ );
     ResolveRelativePath( rootDir_, modelsDir_ );
     ResolveRelativePath( rootDir_, exercisesDir_ );

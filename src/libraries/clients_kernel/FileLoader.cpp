@@ -56,14 +56,24 @@ namespace
             std::auto_ptr< xml::grammar > grammar( new xml::null_grammar() );
             const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
             if( !schema.empty() )
+            {
+                CheckedLoader::GetModelVersion( schema );
                 grammar.reset( new xml::external_grammar( config_.BuildResourceChildFile( schema ) ) );
+            }
             xml::xifstream input( path_, *grammar );
             loader_( input );
+        }
+
+        void GetModelVersion( const std::string& grammarPath )
+        {
+            xml::xifstream xis( config_.BuildResourceChildFile( grammarPath ) );
+            xis >> xml::start( "xs:schema" ) >> xml::optional >> xml::attribute( "version", modelVersion_ ) >> xml::end;
         }
 
         CheckedLoader& operator=( const CheckedLoader& );
         const std::string path_;
         const tools::ExerciseConfig& config_;
+        std::string modelVersion_;
         T_Loader loader_;
     };
 }

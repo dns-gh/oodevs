@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<dotations>
-  <dotation category="Balle Classique 12,7" codeEMAT6="Balle Classique 12,7" codeEMAT8="Balle Classique 12,7" codeLFRIL="Balle Classique 12,7" codeNNO="Balle Classique 12,7" id="1" name="munition" nature="Solide" package-mass="0.2" package-size="5" package-volume="0.2" type="Mitraille">
+<resources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Resources.xsd">
+  <resource category="munition" codeEMAT6="Balle Classique 12,7" codeEMAT8="Balle Classique 12,7" codeLFRIL="Balle Classique 12,7" codeNNO="Balle Classique 12,7" id="1" id-nature="2" name="Balle Classique 12,7" nature="Solide" package-mass="0.2" package-size="5" package-volume="0.2" type="Mitraille">
     <attritions>
       <attrition destruction="0.3" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
       <attrition destruction="0.3" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
@@ -10,8 +10,8 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
       <attrition destruction="0.3" protection="Combattant" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
     </attritions>
-  </dotation>
-  <dotation category="Obus 120 mm" codeEMAT6="Obus 120 mm" codeEMAT8="Obus 120 mm" codeLFRIL="Obus 120 mm" codeNNO="Obus 120 mm" id="2" name="munition" nature="Liquide" package-mass="0.6" package-size="5" package-volume="0.5" type="Obus">
+  </resource>
+  <resource category="munition" codeEMAT6="Obus 120 mm" codeEMAT8="Obus 120 mm" codeLFRIL="Obus 120 mm" codeNNO="Obus 120 mm" id="2" id-nature="1" name="Obus 120 mm" nature="Liquide" package-mass="0.6" package-size="5" package-volume="0.5" type="Obus">
     <attritions>
       <attrition destruction="0.3" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
       <attrition destruction="0.3" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
@@ -30,8 +30,8 @@
       <ph target-posture="PosteAmenage" value="0.2"/>
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
-  </dotation>
-  <dotation category="Fusse a jupette 53mm" codeEMAT6="Fusse a jupette 53mm" codeEMAT8="Fusse a jupette 53mm" codeLFRIL="Fusse a jupette 53mm" codeNNO="Fusse a jupette 53mm" d-type="true" id="3" name="munition" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="MissileSol">
+  </resource>
+  <resource category="munition" codeEMAT6="Fusse a jupette 53mm" codeEMAT8="Fusse a jupette 53mm" codeLFRIL="Fusse a jupette 53mm" codeNNO="Fusse a jupette 53mm" d-type="true" id="3" id-nature="2" name="Fusse a jupette 53mm" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="MissileSol">
     <attritions>
       <attrition destruction="0.3" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
       <attrition destruction="0.3" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
@@ -50,8 +50,8 @@
       <ph target-posture="PosteAmenage" value="0.2"/>
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
-  </dotation>
-  <dotation category="Fusse a ailettes 50mm" codeEMAT6="Fusse a ailettes 50mm" codeEMAT8="Fusse a ailettes 50mm" codeLFRIL="Fusse a ailettes 50mm" codeNNO="Fusse a ailettes 50mm" id="4" name="munition" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="MissileAir">
+  </resource>
+  <resource category="munition" codeEMAT6="Fusse a ailettes 50mm" codeEMAT8="Fusse a ailettes 50mm" codeLFRIL="Fusse a ailettes 50mm" codeNNO="Fusse a ailettes 50mm" id="4" id-nature="2" name="Fusse a ailettes 50mm" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="MissileAir">
     <attritions>
       <attrition destruction="0.3" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
       <attrition destruction="0.3" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
@@ -70,8 +70,8 @@
       <ph target-posture="PosteAmenage" value="0.2"/>
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
-  </dotation>
-  <dotation category="Missile Hot" codeEMAT6="Missile Hot" codeEMAT8="Missile Hot" codeLFRIL="Missile Hot" codeNNO="Missile Hot" id="5" name="munition" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="MissileSol">
+  </resource>
+  <resource category="munition" codeEMAT6="Missile Hot" codeEMAT8="Missile Hot" codeLFRIL="Missile Hot" codeNNO="Missile Hot" id="5" id-nature="2" name="Missile Hot" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="MissileSol">
     <attritions>
       <attrition destruction="0.3" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
       <attrition destruction="0.3" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.15"/>
@@ -90,18 +90,18 @@
       <ph target-posture="PosteAmenage" value="0.2"/>
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
-  </dotation>
-  <dotation category="Obus eclairant" codeEMAT6="Obus eclairant" codeEMAT8="Obus eclairant" codeLFRIL="Obus eclairant" codeNNO="Obus eclairant" d-type="true" id="6" name="munition" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="Obus">
+  </resource>
+  <resource category="munition" codeEMAT6="Obus eclairant" codeEMAT8="Obus eclairant" codeLFRIL="Obus eclairant" codeNNO="Obus eclairant" d-type="true" id="6" id-nature="2" name="Obus eclairant" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="Obus">
     <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
-  </dotation>
-  <dotation category="Obus mine" codeEMAT6="Obus mine" codeEMAT8="Obus mine" codeLFRIL="Obus mine" codeNNO="Obus mine" d-type="true" id="7" name="munition" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="Obus">
+  </resource>
+  <resource category="munition" codeEMAT6="Obus mine" codeEMAT8="Obus mine" codeLFRIL="Obus mine" codeNNO="Obus mine" d-type="true" id="7" id-nature="2" name="Obus mine" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="Obus">
     <indirect-fire intervention-type="6" mine-count="5" type="mine" x-dispersion="1000" y-dispersion="1500"/>
-  </dotation>
-  <dotation category="Obus fumigene" codeEMAT6="Obus mine" codeEMAT8="Obus mine" codeLFRIL="Obus mine" codeNNO="Obus mine" id="8" name="munition" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="Obus">
+  </resource>
+  <resource category="munition" codeEMAT6="Obus mine" codeEMAT8="Obus mine" codeLFRIL="Obus mine" codeNNO="Obus mine" id="8" id-nature="2" name="Obus fumigene" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="Obus">
     <indirect-fire intervention-type="10" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="450" y-dispersion="300"/>
-  </dotation>
-  <dotation category="gasoil" codeEMAT6="gasoil" codeEMAT8="gasoil" codeLFRIL="gasoil" codeNNO="gasoil" id="9" name="carburant" nature="Liquide" package-mass="6" package-size="50" package-volume="5"/>
-  <dotation category="explosif classique" codeEMAT6="explosif classique" codeEMAT8="explosif classique" codeLFRIL="explosif classique" codeNNO="explosif classique" id="10" name="explosif" nature="Solide" package-mass="65" package-size="5" package-volume="5">
+  </resource>
+  <resource category="carburant" codeEMAT6="gasoil" codeEMAT8="gasoil" codeLFRIL="gasoil" codeNNO="gasoil" id="9" id-nature="1" name="gasoil" nature="Liquide" package-mass="6" package-size="50" package-volume="5"/>
+  <resource category="explosif" codeEMAT6="explosif classique" codeEMAT8="explosif classique" codeLFRIL="explosif classique" codeNNO="explosif classique" id="10" id-nature="2" name="explosif classique" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="Obus">
     <attritions>
       <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
@@ -111,8 +111,8 @@
       <attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
       <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-  </dotation>
-  <dotation category="mine classique" codeEMAT6="mine classique" codeEMAT8="mine classique" codeLFRIL="mine classique" codeNNO="mine classique" id="11" name="mine" nature="Solide" package-mass="65" package-size="5" package-volume="5">
+  </resource>
+  <resource category="mine" codeEMAT6="mine classique" codeEMAT8="mine classique" codeLFRIL="mine classique" codeNNO="mine classique" id="11" id-nature="2" name="mine classique" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="Obus">
     <attritions>
       <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
@@ -122,13 +122,13 @@
       <attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
       <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-  </dotation>
-  <dotation category="pont flottant de la mort" codeEMAT6="pont flottant" codeEMAT8="pont flottant" codeLFRIL="pont flottant" codeNNO="pont flottant" id="12" name="mine" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
-  <dotation category="barbele classique" codeEMAT6="barbele classique" codeEMAT8="barbele classique" codeLFRIL="barbele classique" codeNNO="barbele classique" id="13" name="barbele" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
-  <dotation category="Truc pour reparer la mobilite 1" codeEMAT6="Truc pour reparer la mobilite 1" codeEMAT8="Truc pour reparer la mobilite 1" codeLFRIL="Truc pour reparer la mobilite 1" codeNNO="Truc pour reparer la mobilite 1" id="14" name="piece" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
-  <dotation category="Truc pour reparer la mobilite 2" codeEMAT6="Truc pour reparer la mobilite 2" codeEMAT8="Truc pour reparer la mobilite 2" codeLFRIL="Truc pour reparer la mobilite 2" codeNNO="Truc pour reparer la mobilite 2" id="15" name="piece" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
-  <dotation category="Truc pour reparer la mobilite 3" codeEMAT6="Truc pour reparer la mobilite 3" codeEMAT8="Truc pour reparer la mobilite 3" codeLFRIL="Truc pour reparer la mobilite 3" codeNNO="Truc pour reparer la mobilite 3" id="16" name="piece" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
-  <dotation category="Truc pour reparer l'electronique 1" codeEMAT6="Truc pour reparer l'electronique 1" codeEMAT8="Truc pour reparer l'electronique 1" codeLFRIL="Truc pour reparer l'electronique 1" codeNNO="Truc pour reparer l'electronique 1" id="17" name="piece" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
-  <dotation category="bouffe" codeEMAT6="bouffe" codeEMAT8="bouffe" codeLFRIL="bouffe" codeNNO="bouffe" id="18" name="ration" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
-  <dotation category="flotte" codeEMAT6="flotte" codeEMAT8="flotte" codeLFRIL="flotte" codeNNO="flotte" id="19" name="ration" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
-</dotations>
+  </resource>
+  <resource category="mine" codeEMAT6="pont flottant" codeEMAT8="pont flottant" codeLFRIL="pont flottant" codeNNO="pont flottant" id="12" id-nature="2" name="pont flottant de la mort" nature="Solide" package-mass="65" package-size="5" package-volume="5" type="Obus"/>
+  <resource category="barbele" codeEMAT6="barbele classique" codeEMAT8="barbele classique" codeLFRIL="barbele classique" codeNNO="barbele classique" id="13" id-nature="2" name="barbele classique" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <resource category="piece" codeEMAT6="Truc pour reparer la mobilite 1" codeEMAT8="Truc pour reparer la mobilite 1" codeLFRIL="Truc pour reparer la mobilite 1" codeNNO="Truc pour reparer la mobilite 1" id="14" id-nature="2" name="Truc pour reparer la mobilite 1" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <resource category="piece" codeEMAT6="Truc pour reparer la mobilite 2" codeEMAT8="Truc pour reparer la mobilite 2" codeLFRIL="Truc pour reparer la mobilite 2" codeNNO="Truc pour reparer la mobilite 2" id="15" id-nature="2" name="Truc pour reparer la mobilite 2" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <resource category="piece" codeEMAT6="Truc pour reparer la mobilite 3" codeEMAT8="Truc pour reparer la mobilite 3" codeLFRIL="Truc pour reparer la mobilite 3" codeNNO="Truc pour reparer la mobilite 3" id="16" id-nature="2" name="Truc pour reparer la mobilite 3" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <resource category="piece" codeEMAT6="Truc pour reparer l'electronique 1" codeEMAT8="Truc pour reparer l'electronique 1" codeLFRIL="Truc pour reparer l'electronique 1" codeNNO="Truc pour reparer l'electronique 1" id="17" id-nature="2" name="Truc pour reparer l'electronique 1" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <resource category="ration" codeEMAT6="bouffe" codeEMAT8="bouffe" codeLFRIL="bouffe" codeNNO="bouffe" id="18" id-nature="2" name="bouffe" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+  <resource category="ration" codeEMAT6="flotte" codeEMAT8="flotte" codeLFRIL="flotte" codeNNO="flotte" id="19" id-nature="2" name="flotte" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
+</resources>

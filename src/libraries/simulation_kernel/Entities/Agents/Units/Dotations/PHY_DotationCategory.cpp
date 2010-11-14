@@ -157,7 +157,7 @@ void PHY_DotationCategory::ReadAttrition( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory::InitializeUrbanAttritions( xml::xistream& xis )
 {
-    xis >> xml::list( "urbanModifiers", *this, &PHY_DotationCategory::ListUrbanAttrition );
+    xis >> xml::list( "urban-modifiers", *this, &PHY_DotationCategory::ListUrbanAttrition );
 
 }
 
@@ -167,7 +167,7 @@ void PHY_DotationCategory::InitializeUrbanAttritions( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory::ListUrbanAttrition( xml::xistream& xis )
 {
-    xis >> xml::list( "urbanModifier", *this, &PHY_DotationCategory::ReadUrbanAttritionModifier );
+    xis >> xml::list( "urban-modifier", *this, &PHY_DotationCategory::ReadUrbanAttritionModifier );
 }
 
 // -----------------------------------------------------------------------------

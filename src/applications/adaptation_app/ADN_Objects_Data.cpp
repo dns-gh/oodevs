@@ -178,7 +178,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadDotation( xml::xistream&
         ADN_Equipement_Data::CategoryInfo* category = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( dotation );
         if( category == 0 )
             throw ADN_DataException( "Donnée invalide", "Dotation invalide : " + dotation );
-        ADN_Composantes_Data::CategoryInfos* infos = new ADN_Composantes_Data::CategoryInfos( category->parentDotation_ );
+        ADN_Composantes_Data::CategoryInfos* infos = new ADN_Composantes_Data::CategoryInfos( category->parentResource_ );
         infos->ptrCategory_ = category;
         infos->rNbr_ = quantity;
         categories_.AddItem( infos );
@@ -243,7 +243,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadDotation( xml::xistream
         ADN_Equipement_Data::CategoryInfo* category = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( dotation );
         if( category == 0 )
             throw ADN_DataException( "Donnée invalide", "Dotation invalide : " + dotation );
-        ADN_Composantes_Data::CategoryInfos* infos = new ADN_Composantes_Data::CategoryInfos( category->parentDotation_ );
+        ADN_Composantes_Data::CategoryInfos* infos = new ADN_Composantes_Data::CategoryInfos( category->parentResource_ );
         infos->ptrCategory_ = category;
         infos->rNbr_ = quantity;
         categories_.AddItem( infos );

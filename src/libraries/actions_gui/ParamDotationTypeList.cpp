@@ -60,7 +60,7 @@ QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
     while( it.HasMoreElements() )
     {
         const kernel::DotationType& type = it.NextElement();
-        AddItem( type.GetName().c_str(), type.GetCategory().c_str(), type.GetId() );
+        AddItem( type.GetName().c_str(), type.GetName().c_str(), type.GetId() );
     }
 
     connect( list_, SIGNAL( clicked( QListViewItem* ) ), SLOT( Clicked( QListViewItem* ) ) );

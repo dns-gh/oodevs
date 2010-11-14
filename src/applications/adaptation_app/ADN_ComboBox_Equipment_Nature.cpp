@@ -12,8 +12,7 @@
 #include "ADN_ComboBox_Equipment_Nature.h"
 
 #include "ADN_Categories_Data.h"
-
-typedef ADN_Categories_Data::DotationNatureInfos DotationNatureInfos;
+#include "ADN_ResourceNatureInfos.h"
 
 class ADN_CCB_Equipement_Nature
 : public ADN_Connector_ComboBox
@@ -32,7 +31,7 @@ public:
         ADN_ComboBoxItem* pItem = new ADN_ComboBoxItem(*pCombo_,obj);
 
         // connect it with armor name
-        pItem->GetConnector().Connect( (DotationNatureInfos*)obj );
+        pItem->GetConnector().Connect( (helpers::ResourceNatureInfos*)obj );
 
         // return
         return pItem;

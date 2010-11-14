@@ -374,7 +374,7 @@ ADN_Table* ADN_Equipement_GUI::CreatePKTable()
     pTable->setSorting( false );
 
     // Fill the table.
-    ADN_Equipement_Data::DotationInfos& ammo = data_.GetDotation( eDotationFamily_Munition );
+    ADN_Equipement_Data::ResourceInfos& ammo = data_.GetDotation( eDotationFamily_Munition );
 
     int nRowSize = (int)armorInfos.size();
     int nRow = 1;

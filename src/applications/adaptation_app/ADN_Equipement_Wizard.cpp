@@ -28,7 +28,7 @@ typedef ADN_Equipement_Data::CategoryInfo CategoryInfos;
 // Name: ADN_Equipement_Wizard constructor
 // Created: APE 2005-01-20
 // -----------------------------------------------------------------------------
-ADN_Equipement_Wizard::ADN_Equipement_Wizard( ADN_Equipement_Data::DotationInfos& parentDotation, QWidget* pParent, const char* szName )
+ADN_Equipement_Wizard::ADN_Equipement_Wizard( ADN_Equipement_Data::ResourceInfos& parentDotation, QWidget* pParent, const char* szName )
 : ADN_Wizard_ABC<CategoryInfos>( pParent, szName )
 {
     setCaption( qApp->translate( "ADN_Equipement_Wizard", "New resource creation" ) );

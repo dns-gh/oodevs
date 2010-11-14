@@ -205,8 +205,11 @@ ADN_Reports_Data::ReportInfo* ADN_Reports_Data::ReportInfo::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Reports_Data::ReportInfo::ReadArchive( xml::xistream& input )
 {
+    category_ = "operational";
     input >> xml::attribute( "id", id_ )
+          >> xml::optional >> xml::attribute( "category", category_ )
           >> xml::attribute( "message", message_ )
+          >> xml::optional >> xml::attribute( "client-function-trigger", clientFunctionTrigger_ )
           >> xml::list( "parameter", *this, &ADN_Reports_Data::ReportInfo::ReadParameter );
 }
 
@@ -229,7 +232,10 @@ void ADN_Reports_Data::ReportInfo::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "report" )
             << xml::attribute( "id", id_ )
+            << xml::attribute( "category", category_ )
             << xml::attribute( "message",  message_ );
+    if ( clientFunctionTrigger_ != "" )
+        output  << xml::attribute( "client-function-trigger",  clientFunctionTrigger_ );
     for( unsigned long i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
     output << xml::end;

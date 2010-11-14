@@ -53,11 +53,11 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string name_;
+    std::string   name_;
     unsigned long id_;
-    unsigned long nameId_; // $$$$ AGE 2006-04-28: name == category
-    std::string category_;
-    bool gaz_, ammunition_, dType_;
+    unsigned long categoryId_;
+    std::string   category_;
+    bool          gaz_, ammunition_, dType_;
     //@}
 };
 

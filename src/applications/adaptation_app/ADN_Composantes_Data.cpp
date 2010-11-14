@@ -458,9 +458,9 @@ ADN_Composantes_Data::LogSupplyInfos::LogSupplyInfos()
 , bIsCarrier_         ( false )
 , rWeight_            ( 0 )
 , rVolume_            ( 0 )
-, ptrDotationNature_  ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
+, ptrResourceNature_  ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
 {
-    BindExistenceTo( &ptrDotationNature_ );
+    BindExistenceTo( &ptrResourceNature_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -490,7 +490,7 @@ void ADN_Composantes_Data::LogSupplyInfos::CopyFrom( LogSupplyInfos& src )
     bIsCarrier_  = src.bIsCarrier_.GetData();
     rWeight_     = src.rWeight_.GetData();
     rVolume_     = src.rVolume_.GetData();
-    ptrDotationNature_ = src.ptrDotationNature_.GetData();
+    ptrResourceNature_ = src.ptrResourceNature_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -509,10 +509,10 @@ void ADN_Composantes_Data::LogSupplyInfos::ReadArchive( xml::xistream& input )
     if( !strNature.empty() )
     {
         bIsCarrier_ = true;
-        ADN_Categories_Data::DotationNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( strNature );
+        helpers::ResourceNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( strNature );
         if( !pNature )
             throw ADN_DataException( tools::translate( "Composante_Data", "Invalid data" ).ascii(), tools::translate( "Composante_Data", "Equipment - Invalid resource nature '%1'" ).arg( strNature.c_str() ).ascii() );
-        ptrDotationNature_ = pNature;
+        ptrResourceNature_ = pNature;
     }
 }
 
@@ -527,7 +527,7 @@ void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( xml::xostream& output )
         output << xml::start( "carrying" )
                 << xml::attribute( "mass", rWeight_ )
                 << xml::attribute( "volume", rVolume_ )
-                << xml::attribute( "nature", ptrDotationNature_.GetData()->GetData() )
+                << xml::attribute( "nature", ptrResourceNature_.GetData()->GetData() )
                << xml::end;
     output << xml::end;
 }
@@ -1199,7 +1199,7 @@ void ADN_Composantes_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& 
 // Name: CategoryInfos::CategoryInfos
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-ADN_Composantes_Data::CategoryInfos::CategoryInfos( ADN_Equipement_Data::DotationInfos& parentDotation )
+ADN_Composantes_Data::CategoryInfos::CategoryInfos( ADN_Equipement_Data::ResourceInfos& parentDotation )
 : ADN_Ref_ABC( "ADN_Composantes_Data::CategoryInfos" )
 , ptrDotation_( &parentDotation, "" )
 , ptrCategory_( parentDotation.categories_, 0, "ptr cat ds ADN_Composantes_Data::CategoryInfos" )
@@ -1276,61 +1276,61 @@ void ADN_Composantes_Data::CategoryInfos::WriteArchive( xml::xostream& output )
 }
 
 //-----------------------------------------------------------------------------
-// Name: DotationInfos::DotationInfos
+// Name: ResourceInfos::ResourceInfos
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-ADN_Composantes_Data::DotationInfos::DotationInfos()
+ADN_Composantes_Data::ResourceInfos::ResourceInfos()
 : ADN_Ref_ABC()
 , categories_()
 {
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationInfos::GetNodeName
+// Name: ResourceInfos::GetNodeName
 // Created: AGN 2004-05-14
 // -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::DotationInfos::GetNodeName()
+std::string ADN_Composantes_Data::ResourceInfos::GetNodeName()
 {
     return std::string();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationInfos::GetItemName
+// Name: ResourceInfos::GetItemName
 // Created: AGN 2004-05-18
 // -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::DotationInfos::GetItemName()
+std::string ADN_Composantes_Data::ResourceInfos::GetItemName()
 {
     return GetNodeName();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationInfos::CreateCopy
+// Name: ResourceInfos::CreateCopy
 // Created: APE 2004-11-29
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::DotationInfos::CopyFrom( ADN_Composantes_Data::DotationInfos& src )
+void ADN_Composantes_Data::ResourceInfos::CopyFrom( ADN_Composantes_Data::ResourceInfos& src )
 {
     for( IT_CategoryInfos_Vector it = src.categories_.begin(); it != src.categories_.end(); ++it )
         categories_.AddItem( (*it)->CreateCopy() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Data::DotationInfos::ReadCategory
+// Name: ADN_Composantes_Data::ResourceInfos::ReadCategory
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::DotationInfos::ReadCategory( xml::xistream& input )
+void ADN_Composantes_Data::ResourceInfos::ReadCategory( xml::xistream& input )
 {
     std::string name = input.attribute< std::string >( "name" );
     E_DotationFamily family = ENT_Tr::ConvertToDotationFamily( name );
-    ADN_Equipement_Data::DotationInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( family );
+    ADN_Equipement_Data::ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( family );
 
-    input >> xml::list( "dotation", *this, &ADN_Composantes_Data::DotationInfos::ReadDotation, dotation );
+    input >> xml::list( "dotation", *this, &ADN_Composantes_Data::ResourceInfos::ReadDotation, dotation );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Data::DotationInfos::ReadDotation
+// Name: ADN_Composantes_Data::ResourceInfos::ReadDotation
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::DotationInfos::ReadDotation( xml::xistream& input, ADN_Equipement_Data::DotationInfos& dotation )
+void ADN_Composantes_Data::ResourceInfos::ReadDotation( xml::xistream& input, ADN_Equipement_Data::ResourceInfos& dotation )
 {
     std::auto_ptr< CategoryInfos > pInfo( new CategoryInfos( dotation ) );
     pInfo->ReadArchive( input );
@@ -1338,19 +1338,19 @@ void ADN_Composantes_Data::DotationInfos::ReadDotation( xml::xistream& input, AD
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationInfos::ReadArchive
+// Name: ResourceInfos::ReadArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::DotationInfos::ReadArchive( xml::xistream& input )
+void ADN_Composantes_Data::ResourceInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::list( "category", *this, &ADN_Composantes_Data::DotationInfos::ReadCategory );
+    input >> xml::list( "category", *this, &ADN_Composantes_Data::ResourceInfos::ReadCategory );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationInfos::WriteArchive
+// Name: ResourceInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::DotationInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::ResourceInfos::WriteArchive( xml::xostream& output )
 {
     for( uint n = 0; n < eNbrDotationFamily; ++n )
     {
@@ -1540,7 +1540,7 @@ void ADN_Composantes_Data::ObjectInfos::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::ConsumptionItem::ConsumptionItem( E_ConsumptionType nConsumptionType, ADN_Equipement_Data::CategoryInfo& category )
 : nConsumptionType_    ( nConsumptionType )
-, ptrCategory_         ( category.parentDotation_.categories_, &category, "" )
+, ptrCategory_         ( category.parentResource_.categories_, &category, "" )
 , nQuantityUsedPerHour_( 0 )
 {
     this->BindExistenceTo( &ptrCategory_ );
@@ -1591,7 +1591,7 @@ void ADN_Composantes_Data::ConsumptionItem::ReadArchive( xml::xistream& input )
 void ADN_Composantes_Data::ConsumptionItem::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "dotation" )
-            << xml::attribute( "category", ptrCategory_.GetData()->parentDotation_.strName_ )
+            << xml::attribute( "category", ptrCategory_.GetData()->parentResource_.strName_ )
             << xml::attribute( "name", ptrCategory_.GetData()->strName_ )
             << xml::attribute( "value", nQuantityUsedPerHour_ )
            << xml::end;
@@ -1853,7 +1853,7 @@ ADN_Composantes_Data::ComposanteInfos* ADN_Composantes_Data::ComposanteInfos::Cr
     }
 
     pCopy->consumptions_.CopyFrom( consumptions_ );
-    pCopy->dotations_.CopyFrom( dotations_ );
+    pCopy->resources_.CopyFrom( resources_ );
 
     pCopy->bTroopEmbarkingTimes_ = bTroopEmbarkingTimes_.GetData();
     pCopy->embarkingTimePerPerson_ = embarkingTimePerPerson_.GetData();
@@ -1975,7 +1975,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
           >> xml::end;
 
     input >> xml::start( "composition" );
-    dotations_.ReadArchive( input );
+    resources_.ReadArchive( input );
     input >> xml::end;
 
     input >> xml::start( "sensors" )
@@ -2053,7 +2053,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
     output << xml::end;
 
     output << xml::start( "composition" );
-    dotations_.WriteArchive( output );
+    resources_.WriteArchive( output );
     output << xml::end;
 
     output << xml::start( "sensors" );

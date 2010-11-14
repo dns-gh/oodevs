@@ -82,10 +82,10 @@ void ADN_AutomatLogCategory_ListView::BuildHeaders()
 void ADN_AutomatLogCategory_ListView::BuildBody()
 {
     // Dotation (eg. ration)
-    ADN_Equipement_Data::T_DotationInfos_Vector& dotations = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
-    for( ADN_Equipement_Data::IT_DotationInfos_Vector itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
+    ADN_Equipement_Data::T_ResourceInfos_Vector& dotations = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
+    for( ADN_Equipement_Data::IT_ResourceInfos_Vector itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
     {
-        ADN_Equipement_Data::DotationInfos& dotation = **itDotation;
+        ADN_Equipement_Data::ResourceInfos& dotation = **itDotation;
         ADN_Rich_ListViewItem* pDotationItem = new ADN_Rich_ListViewItem( this, true );
         pDotationItem->setText( eColumnTarget, dotation.strName_.GetData().c_str() );
 
@@ -178,7 +178,7 @@ void ADN_AutomatLogCategory_ListView::FillComponentItem( ADN_Rich_ListViewItem& 
     item.setText( eColumnNbrComp, QString::number( comp.nNb_.GetData() ) );
 
     // retrieve corresponding dotation category
-    ADN_Composantes_Data::T_CategoryInfos_Vector& categories = comp.ptrComposante_.GetData()->dotations_.categories_;
+    ADN_Composantes_Data::T_CategoryInfos_Vector& categories = comp.ptrComposante_.GetData()->resources_.categories_;
     ADN_Composantes_Data::IT_CategoryInfos_Vector itCategory = categories.begin();
     for( ; itCategory != categories.end(); ++itCategory )
         if( (*itCategory)->ptrCategory_.GetData() == &category )

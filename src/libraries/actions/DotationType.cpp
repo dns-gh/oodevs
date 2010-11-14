@@ -29,7 +29,7 @@ DotationType::DotationType( const kernel::OrderParameter& parameter, unsigned in
     : Parameter< std::string >( parameter )
     , type_( resolver.Get( id ) )
 {
-    SetValue( type_.GetCategory() );
+    SetValue( type_.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ DotationType::DotationType( const kernel::OrderParameter& parameter, xml::xistre
     : Parameter< std::string >( parameter )
     , type_( resolver.Get( xis.attribute< unsigned int >( "value" ) ) )
 {
-    SetValue( type_.GetCategory() );
+    SetValue( type_.GetName() );
 }
 
 // -----------------------------------------------------------------------------

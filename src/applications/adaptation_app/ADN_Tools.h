@@ -75,5 +75,7 @@ public:
     static void SortMenu( QPopupMenu& menu );
 
     static void AddSchema( xml::xostream& xos, const std::string& name );
+
+    static void AddVersion( xml::xostream& xos, const std::string& name );
 };
 #endif // __ADN_Tools_h_

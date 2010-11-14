@@ -37,7 +37,7 @@ class ADN_Equipement_Wizard_Page0
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Equipement_Wizard_Page0( ADN_Equipement_Data::DotationInfos& parentDotation, QWizard* pParent = 0, const char* szName = 0 );
+             ADN_Equipement_Wizard_Page0( ADN_Equipement_Data::ResourceInfos& parentDotation, QWizard* pParent = 0, const char* szName = 0 );
     virtual ~ADN_Equipement_Wizard_Page0();
     //@}
 
@@ -51,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ADN_Equipement_Data::DotationInfos& parentDotation_;
+    ADN_Equipement_Data::ResourceInfos& parentResource_;
     //@}
 };
 

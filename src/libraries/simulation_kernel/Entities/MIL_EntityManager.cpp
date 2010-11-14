@@ -1574,11 +1574,14 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "orbat" )
-            << xml::start( "dotations" )
+    xos << xml::start( "orbat" );
+    if ( infiniteDotations_ )
+    {
+        xos << xml::start( "dotations" )
                 << xml::attribute( "infinite", infiniteDotations_ )
-            << xml::end
-            << xml::start( "sides" );
+            << xml::end;
+    }
+    xos     << xml::start( "sides" );
                 armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteODB, _1, boost::ref( xos ) ) );
     xos     << xml::end
             << xml::start( "diplomacies" );

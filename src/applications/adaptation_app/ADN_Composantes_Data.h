@@ -23,6 +23,7 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_ActiveProtections_Data.h"
+#include "ADN_ResourceNatureInfos.h"
 #include "ADN_Breakdowns_Data.h"
 #include "ADN_Tr.h"
 
@@ -178,7 +179,7 @@ public:
         ADN_Type_Bool bIsCarrier_;
         ADN_Type_Double rWeight_;
         ADN_Type_Double rVolume_;
-        ADN_TypePtr_InVector_ABC<ADN_Categories_Data::DotationNatureInfos> ptrDotationNature_;
+        ADN_TypePtr_InVector_ABC<helpers::ResourceNatureInfos> ptrResourceNature_;
     };
 
     //*****************************************************************************
@@ -455,8 +456,6 @@ public:
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
-    public:
-        // ADN_TypePtr_InVector_ABC< ADN_Categories_Data::DotationNatureInfos > ptrDotationNature_;
     };
 
     //*****************************************************************************
@@ -488,7 +487,7 @@ public:
         MT_COPYNOTALLOWED( CategoryInfos )
 
     public:
-        CategoryInfos( ADN_Equipement_Data::DotationInfos& parentDotation );
+        CategoryInfos( ADN_Equipement_Data::ResourceInfos& parentDotation );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -499,7 +498,7 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::DotationInfos> ptrDotation_;
+        ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::ResourceInfos> ptrDotation_;
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo>  ptrCategory_;
         ADN_Type_Double                                              rNbr_;
         ADN_Type_Double                                              rLogThreshold_;
@@ -511,24 +510,24 @@ public:
 
 
     //*****************************************************************************
-    class DotationInfos
+    class ResourceInfos
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( DotationInfos )
+        MT_COPYNOTALLOWED( ResourceInfos )
 
     public:
-        DotationInfos();
+        ResourceInfos();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void CopyFrom( DotationInfos& src );
+        void CopyFrom( ResourceInfos& src );
 
         void ReadCategory( xml::xistream& input );
 
         void ReadArchive( xml::xistream& input );
-        void ReadDotation( xml::xistream& input, ADN_Equipement_Data::DotationInfos& dotation );
+        void ReadDotation( xml::xistream& input, ADN_Equipement_Data::ResourceInfos& dotation );
         void WriteArchive( xml::xostream& output );
 
     public:
@@ -696,7 +695,7 @@ public:
         T_RadarInfos_Vector                                                       vRadars_;
         T_ObjectInfos_Vector                                                      vObjects_;
         ConsumptionsInfos                                                         consumptions_;
-        DotationInfos                                                             dotations_;
+        ResourceInfos                                                             resources_;
         HumanProtectionInfos                                                      humanProtections_;
         T_ActiveProtectionsInfos_Vector                                           vActiveProtections_;
 

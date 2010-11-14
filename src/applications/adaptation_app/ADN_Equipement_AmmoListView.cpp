@@ -27,7 +27,7 @@
 #include "ADN_Equipement_GUI.h"
 
 typedef ADN_Equipement_Data::AmmoCategoryInfo AmmoCategoryInfo;
-typedef ADN_Equipement_Data::DotationInfos DotationInfos;
+typedef ADN_Equipement_Data::ResourceInfos ResourceInfos;
 typedef ADN_Equipement_Data::CategoryInfo CategoryInfo;
 
 // -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipement_GUI::eLFRILCode]->Connect( &pInfos->strCodeLFRIL_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eNNOCode]->Connect( &pInfos->strCodeNNO_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eType]->Connect( &pInfos->nType_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eNature]->Connect( &pInfos->ptrDotationNature_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eNature]->Connect( &pInfos->ptrResourceNature_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eAmmoPackageNbr    ]->Connect( &pInfos->rNbrInPackage_ , bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eAmmoPackageWeight ]->Connect( &pInfos->rPackageWeight_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eAmmoPackageVolume ]->Connect( &pInfos->rPackageVolume_, bConnect );
@@ -122,7 +122,7 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
 void ADN_Equipement_AmmoListView::OnContextMenu( const QPoint& pt )
 {
     QPopupMenu popupMenu( this );
-    DotationInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition );
+    ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition );
     ADN_Equipement_Wizard wizard( dotation, this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );

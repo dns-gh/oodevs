@@ -10,7 +10,7 @@
 #include "ADN_ComboBox_ActiveProtection_Dotations.h"
 #include "ADN_Equipement_Data.h"
 
-typedef ADN_Equipement_Data::DotationInfos DotationInfos;
+typedef ADN_Equipement_Data::ResourceInfos ResourceInfos;
 
 class ADN_CBB_ActiveProtection_Dotations
 : public ADN_Connector_ComboBox
@@ -29,7 +29,7 @@ public:
         ADN_ComboBoxItem* pItem = new ADN_ComboBoxItem(*pCombo_,obj);
 
         // connect it with armor name
-        pItem->GetConnector().Connect( (DotationInfos*)obj );
+        pItem->GetConnector().Connect( (ResourceInfos*)obj );
 
         // return
         return pItem;

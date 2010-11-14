@@ -60,8 +60,8 @@ void PHY_DotationType::Initialize( xml::xistream& xis )
     dotationTypes_[ piece_    ->GetName() ] = piece_;
     dotationTypes_[ ration_   ->GetName() ] = ration_;
     LoadingWrapper loader;
-    xis >> xml::start( "dotations" )
-            >> xml::list( "dotation", loader, &LoadingWrapper::ReadDotation )
+    xis >> xml::start( "resources" )
+            >> xml::list( "resource", loader, &LoadingWrapper::ReadDotation )
         >> xml::end;
 }
 
@@ -71,17 +71,17 @@ void PHY_DotationType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationType::ReadDotation( xml::xistream& xis )
 {
-    std::string strTypeName;
-    std::string strCategoryName;
+    std::string name;
+    std::string category;
 
-    xis >> xml::attribute( "name", strTypeName )
-        >> xml::attribute( "category", strCategoryName );
+    xis >> xml::attribute( "name", name )
+        >> xml::attribute( "category", category );
 
-    CIT_DotationTypeMap it = dotationTypes_.find( strTypeName );
+    CIT_DotationTypeMap it = dotationTypes_.find( category );
     if( it == dotationTypes_.end() )
-        xis.error( "Invalid dotation type name" );
+        xis.error( "Invalid dotation category name" );
 
-    const_cast< PHY_DotationType& >( *it->second ).RegisterDotationCategory( strCategoryName, xis );
+    const_cast< PHY_DotationType& >( *it->second ).RegisterDotation( name, xis );
 }
 
 //-----------------------------------------------------------------------------
@@ -114,7 +114,7 @@ PHY_DotationType::PHY_DotationType( const std::string& strName, E_DotationType n
 // Name: PHY_DotationType::Initialize
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
-void PHY_DotationType::RegisterDotationCategory( const std::string& strCategoryName, xml::xistream& xis )
+void PHY_DotationType::RegisterDotation( const std::string& strCategoryName, xml::xistream& xis )
 {
     const PHY_DotationCategory*& pCategory = dotationCategories_[ strCategoryName ];
     if( pCategory )

@@ -18,6 +18,8 @@
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Tools.h"
 #include "ADN_ArmorInfos.h"
+#include "ADN_ResourceNatureInfos.h"
+#include "IdentifierFactory.h"
 
 class xml::xistream;
 
@@ -33,9 +35,6 @@ public:
     typedef ADN_Type_String SizeInfos;
     typedef ADN_Type_Vector_ABC< SizeInfos >         T_SizeInfos_Vector;
     typedef T_SizeInfos_Vector::iterator            IT_SizeInfos_Vector;
-    typedef ADN_Type_String DotationNatureInfos;
-    typedef ADN_Type_Vector_ABC< DotationNatureInfos > T_DotationNatureInfos_Vector;
-    typedef T_DotationNatureInfos_Vector::iterator    IT_DotationNatureInfos_Vector;
 
 public:
              ADN_Categories_Data();
@@ -46,12 +45,13 @@ public:
     void Load();
     void Save();
 
-    helpers::T_ArmorInfos_Vector& GetArmorsInfos();
-    T_SizeInfos_Vector&           GetSizesInfos();
-    T_DotationNatureInfos_Vector& GetDotationNaturesInfos();
-    helpers::ArmorInfos*          FindArmor( const std::string& strName );
-    SizeInfos*                    FindSize( const std::string& strName );
-    DotationNatureInfos*          FindDotationNature( const std::string& strName );
+    helpers::T_ArmorInfos_Vector&          GetArmorsInfos();
+    T_SizeInfos_Vector&                    GetSizesInfos();
+    helpers::T_ResourceNatureInfos_Vector& GetDotationNaturesInfos();
+    helpers::ArmorInfos*                   FindArmor( const std::string& strName );
+    SizeInfos*                             FindSize( const std::string& strName );
+    helpers::ResourceNatureInfos*          FindDotationNature( const std::string& strName );
+    static unsigned long                   GetNewIdentifier();             
 
 private:
     void ReadVolume( xml::xistream& input );
@@ -68,7 +68,8 @@ private:
 private:
     helpers::T_ArmorInfos_Vector vArmors_;
     T_SizeInfos_Vector  vSizes_;
-    T_DotationNatureInfos_Vector vDotationNatures_;
+    helpers::T_ResourceNatureInfos_Vector vDotationNatures_;
+    static IdentifierFactory idFactory_;
 };
 
 
@@ -98,7 +99,7 @@ ADN_Categories_Data::T_SizeInfos_Vector& ADN_Categories_Data::GetSizesInfos()
 // Created: SBO 2006-03-23
 // -----------------------------------------------------------------------------
 inline
-ADN_Categories_Data::T_DotationNatureInfos_Vector& ADN_Categories_Data::GetDotationNaturesInfos()
+helpers::T_ResourceNatureInfos_Vector& ADN_Categories_Data::GetDotationNaturesInfos()
 {
     return vDotationNatures_;
 }
@@ -135,9 +136,9 @@ ADN_Categories_Data::SizeInfos* ADN_Categories_Data::FindSize( const std::string
 // Created: SBO 2006-03-23
 // -----------------------------------------------------------------------------
 inline
-ADN_Categories_Data::DotationNatureInfos* ADN_Categories_Data::FindDotationNature( const std::string& strName )
+helpers::ResourceNatureInfos* ADN_Categories_Data::FindDotationNature( const std::string& strName )
 {
-    for( IT_DotationNatureInfos_Vector it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
+    for( helpers::IT_ResourceNatureInfos_Vector it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
         if( ADN_Tools::CaselessCompare( (*it)->GetData(), strName ) )
             return *it;
     return 0;

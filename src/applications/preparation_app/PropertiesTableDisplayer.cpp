@@ -66,7 +66,7 @@ void PropertiesTableDisplayer::Call( const DotationsItem& /*value*/ )
 //    while( it.HasMoreElements() )
 //    {
 //        const Dotation& dotation = it.NextElement();
-//        result.append( dotation.type_->GetCategory() ).append( " " );
+//        result.append( dotation.type_->GetName() ).append( " " );
 //    }
 //    AddToDisplay( result );
 }

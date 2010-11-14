@@ -19,6 +19,7 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tr.h"
 
+IdentifierFactory ADN_Categories_Data::idFactory_;
 // =============================================================================
 // AttritionEffectOnHuman
 // =============================================================================
@@ -39,6 +40,7 @@ ADN_Categories_Data::ADN_Categories_Data()
     vSizes_.SetItemTypeName( "la catégorie de volume" );
     vDotationNatures_.SetNodeName( "la liste des nature de dotations" );
     vDotationNatures_.SetItemTypeName( "la nature de dotation" );
+    idFactory_.Reserve( 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -70,6 +72,7 @@ void ADN_Categories_Data::Reset()
     vArmors_.Reset();
     vSizes_.Reset();
     vDotationNatures_.Reset();
+    idFactory_.Reset();
 }
 
 //-----------------------------------------------------------------------------
@@ -227,15 +230,18 @@ void ADN_Categories_Data::ReadArmors( xml::xistream& input )
 void ADN_Categories_Data::ReadNature( xml::xistream& input )
 {
     std::string strName;
+    int id ( 0 );
     input >> xml::attribute( "type", strName );
-    T_DotationNatureInfos_Vector::iterator found = std::find_if( vDotationNatures_.begin(), vDotationNatures_.end(), ADN_String_Cmp( strName ) );
+    input >> xml::optional() >> xml::attribute( "id", id );
+    helpers::T_ResourceNatureInfos_Vector::iterator found = std::find_if( vDotationNatures_.begin(), vDotationNatures_.end(), ADN_String_Cmp( strName ) );
     if( found != vDotationNatures_.end() )
         throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data", "Categories - Duplicated resource nature type name '%1'" ).arg( strName.c_str() ).ascii() );
-
-    DotationNatureInfos* pNew = new DotationNatureInfos( strName );
+    if ( !id )
+        id = idFactory_.Create();
+    helpers::ResourceNatureInfos* pNew = new helpers::ResourceNatureInfos( strName, id );
     pNew->SetDataName( "le nom de la nature de dotation" );
     vDotationNatures_.AddItem( pNew );
-
+    idFactory_.Reserve( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -303,14 +309,24 @@ void ADN_Categories_Data::WriteDotationNatures( xml::xostream& output )
 
     output << xml::start( "natures" );
     ADN_Tools::AddSchema( output, "ResourceNatures" );
-    for( T_DotationNatureInfos_Vector::const_iterator it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
+    for( helpers::T_ResourceNatureInfos_Vector::const_iterator it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
     {
         if( ( *it )->GetData().empty() )
             throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data","Categories - Invalid resource nature" ).ascii() );
         std::string strData( ( *it )->GetData() );
         output << xml::start( "nature" )
                 << xml::attribute( "type", trim( strData ) )
+                << xml::attribute( "id", ( *it )->id_ )
                << xml::end;
     }
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Categories_Data::GetNewIdentifier
+// Created: RPD 2010-11-03
+// -----------------------------------------------------------------------------
+unsigned long ADN_Categories_Data::GetNewIdentifier()
+{
+    return idFactory_.Create();
 }

@@ -24,9 +24,9 @@
 // Name: ADN_Equipement_Wizard_Page0 constructor
 // Created: APE 2005-01-20
 // -----------------------------------------------------------------------------
-ADN_Equipement_Wizard_Page0::ADN_Equipement_Wizard_Page0( ADN_Equipement_Data::DotationInfos& parentDotation, QWizard* pParent, const char* szName )
+ADN_Equipement_Wizard_Page0::ADN_Equipement_Wizard_Page0( ADN_Equipement_Data::ResourceInfos& parentDotation, QWizard* pParent, const char* szName )
 : ADN_Wizard_FirstPage_Default<ADN_Equipement_Data::CategoryInfo>( parentDotation.categories_, pParent, szName )
-, parentDotation_   ( parentDotation )
+, parentResource_   ( parentDotation )
 {
 }
 
@@ -46,8 +46,8 @@ ADN_Equipement_Wizard_Page0::~ADN_Equipement_Wizard_Page0()
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Wizard_Page0::NewT()
 {
-    if( parentDotation_.nType_ == eDotationFamily_Munition )
-        return new ADN_Equipement_Data::AmmoCategoryInfo( parentDotation_ );
+    if( parentResource_.nType_ == eDotationFamily_Munition )
+        return new ADN_Equipement_Data::AmmoCategoryInfo( parentResource_ );
     else
-        return new ADN_Equipement_Data::CategoryInfo( parentDotation_ );
+        return new ADN_Equipement_Data::CategoryInfo( parentResource_ );
 }

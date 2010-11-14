@@ -64,11 +64,11 @@ void ADN_EquipementSelector::OnButtonPressed()
     QPopupMenu* pPopup = new QPopupMenu( this );
 
     // Get the dotation list.
-    ADN_Equipement_Data::T_DotationInfos_Vector& dotations
+    ADN_Equipement_Data::T_ResourceInfos_Vector& dotations
         = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
 
     // Fill the popup menu with submenus, one for each dotation.
-    for( ADN_Equipement_Data::IT_DotationInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )
+    for( ADN_Equipement_Data::IT_ResourceInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )
     {
         QPopupMenu* pSubMenu = new QPopupMenu( pPopup );
 
@@ -131,7 +131,7 @@ void ADN_EquipementSelector::SetItem( void* pItem )
         return;
     }
 
-    pConnected_ = & ((ADN_Equipement_Data::CategoryInfo*)pItem)->parentDotation_.categories_;
+    pConnected_ = & ((ADN_Equipement_Data::CategoryInfo*)pItem)->parentResource_.categories_;
     pData_ = pItem;
     connect( pConnected_, SIGNAL( ItemRemoved( void* ) ), this, SLOT( ItemRemoved( void* ) ) );
     setText( ((ADN_Equipement_Data::CategoryInfo*)pItem)->strName_.GetData().c_str() );

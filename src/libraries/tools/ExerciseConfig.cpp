@@ -64,6 +64,7 @@ void ExerciseConfig::LoadExercise( const std::string& file )
     {
         xml::xifstream xis( file );
         xis >> xml::start( "exercise" )
+                >> xml::optional >> xml::attribute( "model-version", modelVersion_ )
                 >> xml::start( "terrain" )
                     >> xml::attribute( "name", terrain_ )
                 >> xml::end

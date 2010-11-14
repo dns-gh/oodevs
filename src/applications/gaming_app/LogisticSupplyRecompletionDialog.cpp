@@ -298,9 +298,9 @@ void LogisticSupplyRecompletionDialog::InitializeSupplies()
             const unsigned nPos = stockTable_->numRows();
             stockTable_->insertRows( nPos, 1 );
             stockTable_->setItem( nPos, 0, new QCheckTableItem( stockTable_, 0 ) );
-            stockTable_->setText( nPos, 1, stock.type_->GetCategory().c_str() );
+            stockTable_->setText( nPos, 1, stock.type_->GetName().c_str() );
             stockTable_->setText( nPos, 2, QString::number( stock.quantity_ ) );
-            stocks_[ stock.type_->GetCategory().c_str() ] = &stock;
+            stocks_[ stock.type_->GetName().c_str() ] = &stock;
             show = true;
         }
     }

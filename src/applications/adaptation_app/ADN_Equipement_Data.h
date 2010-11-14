@@ -26,6 +26,7 @@
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Enums.h"
 #include "ADN_Categories_Data.h"
+#include "ADN_ResourceNatureInfos.h"
 #include "ADN_Urban_Data.h"
 
 class xml::xistream;
@@ -42,7 +43,7 @@ class ADN_Equipement_Data : public ADN_Data_ABC
     MT_COPYNOTALLOWED( ADN_Equipement_Data );
 
 public:
-    class DotationInfos;
+    class ResourceInfos;
 
 // *****************************************************************************
     class CategoryInfo
@@ -53,7 +54,7 @@ public:
 
     public:
         CategoryInfo(); // For template usage.
-        CategoryInfo( DotationInfos& parentDotation );
+        CategoryInfo( ResourceInfos& parentDotation );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -65,14 +66,17 @@ public:
         virtual void WriteContent( xml::xostream& );
 
     public:
-        DotationInfos&  parentDotation_;
+        ResourceInfos&  parentResource_;
         ADN_Type_String strName_;
+        ADN_Type_String category_;
         int             nMosId_;
         ADN_Type_String strCodeEMAT6_;
         ADN_Type_String strCodeEMAT8_;
         ADN_Type_String strCodeLFRIL_;
         ADN_Type_String strCodeNNO_;
-        ADN_TypePtr_InVector_ABC<ADN_Categories_Data::DotationNatureInfos> ptrDotationNature_;
+        ADN_Type_String strDotationNature_;
+        ADN_Type_Int    nDotationNatureId_;
+        ADN_TypePtr_InVector_ABC<helpers::ResourceNatureInfos> ptrResourceNature_;
         ADN_Type_Double rNbrInPackage_;
         ADN_Type_Double rPackageVolume_;
         ADN_Type_Double rPackageWeight_;
@@ -96,7 +100,7 @@ public:
         void CopyFrom( UrbanAttritionInfos& attritions );
 
         void ReadArchive( xml::xistream& );
-        void WriteArchive( xml::xostream&, const std::string& tag = "urbanModifier" );
+        void WriteArchive( xml::xostream&, const std::string& tag = "urban-modifier" );
 
     public:
         ADN_TypePtr_InVector_ABC< ADN_Urban_Data::UrbanMaterialInfos > ptrMaterial_;
@@ -222,7 +226,7 @@ public:
         MT_COPYNOTALLOWED( AmmoCategoryInfo );
 
     public:
-        AmmoCategoryInfo( DotationInfos& parentDotation );
+        AmmoCategoryInfo( ResourceInfos& parentDotation );
 
         CategoryInfo* CreateCopy();
 
@@ -257,15 +261,15 @@ public:
     typedef ADN_Type_Vector_ABC<AmmoCategoryInfo> T_AmmoCategoryInfo_Vector;
 
 // *****************************************************************************
-    class DotationInfos
+    class ResourceInfos
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( DotationInfos );
+        MT_COPYNOTALLOWED( ResourceInfos );
 
     public:
-         DotationInfos( E_DotationFamily nType );
-        ~DotationInfos();
+         ResourceInfos( E_DotationFamily nType );
+        ~ResourceInfos();
 
         void Reset();
 
@@ -284,8 +288,8 @@ public:
         T_CategoryInfos_Vector categories_;
     };
 
-    typedef ADN_Type_Vector_ABC<DotationInfos> T_DotationInfos_Vector;
-    typedef T_DotationInfos_Vector::iterator   IT_DotationInfos_Vector;
+    typedef ADN_Type_Vector_ABC<ResourceInfos> T_ResourceInfos_Vector;
+    typedef T_ResourceInfos_Vector::iterator   IT_ResourceInfos_Vector;
 
 
 // *****************************************************************************
@@ -297,8 +301,8 @@ public:
     void FilesNeeded(T_StringList& files ) const;
     void Reset();
 
-    T_DotationInfos_Vector& GetDotations();
-    DotationInfos&          GetDotation( E_DotationFamily nType );
+    T_ResourceInfos_Vector& GetDotations();
+    ResourceInfos&          GetDotation( E_DotationFamily nType );
     CategoryInfo*           FindEquipementCategory( const std::string& strDotationName, const std::string& strCategoryName );
     CategoryInfo*           FindEquipementCategory( const std::string& strCategoryName );
 
@@ -306,13 +310,13 @@ public:
 
 private:
     void ReadArchive( xml::xistream& );
-    void ReadDotation( xml::xistream& );
+    void ReadResource( xml::xistream& );
     void WriteArchive( xml::xostream& );
 
 private:
     int nNextCatId_;
 
-    T_DotationInfos_Vector dotations_;
+    T_ResourceInfos_Vector resources_;
 };
 
 
@@ -321,9 +325,9 @@ private:
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
 inline
-ADN_Equipement_Data::T_DotationInfos_Vector& ADN_Equipement_Data::GetDotations()
+ADN_Equipement_Data::T_ResourceInfos_Vector& ADN_Equipement_Data::GetDotations()
 {
-    return dotations_;
+    return resources_;
 }
 
 

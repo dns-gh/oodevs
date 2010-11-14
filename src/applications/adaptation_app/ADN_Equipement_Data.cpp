@@ -25,13 +25,14 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tr.h"
 #include "ADN_DataException.h"
+#include "ADN_AttritionInfos.h"
 
 #include "ENT/ENT_Tr.h"
 
 #include <memory>
 
 
-ADN_Equipement_Data::DotationInfos* gpDummyDotationInfos;
+ADN_Equipement_Data::ResourceInfos* gpDummyDotationInfos;
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_Data::CategoryInfo
@@ -44,8 +45,8 @@ ADN_Equipement_Data::DotationInfos* gpDummyDotationInfos;
 ADN_Equipement_Data::CategoryInfo::CategoryInfo()
 : ADN_Ref_ABC           ( "ADN_Equipement_Data::CategoryInfo" )
 , ADN_DataTreeNode_ABC  ()
-, parentDotation_       ( *gpDummyDotationInfos )
-, ptrDotationNature_    ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
+, parentResource_       ( *gpDummyDotationInfos )
+, ptrResourceNature_    ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
 {
     assert( 0 );
 }
@@ -54,20 +55,21 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo()
 // Name: CategoryInfo::CategoryInfo
 // Created: APE 2004-11-15
 // -----------------------------------------------------------------------------
-ADN_Equipement_Data::CategoryInfo::CategoryInfo( DotationInfos& parentDotation )
+ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
 : ADN_Ref_ABC           ( "ADN_Equipement_Data::CategoryInfo" )
 , ADN_DataTreeNode_ABC  ()
 , strCodeEMAT6_         ()
 , strCodeEMAT8_         ()
 , strCodeLFRIL_         ()
 , strCodeNNO_           ()
-, ptrDotationNature_    ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
-, parentDotation_       ( parentDotation )
+, ptrResourceNature_    ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
+, parentResource_       ( parentDotation )
 , strName_              ()
 , nMosId_               ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNextCatId() )
 , rNbrInPackage_        ( 0. )
 , rPackageVolume_       ( 0. )
 , rPackageWeight_       ( 0. )
+, nDotationNatureId_    ( 0 )
 {
     strName_.SetDataName( "le nom d'" );
     strName_.SetParentNode( *this );
@@ -97,12 +99,12 @@ std::string ADN_Equipement_Data::CategoryInfo::GetItemName()
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::CategoryInfo::CreateCopy()
 {
-    CategoryInfo* pCopy = new CategoryInfo( parentDotation_ );
+    CategoryInfo* pCopy = new CategoryInfo( parentResource_ );
 
     pCopy->rNbrInPackage_  = rNbrInPackage_ .GetData();
     pCopy->rPackageVolume_ = rPackageVolume_.GetData();
     pCopy->rPackageWeight_ = rPackageWeight_.GetData();
-    pCopy->ptrDotationNature_ = ptrDotationNature_.GetData();
+    pCopy->ptrResourceNature_ = ptrResourceNature_.GetData();
     return pCopy;
 }
 
@@ -112,13 +114,13 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::CategoryInfo::CreateCopy
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::CategoryInfo::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "category", strName_ );
+    input >> xml::attribute( "name", strName_ );
     strCodeEMAT6_ = strName_.GetData();
     strCodeEMAT8_ = strName_.GetData();
     strCodeLFRIL_ = strName_.GetData();
     strCodeNNO_   = strName_.GetData();
+    input >> xml::attribute( "category", category_ );
 
-    std::string strNature;
     input >> xml::optional >> xml::attribute( "codeEMAT6", strCodeEMAT6_ )
           >> xml::optional >> xml::attribute( "codeEMAT8", strCodeEMAT8_ )
           >> xml::optional >> xml::attribute( "codeLFRIL", strCodeLFRIL_ )
@@ -126,11 +128,12 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "package-size", rNbrInPackage_ )
           >> xml::attribute( "package-mass", rPackageWeight_ )
           >> xml::attribute( "package-volume", rPackageVolume_ )
-          >> xml::attribute( "nature", strNature );
-    ADN_Categories_Data::DotationNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( strNature );
+          >> xml::attribute( "nature", strDotationNature_ );
+    helpers::ResourceNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( strDotationNature_.GetData() );
     if( !pNature )
-        throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).ascii(), tools::translate( "Equipment_Data", "Equipment - Invalid resource nature '%1'" ).arg( strNature.c_str() ).ascii() );
-    ptrDotationNature_ = pNature;
+        throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).ascii(), tools::translate( "Equipment_Data", "Equipment - Invalid resource nature '%1'" ).arg( strDotationNature_.GetData().c_str() ).ascii() );
+    ptrResourceNature_ = pNature;
+    nDotationNatureId_ = pNature->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +142,7 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::CategoryInfo::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "dotation" );
+    output << xml::start( "resource" );
     WriteContent( output );
     output << xml::end;
 }
@@ -150,13 +153,14 @@ void ADN_Equipement_Data::CategoryInfo::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::CategoryInfo::WriteContent( xml::xostream& output )
 {
-    output << xml::attribute( "name", parentDotation_.strName_ )
-           << xml::attribute( "category", strName_ )
+    output << xml::attribute( "category", category_ )
+           << xml::attribute( "name", strName_ )
            << xml::attribute( "id", nMosId_ )
            << xml::attribute( "package-size", rNbrInPackage_ )
            << xml::attribute( "package-mass", rPackageWeight_ )
            << xml::attribute( "package-volume", rPackageVolume_ )
-           << xml::attribute( "nature", *ptrDotationNature_.GetData() )
+           << xml::attribute( "nature", strDotationNature_ )
+           << xml::attribute( "id-nature", nDotationNatureId_ )
            << xml::attribute( "codeEMAT6", strCodeEMAT6_ )
            << xml::attribute( "codeEMAT8", strCodeEMAT8_ )
            << xml::attribute( "codeLFRIL", strCodeLFRIL_ )
@@ -419,7 +423,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
 // Name: AmmoCategoryInfo::AmmoCategoryInfo
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( DotationInfos& parentDotation )
+ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( ResourceInfos& parentDotation )
 : CategoryInfo          ( parentDotation )
 , bDirect_              ( false )
 , bUrbanAttrition_      ( false )
@@ -443,7 +447,7 @@ ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( DotationInfos& parentDo
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::CreateCopy()
 {
-    AmmoCategoryInfo* pCopy = new AmmoCategoryInfo( parentDotation_ );
+    AmmoCategoryInfo* pCopy = new AmmoCategoryInfo( parentResource_ );
     pCopy->bTrancheD_ = bTrancheD_.GetData();
     pCopy->nType_ = nType_.GetData();
     pCopy->bDirect_ = bDirect_.GetData();
@@ -553,8 +557,8 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
             >> xml::list( "attrition", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition )
           >> xml::end
           >> xml::optional
-          >> xml::start( "urbanModifiers" )
-            >> xml::list( "urbanModifier", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadUrbanModifer )
+          >> xml::start( "urban-modifiers" )
+            >> xml::list( "urban-modifier", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadUrbanModifer )
           >> xml::end
           >> xml::list( "indirect-fire", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadIndirectFire );
 }
@@ -565,7 +569,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "dotation" );
+    output << xml::start( "resource" );
     CategoryInfo::WriteContent( output );
     output << xml::attribute( "type", ADN_Tr::ConvertFromMunitionType( nType_.GetData() ) );
     if( bTrancheD_.GetData() )
@@ -595,7 +599,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
     }
     if( bUrbanAttrition_.GetData() == true )
     {
-        output << xml::start( "urbanModifiers" );
+        output << xml::start( "urban-modifiers" );
         for( IT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
             (*itUrbanAttrition)->WriteArchive( output );
         output << xml::end;
@@ -608,68 +612,68 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationInfos::DotationInfos
+// Name: ResourceInfos::ResourceInfos
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-ADN_Equipement_Data::DotationInfos::DotationInfos( E_DotationFamily nType )
+ADN_Equipement_Data::ResourceInfos::ResourceInfos( E_DotationFamily nType )
 : ADN_Ref_ABC            ()
 , ADN_DataTreeNode_ABC   ()
 , nType_                 ( nType )
 , strName_               ( ENT_Tr::ConvertFromDotationFamily( nType ) )
-, categories_            ( true, "ADN_Equipement_Data::DotationInfos::categories_" )
+, categories_            ( true, "ADN_Equipement_Data::ResourceInfos::categories_" )
 {
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationInfos::~DotationInfos
+// Name: ResourceInfos::~ResourceInfos
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-ADN_Equipement_Data::DotationInfos::~DotationInfos()
+ADN_Equipement_Data::ResourceInfos::~ResourceInfos()
 {
     this->Reset();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationInfos::Reset
+// Name: ResourceInfos::Reset
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-void ADN_Equipement_Data::DotationInfos::Reset()
+void ADN_Equipement_Data::ResourceInfos::Reset()
 {
     categories_.Reset();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationInfos::GetNodeName
+// Name: ResourceInfos::GetNodeName
 // Created: APE 2004-12-13
 // -----------------------------------------------------------------------------
-std::string ADN_Equipement_Data::DotationInfos::GetNodeName()
+std::string ADN_Equipement_Data::ResourceInfos::GetNodeName()
 {
     return std::string();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationInfos::GetItemName
+// Name: ResourceInfos::GetItemName
 // Created: APE 2004-12-13
 // -----------------------------------------------------------------------------
-std::string ADN_Equipement_Data::DotationInfos::GetItemName()
+std::string ADN_Equipement_Data::ResourceInfos::GetItemName()
 {
     return std::string();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationInfos::GetCategories
+// Name: ResourceInfos::GetCategories
 // Created: APE 2005-01-05
 // -----------------------------------------------------------------------------
-ADN_Equipement_Data::T_CategoryInfos_Vector& ADN_Equipement_Data::DotationInfos::GetCategories()
+ADN_Equipement_Data::T_CategoryInfos_Vector& ADN_Equipement_Data::ResourceInfos::GetCategories()
 {
     return categories_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationInfos::FindCategory
+// Name: ResourceInfos::FindCategory
 // Created: APE 2005-01-12
 // -----------------------------------------------------------------------------
-ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::DotationInfos::FindCategory( const std::string& strName )
+ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::ResourceInfos::FindCategory( const std::string& strName )
 {
     IT_CategoryInfos_Vector it = std::find_if( categories_.begin(), categories_.end(), ADN_Tools::NameCmp<CategoryInfo>( strName ) );
     if( it == categories_.end() )
@@ -679,10 +683,10 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::DotationInfos::FindCateg
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationInfos::ReadArchive
+// Name: ResourceInfos::ReadArchive
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Equipement_Data::DotationInfos::ReadArchive( xml::xistream& input )
+void ADN_Equipement_Data::ResourceInfos::ReadArchive( xml::xistream& input )
 {
     std::auto_ptr< CategoryInfo > spNew;
     if( strName_.GetData() == "munition" || strName_.GetData() == "explosif" || strName_.GetData() == "mine" )
@@ -694,10 +698,10 @@ void ADN_Equipement_Data::DotationInfos::ReadArchive( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationInfos::WriteArchive
+// Name: ResourceInfos::WriteArchive
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Equipement_Data::DotationInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipement_Data::ResourceInfos::WriteArchive( xml::xostream& output )
 {
     for( IT_CategoryInfos_Vector it = categories_.begin(); it != categories_.end(); ++it )
         (*it)->WriteArchive( output );
@@ -710,10 +714,10 @@ void ADN_Equipement_Data::DotationInfos::WriteArchive( xml::xostream& output )
 ADN_Equipement_Data::ADN_Equipement_Data()
 : ADN_Data_ABC()
 , nNextCatId_ ( 1 )
-, dotations_  ()
+, resources_  ()
 {
     for( int n = 0; n < eNbrDotationFamily; ++n )
-        dotations_.AddItem( new DotationInfos( (E_DotationFamily)n ) );
+        resources_.AddItem( new ResourceInfos( (E_DotationFamily)n ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -722,7 +726,7 @@ ADN_Equipement_Data::ADN_Equipement_Data()
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::~ADN_Equipement_Data()
 {
-    dotations_.Reset();
+    resources_.Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -741,7 +745,7 @@ void ADN_Equipement_Data::FilesNeeded(T_StringList& files ) const
 void ADN_Equipement_Data::Reset()
 {
     nNextCatId_ = 1;
-    for( IT_DotationInfos_Vector it = dotations_.begin(); it != dotations_.end(); ++it )
+    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
         (*it)->Reset();
 }
 
@@ -749,14 +753,14 @@ void ADN_Equipement_Data::Reset()
 // Name: ADN_Equipement_Data::ReadDotation
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_Equipement_Data::ReadDotation( xml::xistream& input )
+void ADN_Equipement_Data::ReadResource( xml::xistream& input )
 {
-    std::string name;
-    input >> xml::attribute( "name", name );
-    E_DotationFamily nTypeDotation = ENT_Tr::ConvertToDotationFamily( name );
-    if( nTypeDotation == -1 )
-        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid resource type '%1'" ).arg( name.c_str() ).ascii() );
-    dotations_.at( nTypeDotation )->ReadArchive( input );
+    std::string category;
+    input >> xml::attribute( "category", category );
+    E_DotationFamily nResourceType = ENT_Tr::ConvertToDotationFamily( category );
+    if( nResourceType == -1 )
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid resource type '%1'" ).arg( category.c_str() ).ascii() );
+    resources_.at( nResourceType )->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -765,8 +769,8 @@ void ADN_Equipement_Data::ReadDotation( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::ReadArchive( xml::xistream& input )
 {
-    input >> xml::start( "dotations" )
-            >> xml::list( "dotation", *this, &ADN_Equipement_Data::ReadDotation )
+    input >> xml::start( "resources" )
+            >> xml::list( "resource", *this, &ADN_Equipement_Data::ReadResource )
           >> xml::end;
 }
 
@@ -776,9 +780,9 @@ void ADN_Equipement_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "dotations" );
+    output << xml::start( "resources" );
     ADN_Tools::AddSchema( output, "Resources" );
-    for( IT_DotationInfos_Vector it = dotations_.begin(); it != dotations_.end(); ++it )
+    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }
@@ -789,8 +793,8 @@ void ADN_Equipement_Data::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::FindEquipementCategory( const std::string& strDotationName, const std::string& strCategoryName )
 {
-    IT_DotationInfos_Vector it = std::find_if( dotations_.begin(), dotations_.end(), ADN_Tools::NameCmp<DotationInfos>( strDotationName ) );
-    if( it == dotations_.end() )
+    IT_ResourceInfos_Vector it = std::find_if( resources_.begin(), resources_.end(), ADN_Tools::NameCmp<ResourceInfos>( strDotationName ) );
+    if( it == resources_.end() )
         return 0;
 
     return (*it)->FindCategory( strCategoryName );
@@ -802,7 +806,7 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::FindEquipementCategory( 
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::FindEquipementCategory( const std::string& strCategoryName )
 {
-    for ( IT_DotationInfos_Vector it = dotations_.begin(); it != dotations_.end(); ++it )
+    for ( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
     {
         ADN_Equipement_Data::CategoryInfo* category = (*it)->FindCategory( strCategoryName );
         if( category )
@@ -824,7 +828,7 @@ int ADN_Equipement_Data::GetNextCatId()
 // Name: ADN_Equipement_Data::GetDotation
 // Created: APE 2005-01-12
 // -----------------------------------------------------------------------------
-ADN_Equipement_Data::DotationInfos& ADN_Equipement_Data::GetDotation( E_DotationFamily nType )
+ADN_Equipement_Data::ResourceInfos& ADN_Equipement_Data::GetDotation( E_DotationFamily nType )
 {
-    return * dotations_[ nType ];
+    return * resources_[ nType ];
 }

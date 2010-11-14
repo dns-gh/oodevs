@@ -163,7 +163,7 @@ QString ReportFactory::RenderParameter( const Common::MsgMissionParameter& value
         if( value.value().has_equipmenttype() )
             return equipmentResolver_.Get( value.value().equipmenttype().id() ).GetName().c_str();
         if( value.value().has_resourcetype() )
-            return dotationResolver_.Get( value.value().resourcetype().id() ).GetCategory().c_str();
+            return dotationResolver_.Get( value.value().resourcetype().id() ).GetName().c_str();
         if( value.value().has_tirindirect() )
             return QString::number( value.value().tirindirect().id() );
         if( value.value().has_acharstr() )

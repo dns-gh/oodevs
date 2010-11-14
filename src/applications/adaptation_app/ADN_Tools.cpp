@@ -175,3 +175,12 @@ void ADN_Tools::AddSchema( xml::xostream& xos, const std::string& name )
             << xml::ns( "http://www.w3.org/2001/XMLSchema-instance" )
                 << xml::attribute( "noNamespaceSchemaLocation", "schemas/physical/" + name + ".xsd" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tools::AddVersion
+// Created: RPD 2010-09-22
+// -----------------------------------------------------------------------------
+void ADN_Tools::AddVersion( xml::xostream& xos, const std::string& version )
+{
+    xos << xml::attribute( "model-version", version );
+}

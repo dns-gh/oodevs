@@ -54,7 +54,7 @@ public:
         ADN_Type_String strName_;
         ADN_Type_String strColor_;
         ADN_Type_Int nProduction_;
-        ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::DotationInfos > ptrDotation_;
+        ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::ResourceInfos > ptrDotation_;
         ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > ptrCategory_;
         //@}
     };

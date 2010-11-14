@@ -96,7 +96,9 @@ public:
 
     public:
         ADN_Type_Int id_;
+        ADN_Type_String category_;
         ADN_Type_String message_;
+        ADN_Type_String clientFunctionTrigger_;
         T_ReportParameter_Vector parameters_;
     };
 

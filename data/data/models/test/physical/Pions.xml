@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<units>
+<units xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Units.xsd">
   <unit decisional-model="Test LOG" id="1" name="PC TC2" type="Pion LOG TC2">
     <nature atlas-nature="ASA" level="xxxx" nature="combat/engineer/combat"/>
     <equipments>

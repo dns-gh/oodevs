@@ -56,7 +56,7 @@ QWidget* ParamDotationDType::BuildInterface( QWidget* parent )
             {
                 Common::ResourceType dot;
                 dot.set_id( type.GetId() );
-                AddItem( type.GetCategory().c_str(), dot.id() );
+                AddItem( type.GetName().c_str(), dot.id() );
             }
         }
     }

@@ -96,7 +96,7 @@ void BaseDisplayer::Call( const kernel::Automat_ABC& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const DotationType& value )
 {
-    AddToDisplay( value.GetCategory() );
+    AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------

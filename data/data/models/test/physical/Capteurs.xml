@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<sensors>
+<sensors xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Sensors.xsd">
   <alat-monitoring-times>
     <alat-monitoring-time terrain="Vide" time="10s"/>
     <alat-monitoring-time terrain="Foret" time="20s"/>
@@ -60,8 +60,8 @@
     </radar>
   </radars>
   <sensors>
-    <sensor name="oeil">
-      <unit-detection angle="30" scanning="true">
+    <sensor detection-delay="0h" name="oeil">
+      <unit-detection angle="30" firer-detection-distance="0" scanning="true">
         <base-distances close-range="50">
           <base-distance distance="3000" level="identification"/>
           <base-distance distance="5000" level="recognition"/>
@@ -171,8 +171,8 @@
         </object>
       </object-detection>
     </sensor>
-    <sensor name="oeil NBC">
-      <unit-detection angle="60" scanning="true">
+    <sensor detection-delay="0h" name="oeil NBC">
+      <unit-detection angle="60" firer-detection-distance="0" scanning="true">
         <base-distances close-range="50">
           <base-distance distance="75" level="identification"/>
           <base-distance distance="150" level="recognition"/>

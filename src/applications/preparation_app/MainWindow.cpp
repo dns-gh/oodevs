@@ -434,6 +434,7 @@ bool MainWindow::Load()
     }
     catch( xml::exception& e )
     {
+        SetNeedsSaving( false );
         Close();
         QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
                                    , ( tr( "Error reading xml file: " ) + e.what() ).ascii() );
@@ -478,6 +479,7 @@ void MainWindow::LoadExercise()
     }
     catch( std::exception& e )
     {
+        SetNeedsSaving( false );
         Close();
         QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
                                    , ( tr( "Error loading exercise: " ) + e.what() ).ascii() );

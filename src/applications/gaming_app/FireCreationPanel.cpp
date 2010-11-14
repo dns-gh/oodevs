@@ -134,7 +134,7 @@ void FireCreationPanel::NotifyUpdated( const kernel::ModelLoaded& )
         {
             Common::ResourceType dot;
             dot.set_id( type.GetId() );
-            ammunitionsBox_->AddItem( type.GetCategory(), dot.id() );
+            ammunitionsBox_->AddItem( type.GetName(), dot.id() );
         }
     }
 

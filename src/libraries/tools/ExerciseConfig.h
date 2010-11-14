@@ -77,6 +77,7 @@ private:
 private:
     //! @name Member data
     //@{
+    std::string modelVersion_;
     std::string exerciseName_;
     std::string terrain_;
     std::string dataset_;

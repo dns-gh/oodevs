@@ -47,7 +47,7 @@ DotationsEditor::DotationsEditor( QDialog*& self, QWidget* parent, const tools::
     tools::Iterator< const DotationType& > it = dotationTypes_.CreateIterator();
     types_.append( "" );
     while( it.HasMoreElements() )
-        types_.append( it.NextElement().GetCategory().c_str() );
+        types_.append( it.NextElement().GetName().c_str() );
 
     connect( ok    , SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
@@ -162,7 +162,7 @@ void DotationsEditor::AddItem( const Dotation* dotation /*=0*/ )
     if( dotation )
     {
         table_->setText( row, 1, QString::number( dotation->quantity_ ) );
-        item->setCurrentItem( dotation->type_->GetCategory().c_str() );
+        item->setCurrentItem( dotation->type_->GetName().c_str() );
     }
     table_->setCurrentCell( row, 1 );
 }

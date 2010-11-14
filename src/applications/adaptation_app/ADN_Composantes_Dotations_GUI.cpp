@@ -127,11 +127,11 @@ void ADN_Composantes_Dotations_GUI::OnContextMenu( int /*row*/, int /*col*/, con
     QPopupMenu targetMenu( &menu );
 
     // Get the dotation list.
-    ADN_Equipement_Data::T_DotationInfos_Vector& dotations
+    ADN_Equipement_Data::T_ResourceInfos_Vector& dotations
         = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
 
     // Fill the popup menu with submenus, one for each dotation.
-    for( ADN_Equipement_Data::IT_DotationInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )
+    for( ADN_Equipement_Data::IT_ResourceInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )
     {
         QPopupMenu* pSubMenu = new QPopupMenu( &targetMenu );
 
@@ -190,7 +190,7 @@ bool ADN_Composantes_Dotations_GUI::Contains( ADN_Equipement_Data::CategoryInfo&
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Dotations_GUI::AddNewDotation( ADN_Equipement_Data::CategoryInfo& category )
 {
-    CategoryInfos* pNewInfo = new CategoryInfos( category.parentDotation_ );
+    CategoryInfos* pNewInfo = new CategoryInfos( category.parentResource_ );
     pNewInfo->ptrCategory_ = &category;
     pNewInfo->rNbr_ = 0;
 

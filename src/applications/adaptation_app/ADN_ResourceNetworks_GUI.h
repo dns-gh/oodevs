@@ -15,7 +15,7 @@
 #include "ADN_ResourceNetworks_Data.h"
 
 class ADN_ListView_ResourceNetworks;
-class ADN_Equipement_Data::DotationInfos;
+class ADN_Equipement_Data::ResourceInfos;
 class ADN_Equipement_Data::CategoryInfo;
 
 // =============================================================================
@@ -68,7 +68,7 @@ private:
     //@{
     ADN_ResourceNetworks_Data& data_;
     ADN_ListView_ResourceNetworks* pResourceNetworks_;
-    ADN_ComboBox_Vector< ADN_Equipement_Data::DotationInfos >* dotationsCombo_;
+    ADN_ComboBox_Vector< ADN_Equipement_Data::ResourceInfos >* dotationsCombo_;
     ADN_ComboBox_Vector< ADN_Equipement_Data::CategoryInfo >* categoriesCombo_;
     //@}
 };

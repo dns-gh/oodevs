@@ -16,9 +16,7 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_Categories_GUI.h"
 #include "ADN_GuiTools.h"
-
-typedef ADN_Categories_Data::DotationNatureInfos DotationNatureInfos;
-
+#include "ADN_ResourceNatureInfos.h"
 
 //-----------------------------------------------------------------------------
 // Internal List View Categories_DotationNature connector to be connected with ADN_ListView_Categories_DotationNature
@@ -36,7 +34,7 @@ public:
     ADN_ListViewItem* CreateItem( void * obj )
     {
         ADN_ListViewItem *pItem = new ADN_ListViewItem( &list_, obj, 1 );
-        pItem->Connect( 0, static_cast< DotationNatureInfos* >( obj ) );
+        pItem->Connect( 0, static_cast< helpers::ResourceNatureInfos* >( obj ) );
         return pItem;
     }
 
@@ -78,7 +76,7 @@ void ADN_ListView_Categories_DotationNature::ConnectItem( bool bConnect )
     if( pCurData_ == 0 )
         return;
 
-    DotationNatureInfos* pInfos = (DotationNatureInfos*) pCurData_;
+    helpers::ResourceNatureInfos* pInfos = (helpers::ResourceNatureInfos*) pCurData_;
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Categories_GUI::eNbrDotationNatureGuiElements );
 
     vItemConnectors_[ ADN_Categories_GUI::eDotationNatureName ]->Connect( pInfos, bConnect );
@@ -101,8 +99,8 @@ void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
     {
         case 0:
         {
-            DotationNatureInfos* pNewInfo = new DotationNatureInfos();
-            pNewInfo->SetDataName( "le nom de la nature de dotation" );
+            helpers::ResourceNatureInfos* pNewInfo = new helpers::ResourceNatureInfos( "new nature", ADN_Categories_Data::GetNewIdentifier() );
+            pNewInfo->SetDataName( "new nature" );
 
             ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
             pCList->AddItem( pNewInfo );
@@ -121,7 +119,7 @@ void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
         }
         case 1:
         {
-            DotationNatureInfos* pCurSize = (DotationNatureInfos*)pCurData_;
+            helpers::ResourceNatureInfos* pCurSize = ( helpers::ResourceNatureInfos* )pCurData_;
             if( pCurSize )
             {
                 if( pCurSize->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )

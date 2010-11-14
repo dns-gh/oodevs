@@ -104,9 +104,12 @@ void TeamsModel::NotifyDeleted( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void TeamsModel::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::start( "dotations" )
-            << xml::attribute( "infinite", infiniteDotations_ )
-        << xml::end;
+    if ( infiniteDotations_ )
+    {
+        xos << xml::start( "dotations" )
+                << xml::attribute( "infinite", infiniteDotations_ )
+            << xml::end;
+    }
 
     xos << xml::start( "sides" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )

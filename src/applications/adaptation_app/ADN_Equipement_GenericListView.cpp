@@ -28,7 +28,7 @@
 #include "ADN_Equipement_Wizard.h"
 #include "ENT/ENT_Tr.h"
 
-typedef ADN_Equipement_Data::DotationInfos DotationInfos;
+typedef ADN_Equipement_Data::ResourceInfos ResourceInfos;
 typedef ADN_Equipement_Data::CategoryInfo CategoryInfo;
 
 
@@ -82,7 +82,7 @@ void ADN_Equipement_GenericListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipement_GUI::eGenEMAT8Code]->Connect( &pInfos->strCodeEMAT8_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eGenLFRILCode]->Connect( &pInfos->strCodeLFRIL_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eGenNNOCode]->Connect( &pInfos->strCodeNNO_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eGenNature]->Connect( &pInfos->ptrDotationNature_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eGenNature]->Connect( &pInfos->ptrResourceNature_, bConnect );
 }
 
 
@@ -93,7 +93,7 @@ void ADN_Equipement_GenericListView::ConnectItem( bool bConnect )
 void ADN_Equipement_GenericListView::OnContextMenu( const QPoint& pt )
 {
     QPopupMenu popupMenu( this );
-    DotationInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( nType_ );
+    ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( nType_ );
     ADN_Equipement_Wizard wizard( dotation, this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );

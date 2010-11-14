@@ -138,7 +138,7 @@ void ADN_Composantes_ConsumptionsTable::OnContextMenu( int /*nRow*/, int /*nCol*
     // Get the available category list.
     assert( composanteListView_.GetCurrentData() != 0 );
     ADN_Composantes_Data::ComposanteInfos* pComp = (ADN_Composantes_Data::ComposanteInfos*)(composanteListView_.GetCurrentData());
-    ADN_Composantes_Data::DotationInfos& dotation = pComp->dotations_;
+    ADN_Composantes_Data::ResourceInfos& dotation = pComp->resources_;
     ADN_Composantes_Data::T_CategoryInfos_Vector& categories = dotation.categories_;
 
     QPopupMenu menu( this );

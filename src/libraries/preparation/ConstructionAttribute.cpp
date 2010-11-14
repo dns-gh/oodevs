@@ -83,7 +83,7 @@ void ConstructionAttribute::SerializeAttributes( xml::xostream& xos ) const
     if( dotationType_ != 0 && dotationCount_ != 0 )
         xos << xml::start( "resources" )
                 << xml::start( "dotation" )
-                    << xml::attribute( "name", dotationType_->GetCategory() )
+                    << xml::attribute( "name", dotationType_->GetName() )
                     << xml::attribute( "count", dotationCount_ )
                 << xml::end
             << xml::end;

@@ -104,7 +104,7 @@ private:
     const PHY_DotationCategory* InternalFindDotationCategory( unsigned int nID ) const;
     const PHY_DotationCategory* InternalFindDotationCategory( const std::string& strName ) const;
 
-    void RegisterDotationCategory( const std::string& strCategoryName, xml::xistream& xis );
+    void RegisterDotation( const std::string& strCategoryName, xml::xistream& xis );
     //@}
     //! @name Helpers
     //@{

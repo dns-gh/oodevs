@@ -289,7 +289,7 @@ void LogisticSupplyPushFlowDialog::AddDotation( const SupplyStates& states )
 	while( it.HasMoreElements() )
 	{
 		const Dotation& dotation = it.NextElement();
-		const QString type = dotation.type_->GetCategory().c_str();
+		const QString type = dotation.type_->GetName().c_str();
 		Dotation& supply = supplies_[ type ];
 		if( ! supply.type_ )
 		{

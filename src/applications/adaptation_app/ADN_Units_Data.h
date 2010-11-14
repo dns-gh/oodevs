@@ -74,7 +74,7 @@ public:
 
 
     //*****************************************************************************
-    typedef ADN_Composantes_Data::DotationInfos DotationInfos;
+    typedef ADN_Composantes_Data::ResourceInfos ResourceInfos;
 
     //*****************************************************************************
 
@@ -235,7 +235,7 @@ public:
         T_PointInfos_Vector                                         vPointInfos_;
 
         ADN_Type_Bool                                               bTC1_;
-        DotationInfos                                               contenancesTC1_;
+        ResourceInfos                                               contenancesTC1_;
         ADN_Type_Bool                                               bStock_;
         StockInfos                                                  stocks_;
 

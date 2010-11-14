@@ -21,16 +21,14 @@ using namespace kernel;
 DotationType::DotationType( xml::xistream& xis )
     : dType_( false )
 {
-    std::string category, xmlName;
     xis >> xml::attribute( "id", id_ )
-        >> xml::attribute( "name", xmlName )
+        >> xml::attribute( "name", name_ )
         >> xml::attribute( "category", category_ )
         >> xml::optional >> xml::attribute( "d-type", dType_ );
-    nameId_ = tools::DotationFamilyFromString( xmlName );
-    name_ = tools::ToString( E_DotationFamily( nameId_ ) );
+    categoryId_ = tools::DotationFamilyFromString( category_ );
 
-    gaz_        = ( xmlName == "carburant" );
-    ammunition_ = ( xmlName == "munition" );
+    gaz_        = ( category_ == "carburant" );
+    ammunition_ = ( category_ == "munition" );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +91,7 @@ bool DotationType::IsAmmunition() const
 // -----------------------------------------------------------------------------
 unsigned long DotationType::GetFamily() const
 {
-    return nameId_;
+    return categoryId_;
 }
 
 // -----------------------------------------------------------------------------

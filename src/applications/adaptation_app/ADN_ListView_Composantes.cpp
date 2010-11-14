@@ -87,7 +87,7 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eWeapons]->Connect( &pInfos->vWeapons_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eActiveProtections]->Connect( &pInfos->vActiveProtections_, bConnect );
 
-    vItemConnectors_[ADN_Composantes_GUI::eDotations]->Connect( &pInfos->dotations_.categories_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eDotations]->Connect( &pInfos->resources_.categories_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eConsumptions]->Connect( &pInfos->consumptions_.vConsumptions_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eObjects]->Connect( &pInfos->vObjects_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eAttritionBreakdowns]->Connect( &pInfos->attritionBreakdowns_.vBreakdowns_, bConnect );
@@ -122,7 +122,7 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
 
     vItemConnectors_[ADN_Composantes_GUI::eLogCarryVolumeCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rVolume_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eLogCarryWeightCapacity]->Connect( &pInfos->logInfos_.supplyInfos_.rWeight_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eLogCarryNature]->Connect( &pInfos->logInfos_.supplyInfos_.ptrDotationNature_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eLogCarryNature]->Connect( &pInfos->logInfos_.supplyInfos_.ptrResourceNature_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsLogCarrier]->Connect( &pInfos->logInfos_.supplyInfos_.bIsCarrier_, bConnect );
 
     vItemConnectors_[ADN_Composantes_GUI::eMaintenanceLoadTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.loadTime_, bConnect );

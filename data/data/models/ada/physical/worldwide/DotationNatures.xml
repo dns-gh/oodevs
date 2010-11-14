@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <natures xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/ResourceNatures.xsd">
-  <nature type="Kerosene"/>
-  <nature type="Gasoil"/>
-  <nature type="Solid"/>
-  <nature type="Eau en masse"/>
-  <nature type="Eau en pulverisation"/>
-  <nature type="Mousse"/>
-  <nature type="Poudre"/>
-  <nature type="CO2"/>
-  <nature type="Sable"/>
-  <nature type="Hydocarbures Halogenes"/>
+  <nature id="1" type="Kerosene"/>
+  <nature id="2" type="Gasoil"/>
+  <nature id="3" type="Solid"/>
+  <nature id="4" type="Eau en masse"/>
+  <nature id="5" type="Eau en pulverisation"/>
+  <nature id="6" type="Mousse"/>
+  <nature id="7" type="Poudre"/>
+  <nature id="8" type="CO2"/>
+  <nature id="9" type="Sable"/>
+  <nature id="10" type="Hydocarbures Halogenes"/>
 </natures>

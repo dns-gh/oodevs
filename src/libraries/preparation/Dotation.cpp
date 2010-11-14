@@ -54,6 +54,6 @@ Dotation::~Dotation()
 // -----------------------------------------------------------------------------
 void Dotation::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "name", type_->GetCategory() )
+    xos << xml::attribute( "name", type_->GetName() )
         << xml::attribute( "quantity", unsigned int( quantity_ ) );
 }

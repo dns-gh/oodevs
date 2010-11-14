@@ -140,7 +140,7 @@ void ADN_AutomatLog_ListView::BuildBody()
 
                 // Consumption
                 ADN_Composantes_Data::T_ConsumptionItem_Vector& consumptions = (*it3)->ptrComposante_.GetData()->consumptions_.vConsumptions_;
-                ADN_Composantes_Data::T_CategoryInfos_Vector&   categories   = (*it3)->ptrComposante_.GetData()->dotations_.categories_;
+                ADN_Composantes_Data::T_CategoryInfos_Vector&   categories   = (*it3)->ptrComposante_.GetData()->resources_.categories_;
                 for( ADN_Composantes_Data::IT_ConsumptionItem_Vector itCompCons = consumptions.begin(); itCompCons != consumptions.end(); ++itCompCons )
                 {
                     ADN_Composantes_Data::IT_CategoryInfos_Vector itCategory = categories.begin();
