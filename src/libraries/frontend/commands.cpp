@@ -99,10 +99,18 @@ namespace frontend
 
         bool IsValidReplay( const bfs::path& session )
         {
-            return bfs::is_directory( session )
-                && bfs::exists      ( session / "record" )
-                && bfs::is_directory( session / "record" )
-                && bfs::exists( session / "record" / "current" );
+            bfs::path record = session / "record";
+            if( !bfs::is_directory( session ) || !bfs::exists( record ) || !bfs::is_directory( record ) )
+                return false;
+            bfs::directory_iterator end;
+            for( bfs::directory_iterator it( record ); it != end; ++it )
+            {
+                const bfs::path child = *it;
+                if( bfs::is_directory( child ) && bfs::exists( child / "info" ) && bfs::exists( child / "index" )
+                    && bfs::exists( child / "keyindex" ) && bfs::exists( child / "key" ) && bfs::exists( child / "update" ) )
+                    return true; // un seul dossier valide suffit
+            }
+            return false;
         }
 
         QStringList ListSessions( const tools::GeneralConfig& config, const std::string& exercise )

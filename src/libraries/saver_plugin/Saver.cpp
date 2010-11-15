@@ -112,7 +112,7 @@ namespace
 // -----------------------------------------------------------------------------
 void Saver::ControlInformation( const MsgsSimToClient::MsgControlInformation& controlInformation )
 {
-    frameCount_ = controlInformation.current_tick();
+    frameCount_ = controlInformation.current_tick() - 1;
     fragmentFirstFrame_ = frameCount_;
     const bfs::path recorderDirectory( recorderDirectory_, bfs::native );
     if( bfs::exists( recorderDirectory ) )
