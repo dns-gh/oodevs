@@ -14,11 +14,8 @@
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "MIL_Mission_ABC.h"
 #include "MIL_AgentKnowledgeParameter.h"
-#include "MIL_AgentKnowledgeListParameter.h"
-#include "MIL_AgentListParameter.h"
 #include "MIL_AgentParameter.h"
 #include "MIL_AutomatParameter.h"
-#include "MIL_AutomatListParameter.h"
 #include "MIL_AtlasNatureParameter.h"
 #include "MIL_BoolParameter.h"
 #include "MIL_DateTimeParameter.h"
@@ -29,21 +26,15 @@
 #include "MIL_LimaListParameter.h"
 #include "MIL_ListParameter.h"
 #include "MIL_LocationParameter.h"
-#include "MIL_LocationListParameter.h"
 #include "MIL_LogMaintenancePrioritiesParameter.h"
 #include "MIL_LogMedicalPrioritiesParameter.h"
-#include "MIL_MissionObjectiveListParameter.h"
+#include "MIL_OrderType_ABC.h"
 #include "MIL_NullParameter.h"
 #include "MIL_ObjectKnowledgeParameter.h"
-#include "MIL_ObjectKnowledgeListParameter.h"
 #include "MIL_PathParameter.h"
-#include "MIL_PathListParameter.h"
 #include "MIL_PlannedWorkParameter.h"
-#include "MIL_PlannedWorkListParameter.h"
 #include "MIL_PointParameter.h"
-#include "MIL_PointListParameter.h"
 #include "MIL_PolygonParameter.h"
-#include "MIL_PolygonListParameter.h"
 #include "MIL_PopulationKnowledgeParameter.h"
 #include "MIL_RealParameter.h"
 #include "MIL_StringParameter.h"
@@ -51,41 +42,29 @@
 #include "MIL_UrbanBlockParameter.h"
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "protocol/protocol.h"
-#include "simulation_orders/MIL_ParameterType_PolygonList.h"
-#include "simulation_orders/MIL_ParameterType_ObjectKnowledgeList.h"
-#include "simulation_orders/MIL_ParameterType_GenObjectList.h"
-
-// -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
-// Created: LMT 2010-04-19
-// -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const MIL_OrderTypeParameter& type )
-{
-    const MIL_ParameterType_ABC& parameterType = type.GetType();
-    if( dynamic_cast< const MIL_ParameterType_PolygonList* >( &parameterType ) )
-        return boost::shared_ptr< MIL_MissionParameter_ABC >( new MIL_PolygonListParameter() );
-    if( dynamic_cast< const MIL_ParameterType_ObjectKnowledgeList* >( &parameterType ) )
-        return boost::shared_ptr< MIL_MissionParameter_ABC >( new MIL_ObjectKnowledgeListParameter() );
-    if( dynamic_cast< const MIL_ParameterType_GenObjectList* >( &parameterType ) )
-        return boost::shared_ptr< MIL_MissionParameter_ABC >( new MIL_PlannedWorkListParameter() );
-    return boost::shared_ptr<MIL_MissionParameter_ABC>( new MIL_NullParameter() );
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::Create
 // Created: LDC 2009-04-29
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const Common::MsgMissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const MIL_OrderTypeParameter& type, const Common::MsgMissionParameter& message, const DEC_KnowledgeResolver_ABC& resolver )
 {
-    if( asn.null_value() )
+    if( message.null_value() )
     {
         MIL_MissionParameter_ABC* ptr = 0;
         ptr = new MIL_NullParameter();
         boost::shared_ptr<MIL_MissionParameter_ABC> result( ptr );
         return result;
     }
+    else if( !type.IsList()  && message.value_size() == 1 )
+    {
+        return Create( message.value().Get( 0 ), resolver );
+    }
     else
-        return Create( asn.value(), resolver );
+    {
+        MIL_MissionParameter_ABC* ptr = new MIL_ListParameter( resolver, message.value() );
+        return boost::shared_ptr<MIL_MissionParameter_ABC>( ptr );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -96,54 +75,36 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 {  
     MIL_MissionParameter_ABC* ptr = 0;
     MIL_EntityManager_ABC& entityManager = MIL_AgentServer::GetWorkspace().GetEntityManager();
-    if( message.has_abool() )
-        ptr = new MIL_BoolParameter( message.abool() ? true : false );
+    if( message.has_booleanvalue() )
+        ptr = new MIL_BoolParameter( message.has_booleanvalue() ? true : false );
     else if( message.has_areal() )
         ptr = new MIL_RealParameter( message.areal() );
     else if( message.has_enumeration() )
         ptr = new MIL_EnumerationParameter( message.enumeration() );
     else if( message.has_path() )
         ptr = new MIL_PathParameter( message.path() );
-    else if( message.has_pathlist() )
-        ptr = new MIL_PathListParameter( message.pathlist() );
     else if( message.has_point() )
         ptr = new MIL_PointParameter( message.point() );
-    else if( message.has_pointlist() )
-        ptr = new MIL_PointListParameter( message.pointlist() );
-    else if( message.has_polygon() )
-        ptr = new MIL_PolygonParameter( message.polygon() );
-    else if( message.has_polygonlist() )
-        ptr = new MIL_PolygonListParameter( message.polygonlist() );
+    else if( message.has_area() )
+        ptr = new MIL_PolygonParameter( message.area() );
     else if( message.has_location() )
         ptr = new MIL_LocationParameter( message.location() );
-    else if( message.has_locationlist() )
-        ptr = new MIL_LocationListParameter( message.locationlist() );
     else if( message.has_heading() )
         ptr = new MIL_DirectionParameter( message.heading() );
     else if( message.has_atlasnature() )
         ptr = new MIL_AtlasNatureParameter( message.atlasnature() );
-    else if( message.has_unit() )
-        ptr = new MIL_AgentParameter( message.unit(), entityManager );
-    else if( message.has_unitlist() )
-        ptr = new MIL_AgentListParameter( message.unitlist(), entityManager );
+    else if( message.has_agent() )
+        ptr = new MIL_AgentParameter( message.agent(), entityManager );
     else if( message.has_automat() )
         ptr = new MIL_AutomatParameter( message.automat(), entityManager );
-    else if( message.has_automatlist() )
-        ptr = new MIL_AutomatListParameter( message.automatlist(), entityManager );
-    else if( message.has_unitknowledge() )
-        ptr = new MIL_AgentKnowledgeParameter( message.unitknowledge(), resolver );
-    else if( message.has_unitknowledgelist() )
-        ptr = new MIL_AgentKnowledgeListParameter( message.unitknowledgelist(), resolver );
+    else if( message.has_agentknowledge() )
+        ptr = new MIL_AgentKnowledgeParameter( message.agentknowledge(), resolver );
     else if( message.has_objectknowledge() )
         ptr = new MIL_ObjectKnowledgeParameter( message.objectknowledge(), resolver );
-    else if( message.has_objectknowledgelist() )
-        ptr = new MIL_ObjectKnowledgeListParameter( message.objectknowledgelist(), resolver );
     else if( message.has_crowdknowledge() )
         ptr = new MIL_PopulationKnowledgeParameter( message.crowdknowledge(), resolver );
     else if( message.has_plannedwork() )
         ptr = new MIL_PlannedWorkParameter( message.plannedwork(), entityManager );
-    else if( message.has_plannedworklist() )
-        ptr = new MIL_PlannedWorkListParameter( message.plannedworklist(), entityManager );
     else if ( message.has_resourcetype() )
         ptr = new MIL_DotationTypeParameter( message.resourcetype() );
     else if( message.has_equipmenttype() )
@@ -166,17 +127,13 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         ptr = new MIL_StringParameter( message.acharstr() );
     else if( message.has_missionobjective() )              // $$$$ LDC : This type doesn't seem to ever be converted to/from. Only lists of objectives exist.
         ptr = new MIL_NullParameter();
-    else if( message.has_missionobjectivelist() )
-        ptr = new MIL_MissionObjectiveListParameter( message.missionobjectivelist() );
     else if( message.has_limasorder() )
         ptr = new MIL_LimaListParameter( message.limasorder() ); // group LimaList and Lima type  before updating protobuff
 //        else if( message.has_value_line() ||
 //            message.has_value_intelligenceList() )
         // $$$$ LDC : These types are exclusively managed by the OrderContext.
-    else if( message.list_size() > 0 ) // $$$$ LDC: Actually a list size of 0 may be a list too.
-        ptr = new MIL_ListParameter( resolver, message.list() );
     else
-        ptr = new MIL_NullParameter();
+        ptr = new MIL_ListParameter( resolver, message.list() );
     
     boost::shared_ptr<MIL_MissionParameter_ABC> result( ptr );
     return result;
@@ -337,12 +294,12 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Name: MIL_MissionParameterFactory::Copy
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::Copy( const Common::MsgMissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver )
+void MIL_MissionParameterFactory::Copy( const MIL_OrderType_ABC& orderType, const Common::MsgMissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver )
 {
     parameters.clear();
     int size = asn.elem_size();
     for ( int i = 0; i < size; ++i )
-        parameters.push_back( Create( asn.elem(i), resolver ) );
+        parameters.push_back( Create( orderType.GetParameterType(i), asn.elem(i), resolver ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -374,6 +331,17 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateD
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_DirectionParameter( direction ) );
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( boost::shared_ptr< DEC_Gen_Object > param )
+{
+    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_PlannedWorkParameter( param ) );
+    return result;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::SetPawnParameter
 // Created: LDC 2009-07-10
@@ -454,10 +422,10 @@ void MIL_MissionParameterFactory::SetNatureAtlasTypeParameter( boost::shared_ptr
 // -----------------------------------------------------------------------------
 void MIL_MissionParameterFactory::SetAutomatListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< DEC_Decision_ABC* >& automatList )
 {
-    std::vector< DEC_AutomateDecision* > typedAutomatList;
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > paramList;
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = automatList.begin(); it != automatList.end(); ++it )
-        typedAutomatList.push_back( dynamic_cast<DEC_AutomateDecision*>( *it ) );
-    boost::shared_ptr< MIL_AutomatListParameter > listParam( new MIL_AutomatListParameter( typedAutomatList ) );
+        paramList.push_back( CreateAutomat( *it ) );
+    boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), paramList ) );
     pMission->SetParameter( parameter, listParam );
 }
 
@@ -476,7 +444,10 @@ void MIL_MissionParameterFactory::SetAgentKnowledgeParameter( boost::shared_ptr<
 // -----------------------------------------------------------------------------
 void MIL_MissionParameterFactory::SetPathListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& list )
 {
-    boost::shared_ptr< MIL_PathListParameter > listParam( new MIL_PathListParameter( list ) );
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > paramList;
+    for( std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >::const_iterator it = list.begin(); it != list.end(); ++it )
+        paramList.push_back( CreatePath( *it ) );
+    boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), paramList ) );
     pMission->SetParameter( parameter, listParam );
 }
 
@@ -504,7 +475,10 @@ void MIL_MissionParameterFactory::SetLocationParameter( boost::shared_ptr< MIL_M
 // -----------------------------------------------------------------------------
 void MIL_MissionParameterFactory::SetObjectKnowledgeListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& objectKnowledgeList )
 {
-    boost::shared_ptr< MIL_ObjectKnowledgeListParameter > listParam( new MIL_ObjectKnowledgeListParameter( objectKnowledgeList ) );
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > paramList;
+    for( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >::const_iterator it = objectKnowledgeList.begin(); it != objectKnowledgeList.end(); ++it )
+        paramList.push_back( Create( *it ) );
+    boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), paramList ) );
     pMission->SetParameter( parameter, listParam );
 }
 
@@ -523,7 +497,10 @@ void MIL_MissionParameterFactory::SetPointParameter( boost::shared_ptr< MIL_Miss
 // -----------------------------------------------------------------------------
 void MIL_MissionParameterFactory::SetAgentKnowledgeListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& agentKnowledgeList )
 {
-    boost::shared_ptr< MIL_AgentKnowledgeListParameter > listParam( new MIL_AgentKnowledgeListParameter( agentKnowledgeList ) );
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > paramList;
+    for( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >::const_iterator it = agentKnowledgeList.begin(); it != agentKnowledgeList.end(); ++it )
+        paramList.push_back( Create( *it ) );
+    boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), paramList ) );
     pMission->SetParameter( parameter, listParam );
 }
 
@@ -533,7 +510,10 @@ void MIL_MissionParameterFactory::SetAgentKnowledgeListParameter( boost::shared_
 // -----------------------------------------------------------------------------
 void MIL_MissionParameterFactory::SetGenObjectListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Gen_Object > >& list )
 {
-    boost::shared_ptr< MIL_PlannedWorkListParameter > listParam( new MIL_PlannedWorkListParameter( list ) );
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > paramList;
+    for( std::vector< boost::shared_ptr< DEC_Gen_Object > >::const_iterator it = list.begin(); it != list.end(); ++it )
+        paramList.push_back( Create( *it ) );
+    boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), paramList ) );
     pMission->SetParameter( parameter, listParam );
 }
 
@@ -543,7 +523,10 @@ void MIL_MissionParameterFactory::SetGenObjectListParameter( boost::shared_ptr< 
 // -----------------------------------------------------------------------------
 void MIL_MissionParameterFactory::SetPionListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< DEC_Decision_ABC* >& pionList )
 {
-    boost::shared_ptr< MIL_AgentListParameter > listParam( new MIL_AgentListParameter( pionList ) );
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > paramList;
+    for( std::vector< DEC_Decision_ABC* >::const_iterator it = pionList.begin(); it != pionList.end(); ++it )
+        paramList.push_back( CreatePawn( *it ) );
+    boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), paramList ) );
     pMission->SetParameter( parameter, listParam );
 }
 
@@ -553,7 +536,10 @@ void MIL_MissionParameterFactory::SetPionListParameter( boost::shared_ptr< MIL_M
 // -----------------------------------------------------------------------------
 void MIL_MissionParameterFactory::SetLocationListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList )
 {
-    boost::shared_ptr< MIL_LocationListParameter > listParam( new MIL_LocationListParameter( locationList ) );
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > paramList;
+    for( std::vector< boost::shared_ptr< TER_Localisation > >::const_iterator it = locationList.begin(); it != locationList.end(); ++it )
+        paramList.push_back( Create( *it ) );
+    boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), paramList ) );
     pMission->SetParameter( parameter, listParam );
 }
 
@@ -563,7 +549,10 @@ void MIL_MissionParameterFactory::SetLocationListParameter( boost::shared_ptr< M
 // -----------------------------------------------------------------------------
 void MIL_MissionParameterFactory::SetPointListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList )
 {
-    boost::shared_ptr< MIL_PointListParameter > listParam( new MIL_PointListParameter( pointList ) );
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > paramList;
+    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = pointList.begin(); it != pointList.end(); ++it )
+        paramList.push_back( Create( **it ) );
+    boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), paramList ) );
     pMission->SetParameter( parameter, listParam );
 }
 
@@ -573,7 +562,10 @@ void MIL_MissionParameterFactory::SetPointListParameter( boost::shared_ptr< MIL_
 // -----------------------------------------------------------------------------
 void MIL_MissionParameterFactory::SetPolygonListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList )
 {
-    boost::shared_ptr< MIL_PolygonListParameter > listParam( new MIL_PolygonListParameter( locationList ) );
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > paramList;
+    for( std::vector< boost::shared_ptr< TER_Localisation > >::const_iterator it = locationList.begin(); it != locationList.end(); ++it )
+        paramList.push_back( Create( *it ) );
+    boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), paramList ) );
     pMission->SetParameter( parameter, listParam );
 }
 
@@ -592,7 +584,10 @@ void MIL_MissionParameterFactory::SetUrbanBlockParameter( boost::shared_ptr< MIL
 // -----------------------------------------------------------------------------
 void MIL_MissionParameterFactory::SetUrbanBlockListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Knowledge_Urban > >& urbanBlockList )
 {
-    boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), urbanBlockList ) );
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > paramList;
+    for( std::vector< boost::shared_ptr< DEC_Knowledge_Urban > >::const_iterator it = urbanBlockList.begin(); it != urbanBlockList.end(); ++it )
+        paramList.push_back( Create( *it ) );
+    boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), paramList ) );
     pMission->SetParameter( parameter, listParam );
 }
 

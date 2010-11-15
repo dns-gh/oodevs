@@ -519,52 +519,58 @@ message MsgAtlasNature {
 
 message MsgMissionParameter {
     message Value {
-        optional bool                        aBool                       = 1;
-        optional float                       aReal                       = 2;
-        optional int32                       enumeration                 = 3;
-        optional MsgPath                     path                        = 4;
-        optional MsgPathList                 pathList                    = 5;
+        //parameters used for missions and magic actions:
+        optional bool                        booleanValue                = 1;
+        optional int32                       intValue                    = 2;
+        optional MsgHeading                  heading                     = 3;
+        optional int32                       enumeration                 = 4;
+        optional MsgDateTime                 dateTime                    = 5;
         optional MsgPoint                    point                       = 6;
-        optional MsgPointList                pointList                   = 7;
-        optional MsgPolygon                  polygon                     = 8;
-        optional MsgPolygonList              polygonList                 = 9;
-        optional MsgLocation                 location                    = 10;
-        optional MsgLocationList             locationList                = 11;
-        optional MsgHeading                  heading                     = 12;
-        optional MsgAtlasNature              atlasNature                 = 13;
-        optional UnitId                      unit                        = 14;
-        optional UnitIdList                  unitList                    = 15;
-        optional AutomatId                   automat                     = 16;
-        optional AutomatIdList               automatList                 = 17;
-        optional UnitKnowledgeId             unitKnowledge               = 18;
-        optional UnitKnowledgeIdList         unitKnowledgeList           = 19;
-        optional ObjectKnowledgeId           objectKnowledge             = 20;
-        optional ObjectKnowledgeIdList       objectKnowledgeList         = 21;
-        optional CrowdKnowledgeId            crowdKnowledge              = 22;
-        optional MsgPlannedWork              plannedWork                 = 23;
-        optional MsgPlannedWorkList          plannedWorkList             = 24;
-        optional ResourceType                resourceType                = 25;
-        optional EquipmentType               equipmentType               = 26;
-        optional FireId                      tirIndirect                 = 27;
-        optional MsgDateTime                 dateTime                    = 28;
-        optional MsgLogMaintenancePriorities logMaintenancePriorities    = 29;
-        optional MsgLogMedicalPriorities     logMedicalPriorities        = 30;
-        optional string                     aCharStr                    = 31;
-        optional MsgMissionObjective         missionObjective            = 32;
-        optional MsgMissionObjectiveList     missionObjectiveList        = 33;
-        optional MsgLine                     line                        = 34;
-        optional MsgLimasOrder               limasOrder                  = 35;
-        optional MsgIntelligenceList         intelligenceList            = 36;
-        optional UrbanObjectId               urbanBlock                  = 37;
-        optional PartyId                     party                        = 38;
-        optional FormationId                 formation                   = 39;
-        optional uint32                     identifier                  = 40;
-        optional int32                      quantity                    = 41;
-        optional KnowledgeGroupId            knowledgeGroup              = 42;
-        repeated Value                       list                        = 43;
+        optional MsgPolygon                  area                        = 7;
+        optional MsgPath                     path                        = 8;
+        optional MsgLine                     limit                       = 9;
+        optional MsgLimasOrder               phaseLine                   = 10;
+        optional AutomatId                   automat                     = 11;
+        optional UnitId                      agent                       = 12;
+        optional UnitKnowledgeId             agentKnowledge              = 13;
+        optional CrowdKnowledgeId            crowdKnowledge              = 14;
+        optional ObjectKnowledgeId           objectKnowledge             = 15;
+        optional UrbanObjectKnowledgeId      urbanKnowledge              = 16;
+        optional MsgPlannedWork              plannedWork                 = 17;
+        optional MsgAtlasNature              atlasNature                 = 18;
+        optional ResourceType                resourceType                = 19;
+        optional MsgLogMaintenancePriorities logMaintenancePriorities    = 20;
+        optional MsgLogMedicalPriorities     logMedicalPriorities        = 21;
+        
+        //parameters used for magic actions only:
+        optional float                       aReal                       = 22;
+        optional MsgPathList                 pathList                    = 23;
+        optional MsgPointList                pointList                   = 24;
+        optional MsgPolygonList              polygonList                 = 25;
+        optional MsgLocation                 location                    = 26;
+        optional MsgLocationList             locationList                = 27;
+        optional UnitIdList                  unitList                    = 28;
+        optional AutomatIdList               automatList                 = 29;
+        optional UnitKnowledgeIdList         unitKnowledgeList           = 30;
+        optional ObjectKnowledgeIdList       objectKnowledgeList         = 31;
+        optional MsgPlannedWorkList          plannedWorkList             = 32;
+        optional EquipmentType               equipmentType               = 33;
+        optional FireId                      tirIndirect                 = 34;
+        optional string                      aCharStr                    = 35;
+        optional MsgMissionObjective         missionObjective            = 36;
+        optional MsgMissionObjectiveList     missionObjectiveList        = 37;
+        optional MsgLimasOrder               limasOrder                  = 38;
+        optional MsgIntelligenceList         intelligenceList            = 39;
+        optional UrbanObjectId               urbanBlock                  = 40;
+        optional PartyId                     party                       = 41;
+        optional FormationId                 formation                   = 42;
+        optional uint32                      identifier                  = 43;
+        optional int32                       quantity                    = 44;
+        optional KnowledgeGroupId            knowledgeGroup              = 45;
+        repeated Value                       list                        = 46;
     }
-    optional bool  null_value = 1;
-    optional Value value      = 2;
+    optional bool  null_value       = 1;
+    repeated Value value   = 2;
 }
 
 message MsgMissionParameters {

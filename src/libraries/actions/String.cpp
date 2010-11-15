@@ -62,7 +62,16 @@ void String::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        message.mutable_value()->set_acharstr( GetValue().ascii() );
+       message.mutable_value()->Add()->set_acharstr( GetValue().ascii() );
+}
+// -----------------------------------------------------------------------------
+// Name: String::CommitTo
+// Created: JSR 2010-04-20
+// -----------------------------------------------------------------------------
+void String::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    if( IsSet() )
+        message.set_acharstr( GetValue().ascii() );
 }
 
 // -----------------------------------------------------------------------------

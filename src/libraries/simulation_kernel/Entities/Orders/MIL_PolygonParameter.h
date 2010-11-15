@@ -36,6 +36,7 @@ public:
     //@{
     virtual bool ToPolygon( Common::MsgPolygon& ) const;
     virtual bool ToPolygon( boost::shared_ptr< TER_Localisation >& ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

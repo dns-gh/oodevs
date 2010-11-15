@@ -85,7 +85,7 @@ private:
     //@{
     void ReadReport( xml::xistream& xis );
     friend class ReportTemplate;
-    QString RenderParameter( const Common::MsgMissionParameter& value ) const;
+    QString RenderParameter( const Common::MsgMissionParameter_Value& value ) const;
     //@}
 
 private:

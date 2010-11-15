@@ -10,7 +10,7 @@
 #include "actions_gui_pch.h"
 #include "ParamAutomatList.h"
 #include "ParamAutomat.h"
-#include "actions/AutomatList.h"
+#include "actions/ParameterList.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/Tools.h"
@@ -62,7 +62,7 @@ EntityParameter< kernel::Automat_ABC >* ParamAutomatList::CreateElement( const k
 // -----------------------------------------------------------------------------
 void ParamAutomatList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::AutomatList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

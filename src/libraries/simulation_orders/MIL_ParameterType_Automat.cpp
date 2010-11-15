@@ -40,7 +40,7 @@ bool MIL_ParameterType_Automat::Copy( const MIL_MissionParameter_ABC& from, Comm
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( !from.ToAutomat( *to.mutable_value()->mutable_automat() ) );
+    to.set_null_value( !from.ToAutomat( *to.mutable_value()->Add()->mutable_automat() ) );
     if( to.null_value() )
         to.clear_value();
     return !to.null_value() || bIsOptional;

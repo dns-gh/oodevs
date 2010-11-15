@@ -9367,40 +9367,40 @@ class MsgMissionParameter_Value : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional bool aBool = 1;
-  inline bool has_abool() const;
-  inline void clear_abool();
-  static const int kABoolFieldNumber = 1;
-  inline bool abool() const;
-  inline void set_abool(bool value);
+  // optional bool booleanValue = 1;
+  inline bool has_booleanvalue() const;
+  inline void clear_booleanvalue();
+  static const int kBooleanValueFieldNumber = 1;
+  inline bool booleanvalue() const;
+  inline void set_booleanvalue(bool value);
   
-  // optional float aReal = 2;
-  inline bool has_areal() const;
-  inline void clear_areal();
-  static const int kARealFieldNumber = 2;
-  inline float areal() const;
-  inline void set_areal(float value);
+  // optional int32 intValue = 2;
+  inline bool has_intvalue() const;
+  inline void clear_intvalue();
+  static const int kIntValueFieldNumber = 2;
+  inline ::google::protobuf::int32 intvalue() const;
+  inline void set_intvalue(::google::protobuf::int32 value);
   
-  // optional int32 enumeration = 3;
+  // optional .Common.MsgHeading heading = 3;
+  inline bool has_heading() const;
+  inline void clear_heading();
+  static const int kHeadingFieldNumber = 3;
+  inline const ::Common::MsgHeading& heading() const;
+  inline ::Common::MsgHeading* mutable_heading();
+  
+  // optional int32 enumeration = 4;
   inline bool has_enumeration() const;
   inline void clear_enumeration();
-  static const int kEnumerationFieldNumber = 3;
+  static const int kEnumerationFieldNumber = 4;
   inline ::google::protobuf::int32 enumeration() const;
   inline void set_enumeration(::google::protobuf::int32 value);
   
-  // optional .Common.MsgPath path = 4;
-  inline bool has_path() const;
-  inline void clear_path();
-  static const int kPathFieldNumber = 4;
-  inline const ::Common::MsgPath& path() const;
-  inline ::Common::MsgPath* mutable_path();
-  
-  // optional .Common.MsgPathList pathList = 5;
-  inline bool has_pathlist() const;
-  inline void clear_pathlist();
-  static const int kPathListFieldNumber = 5;
-  inline const ::Common::MsgPathList& pathlist() const;
-  inline ::Common::MsgPathList* mutable_pathlist();
+  // optional .Common.MsgDateTime dateTime = 5;
+  inline bool has_datetime() const;
+  inline void clear_datetime();
+  static const int kDateTimeFieldNumber = 5;
+  inline const ::Common::MsgDateTime& datetime() const;
+  inline ::Common::MsgDateTime* mutable_datetime();
   
   // optional .Common.MsgPoint point = 6;
   inline bool has_point() const;
@@ -9409,265 +9409,286 @@ class MsgMissionParameter_Value : public ::google::protobuf::Message {
   inline const ::Common::MsgPoint& point() const;
   inline ::Common::MsgPoint* mutable_point();
   
-  // optional .Common.MsgPointList pointList = 7;
-  inline bool has_pointlist() const;
-  inline void clear_pointlist();
-  static const int kPointListFieldNumber = 7;
-  inline const ::Common::MsgPointList& pointlist() const;
-  inline ::Common::MsgPointList* mutable_pointlist();
+  // optional .Common.MsgPolygon area = 7;
+  inline bool has_area() const;
+  inline void clear_area();
+  static const int kAreaFieldNumber = 7;
+  inline const ::Common::MsgPolygon& area() const;
+  inline ::Common::MsgPolygon* mutable_area();
   
-  // optional .Common.MsgPolygon polygon = 8;
-  inline bool has_polygon() const;
-  inline void clear_polygon();
-  static const int kPolygonFieldNumber = 8;
-  inline const ::Common::MsgPolygon& polygon() const;
-  inline ::Common::MsgPolygon* mutable_polygon();
+  // optional .Common.MsgPath path = 8;
+  inline bool has_path() const;
+  inline void clear_path();
+  static const int kPathFieldNumber = 8;
+  inline const ::Common::MsgPath& path() const;
+  inline ::Common::MsgPath* mutable_path();
   
-  // optional .Common.MsgPolygonList polygonList = 9;
-  inline bool has_polygonlist() const;
-  inline void clear_polygonlist();
-  static const int kPolygonListFieldNumber = 9;
-  inline const ::Common::MsgPolygonList& polygonlist() const;
-  inline ::Common::MsgPolygonList* mutable_polygonlist();
+  // optional .Common.MsgLine limit = 9;
+  inline bool has_limit() const;
+  inline void clear_limit();
+  static const int kLimitFieldNumber = 9;
+  inline const ::Common::MsgLine& limit() const;
+  inline ::Common::MsgLine* mutable_limit();
   
-  // optional .Common.MsgLocation location = 10;
-  inline bool has_location() const;
-  inline void clear_location();
-  static const int kLocationFieldNumber = 10;
-  inline const ::Common::MsgLocation& location() const;
-  inline ::Common::MsgLocation* mutable_location();
+  // optional .Common.MsgLimasOrder phaseLine = 10;
+  inline bool has_phaseline() const;
+  inline void clear_phaseline();
+  static const int kPhaseLineFieldNumber = 10;
+  inline const ::Common::MsgLimasOrder& phaseline() const;
+  inline ::Common::MsgLimasOrder* mutable_phaseline();
   
-  // optional .Common.MsgLocationList locationList = 11;
-  inline bool has_locationlist() const;
-  inline void clear_locationlist();
-  static const int kLocationListFieldNumber = 11;
-  inline const ::Common::MsgLocationList& locationlist() const;
-  inline ::Common::MsgLocationList* mutable_locationlist();
-  
-  // optional .Common.MsgHeading heading = 12;
-  inline bool has_heading() const;
-  inline void clear_heading();
-  static const int kHeadingFieldNumber = 12;
-  inline const ::Common::MsgHeading& heading() const;
-  inline ::Common::MsgHeading* mutable_heading();
-  
-  // optional .Common.MsgAtlasNature atlasNature = 13;
-  inline bool has_atlasnature() const;
-  inline void clear_atlasnature();
-  static const int kAtlasNatureFieldNumber = 13;
-  inline const ::Common::MsgAtlasNature& atlasnature() const;
-  inline ::Common::MsgAtlasNature* mutable_atlasnature();
-  
-  // optional .Common.UnitId unit = 14;
-  inline bool has_unit() const;
-  inline void clear_unit();
-  static const int kUnitFieldNumber = 14;
-  inline const ::Common::UnitId& unit() const;
-  inline ::Common::UnitId* mutable_unit();
-  
-  // optional .Common.UnitIdList unitList = 15;
-  inline bool has_unitlist() const;
-  inline void clear_unitlist();
-  static const int kUnitListFieldNumber = 15;
-  inline const ::Common::UnitIdList& unitlist() const;
-  inline ::Common::UnitIdList* mutable_unitlist();
-  
-  // optional .Common.AutomatId automat = 16;
+  // optional .Common.AutomatId automat = 11;
   inline bool has_automat() const;
   inline void clear_automat();
-  static const int kAutomatFieldNumber = 16;
+  static const int kAutomatFieldNumber = 11;
   inline const ::Common::AutomatId& automat() const;
   inline ::Common::AutomatId* mutable_automat();
   
-  // optional .Common.AutomatIdList automatList = 17;
-  inline bool has_automatlist() const;
-  inline void clear_automatlist();
-  static const int kAutomatListFieldNumber = 17;
-  inline const ::Common::AutomatIdList& automatlist() const;
-  inline ::Common::AutomatIdList* mutable_automatlist();
+  // optional .Common.UnitId agent = 12;
+  inline bool has_agent() const;
+  inline void clear_agent();
+  static const int kAgentFieldNumber = 12;
+  inline const ::Common::UnitId& agent() const;
+  inline ::Common::UnitId* mutable_agent();
   
-  // optional .Common.UnitKnowledgeId unitKnowledge = 18;
-  inline bool has_unitknowledge() const;
-  inline void clear_unitknowledge();
-  static const int kUnitKnowledgeFieldNumber = 18;
-  inline const ::Common::UnitKnowledgeId& unitknowledge() const;
-  inline ::Common::UnitKnowledgeId* mutable_unitknowledge();
+  // optional .Common.UnitKnowledgeId agentKnowledge = 13;
+  inline bool has_agentknowledge() const;
+  inline void clear_agentknowledge();
+  static const int kAgentKnowledgeFieldNumber = 13;
+  inline const ::Common::UnitKnowledgeId& agentknowledge() const;
+  inline ::Common::UnitKnowledgeId* mutable_agentknowledge();
   
-  // optional .Common.UnitKnowledgeIdList unitKnowledgeList = 19;
-  inline bool has_unitknowledgelist() const;
-  inline void clear_unitknowledgelist();
-  static const int kUnitKnowledgeListFieldNumber = 19;
-  inline const ::Common::UnitKnowledgeIdList& unitknowledgelist() const;
-  inline ::Common::UnitKnowledgeIdList* mutable_unitknowledgelist();
-  
-  // optional .Common.ObjectKnowledgeId objectKnowledge = 20;
-  inline bool has_objectknowledge() const;
-  inline void clear_objectknowledge();
-  static const int kObjectKnowledgeFieldNumber = 20;
-  inline const ::Common::ObjectKnowledgeId& objectknowledge() const;
-  inline ::Common::ObjectKnowledgeId* mutable_objectknowledge();
-  
-  // optional .Common.ObjectKnowledgeIdList objectKnowledgeList = 21;
-  inline bool has_objectknowledgelist() const;
-  inline void clear_objectknowledgelist();
-  static const int kObjectKnowledgeListFieldNumber = 21;
-  inline const ::Common::ObjectKnowledgeIdList& objectknowledgelist() const;
-  inline ::Common::ObjectKnowledgeIdList* mutable_objectknowledgelist();
-  
-  // optional .Common.CrowdKnowledgeId crowdKnowledge = 22;
+  // optional .Common.CrowdKnowledgeId crowdKnowledge = 14;
   inline bool has_crowdknowledge() const;
   inline void clear_crowdknowledge();
-  static const int kCrowdKnowledgeFieldNumber = 22;
+  static const int kCrowdKnowledgeFieldNumber = 14;
   inline const ::Common::CrowdKnowledgeId& crowdknowledge() const;
   inline ::Common::CrowdKnowledgeId* mutable_crowdknowledge();
   
-  // optional .Common.MsgPlannedWork plannedWork = 23;
+  // optional .Common.ObjectKnowledgeId objectKnowledge = 15;
+  inline bool has_objectknowledge() const;
+  inline void clear_objectknowledge();
+  static const int kObjectKnowledgeFieldNumber = 15;
+  inline const ::Common::ObjectKnowledgeId& objectknowledge() const;
+  inline ::Common::ObjectKnowledgeId* mutable_objectknowledge();
+  
+  // optional .Common.UrbanObjectKnowledgeId urbanKnowledge = 16;
+  inline bool has_urbanknowledge() const;
+  inline void clear_urbanknowledge();
+  static const int kUrbanKnowledgeFieldNumber = 16;
+  inline const ::Common::UrbanObjectKnowledgeId& urbanknowledge() const;
+  inline ::Common::UrbanObjectKnowledgeId* mutable_urbanknowledge();
+  
+  // optional .Common.MsgPlannedWork plannedWork = 17;
   inline bool has_plannedwork() const;
   inline void clear_plannedwork();
-  static const int kPlannedWorkFieldNumber = 23;
+  static const int kPlannedWorkFieldNumber = 17;
   inline const ::Common::MsgPlannedWork& plannedwork() const;
   inline ::Common::MsgPlannedWork* mutable_plannedwork();
   
-  // optional .Common.MsgPlannedWorkList plannedWorkList = 24;
-  inline bool has_plannedworklist() const;
-  inline void clear_plannedworklist();
-  static const int kPlannedWorkListFieldNumber = 24;
-  inline const ::Common::MsgPlannedWorkList& plannedworklist() const;
-  inline ::Common::MsgPlannedWorkList* mutable_plannedworklist();
+  // optional .Common.MsgAtlasNature atlasNature = 18;
+  inline bool has_atlasnature() const;
+  inline void clear_atlasnature();
+  static const int kAtlasNatureFieldNumber = 18;
+  inline const ::Common::MsgAtlasNature& atlasnature() const;
+  inline ::Common::MsgAtlasNature* mutable_atlasnature();
   
-  // optional .Common.ResourceType resourceType = 25;
+  // optional .Common.ResourceType resourceType = 19;
   inline bool has_resourcetype() const;
   inline void clear_resourcetype();
-  static const int kResourceTypeFieldNumber = 25;
+  static const int kResourceTypeFieldNumber = 19;
   inline const ::Common::ResourceType& resourcetype() const;
   inline ::Common::ResourceType* mutable_resourcetype();
   
-  // optional .Common.EquipmentType equipmentType = 26;
-  inline bool has_equipmenttype() const;
-  inline void clear_equipmenttype();
-  static const int kEquipmentTypeFieldNumber = 26;
-  inline const ::Common::EquipmentType& equipmenttype() const;
-  inline ::Common::EquipmentType* mutable_equipmenttype();
-  
-  // optional .Common.FireId tirIndirect = 27;
-  inline bool has_tirindirect() const;
-  inline void clear_tirindirect();
-  static const int kTirIndirectFieldNumber = 27;
-  inline const ::Common::FireId& tirindirect() const;
-  inline ::Common::FireId* mutable_tirindirect();
-  
-  // optional .Common.MsgDateTime dateTime = 28;
-  inline bool has_datetime() const;
-  inline void clear_datetime();
-  static const int kDateTimeFieldNumber = 28;
-  inline const ::Common::MsgDateTime& datetime() const;
-  inline ::Common::MsgDateTime* mutable_datetime();
-  
-  // optional .Common.MsgLogMaintenancePriorities logMaintenancePriorities = 29;
+  // optional .Common.MsgLogMaintenancePriorities logMaintenancePriorities = 20;
   inline bool has_logmaintenancepriorities() const;
   inline void clear_logmaintenancepriorities();
-  static const int kLogMaintenancePrioritiesFieldNumber = 29;
+  static const int kLogMaintenancePrioritiesFieldNumber = 20;
   inline const ::Common::MsgLogMaintenancePriorities& logmaintenancepriorities() const;
   inline ::Common::MsgLogMaintenancePriorities* mutable_logmaintenancepriorities();
   
-  // optional .Common.MsgLogMedicalPriorities logMedicalPriorities = 30;
+  // optional .Common.MsgLogMedicalPriorities logMedicalPriorities = 21;
   inline bool has_logmedicalpriorities() const;
   inline void clear_logmedicalpriorities();
-  static const int kLogMedicalPrioritiesFieldNumber = 30;
+  static const int kLogMedicalPrioritiesFieldNumber = 21;
   inline const ::Common::MsgLogMedicalPriorities& logmedicalpriorities() const;
   inline ::Common::MsgLogMedicalPriorities* mutable_logmedicalpriorities();
   
-  // optional string aCharStr = 31;
+  // optional float aReal = 22;
+  inline bool has_areal() const;
+  inline void clear_areal();
+  static const int kARealFieldNumber = 22;
+  inline float areal() const;
+  inline void set_areal(float value);
+  
+  // optional .Common.MsgPathList pathList = 23;
+  inline bool has_pathlist() const;
+  inline void clear_pathlist();
+  static const int kPathListFieldNumber = 23;
+  inline const ::Common::MsgPathList& pathlist() const;
+  inline ::Common::MsgPathList* mutable_pathlist();
+  
+  // optional .Common.MsgPointList pointList = 24;
+  inline bool has_pointlist() const;
+  inline void clear_pointlist();
+  static const int kPointListFieldNumber = 24;
+  inline const ::Common::MsgPointList& pointlist() const;
+  inline ::Common::MsgPointList* mutable_pointlist();
+  
+  // optional .Common.MsgPolygonList polygonList = 25;
+  inline bool has_polygonlist() const;
+  inline void clear_polygonlist();
+  static const int kPolygonListFieldNumber = 25;
+  inline const ::Common::MsgPolygonList& polygonlist() const;
+  inline ::Common::MsgPolygonList* mutable_polygonlist();
+  
+  // optional .Common.MsgLocation location = 26;
+  inline bool has_location() const;
+  inline void clear_location();
+  static const int kLocationFieldNumber = 26;
+  inline const ::Common::MsgLocation& location() const;
+  inline ::Common::MsgLocation* mutable_location();
+  
+  // optional .Common.MsgLocationList locationList = 27;
+  inline bool has_locationlist() const;
+  inline void clear_locationlist();
+  static const int kLocationListFieldNumber = 27;
+  inline const ::Common::MsgLocationList& locationlist() const;
+  inline ::Common::MsgLocationList* mutable_locationlist();
+  
+  // optional .Common.UnitIdList unitList = 28;
+  inline bool has_unitlist() const;
+  inline void clear_unitlist();
+  static const int kUnitListFieldNumber = 28;
+  inline const ::Common::UnitIdList& unitlist() const;
+  inline ::Common::UnitIdList* mutable_unitlist();
+  
+  // optional .Common.AutomatIdList automatList = 29;
+  inline bool has_automatlist() const;
+  inline void clear_automatlist();
+  static const int kAutomatListFieldNumber = 29;
+  inline const ::Common::AutomatIdList& automatlist() const;
+  inline ::Common::AutomatIdList* mutable_automatlist();
+  
+  // optional .Common.UnitKnowledgeIdList unitKnowledgeList = 30;
+  inline bool has_unitknowledgelist() const;
+  inline void clear_unitknowledgelist();
+  static const int kUnitKnowledgeListFieldNumber = 30;
+  inline const ::Common::UnitKnowledgeIdList& unitknowledgelist() const;
+  inline ::Common::UnitKnowledgeIdList* mutable_unitknowledgelist();
+  
+  // optional .Common.ObjectKnowledgeIdList objectKnowledgeList = 31;
+  inline bool has_objectknowledgelist() const;
+  inline void clear_objectknowledgelist();
+  static const int kObjectKnowledgeListFieldNumber = 31;
+  inline const ::Common::ObjectKnowledgeIdList& objectknowledgelist() const;
+  inline ::Common::ObjectKnowledgeIdList* mutable_objectknowledgelist();
+  
+  // optional .Common.MsgPlannedWorkList plannedWorkList = 32;
+  inline bool has_plannedworklist() const;
+  inline void clear_plannedworklist();
+  static const int kPlannedWorkListFieldNumber = 32;
+  inline const ::Common::MsgPlannedWorkList& plannedworklist() const;
+  inline ::Common::MsgPlannedWorkList* mutable_plannedworklist();
+  
+  // optional .Common.EquipmentType equipmentType = 33;
+  inline bool has_equipmenttype() const;
+  inline void clear_equipmenttype();
+  static const int kEquipmentTypeFieldNumber = 33;
+  inline const ::Common::EquipmentType& equipmenttype() const;
+  inline ::Common::EquipmentType* mutable_equipmenttype();
+  
+  // optional .Common.FireId tirIndirect = 34;
+  inline bool has_tirindirect() const;
+  inline void clear_tirindirect();
+  static const int kTirIndirectFieldNumber = 34;
+  inline const ::Common::FireId& tirindirect() const;
+  inline ::Common::FireId* mutable_tirindirect();
+  
+  // optional string aCharStr = 35;
   inline bool has_acharstr() const;
   inline void clear_acharstr();
-  static const int kACharStrFieldNumber = 31;
+  static const int kACharStrFieldNumber = 35;
   inline const ::std::string& acharstr() const;
   inline void set_acharstr(const ::std::string& value);
   inline void set_acharstr(const char* value);
   inline void set_acharstr(const char* value, size_t size);
   inline ::std::string* mutable_acharstr();
   
-  // optional .Common.MsgMissionObjective missionObjective = 32;
+  // optional .Common.MsgMissionObjective missionObjective = 36;
   inline bool has_missionobjective() const;
   inline void clear_missionobjective();
-  static const int kMissionObjectiveFieldNumber = 32;
+  static const int kMissionObjectiveFieldNumber = 36;
   inline const ::Common::MsgMissionObjective& missionobjective() const;
   inline ::Common::MsgMissionObjective* mutable_missionobjective();
   
-  // optional .Common.MsgMissionObjectiveList missionObjectiveList = 33;
+  // optional .Common.MsgMissionObjectiveList missionObjectiveList = 37;
   inline bool has_missionobjectivelist() const;
   inline void clear_missionobjectivelist();
-  static const int kMissionObjectiveListFieldNumber = 33;
+  static const int kMissionObjectiveListFieldNumber = 37;
   inline const ::Common::MsgMissionObjectiveList& missionobjectivelist() const;
   inline ::Common::MsgMissionObjectiveList* mutable_missionobjectivelist();
   
-  // optional .Common.MsgLine line = 34;
-  inline bool has_line() const;
-  inline void clear_line();
-  static const int kLineFieldNumber = 34;
-  inline const ::Common::MsgLine& line() const;
-  inline ::Common::MsgLine* mutable_line();
-  
-  // optional .Common.MsgLimasOrder limasOrder = 35;
+  // optional .Common.MsgLimasOrder limasOrder = 38;
   inline bool has_limasorder() const;
   inline void clear_limasorder();
-  static const int kLimasOrderFieldNumber = 35;
+  static const int kLimasOrderFieldNumber = 38;
   inline const ::Common::MsgLimasOrder& limasorder() const;
   inline ::Common::MsgLimasOrder* mutable_limasorder();
   
-  // optional .Common.MsgIntelligenceList intelligenceList = 36;
+  // optional .Common.MsgIntelligenceList intelligenceList = 39;
   inline bool has_intelligencelist() const;
   inline void clear_intelligencelist();
-  static const int kIntelligenceListFieldNumber = 36;
+  static const int kIntelligenceListFieldNumber = 39;
   inline const ::Common::MsgIntelligenceList& intelligencelist() const;
   inline ::Common::MsgIntelligenceList* mutable_intelligencelist();
   
-  // optional .Common.UrbanObjectId urbanBlock = 37;
+  // optional .Common.UrbanObjectId urbanBlock = 40;
   inline bool has_urbanblock() const;
   inline void clear_urbanblock();
-  static const int kUrbanBlockFieldNumber = 37;
+  static const int kUrbanBlockFieldNumber = 40;
   inline const ::Common::UrbanObjectId& urbanblock() const;
   inline ::Common::UrbanObjectId* mutable_urbanblock();
   
-  // optional .Common.PartyId party = 38;
+  // optional .Common.PartyId party = 41;
   inline bool has_party() const;
   inline void clear_party();
-  static const int kPartyFieldNumber = 38;
+  static const int kPartyFieldNumber = 41;
   inline const ::Common::PartyId& party() const;
   inline ::Common::PartyId* mutable_party();
   
-  // optional .Common.FormationId formation = 39;
+  // optional .Common.FormationId formation = 42;
   inline bool has_formation() const;
   inline void clear_formation();
-  static const int kFormationFieldNumber = 39;
+  static const int kFormationFieldNumber = 42;
   inline const ::Common::FormationId& formation() const;
   inline ::Common::FormationId* mutable_formation();
   
-  // optional uint32 identifier = 40;
+  // optional uint32 identifier = 43;
   inline bool has_identifier() const;
   inline void clear_identifier();
-  static const int kIdentifierFieldNumber = 40;
+  static const int kIdentifierFieldNumber = 43;
   inline ::google::protobuf::uint32 identifier() const;
   inline void set_identifier(::google::protobuf::uint32 value);
   
-  // optional int32 quantity = 41;
+  // optional int32 quantity = 44;
   inline bool has_quantity() const;
   inline void clear_quantity();
-  static const int kQuantityFieldNumber = 41;
+  static const int kQuantityFieldNumber = 44;
   inline ::google::protobuf::int32 quantity() const;
   inline void set_quantity(::google::protobuf::int32 value);
   
-  // optional .Common.KnowledgeGroupId knowledgeGroup = 42;
+  // optional .Common.KnowledgeGroupId knowledgeGroup = 45;
   inline bool has_knowledgegroup() const;
   inline void clear_knowledgegroup();
-  static const int kKnowledgeGroupFieldNumber = 42;
+  static const int kKnowledgeGroupFieldNumber = 45;
   inline const ::Common::KnowledgeGroupId& knowledgegroup() const;
   inline ::Common::KnowledgeGroupId* mutable_knowledgegroup();
   
-  // repeated .Common.MsgMissionParameter.Value list = 43;
+  // repeated .Common.MsgMissionParameter.Value list = 46;
   inline int list_size() const;
   inline void clear_list();
-  static const int kListFieldNumber = 43;
+  static const int kListFieldNumber = 46;
   inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list() const;
   inline ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >* mutable_list();
   inline const ::Common::MsgMissionParameter_Value& list(int index) const;
@@ -9678,41 +9699,44 @@ class MsgMissionParameter_Value : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  bool abool_;
-  float areal_;
+  bool booleanvalue_;
+  ::google::protobuf::int32 intvalue_;
+  ::Common::MsgHeading* heading_;
   ::google::protobuf::int32 enumeration_;
-  ::Common::MsgPath* path_;
-  ::Common::MsgPathList* pathlist_;
+  ::Common::MsgDateTime* datetime_;
   ::Common::MsgPoint* point_;
+  ::Common::MsgPolygon* area_;
+  ::Common::MsgPath* path_;
+  ::Common::MsgLine* limit_;
+  ::Common::MsgLimasOrder* phaseline_;
+  ::Common::AutomatId* automat_;
+  ::Common::UnitId* agent_;
+  ::Common::UnitKnowledgeId* agentknowledge_;
+  ::Common::CrowdKnowledgeId* crowdknowledge_;
+  ::Common::ObjectKnowledgeId* objectknowledge_;
+  ::Common::UrbanObjectKnowledgeId* urbanknowledge_;
+  ::Common::MsgPlannedWork* plannedwork_;
+  ::Common::MsgAtlasNature* atlasnature_;
+  ::Common::ResourceType* resourcetype_;
+  ::Common::MsgLogMaintenancePriorities* logmaintenancepriorities_;
+  ::Common::MsgLogMedicalPriorities* logmedicalpriorities_;
+  float areal_;
+  ::Common::MsgPathList* pathlist_;
   ::Common::MsgPointList* pointlist_;
-  ::Common::MsgPolygon* polygon_;
   ::Common::MsgPolygonList* polygonlist_;
   ::Common::MsgLocation* location_;
   ::Common::MsgLocationList* locationlist_;
-  ::Common::MsgHeading* heading_;
-  ::Common::MsgAtlasNature* atlasnature_;
-  ::Common::UnitId* unit_;
   ::Common::UnitIdList* unitlist_;
-  ::Common::AutomatId* automat_;
   ::Common::AutomatIdList* automatlist_;
-  ::Common::UnitKnowledgeId* unitknowledge_;
   ::Common::UnitKnowledgeIdList* unitknowledgelist_;
-  ::Common::ObjectKnowledgeId* objectknowledge_;
   ::Common::ObjectKnowledgeIdList* objectknowledgelist_;
-  ::Common::CrowdKnowledgeId* crowdknowledge_;
-  ::Common::MsgPlannedWork* plannedwork_;
   ::Common::MsgPlannedWorkList* plannedworklist_;
-  ::Common::ResourceType* resourcetype_;
   ::Common::EquipmentType* equipmenttype_;
   ::Common::FireId* tirindirect_;
-  ::Common::MsgDateTime* datetime_;
-  ::Common::MsgLogMaintenancePriorities* logmaintenancepriorities_;
-  ::Common::MsgLogMedicalPriorities* logmedicalpriorities_;
   ::std::string* acharstr_;
   static const ::std::string _default_acharstr_;
   ::Common::MsgMissionObjective* missionobjective_;
   ::Common::MsgMissionObjectiveList* missionobjectivelist_;
-  ::Common::MsgLine* line_;
   ::Common::MsgLimasOrder* limasorder_;
   ::Common::MsgIntelligenceList* intelligencelist_;
   ::Common::UrbanObjectId* urbanblock_;
@@ -9726,7 +9750,7 @@ class MsgMissionParameter_Value : public ::google::protobuf::Message {
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(43 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(46 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -9806,19 +9830,22 @@ class MsgMissionParameter : public ::google::protobuf::Message {
   inline bool null_value() const;
   inline void set_null_value(bool value);
   
-  // optional .Common.MsgMissionParameter.Value value = 2;
-  inline bool has_value() const;
+  // repeated .Common.MsgMissionParameter.Value value = 2;
+  inline int value_size() const;
   inline void clear_value();
   static const int kValueFieldNumber = 2;
-  inline const ::Common::MsgMissionParameter_Value& value() const;
-  inline ::Common::MsgMissionParameter_Value* mutable_value();
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& value() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >* mutable_value();
+  inline const ::Common::MsgMissionParameter_Value& value(int index) const;
+  inline ::Common::MsgMissionParameter_Value* mutable_value(int index);
+  inline ::Common::MsgMissionParameter_Value* add_value();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
   bool null_value_;
-  ::Common::MsgMissionParameter_Value* value_;
+  ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value > value_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
@@ -16897,86 +16924,86 @@ inline void MsgAtlasNature::set_nature(::google::protobuf::int32 value) {
 
 // MsgMissionParameter_Value
 
-// optional bool aBool = 1;
-inline bool MsgMissionParameter_Value::has_abool() const {
+// optional bool booleanValue = 1;
+inline bool MsgMissionParameter_Value::has_booleanvalue() const {
   return _has_bit(0);
 }
-inline void MsgMissionParameter_Value::clear_abool() {
-  abool_ = false;
+inline void MsgMissionParameter_Value::clear_booleanvalue() {
+  booleanvalue_ = false;
   _clear_bit(0);
 }
-inline bool MsgMissionParameter_Value::abool() const {
-  return abool_;
+inline bool MsgMissionParameter_Value::booleanvalue() const {
+  return booleanvalue_;
 }
-inline void MsgMissionParameter_Value::set_abool(bool value) {
+inline void MsgMissionParameter_Value::set_booleanvalue(bool value) {
   _set_bit(0);
-  abool_ = value;
+  booleanvalue_ = value;
 }
 
-// optional float aReal = 2;
-inline bool MsgMissionParameter_Value::has_areal() const {
+// optional int32 intValue = 2;
+inline bool MsgMissionParameter_Value::has_intvalue() const {
   return _has_bit(1);
 }
-inline void MsgMissionParameter_Value::clear_areal() {
-  areal_ = 0;
+inline void MsgMissionParameter_Value::clear_intvalue() {
+  intvalue_ = 0;
   _clear_bit(1);
 }
-inline float MsgMissionParameter_Value::areal() const {
-  return areal_;
+inline ::google::protobuf::int32 MsgMissionParameter_Value::intvalue() const {
+  return intvalue_;
 }
-inline void MsgMissionParameter_Value::set_areal(float value) {
+inline void MsgMissionParameter_Value::set_intvalue(::google::protobuf::int32 value) {
   _set_bit(1);
-  areal_ = value;
+  intvalue_ = value;
 }
 
-// optional int32 enumeration = 3;
-inline bool MsgMissionParameter_Value::has_enumeration() const {
+// optional .Common.MsgHeading heading = 3;
+inline bool MsgMissionParameter_Value::has_heading() const {
   return _has_bit(2);
+}
+inline void MsgMissionParameter_Value::clear_heading() {
+  if (heading_ != NULL) heading_->::Common::MsgHeading::Clear();
+  _clear_bit(2);
+}
+inline const ::Common::MsgHeading& MsgMissionParameter_Value::heading() const {
+  return heading_ != NULL ? *heading_ : *default_instance_->heading_;
+}
+inline ::Common::MsgHeading* MsgMissionParameter_Value::mutable_heading() {
+  _set_bit(2);
+  if (heading_ == NULL) heading_ = new ::Common::MsgHeading;
+  return heading_;
+}
+
+// optional int32 enumeration = 4;
+inline bool MsgMissionParameter_Value::has_enumeration() const {
+  return _has_bit(3);
 }
 inline void MsgMissionParameter_Value::clear_enumeration() {
   enumeration_ = 0;
-  _clear_bit(2);
+  _clear_bit(3);
 }
 inline ::google::protobuf::int32 MsgMissionParameter_Value::enumeration() const {
   return enumeration_;
 }
 inline void MsgMissionParameter_Value::set_enumeration(::google::protobuf::int32 value) {
-  _set_bit(2);
+  _set_bit(3);
   enumeration_ = value;
 }
 
-// optional .Common.MsgPath path = 4;
-inline bool MsgMissionParameter_Value::has_path() const {
-  return _has_bit(3);
-}
-inline void MsgMissionParameter_Value::clear_path() {
-  if (path_ != NULL) path_->::Common::MsgPath::Clear();
-  _clear_bit(3);
-}
-inline const ::Common::MsgPath& MsgMissionParameter_Value::path() const {
-  return path_ != NULL ? *path_ : *default_instance_->path_;
-}
-inline ::Common::MsgPath* MsgMissionParameter_Value::mutable_path() {
-  _set_bit(3);
-  if (path_ == NULL) path_ = new ::Common::MsgPath;
-  return path_;
-}
-
-// optional .Common.MsgPathList pathList = 5;
-inline bool MsgMissionParameter_Value::has_pathlist() const {
+// optional .Common.MsgDateTime dateTime = 5;
+inline bool MsgMissionParameter_Value::has_datetime() const {
   return _has_bit(4);
 }
-inline void MsgMissionParameter_Value::clear_pathlist() {
-  if (pathlist_ != NULL) pathlist_->::Common::MsgPathList::Clear();
+inline void MsgMissionParameter_Value::clear_datetime() {
+  if (datetime_ != NULL) datetime_->::Common::MsgDateTime::Clear();
   _clear_bit(4);
 }
-inline const ::Common::MsgPathList& MsgMissionParameter_Value::pathlist() const {
-  return pathlist_ != NULL ? *pathlist_ : *default_instance_->pathlist_;
+inline const ::Common::MsgDateTime& MsgMissionParameter_Value::datetime() const {
+  return datetime_ != NULL ? *datetime_ : *default_instance_->datetime_;
 }
-inline ::Common::MsgPathList* MsgMissionParameter_Value::mutable_pathlist() {
+inline ::Common::MsgDateTime* MsgMissionParameter_Value::mutable_datetime() {
   _set_bit(4);
-  if (pathlist_ == NULL) pathlist_ = new ::Common::MsgPathList;
-  return pathlist_;
+  if (datetime_ == NULL) datetime_ = new ::Common::MsgDateTime;
+  return datetime_;
 }
 
 // optional .Common.MsgPoint point = 6;
@@ -16996,642 +17023,692 @@ inline ::Common::MsgPoint* MsgMissionParameter_Value::mutable_point() {
   return point_;
 }
 
-// optional .Common.MsgPointList pointList = 7;
-inline bool MsgMissionParameter_Value::has_pointlist() const {
+// optional .Common.MsgPolygon area = 7;
+inline bool MsgMissionParameter_Value::has_area() const {
   return _has_bit(6);
 }
-inline void MsgMissionParameter_Value::clear_pointlist() {
-  if (pointlist_ != NULL) pointlist_->::Common::MsgPointList::Clear();
+inline void MsgMissionParameter_Value::clear_area() {
+  if (area_ != NULL) area_->::Common::MsgPolygon::Clear();
   _clear_bit(6);
 }
-inline const ::Common::MsgPointList& MsgMissionParameter_Value::pointlist() const {
-  return pointlist_ != NULL ? *pointlist_ : *default_instance_->pointlist_;
+inline const ::Common::MsgPolygon& MsgMissionParameter_Value::area() const {
+  return area_ != NULL ? *area_ : *default_instance_->area_;
 }
-inline ::Common::MsgPointList* MsgMissionParameter_Value::mutable_pointlist() {
+inline ::Common::MsgPolygon* MsgMissionParameter_Value::mutable_area() {
   _set_bit(6);
-  if (pointlist_ == NULL) pointlist_ = new ::Common::MsgPointList;
-  return pointlist_;
+  if (area_ == NULL) area_ = new ::Common::MsgPolygon;
+  return area_;
 }
 
-// optional .Common.MsgPolygon polygon = 8;
-inline bool MsgMissionParameter_Value::has_polygon() const {
+// optional .Common.MsgPath path = 8;
+inline bool MsgMissionParameter_Value::has_path() const {
   return _has_bit(7);
 }
-inline void MsgMissionParameter_Value::clear_polygon() {
-  if (polygon_ != NULL) polygon_->::Common::MsgPolygon::Clear();
+inline void MsgMissionParameter_Value::clear_path() {
+  if (path_ != NULL) path_->::Common::MsgPath::Clear();
   _clear_bit(7);
 }
-inline const ::Common::MsgPolygon& MsgMissionParameter_Value::polygon() const {
-  return polygon_ != NULL ? *polygon_ : *default_instance_->polygon_;
+inline const ::Common::MsgPath& MsgMissionParameter_Value::path() const {
+  return path_ != NULL ? *path_ : *default_instance_->path_;
 }
-inline ::Common::MsgPolygon* MsgMissionParameter_Value::mutable_polygon() {
+inline ::Common::MsgPath* MsgMissionParameter_Value::mutable_path() {
   _set_bit(7);
-  if (polygon_ == NULL) polygon_ = new ::Common::MsgPolygon;
-  return polygon_;
+  if (path_ == NULL) path_ = new ::Common::MsgPath;
+  return path_;
 }
 
-// optional .Common.MsgPolygonList polygonList = 9;
-inline bool MsgMissionParameter_Value::has_polygonlist() const {
+// optional .Common.MsgLine limit = 9;
+inline bool MsgMissionParameter_Value::has_limit() const {
   return _has_bit(8);
 }
-inline void MsgMissionParameter_Value::clear_polygonlist() {
-  if (polygonlist_ != NULL) polygonlist_->::Common::MsgPolygonList::Clear();
+inline void MsgMissionParameter_Value::clear_limit() {
+  if (limit_ != NULL) limit_->::Common::MsgLine::Clear();
   _clear_bit(8);
 }
-inline const ::Common::MsgPolygonList& MsgMissionParameter_Value::polygonlist() const {
-  return polygonlist_ != NULL ? *polygonlist_ : *default_instance_->polygonlist_;
+inline const ::Common::MsgLine& MsgMissionParameter_Value::limit() const {
+  return limit_ != NULL ? *limit_ : *default_instance_->limit_;
 }
-inline ::Common::MsgPolygonList* MsgMissionParameter_Value::mutable_polygonlist() {
+inline ::Common::MsgLine* MsgMissionParameter_Value::mutable_limit() {
   _set_bit(8);
-  if (polygonlist_ == NULL) polygonlist_ = new ::Common::MsgPolygonList;
-  return polygonlist_;
+  if (limit_ == NULL) limit_ = new ::Common::MsgLine;
+  return limit_;
 }
 
-// optional .Common.MsgLocation location = 10;
-inline bool MsgMissionParameter_Value::has_location() const {
+// optional .Common.MsgLimasOrder phaseLine = 10;
+inline bool MsgMissionParameter_Value::has_phaseline() const {
   return _has_bit(9);
 }
-inline void MsgMissionParameter_Value::clear_location() {
-  if (location_ != NULL) location_->::Common::MsgLocation::Clear();
+inline void MsgMissionParameter_Value::clear_phaseline() {
+  if (phaseline_ != NULL) phaseline_->::Common::MsgLimasOrder::Clear();
   _clear_bit(9);
 }
-inline const ::Common::MsgLocation& MsgMissionParameter_Value::location() const {
-  return location_ != NULL ? *location_ : *default_instance_->location_;
+inline const ::Common::MsgLimasOrder& MsgMissionParameter_Value::phaseline() const {
+  return phaseline_ != NULL ? *phaseline_ : *default_instance_->phaseline_;
 }
-inline ::Common::MsgLocation* MsgMissionParameter_Value::mutable_location() {
+inline ::Common::MsgLimasOrder* MsgMissionParameter_Value::mutable_phaseline() {
   _set_bit(9);
-  if (location_ == NULL) location_ = new ::Common::MsgLocation;
-  return location_;
+  if (phaseline_ == NULL) phaseline_ = new ::Common::MsgLimasOrder;
+  return phaseline_;
 }
 
-// optional .Common.MsgLocationList locationList = 11;
-inline bool MsgMissionParameter_Value::has_locationlist() const {
-  return _has_bit(10);
-}
-inline void MsgMissionParameter_Value::clear_locationlist() {
-  if (locationlist_ != NULL) locationlist_->::Common::MsgLocationList::Clear();
-  _clear_bit(10);
-}
-inline const ::Common::MsgLocationList& MsgMissionParameter_Value::locationlist() const {
-  return locationlist_ != NULL ? *locationlist_ : *default_instance_->locationlist_;
-}
-inline ::Common::MsgLocationList* MsgMissionParameter_Value::mutable_locationlist() {
-  _set_bit(10);
-  if (locationlist_ == NULL) locationlist_ = new ::Common::MsgLocationList;
-  return locationlist_;
-}
-
-// optional .Common.MsgHeading heading = 12;
-inline bool MsgMissionParameter_Value::has_heading() const {
-  return _has_bit(11);
-}
-inline void MsgMissionParameter_Value::clear_heading() {
-  if (heading_ != NULL) heading_->::Common::MsgHeading::Clear();
-  _clear_bit(11);
-}
-inline const ::Common::MsgHeading& MsgMissionParameter_Value::heading() const {
-  return heading_ != NULL ? *heading_ : *default_instance_->heading_;
-}
-inline ::Common::MsgHeading* MsgMissionParameter_Value::mutable_heading() {
-  _set_bit(11);
-  if (heading_ == NULL) heading_ = new ::Common::MsgHeading;
-  return heading_;
-}
-
-// optional .Common.MsgAtlasNature atlasNature = 13;
-inline bool MsgMissionParameter_Value::has_atlasnature() const {
-  return _has_bit(12);
-}
-inline void MsgMissionParameter_Value::clear_atlasnature() {
-  if (atlasnature_ != NULL) atlasnature_->::Common::MsgAtlasNature::Clear();
-  _clear_bit(12);
-}
-inline const ::Common::MsgAtlasNature& MsgMissionParameter_Value::atlasnature() const {
-  return atlasnature_ != NULL ? *atlasnature_ : *default_instance_->atlasnature_;
-}
-inline ::Common::MsgAtlasNature* MsgMissionParameter_Value::mutable_atlasnature() {
-  _set_bit(12);
-  if (atlasnature_ == NULL) atlasnature_ = new ::Common::MsgAtlasNature;
-  return atlasnature_;
-}
-
-// optional .Common.UnitId unit = 14;
-inline bool MsgMissionParameter_Value::has_unit() const {
-  return _has_bit(13);
-}
-inline void MsgMissionParameter_Value::clear_unit() {
-  if (unit_ != NULL) unit_->::Common::UnitId::Clear();
-  _clear_bit(13);
-}
-inline const ::Common::UnitId& MsgMissionParameter_Value::unit() const {
-  return unit_ != NULL ? *unit_ : *default_instance_->unit_;
-}
-inline ::Common::UnitId* MsgMissionParameter_Value::mutable_unit() {
-  _set_bit(13);
-  if (unit_ == NULL) unit_ = new ::Common::UnitId;
-  return unit_;
-}
-
-// optional .Common.UnitIdList unitList = 15;
-inline bool MsgMissionParameter_Value::has_unitlist() const {
-  return _has_bit(14);
-}
-inline void MsgMissionParameter_Value::clear_unitlist() {
-  if (unitlist_ != NULL) unitlist_->::Common::UnitIdList::Clear();
-  _clear_bit(14);
-}
-inline const ::Common::UnitIdList& MsgMissionParameter_Value::unitlist() const {
-  return unitlist_ != NULL ? *unitlist_ : *default_instance_->unitlist_;
-}
-inline ::Common::UnitIdList* MsgMissionParameter_Value::mutable_unitlist() {
-  _set_bit(14);
-  if (unitlist_ == NULL) unitlist_ = new ::Common::UnitIdList;
-  return unitlist_;
-}
-
-// optional .Common.AutomatId automat = 16;
+// optional .Common.AutomatId automat = 11;
 inline bool MsgMissionParameter_Value::has_automat() const {
-  return _has_bit(15);
+  return _has_bit(10);
 }
 inline void MsgMissionParameter_Value::clear_automat() {
   if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
-  _clear_bit(15);
+  _clear_bit(10);
 }
 inline const ::Common::AutomatId& MsgMissionParameter_Value::automat() const {
   return automat_ != NULL ? *automat_ : *default_instance_->automat_;
 }
 inline ::Common::AutomatId* MsgMissionParameter_Value::mutable_automat() {
-  _set_bit(15);
+  _set_bit(10);
   if (automat_ == NULL) automat_ = new ::Common::AutomatId;
   return automat_;
 }
 
-// optional .Common.AutomatIdList automatList = 17;
-inline bool MsgMissionParameter_Value::has_automatlist() const {
-  return _has_bit(16);
+// optional .Common.UnitId agent = 12;
+inline bool MsgMissionParameter_Value::has_agent() const {
+  return _has_bit(11);
 }
-inline void MsgMissionParameter_Value::clear_automatlist() {
-  if (automatlist_ != NULL) automatlist_->::Common::AutomatIdList::Clear();
-  _clear_bit(16);
+inline void MsgMissionParameter_Value::clear_agent() {
+  if (agent_ != NULL) agent_->::Common::UnitId::Clear();
+  _clear_bit(11);
 }
-inline const ::Common::AutomatIdList& MsgMissionParameter_Value::automatlist() const {
-  return automatlist_ != NULL ? *automatlist_ : *default_instance_->automatlist_;
+inline const ::Common::UnitId& MsgMissionParameter_Value::agent() const {
+  return agent_ != NULL ? *agent_ : *default_instance_->agent_;
 }
-inline ::Common::AutomatIdList* MsgMissionParameter_Value::mutable_automatlist() {
-  _set_bit(16);
-  if (automatlist_ == NULL) automatlist_ = new ::Common::AutomatIdList;
-  return automatlist_;
-}
-
-// optional .Common.UnitKnowledgeId unitKnowledge = 18;
-inline bool MsgMissionParameter_Value::has_unitknowledge() const {
-  return _has_bit(17);
-}
-inline void MsgMissionParameter_Value::clear_unitknowledge() {
-  if (unitknowledge_ != NULL) unitknowledge_->::Common::UnitKnowledgeId::Clear();
-  _clear_bit(17);
-}
-inline const ::Common::UnitKnowledgeId& MsgMissionParameter_Value::unitknowledge() const {
-  return unitknowledge_ != NULL ? *unitknowledge_ : *default_instance_->unitknowledge_;
-}
-inline ::Common::UnitKnowledgeId* MsgMissionParameter_Value::mutable_unitknowledge() {
-  _set_bit(17);
-  if (unitknowledge_ == NULL) unitknowledge_ = new ::Common::UnitKnowledgeId;
-  return unitknowledge_;
+inline ::Common::UnitId* MsgMissionParameter_Value::mutable_agent() {
+  _set_bit(11);
+  if (agent_ == NULL) agent_ = new ::Common::UnitId;
+  return agent_;
 }
 
-// optional .Common.UnitKnowledgeIdList unitKnowledgeList = 19;
-inline bool MsgMissionParameter_Value::has_unitknowledgelist() const {
-  return _has_bit(18);
+// optional .Common.UnitKnowledgeId agentKnowledge = 13;
+inline bool MsgMissionParameter_Value::has_agentknowledge() const {
+  return _has_bit(12);
 }
-inline void MsgMissionParameter_Value::clear_unitknowledgelist() {
-  if (unitknowledgelist_ != NULL) unitknowledgelist_->::Common::UnitKnowledgeIdList::Clear();
-  _clear_bit(18);
+inline void MsgMissionParameter_Value::clear_agentknowledge() {
+  if (agentknowledge_ != NULL) agentknowledge_->::Common::UnitKnowledgeId::Clear();
+  _clear_bit(12);
 }
-inline const ::Common::UnitKnowledgeIdList& MsgMissionParameter_Value::unitknowledgelist() const {
-  return unitknowledgelist_ != NULL ? *unitknowledgelist_ : *default_instance_->unitknowledgelist_;
+inline const ::Common::UnitKnowledgeId& MsgMissionParameter_Value::agentknowledge() const {
+  return agentknowledge_ != NULL ? *agentknowledge_ : *default_instance_->agentknowledge_;
 }
-inline ::Common::UnitKnowledgeIdList* MsgMissionParameter_Value::mutable_unitknowledgelist() {
-  _set_bit(18);
-  if (unitknowledgelist_ == NULL) unitknowledgelist_ = new ::Common::UnitKnowledgeIdList;
-  return unitknowledgelist_;
-}
-
-// optional .Common.ObjectKnowledgeId objectKnowledge = 20;
-inline bool MsgMissionParameter_Value::has_objectknowledge() const {
-  return _has_bit(19);
-}
-inline void MsgMissionParameter_Value::clear_objectknowledge() {
-  if (objectknowledge_ != NULL) objectknowledge_->::Common::ObjectKnowledgeId::Clear();
-  _clear_bit(19);
-}
-inline const ::Common::ObjectKnowledgeId& MsgMissionParameter_Value::objectknowledge() const {
-  return objectknowledge_ != NULL ? *objectknowledge_ : *default_instance_->objectknowledge_;
-}
-inline ::Common::ObjectKnowledgeId* MsgMissionParameter_Value::mutable_objectknowledge() {
-  _set_bit(19);
-  if (objectknowledge_ == NULL) objectknowledge_ = new ::Common::ObjectKnowledgeId;
-  return objectknowledge_;
+inline ::Common::UnitKnowledgeId* MsgMissionParameter_Value::mutable_agentknowledge() {
+  _set_bit(12);
+  if (agentknowledge_ == NULL) agentknowledge_ = new ::Common::UnitKnowledgeId;
+  return agentknowledge_;
 }
 
-// optional .Common.ObjectKnowledgeIdList objectKnowledgeList = 21;
-inline bool MsgMissionParameter_Value::has_objectknowledgelist() const {
-  return _has_bit(20);
-}
-inline void MsgMissionParameter_Value::clear_objectknowledgelist() {
-  if (objectknowledgelist_ != NULL) objectknowledgelist_->::Common::ObjectKnowledgeIdList::Clear();
-  _clear_bit(20);
-}
-inline const ::Common::ObjectKnowledgeIdList& MsgMissionParameter_Value::objectknowledgelist() const {
-  return objectknowledgelist_ != NULL ? *objectknowledgelist_ : *default_instance_->objectknowledgelist_;
-}
-inline ::Common::ObjectKnowledgeIdList* MsgMissionParameter_Value::mutable_objectknowledgelist() {
-  _set_bit(20);
-  if (objectknowledgelist_ == NULL) objectknowledgelist_ = new ::Common::ObjectKnowledgeIdList;
-  return objectknowledgelist_;
-}
-
-// optional .Common.CrowdKnowledgeId crowdKnowledge = 22;
+// optional .Common.CrowdKnowledgeId crowdKnowledge = 14;
 inline bool MsgMissionParameter_Value::has_crowdknowledge() const {
-  return _has_bit(21);
+  return _has_bit(13);
 }
 inline void MsgMissionParameter_Value::clear_crowdknowledge() {
   if (crowdknowledge_ != NULL) crowdknowledge_->::Common::CrowdKnowledgeId::Clear();
-  _clear_bit(21);
+  _clear_bit(13);
 }
 inline const ::Common::CrowdKnowledgeId& MsgMissionParameter_Value::crowdknowledge() const {
   return crowdknowledge_ != NULL ? *crowdknowledge_ : *default_instance_->crowdknowledge_;
 }
 inline ::Common::CrowdKnowledgeId* MsgMissionParameter_Value::mutable_crowdknowledge() {
-  _set_bit(21);
+  _set_bit(13);
   if (crowdknowledge_ == NULL) crowdknowledge_ = new ::Common::CrowdKnowledgeId;
   return crowdknowledge_;
 }
 
-// optional .Common.MsgPlannedWork plannedWork = 23;
+// optional .Common.ObjectKnowledgeId objectKnowledge = 15;
+inline bool MsgMissionParameter_Value::has_objectknowledge() const {
+  return _has_bit(14);
+}
+inline void MsgMissionParameter_Value::clear_objectknowledge() {
+  if (objectknowledge_ != NULL) objectknowledge_->::Common::ObjectKnowledgeId::Clear();
+  _clear_bit(14);
+}
+inline const ::Common::ObjectKnowledgeId& MsgMissionParameter_Value::objectknowledge() const {
+  return objectknowledge_ != NULL ? *objectknowledge_ : *default_instance_->objectknowledge_;
+}
+inline ::Common::ObjectKnowledgeId* MsgMissionParameter_Value::mutable_objectknowledge() {
+  _set_bit(14);
+  if (objectknowledge_ == NULL) objectknowledge_ = new ::Common::ObjectKnowledgeId;
+  return objectknowledge_;
+}
+
+// optional .Common.UrbanObjectKnowledgeId urbanKnowledge = 16;
+inline bool MsgMissionParameter_Value::has_urbanknowledge() const {
+  return _has_bit(15);
+}
+inline void MsgMissionParameter_Value::clear_urbanknowledge() {
+  if (urbanknowledge_ != NULL) urbanknowledge_->::Common::UrbanObjectKnowledgeId::Clear();
+  _clear_bit(15);
+}
+inline const ::Common::UrbanObjectKnowledgeId& MsgMissionParameter_Value::urbanknowledge() const {
+  return urbanknowledge_ != NULL ? *urbanknowledge_ : *default_instance_->urbanknowledge_;
+}
+inline ::Common::UrbanObjectKnowledgeId* MsgMissionParameter_Value::mutable_urbanknowledge() {
+  _set_bit(15);
+  if (urbanknowledge_ == NULL) urbanknowledge_ = new ::Common::UrbanObjectKnowledgeId;
+  return urbanknowledge_;
+}
+
+// optional .Common.MsgPlannedWork plannedWork = 17;
 inline bool MsgMissionParameter_Value::has_plannedwork() const {
-  return _has_bit(22);
+  return _has_bit(16);
 }
 inline void MsgMissionParameter_Value::clear_plannedwork() {
   if (plannedwork_ != NULL) plannedwork_->::Common::MsgPlannedWork::Clear();
-  _clear_bit(22);
+  _clear_bit(16);
 }
 inline const ::Common::MsgPlannedWork& MsgMissionParameter_Value::plannedwork() const {
   return plannedwork_ != NULL ? *plannedwork_ : *default_instance_->plannedwork_;
 }
 inline ::Common::MsgPlannedWork* MsgMissionParameter_Value::mutable_plannedwork() {
-  _set_bit(22);
+  _set_bit(16);
   if (plannedwork_ == NULL) plannedwork_ = new ::Common::MsgPlannedWork;
   return plannedwork_;
 }
 
-// optional .Common.MsgPlannedWorkList plannedWorkList = 24;
-inline bool MsgMissionParameter_Value::has_plannedworklist() const {
-  return _has_bit(23);
+// optional .Common.MsgAtlasNature atlasNature = 18;
+inline bool MsgMissionParameter_Value::has_atlasnature() const {
+  return _has_bit(17);
 }
-inline void MsgMissionParameter_Value::clear_plannedworklist() {
-  if (plannedworklist_ != NULL) plannedworklist_->::Common::MsgPlannedWorkList::Clear();
-  _clear_bit(23);
+inline void MsgMissionParameter_Value::clear_atlasnature() {
+  if (atlasnature_ != NULL) atlasnature_->::Common::MsgAtlasNature::Clear();
+  _clear_bit(17);
 }
-inline const ::Common::MsgPlannedWorkList& MsgMissionParameter_Value::plannedworklist() const {
-  return plannedworklist_ != NULL ? *plannedworklist_ : *default_instance_->plannedworklist_;
+inline const ::Common::MsgAtlasNature& MsgMissionParameter_Value::atlasnature() const {
+  return atlasnature_ != NULL ? *atlasnature_ : *default_instance_->atlasnature_;
 }
-inline ::Common::MsgPlannedWorkList* MsgMissionParameter_Value::mutable_plannedworklist() {
-  _set_bit(23);
-  if (plannedworklist_ == NULL) plannedworklist_ = new ::Common::MsgPlannedWorkList;
-  return plannedworklist_;
+inline ::Common::MsgAtlasNature* MsgMissionParameter_Value::mutable_atlasnature() {
+  _set_bit(17);
+  if (atlasnature_ == NULL) atlasnature_ = new ::Common::MsgAtlasNature;
+  return atlasnature_;
 }
 
-// optional .Common.ResourceType resourceType = 25;
+// optional .Common.ResourceType resourceType = 19;
 inline bool MsgMissionParameter_Value::has_resourcetype() const {
-  return _has_bit(24);
+  return _has_bit(18);
 }
 inline void MsgMissionParameter_Value::clear_resourcetype() {
   if (resourcetype_ != NULL) resourcetype_->::Common::ResourceType::Clear();
-  _clear_bit(24);
+  _clear_bit(18);
 }
 inline const ::Common::ResourceType& MsgMissionParameter_Value::resourcetype() const {
   return resourcetype_ != NULL ? *resourcetype_ : *default_instance_->resourcetype_;
 }
 inline ::Common::ResourceType* MsgMissionParameter_Value::mutable_resourcetype() {
-  _set_bit(24);
+  _set_bit(18);
   if (resourcetype_ == NULL) resourcetype_ = new ::Common::ResourceType;
   return resourcetype_;
 }
 
-// optional .Common.EquipmentType equipmentType = 26;
-inline bool MsgMissionParameter_Value::has_equipmenttype() const {
-  return _has_bit(25);
-}
-inline void MsgMissionParameter_Value::clear_equipmenttype() {
-  if (equipmenttype_ != NULL) equipmenttype_->::Common::EquipmentType::Clear();
-  _clear_bit(25);
-}
-inline const ::Common::EquipmentType& MsgMissionParameter_Value::equipmenttype() const {
-  return equipmenttype_ != NULL ? *equipmenttype_ : *default_instance_->equipmenttype_;
-}
-inline ::Common::EquipmentType* MsgMissionParameter_Value::mutable_equipmenttype() {
-  _set_bit(25);
-  if (equipmenttype_ == NULL) equipmenttype_ = new ::Common::EquipmentType;
-  return equipmenttype_;
-}
-
-// optional .Common.FireId tirIndirect = 27;
-inline bool MsgMissionParameter_Value::has_tirindirect() const {
-  return _has_bit(26);
-}
-inline void MsgMissionParameter_Value::clear_tirindirect() {
-  if (tirindirect_ != NULL) tirindirect_->::Common::FireId::Clear();
-  _clear_bit(26);
-}
-inline const ::Common::FireId& MsgMissionParameter_Value::tirindirect() const {
-  return tirindirect_ != NULL ? *tirindirect_ : *default_instance_->tirindirect_;
-}
-inline ::Common::FireId* MsgMissionParameter_Value::mutable_tirindirect() {
-  _set_bit(26);
-  if (tirindirect_ == NULL) tirindirect_ = new ::Common::FireId;
-  return tirindirect_;
-}
-
-// optional .Common.MsgDateTime dateTime = 28;
-inline bool MsgMissionParameter_Value::has_datetime() const {
-  return _has_bit(27);
-}
-inline void MsgMissionParameter_Value::clear_datetime() {
-  if (datetime_ != NULL) datetime_->::Common::MsgDateTime::Clear();
-  _clear_bit(27);
-}
-inline const ::Common::MsgDateTime& MsgMissionParameter_Value::datetime() const {
-  return datetime_ != NULL ? *datetime_ : *default_instance_->datetime_;
-}
-inline ::Common::MsgDateTime* MsgMissionParameter_Value::mutable_datetime() {
-  _set_bit(27);
-  if (datetime_ == NULL) datetime_ = new ::Common::MsgDateTime;
-  return datetime_;
-}
-
-// optional .Common.MsgLogMaintenancePriorities logMaintenancePriorities = 29;
+// optional .Common.MsgLogMaintenancePriorities logMaintenancePriorities = 20;
 inline bool MsgMissionParameter_Value::has_logmaintenancepriorities() const {
-  return _has_bit(28);
+  return _has_bit(19);
 }
 inline void MsgMissionParameter_Value::clear_logmaintenancepriorities() {
   if (logmaintenancepriorities_ != NULL) logmaintenancepriorities_->::Common::MsgLogMaintenancePriorities::Clear();
-  _clear_bit(28);
+  _clear_bit(19);
 }
 inline const ::Common::MsgLogMaintenancePriorities& MsgMissionParameter_Value::logmaintenancepriorities() const {
   return logmaintenancepriorities_ != NULL ? *logmaintenancepriorities_ : *default_instance_->logmaintenancepriorities_;
 }
 inline ::Common::MsgLogMaintenancePriorities* MsgMissionParameter_Value::mutable_logmaintenancepriorities() {
-  _set_bit(28);
+  _set_bit(19);
   if (logmaintenancepriorities_ == NULL) logmaintenancepriorities_ = new ::Common::MsgLogMaintenancePriorities;
   return logmaintenancepriorities_;
 }
 
-// optional .Common.MsgLogMedicalPriorities logMedicalPriorities = 30;
+// optional .Common.MsgLogMedicalPriorities logMedicalPriorities = 21;
 inline bool MsgMissionParameter_Value::has_logmedicalpriorities() const {
-  return _has_bit(29);
+  return _has_bit(20);
 }
 inline void MsgMissionParameter_Value::clear_logmedicalpriorities() {
   if (logmedicalpriorities_ != NULL) logmedicalpriorities_->::Common::MsgLogMedicalPriorities::Clear();
-  _clear_bit(29);
+  _clear_bit(20);
 }
 inline const ::Common::MsgLogMedicalPriorities& MsgMissionParameter_Value::logmedicalpriorities() const {
   return logmedicalpriorities_ != NULL ? *logmedicalpriorities_ : *default_instance_->logmedicalpriorities_;
 }
 inline ::Common::MsgLogMedicalPriorities* MsgMissionParameter_Value::mutable_logmedicalpriorities() {
-  _set_bit(29);
+  _set_bit(20);
   if (logmedicalpriorities_ == NULL) logmedicalpriorities_ = new ::Common::MsgLogMedicalPriorities;
   return logmedicalpriorities_;
 }
 
-// optional string aCharStr = 31;
-inline bool MsgMissionParameter_Value::has_acharstr() const {
+// optional float aReal = 22;
+inline bool MsgMissionParameter_Value::has_areal() const {
+  return _has_bit(21);
+}
+inline void MsgMissionParameter_Value::clear_areal() {
+  areal_ = 0;
+  _clear_bit(21);
+}
+inline float MsgMissionParameter_Value::areal() const {
+  return areal_;
+}
+inline void MsgMissionParameter_Value::set_areal(float value) {
+  _set_bit(21);
+  areal_ = value;
+}
+
+// optional .Common.MsgPathList pathList = 23;
+inline bool MsgMissionParameter_Value::has_pathlist() const {
+  return _has_bit(22);
+}
+inline void MsgMissionParameter_Value::clear_pathlist() {
+  if (pathlist_ != NULL) pathlist_->::Common::MsgPathList::Clear();
+  _clear_bit(22);
+}
+inline const ::Common::MsgPathList& MsgMissionParameter_Value::pathlist() const {
+  return pathlist_ != NULL ? *pathlist_ : *default_instance_->pathlist_;
+}
+inline ::Common::MsgPathList* MsgMissionParameter_Value::mutable_pathlist() {
+  _set_bit(22);
+  if (pathlist_ == NULL) pathlist_ = new ::Common::MsgPathList;
+  return pathlist_;
+}
+
+// optional .Common.MsgPointList pointList = 24;
+inline bool MsgMissionParameter_Value::has_pointlist() const {
+  return _has_bit(23);
+}
+inline void MsgMissionParameter_Value::clear_pointlist() {
+  if (pointlist_ != NULL) pointlist_->::Common::MsgPointList::Clear();
+  _clear_bit(23);
+}
+inline const ::Common::MsgPointList& MsgMissionParameter_Value::pointlist() const {
+  return pointlist_ != NULL ? *pointlist_ : *default_instance_->pointlist_;
+}
+inline ::Common::MsgPointList* MsgMissionParameter_Value::mutable_pointlist() {
+  _set_bit(23);
+  if (pointlist_ == NULL) pointlist_ = new ::Common::MsgPointList;
+  return pointlist_;
+}
+
+// optional .Common.MsgPolygonList polygonList = 25;
+inline bool MsgMissionParameter_Value::has_polygonlist() const {
+  return _has_bit(24);
+}
+inline void MsgMissionParameter_Value::clear_polygonlist() {
+  if (polygonlist_ != NULL) polygonlist_->::Common::MsgPolygonList::Clear();
+  _clear_bit(24);
+}
+inline const ::Common::MsgPolygonList& MsgMissionParameter_Value::polygonlist() const {
+  return polygonlist_ != NULL ? *polygonlist_ : *default_instance_->polygonlist_;
+}
+inline ::Common::MsgPolygonList* MsgMissionParameter_Value::mutable_polygonlist() {
+  _set_bit(24);
+  if (polygonlist_ == NULL) polygonlist_ = new ::Common::MsgPolygonList;
+  return polygonlist_;
+}
+
+// optional .Common.MsgLocation location = 26;
+inline bool MsgMissionParameter_Value::has_location() const {
+  return _has_bit(25);
+}
+inline void MsgMissionParameter_Value::clear_location() {
+  if (location_ != NULL) location_->::Common::MsgLocation::Clear();
+  _clear_bit(25);
+}
+inline const ::Common::MsgLocation& MsgMissionParameter_Value::location() const {
+  return location_ != NULL ? *location_ : *default_instance_->location_;
+}
+inline ::Common::MsgLocation* MsgMissionParameter_Value::mutable_location() {
+  _set_bit(25);
+  if (location_ == NULL) location_ = new ::Common::MsgLocation;
+  return location_;
+}
+
+// optional .Common.MsgLocationList locationList = 27;
+inline bool MsgMissionParameter_Value::has_locationlist() const {
+  return _has_bit(26);
+}
+inline void MsgMissionParameter_Value::clear_locationlist() {
+  if (locationlist_ != NULL) locationlist_->::Common::MsgLocationList::Clear();
+  _clear_bit(26);
+}
+inline const ::Common::MsgLocationList& MsgMissionParameter_Value::locationlist() const {
+  return locationlist_ != NULL ? *locationlist_ : *default_instance_->locationlist_;
+}
+inline ::Common::MsgLocationList* MsgMissionParameter_Value::mutable_locationlist() {
+  _set_bit(26);
+  if (locationlist_ == NULL) locationlist_ = new ::Common::MsgLocationList;
+  return locationlist_;
+}
+
+// optional .Common.UnitIdList unitList = 28;
+inline bool MsgMissionParameter_Value::has_unitlist() const {
+  return _has_bit(27);
+}
+inline void MsgMissionParameter_Value::clear_unitlist() {
+  if (unitlist_ != NULL) unitlist_->::Common::UnitIdList::Clear();
+  _clear_bit(27);
+}
+inline const ::Common::UnitIdList& MsgMissionParameter_Value::unitlist() const {
+  return unitlist_ != NULL ? *unitlist_ : *default_instance_->unitlist_;
+}
+inline ::Common::UnitIdList* MsgMissionParameter_Value::mutable_unitlist() {
+  _set_bit(27);
+  if (unitlist_ == NULL) unitlist_ = new ::Common::UnitIdList;
+  return unitlist_;
+}
+
+// optional .Common.AutomatIdList automatList = 29;
+inline bool MsgMissionParameter_Value::has_automatlist() const {
+  return _has_bit(28);
+}
+inline void MsgMissionParameter_Value::clear_automatlist() {
+  if (automatlist_ != NULL) automatlist_->::Common::AutomatIdList::Clear();
+  _clear_bit(28);
+}
+inline const ::Common::AutomatIdList& MsgMissionParameter_Value::automatlist() const {
+  return automatlist_ != NULL ? *automatlist_ : *default_instance_->automatlist_;
+}
+inline ::Common::AutomatIdList* MsgMissionParameter_Value::mutable_automatlist() {
+  _set_bit(28);
+  if (automatlist_ == NULL) automatlist_ = new ::Common::AutomatIdList;
+  return automatlist_;
+}
+
+// optional .Common.UnitKnowledgeIdList unitKnowledgeList = 30;
+inline bool MsgMissionParameter_Value::has_unitknowledgelist() const {
+  return _has_bit(29);
+}
+inline void MsgMissionParameter_Value::clear_unitknowledgelist() {
+  if (unitknowledgelist_ != NULL) unitknowledgelist_->::Common::UnitKnowledgeIdList::Clear();
+  _clear_bit(29);
+}
+inline const ::Common::UnitKnowledgeIdList& MsgMissionParameter_Value::unitknowledgelist() const {
+  return unitknowledgelist_ != NULL ? *unitknowledgelist_ : *default_instance_->unitknowledgelist_;
+}
+inline ::Common::UnitKnowledgeIdList* MsgMissionParameter_Value::mutable_unitknowledgelist() {
+  _set_bit(29);
+  if (unitknowledgelist_ == NULL) unitknowledgelist_ = new ::Common::UnitKnowledgeIdList;
+  return unitknowledgelist_;
+}
+
+// optional .Common.ObjectKnowledgeIdList objectKnowledgeList = 31;
+inline bool MsgMissionParameter_Value::has_objectknowledgelist() const {
   return _has_bit(30);
+}
+inline void MsgMissionParameter_Value::clear_objectknowledgelist() {
+  if (objectknowledgelist_ != NULL) objectknowledgelist_->::Common::ObjectKnowledgeIdList::Clear();
+  _clear_bit(30);
+}
+inline const ::Common::ObjectKnowledgeIdList& MsgMissionParameter_Value::objectknowledgelist() const {
+  return objectknowledgelist_ != NULL ? *objectknowledgelist_ : *default_instance_->objectknowledgelist_;
+}
+inline ::Common::ObjectKnowledgeIdList* MsgMissionParameter_Value::mutable_objectknowledgelist() {
+  _set_bit(30);
+  if (objectknowledgelist_ == NULL) objectknowledgelist_ = new ::Common::ObjectKnowledgeIdList;
+  return objectknowledgelist_;
+}
+
+// optional .Common.MsgPlannedWorkList plannedWorkList = 32;
+inline bool MsgMissionParameter_Value::has_plannedworklist() const {
+  return _has_bit(31);
+}
+inline void MsgMissionParameter_Value::clear_plannedworklist() {
+  if (plannedworklist_ != NULL) plannedworklist_->::Common::MsgPlannedWorkList::Clear();
+  _clear_bit(31);
+}
+inline const ::Common::MsgPlannedWorkList& MsgMissionParameter_Value::plannedworklist() const {
+  return plannedworklist_ != NULL ? *plannedworklist_ : *default_instance_->plannedworklist_;
+}
+inline ::Common::MsgPlannedWorkList* MsgMissionParameter_Value::mutable_plannedworklist() {
+  _set_bit(31);
+  if (plannedworklist_ == NULL) plannedworklist_ = new ::Common::MsgPlannedWorkList;
+  return plannedworklist_;
+}
+
+// optional .Common.EquipmentType equipmentType = 33;
+inline bool MsgMissionParameter_Value::has_equipmenttype() const {
+  return _has_bit(32);
+}
+inline void MsgMissionParameter_Value::clear_equipmenttype() {
+  if (equipmenttype_ != NULL) equipmenttype_->::Common::EquipmentType::Clear();
+  _clear_bit(32);
+}
+inline const ::Common::EquipmentType& MsgMissionParameter_Value::equipmenttype() const {
+  return equipmenttype_ != NULL ? *equipmenttype_ : *default_instance_->equipmenttype_;
+}
+inline ::Common::EquipmentType* MsgMissionParameter_Value::mutable_equipmenttype() {
+  _set_bit(32);
+  if (equipmenttype_ == NULL) equipmenttype_ = new ::Common::EquipmentType;
+  return equipmenttype_;
+}
+
+// optional .Common.FireId tirIndirect = 34;
+inline bool MsgMissionParameter_Value::has_tirindirect() const {
+  return _has_bit(33);
+}
+inline void MsgMissionParameter_Value::clear_tirindirect() {
+  if (tirindirect_ != NULL) tirindirect_->::Common::FireId::Clear();
+  _clear_bit(33);
+}
+inline const ::Common::FireId& MsgMissionParameter_Value::tirindirect() const {
+  return tirindirect_ != NULL ? *tirindirect_ : *default_instance_->tirindirect_;
+}
+inline ::Common::FireId* MsgMissionParameter_Value::mutable_tirindirect() {
+  _set_bit(33);
+  if (tirindirect_ == NULL) tirindirect_ = new ::Common::FireId;
+  return tirindirect_;
+}
+
+// optional string aCharStr = 35;
+inline bool MsgMissionParameter_Value::has_acharstr() const {
+  return _has_bit(34);
 }
 inline void MsgMissionParameter_Value::clear_acharstr() {
   if (acharstr_ != &_default_acharstr_) {
     acharstr_->clear();
   }
-  _clear_bit(30);
+  _clear_bit(34);
 }
 inline const ::std::string& MsgMissionParameter_Value::acharstr() const {
   return *acharstr_;
 }
 inline void MsgMissionParameter_Value::set_acharstr(const ::std::string& value) {
-  _set_bit(30);
+  _set_bit(34);
   if (acharstr_ == &_default_acharstr_) {
     acharstr_ = new ::std::string;
   }
   acharstr_->assign(value);
 }
 inline void MsgMissionParameter_Value::set_acharstr(const char* value) {
-  _set_bit(30);
+  _set_bit(34);
   if (acharstr_ == &_default_acharstr_) {
     acharstr_ = new ::std::string;
   }
   acharstr_->assign(value);
 }
 inline void MsgMissionParameter_Value::set_acharstr(const char* value, size_t size) {
-  _set_bit(30);
+  _set_bit(34);
   if (acharstr_ == &_default_acharstr_) {
     acharstr_ = new ::std::string;
   }
   acharstr_->assign(reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* MsgMissionParameter_Value::mutable_acharstr() {
-  _set_bit(30);
+  _set_bit(34);
   if (acharstr_ == &_default_acharstr_) {
     acharstr_ = new ::std::string;
   }
   return acharstr_;
 }
 
-// optional .Common.MsgMissionObjective missionObjective = 32;
+// optional .Common.MsgMissionObjective missionObjective = 36;
 inline bool MsgMissionParameter_Value::has_missionobjective() const {
-  return _has_bit(31);
+  return _has_bit(35);
 }
 inline void MsgMissionParameter_Value::clear_missionobjective() {
   if (missionobjective_ != NULL) missionobjective_->::Common::MsgMissionObjective::Clear();
-  _clear_bit(31);
+  _clear_bit(35);
 }
 inline const ::Common::MsgMissionObjective& MsgMissionParameter_Value::missionobjective() const {
   return missionobjective_ != NULL ? *missionobjective_ : *default_instance_->missionobjective_;
 }
 inline ::Common::MsgMissionObjective* MsgMissionParameter_Value::mutable_missionobjective() {
-  _set_bit(31);
+  _set_bit(35);
   if (missionobjective_ == NULL) missionobjective_ = new ::Common::MsgMissionObjective;
   return missionobjective_;
 }
 
-// optional .Common.MsgMissionObjectiveList missionObjectiveList = 33;
+// optional .Common.MsgMissionObjectiveList missionObjectiveList = 37;
 inline bool MsgMissionParameter_Value::has_missionobjectivelist() const {
-  return _has_bit(32);
+  return _has_bit(36);
 }
 inline void MsgMissionParameter_Value::clear_missionobjectivelist() {
   if (missionobjectivelist_ != NULL) missionobjectivelist_->::Common::MsgMissionObjectiveList::Clear();
-  _clear_bit(32);
+  _clear_bit(36);
 }
 inline const ::Common::MsgMissionObjectiveList& MsgMissionParameter_Value::missionobjectivelist() const {
   return missionobjectivelist_ != NULL ? *missionobjectivelist_ : *default_instance_->missionobjectivelist_;
 }
 inline ::Common::MsgMissionObjectiveList* MsgMissionParameter_Value::mutable_missionobjectivelist() {
-  _set_bit(32);
+  _set_bit(36);
   if (missionobjectivelist_ == NULL) missionobjectivelist_ = new ::Common::MsgMissionObjectiveList;
   return missionobjectivelist_;
 }
 
-// optional .Common.MsgLine line = 34;
-inline bool MsgMissionParameter_Value::has_line() const {
-  return _has_bit(33);
-}
-inline void MsgMissionParameter_Value::clear_line() {
-  if (line_ != NULL) line_->::Common::MsgLine::Clear();
-  _clear_bit(33);
-}
-inline const ::Common::MsgLine& MsgMissionParameter_Value::line() const {
-  return line_ != NULL ? *line_ : *default_instance_->line_;
-}
-inline ::Common::MsgLine* MsgMissionParameter_Value::mutable_line() {
-  _set_bit(33);
-  if (line_ == NULL) line_ = new ::Common::MsgLine;
-  return line_;
-}
-
-// optional .Common.MsgLimasOrder limasOrder = 35;
+// optional .Common.MsgLimasOrder limasOrder = 38;
 inline bool MsgMissionParameter_Value::has_limasorder() const {
-  return _has_bit(34);
+  return _has_bit(37);
 }
 inline void MsgMissionParameter_Value::clear_limasorder() {
   if (limasorder_ != NULL) limasorder_->::Common::MsgLimasOrder::Clear();
-  _clear_bit(34);
+  _clear_bit(37);
 }
 inline const ::Common::MsgLimasOrder& MsgMissionParameter_Value::limasorder() const {
   return limasorder_ != NULL ? *limasorder_ : *default_instance_->limasorder_;
 }
 inline ::Common::MsgLimasOrder* MsgMissionParameter_Value::mutable_limasorder() {
-  _set_bit(34);
+  _set_bit(37);
   if (limasorder_ == NULL) limasorder_ = new ::Common::MsgLimasOrder;
   return limasorder_;
 }
 
-// optional .Common.MsgIntelligenceList intelligenceList = 36;
+// optional .Common.MsgIntelligenceList intelligenceList = 39;
 inline bool MsgMissionParameter_Value::has_intelligencelist() const {
-  return _has_bit(35);
+  return _has_bit(38);
 }
 inline void MsgMissionParameter_Value::clear_intelligencelist() {
   if (intelligencelist_ != NULL) intelligencelist_->::Common::MsgIntelligenceList::Clear();
-  _clear_bit(35);
+  _clear_bit(38);
 }
 inline const ::Common::MsgIntelligenceList& MsgMissionParameter_Value::intelligencelist() const {
   return intelligencelist_ != NULL ? *intelligencelist_ : *default_instance_->intelligencelist_;
 }
 inline ::Common::MsgIntelligenceList* MsgMissionParameter_Value::mutable_intelligencelist() {
-  _set_bit(35);
+  _set_bit(38);
   if (intelligencelist_ == NULL) intelligencelist_ = new ::Common::MsgIntelligenceList;
   return intelligencelist_;
 }
 
-// optional .Common.UrbanObjectId urbanBlock = 37;
+// optional .Common.UrbanObjectId urbanBlock = 40;
 inline bool MsgMissionParameter_Value::has_urbanblock() const {
-  return _has_bit(36);
+  return _has_bit(39);
 }
 inline void MsgMissionParameter_Value::clear_urbanblock() {
   if (urbanblock_ != NULL) urbanblock_->::Common::UrbanObjectId::Clear();
-  _clear_bit(36);
+  _clear_bit(39);
 }
 inline const ::Common::UrbanObjectId& MsgMissionParameter_Value::urbanblock() const {
   return urbanblock_ != NULL ? *urbanblock_ : *default_instance_->urbanblock_;
 }
 inline ::Common::UrbanObjectId* MsgMissionParameter_Value::mutable_urbanblock() {
-  _set_bit(36);
+  _set_bit(39);
   if (urbanblock_ == NULL) urbanblock_ = new ::Common::UrbanObjectId;
   return urbanblock_;
 }
 
-// optional .Common.PartyId party = 38;
+// optional .Common.PartyId party = 41;
 inline bool MsgMissionParameter_Value::has_party() const {
-  return _has_bit(37);
+  return _has_bit(40);
 }
 inline void MsgMissionParameter_Value::clear_party() {
   if (party_ != NULL) party_->::Common::PartyId::Clear();
-  _clear_bit(37);
+  _clear_bit(40);
 }
 inline const ::Common::PartyId& MsgMissionParameter_Value::party() const {
   return party_ != NULL ? *party_ : *default_instance_->party_;
 }
 inline ::Common::PartyId* MsgMissionParameter_Value::mutable_party() {
-  _set_bit(37);
+  _set_bit(40);
   if (party_ == NULL) party_ = new ::Common::PartyId;
   return party_;
 }
 
-// optional .Common.FormationId formation = 39;
+// optional .Common.FormationId formation = 42;
 inline bool MsgMissionParameter_Value::has_formation() const {
-  return _has_bit(38);
+  return _has_bit(41);
 }
 inline void MsgMissionParameter_Value::clear_formation() {
   if (formation_ != NULL) formation_->::Common::FormationId::Clear();
-  _clear_bit(38);
+  _clear_bit(41);
 }
 inline const ::Common::FormationId& MsgMissionParameter_Value::formation() const {
   return formation_ != NULL ? *formation_ : *default_instance_->formation_;
 }
 inline ::Common::FormationId* MsgMissionParameter_Value::mutable_formation() {
-  _set_bit(38);
+  _set_bit(41);
   if (formation_ == NULL) formation_ = new ::Common::FormationId;
   return formation_;
 }
 
-// optional uint32 identifier = 40;
+// optional uint32 identifier = 43;
 inline bool MsgMissionParameter_Value::has_identifier() const {
-  return _has_bit(39);
+  return _has_bit(42);
 }
 inline void MsgMissionParameter_Value::clear_identifier() {
   identifier_ = 0u;
-  _clear_bit(39);
+  _clear_bit(42);
 }
 inline ::google::protobuf::uint32 MsgMissionParameter_Value::identifier() const {
   return identifier_;
 }
 inline void MsgMissionParameter_Value::set_identifier(::google::protobuf::uint32 value) {
-  _set_bit(39);
+  _set_bit(42);
   identifier_ = value;
 }
 
-// optional int32 quantity = 41;
+// optional int32 quantity = 44;
 inline bool MsgMissionParameter_Value::has_quantity() const {
-  return _has_bit(40);
+  return _has_bit(43);
 }
 inline void MsgMissionParameter_Value::clear_quantity() {
   quantity_ = 0;
-  _clear_bit(40);
+  _clear_bit(43);
 }
 inline ::google::protobuf::int32 MsgMissionParameter_Value::quantity() const {
   return quantity_;
 }
 inline void MsgMissionParameter_Value::set_quantity(::google::protobuf::int32 value) {
-  _set_bit(40);
+  _set_bit(43);
   quantity_ = value;
 }
 
-// optional .Common.KnowledgeGroupId knowledgeGroup = 42;
+// optional .Common.KnowledgeGroupId knowledgeGroup = 45;
 inline bool MsgMissionParameter_Value::has_knowledgegroup() const {
-  return _has_bit(41);
+  return _has_bit(44);
 }
 inline void MsgMissionParameter_Value::clear_knowledgegroup() {
   if (knowledgegroup_ != NULL) knowledgegroup_->::Common::KnowledgeGroupId::Clear();
-  _clear_bit(41);
+  _clear_bit(44);
 }
 inline const ::Common::KnowledgeGroupId& MsgMissionParameter_Value::knowledgegroup() const {
   return knowledgegroup_ != NULL ? *knowledgegroup_ : *default_instance_->knowledgegroup_;
 }
 inline ::Common::KnowledgeGroupId* MsgMissionParameter_Value::mutable_knowledgegroup() {
-  _set_bit(41);
+  _set_bit(44);
   if (knowledgegroup_ == NULL) knowledgegroup_ = new ::Common::KnowledgeGroupId;
   return knowledgegroup_;
 }
 
-// repeated .Common.MsgMissionParameter.Value list = 43;
+// repeated .Common.MsgMissionParameter.Value list = 46;
 inline int MsgMissionParameter_Value::list_size() const {
   return list_.size();
 }
@@ -17676,21 +17753,29 @@ inline void MsgMissionParameter::set_null_value(bool value) {
   null_value_ = value;
 }
 
-// optional .Common.MsgMissionParameter.Value value = 2;
-inline bool MsgMissionParameter::has_value() const {
-  return _has_bit(1);
+// repeated .Common.MsgMissionParameter.Value value = 2;
+inline int MsgMissionParameter::value_size() const {
+  return value_.size();
 }
 inline void MsgMissionParameter::clear_value() {
-  if (value_ != NULL) value_->::Common::MsgMissionParameter_Value::Clear();
-  _clear_bit(1);
+  value_.Clear();
 }
-inline const ::Common::MsgMissionParameter_Value& MsgMissionParameter::value() const {
-  return value_ != NULL ? *value_ : *default_instance_->value_;
-}
-inline ::Common::MsgMissionParameter_Value* MsgMissionParameter::mutable_value() {
-  _set_bit(1);
-  if (value_ == NULL) value_ = new ::Common::MsgMissionParameter_Value;
+inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >&
+MsgMissionParameter::value() const {
   return value_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >*
+MsgMissionParameter::mutable_value() {
+  return &value_;
+}
+inline const ::Common::MsgMissionParameter_Value& MsgMissionParameter::value(int index) const {
+  return value_.Get(index);
+}
+inline ::Common::MsgMissionParameter_Value* MsgMissionParameter::mutable_value(int index) {
+  return value_.Mutable(index);
+}
+inline ::Common::MsgMissionParameter_Value* MsgMissionParameter::add_value() {
+  return value_.Add();
 }
 
 // -------------------------------------------------------------------

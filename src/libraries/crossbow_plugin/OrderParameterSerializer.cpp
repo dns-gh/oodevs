@@ -161,53 +161,53 @@ void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, 
     std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
 
     if( type == "point" )
-        SerializeLocation( *message.mutable_value()->mutable_point()->mutable_location(), parameterId, value );
+        SerializeLocation( *message.mutable_value()->Add()->mutable_point()->mutable_location(), parameterId, value );
     else if( type == "polygon" )
-        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->mutable_polygon()->mutable_location(), parameterId, value );
+        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->Add()->mutable_area()->mutable_location(), parameterId, value );
     else if( type == "location" )
-        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->mutable_location(), parameterId, value );
+        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->Add()->mutable_location(), parameterId, value );
     else if( type == "path" )
-        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->mutable_path()->mutable_location(), parameterId, value );
+        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->Add()->mutable_path()->mutable_location(), parameterId, value );
     else if( type == "automate" )
-        SerializeAutomat( *message.mutable_value()->mutable_automat(), value );
+        SerializeAutomat( *message.mutable_value()->Add()->mutable_automat(), value );
     else if( type == "bool" )
-        message.mutable_value()->set_abool( value == "true" );
+        message.mutable_value()->Add()->set_booleanvalue( value == "true" );
     else if( type == "direction" || type == "heading" )
-        SerializeDirection( *message.mutable_value()->mutable_heading(), value );
+        SerializeDirection( *message.mutable_value()->Add()->mutable_heading(), value );
     else if( type == "phaselinelist" )
-        SerializePhaseLines( *message.mutable_value()->mutable_limasorder(), parameterId, value );
+        SerializePhaseLines( *message.mutable_value()->Add()->mutable_limasorder(), parameterId, value );
     else if( type == "limit" )
-        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->mutable_line()->mutable_location(), parameterId, value );
+        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->Add()->mutable_limit()->mutable_location(), parameterId, value );
     else if( type == "intelligencelist" )
-        SerializeIntelligenceList( *message.mutable_value()->mutable_intelligencelist(), value );
+        SerializeIntelligenceList( *message.mutable_value()->Add()->mutable_intelligencelist(), value );
     else if( type == "pointlist" )
-        SerializeLocationList< Common::MsgPointList, Common::MsgPoint >( *message.mutable_value()->mutable_pointlist(), parameterId, value );
+        SerializeLocationList< Common::MsgPointList, Common::MsgPoint >( *message.mutable_value()->Add()->mutable_pointlist(), parameterId, value );
     else if( type == "polygonlist" )
-        SerializeLocationList< Common::MsgPolygonList, Common::MsgPolygon >( *message.mutable_value()->mutable_polygonlist(), parameterId, value );
+        SerializeLocationList< Common::MsgPolygonList, Common::MsgPolygon >( *message.mutable_value()->Add()->mutable_polygonlist(), parameterId, value );
     else if( type == "locationlist" )
-        SerializeLocationList< Common::MsgLocationList, Common::MsgLocation >( *message.mutable_value()->mutable_locationlist(), parameterId, value );
+        SerializeLocationList< Common::MsgLocationList, Common::MsgLocation >( *message.mutable_value()->Add()->mutable_locationlist(), parameterId, value );
     else if( type == "numeric" )
-        message.mutable_value()->set_areal( boost::lexical_cast< float >( value ) );
+        message.mutable_value()->Add()->set_areal( boost::lexical_cast< float >( value ) );
     else if( type == "enumeration" )
-        message.mutable_value()->set_enumeration( boost::lexical_cast< int >( value ) );
+        message.mutable_value()->Add()->set_enumeration( boost::lexical_cast< int >( value ) );
     else if( type == "agent" )
-        SerializeUnit( *message.mutable_value()->mutable_unit(), value );
+        SerializeUnit( *message.mutable_value()->Add()->mutable_agent(), value );
     else if( type == "agentlist" )
-        SerializeValueList< Common::UnitId >( *message.mutable_value()->mutable_unitlist(), value, BIND_SERIALIZER( SerializeUnit ) );
+        SerializeValueList< Common::UnitId >( *message.mutable_value()->Add()->mutable_unitlist(), value, BIND_SERIALIZER( SerializeUnit ) );
     else if( type == "automatelist" )
-        SerializeValueList< Common::AutomatId >( *message.mutable_value()->mutable_automatlist(), value, BIND_SERIALIZER( SerializeAutomat ) );    
+        SerializeValueList< Common::AutomatId >( *message.mutable_value()->Add()->mutable_automatlist(), value, BIND_SERIALIZER( SerializeAutomat ) );    
     else if( type == "agentknowledge" )
-        SerializeUnitKnowledge( *message.mutable_value()->mutable_unitknowledge(), value );
+        SerializeUnitKnowledge( *message.mutable_value()->Add()->mutable_agentknowledge(), value );
     else if( type == "agentknowledgelist" )
-        SerializeValueList< Common::UnitKnowledgeId >( *message.mutable_value()->mutable_unitknowledgelist(), value, BIND_SERIALIZER( SerializeUnitKnowledge ) );
+        SerializeValueList< Common::UnitKnowledgeId >( *message.mutable_value()->Add()->mutable_unitknowledgelist(), value, BIND_SERIALIZER( SerializeUnitKnowledge ) );
     else if( type == "objectknowledge" )
-        SerializeObjectKnowledge( *message.mutable_value()->mutable_objectknowledge(), value );
+        SerializeObjectKnowledge( *message.mutable_value()->Add()->mutable_objectknowledge(), value );
     else if( type == "objectknowledgelist" )
-        SerializeValueList< Common::ObjectKnowledgeId >( *message.mutable_value()->mutable_objectknowledgelist(), value, BIND_SERIALIZER( SerializeObjectKnowledge ) );
+        SerializeValueList< Common::ObjectKnowledgeId >( *message.mutable_value()->Add()->mutable_objectknowledgelist(), value, BIND_SERIALIZER( SerializeObjectKnowledge ) );
     else if( type == "objective" )
-        SerializeMissionObjective( *message.mutable_value()->mutable_missionobjective(), value );
+        SerializeMissionObjective( *message.mutable_value()->Add()->mutable_missionobjective(), value );
     else if( type == "objectivelist" )
-        SerializeMissionObjectiveList( *message.mutable_value()->mutable_missionobjectivelist(), value );
+        SerializeMissionObjectiveList( *message.mutable_value()->Add()->mutable_missionobjectivelist(), value );
     else 
         throw std::runtime_error( "mission parameter not supported : " + parameter.GetType() + " with value " + value );
 
@@ -224,49 +224,6 @@ void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, 
     case T_MissionParameter_value_logMedicalPriorities:
     case T_MissionParameter_value_aCharStr:
     */
-}
-
-// -----------------------------------------------------------------------------
-// Name: OrderParameterSerializer::Clean
-// Updated: JCR 2009-10-15
-// Created: SBO 2007-05-31
-// -----------------------------------------------------------------------------
-void OrderParameterSerializer::Clean( Common::MsgMissionParameter& message ) const
-{
-    if( message.value().has_point() )
-        message.mutable_value()->mutable_point()->Clear();
-    if( message.value().has_polygon() )
-        message.mutable_value()->mutable_polygon()->Clear();
-    if( message.value().has_location() )
-        message.mutable_value()->mutable_location()->Clear();
-    if( message.value().has_path() )
-        message.mutable_value()->mutable_path()->Clear();
-    if( message.value().has_line() )
-        message.mutable_value()->mutable_line()->Clear();
-    if( message.value().has_limasorder() )
-        if( message.value().limasorder().elem_size() )
-        {
-            for( int i = 0; i < message.value().limasorder().elem_size(); ++i )
-                message.mutable_value()->mutable_limasorder()->mutable_elem(i)->clear_fonctions();
-            message.mutable_value()->mutable_limasorder()->mutable_elem()->Clear();
-            message.mutable_value()->mutable_limasorder()->Clear();
-        }
-    if( message.value().has_pointlist() )
-        message.mutable_value()->mutable_pointlist()->Clear();
-    if( message.value().has_polygonlist() )
-        message.mutable_value()->mutable_polygonlist()->Clear();
-    if( message.value().has_locationlist() )
-        message.mutable_value()->mutable_locationlist()->Clear();
-    if( message.value().has_objectknowledgelist() )
-        message.mutable_value()->mutable_objectknowledgelist()->Clear();
-    if( message.value().has_unitlist() )
-        message.mutable_value()->mutable_intelligencelist()->Clear();
-    if( message.value().has_intelligencelist() )
-        message.mutable_value()->mutable_intelligencelist()->Clear();
-    if( message.value().has_missionobjective() )
-        message.mutable_value()->mutable_missionobjective()->Clear();
-    if( message.value().has_missionobjectivelist() )
-        message.mutable_value()->mutable_missionobjectivelist()->Clear();
 }
 
 // -----------------------------------------------------------------------------

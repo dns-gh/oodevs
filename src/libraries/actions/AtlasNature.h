@@ -47,7 +47,7 @@ public:
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void CommitTo( Common::MsgMissionParameter& asn ) const;
-    virtual void Clean( Common::MsgMissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter_Value& asn ) const;
     //@}
 
 private:

@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentParameter.h"
 #include "simulation_orders/MIL_ParameterType_Agent.h"
+#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Network/NET_ASN_Tools.h"
@@ -52,7 +53,8 @@ MIL_AgentParameter::~MIL_AgentParameter()
 // -----------------------------------------------------------------------------
 bool MIL_AgentParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_Agent*>( &type ) != 0 );
+    return dynamic_cast<const MIL_ParameterType_Agent*>( &type ) != 0
+        || dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,5 +76,15 @@ bool MIL_AgentParameter::ToAgent( Common::UnitId& asn ) const
 bool MIL_AgentParameter::ToAgent( DEC_Decision_ABC*& value ) const
 {
     value = pDecision_;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentParameter::ToElement
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+bool MIL_AgentParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    ToAgent( *elem.mutable_agent() );
     return true;
 }

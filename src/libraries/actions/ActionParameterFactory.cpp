@@ -12,27 +12,17 @@
 #include "Limit.h"
 #include "LimaList.h"
 #include "EngineerConstruction.h"
-#include "EngineerConstructionList.h"
 #include "Objective.h"
-#include "ObjectiveList.h"
 #include "Direction.h"
 #include "Location.h"
 #include "Point.h"
 #include "Polygon.h"
-#include "PointList.h"
-#include "PolygonList.h"
-#include "LocationList.h"
-#include "PathList.h"
 #include "Path.h"
 #include "Agent.h"
 #include "Automat.h"
-#include "AgentList.h"
-#include "AutomatList.h"
 #include "AgentKnowledge.h"
 #include "PopulationKnowledge.h"
 #include "ObjectKnowledge.h"
-#include "AgentKnowledgeList.h"
-#include "ObjectKnowledgeList.h"
 #include "Enumeration.h"
 #include "Bool.h"
 #include "String.h"
@@ -41,7 +31,6 @@
 #include "AtlasNature.h"
 #include "MaintenancePriorities.h"
 #include "MedicalPriorities.h"
-#include "IntelligenceList.h"
 #include "DateTime.h"
 #include "UrbanBlock.h"
 #include "Army.h"
@@ -100,93 +89,83 @@ ActionParameterFactory::~ActionParameterFactory()
 actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const Common::MsgMissionParameter& message, const kernel::Entity_ABC& entity ) const
 {
     // $$$$ SBO 2007-10-11: we should create a parameter of the real type in order to be able (later) to edit parameters
-    if( message.null_value() )
-        return new actions::parameters::Parameter< QString >( parameter, tools::translate( "ActionParameterFactory", "not set" ) );
-    if( message.value().has_abool() )
-        return new actions::parameters::Bool( parameter, message.value().abool() != 0 );
-    if( message.value().has_acharstr() )
-        return new actions::parameters::String( parameter, message.value().acharstr().c_str() );
-    if( message.value().has_unit() )
-        return new actions::parameters::Agent( parameter, message.value().unit().id(), entities_, controller_ );
-    if( message.value().has_areal() )
-        return new actions::parameters::Numeric( parameter, message.value().areal() );
-    if( message.value().has_automat() )
-        return new actions::parameters::Automat( parameter, message.value().automat().id(), entities_, controller_ );
-    if( message.value().has_heading() )
-        return new actions::parameters::Direction( parameter, message.value().heading().heading() );
-    if( message.value().has_enumeration() )
-        return new actions::parameters::Enumeration( parameter, message.value().enumeration() );
-    if( message.value().has_path() )
-        return new actions::parameters::Path( parameter, converter_, message.value().path().location() );
-    if( message.value().has_unitknowledge() )
-        return new actions::parameters::AgentKnowledge( parameter, message.value().unitknowledge().id(), agentKnowledgeConverter_, entity, controller_ );
-    if( message.value().has_objectknowledge() )
-        return new actions::parameters::ObjectKnowledge( parameter, message.value().objectknowledge().id(), objectKnowledgeConverter_, entity, controller_ );
-    if( message.value().has_crowdknowledge() )
-        return new actions::parameters::PopulationKnowledge( parameter, message.value().crowdknowledge().id(), agentKnowledgeConverter_, entity, controller_ );
-    if( message.value().has_unitlist() )
-        return new actions::parameters::AgentList( parameter, message.value().unitlist(), entities_, controller_ );
-    if( message.value().has_automatlist() )
-        return new actions::parameters::AutomatList( parameter, message.value().automatlist(), entities_, controller_ );
-    if( message.value().has_pathlist() )
-        return new actions::parameters::PathList( parameter, converter_, message.value().pathlist() );
-    if( message.value().has_unitknowledgelist() )
-        return new actions::parameters::AgentKnowledgeList( parameter, message.value().unitknowledgelist(), agentKnowledgeConverter_, entity, controller_ );
-    if( message.value().has_objectknowledgelist() )
-        return new actions::parameters::ObjectKnowledgeList( parameter, message.value().objectknowledgelist(), objectKnowledgeConverter_, entity, controller_ );
-    if( message.value().has_locationlist() )
-        return new actions::parameters::LocationList( parameter, converter_, message.value().locationlist() );
-    if( message.value().has_plannedworklist() )
-        return new actions::parameters::EngineerConstructionList( parameter, converter_, staticModel_.objectTypes_, entities_, message.value().plannedworklist(), controller_ );
-    if( message.value().has_pointlist() )
-        return new actions::parameters::PointList( parameter, converter_, message.value().pointlist() );
-    if( message.value().has_polygonlist() )
-        return new actions::parameters::PolygonList( parameter, converter_, message.value().polygonlist() );
-    if( message.value().has_location() )
-        return new actions::parameters::Location( parameter, converter_, message.value().location() );
-    if( message.value().has_plannedwork() )
-        return new actions::parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, message.value().plannedwork(), controller_ );
-    if( message.value().has_atlasnature() )
-        return new actions::parameters::AtlasNature( parameter, message.value().atlasnature(), staticModel_.atlasNatures_ );
-    if( message.value().has_missionobjective() )
-        return new actions::parameters::Objective( parameter, converter_, message.value().missionobjective() );
-    if( message.value().has_missionobjectivelist() )
-        return new actions::parameters::ObjectiveList( parameter, converter_, message.value().missionobjectivelist() );
-    if( message.value().has_point() )
-        return new actions::parameters::Point( parameter, converter_, message.value().point() );
-    if( message.value().has_polygon() )
-        return new actions::parameters::Polygon( parameter, converter_, message.value().polygon().location() );
-    if( message.value().has_resourcetype() )
-        return new actions::parameters::DotationType( parameter, message.value().resourcetype().id(), staticModel_.objectTypes_ );
-    if( message.value().has_equipmenttype() )
+    if( message.null_value() || message.value_size() == 0 )
+        return new actions::parameters::String( parameter, tools::translate( "ActionParameterFactory", "not set" ).ascii() );
+    else if( !parameter.IsList() && message.value_size() == 1 )
+        return CreateParameter( parameter, message.value().Get( 0 ), entity );
+    else
+        return new actions::parameters::ParameterList( parameter, message.value(), *this, entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterFactory::CreateParameter
+// Created: MGD 2010-11-09
+// -----------------------------------------------------------------------------
+actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const Common::MsgMissionParameter_Value& message, const kernel::Entity_ABC& entity ) const
+{
+    if( message.has_booleanvalue() )
+        return new actions::parameters::Bool( parameter, message.booleanvalue() != 0 );
+    if( message.has_acharstr() )
+        return new actions::parameters::String( parameter, message.acharstr().c_str() );
+    if( message.has_agent() )
+        return new actions::parameters::Agent( parameter, message.agent().id(), entities_, controller_ );
+    if( message.has_areal() )
+        return new actions::parameters::Numeric( parameter, message.areal() );
+    if( message.has_automat() )
+        return new actions::parameters::Automat( parameter, message.automat().id(), entities_, controller_ );
+    if( message.has_heading() )
+        return new actions::parameters::Direction( parameter, message.heading().heading() );
+    if( message.has_enumeration() )
+        return new actions::parameters::Enumeration( parameter, message.enumeration() );
+    if( message.has_path() )
+        return new actions::parameters::Path( parameter, converter_, message.path().location() );
+    if( message.has_agentknowledge() )
+        return new actions::parameters::AgentKnowledge( parameter, message.agentknowledge().id(), agentKnowledgeConverter_, entity, controller_ );
+    if( message.has_objectknowledge() )
+        return new actions::parameters::ObjectKnowledge( parameter, message.objectknowledge().id(), objectKnowledgeConverter_, entity, controller_ );
+    if( message.has_crowdknowledge() )
+        return new actions::parameters::PopulationKnowledge( parameter, message.crowdknowledge().id(), agentKnowledgeConverter_, entity, controller_ );
+    if( message.has_location() )
+        return new actions::parameters::Location( parameter, converter_, message.location() );
+    if( message.has_plannedwork() )
+        return new actions::parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, message.plannedwork(), controller_ );
+    if( message.has_atlasnature() )
+        return new actions::parameters::AtlasNature( parameter, message.atlasnature(), staticModel_.atlasNatures_ );
+    if( message.has_missionobjective() )
+        return new actions::parameters::Objective( parameter, converter_, message.missionobjective() );
+    if( message.has_point() )
+        return new actions::parameters::Point( parameter, converter_, message.point() );
+    if( message.has_area() )
+        return new actions::parameters::Polygon( parameter, converter_, message.area().location() );
+    if( message.has_resourcetype() )
+        return new actions::parameters::DotationType( parameter, message.resourcetype().id(), staticModel_.objectTypes_ );
+    if( message.has_equipmenttype() )
         return 0;
-    if( message.value().has_logmaintenancepriorities() )
-        return new actions::parameters::MaintenancePriorities( parameter, staticModel_.objectTypes_, message.value().logmaintenancepriorities() );
-    if( message.value().has_logmedicalpriorities() )
-        return new actions::parameters::MedicalPriorities( parameter, message.value().logmedicalpriorities() );
-    if( message.value().has_tirindirect() ) // $$$$ SBO 2007-05-21: reports only, not to be used!
+    if( message.has_logmaintenancepriorities() )
+        return new actions::parameters::MaintenancePriorities( parameter, staticModel_.objectTypes_, message.logmaintenancepriorities() );
+    if( message.has_logmedicalpriorities() )
+        return new actions::parameters::MedicalPriorities( parameter, message.logmedicalpriorities() );
+    if( message.has_tirindirect() ) // $$$$ SBO 2007-05-21: reports only, not to be used!
         return 0;
-    if( message.value().has_line() )
-        return new actions::parameters::Limit( parameter, converter_, message.value().line() );
-    if( message.value().has_limasorder() )
-        return new actions::parameters::LimaList( parameter, converter_, message.value().limasorder() );
-    if( message.value().has_intelligencelist() )
-        return new actions::parameters::IntelligenceList( parameter, converter_, message.value().intelligencelist(), entities_, staticModel_.levels_, controller_ );
-    if( message.value().has_datetime() )
-        return new actions::parameters::DateTime( parameter, message.value().datetime() );
-    if( message.value().has_urbanblock() )
-        return new actions::parameters::UrbanBlock( parameter, message.value().urbanblock().id() );
-    if( message.value().has_party() )
-        return new actions::parameters::Army( parameter, message.value().party().id(), entities_, controller_ );
-    if( message.value().has_formation() )
-        return new actions::parameters::Formation( parameter, message.value().formation().id(), entities_, controller_ );
-    if( message.value().has_quantity() )
-        return new actions::parameters::Quantity( parameter, message.value().quantity() );
-    if( message.value().has_identifier() )
-        return new actions::parameters::Identifier( parameter, message.value().identifier() );
-    if( message.value().has_knowledgegroup() )
-        return new actions::parameters::KnowledgeGroup( parameter, message.value().knowledgegroup().id(), entities_, controller_ );
-    if( message.value().list_size() )
+    if( message.has_limit() )
+        return new actions::parameters::Limit( parameter, converter_, message.limit() );
+    if( message.has_limasorder() )
+        return new actions::parameters::LimaList( parameter, converter_, message.limasorder() );
+    if( message.has_datetime() )
+        return new actions::parameters::DateTime( parameter, message.datetime() );
+    if( message.has_urbanblock() )
+        return new actions::parameters::UrbanBlock( parameter, message.urbanblock().id() );
+    if( message.has_party() )
+        return new actions::parameters::Army( parameter, message.party().id(), entities_, controller_ );
+    if( message.has_formation() )
+        return new actions::parameters::Formation( parameter, message.formation().id(), entities_, controller_ );
+    if( message.has_quantity() )
+        return new actions::parameters::Quantity( parameter, message.quantity() );
+    if( message.has_identifier() )
+        return new actions::parameters::Identifier( parameter, message.identifier() );
+    if( message.has_knowledgegroup() )
+        return new actions::parameters::KnowledgeGroup( parameter, message.knowledgegroup().id(), entities_, controller_ );
+    if( message.list_size() )
         return new actions::parameters::ParameterList( parameter );
     return 0;
 }
@@ -265,64 +244,38 @@ void ActionParameterFactory::CreateListParameter( xml::xistream& xis, actions::p
 // -----------------------------------------------------------------------------
 bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const std::string& type, std::auto_ptr< actions::Parameter_ABC >& param ) const
 {
-    if( type == "bool" )
+    if( parameter.IsList() || type == "list" || type == "locationcomposite" )
+    {
+        actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( parameter );
+        param.reset( parameterList );
+        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList );
+    }
+    else if( type == "bool" )
         param.reset( new actions::parameters::Bool( parameter, xis ) );
     else if( type == "numeric" )
         param.reset( new actions::parameters::Numeric( parameter, xis ) );
     else if( type == "string" )
         param.reset( new actions::parameters::String( parameter, xis ) );
     else if( type == "path" )
-    {
-        if( !parameter.IsList() )
-            param.reset( new actions::parameters::Path( parameter, converter_, xis ) );
-        else
-            param.reset( new actions::parameters::PathList( parameter, converter_, xis ) );
-    }
+        param.reset( new actions::parameters::Path( parameter, converter_, xis ) );
     else if( type == "point" )
-    {
-        if( !parameter.IsList() )
-            param.reset( new actions::parameters::Point( parameter, converter_, xis ) );
-        else
-            param.reset( new actions::parameters::PointList( parameter, converter_, xis ) );
-    }
+        param.reset( new actions::parameters::Point( parameter, converter_, xis ) );
     else if( type == "polygon" )
-    {
-        if( !parameter.IsList() )
-            param.reset( new actions::parameters::Polygon( parameter, converter_, xis ) );
-        else
-            param.reset( new actions::parameters::PolygonList( parameter, converter_, xis ) );
-    }
+        param.reset( new actions::parameters::Polygon( parameter, converter_, xis ) );
     else if( type == "location" )
-    {
-        if( !parameter.IsList() )
-            param.reset( new actions::parameters::Location( parameter, converter_, xis ) );
-        else
-            param.reset( new actions::parameters::LocationList( parameter, converter_, xis ) );
-    }
+        param.reset( new actions::parameters::Location( parameter, converter_, xis ) );
     else if( type == "heading" )
         param.reset( new actions::parameters::Direction( parameter, xis ) );
     else if( type == "phaseline" && parameter.IsList() )
         param.reset( new actions::parameters::LimaList( parameter, converter_, xis ) );
-    else if( type == "intelligence" && parameter.IsList() )
-        param.reset( new actions::parameters::IntelligenceList( parameter, converter_, xis, entities_, staticModel_.levels_, controller_ ) );
     else if( type == "limit" )
         param.reset( new actions::parameters::Limit( parameter, converter_, xis ) );
     else if( type == "enumeration" )
         param.reset( new actions::parameters::Enumeration( parameter, xis ) );
     else if( type == "agent" )
-    {        
-        if( !parameter.IsList() )
-            param.reset( new actions::parameters::Agent( parameter, xis, entities_, controller_ ) );
-        else
-            param.reset( new actions::parameters::AgentList( parameter, xis, entities_, controller_ ) );
-    }
+        param.reset( new actions::parameters::Agent( parameter, xis, entities_, controller_ ) );
     else if( type == "automate" )
-    {
-        if( !parameter.IsList() )
-            param.reset( new actions::parameters::Automat( parameter, xis, entities_, controller_ ) );
-        else
-            param.reset( new actions::parameters::AutomatList( parameter, xis, entities_, controller_ ) );
-    }
+        param.reset( new actions::parameters::Automat( parameter, xis, entities_, controller_ ) );
     else if( type == "army" )
         param.reset( new actions::parameters::Army( parameter, xis, entities_, controller_ ) );
     else if( type == "formation" )
@@ -330,21 +283,11 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
     else if( type == "dotationtype" )
         param.reset( new actions::parameters::DotationType( parameter, xis, staticModel_.objectTypes_ ) );
     else if( type == "genobject" )
-    {
-        if( !parameter.IsList() )
-            param.reset( new actions::parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_ ) );
-        else
-            param.reset( new actions::parameters::EngineerConstructionList( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_ ) );
-    }
+        param.reset( new actions::parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_ ) );
     else if( type == "natureatlas" )
         param.reset( new actions::parameters::AtlasNature( parameter, xis, staticModel_.atlasNatures_ ) );
     else if( type == "objective" )
-    {
-        if( !parameter.IsList() )
-            param.reset( new actions::parameters::Objective( parameter, xis, converter_ ) );
-        else
-            param.reset( new actions::parameters::ObjectiveList( parameter, xis, converter_ ) );
-    }
+        param.reset( new actions::parameters::Objective( parameter, xis, converter_ ) );
     else if( type == "medicalpriorities" )
         param.reset( new actions::parameters::MedicalPriorities( parameter, xis ) );
     else if( type == "maintenancepriorities" )
@@ -359,12 +302,6 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new actions::parameters::Identifier( parameter, xis ) );
     else if( type == "knowledgegroup" )
         param.reset( new actions::parameters::KnowledgeGroup( parameter, xis, entities_, controller_ ) );
-    else if( type == "list" )
-    {
-        actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( parameter );
-        param.reset( parameterList );
-        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList );
-    }
     else
         return false;
 
@@ -373,32 +310,22 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterFactory::DoCreateParameter
-// Created: JSR 2010-04-02
+// Created: MGD 2010-11-10
 // -----------------------------------------------------------------------------
 bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity, const std::string& type, std::auto_ptr< actions::Parameter_ABC >& param ) const
 {
-    if( type == "agentknowledge" )
-    {
-        if( !parameter.IsList() )
-            param.reset( new actions::parameters::AgentKnowledge( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
-        else
-            param.reset( new actions::parameters::AgentKnowledgeList( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
-    }
-    else if( type == "populationknowledge" )
-        param.reset( new actions::parameters::PopulationKnowledge( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
-    else if( type == "objectknowledge" )
-    {
-        if( !parameter.IsList() )
-            param.reset( new actions::parameters::ObjectKnowledge( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
-        else
-            param.reset( new actions::parameters::ObjectKnowledgeList( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
-    }
-    else if( type == "list" || type == "locationcomposite" )
+    if( parameter.IsList() || type == "list" || type == "locationcomposite" )
     {
         actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( parameter );
         param.reset( parameterList );
         xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList, entity );
     }
+    else if( type == "agentknowledge" )
+        param.reset( new actions::parameters::AgentKnowledge( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
+    else if( type == "populationknowledge" )
+        param.reset( new actions::parameters::PopulationKnowledge( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
+    else if( type == "objectknowledge" )
+        param.reset( new actions::parameters::ObjectKnowledge( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
     else
         return false;
 

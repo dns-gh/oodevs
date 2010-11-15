@@ -44,6 +44,7 @@ public:
     //@{
     using Entity< kernel::Team_ABC >::CommitTo;
     virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 

@@ -191,8 +191,8 @@ void UpdateListener::SendHospital( xml::xistream& xis )
         
         magic().mutable_object()->set_id( hospital->GetId() );
         magic().set_type( MsgsClientToSim::MsgObjectMagicAction_Type_update );
-        magic().mutable_parameters()->add_elem()->mutable_value()->set_identifier( MsgsClientToSim::MsgObjectMagicAction_Attribute_medical_treatment );
-        Common::MsgMissionParameter_Value* parameters = magic().mutable_parameters()->add_elem()->mutable_value()->add_list();
+        magic().mutable_parameters()->add_elem()->mutable_value()->Add()->set_identifier( MsgsClientToSim::MsgObjectMagicAction_Attribute_medical_treatment );
+        Common::MsgMissionParameter_Value* parameters = magic().mutable_parameters()->add_elem()->mutable_value()->Add()->add_list();
         xis >> xml::optional >> xml::start( "HospitalBedCapacityStatus" )
                 >> xml_bind( boost::bind( &UpdateListener::UpdateCapacityStatus, this, _1, boost::ref( *parameters ) ) )
             >> xml::end

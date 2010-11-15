@@ -13,6 +13,7 @@
 namespace Common
 {
     class MsgMissionParameter;
+    class MsgMissionParameter_Value;
 }
 
 namespace kernel
@@ -51,6 +52,7 @@ public:
     virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const = 0;
     virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis ) const = 0;
     virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const Common::MsgMissionParameter& message, const kernel::Entity_ABC& entity ) const = 0;
+    virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const Common::MsgMissionParameter_Value& message, const kernel::Entity_ABC& entity ) const = 0;
     //@}
 };
 

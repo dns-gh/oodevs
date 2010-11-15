@@ -10,7 +10,7 @@
 #include "actions_gui_pch.h"
 #include "ParamObjectKnowledgeList.h"
 #include "ParamObjectKnowledge.h"
-#include "actions/ObjectKnowledgeList.h"
+#include "actions/ParameterList.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
@@ -79,7 +79,7 @@ void ParamObjectKnowledgeList::NotifyContextMenu( const kernel::Object_ABC& enti
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledgeList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ObjectKnowledgeList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

@@ -13,6 +13,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/protocol.h"
 #include "simulation_orders/MIL_ParameterType_AgentKnowledge.h"
+#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentKnowledgeParameter constructor
@@ -49,7 +50,8 @@ MIL_AgentKnowledgeParameter::~MIL_AgentKnowledgeParameter()
 // -----------------------------------------------------------------------------
 bool MIL_AgentKnowledgeParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_AgentKnowledge*>( &type ) != 0 );
+    return dynamic_cast<const MIL_ParameterType_AgentKnowledge*>( &type ) != 0
+        || dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,5 +71,15 @@ bool MIL_AgentKnowledgeParameter::ToAgentKnowledge( Common::UnitKnowledgeId& asn
 bool MIL_AgentKnowledgeParameter::ToAgentKnowledge( boost::shared_ptr< DEC_Knowledge_Agent >& value ) const
 {
     value = pKnowledgeAgent_;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentKnowledgeParameter::ToElement
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+bool MIL_AgentKnowledgeParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    ToAgentKnowledge( *elem.mutable_agentknowledge() );
     return true;
 }

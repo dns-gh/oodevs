@@ -87,7 +87,20 @@ void MaintenancePriorities::CommitTo( Common::MsgMissionParameter& message ) con
     message.set_null_value( !IsSet() );
     if( IsSet() )
     {
-        Common::MsgLogMaintenancePriorities* list = message.mutable_value()->mutable_logmaintenancepriorities();
+        Common::MsgLogMaintenancePriorities* list =message.mutable_value()->Add()->mutable_logmaintenancepriorities();
+        for( unsigned int i = 0; i < priorities_.size(); ++i )
+            list->add_elem()->set_id( priorities_.at( i )->GetId() );
+    }
+}
+// -----------------------------------------------------------------------------
+// Name: MaintenancePriorities::CommitTo
+// Created: SBO 2007-06-26
+// -----------------------------------------------------------------------------
+void MaintenancePriorities::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    if( IsSet() )
+    {
+        Common::MsgLogMaintenancePriorities* list = message.mutable_logmaintenancepriorities();
         for( unsigned int i = 0; i < priorities_.size(); ++i )
             list->add_elem()->set_id( priorities_.at( i )->GetId() );
     }
@@ -105,16 +118,6 @@ void MaintenancePriorities::CommitTo( std::string& content ) const
             content += ",";
         content += boost::lexical_cast< std::string >( (*it)->GetId() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MaintenancePriorities::Clean
-// Created: SBO 2007-06-26
-// -----------------------------------------------------------------------------
-void MaintenancePriorities::Clean( Common::MsgMissionParameter& message ) const
-{
-    if( message.value().has_logmaintenancepriorities() )
-        message.mutable_value()->clear_logmaintenancepriorities();
 }
 
 // -----------------------------------------------------------------------------

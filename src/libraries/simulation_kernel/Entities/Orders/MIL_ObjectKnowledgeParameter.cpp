@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectKnowledgeParameter.h"
 #include "simulation_orders/MIL_ParameterType_ObjectKnowledge.h"
+#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/protocol.h"
@@ -49,7 +50,8 @@ MIL_ObjectKnowledgeParameter::~MIL_ObjectKnowledgeParameter()
 // -----------------------------------------------------------------------------
 bool MIL_ObjectKnowledgeParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return dynamic_cast< const MIL_ParameterType_ObjectKnowledge* >( &type ) != 0;
+    return dynamic_cast< const MIL_ParameterType_ObjectKnowledge* >( &type ) != 0
+      || dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,3 +73,14 @@ bool MIL_ObjectKnowledgeParameter::ToObjectKnowledge( boost::shared_ptr< DEC_Kno
     value = pKnowledgeObject_;
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectKnowledgeParameter::ToElement
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+bool MIL_ObjectKnowledgeParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    ToObjectKnowledge( *elem.mutable_objectknowledge() );
+    return true;
+}
+

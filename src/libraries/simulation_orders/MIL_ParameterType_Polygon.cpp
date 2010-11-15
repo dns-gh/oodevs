@@ -40,7 +40,7 @@ bool MIL_ParameterType_Polygon::Copy( const MIL_MissionParameter_ABC& from, Comm
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( !from.ToPolygon( *to.mutable_value()->mutable_polygon() ) );
+    to.set_null_value( !from.ToPolygon( *to.mutable_value()->Add()->mutable_area() ) );
     if( to.null_value() )
         to.clear_value();
     return !to.null_value() || bIsOptional;

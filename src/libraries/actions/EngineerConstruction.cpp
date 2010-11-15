@@ -146,16 +146,16 @@ void EngineerConstruction::CommitTo( Common::MsgMissionParameter& message ) cons
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        CommitTo( *message.mutable_value()->mutable_plannedwork() );
+        CommitTo( *message.mutable_value()->Add()->mutable_plannedwork() );
 }
-
 // -----------------------------------------------------------------------------
-// Name: EngineerConstruction::Clean
+// Name: EngineerConstruction::CommitTo
 // Created: JCR 2008-11-03
 // -----------------------------------------------------------------------------
-void EngineerConstruction::Clean( Common::MsgMissionParameter& message ) const
+void EngineerConstruction::CommitTo( Common::MsgMissionParameter_Value& message ) const
 {
-    message.mutable_value()->clear_plannedwork();
+    if( IsSet() )
+        CommitTo( *message.mutable_plannedwork() );
 }
 
 // -----------------------------------------------------------------------------

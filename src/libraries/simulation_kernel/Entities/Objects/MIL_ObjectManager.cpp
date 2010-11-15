@@ -168,7 +168,7 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObje
    //@HBD : Verify later that conversion from MIL_Army to MIL_Army_ABC was right
     if( message.elem_size() != 5 ) // type, location, name, team, attributes
         return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
-    MIL_Army_ABC* pArmy = armies.Find( message.elem( 3 ).value().party().id() );
+    MIL_Army_ABC* pArmy = armies.Find( message.elem( 3 ).value().Get( 0 ).party().id() );
     if( !pArmy )
         return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_camp;
     MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode value = MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
@@ -324,8 +324,8 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
         else
         {
             const Common::MsgMissionParameters& params = msg.parameters();
-            if( params.elem_size() && params.elem( 0 ).has_value() && params.elem( 0 ).value().list_size() )
-                nErrorCode = pObject->OnUpdate( params.elem( 0 ).value() );
+            if( params.elem_size() && params.elem( 0 ).value_size() && params.elem( 0 ).value().Get( 0 ).list_size() )
+                nErrorCode = pObject->OnUpdate( params.elem( 0 ).value().Get( 0 ) );
         }
     }
     client::ObjectMagicActionAck asnReplyMsg;
@@ -341,8 +341,8 @@ void MIL_ObjectManager::OnReceiveMsgChangeResourceLinks( const MsgsClientToSim::
 {
     MsgsSimToClient::MsgMagicActionAck_ErrorCode nErrorCode = MsgsSimToClient::MsgMagicActionAck::no_error;
     const Common::MsgMissionParameters& params = message.parameters();
-    unsigned int id = params.elem( 0 ).value().identifier();
-    bool urban = params.elem( 1 ).value().abool();
+    unsigned int id = params.elem( 0 ).value().Get( 0 ).identifier();
+    bool urban = params.elem( 1 ).value().Get( 0 ).booleanvalue();
     MIL_Object_ABC* object = 0;
     if( urban )
         object = FindUrbanWrapper( id );
@@ -350,8 +350,8 @@ void MIL_ObjectManager::OnReceiveMsgChangeResourceLinks( const MsgsClientToSim::
         object = Find( id );
     if( object == 0 )
         nErrorCode = MsgsSimToClient::MsgMagicActionAck::error_invalid_attribute;
-    else if( params.elem( 2 ).value().list_size() > 0 )
-        nErrorCode = object->OnUpdateResourceLinks( params.elem( 2 ).value() );
+    else if( params.elem( 2 ).value().Get( 0 ).list_size() > 0 )
+        nErrorCode = object->OnUpdateResourceLinks( params.elem( 2 ).value().Get( 0 ) );
     client::MagicActionAck asnReplyMsg;
     asnReplyMsg().set_error_code( nErrorCode );
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );

@@ -153,7 +153,7 @@ void AgentManipulator::Teleport( const dispatcher::Position& position )
     Common::MsgPoint point;
     Common::MsgMissionParameter& parameter = *message().mutable_parameters()->add_elem();
     parameter.set_null_value( false );
-    Common::MsgLocation& location = *parameter.mutable_value()->mutable_point()->mutable_location();
+    Common::MsgLocation& location = *parameter.mutable_value()->Add()->mutable_point()->mutable_location();
     location.set_type( Common::MsgLocation::point );
     converter_.ConvertToGeo( ToPoint( position ), *location.mutable_coordinates()->add_elem() );
     message.Send( publisher_ );
@@ -184,11 +184,11 @@ void AgentManipulator::Wound( int injury, int type )
 
     Common::MsgMissionParameter& paramInjury = *message().mutable_parameters()->add_elem();
     paramInjury.set_null_value( false );
-    paramInjury.mutable_value()->set_identifier( injury );
+    paramInjury.mutable_value()->Add()->set_identifier( injury );
 
     Common::MsgMissionParameter& paramType = *message().mutable_parameters()->add_elem();
     paramType.set_null_value( false );
-    paramType.mutable_value()->set_identifier( type );
+    paramType.mutable_value()->Add()->set_identifier( type );
     
     message.Send( publisher_ );
 }

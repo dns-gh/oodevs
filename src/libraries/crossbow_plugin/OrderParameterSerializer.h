@@ -71,7 +71,6 @@ public:
     //! @name Operations
     //@{
     void Serialize( Common::MsgMissionParameter& message, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value ) const;
-    void Clean( Common::MsgMissionParameter& message ) const;
     bool IsValidParameter( const kernel::OrderParameter& parameter ) const;
     //@}
 

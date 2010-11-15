@@ -11,7 +11,7 @@
 #include "ParamPolygonList.h"
 #include "ParamLocation.h"
 #include "actions/Action_ABC.h"
-#include "actions/PolygonList.h"
+#include "actions/ParameterList.h"
 
 using namespace actions::gui;
 
@@ -41,7 +41,7 @@ ParamPolygonList::~ParamPolygonList()
 // -----------------------------------------------------------------------------
 void ParamPolygonList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::PolygonList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

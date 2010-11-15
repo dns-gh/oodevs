@@ -71,7 +71,8 @@ public:
     virtual bool ToPathList( Common::MsgPathList& asn ) const;
     virtual bool ToPopulationKnowledge( Common::CrowdKnowledgeId& asn ) const;
     virtual bool ToUrbanBlock( Common::UrbanObjectId& ) const;
-    virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const;
+    virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& ) const;
     virtual bool ToLima( Common::MsgLimasOrder& ) const;
     virtual bool ToLimaList( Common::MsgLimasOrder& ) const;
 
@@ -109,9 +110,7 @@ public:
     virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const;
     virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
 
-    virtual void Append( boost::shared_ptr< TER_Localisation > pLocation );
-    virtual void Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject );
-    virtual void Append( boost::shared_ptr< DEC_Gen_Object > pKnowledgeObject );
+    virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param );
     //@}
 
 private:

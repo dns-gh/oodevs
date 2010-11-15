@@ -53,7 +53,16 @@ void Quantity::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        message.mutable_value()->set_quantity( GetValue() );
+       message.mutable_value()->Add()->set_quantity( GetValue() );
+}
+// -----------------------------------------------------------------------------
+// Name: Quantity::CommitTo
+// Created: JSR 2010-04-14
+// -----------------------------------------------------------------------------
+void Quantity::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    if( IsSet() )
+        message.set_quantity( GetValue() );
 }
 
 // -----------------------------------------------------------------------------

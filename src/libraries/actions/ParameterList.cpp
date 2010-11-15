@@ -14,6 +14,7 @@
 #include "Numeric.h"
 #include "Quantity.h"
 #include "String.h"
+#include "ParameterFactory_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
 #include "protocol/Protocol.h"
@@ -28,10 +29,23 @@ namespace actions {
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
 ParameterList::ParameterList( const kernel::OrderParameter& parameter )
-    : Parameter_ABC( parameter.GetName().c_str() )
+    : Parameter< QString >( parameter )
     , parameter_( parameter )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterList constructor
+// Created: MGD 2010-11-09
+// -----------------------------------------------------------------------------
+ParameterList::ParameterList( const kernel::OrderParameter& parameter, const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list, const actions::ParameterFactory_ABC& factory, const kernel::Entity_ABC& entity )
+    : Parameter< QString >( parameter )
+    , parameter_( parameter )
+{
+    int i = 0;
+    for( ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >::const_iterator it = list.begin(); it != list.end(); ++it, ++i )
+        AddParameter( *factory.CreateParameter( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).ascii(), "location", false ), *it, entity ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,27 +89,15 @@ void ParameterList::Serialize( xml::xostream& xos ) const
 // Name: ParameterList::CommitTo
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void ParameterList::CommitTo( Common::MsgMissionParameter& message ) const
+void ParameterList::CommitTo( Common::MsgMissionParameter_Value& message ) const
 {
-    message.mutable_value()->mutable_list();
+    ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >* list = message.mutable_list();
 
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        Common::MsgMissionParameter_Value* parameter = message.mutable_value()->add_list();
-        Common::MsgMissionParameter msg;
-        it->second->CommitTo( msg );
-        *parameter = msg.value();
+        Common::MsgMissionParameter_Value* elementValue = list->Add();
+        it->second->CommitTo( *elementValue );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParameterList::Clean
-// Created: JSR 2010-04-15
-// -----------------------------------------------------------------------------
-void ParameterList::Clean( Common::MsgMissionParameter& message ) const
-{
-    if( message.value().list_size() > 0 )
-        message.mutable_value()->clear_list();
 }
 
 // -----------------------------------------------------------------------------

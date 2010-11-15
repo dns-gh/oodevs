@@ -74,17 +74,16 @@ void AtlasNature::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        message.mutable_value()->mutable_atlasnature()->set_nature( GetValue().GetValue() );
+       message.mutable_value()->Add()->mutable_atlasnature()->set_nature( GetValue().GetValue() );
 }
-
 // -----------------------------------------------------------------------------
-// Name: AtlasNature::Clean
+// Name: AtlasNature::CommitTo
 // Created: SBO 2008-06-16
 // -----------------------------------------------------------------------------
-void AtlasNature::Clean( Common::MsgMissionParameter& message ) const
+void AtlasNature::CommitTo( Common::MsgMissionParameter_Value& message ) const
 {
-    if( message.value().has_atlasnature() )
-        message.mutable_value()->clear_atlasnature();
+    if( IsSet() )
+        message.mutable_atlasnature()->set_nature( GetValue().GetValue() );
 }
 
 // -----------------------------------------------------------------------------

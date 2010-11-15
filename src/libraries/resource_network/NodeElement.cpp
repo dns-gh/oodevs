@@ -299,8 +299,8 @@ void NodeElement::Serialize( Common::ResourceNetwork& msg ) const
 void NodeElement::Update( const Common::MsgMissionParameter_Value& msg )
 {
     consumptionAmount_ = msg.list( 1 ).quantity();
-    consumptionCritical_ = msg.list( 2 ).abool();
-    isActivated_ = msg.list( 3 ).abool();
+    consumptionCritical_ = msg.list( 2 ).booleanvalue();
+    isActivated_ = msg.list( 3 ).booleanvalue();
     productionCapacity_ = msg.list( 4 ).quantity();
     stockMaxCapacity_ = msg.list( 5 ).quantity();
     for( int i = 0; i < msg.list( 6 ).list_size(); ++ i )

@@ -107,14 +107,14 @@ void DateTime::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        CommitTo( *message.mutable_value()->mutable_datetime() );
+        CommitTo( *message.mutable_value()->Add()->mutable_datetime() );
 }
-
 // -----------------------------------------------------------------------------
-// Name: DateTime::Clean
+// Name: DateTime::CommitTo
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
-void DateTime::Clean( Common::MsgMissionParameter& message ) const
+void DateTime::CommitTo( Common::MsgMissionParameter_Value& message ) const
 {
-    message.mutable_value()->clear_datetime();
+    if( IsSet() )
+        CommitTo( *message.mutable_datetime() );
 }

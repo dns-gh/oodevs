@@ -52,14 +52,14 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& 
     , bPushedFlow_                       ( pushedFlow )
     , bManual_                           ( true )
 {
-    if( !asnStocks.has_value() || asnStocks.value().list_size() == 0 )
+    if( asnStocks.null_value() || asnStocks.value_size() == 0 )
         return;
 
     const MIL_Automate::T_PionVector& pions = suppliedAutomate.GetPions();
-    for( int i = 0; i < asnStocks.value().list_size(); ++i )
+    for( int i = 0; i < asnStocks.value_size(); ++i )
     {
-        unsigned int type = asnStocks.value().list( i ).list( 0 ).identifier();
-        int number = asnStocks.value().list( i ).list( 1 ).quantity();
+        unsigned int type = asnStocks.value().Get( i ).list( 0 ).identifier();
+        int number = asnStocks.value().Get( i ).list( 1 ).quantity();
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( type );
         if( !pDotationCategory )

@@ -37,47 +37,47 @@ MIL_ParameterType_LocationComposite::~MIL_ParameterType_LocationComposite()
 // -----------------------------------------------------------------------------
 bool MIL_ParameterType_LocationComposite::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
-    to.set_null_value( !from.ToPoint( *to.mutable_value()->mutable_point() ) );
+    to.set_null_value( !from.ToPoint( *to.mutable_value()->Add()->mutable_point() ) );
     if( to.null_value() )
         to.clear_value();
     else
         return true;
-    to.set_null_value( !from.ToPath( (Common::MsgPath&)*to.mutable_value()->mutable_path() ) );
+    to.set_null_value( !from.ToPath( (Common::MsgPath&)*to.mutable_value()->Add()->mutable_path() ) );
     if( to.null_value() )
         to.clear_value();
     else
         return true;
-    to.set_null_value( !from.ToPolygon( *to.mutable_value()->mutable_polygon() ) );
+    to.set_null_value( !from.ToPolygon( *to.mutable_value()->Add()->mutable_area() ) );
     if( to.null_value() )
         to.clear_value();
     else
         return true;
-    to.set_null_value( !from.ToAutomat( *to.mutable_value()->mutable_automat() ) );
+    to.set_null_value( !from.ToAutomat( *to.mutable_value()->Add()->mutable_automat() ) );
     if( to.null_value() )
         to.clear_value();
     else
         return true;
-    to.set_null_value( !from.ToAgent( *to.mutable_value()->mutable_unit() ) );
+    to.set_null_value( !from.ToAgent( *to.mutable_value()->Add()->mutable_agent() ) );
     if( to.null_value() )
         to.clear_value();
     else
         return true;
-    to.set_null_value( !from.ToAgentKnowledge( *to.mutable_value()->mutable_unitknowledge() ) );
+    to.set_null_value( !from.ToAgentKnowledge( *to.mutable_value()->Add()->mutable_agentknowledge() ) );
     if( to.null_value() )
         to.clear_value();
     else
         return true;
-    to.set_null_value( !from.ToObjectKnowledge( *to.mutable_value()->mutable_objectknowledge() ) );
+    to.set_null_value( !from.ToObjectKnowledge( *to.mutable_value()->Add()->mutable_objectknowledge() ) );
     if( to.null_value() )
         to.clear_value();
     else
         return true;
-    to.set_null_value( !from.ToPopulationKnowledge( *to.mutable_value()->mutable_crowdknowledge() ) );
+    to.set_null_value( !from.ToPopulationKnowledge( *to.mutable_value()->Add()->mutable_crowdknowledge() ) );
     if( to.null_value() )
         to.clear_value();
     else
         return true;
-    to.set_null_value( !from.ToUrbanBlock( *to.mutable_value()->mutable_urbanblock() ) );
+    to.set_null_value( !from.ToUrbanBlock( *to.mutable_value()->Add()->mutable_urbanblock() ) );
     if( to.null_value() )
         to.clear_value();
     return !to.null_value() || bIsOptional;

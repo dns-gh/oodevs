@@ -609,7 +609,16 @@ bool MIL_BaseParameter::ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& 
 // Name: MIL_BaseParameter::ToList
 // Created: LDC 2010-09-22
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToList( std::vector< Common::MsgMissionParameter_Value >& ) const
+bool MIL_BaseParameter::ToList( ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToElement
+// Created: MGD 2010-11-05
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToElement( Common::MsgMissionParameter_Value& ) const
 {
     return false;
 }
@@ -646,25 +655,7 @@ bool MIL_BaseParameter::ToLimaList( std::vector< boost::shared_ptr< TER_Localisa
 // Name: MIL_BaseParameter::Append
 // Created: LDC 2009-07-31
 // -----------------------------------------------------------------------------
-void MIL_BaseParameter::Append( boost::shared_ptr< TER_Localisation > pLocation )
+void MIL_BaseParameter::Append( boost::shared_ptr< MIL_MissionParameter_ABC > param )
 {
     throw std::runtime_error( "Trying to append a location. Incompatible types." );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_BaseParameter::Append
-// Created: JSR 2010-03-04
-// -----------------------------------------------------------------------------
-void MIL_BaseParameter::Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject )
-{
-    throw std::runtime_error( "Trying to append a knowledge object. Incompatible types." );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_BaseParameter::Append
-// Created: LDC 2010-04-14
-// -----------------------------------------------------------------------------
-void MIL_BaseParameter::Append( boost::shared_ptr< DEC_Gen_Object > pKnowledgeObject )
-{
-    throw std::runtime_error( "Trying to append a gen object. Incompatible types." );
 }

@@ -63,7 +63,16 @@ void Numeric::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        message.mutable_value()->set_areal( GetValue() );
+       message.mutable_value()->Add()->set_areal( GetValue() );
+}
+// -----------------------------------------------------------------------------
+// Name: Numeric::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void Numeric::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    if( IsSet() )
+        message.set_areal( GetValue() );
 }
 
 // -----------------------------------------------------------------------------

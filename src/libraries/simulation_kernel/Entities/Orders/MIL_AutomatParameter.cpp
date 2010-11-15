@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomatParameter.h"
 #include "simulation_orders/MIL_ParameterType_Automat.h"
+#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Network/NET_ASN_Tools.h"
@@ -52,7 +53,8 @@ MIL_AutomatParameter::~MIL_AutomatParameter()
 // -----------------------------------------------------------------------------
 bool MIL_AutomatParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_Automat*>( &type ) != 0 );
+    return dynamic_cast<const MIL_ParameterType_Automat*>( &type ) != 0
+        || dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,5 +76,15 @@ bool MIL_AutomatParameter::ToAutomat( Common::AutomatId& asn ) const
 bool MIL_AutomatParameter::ToAutomat( DEC_Decision_ABC*& value ) const
 {
     value = pDecision_;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomatParameter::ToElement
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+bool MIL_AutomatParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    ToAutomat( *elem.mutable_automat() );
     return true;
 }

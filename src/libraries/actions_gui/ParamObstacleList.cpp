@@ -10,7 +10,7 @@
 #include "ParamObstacleList.h"
 #include "ParamObstacle.h"
 #include "actions/Action_ABC.h"
-#include "actions/EngineerConstructionList.h"
+#include "actions/ParameterList.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/Tools.h"
 #include "clients_gui/ValuedListItem.h"
@@ -48,7 +48,7 @@ ParamObstacleList::~ParamObstacleList()
 // -----------------------------------------------------------------------------
 void ParamObstacleList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::EngineerConstructionList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

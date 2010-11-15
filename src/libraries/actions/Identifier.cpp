@@ -53,7 +53,16 @@ void Identifier::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        message.mutable_value()->set_identifier( GetValue() );
+       message.mutable_value()->Add()->set_identifier( GetValue() );
+}
+// -----------------------------------------------------------------------------
+// Name: Identifier::CommitTo
+// Created: JSR 2010-04-15
+// -----------------------------------------------------------------------------
+void Identifier::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    if( IsSet() )
+        message.set_identifier( GetValue() );
 }
 
 // -----------------------------------------------------------------------------

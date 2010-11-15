@@ -160,7 +160,18 @@ void Lima::CommitTo( Common::MsgMissionParameter& message ) const
     message.set_null_value( !IsSet() );
     if( IsSet() )
     {
-        CommitTo( *message.mutable_value()->mutable_limasorder()->add_elem() );
+        CommitTo( *message.mutable_value()->Add()->mutable_limasorder()->add_elem() );
+    }
+}
+// -----------------------------------------------------------------------------
+// Name: Lima::CommitTo
+// Created: MGD 2010-10-27
+// -----------------------------------------------------------------------------
+void Lima::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    if( IsSet() )
+    {
+        CommitTo( *message.mutable_limasorder()->add_elem() );
     }
 }
 

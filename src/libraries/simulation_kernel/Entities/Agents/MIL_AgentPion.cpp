@@ -668,9 +668,9 @@ void MIL_AgentPion::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUni
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1)
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     const Common::MsgMissionParameter& parametre = asn.parameters().elem( 0 );
-    if( !parametre.has_value() || !parametre.value().has_point() )
+    if( !parametre.value_size() == 1 || !parametre.value().Get(0).has_point() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
-    const Common::MsgPoint& point = parametre.value().point();
+    const Common::MsgPoint& point = parametre.value().Get(0).point();
     if( point.location().type() != Common::MsgLocation::point  || point.location().coordinates().elem_size() != 1 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     MT_Vector2D vPosTmp;
@@ -685,25 +685,25 @@ void MIL_AgentPion::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUni
 // -----------------------------------------------------------------------------
 void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const Common::MsgMissionParameters& msg )
 {
-    if( msg.elem( 0 ).has_value() && msg.elem( 0 ).value().has_enumeration() )
+    if( msg.elem( 0 ).value_size() == 1 && msg.elem( 0 ).value().Get(0).has_enumeration() )
     {
-        Common::EnumUnitTiredness tiredness = static_cast< Common::EnumUnitTiredness >( msg.elem( 0 ).value().enumeration() );
+        Common::EnumUnitTiredness tiredness = static_cast< Common::EnumUnitTiredness >( msg.elem( 0 ).value().Get(0).enumeration() );
         const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( tiredness );
         if( !pTiredness )
             throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness );
     }
-    if( msg.elem( 1 ).has_value() && msg.elem( 1 ).value().has_enumeration() )
+    if( msg.elem( 1 ).value_size() == 1 && msg.elem( 1 ).value().Get(0).has_enumeration() )
     {
-        Common::EnumUnitMorale morale = static_cast< Common::EnumUnitMorale >( msg.elem( 1 ).value().enumeration() );
+        Common::EnumUnitMorale morale = static_cast< Common::EnumUnitMorale >( msg.elem( 1 ).value().Get(0).enumeration() );
         const PHY_Morale* pMoral = PHY_Morale::Find( morale );
         if( !pMoral )
             throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetMorale( *pMoral );
     }
-    if( msg.elem( 2 ).has_value() && msg.elem( 2 ).value().has_enumeration() )
+    if( msg.elem( 2 ).value_size() == 1 && msg.elem( 2 ).value().Get(0).has_enumeration() )
     {
-        Common::EnumUnitExperience experience = static_cast< Common::EnumUnitExperience >( msg.elem( 2 ).value().enumeration() );
+        Common::EnumUnitExperience experience = static_cast< Common::EnumUnitExperience >( msg.elem( 2 ).value().Get(0).enumeration() );
         const PHY_Experience* pExperience = PHY_Experience::Find( experience );
         if( !pExperience )
             throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
@@ -762,61 +762,61 @@ void MIL_AgentPion::OnReceiveMsgResupplyAll()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMsgResupply( const Common::MsgMissionParameters& msg )
 {
-    if( msg.elem( 0 ).has_value() ) // Equipments
+    if( msg.elem( 0 ).value_size() > 0 ) // Equipments
     {
         PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
-        for( int i = 0; i < msg.elem( 0 ).value().list_size(); ++i )
+        for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
         {
             Common::EquipmentType type;
-            type.set_id( msg.elem( 0 ).value().list( i ).list( 0 ).identifier() );
-            int number = msg.elem( 0 ).value().list( i ).list( 1 ).quantity();
+            type.set_id( msg.elem( 0 ).value().Get( i ).list( 0 ).identifier() );
+            int number = msg.elem( 0 ).value().Get( i ).list( 1 ).quantity();
             const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
             if( pComposanteType )
                 roleComposantes.ChangeComposantesAvailability( *pComposanteType, number );
         }
     }
-    if( msg.elem( 1 ).has_value() ) // Humans
+    if( msg.elem( 1 ).value_size() > 0 ) // Humans
     {
         human::PHY_RolePion_Humans& roleHumans = GetRole< human::PHY_RolePion_Humans >();
-        for( int i = 0 ; i < msg.elem( 1 ).value().list_size(); ++i )
+        for( int i = 0 ; i < msg.elem( 1 ).value_size(); ++i )
         {
-            unsigned int rank = msg.elem( 1 ).value().list( i ).list( 0 ).identifier();
-            int number = msg.elem( 1 ).value().list( i ).list( 1 ).quantity();
+            unsigned int rank = msg.elem( 1 ).value().Get( i ).list( 0 ).identifier();
+            int number = msg.elem( 1 ).value().Get( i ).list( 1 ).quantity();
             const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( rank );
             if( pHumanRank )
                 roleHumans.ChangeHumansAvailability( *pHumanRank, number );
         }
     }
-    if( msg.elem( 2 ).has_value() ) // Dotations
+    if( msg.elem( 2 ).value_size() > 0 ) // Dotations
     {
         dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
-        for( int i = 0; i < msg.elem( 2 ).value().list_size(); ++i )
+        for( int i = 0; i < msg.elem( 2 ).value_size(); ++i )
         {
-            unsigned int dotation = msg.elem( 2 ).value().list( i ).list( 0 ).identifier();
-            int number = msg.elem( 2 ).value().list( i ).list( 1 ).quantity();
+            unsigned int dotation = msg.elem( 2 ).value().Get( i ).list( 0 ).identifier();
+            int number = msg.elem( 2 ).value().Get( i ).list( 1 ).quantity();
             const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( dotation );
             if( pDotationType )
                 roleDotations.ResupplyDotations( *pDotationType, number / 100. );
         }
     }
-    if( msg.elem( 3 ).has_value() ) // Ammunition
+    if( msg.elem( 3 ).value_size() > 0 ) // Ammunition
     {
         dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
-        for( int i = 0; i < msg.elem( 3 ).value().list_size(); ++i )
+        for( int i = 0; i < msg.elem( 3 ).value_size(); ++i )
         {
-            unsigned int munition = msg.elem( 3 ).value().list( i ).list( 0 ).identifier();
-            int number = msg.elem( 3 ).value().list( i ).list( 1 ).quantity();
+            unsigned int munition = msg.elem( 3 ).value().Get( i ).list( 0 ).identifier();
+            int number = msg.elem( 3 ).value().Get( i ).list( 1 ).quantity();
             const PHY_AmmoDotationClass* pAmmoClass = PHY_AmmoDotationClass::Find( munition );
             if( pAmmoClass )
                 roleDotations.ResupplyDotations( *pAmmoClass, number / 100. );
         }
     }
     PHY_RoleInterface_Supply* roleSupply = RetrieveRole< PHY_RoleInterface_Supply >();
-    if( roleSupply && msg.elem( 4 ).has_value() ) // stocks
-        for( int i = 0; i < msg.elem( 4 ).value().list_size(); ++i )
+    if( roleSupply && msg.elem( 4 ).value_size() > 0 ) // stocks
+        for( int i = 0; i < msg.elem( 4 ).value_size(); ++i )
         {
-            unsigned int stock = msg.elem( 4 ).value().list( i ).list( 0 ).identifier();
-            int number = msg.elem( 4 ).value().list( i ).list( 1 ).quantity();
+            unsigned int stock = msg.elem( 4 ).value().Get( i ).list( 0 ).identifier();
+            int number = msg.elem( 4 ).value().Get( i ).list( 1 ).quantity();
             const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( stock );
             if( pDotationCategory )
                 roleSupply->ResupplyStocks( *pDotationCategory, number );
@@ -847,10 +847,10 @@ void  MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMsgCreateWound( const Common::MsgMissionParameters& msg )
 {
-    if( msg.elem( 0 ).has_value() && msg.elem( 1 ).has_value() ) // injury_id && injury_type
+    if( msg.elem( 0 ).value_size() == 1 && msg.elem( 1 ).value_size() == 1 ) // injury_id && injury_type
     {
-        MIL_Injury_Wound* injury = new MIL_Injury_Wound( msg.elem( 0 ).value().identifier() );
-        injury->SetInjuryCategory( ( MIL_MedicalTreatmentType::E_InjuryCategories ) msg.elem( 1 ).value().identifier() );
+        MIL_Injury_Wound* injury = new MIL_Injury_Wound( msg.elem( 0 ).value().Get(0).identifier() );
+        injury->SetInjuryCategory( ( MIL_MedicalTreatmentType::E_InjuryCategories ) msg.elem( 1 ).value().Get(0).identifier() );
         GetRole< PHY_RolePion_Composantes >().ApplyInjury( *injury );
     }
 }
@@ -935,7 +935,7 @@ void MIL_AgentPion::OnReceiveMagicCancelSurrender()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMsgChangeSuperior( const MIL_EntityManager& manager, const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
-    MIL_Automate* pNewAutomate = manager.FindAutomate( msg.parameters().elem( 0 ).value().automat().id() );
+    MIL_Automate* pNewAutomate = manager.FindAutomate( msg.parameters().elem( 0 ).value().Get(0).automat().id() );
     if( !pNewAutomate )
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck::ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_invalid_automate );
     if( pNewAutomate->GetArmy() != GetArmy() )

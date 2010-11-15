@@ -74,7 +74,16 @@ void Agent::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        Entity< Agent_ABC >::CommitTo( *message.mutable_value()->mutable_unit() );
+        Entity< Agent_ABC >::CommitTo( *message.mutable_value()->Add()->mutable_agent() );
+}
+// -----------------------------------------------------------------------------
+// Name: Agent::CommitTo
+// Created: MGD 2010-11-10
+// -----------------------------------------------------------------------------
+void Agent::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    if( IsSet() )
+        Entity< Agent_ABC >::CommitTo( *message.mutable_agent() );
 }
 
 // -----------------------------------------------------------------------------

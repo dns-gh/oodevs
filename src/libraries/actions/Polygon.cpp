@@ -63,17 +63,16 @@ void Polygon::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        CommitTo( *message.mutable_value()->mutable_polygon()->mutable_location() );
+        CommitTo( *message.mutable_value()->Add()->mutable_area()->mutable_location() );
 }
-
 // -----------------------------------------------------------------------------
-// Name: Polygon::Clean
+// Name: Polygon::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Polygon::Clean( Common::MsgMissionParameter& message ) const
+void Polygon::CommitTo( Common::MsgMissionParameter_Value& message ) const
 {
-    if( message.value().has_polygon() )
-        message.mutable_value()->clear_polygon();
+    if( IsSet() )
+        CommitTo( *message.mutable_area()->mutable_location() );
 }
 
 namespace

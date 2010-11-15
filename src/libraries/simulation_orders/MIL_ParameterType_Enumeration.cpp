@@ -39,7 +39,7 @@ bool MIL_ParameterType_Enumeration::Copy( const MIL_MissionParameter_ABC& from, 
 {
     int id;
     to.set_null_value( !from.ToId( id ) );
-    to.mutable_value()->set_enumeration( id );
+    to.mutable_value()->Add()->set_enumeration( id );
     if( to.null_value() )
         to.clear_value();
     return !to.null_value() || bIsOptional;

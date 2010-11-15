@@ -100,7 +100,16 @@ void ObjectKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        CommitTo( *message.mutable_value()->mutable_objectknowledge() );
+        CommitTo( *message.mutable_value()->Add()->mutable_objectknowledge() );
+}
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::CommitTo
+// Created: SBO 2007-05-24
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    if( IsSet() )
+        CommitTo( *message.mutable_objectknowledge() );
 }
 
 // -----------------------------------------------------------------------------

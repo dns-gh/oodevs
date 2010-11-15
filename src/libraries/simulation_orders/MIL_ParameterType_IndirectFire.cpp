@@ -39,7 +39,7 @@ bool MIL_ParameterType_IndirectFire::Copy( const MIL_MissionParameter_ABC& from,
 {
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( !from.ToIndirectFire( *to.mutable_value()->mutable_tirindirect() ) );
+    to.set_null_value( !from.ToIndirectFire( *to.mutable_value()->Add()->mutable_tirindirect() ) );
     if( to.null_value() )
         to.clear_value();
     return !to.null_value() || bIsOptional;

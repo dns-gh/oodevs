@@ -49,18 +49,18 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const Common::MsgMissionParamet
     , bIsPatched_( false )
 {
     const Common::MsgMissionParameter& startTime = msg.elem( 7 );
-    if( !startTime.has_value() || !startTime.value().has_datetime() )
+    if( !startTime.value_size() == 1 || !startTime.value().Get(0).has_datetime() )
         throw std::exception( "Meteo : bad attribute for StartTime" );
-    startTime_ = ( bpt::from_iso_string( startTime.value().datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
+    startTime_ = ( bpt::from_iso_string( startTime.value().Get(0).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
     const Common::MsgMissionParameter& endTime = msg.elem( 8 );
-    if( !endTime.has_value() || !endTime.value().has_datetime() )
+    if( !endTime.value_size() == 1 || !endTime.value().Get(0).has_datetime() )
         throw std::exception( "Meteo : bad attribute for EndTime" );
-    endTime_ = ( bpt::from_iso_string( endTime.value().datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
+    endTime_ = ( bpt::from_iso_string( endTime.value().Get(0).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
     const Common::MsgMissionParameter& location = msg.elem( 9 );
-    if( !location.has_value() || !location.value().has_location() )
+    if( !location.value_size() == 1 || !location.value().Get(0).has_location() )
         throw std::exception( "Meteo : bad attribute for Location" );
-    NET_ASN_Tools::ReadPoint( location.value().location().coordinates().elem( 0 ), upLeft_    );
-    NET_ASN_Tools::ReadPoint( location.value().location().coordinates().elem( 1 ), downRight_ );
+    NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 0 ), upLeft_    );
+    NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 1 ), downRight_ );
 }
 
 

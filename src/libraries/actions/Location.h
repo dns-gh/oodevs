@@ -53,7 +53,7 @@ public:
     using LocationBase::Clean;
     virtual void CommitTo( std::string& content ) const;
     virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void Clean( Common::MsgMissionParameter& message ) const;
+    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual bool IsSet() const;
     //@}

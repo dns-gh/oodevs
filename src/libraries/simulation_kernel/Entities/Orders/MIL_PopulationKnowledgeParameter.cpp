@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationKnowledgeParameter.h"
 #include "simulation_orders/MIL_ParameterType_PopulationKnowledge.h"
+#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "protocol/protocol.h"
@@ -49,7 +50,8 @@ MIL_PopulationKnowledgeParameter::~MIL_PopulationKnowledgeParameter()
 // -----------------------------------------------------------------------------
 bool MIL_PopulationKnowledgeParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_PopulationKnowledge*>( &type ) != 0 );
+    return dynamic_cast<const MIL_ParameterType_PopulationKnowledge*>( &type ) != 0
+        || dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0;
 }
 
 // -----------------------------------------------------------------------------

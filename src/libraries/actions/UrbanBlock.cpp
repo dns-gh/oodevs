@@ -62,7 +62,16 @@ void UrbanBlock::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        message.mutable_value()->mutable_urbanblock()->set_id( GetValue() );
+       message.mutable_value()->Add()->mutable_urbanblock()->set_id( GetValue() );
+}
+// -----------------------------------------------------------------------------
+// Name: UrbanBlock::CommitTo
+// Created: MGD 2009-11-05
+// -----------------------------------------------------------------------------
+void UrbanBlock::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    if( IsSet() )
+        message.mutable_urbanblock()->set_id( GetValue() );
 }
 
 // -----------------------------------------------------------------------------

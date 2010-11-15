@@ -64,17 +64,16 @@ void Point::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        Location::CommitTo( *message.mutable_value()->mutable_point()->mutable_location() );
+        Location::CommitTo( *message.mutable_value()->Add()->mutable_point()->mutable_location() );
 }
-
 // -----------------------------------------------------------------------------
-// Name: Point::Clean
+// Name: Point::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Point::Clean( Common::MsgMissionParameter& message ) const
+void Point::CommitTo( Common::MsgMissionParameter_Value& message ) const
 {
-    if( message.value().has_point() )
-        message.mutable_value()->clear_point();
+    if( IsSet() )
+        Location::CommitTo( *message.mutable_point()->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------

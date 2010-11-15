@@ -46,7 +46,7 @@ public:
     const std::string& GetName   () const;
     const std::string& GetDIAType() const;
           unsigned int GetID     () const;
-    const MIL_ParameterType_ABC& GetParameterType( unsigned int ) const;
+    const MIL_OrderTypeParameter& GetParameterType( unsigned int ) const;
     const std::string&           GetParameterName( unsigned int ) const;
     unsigned int                 GetParameterIndex( const std::string& name ) const;
     //@}
@@ -54,7 +54,6 @@ public:
     //! @name Copy operations
     //@{
     bool Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, Common::MsgMissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const;
-    void InitializeDefault( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters ) const;
     //@}
 
 protected:

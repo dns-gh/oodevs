@@ -63,7 +63,17 @@ Formation::~Formation()
 // -----------------------------------------------------------------------------
 void Formation::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    message.mutable_value()->mutable_formation();    // enforce initialisation of parameter to force his type
+   message.mutable_value()->Add()->mutable_formation();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        Entity< Formation_ABC >::CommitTo( *message.mutable_value()->mutable_formation() );
+        Entity< Formation_ABC >::CommitTo( *message.mutable_value()->Add()->mutable_formation() );
+}
+// -----------------------------------------------------------------------------
+// Name: Formation::CommitTo
+// Created: JSR 2010-04-20
+// -----------------------------------------------------------------------------
+void Formation::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    message.mutable_formation();    // enforce initialisation of parameter to force his type
+    if( IsSet() )
+        Entity< Formation_ABC >::CommitTo( *message.mutable_formation() );
 }

@@ -81,14 +81,14 @@ void WeatherWidget::Commit( Common::MsgWeatherAttributes& att ) const
 // -----------------------------------------------------------------------------
 void WeatherWidget::Commit( Common::MsgMissionParameters& att ) const
 {
-    att.add_elem()->mutable_value()->set_areal( 0 ); // Temperature
-    att.add_elem()->mutable_value()->set_areal( ( float) windSpeed_->value() );
-    att.add_elem()->mutable_value()->mutable_heading()->set_heading( windDirection_->value() );
-    att.add_elem()->mutable_value()->set_areal( ( float) cloudFloor_->value() );
-    att.add_elem()->mutable_value()->set_areal( ( float) cloudCeiling_->value() );
-    att.add_elem()->mutable_value()->set_areal( ( float) cloudDensity_->value() );
+    att.add_elem()->mutable_value()->Add()->set_areal( 0 ); // Temperature
+    att.add_elem()->mutable_value()->Add()->set_areal( ( float) windSpeed_->value() );
+    att.add_elem()->mutable_value()->Add()->mutable_heading()->set_heading( windDirection_->value() );
+    att.add_elem()->mutable_value()->Add()->set_areal( ( float) cloudFloor_->value() );
+    att.add_elem()->mutable_value()->Add()->set_areal( ( float) cloudCeiling_->value() );
+    att.add_elem()->mutable_value()->Add()->set_areal( ( float) cloudDensity_->value() );
     const weather::PHY_Precipitation* precipitation = weather::PHY_Precipitation::FindPrecipitation( tools::ToString( type_->GetValue() ).ascii() );
-    att.add_elem()->mutable_value()->set_enumeration( precipitation->GetAsnID() );
+    att.add_elem()->mutable_value()->Add()->set_enumeration( precipitation->GetAsnID() );
 }
 
 // -----------------------------------------------------------------------------

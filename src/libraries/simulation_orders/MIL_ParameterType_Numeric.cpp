@@ -41,7 +41,7 @@ bool MIL_ParameterType_Numeric::Copy( const MIL_MissionParameter_ABC& from, Comm
         return false;
     float value;
     to.set_null_value( !from.ToNumeric( value ) );
-    to.mutable_value()->set_areal( value );
+    to.mutable_value()->Add()->set_areal( value );
     if( to.null_value() )
         to.clear_value();
     return !to.null_value() || bIsOptional;

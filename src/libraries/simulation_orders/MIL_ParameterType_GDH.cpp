@@ -39,7 +39,7 @@ bool MIL_ParameterType_GDH::Copy( const MIL_MissionParameter_ABC& from, Common::
 {
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( !from.ToGDH( *to.mutable_value()->mutable_datetime() ) );
+    to.set_null_value( !from.ToGDH( *to.mutable_value()->Add()->mutable_datetime() ) );
     if( to.null_value() )
         to.clear_value();
     return !to.null_value() || bIsOptional;

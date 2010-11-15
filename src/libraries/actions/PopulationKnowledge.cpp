@@ -73,7 +73,16 @@ void PopulationKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
     if( IsSet() )
-        Entity< PopulationKnowledge_ABC >::CommitTo< Common::CrowdKnowledgeId >( *message.mutable_value()->mutable_crowdknowledge() );
+        Entity< PopulationKnowledge_ABC >::CommitTo< Common::CrowdKnowledgeId >( *message.mutable_value()->Add()->mutable_crowdknowledge() );
+}
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::CommitTo
+// Created: SBO 2007-05-24
+// -----------------------------------------------------------------------------
+void PopulationKnowledge::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    if( IsSet() )
+        Entity< PopulationKnowledge_ABC >::CommitTo< Common::CrowdKnowledgeId >( *message.mutable_crowdknowledge() );
 }
 
 // -----------------------------------------------------------------------------

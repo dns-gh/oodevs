@@ -13,6 +13,13 @@
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
+namespace google
+{
+    namespace protobuf
+    {
+        template< typename T > class RepeatedPtrField;
+    }
+}
 namespace Common
 {
     class AutomatId;
@@ -131,7 +138,8 @@ public:
     virtual bool ToPopulationKnowledge( Common::CrowdKnowledgeId& asn ) const = 0;
     virtual bool ToString( std::string& asn ) const = 0;
     virtual bool ToUrbanBlock( Common::UrbanObjectId& ) const = 0;
-    virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const = 0;
+    virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& ) const = 0;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& ) const = 0;
     virtual bool ToLima( Common::MsgLimasOrder& ) const = 0;
     virtual bool ToLimaList( Common::MsgLimasOrder& ) const = 0;
 
@@ -170,9 +178,7 @@ public:
     virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const = 0;
     virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const = 0;
 
-    virtual void Append( boost::shared_ptr< TER_Localisation > pLocation ) = 0;
-    virtual void Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject ) = 0;
-    virtual void Append( boost::shared_ptr< DEC_Gen_Object > pKnowledgeObject ) = 0;
+    virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param ) = 0;
     //@}
 };
 

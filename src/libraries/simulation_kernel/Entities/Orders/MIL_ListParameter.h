@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list );
-             MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const std::vector< boost::shared_ptr< DEC_Knowledge_Urban > >& urbanBlockList );
+             MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& paramList );
     virtual ~MIL_ListParameter();
     //@}
 
@@ -36,8 +36,21 @@ public:
     //@{
     virtual bool IsOfType( const MIL_ParameterType_ABC& ) const;
     
-    virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const;
-    virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const;
+    virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& message ) const;
+    virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& result ) const;
+
+    virtual bool ToPathList( std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& ) const;
+    virtual bool ToPointList( std::vector< boost::shared_ptr< MT_Vector2D > >& result ) const;
+    virtual bool ToPolygonList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
+    virtual bool ToLocationList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
+    virtual bool ToAutomatList( std::vector< DEC_Decision_ABC* >& ) const;
+    virtual bool ToAgentList( std::vector< DEC_Decision_ABC* >& ) const;
+    virtual bool ToAgentKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& ) const;
+    virtual bool ToObjectKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& ) const;
+    virtual bool ToGenObjectList( std::vector< boost::shared_ptr< DEC_Gen_Object > >& ) const;
+
+
+    virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param );
     //@}
 
 private:
@@ -47,8 +60,8 @@ private:
     MIL_ListParameter& operator=( const MIL_ListParameter& ); //!< Assignment operator
     //@}
     
-    typedef std::vector< Common::MsgMissionParameter_Value > T_ParameterList;
-    typedef T_ParameterList::const_iterator                  CIT_ParameterList;
+    typedef std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > T_ParameterList;
+    typedef T_ParameterList::const_iterator                          CIT_ParameterList;
 
     T_ParameterList list_;
     const DEC_KnowledgeResolver_ABC& resolver_;

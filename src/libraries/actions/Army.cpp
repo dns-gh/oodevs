@@ -82,9 +82,19 @@ Army::~Army()
 // -----------------------------------------------------------------------------
 void Army::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    message.mutable_value()->mutable_party();    // enforce initialisation of parameter to force his type
+   message.mutable_value()->Add()->mutable_party();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        Entity< Team_ABC >::CommitTo( *message.mutable_value()->mutable_party() );
+        Entity< Team_ABC >::CommitTo( *message.mutable_value()->Add()->mutable_party() );
+}
+// -----------------------------------------------------------------------------
+// Name: Army::CommitTo
+// Created: JSR 2010-04-14
+// -----------------------------------------------------------------------------
+void Army::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    message.mutable_party();    // enforce initialisation of parameter to force his type
+    if( IsSet() )
+        Entity< Team_ABC >::CommitTo( *message.mutable_party() );
 }
 
 // -----------------------------------------------------------------------------

@@ -42,7 +42,7 @@ MissionParameterPoint::~MissionParameterPoint()
 void MissionParameterPoint::Serialize( Common::MsgMissionParameter& parameter ) const
 {
     parameter.set_null_value( false );
-    parameter.mutable_value()->mutable_point()->mutable_location()->set_type( Common::MsgLocation_Geometry_point );
-    parameter.mutable_value()->mutable_point()->mutable_location()->mutable_coordinates()->add_elem();
-    point_->Serialize( *parameter.mutable_value()->mutable_point()->mutable_location()->mutable_coordinates()->mutable_elem(0) );
+    parameter.mutable_value()->Add()->mutable_point()->mutable_location()->set_type( Common::MsgLocation_Geometry_point );
+    parameter.mutable_value()->Add()->mutable_point()->mutable_location()->mutable_coordinates()->add_elem();
+    point_->Serialize( *parameter.mutable_value()->Add()->mutable_point()->mutable_location()->mutable_coordinates()->mutable_elem(0) );
 }

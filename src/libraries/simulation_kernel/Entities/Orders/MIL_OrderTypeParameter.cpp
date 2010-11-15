@@ -10,11 +10,23 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_OrderTypeParameter.h"
 #include "MIL_OrderType_ABC.h"
+#include "simulation_orders/MIL_MissionParameter_ABC.h"
 #include "simulation_orders/MIL_ParameterType_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 
+
+namespace
+{
+    bool InitIsList(  xml::xistream& xis )
+    {
+        std::string maxOccurs = xis.attribute< std::string >( "max-occurs", "1" );
+        if( maxOccurs != "1" )
+            return true;
+        return false;
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderTypeParameter constructor
 // Created: SBO 2008-03-03
@@ -23,7 +35,8 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( xml::xistream& xis )
     : bIsOptional_  ( xis.attribute< bool >( "optional", false ) )
     , strName_      ( xis.attribute< std::string >( "name" ) )
     , strDiaName_   ( xis.attribute< std::string >( "dia-name" ) )
-    , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ), xis.attribute< std::string >( "max-occurs", "1" ) ) )
+    , bIsList_      ( InitIsList( xis ) )
+    , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ) ) )
 {
     if( !pParameter_ )
         xis.error( "Unknown parameter type" );
@@ -37,7 +50,8 @@ MIL_OrderTypeParameter::MIL_OrderTypeParameter( const MIL_OrderType_ABC& /*order
     : bIsOptional_  ( xis.attribute< bool >( "optional", false ) )
     , strName_      ( xis.attribute< std::string >( "name" ) )
     , strDiaName_   ( xis.attribute< std::string >( "dia-name" ) )
-    , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ), xis.attribute< std::string >( "max-occurs", "1" ) ) )
+    , bIsList_      ( InitIsList( xis ) )
+    , pParameter_   ( MIL_ParameterType_ABC::Find( xis.attribute< std::string >( "type" ) ) )
 {
     if( !pParameter_ )
         xis.error( "Unknown parameter type" );
@@ -59,7 +73,17 @@ MIL_OrderTypeParameter::~MIL_OrderTypeParameter()
 //-----------------------------------------------------------------------------
 bool MIL_OrderTypeParameter::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const
 {
-    return pParameter_->Copy( from, to, knowledgeResolver, bIsOptional_ );
+    if( bIsList_ )
+    {
+        if( !from.IsOfType( *pParameter_ ) )
+            return false;
+        to.set_null_value( !from.ToList( *to.mutable_value() ) );
+        if( to.null_value() )
+            to.clear_value();
+        return !to.null_value() || bIsOptional_;
+    }
+    else
+        return pParameter_->Copy( from, to, knowledgeResolver, bIsOptional_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,4 +111,13 @@ const std::string& MIL_OrderTypeParameter::GetDIAName() const
 const MIL_ParameterType_ABC& MIL_OrderTypeParameter::GetType() const
 {
     return *pParameter_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderTypeParameter::GetType
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+bool MIL_OrderTypeParameter::IsList() const
+{
+    return bIsList_;
 }

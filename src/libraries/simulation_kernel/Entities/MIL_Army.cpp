@@ -646,11 +646,11 @@ void MIL_Army::SendKnowledge() const
 // -----------------------------------------------------------------------------
 void MIL_Army::OnReceiveMsgChangeDiplomacy( const Common::MsgMissionParameters& asnMsg )
 {
-    MIL_Army_ABC* pArmy2 = armyFactory_.Find( asnMsg.elem( 1 ).value().identifier() );
+    MIL_Army_ABC* pArmy2 = armyFactory_.Find( asnMsg.elem( 1 ).value().Get(0).identifier() );
     if( !pArmy2 || *pArmy2 == *this )
         throw NET_AsnException< MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode >( MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_error_invalid_camp_diplomacy );
     E_Diplomacy nDiplomacy = eUnknown;
-    switch( asnMsg.elem( 2 ).value().enumeration() )
+    switch( asnMsg.elem( 2 ).value().Get(0).enumeration() )
     {
     case Common::unknown_diplo:
         nDiplomacy = eUnknown;

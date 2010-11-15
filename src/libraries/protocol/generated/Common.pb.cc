@@ -1886,41 +1886,44 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgMissionParameter));
   MsgMissionParameter_Value_descriptor_ = MsgMissionParameter_descriptor_->nested_type(0);
-  static const int MsgMissionParameter_Value_offsets_[43] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, abool_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, areal_),
+  static const int MsgMissionParameter_Value_offsets_[46] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, booleanvalue_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, intvalue_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, heading_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, enumeration_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, path_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, pathlist_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, datetime_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, point_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, area_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, path_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, limit_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, phaseline_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, automat_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, agent_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, agentknowledge_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, crowdknowledge_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, objectknowledge_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, urbanknowledge_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, plannedwork_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, atlasnature_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, resourcetype_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, logmaintenancepriorities_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, logmedicalpriorities_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, areal_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, pathlist_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, pointlist_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, polygon_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, polygonlist_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, location_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, locationlist_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, heading_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, atlasnature_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, unit_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, unitlist_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, automat_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, automatlist_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, unitknowledge_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, unitknowledgelist_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, objectknowledge_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, objectknowledgelist_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, crowdknowledge_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, plannedwork_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, plannedworklist_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, resourcetype_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, equipmenttype_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, tirindirect_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, datetime_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, logmaintenancepriorities_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, logmedicalpriorities_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, acharstr_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, missionobjective_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, missionobjectivelist_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, line_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, limasorder_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, intelligencelist_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, urbanblock_),
@@ -3326,267 +3329,270 @@ void protobuf_AddDesc_Common_2eproto() {
     "de\020\001\022\007\n\003ass\020\002\022\006\n\002pc\020\004\022\007\n\003log\020\010\022\013\n\007mortie"
     "r\020\020\022\022\n\016lance_roquette\020 \022\014\n\010vehicule\020@\022\025\n"
     "\020personnel_a_pied\020\200\001\022\020\n\013helicoptere\020\200\002\022\r"
-    "\n\010indefini\020\200\004\022\010\n\003asa\020\200\010\022\t\n\004none\020\200\020\"\323\016\n\023M"
+    "\n\010indefini\020\200\004\022\010\n\003asa\020\200\010\022\t\n\004none\020\200\020\"\316\017\n\023M"
     "sgMissionParameter\022\022\n\nnull_value\030\001 \001(\010\0220"
-    "\n\005value\030\002 \001(\0132!.Common.MsgMissionParamet"
-    "er.Value\032\365\r\n\005Value\022\r\n\005aBool\030\001 \001(\010\022\r\n\005aRe"
-    "al\030\002 \001(\002\022\023\n\013enumeration\030\003 \001(\005\022\035\n\004path\030\004 "
-    "\001(\0132\017.Common.MsgPath\022%\n\010pathList\030\005 \001(\0132\023"
-    ".Common.MsgPathList\022\037\n\005point\030\006 \001(\0132\020.Com"
-    "mon.MsgPoint\022\'\n\tpointList\030\007 \001(\0132\024.Common"
-    ".MsgPointList\022#\n\007polygon\030\010 \001(\0132\022.Common."
-    "MsgPolygon\022+\n\013polygonList\030\t \001(\0132\026.Common"
-    ".MsgPolygonList\022%\n\010location\030\n \001(\0132\023.Comm"
-    "on.MsgLocation\022-\n\014locationList\030\013 \001(\0132\027.C"
-    "ommon.MsgLocationList\022#\n\007heading\030\014 \001(\0132\022"
-    ".Common.MsgHeading\022+\n\013atlasNature\030\r \001(\0132"
-    "\026.Common.MsgAtlasNature\022\034\n\004unit\030\016 \001(\0132\016."
-    "Common.UnitId\022$\n\010unitList\030\017 \001(\0132\022.Common"
-    ".UnitIdList\022\"\n\007automat\030\020 \001(\0132\021.Common.Au"
-    "tomatId\022*\n\013automatList\030\021 \001(\0132\025.Common.Au"
-    "tomatIdList\022.\n\runitKnowledge\030\022 \001(\0132\027.Com"
-    "mon.UnitKnowledgeId\0226\n\021unitKnowledgeList"
-    "\030\023 \001(\0132\033.Common.UnitKnowledgeIdList\0222\n\017o"
-    "bjectKnowledge\030\024 \001(\0132\031.Common.ObjectKnow"
-    "ledgeId\022:\n\023objectKnowledgeList\030\025 \001(\0132\035.C"
-    "ommon.ObjectKnowledgeIdList\0220\n\016crowdKnow"
-    "ledge\030\026 \001(\0132\030.Common.CrowdKnowledgeId\022+\n"
-    "\013plannedWork\030\027 \001(\0132\026.Common.MsgPlannedWo"
-    "rk\0223\n\017plannedWorkList\030\030 \001(\0132\032.Common.Msg"
-    "PlannedWorkList\022*\n\014resourceType\030\031 \001(\0132\024."
-    "Common.ResourceType\022,\n\requipmentType\030\032 \001"
-    "(\0132\025.Common.EquipmentType\022#\n\013tirIndirect"
-    "\030\033 \001(\0132\016.Common.FireId\022%\n\010dateTime\030\034 \001(\013"
-    "2\023.Common.MsgDateTime\022E\n\030logMaintenanceP"
-    "riorities\030\035 \001(\0132#.Common.MsgLogMaintenan"
-    "cePriorities\022=\n\024logMedicalPriorities\030\036 \001"
-    "(\0132\037.Common.MsgLogMedicalPriorities\022\020\n\010a"
-    "CharStr\030\037 \001(\t\0225\n\020missionObjective\030  \001(\0132"
-    "\033.Common.MsgMissionObjective\022=\n\024missionO"
-    "bjectiveList\030! \001(\0132\037.Common.MsgMissionOb"
-    "jectiveList\022\035\n\004line\030\" \001(\0132\017.Common.MsgLi"
-    "ne\022)\n\nlimasOrder\030# \001(\0132\025.Common.MsgLimas"
-    "Order\0225\n\020intelligenceList\030$ \001(\0132\033.Common"
-    ".MsgIntelligenceList\022)\n\nurbanBlock\030% \001(\013"
-    "2\025.Common.UrbanObjectId\022\036\n\005party\030& \001(\0132\017"
-    ".Common.PartyId\022&\n\tformation\030\' \001(\0132\023.Com"
-    "mon.FormationId\022\022\n\nidentifier\030( \001(\r\022\020\n\010q"
-    "uantity\030) \001(\005\0220\n\016knowledgeGroup\030* \001(\0132\030."
-    "Common.KnowledgeGroupId\022/\n\004list\030+ \003(\0132!."
-    "Common.MsgMissionParameter.Value\"A\n\024MsgM"
-    "issionParameters\022)\n\004elem\030\001 \003(\0132\033.Common."
-    "MsgMissionParameter\"\350\001\n\014MsgUnitOrder\022\036\n\006"
-    "tasker\030\001 \002(\0132\016.Common.UnitId\022!\n\004type\030\002 \002"
-    "(\0132\023.Common.MissionType\0220\n\nparameters\030\003 "
-    "\001(\0132\034.Common.MsgMissionParameters\022\r\n\005lab"
-    "el\030\004 \001(\t\022+\n\016symbolLocation\030\005 \001(\0132\023.Commo"
-    "n.MsgLocation\022\'\n\nstart_time\030\006 \001(\0132\023.Comm"
-    "on.MsgDateTime\"\356\001\n\017MsgAutomatOrder\022!\n\006ta"
-    "sker\030\001 \002(\0132\021.Common.AutomatId\022!\n\004type\030\002 "
+    "\n\005value\030\002 \003(\0132!.Common.MsgMissionParamet"
+    "er.Value\032\360\016\n\005Value\022\024\n\014booleanValue\030\001 \001(\010"
+    "\022\020\n\010intValue\030\002 \001(\005\022#\n\007heading\030\003 \001(\0132\022.Co"
+    "mmon.MsgHeading\022\023\n\013enumeration\030\004 \001(\005\022%\n\010"
+    "dateTime\030\005 \001(\0132\023.Common.MsgDateTime\022\037\n\005p"
+    "oint\030\006 \001(\0132\020.Common.MsgPoint\022 \n\004area\030\007 \001"
+    "(\0132\022.Common.MsgPolygon\022\035\n\004path\030\010 \001(\0132\017.C"
+    "ommon.MsgPath\022\036\n\005limit\030\t \001(\0132\017.Common.Ms"
+    "gLine\022(\n\tphaseLine\030\n \001(\0132\025.Common.MsgLim"
+    "asOrder\022\"\n\007automat\030\013 \001(\0132\021.Common.Automa"
+    "tId\022\035\n\005agent\030\014 \001(\0132\016.Common.UnitId\022/\n\016ag"
+    "entKnowledge\030\r \001(\0132\027.Common.UnitKnowledg"
+    "eId\0220\n\016crowdKnowledge\030\016 \001(\0132\030.Common.Cro"
+    "wdKnowledgeId\0222\n\017objectKnowledge\030\017 \001(\0132\031"
+    ".Common.ObjectKnowledgeId\0226\n\016urbanKnowle"
+    "dge\030\020 \001(\0132\036.Common.UrbanObjectKnowledgeI"
+    "d\022+\n\013plannedWork\030\021 \001(\0132\026.Common.MsgPlann"
+    "edWork\022+\n\013atlasNature\030\022 \001(\0132\026.Common.Msg"
+    "AtlasNature\022*\n\014resourceType\030\023 \001(\0132\024.Comm"
+    "on.ResourceType\022E\n\030logMaintenancePriorit"
+    "ies\030\024 \001(\0132#.Common.MsgLogMaintenancePrio"
+    "rities\022=\n\024logMedicalPriorities\030\025 \001(\0132\037.C"
+    "ommon.MsgLogMedicalPriorities\022\r\n\005aReal\030\026"
+    " \001(\002\022%\n\010pathList\030\027 \001(\0132\023.Common.MsgPathL"
+    "ist\022\'\n\tpointList\030\030 \001(\0132\024.Common.MsgPoint"
+    "List\022+\n\013polygonList\030\031 \001(\0132\026.Common.MsgPo"
+    "lygonList\022%\n\010location\030\032 \001(\0132\023.Common.Msg"
+    "Location\022-\n\014locationList\030\033 \001(\0132\027.Common."
+    "MsgLocationList\022$\n\010unitList\030\034 \001(\0132\022.Comm"
+    "on.UnitIdList\022*\n\013automatList\030\035 \001(\0132\025.Com"
+    "mon.AutomatIdList\0226\n\021unitKnowledgeList\030\036"
+    " \001(\0132\033.Common.UnitKnowledgeIdList\022:\n\023obj"
+    "ectKnowledgeList\030\037 \001(\0132\035.Common.ObjectKn"
+    "owledgeIdList\0223\n\017plannedWorkList\030  \001(\0132\032"
+    ".Common.MsgPlannedWorkList\022,\n\requipmentT"
+    "ype\030! \001(\0132\025.Common.EquipmentType\022#\n\013tirI"
+    "ndirect\030\" \001(\0132\016.Common.FireId\022\020\n\010aCharSt"
+    "r\030# \001(\t\0225\n\020missionObjective\030$ \001(\0132\033.Comm"
+    "on.MsgMissionObjective\022=\n\024missionObjecti"
+    "veList\030% \001(\0132\037.Common.MsgMissionObjectiv"
+    "eList\022)\n\nlimasOrder\030& \001(\0132\025.Common.MsgLi"
+    "masOrder\0225\n\020intelligenceList\030\' \001(\0132\033.Com"
+    "mon.MsgIntelligenceList\022)\n\nurbanBlock\030( "
+    "\001(\0132\025.Common.UrbanObjectId\022\036\n\005party\030) \001("
+    "\0132\017.Common.PartyId\022&\n\tformation\030* \001(\0132\023."
+    "Common.FormationId\022\022\n\nidentifier\030+ \001(\r\022\020"
+    "\n\010quantity\030, \001(\005\0220\n\016knowledgeGroup\030- \001(\013"
+    "2\030.Common.KnowledgeGroupId\022/\n\004list\030. \003(\013"
+    "2!.Common.MsgMissionParameter.Value\"A\n\024M"
+    "sgMissionParameters\022)\n\004elem\030\001 \003(\0132\033.Comm"
+    "on.MsgMissionParameter\"\350\001\n\014MsgUnitOrder\022"
+    "\036\n\006tasker\030\001 \002(\0132\016.Common.UnitId\022!\n\004type\030"
+    "\002 \002(\0132\023.Common.MissionType\0220\n\nparameters"
+    "\030\003 \001(\0132\034.Common.MsgMissionParameters\022\r\n\005"
+    "label\030\004 \001(\t\022+\n\016symbolLocation\030\005 \001(\0132\023.Co"
+    "mmon.MsgLocation\022\'\n\nstart_time\030\006 \001(\0132\023.C"
+    "ommon.MsgDateTime\"\356\001\n\017MsgAutomatOrder\022!\n"
+    "\006tasker\030\001 \002(\0132\021.Common.AutomatId\022!\n\004type"
+    "\030\002 \002(\0132\023.Common.MissionType\0220\n\nparameter"
+    "s\030\003 \001(\0132\034.Common.MsgMissionParameters\022\r\n"
+    "\005label\030\004 \001(\t\022+\n\016symbolLocation\030\005 \001(\0132\023.C"
+    "ommon.MsgLocation\022\'\n\nstart_time\030\006 \001(\0132\023."
+    "Common.MsgDateTime\"\352\001\n\rMsgCrowdOrder\022\037\n\006"
+    "tasker\030\001 \002(\0132\017.Common.CrowdId\022!\n\004type\030\002 "
     "\002(\0132\023.Common.MissionType\0220\n\nparameters\030\003"
     " \001(\0132\034.Common.MsgMissionParameters\022\r\n\005la"
     "bel\030\004 \001(\t\022+\n\016symbolLocation\030\005 \001(\0132\023.Comm"
     "on.MsgLocation\022\'\n\nstart_time\030\006 \001(\0132\023.Com"
-    "mon.MsgDateTime\"\352\001\n\rMsgCrowdOrder\022\037\n\006tas"
-    "ker\030\001 \002(\0132\017.Common.CrowdId\022!\n\004type\030\002 \002(\013"
-    "2\023.Common.MissionType\0220\n\nparameters\030\003 \001("
-    "\0132\034.Common.MsgMissionParameters\022\r\n\005label"
-    "\030\004 \001(\t\022+\n\016symbolLocation\030\005 \001(\0132\023.Common."
-    "MsgLocation\022\'\n\nstart_time\030\006 \001(\0132\023.Common"
-    ".MsgDateTime\"\326\001\n\024ClientObjectProperty\022\014\n"
-    "\004name\030\001 \002(\t\0221\n\005value\030\002 \002(\0132\".Common.Clie"
-    "ntObjectProperty.Value\032}\n\005Value\022\024\n\014strin"
-    "g_value\030\001 \001(\t\022\025\n\rinteger_value\030\002 \001(\005\022\036\n\026"
-    "unsigned_integer_value\030\003 \001(\r\022\023\n\013float_va"
-    "lue\030\004 \001(\002\022\022\n\nbool_value\030\005 \001(\010\"\325\001\n\017MsgTac"
-    "ticalLine\022\014\n\004name\030\001 \002(\t\022%\n\010geometry\030\002 \002("
-    "\0132\023.Common.MsgLocation\0224\n\tdiffusion\030\003 \002("
-    "\0132!.Common.MsgTacticalLine.Diffusion\032W\n\t"
-    "Diffusion\022\"\n\007automat\030\001 \001(\0132\021.Common.Auto"
-    "matId\022&\n\tformation\030\002 \001(\0132\023.Common.Format"
-    "ionId\"i\n\010MsgShape\022\020\n\010category\030\001 \002(\t\022\r\n\005c"
-    "olor\030\002 \002(\t\022\017\n\007pattern\030\003 \002(\t\022+\n\006points\030\004 "
-    "\002(\0132\033.Common.MsgCoordLatLongList\" \n\rMsgC"
-    "hatTarget\022\017\n\007profile\030\001 \002(\t\"o\n\016MsgTextMes"
-    "sage\022%\n\006source\030\001 \002(\0132\025.Common.MsgChatTar"
-    "get\022%\n\006target\030\002 \002(\0132\025.Common.MsgChatTarg"
-    "et\022\017\n\007message\030\003 \002(\t\"\362\002\n\017ResourceNetwork\022"
-    "-\n\010resource\030\001 \002(\0132\033.Common.ResourceNetwo"
-    "rkType\022*\n\004link\030\002 \003(\0132\034.Common.ResourceNe"
-    "twork.Link\022\017\n\007enabled\030\003 \002(\010\022\021\n\tmax_stock"
-    "\030\004 \001(\r\022\r\n\005stock\030\005 \001(\r\022\022\n\nproduction\030\006 \001("
-    "\r\022\023\n\013consumption\030\007 \001(\r\022\020\n\010critical\030\010 \001(\010"
-    "\032\225\001\n\004Link\0225\n\004kind\030\001 \002(\0162\'.Common.Resourc"
-    "eNetwork.Link.TargetKind\022\021\n\ttarget_id\030\002 "
-    "\002(\r\022\020\n\010capacity\030\003 \002(\005\022\014\n\004flow\030\004 \002(\r\"#\n\nT"
-    "argetKind\022\t\n\005urban\020\001\022\n\n\006object\020\002\"J\n\036Obje"
-    "ctAttributeResourceNetwork\022(\n\007network\030\001 "
-    "\003(\0132\027.Common.ResourceNetwork\"\200\001\n\033ObjectA"
-    "ttributeConstruction\022&\n\010resource\030\001 \001(\0132\024"
-    ".Common.ResourceType\022\024\n\014dotation_nbr\030\002 \001"
-    "(\005\022\017\n\007density\030\003 \001(\002\022\022\n\npercentage\030\004 \001(\005\""
-    "x\n\023ObjectAttributeMine\022&\n\010resource\030\001 \001(\013"
-    "2\024.Common.ResourceType\022\024\n\014dotation_nbr\030\002"
-    " \001(\005\022\017\n\007density\030\003 \001(\002\022\022\n\npercentage\030\004 \001("
-    "\005\"9\n\027ObjectAttributeLogistic\022\036\n\003tc2\030\001 \002("
-    "\0132\021.Common.AutomatId\"2\n ObjectAttributeI"
-    "nteractionHeight\022\016\n\006height\030\001 \002(\002\"~\n\027Obje"
-    "ctAttributeObstacle\0227\n\004type\030\001 \002(\0162).Comm"
-    "on.ObstacleType.DemolitionTargetType\022\021\n\t"
-    "activated\030\002 \001(\010\022\027\n\017activation_time\030\003 \001(\005"
-    "\",\n\033ObjectAttributeActivityTime\022\r\n\005value"
-    "\030\001 \002(\005\"+\n\025ObjectAttributeBypass\022\022\n\nperce"
-    "ntage\030\001 \002(\005\"+\n\032ObjectAttributeEffectDela"
-    "y\022\r\n\005value\030\001 \002(\005\"T\n\022ObjectAttributeNBC\022\024"
-    "\n\014danger_level\030\001 \002(\005\022(\n\nnbc_agents\030\002 \003(\013"
-    "2\024.Common.NBCAgentType\"Y\n\rStockResource\022"
-    "&\n\010resource\030\001 \002(\0132\024.Common.ResourceType\022"
-    "\017\n\007current\030\002 \002(\005\022\017\n\007maximum\030\003 \001(\005\"@\n\024Obj"
-    "ectAttributeStock\022(\n\tresources\030\001 \003(\0132\025.C"
-    "ommon.StockResource\"m\n\033ObjectAttributeCr"
-    "ossingSite\022\r\n\005width\030\001 \002(\005\022\r\n\005depth\030\002 \002(\005"
-    "\022\021\n\tflow_rate\030\003 \002(\005\022\035\n\025banks_require_fit"
-    "ting\030\004 \002(\010\"t\n\032ObjectAttributeSupplyRoute"
-    "\022\020\n\010equipped\030\001 \002(\010\022\022\n\nmax_weight\030\002 \002(\005\022\r"
-    "\n\005width\030\003 \002(\005\022\016\n\006length\030\004 \002(\005\022\021\n\tflow_ra"
-    "te\030\005 \002(\005\"S\n\022MsgLocatedQuantity\022+\n\ncoordi"
-    "nate\030\001 \002(\0132\027.Common.MsgCoordLatLong\022\020\n\010q"
-    "uantity\030\002 \002(\002\"B\n\026MsgLocatedQuantityList\022"
-    "(\n\004elem\030\001 \003(\0132\032.Common.MsgLocatedQuantit"
-    "y\"O\n\031ObjectAttributeToxicCloud\0222\n\nquanti"
-    "ties\030\001 \002(\0132\036.Common.MsgLocatedQuantityLi"
-    "st\"5\n\023ObjectAttributeFire\022\020\n\010class_id\030\001 "
-    "\002(\005\022\014\n\004heat\030\002 \002(\005\"\207\001\n*ObjectAttributeMed"
-    "icalTreatmentBedCapacity\022\017\n\007type_id\030\001 \002("
-    "\005\022\026\n\016baseline_count\030\002 \001(\r\022\027\n\017available_c"
-    "ount\030\003 \001(\r\022\027\n\017emergency_count\030\004 \001(\r\"\332\002\n\037"
-    "ObjectAttributeMedicalTreatment\022\035\n\025exter"
-    "nal_reference_id\030\001 \001(\t\022J\n\016bed_capacities"
-    "\030\002 \003(\01322.Common.ObjectAttributeMedicalTr"
-    "eatmentBedCapacity\022[\n\017facility_status\030\003 "
-    "\001(\0162B.Common.ObjectAttributeMedicalTreat"
-    "ment.EnumMedicalTreatmentStatus\022\017\n\007docto"
-    "rs\030\004 \001(\r\022\031\n\021available_doctors\030\005 \001(\r\"C\n\032E"
-    "numMedicalTreatmentStatus\022\n\n\006normal\020\000\022\r\n"
-    "\ton_divert\020\001\022\n\n\006closed\020\002\"r\n\026ObjectAttrib"
-    "uteNBCType\022#\n\005agent\030\001 \002(\0132\024.Common.NBCAg"
-    "entType\022\025\n\rconcentration\030\002 \002(\005\022\034\n\024source"
-    "_life_duration\030\003 \002(\005\"\'\n\026ObjectAttributeS"
-    "ealOff\022\r\n\005level\030\001 \002(\005\"\344\007\n\020ObjectAttribut"
-    "es\0229\n\014construction\030\001 \001(\0132#.Common.Object"
-    "AttributeConstruction\0221\n\010obstacle\030\002 \001(\0132"
-    "\037.Common.ObjectAttributeObstacle\022)\n\004mine"
-    "\030\003 \001(\0132\033.Common.ObjectAttributeMine\022:\n\ra"
-    "ctivity_time\030\004 \001(\0132#.Common.ObjectAttrib"
-    "uteActivityTime\022-\n\006bypass\030\005 \001(\0132\035.Common"
-    ".ObjectAttributeBypass\0221\n\010logistic\030\006 \001(\013"
-    "2\037.Common.ObjectAttributeLogistic\022\'\n\003nbc"
-    "\030\007 \001(\0132\032.Common.ObjectAttributeNBC\022:\n\rcr"
-    "ossing_site\030\010 \001(\0132#.Common.ObjectAttribu"
-    "teCrossingSite\0228\n\014supply_route\030\t \001(\0132\".C"
-    "ommon.ObjectAttributeSupplyRoute\0226\n\013toxi"
-    "c_cloud\030\n \001(\0132!.Common.ObjectAttributeTo"
-    "xicCloud\022)\n\004fire\030\013 \001(\0132\033.Common.ObjectAt"
-    "tributeFire\022B\n\021medical_treatment\030\014 \001(\0132\'"
-    ".Common.ObjectAttributeMedicalTreatment\022"
-    "D\n\022interaction_height\030\r \001(\0132(.Common.Obj"
-    "ectAttributeInteractionHeight\022+\n\005stock\030\016"
-    " \001(\0132\034.Common.ObjectAttributeStock\0221\n\tnb"
-    "c_agent\030\017 \001(\0132\036.Common.ObjectAttributeNB"
-    "CType\0228\n\014effect_delay\030\020 \001(\0132\".Common.Obj"
-    "ectAttributeEffectDelay\0220\n\010seal_off\030\021 \001("
-    "\0132\036.Common.ObjectAttributeSealOff\022A\n\021res"
-    "ource_networks\030\022 \001(\0132&.Common.ObjectAttr"
-    "ibuteResourceNetwork\"L\n\007MsgNote\022\014\n\004name\030"
-    "\001 \002(\t\022\016\n\006number\030\002 \002(\t\022\023\n\013description\030\003 \002"
-    "(\t\022\016\n\006parent\030\004 \002(\r\"\220\002\n\024MsgWeatherAttribu"
-    "tes\022\023\n\013temperature\030\001 \002(\005\022\022\n\nwind_speed\030\002"
-    " \002(\005\022*\n\016wind_direction\030\003 \002(\0132\022.Common.Ms"
-    "gHeading\022\023\n\013cloud_floor\030\004 \002(\005\022\025\n\rcloud_c"
-    "eiling\030\005 \002(\005\022\025\n\rcloud_density\030\006 \002(\005\0224\n\rp"
-    "recipitation\030\007 \002(\0162\035.Common.EnumPrecipit"
-    "ationType\022*\n\010lighting\030\010 \002(\0162\030.Common.Enu"
-    "mLightingType*m\n\022EnumDotationFamily\022\014\n\010m"
-    "unition\020\000\022\r\n\tcarburant\020\001\022\014\n\010explosif\020\002\022\010"
-    "\n\004mine\020\003\022\013\n\007barbele\020\004\022\t\n\005piece\020\005\022\n\n\006rati"
-    "on\020\006*Q\n\024EnumAmmunitionFamily\022\010\n\004obus\020\000\022\017"
-    "\n\013missile_sol\020\001\022\017\n\013missile_air\020\002\022\r\n\tmitr"
-    "aille\020\003*w\n\025EnumPrecipitationType\022\030\n\024pas_"
-    "de_precipitation\020\000\022\021\n\rtempete_sable\020\001\022\016\n"
-    "\nbrouillard\020\002\022\013\n\007crachin\020\003\022\t\n\005pluie\020\004\022\t\n"
-    "\005neige\020\005**\n\022EnumFireEffectType\022\t\n\005smoke\020"
-    "\000\022\t\n\005light\020\001*(\n\014UnitFireType\022\n\n\006direct\020\000"
-    "\022\014\n\010indirect\020\001*\245\002\n\020EnumLightingType\022\023\n\017j"
-    "our_sans_nuage\020\000\022\024\n\020jour_peu_nuageux\020\001\022\034"
-    "\n\030jour_moyennement_nuageux\020\002\022\026\n\022jour_ass"
-    "ez_nuageux\020\003\022\025\n\021jour_tres_nuageux\020\004\022\024\n\020n"
-    "uit_pleine_lune\020\005\022\034\n\030nuit_trois_quart_de"
-    "_lune\020\006\022\022\n\016nuit_demi_lune\020\007\022\026\n\022nuit_quar"
-    "t_de_lune\020\010\022\026\n\022nuit_nouvelle_lune\020\t\022\r\n\te"
-    "clairant\020\n\022\022\n\016global_weather\020\013*\264\003\n EnumL"
-    "ogMaintenanceHandlingStatus\022\033\n\027deplaceme"
-    "nt_vers_chaine\020\000\022$\n attente_disponibilit"
-    "e_remorqueur\020\001\022 \n\034remorqueur_deplacement"
-    "_aller\020\002\022\031\n\025remorqueur_chargement\020\003\022!\n\035r"
-    "emorqueur_deplacement_retour\020\004\022\033\n\027remorq"
-    "ueur_dechargement\020\005\022\034\n\030diagnostique_main"
-    "tenance\020\006\0220\n,attente_prise_en_charge_par"
-    "_niveau_superieur\020\007\022 \n\034attente_disponibi"
-    "lite_pieces\020\010\022$\n attente_disponibilite_r"
-    "eparateur\020\t\022\016\n\nreparation\020\n\022\017\n\013retour_pi"
-    "on\020\013\022\027\n\023termine_maintenance\020\014*\364\005\n\034EnumLo"
-    "gMedicalHandlingStatus\022*\n&attente_dispon"
-    "ibilite_ambulance_releve\020\000\022&\n\"ambulance_"
-    "releve_deplacement_aller\020\001\022\037\n\033ambulance_"
-    "releve_chargement\020\002\022/\n+attente_chargemen"
-    "t_complet_ambulance_releve\020\003\022\'\n#ambulanc"
-    "e_releve_deplacement_retour\020\004\022!\n\035ambulan"
-    "ce_releve_dechargement\020\005\0223\n/attente_disp"
-    "onibilite_medecin_pour_diagnostique\020\006\022\020\n"
-    "\014diagnostique\020\007\022\031\n\025recherche_secteur_tri"
-    "\020\010\022*\n&attente_disponibilite_medecin_pour"
-    "_tri\020\t\022\007\n\003tri\020\n\022\032\n\026recherche_secteur_soi"
-    "n\020\013\022+\n\'attente_disponibilite_medecin_pou"
-    "r_soin\020\014\022\010\n\004soin\020\r\022\023\n\017hospitalisation\020\016\022"
-    "-\n)attente_disponibilite_ambulance_ramas"
-    "sage\020\017\022\"\n\036ambulance_ramassage_chargement"
-    "\020\020\0222\n.attente_chargement_complet_ambulan"
-    "ce_ramassage\020\021\022)\n%ambulance_ramassage_de"
-    "placement_aller\020\022\022$\n ambulance_ramassage"
-    "_dechargement\020\023\022\013\n\007termine\020\024*_\n\022EnumUnit"
-    "Visibility\022\r\n\tinvisible\020\000\022\014\n\010detected\020\001\022"
-    "\016\n\nrecognized\020\002\022\016\n\nidentified\020\003\022\014\n\010recor"
-    "ded\020\004*H\n\023EnumSimulationState\022\013\n\007running\020"
-    "\000\022\n\n\006paused\020\001\022\013\n\007stopped\020\002\022\013\n\007loading\020\003*"
-    "5\n\023EnumDispatcherState\022\r\n\tavailable\020\000\022\017\n"
-    "\013unavailable\020\001*l\n\033EnumMeetingEngagementS"
-    "tatus\022\020\n\014none_meeting\020\000\022\020\n\014etat_esquive\020"
-    "\001\022\r\n\tetat_fixe\020\002\022\032\n\026etat_poursuite_missi"
-    "on\020\003*[\n\025EnumOperationalStatus\022\026\n\022detruit"
-    "_totalement\020\000\022\030\n\024detruit_tactiquement\020\001\022"
-    "\020\n\014operationnel\020\002*+\n\017EnumAutomatMode\022\013\n\007"
-    "embraye\020\000\022\013\n\007debraye\020\001*F\n\021EnumCrowdAttit"
-    "ude\022\t\n\005calme\020\000\022\n\n\006agitee\020\001\022\013\n\007excitee\020\002\022"
-    "\r\n\tagressive\020\003*8\n\021EnumUnitTiredness\022\n\n\006n"
-    "ormal\020\000\022\013\n\007fatigue\020\001\022\n\n\006epuise\020\002*@\n\016Enum"
-    "UnitMorale\022\r\n\tfanatique\020\000\022\007\n\003bon\020\001\022\t\n\005mo"
-    "yen\020\002\022\013\n\007mauvais\020\003*@\n\022EnumUnitExperience"
-    "\022\013\n\007veteran\020\000\022\017\n\013experimente\020\001\022\014\n\010conscr"
-    "it\020\002*8\n\rEnumHumanRank\022\014\n\010officier\020\000\022\020\n\014s"
-    "ous_officer\020\001\022\007\n\003mdr\020\002*X\n\rEnumDiplomacy\022"
-    "\021\n\runknown_diplo\020\000\022\020\n\014friend_diplo\020\001\022\017\n\013"
-    "enemy_diplo\020\002\022\021\n\rneutral_diplo\020\003*\210\001\n\016Enu"
-    "mHumanWound\022\016\n\nnon_blesse\020\000\022\010\n\004mort\020\001\022\024\n"
-    "\020blesse_urgence_1\020\002\022\024\n\020blesse_urgence_2\020"
-    "\003\022\024\n\020blesse_urgence_3\020\004\022\032\n\026blesse_urgenc"
-    "e_extreme\020\005*Y\n\037EnumLogMaintenanceRegimeT"
-    "ravail\022\014\n\010regime_1\020\000\022\014\n\010regime_2\020\001\022\014\n\010re"
-    "gime_3\020\002\022\014\n\010regime_4\020\003*\204\001\n\017EnumNatureLev"
-    "el\022\024\n\020none_naturelevel\020\000\022\005\n\001o\020\001\022\006\n\002oo\020\002\022"
-    "\007\n\003ooo\020\003\022\005\n\001i\020\004\022\006\n\002ii\020\005\022\007\n\003iii\020\006\022\005\n\001x\020\007\022"
-    "\006\n\002xx\020\010\022\007\n\003xxx\020\t\022\010\n\004xxxx\020\n\022\t\n\005xxxxx\020\013*9\n"
-    "\021EnumLogisticLevel\022\010\n\004none\020\000\022\007\n\003tc2\020\001\022\021\n"
-    "\rlogistic_base\020\002", 16016);
+    "mon.MsgDateTime\"\326\001\n\024ClientObjectProperty"
+    "\022\014\n\004name\030\001 \002(\t\0221\n\005value\030\002 \002(\0132\".Common.C"
+    "lientObjectProperty.Value\032}\n\005Value\022\024\n\014st"
+    "ring_value\030\001 \001(\t\022\025\n\rinteger_value\030\002 \001(\005\022"
+    "\036\n\026unsigned_integer_value\030\003 \001(\r\022\023\n\013float"
+    "_value\030\004 \001(\002\022\022\n\nbool_value\030\005 \001(\010\"\325\001\n\017Msg"
+    "TacticalLine\022\014\n\004name\030\001 \002(\t\022%\n\010geometry\030\002"
+    " \002(\0132\023.Common.MsgLocation\0224\n\tdiffusion\030\003"
+    " \002(\0132!.Common.MsgTacticalLine.Diffusion\032"
+    "W\n\tDiffusion\022\"\n\007automat\030\001 \001(\0132\021.Common.A"
+    "utomatId\022&\n\tformation\030\002 \001(\0132\023.Common.For"
+    "mationId\"i\n\010MsgShape\022\020\n\010category\030\001 \002(\t\022\r"
+    "\n\005color\030\002 \002(\t\022\017\n\007pattern\030\003 \002(\t\022+\n\006points"
+    "\030\004 \002(\0132\033.Common.MsgCoordLatLongList\" \n\rM"
+    "sgChatTarget\022\017\n\007profile\030\001 \002(\t\"o\n\016MsgText"
+    "Message\022%\n\006source\030\001 \002(\0132\025.Common.MsgChat"
+    "Target\022%\n\006target\030\002 \002(\0132\025.Common.MsgChatT"
+    "arget\022\017\n\007message\030\003 \002(\t\"\362\002\n\017ResourceNetwo"
+    "rk\022-\n\010resource\030\001 \002(\0132\033.Common.ResourceNe"
+    "tworkType\022*\n\004link\030\002 \003(\0132\034.Common.Resourc"
+    "eNetwork.Link\022\017\n\007enabled\030\003 \002(\010\022\021\n\tmax_st"
+    "ock\030\004 \001(\r\022\r\n\005stock\030\005 \001(\r\022\022\n\nproduction\030\006"
+    " \001(\r\022\023\n\013consumption\030\007 \001(\r\022\020\n\010critical\030\010 "
+    "\001(\010\032\225\001\n\004Link\0225\n\004kind\030\001 \002(\0162\'.Common.Reso"
+    "urceNetwork.Link.TargetKind\022\021\n\ttarget_id"
+    "\030\002 \002(\r\022\020\n\010capacity\030\003 \002(\005\022\014\n\004flow\030\004 \002(\r\"#"
+    "\n\nTargetKind\022\t\n\005urban\020\001\022\n\n\006object\020\002\"J\n\036O"
+    "bjectAttributeResourceNetwork\022(\n\007network"
+    "\030\001 \003(\0132\027.Common.ResourceNetwork\"\200\001\n\033Obje"
+    "ctAttributeConstruction\022&\n\010resource\030\001 \001("
+    "\0132\024.Common.ResourceType\022\024\n\014dotation_nbr\030"
+    "\002 \001(\005\022\017\n\007density\030\003 \001(\002\022\022\n\npercentage\030\004 \001"
+    "(\005\"x\n\023ObjectAttributeMine\022&\n\010resource\030\001 "
+    "\001(\0132\024.Common.ResourceType\022\024\n\014dotation_nb"
+    "r\030\002 \001(\005\022\017\n\007density\030\003 \001(\002\022\022\n\npercentage\030\004"
+    " \001(\005\"9\n\027ObjectAttributeLogistic\022\036\n\003tc2\030\001"
+    " \002(\0132\021.Common.AutomatId\"2\n ObjectAttribu"
+    "teInteractionHeight\022\016\n\006height\030\001 \002(\002\"~\n\027O"
+    "bjectAttributeObstacle\0227\n\004type\030\001 \002(\0162).C"
+    "ommon.ObstacleType.DemolitionTargetType\022"
+    "\021\n\tactivated\030\002 \001(\010\022\027\n\017activation_time\030\003 "
+    "\001(\005\",\n\033ObjectAttributeActivityTime\022\r\n\005va"
+    "lue\030\001 \002(\005\"+\n\025ObjectAttributeBypass\022\022\n\npe"
+    "rcentage\030\001 \002(\005\"+\n\032ObjectAttributeEffectD"
+    "elay\022\r\n\005value\030\001 \002(\005\"T\n\022ObjectAttributeNB"
+    "C\022\024\n\014danger_level\030\001 \002(\005\022(\n\nnbc_agents\030\002 "
+    "\003(\0132\024.Common.NBCAgentType\"Y\n\rStockResour"
+    "ce\022&\n\010resource\030\001 \002(\0132\024.Common.ResourceTy"
+    "pe\022\017\n\007current\030\002 \002(\005\022\017\n\007maximum\030\003 \001(\005\"@\n\024"
+    "ObjectAttributeStock\022(\n\tresources\030\001 \003(\0132"
+    "\025.Common.StockResource\"m\n\033ObjectAttribut"
+    "eCrossingSite\022\r\n\005width\030\001 \002(\005\022\r\n\005depth\030\002 "
+    "\002(\005\022\021\n\tflow_rate\030\003 \002(\005\022\035\n\025banks_require_"
+    "fitting\030\004 \002(\010\"t\n\032ObjectAttributeSupplyRo"
+    "ute\022\020\n\010equipped\030\001 \002(\010\022\022\n\nmax_weight\030\002 \002("
+    "\005\022\r\n\005width\030\003 \002(\005\022\016\n\006length\030\004 \002(\005\022\021\n\tflow"
+    "_rate\030\005 \002(\005\"S\n\022MsgLocatedQuantity\022+\n\ncoo"
+    "rdinate\030\001 \002(\0132\027.Common.MsgCoordLatLong\022\020"
+    "\n\010quantity\030\002 \002(\002\"B\n\026MsgLocatedQuantityLi"
+    "st\022(\n\004elem\030\001 \003(\0132\032.Common.MsgLocatedQuan"
+    "tity\"O\n\031ObjectAttributeToxicCloud\0222\n\nqua"
+    "ntities\030\001 \002(\0132\036.Common.MsgLocatedQuantit"
+    "yList\"5\n\023ObjectAttributeFire\022\020\n\010class_id"
+    "\030\001 \002(\005\022\014\n\004heat\030\002 \002(\005\"\207\001\n*ObjectAttribute"
+    "MedicalTreatmentBedCapacity\022\017\n\007type_id\030\001"
+    " \002(\005\022\026\n\016baseline_count\030\002 \001(\r\022\027\n\017availabl"
+    "e_count\030\003 \001(\r\022\027\n\017emergency_count\030\004 \001(\r\"\332"
+    "\002\n\037ObjectAttributeMedicalTreatment\022\035\n\025ex"
+    "ternal_reference_id\030\001 \001(\t\022J\n\016bed_capacit"
+    "ies\030\002 \003(\01322.Common.ObjectAttributeMedica"
+    "lTreatmentBedCapacity\022[\n\017facility_status"
+    "\030\003 \001(\0162B.Common.ObjectAttributeMedicalTr"
+    "eatment.EnumMedicalTreatmentStatus\022\017\n\007do"
+    "ctors\030\004 \001(\r\022\031\n\021available_doctors\030\005 \001(\r\"C"
+    "\n\032EnumMedicalTreatmentStatus\022\n\n\006normal\020\000"
+    "\022\r\n\ton_divert\020\001\022\n\n\006closed\020\002\"r\n\026ObjectAtt"
+    "ributeNBCType\022#\n\005agent\030\001 \002(\0132\024.Common.NB"
+    "CAgentType\022\025\n\rconcentration\030\002 \002(\005\022\034\n\024sou"
+    "rce_life_duration\030\003 \002(\005\"\'\n\026ObjectAttribu"
+    "teSealOff\022\r\n\005level\030\001 \002(\005\"\344\007\n\020ObjectAttri"
+    "butes\0229\n\014construction\030\001 \001(\0132#.Common.Obj"
+    "ectAttributeConstruction\0221\n\010obstacle\030\002 \001"
+    "(\0132\037.Common.ObjectAttributeObstacle\022)\n\004m"
+    "ine\030\003 \001(\0132\033.Common.ObjectAttributeMine\022:"
+    "\n\ractivity_time\030\004 \001(\0132#.Common.ObjectAtt"
+    "ributeActivityTime\022-\n\006bypass\030\005 \001(\0132\035.Com"
+    "mon.ObjectAttributeBypass\0221\n\010logistic\030\006 "
+    "\001(\0132\037.Common.ObjectAttributeLogistic\022\'\n\003"
+    "nbc\030\007 \001(\0132\032.Common.ObjectAttributeNBC\022:\n"
+    "\rcrossing_site\030\010 \001(\0132#.Common.ObjectAttr"
+    "ibuteCrossingSite\0228\n\014supply_route\030\t \001(\0132"
+    "\".Common.ObjectAttributeSupplyRoute\0226\n\013t"
+    "oxic_cloud\030\n \001(\0132!.Common.ObjectAttribut"
+    "eToxicCloud\022)\n\004fire\030\013 \001(\0132\033.Common.Objec"
+    "tAttributeFire\022B\n\021medical_treatment\030\014 \001("
+    "\0132\'.Common.ObjectAttributeMedicalTreatme"
+    "nt\022D\n\022interaction_height\030\r \001(\0132(.Common."
+    "ObjectAttributeInteractionHeight\022+\n\005stoc"
+    "k\030\016 \001(\0132\034.Common.ObjectAttributeStock\0221\n"
+    "\tnbc_agent\030\017 \001(\0132\036.Common.ObjectAttribut"
+    "eNBCType\0228\n\014effect_delay\030\020 \001(\0132\".Common."
+    "ObjectAttributeEffectDelay\0220\n\010seal_off\030\021"
+    " \001(\0132\036.Common.ObjectAttributeSealOff\022A\n\021"
+    "resource_networks\030\022 \001(\0132&.Common.ObjectA"
+    "ttributeResourceNetwork\"L\n\007MsgNote\022\014\n\004na"
+    "me\030\001 \002(\t\022\016\n\006number\030\002 \002(\t\022\023\n\013description\030"
+    "\003 \002(\t\022\016\n\006parent\030\004 \002(\r\"\220\002\n\024MsgWeatherAttr"
+    "ibutes\022\023\n\013temperature\030\001 \002(\005\022\022\n\nwind_spee"
+    "d\030\002 \002(\005\022*\n\016wind_direction\030\003 \002(\0132\022.Common"
+    ".MsgHeading\022\023\n\013cloud_floor\030\004 \002(\005\022\025\n\rclou"
+    "d_ceiling\030\005 \002(\005\022\025\n\rcloud_density\030\006 \002(\005\0224"
+    "\n\rprecipitation\030\007 \002(\0162\035.Common.EnumPreci"
+    "pitationType\022*\n\010lighting\030\010 \002(\0162\030.Common."
+    "EnumLightingType*m\n\022EnumDotationFamily\022\014"
+    "\n\010munition\020\000\022\r\n\tcarburant\020\001\022\014\n\010explosif\020"
+    "\002\022\010\n\004mine\020\003\022\013\n\007barbele\020\004\022\t\n\005piece\020\005\022\n\n\006r"
+    "ation\020\006*Q\n\024EnumAmmunitionFamily\022\010\n\004obus\020"
+    "\000\022\017\n\013missile_sol\020\001\022\017\n\013missile_air\020\002\022\r\n\tm"
+    "itraille\020\003*w\n\025EnumPrecipitationType\022\030\n\024p"
+    "as_de_precipitation\020\000\022\021\n\rtempete_sable\020\001"
+    "\022\016\n\nbrouillard\020\002\022\013\n\007crachin\020\003\022\t\n\005pluie\020\004"
+    "\022\t\n\005neige\020\005**\n\022EnumFireEffectType\022\t\n\005smo"
+    "ke\020\000\022\t\n\005light\020\001*(\n\014UnitFireType\022\n\n\006direc"
+    "t\020\000\022\014\n\010indirect\020\001*\245\002\n\020EnumLightingType\022\023"
+    "\n\017jour_sans_nuage\020\000\022\024\n\020jour_peu_nuageux\020"
+    "\001\022\034\n\030jour_moyennement_nuageux\020\002\022\026\n\022jour_"
+    "assez_nuageux\020\003\022\025\n\021jour_tres_nuageux\020\004\022\024"
+    "\n\020nuit_pleine_lune\020\005\022\034\n\030nuit_trois_quart"
+    "_de_lune\020\006\022\022\n\016nuit_demi_lune\020\007\022\026\n\022nuit_q"
+    "uart_de_lune\020\010\022\026\n\022nuit_nouvelle_lune\020\t\022\r"
+    "\n\teclairant\020\n\022\022\n\016global_weather\020\013*\264\003\n En"
+    "umLogMaintenanceHandlingStatus\022\033\n\027deplac"
+    "ement_vers_chaine\020\000\022$\n attente_disponibi"
+    "lite_remorqueur\020\001\022 \n\034remorqueur_deplacem"
+    "ent_aller\020\002\022\031\n\025remorqueur_chargement\020\003\022!"
+    "\n\035remorqueur_deplacement_retour\020\004\022\033\n\027rem"
+    "orqueur_dechargement\020\005\022\034\n\030diagnostique_m"
+    "aintenance\020\006\0220\n,attente_prise_en_charge_"
+    "par_niveau_superieur\020\007\022 \n\034attente_dispon"
+    "ibilite_pieces\020\010\022$\n attente_disponibilit"
+    "e_reparateur\020\t\022\016\n\nreparation\020\n\022\017\n\013retour"
+    "_pion\020\013\022\027\n\023termine_maintenance\020\014*\364\005\n\034Enu"
+    "mLogMedicalHandlingStatus\022*\n&attente_dis"
+    "ponibilite_ambulance_releve\020\000\022&\n\"ambulan"
+    "ce_releve_deplacement_aller\020\001\022\037\n\033ambulan"
+    "ce_releve_chargement\020\002\022/\n+attente_charge"
+    "ment_complet_ambulance_releve\020\003\022\'\n#ambul"
+    "ance_releve_deplacement_retour\020\004\022!\n\035ambu"
+    "lance_releve_dechargement\020\005\0223\n/attente_d"
+    "isponibilite_medecin_pour_diagnostique\020\006"
+    "\022\020\n\014diagnostique\020\007\022\031\n\025recherche_secteur_"
+    "tri\020\010\022*\n&attente_disponibilite_medecin_p"
+    "our_tri\020\t\022\007\n\003tri\020\n\022\032\n\026recherche_secteur_"
+    "soin\020\013\022+\n\'attente_disponibilite_medecin_"
+    "pour_soin\020\014\022\010\n\004soin\020\r\022\023\n\017hospitalisation"
+    "\020\016\022-\n)attente_disponibilite_ambulance_ra"
+    "massage\020\017\022\"\n\036ambulance_ramassage_chargem"
+    "ent\020\020\0222\n.attente_chargement_complet_ambu"
+    "lance_ramassage\020\021\022)\n%ambulance_ramassage"
+    "_deplacement_aller\020\022\022$\n ambulance_ramass"
+    "age_dechargement\020\023\022\013\n\007termine\020\024*_\n\022EnumU"
+    "nitVisibility\022\r\n\tinvisible\020\000\022\014\n\010detected"
+    "\020\001\022\016\n\nrecognized\020\002\022\016\n\nidentified\020\003\022\014\n\010re"
+    "corded\020\004*H\n\023EnumSimulationState\022\013\n\007runni"
+    "ng\020\000\022\n\n\006paused\020\001\022\013\n\007stopped\020\002\022\013\n\007loading"
+    "\020\003*5\n\023EnumDispatcherState\022\r\n\tavailable\020\000"
+    "\022\017\n\013unavailable\020\001*l\n\033EnumMeetingEngageme"
+    "ntStatus\022\020\n\014none_meeting\020\000\022\020\n\014etat_esqui"
+    "ve\020\001\022\r\n\tetat_fixe\020\002\022\032\n\026etat_poursuite_mi"
+    "ssion\020\003*[\n\025EnumOperationalStatus\022\026\n\022detr"
+    "uit_totalement\020\000\022\030\n\024detruit_tactiquement"
+    "\020\001\022\020\n\014operationnel\020\002*+\n\017EnumAutomatMode\022"
+    "\013\n\007embraye\020\000\022\013\n\007debraye\020\001*F\n\021EnumCrowdAt"
+    "titude\022\t\n\005calme\020\000\022\n\n\006agitee\020\001\022\013\n\007excitee"
+    "\020\002\022\r\n\tagressive\020\003*8\n\021EnumUnitTiredness\022\n"
+    "\n\006normal\020\000\022\013\n\007fatigue\020\001\022\n\n\006epuise\020\002*@\n\016E"
+    "numUnitMorale\022\r\n\tfanatique\020\000\022\007\n\003bon\020\001\022\t\n"
+    "\005moyen\020\002\022\013\n\007mauvais\020\003*@\n\022EnumUnitExperie"
+    "nce\022\013\n\007veteran\020\000\022\017\n\013experimente\020\001\022\014\n\010con"
+    "scrit\020\002*8\n\rEnumHumanRank\022\014\n\010officier\020\000\022\020"
+    "\n\014sous_officer\020\001\022\007\n\003mdr\020\002*X\n\rEnumDiploma"
+    "cy\022\021\n\runknown_diplo\020\000\022\020\n\014friend_diplo\020\001\022"
+    "\017\n\013enemy_diplo\020\002\022\021\n\rneutral_diplo\020\003*\210\001\n\016"
+    "EnumHumanWound\022\016\n\nnon_blesse\020\000\022\010\n\004mort\020\001"
+    "\022\024\n\020blesse_urgence_1\020\002\022\024\n\020blesse_urgence"
+    "_2\020\003\022\024\n\020blesse_urgence_3\020\004\022\032\n\026blesse_urg"
+    "ence_extreme\020\005*Y\n\037EnumLogMaintenanceRegi"
+    "meTravail\022\014\n\010regime_1\020\000\022\014\n\010regime_2\020\001\022\014\n"
+    "\010regime_3\020\002\022\014\n\010regime_4\020\003*\204\001\n\017EnumNature"
+    "Level\022\024\n\020none_naturelevel\020\000\022\005\n\001o\020\001\022\006\n\002oo"
+    "\020\002\022\007\n\003ooo\020\003\022\005\n\001i\020\004\022\006\n\002ii\020\005\022\007\n\003iii\020\006\022\005\n\001x"
+    "\020\007\022\006\n\002xx\020\010\022\007\n\003xxx\020\t\022\010\n\004xxxx\020\n\022\t\n\005xxxxx\020\013"
+    "*9\n\021EnumLogisticLevel\022\010\n\004none\020\000\022\007\n\003tc2\020\001"
+    "\022\021\n\rlogistic_base\020\002", 16139);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Common.proto", &protobuf_RegisterTypes);
   AutomatId::default_instance_ = new AutomatId();
@@ -24865,40 +24871,43 @@ void MsgAtlasNature::Swap(MsgAtlasNature* other) {
 
 const ::std::string MsgMissionParameter_Value::_default_acharstr_;
 #ifndef _MSC_VER
-const int MsgMissionParameter_Value::kABoolFieldNumber;
-const int MsgMissionParameter_Value::kARealFieldNumber;
+const int MsgMissionParameter_Value::kBooleanValueFieldNumber;
+const int MsgMissionParameter_Value::kIntValueFieldNumber;
+const int MsgMissionParameter_Value::kHeadingFieldNumber;
 const int MsgMissionParameter_Value::kEnumerationFieldNumber;
-const int MsgMissionParameter_Value::kPathFieldNumber;
-const int MsgMissionParameter_Value::kPathListFieldNumber;
+const int MsgMissionParameter_Value::kDateTimeFieldNumber;
 const int MsgMissionParameter_Value::kPointFieldNumber;
+const int MsgMissionParameter_Value::kAreaFieldNumber;
+const int MsgMissionParameter_Value::kPathFieldNumber;
+const int MsgMissionParameter_Value::kLimitFieldNumber;
+const int MsgMissionParameter_Value::kPhaseLineFieldNumber;
+const int MsgMissionParameter_Value::kAutomatFieldNumber;
+const int MsgMissionParameter_Value::kAgentFieldNumber;
+const int MsgMissionParameter_Value::kAgentKnowledgeFieldNumber;
+const int MsgMissionParameter_Value::kCrowdKnowledgeFieldNumber;
+const int MsgMissionParameter_Value::kObjectKnowledgeFieldNumber;
+const int MsgMissionParameter_Value::kUrbanKnowledgeFieldNumber;
+const int MsgMissionParameter_Value::kPlannedWorkFieldNumber;
+const int MsgMissionParameter_Value::kAtlasNatureFieldNumber;
+const int MsgMissionParameter_Value::kResourceTypeFieldNumber;
+const int MsgMissionParameter_Value::kLogMaintenancePrioritiesFieldNumber;
+const int MsgMissionParameter_Value::kLogMedicalPrioritiesFieldNumber;
+const int MsgMissionParameter_Value::kARealFieldNumber;
+const int MsgMissionParameter_Value::kPathListFieldNumber;
 const int MsgMissionParameter_Value::kPointListFieldNumber;
-const int MsgMissionParameter_Value::kPolygonFieldNumber;
 const int MsgMissionParameter_Value::kPolygonListFieldNumber;
 const int MsgMissionParameter_Value::kLocationFieldNumber;
 const int MsgMissionParameter_Value::kLocationListFieldNumber;
-const int MsgMissionParameter_Value::kHeadingFieldNumber;
-const int MsgMissionParameter_Value::kAtlasNatureFieldNumber;
-const int MsgMissionParameter_Value::kUnitFieldNumber;
 const int MsgMissionParameter_Value::kUnitListFieldNumber;
-const int MsgMissionParameter_Value::kAutomatFieldNumber;
 const int MsgMissionParameter_Value::kAutomatListFieldNumber;
-const int MsgMissionParameter_Value::kUnitKnowledgeFieldNumber;
 const int MsgMissionParameter_Value::kUnitKnowledgeListFieldNumber;
-const int MsgMissionParameter_Value::kObjectKnowledgeFieldNumber;
 const int MsgMissionParameter_Value::kObjectKnowledgeListFieldNumber;
-const int MsgMissionParameter_Value::kCrowdKnowledgeFieldNumber;
-const int MsgMissionParameter_Value::kPlannedWorkFieldNumber;
 const int MsgMissionParameter_Value::kPlannedWorkListFieldNumber;
-const int MsgMissionParameter_Value::kResourceTypeFieldNumber;
 const int MsgMissionParameter_Value::kEquipmentTypeFieldNumber;
 const int MsgMissionParameter_Value::kTirIndirectFieldNumber;
-const int MsgMissionParameter_Value::kDateTimeFieldNumber;
-const int MsgMissionParameter_Value::kLogMaintenancePrioritiesFieldNumber;
-const int MsgMissionParameter_Value::kLogMedicalPrioritiesFieldNumber;
 const int MsgMissionParameter_Value::kACharStrFieldNumber;
 const int MsgMissionParameter_Value::kMissionObjectiveFieldNumber;
 const int MsgMissionParameter_Value::kMissionObjectiveListFieldNumber;
-const int MsgMissionParameter_Value::kLineFieldNumber;
 const int MsgMissionParameter_Value::kLimasOrderFieldNumber;
 const int MsgMissionParameter_Value::kIntelligenceListFieldNumber;
 const int MsgMissionParameter_Value::kUrbanBlockFieldNumber;
@@ -24915,36 +24924,38 @@ MsgMissionParameter_Value::MsgMissionParameter_Value() {
 }
 
 void MsgMissionParameter_Value::InitAsDefaultInstance() {
-  path_ = const_cast< ::Common::MsgPath*>(&::Common::MsgPath::default_instance());
-  pathlist_ = const_cast< ::Common::MsgPathList*>(&::Common::MsgPathList::default_instance());
+  heading_ = const_cast< ::Common::MsgHeading*>(&::Common::MsgHeading::default_instance());
+  datetime_ = const_cast< ::Common::MsgDateTime*>(&::Common::MsgDateTime::default_instance());
   point_ = const_cast< ::Common::MsgPoint*>(&::Common::MsgPoint::default_instance());
+  area_ = const_cast< ::Common::MsgPolygon*>(&::Common::MsgPolygon::default_instance());
+  path_ = const_cast< ::Common::MsgPath*>(&::Common::MsgPath::default_instance());
+  limit_ = const_cast< ::Common::MsgLine*>(&::Common::MsgLine::default_instance());
+  phaseline_ = const_cast< ::Common::MsgLimasOrder*>(&::Common::MsgLimasOrder::default_instance());
+  automat_ = const_cast< ::Common::AutomatId*>(&::Common::AutomatId::default_instance());
+  agent_ = const_cast< ::Common::UnitId*>(&::Common::UnitId::default_instance());
+  agentknowledge_ = const_cast< ::Common::UnitKnowledgeId*>(&::Common::UnitKnowledgeId::default_instance());
+  crowdknowledge_ = const_cast< ::Common::CrowdKnowledgeId*>(&::Common::CrowdKnowledgeId::default_instance());
+  objectknowledge_ = const_cast< ::Common::ObjectKnowledgeId*>(&::Common::ObjectKnowledgeId::default_instance());
+  urbanknowledge_ = const_cast< ::Common::UrbanObjectKnowledgeId*>(&::Common::UrbanObjectKnowledgeId::default_instance());
+  plannedwork_ = const_cast< ::Common::MsgPlannedWork*>(&::Common::MsgPlannedWork::default_instance());
+  atlasnature_ = const_cast< ::Common::MsgAtlasNature*>(&::Common::MsgAtlasNature::default_instance());
+  resourcetype_ = const_cast< ::Common::ResourceType*>(&::Common::ResourceType::default_instance());
+  logmaintenancepriorities_ = const_cast< ::Common::MsgLogMaintenancePriorities*>(&::Common::MsgLogMaintenancePriorities::default_instance());
+  logmedicalpriorities_ = const_cast< ::Common::MsgLogMedicalPriorities*>(&::Common::MsgLogMedicalPriorities::default_instance());
+  pathlist_ = const_cast< ::Common::MsgPathList*>(&::Common::MsgPathList::default_instance());
   pointlist_ = const_cast< ::Common::MsgPointList*>(&::Common::MsgPointList::default_instance());
-  polygon_ = const_cast< ::Common::MsgPolygon*>(&::Common::MsgPolygon::default_instance());
   polygonlist_ = const_cast< ::Common::MsgPolygonList*>(&::Common::MsgPolygonList::default_instance());
   location_ = const_cast< ::Common::MsgLocation*>(&::Common::MsgLocation::default_instance());
   locationlist_ = const_cast< ::Common::MsgLocationList*>(&::Common::MsgLocationList::default_instance());
-  heading_ = const_cast< ::Common::MsgHeading*>(&::Common::MsgHeading::default_instance());
-  atlasnature_ = const_cast< ::Common::MsgAtlasNature*>(&::Common::MsgAtlasNature::default_instance());
-  unit_ = const_cast< ::Common::UnitId*>(&::Common::UnitId::default_instance());
   unitlist_ = const_cast< ::Common::UnitIdList*>(&::Common::UnitIdList::default_instance());
-  automat_ = const_cast< ::Common::AutomatId*>(&::Common::AutomatId::default_instance());
   automatlist_ = const_cast< ::Common::AutomatIdList*>(&::Common::AutomatIdList::default_instance());
-  unitknowledge_ = const_cast< ::Common::UnitKnowledgeId*>(&::Common::UnitKnowledgeId::default_instance());
   unitknowledgelist_ = const_cast< ::Common::UnitKnowledgeIdList*>(&::Common::UnitKnowledgeIdList::default_instance());
-  objectknowledge_ = const_cast< ::Common::ObjectKnowledgeId*>(&::Common::ObjectKnowledgeId::default_instance());
   objectknowledgelist_ = const_cast< ::Common::ObjectKnowledgeIdList*>(&::Common::ObjectKnowledgeIdList::default_instance());
-  crowdknowledge_ = const_cast< ::Common::CrowdKnowledgeId*>(&::Common::CrowdKnowledgeId::default_instance());
-  plannedwork_ = const_cast< ::Common::MsgPlannedWork*>(&::Common::MsgPlannedWork::default_instance());
   plannedworklist_ = const_cast< ::Common::MsgPlannedWorkList*>(&::Common::MsgPlannedWorkList::default_instance());
-  resourcetype_ = const_cast< ::Common::ResourceType*>(&::Common::ResourceType::default_instance());
   equipmenttype_ = const_cast< ::Common::EquipmentType*>(&::Common::EquipmentType::default_instance());
   tirindirect_ = const_cast< ::Common::FireId*>(&::Common::FireId::default_instance());
-  datetime_ = const_cast< ::Common::MsgDateTime*>(&::Common::MsgDateTime::default_instance());
-  logmaintenancepriorities_ = const_cast< ::Common::MsgLogMaintenancePriorities*>(&::Common::MsgLogMaintenancePriorities::default_instance());
-  logmedicalpriorities_ = const_cast< ::Common::MsgLogMedicalPriorities*>(&::Common::MsgLogMedicalPriorities::default_instance());
   missionobjective_ = const_cast< ::Common::MsgMissionObjective*>(&::Common::MsgMissionObjective::default_instance());
   missionobjectivelist_ = const_cast< ::Common::MsgMissionObjectiveList*>(&::Common::MsgMissionObjectiveList::default_instance());
-  line_ = const_cast< ::Common::MsgLine*>(&::Common::MsgLine::default_instance());
   limasorder_ = const_cast< ::Common::MsgLimasOrder*>(&::Common::MsgLimasOrder::default_instance());
   intelligencelist_ = const_cast< ::Common::MsgIntelligenceList*>(&::Common::MsgIntelligenceList::default_instance());
   urbanblock_ = const_cast< ::Common::UrbanObjectId*>(&::Common::UrbanObjectId::default_instance());
@@ -24960,40 +24971,43 @@ MsgMissionParameter_Value::MsgMissionParameter_Value(const MsgMissionParameter_V
 
 void MsgMissionParameter_Value::SharedCtor() {
   _cached_size_ = 0;
-  abool_ = false;
-  areal_ = 0;
+  booleanvalue_ = false;
+  intvalue_ = 0;
+  heading_ = NULL;
   enumeration_ = 0;
-  path_ = NULL;
-  pathlist_ = NULL;
+  datetime_ = NULL;
   point_ = NULL;
+  area_ = NULL;
+  path_ = NULL;
+  limit_ = NULL;
+  phaseline_ = NULL;
+  automat_ = NULL;
+  agent_ = NULL;
+  agentknowledge_ = NULL;
+  crowdknowledge_ = NULL;
+  objectknowledge_ = NULL;
+  urbanknowledge_ = NULL;
+  plannedwork_ = NULL;
+  atlasnature_ = NULL;
+  resourcetype_ = NULL;
+  logmaintenancepriorities_ = NULL;
+  logmedicalpriorities_ = NULL;
+  areal_ = 0;
+  pathlist_ = NULL;
   pointlist_ = NULL;
-  polygon_ = NULL;
   polygonlist_ = NULL;
   location_ = NULL;
   locationlist_ = NULL;
-  heading_ = NULL;
-  atlasnature_ = NULL;
-  unit_ = NULL;
   unitlist_ = NULL;
-  automat_ = NULL;
   automatlist_ = NULL;
-  unitknowledge_ = NULL;
   unitknowledgelist_ = NULL;
-  objectknowledge_ = NULL;
   objectknowledgelist_ = NULL;
-  crowdknowledge_ = NULL;
-  plannedwork_ = NULL;
   plannedworklist_ = NULL;
-  resourcetype_ = NULL;
   equipmenttype_ = NULL;
   tirindirect_ = NULL;
-  datetime_ = NULL;
-  logmaintenancepriorities_ = NULL;
-  logmedicalpriorities_ = NULL;
   acharstr_ = const_cast< ::std::string*>(&_default_acharstr_);
   missionobjective_ = NULL;
   missionobjectivelist_ = NULL;
-  line_ = NULL;
   limasorder_ = NULL;
   intelligencelist_ = NULL;
   urbanblock_ = NULL;
@@ -25014,36 +25028,38 @@ void MsgMissionParameter_Value::SharedDtor() {
     delete acharstr_;
   }
   if (this != default_instance_) {
-    delete path_;
-    delete pathlist_;
+    delete heading_;
+    delete datetime_;
     delete point_;
+    delete area_;
+    delete path_;
+    delete limit_;
+    delete phaseline_;
+    delete automat_;
+    delete agent_;
+    delete agentknowledge_;
+    delete crowdknowledge_;
+    delete objectknowledge_;
+    delete urbanknowledge_;
+    delete plannedwork_;
+    delete atlasnature_;
+    delete resourcetype_;
+    delete logmaintenancepriorities_;
+    delete logmedicalpriorities_;
+    delete pathlist_;
     delete pointlist_;
-    delete polygon_;
     delete polygonlist_;
     delete location_;
     delete locationlist_;
-    delete heading_;
-    delete atlasnature_;
-    delete unit_;
     delete unitlist_;
-    delete automat_;
     delete automatlist_;
-    delete unitknowledge_;
     delete unitknowledgelist_;
-    delete objectknowledge_;
     delete objectknowledgelist_;
-    delete crowdknowledge_;
-    delete plannedwork_;
     delete plannedworklist_;
-    delete resourcetype_;
     delete equipmenttype_;
     delete tirindirect_;
-    delete datetime_;
-    delete logmaintenancepriorities_;
-    delete logmedicalpriorities_;
     delete missionobjective_;
     delete missionobjectivelist_;
-    delete line_;
     delete limasorder_;
     delete intelligencelist_;
     delete urbanblock_;
@@ -25070,132 +25086,139 @@ MsgMissionParameter_Value* MsgMissionParameter_Value::New() const {
 
 void MsgMissionParameter_Value::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    abool_ = false;
-    areal_ = 0;
-    enumeration_ = 0;
-    if (_has_bit(3)) {
-      if (path_ != NULL) path_->::Common::MsgPath::Clear();
+    booleanvalue_ = false;
+    intvalue_ = 0;
+    if (_has_bit(2)) {
+      if (heading_ != NULL) heading_->::Common::MsgHeading::Clear();
     }
+    enumeration_ = 0;
     if (_has_bit(4)) {
-      if (pathlist_ != NULL) pathlist_->::Common::MsgPathList::Clear();
+      if (datetime_ != NULL) datetime_->::Common::MsgDateTime::Clear();
     }
     if (_has_bit(5)) {
       if (point_ != NULL) point_->::Common::MsgPoint::Clear();
     }
     if (_has_bit(6)) {
-      if (pointlist_ != NULL) pointlist_->::Common::MsgPointList::Clear();
+      if (area_ != NULL) area_->::Common::MsgPolygon::Clear();
     }
     if (_has_bit(7)) {
-      if (polygon_ != NULL) polygon_->::Common::MsgPolygon::Clear();
+      if (path_ != NULL) path_->::Common::MsgPath::Clear();
     }
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (_has_bit(8)) {
-      if (polygonlist_ != NULL) polygonlist_->::Common::MsgPolygonList::Clear();
+      if (limit_ != NULL) limit_->::Common::MsgLine::Clear();
     }
     if (_has_bit(9)) {
-      if (location_ != NULL) location_->::Common::MsgLocation::Clear();
+      if (phaseline_ != NULL) phaseline_->::Common::MsgLimasOrder::Clear();
     }
     if (_has_bit(10)) {
-      if (locationlist_ != NULL) locationlist_->::Common::MsgLocationList::Clear();
+      if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
     }
     if (_has_bit(11)) {
-      if (heading_ != NULL) heading_->::Common::MsgHeading::Clear();
+      if (agent_ != NULL) agent_->::Common::UnitId::Clear();
     }
     if (_has_bit(12)) {
-      if (atlasnature_ != NULL) atlasnature_->::Common::MsgAtlasNature::Clear();
+      if (agentknowledge_ != NULL) agentknowledge_->::Common::UnitKnowledgeId::Clear();
     }
     if (_has_bit(13)) {
-      if (unit_ != NULL) unit_->::Common::UnitId::Clear();
+      if (crowdknowledge_ != NULL) crowdknowledge_->::Common::CrowdKnowledgeId::Clear();
     }
     if (_has_bit(14)) {
-      if (unitlist_ != NULL) unitlist_->::Common::UnitIdList::Clear();
+      if (objectknowledge_ != NULL) objectknowledge_->::Common::ObjectKnowledgeId::Clear();
     }
     if (_has_bit(15)) {
-      if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
+      if (urbanknowledge_ != NULL) urbanknowledge_->::Common::UrbanObjectKnowledgeId::Clear();
     }
   }
   if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (_has_bit(16)) {
-      if (automatlist_ != NULL) automatlist_->::Common::AutomatIdList::Clear();
-    }
-    if (_has_bit(17)) {
-      if (unitknowledge_ != NULL) unitknowledge_->::Common::UnitKnowledgeId::Clear();
-    }
-    if (_has_bit(18)) {
-      if (unitknowledgelist_ != NULL) unitknowledgelist_->::Common::UnitKnowledgeIdList::Clear();
-    }
-    if (_has_bit(19)) {
-      if (objectknowledge_ != NULL) objectknowledge_->::Common::ObjectKnowledgeId::Clear();
-    }
-    if (_has_bit(20)) {
-      if (objectknowledgelist_ != NULL) objectknowledgelist_->::Common::ObjectKnowledgeIdList::Clear();
-    }
-    if (_has_bit(21)) {
-      if (crowdknowledge_ != NULL) crowdknowledge_->::Common::CrowdKnowledgeId::Clear();
-    }
-    if (_has_bit(22)) {
       if (plannedwork_ != NULL) plannedwork_->::Common::MsgPlannedWork::Clear();
     }
+    if (_has_bit(17)) {
+      if (atlasnature_ != NULL) atlasnature_->::Common::MsgAtlasNature::Clear();
+    }
+    if (_has_bit(18)) {
+      if (resourcetype_ != NULL) resourcetype_->::Common::ResourceType::Clear();
+    }
+    if (_has_bit(19)) {
+      if (logmaintenancepriorities_ != NULL) logmaintenancepriorities_->::Common::MsgLogMaintenancePriorities::Clear();
+    }
+    if (_has_bit(20)) {
+      if (logmedicalpriorities_ != NULL) logmedicalpriorities_->::Common::MsgLogMedicalPriorities::Clear();
+    }
+    areal_ = 0;
+    if (_has_bit(22)) {
+      if (pathlist_ != NULL) pathlist_->::Common::MsgPathList::Clear();
+    }
     if (_has_bit(23)) {
-      if (plannedworklist_ != NULL) plannedworklist_->::Common::MsgPlannedWorkList::Clear();
+      if (pointlist_ != NULL) pointlist_->::Common::MsgPointList::Clear();
     }
   }
   if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
     if (_has_bit(24)) {
-      if (resourcetype_ != NULL) resourcetype_->::Common::ResourceType::Clear();
+      if (polygonlist_ != NULL) polygonlist_->::Common::MsgPolygonList::Clear();
     }
     if (_has_bit(25)) {
-      if (equipmenttype_ != NULL) equipmenttype_->::Common::EquipmentType::Clear();
+      if (location_ != NULL) location_->::Common::MsgLocation::Clear();
     }
     if (_has_bit(26)) {
-      if (tirindirect_ != NULL) tirindirect_->::Common::FireId::Clear();
+      if (locationlist_ != NULL) locationlist_->::Common::MsgLocationList::Clear();
     }
     if (_has_bit(27)) {
-      if (datetime_ != NULL) datetime_->::Common::MsgDateTime::Clear();
+      if (unitlist_ != NULL) unitlist_->::Common::UnitIdList::Clear();
     }
     if (_has_bit(28)) {
-      if (logmaintenancepriorities_ != NULL) logmaintenancepriorities_->::Common::MsgLogMaintenancePriorities::Clear();
+      if (automatlist_ != NULL) automatlist_->::Common::AutomatIdList::Clear();
     }
     if (_has_bit(29)) {
-      if (logmedicalpriorities_ != NULL) logmedicalpriorities_->::Common::MsgLogMedicalPriorities::Clear();
+      if (unitknowledgelist_ != NULL) unitknowledgelist_->::Common::UnitKnowledgeIdList::Clear();
     }
     if (_has_bit(30)) {
-      if (acharstr_ != &_default_acharstr_) {
-        acharstr_->clear();
-      }
+      if (objectknowledgelist_ != NULL) objectknowledgelist_->::Common::ObjectKnowledgeIdList::Clear();
     }
     if (_has_bit(31)) {
-      if (missionobjective_ != NULL) missionobjective_->::Common::MsgMissionObjective::Clear();
+      if (plannedworklist_ != NULL) plannedworklist_->::Common::MsgPlannedWorkList::Clear();
     }
   }
   if (_has_bits_[32 / 32] & (0xffu << (32 % 32))) {
     if (_has_bit(32)) {
-      if (missionobjectivelist_ != NULL) missionobjectivelist_->::Common::MsgMissionObjectiveList::Clear();
+      if (equipmenttype_ != NULL) equipmenttype_->::Common::EquipmentType::Clear();
     }
     if (_has_bit(33)) {
-      if (line_ != NULL) line_->::Common::MsgLine::Clear();
+      if (tirindirect_ != NULL) tirindirect_->::Common::FireId::Clear();
     }
     if (_has_bit(34)) {
-      if (limasorder_ != NULL) limasorder_->::Common::MsgLimasOrder::Clear();
+      if (acharstr_ != &_default_acharstr_) {
+        acharstr_->clear();
+      }
     }
     if (_has_bit(35)) {
-      if (intelligencelist_ != NULL) intelligencelist_->::Common::MsgIntelligenceList::Clear();
+      if (missionobjective_ != NULL) missionobjective_->::Common::MsgMissionObjective::Clear();
     }
     if (_has_bit(36)) {
-      if (urbanblock_ != NULL) urbanblock_->::Common::UrbanObjectId::Clear();
+      if (missionobjectivelist_ != NULL) missionobjectivelist_->::Common::MsgMissionObjectiveList::Clear();
     }
     if (_has_bit(37)) {
-      if (party_ != NULL) party_->::Common::PartyId::Clear();
+      if (limasorder_ != NULL) limasorder_->::Common::MsgLimasOrder::Clear();
     }
     if (_has_bit(38)) {
+      if (intelligencelist_ != NULL) intelligencelist_->::Common::MsgIntelligenceList::Clear();
+    }
+    if (_has_bit(39)) {
+      if (urbanblock_ != NULL) urbanblock_->::Common::UrbanObjectId::Clear();
+    }
+  }
+  if (_has_bits_[40 / 32] & (0xffu << (40 % 32))) {
+    if (_has_bit(40)) {
+      if (party_ != NULL) party_->::Common::PartyId::Clear();
+    }
+    if (_has_bit(41)) {
       if (formation_ != NULL) formation_->::Common::FormationId::Clear();
     }
     identifier_ = 0u;
-  }
-  if (_has_bits_[40 / 32] & (0xffu << (40 % 32))) {
     quantity_ = 0;
-    if (_has_bit(41)) {
+    if (_has_bit(44)) {
       if (knowledgegroup_ != NULL) knowledgegroup_->::Common::KnowledgeGroupId::Clear();
     }
   }
@@ -25210,35 +25233,48 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional bool aBool = 1;
+      // optional bool booleanValue = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
         }
         DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
-              input, &abool_));
+              input, &booleanvalue_));
         _set_bit(0);
-        if (input->ExpectTag(21)) goto parse_aReal;
+        if (input->ExpectTag(16)) goto parse_intValue;
         break;
       }
       
-      // optional float aReal = 2;
+      // optional int32 intValue = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
         }
-       parse_aReal:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadFloat(
-              input, &areal_));
+       parse_intValue:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+              input, &intvalue_));
         _set_bit(1);
-        if (input->ExpectTag(24)) goto parse_enumeration;
+        if (input->ExpectTag(26)) goto parse_heading;
         break;
       }
       
-      // optional int32 enumeration = 3;
+      // optional .Common.MsgHeading heading = 3;
       case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_heading:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_heading()));
+        if (input->ExpectTag(32)) goto parse_enumeration;
+        break;
+      }
+      
+      // optional int32 enumeration = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
@@ -25246,33 +25282,20 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_enumeration:
         DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
               input, &enumeration_));
-        _set_bit(2);
-        if (input->ExpectTag(34)) goto parse_path;
+        _set_bit(3);
+        if (input->ExpectTag(42)) goto parse_dateTime;
         break;
       }
       
-      // optional .Common.MsgPath path = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_path:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_path()));
-        if (input->ExpectTag(42)) goto parse_pathList;
-        break;
-      }
-      
-      // optional .Common.MsgPathList pathList = 5;
+      // optional .Common.MsgDateTime dateTime = 5;
       case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_pathList:
+       parse_dateTime:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_pathlist()));
+             input, mutable_datetime()));
         if (input->ExpectTag(50)) goto parse_point;
         break;
       }
@@ -25286,129 +25309,64 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_point:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_point()));
-        if (input->ExpectTag(58)) goto parse_pointList;
+        if (input->ExpectTag(58)) goto parse_area;
         break;
       }
       
-      // optional .Common.MsgPointList pointList = 7;
+      // optional .Common.MsgPolygon area = 7;
       case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_pointList:
+       parse_area:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_pointlist()));
-        if (input->ExpectTag(66)) goto parse_polygon;
+             input, mutable_area()));
+        if (input->ExpectTag(66)) goto parse_path;
         break;
       }
       
-      // optional .Common.MsgPolygon polygon = 8;
+      // optional .Common.MsgPath path = 8;
       case 8: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_polygon:
+       parse_path:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_polygon()));
-        if (input->ExpectTag(74)) goto parse_polygonList;
+             input, mutable_path()));
+        if (input->ExpectTag(74)) goto parse_limit;
         break;
       }
       
-      // optional .Common.MsgPolygonList polygonList = 9;
+      // optional .Common.MsgLine limit = 9;
       case 9: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_polygonList:
+       parse_limit:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_polygonlist()));
-        if (input->ExpectTag(82)) goto parse_location;
+             input, mutable_limit()));
+        if (input->ExpectTag(82)) goto parse_phaseLine;
         break;
       }
       
-      // optional .Common.MsgLocation location = 10;
+      // optional .Common.MsgLimasOrder phaseLine = 10;
       case 10: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_location:
+       parse_phaseLine:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_location()));
-        if (input->ExpectTag(90)) goto parse_locationList;
+             input, mutable_phaseline()));
+        if (input->ExpectTag(90)) goto parse_automat;
         break;
       }
       
-      // optional .Common.MsgLocationList locationList = 11;
+      // optional .Common.AutomatId automat = 11;
       case 11: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_locationList:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_locationlist()));
-        if (input->ExpectTag(98)) goto parse_heading;
-        break;
-      }
-      
-      // optional .Common.MsgHeading heading = 12;
-      case 12: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_heading:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_heading()));
-        if (input->ExpectTag(106)) goto parse_atlasNature;
-        break;
-      }
-      
-      // optional .Common.MsgAtlasNature atlasNature = 13;
-      case 13: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_atlasNature:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_atlasnature()));
-        if (input->ExpectTag(114)) goto parse_unit;
-        break;
-      }
-      
-      // optional .Common.UnitId unit = 14;
-      case 14: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_unit:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_unit()));
-        if (input->ExpectTag(122)) goto parse_unitList;
-        break;
-      }
-      
-      // optional .Common.UnitIdList unitList = 15;
-      case 15: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_unitList:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_unitlist()));
-        if (input->ExpectTag(130)) goto parse_automat;
-        break;
-      }
-      
-      // optional .Common.AutomatId automat = 16;
-      case 16: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25416,77 +25374,38 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_automat:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_automat()));
-        if (input->ExpectTag(138)) goto parse_automatList;
+        if (input->ExpectTag(98)) goto parse_agent;
         break;
       }
       
-      // optional .Common.AutomatIdList automatList = 17;
-      case 17: {
+      // optional .Common.UnitId agent = 12;
+      case 12: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_automatList:
+       parse_agent:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_automatlist()));
-        if (input->ExpectTag(146)) goto parse_unitKnowledge;
+             input, mutable_agent()));
+        if (input->ExpectTag(106)) goto parse_agentKnowledge;
         break;
       }
       
-      // optional .Common.UnitKnowledgeId unitKnowledge = 18;
-      case 18: {
+      // optional .Common.UnitKnowledgeId agentKnowledge = 13;
+      case 13: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_unitKnowledge:
+       parse_agentKnowledge:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_unitknowledge()));
-        if (input->ExpectTag(154)) goto parse_unitKnowledgeList;
+             input, mutable_agentknowledge()));
+        if (input->ExpectTag(114)) goto parse_crowdKnowledge;
         break;
       }
       
-      // optional .Common.UnitKnowledgeIdList unitKnowledgeList = 19;
-      case 19: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_unitKnowledgeList:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_unitknowledgelist()));
-        if (input->ExpectTag(162)) goto parse_objectKnowledge;
-        break;
-      }
-      
-      // optional .Common.ObjectKnowledgeId objectKnowledge = 20;
-      case 20: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_objectKnowledge:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_objectknowledge()));
-        if (input->ExpectTag(170)) goto parse_objectKnowledgeList;
-        break;
-      }
-      
-      // optional .Common.ObjectKnowledgeIdList objectKnowledgeList = 21;
-      case 21: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_objectKnowledgeList:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_objectknowledgelist()));
-        if (input->ExpectTag(178)) goto parse_crowdKnowledge;
-        break;
-      }
-      
-      // optional .Common.CrowdKnowledgeId crowdKnowledge = 22;
-      case 22: {
+      // optional .Common.CrowdKnowledgeId crowdKnowledge = 14;
+      case 14: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25494,12 +25413,38 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_crowdKnowledge:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_crowdknowledge()));
-        if (input->ExpectTag(186)) goto parse_plannedWork;
+        if (input->ExpectTag(122)) goto parse_objectKnowledge;
         break;
       }
       
-      // optional .Common.MsgPlannedWork plannedWork = 23;
-      case 23: {
+      // optional .Common.ObjectKnowledgeId objectKnowledge = 15;
+      case 15: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_objectKnowledge:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_objectknowledge()));
+        if (input->ExpectTag(130)) goto parse_urbanKnowledge;
+        break;
+      }
+      
+      // optional .Common.UrbanObjectKnowledgeId urbanKnowledge = 16;
+      case 16: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_urbanKnowledge:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_urbanknowledge()));
+        if (input->ExpectTag(138)) goto parse_plannedWork;
+        break;
+      }
+      
+      // optional .Common.MsgPlannedWork plannedWork = 17;
+      case 17: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25507,25 +25452,25 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_plannedWork:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_plannedwork()));
-        if (input->ExpectTag(194)) goto parse_plannedWorkList;
+        if (input->ExpectTag(146)) goto parse_atlasNature;
         break;
       }
       
-      // optional .Common.MsgPlannedWorkList plannedWorkList = 24;
-      case 24: {
+      // optional .Common.MsgAtlasNature atlasNature = 18;
+      case 18: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_plannedWorkList:
+       parse_atlasNature:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_plannedworklist()));
-        if (input->ExpectTag(202)) goto parse_resourceType;
+             input, mutable_atlasnature()));
+        if (input->ExpectTag(154)) goto parse_resourceType;
         break;
       }
       
-      // optional .Common.ResourceType resourceType = 25;
-      case 25: {
+      // optional .Common.ResourceType resourceType = 19;
+      case 19: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25533,51 +25478,12 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_resourceType:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_resourcetype()));
-        if (input->ExpectTag(210)) goto parse_equipmentType;
+        if (input->ExpectTag(162)) goto parse_logMaintenancePriorities;
         break;
       }
       
-      // optional .Common.EquipmentType equipmentType = 26;
-      case 26: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_equipmentType:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_equipmenttype()));
-        if (input->ExpectTag(218)) goto parse_tirIndirect;
-        break;
-      }
-      
-      // optional .Common.FireId tirIndirect = 27;
-      case 27: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_tirIndirect:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_tirindirect()));
-        if (input->ExpectTag(226)) goto parse_dateTime;
-        break;
-      }
-      
-      // optional .Common.MsgDateTime dateTime = 28;
-      case 28: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_dateTime:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_datetime()));
-        if (input->ExpectTag(234)) goto parse_logMaintenancePriorities;
-        break;
-      }
-      
-      // optional .Common.MsgLogMaintenancePriorities logMaintenancePriorities = 29;
-      case 29: {
+      // optional .Common.MsgLogMaintenancePriorities logMaintenancePriorities = 20;
+      case 20: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25585,12 +25491,12 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_logMaintenancePriorities:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_logmaintenancepriorities()));
-        if (input->ExpectTag(242)) goto parse_logMedicalPriorities;
+        if (input->ExpectTag(170)) goto parse_logMedicalPriorities;
         break;
       }
       
-      // optional .Common.MsgLogMedicalPriorities logMedicalPriorities = 30;
-      case 30: {
+      // optional .Common.MsgLogMedicalPriorities logMedicalPriorities = 21;
+      case 21: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25598,12 +25504,182 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_logMedicalPriorities:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_logmedicalpriorities()));
-        if (input->ExpectTag(250)) goto parse_aCharStr;
+        if (input->ExpectTag(181)) goto parse_aReal;
         break;
       }
       
-      // optional string aCharStr = 31;
+      // optional float aReal = 22;
+      case 22: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+          goto handle_uninterpreted;
+        }
+       parse_aReal:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadFloat(
+              input, &areal_));
+        _set_bit(21);
+        if (input->ExpectTag(186)) goto parse_pathList;
+        break;
+      }
+      
+      // optional .Common.MsgPathList pathList = 23;
+      case 23: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_pathList:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_pathlist()));
+        if (input->ExpectTag(194)) goto parse_pointList;
+        break;
+      }
+      
+      // optional .Common.MsgPointList pointList = 24;
+      case 24: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_pointList:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_pointlist()));
+        if (input->ExpectTag(202)) goto parse_polygonList;
+        break;
+      }
+      
+      // optional .Common.MsgPolygonList polygonList = 25;
+      case 25: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_polygonList:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_polygonlist()));
+        if (input->ExpectTag(210)) goto parse_location;
+        break;
+      }
+      
+      // optional .Common.MsgLocation location = 26;
+      case 26: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_location:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_location()));
+        if (input->ExpectTag(218)) goto parse_locationList;
+        break;
+      }
+      
+      // optional .Common.MsgLocationList locationList = 27;
+      case 27: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_locationList:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_locationlist()));
+        if (input->ExpectTag(226)) goto parse_unitList;
+        break;
+      }
+      
+      // optional .Common.UnitIdList unitList = 28;
+      case 28: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_unitList:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_unitlist()));
+        if (input->ExpectTag(234)) goto parse_automatList;
+        break;
+      }
+      
+      // optional .Common.AutomatIdList automatList = 29;
+      case 29: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_automatList:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_automatlist()));
+        if (input->ExpectTag(242)) goto parse_unitKnowledgeList;
+        break;
+      }
+      
+      // optional .Common.UnitKnowledgeIdList unitKnowledgeList = 30;
+      case 30: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_unitKnowledgeList:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_unitknowledgelist()));
+        if (input->ExpectTag(250)) goto parse_objectKnowledgeList;
+        break;
+      }
+      
+      // optional .Common.ObjectKnowledgeIdList objectKnowledgeList = 31;
       case 31: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_objectKnowledgeList:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_objectknowledgelist()));
+        if (input->ExpectTag(258)) goto parse_plannedWorkList;
+        break;
+      }
+      
+      // optional .Common.MsgPlannedWorkList plannedWorkList = 32;
+      case 32: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_plannedWorkList:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_plannedworklist()));
+        if (input->ExpectTag(266)) goto parse_equipmentType;
+        break;
+      }
+      
+      // optional .Common.EquipmentType equipmentType = 33;
+      case 33: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_equipmentType:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_equipmenttype()));
+        if (input->ExpectTag(274)) goto parse_tirIndirect;
+        break;
+      }
+      
+      // optional .Common.FireId tirIndirect = 34;
+      case 34: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_tirIndirect:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_tirindirect()));
+        if (input->ExpectTag(282)) goto parse_aCharStr;
+        break;
+      }
+      
+      // optional string aCharStr = 35;
+      case 35: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25614,12 +25690,12 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
         ::google::protobuf::internal::WireFormat::VerifyUTF8String(
           this->acharstr().data(), this->acharstr().length(),
           ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectTag(258)) goto parse_missionObjective;
+        if (input->ExpectTag(290)) goto parse_missionObjective;
         break;
       }
       
-      // optional .Common.MsgMissionObjective missionObjective = 32;
-      case 32: {
+      // optional .Common.MsgMissionObjective missionObjective = 36;
+      case 36: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25627,12 +25703,12 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_missionObjective:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_missionobjective()));
-        if (input->ExpectTag(266)) goto parse_missionObjectiveList;
+        if (input->ExpectTag(298)) goto parse_missionObjectiveList;
         break;
       }
       
-      // optional .Common.MsgMissionObjectiveList missionObjectiveList = 33;
-      case 33: {
+      // optional .Common.MsgMissionObjectiveList missionObjectiveList = 37;
+      case 37: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25640,25 +25716,12 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_missionObjectiveList:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_missionobjectivelist()));
-        if (input->ExpectTag(274)) goto parse_line;
+        if (input->ExpectTag(306)) goto parse_limasOrder;
         break;
       }
       
-      // optional .Common.MsgLine line = 34;
-      case 34: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_line:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_line()));
-        if (input->ExpectTag(282)) goto parse_limasOrder;
-        break;
-      }
-      
-      // optional .Common.MsgLimasOrder limasOrder = 35;
-      case 35: {
+      // optional .Common.MsgLimasOrder limasOrder = 38;
+      case 38: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25666,12 +25729,12 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_limasOrder:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_limasorder()));
-        if (input->ExpectTag(290)) goto parse_intelligenceList;
+        if (input->ExpectTag(314)) goto parse_intelligenceList;
         break;
       }
       
-      // optional .Common.MsgIntelligenceList intelligenceList = 36;
-      case 36: {
+      // optional .Common.MsgIntelligenceList intelligenceList = 39;
+      case 39: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25679,12 +25742,12 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_intelligenceList:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_intelligencelist()));
-        if (input->ExpectTag(298)) goto parse_urbanBlock;
+        if (input->ExpectTag(322)) goto parse_urbanBlock;
         break;
       }
       
-      // optional .Common.UrbanObjectId urbanBlock = 37;
-      case 37: {
+      // optional .Common.UrbanObjectId urbanBlock = 40;
+      case 40: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25692,12 +25755,12 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_urbanBlock:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_urbanblock()));
-        if (input->ExpectTag(306)) goto parse_party;
+        if (input->ExpectTag(330)) goto parse_party;
         break;
       }
       
-      // optional .Common.PartyId party = 38;
-      case 38: {
+      // optional .Common.PartyId party = 41;
+      case 41: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25705,12 +25768,12 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_party:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_party()));
-        if (input->ExpectTag(314)) goto parse_formation;
+        if (input->ExpectTag(338)) goto parse_formation;
         break;
       }
       
-      // optional .Common.FormationId formation = 39;
-      case 39: {
+      // optional .Common.FormationId formation = 42;
+      case 42: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25718,12 +25781,12 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_formation:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_formation()));
-        if (input->ExpectTag(320)) goto parse_identifier;
+        if (input->ExpectTag(344)) goto parse_identifier;
         break;
       }
       
-      // optional uint32 identifier = 40;
-      case 40: {
+      // optional uint32 identifier = 43;
+      case 43: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
@@ -25731,13 +25794,13 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_identifier:
         DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
               input, &identifier_));
-        _set_bit(39);
-        if (input->ExpectTag(328)) goto parse_quantity;
+        _set_bit(42);
+        if (input->ExpectTag(352)) goto parse_quantity;
         break;
       }
       
-      // optional int32 quantity = 41;
-      case 41: {
+      // optional int32 quantity = 44;
+      case 44: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
@@ -25745,13 +25808,13 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_quantity:
         DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
               input, &quantity_));
-        _set_bit(40);
-        if (input->ExpectTag(338)) goto parse_knowledgeGroup;
+        _set_bit(43);
+        if (input->ExpectTag(362)) goto parse_knowledgeGroup;
         break;
       }
       
-      // optional .Common.KnowledgeGroupId knowledgeGroup = 42;
-      case 42: {
+      // optional .Common.KnowledgeGroupId knowledgeGroup = 45;
+      case 45: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25759,12 +25822,12 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_knowledgeGroup:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_knowledgegroup()));
-        if (input->ExpectTag(346)) goto parse_list;
+        if (input->ExpectTag(370)) goto parse_list;
         break;
       }
       
-      // repeated .Common.MsgMissionParameter.Value list = 43;
-      case 43: {
+      // repeated .Common.MsgMissionParameter.Value list = 46;
+      case 46: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -25772,7 +25835,7 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_list:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
               input, add_list()));
-        if (input->ExpectTag(346)) goto parse_list;
+        if (input->ExpectTag(370)) goto parse_list;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -25801,31 +25864,31 @@ void MsgMissionParameter_Value::SerializeWithCachedSizes(
     return;
   }
   
-  // optional bool aBool = 1;
+  // optional bool booleanValue = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->abool(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->booleanvalue(), output);
   }
   
-  // optional float aReal = 2;
+  // optional int32 intValue = 2;
   if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(2, this->areal(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->intvalue(), output);
   }
   
-  // optional int32 enumeration = 3;
+  // optional .Common.MsgHeading heading = 3;
   if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->enumeration(), output);
-  }
-  
-  // optional .Common.MsgPath path = 4;
-  if (_has_bit(3)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      4, this->path(), output);
+      3, this->heading(), output);
   }
   
-  // optional .Common.MsgPathList pathList = 5;
+  // optional int32 enumeration = 4;
+  if (_has_bit(3)) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->enumeration(), output);
+  }
+  
+  // optional .Common.MsgDateTime dateTime = 5;
   if (_has_bit(4)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      5, this->pathlist(), output);
+      5, this->datetime(), output);
   }
   
   // optional .Common.MsgPoint point = 6;
@@ -25834,227 +25897,244 @@ void MsgMissionParameter_Value::SerializeWithCachedSizes(
       6, this->point(), output);
   }
   
-  // optional .Common.MsgPointList pointList = 7;
+  // optional .Common.MsgPolygon area = 7;
   if (_has_bit(6)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      7, this->pointlist(), output);
+      7, this->area(), output);
   }
   
-  // optional .Common.MsgPolygon polygon = 8;
+  // optional .Common.MsgPath path = 8;
   if (_has_bit(7)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      8, this->polygon(), output);
+      8, this->path(), output);
   }
   
-  // optional .Common.MsgPolygonList polygonList = 9;
+  // optional .Common.MsgLine limit = 9;
   if (_has_bit(8)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      9, this->polygonlist(), output);
+      9, this->limit(), output);
   }
   
-  // optional .Common.MsgLocation location = 10;
+  // optional .Common.MsgLimasOrder phaseLine = 10;
   if (_has_bit(9)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      10, this->location(), output);
+      10, this->phaseline(), output);
   }
   
-  // optional .Common.MsgLocationList locationList = 11;
+  // optional .Common.AutomatId automat = 11;
   if (_has_bit(10)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      11, this->locationlist(), output);
+      11, this->automat(), output);
   }
   
-  // optional .Common.MsgHeading heading = 12;
+  // optional .Common.UnitId agent = 12;
   if (_has_bit(11)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      12, this->heading(), output);
+      12, this->agent(), output);
   }
   
-  // optional .Common.MsgAtlasNature atlasNature = 13;
+  // optional .Common.UnitKnowledgeId agentKnowledge = 13;
   if (_has_bit(12)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      13, this->atlasnature(), output);
+      13, this->agentknowledge(), output);
   }
   
-  // optional .Common.UnitId unit = 14;
+  // optional .Common.CrowdKnowledgeId crowdKnowledge = 14;
   if (_has_bit(13)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      14, this->unit(), output);
+      14, this->crowdknowledge(), output);
   }
   
-  // optional .Common.UnitIdList unitList = 15;
+  // optional .Common.ObjectKnowledgeId objectKnowledge = 15;
   if (_has_bit(14)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      15, this->unitlist(), output);
+      15, this->objectknowledge(), output);
   }
   
-  // optional .Common.AutomatId automat = 16;
+  // optional .Common.UrbanObjectKnowledgeId urbanKnowledge = 16;
   if (_has_bit(15)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      16, this->automat(), output);
+      16, this->urbanknowledge(), output);
   }
   
-  // optional .Common.AutomatIdList automatList = 17;
+  // optional .Common.MsgPlannedWork plannedWork = 17;
   if (_has_bit(16)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      17, this->automatlist(), output);
+      17, this->plannedwork(), output);
   }
   
-  // optional .Common.UnitKnowledgeId unitKnowledge = 18;
+  // optional .Common.MsgAtlasNature atlasNature = 18;
   if (_has_bit(17)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      18, this->unitknowledge(), output);
+      18, this->atlasnature(), output);
   }
   
-  // optional .Common.UnitKnowledgeIdList unitKnowledgeList = 19;
+  // optional .Common.ResourceType resourceType = 19;
   if (_has_bit(18)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      19, this->unitknowledgelist(), output);
+      19, this->resourcetype(), output);
   }
   
-  // optional .Common.ObjectKnowledgeId objectKnowledge = 20;
+  // optional .Common.MsgLogMaintenancePriorities logMaintenancePriorities = 20;
   if (_has_bit(19)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      20, this->objectknowledge(), output);
+      20, this->logmaintenancepriorities(), output);
   }
   
-  // optional .Common.ObjectKnowledgeIdList objectKnowledgeList = 21;
+  // optional .Common.MsgLogMedicalPriorities logMedicalPriorities = 21;
   if (_has_bit(20)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      21, this->objectknowledgelist(), output);
+      21, this->logmedicalpriorities(), output);
   }
   
-  // optional .Common.CrowdKnowledgeId crowdKnowledge = 22;
+  // optional float aReal = 22;
   if (_has_bit(21)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      22, this->crowdknowledge(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(22, this->areal(), output);
   }
   
-  // optional .Common.MsgPlannedWork plannedWork = 23;
+  // optional .Common.MsgPathList pathList = 23;
   if (_has_bit(22)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      23, this->plannedwork(), output);
+      23, this->pathlist(), output);
   }
   
-  // optional .Common.MsgPlannedWorkList plannedWorkList = 24;
+  // optional .Common.MsgPointList pointList = 24;
   if (_has_bit(23)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      24, this->plannedworklist(), output);
+      24, this->pointlist(), output);
   }
   
-  // optional .Common.ResourceType resourceType = 25;
+  // optional .Common.MsgPolygonList polygonList = 25;
   if (_has_bit(24)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      25, this->resourcetype(), output);
+      25, this->polygonlist(), output);
   }
   
-  // optional .Common.EquipmentType equipmentType = 26;
+  // optional .Common.MsgLocation location = 26;
   if (_has_bit(25)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      26, this->equipmenttype(), output);
+      26, this->location(), output);
   }
   
-  // optional .Common.FireId tirIndirect = 27;
+  // optional .Common.MsgLocationList locationList = 27;
   if (_has_bit(26)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      27, this->tirindirect(), output);
+      27, this->locationlist(), output);
   }
   
-  // optional .Common.MsgDateTime dateTime = 28;
+  // optional .Common.UnitIdList unitList = 28;
   if (_has_bit(27)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      28, this->datetime(), output);
+      28, this->unitlist(), output);
   }
   
-  // optional .Common.MsgLogMaintenancePriorities logMaintenancePriorities = 29;
+  // optional .Common.AutomatIdList automatList = 29;
   if (_has_bit(28)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      29, this->logmaintenancepriorities(), output);
+      29, this->automatlist(), output);
   }
   
-  // optional .Common.MsgLogMedicalPriorities logMedicalPriorities = 30;
+  // optional .Common.UnitKnowledgeIdList unitKnowledgeList = 30;
   if (_has_bit(29)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      30, this->logmedicalpriorities(), output);
+      30, this->unitknowledgelist(), output);
   }
   
-  // optional string aCharStr = 31;
+  // optional .Common.ObjectKnowledgeIdList objectKnowledgeList = 31;
   if (_has_bit(30)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      31, this->objectknowledgelist(), output);
+  }
+  
+  // optional .Common.MsgPlannedWorkList plannedWorkList = 32;
+  if (_has_bit(31)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      32, this->plannedworklist(), output);
+  }
+  
+  // optional .Common.EquipmentType equipmentType = 33;
+  if (_has_bit(32)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      33, this->equipmenttype(), output);
+  }
+  
+  // optional .Common.FireId tirIndirect = 34;
+  if (_has_bit(33)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      34, this->tirindirect(), output);
+  }
+  
+  // optional string aCharStr = 35;
+  if (_has_bit(34)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->acharstr().data(), this->acharstr().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      31, this->acharstr(), output);
+      35, this->acharstr(), output);
   }
   
-  // optional .Common.MsgMissionObjective missionObjective = 32;
-  if (_has_bit(31)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      32, this->missionobjective(), output);
-  }
-  
-  // optional .Common.MsgMissionObjectiveList missionObjectiveList = 33;
-  if (_has_bit(32)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      33, this->missionobjectivelist(), output);
-  }
-  
-  // optional .Common.MsgLine line = 34;
-  if (_has_bit(33)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      34, this->line(), output);
-  }
-  
-  // optional .Common.MsgLimasOrder limasOrder = 35;
-  if (_has_bit(34)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      35, this->limasorder(), output);
-  }
-  
-  // optional .Common.MsgIntelligenceList intelligenceList = 36;
+  // optional .Common.MsgMissionObjective missionObjective = 36;
   if (_has_bit(35)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      36, this->intelligencelist(), output);
+      36, this->missionobjective(), output);
   }
   
-  // optional .Common.UrbanObjectId urbanBlock = 37;
+  // optional .Common.MsgMissionObjectiveList missionObjectiveList = 37;
   if (_has_bit(36)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      37, this->urbanblock(), output);
+      37, this->missionobjectivelist(), output);
   }
   
-  // optional .Common.PartyId party = 38;
+  // optional .Common.MsgLimasOrder limasOrder = 38;
   if (_has_bit(37)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      38, this->party(), output);
+      38, this->limasorder(), output);
   }
   
-  // optional .Common.FormationId formation = 39;
+  // optional .Common.MsgIntelligenceList intelligenceList = 39;
   if (_has_bit(38)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      39, this->formation(), output);
+      39, this->intelligencelist(), output);
   }
   
-  // optional uint32 identifier = 40;
+  // optional .Common.UrbanObjectId urbanBlock = 40;
   if (_has_bit(39)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(40, this->identifier(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      40, this->urbanblock(), output);
   }
   
-  // optional int32 quantity = 41;
+  // optional .Common.PartyId party = 41;
   if (_has_bit(40)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(41, this->quantity(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      41, this->party(), output);
   }
   
-  // optional .Common.KnowledgeGroupId knowledgeGroup = 42;
+  // optional .Common.FormationId formation = 42;
   if (_has_bit(41)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      42, this->knowledgegroup(), output);
+      42, this->formation(), output);
   }
   
-  // repeated .Common.MsgMissionParameter.Value list = 43;
+  // optional uint32 identifier = 43;
+  if (_has_bit(42)) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(43, this->identifier(), output);
+  }
+  
+  // optional int32 quantity = 44;
+  if (_has_bit(43)) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(44, this->quantity(), output);
+  }
+  
+  // optional .Common.KnowledgeGroupId knowledgeGroup = 45;
+  if (_has_bit(44)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      45, this->knowledgegroup(), output);
+  }
+  
+  // repeated .Common.MsgMissionParameter.Value list = 46;
   for (int i = 0; i < this->list_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      43, this->list(i), output);
+      46, this->list(i), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -26065,33 +26145,33 @@ void MsgMissionParameter_Value::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgMissionParameter_Value::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional bool aBool = 1;
+  // optional bool booleanValue = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->abool(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->booleanvalue(), target);
   }
   
-  // optional float aReal = 2;
+  // optional int32 intValue = 2;
   if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(2, this->areal(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->intvalue(), target);
   }
   
-  // optional int32 enumeration = 3;
+  // optional .Common.MsgHeading heading = 3;
   if (_has_bit(2)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->enumeration(), target);
-  }
-  
-  // optional .Common.MsgPath path = 4;
-  if (_has_bit(3)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        4, this->path(), target);
+        3, this->heading(), target);
   }
   
-  // optional .Common.MsgPathList pathList = 5;
+  // optional int32 enumeration = 4;
+  if (_has_bit(3)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->enumeration(), target);
+  }
+  
+  // optional .Common.MsgDateTime dateTime = 5;
   if (_has_bit(4)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        5, this->pathlist(), target);
+        5, this->datetime(), target);
   }
   
   // optional .Common.MsgPoint point = 6;
@@ -26101,262 +26181,281 @@ void MsgMissionParameter_Value::SerializeWithCachedSizes(
         6, this->point(), target);
   }
   
-  // optional .Common.MsgPointList pointList = 7;
+  // optional .Common.MsgPolygon area = 7;
   if (_has_bit(6)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        7, this->pointlist(), target);
+        7, this->area(), target);
   }
   
-  // optional .Common.MsgPolygon polygon = 8;
+  // optional .Common.MsgPath path = 8;
   if (_has_bit(7)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        8, this->polygon(), target);
+        8, this->path(), target);
   }
   
-  // optional .Common.MsgPolygonList polygonList = 9;
+  // optional .Common.MsgLine limit = 9;
   if (_has_bit(8)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        9, this->polygonlist(), target);
+        9, this->limit(), target);
   }
   
-  // optional .Common.MsgLocation location = 10;
+  // optional .Common.MsgLimasOrder phaseLine = 10;
   if (_has_bit(9)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        10, this->location(), target);
+        10, this->phaseline(), target);
   }
   
-  // optional .Common.MsgLocationList locationList = 11;
+  // optional .Common.AutomatId automat = 11;
   if (_has_bit(10)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        11, this->locationlist(), target);
+        11, this->automat(), target);
   }
   
-  // optional .Common.MsgHeading heading = 12;
+  // optional .Common.UnitId agent = 12;
   if (_has_bit(11)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        12, this->heading(), target);
+        12, this->agent(), target);
   }
   
-  // optional .Common.MsgAtlasNature atlasNature = 13;
+  // optional .Common.UnitKnowledgeId agentKnowledge = 13;
   if (_has_bit(12)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        13, this->atlasnature(), target);
+        13, this->agentknowledge(), target);
   }
   
-  // optional .Common.UnitId unit = 14;
+  // optional .Common.CrowdKnowledgeId crowdKnowledge = 14;
   if (_has_bit(13)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        14, this->unit(), target);
+        14, this->crowdknowledge(), target);
   }
   
-  // optional .Common.UnitIdList unitList = 15;
+  // optional .Common.ObjectKnowledgeId objectKnowledge = 15;
   if (_has_bit(14)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        15, this->unitlist(), target);
+        15, this->objectknowledge(), target);
   }
   
-  // optional .Common.AutomatId automat = 16;
+  // optional .Common.UrbanObjectKnowledgeId urbanKnowledge = 16;
   if (_has_bit(15)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        16, this->automat(), target);
+        16, this->urbanknowledge(), target);
   }
   
-  // optional .Common.AutomatIdList automatList = 17;
+  // optional .Common.MsgPlannedWork plannedWork = 17;
   if (_has_bit(16)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        17, this->automatlist(), target);
+        17, this->plannedwork(), target);
   }
   
-  // optional .Common.UnitKnowledgeId unitKnowledge = 18;
+  // optional .Common.MsgAtlasNature atlasNature = 18;
   if (_has_bit(17)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        18, this->unitknowledge(), target);
+        18, this->atlasnature(), target);
   }
   
-  // optional .Common.UnitKnowledgeIdList unitKnowledgeList = 19;
+  // optional .Common.ResourceType resourceType = 19;
   if (_has_bit(18)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        19, this->unitknowledgelist(), target);
+        19, this->resourcetype(), target);
   }
   
-  // optional .Common.ObjectKnowledgeId objectKnowledge = 20;
+  // optional .Common.MsgLogMaintenancePriorities logMaintenancePriorities = 20;
   if (_has_bit(19)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        20, this->objectknowledge(), target);
+        20, this->logmaintenancepriorities(), target);
   }
   
-  // optional .Common.ObjectKnowledgeIdList objectKnowledgeList = 21;
+  // optional .Common.MsgLogMedicalPriorities logMedicalPriorities = 21;
   if (_has_bit(20)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        21, this->objectknowledgelist(), target);
+        21, this->logmedicalpriorities(), target);
   }
   
-  // optional .Common.CrowdKnowledgeId crowdKnowledge = 22;
+  // optional float aReal = 22;
   if (_has_bit(21)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        22, this->crowdknowledge(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(22, this->areal(), target);
   }
   
-  // optional .Common.MsgPlannedWork plannedWork = 23;
+  // optional .Common.MsgPathList pathList = 23;
   if (_has_bit(22)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        23, this->plannedwork(), target);
+        23, this->pathlist(), target);
   }
   
-  // optional .Common.MsgPlannedWorkList plannedWorkList = 24;
+  // optional .Common.MsgPointList pointList = 24;
   if (_has_bit(23)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        24, this->plannedworklist(), target);
+        24, this->pointlist(), target);
   }
   
-  // optional .Common.ResourceType resourceType = 25;
+  // optional .Common.MsgPolygonList polygonList = 25;
   if (_has_bit(24)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        25, this->resourcetype(), target);
+        25, this->polygonlist(), target);
   }
   
-  // optional .Common.EquipmentType equipmentType = 26;
+  // optional .Common.MsgLocation location = 26;
   if (_has_bit(25)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        26, this->equipmenttype(), target);
+        26, this->location(), target);
   }
   
-  // optional .Common.FireId tirIndirect = 27;
+  // optional .Common.MsgLocationList locationList = 27;
   if (_has_bit(26)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        27, this->tirindirect(), target);
+        27, this->locationlist(), target);
   }
   
-  // optional .Common.MsgDateTime dateTime = 28;
+  // optional .Common.UnitIdList unitList = 28;
   if (_has_bit(27)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        28, this->datetime(), target);
+        28, this->unitlist(), target);
   }
   
-  // optional .Common.MsgLogMaintenancePriorities logMaintenancePriorities = 29;
+  // optional .Common.AutomatIdList automatList = 29;
   if (_has_bit(28)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        29, this->logmaintenancepriorities(), target);
+        29, this->automatlist(), target);
   }
   
-  // optional .Common.MsgLogMedicalPriorities logMedicalPriorities = 30;
+  // optional .Common.UnitKnowledgeIdList unitKnowledgeList = 30;
   if (_has_bit(29)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        30, this->logmedicalpriorities(), target);
+        30, this->unitknowledgelist(), target);
   }
   
-  // optional string aCharStr = 31;
+  // optional .Common.ObjectKnowledgeIdList objectKnowledgeList = 31;
   if (_has_bit(30)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        31, this->objectknowledgelist(), target);
+  }
+  
+  // optional .Common.MsgPlannedWorkList plannedWorkList = 32;
+  if (_has_bit(31)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        32, this->plannedworklist(), target);
+  }
+  
+  // optional .Common.EquipmentType equipmentType = 33;
+  if (_has_bit(32)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        33, this->equipmenttype(), target);
+  }
+  
+  // optional .Common.FireId tirIndirect = 34;
+  if (_has_bit(33)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        34, this->tirindirect(), target);
+  }
+  
+  // optional string aCharStr = 35;
+  if (_has_bit(34)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->acharstr().data(), this->acharstr().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        31, this->acharstr(), target);
+        35, this->acharstr(), target);
   }
   
-  // optional .Common.MsgMissionObjective missionObjective = 32;
-  if (_has_bit(31)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        32, this->missionobjective(), target);
-  }
-  
-  // optional .Common.MsgMissionObjectiveList missionObjectiveList = 33;
-  if (_has_bit(32)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        33, this->missionobjectivelist(), target);
-  }
-  
-  // optional .Common.MsgLine line = 34;
-  if (_has_bit(33)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        34, this->line(), target);
-  }
-  
-  // optional .Common.MsgLimasOrder limasOrder = 35;
-  if (_has_bit(34)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        35, this->limasorder(), target);
-  }
-  
-  // optional .Common.MsgIntelligenceList intelligenceList = 36;
+  // optional .Common.MsgMissionObjective missionObjective = 36;
   if (_has_bit(35)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        36, this->intelligencelist(), target);
+        36, this->missionobjective(), target);
   }
   
-  // optional .Common.UrbanObjectId urbanBlock = 37;
+  // optional .Common.MsgMissionObjectiveList missionObjectiveList = 37;
   if (_has_bit(36)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        37, this->urbanblock(), target);
+        37, this->missionobjectivelist(), target);
   }
   
-  // optional .Common.PartyId party = 38;
+  // optional .Common.MsgLimasOrder limasOrder = 38;
   if (_has_bit(37)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        38, this->party(), target);
+        38, this->limasorder(), target);
   }
   
-  // optional .Common.FormationId formation = 39;
+  // optional .Common.MsgIntelligenceList intelligenceList = 39;
   if (_has_bit(38)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        39, this->formation(), target);
+        39, this->intelligencelist(), target);
   }
   
-  // optional uint32 identifier = 40;
+  // optional .Common.UrbanObjectId urbanBlock = 40;
   if (_has_bit(39)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(40, this->identifier(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        40, this->urbanblock(), target);
   }
   
-  // optional int32 quantity = 41;
+  // optional .Common.PartyId party = 41;
   if (_has_bit(40)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(41, this->quantity(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        41, this->party(), target);
   }
   
-  // optional .Common.KnowledgeGroupId knowledgeGroup = 42;
+  // optional .Common.FormationId formation = 42;
   if (_has_bit(41)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        42, this->knowledgegroup(), target);
+        42, this->formation(), target);
   }
   
-  // repeated .Common.MsgMissionParameter.Value list = 43;
+  // optional uint32 identifier = 43;
+  if (_has_bit(42)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(43, this->identifier(), target);
+  }
+  
+  // optional int32 quantity = 44;
+  if (_has_bit(43)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(44, this->quantity(), target);
+  }
+  
+  // optional .Common.KnowledgeGroupId knowledgeGroup = 45;
+  if (_has_bit(44)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        45, this->knowledgegroup(), target);
+  }
+  
+  // repeated .Common.MsgMissionParameter.Value list = 46;
   for (int i = 0; i < this->list_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        43, this->list(i), target);
+        46, this->list(i), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -26370,35 +26469,37 @@ int MsgMissionParameter_Value::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional bool aBool = 1;
-    if (has_abool()) {
+    // optional bool booleanValue = 1;
+    if (has_booleanvalue()) {
       total_size += 1 + 1;
     }
     
-    // optional float aReal = 2;
-    if (has_areal()) {
-      total_size += 1 + 4;
+    // optional int32 intValue = 2;
+    if (has_intvalue()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->intvalue());
     }
     
-    // optional int32 enumeration = 3;
+    // optional .Common.MsgHeading heading = 3;
+    if (has_heading()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->heading());
+    }
+    
+    // optional int32 enumeration = 4;
     if (has_enumeration()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->enumeration());
     }
     
-    // optional .Common.MsgPath path = 4;
-    if (has_path()) {
+    // optional .Common.MsgDateTime dateTime = 5;
+    if (has_datetime()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->path());
-    }
-    
-    // optional .Common.MsgPathList pathList = 5;
-    if (has_pathlist()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->pathlist());
+          this->datetime());
     }
     
     // optional .Common.MsgPoint point = 6;
@@ -26408,130 +26509,186 @@ int MsgMissionParameter_Value::ByteSize() const {
           this->point());
     }
     
-    // optional .Common.MsgPointList pointList = 7;
-    if (has_pointlist()) {
+    // optional .Common.MsgPolygon area = 7;
+    if (has_area()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->pointlist());
+          this->area());
     }
     
-    // optional .Common.MsgPolygon polygon = 8;
-    if (has_polygon()) {
+    // optional .Common.MsgPath path = 8;
+    if (has_path()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->polygon());
+          this->path());
     }
     
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional .Common.MsgPolygonList polygonList = 9;
-    if (has_polygonlist()) {
+    // optional .Common.MsgLine limit = 9;
+    if (has_limit()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->polygonlist());
+          this->limit());
     }
     
-    // optional .Common.MsgLocation location = 10;
-    if (has_location()) {
+    // optional .Common.MsgLimasOrder phaseLine = 10;
+    if (has_phaseline()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->location());
+          this->phaseline());
     }
     
-    // optional .Common.MsgLocationList locationList = 11;
-    if (has_locationlist()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->locationlist());
-    }
-    
-    // optional .Common.MsgHeading heading = 12;
-    if (has_heading()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->heading());
-    }
-    
-    // optional .Common.MsgAtlasNature atlasNature = 13;
-    if (has_atlasnature()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->atlasnature());
-    }
-    
-    // optional .Common.UnitId unit = 14;
-    if (has_unit()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->unit());
-    }
-    
-    // optional .Common.UnitIdList unitList = 15;
-    if (has_unitlist()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->unitlist());
-    }
-    
-    // optional .Common.AutomatId automat = 16;
+    // optional .Common.AutomatId automat = 11;
     if (has_automat()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->automat());
     }
     
-  }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
-    // optional .Common.AutomatIdList automatList = 17;
-    if (has_automatlist()) {
-      total_size += 2 +
+    // optional .Common.UnitId agent = 12;
+    if (has_agent()) {
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->automatlist());
+          this->agent());
     }
     
-    // optional .Common.UnitKnowledgeId unitKnowledge = 18;
-    if (has_unitknowledge()) {
-      total_size += 2 +
+    // optional .Common.UnitKnowledgeId agentKnowledge = 13;
+    if (has_agentknowledge()) {
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->unitknowledge());
+          this->agentknowledge());
     }
     
-    // optional .Common.UnitKnowledgeIdList unitKnowledgeList = 19;
-    if (has_unitknowledgelist()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->unitknowledgelist());
-    }
-    
-    // optional .Common.ObjectKnowledgeId objectKnowledge = 20;
-    if (has_objectknowledge()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->objectknowledge());
-    }
-    
-    // optional .Common.ObjectKnowledgeIdList objectKnowledgeList = 21;
-    if (has_objectknowledgelist()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->objectknowledgelist());
-    }
-    
-    // optional .Common.CrowdKnowledgeId crowdKnowledge = 22;
+    // optional .Common.CrowdKnowledgeId crowdKnowledge = 14;
     if (has_crowdknowledge()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->crowdknowledge());
     }
     
-    // optional .Common.MsgPlannedWork plannedWork = 23;
+    // optional .Common.ObjectKnowledgeId objectKnowledge = 15;
+    if (has_objectknowledge()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->objectknowledge());
+    }
+    
+    // optional .Common.UrbanObjectKnowledgeId urbanKnowledge = 16;
+    if (has_urbanknowledge()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->urbanknowledge());
+    }
+    
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    // optional .Common.MsgPlannedWork plannedWork = 17;
     if (has_plannedwork()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->plannedwork());
     }
     
-    // optional .Common.MsgPlannedWorkList plannedWorkList = 24;
+    // optional .Common.MsgAtlasNature atlasNature = 18;
+    if (has_atlasnature()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->atlasnature());
+    }
+    
+    // optional .Common.ResourceType resourceType = 19;
+    if (has_resourcetype()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->resourcetype());
+    }
+    
+    // optional .Common.MsgLogMaintenancePriorities logMaintenancePriorities = 20;
+    if (has_logmaintenancepriorities()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->logmaintenancepriorities());
+    }
+    
+    // optional .Common.MsgLogMedicalPriorities logMedicalPriorities = 21;
+    if (has_logmedicalpriorities()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->logmedicalpriorities());
+    }
+    
+    // optional float aReal = 22;
+    if (has_areal()) {
+      total_size += 2 + 4;
+    }
+    
+    // optional .Common.MsgPathList pathList = 23;
+    if (has_pathlist()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->pathlist());
+    }
+    
+    // optional .Common.MsgPointList pointList = 24;
+    if (has_pointlist()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->pointlist());
+    }
+    
+  }
+  if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
+    // optional .Common.MsgPolygonList polygonList = 25;
+    if (has_polygonlist()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->polygonlist());
+    }
+    
+    // optional .Common.MsgLocation location = 26;
+    if (has_location()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->location());
+    }
+    
+    // optional .Common.MsgLocationList locationList = 27;
+    if (has_locationlist()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->locationlist());
+    }
+    
+    // optional .Common.UnitIdList unitList = 28;
+    if (has_unitlist()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->unitlist());
+    }
+    
+    // optional .Common.AutomatIdList automatList = 29;
+    if (has_automatlist()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->automatlist());
+    }
+    
+    // optional .Common.UnitKnowledgeIdList unitKnowledgeList = 30;
+    if (has_unitknowledgelist()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->unitknowledgelist());
+    }
+    
+    // optional .Common.ObjectKnowledgeIdList objectKnowledgeList = 31;
+    if (has_objectknowledgelist()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->objectknowledgelist());
+    }
+    
+    // optional .Common.MsgPlannedWorkList plannedWorkList = 32;
     if (has_plannedworklist()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -26539,131 +26696,94 @@ int MsgMissionParameter_Value::ByteSize() const {
     }
     
   }
-  if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
-    // optional .Common.ResourceType resourceType = 25;
-    if (has_resourcetype()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->resourcetype());
-    }
-    
-    // optional .Common.EquipmentType equipmentType = 26;
+  if (_has_bits_[32 / 32] & (0xffu << (32 % 32))) {
+    // optional .Common.EquipmentType equipmentType = 33;
     if (has_equipmenttype()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->equipmenttype());
     }
     
-    // optional .Common.FireId tirIndirect = 27;
+    // optional .Common.FireId tirIndirect = 34;
     if (has_tirindirect()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->tirindirect());
     }
     
-    // optional .Common.MsgDateTime dateTime = 28;
-    if (has_datetime()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->datetime());
-    }
-    
-    // optional .Common.MsgLogMaintenancePriorities logMaintenancePriorities = 29;
-    if (has_logmaintenancepriorities()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->logmaintenancepriorities());
-    }
-    
-    // optional .Common.MsgLogMedicalPriorities logMedicalPriorities = 30;
-    if (has_logmedicalpriorities()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->logmedicalpriorities());
-    }
-    
-    // optional string aCharStr = 31;
+    // optional string aCharStr = 35;
     if (has_acharstr()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->acharstr());
     }
     
-    // optional .Common.MsgMissionObjective missionObjective = 32;
+    // optional .Common.MsgMissionObjective missionObjective = 36;
     if (has_missionobjective()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->missionobjective());
     }
     
-  }
-  if (_has_bits_[32 / 32] & (0xffu << (32 % 32))) {
-    // optional .Common.MsgMissionObjectiveList missionObjectiveList = 33;
+    // optional .Common.MsgMissionObjectiveList missionObjectiveList = 37;
     if (has_missionobjectivelist()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->missionobjectivelist());
     }
     
-    // optional .Common.MsgLine line = 34;
-    if (has_line()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->line());
-    }
-    
-    // optional .Common.MsgLimasOrder limasOrder = 35;
+    // optional .Common.MsgLimasOrder limasOrder = 38;
     if (has_limasorder()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->limasorder());
     }
     
-    // optional .Common.MsgIntelligenceList intelligenceList = 36;
+    // optional .Common.MsgIntelligenceList intelligenceList = 39;
     if (has_intelligencelist()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->intelligencelist());
     }
     
-    // optional .Common.UrbanObjectId urbanBlock = 37;
+    // optional .Common.UrbanObjectId urbanBlock = 40;
     if (has_urbanblock()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->urbanblock());
     }
     
-    // optional .Common.PartyId party = 38;
+  }
+  if (_has_bits_[40 / 32] & (0xffu << (40 % 32))) {
+    // optional .Common.PartyId party = 41;
     if (has_party()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->party());
     }
     
-    // optional .Common.FormationId formation = 39;
+    // optional .Common.FormationId formation = 42;
     if (has_formation()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->formation());
     }
     
-    // optional uint32 identifier = 40;
+    // optional uint32 identifier = 43;
     if (has_identifier()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->identifier());
     }
     
-  }
-  if (_has_bits_[40 / 32] & (0xffu << (40 % 32))) {
-    // optional int32 quantity = 41;
+    // optional int32 quantity = 44;
     if (has_quantity()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->quantity());
     }
     
-    // optional .Common.KnowledgeGroupId knowledgeGroup = 42;
+    // optional .Common.KnowledgeGroupId knowledgeGroup = 45;
     if (has_knowledgegroup()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -26671,7 +26791,7 @@ int MsgMissionParameter_Value::ByteSize() const {
     }
     
   }
-  // repeated .Common.MsgMissionParameter.Value list = 43;
+  // repeated .Common.MsgMissionParameter.Value list = 46;
   total_size += 2 * this->list_size();
   for (int i = 0; i < this->list_size(); i++) {
     total_size +=
@@ -26705,139 +26825,148 @@ void MsgMissionParameter_Value::MergeFrom(const MsgMissionParameter_Value& from)
   list_.MergeFrom(from.list_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_abool(from.abool());
+      set_booleanvalue(from.booleanvalue());
     }
     if (from._has_bit(1)) {
-      set_areal(from.areal());
+      set_intvalue(from.intvalue());
     }
     if (from._has_bit(2)) {
-      set_enumeration(from.enumeration());
+      mutable_heading()->::Common::MsgHeading::MergeFrom(from.heading());
     }
     if (from._has_bit(3)) {
-      mutable_path()->::Common::MsgPath::MergeFrom(from.path());
+      set_enumeration(from.enumeration());
     }
     if (from._has_bit(4)) {
-      mutable_pathlist()->::Common::MsgPathList::MergeFrom(from.pathlist());
+      mutable_datetime()->::Common::MsgDateTime::MergeFrom(from.datetime());
     }
     if (from._has_bit(5)) {
       mutable_point()->::Common::MsgPoint::MergeFrom(from.point());
     }
     if (from._has_bit(6)) {
-      mutable_pointlist()->::Common::MsgPointList::MergeFrom(from.pointlist());
+      mutable_area()->::Common::MsgPolygon::MergeFrom(from.area());
     }
     if (from._has_bit(7)) {
-      mutable_polygon()->::Common::MsgPolygon::MergeFrom(from.polygon());
+      mutable_path()->::Common::MsgPath::MergeFrom(from.path());
     }
   }
   if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from._has_bit(8)) {
-      mutable_polygonlist()->::Common::MsgPolygonList::MergeFrom(from.polygonlist());
+      mutable_limit()->::Common::MsgLine::MergeFrom(from.limit());
     }
     if (from._has_bit(9)) {
-      mutable_location()->::Common::MsgLocation::MergeFrom(from.location());
+      mutable_phaseline()->::Common::MsgLimasOrder::MergeFrom(from.phaseline());
     }
     if (from._has_bit(10)) {
-      mutable_locationlist()->::Common::MsgLocationList::MergeFrom(from.locationlist());
+      mutable_automat()->::Common::AutomatId::MergeFrom(from.automat());
     }
     if (from._has_bit(11)) {
-      mutable_heading()->::Common::MsgHeading::MergeFrom(from.heading());
+      mutable_agent()->::Common::UnitId::MergeFrom(from.agent());
     }
     if (from._has_bit(12)) {
-      mutable_atlasnature()->::Common::MsgAtlasNature::MergeFrom(from.atlasnature());
+      mutable_agentknowledge()->::Common::UnitKnowledgeId::MergeFrom(from.agentknowledge());
     }
     if (from._has_bit(13)) {
-      mutable_unit()->::Common::UnitId::MergeFrom(from.unit());
+      mutable_crowdknowledge()->::Common::CrowdKnowledgeId::MergeFrom(from.crowdknowledge());
     }
     if (from._has_bit(14)) {
-      mutable_unitlist()->::Common::UnitIdList::MergeFrom(from.unitlist());
+      mutable_objectknowledge()->::Common::ObjectKnowledgeId::MergeFrom(from.objectknowledge());
     }
     if (from._has_bit(15)) {
-      mutable_automat()->::Common::AutomatId::MergeFrom(from.automat());
+      mutable_urbanknowledge()->::Common::UrbanObjectKnowledgeId::MergeFrom(from.urbanknowledge());
     }
   }
   if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (from._has_bit(16)) {
-      mutable_automatlist()->::Common::AutomatIdList::MergeFrom(from.automatlist());
-    }
-    if (from._has_bit(17)) {
-      mutable_unitknowledge()->::Common::UnitKnowledgeId::MergeFrom(from.unitknowledge());
-    }
-    if (from._has_bit(18)) {
-      mutable_unitknowledgelist()->::Common::UnitKnowledgeIdList::MergeFrom(from.unitknowledgelist());
-    }
-    if (from._has_bit(19)) {
-      mutable_objectknowledge()->::Common::ObjectKnowledgeId::MergeFrom(from.objectknowledge());
-    }
-    if (from._has_bit(20)) {
-      mutable_objectknowledgelist()->::Common::ObjectKnowledgeIdList::MergeFrom(from.objectknowledgelist());
-    }
-    if (from._has_bit(21)) {
-      mutable_crowdknowledge()->::Common::CrowdKnowledgeId::MergeFrom(from.crowdknowledge());
-    }
-    if (from._has_bit(22)) {
       mutable_plannedwork()->::Common::MsgPlannedWork::MergeFrom(from.plannedwork());
     }
+    if (from._has_bit(17)) {
+      mutable_atlasnature()->::Common::MsgAtlasNature::MergeFrom(from.atlasnature());
+    }
+    if (from._has_bit(18)) {
+      mutable_resourcetype()->::Common::ResourceType::MergeFrom(from.resourcetype());
+    }
+    if (from._has_bit(19)) {
+      mutable_logmaintenancepriorities()->::Common::MsgLogMaintenancePriorities::MergeFrom(from.logmaintenancepriorities());
+    }
+    if (from._has_bit(20)) {
+      mutable_logmedicalpriorities()->::Common::MsgLogMedicalPriorities::MergeFrom(from.logmedicalpriorities());
+    }
+    if (from._has_bit(21)) {
+      set_areal(from.areal());
+    }
+    if (from._has_bit(22)) {
+      mutable_pathlist()->::Common::MsgPathList::MergeFrom(from.pathlist());
+    }
     if (from._has_bit(23)) {
-      mutable_plannedworklist()->::Common::MsgPlannedWorkList::MergeFrom(from.plannedworklist());
+      mutable_pointlist()->::Common::MsgPointList::MergeFrom(from.pointlist());
     }
   }
   if (from._has_bits_[24 / 32] & (0xffu << (24 % 32))) {
     if (from._has_bit(24)) {
-      mutable_resourcetype()->::Common::ResourceType::MergeFrom(from.resourcetype());
+      mutable_polygonlist()->::Common::MsgPolygonList::MergeFrom(from.polygonlist());
     }
     if (from._has_bit(25)) {
-      mutable_equipmenttype()->::Common::EquipmentType::MergeFrom(from.equipmenttype());
+      mutable_location()->::Common::MsgLocation::MergeFrom(from.location());
     }
     if (from._has_bit(26)) {
-      mutable_tirindirect()->::Common::FireId::MergeFrom(from.tirindirect());
+      mutable_locationlist()->::Common::MsgLocationList::MergeFrom(from.locationlist());
     }
     if (from._has_bit(27)) {
-      mutable_datetime()->::Common::MsgDateTime::MergeFrom(from.datetime());
+      mutable_unitlist()->::Common::UnitIdList::MergeFrom(from.unitlist());
     }
     if (from._has_bit(28)) {
-      mutable_logmaintenancepriorities()->::Common::MsgLogMaintenancePriorities::MergeFrom(from.logmaintenancepriorities());
+      mutable_automatlist()->::Common::AutomatIdList::MergeFrom(from.automatlist());
     }
     if (from._has_bit(29)) {
-      mutable_logmedicalpriorities()->::Common::MsgLogMedicalPriorities::MergeFrom(from.logmedicalpriorities());
+      mutable_unitknowledgelist()->::Common::UnitKnowledgeIdList::MergeFrom(from.unitknowledgelist());
     }
     if (from._has_bit(30)) {
-      set_acharstr(from.acharstr());
+      mutable_objectknowledgelist()->::Common::ObjectKnowledgeIdList::MergeFrom(from.objectknowledgelist());
     }
     if (from._has_bit(31)) {
-      mutable_missionobjective()->::Common::MsgMissionObjective::MergeFrom(from.missionobjective());
+      mutable_plannedworklist()->::Common::MsgPlannedWorkList::MergeFrom(from.plannedworklist());
     }
   }
   if (from._has_bits_[32 / 32] & (0xffu << (32 % 32))) {
     if (from._has_bit(32)) {
-      mutable_missionobjectivelist()->::Common::MsgMissionObjectiveList::MergeFrom(from.missionobjectivelist());
+      mutable_equipmenttype()->::Common::EquipmentType::MergeFrom(from.equipmenttype());
     }
     if (from._has_bit(33)) {
-      mutable_line()->::Common::MsgLine::MergeFrom(from.line());
+      mutable_tirindirect()->::Common::FireId::MergeFrom(from.tirindirect());
     }
     if (from._has_bit(34)) {
-      mutable_limasorder()->::Common::MsgLimasOrder::MergeFrom(from.limasorder());
+      set_acharstr(from.acharstr());
     }
     if (from._has_bit(35)) {
-      mutable_intelligencelist()->::Common::MsgIntelligenceList::MergeFrom(from.intelligencelist());
+      mutable_missionobjective()->::Common::MsgMissionObjective::MergeFrom(from.missionobjective());
     }
     if (from._has_bit(36)) {
-      mutable_urbanblock()->::Common::UrbanObjectId::MergeFrom(from.urbanblock());
+      mutable_missionobjectivelist()->::Common::MsgMissionObjectiveList::MergeFrom(from.missionobjectivelist());
     }
     if (from._has_bit(37)) {
-      mutable_party()->::Common::PartyId::MergeFrom(from.party());
+      mutable_limasorder()->::Common::MsgLimasOrder::MergeFrom(from.limasorder());
     }
     if (from._has_bit(38)) {
-      mutable_formation()->::Common::FormationId::MergeFrom(from.formation());
+      mutable_intelligencelist()->::Common::MsgIntelligenceList::MergeFrom(from.intelligencelist());
     }
     if (from._has_bit(39)) {
-      set_identifier(from.identifier());
+      mutable_urbanblock()->::Common::UrbanObjectId::MergeFrom(from.urbanblock());
     }
   }
   if (from._has_bits_[40 / 32] & (0xffu << (40 % 32))) {
     if (from._has_bit(40)) {
-      set_quantity(from.quantity());
+      mutable_party()->::Common::PartyId::MergeFrom(from.party());
     }
     if (from._has_bit(41)) {
+      mutable_formation()->::Common::FormationId::MergeFrom(from.formation());
+    }
+    if (from._has_bit(42)) {
+      set_identifier(from.identifier());
+    }
+    if (from._has_bit(43)) {
+      set_quantity(from.quantity());
+    }
+    if (from._has_bit(44)) {
       mutable_knowledgegroup()->::Common::KnowledgeGroupId::MergeFrom(from.knowledgegroup());
     }
   }
@@ -26858,20 +26987,62 @@ void MsgMissionParameter_Value::CopyFrom(const MsgMissionParameter_Value& from) 
 
 bool MsgMissionParameter_Value::IsInitialized() const {
   
-  if (has_path()) {
-    if (!this->path().IsInitialized()) return false;
+  if (has_heading()) {
+    if (!this->heading().IsInitialized()) return false;
   }
-  if (has_pathlist()) {
-    if (!this->pathlist().IsInitialized()) return false;
+  if (has_datetime()) {
+    if (!this->datetime().IsInitialized()) return false;
   }
   if (has_point()) {
     if (!this->point().IsInitialized()) return false;
   }
+  if (has_area()) {
+    if (!this->area().IsInitialized()) return false;
+  }
+  if (has_path()) {
+    if (!this->path().IsInitialized()) return false;
+  }
+  if (has_limit()) {
+    if (!this->limit().IsInitialized()) return false;
+  }
+  if (has_phaseline()) {
+    if (!this->phaseline().IsInitialized()) return false;
+  }
+  if (has_automat()) {
+    if (!this->automat().IsInitialized()) return false;
+  }
+  if (has_agent()) {
+    if (!this->agent().IsInitialized()) return false;
+  }
+  if (has_agentknowledge()) {
+    if (!this->agentknowledge().IsInitialized()) return false;
+  }
+  if (has_crowdknowledge()) {
+    if (!this->crowdknowledge().IsInitialized()) return false;
+  }
+  if (has_objectknowledge()) {
+    if (!this->objectknowledge().IsInitialized()) return false;
+  }
+  if (has_urbanknowledge()) {
+    if (!this->urbanknowledge().IsInitialized()) return false;
+  }
+  if (has_plannedwork()) {
+    if (!this->plannedwork().IsInitialized()) return false;
+  }
+  if (has_atlasnature()) {
+    if (!this->atlasnature().IsInitialized()) return false;
+  }
+  if (has_resourcetype()) {
+    if (!this->resourcetype().IsInitialized()) return false;
+  }
+  if (has_logmaintenancepriorities()) {
+    if (!this->logmaintenancepriorities().IsInitialized()) return false;
+  }
+  if (has_pathlist()) {
+    if (!this->pathlist().IsInitialized()) return false;
+  }
   if (has_pointlist()) {
     if (!this->pointlist().IsInitialized()) return false;
-  }
-  if (has_polygon()) {
-    if (!this->polygon().IsInitialized()) return false;
   }
   if (has_polygonlist()) {
     if (!this->polygonlist().IsInitialized()) return false;
@@ -26882,47 +27053,20 @@ bool MsgMissionParameter_Value::IsInitialized() const {
   if (has_locationlist()) {
     if (!this->locationlist().IsInitialized()) return false;
   }
-  if (has_heading()) {
-    if (!this->heading().IsInitialized()) return false;
-  }
-  if (has_atlasnature()) {
-    if (!this->atlasnature().IsInitialized()) return false;
-  }
-  if (has_unit()) {
-    if (!this->unit().IsInitialized()) return false;
-  }
   if (has_unitlist()) {
     if (!this->unitlist().IsInitialized()) return false;
-  }
-  if (has_automat()) {
-    if (!this->automat().IsInitialized()) return false;
   }
   if (has_automatlist()) {
     if (!this->automatlist().IsInitialized()) return false;
   }
-  if (has_unitknowledge()) {
-    if (!this->unitknowledge().IsInitialized()) return false;
-  }
   if (has_unitknowledgelist()) {
     if (!this->unitknowledgelist().IsInitialized()) return false;
-  }
-  if (has_objectknowledge()) {
-    if (!this->objectknowledge().IsInitialized()) return false;
   }
   if (has_objectknowledgelist()) {
     if (!this->objectknowledgelist().IsInitialized()) return false;
   }
-  if (has_crowdknowledge()) {
-    if (!this->crowdknowledge().IsInitialized()) return false;
-  }
-  if (has_plannedwork()) {
-    if (!this->plannedwork().IsInitialized()) return false;
-  }
   if (has_plannedworklist()) {
     if (!this->plannedworklist().IsInitialized()) return false;
-  }
-  if (has_resourcetype()) {
-    if (!this->resourcetype().IsInitialized()) return false;
   }
   if (has_equipmenttype()) {
     if (!this->equipmenttype().IsInitialized()) return false;
@@ -26930,20 +27074,11 @@ bool MsgMissionParameter_Value::IsInitialized() const {
   if (has_tirindirect()) {
     if (!this->tirindirect().IsInitialized()) return false;
   }
-  if (has_datetime()) {
-    if (!this->datetime().IsInitialized()) return false;
-  }
-  if (has_logmaintenancepriorities()) {
-    if (!this->logmaintenancepriorities().IsInitialized()) return false;
-  }
   if (has_missionobjective()) {
     if (!this->missionobjective().IsInitialized()) return false;
   }
   if (has_missionobjectivelist()) {
     if (!this->missionobjectivelist().IsInitialized()) return false;
-  }
-  if (has_line()) {
-    if (!this->line().IsInitialized()) return false;
   }
   if (has_limasorder()) {
     if (!this->limasorder().IsInitialized()) return false;
@@ -26971,40 +27106,43 @@ bool MsgMissionParameter_Value::IsInitialized() const {
 
 void MsgMissionParameter_Value::Swap(MsgMissionParameter_Value* other) {
   if (other != this) {
-    std::swap(abool_, other->abool_);
-    std::swap(areal_, other->areal_);
+    std::swap(booleanvalue_, other->booleanvalue_);
+    std::swap(intvalue_, other->intvalue_);
+    std::swap(heading_, other->heading_);
     std::swap(enumeration_, other->enumeration_);
-    std::swap(path_, other->path_);
-    std::swap(pathlist_, other->pathlist_);
+    std::swap(datetime_, other->datetime_);
     std::swap(point_, other->point_);
+    std::swap(area_, other->area_);
+    std::swap(path_, other->path_);
+    std::swap(limit_, other->limit_);
+    std::swap(phaseline_, other->phaseline_);
+    std::swap(automat_, other->automat_);
+    std::swap(agent_, other->agent_);
+    std::swap(agentknowledge_, other->agentknowledge_);
+    std::swap(crowdknowledge_, other->crowdknowledge_);
+    std::swap(objectknowledge_, other->objectknowledge_);
+    std::swap(urbanknowledge_, other->urbanknowledge_);
+    std::swap(plannedwork_, other->plannedwork_);
+    std::swap(atlasnature_, other->atlasnature_);
+    std::swap(resourcetype_, other->resourcetype_);
+    std::swap(logmaintenancepriorities_, other->logmaintenancepriorities_);
+    std::swap(logmedicalpriorities_, other->logmedicalpriorities_);
+    std::swap(areal_, other->areal_);
+    std::swap(pathlist_, other->pathlist_);
     std::swap(pointlist_, other->pointlist_);
-    std::swap(polygon_, other->polygon_);
     std::swap(polygonlist_, other->polygonlist_);
     std::swap(location_, other->location_);
     std::swap(locationlist_, other->locationlist_);
-    std::swap(heading_, other->heading_);
-    std::swap(atlasnature_, other->atlasnature_);
-    std::swap(unit_, other->unit_);
     std::swap(unitlist_, other->unitlist_);
-    std::swap(automat_, other->automat_);
     std::swap(automatlist_, other->automatlist_);
-    std::swap(unitknowledge_, other->unitknowledge_);
     std::swap(unitknowledgelist_, other->unitknowledgelist_);
-    std::swap(objectknowledge_, other->objectknowledge_);
     std::swap(objectknowledgelist_, other->objectknowledgelist_);
-    std::swap(crowdknowledge_, other->crowdknowledge_);
-    std::swap(plannedwork_, other->plannedwork_);
     std::swap(plannedworklist_, other->plannedworklist_);
-    std::swap(resourcetype_, other->resourcetype_);
     std::swap(equipmenttype_, other->equipmenttype_);
     std::swap(tirindirect_, other->tirindirect_);
-    std::swap(datetime_, other->datetime_);
-    std::swap(logmaintenancepriorities_, other->logmaintenancepriorities_);
-    std::swap(logmedicalpriorities_, other->logmedicalpriorities_);
     std::swap(acharstr_, other->acharstr_);
     std::swap(missionobjective_, other->missionobjective_);
     std::swap(missionobjectivelist_, other->missionobjectivelist_);
-    std::swap(line_, other->line_);
     std::swap(limasorder_, other->limasorder_);
     std::swap(intelligencelist_, other->intelligencelist_);
     std::swap(urbanblock_, other->urbanblock_);
@@ -27042,7 +27180,6 @@ MsgMissionParameter::MsgMissionParameter() {
 }
 
 void MsgMissionParameter::InitAsDefaultInstance() {
-  value_ = const_cast< ::Common::MsgMissionParameter_Value*>(&::Common::MsgMissionParameter_Value::default_instance());
 }
 
 MsgMissionParameter::MsgMissionParameter(const MsgMissionParameter& from) {
@@ -27053,7 +27190,6 @@ MsgMissionParameter::MsgMissionParameter(const MsgMissionParameter& from) {
 void MsgMissionParameter::SharedCtor() {
   _cached_size_ = 0;
   null_value_ = false;
-  value_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -27063,7 +27199,6 @@ MsgMissionParameter::~MsgMissionParameter() {
 
 void MsgMissionParameter::SharedDtor() {
   if (this != default_instance_) {
-    delete value_;
   }
 }
 
@@ -27085,10 +27220,8 @@ MsgMissionParameter* MsgMissionParameter::New() const {
 void MsgMissionParameter::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     null_value_ = false;
-    if (_has_bit(1)) {
-      if (value_ != NULL) value_->::Common::MsgMissionParameter_Value::Clear();
-    }
   }
+  value_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -27112,7 +27245,7 @@ bool MsgMissionParameter::MergePartialFromCodedStream(
         break;
       }
       
-      // optional .Common.MsgMissionParameter.Value value = 2;
+      // repeated .Common.MsgMissionParameter.Value value = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -27120,7 +27253,8 @@ bool MsgMissionParameter::MergePartialFromCodedStream(
         }
        parse_value:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_value()));
+              input, add_value()));
+        if (input->ExpectTag(18)) goto parse_value;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -27154,10 +27288,10 @@ void MsgMissionParameter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->null_value(), output);
   }
   
-  // optional .Common.MsgMissionParameter.Value value = 2;
-  if (_has_bit(1)) {
+  // repeated .Common.MsgMissionParameter.Value value = 2;
+  for (int i = 0; i < this->value_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->value(), output);
+      2, this->value(i), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -27173,11 +27307,11 @@ void MsgMissionParameter::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->null_value(), target);
   }
   
-  // optional .Common.MsgMissionParameter.Value value = 2;
-  if (_has_bit(1)) {
+  // repeated .Common.MsgMissionParameter.Value value = 2;
+  for (int i = 0; i < this->value_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->value(), target);
+        2, this->value(i), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -27196,14 +27330,15 @@ int MsgMissionParameter::ByteSize() const {
       total_size += 1 + 1;
     }
     
-    // optional .Common.MsgMissionParameter.Value value = 2;
-    if (has_value()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->value());
-    }
-    
   }
+  // repeated .Common.MsgMissionParameter.Value value = 2;
+  total_size += 1 * this->value_size();
+  for (int i = 0; i < this->value_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->value(i));
+  }
+  
   if (!unknown_fields().empty()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
@@ -27227,12 +27362,10 @@ void MsgMissionParameter::MergeFrom(const ::google::protobuf::Message& from) {
 
 void MsgMissionParameter::MergeFrom(const MsgMissionParameter& from) {
   GOOGLE_CHECK_NE(&from, this);
+  value_.MergeFrom(from.value_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
       set_null_value(from.null_value());
-    }
-    if (from._has_bit(1)) {
-      mutable_value()->::Common::MsgMissionParameter_Value::MergeFrom(from.value());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -27252,8 +27385,8 @@ void MsgMissionParameter::CopyFrom(const MsgMissionParameter& from) {
 
 bool MsgMissionParameter::IsInitialized() const {
   
-  if (has_value()) {
-    if (!this->value().IsInitialized()) return false;
+  for (int i = 0; i < value_size(); i++) {
+    if (!this->value(i).IsInitialized()) return false;
   }
   return true;
 }
@@ -27261,7 +27394,7 @@ bool MsgMissionParameter::IsInitialized() const {
 void MsgMissionParameter::Swap(MsgMissionParameter* other) {
   if (other != this) {
     std::swap(null_value_, other->null_value_);
-    std::swap(value_, other->value_);
+    value_.Swap(&other->value_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

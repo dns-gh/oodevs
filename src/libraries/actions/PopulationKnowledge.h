@@ -50,7 +50,8 @@ public:
     //! @name Operations
     //@{
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
-    virtual void CommitTo( Common::MsgMissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void CommitTo( Common::MsgMissionParameter_Value& asn ) const;
     void CommitTo( Common::CrowdKnowledgeId& asn ) const;
     //@}
 

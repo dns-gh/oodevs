@@ -14,9 +14,28 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "Parameter.h"
 #include <xeumeuleu/xml.hpp>
 
+namespace google
+{
+    namespace protobuf
+    {
+        template< typename T > class RepeatedPtrField;
+    }
+}
+namespace Common
+{
+    class MsgMissionParameter_Value;
+}
+namespace kernel
+{
+    class Entity_ABC;
+}
 namespace actions {
+
+    class ParameterFactory_ABC;
+
     namespace parameters {
 
 // =============================================================================
@@ -25,12 +44,13 @@ namespace actions {
 */
 // Created: JSR 2010-04-15
 // =============================================================================
-class ParameterList : public Parameter_ABC
+class ParameterList : public Parameter< QString >
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit ParameterList( const kernel::OrderParameter& parameter );
+             ParameterList( const kernel::OrderParameter& parameter, const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list, const actions::ParameterFactory_ABC& factory, const kernel::Entity_ABC& entity );
     virtual ~ParameterList();
     //@}
 
@@ -39,8 +59,7 @@ public:
     virtual std::string GetType() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Serialize( xml::xostream& xos ) const;
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void Clean( Common::MsgMissionParameter& message ) const;
+    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
 
     ParameterList& AddList      ( const std::string& name );
 

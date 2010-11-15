@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_PathParameter.h"
 #include "simulation_orders/MIL_ParameterType_Path.h"
+#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 #include "Network/NET_ASN_Tools.h"
 #include "tools/MIL_Tools.h"
 #include "protocol/protocol.h"
@@ -64,7 +65,8 @@ MIL_PathParameter::~MIL_PathParameter()
 // -----------------------------------------------------------------------------
 bool MIL_PathParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return dynamic_cast< const MIL_ParameterType_Path* >( &type ) != 0;
+    return dynamic_cast< const MIL_ParameterType_Path* >( &type ) != 0
+        || dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -87,5 +89,15 @@ bool MIL_PathParameter::ToPath( Common::MsgPath& asn ) const
 bool MIL_PathParameter::ToPath( std::vector< boost::shared_ptr< MT_Vector2D > >& value ) const
 {
     value = path_;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PathParameter::ToElement
+// Created: MGD 2010-11-05
+// -----------------------------------------------------------------------------
+bool MIL_PathParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    ToPath( *elem.mutable_path() );
     return true;
 }

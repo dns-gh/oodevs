@@ -66,7 +66,7 @@ CrossingSiteAttribute::CrossingSiteAttribute( const Common::MsgMissionParameter_
     rWidth_         = attributes.list( 1 ).quantity();
     rDepth_         = attributes.list( 2 ).quantity();
     rCurrentSpeed_  = attributes.list( 3 ).quantity();
-    bBanksToFitOut_ = attributes.list( 4 ).abool();
+    bBanksToFitOut_ = attributes.list( 4 ).booleanvalue();
 }
 
 // -----------------------------------------------------------------------------
@@ -161,7 +161,7 @@ void CrossingSiteAttribute::OnUpdate( const Common::MsgMissionParameter_Value& a
         rWidth_         = attribute.list( 1 ).quantity();
         rDepth_         = attribute.list( 2 ).quantity();
         rCurrentSpeed_  = attribute.list( 3 ).quantity();
-        bBanksToFitOut_ = attribute.list( 4 ).abool();
+        bBanksToFitOut_ = attribute.list( 4 ).booleanvalue();
     }
 }
 

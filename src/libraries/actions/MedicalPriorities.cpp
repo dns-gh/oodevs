@@ -82,20 +82,23 @@ void MedicalPriorities::CommitTo( Common::MsgMissionParameter& message ) const
     message.set_null_value( !IsSet() );
     if( IsSet() )
     {
-        Common::MsgLogMedicalPriorities* list = message.mutable_value()->mutable_logmedicalpriorities();
+        Common::MsgLogMedicalPriorities* list =message.mutable_value()->Add()->mutable_logmedicalpriorities();
         for( unsigned int i = 0; i < priorities_.size(); ++i )
             list->add_elem( Common::EnumHumanWound( priorities_.at( i ) ) );
     }
 }
-
 // -----------------------------------------------------------------------------
-// Name: MedicalPriorities::Clean
+// Name: MedicalPriorities::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MedicalPriorities::Clean( Common::MsgMissionParameter& message ) const
+void MedicalPriorities::CommitTo( Common::MsgMissionParameter_Value& message ) const
 {
-    if( message.value().has_logmedicalpriorities() )
-        message.mutable_value()->clear_logmedicalpriorities();
+    if( IsSet() )
+    {
+        Common::MsgLogMedicalPriorities* list = message.mutable_logmedicalpriorities();
+        for( unsigned int i = 0; i < priorities_.size(); ++i )
+            list->add_elem( Common::EnumHumanWound( priorities_.at( i ) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

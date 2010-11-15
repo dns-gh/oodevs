@@ -41,7 +41,7 @@ bool MIL_ParameterType_Lima::Copy( const MIL_MissionParameter_ABC& from, Common:
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( !from.ToLima( *to.mutable_value()->mutable_limasorder() ) );
+    to.set_null_value( !from.ToLima( *to.mutable_value()->Add()->mutable_limasorder() ) );
     if( to.null_value() )
         to.clear_value();
     return !to.null_value() || bIsOptional;

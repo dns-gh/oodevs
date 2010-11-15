@@ -87,7 +87,7 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( const Common::MsgMissionParameter_Value& attributes )
     : obstacle_      ( ( Common::ObstacleType_DemolitionTargetType ) attributes.list( 1 ).identifier() )
-    , bActivated_    ( attributes.list( 2 ).abool() )
+    , bActivated_    ( attributes.list( 2 ).booleanvalue() )
     , activationTime_( attributes.list( 3 ).quantity() )
 {
     // NOTHING
@@ -239,9 +239,9 @@ ObstacleAttribute& ObstacleAttribute::operator=( const ObstacleAttribute& rhs )
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribute )
 {
-    if( attribute.list_size() > 2 && bActivated_ != attribute.list( 2 ).abool() )
+    if( attribute.list_size() > 2 && bActivated_ != attribute.list( 2 ).booleanvalue() )
     {
-        bActivated_ = attribute.list( 2 ).abool();
+        bActivated_ = attribute.list( 2 ).booleanvalue();
         NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
     }
 }

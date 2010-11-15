@@ -129,7 +129,7 @@ void DEC_KS_Perception::serialize( Archive& archive, const unsigned int )
 void DEC_KS_Perception::Prepare()
 {
     assert( pBlackBoard_ );
-    std::mem_fun_ref_t< void, DEC_Knowledge_AgentPerception > agentFunctor = std::mem_fun_ref( &DEC_Knowledge_AgentPerception::Prepare );
+    boost::function< void( DEC_Knowledge_AgentPerception& ) > agentFunctor =  boost::bind( &DEC_Knowledge_AgentPerception::Prepare, _1 );
     pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( agentFunctor );
     std::mem_fun_ref_t< void, DEC_Knowledge_ObjectPerception > objectFunctor = std::mem_fun_ref( &DEC_Knowledge_ObjectPerception::Prepare );
     pBlackBoard_->GetKnowledgeObjectPerceptionContainer().ApplyOnKnowledgesObjectPerception( objectFunctor );

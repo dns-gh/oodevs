@@ -27,7 +27,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Accept( const std::string& dianame, const MIL_ParameterType_ABC& type, MIL_MissionParameter_ABC& element ) = 0;
+    virtual void Accept( const std::string& dianame, const MIL_OrderTypeParameter& type, MIL_MissionParameter_ABC& element ) = 0;
     //@}
 };
 

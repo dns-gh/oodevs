@@ -146,28 +146,25 @@ Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const MsgsS
 // Name: ReportFactory::RenderParameter
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-QString ReportFactory::RenderParameter( const Common::MsgMissionParameter& value ) const
+QString ReportFactory::RenderParameter( const Common::MsgMissionParameter_Value& value ) const
 {
-    if( value.has_value() )
-    {
-        if( value.value().has_areal() )
-            return QString::number( value.value().areal() );
-        if( value.value().has_unit() )
-            return rcResolver_.CreateLink( Agent_ABC::typeName_, value.value().unit().id() );
-        if( value.value().has_unitknowledge() )
-            return rcResolver_.CreateLink( AgentKnowledge_ABC::typeName_, value.value().unitknowledge().id() );
-        if( value.value().has_objectknowledge() )
-            return rcResolver_.CreateLink( ObjectKnowledge_ABC::typeName_, value.value().objectknowledge().id() );
-        if( value.value().has_crowdknowledge() )
-            return rcResolver_.CreateLink( PopulationKnowledge_ABC::typeName_, value.value().crowdknowledge().id() );
-        if( value.value().has_equipmenttype() )
-            return equipmentResolver_.Get( value.value().equipmenttype().id() ).GetName().c_str();
-        if( value.value().has_resourcetype() )
-            return dotationResolver_.Get( value.value().resourcetype().id() ).GetName().c_str();
-        if( value.value().has_tirindirect() )
-            return QString::number( value.value().tirindirect().id() );
-        if( value.value().has_acharstr() )
-            return QString( value.value().acharstr().c_str() );
-    }
+    if( value.has_areal() )
+        return QString::number( value.areal() );
+    if( value.has_agent() )
+        return rcResolver_.CreateLink( Agent_ABC::typeName_, value.agent().id() );
+    if( value.has_agentknowledge() )
+        return rcResolver_.CreateLink( AgentKnowledge_ABC::typeName_, value.agentknowledge().id() );
+    if( value.has_objectknowledge() )
+        return rcResolver_.CreateLink( ObjectKnowledge_ABC::typeName_, value.objectknowledge().id() );
+    if( value.has_crowdknowledge() )
+        return rcResolver_.CreateLink( PopulationKnowledge_ABC::typeName_, value.crowdknowledge().id() );
+    if( value.has_equipmenttype() )
+        return equipmentResolver_.Get( value.equipmenttype().id() ).GetName().c_str();
+    if( value.has_resourcetype() )
+        return dotationResolver_.Get( value.resourcetype().id() ).GetName().c_str();
+    if( value.has_tirindirect() )
+        return QString::number( value.tirindirect().id() );
+    if( value.has_acharstr() )
+        return QString( value.acharstr().c_str() );
     throw std::runtime_error( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.GetDescriptor()->full_name().c_str() ).ascii() );
 }

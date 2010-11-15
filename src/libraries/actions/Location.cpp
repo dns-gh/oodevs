@@ -108,7 +108,16 @@ void Location::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
     if( IsSet() )
-        LocationBase::CommitTo( *message.mutable_value()->mutable_location() );
+        LocationBase::CommitTo( *message.mutable_value()->Add()->mutable_location() );
+}
+// -----------------------------------------------------------------------------
+// Name: Location::CommitTo
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void Location::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    if( IsSet() )
+        LocationBase::CommitTo( *message.mutable_location() );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,15 +127,6 @@ void Location::CommitTo( Common::MsgMissionParameter& message ) const
 void Location::CommitTo( std::string& content ) const
 {
     LocationBase::CommitTo( content );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Location::Clean
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-void Location::Clean( Common::MsgMissionParameter& message ) const
-{
-    message.mutable_value()->clear_location();
 }
 
 // -----------------------------------------------------------------------------

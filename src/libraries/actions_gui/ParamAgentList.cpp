@@ -11,7 +11,7 @@
 #include "ParamAgentList.h"
 #include "moc_ParamAgentList.cpp"
 #include "ParamAgent.h"
-#include "actions/AgentList.h"
+#include "actions/ParameterList.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -67,7 +67,7 @@ EntityParameter< kernel::Agent_ABC >* ParamAgentList::CreateElement( const kerne
 // -----------------------------------------------------------------------------
 void ParamAgentList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::AgentList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

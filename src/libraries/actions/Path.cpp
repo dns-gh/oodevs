@@ -136,16 +136,16 @@ void Path::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        CommitTo( *message.mutable_value()->mutable_path()->mutable_location() );
+        CommitTo( *message.mutable_value()->Add()->mutable_path()->mutable_location() );
 }
-
 // -----------------------------------------------------------------------------
-// Name: Path::Clean
+// Name: Path::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Path::Clean( Common::MsgMissionParameter& message ) const
+void Path::CommitTo( Common::MsgMissionParameter_Value& message ) const
 {
-    message.mutable_value()->clear_path();
+    if( IsSet() )
+        CommitTo( *message.mutable_path()->mutable_location() );
 }
 
 namespace
@@ -170,15 +170,6 @@ void Path::CommitTo( Common::MsgLocation& message ) const
     message.set_type( Common::MsgLocation::line );
     AsnSerializer serializer( message );
     Accept( serializer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Path::Clean
-// Created: SBO 2007-05-22
-// -----------------------------------------------------------------------------
-void Path::Clean( Common::MsgLocation& message ) const
-{
-    message.Clear();
 }
 
 // -----------------------------------------------------------------------------

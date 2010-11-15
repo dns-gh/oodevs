@@ -598,8 +598,8 @@ void MIL_AutomateLOG::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
-    unsigned int automatId = msg.parameters().elem( 1 ).value().identifier();
-    unsigned int formationId = msg.parameters().elem( 2 ).value().identifier();
+    unsigned int automatId = msg.parameters().elem( 1 ).value().Get(0).identifier();
+    unsigned int formationId = msg.parameters().elem( 2 ).value().Get(0).identifier();
     if( ( automatId == ( unsigned int ) -1 ) && (formationId == ( unsigned int ) -1) )
     {
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_party_hierarchy );
@@ -617,8 +617,8 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::Ms
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionParameters& msg )
 {
-    unsigned int oid_donneur = msg.elem( 0 ).value().has_automat() ?
-        msg.elem( 0 ).value().automat().id() : msg.elem( 0 ).value().formation().id();
+    unsigned int oid_donneur = msg.elem( 0 ).value().Get(0).has_automat() ?
+        msg.elem( 0 ).value().Get(0).automat().id() : msg.elem( 0 ).value().Get(0).formation().id();
     if( ( !pCurrentSuperior_ && !pNominalSuperior_ ) ||
          ( GetLogisticAutomate( oid_donneur ) != pCurrentSuperior_ &&
            GetLogisticAutomate( oid_donneur ) != pNominalSuperior_)
@@ -629,10 +629,10 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissio
 
     if ( GetLogisticAutomate( oid_donneur ) == pCurrentSuperior_ )
     {
-        for( int i = 0; i < msg.elem( 1 ).value().list_size(); ++i )
+        for( int i = 0; i < msg.elem( 1 ).value_size(); ++i )
         {
-            unsigned int type = msg.elem( 1 ).value().list( i ).list( 0 ).identifier();
-            int number = msg.elem( 1 ).value().list( i ).list( 1 ).quantity();
+            unsigned int type = msg.elem( 1 ).value().Get( i ).list( 0 ).identifier();
+            int number = msg.elem( 1 ).value().Get( i ).list( 1 ).quantity();
 
             const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( type );
             if( pDotationCategory )
@@ -645,10 +645,10 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissio
     }
     else // nominal superior
     {
-        for( int i = 0; i < msg.elem( 1 ).value().list_size(); ++i )
+        for( int i = 0; i < msg.elem( 1 ).value_size(); ++i )
         {
-            unsigned int type = msg.elem( 1 ).value().list( i ).list( 0 ).identifier();
-            int number = msg.elem( 1 ).value().list( i ).list( 1 ).quantity();
+            unsigned int type = msg.elem( 1 ).value().Get( i ).list( 0 ).identifier();
+            int number = msg.elem( 1 ).value().Get( i ).list( 1 ).quantity();
 
             const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( type );
             if( pDotationCategory )

@@ -204,8 +204,8 @@ void MIL_StockSupplyManager::NotifyStockSupplyCanceled( const PHY_SupplyStockSta
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::OnReceiveMsgLogSupplyPullFlow( const Common::MsgMissionParameters& msg )
 {
-	unsigned int oid_donneur = msg.elem( 0 ).value().has_automat() ?
-	    		msg.elem( 0 ).value().automat().id() : msg.elem( 0 ).value().formation().id();
+	unsigned int oid_donneur = msg.elem( 0 ).value().Get(0).has_automat() ?
+	    		msg.elem( 0 ).value().Get(0).automat().id() : msg.elem( 0 ).value().Get(0).formation().id();
     MIL_Formation* candidateFormation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( oid_donneur );
     MIL_Automate* candidateAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( oid_donneur );
     if( !candidateAutomate && !candidateFormation)
@@ -236,8 +236,8 @@ void MIL_StockSupplyManager::OnReceiveMsgLogSupplyPullFlow( const Common::MsgMis
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::OnReceiveMsgLogSupplyPushFlow( const Common::MsgMissionParameters& msg)
 {
-    unsigned int oid_donneur = msg.elem( 0 ).value().has_automat() ?
-    		msg.elem( 0 ).value().automat().id() : msg.elem( 0 ).value().formation().id();
+    unsigned int oid_donneur = msg.elem( 0 ).value().Get(0).has_automat() ?
+    		msg.elem( 0 ).value().Get(0).automat().id() : msg.elem( 0 ).value().Get(0).formation().id();
     MIL_Formation* candidateFormation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( oid_donneur );
     MIL_Automate* candidateAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( oid_donneur );
     if( !candidateAutomate && !candidateFormation)

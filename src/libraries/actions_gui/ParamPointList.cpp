@@ -11,7 +11,7 @@
 #include "ParamPointList.h"
 #include "ParamLocation.h"
 #include "actions/Action_ABC.h"
-#include "actions/PointList.h"
+#include "actions/ParameterList.h"
 
 using namespace actions::gui;
 
@@ -41,7 +41,7 @@ ParamPointList::~ParamPointList()
 // -----------------------------------------------------------------------------
 void ParamPointList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::PointList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

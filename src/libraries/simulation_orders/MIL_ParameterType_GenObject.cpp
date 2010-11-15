@@ -39,7 +39,7 @@ bool MIL_ParameterType_GenObject::Copy( const MIL_MissionParameter_ABC& from, Co
 {
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( !from.ToGenObject( *to.mutable_value()->mutable_plannedwork() ) );
+    to.set_null_value( !from.ToGenObject( *to.mutable_value()->Add()->mutable_plannedwork() ) );
     if( to.null_value() )
         to.clear_value();
     return !to.null_value() || bIsOptional;

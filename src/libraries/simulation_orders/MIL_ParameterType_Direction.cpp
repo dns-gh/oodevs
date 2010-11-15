@@ -40,7 +40,7 @@ bool MIL_ParameterType_Direction::Copy( const MIL_MissionParameter_ABC& from, Co
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( !from.ToDirection( *to.mutable_value()->mutable_heading() ) );
+    to.set_null_value( !from.ToDirection( *to.mutable_value()->Add()->mutable_heading() ) );
     if( to.null_value() )
         to.clear_value();
     return !to.null_value() || bIsOptional;

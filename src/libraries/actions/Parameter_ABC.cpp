@@ -14,6 +14,7 @@
 #include "clients_kernel/GlTooltip_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -173,18 +174,20 @@ void Parameter_ABC::CommitTo( std::string& content ) const
 // -----------------------------------------------------------------------------
 void Parameter_ABC::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->CommitTo( message );
-}
+    ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >* list =message.mutable_value();
 
-// -----------------------------------------------------------------------------
-// Name: Parameter_ABC::Clean
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-void Parameter_ABC::Clean( Common::MsgMissionParameter& message ) const
-{
+    message.set_null_value( elements_.size() == 0 );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->Clean( message );
+    {
+        if( !it->second->IsSet() )
+        {
+            message.Clear();
+            message.set_null_value( true );
+            return;
+        }
+        Common::MsgMissionParameter_Value* elementValue = list->Add();
+        it->second->CommitTo( *elementValue );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -214,3 +217,13 @@ bool Parameter_ABC::IsSet() const
 {
     return isSet_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Parameter::CommitTo
+// Created: MGD 2010-11-10
+// -----------------------------------------------------------------------------
+void Parameter_ABC::CommitTo( Common::MsgMissionParameter_Value& /*message*/ ) const
+{
+    throw("No specific implementation avalaible");
+}
+

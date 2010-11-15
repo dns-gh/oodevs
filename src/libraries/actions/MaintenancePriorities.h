@@ -47,8 +47,8 @@ public:
     //@{
     void AddPriority( const kernel::EquipmentType& value );
     virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
     virtual void CommitTo( std::string& content ) const;
-    virtual void Clean( Common::MsgMissionParameter& message ) const;
     virtual bool IsSet() const;
     //@}
 

@@ -60,17 +60,16 @@ void Limit::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        Location::CommitTo( *message.mutable_value()->mutable_line()->mutable_location() );
+        Location::CommitTo( *message.mutable_value()->Add()->mutable_limit()->mutable_location() );
 }
-
 // -----------------------------------------------------------------------------
-// Name: Limit::Clean
+// Name: Limit::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Limit::Clean( Common::MsgMissionParameter& message ) const
+void Limit::CommitTo( Common::MsgMissionParameter_Value& message ) const
 {
-    if( message.value().has_line() )
-        message.mutable_value()->clear_line();
+    if( IsSet() )
+        Location::CommitTo( *message.mutable_limit()->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------

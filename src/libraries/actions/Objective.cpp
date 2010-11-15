@@ -91,16 +91,16 @@ void Objective::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        CommitTo( *message.mutable_value()->mutable_missionobjective() );
+        CommitTo( *message.mutable_value()->Add()->mutable_missionobjective() );
 }
-
 // -----------------------------------------------------------------------------
-// Name: Objective::Clean
+// Name: Objective::CommitTo
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void Objective::Clean( Common::MsgMissionParameter& message ) const
+void Objective::CommitTo( Common::MsgMissionParameter_Value& message ) const
 {
-    message.mutable_value()->clear_missionobjective();
+    if( IsSet() )
+        CommitTo( *message.mutable_missionobjective() );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,15 +117,6 @@ void Objective::CommitTo( Common::MsgMissionObjective& message ) const
         else if( type == "datetime" )
             static_cast< const DateTime* >( it->second )->CommitTo( *message.mutable_horaire() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Objective::Clean
-// Created: SBO 2007-06-25
-// -----------------------------------------------------------------------------
-void Objective::Clean( Common::MsgMissionObjective& message ) const
-{
-    message.clear_localisation();
 }
 
 // -----------------------------------------------------------------------------

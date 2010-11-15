@@ -53,6 +53,7 @@ public:
 
     void CommitTo( Common::MsgLimaOrder& message ) const;
     virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
     void Clean( Common::MsgLimaOrder& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}

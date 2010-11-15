@@ -10,7 +10,7 @@
 #include "actions_gui_pch.h"
 #include "ParamAgentKnowledgeList.h"
 #include "ParamAgentKnowledge.h"
-#include "actions/AgentKnowledgeList.h"
+#include "actions/ParameterList.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -76,7 +76,7 @@ void ParamAgentKnowledgeList::NotifyContextMenu( const kernel::Agent_ABC& entity
 // -----------------------------------------------------------------------------
 void ParamAgentKnowledgeList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::AgentKnowledgeList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

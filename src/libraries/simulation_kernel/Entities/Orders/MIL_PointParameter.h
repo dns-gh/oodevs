@@ -37,6 +37,7 @@ public:
     //@{
     virtual bool ToPoint( Common::MsgPoint& ) const;
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

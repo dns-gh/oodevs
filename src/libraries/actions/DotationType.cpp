@@ -78,7 +78,15 @@ void DotationType::CommitTo( std::string& content ) const
 void DotationType::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    message.mutable_value()->mutable_resourcetype()->set_id( type_.GetId() );
+   message.mutable_value()->Add()->mutable_resourcetype()->set_id( type_.GetId() );
+}
+// -----------------------------------------------------------------------------
+// Name: DotationType::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void DotationType::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    message.mutable_resourcetype()->set_id( type_.GetId() );
 }
 
 // -----------------------------------------------------------------------------

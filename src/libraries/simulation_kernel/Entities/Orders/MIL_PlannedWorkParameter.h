@@ -27,6 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_PlannedWorkParameter( const Common::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
+    explicit MIL_PlannedWorkParameter( boost::shared_ptr< DEC_Gen_Object > param );   
     virtual ~MIL_PlannedWorkParameter();
     //@}
 
@@ -39,6 +40,7 @@ public:
     //@{
     virtual bool ToGenObject( Common::MsgPlannedWork& ) const;
     virtual bool ToGenObject( boost::shared_ptr< DEC_Gen_Object >& ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

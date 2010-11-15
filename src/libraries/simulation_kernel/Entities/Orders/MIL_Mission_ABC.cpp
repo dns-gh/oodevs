@@ -9,22 +9,24 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Mission_ABC.h"
+#include "MIL_ListParameter.h"
 #include "MIL_MissionType_ABC.h"
 #include "MIL_MissionParameterFactory.h"
 #include "MIL_MissionParameterVisitor_ABC.h"
 #include "MIL_NullParameter.h"
-#include "MIL_PlannedWorkListParameter.h"
-#include "MIL_PolygonListParameter.h"
-#include "MIL_ObjectKnowledgeListParameter.h"
+#include "MIL_OrderTypeParameter.h"
+#include "simulation_kernel/Entities/Agents/MIL_AgentPion.h"
+#include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "simulation_orders/MIL_MissionParameter_ABC.h"
 #include "protocol/protocol.h"
 
 namespace
 {
-    void FillParameters( int firstIndex, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters_, const Common::MsgMissionParameters& parameters, const DEC_KnowledgeResolver_ABC& resolver )
+    void FillParameters( const MIL_OrderType_ABC& orderType, int firstIndex, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters_, const Common::MsgMissionParameters& parameters, const DEC_KnowledgeResolver_ABC& resolver )
     {
-        for( int i = firstIndex; i < parameters.elem_size(); ++i )
-            parameters_.push_back( MIL_MissionParameterFactory::Create( parameters.elem( i ), resolver ) );
+        unsigned int indexWithoutContext = 0;
+        for( int i = firstIndex; i < parameters.elem_size(); ++i, ++indexWithoutContext )
+            parameters_.push_back( MIL_MissionParameterFactory::Create( orderType.GetParameterType( indexWithoutContext ), parameters.elem( i ), resolver ) );
     }
 }
 
@@ -49,7 +51,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
     , context_          ()
     , knowledgeResolver_( knowledgeResolver )
 {
-    FillParameters( context_.Length(), parameters_, parameters, knowledgeResolver );
+    FillParameters( type_, context_.Length(), parameters_, parameters, knowledgeResolver );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +63,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
     , context_          ( parameters, refPosition )
     , knowledgeResolver_( knowledgeResolver )
 {
-    FillParameters( context_.Length(), parameters_, parameters, knowledgeResolver );
+    FillParameters( type_, context_.Length(), parameters_, parameters, knowledgeResolver );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +75,6 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
     , context_          ( parent->context_ )
     , knowledgeResolver_( knowledgeResolver )
 {
-    type.InitializeDefault( parameters_ ); // $$$$ LMT 2010-04-19: set default to NullParameter
     // Parameters will be filled by DIA $$$ // $$$$ LDC: TODO Fill parameters_ from DIA....
 }
 
@@ -156,7 +157,7 @@ void MIL_Mission_ABC::Visit( MIL_MissionParameterVisitor_ABC& parameterVisitor )
     for (unsigned int i = 0; i < parametersNumber; ++i )
     {
         const std::string& paramName = type_.GetParameterName( i );
-        const MIL_ParameterType_ABC& paramType = type_.GetParameterType( i );
+        const MIL_OrderTypeParameter& paramType = type_.GetParameterType( i );
         if( parameters_[i] )
             parameterVisitor.Accept( paramName, paramType, *parameters_[i] );
     }
@@ -200,10 +201,10 @@ void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_
     if( parameters_.size() <= index || !parameters_[index] )
     {
         EnsureParameters( parameters_, index );
-        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_PolygonListParameter() );
+        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( GetPion().GetKnowledge(), std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >() ) );
         parameters_[index] = param;
     }
-    parameters_[index]->Append( pLocation );
+    parameters_[index]->Append( MIL_MissionParameterFactory::Create( pLocation ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -216,10 +217,10 @@ void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_
     if( parameters_.size() <= index || !parameters_[index] )
     {
         EnsureParameters( parameters_, index );
-        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ObjectKnowledgeListParameter() );
+        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( GetPion().GetKnowledge(), std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >() ) );
         parameters_[index] = param;
     }
-    parameters_[index]->Append( pKnowledgeObject );
+    parameters_[index]->Append( MIL_MissionParameterFactory::Create( pKnowledgeObject ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,10 +233,10 @@ void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_
     if( parameters_.size() <= index || !parameters_[index] )
     {
         EnsureParameters( parameters_, index );
-        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_PlannedWorkListParameter() );
+        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( GetPion().GetKnowledge(), std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >() ) );
         parameters_[index] = param;
     }
-    parameters_[index]->Append( pGenObject );
+    parameters_[index]->Append(  MIL_MissionParameterFactory::Create( pGenObject ) );
 }
 
 // -----------------------------------------------------------------------------

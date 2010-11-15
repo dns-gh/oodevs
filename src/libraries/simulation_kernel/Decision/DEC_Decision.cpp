@@ -28,6 +28,7 @@
 #include "Entities/Orders/MIL_FragOrder.h"
 #include "Entities/Orders/MIL_MissionParameterFactory.h"
 #include "Entities/Orders/MIL_MissionParameterVisitor_ABC.h"
+#include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -912,9 +913,12 @@ public:
     {}
     virtual ~RegisterMissionParameterVisitor()
     {}
-    virtual void Accept( const std::string& dianame, const MIL_ParameterType_ABC& type, MIL_MissionParameter_ABC& element )
+    virtual void Accept( const std::string& dianame, const MIL_OrderTypeParameter& type, MIL_MissionParameter_ABC& element )
     {
-        std::map< std::string, T_Function >::iterator itFind = functors.find( type.GetName() );
+        std::string typeName = type.GetType().GetName();
+        if( type.IsList() )
+            typeName += "List";
+        std::map< std::string, T_Function >::iterator itFind = functors.find( typeName );
         if( itFind != functors.end() )
             functors[ type.GetName() ]( refMission_, dianame, element );
     }
@@ -935,10 +939,13 @@ public:
     {}
     virtual ~RegisterMissionParameterBMVisitor()
     {}
-    virtual void Accept( const std::string& dianame, const MIL_ParameterType_ABC& type, MIL_MissionParameter_ABC& element )
+    virtual void Accept( const std::string& dianame, const MIL_OrderTypeParameter& type, MIL_MissionParameter_ABC& element )
     {
+        std::string typeName = type.GetType().GetName();
+        if( type.IsList() )
+            typeName += "List";
         if( !!knowledgeCreateFunction_ )
-            functorsBM[ type.GetName() ]( brain_, knowledgeCreateFunction_, refMission_, dianame, element );
+            functorsBM[ typeName ]( brain_, knowledgeCreateFunction_, refMission_, dianame, element );
     }
 
 private:

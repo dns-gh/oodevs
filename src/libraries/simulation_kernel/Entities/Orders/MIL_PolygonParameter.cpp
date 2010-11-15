@@ -10,8 +10,10 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_PolygonParameter.h"
 #include "simulation_orders/MIL_ParameterType_Polygon.h"
+#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "Network/NET_ASN_Tools.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PolygonParameter constructor
@@ -38,7 +40,8 @@ MIL_PolygonParameter::~MIL_PolygonParameter()
 // -----------------------------------------------------------------------------
 bool MIL_PolygonParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_Polygon*>( &type ) != 0 );
+    return dynamic_cast<const MIL_ParameterType_Polygon*>( &type ) != 0
+        || dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -58,5 +61,15 @@ bool MIL_PolygonParameter::ToPolygon( Common::MsgPolygon& asn ) const
 bool MIL_PolygonParameter::ToPolygon( boost::shared_ptr< TER_Localisation >& value ) const
 {
     value = pPolygon_;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PolygonParameter::ToElement
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+bool MIL_PolygonParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    ToPolygon( *elem.mutable_area() );
     return true;
 }

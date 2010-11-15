@@ -39,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    void CommitTo( Common::MsgMissionParameter& message ) const;
-    void Clean( Common::MsgMissionParameter& message ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    void CommitTo( Common::MsgMissionParameter_Value& message ) const;
     //@}
 
 protected:

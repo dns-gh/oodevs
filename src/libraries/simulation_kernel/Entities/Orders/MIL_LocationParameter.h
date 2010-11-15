@@ -40,6 +40,9 @@ public:
     virtual bool ToLocation( boost::shared_ptr< TER_Localisation >& ) const;
     virtual bool ToPolygon( Common::MsgPolygon& ) const;
     virtual bool ToPolygon( boost::shared_ptr< TER_Localisation >& ) const;
+    virtual bool ToPoint( Common::MsgPoint& ) const;
+    virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

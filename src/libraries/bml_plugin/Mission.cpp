@@ -271,7 +271,7 @@ void Mission::FillEmptyParameters( Common::MsgMissionParameters& asn ) const
     {
         const kernel::OrderParameter& parameter = it.NextElement();
         Common::MsgMissionParameter& asnParam = *asn.mutable_elem(i);
-        if( !asnParam.has_value() )
+        if( asnParam.null_value() )
         {
             const std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
             if( type == "phaselinelist" )
@@ -298,10 +298,10 @@ void Mission::SerializeDummyParameters( Common::MsgMissionParameters& asn ) cons
         if( type == "bool" )
         {
             asnParam.set_null_value( false ); // $$$$ SBO 2008-05-26: FIXME: simulation bug
-            asnParam.mutable_value()->set_abool( false );
+            asnParam.mutable_value()->Add()->set_booleanvalue( false );
         }
         else if( type == "direction" )
-            asnParam.mutable_value()->mutable_heading()->set_heading( 0 );
+            asnParam.mutable_value()->Add()->mutable_heading()->set_heading( 0 );
     }
 }
 

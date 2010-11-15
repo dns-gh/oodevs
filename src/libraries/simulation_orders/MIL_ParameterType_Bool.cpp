@@ -40,6 +40,6 @@ bool MIL_ParameterType_Bool::Copy( const MIL_MissionParameter_ABC& from, Common:
     bool value;
     to.set_null_value( !from.ToBool( value ) );
     if( !to.null_value() )
-        to.mutable_value()->set_abool( value );
+        to.mutable_value()->Add()->set_booleanvalue( value );
     return !to.null_value() || bIsOptional;
 }

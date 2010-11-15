@@ -11,6 +11,7 @@
 #include "MIL_PlannedWorkParameter.h"
 #include "simulation_orders/MIL_ParameterType_GenObject.h"
 #include "Decision/DEC_Gen_Object.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PlannedWorkParameter constructor
@@ -20,6 +21,16 @@ MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( const Common::MsgPlannedWork
     : pGenObject_( new DEC_Gen_Object( asn, entityManager ) )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PlannedWorkParameter constructor
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( boost::shared_ptr< DEC_Gen_Object > param )
+    : pGenObject_( param )
+{
+
 }
 
 // -----------------------------------------------------------------------------
@@ -57,5 +68,15 @@ bool MIL_PlannedWorkParameter::ToGenObject( Common::MsgPlannedWork& asn ) const
 bool MIL_PlannedWorkParameter::ToGenObject( boost::shared_ptr< DEC_Gen_Object >& value ) const
 {
     value = pGenObject_;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PlannedWorkParameter::ToElement
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+bool MIL_PlannedWorkParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    ToGenObject( *elem.mutable_plannedwork() );
     return true;
 }

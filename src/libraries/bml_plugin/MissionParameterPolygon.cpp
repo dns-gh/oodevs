@@ -46,6 +46,6 @@ MissionParameterPolygon::~MissionParameterPolygon()
 void MissionParameterPolygon::Serialize( Common::MsgMissionParameter& parameter ) const
 {
     parameter.set_null_value( false );
-    parameter.mutable_value()->mutable_polygon()->mutable_location()->set_type ( Common::MsgLocation_Geometry_polygon );
-    points_->Serialize( *parameter.mutable_value()->mutable_polygon()->mutable_location()->mutable_coordinates() );
+    parameter.mutable_value()->Add()->mutable_area()->mutable_location()->set_type ( Common::MsgLocation_Geometry_polygon );
+    points_->Serialize( *parameter.mutable_value()->Add()->mutable_area()->mutable_location()->mutable_coordinates() );
 }

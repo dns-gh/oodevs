@@ -11,6 +11,7 @@
 #include "MIL_UrbanBlockParameter.h"
 #include "protocol/protocol.h"
 #include "simulation_orders/MIL_ParameterType_UrbanBlock.h"
+#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 #include "simulation_kernel/knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "simulation_kernel/knowledge/DEC_Knowledge_Urban.h"
 #include "UrbanModel.h"
@@ -50,7 +51,8 @@ MIL_UrbanBlockParameter::~MIL_UrbanBlockParameter()
 // -----------------------------------------------------------------------------
 bool MIL_UrbanBlockParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return( dynamic_cast< const MIL_ParameterType_UrbanBlock* >( &type ) != 0 );
+    return dynamic_cast< const MIL_ParameterType_UrbanBlock* >( &type ) != 0
+        || dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0;
 }
 
 // -----------------------------------------------------------------------------

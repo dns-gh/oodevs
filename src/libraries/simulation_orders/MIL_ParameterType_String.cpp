@@ -39,7 +39,7 @@ bool MIL_ParameterType_String::Copy( const MIL_MissionParameter_ABC& from, Commo
 {
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( !from.ToString( *to.mutable_value()->mutable_acharstr() ) );
+    to.set_null_value( !from.ToString( *to.mutable_value()->Add()->mutable_acharstr() ) );
     if( to.null_value() )
         to.clear_value();
     return !to.null_value() || bIsOptional;

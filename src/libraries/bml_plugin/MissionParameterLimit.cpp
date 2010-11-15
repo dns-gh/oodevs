@@ -44,6 +44,6 @@ MissionParameterLimit::~MissionParameterLimit()
 void MissionParameterLimit::Serialize( Common::MsgMissionParameter& parameter ) const
 {
     parameter.set_null_value( false );
-    parameter.mutable_value()->mutable_line()->mutable_location()->set_type( Common::MsgLocation::line );
-    points_->Serialize( *parameter.mutable_value()->mutable_line()->mutable_location()->mutable_coordinates() );
+    parameter.mutable_value()->Add()->mutable_limit()->mutable_location()->set_type( Common::MsgLocation::line );
+    points_->Serialize( *parameter.mutable_value()->Add()->mutable_limit()->mutable_location()->mutable_coordinates() );
 }

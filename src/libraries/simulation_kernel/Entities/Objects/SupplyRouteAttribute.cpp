@@ -69,7 +69,7 @@ SupplyRouteAttribute::SupplyRouteAttribute()
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
 SupplyRouteAttribute::SupplyRouteAttribute( const Common::MsgMissionParameter_Value& attributes )
-    : bEquipped_       ( attributes.list( 1 ).abool() )
+    : bEquipped_       ( attributes.list( 1 ).booleanvalue() )
     , rWeightSupported_( attributes.list( 2 ).quantity() )
     , rWidth_          ( attributes.list( 3 ).quantity() )
     , rLength_         ( attributes.list( 4 ).quantity() )

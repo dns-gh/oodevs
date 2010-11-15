@@ -40,6 +40,7 @@ public:
     //@{
     virtual bool ToAgent( Common::UnitId& ) const;
     virtual bool ToAgent( DEC_Decision_ABC*& ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

@@ -42,7 +42,7 @@ public:
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
     void CommitTo( Common::MsgDateTime& message ) const;
     virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void Clean( Common::MsgMissionParameter& message ) const;
+    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
     //@}
 
 private:

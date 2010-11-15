@@ -11,7 +11,7 @@
 #include "ParamPathList.h"
 #include "ParamPath.h"
 #include "actions/Action_ABC.h"
-#include "actions/PathList.h"
+#include "actions/ParameterList.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/Tools.h"
@@ -48,7 +48,7 @@ ParamPathList::~ParamPathList()
 // -----------------------------------------------------------------------------
 void ParamPathList::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::PathList( parameter_ ) );
+    std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
     CommitChildrenTo( *param );
     action.AddParameter( *param.release() );
 }

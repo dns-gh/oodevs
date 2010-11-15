@@ -112,6 +112,30 @@ void Intelligence::ReadParameter( xml::xistream& xis, const kernel::EntityResolv
 }
 
 // -----------------------------------------------------------------------------
+// Name: Lima::CommitTo
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+void Intelligence::CommitTo( Common::MsgMissionParameter& message ) const
+{
+    message.set_null_value( !IsSet() );
+    if( IsSet() )
+    {
+        CommitTo( *message.mutable_value()->Add()->mutable_intelligencelist()->add_elem() );
+    }
+}
+// -----------------------------------------------------------------------------
+// Name: Lima::CommitTo
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+void Intelligence::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    if( IsSet() )
+    {
+        CommitTo( *message.mutable_intelligencelist()->add_elem() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: Intelligence::CommitTo
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------

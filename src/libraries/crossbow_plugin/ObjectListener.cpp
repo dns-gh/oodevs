@@ -141,14 +141,14 @@ void ObjectListener::SendCreation( const Row_ABC& row )
     message().mutable_object()->set_id( 0 );
     message().set_type( MsgsClientToSim::MsgObjectMagicAction_Type_create );
     // team
-    message().mutable_parameters()->add_elem()->mutable_value()->mutable_party()->set_id( GetField< int >( row, "team_id" ) );
+    message().mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_party()->set_id( GetField< int >( row, "team_id" ) );
     // type
-    message().mutable_parameters()->add_elem()->mutable_value()->set_acharstr( GetField< std::string >( row, "type" ) );
+    message().mutable_parameters()->add_elem()->mutable_value()->Add()->set_acharstr( GetField< std::string >( row, "type" ) );
     // name
-    message().mutable_parameters()->add_elem()->mutable_value()->set_acharstr( GetField< std::string >( row, "name" ) );
+    message().mutable_parameters()->add_elem()->mutable_value()->Add()->set_acharstr( GetField< std::string >( row, "name" ) );
 
     // location
-    row.GetGeometry().Serialize( *message().mutable_parameters()->add_elem()->mutable_value()->mutable_location() );
+    row.GetGeometry().Serialize( *message().mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_location() );
     
     // list (unused but must be created)
     message().mutable_parameters()->add_elem();

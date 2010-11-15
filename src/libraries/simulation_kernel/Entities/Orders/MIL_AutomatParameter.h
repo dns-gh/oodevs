@@ -40,6 +40,7 @@ public:
     //@{
     virtual bool ToAutomat( Common::AutomatId& ) const;
     virtual bool ToAutomat( DEC_Decision_ABC*& ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

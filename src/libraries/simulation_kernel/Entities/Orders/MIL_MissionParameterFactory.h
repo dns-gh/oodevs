@@ -30,6 +30,7 @@ class DEC_Knowledge_Urban;
 class DEC_RolePion_Decision;
 class MIL_Mission_ABC;
 class MIL_MissionParameter_ABC;
+class MIL_OrderType_ABC;
 class MIL_OrderTypeParameter;
 class MT_Vector2D;
 class PHY_DotationCategory;
@@ -53,8 +54,7 @@ class MIL_MissionParameterFactory
 public:
     //! @name Operations
     //@{
-    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const MIL_OrderTypeParameter& type );
-    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const Common::MsgMissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const MIL_OrderTypeParameter& type, const Common::MsgMissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const Common::MsgMissionParameter_Value& message, const DEC_KnowledgeResolver_ABC& resolver );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const PHY_DotationCategory* dotationType );
@@ -73,7 +73,7 @@ public:
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePath( const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePath( boost::shared_ptr< MT_Vector2D > point );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateDirection( boost::shared_ptr< MT_Vector2D > direction );
-
+    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< DEC_Gen_Object > param );
     static void SetPawnParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, DEC_Decision_ABC* pion );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePawn( DEC_Decision_ABC* pion );
 
@@ -104,7 +104,7 @@ public:
     static void SetDotationTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const PHY_DotationCategory* type );
     static void SetNumericTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, float value );
 
-    static void Copy( const Common::MsgMissionParameters& asn, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
+    static void Copy( const MIL_OrderType_ABC& orderType, const Common::MsgMissionParameters& asn, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
 
     //@}
 };

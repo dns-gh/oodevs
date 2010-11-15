@@ -658,7 +658,7 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const Common::MsgMissionParameters& message )
 {
-    isActivated_ = message.elem( 0 ).value().abool();
+    isActivated_ = message.elem( 0 ).value().Get( 0 ).booleanvalue();
     return true;
 }
 
@@ -668,13 +668,13 @@ bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const Common::MsgMiss
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const Common::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent )
 {
-    MIL_Army_ABC* pTargetArmy = armies.Find( message.elem( 0 ).value().party().id() );
+    MIL_Army_ABC* pTargetArmy = armies.Find( message.elem( 0 ).value().Get( 0 ).party().id() );
     if( !pTargetArmy || *pTargetArmy != GetArmy() )
         throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck::ErrorCode >( MsgsSimToClient::KnowledgeGroupAck::error_invalid_camp );
     MIL_KnowledgeGroup* pNewParent = 0;
     if( hasParent )
     {
-        pNewParent = pTargetArmy->FindKnowledgeGroup( message.elem( 1 ).value().knowledgegroup().id() );
+        pNewParent = pTargetArmy->FindKnowledgeGroup( message.elem( 1 ).value().Get( 0 ).knowledgegroup().id() );
         if( !pNewParent || pNewParent->IsJammed() )
             throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck::ErrorCode >( MsgsSimToClient::KnowledgeGroupAck::error_invalid_superior );
     }
@@ -719,7 +719,7 @@ bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const Common:
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupSetType( const Common::MsgMissionParameters& message )
 {
-    const MIL_KnowledgeGroupType* pFoundType = MIL_KnowledgeGroupType::FindType( message.elem( 0 ).value().acharstr() );
+    const MIL_KnowledgeGroupType* pFoundType = MIL_KnowledgeGroupType::FindType( message.elem( 0 ).value().Get( 0 ).acharstr() );
     if( pFoundType && pFoundType->GetID() != GetType().GetID() )
     {
         SetType( const_cast< MIL_KnowledgeGroupType* >( pFoundType ) );

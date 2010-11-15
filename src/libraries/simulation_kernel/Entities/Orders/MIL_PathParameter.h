@@ -38,6 +38,7 @@ public:
     //@{
     virtual bool ToPath( Common::MsgPath& asn ) const;
     virtual bool ToPath( std::vector< boost::shared_ptr< MT_Vector2D > >& ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

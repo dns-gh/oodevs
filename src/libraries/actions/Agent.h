@@ -43,6 +43,7 @@ public:
     //@{
     using Entity< kernel::Agent_ABC >::CommitTo;
     virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    void CommitTo( Common::MsgMissionParameter_Value& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 

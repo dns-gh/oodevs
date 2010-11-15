@@ -58,12 +58,13 @@ QString ReportTemplate::RenderMessage( const MsgsSimToClient::MsgReport& message
         for( int i = 0; i < parameters.elem_size(); ++i )
         {
             const Common::MsgMissionParameter& parameter = parameters.elem( i );
-            if( !parameter.null_value() )
+            if( !parameter.null_value() && parameter.value_size() == 1 )//report doesn't manage list
             {
-                if( parameter.value().has_enumeration() )
-                    messageStr = messageStr.arg( enumerations_[ enums++ ][ parameter.value().enumeration() ] );
+                const Common::MsgMissionParameter_Value& param = *parameter.value().begin();
+                if( param.has_enumeration() )
+                    messageStr = messageStr.arg( enumerations_[ enums++ ][ param.enumeration() ] );
                 else
-                    messageStr = messageStr.arg( factory_.RenderParameter( parameter ) );
+                    messageStr = messageStr.arg( factory_.RenderParameter( param ) );
             }
         }
     }

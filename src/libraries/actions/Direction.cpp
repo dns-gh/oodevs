@@ -91,7 +91,16 @@ void Direction::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        message.mutable_value()->mutable_heading()->set_heading( GetValue() );
+       message.mutable_value()->Add()->mutable_heading()->set_heading( GetValue() );
+}
+// -----------------------------------------------------------------------------
+// Name: Direction::CommitTo
+// Created: SBO 2007-05-21
+// -----------------------------------------------------------------------------
+void Direction::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    if( IsSet() )
+        message.mutable_heading()->set_heading( GetValue() );
 }
 
 // -----------------------------------------------------------------------------

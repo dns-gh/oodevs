@@ -62,7 +62,16 @@ void Bool::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
     if( IsSet() )
-        message.mutable_value()->set_abool( GetValue() );
+       message.mutable_value()->Add()->set_booleanvalue( GetValue() );
+}
+// -----------------------------------------------------------------------------
+// Name: Bool::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void Bool::CommitTo( Common::MsgMissionParameter_Value& message ) const
+{
+    if( IsSet() )
+        message.set_booleanvalue( GetValue() );
 }
 
 // -----------------------------------------------------------------------------

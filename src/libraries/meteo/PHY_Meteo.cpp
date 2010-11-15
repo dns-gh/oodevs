@@ -174,46 +174,46 @@ void PHY_Meteo::Update( const Common::MsgMissionParameters& msg )
 
     // Temperature
     const Common::MsgMissionParameter& temperature = msg.elem( 0 );
-    if( !temperature.has_value() || !temperature.value().has_areal() )
+    if( temperature.null_value() || !temperature.value().Get(0).has_areal() )
         throw std::exception( "Meteo : bad attribute for temperature" );
     // TODO
     // temperature_ = parametre.value().areal();
 
     // Vitesse du vent
     const Common::MsgMissionParameter& windSpeed = msg.elem( 1 );
-    if( !windSpeed.has_value() || !windSpeed.value().has_areal() )
+    if( windSpeed.null_value() || !windSpeed.value().Get(0).has_areal() )
         throw std::exception( "Meteo : bad attribute for windSpeed" );
-    wind_.rWindSpeed_ = conversionFactor_ * windSpeed.value().areal();
+    wind_.rWindSpeed_ = conversionFactor_ * windSpeed.value().Get(0).areal();
 
     // Direction du vent
     const Common::MsgMissionParameter& windDirection = msg.elem( 2 );
-    if( !windDirection.has_value() || !windDirection.value().has_heading() )
+    if( windDirection.null_value() || !windDirection.value().Get(0).has_heading() )
         throw std::exception( "Meteo : bad attribute for windDirection" );
-    wind_.vWindDirection_ = weather::ReadDirection( windDirection.value().heading() );
+    wind_.vWindDirection_ = weather::ReadDirection( windDirection.value().Get(0).heading() );
 
     // Plancher de couverture nuageuse
     const Common::MsgMissionParameter& cloudFloor = msg.elem( 3 );
-    if( !cloudFloor.has_value() || !cloudFloor.value().has_areal() )
+    if( cloudFloor.null_value() || !cloudFloor.value().Get(0).has_areal() )
         throw std::exception( "Meteo : bad attribute for cloudFloor" );
-    nPlancherCouvertureNuageuse_ = (int) cloudFloor.value().areal();
+    nPlancherCouvertureNuageuse_ = (int) cloudFloor.value().Get(0).areal();
 
     // Plafond de couverture nuageuse
     const Common::MsgMissionParameter& cloudCeiling = msg.elem( 4 );
-    if( !cloudCeiling.has_value() || !cloudCeiling.value().has_areal() )
+    if( cloudCeiling.null_value() || !cloudCeiling.value().Get(0).has_areal() )
         throw std::exception( "Meteo : bad attribute for cloudCeiling" );
-    nPlafondCouvertureNuageuse_ = (int) cloudCeiling.value().areal();
+    nPlafondCouvertureNuageuse_ = (int) cloudCeiling.value().Get(0).areal();
 
     // Densite moyenne de couverture nuageuse
     const Common::MsgMissionParameter& cloudDensity = msg.elem( 5 );
-    if( !cloudDensity.has_value() || !cloudDensity.value().has_areal() )
+    if( cloudDensity.null_value() || !cloudDensity.value().Get(0).has_areal() )
         throw std::exception( "Meteo : bad attribute for cloudDensity" );
-    rDensiteCouvertureNuageuse_ = std::min( std::max( (int) cloudDensity.value().areal(), 0 ), 100 ) / 100.;
+    rDensiteCouvertureNuageuse_ = std::min( std::max( (int) cloudDensity.value().Get(0).areal(), 0 ), 100 ) / 100.;
 
      // Précipitation
     const Common::MsgMissionParameter& precipitation = msg.elem( 6 );
-    if( !precipitation.has_value() || !precipitation.value().has_enumeration() )
+    if( precipitation.null_value() || !precipitation.value().Get(0).has_enumeration() )
         throw std::exception( "Meteo : bad attribute for precipitation" );
-    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( (Common::EnumPrecipitationType ) precipitation.value().enumeration() );
+    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( (Common::EnumPrecipitationType ) precipitation.value().Get(0).enumeration() );
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;
 

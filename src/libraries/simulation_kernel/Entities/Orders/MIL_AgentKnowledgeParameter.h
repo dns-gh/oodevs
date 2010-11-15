@@ -40,6 +40,7 @@ public:
     //@{
     virtual bool ToAgentKnowledge( Common::UnitKnowledgeId& asn ) const;
     virtual bool ToAgentKnowledge( boost::shared_ptr< DEC_Knowledge_Agent >& value ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

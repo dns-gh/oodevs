@@ -41,7 +41,7 @@ public:
     //@{
     void AddMedicalPriority( E_HumanWound value );
     virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void Clean( Common::MsgMissionParameter& message ) const;
+    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
     virtual bool IsSet() const;
     //@}
 

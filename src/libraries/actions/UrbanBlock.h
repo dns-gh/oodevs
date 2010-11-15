@@ -41,6 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
     //@}
 
 private:

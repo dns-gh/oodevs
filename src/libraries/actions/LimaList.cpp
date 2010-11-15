@@ -90,19 +90,21 @@ void LimaList::CommitTo( Common::MsgMissionParameter& message ) const
     message.set_null_value( !IsSet() );
     if( IsSet() )
     {
-        AsnSerializer serializer( *message.mutable_value()->mutable_limasorder() );
+        AsnSerializer serializer( *message.mutable_value()->Add()->mutable_limasorder() );
         Accept( serializer );
     }
 }
-
 // -----------------------------------------------------------------------------
-// Name: LimaList::Clean
+// Name: LimaList::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void LimaList::Clean( Common::MsgMissionParameter& message ) const
+void LimaList::CommitTo( Common::MsgMissionParameter_Value& message ) const
 {
-    if( message.value().has_limasorder() )
-        message.mutable_value()->clear_limasorder();
+    if( IsSet() )
+    {
+        AsnSerializer serializer( *message.mutable_limasorder() );
+        Accept( serializer );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -10,7 +10,6 @@
 #include "actions_test_pch.h"
 #include "MockEntityResolver.h"
 #include "actions/Agent.h"
-#include "actions/AgentList.h"
 #include "actions/Automat.h"
 #include "actions/AtlasNature.h"
 #include "actions/Bool.h"
@@ -69,7 +68,7 @@ namespace
     void CheckSet( const Common::MsgMissionParameter& message )
     {
         BOOST_CHECK_EQUAL( false, message.null_value() );
-        BOOST_REQUIRE( message.has_value() );
+        BOOST_REQUIRE( message.value_size() > 0 );
     }
 
     MOCK_BASE_CLASS( MockTeam, kernel::Team_ABC )
@@ -182,7 +181,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Bool )
     xml::xistringstream xis( input ); xis >> xml::start( "parameter" );
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "bool", input, bl::new_ptr< actions::parameters::Bool >() ) );
     CheckSet( *message );
-    BOOST_CHECK_EQUAL( true, message->value().abool() );
+    BOOST_CHECK_EQUAL( true, message->value().Get( 0 ).booleanvalue() );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +193,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Numeric )
     const std::string input( "<parameter name='test' type='numeric' value='1.5'/>" );
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "numeric", input, bl::new_ptr< actions::parameters::Numeric >() ) );
     CheckSet( *message );
-    BOOST_CHECK_EQUAL( 1.5f, message->value().areal() );
+    BOOST_CHECK_EQUAL( 1.5f, message->value().Get( 0 ).areal() );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,7 +211,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Agent )
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "agent", input,
         bl::bind( bl::new_ptr< actions::parameters::Agent >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     CheckSet( *message );
-    BOOST_CHECK_EQUAL( 42u, message->value().unit().id() );
+    BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).agent().id() );
 }
 
 namespace
@@ -246,7 +245,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Polygon )
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "polygon", input,
         bl::bind( bl::new_ptr< actions::parameters::Polygon >(), bl::_1, bl::var( converter ), bl::_2 ) ) );
     CheckSet( *message );
-    const Common::MsgLocation& result = message->value().polygon().location();
+    const Common::MsgLocation& result = message->value().Get( 0 ).area().location();
     BOOST_CHECK_EQUAL( Common::MsgLocation::polygon, result.type() );
     BOOST_REQUIRE_EQUAL( 5, result.coordinates().elem_size() );
     CheckCoordinate( converter, "30TYS1037476379", result.coordinates().elem( 0 ) );
@@ -279,7 +278,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Path )
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "path", input,
         bl::bind( bl::new_ptr< actions::parameters::Path >(), bl::_1, bl::var( converter ), bl::_2 ) ) );
     CheckSet( *message );
-    const Common::MsgLocation& result = message->value().path().location();
+    const Common::MsgLocation& result = message->value().Get( 0 ).path().location();
     BOOST_CHECK_EQUAL( Common::MsgLocation::line, result.type() );
     BOOST_REQUIRE_EQUAL( 2, result.coordinates().elem_size() );
     CheckCoordinate( converter, "30TYS1037476379", result.coordinates().elem( 0 ) );
@@ -295,7 +294,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Direction )
     const std::string input( "<parameter name='test' type='direction' value='21'/>" );
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "heading", input,
         bl::bind( bl::new_ptr< actions::parameters::Direction >(), bl::_1, bl::_2 ) ) );
-    BOOST_CHECK_EQUAL( 21, message->value().heading().heading() );
+    BOOST_CHECK_EQUAL( 21, message->value().Get( 0 ).heading().heading() );
 }
 
 // -----------------------------------------------------------------------------
@@ -313,7 +312,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "automate", input,
         bl::bind( bl::new_ptr< actions::parameters::Automat >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     CheckSet( *message );
-    BOOST_CHECK_EQUAL( 42u, message->value().automat().id() );
+    BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).automat().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -328,7 +327,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 //    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "level", input,
 //        bl::bind( bl::new_ptr< actions::parameters::Level >(), bl::_1, bl::_2, bl::var( levels ) ) ) );
 //    CheckSet( *message );
-//    //BOOST_CHECK_EQUAL( 42u, message->value().oid() );
+//    //BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).oid() );
 //}
 
 // -----------------------------------------------------------------------------
@@ -345,7 +344,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 //    std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "formation", input,
 //        bl::bind( bl::new_ptr< actions::parameters::Formation >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
 //    CheckSet( *message );
-//    BOOST_CHECK_EQUAL( 42u, message->value().unit().oid() );
+//    BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).unit().oid() );
 //}
 // -----------------------------------------------------------------------------
 // Name: ParametersSerialization_DotationType
@@ -360,7 +359,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 //    std::auto_ptr< Common::MsgMissionParameter > message( new Common::MsgMissionParameter() );
 //    parameter.CommitTo( *message );
 //    CheckSet( *message );
-//    BOOST_CHECK_EQUAL( 42u, message->value().dotationtype().oid() );
+//    BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).dotationtype().oid() );
 //}
 
 // -----------------------------------------------------------------------------
@@ -372,7 +371,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Datetime )
     const std::string input( "<parameter name='Horaire' type='datetime' value='20081211T190022'/>" );
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "datetime", input,
         bl::bind( bl::new_ptr< actions::parameters::DateTime >(), bl::_1, bl::_2 ) ) );
-    BOOST_CHECK_EQUAL( "20081211T190022", message->value().datetime().data() );
+    BOOST_CHECK_EQUAL( "20081211T190022", message->value().Get( 0 ).datetime().data() );
 }
 
 // -----------------------------------------------------------------------------
@@ -385,9 +384,9 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AtlasNature )
     kernel::AtlasNatures natures;
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "NatureAtlas", input,
         bl::bind( bl::new_ptr< actions::parameters::AtlasNature >(), bl::_1, bl::_2, bl::var( natures ) ) ) );
-    BOOST_CHECK_EQUAL( Common::MsgAtlasNature::blinde,   message->value().atlasnature().nature() & Common::MsgAtlasNature::blinde );
-    BOOST_CHECK_EQUAL( Common::MsgAtlasNature::vehicule, message->value().atlasnature().nature() & Common::MsgAtlasNature::vehicule );
-    BOOST_CHECK_EQUAL( Common::MsgAtlasNature::none,     message->value().atlasnature().nature() & Common::MsgAtlasNature::none );
+    BOOST_CHECK_EQUAL( Common::MsgAtlasNature::blinde,   message->value().Get( 0 ).atlasnature().nature() & Common::MsgAtlasNature::blinde );
+    BOOST_CHECK_EQUAL( Common::MsgAtlasNature::vehicule, message->value().Get( 0 ).atlasnature().nature() & Common::MsgAtlasNature::vehicule );
+    BOOST_CHECK_EQUAL( Common::MsgAtlasNature::none,     message->value().Get( 0 ).atlasnature().nature() & Common::MsgAtlasNature::none );
 }
 
 // -----------------------------------------------------------------------------
@@ -410,7 +409,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Enumeration )
     std::auto_ptr< Common::MsgMissionParameter > message( new Common::MsgMissionParameter() );
     parameter.CommitTo( *message );
     CheckSet( *message );
-    BOOST_CHECK_EQUAL( 2, message->value().enumeration() );
+    BOOST_CHECK_EQUAL( 2, message->value().Get( 0 ).enumeration() );
 }
 
 // -----------------------------------------------------------------------------
@@ -435,9 +434,9 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Lima )
     kernel::CoordinateConverter converter;
     actions::parameters::Lima parameter( converter, xis );
     std::auto_ptr< Common::MsgMissionParameter > message( new Common::MsgMissionParameter() );
-    parameter.CommitTo( *message->mutable_value()->mutable_limasorder()->add_elem() );
+    parameter.CommitTo( *message->mutable_value()->Add()->mutable_limasorder()->add_elem() );
     CheckSet( *message );
-    const Common::MsgLimaOrder& lima = message->value().limasorder().elem(0);
+    const Common::MsgLimaOrder& lima = message->value().Get( 0 ).limasorder().elem(0);
     BOOST_CHECK_EQUAL( 2, lima.lima().location().type() );
     BOOST_CHECK_EQUAL( 5, lima.lima().location().coordinates().elem_size() );
     BOOST_CHECK_EQUAL( "20081211T190022", lima.horaire().data() );
@@ -466,7 +465,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Limit )
     kernel::CoordinateConverter converter;
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "limit", input,
         bl::bind( bl::new_ptr< actions::parameters::Limit >(), bl::_1, bl::var( converter ), bl::_2 ) ) );
-    const Common::MsgLocation& loc = message->value().line().location();
+    const Common::MsgLocation& loc = message->value().Get( 0 ).limit().location();
     BOOST_CHECK_EQUAL( 2, loc.type() );
     BOOST_CHECK_EQUAL( 4, loc.coordinates().elem_size() );
     CheckCoordinate( converter, "30TXS2657258333", loc.coordinates().elem( 0 ) );
@@ -504,11 +503,11 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AgentList )
 //        bl::bind( bl::new_ptr< actions::parameters::AgentList >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
 //
 //    CheckSet( *message );
-//    BOOST_CHECK_EQUAL( 62, message->value().unitlist().elem(0).oid() );
-//    BOOST_CHECK_EQUAL( 63, message->value().unitlist().elem(1).oid() );
-//    BOOST_CHECK_EQUAL( 64, message->value().unitlist().elem(2).oid() );
-//    BOOST_CHECK_EQUAL( 65, message->value().unitlist().elem(3).oid() );
-//    BOOST_CHECK_EQUAL( 66, message->value().unitlist().elem(4).oid() );
+//    BOOST_CHECK_EQUAL( 62, message->value().Get( 0 ).unitlist().elem(0).oid() );
+//    BOOST_CHECK_EQUAL( 63, message->value().Get( 0 ).unitlist().elem(1).oid() );
+//    BOOST_CHECK_EQUAL( 64, message->value().Get( 0 ).unitlist().elem(2).oid() );
+//    BOOST_CHECK_EQUAL( 65, message->value().Get( 0 ).unitlist().elem(3).oid() );
+//    BOOST_CHECK_EQUAL( 66, message->value().Get( 0 ).unitlist().elem(4).oid() );
 }
 
 // -----------------------------------------------------------------------------
@@ -534,7 +533,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_PopulationKnowledge )
     MOCK_EXPECT( knowledge, GetPopulationEntity ).returns( &population );
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "populationknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::PopulationKnowledge >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
-    BOOST_CHECK_EQUAL( 15u, message->value().crowdknowledge().id() );
+    BOOST_CHECK_EQUAL( 15u, message->value().Get( 0 ).crowdknowledge().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -563,5 +562,5 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectKnowledge )
     kernel::Controller controller;
     std::auto_ptr< Common::MsgMissionParameter > message( Serialize( "objectknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::ObjectKnowledge >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
-    BOOST_CHECK_EQUAL( 15u, message->value().objectknowledge().id() );
+    BOOST_CHECK_EQUAL( 15u, message->value().Get( 0 ).objectknowledge().id() );
 }

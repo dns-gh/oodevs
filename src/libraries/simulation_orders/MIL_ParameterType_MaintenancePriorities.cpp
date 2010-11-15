@@ -40,7 +40,7 @@ bool MIL_ParameterType_MaintenancePriorities::Copy( const MIL_MissionParameter_A
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-    to.set_null_value( !from.ToMaintenancePriorities( *to.mutable_value()->mutable_logmaintenancepriorities() ) );
+    to.set_null_value( !from.ToMaintenancePriorities( *to.mutable_value()->Add()->mutable_logmaintenancepriorities() ) );
     if( to.null_value() )
         to.clear_value();
     return !to.null_value() || bIsOptional;

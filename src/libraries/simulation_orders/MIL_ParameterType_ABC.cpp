@@ -10,11 +10,8 @@
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_ABC.h"
 #include "MIL_ParameterType_Agent.h"
-#include "MIL_ParameterType_AgentList.h"
 #include "MIL_ParameterType_AgentKnowledge.h"
-#include "MIL_ParameterType_AgentKnowledgeList.h"
 #include "MIL_ParameterType_Automat.h"
-#include "MIL_ParameterType_AutomatList.h"
 #include "MIL_ParameterType_Bool.h"
 #include "MIL_ParameterType_Direction.h"
 #include "MIL_ParameterType_DotationType.h"
@@ -22,27 +19,19 @@
 #include "MIL_ParameterType_EquipmentType.h"
 #include "MIL_ParameterType_GDH.h"
 #include "MIL_ParameterType_GenObject.h"
-#include "MIL_ParameterType_GenObjectList.h"
 #include "MIL_ParameterType_IndirectFire.h"
 #include "MIL_ParameterType_Lima.h"
 #include "MIL_ParameterType_LimaList.h"
 #include "MIL_ParameterType_Location.h"
 #include "MIL_ParameterType_LocationComposite.h"
-#include "MIL_ParameterType_LocationCompositeList.h"
-#include "MIL_ParameterType_LocationList.h"
 #include "MIL_ParameterType_MaintenancePriorities.h"
 #include "MIL_ParameterType_MedicalPriorities.h"
 #include "MIL_ParameterType_NatureAtlas.h"
 #include "MIL_ParameterType_Numeric.h"
-#include "MIL_ParameterType_ObjectiveList.h"
 #include "MIL_ParameterType_ObjectKnowledge.h"
-#include "MIL_ParameterType_ObjectKnowledgeList.h"
 #include "MIL_ParameterType_Path.h"
-#include "MIL_ParameterType_PathList.h"
 #include "MIL_ParameterType_Point.h"
-#include "MIL_ParameterType_PointList.h"
 #include "MIL_ParameterType_Polygon.h"
-#include "MIL_ParameterType_PolygonList.h"
 #include "MIL_ParameterType_PopulationKnowledge.h"
 #include "MIL_ParameterType_String.h"
 #include "MIL_ParameterType_UrbanBlock.h"
@@ -89,40 +78,29 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType< MIL_ParameterType_Bool                  >();
     RegisterParameterType< MIL_ParameterType_Enumeration           >();
     RegisterParameterType< MIL_ParameterType_Point                 >( std::string("Point") );
-    RegisterParameterType< MIL_ParameterType_PointList             >( std::string("PointList"));
     RegisterParameterType< MIL_ParameterType_Polygon               >( std::string("Polygon") );
-    RegisterParameterType< MIL_ParameterType_PolygonList           >( std::string("PolygonList") );
     RegisterParameterType< MIL_ParameterType_Location              >();
-    RegisterParameterType< MIL_ParameterType_LocationList          >();
     RegisterParameterType< MIL_ParameterType_Path                  >( std::string("Path") );
-    RegisterParameterType< MIL_ParameterType_PathList              >();
     RegisterParameterType< MIL_ParameterType_Direction             >( std::string("Direction") );
     RegisterParameterType< MIL_ParameterType_Direction             >( std::string("DirectionBM") );
     RegisterParameterType< MIL_ParameterType_Direction             >( std::string("Heading") );
     RegisterParameterType< MIL_ParameterType_NatureAtlas           >();
     RegisterParameterType< MIL_ParameterType_Automat               >( std::string("Automate") );
-    RegisterParameterType< MIL_ParameterType_AutomatList           >( std::string("AutomateList") );
     RegisterParameterType< MIL_ParameterType_Agent                 >( std::string("Agent") );
-    RegisterParameterType< MIL_ParameterType_AgentList             >( std::string("AgentList") );
     RegisterParameterType< MIL_ParameterType_AgentKnowledge        >( std::string("AgentKnowledge") );
-    RegisterParameterType< MIL_ParameterType_AgentKnowledgeList    >( std::string("AgentKnowledgeList") );
     RegisterParameterType< MIL_ParameterType_ObjectKnowledge       >( std::string("ObjectKnowledge") );
-    RegisterParameterType< MIL_ParameterType_ObjectKnowledgeList   >( std::string("ObjectKnowledgeList") );
     RegisterParameterType< MIL_ParameterType_PopulationKnowledge   >( std::string("PopulationKnowledge") );
     RegisterParameterType< MIL_ParameterType_DotationType          >();
     RegisterParameterType< MIL_ParameterType_EquipmentType         >();
     RegisterParameterType< MIL_ParameterType_GDH                   >();
     RegisterParameterType< MIL_ParameterType_Numeric               >();
     RegisterParameterType< MIL_ParameterType_GenObject             >( std::string("GenObject") );
-    RegisterParameterType< MIL_ParameterType_GenObjectList         >( std::string("GenObjectList") );
     RegisterParameterType< MIL_ParameterType_MaintenancePriorities >();
     RegisterParameterType< MIL_ParameterType_MedicalPriorities     >();
     RegisterParameterType< MIL_ParameterType_IndirectFire          >();
     RegisterParameterType< MIL_ParameterType_String                >();
-    RegisterParameterType< MIL_ParameterType_ObjectiveList         >();
     RegisterParameterType< MIL_ParameterType_UrbanBlock            >( std::string("UrbanBlock") );
     RegisterParameterType< MIL_ParameterType_LocationComposite     >( std::string("LocationComposite") );
-    RegisterParameterType< MIL_ParameterType_LocationCompositeList >( std::string("LocationCompositeList") );
     RegisterParameterType< MIL_ParameterType_Lima                  >();
     RegisterParameterType< MIL_ParameterType_LimaList              >();
 }
@@ -160,18 +138,6 @@ const MIL_ParameterType_ABC* MIL_ParameterType_ABC::Find( const std::string& str
     if( it == parameters_.end() )
         return 0;
     return it->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_ABC::Find
-// Created: NLD 2006-12-06
-// -----------------------------------------------------------------------------
-const MIL_ParameterType_ABC* MIL_ParameterType_ABC::Find( const std::string& strName, const std::string& maxOccurs )
-{
-    std::string finalName = strName;
-    if( maxOccurs != "1" )
-        finalName = finalName + "List";
-    return MIL_ParameterType_ABC::Find( finalName );
 }
 
 // -----------------------------------------------------------------------------
