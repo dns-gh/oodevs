@@ -534,7 +534,7 @@
     </macrodef>
 
     <target name="generate-database" description="compile behavior model database">
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/libs/base/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/directia.core.bml"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.military/src" core="${data.dir}/data/models/ada/decisional/directia5/models/directia.core/directia.core.bml"/>
         <delete>
             <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
             <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.test/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
@@ -542,11 +542,11 @@
             <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.security/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
             <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.worldwide/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
         </delete>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/libs/base/src"/>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.test/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/libs/base/src;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.france/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/libs/base/src;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.security/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/libs/base/src;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.worldwide/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/libs/base/src;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src" core="${data.dir}/data/models/ada/decisional/directia5/models/directia.core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.military/src"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.test/src" core="${data.dir}/data/models/ada/decisional/directia5/models/directia.core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.military/src;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.france/src" core="${data.dir}/data/models/ada/decisional/directia5/models/directia.core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.military/src;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.security/src" core="${data.dir}/data/models/ada/decisional/directia5/models/directia.core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.military/src;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.worldwide/src" core="${data.dir}/data/models/ada/decisional/directia5/models/directia.core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.military/src;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
     </target>
 
     <target name="generate-data" depends="generate-database" description="generate data"/>
