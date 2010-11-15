@@ -110,7 +110,7 @@ bool ADN_Connector_Table_ABC::AddItemPrivate(void *obj,bool)
     }
     else
     {
-        tab_.setUpdatesEnabled( false );
+        tab_.setUpdatesEnabled( true );
         if( bWithSort_ )
         {
             DataComparison comparor( *this );
@@ -127,7 +127,6 @@ bool ADN_Connector_Table_ABC::AddItemPrivate(void *obj,bool)
             AddSubItems(i,*it);
         tab_.EnableRefreshing(true);
         tab_.repaintContents(false);
-        tab_.setUpdatesEnabled( true );
     }
 
     return true;
