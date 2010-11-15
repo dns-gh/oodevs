@@ -150,7 +150,7 @@ void NBCAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
 // -----------------------------------------------------------------------------
 void NBCAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< NBCAttribute > >( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

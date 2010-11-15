@@ -20,7 +20,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( BypassableCapacity )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 BypassableCapacity::BypassableCapacity( xml::xistream& xis )
-    : bypassSpeed_ ( xis.attribute< int >( "bypass-speed", 0 ) )
+    : bypassSpeed_ ( xis.attribute< double >( "bypass-speed", 0. ) )
 {
     // NOTHING
 }
@@ -30,7 +30,7 @@ BypassableCapacity::BypassableCapacity( xml::xistream& xis )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 BypassableCapacity::BypassableCapacity()
-    : bypassSpeed_ ( 0 )
+    : bypassSpeed_ ( 0. )
 {
     // NOTHING
 }
@@ -81,4 +81,22 @@ void BypassableCapacity::Instanciate( MIL_Object_ABC& object ) const
 void BypassableCapacity::Bypass( MIL_Object_ABC& object, double rDeltaPercentage )
 {
     object.GetAttribute< BypassAttribute >().Update( rDeltaPercentage );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BypassableCapacity::IsBypassed
+// Created: LDC 2010-11-12
+// -----------------------------------------------------------------------------
+bool BypassableCapacity::IsBypassed( const MIL_Object_ABC& object ) const
+{
+    return object.GetAttribute< BypassAttribute >().IsBypassed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: BypassableCapacity::GetBypassSpeed
+// Created: LDC 2010-11-12
+// -----------------------------------------------------------------------------
+double BypassableCapacity::GetBypassSpeed() const
+{
+    return bypassSpeed_;
 }

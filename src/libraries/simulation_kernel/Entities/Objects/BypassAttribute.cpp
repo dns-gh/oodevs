@@ -79,7 +79,7 @@ void BypassAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) c
 // -----------------------------------------------------------------------------
 void BypassAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< BypassAttribute > >( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< BypassAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

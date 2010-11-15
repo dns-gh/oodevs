@@ -165,7 +165,7 @@ void MedicalTreatmentAttribute::save( MIL_CheckPointOutArchive& ar, const unsign
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< MedicalTreatmentAttribute > >( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

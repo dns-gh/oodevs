@@ -113,7 +113,7 @@ void CrossingSiteAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void CrossingSiteAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< CrossingSiteAttribute > >( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

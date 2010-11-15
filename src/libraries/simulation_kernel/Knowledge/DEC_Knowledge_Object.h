@@ -225,7 +225,7 @@ void DEC_Knowledge_Object::UpdateAttributes( Functor functor )
 template< typename T > 
 const T* DEC_Knowledge_Object::RetrieveAttribute() const
 {
-    const T::T_KnowledgeProxyType* pAttr = Retrieve< T::T_KnowledgeProxyType >();
+    const DEC_Knowledge_ObjectAttributeProxy_ABC<T>* pAttr = Retrieve< DEC_Knowledge_ObjectAttributeProxy_ABC<T> >();
     if( !pAttr )
         return 0;
     return pAttr->GetAttribute();

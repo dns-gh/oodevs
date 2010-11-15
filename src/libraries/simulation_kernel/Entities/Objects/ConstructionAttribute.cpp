@@ -93,7 +93,7 @@ void ConstructionAttribute::Load( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< ConstructionAttribute > >( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

@@ -102,7 +102,7 @@ template < typename Archive > void LogisticAttribute::serialize( Archive& file, 
 // -----------------------------------------------------------------------------
 void LogisticAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< LogisticAttribute > >( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------

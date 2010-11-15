@@ -43,12 +43,14 @@ public:
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
     void Bypass( MIL_Object_ABC& object, double rDeltaPercentage );
+    bool IsBypassed( const MIL_Object_ABC& object ) const;
+    double GetBypassSpeed() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    unsigned int bypassSpeed_;
+    double bypassSpeed_;
     //@}
 };
 

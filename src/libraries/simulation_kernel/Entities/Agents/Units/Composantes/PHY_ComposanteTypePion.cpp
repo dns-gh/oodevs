@@ -33,6 +33,7 @@
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/BuildableCapacity.h"
+#include "Entities/Objects/BypassableCapacity.h"
 #include "Entities/Objects/MobilityCapacity.h"
 #include "PHY_ComposanteTypeObjectData.h"
 #include "protocol/protocol.h"
@@ -964,6 +965,9 @@ double PHY_ComposanteTypePion::GetMaxSpeed( const MIL_Object_ABC& object ) const
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetType().GetID() ];
     if( pObjectData )
         return pObjectData->GetMaxSpeed( object );
+    const BypassableCapacity* bypass = object.Retrieve< BypassableCapacity >();
+    if( bypass && bypass->IsBypassed( object ) )
+        return bypass->GetBypassSpeed();
     return object.Get< MobilityCapacity >().GetDefaultSpeed();
 }
 

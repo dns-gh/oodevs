@@ -172,7 +172,7 @@ void ObstacleAttribute::Activate()
 // -----------------------------------------------------------------------------
 void ObstacleAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< ObstacleAttribute > >( *new DEC_Knowledge_ObjectAttributeProxyPassThrough< ObstacleAttribute >() );
 }
 
 // -----------------------------------------------------------------------------

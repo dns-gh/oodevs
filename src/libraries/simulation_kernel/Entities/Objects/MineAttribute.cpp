@@ -153,7 +153,7 @@ void MineAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MineAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-    object.Attach( *new T_KnowledgeProxyType() );
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< MineAttribute > >( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------
