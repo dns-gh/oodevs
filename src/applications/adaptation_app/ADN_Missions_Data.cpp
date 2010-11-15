@@ -648,7 +648,6 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
         "   <parameter dia-name='phaseLines_' max-occurs='unbounded' min-occurs='1' name='Limas' optional='true' type='PhaseLine'/>"
         "   <parameter dia-name='boundaryLimit1_' name='Limit 1' optional='true' type='Limit'/>"
         "   <parameter dia-name='boundaryLimit2_' name='Limit 2' optional='true' type='Limit'/>"
-        "   <parameter dia-name='intelligences_' max-occurs='unbounded' min-occurs='1' name='Renseignements' optional='true' type='Intelligence'/>"
         "</context>" );
     xml::xistringstream automatContextFlow(
         "<context>"
@@ -656,7 +655,6 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
         "<parameter dia-name='phaseLines_' max-occurs='unbounded' min-occurs='1' name='Limas' optional='true' type='PhaseLine'/>"
         "<parameter dia-name='boundaryLimit1_' name='Limit 1' optional='false' type='Limit'/>"
         "<parameter dia-name='boundaryLimit2_' name='Limit 2' optional='false' type='Limit'/>"
-        "<parameter dia-name='intelligences_' max-occurs='unbounded' min-occurs='1' name='Renseignements' optional='true' type='Intelligence'/>"
         "</context>" );
     xml::xistringstream crowContextFlow( "<context></context>" );
     ReadContext( unitContextFlow, unitContext_ );

@@ -44,7 +44,7 @@ void MIL_AutomateMissionType::Initialize( xml::xistream& xis )
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
 MIL_AutomateMissionType::MIL_AutomateMissionType( unsigned int nID, xml::xistream& xis )
-    : MIL_MissionType_ABC( nID, 5, xis )
+    : MIL_MissionType_ABC( nID, 4, xis )
     , strDIAMrtBehavior_ ()
     , strDIACdtBehavior_ ()
 {
