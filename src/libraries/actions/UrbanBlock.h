@@ -7,58 +7,62 @@
 //
 // *****************************************************************************
 
-#ifndef __ActionParameterUrbanBlock_h_
-#define __ActionParameterUrbanBlock_h_
+#ifndef __ActionParameterUrbanKnowledge_h_
+#define __ActionParameterUrbanKnowledge_h_
 
-#include "Parameter.h"
+#include "Knowledge_ABC.h"
+#include "clients_kernel/UrbanKnowledge_ABC.h"
+#include "tools/Resolver_ABC.h"
 
 namespace Common
 {
-    class MsgUrbanBlock;
+    class UrbanObjectKnowledgeId;
+}
+
+namespace kernel
+{
+    class EntityResolver_ABC;
+    class UrbanKnowledgeConverter_ABC;
 }
 
 namespace actions {
-
 namespace parameters {
 
 // =============================================================================
 /** @class  UrbanBlock
-    @brief  UrbanBlock
+@brief  UrbanBlock
+// $$$$ SBO 2007-05-24: watch for deletion !!!
 */
-// Created: MGD 2009-11-05
+// Created: SBO 2007-05-24
 // =============================================================================
-class UrbanBlock : public Parameter< unsigned long >
+class UrbanBlock : public Knowledge_ABC< kernel::UrbanKnowledge_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanBlock( const kernel::OrderParameter& parameter, unsigned long id );
-             UrbanBlock( const kernel::OrderParameter& parameter, const Common::MsgUrbanBlock& message );
-             UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis );
+    UrbanBlock( const kernel::OrderParameter& parameter, kernel::Controller& controller );
+    UrbanBlock( const kernel::OrderParameter& parameter, unsigned long id, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+    UrbanBlock( xml::xistream& xis, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+    UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~UrbanBlock();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual void CommitTo( Common::MsgMissionParameter& message ) const;
     virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
+    void CommitTo( Common::UrbanObjectKnowledgeId& message ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UrbanBlock( const UrbanBlock& );            //!< Copy constructor
-    UrbanBlock& operator=( const UrbanBlock& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    virtual void Serialize( xml::xostream& xos ) const;
+    virtual void ThrowInvalidKnowledge() const;
     //@}
 };
 
 }
-
 }
 
-#endif // __ActionParameterUrbanBlock_h_
+#endif // __ActionParameterUrbanKnowledge_h_

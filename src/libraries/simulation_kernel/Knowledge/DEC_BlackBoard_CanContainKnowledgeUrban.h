@@ -96,6 +96,7 @@ private:
     //@{
     const MIL_Army_ABC& army_;
     T_KnowledgeUrbanMap urbanMapFromConcrete_;
+    std::map< unsigned, boost::shared_ptr< DEC_Knowledge_Urban > > urbanKnowledgeMapFromKnowledgeId_;
     //@}
 };
 

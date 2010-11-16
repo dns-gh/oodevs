@@ -31,6 +31,7 @@ namespace kernel
     class Profile_ABC;
     class AgentKnowledgeConverter_ABC;
     class ObjectKnowledgeConverter_ABC;
+    class UrbanKnowledgeConverter_ABC;
     class Time_ABC;
 }
 
@@ -76,7 +77,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel
-                , kernel::AgentKnowledgeConverter_ABC& knowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::Time_ABC& simulation );
+                , kernel::AgentKnowledgeConverter_ABC& knowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
+                , kernel::UrbanKnowledgeConverter_ABC& urbanKnowledgeConverter, const kernel::Time_ABC& simulation );
     virtual ~MissionPanel();
     //@}
 

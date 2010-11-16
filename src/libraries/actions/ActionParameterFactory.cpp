@@ -62,12 +62,13 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 ActionParameterFactory::ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel
                                               , kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
-                                              , kernel::Controller& controller )
+                                              , kernel::UrbanKnowledgeConverter_ABC& urbanKnowledgeConverter, kernel::Controller& controller )
     : converter_( converter )
     , entities_( entities )
     , staticModel_( staticModel )
     , agentKnowledgeConverter_( agentKnowledgeConverter )
     , objectKnowledgeConverter_( objectKnowledgeConverter )
+    , urbanKnowledgeConverter_( urbanKnowledgeConverter )
     , controller_( controller )
 {
     // NOTHING
@@ -154,7 +155,7 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
     if( message.has_datetime() )
         return new actions::parameters::DateTime( parameter, message.datetime() );
     if( message.has_urbanblock() )
-        return new actions::parameters::UrbanBlock( parameter, message.urbanblock().id() );
+        return new actions::parameters::UrbanBlock( parameter, message.urbanblock().id(), urbanKnowledgeConverter_, entity, controller_  );
     if( message.has_party() )
         return new actions::parameters::Army( parameter, message.party().id(), entities_, controller_ );
     if( message.has_formation() )
@@ -304,10 +305,6 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new actions::parameters::MaintenancePriorities( parameter, staticModel_.objectTypes_, xis ) );
     else if( type == "datetime" )
         param.reset( new actions::parameters::DateTime( parameter, xis ) );
-    else if( type == "urbanblock" )
-        param.reset( new actions::parameters::UrbanBlock( parameter, xis ) );
-    else if( type == "urbanknowledge" )
-        param.reset( new actions::parameters::UrbanBlock( parameter, xis ) );
     else if( type == "quantity" )
         param.reset( new actions::parameters::Quantity( parameter, xis ) );
     else if( type == "identifier" )
@@ -338,6 +335,8 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new actions::parameters::PopulationKnowledge( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
     else if( type == "objectknowledge" )
         param.reset( new actions::parameters::ObjectKnowledge( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
+    else if( type == "urbanknowledge" )
+        param.reset( new actions::parameters::UrbanBlock( parameter, xis, urbanKnowledgeConverter_, entity, controller_ ) );
     else
         return false;
 

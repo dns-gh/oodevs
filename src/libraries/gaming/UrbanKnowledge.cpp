@@ -18,6 +18,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_gui/TerrainObjectProxy.h"
 #include "Tools.h"
 #include "statusicons.h"
 #include "protocol/Simulation.h"
@@ -30,7 +31,7 @@ using namespace kernel;
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
 UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message, Controller& controller,
-                                const tools::Resolver_ABC< urban::TerrainObject_ABC >& terrainObjectResolver )
+                                const tools::Resolver< gui::TerrainObjectProxy >& terrainObjectResolver )
     : EntityImplementation< UrbanKnowledge_ABC >( controller, message.knowledge().id(), "" )
     , owner_                ( owner )
     , terrainObjectResolver_( terrainObjectResolver )
@@ -108,7 +109,7 @@ void UrbanKnowledge::DisplayInSummary( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 QString UrbanKnowledge::GetName() const
 {
-    return pRealUrban_ ? QString( pRealUrban_->GetName().c_str() ) : tools::translate( "Urban", "Unknown urban object" );
+    return pRealUrban_ ? QString( pRealUrban_->GetName().ascii() ) : tools::translate( "Urban", "Unknown urban object" );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +118,7 @@ QString UrbanKnowledge::GetName() const
 // -----------------------------------------------------------------------------
 const Entity_ABC* UrbanKnowledge::GetEntity() const
 {
-    return 0;//@TODO MGD pRealUrban_;
+    return pRealUrban_;
 }
 
 // -----------------------------------------------------------------------------

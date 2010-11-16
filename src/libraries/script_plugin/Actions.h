@@ -25,6 +25,7 @@ namespace kernel
     class Controller;
     class EntityResolver_ABC;
     class ObjectKnowledgeConverter_ABC;
+    class UrbanKnowledgeConverter_ABC;
     class StaticModel;
     class Time_ABC;
 }
@@ -93,6 +94,7 @@ private:
     std::auto_ptr< kernel::Time_ABC > time_;
     std::auto_ptr< kernel::AgentKnowledgeConverter_ABC > agentsKnowledges_;
     std::auto_ptr< kernel::ObjectKnowledgeConverter_ABC > objectsKnowledges_;
+    std::auto_ptr< kernel::UrbanKnowledgeConverter_ABC > urbansKnowledges_;
     std::auto_ptr< actions::ParameterFactory_ABC > parameters_;
     std::auto_ptr< actions::ActionFactory_ABC > factory_;
     //@}

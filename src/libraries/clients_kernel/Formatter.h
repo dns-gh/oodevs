@@ -24,7 +24,7 @@ namespace urban
 
 namespace kernel
 {
-
+    class UrbanKnowledge_ABC;
 // =============================================================================
 /** @class  Formatter
     @brief  Formatter
@@ -193,6 +193,12 @@ template< >
 struct Formatter< urban::TerrainObject_ABC >
 {
     void operator()( const urban::TerrainObject_ABC& value, Displayer_ABC& displayer ) const;
+};
+
+template< >
+struct Formatter< kernel::UrbanKnowledge_ABC >
+{
+    void operator()( const kernel::UrbanKnowledge_ABC& value, Displayer_ABC& displayer ) const;
 };
 
 

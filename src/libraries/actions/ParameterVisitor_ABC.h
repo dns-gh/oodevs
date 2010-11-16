@@ -31,6 +31,7 @@ namespace actions
         class Quantity;
         class Identifier;
         class KnowledgeGroup;
+        class UrbanBlock;
     }
 
 // =============================================================================
@@ -63,6 +64,7 @@ public:
     virtual void Visit( const parameters::AgentKnowledge&      ) {}
     virtual void Visit( const parameters::ObjectKnowledge&     ) {}
     virtual void Visit( const parameters::PopulationKnowledge& ) {}
+    virtual void Visit( const parameters::UrbanBlock&          ) {}
     virtual void Visit( const parameters::DotationType&        ) {}
     virtual void Visit( const parameters::Army&                ) {}
     virtual void Visit( const parameters::Quantity&            ) {}

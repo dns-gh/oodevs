@@ -20,6 +20,7 @@
 #include "dispatcher/ModelAdapter.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/ObjectKnowledgeConverter.h"
+#include "dispatcher/UrbanKnowledgeConverter.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/protocol.h"
@@ -70,7 +71,8 @@ Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& c
     , time_             ( new SimulationTime() )
     , agentsKnowledges_ ( new dispatcher::AgentKnowledgeConverter( model ) )
     , objectsKnowledges_( new dispatcher::ObjectKnowledgeConverter( model ) )
-    , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, controller ) )
+    , urbansKnowledges_( new dispatcher::UrbanKnowledgeConverter( model ) )
+    , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, *urbansKnowledges_, controller ) )
     , factory_          ( new actions::ActionFactory( controller, *parameters_, *entities_, staticModel, *time_ ) )
 {
     // NOTHING

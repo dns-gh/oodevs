@@ -50,7 +50,7 @@ UrbanKnowledgeFactory::~UrbanKnowledgeFactory()
 UrbanKnowledge_ABC* UrbanKnowledgeFactory::Create( const Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
 {
     // $$$ FDS 2009-01-11: remove public blocks, use knowledgeConverter if possible
-    UrbanKnowledge* knowledge = new UrbanKnowledge( owner, message, controllers_.controller_, *model_.urbanObjects_.urbanModel_ );
+    UrbanKnowledge* knowledge = new UrbanKnowledge( owner, message, controllers_.controller_, model_.urbanObjects_ );
     knowledge->Attach( *new UrbanPerceptions( controllers_.controller_, model_.agents_ ) );
     knowledge->Polish();
     return knowledge;

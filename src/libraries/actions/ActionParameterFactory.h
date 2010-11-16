@@ -20,6 +20,7 @@ namespace kernel
     class CoordinateConverter_ABC;
     class EntityResolver_ABC;
     class ObjectKnowledgeConverter_ABC;
+    class UrbanKnowledgeConverter_ABC;
     class StaticModel;
 }
 
@@ -43,7 +44,7 @@ public:
     //@{
              ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel
                                    , kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
-                                   , kernel::Controller& controller );
+                                   , kernel::UrbanKnowledgeConverter_ABC& urbanKnowledgeConverter, kernel::Controller& controller );
     virtual ~ActionParameterFactory();
     //@}
 
@@ -78,6 +79,7 @@ private:
     const kernel::StaticModel& staticModel_;
     kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
+    kernel::UrbanKnowledgeConverter_ABC& urbanKnowledgeConverter_;
     kernel::Controller& controller_;
     //@}
 };

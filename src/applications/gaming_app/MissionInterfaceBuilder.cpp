@@ -46,7 +46,7 @@
 #include "actions_gui/ParamPointList.h"
 #include "actions_gui/ParamPolygonList.h"
 #include "actions_gui/ParamPopulationKnowledge.h"
-#include "actions_gui/ParamUrbanBlock.h"
+#include "actions_gui/ParamUrbanKnowledge.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
@@ -68,12 +68,14 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui::ParametersLayer& layer
                                                 , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
+                                                , kernel::UrbanKnowledgeConverter_ABC& urbanKnowledgeConverter
                                                 , const ::StaticModel& staticModel, const kernel::Time_ABC& simulation )
     : controllers_             ( controllers )
     , layer_                   ( layer )
     , converter_               ( staticModel.coordinateConverter_ )
     , knowledgeConverter_      ( knowledgeConverter )
     , objectKnowledgeConverter_( objectKnowledgeConverter )
+    , urbanKnowledgeConverter_ ( urbanKnowledgeConverter )
     , staticModel_             ( staticModel )
     , simulation_              ( simulation )
     , missionInterface_        ( 0 )
@@ -525,6 +527,6 @@ actions::gui::Param_ABC& MissionInterfaceBuilder::BuildIntelligenceList( const k
 // -----------------------------------------------------------------------------
 actions::gui::Param_ABC& MissionInterfaceBuilder::BuildUrbanBlock( const kernel::OrderParameter& parameter ) const
 {
-    return *new actions::gui::ParamUrbanBlock( missionInterface_, parameter, layer_ );
+    return *new actions::gui::ParamUrbanKnowledge( missionInterface_, parameter, urbanKnowledgeConverter_, *entity_, controllers_.controller_ );
 }
 

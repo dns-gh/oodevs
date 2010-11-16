@@ -25,6 +25,7 @@ namespace kernel
     class EntityResolver_ABC;
     class AgentKnowledgeConverter_ABC;
     class ObjectKnowledgeConverter_ABC;
+    class UrbanKnowledgeConverter_ABC;
     class Time_ABC;
 }
 
@@ -87,6 +88,7 @@ private:
     std::auto_ptr< kernel::EntityResolver_ABC > entities_;
     std::auto_ptr< kernel::AgentKnowledgeConverter_ABC > agentsKnowledges_;
     std::auto_ptr< kernel::ObjectKnowledgeConverter_ABC > objectsKnowledges_;
+    std::auto_ptr< kernel::UrbanKnowledgeConverter_ABC > urbansKnowledges_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
     std::auto_ptr< kernel::Time_ABC > time_;
     std::auto_ptr< actions::ParameterFactory_ABC > parameters_;

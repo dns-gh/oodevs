@@ -10,6 +10,8 @@
 #ifndef __UrbanKnowledge_h_
 #define __UrbanKnowledge_h_
 
+#include "tools/Resolver.h"
+
 #include "clients_kernel/UrbanKnowledge_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/OptionalValue.h"
@@ -37,6 +39,11 @@ namespace MsgsSimToClient
     class MsgUrbanKnowledgeCreation;
 }
 
+namespace gui
+{
+    class TerrainObjectProxy;
+}
+
 // =============================================================================
 /** @class  UrbanKnowledge
     @brief  UrbanKnowledge
@@ -53,7 +60,7 @@ public:
     //@{
              UrbanKnowledge( const kernel::Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message,
                              kernel::Controller& controller,
-                             const tools::Resolver_ABC< urban::TerrainObject_ABC >& terrainObjectResolver );
+                             const tools::Resolver< gui::TerrainObjectProxy >& terrainObjectResolver );
     virtual ~UrbanKnowledge();
     //@}
 
@@ -84,10 +91,10 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::Resolver_ABC< urban::TerrainObject_ABC >& terrainObjectResolver_;
+    const tools::Resolver< gui::TerrainObjectProxy >& terrainObjectResolver_;
     const kernel::Team_ABC& owner_;
 
-    urban::TerrainObject_ABC* pRealUrban_;
+    gui::TerrainObjectProxy* pRealUrban_;
 
     kernel::OptionalValue< bool > bIsPerceived_;
     kernel::OptionalValue< int > rProgress_;

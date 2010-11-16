@@ -263,7 +263,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     pInfoDockWnd_->hide();
 
      // Mission panel
-    pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile, model_.actions_, model_.agentKnowledgeConverter_, model_.objectKnowledgeConverter_, simulation );
+    pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile, model_.actions_, model_.agentKnowledgeConverter_, model_.objectKnowledgeConverter_, model_.urbanKnowledgeConverter_, simulation );
     moveDockWindow( pMissionPanel_, Qt::DockLeft );
     setDockEnabled( pMissionPanel_, Qt::DockTop, false );
     setAppropriate( pMissionPanel_, false );
