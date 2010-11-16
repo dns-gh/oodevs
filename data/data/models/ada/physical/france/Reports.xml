@@ -289,13 +289,13 @@
   <report category="operational" id="223" message="dispersion par moyens de defense actifs"/>
   <report category="operational" id="224" message="armes letales autorisees"/>
   <report category="operational" id="225" message="population detectee : %1">
-    <parameter type=""/>
+    <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="226" message="prise a partie par population : %1">
-    <parameter type=""/>
+    <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="227" message="riposte contre population : %1">
-    <parameter type=""/>
+    <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="228" message="population dangereuse a proximite"/>
   <report category="operational" id="229" message="esquive face a population"/>
@@ -336,13 +336,13 @@
   <report category="operational" id="247" message="population temporairement repoussee"/>
   <report category="operational" id="248" message="reprise des affrontements"/>
   <report category="operational" id="249" message="agression de population : %1">
-    <parameter type=""/>
+    <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="250" message="agression par population : %1">
-    <parameter type=""/>
+    <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="251" message="riposte contre agression par population : %1">
-    <parameter type=""/>
+    <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="252" message="attaque installation"/>
   <report category="operational" id="253" message="en stationnement"/>

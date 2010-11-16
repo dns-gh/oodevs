@@ -289,13 +289,13 @@
   <report category="operational" id="223" message="dispersing civilians by active defense means"/>
   <report category="operational" id="224" message="lethal weapons authorized for use"/>
   <report category="operational" id="225" message="population %1 detected">
-    <parameter type=""/>
+    <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="226" message="assaulted by population %1">
-    <parameter type=""/>
+    <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="227" message="retaliation on population %1">
-    <parameter type=""/>
+    <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="228" message="threatening population nearby"/>
   <report category="operational" id="229" message="breaking contact with population"/>
@@ -336,13 +336,13 @@
   <report category="operational" id="247" message="population temporarily driven back"/>
   <report category="operational" id="248" message="clashes resume"/>
   <report category="operational" id="249" message="population %1 is being assaulted">
-    <parameter type=""/>
+    <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="250" message="sustaining assault from population %1">
-    <parameter type=""/>
+    <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="251" message="retaliating to population %1 assault">
-    <parameter type=""/>
+    <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="252" message="critical site under attack"/>
   <report category="operational" id="253" message="parking"/>
