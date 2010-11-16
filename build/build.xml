@@ -778,6 +778,7 @@
     <target name="test-exercises" depends="application.simulation_app" description="validates some significant exercises">
         <test-exercise exercise="Egypt"/>
         <test-exercise exercise="Cabourg"/>
+        <test-exercise exercise="Poseidon VA"/>        
     </target>
 
     <target name="protocol_test" description="build Sword protocol test executable" depends="library.protocol,library.tools">
