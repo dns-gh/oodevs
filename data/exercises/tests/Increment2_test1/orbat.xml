@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <dotations infinite="false"/>
-  <sides>
-    <side id="1" name="Camp Bleu" type="friend">
+<orbat model-version="4.2.6">
+  <resources infinite="false"/>
+  <parties>
+    <party id="1" name="Camp Bleu" type="friend">
       <objects>
         <object id="104" name="zone protegee [104]" type="safe zone">
           <shape type="point">
@@ -69,8 +69,8 @@
           <subordinate id="34"/>
         </tc2>
       </logistics>
-    </side>
-    <side id="2" name="Camp Rouge" type="enemy">
+    </party>
+    <party id="2" name="Camp Rouge" type="enemy">
       <objects>
         <object id="100" name="zone minee lineaire [100]" type="mined area (linear)">
           <shape type="polygone">
@@ -187,8 +187,8 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-    <side id="3" name="Camp Vert" type="neutral">
+    </party>
+    <party id="3" name="Camp Vert" type="neutral">
       <objects/>
       <tactical/>
       <communication>
@@ -197,8 +197,8 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-    <side id="93" name="Camp Bleu" type="friend">
+    </party>
+    <party id="93" name="Camp Bleu" type="friend">
       <objects/>
       <tactical>
         <formation id="102" level="ii" name="Formation [10]">
@@ -251,8 +251,8 @@
       <logistics>
         <automat id="126"/>
       </logistics>
-    </side>
-    <side id="94" name="Camp Rouge" type="enemy">
+    </party>
+    <party id="94" name="Camp Rouge" type="enemy">
       <objects/>
       <tactical>
         <formation id="125" level="ii" name="Formation ENI [33]">
@@ -295,8 +295,8 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-    <side id="95" name="Camp Vert" type="neutral">
+    </party>
+    <party id="95" name="Camp Vert" type="neutral">
       <objects/>
       <tactical/>
       <communication>
@@ -305,50 +305,50 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1">
-      <relationship diplomacy="enemy" side="2"/>
-      <relationship diplomacy="neutral" side="3"/>
-      <relationship diplomacy="neutral" side="93"/>
-      <relationship diplomacy="neutral" side="94"/>
-      <relationship diplomacy="neutral" side="95"/>
-    </side>
-    <side id="2">
-      <relationship diplomacy="enemy" side="1"/>
-      <relationship diplomacy="neutral" side="3"/>
-      <relationship diplomacy="neutral" side="93"/>
-      <relationship diplomacy="neutral" side="94"/>
-      <relationship diplomacy="neutral" side="95"/>
-    </side>
-    <side id="3">
-      <relationship diplomacy="neutral" side="1"/>
-      <relationship diplomacy="neutral" side="2"/>
-      <relationship diplomacy="neutral" side="93"/>
-      <relationship diplomacy="neutral" side="94"/>
-      <relationship diplomacy="neutral" side="95"/>
-    </side>
-    <side id="93">
-      <relationship diplomacy="neutral" side="1"/>
-      <relationship diplomacy="neutral" side="2"/>
-      <relationship diplomacy="neutral" side="3"/>
-      <relationship diplomacy="enemy" side="94"/>
-      <relationship diplomacy="neutral" side="95"/>
-    </side>
-    <side id="94">
-      <relationship diplomacy="neutral" side="1"/>
-      <relationship diplomacy="neutral" side="2"/>
-      <relationship diplomacy="neutral" side="3"/>
-      <relationship diplomacy="enemy" side="93"/>
-      <relationship diplomacy="neutral" side="95"/>
-    </side>
-    <side id="95">
-      <relationship diplomacy="neutral" side="1"/>
-      <relationship diplomacy="neutral" side="2"/>
-      <relationship diplomacy="neutral" side="3"/>
-      <relationship diplomacy="neutral" side="93"/>
-      <relationship diplomacy="neutral" side="94"/>
-    </side>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+      <relationship diplomacy="neutral" party="3"/>
+      <relationship diplomacy="neutral" party="93"/>
+      <relationship diplomacy="neutral" party="94"/>
+      <relationship diplomacy="neutral" party="95"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="neutral" party="3"/>
+      <relationship diplomacy="neutral" party="93"/>
+      <relationship diplomacy="neutral" party="94"/>
+      <relationship diplomacy="neutral" party="95"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="2"/>
+      <relationship diplomacy="neutral" party="93"/>
+      <relationship diplomacy="neutral" party="94"/>
+      <relationship diplomacy="neutral" party="95"/>
+    </party>
+    <party id="93">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="2"/>
+      <relationship diplomacy="neutral" party="3"/>
+      <relationship diplomacy="enemy" party="94"/>
+      <relationship diplomacy="neutral" party="95"/>
+    </party>
+    <party id="94">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="2"/>
+      <relationship diplomacy="neutral" party="3"/>
+      <relationship diplomacy="enemy" party="93"/>
+      <relationship diplomacy="neutral" party="95"/>
+    </party>
+    <party id="95">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="2"/>
+      <relationship diplomacy="neutral" party="3"/>
+      <relationship diplomacy="neutral" party="93"/>
+      <relationship diplomacy="neutral" party="94"/>
+    </party>
+  </diplomacy>
 </orbat>

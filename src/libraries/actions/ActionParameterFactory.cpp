@@ -252,7 +252,11 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
     }
     else if( type == "bool" )
         param.reset( new actions::parameters::Bool( parameter, xis ) );
+    else if( type == "boolean" )
+        param.reset( new actions::parameters::Bool( parameter, xis ) );
     else if( type == "numeric" )
+        param.reset( new actions::parameters::Numeric( parameter, xis ) );
+    else if( type == "integer" )
         param.reset( new actions::parameters::Numeric( parameter, xis ) );
     else if( type == "string" )
         param.reset( new actions::parameters::String( parameter, xis ) );
@@ -276,13 +280,19 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new actions::parameters::Agent( parameter, xis, entities_, controller_ ) );
     else if( type == "automate" )
         param.reset( new actions::parameters::Automat( parameter, xis, entities_, controller_ ) );
+    else if( type == "automat" )
+        param.reset( new actions::parameters::Automat( parameter, xis, entities_, controller_ ) );
     else if( type == "army" )
         param.reset( new actions::parameters::Army( parameter, xis, entities_, controller_ ) );
     else if( type == "formation" )
         param.reset( new actions::parameters::Formation( parameter, xis, entities_, controller_ ) );
     else if( type == "dotationtype" )
         param.reset( new actions::parameters::DotationType( parameter, xis, staticModel_.objectTypes_ ) );
+    else if( type == "resourcetype" )
+        param.reset( new actions::parameters::DotationType( parameter, xis, staticModel_.objectTypes_ ) );
     else if( type == "genobject" )
+        param.reset( new actions::parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_ ) );
+    else if( type == "plannedwork" )
         param.reset( new actions::parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_ ) );
     else if( type == "natureatlas" )
         param.reset( new actions::parameters::AtlasNature( parameter, xis, staticModel_.atlasNatures_ ) );
@@ -295,6 +305,8 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
     else if( type == "datetime" )
         param.reset( new actions::parameters::DateTime( parameter, xis ) );
     else if( type == "urbanblock" )
+        param.reset( new actions::parameters::UrbanBlock( parameter, xis ) );
+    else if( type == "urbanknowledge" )
         param.reset( new actions::parameters::UrbanBlock( parameter, xis ) );
     else if( type == "quantity" )
         param.reset( new actions::parameters::Quantity( parameter, xis ) );

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <sides>
-    <side id="1" name="Les Méchants" type="enemy">
+<orbat model-version="4.2.6">
+  <parties>
+    <party id="1" name="Les Méchants" type="enemy">
       <objects/>
       <tactical>
         <formation id="898" level="xxxx" name="Formation [898]"/>
@@ -11,8 +11,8 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-    <side id="3" name="Les Gentils" type="friend">
+    </party>
+    <party id="3" name="Les Gentils" type="friend">
       <objects>
         <object id="896" name="Site de franchissement [896]" type="crossing site">
           <shape type="ligne">
@@ -220,8 +220,8 @@
         <logistic-base id="1897">
           <subordinate id="1004">
             <quotas>
-              <dotation name="RATION DE COMBAT 1" quantity="1000"/>
-              <dotation name="EAU MINERALE 1L T 1" quantity="1000"/>
+              <resource name="RATION DE COMBAT 1" quantity="1000"/>
+              <resource name="EAU MINERALE 1L T 1" quantity="1000"/>
             </quotas>
           </subordinate>
           <subordinate id="1006">
@@ -302,14 +302,14 @@
           <subordinate id="1006"/>
         </tc2>
       </logistics>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1">
-      <relationship diplomacy="enemy" side="3"/>
-    </side>
-    <side id="3">
-      <relationship diplomacy="enemy" side="1"/>
-    </side>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="3"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
 </orbat>

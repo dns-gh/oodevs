@@ -2019,6 +2019,10 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 
     randomBreakdowns_.ReadArchive( input );
     attritionBreakdowns_.ReadArchive( input );
+    
+    input >> xml::optional >> xml::content( "equipment-category", equipmentCategory_ );
+    if ( equipmentCategory_ == "" )
+        equipmentCategory_ = "Autres";
 
     input >> xml::optional >> xml::attribute( "max-slope", rMaxSlope_ );
     if( rMaxSlope_ != 60. )
@@ -2034,7 +2038,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "element" )
+    output << xml::start( "equipment" )
             << xml::attribute( "comment", strAdditionalComments_ )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "id", nMosId_ )
@@ -2116,6 +2120,8 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
     if( bMaxSlope_.GetData() )
         output << xml::attribute( "max-slope", rMaxSlope_.GetData() / 100.0 );
 
+    output << xml::content( "equipment-category", equipmentCategory_ );
+
     output << xml::end;
 }
 
@@ -2181,8 +2187,8 @@ void ADN_Composantes_Data::ReadElement( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::ReadArchive( xml::xistream& input )
 {
-    input >> xml::start( "elements" )
-            >> xml::list( "element", *this, &ADN_Composantes_Data::ReadElement )
+    input >> xml::start( "equipments" )
+            >> xml::list( "equipment", *this, &ADN_Composantes_Data::ReadElement )
           >> xml::end;
 }
 
@@ -2192,7 +2198,7 @@ void ADN_Composantes_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "elements" );
+    output << xml::start( "equipments" );
     ADN_Tools::AddSchema( output, "Equipments" );
     for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
         (*it)->WriteArchive( output );

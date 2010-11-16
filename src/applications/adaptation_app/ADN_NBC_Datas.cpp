@@ -91,12 +91,12 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
     std::string wound = input.attribute< std::string >( "wound" );
     std::transform( wound.begin(), wound.end(), wound.begin(), std::tolower );
     ADN_Type_Double* pWound =
-        wound == "nonblesse" ? &rNbAlivedHumans_ :
+        wound == "healthy" ? &rNbAlivedHumans_ :
         wound == "u1"        ? &rNbHurtedHumans1_ :
         wound == "u2"        ? &rNbHurtedHumans2_ :
         wound == "u3"        ? &rNbHurtedHumans3_ :
         wound == "ue"        ? &rNbHurtedHumansE_ :
-        wound == "mort"      ? &rNbDeadHumans_ :
+        wound == "dead"      ? &rNbDeadHumans_ :
         0;
     if( pWound )
     {
@@ -114,7 +114,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::NbcIntoxInfos::ReadArchive( xml::xistream& input )
 {
-    input >>  xml::attribute( "intoxication", bIntoxPresent_ );
+    input >>  xml::attribute( "affliction", bIntoxPresent_ );
     if( bIntoxPresent_.GetData() )
     {
         input >> xml::list( "effect", *this, &ADN_NBC_Datas::NbcIntoxInfos::ReadEffect );
@@ -132,7 +132,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "effects" )
            << xml::attribute( "type", "liquid" )
-           << xml::attribute( "intoxication", "false" );
+           << xml::attribute( "affliction", "false" );
     WriteContent( output );
     output << xml::end;
 }
@@ -147,9 +147,9 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
     {
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
             throw ADN_DataException( tools::translate( "NBC_Data","Invalid data" ).ascii(), tools::translate( "NBC_Data", "NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( GetParentNode()->GetNodeName().c_str() ).ascii() );
-        output << xml::attribute( "intoxication", "true" )
+        output << xml::attribute( "affliction", "true" )
                << xml::start( "effect" )
-                << xml::attribute( "wound", "nonblesse" )
+                << xml::attribute( "wound", "healthy" )
                 << xml::attribute( "percentage", rNbAlivedHumans_.GetData() / 100.0 )
                << xml::end
                << xml::start( "effect" )
@@ -169,7 +169,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
                 << xml::attribute( "percentage", rNbHurtedHumansE_.GetData() / 100.0 )
                << xml::end
                << xml::start( "effect" )
-                << xml::attribute( "wound", "mort" )
+                << xml::attribute( "wound", "dead" )
                 << xml::attribute( "percentage", rNbDeadHumans_.GetData() / 100.0 )
                << xml::end;
     }
@@ -256,6 +256,7 @@ ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos()
     , strName_()
     , nMosId_( ADN_Workspace::GetWorkspace().GetNbc().GetData().GetNextId() )
     , liquidInfos_( "liquide" )
+    , category_( "chemical" )
     , bGazPresent_( false )
     , gazInfos_()
 {
@@ -324,7 +325,10 @@ void ADN_NBC_Datas::NbcAgentInfos::ReadEffect( xml::xistream& input )
 void ADN_NBC_Datas::NbcAgentInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ )
+          >> xml::optional >> xml::attribute( "category", category_ )
           >> xml::list( "effects", *this, &ADN_NBC_Datas::NbcAgentInfos::ReadEffect );
+    if ( category_ == "" )
+        category_ = "chemical";
 }
 
 // -----------------------------------------------------------------------------
@@ -337,6 +341,7 @@ void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( xml::xostream& output )
         return;
     output << xml::start( "agent" )
            << xml::attribute( "name", strName_ )
+           << xml::attribute( "category", category_ )
            << xml::attribute( "id", nMosId_ );
     if( bLiquidPresent_.GetData() )
         liquidInfos_.WriteArchive( output );

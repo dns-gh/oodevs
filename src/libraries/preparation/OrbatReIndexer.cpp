@@ -62,7 +62,7 @@ namespace
     {
         return attribute == "id"
             || attribute == "knowledge-group"
-            || attribute == "side";
+            || attribute == "party";
     }
 }
 

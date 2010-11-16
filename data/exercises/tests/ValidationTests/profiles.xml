@@ -351,7 +351,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion ASY Commettre attentat contre population" password="" supervision="true">
+  <profile name="Pion ASY Commettre attentat contre crowd" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -972,7 +972,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion Commun Canaliser population" password="" supervision="true">
+  <profile name="Pion Commun Canaliser crowd" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -981,7 +981,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion Commun Controler population dans zone" password="" supervision="true">
+  <profile name="Pion Commun Controler crowd dans zone" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -1008,7 +1008,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion Commun Filtrer population" password="" supervision="true">
+  <profile name="Pion Commun Filtrer crowd" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -1026,7 +1026,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion Commun Interdire franchissement population" password="" supervision="true">
+  <profile name="Pion Commun Interdire franchissement crowd" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -1053,7 +1053,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion Commun Renseigner sur population" password="" supervision="true">
+  <profile name="Pion Commun Renseigner sur crowd" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -1080,7 +1080,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Pion Commun Sécuriser zone contre population" password="" supervision="true">
+  <profile name="Pion Commun Sécuriser zone contre crowd" password="" supervision="true">
     <rights>
       <readonly/>
       <readwrite>

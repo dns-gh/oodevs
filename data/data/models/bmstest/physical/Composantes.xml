@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<elements>
-  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="22" name="Truc" protection="BlindeLeger" size="Moyen" weight="2.6">
+<equipments>
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="22" name="Truc" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="500"/>
       <speed terrain="foret" value="500"/>
@@ -48,5 +48,5 @@
       <breakdown origin="random" percentage="100" type="Panne 1"/>
       <breakdown origin="attrition" percentage="100" type="Panne 1"/>
     </breakdowns>
-  </element>
-</elements>
+  </equipment>
+</equipments>

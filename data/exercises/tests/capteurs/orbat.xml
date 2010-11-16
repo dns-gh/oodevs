@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <dotations infinite="false"/>
-  <sides>
-    <side id="99" name="Capteur" type="friend">
+<orbat model-version="4.2.6">
+  <resources infinite="false"/>
+  <parties>
+    <party id="99" name="Capteur" type="friend">
       <objects/>
       <tactical>
         <formation id="155" level="i" name="Formation [155]">
@@ -34,8 +34,8 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-    <side id="162" name="Capté" type="friend">
+    </party>
+    <party id="162" name="Capté" type="friend">
       <objects/>
       <tactical>
         <formation id="163" level="i" name="Formation [163]">
@@ -53,8 +53,8 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-    <side id="176" name="Camp 176" type="enemy">
+    </party>
+    <party id="176" name="Camp 176" type="enemy">
       <objects/>
       <tactical>
         <formation id="177" level="i" name="Formation [177]">
@@ -68,20 +68,20 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="99">
-      <relationship diplomacy="neutral" side="162"/>
-      <relationship diplomacy="enemy" side="176"/>
-    </side>
-    <side id="162">
-      <relationship diplomacy="neutral" side="99"/>
-      <relationship diplomacy="enemy" side="176"/>
-    </side>
-    <side id="176">
-      <relationship diplomacy="enemy" side="99"/>
-      <relationship diplomacy="enemy" side="162"/>
-    </side>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="99">
+      <relationship diplomacy="neutral" party="162"/>
+      <relationship diplomacy="enemy" party="176"/>
+    </party>
+    <party id="162">
+      <relationship diplomacy="neutral" party="99"/>
+      <relationship diplomacy="enemy" party="176"/>
+    </party>
+    <party id="176">
+      <relationship diplomacy="enemy" party="99"/>
+      <relationship diplomacy="enemy" party="162"/>
+    </party>
+  </diplomacy>
 </orbat>

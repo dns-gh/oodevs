@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <sides>
-    <side id="1" name="Les Méchants" type="enemy">
+<orbat model-version="4.2.6">
+  <parties>
+    <party id="1" name="Les Méchants" type="enemy">
       <objects/>
       <tactical>
         <formation id="444" level="ii" name="GTIA Case 5">
@@ -25,8 +25,8 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-    <side id="3" name="Les Gentils" type="friend">
+    </party>
+    <party id="3" name="Les Gentils" type="friend">
       <objects>
         <object id="896" name="Site de franchissement [896]" type="crossing site">
           <shape type="ligne">
@@ -56,11 +56,11 @@
           </automat>
           <automat engaged="false" id="459" knowledge-group="4" name="TC2 RGT AMX30B2 BRENNUS [459]" type="TC2 RGT AMX30B2 BRENNUS" logistic-level="tc2">
             <unit command-post="true" id="460" name="TC2 RGT AMX30B2 BRENNUS[460]" position="31UCP2393826631" type="TC2 RGT AMX30B2 BRENNUS">
-              <dotations>
-                <dotation name="F63 Gasoil" quantity="500"/>
-              </dotations>
+              <resources>
+                <resource name="F63 Gasoil" quantity="500"/>
+              </resources>
               <stocks>
-                <dotation name="F63 Gasoil" quantity="500"/>
+                <resource name="F63 Gasoil" quantity="500"/>
               </stocks>
             </unit>
           </automat>
@@ -183,7 +183,7 @@
           <automat engaged="false" id="606" knowledge-group="4" name="Zone Fonctionnelle Ravitaillement Transport BLD [606]" type="Zone Fonctionnelle Ravitaillement Transport BLD">
             <unit command-post="true" id="607" name="PC LOG BLD Ravitaillerment [607]" position="31UCP0413249152" type="PC LOG BLD Ravitaillerment">
               <stocks>
-                <dotation name="F63 Gasoil" quantity="500"/>
+                <resource name="F63 Gasoil" quantity="500"/>
               </stocks>
             </unit>
             <unit command-post="false" id="608" name="Groupe Munitions SOFF TT - D [608]" position="31UCP0461148632" type="Groupe Munitions SOFF TT - D"/>
@@ -356,19 +356,19 @@
         <logistic-base id="775">
             <subordinate id="459">
              <quotas>
-              <dotation name="F63 Gasoil" quantity="500"/>
+              <resource name="F63 Gasoil" quantity="500"/>
             </quotas>
           </subordinate>
         </logistic-base>
       </logistics>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1">
-      <relationship diplomacy="enemy" side="3"/>
-    </side>
-    <side id="3">
-      <relationship diplomacy="enemy" side="1"/>
-    </side>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="3"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
 </orbat>

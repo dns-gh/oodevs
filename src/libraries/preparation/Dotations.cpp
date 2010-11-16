@@ -37,8 +37,8 @@ Dotations::Dotations( xml::xistream& xis, Controller& controller, Entity_ABC& en
     : controller_( controller )
 {
     CreateDictionary( entity, dico );
-    xis >> xml::optional >> xml::start( "dotations" )
-            >> xml::list( "dotation", *this, &Dotations::ReadDotation, resolver )
+    xis >> xml::optional >> xml::start( "resources" )
+            >> xml::list( "resource", *this, &Dotations::ReadDotation, resolver )
         >> xml::end;
 }
 
@@ -71,10 +71,10 @@ void Dotations::SerializeAttributes( xml::xostream& xos ) const
 {
     if( elements_.empty() )
         return;
-    xos << xml::start( "dotations" );
+    xos << xml::start( "resources" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << xml::start( "dotation" );
+        xos << xml::start( "resource" );
         it->second->SerializeAttributes( xos );
         xos << xml::end;
     }

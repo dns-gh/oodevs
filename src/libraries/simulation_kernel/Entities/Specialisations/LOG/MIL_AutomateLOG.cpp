@@ -210,7 +210,7 @@ void MIL_AutomateLOG::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream
 {
     pCurrentSuperior_ = pNominalSuperior_ = &superior;
     xis >> xml::optional >> xml::start( "quotas" )
-            >> xml::list( "dotation", *this, &MIL_AutomateLOG::ReadDotation )
+            >> xml::list( "resource", *this, &MIL_AutomateLOG::ReadDotation )
         >> xml::end;
 }
 
@@ -260,7 +260,7 @@ void MIL_AutomateLOG::WriteLogisticLinksODB( xml::xostream& xos ) const
         for( CIT_DotationQuotaMap it = stockQuotasSuperior_.begin(); it != stockQuotasSuperior_.end(); ++it )
         {
            const PHY_DotationCategory& dotation = *it->first;
-           xos << xml::start( "dotation" )
+           xos << xml::start( "resource" )
                    << xml::attribute( "name", dotation.GetName()  )
                    << xml::attribute( "quantity", it->second.rQuota_ )
                << xml::end; // dotation

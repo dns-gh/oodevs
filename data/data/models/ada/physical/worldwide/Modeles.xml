@@ -4647,8 +4647,8 @@
       <fragorders/>
     </automat>
   </automats>
-  <populations>
-    <population dia-type="T_Population" file="Population\Populations\Model.bms" name="Population">
+  <crowd>
+    <crowd dia-type="T_Population" file="Population\Populations\Model.bms" name="Population">
       <missions>
         <mission name="Population - move">
           <fragorder name="Population - Change attitude"/>
@@ -4669,6 +4669,6 @@
       <fragorders>
         <fragorder name="Population - Change attitude"/>
       </fragorders>
-    </population>
-  </populations>
+    </crowd>
+  </crowd>
 </models>

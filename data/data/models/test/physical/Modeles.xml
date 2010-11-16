@@ -129,13 +129,13 @@
       <fragorders/>
     </automat>
   </automats>
-  <populations>
-    <population dia-type="T_Population" file="For Tests\Tests\Population\Files.hal" name="Test">
+  <crowd>
+    <crowd dia-type="T_Population" file="For Tests\Tests\Population\Files.hal" name="Test">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Commettre Exactions"/>
       </missions>
       <fragorders/>
-    </population>
-  </populations>
+    </crowd>
+  </crowd>
 </models>

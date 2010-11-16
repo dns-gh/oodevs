@@ -3,125 +3,125 @@
   <propagation contamination-distance="300" contamination-quantity-given="0.5" wind-speed-limit="5"/>
   <nbc-suit max-speed-modifier="0.4" reloading-time-modifier="1.5"/>
   <agents>
-    <agent id="1" name="Air">
-      <effects intoxication="false" type="liquid"/>
+    <agent id="1" name="Air" category="chemical">
+      <effects affliction="false" type="liquid"/>
     </agent>
-    <agent id="2" name="Gaz sarin">
-      <effects contamination="true" intoxication="true" type="liquid">
-        <effect percentage="0.2" wound="nonblesse"/>
+    <agent id="2" name="Gaz sarin" category="chemical">
+      <effects affliction="true" contamination="true" type="liquid">
+        <effect percentage="0.2" wound="healthy"/>
         <effect percentage="0.05" wound="u1"/>
         <effect percentage="0.15" wound="u2"/>
         <effect percentage="0.15" wound="u3"/>
         <effect percentage="0.15" wound="ue"/>
-        <effect percentage="0.3" wound="mort"/>
+        <effect percentage="0.3" wound="dead"/>
       </effects>
-      <effects contamination="true" intoxication="true" life-time="300s" propagation="20" type="gaseous">
-        <effect percentage="0.2" wound="nonblesse"/>
+      <effects affliction="true" contamination="true" life-time="300s" propagation="20" type="gaseous">
+        <effect percentage="0.2" wound="healthy"/>
         <effect percentage="0.05" wound="u1"/>
         <effect percentage="0.15" wound="u2"/>
         <effect percentage="0.15" wound="u3"/>
         <effect percentage="0.15" wound="ue"/>
-        <effect percentage="0.3" wound="mort"/>
+        <effect percentage="0.3" wound="dead"/>
       </effects>
     </agent>
-    <agent id="3" name="H5N1">
-      <effects contamination="true" intoxication="true" type="liquid">
-        <effect percentage="0.3" wound="nonblesse"/>
+    <agent id="3" name="H5N1" category="biological">
+      <effects affliction="true" contamination="true" type="liquid">
+        <effect percentage="0.3" wound="healthy"/>
         <effect percentage="0.1" wound="u1"/>
         <effect percentage="0.1" wound="u2"/>
         <effect percentage="0.2" wound="u3"/>
         <effect percentage="0.1" wound="ue"/>
-        <effect percentage="0.2" wound="mort"/>
+        <effect percentage="0.2" wound="dead"/>
       </effects>
-      <effects contamination="true" intoxication="true" life-time="300s" propagation="20" type="gaseous">
-        <effect percentage="0.3" wound="nonblesse"/>
+      <effects affliction="true" contamination="true" life-time="300s" propagation="20" type="gaseous">
+        <effect percentage="0.3" wound="healthy"/>
         <effect percentage="0.1" wound="u1"/>
         <effect percentage="0.1" wound="u2"/>
         <effect percentage="0.2" wound="u3"/>
         <effect percentage="0.1" wound="ue"/>
-        <effect percentage="0.2" wound="mort"/>
+        <effect percentage="0.2" wound="dead"/>
       </effects>
     </agent>
-    <agent id="4" name="HCN">
-      <effects contamination="true" intoxication="true" type="liquid">
-        <effect percentage="0.5" wound="nonblesse"/>
+    <agent id="4" name="HCN" category="biological">
+      <effects affliction="true" contamination="true" type="liquid">
+        <effect percentage="0.5" wound="healthy"/>
         <effect percentage="0.05" wound="u1"/>
         <effect percentage="0.15" wound="u2"/>
         <effect percentage="0.15" wound="u3"/>
         <effect percentage="0.05" wound="ue"/>
-        <effect percentage="0.1" wound="mort"/>
+        <effect percentage="0.1" wound="dead"/>
       </effects>
-      <effects contamination="true" intoxication="true" life-time="300s" propagation="20" type="gaseous">
-        <effect percentage="0.5" wound="nonblesse"/>
+      <effects affliction="true" contamination="true" life-time="300s" propagation="20" type="gaseous">
+        <effect percentage="0.5" wound="healthy"/>
         <effect percentage="0.05" wound="u1"/>
         <effect percentage="0.15" wound="u2"/>
         <effect percentage="0.15" wound="u3"/>
         <effect percentage="0.05" wound="ue"/>
-        <effect percentage="0.1" wound="mort"/>
+        <effect percentage="0.1" wound="dead"/>
       </effects>
     </agent>
-    <agent id="5" name="Rayon gamma">
-      <effects contamination="true" intoxication="true" type="liquid">
-        <effect percentage="0.3" wound="nonblesse"/>
+    <agent id="5" name="Rayon gamma" category="radiological">
+      <effects affliction="true" contamination="true" type="liquid">
+        <effect percentage="0.3" wound="healthy"/>
         <effect percentage="0.1" wound="u1"/>
         <effect percentage="0.1" wound="u2"/>
         <effect percentage="0.2" wound="u3"/>
         <effect percentage="0.1" wound="ue"/>
-        <effect percentage="0.2" wound="mort"/>
+        <effect percentage="0.2" wound="dead"/>
       </effects>
-      <effects contamination="true" intoxication="true" life-time="300s" propagation="20" type="gaseous">
-        <effect percentage="0.3" wound="nonblesse"/>
+      <effects affliction="true" contamination="true" life-time="300s" propagation="20" type="gaseous">
+        <effect percentage="0.3" wound="healthy"/>
         <effect percentage="0.1" wound="u1"/>
         <effect percentage="0.1" wound="u2"/>
         <effect percentage="0.2" wound="u3"/>
         <effect percentage="0.1" wound="ue"/>
-        <effect percentage="0.2" wound="mort"/>
+        <effect percentage="0.2" wound="dead"/>
       </effects>
     </agent>
-    <agent id="6" name="Soman">
-      <effects contamination="true" intoxication="true" type="liquid">
-        <effect percentage="0.5" wound="nonblesse"/>
+    <agent id="6" name="Soman" category="chemical">
+      <effects affliction="true" contamination="true" type="liquid">
+        <effect percentage="0.5" wound="healthy"/>
         <effect percentage="0.05" wound="u1"/>
         <effect percentage="0.15" wound="u2"/>
         <effect percentage="0.15" wound="u3"/>
         <effect percentage="0.05" wound="ue"/>
-        <effect percentage="0.1" wound="mort"/>
+        <effect percentage="0.1" wound="dead"/>
       </effects>
     </agent>
-    <agent id="7" name="VX">
-      <effects contamination="true" intoxication="true" type="liquid">
-        <effect percentage="0.5" wound="nonblesse"/>
+    <agent id="7" name="VX" category="chemical">
+      <effects affliction="true" contamination="true" type="liquid">
+        <effect percentage="0.5" wound="healthy"/>
         <effect percentage="0.05" wound="u1"/>
         <effect percentage="0.15" wound="u2"/>
         <effect percentage="0.15" wound="u3"/>
         <effect percentage="0.05" wound="ue"/>
-        <effect percentage="0.1" wound="mort"/>
+        <effect percentage="0.1" wound="dead"/>
       </effects>
-      <effects intoxication="true" life-time="30s" propagation="20" type="gaseous">
-        <effect percentage="0.5" wound="nonblesse"/>
+      <effects affliction="true" life-time="30s" propagation="20" type="gaseous">
+        <effect percentage="0.5" wound="healthy"/>
         <effect percentage="0.05" wound="u1"/>
         <effect percentage="0.15" wound="u2"/>
         <effect percentage="0.15" wound="u3"/>
         <effect percentage="0.05" wound="ue"/>
-        <effect percentage="0.1" wound="mort"/>
+        <effect percentage="0.1" wound="dead"/>
       </effects>
     </agent>
-    <agent id="8" name="Virus ebola">
-      <effects intoxication="true" type="liquid">
-        <effect percentage="0.3" wound="nonblesse"/>
+    <agent id="8" name="Virus ebola" category="biological">
+      <effects affliction="true" type="liquid">
+        <effect percentage="0.3" wound="healthy"/>
         <effect percentage="0.12" wound="u1"/>
         <effect percentage="0.08" wound="u2"/>
         <effect percentage="0.2" wound="u3"/>
         <effect percentage="0.1" wound="ue"/>
-        <effect percentage="0.2" wound="mort"/>
+        <effect percentage="0.2" wound="dead"/>
       </effects>
-      <effects intoxication="true" life-time="300s" propagation="20" type="gaseous">
-        <effect percentage="0.3" wound="nonblesse"/>
+      <effects affliction="true" life-time="300s" propagation="20" type="gaseous">
+        <effect percentage="0.3" wound="healthy"/>
         <effect percentage="0.1" wound="u1"/>
         <effect percentage="0.1" wound="u2"/>
         <effect percentage="0.2" wound="u3"/>
         <effect percentage="0.1" wound="ue"/>
-        <effect percentage="0.2" wound="mort"/>
+        <effect percentage="0.2" wound="dead"/>
       </effects>
     </agent>
   </agents>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<elements xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Equipments.xsd">
-  <element codeEMAT6="Drone" codeEMAT8="Drone" codeLFRIL="Drone" codeNNO="Drone" comment="" id="1" name="Drone" protection="Aeronef" size="Petit" weight="2.6">
+<equipments xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Equipments.xsd">
+  <equipment codeEMAT6="Drone" codeEMAT8="Drone" codeLFRIL="Drone" codeNNO="Drone" comment="" id="1" name="Drone" protection="Aeronef" size="Petit" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="10"/>
@@ -31,28 +31,7 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="munition">
-        <dotation capacity="1000" logistic-threshold="20" name="Balle Classique 12,7" normalized-consumption="10"/>
-        <dotation capacity="100" logistic-threshold="20" name="Obus fumigene" normalized-consumption="10"/>
-        <dotation capacity="100" logistic-threshold="20" name="Obus eclairant" normalized-consumption="10"/>
-        <dotation capacity="20" logistic-threshold="20" name="Obus 120 mm" normalized-consumption="10"/>
-        <dotation capacity="50" logistic-threshold="20" name="Obus mine" normalized-consumption="10"/>
-        <dotation capacity="5" logistic-threshold="0" name="Fusse a ailettes 50mm" normalized-consumption="10"/>
-        <dotation capacity="4" logistic-threshold="0" name="Fusse a jupette 53mm" normalized-consumption="10"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="1000" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-      <category name="mine">
-        <dotation capacity="1000" logistic-threshold="10" name="mine classique" normalized-consumption="10"/>
-        <dotation capacity="40" logistic-threshold="10" name="pont flottant de la mort" normalized-consumption="10"/>
-      </category>
-      <category name="ration">
-        <dotation capacity="1000" logistic-threshold="80" name="bouffe" normalized-consumption="10"/>
-        <dotation capacity="1000" logistic-threshold="80" name="flotte" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
@@ -65,15 +44,7 @@
       <crew man-boarding-time="3s" man-unloading-time="6s"/>
       <unit capacity="5" ton-loading-time="15s" ton-unloading-time="15s"/>
     </transports>
-    <consumptions>
-      <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="bouffe" value="1000"/>
-        <dotation category="ration" name="flotte" value="1000"/>
-      </consumption>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="1000"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems>
       <weapon-system launcher="Lance-fussoir" munition="Fusse a jupette 53mm"/>
       <weapon-system launcher="Lance-fussoir" munition="Obus fumigene"/>
@@ -92,8 +63,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="CompTestEMAT6" codeEMAT8="CompTestEMAT8" codeLFRIL="CompTestLFRIL" codeNNO="CompTestNNO" comment="" id="2" name="CompTest" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="CompTestEMAT6" codeEMAT8="CompTestEMAT8" codeLFRIL="CompTestLFRIL" codeNNO="CompTestNNO" comment="" id="2" name="CompTest" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="10"/>
@@ -124,28 +96,7 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="munition">
-        <dotation capacity="1000" logistic-threshold="20" name="Balle Classique 12,7" normalized-consumption="10"/>
-        <dotation capacity="100" logistic-threshold="20" name="Obus fumigene" normalized-consumption="10"/>
-        <dotation capacity="100" logistic-threshold="20" name="Obus eclairant" normalized-consumption="10"/>
-        <dotation capacity="2000" logistic-threshold="20" name="Obus 120 mm" normalized-consumption="10"/>
-        <dotation capacity="50" logistic-threshold="20" name="Obus mine" normalized-consumption="10"/>
-        <dotation capacity="5" logistic-threshold="0" name="Fusse a ailettes 50mm" normalized-consumption="10"/>
-        <dotation capacity="40" logistic-threshold="0" name="Fusse a jupette 53mm" normalized-consumption="10"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="1000" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-      <category name="mine">
-        <dotation capacity="1000" logistic-threshold="10" name="mine classique" normalized-consumption="10"/>
-        <dotation capacity="40" logistic-threshold="10" name="pont flottant de la mort" normalized-consumption="10"/>
-      </category>
-      <category name="ration">
-        <dotation capacity="1000" logistic-threshold="80" name="bouffe" normalized-consumption="10"/>
-        <dotation capacity="1000" logistic-threshold="80" name="flotte" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
@@ -158,15 +109,7 @@
       <crew man-boarding-time="3s" man-unloading-time="6s"/>
       <unit capacity="5" ton-loading-time="15s" ton-unloading-time="15s"/>
     </transports>
-    <consumptions>
-      <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="bouffe" value="1000"/>
-        <dotation category="ration" name="flotte" value="1000"/>
-      </consumption>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="1000"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems>
       <weapon-system launcher="Lance-fussoir" munition="Obus mine"/>
       <weapon-system launcher="Lance-fussoir" munition="Fusse a jupette 53mm"/>
@@ -186,8 +129,9 @@
       <breakdown origin="attrition" percentage="0" type="Panne 2"/>
       <breakdown origin="attrition" percentage="0" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="CompTest2" codeEMAT8="CompTest2" codeLFRIL="CompTest2" codeNNO="CompTest2" comment="" id="3" name="CompTest2" protection="Combattant" size="Petit" weight="1.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="CompTest2" codeEMAT8="CompTest2" codeLFRIL="CompTest2" codeNNO="CompTest2" comment="" id="3" name="CompTest2" protection="Combattant" size="Petit" weight="1.6">
     <speeds max="10">
       <speed terrain="inconnu" value="3"/>
       <speed terrain="foret" value="2"/>
@@ -218,38 +162,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="munition">
-        <dotation capacity="100" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="10"/>
-        <dotation capacity="1000" logistic-threshold="10" name="Obus eclairant" normalized-consumption="10"/>
-        <dotation capacity="2" logistic-threshold="10" name="Obus 120 mm" normalized-consumption="10"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-      <category name="mine">
-        <dotation capacity="30000" logistic-threshold="10" name="mine classique" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="ArretMoteurEteint">
-        <dotation category="carburant" name="gasoil" value="0"/>
-      </consumption>
-      <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="gasoil" value="30"/>
-      </consumption>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="50"/>
-      </consumption>
-      <consumption status="EnTravaux">
-        <dotation category="munition" name="Obus eclairant" value="100"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems>
       <weapon-system launcher="Mitrailleuse" munition="Balle Classique 12,7"/>
     </weapon-systems>
@@ -257,8 +176,9 @@
     <objects>
       <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="240s" destruction-time-factor="288s" devalorization-time="1800s" initial-construction-time="3600s" type="anti tank obstacle" valorization-time="0s"/>
     </objects>
-  </element>
-  <element codeEMAT6="CompNBC" codeEMAT8="CompNBC" codeLFRIL="CompNBC" codeNNO="CompNBC" comment="" id="4" name="CompNBC" protection="BlindeLeger" size="Moyen" weight="5">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="CompNBC" codeEMAT8="CompNBC" codeLFRIL="CompNBC" codeNNO="CompNBC" comment="" id="4" name="CompNBC" protection="BlindeLeger" size="Moyen" weight="5">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -289,40 +209,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="munition">
-        <dotation capacity="800" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="10"/>
-        <dotation capacity="100" logistic-threshold="10" name="Obus fumigene" normalized-consumption="10"/>
-        <dotation capacity="100" logistic-threshold="10" name="Obus eclairant" normalized-consumption="10"/>
-        <dotation capacity="2" logistic-threshold="10" name="Obus 120 mm" normalized-consumption="10"/>
-        <dotation capacity="50" logistic-threshold="10" name="Obus mine" normalized-consumption="10"/>
-        <dotation capacity="5" logistic-threshold="10" name="Fusse a ailettes 50mm" normalized-consumption="10"/>
-        <dotation capacity="4" logistic-threshold="10" name="Fusse a jupette 53mm" normalized-consumption="10"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil NBC"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="ArretMoteurEteint">
-        <dotation category="carburant" name="gasoil" value="1"/>
-      </consumption>
-      <consumption status="ArretMoteurAllume">
-        <dotation category="carburant" name="gasoil" value="723"/>
-      </consumption>
-      <consumption status="Deplacement">
-        <dotation category="munition" name="Balle Classique 12,7" value="100"/>
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-      <consumption status="EnTravaux">
-        <dotation category="munition" name="Obus eclairant" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems>
       <weapon-system launcher="Canon 120" munition="Obus 120 mm"/>
       <weapon-system launcher="Lance-fussoir" munition="Fusse a ailettes 50mm"/>
@@ -341,8 +234,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="Remorqueur" codeEMAT8="Remorqueur" codeLFRIL="Remorqueur" codeNNO="Remorqueur" comment="" id="5" name="Remorqueur 5T" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="Remorqueur" codeEMAT8="Remorqueur" codeLFRIL="Remorqueur" codeNNO="Remorqueur" comment="" id="5" name="Remorqueur 5T" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -373,11 +267,7 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
@@ -385,11 +275,7 @@
       <radar type="Ecoute radar"/>
     </radars>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -404,8 +290,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="Remorqueur" codeEMAT8="Remorqueur" codeLFRIL="Remorqueur" codeNNO="Remorqueur" comment="" id="6" name="Remorqueur 3T" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="Remorqueur" codeEMAT8="Remorqueur" codeLFRIL="Remorqueur" codeNNO="Remorqueur" comment="" id="6" name="Remorqueur 3T" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -436,11 +323,7 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
@@ -448,11 +331,7 @@
       <radar type="Ecoute radar"/>
     </radars>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -467,8 +346,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="7" name="NTI TC2" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="7" name="NTI TC2" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -499,21 +379,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -526,8 +398,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="8" name="NTI BLD M" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="8" name="NTI BLD M" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -558,21 +431,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -585,8 +450,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="9" name="NTI BLD EA" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="9" name="NTI BLD EA" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -617,21 +483,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540.6"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -644,8 +502,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="10" name="NTI BLT M" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="10" name="NTI BLT M" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -676,21 +535,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -703,8 +554,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="11" name="NTI BLT EA" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="11" name="NTI BLT EA" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -735,21 +587,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -762,8 +606,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="12" name="VSB (releve)" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="12" name="VSB (releve)" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -794,21 +639,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -823,8 +660,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="13" max-slope="0.9" name="VSR (ramassage)" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="13" max-slope="0.9" name="VSR (ramassage)" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -855,21 +693,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -884,8 +714,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="14" name="Medecin TC2" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="14" name="Medecin TC2" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -916,21 +747,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -945,8 +768,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="15" name="Medecin tri" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="15" name="Medecin tri" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -977,21 +801,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -1006,8 +822,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="16" name="Medecin soin chirurgical" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="16" name="Medecin soin chirurgical" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -1038,21 +855,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -1067,8 +876,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="17" name="Medecin soin chirurgical U2/U3" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="17" name="Medecin soin chirurgical U2/U3" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -1099,21 +909,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -1128,8 +930,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="18" name="Medecin soin mental" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="18" name="Medecin soin mental" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -1160,21 +963,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -1189,8 +984,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="19" name="Medecin soin NBC" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="19" name="Medecin soin NBC" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -1221,21 +1017,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -1250,8 +1038,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="20" name="Camion transport solide" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="20" name="Camion transport solide" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -1282,21 +1071,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -1311,8 +1092,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="21" name="Camion transport liquide" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="NTI" codeEMAT8="NTI" codeLFRIL="NTI" codeNNO="NTI" comment="" id="21" name="Camion transport liquide" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="20"/>
@@ -1343,21 +1125,13 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="carburant">
-        <dotation capacity="600" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
     <radars/>
     <transports/>
-    <consumptions>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="540"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems/>
     <human-protections/>
     <objects/>
@@ -1372,8 +1146,9 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="22" name="Truc Volant" protection="BlindeLeger" size="Moyen" weight="2.6">
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="22" name="Truc Volant" protection="BlindeLeger" size="Moyen" weight="2.6">
     <speeds max="90">
       <speed terrain="inconnu" value="500"/>
       <speed terrain="foret" value="500"/>
@@ -1404,28 +1179,7 @@
       <speed terrain="montagne" value="0"/>
       <speed terrain="bord de montagne" value="0"/>
     </speeds>
-    <composition>
-      <category name="munition">
-        <dotation capacity="1000" logistic-threshold="20" name="Balle Classique 12,7" normalized-consumption="10"/>
-        <dotation capacity="100" logistic-threshold="20" name="Obus fumigene" normalized-consumption="10"/>
-        <dotation capacity="100" logistic-threshold="20" name="Obus eclairant" normalized-consumption="10"/>
-        <dotation capacity="20" logistic-threshold="20" name="Obus 120 mm" normalized-consumption="10"/>
-        <dotation capacity="50" logistic-threshold="20" name="Obus mine" normalized-consumption="10"/>
-        <dotation capacity="5" logistic-threshold="0" name="Fusse a ailettes 50mm" normalized-consumption="10"/>
-        <dotation capacity="4" logistic-threshold="0" name="Fusse a jupette 53mm" normalized-consumption="10"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="1000" logistic-threshold="10" name="gasoil" normalized-consumption="10"/>
-      </category>
-      <category name="mine">
-        <dotation capacity="1000" logistic-threshold="10" name="mine classique" normalized-consumption="10"/>
-        <dotation capacity="40" logistic-threshold="10" name="pont flottant de la mort" normalized-consumption="10"/>
-      </category>
-      <category name="ration">
-        <dotation capacity="1000" logistic-threshold="80" name="bouffe" normalized-consumption="10"/>
-        <dotation capacity="1000" logistic-threshold="80" name="flotte" normalized-consumption="10"/>
-      </category>
-    </composition>
+    <composition/>
     <sensors>
       <sensor height="2" type="oeil"/>
     </sensors>
@@ -1438,15 +1192,7 @@
       <crew man-boarding-time="3s" man-unloading-time="6s"/>
       <unit capacity="5" ton-loading-time="15s" ton-unloading-time="15s"/>
     </transports>
-    <consumptions>
-      <consumption status="ArretMoteurEteint">
-        <dotation category="ration" name="bouffe" value="1000"/>
-        <dotation category="ration" name="flotte" value="1000"/>
-      </consumption>
-      <consumption status="Deplacement">
-        <dotation category="carburant" name="gasoil" value="1000"/>
-      </consumption>
-    </consumptions>
+    <consumptions/>
     <weapon-systems>
       <weapon-system launcher="Lance-fussoir" munition="Fusse a jupette 53mm"/>
       <weapon-system launcher="Lance-fussoir" munition="Obus fumigene"/>
@@ -1461,5 +1207,6 @@
       <breakdown origin="attrition" percentage="30" type="Panne 2"/>
       <breakdown origin="attrition" percentage="40" type="Panne 3"/>
     </breakdowns>
-  </element>
-</elements>
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+</equipments>

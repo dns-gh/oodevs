@@ -106,25 +106,25 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
 {
     if ( infiniteDotations_ )
     {
-        xos << xml::start( "dotations" )
+        xos << xml::start( "resources" )
                 << xml::attribute( "infinite", infiniteDotations_ )
             << xml::end;
     }
 
-    xos << xml::start( "sides" );
+    xos << xml::start( "parties" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << xml::start( "side" );
+        xos << xml::start( "party" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
         xos << xml::end;
     }
     xos << xml::end;
 
-    xos << xml::start( "diplomacies" );
+    xos << xml::start( "diplomacy" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << xml::start( "side" );
+        xos << xml::start( "party" );
         static_cast< const Diplomacies& >( it->second->Get< kernel::Diplomacies_ABC >() ).Serialize( xos ); // $$$$ SBO 2008-12-09: !
         xos << xml::end;
     }
@@ -147,14 +147,14 @@ tools::Iterator< const Entity_ABC& > TeamsModel::CreateEntityIterator() const
 void TeamsModel::Load( xml::xistream& xis, Model& model, std::string& loadingErrors )
 {
     xis >> xml::start( "orbat" )
-            >> xml::optional >> xml::start( "dotations" )
+            >> xml::optional >> xml::start( "resources" )
                 >> xml::attribute( "infinite", infiniteDotations_ )
             >> xml::end
-            >> xml::start( "sides" )
-                >> xml::list( "side", *this, &TeamsModel::ReadTeam, model, loadingErrors )
+            >> xml::start( "parties" )
+                >> xml::list( "party", *this, &TeamsModel::ReadTeam, model, loadingErrors )
             >> xml::end
-            >> xml::start( "diplomacies" )
-                >> xml::list( "side", *this, &TeamsModel::ReadDiplomacy )
+            >> xml::start( "diplomacy" )
+                >> xml::list( "party", *this, &TeamsModel::ReadDiplomacy )
             >> xml::end
         >> xml::end;
 }

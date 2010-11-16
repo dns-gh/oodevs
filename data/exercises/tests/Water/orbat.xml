@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <sides>
-    <side id="1" name="Camp 1" type="friend">
+<orbat model-version="4.2.6">
+  <parties>
+    <party id="1" name="Camp 1" type="friend">
       <objects/>
       <tactical>
         <formation id="3" level="ii" name="Formation [3]">
@@ -21,9 +21,9 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1"/>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1"/>
+  </diplomacy>
 </orbat>

@@ -78,8 +78,8 @@ void PHY_ComposanteTypePion::Initialize( const MIL_Time_ABC& time, xml::xistream
 {
     MT_LOG_INFO_MSG( "Initializing composante types" );
     LoadingWrapper loader;
-    xis >> xml::start( "elements" )
-            >> xml::list( "element", loader, &LoadingWrapper::ReadElement, time )
+    xis >> xml::start( "equipments" )
+            >> xml::list( "equipment", loader, &LoadingWrapper::ReadElement, time )
         >> xml::end;
 }
 

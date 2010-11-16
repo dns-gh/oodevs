@@ -102,7 +102,7 @@ void Diplomacies::Serialize( xml::xostream& xos ) const
         if( &team == &team_ )
             continue;
         xos << xml::start( "relationship" )
-                << xml::attribute( "side", int( team.GetId() ) );
+                << xml::attribute( "party", int( team.GetId() ) );
         CIT_Diplomacies it = diplomacies_.find( &team.Get< Diplomacies_ABC >() );
         if( it != diplomacies_.end() )
             xos << xml::attribute( "diplomacy", it->second.GetId() );
@@ -129,7 +129,7 @@ void Diplomacies::ReadRelationship( xml::xistream& xis )
 {
     int id;
     std::string diplomacy;
-    xis >> xml::attribute( "side", id )
+    xis >> xml::attribute( "party", id )
         >> xml::attribute( "diplomacy", diplomacy );
     SetDiplomacy( resolver_.Get( id ), kernel::Karma::ResolveId( diplomacy.c_str() ) );
 }

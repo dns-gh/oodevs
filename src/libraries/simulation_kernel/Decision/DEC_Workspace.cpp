@@ -99,7 +99,7 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
 
     unsigned int nTmp;
 
-    xisDecisional >> xml::start( "decisonal" )
+    xisDecisional >> xml::start( "decisional" )
                       >> xml::start( "dangerosity-modifiers" )
                           >> xml::attribute( "max-accuracy", nTmp );
     if( nTmp < 0 || nTmp > 100 )
@@ -258,8 +258,8 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::s
 
     // Populations
     MT_LOG_INFO_MSG( "Initializing population DIA models" );
-    xisModels >> xml::start( "populations" )
-                  >> xml::list( "population", *this, &DEC_Workspace::ReadModel, strSourcePaths, strPopulation, MIL_PopulationMissionType::MissionNames() )
+    xisModels >> xml::start( "crowd" )
+                  >> xml::list( "crowd", *this, &DEC_Workspace::ReadModel, strSourcePaths, strPopulation, MIL_PopulationMissionType::MissionNames() )
               >> xml::end;
 
     xisModels >> xml::end; // models

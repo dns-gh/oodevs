@@ -73,7 +73,8 @@ void ADN_AiEngine_Data::FilesNeeded( T_StringList& vFiles ) const
 // -----------------------------------------------------------------------------
 void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
 {
-    input >> xml::start( "decisonal" )
+    input >> xml::start( "decisional" )
+        >> xml::attribute("model-version", modelVersion_ )
             >> xml::start( "dangerosity-modifiers" )
                 >> xml::attribute( "max-accuracy", rPertinenceMaxDecrease_ )
                 >> xml::attribute( "max-operational-state", rOperationalStateMaxDecrease_ )
@@ -120,8 +121,9 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_AiEngine_Data::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "decisonal" );
+    output << xml::start( "decisional" );
     ADN_Tools::AddSchema( output, "Decisional" );
+    output << xml::attribute("model-version", modelVersion_ );
     output  << xml::start( "dangerosity-modifiers" )
                 << xml::attribute( "max-accuracy", rPertinenceMaxDecrease_ )
                 << xml::attribute( "max-operational-state", rOperationalStateMaxDecrease_ )

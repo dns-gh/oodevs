@@ -51,6 +51,7 @@ public:
     ADN_Type_Double rMajorEquipmentWeight_;
     ADN_Type_Double rHumanWeight_;
     ADN_Type_Time rDefaultFeedbackTime_;
+    ADN_Type_String modelVersion_;
 };
 
 

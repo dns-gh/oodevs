@@ -158,7 +158,7 @@ void PHY_DotationStockContainer::WriteODB( xml::xostream& xos ) const
     {
         const PHY_DotationStock& dotationStock = *it->second;
 
-        xos << xml::start( "dotation" )
+        xos << xml::start( "resource" )
             << xml::attribute( "name", dotationStock.GetCategory().GetName() )
             << xml::attribute( "quantity", dotationStock.GetValue() )
         << xml::end; // dotation"
@@ -173,7 +173,7 @@ void PHY_DotationStockContainer::WriteODB( xml::xostream& xos ) const
 void PHY_DotationStockContainer::ReadValues( xml::xistream& xis )
 {
     xis >> xml::optional >> xml::start( "stocks" )
-                          >> xml::list( "dotation", *this, &PHY_DotationStockContainer::ReadStock )
+                          >> xml::list( "resource", *this, &PHY_DotationStockContainer::ReadStock )
                       >> xml::end;
 }
 

@@ -4230,24 +4230,8 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automate</source>
-        <translation type="unfinished">Automate</translation>
-    </message>
-    <message>
-        <source>Bool</source>
-        <translation type="unfinished">Booléen</translation>
-    </message>
-    <message>
-        <source>Numeric</source>
-        <translation type="unfinished">Nombre</translation>
-    </message>
-    <message>
         <source>String</source>
         <translation type="unfinished">Chaîne de caractères</translation>
-    </message>
-    <message>
-        <source>Datetime</source>
-        <translation type="unfinished">Date/heure</translation>
     </message>
     <message>
         <source>Enumeration</source>
@@ -4268,10 +4252,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>PopulationKnowledge</source>
         <translation type="unfinished">Connaissance de Population</translation>
-    </message>
-    <message>
-        <source>GenObject</source>
-        <translation type="unfinished">Objet génie</translation>
     </message>
     <message>
         <source>Objective</source>
@@ -4298,10 +4278,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation type="unfinished">Type d&apos;Equipement</translation>
     </message>
     <message>
-        <source>DotationType</source>
-        <translation type="unfinished">Type de Dotation</translation>
-    </message>
-    <message>
         <source>MaintenancePriorities</source>
         <translation type="unfinished">Priorités de Maintenance</translation>
     </message>
@@ -4316,10 +4292,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Limit</source>
         <translation type="unfinished">Limite</translation>
-    </message>
-    <message>
-        <source>UrbanBlock</source>
-        <translation type="unfinished">Bloc urbain</translation>
     </message>
     <message>
         <source>Urban block speed</source>
@@ -4363,6 +4335,34 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>PhaseLine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Boolean</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Integer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DateTime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PlannedWork</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ResourceType</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UrbanKnowledge</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

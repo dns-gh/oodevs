@@ -346,7 +346,7 @@ void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, unsigned int
         >> xml::optional >> xml::attribute( "dia-behavior", diaBehavior_ )
         >> xml::optional >> xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ )
         >> xml::optional >> xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
-        >> xml::optional >> xml::start( "descriptions" )
+        >> xml::optional >> xml::start( "description" )
             >> xml::optional >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
             >> xml::optional >> xml::start( "usage" ) >> usageDesc >> xml::end
         >> xml::end
@@ -415,7 +415,7 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
     }
     if( ! doctrineDescription_.GetData().empty() || ! usageDescription_.GetData().empty() )
     {
-        output << xml::start( "descriptions" );
+        output << xml::start( "description" );
         if( ! doctrineDescription_.GetData().empty() )
             output << xml::start( "doctrine" ) << xml::cdata( doctrineDescription_.GetData() ) << xml::end;
         if( ! usageDescription_.GetData().empty() )
@@ -507,7 +507,7 @@ void ADN_Missions_Data::FragOrder::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "dia-type", diaType_ )
           >> xml::optional >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )
-          >> xml::optional >> xml::start( "descriptions" )
+          >> xml::optional >> xml::start( "description" )
              >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
              >> xml::start( "usage" ) >> usageDesc >> xml::end
           >> xml::end
@@ -557,7 +557,7 @@ void ADN_Missions_Data::FragOrder::WriteArchive( xml::xostream& output )
             << xml::attribute( "available-without-mission", isAvailableWithoutMission_ );
     if( ! doctrineDescription_.GetData().empty() || ! usageDescription_.GetData().empty() )
     {
-        output << xml::start( "descriptions" );
+        output << xml::start( "description" );
         if( ! doctrineDescription_.GetData().empty() )
             output << xml::start( "doctrine" ) << xml::cdata( doctrineDescription_.GetData() ) << xml::end;
         if( ! usageDescription_.GetData().empty() )

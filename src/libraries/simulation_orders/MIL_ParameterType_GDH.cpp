@@ -16,8 +16,8 @@
 // Name: MIL_ParameterType_GDH constructor
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-MIL_ParameterType_GDH::MIL_ParameterType_GDH()
-    : MIL_ParameterType_ABC( "datetime" )
+MIL_ParameterType_GDH::MIL_ParameterType_GDH( const std::string& name )
+    : MIL_ParameterType_ABC( name )
 {
     // NOTHING
 }

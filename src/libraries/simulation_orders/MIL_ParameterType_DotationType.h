@@ -23,8 +23,8 @@ class MIL_ParameterType_DotationType : public MIL_ParameterType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ParameterType_DotationType();
-    virtual ~MIL_ParameterType_DotationType();
+    explicit MIL_ParameterType_DotationType( const std::string& name );
+    virtual ~MIL_ParameterType_DotationType();();
     //@}
 
     //! @name Operations

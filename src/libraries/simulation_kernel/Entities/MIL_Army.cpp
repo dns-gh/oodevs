@@ -272,7 +272,7 @@ void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 // -----------------------------------------------------------------------------
 void MIL_Army::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "side" )
+    xos << xml::start( "party" )
             << xml::attribute( "id", nID_ )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "type", diplomacyConverter_.RevertConvert( nType_ ) );
@@ -308,12 +308,12 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_Army::WriteDiplomacyODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "side" )
+    xos << xml::start( "party" )
         << xml::attribute( "id", nID_ );
     for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
         xos << xml::start( "relationship" )
-                << xml::attribute( "side", it->first->GetID() )
+                << xml::attribute( "party", it->first->GetID() )
                 << xml::attribute( "diplomacy", diplomacyConverter_.RevertConvert(it->second) )
             << xml::end;
     }
@@ -371,7 +371,7 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 {
     unsigned int nTeam;
     std::string strDiplomacy;
-    xis >> xml::attribute( "side", nTeam )
+    xis >> xml::attribute( "party", nTeam )
         >> xml::attribute( "diplomacy", strDiplomacy );
     E_Diplomacy nDiplomacy = diplomacyConverter_.Convert( strDiplomacy );
     if( nDiplomacy == eUnknown )

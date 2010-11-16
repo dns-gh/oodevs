@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <dotations infinite="false"/>
-  <sides>
-    <side id="1" name="Army 1" type="friend">
+<orbat model-version="4.2.6">
+  <resources infinite="false"/>
+  <parties>
+    <party id="1" name="Army 1" type="friend">
       <objects>
         <object id="28" name="Anti-tank Ditch [28]" type="anti tank obstacle">
           <shape type="polygone">
@@ -63,8 +63,8 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-    <side id="2" name="Army 2" type="enemy">
+    </party>
+    <party id="2" name="Army 2" type="enemy">
       <objects>
         <object id="30" name="Anti-tank Ditch [30]" type="anti tank obstacle">
           <shape type="polygone">
@@ -117,14 +117,14 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1">
-      <relationship diplomacy="enemy" side="2"/>
-    </side>
-    <side id="2">
-      <relationship diplomacy="enemy" side="1"/>
-    </side>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="2"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
 </orbat>

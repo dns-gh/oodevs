@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <sides>
-    <side id="1" name="Camp Bleu" type="friend">
+<orbat model-version="4.2.6">
+  <parties>
+    <party id="1" name="Camp Bleu" type="friend">
       <objects>
         <object id="30" name="installation" type="installation">
           <shape type="point">
@@ -41,8 +41,8 @@
         <population attitude="calme" humans="10000" id="29" name="Population standard [29]" position="31UEQ1089024355" type="Population standard"/>
       </populations>
       <logistics/>
-    </side>
-    <side id="3" name="Camp Rouge" type="enemy">
+    </party>
+    <party id="3" name="Camp Rouge" type="enemy">
       <objects/>
       <tactical>
         <formation id="20" level="x" name="Formation [20]">
@@ -63,14 +63,14 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1">
-      <relationship diplomacy="enemy" side="3"/>
-    </side>
-    <side id="3">
-      <relationship diplomacy="enemy" side="1"/>
-    </side>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="3"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
 </orbat>

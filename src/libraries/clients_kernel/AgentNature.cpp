@@ -21,7 +21,7 @@ AgentNature::AgentNature( xml::xistream& xis )
 {
     xis >> xml::start( "nature" )
             >> xml::attribute( "level", level_ )
-            >> xml::attribute( "nature", nature_ )
+            >> xml::attribute( "nature-app6", nature_ )
             >> xml::attribute( "atlas-nature", atlas_ )
         >> xml::end;
 }

@@ -139,8 +139,8 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< PHY_Tiredness                  >( xis, config, "human-factors"      );
     InitializeType< PHY_Volume                     >( xis, config, "volumes"            );
     InitializeType< PHY_Protection                 >( xis, config, "protections"        );
-    InitializeType< PHY_DotationNature             >( xis, config, "dotation-natures"   );
-    InitializeType< PHY_DotationType               >( xis, config, "dotations"          );
+    InitializeType< PHY_DotationNature             >( xis, config, "resource-natures"   );
+    InitializeType< PHY_DotationType               >( xis, config, "resources"          );
     InitializeType< PHY_ResourceNetworkType        >( xis, config, "resource-networks"  );
     InitializeType< MIL_ObjectFactory              >( xis, config, "objects"            );
     InitializeType< PHY_BreakdownType              >( xis, config, "breakdowns"         );

@@ -33,14 +33,14 @@ BOOST_AUTO_TEST_CASE( FactoriesTest_ArmyFactory )
      std::auto_ptr< UrbanModel > urbanModel( new UrbanModel() );
      ArmyFactory armyFactory( automateFactory, agentFactory, formationFactory, objetFactory, populationFactory, knowledgeGroupFactory /*LTO*/ );
      xml::xistringstream xis(
-         "<side id='1' name='Local militia' type='enemy'>"
+         "<party id='1' name='Local militia' type='enemy'>"
          "    <objects/>"
          "    <tactical/>"
          "    <communication/>"
          "    <populations/>"
          "    <logistics/>"
-         "</side>" );
-     xis >> xml::start( "side" );
+         "</party>" );
+     xis >> xml::start( "party" );
      armyFactory.Create( xis );
      xis >> xml::end;
      BOOST_TODO;

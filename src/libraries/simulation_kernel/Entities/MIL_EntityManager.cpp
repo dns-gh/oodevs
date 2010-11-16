@@ -363,8 +363,8 @@ void MIL_EntityManager::InitializeDiplomacy( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing diplomacy" );
 
-    xis >> xml::start( "diplomacies" )
-            >> xml::list( "side", *this, &MIL_EntityManager::ReadDiplomacy )
+    xis >> xml::start( "diplomacy" )
+            >> xml::list( "party", *this, &MIL_EntityManager::ReadDiplomacy )
         >> xml::end;
 }
 
@@ -374,9 +374,9 @@ void MIL_EntityManager::InitializeDiplomacy( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::InitializeDotations( xml::xistream& xis )
 {
-    MT_LOG_INFO_MSG( "Initializing dotations" );
+    MT_LOG_INFO_MSG( "Initializing resources" );
 
-    xis >> xml::optional >> xml::start( "dotations" )
+    xis >> xml::optional >> xml::start( "resources" )
             >> xml::attribute( "infinite", infiniteDotations_ )
         >> xml::end;
 }
@@ -406,8 +406,8 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis )
 
     assert( armyFactory_->Count() == 0 );
 
-    xis >> xml::start( "sides" )
-        >> xml::list( "side", boost::bind( &ArmyFactory_ABC::Create, boost::ref( *armyFactory_ ), _1 ) )
+    xis >> xml::start( "parties" )
+        >> xml::list( "party", boost::bind( &ArmyFactory_ABC::Create, boost::ref( *armyFactory_ ), _1 ) )
         >> xml::end;
 }
 
@@ -1577,14 +1577,14 @@ void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
     xos << xml::start( "orbat" );
     if ( infiniteDotations_ )
     {
-        xos << xml::start( "dotations" )
+        xos << xml::start( "resources" )
                 << xml::attribute( "infinite", infiniteDotations_ )
             << xml::end;
     }
-    xos     << xml::start( "sides" );
+    xos     << xml::start( "parties" );
                 armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteODB, _1, boost::ref( xos ) ) );
     xos     << xml::end
-            << xml::start( "diplomacies" );
+            << xml::start( "diplomacy" );
                 armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteDiplomacyODB, _1, boost::ref( xos ) ) );
     xos     << xml::end
         << xml::end;

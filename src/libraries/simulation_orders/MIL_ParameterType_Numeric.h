@@ -23,7 +23,7 @@ class MIL_ParameterType_Numeric : public MIL_ParameterType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ParameterType_Numeric();
+    explicit MIL_ParameterType_Numeric( const std::string& name );
     virtual ~MIL_ParameterType_Numeric();
     //@}
 

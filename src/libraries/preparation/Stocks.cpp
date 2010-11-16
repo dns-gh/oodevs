@@ -38,7 +38,7 @@ Stocks::Stocks( xml::xistream& xis, Controller& controller, Entity_ABC& entity, 
 {
     CreateDictionary( entity, dico );
     xis >> xml::optional >> xml::start( "stocks" )
-            >> xml::list( "dotation", *this, &Stocks::ReadDotation, resolver )
+            >> xml::list( "resource", *this, &Stocks::ReadDotation, resolver )
         >> xml::end;
 }
 
@@ -74,7 +74,7 @@ void Stocks::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::start( "stocks" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << xml::start( "dotation" );
+        xos << xml::start( "resource" );
         it->second->SerializeAttributes( xos );
         xos << xml::end;
     }

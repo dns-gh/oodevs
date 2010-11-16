@@ -8,7 +8,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="10" name="standard landmine"/>
+          <resource count="10" name="standard landmine"/>
         </resources>
       </buildable>
     </constructor>
@@ -93,12 +93,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="50" name="standard explosive"/>
+          <resource count="50" name="standard explosive"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <dotation count="10" name="standard landmine"/>
+          <resource count="10" name="standard landmine"/>
         </resources>
       </improvable>
     </constructor>
@@ -112,7 +112,7 @@
       <buildable/>
       <improvable>
         <resources>
-          <dotation count="1" name="standard landmine"/>
+          <resource count="1" name="standard landmine"/>
         </resources>
       </improvable>
     </constructor>
@@ -125,12 +125,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="10" name="standard barbed wire"/>
+          <resource count="10" name="standard barbed wire"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <dotation count="10" name="standard landmine"/>
+          <resource count="10" name="standard landmine"/>
         </resources>
       </improvable>
     </constructor>
@@ -145,7 +145,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable>
         <resources>
-          <dotation count="10" name="standard landmine"/>
+          <resource count="10" name="standard landmine"/>
         </resources>
       </buildable>
       <improvable/>
@@ -163,7 +163,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable>
         <resources>
-          <dotation count="10" name="standard landmine"/>
+          <resource count="10" name="standard landmine"/>
         </resources>
       </buildable>
       <improvable/>
@@ -179,12 +179,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="200" name="standard explosive"/>
+          <resource count="200" name="standard explosive"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <dotation count="17" name="standard landmine"/>
+          <resource count="17" name="standard landmine"/>
         </resources>
       </improvable>
     </constructor>
@@ -204,12 +204,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="300" name="standard explosive"/>
+          <resource count="300" name="standard explosive"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <dotation count="7" name="standard landmine"/>
+          <resource count="7" name="standard landmine"/>
         </resources>
       </improvable>
     </constructor>
@@ -228,12 +228,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="300" name="standard explosive"/>
+          <resource count="300" name="standard explosive"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <dotation count="7" name="standard landmine"/>
+          <resource count="7" name="standard landmine"/>
         </resources>
       </improvable>
     </constructor>
@@ -283,7 +283,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="10" name="standard barbed wire"/>
+          <resource count="10" name="standard barbed wire"/>
         </resources>
       </buildable>
     </constructor>
@@ -353,12 +353,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="1" name="standard explosive"/>
+          <resource count="1" name="standard explosive"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <dotation count="1" name="standard explosive"/>
+          <resource count="1" name="standard explosive"/>
         </resources>
       </improvable>
     </constructor>

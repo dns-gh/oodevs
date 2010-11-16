@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <dotations infinite="false"/>
-  <sides>
-    <side id="1" name="AZUR" type="friend">
+<orbat model-version="4.2.6">
+  <resources infinite="false"/>
+  <parties>
+    <party id="1" name="AZUR" type="friend">
       <objects/>
       <tactical>
         <formation id="5" level="x" name="11(AZ)BB">
@@ -197,8 +197,8 @@
       <logistics>
         <tc2 id="482"/>
       </logistics>
-    </side>
-    <side id="3" name="VERMILLON" type="enemy">
+    </party>
+    <party id="3" name="VERMILLON" type="enemy">
       <objects/>
       <tactical>
         <formation id="8" level="x" name="61(VN)BRIMOTO/BTR ">
@@ -216,14 +216,14 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1">
-      <relationship diplomacy="enemy" side="3"/>
-    </side>
-    <side id="3">
-      <relationship diplomacy="enemy" side="1"/>
-    </side>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="3"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
 </orbat>

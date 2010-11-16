@@ -54,7 +54,7 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
     Purge();
     FileLoader( config )
         .Load( "objects", boost::bind( &ObjectTypes::ReadObjectTypes, this, _1 ) )
-        .Load( "dotations", boost::bind( &ObjectTypes::ReadDotations, this, _1 ) )
+        .Load( "resources", boost::bind( &ObjectTypes::ReadDotations, this, _1 ) )
         .Load( "volumes", boost::bind( &ObjectTypes::ReadVolumes, this, _1 ) )
         .Load( "weapon-systems", boost::bind( &ObjectTypes::ReadWeaponSystems, this, _1 ) )
         .Load( "components", boost::bind( &ObjectTypes::ReadEquipments, this, _1 ) )
@@ -156,7 +156,7 @@ void ObjectTypes::ReadWeaponSystem( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadEquipments( xml::xistream& xis )
 {
-    xis >> xml::start( "elements" ) >> xml::list( "element", *this, &ObjectTypes::ReadEquipment );
+    xis >> xml::start( "equipments" ) >> xml::list( "equipment", *this, &ObjectTypes::ReadEquipment );
 }
 
 // -----------------------------------------------------------------------------

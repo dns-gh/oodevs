@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <sides>
-    <side id="1" name="Les Méchants" type="enemy">
+<orbat model-version="4.2.6">
+  <parties>
+    <party id="1" name="Les Méchants" type="enemy">
       <objects>
         <object id="494" name="Abattis [494]" type="abattis">
           <shape type="polygone">
@@ -275,8 +275,8 @@
         <population attitude="calme" humans="1000" id="457" name="Population standard[457]" position="31UCP0257236725" type="Population standard"/>
       </populations>
       <logistics/>
-    </side>
-    <side id="3" name="Les Gentils" type="friend">
+    </party>
+    <party id="3" name="Les Gentils" type="friend">
       <objects>
         <object id="461" name="Prison[461]" type="prisoners camp">
           <shape type="polygone">
@@ -664,14 +664,14 @@
       <logistics>
         <tc2 id="459"/>
       </logistics>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1">
-      <relationship diplomacy="enemy" side="3"/>
-    </side>
-    <side id="3">
-      <relationship diplomacy="enemy" side="1"/>
-    </side>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="3"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
 </orbat>

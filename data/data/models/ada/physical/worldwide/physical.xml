@@ -5,9 +5,9 @@
   <protections file="Protections.xml"/>
   <active-protections file="ActiveProtections.xml"/>
   <human-protections file="HumanProtections.xml"/>
-  <dotation-natures file="DotationNatures.xml"/>
+  <resource-natures file="DotationNatures.xml"/>
   <objects file="Objects.xml"/>
-  <dotations file="Dotations.xml"/>
+  <resources file="Dotations.xml"/>
   <launchers file="Lanceurs.xml"/>
   <weapon-systems file="Armements.xml"/>
   <sensors file="Capteurs.xml"/>

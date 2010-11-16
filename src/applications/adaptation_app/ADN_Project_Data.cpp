@@ -61,9 +61,9 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "protections", szArmors_ );
     ReadFile( input, "active-protections", szActiveProtections_ );
     ReadFile( input, "human-protections", szHumanProtections_ );
-    ReadFile( input, "dotation-natures", szDotationNatures_ );
+    ReadFile( input, "resource-natures", szDotationNatures_ );
     ReadFile( input, "objects", szObjects_ );
-    ReadFile( input, "dotations", szEquipements_ );
+    ReadFile( input, "resources", szEquipements_ );
     ReadFile( input, "launchers", szLaunchers_ );
     ReadFile( input, "weapon-systems", szWeapons_ );
     ReadFile( input, "sensors", szSensors_ );
@@ -105,9 +105,9 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "protections", szArmors_ );
     WriteFile( output, "active-protections", szActiveProtections_ );
     WriteFile( output, "human-protections", szHumanProtections_ );
-    WriteFile( output, "dotation-natures", szDotationNatures_ );
+    WriteFile( output, "resource-natures", szDotationNatures_ );
     WriteFile( output, "objects", szObjects_ );
-    WriteFile( output, "dotations", szEquipements_ );
+    WriteFile( output, "resources", szEquipements_ );
     WriteFile( output, "launchers", szLaunchers_ );
     WriteFile( output, "weapon-systems", szWeapons_ );
     WriteFile( output, "sensors", szSensors_ );

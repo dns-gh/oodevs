@@ -46,7 +46,7 @@ namespace
         const kernel::SymbolFactory symbolFactory;
         const std::string xml(
             "<type name='my_name' type='my_type' id='42' decisional-model='my_model'>"
-                "<nature level='iii' nature='undefined/undefined' atlas-nature='none'/>"
+                "<nature level='iii' nature-app6='undefined/undefined' atlas-nature='none'/>"
                 "<equipments/>"
             "</type>"
         );

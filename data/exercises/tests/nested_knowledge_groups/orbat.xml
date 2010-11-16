@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <dotations infinite="false"/>
-  <sides>
-    <side id="1" name="Camp Bleu" type="friend">
+<orbat model-version="4.2.6">
+  <resources infinite="false"/>
+  <parties>
+    <party id="1" name="Camp Bleu" type="friend">
       <objects/>
       <tactical>
         <formation id="6" level="x" name="Formation [6]">
@@ -50,8 +50,8 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-    <side id="57" name="Camp Rouge" type="enemy">
+    </party>
+    <party id="57" name="Camp Rouge" type="enemy">
       <objects/>
       <tactical>
         <formation id="58" level="x" name="Formation [58]">
@@ -69,14 +69,14 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1">
-      <relationship diplomacy="enemy" side="57"/>
-    </side>
-    <side id="57">
-      <relationship diplomacy="enemy" side="1"/>
-    </side>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="57"/>
+    </party>
+    <party id="57">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
 </orbat>

@@ -113,8 +113,8 @@ AgentTypes::~AgentTypes()
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadComponents( xml::xistream& xis )
 {
-    xis >> xml::start( "elements" )
-            >> xml::list( "element", *this, &AgentTypes::ReadComponent );
+    xis >> xml::start( "equipments" )
+            >> xml::list( "equipment", *this, &AgentTypes::ReadComponent );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,8 +193,8 @@ void AgentTypes::ReadModels( xml::xistream& xis )
             >> xml::start( "automats" )
                 >> xml::list( "automat", *this, &AgentTypes::ReadModel, automatResolver, automatModels_ )
             >> xml::end
-            >> xml::start( "populations" )
-                >> xml::list( "population", *this, &AgentTypes::ReadModel, populationResolver, populationModels_ )
+            >> xml::start( "crowd" )
+                >> xml::list( "crowd", *this, &AgentTypes::ReadModel, populationResolver, populationModels_ )
             >> xml::end;
 }
 

@@ -75,7 +75,8 @@ template< typename T > void MIL_ParameterType_ABC::RegisterParameterType( const 
 // -----------------------------------------------------------------------------
 void MIL_ParameterType_ABC::Initialize()
 {
-    RegisterParameterType< MIL_ParameterType_Bool                  >();
+    RegisterParameterType< MIL_ParameterType_Bool                  >("bool");
+    RegisterParameterType< MIL_ParameterType_Bool                  >("Boolean");
     RegisterParameterType< MIL_ParameterType_Enumeration           >();
     RegisterParameterType< MIL_ParameterType_Point                 >( std::string("Point") );
     RegisterParameterType< MIL_ParameterType_Polygon               >( std::string("Polygon") );
@@ -86,20 +87,26 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType< MIL_ParameterType_Direction             >( std::string("Heading") );
     RegisterParameterType< MIL_ParameterType_NatureAtlas           >();
     RegisterParameterType< MIL_ParameterType_Automat               >( std::string("Automate") );
+    RegisterParameterType< MIL_ParameterType_Automat               >( std::string("Automat") );
     RegisterParameterType< MIL_ParameterType_Agent                 >( std::string("Agent") );
     RegisterParameterType< MIL_ParameterType_AgentKnowledge        >( std::string("AgentKnowledge") );
     RegisterParameterType< MIL_ParameterType_ObjectKnowledge       >( std::string("ObjectKnowledge") );
     RegisterParameterType< MIL_ParameterType_PopulationKnowledge   >( std::string("PopulationKnowledge") );
-    RegisterParameterType< MIL_ParameterType_DotationType          >();
+    RegisterParameterType< MIL_ParameterType_PopulationKnowledge   >( std::string("CrowdKnowledge") );
+    RegisterParameterType< MIL_ParameterType_DotationType          >("DotationType");
+    RegisterParameterType< MIL_ParameterType_DotationType          >("ResourceType");
     RegisterParameterType< MIL_ParameterType_EquipmentType         >();
-    RegisterParameterType< MIL_ParameterType_GDH                   >();
-    RegisterParameterType< MIL_ParameterType_Numeric               >();
+    RegisterParameterType< MIL_ParameterType_GDH                   >("datetime");
+    RegisterParameterType< MIL_ParameterType_Numeric               >("Integer");
+    RegisterParameterType< MIL_ParameterType_Numeric               >("numeric");
     RegisterParameterType< MIL_ParameterType_GenObject             >( std::string("GenObject") );
+    RegisterParameterType< MIL_ParameterType_GenObject             >( std::string("PlannedWork") );
     RegisterParameterType< MIL_ParameterType_MaintenancePriorities >();
     RegisterParameterType< MIL_ParameterType_MedicalPriorities     >();
     RegisterParameterType< MIL_ParameterType_IndirectFire          >();
     RegisterParameterType< MIL_ParameterType_String                >();
     RegisterParameterType< MIL_ParameterType_UrbanBlock            >( std::string("UrbanBlock") );
+    RegisterParameterType< MIL_ParameterType_UrbanBlock            >( std::string("UrbanKnowledge") );
     RegisterParameterType< MIL_ParameterType_LocationComposite     >( std::string("LocationComposite") );
     RegisterParameterType< MIL_ParameterType_Lima                  >();
     RegisterParameterType< MIL_ParameterType_LimaList              >();

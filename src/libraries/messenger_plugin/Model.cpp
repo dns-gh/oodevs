@@ -143,8 +143,8 @@ void Model::Load()
     {
         xml::xifstream xis( config_.GetOrbatFile() );
         xis >> xml::start( "orbat" )
-                >> xml::start( "sides" )
-                    >> xml::list( "side", *this, &Model::ReadSide )
+                >> xml::start( "parties" )
+                    >> xml::list( "party", *this, &Model::ReadSide )
                 >> xml::end
             >> xml::end;
     }

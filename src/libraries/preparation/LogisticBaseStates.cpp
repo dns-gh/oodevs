@@ -84,7 +84,7 @@ void LogisticBaseStates::Draw( const geometry::Point2f& where, const kernel::Vie
 void LogisticBaseStates::Load( xml::xistream& xis )
 {
     xis >> xml::optional >> xml::start( "quotas" )
-            >> xml::list( "dotation", *this, &LogisticBaseStates::ReadDotation )
+            >> xml::list( "resource", *this, &LogisticBaseStates::ReadDotation )
         >> xml::end;
 }
 
@@ -111,7 +111,7 @@ void LogisticBaseStates::SerializeQuotas( xml::xostream& xos ) const
         xos << xml::start( "quotas" );
         while( it.HasMoreElements() )
         {
-            xos << xml::start( "dotation" );
+            xos << xml::start( "resource" );
             it.NextElement().SerializeAttributes( xos );
             xos << xml::end;
         }

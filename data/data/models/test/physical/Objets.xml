@@ -8,7 +8,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="10" name="mine classique"/>
+          <resource count="10" name="mine classique"/>
         </resources>
       </buildable>
     </constructor>
@@ -83,12 +83,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="50" name="explosif classique"/>
+          <resource count="50" name="explosif classique"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <dotation count="10" name="mine classique"/>
+          <resource count="10" name="mine classique"/>
         </resources>
       </improvable>
     </constructor>
@@ -102,7 +102,7 @@
       <buildable/>
       <improvable>
         <resources>
-          <dotation count="1" name="mine classique"/>
+          <resource count="1" name="mine classique"/>
         </resources>
       </improvable>
     </constructor>
@@ -115,12 +115,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="10" name="barbele classique"/>
+          <resource count="10" name="barbele classique"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <dotation count="10" name="mine classique"/>
+          <resource count="10" name="mine classique"/>
         </resources>
       </improvable>
     </constructor>
@@ -135,7 +135,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable>
         <resources>
-          <dotation count="10" name="mine classique"/>
+          <resource count="10" name="mine classique"/>
         </resources>
       </buildable>
       <improvable/>
@@ -153,7 +153,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable>
         <resources>
-          <dotation count="10" name="mine classique"/>
+          <resource count="10" name="mine classique"/>
         </resources>
       </buildable>
       <improvable/>
@@ -169,12 +169,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="200" name="explosif classique"/>
+          <resource count="200" name="explosif classique"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <dotation count="17" name="mine classique"/>
+          <resource count="17" name="mine classique"/>
         </resources>
       </improvable>
     </constructor>
@@ -194,12 +194,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="300" name="explosif classique"/>
+          <resource count="300" name="explosif classique"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <dotation count="7" name="mine classique"/>
+          <resource count="7" name="mine classique"/>
         </resources>
       </improvable>
     </constructor>
@@ -218,12 +218,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="300" name="explosif classique"/>
+          <resource count="300" name="explosif classique"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <dotation count="7" name="mine classique"/>
+          <resource count="7" name="mine classique"/>
         </resources>
       </improvable>
     </constructor>
@@ -273,7 +273,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <dotation count="10" name="barbele classique"/>
+          <resource count="10" name="barbele classique"/>
         </resources>
       </buildable>
     </constructor>

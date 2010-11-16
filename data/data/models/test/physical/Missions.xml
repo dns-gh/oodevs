@@ -134,11 +134,11 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="intelligences_" max-occurs="unbounded" min-occurs="1" name="Renseignements" optional="true" type="Intelligence"/>
-      <parameter dia-name="avoid_" name="Avoid" optional="false" type="Bool"/>
-      <parameter dia-name="reco_" name="Reco" optional="false" type="Bool"/>
-      <parameter dia-name="noObstacleAvoid_" name="No obstacle avoid" optional="false" type="Bool"/>
-      <parameter dia-name="debordement_" name="Debordement" optional="false" type="Bool"/>
-      <parameter dia-name="decPoints_" name="Dec points" optional="false" type="Bool"/>
+      <parameter dia-name="avoid_" name="Avoid" optional="false" type="Boolean"/>
+      <parameter dia-name="reco_" name="Reco" optional="false" type="Boolean"/>
+      <parameter dia-name="noObstacleAvoid_" name="No obstacle avoid" optional="false" type="Boolean"/>
+      <parameter dia-name="debordement_" name="Debordement" optional="false" type="Boolean"/>
+      <parameter dia-name="decPoints_" name="Dec points" optional="false" type="Boolean"/>
       <parameter dia-name="niveauIdentification_" name="Niveau identification" optional="false" type="Enumeration">
         <value id="0" name="identifiee"/>
         <value id="1" name="reconnue"/>
@@ -185,18 +185,16 @@
       <parameter dia-name="agentKnowledgeList_" name="agentKnowledgeList" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="objectKnowledge_" name="objectKnowledge" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="objectKnowledgeList_" name="objectKnowledgeList" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="populationKnowledge_" name="populationKnowledge" optional="false" type="PopulationKnowledge"/>
-      <parameter dia-name="genObject_" name="genObject" optional="false" type="GenObject"/>
-      <parameter dia-name="genObjectList_" name="genObjectList" optional="false" type="GenObject"/>
+      <parameter dia-name="populationKnowledge_" name="populationKnowledge" optional="false" type="CrowdKnowledge"/>
+      <parameter dia-name="genObject_" name="genObject" optional="false" type="PlannedWork"/>
+      <parameter dia-name="genObjectList_" name="genObjectList" optional="false" type="PlannedWork"/>
       <parameter dia-name="path_" name="path" optional="false" type="Path"/>
       <parameter dia-name="pathList_" name="pathList" optional="false" type="Path"/>
       <parameter dia-name="point_" name="point" optional="false" type="Point"/>
       <parameter dia-name="pointList_" name="pointList" optional="false" type="Point"/>
       <parameter dia-name="polygon_" name="polygon" optional="false" type="Polygon"/>
       <parameter dia-name="polygonList_" name="polygonList" optional="false" type="Polygon"/>
-      <parameter dia-name="location_" name="location" optional="false" type="Location"/>
-      <parameter dia-name="locationList_" name="locationList" optional="false" type="Location"/>
-      <parameter dia-name="dotationType_" name="dotationType" optional="false" type="DotationType"/>
+      <parameter dia-name="dotationType_" name="dotationType" optional="false" type="ResourceType"/>
     </mission>
   </units>
   <automats>
@@ -304,7 +302,7 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Deboucher" id="48" name="Deboucher"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Decrocher" id="49" name="Decrocher"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_AcquerirObjectif" id="50" name="Acquerir Objectif">
-      <parameter dia-name="orderConduiteAcquerirObjectif_" name="Order conduite acquerir objectif" optional="false" type="Location"/>
+      <parameter dia-name="orderConduiteAcquerirObjectif_" name="Order conduite acquerir objectif" optional="false" type="Polygon"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Brouiller" id="51" name="Brouiller"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ChangerPositionDebarquement" id="52" name="Changer Position Debarquement">
@@ -317,8 +315,8 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_EnvoyerVehicule" id="55" name="Pion Envoyer Vehicule"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ActiverObstacle" id="56" name="Pion Activer Obstacle"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AppliquerFeux" id="57" name="Pion Appliquer Feux">
-      <parameter dia-name="munitions_" name="Munitions" optional="false" type="DotationType"/>
-      <parameter dia-name="nbIT_" name="Nb IT" optional="false" type="Numeric"/>
+      <parameter dia-name="munitions_" name="Munitions" optional="false" type="ResourceType"/>
+      <parameter dia-name="nbIT_" name="Nb IT" optional="false" type="Integer"/>
       <parameter dia-name="cible_" name="Cible" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ExecuterTir" id="58" name="Pion Executer Tir"/>
@@ -326,29 +324,29 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_StopperEmission" id="60" name="Pion Stopper Emission"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnVSRAM" id="61" name="Pion Renforcer En VSRAM">
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
-      <parameter dia-name="nbrAmbulances_" name="Nbr ambulances" optional="false" type="Numeric"/>
+      <parameter dia-name="nbrAmbulances_" name="Nbr ambulances" optional="false" type="Integer"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererVSRAM" id="62" name="Pion Transferer VSRAM">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
-      <parameter dia-name="nbrAmbulances_" name="Nbr ambulances" optional="false" type="Numeric"/>
+      <parameter dia-name="nbrAmbulances_" name="Nbr ambulances" optional="false" type="Integer"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" id="63" name="Pion Reprendre Aux Ordres VSRAM">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
-      <parameter dia-name="nbrAmbulances_" name="Nbr ambulances" optional="false" type="Numeric"/>
+      <parameter dia-name="nbrAmbulances_" name="Nbr ambulances" optional="false" type="Integer"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" id="64" name="Pion Renforcer En Remorqueurs">
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
-      <parameter dia-name="nbrRemorqueurs_" name="Nbr remorqueurs" optional="false" type="Numeric"/>
+      <parameter dia-name="nbrRemorqueurs_" name="Nbr remorqueurs" optional="false" type="Integer"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererRemorqueurs" id="65" name="Pion Transferer Remorqueurs">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
-      <parameter dia-name="nbrRemorqueurs_" name="Nbr remorqueurs" optional="false" type="Numeric"/>
+      <parameter dia-name="nbrRemorqueurs_" name="Nbr remorqueurs" optional="false" type="Integer"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" id="66" name="Pion Reprendre Aux Ordres Remorqueurs">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
-      <parameter dia-name="nbrRemorqueurs_" name="Nbr remorqueurs" optional="false" type="Numeric"/>
+      <parameter dia-name="nbrRemorqueurs_" name="Nbr remorqueurs" optional="false" type="Integer"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ModifierRegimeTravailMaintenance" id="67" name="Modifier Regime Travail Maintenance">
       <parameter dia-name="orderConduiteModifierRegimeTravailMaintenance_" name="Order conduite modifier regime travail maintenance" optional="false" type="Enumeration">
@@ -365,10 +363,10 @@
       <parameter dia-name="orderConduiteModifierPrioritesBlesses_" name="Order conduite modifier priorites blesses" optional="false" type="MedicalPriorities"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesReparations" id="70" name="Modifier Priorites Tactiques Reparations">
-      <parameter dia-name="orderConduiteModifierPrioritesTactiquesReparations_" name="Order conduite modifier priorites tactiques reparations" optional="false" type="Automate"/>
+      <parameter dia-name="orderConduiteModifierPrioritesTactiquesReparations_" name="Order conduite modifier priorites tactiques reparations" optional="false" type="Automat"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" id="71" name="Modifier Priorites Tactiques Blesses">
-      <parameter dia-name="orderConduiteModifierPrioritesTactiquesBlesses_" name="Order conduite modifier priorites tactiques blesses" optional="false" type="Automate"/>
+      <parameter dia-name="orderConduiteModifierPrioritesTactiquesBlesses_" name="Order conduite modifier priorites tactiques blesses" optional="false" type="Automat"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_RealiserVariantement" id="72" name="Automate Realiser Variantement">
       <parameter dia-name="siteFranchissementOriginal_" name="Site franchissement original" optional="false" type="ObjectKnowledge"/>
@@ -379,7 +377,7 @@
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_AffecterPionAObstacle" id="74" name="Automate Affecter Pion AObstacle">
       <parameter dia-name="pion_" name="Pion" optional="false" type="Agent"/>
-      <parameter dia-name="obstacle_" name="Obstacle" optional="false" type="GenObject"/>
+      <parameter dia-name="obstacle_" name="Obstacle" optional="false" type="PlannedWork"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_ReconnaitreZoneImplantation" id="75" name="Automate Reconnaitre Zone Implantation">
       <parameter dia-name="orderConduiteAutomateReconnaitreZoneImplantation_" name="Order conduite automate reconnaitre zone implantation" optional="false" type="Point"/>
@@ -396,7 +394,7 @@
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_TransfererRenforts" id="78" name="Automate Transferer Renforts">
       <parameter dia-name="pionATransferer_" name="Pion a transferer" optional="false" type="Agent"/>
-      <parameter dia-name="automateARenforcer_" name="Automate a renforcer" optional="false" type="Automate"/>
+      <parameter dia-name="automateARenforcer_" name="Automate a renforcer" optional="false" type="Automat"/>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Population_ChangerAttitude" id="79" name="Population Changer Attitude">
       <parameter dia-name="orderConduitePopulationChangerAttitude_" name="Order conduite population changer attitude" optional="false" type="Enumeration">

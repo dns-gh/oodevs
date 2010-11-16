@@ -37,7 +37,7 @@ StockAttribute::StockAttribute()
 // -----------------------------------------------------------------------------
 StockAttribute::StockAttribute( xml::xistream& xis )
 {
-    xis >> xml::list( "dotation", *this, &StockAttribute::LoadDotation );
+    xis >> xml::list( "resource", *this, &StockAttribute::LoadDotation );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +148,7 @@ void StockAttribute::WriteODB( xml::xostream& xos ) const
     xos << xml::start( "stock" );
     for ( CIT_DotationProgress it = stock_.begin(); it != stock_.end(); ++it )
     {
-        xos << xml::start( "dotation" )
+        xos << xml::start( "resource" )
             << xml::attribute( "type", it->first->GetName() )
             << xml::attribute( "current", it->second.first )
             << xml::attribute( "max", it->second.second )

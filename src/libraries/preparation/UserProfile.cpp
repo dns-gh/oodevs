@@ -47,13 +47,13 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
                 >> xml::list( "side"      , *this, &UserProfile::ReadRights, readSides_, teamChecker )
                 >> xml::list( "formation" , *this, &UserProfile::ReadRights, readFormations_, formationChecker )
                 >> xml::list( "automat"   , *this, &UserProfile::ReadRights, readAutomats_, automatChecker )
-                >> xml::list( "population", *this, &UserProfile::ReadRights, readPopulations_, populationChecker )
+                >> xml::list( "crowd", *this, &UserProfile::ReadRights, readPopulations_, populationChecker )
             >> xml::end
             >> xml::start( "readwrite" )
                 >> xml::list( "side"      , *this, &UserProfile::ReadRights, writeSides_, teamChecker )
                 >> xml::list( "formation" , *this, &UserProfile::ReadRights, writeFormations_, formationChecker )
                 >> xml::list( "automat"   , *this, &UserProfile::ReadRights, writeAutomats_, automatChecker )
-                >> xml::list( "population", *this, &UserProfile::ReadRights, writePopulations_, populationChecker )
+                >> xml::list( "crowd", *this, &UserProfile::ReadRights, writePopulations_, populationChecker )
             >> xml::end
         >> xml::end;
     userRoleEnabled_ = ( userRole_ != -1 );
@@ -131,13 +131,13 @@ void UserProfile::Serialize( xml::xostream& xos ) const
     SerializeRights( xos, "side", readSides_ );
     SerializeRights( xos, "formation", readFormations_ );
     SerializeRights( xos, "automat", readAutomats_ );
-    SerializeRights( xos, "population", readPopulations_ );
+    SerializeRights( xos, "crowd", readPopulations_ );
     xos         << xml::end
                 << xml::start( "readwrite" );
     SerializeRights( xos, "side", writeSides_ );
     SerializeRights( xos, "formation", writeFormations_ );
     SerializeRights( xos, "automat", writeAutomats_ );
-    SerializeRights( xos, "population", writePopulations_ );
+    SerializeRights( xos, "crowd", writePopulations_ );
     xos         << xml::end
             << xml::end
         << xml::end;

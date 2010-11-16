@@ -184,7 +184,7 @@ MIL_NbcAgentType::~MIL_NbcAgentType()
 bool MIL_NbcAgentType::ReadPoisonousData( xml::xistream& xis, T_HumanPoisonousVector& data )
 {
     bool intoxication = false;
-    xis >> xml::optional >> xml::attribute( "intoxication", intoxication );
+    xis >> xml::optional >> xml::attribute( "affliction", intoxication );
     if( !intoxication )
         return false;
     xis >> xml::list( "effect", *this, &MIL_NbcAgentType::ReadEffect, data );

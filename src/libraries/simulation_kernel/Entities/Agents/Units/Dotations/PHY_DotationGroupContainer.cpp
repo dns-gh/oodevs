@@ -148,7 +148,7 @@ void PHY_DotationGroupContainer::serialize( MIL_CheckPointInArchive& ar, unsigne
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::ReadValues( xml::xistream& xis )
 {
-    xis >> xml::list( "dotations", *this, &PHY_DotationGroupContainer::ReadDotations );
+    xis >> xml::list( "resources", *this, &PHY_DotationGroupContainer::ReadDotations );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +157,7 @@ void PHY_DotationGroupContainer::ReadValues( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::ReadDotations( xml::xistream& xis )
 {
-    xis >> xml::list( "dotation", *this, &PHY_DotationGroupContainer::ReadDotation );
+    xis >> xml::list( "resource", *this, &PHY_DotationGroupContainer::ReadDotation );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,10 +170,10 @@ void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis )
     xis >> xml::attribute( "name", strType );
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
     if( !pDotationCategory )
-        xis.error( "Unknown dotation type" );
+        xis.error( "Unknown resource type" );
     PHY_DotationGroup* pGroup = GetDotationGroup( pDotationCategory->GetType() ); //$$$$$ TEMPORAIRE : merger PHY_DotationGroupContainer et PHY_DotationGroup
     if( !pGroup )
-        xis.error( "Dotation type cannot be overloaded: not in types" );
+        xis.error( "Resource type cannot be overloaded: not in types" );
     pGroup->ReadValues( xis, *pDotationCategory );
 }
 
@@ -183,7 +183,7 @@ void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "dotations" );
+    xos << xml::start( "resources" );
     for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         it->second->WriteODB( xos );
     xos << xml::end; // dotations

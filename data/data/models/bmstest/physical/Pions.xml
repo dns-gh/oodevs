@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <units>
   <unit decisional-model="DumbPion" id="1" name="DumbPion" type="Pion ABC">
-    <nature atlas-nature="ASA" level="xxxx" nature="combat/engineer/combat"/>
+    <nature atlas-nature="ASA" level="xxxx" nature-app6="combat/engineer/combat"/>
     <equipments>
     </equipments>
     <crew-ranks>

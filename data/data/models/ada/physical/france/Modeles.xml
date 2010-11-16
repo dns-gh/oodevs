@@ -9944,8 +9944,8 @@
       </fragorders>
     </automat>
   </automats>
-  <populations>
-    <population dia-type="T_Population" file="Population\Populations\Model.bms" name="Population">
+  <crowd>
+    <crowd dia-type="T_Population" file="Population\Populations\Model.bms" name="Population">
       <missions>
         <mission name="Faire Mouvement">
           <fragorder name="Population Changer Attitude"/>
@@ -9966,12 +9966,12 @@
       <fragorders>
         <fragorder name="Population Changer Attitude"/>
       </fragorders>
-    </population>
-    <population dia-type="net.masagroup.sword.military.crowd.roles.Crowd" file="BMCrowd.bms" name="net.masagroup.sword.military.crowd.roles.Crowd">
+    </crowd>
+    <crowd dia-type="net.masagroup.sword.military.crowd.roles.Crowd" file="BMCrowd.bms" name="net.masagroup.sword.military.crowd.roles.Crowd">
       <missions>
         <mission name="COMMUNES Faire Mouvement"/>
       </missions>
       <fragorders/>
-    </population>
-  </populations>
+    </crowd>
+  </crowd>
 </models>

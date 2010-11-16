@@ -57,8 +57,8 @@ BuildableCapacity::BuildableCapacity( const PHY_ConsumptionType& consumption, Co
 {
     xis >> xml::optional
         >> xml::start( "resources" )
-            // $$$$ _RC_ SBO 2009-06-11: Not a real list, only one dotation
-            >> xml::list( "dotation", *this, &BuildableCapacity::ReadDotation )
+            // $$$$ _RC_ SBO 2009-06-11: Not a real list, only one resource
+            >> xml::list( "resource", *this, &BuildableCapacity::ReadDotation )
         >> xml::end;
 }
 

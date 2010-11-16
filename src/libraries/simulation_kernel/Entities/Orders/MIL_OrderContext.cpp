@@ -47,7 +47,6 @@ MIL_OrderContext::MIL_OrderContext( const Common::MsgMissionParameters& asn, con
     ReadDirection( asn.elem(0) );
     ReadPhaseLines( asn.elem(1) );
     ReadLimits( asn.elem(2), asn.elem(3), orientationReference );
-    ReadIntelligences( asn.elem(4) );
 }
 
 // -----------------------------------------------------------------------------

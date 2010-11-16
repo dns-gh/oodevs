@@ -22,7 +22,7 @@
 // -----------------------------------------------------------------------------
 PHY_DotationConsumptions::PHY_DotationConsumptions( const std::string& /*strParentTagName*/, xml::xistream& xis )
 {
-    xis >> xml::list( "dotation", *this, &PHY_DotationConsumptions::ReadDotation );
+    xis >> xml::list( "resource", *this, &PHY_DotationConsumptions::ReadDotation );
 }
 
 // -----------------------------------------------------------------------------

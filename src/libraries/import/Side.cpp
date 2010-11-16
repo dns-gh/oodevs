@@ -59,7 +59,7 @@ Side::~Side()
 // -----------------------------------------------------------------------------
 xml::xostream& operator<<( xml::xostream& xos, const Side& side )
 {
-    xos << xml::start( "side" )
+    xos << xml::start( "party" )
             << xml::attribute( "id", side.id_ )
             << xml::attribute( "name", side.name_ )
             << xml::attribute( "type", "friend" );

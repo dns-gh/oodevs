@@ -362,17 +362,17 @@ void Parser::WriteOrbat()
 {
     xml::xofstream xos( outputDir_ + "/orbat.xml" );
     xos << xml::start( "orbat" )
-            << xml::start( "dotations" )
+            << xml::start( "resources" )
                 << xml::attribute( "infinite", false )
             << xml::end
-            << xml::start( "sides" );
+            << xml::start( "parties" );
     for( std::map< std::string, Side >::const_iterator it = sides_.begin(); it != sides_.end(); ++it )
         xos << it->second;
     xos    << xml::end
-            << xml::start( "diplomacies" );
+            << xml::start( "diplomacy" );
     for( std::map< std::string, std::vector< Diplomacy > >::const_iterator it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
-        xos << xml::start( "side" )
+        xos << xml::start( "party" )
                 << xml::attribute( "id", mapping_[ it->first ] );
         for( std::vector< Diplomacy >::const_iterator itDiplomacy = it->second.begin(); itDiplomacy != it->second.end(); ++itDiplomacy )
             xos << *itDiplomacy;

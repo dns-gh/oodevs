@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <sides>
-    <side id="1" name="Camp 1" type="friend">
+<orbat model-version="4.2.6">
+  <parties>
+    <party id="1" name="Camp 1" type="friend">
       <objects>
         <object id="22" name="abattis test" type="abattis">
           <shape type="polygone">
@@ -31,8 +31,8 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-    <side id="8" name="Camp 8" type="friend">
+    </party>
+    <party id="8" name="Camp 8" type="friend">
       <objects/>
       <tactical>
         <formation id="9" level="ooo" name="Formation [9]">
@@ -48,14 +48,14 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1">
-      <relationship diplomacy="enemy" side="8"/>
-    </side>
-    <side id="8">
-      <relationship diplomacy="enemy" side="1"/>
-    </side>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="8"/>
+    </party>
+    <party id="8">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
 </orbat>

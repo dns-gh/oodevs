@@ -69,8 +69,8 @@ void SideList::UpdateSides( const std::string& orbat )
 {
     xml::xifstream xis( orbat );
      xis >> xml::start( "orbat" )
-            >> xml::start( "sides" )
-                >> xml::list( "side", *this, &SideList::ReadSide );
+            >> xml::start( "parties" )
+                >> xml::list( "party", *this, &SideList::ReadSide );
 }
 
 namespace

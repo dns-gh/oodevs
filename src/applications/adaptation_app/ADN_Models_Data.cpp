@@ -465,8 +465,8 @@ void ADN_Models_Data::ReadArchive( xml::xistream& input )
             >> xml::start( "automats" )
                 >> xml::list( "automat", *this, &ADN_Models_Data::ReadAutomat )
             >> xml::end
-            >> xml::start( "populations" )
-                >> xml::list( "population", *this, &ADN_Models_Data::ReadPopulation )
+            >> xml::start( "crowd" )
+                >> xml::list( "crowd", *this, &ADN_Models_Data::ReadPopulation )
             >> xml::end
           >> xml::end;
 }
@@ -487,9 +487,9 @@ void ADN_Models_Data::WriteArchive( xml::xostream& output )
     for( IT_ModelInfos_Vector it2 = vAutomataModels_.begin(); it2 != vAutomataModels_.end(); ++it2 )
         (*it2)->WriteArchive( "automat", output );
     output << xml::end
-            << xml::start( "populations" );
+            << xml::start( "crowd" );
     for( IT_ModelInfos_Vector it2 = vPopulationModels_.begin(); it2 != vPopulationModels_.end(); ++it2 )
-        (*it2)->WriteArchive( "population", output );
+        (*it2)->WriteArchive( "crowd", output );
     output << xml::end
           << xml::end;
 }

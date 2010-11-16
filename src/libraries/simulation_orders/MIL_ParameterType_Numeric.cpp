@@ -14,10 +14,10 @@
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Numeric constructor
-// Created: SBO 2006-11-27
+// Created: RPD 2010-11-16
 // -----------------------------------------------------------------------------
-MIL_ParameterType_Numeric::MIL_ParameterType_Numeric()
-    : MIL_ParameterType_ABC( "Numeric" )
+MIL_ParameterType_Numeric::MIL_ParameterType_Numeric( const std::string& name )
+    : MIL_ParameterType_ABC( name )
 {
     // NOTHING
 }

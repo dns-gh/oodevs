@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <dotations infinite="false"/>
-  <sides>
-    <side id="1" name="Blue" type="friend">
+<orbat model-version="4.2.6">
+  <resources infinite="false"/>
+  <parties>
+    <party id="1" name="Blue" type="friend">
       <objects>
         <object id="124" name="Rearm, Refuel and Resupply Point (R3P) [124]" type="logistic support area">
           <shape type="point">
@@ -256,8 +256,8 @@
           <subordinate id="89"/>
         </tc2>
       </logistics>
-    </side>
-    <side id="126" name="Rouge" type="enemy">
+    </party>
+    <party id="126" name="Rouge" type="enemy">
       <objects>
         <object id="169" name="Bridge (continuous) [169]" type="continuous pontoon bridge">
           <shape type="point">
@@ -493,8 +493,8 @@
         <population attitude="calme" humans="10000" id="155" name="Population standard [155]" position="30UXU2259645029" type="Population standard"/>
       </populations>
       <logistics/>
-    </side>
-    <side id="128" name="Vert" type="neutral">
+    </party>
+    <party id="128" name="Vert" type="neutral">
       <objects/>
       <tactical>
         <formation id="131" level="x" name="Formation [131]">
@@ -510,8 +510,8 @@
         <population attitude="calme" humans="10000" id="156" name="Population standard [156]" position="30UXU2472544970" type="Population standard"/>
       </populations>
       <logistics/>
-    </side>
-    <side id="129" name="Turquoise" type="friend">
+    </party>
+    <party id="129" name="Turquoise" type="friend">
       <objects/>
       <tactical>
         <formation id="130" level="x" name="Formation [130]">
@@ -527,28 +527,28 @@
         <population attitude="calme" humans="10000" id="157" name="Population standard [157]" position="30UXU2628245049" type="Population standard"/>
       </populations>
       <logistics/>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1">
-      <relationship diplomacy="enemy" side="126"/>
-      <relationship diplomacy="neutral" side="128"/>
-      <relationship diplomacy="friend" side="129"/>
-    </side>
-    <side id="126">
-      <relationship diplomacy="enemy" side="1"/>
-      <relationship diplomacy="neutral" side="128"/>
-      <relationship diplomacy="enemy" side="129"/>
-    </side>
-    <side id="128">
-      <relationship diplomacy="neutral" side="1"/>
-      <relationship diplomacy="neutral" side="126"/>
-      <relationship diplomacy="neutral" side="129"/>
-    </side>
-    <side id="129">
-      <relationship diplomacy="friend" side="1"/>
-      <relationship diplomacy="enemy" side="126"/>
-      <relationship diplomacy="neutral" side="128"/>
-    </side>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="126"/>
+      <relationship diplomacy="neutral" party="128"/>
+      <relationship diplomacy="friend" party="129"/>
+    </party>
+    <party id="126">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="neutral" party="128"/>
+      <relationship diplomacy="enemy" party="129"/>
+    </party>
+    <party id="128">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="126"/>
+      <relationship diplomacy="neutral" party="129"/>
+    </party>
+    <party id="129">
+      <relationship diplomacy="friend" party="1"/>
+      <relationship diplomacy="enemy" party="126"/>
+      <relationship diplomacy="neutral" party="128"/>
+    </party>
+  </diplomacy>
 </orbat>

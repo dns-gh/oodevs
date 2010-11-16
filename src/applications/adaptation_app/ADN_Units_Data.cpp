@@ -632,7 +632,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
     input >> xml::start( "nature" )
             >> xml::attribute( "level", level )
             >> xml::attribute( "atlas-nature", atlas )
-            >> xml::attribute( "nature", strNature_ )
+            >> xml::attribute( "nature-app6", strNature_ )
           >> xml::end;
 
     E_NatureLevel eNatureLevelType = ENT_Tr::ConvertToNatureLevel( level );
@@ -705,7 +705,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "nature" )
             << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( eNatureLevel_.GetData() ) )
             << xml::attribute( "atlas-nature", ADN_Tr::ConvertFromNatureAtlasType( eNatureAtlas_.GetData() ) )
-            << xml::attribute( "nature", strNature_ )
+            << xml::attribute( "nature-app6", strNature_ )
           << xml::end;
 
     output << xml::start( "equipments" );

@@ -75,7 +75,7 @@ ADN_Breakdowns_Data::RepairPartInfo* ADN_Breakdowns_Data::RepairPartInfo::Create
 void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
 {
     std::string strCategoryName;
-    input >> xml::attribute( "dotation", strCategoryName )
+    input >> xml::attribute( "resource", strCategoryName )
           >> xml::attribute( "quantity", nNbr_ );
     ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Piece ).FindCategory( strCategoryName );
     if( pCategory == 0 )
@@ -90,7 +90,7 @@ void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
 void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "part" )
-            << xml::attribute( "dotation", ptrPart_.GetData()->strName_ )
+            << xml::attribute( "resource", ptrPart_.GetData()->strName_ )
             << xml::attribute( "quantity", nNbr_ )
         << xml::end;
 }

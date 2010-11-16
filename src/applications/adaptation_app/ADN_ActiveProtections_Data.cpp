@@ -221,7 +221,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistr
     xis >> xml::attribute( "name", strName_ )
         >> xml::attribute( "coefficient", coefficient_ )
         >> xml::attribute( "hard-kill", hardKill_ )
-        >> xml::optional >> xml::start( "dotation" )
+        >> xml::optional >> xml::start( "resource" )
             >> xml::attribute( "name", strAmmunition )
             >> xml::attribute( "usage", usage_ )
         >> xml::end
@@ -254,7 +254,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::WriteArchive( xml::xost
         << xml::attribute( "coefficient", coefficient_ )
         << xml::attribute( "hard-kill", hardKill_ );
     if( ptrAmmunition_.GetData()->strName_ != "" )
-        xos << xml::start( "dotation" )
+        xos << xml::start( "resource" )
                 << xml::attribute( "name", ptrAmmunition_.GetData()->strName_ )
                 << xml::attribute( "usage", usage_ )
             << xml::end;

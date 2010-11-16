@@ -597,7 +597,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestAllResources, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestInstantaneousResourceConsumptionsWithResourceFilter, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='resources' id='resources' dotations='42'/>"
+                             "    <extract function='resources' id='resources' resources='42'/>"
                              "    <transform type='int' function='derivate' input='resources' id='resources-var' period='1'/>"
                              "    <constant type='int' value='0' id='zero'/>"
                              "    <transform function='compare' type='bool' operator='less' input='resources-var,zero' id='test'/>"
@@ -638,7 +638,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestInstantaneousResourceConsumptionsWithResourc
 BOOST_FIXTURE_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='resources' id='resources' dotations='42'/>"
+                             "    <extract function='resources' id='resources' resources='42'/>"
                              "    <transform type='int' function='derivate' input='resources' id='resources-var' period='1'/>"
                              "    <constant type='int' value='0' id='zero'/>"
                              "    <transform function='compare' type='bool' operator='less' input='resources-var,zero' id='test'/>"

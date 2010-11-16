@@ -43,13 +43,13 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
                 >> xml::list( "automat"   , *this, &Profile::ReadAutomatRights   , readOnlyAutomats_    )
                 >> xml::list( "side"      , *this, &Profile::ReadSideRights      , readOnlySides_       )
                 >> xml::list( "formation" , *this, &Profile::ReadFormationRights , readOnlyFormations_  )
-                >> xml::list( "population", *this, &Profile::ReadPopulationRights, readOnlyPopulations_ )
+                >> xml::list( "crowd", *this, &Profile::ReadPopulationRights, readOnlyPopulations_ )
             >> xml::end
             >> xml::start( "readwrite" )
                 >> xml::list( "automat"   , *this, &Profile::ReadAutomatRights   , readWriteAutomats_    )
                 >> xml::list( "side"      , *this, &Profile::ReadSideRights      , readWriteSides_       )
                 >> xml::list( "formation" , *this, &Profile::ReadFormationRights , readWriteFormations_  )
-                >> xml::list( "population", *this, &Profile::ReadPopulationRights, readWritePopulations_ )
+                >> xml::list( "crowd", *this, &Profile::ReadPopulationRights, readWritePopulations_ )
             >> xml::end
         >> xml::end;
 }

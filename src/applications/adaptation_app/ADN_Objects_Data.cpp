@@ -163,7 +163,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadArchive( xml::xistream& 
 
     xis >> xml::optional
         >> xml::start( "resources" )
-            >> xml::list( "dotation", *this, &ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadDotation )
+            >> xml::list( "resource", *this, &ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadDotation )
         >> xml::end;
 }
 
@@ -200,7 +200,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::WriteArchive( xml::xostream&
     for( CIT_Categories it = categories_.begin(); it != categories_.end(); ++it )
     {
         ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >(*it);
-        xos << xml::start( "dotation" )
+        xos << xml::start( "resource" )
                 << xml::attribute( "name", infos->ptrCategory_.GetData()->strName_ ) << xml::attribute( "count", infos->rNbr_ )
             << xml::end;
     }
@@ -228,7 +228,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadArchive( xml::xistream&
 
     xis >> xml::optional
          >> xml::start( "resources" )
-            >> xml::list( "dotation", *this, &ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadDotation )
+            >> xml::list( "resource", *this, &ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadDotation )
         >> xml::end;
 }
 
@@ -264,7 +264,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::WriteArchive( xml::xostream
     for( CIT_Categories it = categories_.begin(); it != categories_.end(); ++it )
     {
         ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >(*it);
-        xos << xml::start( "dotation" )
+        xos << xml::start( "resource" )
                 << xml::attribute( "name", infos->ptrCategory_.GetData()->strName_ ) << xml::attribute( "count", infos->rNbr_ )
             << xml::end;
     }

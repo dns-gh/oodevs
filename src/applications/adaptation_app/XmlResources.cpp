@@ -14,15 +14,15 @@
 // *****************************************************************************
 static const char* physicalXml =
 "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
-"<physical xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"schemas/physical/Physical.xsd\">"
+"<physical version=\"4.2.6\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"schemas/physical/Physical.xsd\">"
 "  <decisional file=\"Decisionnel.xml\"/>\n"
 "  <volumes file=\"Volumes.xml\"/>\n"
 "  <protections file=\"Protections.xml\"/>\n"
 "  <active-protections file=\"ActiveProtections.xml\"/>\n"
 "  <human-protections file=\"HumanProtections.xml\"/>\n"
-"  <dotation-natures file=\"DotationNatures.xml\"/>\n"
+"  <resource-natures file=\"DotationNatures.xml\"/>\n"
 "  <objects file=\"Objets.xml\"/>\n"
-"  <dotations file=\"Dotations.xml\"/>\n"
+"  <resources file=\"Dotations.xml\"/>\n"
 "  <launchers file=\"Lanceurs.xml\"/>\n"
 "  <weapon-systems file=\"Armements.xml\"/>\n"
 "  <sensors file=\"Capteurs.xml\"/>\n"

@@ -44,6 +44,6 @@ xml::xostream& operator<<( xml::xostream& xos, const Diplomacy& diplomacy )
 {
     return xos << xml::start( "relationship" )
                    << xml::attribute( "diplomacy", (*diplomacy.mapping_)[ diplomacy.type_ ] )
-                   << xml::attribute( "side", (*diplomacy.mapping_)[ diplomacy.target_ ] )
+                   << xml::attribute( "party", (*diplomacy.mapping_)[ diplomacy.target_ ] )
                << xml::end;
 }

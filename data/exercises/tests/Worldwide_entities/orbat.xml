@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <dotations infinite="false"/>
-  <sides>
-    <side id="1" name="Blue" type="friend">
+<orbat model-version="4.2.6">
+  <resources infinite="false"/>
+  <parties>
+    <party id="1" name="Blue" type="friend">
       <objects>
         <object id="43" name="Abatis [43]" type="abattis">
           <shape type="polygone">
@@ -857,9 +857,9 @@
           <subordinate id="196"/>
         </logistic-base>
       </logistics>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1"/>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1"/>
+  </diplomacy>
 </orbat>

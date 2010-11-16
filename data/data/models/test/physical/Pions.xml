@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <units xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Units.xsd">
   <unit decisional-model="Test LOG" id="1" name="PC TC2" type="Pion LOG TC2">
-    <nature atlas-nature="ASA" level="xxxx" nature="combat/engineer/combat"/>
+    <nature atlas-nature="ASA" level="xxxx" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="3" crew="4" type="NTI TC2"/>
       <equipment count="3" crew="250" type="Remorqueur 5T"/>
@@ -16,20 +16,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-      <category name="piece">
-        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 1" normalized-consumption="0"/>
-        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 2" normalized-consumption="0"/>
-        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 3" normalized-consumption="0"/>
-        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer l'electronique 1" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -49,20 +35,12 @@
     <force-ratio feedback-time="6000s"/>
   </unit>
   <unit decisional-model="Test LOG" id="2" name="PC BLD Maintenance" type="Pion LOG BLD Maintenance">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -80,20 +58,12 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="3" name="PC BLT Maintenance" type="Pion LOG BLT Maintenance">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -111,7 +81,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="4" name="Cie Reparation BLT - M" type="Pion LOG BLT Maintenance">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="3" crew="4" type="NTI BLT M"/>
     </equipments>
@@ -119,20 +89,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-      <category name="piece">
-        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 1" normalized-consumption="0"/>
-        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 2" normalized-consumption="0"/>
-        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 3" normalized-consumption="0"/>
-        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer l'electronique 1" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -150,7 +106,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="5" name="Cie Reparation BLT - EA" type="Pion LOG BLT Maintenance">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="3" crew="4" type="NTI BLT EA"/>
     </equipments>
@@ -158,14 +114,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -183,7 +131,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="6" name="Groupe evacuation maintenance BLT" type="Pion LOG BLT Maintenance">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="2" crew="250" type="Remorqueur 5T"/>
       <equipment count="2" crew="250" type="Remorqueur 3T"/>
@@ -192,14 +140,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -218,7 +158,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="7" name="Cie Reparation BLD - M" type="Pion LOG BLT Maintenance">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="3" crew="4" type="NTI BLD M"/>
     </equipments>
@@ -226,20 +166,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-      <category name="piece">
-        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 1" normalized-consumption="0"/>
-        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 2" normalized-consumption="0"/>
-        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 3" normalized-consumption="0"/>
-        <dotation capacity="1000" logistic-threshold="10" name="Truc pour reparer l'electronique 1" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -257,7 +183,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="8" name="Cie Reparation BLD - EA" type="Pion LOG BLD Maintenance">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="3" crew="4" type="NTI BLD EA"/>
     </equipments>
@@ -265,14 +191,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -290,7 +208,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="9" name="Groupe evacuation maintenance BLD" type="Pion LOG BLD Maintenance">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="2" crew="250" type="Remorqueur 5T"/>
       <equipment count="2" crew="250" type="Remorqueur 3T"/>
@@ -299,14 +217,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -324,7 +234,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test" id="10" name="Section Combat GEN" type="Pion INF">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="3" crew="4" major="true" type="CompTest"/>
       <equipment count="2" crew="4" loadable="true" type="CompTest2"/>
@@ -333,17 +243,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Fusse a jupette 53mm" normalized-consumption="0"/>
-        <dotation capacity="200" logistic-threshold="10" name="Obus 120 mm" normalized-consumption="0"/>
-        <dotation capacity="200" logistic-threshold="10" name="Obus fumigene" normalized-consumption="0"/>
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="200" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -363,7 +262,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test" id="11" name="Section Combat GEN 2" type="Pion INF">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="5" crew="4" loadable="true" type="CompTest2"/>
     </equipments>
@@ -371,14 +270,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -395,7 +286,7 @@
     <drill-blow length="5000" width="100"/>
   </unit>
   <unit can-fly="true" decisional-model="Test ALAT" id="12" name="Escadrille ALAT" type="Pion ALAT">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="Truc Volant"/>
     </equipments>
@@ -403,14 +294,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -427,7 +310,7 @@
     <drill-blow length="5000" width="100"/>
   </unit>
   <unit decisional-model="NBC Test" id="13" name="Section Combat NBC" type="Pion NBC">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="1" crew="4" type="CompNBC"/>
     </equipments>
@@ -435,14 +318,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -459,7 +334,7 @@
     <drill-blow length="5000" width="100"/>
   </unit>
   <unit can-fly="true" decisional-model="RENS Test" id="14" name="Section Combat RENS" type="Pion RENS">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="1" crew="4" type="CompNBC"/>
       <equipment count="2" crew="4" type="CompTest"/>
@@ -469,14 +344,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -493,7 +360,7 @@
     <drill-blow length="5000" width="100"/>
   </unit>
   <unit can-fly="true" decisional-model="RENS Test" id="15" is-autonomous="true" name="Drone RENS" type="Pion RENS">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="2" crew="0" type="Drone"/>
     </equipments>
@@ -501,14 +368,6 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -525,7 +384,7 @@
     <drill-blow length="5000" width="100"/>
   </unit>
   <unit decisional-model="Test LOG" id="16" name="PC BLD Sante" type="Pion LOG BLD Sante">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="CompTest"/>
     </equipments>
@@ -533,14 +392,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -558,7 +409,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="17" name="Secteur tri BLD" type="Pion LOG BLD Sante">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="1" crew="1" type="Medecin tri"/>
     </equipments>
@@ -566,14 +417,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -591,20 +434,12 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="18" name="Secteur soin chirurgical BLD" type="Pion LOG BLD Sante">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -622,7 +457,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="19" name="Secteur soin mental BLD" type="Pion LOG BLD Sante">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="1" crew="4" type="Medecin soin mental"/>
       <equipment count="5" crew="4" type="Medecin soin chirurgical"/>
@@ -631,14 +466,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -656,7 +483,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="20" name="Secteur soin NBC BLD" type="Pion LOG BLD Sante">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="1" crew="4" type="Medecin soin NBC"/>
     </equipments>
@@ -664,14 +491,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -689,7 +508,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="21" name="Secteur tri/soin BLD" type="Pion LOG BLD Sante">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="1" crew="4" type="Medecin tri"/>
       <equipment count="1" crew="4" type="Medecin soin mental"/>
@@ -698,14 +517,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -723,7 +534,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="22" name="Groupe evacuation sante BLD" type="Pion LOG BLD Sante">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="10" crew="4" type="VSR (ramassage)"/>
     </equipments>
@@ -731,14 +542,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -756,20 +559,12 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="23" name="PC BLT Sante" type="Pion LOG BLT Sante">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -787,7 +582,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="24" name="Secteur tri BLT" type="Pion LOG BLT Sante">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="1" crew="4" type="Medecin tri"/>
     </equipments>
@@ -795,14 +590,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -820,7 +607,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="25" name="Secteur soin chirurgical BLT" type="Pion LOG BLT Sante">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="1" crew="4" type="Medecin soin chirurgical"/>
       <equipment count="1" crew="4" type="Medecin soin chirurgical U2/U3"/>
@@ -829,14 +616,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -854,7 +633,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="26" name="Secteur soin mental BLT" type="Pion LOG BLT Sante">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="1" crew="4" type="Medecin soin mental"/>
     </equipments>
@@ -862,14 +641,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -887,7 +658,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="27" name="Secteur soin NBC BLT" type="Pion LOG BLT Sante">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="1" crew="4" type="Medecin soin NBC"/>
     </equipments>
@@ -895,14 +666,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -920,7 +683,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="28" name="Secteur tri/soin BLT" type="Pion LOG BLT Sante">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="1" crew="4" type="Medecin tri"/>
       <equipment count="1" crew="4" type="Medecin soin chirurgical"/>
@@ -930,14 +693,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -955,7 +710,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="29" name="Groupe evacuation sante BLT" type="Pion LOG BLT Sante">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="1" crew="4" type="VSR (ramassage)"/>
     </equipments>
@@ -963,14 +718,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -988,7 +735,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="30" name="PC BLD Ravitaillement" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="CompTest"/>
       <equipment convoyer="true" count="25" crew="1" type="Camion transport solide"/>
@@ -998,14 +745,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1023,7 +762,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="31" name="Pion RAV stocks" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="1" crew="4" type="CompTest"/>
     </equipments>
@@ -1031,14 +770,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1056,7 +787,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="32" name="Pion RAV camions" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment convoyer="true" count="25" crew="1" type="Camion transport solide"/>
       <equipment convoyer="true" count="25" crew="1" type="Camion transport liquide"/>
@@ -1065,14 +796,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1090,20 +813,12 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="Test LOG" id="33" name="Pion Convoi" type="Pion LOG Convoi">
-    <nature atlas-nature="Blinde" level="oo" nature="combat support service/transportation"/>
+    <nature atlas-nature="Blinde" level="oo" nature-app6="combat support service/transportation"/>
     <equipments/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1121,7 +836,7 @@
     <force-ratio feedback-time="100s"/>
   </unit>
   <unit decisional-model="REFUGIE Test" id="34" name="Pion Refugie" type="Pion REFUGIE">
-    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
     <equipments>
       <equipment count="3" crew="4" major="true" type="CompTest"/>
     </equipments>
@@ -1129,14 +844,6 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
-    <logistics>
-      <category name="munition">
-        <dotation capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
-      </category>
-      <category name="carburant">
-        <dotation capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
-      </category>
-    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>

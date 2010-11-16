@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <dotations infinite="false"/>
-  <sides>
-    <side id="1" name="red" type="enemy">
+<orbat model-version="4.2.6">
+  <resources infinite="false"/>
+  <parties>
+    <party id="1" name="red" type="enemy">
       <objects>
         <object id="33" name="Installation [33]" type="installation">
           <shape type="point">
@@ -30,8 +30,8 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-    <side id="4" name="blue" type="friend">
+    </party>
+    <party id="4" name="blue" type="friend">
       <objects/>
       <tactical>
         <formation id="5" level="x" name="Formation [5]">
@@ -53,14 +53,14 @@
           <subordinate id="12"/>
         </tc2>
       </logistics>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1">
-      <relationship diplomacy="enemy" side="4"/>
-    </side>
-    <side id="4">
-      <relationship diplomacy="enemy" side="1"/>
-    </side>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="4"/>
+    </party>
+    <party id="4">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
 </orbat>

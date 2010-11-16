@@ -50,7 +50,7 @@ void PHY_DotationCapacities::ReadCategory( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationCapacities::ReadDotationCategories( xml::xistream& xis, const PHY_DotationType& dotationType )
 {
-    xis >> xml::list( "dotation", *this, &PHY_DotationCapacities::ReadDotation, dotationType );
+    xis >> xml::list( "resource", *this, &PHY_DotationCapacities::ReadDotation, dotationType );
 }
 
 // -----------------------------------------------------------------------------

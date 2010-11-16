@@ -157,7 +157,7 @@ PHY_BreakdownType::PHY_BreakdownType( const std::string& strName, const PHY_Main
 void PHY_BreakdownType::ReadPart( xml::xistream& xis )
 {
     std::string strCategory;
-    xis >> xml::attribute( "dotation", strCategory );
+    xis >> xml::attribute( "resource", strCategory );
 
     const PHY_DotationCategory* pCategory = PHY_DotationType::piece_->FindDotationCategory( strCategory );
     if( !pCategory )

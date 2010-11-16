@@ -14,10 +14,10 @@
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_DotationType constructor
-// Created: SBO 2006-11-27
+// Created: RPD 2010-11-16
 // -----------------------------------------------------------------------------
-MIL_ParameterType_DotationType::MIL_ParameterType_DotationType()
-    : MIL_ParameterType_ABC( "DotationType" )
+MIL_ParameterType_DotationType::MIL_ParameterType_DotationType( const std::string& name )
+    : MIL_ParameterType_ABC( name )
 {
     // NOTHING
 }

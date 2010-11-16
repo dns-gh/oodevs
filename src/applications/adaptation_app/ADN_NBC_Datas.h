@@ -103,6 +103,7 @@ public:
 
     public:
         ADN_Type_String strName_;
+        ADN_Type_String category_;
         int nMosId_;
         NbcIntoxInfos liquidInfos_;
         ADN_Type_Bool bGazPresent_;

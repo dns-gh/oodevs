@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat>
-  <sides>
-    <side id="1" name="AZUR" type="friend">
+<orbat model-version="4.2.6">
+  <parties>
+    <party id="1" name="AZUR" type="friend">
       <objects>
         <object id="3572" name="abattis [3572]" type="abattis">
           <shape type="polygone">
@@ -352,8 +352,8 @@
       <logistics>
         <tc2 id="482"/>
       </logistics>
-    </side>
-    <side id="3" name="VERMILLON" type="enemy">
+    </party>
+    <party id="3" name="VERMILLON" type="enemy">
       <objects>
         <object id="3573" name="abattis [3573]" type="abattis">
           <shape type="polygone">
@@ -386,14 +386,14 @@
       </communication>
       <populations/>
       <logistics/>
-    </side>
-  </sides>
-  <diplomacies>
-    <side id="1">
-      <relationship diplomacy="enemy" side="3"/>
-    </side>
-    <side id="3">
-      <relationship diplomacy="enemy" side="1"/>
-    </side>
-  </diplomacies>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="enemy" party="3"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="enemy" party="1"/>
+    </party>
+  </diplomacy>
 </orbat>
