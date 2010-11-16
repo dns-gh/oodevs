@@ -3,10 +3,10 @@
   <propagation contamination-distance="300" contamination-quantity-given="0.5" wind-speed-limit="5"/>
   <nbc-suit max-speed-modifier="0.4" reloading-time-modifier="1.5"/>
   <agents>
-    <agent id="1" name="Air" category="chemical">
+    <agent category="chemical" id="1" name="Air">
       <effects affliction="false" type="liquid"/>
     </agent>
-    <agent id="2" name="Gaz sarin" category="chemical">
+    <agent category="chemical" id="2" name="Gaz sarin">
       <effects affliction="true" contamination="true" type="liquid">
         <effect percentage="0.2" wound="healthy"/>
         <effect percentage="0.05" wound="u1"/>
@@ -24,7 +24,7 @@
         <effect percentage="0.3" wound="dead"/>
       </effects>
     </agent>
-    <agent id="3" name="H5N1" category="biological">
+    <agent category="biological" id="3" name="H5N1">
       <effects affliction="true" contamination="true" type="liquid">
         <effect percentage="0.3" wound="healthy"/>
         <effect percentage="0.1" wound="u1"/>
@@ -42,7 +42,7 @@
         <effect percentage="0.2" wound="dead"/>
       </effects>
     </agent>
-    <agent id="4" name="HCN" category="biological">
+    <agent category="biological" id="4" name="HCN">
       <effects affliction="true" contamination="true" type="liquid">
         <effect percentage="0.5" wound="healthy"/>
         <effect percentage="0.05" wound="u1"/>
@@ -60,7 +60,7 @@
         <effect percentage="0.1" wound="dead"/>
       </effects>
     </agent>
-    <agent id="5" name="Rayon gamma" category="radiological">
+    <agent category="radiological" id="5" name="Rayon gamma">
       <effects affliction="true" contamination="true" type="liquid">
         <effect percentage="0.3" wound="healthy"/>
         <effect percentage="0.1" wound="u1"/>
@@ -78,7 +78,7 @@
         <effect percentage="0.2" wound="dead"/>
       </effects>
     </agent>
-    <agent id="6" name="Soman" category="chemical">
+    <agent category="chemical" id="6" name="Soman">
       <effects affliction="true" contamination="true" type="liquid">
         <effect percentage="0.5" wound="healthy"/>
         <effect percentage="0.05" wound="u1"/>
@@ -88,7 +88,7 @@
         <effect percentage="0.1" wound="dead"/>
       </effects>
     </agent>
-    <agent id="7" name="VX" category="chemical">
+    <agent category="chemical" id="7" name="VX">
       <effects affliction="true" contamination="true" type="liquid">
         <effect percentage="0.5" wound="healthy"/>
         <effect percentage="0.05" wound="u1"/>
@@ -106,7 +106,7 @@
         <effect percentage="0.1" wound="dead"/>
       </effects>
     </agent>
-    <agent id="8" name="Virus ebola" category="biological">
+    <agent category="biological" id="8" name="Virus ebola">
       <effects affliction="true" type="liquid">
         <effect percentage="0.3" wound="healthy"/>
         <effect percentage="0.12" wound="u1"/>

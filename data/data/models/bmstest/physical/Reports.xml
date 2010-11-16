@@ -13,7 +13,7 @@
   <report id="8" message="en poste face a direction dangereuse"/>
   <report id="9" message="en jalonnement"/>
   <report id="10" message="preparation mission">
-    <parameter type="Numeric"/>
+    <parameter type="Integer"/>
   </report>
   <report id="11" message="debut mission"/>
   <report id="12" message="fin mission"/>
@@ -151,14 +151,14 @@
   <report id="101" message="demande evacuation sanitaire"/>
   <report id="102" message="demande evacuation materiel"/>
   <report id="103" message="allocation consentie bientot epuisee">
-    <parameter type="DotationType"/>
+    <parameter type="ResourceType"/>
   </report>
   <report id="104" message="depassement capacite stockage"/>
   <report id="105" message="seuil logistique dotation depasse en %1">
-    <parameter type="DotationType"/>
+    <parameter type="ResourceType"/>
   </report>
   <report id="106" message="seuil logistique stock depasse en %1">
-    <parameter type="DotationType"/>
+    <parameter type="ResourceType"/>
   </report>
   <report id="107" message="ravitaillement dotations effectue"/>
   <report id="108" message="ravitaillement stock effectue"/>
@@ -282,7 +282,7 @@
     <parameter type="String"/>
   </report>
   <report id="220" message="trace id">
-    <parameter type="Numeric"/>
+    <parameter type="Integer"/>
   </report>
   <report id="221" message="emploi force interdit"/>
   <report id="222" message="maintien a distance par moyens non letaux"/>
@@ -319,8 +319,8 @@
     </parameter>
   </report>
   <report id="242" message="population victime affrontements">
-    <parameter type="Numeric"/>
-    <parameter type="Numeric"/>
+    <parameter type="Integer"/>
+    <parameter type="Integer"/>
   </report>
   <report id="243" message="attitude population">
     <parameter type="Enumeration">
@@ -350,8 +350,8 @@
   <report id="255" message="filtree"/>
   <report id="256" message="attentat terroriste dans population"/>
   <report id="257" message="population victime explosion mines">
-    <parameter type="Numeric"/>
-    <parameter type="Numeric"/>
+    <parameter type="Integer"/>
+    <parameter type="Integer"/>
   </report>
   <report id="258" message="execution attentat"/>
 </reports>

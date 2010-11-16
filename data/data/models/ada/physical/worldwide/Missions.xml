@@ -2145,7 +2145,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objectifsPrioritaires_" max-occurs="unbounded" min-occurs="1" name="Objectives" optional="true" type="Objective"/>
+      <parameter dia-name="objectifsPrioritaires_" max-occurs="unbounded" min-occurs="1" name="Objectives" optional="true" type="Point"/>
       <parameter dia-name="delaisCourts_" name="Short delay" optional="true" type="Boolean"/>
       <parameter dia-name="sansRearticulation_" name="Without dynamic assets organization" optional="true" type="Boolean"/>
     </mission>
@@ -2162,7 +2162,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objectifs_" max-occurs="unbounded" min-occurs="1" name="Objectives" optional="true" type="Objective"/>
+      <parameter dia-name="objectifs_" max-occurs="unbounded" min-occurs="1" name="Objectives" optional="true" type="Point"/>
       <parameter dia-name="delaisCourts_" name="Short delay" optional="true" type="Boolean"/>
       <parameter dia-name="sansRearticulation_" name="Without dynamic assets organization" optional="true" type="Boolean"/>
     </mission>

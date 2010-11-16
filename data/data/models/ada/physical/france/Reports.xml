@@ -13,7 +13,7 @@
   <report category="operational" id="8" message="en poste face a direction dangereuse"/>
   <report category="operational" id="9" message="en jalonnement"/>
   <report category="operational" id="10" message="Préparation mission : %1 minute(s)">
-    <parameter type="Numeric"/>
+    <parameter type="Integer"/>
   </report>
   <report category="operational" id="11" message="debut mission"/>
   <report category="operational" id="12" message="fin mission"/>
@@ -151,14 +151,14 @@
   <report category="operational" id="101" message="demande evacuation sanitaire"/>
   <report category="operational" id="102" message="demande evacuation materiel"/>
   <report category="operational" id="103" message="allocation consentie bientot epuisee : %1">
-    <parameter type="DotationType"/>
+    <parameter type="ResourceType"/>
   </report>
   <report category="operational" id="104" message="depassement capacite stockage"/>
   <report category="operational" id="105" message="seuil logistique dotation depasse en %1">
-    <parameter type="DotationType"/>
+    <parameter type="ResourceType"/>
   </report>
   <report category="operational" id="106" message="seuil logistique stock depasse en %1">
-    <parameter type="DotationType"/>
+    <parameter type="ResourceType"/>
   </report>
   <report category="operational" id="107" message="ravitaillement dotations effectue"/>
   <report category="operational" id="108" message="ravitaillement stock effectue"/>
@@ -282,20 +282,20 @@
     <parameter type="String"/>
   </report>
   <report category="operational" id="220" message="trace id : %1">
-    <parameter type="Numeric"/>
+    <parameter type="Integer"/>
   </report>
   <report category="operational" id="221" message="emploi force interdit"/>
   <report category="operational" id="222" message="maintien a distance par moyens non letaux"/>
   <report category="operational" id="223" message="dispersion par moyens de defense actifs"/>
   <report category="operational" id="224" message="armes letales autorisees"/>
   <report category="operational" id="225" message="population detectee : %1">
-    <parameter type="PopulationKnowledge"/>
+    <parameter type=""/>
   </report>
   <report category="operational" id="226" message="prise a partie par population : %1">
-    <parameter type="PopulationKnowledge"/>
+    <parameter type=""/>
   </report>
   <report category="operational" id="227" message="riposte contre population : %1">
-    <parameter type="PopulationKnowledge"/>
+    <parameter type=""/>
   </report>
   <report category="operational" id="228" message="population dangereuse a proximite"/>
   <report category="operational" id="229" message="esquive face a population"/>
@@ -319,8 +319,8 @@
     </parameter>
   </report>
   <report category="operational" id="242" message="population victime affrontements : %1">
-    <parameter type="Numeric"/>
-    <parameter type="Numeric"/>
+    <parameter type="Integer"/>
+    <parameter type="Integer"/>
   </report>
   <report category="operational" id="243" message="attitude population: %1">
     <parameter type="Enumeration">
@@ -336,13 +336,13 @@
   <report category="operational" id="247" message="population temporairement repoussee"/>
   <report category="operational" id="248" message="reprise des affrontements"/>
   <report category="operational" id="249" message="agression de population : %1">
-    <parameter type="PopulationKnowledge"/>
+    <parameter type=""/>
   </report>
   <report category="operational" id="250" message="agression par population : %1">
-    <parameter type="PopulationKnowledge"/>
+    <parameter type=""/>
   </report>
   <report category="operational" id="251" message="riposte contre agression par population : %1">
-    <parameter type="PopulationKnowledge"/>
+    <parameter type=""/>
   </report>
   <report category="operational" id="252" message="attaque installation"/>
   <report category="operational" id="253" message="en stationnement"/>
@@ -350,8 +350,8 @@
   <report category="operational" id="255" message="filtree"/>
   <report category="operational" id="256" message="attentat terroriste dans population"/>
   <report category="operational" id="257" message="population victime explosion mines : %1">
-    <parameter type="Numeric"/>
-    <parameter type="Numeric"/>
+    <parameter type="Integer"/>
+    <parameter type="Integer"/>
   </report>
   <report category="operational" id="258" message="execution attentat"/>
   <report category="operational" id="259" message="debut mission : %1">
@@ -432,10 +432,10 @@
   <report category="operational" id="300" message="Debut du ratissage de la zone"/>
   <report category="operational" id="301" message="Fin du ratissage de la zone"/>
   <report category="operational" id="302" message="Munition interdite : %1">
-    <parameter type="DotationType"/>
+    <parameter type="ResourceType"/>
   </report>
   <report category="operational" id="303" message="Munition autorisée : %1">
-    <parameter type="DotationType"/>
+    <parameter type="ResourceType"/>
   </report>
   <report category="operational" id="304" message="Debut du bouclage de la zone"/>
   <report category="operational" id="305" message="Fin du bouclage de la zone"/>
@@ -467,11 +467,11 @@
   <report category="operational" id="3014" message="le drone doit être mis en oeuvre"/>
   <report category="operational" id="3015" message="demande un renfort technique"/>
   <report category="operational" id="3016" message="demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
-    <parameter type="Numeric"/>
-    <parameter type="Numeric"/>
+    <parameter type="Integer"/>
+    <parameter type="Integer"/>
   </report>
   <report category="operational" id="3017" message="feu de classe %1 identifié">
-    <parameter type="Numeric"/>
+    <parameter type="Integer"/>
   </report>
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>

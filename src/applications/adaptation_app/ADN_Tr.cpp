@@ -302,7 +302,7 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
     T_ConverterMissionParameterType( "NatureAtlas", QT_TRANSLATE_NOOP("ADN_Tr", "NatureAtlas" ), eMissionParameterTypeNatureAtlas ),
     T_ConverterMissionParameterType( "AgentKnowledge", QT_TRANSLATE_NOOP("ADN_Tr", "AgentKnowledge" ), eMissionParameterTypeAgentKnowledge ),
     T_ConverterMissionParameterType( "ObjectKnowledge", QT_TRANSLATE_NOOP("ADN_Tr", "ObjectKnowledge" ), eMissionParameterTypeObjectKnowledge ),
-    T_ConverterMissionParameterType( "PopulationKnowledge", QT_TRANSLATE_NOOP("ADN_Tr", "PopulationKnowledge" ), eMissionParameterTypePopulationKnowledge ),
+    T_ConverterMissionParameterType( "CrowdKnowledge", QT_TRANSLATE_NOOP("ADN_Tr", "CrowdKnowledge" ), eMissionParameterTypePopulationKnowledge ),
     T_ConverterMissionParameterType( "PlannedWork", QT_TRANSLATE_NOOP("ADN_Tr", "PlannedWork" ), eMissionParameterTypeGenObject ),
     T_ConverterMissionParameterType( "Objective", QT_TRANSLATE_NOOP("ADN_Tr", "Objective" ), eMissionParameterTypeObjective ),
     T_ConverterMissionParameterType( "Path", QT_TRANSLATE_NOOP("ADN_Tr", "Path" ), eMissionParameterTypePath ),

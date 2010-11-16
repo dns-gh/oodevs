@@ -178,12 +178,12 @@ void ADN_Missions_Data::MissionParameter::FillChoices()
     choices_.AddItem( new MissionType( "Point" ) );
     choices_.AddItem( new MissionType( "Path" ) );
     choices_.AddItem( new MissionType( "Polygon" ) );
-    choices_.AddItem( new MissionType( "Automate" ) );
+    choices_.AddItem( new MissionType( "Automat" ) );
     choices_.AddItem( new MissionType( "Agent" ) );
     choices_.AddItem( new MissionType( "AgentKnowledge" ) );
     choices_.AddItem( new MissionType( "ObjectKnowledge" ) );
-    choices_.AddItem( new MissionType( "PopulationKnowledge" ) );
-    choices_.AddItem( new MissionType( "UrbanBlock" ) );
+    choices_.AddItem( new MissionType( "CrowdKnowledge" ) );
+    choices_.AddItem( new MissionType( "UrbanKnowledge" ) );
 }
 
 // -----------------------------------------------------------------------------

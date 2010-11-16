@@ -4250,10 +4250,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation type="unfinished">Connaissance Objet</translation>
     </message>
     <message>
-        <source>PopulationKnowledge</source>
-        <translation type="unfinished">Connaissance de Population</translation>
-    </message>
-    <message>
         <source>Objective</source>
         <translation type="unfinished">Objectif</translation>
     </message>
@@ -4363,6 +4359,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>UrbanKnowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CrowdKnowledge</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

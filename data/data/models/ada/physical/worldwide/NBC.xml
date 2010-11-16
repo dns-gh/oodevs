@@ -3,7 +3,7 @@
   <propagation contamination-distance="300" contamination-quantity-given="0.5" wind-speed-limit="5"/>
   <nbc-suit max-speed-modifier="0.4" reloading-time-modifier="1.5"/>
   <agents>
-    <agent id="1" name="Biological" category="biological">
+    <agent category="biological" id="1" name="Biological">
       <effects affliction="true" type="liquid">
         <effect percentage="0" wound="healthy"/>
         <effect percentage="0.2" wound="u1"/>
@@ -13,7 +13,7 @@
         <effect percentage="0.2" wound="dead"/>
       </effects>
     </agent>
-    <agent id="2" name="Chimical" category="chemical">
+    <agent category="chemical" id="2" name="Chimical">
       <effects affliction="true" contamination="true" type="liquid">
         <effect percentage="0" wound="healthy"/>
         <effect percentage="0.2" wound="u1"/>
@@ -31,7 +31,7 @@
         <effect percentage="0.2" wound="dead"/>
       </effects>
     </agent>
-    <agent id="3" name="Nuclear" category="nuclear">
+    <agent category="nuclear" id="3" name="Nuclear">
       <effects affliction="true" contamination="true" type="liquid">
         <effect percentage="0" wound="healthy"/>
         <effect percentage="0.2" wound="u1"/>
