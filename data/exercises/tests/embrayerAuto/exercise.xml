@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<exercise generator-version="V4.0.0">
+<exercise model-version="4.2.6">
   <profiles file="profiles.xml"/>
   <orbat file="orbat.xml"/>
   <weather file="weather.xml"/>
