@@ -96,7 +96,7 @@ function Start()
        </xsl:call-template>
      </xsl:for-each>
      <xsl:text>
-        TimeSequence( "</xsl:text><xsl:value-of select="$physical"/><xsl:text>\messages", frequency,
+        TimeSequence( "</xsl:text><xsl:value-of select="$physical"/><xsl:text>_messages", frequency,
             function()
                 ChangeState( "</xsl:text><xsl:value-of select="$physical"/><xsl:text>_test_end" )
             end
@@ -125,7 +125,7 @@ end
             function()
                 Mission.create( unit:GetIdentifier(), model.types.missions["</xsl:text><xsl:value-of select="@name"/><xsl:text>"] )
             </xsl:text>
-                <xsl:call-template name="common-parameters"/>
+                <!--xsl:call-template name="common-parameters"/-->
                 <xsl:for-each select="parameter[@optional='false']">
                     <xsl:call-template name="parameter">
                         <xsl:with-param name="unit"><xsl:value-of select="$unit"/></xsl:with-param>
@@ -156,6 +156,12 @@ end
         <xsl:param name="count"/>
         <xsl:param name="index"/>
         <xsl:choose>
+
+        <xsl:when test="@type = 'Heading'">
+                <xsl:text>        :With( { name = "Danger direction", type = "Heading", value = 0 } )
+                </xsl:text>
+            </xsl:when>
+
             <xsl:when test="@type = 'Location'">
                 <xsl:text>    :With( LocationParameter.create( "</xsl:text><xsl:value-of select="@name"/><xsl:text>", { config.positions.destination[1], config.positions.destination[2], config.positions.destination[3] } ) )</xsl:text>
             </xsl:when>
