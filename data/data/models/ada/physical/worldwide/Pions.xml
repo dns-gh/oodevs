@@ -430,7 +430,7 @@
     <nbc decontamination-delay="7800s"/>
   </unit>
   <unit decisional-model="Refugee" id="18" name="Refugee" type="Pion REFUGIE">
-    <nature atlas-nature="None" level="none" nature-app6=""/>
+    <nature atlas-nature="None" level="none" nature-app6="mootw/refugees"/>
     <equipments>
       <equipment count="10" crew="100" major="true" type="Refugee"/>
     </equipments>
@@ -1977,7 +1977,7 @@
     </distance-before-points>
   </unit>
   <unit decisional-model="Field artillery reconnaissance" id="89" name="MLRS reconnaissance platoon" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/artillery/artillery survey"/>
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/artillery survey"/>
     <equipments>
       <equipment count="2" crew="6" major="true" type="Artillery Recce Vehicle"/>
     </equipments>
