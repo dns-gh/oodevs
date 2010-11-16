@@ -995,9 +995,9 @@
         <update name="protobuf"/>
         <update name="vcredist" package="vcredist"/>
         <update name="system"/>
-        <update name="openssl"/>
-        <update-database database="directia.core.bml" dir="${data.dir}/data/models/ada/decisional/directia5/models/libs/core"/>
-        <update name="models/military" package="net.masagroup.military" todir="${data.dir}/data/models/ada/decisional/directia5/models/libs/base"/>
+        <update name="openssl"/> 
+        <update-database database="directia.core.bml" dir="${data.dir}/data/models/ada/decisional/directia5/models/directia.core"/>
+        <update name="models/military" package="net.masagroup.military" todir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.military"/>
         <antcall target="generate-data"/>
     </target>
 
