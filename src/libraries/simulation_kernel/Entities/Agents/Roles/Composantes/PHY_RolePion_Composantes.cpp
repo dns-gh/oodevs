@@ -1556,16 +1556,10 @@ const PHY_ComposantePion* PHY_RolePion_Composantes::GetMajorComposante() const
 // -----------------------------------------------------------------------------
 double PHY_RolePion_Composantes::GetMajorComponentWeight( bool loadedWeight ) const
 {
-    double weight ( 0 );
-    if( loadedWeight || bIsLoaded_ )// LMT : when a unit is unloaded, it can go in every urban block
-    {
-        const PHY_ComposantePion* majorComponent = GetMajorComposante();
-        if( majorComponent )
-        {
-            weight = ( double ) majorComponent->GetWeight();
-        }
-    }
-    return weight;
+    if( loadedWeight || bIsLoaded_ ) // LMT : when a unit is unloaded, it can go in every urban block
+        if( const PHY_ComposantePion* majorComponent = GetMajorComposante() )
+            return majorComponent->GetWeight();
+    return 0.;
 }
 
 
