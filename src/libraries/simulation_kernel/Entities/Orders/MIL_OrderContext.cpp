@@ -28,7 +28,6 @@
 MIL_OrderContext::MIL_OrderContext( bool present /*= false */ )
     : hasContext_   ( present )
     , limas_        ()
-    , intelligences_()
     , fuseau_       ()
     , dirDanger_    ( 0., 1. )
 {
@@ -56,13 +55,10 @@ MIL_OrderContext::MIL_OrderContext( const Common::MsgMissionParameters& asn, con
 MIL_OrderContext::MIL_OrderContext( const MIL_OrderContext& rhs )
     : hasContext_   ( rhs.hasContext_ )
     , limas_        ( rhs.limas_  )
-    , intelligences_()
     , fuseau_       ()
     , dirDanger_    ( rhs.dirDanger_ )
 {
     fuseau_ = rhs.fuseau_; // $$$$ SBO 2008-03-04: ...
-    for( CIT_IntelligenceOrders it = rhs.intelligences_.begin(); it != rhs.intelligences_.end(); ++it )
-        intelligences_.push_back( new MIL_IntelligenceOrder( **it ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -71,8 +67,6 @@ MIL_OrderContext::MIL_OrderContext( const MIL_OrderContext& rhs )
 //-----------------------------------------------------------------------------
 MIL_OrderContext::~MIL_OrderContext()
 {
-    for( CIT_IntelligenceOrders it = intelligences_.begin(); it != intelligences_.end(); ++it )
-        delete *it;
 }
 
 // -----------------------------------------------------------------------------
@@ -88,18 +82,7 @@ void MIL_OrderContext::Serialize( Common::MsgMissionParameters& asn ) const
         WriteDirection( *asn.mutable_elem(0) );
         WritePhaseLines( *asn.mutable_elem(1) );
         WriteLimits( *asn.mutable_elem(2), *asn.mutable_elem(3) );
-        WriteIntelligences( *asn.mutable_elem(4) );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_OrderContext::Accept
-// Created: SBO 2007-11-12
-// -----------------------------------------------------------------------------
-void MIL_OrderContext::Accept( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const
-{
-    for( CIT_IntelligenceOrders it = intelligences_.begin(); it != intelligences_.end(); ++it )
-        visitor.Visit( **it );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,21 +144,6 @@ void MIL_OrderContext::ReadDirection( const Common::MsgMissionParameter& asn )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderContext::ReadIntelligences
-// Created: SBO 2008-03-04
-// -----------------------------------------------------------------------------
-void MIL_OrderContext::ReadIntelligences( const Common::MsgMissionParameter& asn )
-{
-    if( !asn.null_value() )
-    {
-        if( !asn.value_size() || !asn.value().Get( 0 ).has_intelligencelist() )
-            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
-        for( int i = 0; i < asn.value().Get( 0 ).intelligencelist().elem_size(); ++i )
-            intelligences_.push_back( new MIL_IntelligenceOrder( asn.value().Get( 0 ).intelligencelist().elem(i) ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_OrderContext::WritePhaseLines
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
@@ -213,23 +181,12 @@ void MIL_OrderContext::WriteDirection( Common::MsgMissionParameter& asn ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderContext::WriteIntelligences
-// Created: SBO 2008-03-04
-// -----------------------------------------------------------------------------
-void MIL_OrderContext::WriteIntelligences( Common::MsgMissionParameter& asn ) const
-{
-    asn.set_null_value( intelligences_.empty() );
-    for( CIT_IntelligenceOrders it = intelligences_.begin(); it != intelligences_.end(); ++it )
-        (*it)->Serialize( *asn.mutable_value()->Add()->mutable_intelligencelist()->add_elem() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_OrderContext::Length
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
 unsigned int MIL_OrderContext::Length() const
 {
-    return hasContext_ ? 5 : 0;
+    return hasContext_ ? 4 : 0;
 }
 
 // -----------------------------------------------------------------------------

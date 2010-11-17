@@ -51,7 +51,6 @@ public:
           MIL_LimaOrder* FindNextScheduledLima();
           void           AffectFuseau         ( const MIL_Fuseau& fuseau );
           void           AffectDirection      ( const MT_Vector2D& direction );
-          void           Accept               ( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Network
@@ -70,24 +69,15 @@ private:
     void ReadDirection( const Common::MsgMissionParameter& asn );
     void ReadPhaseLines( const Common::MsgMissionParameter& asn );
     void ReadLimits( const Common::MsgMissionParameter& limit1, const Common::MsgMissionParameter& limit2, const MT_Vector2D& orientationReference );
-    void ReadIntelligences( const Common::MsgMissionParameter& asn );
 
     void WriteDirection( Common::MsgMissionParameter& asn ) const;
     void WritePhaseLines( Common::MsgMissionParameter& asn ) const;
     void WriteLimits( Common::MsgMissionParameter& limit1, Common::MsgMissionParameter& limit2 ) const;
-    void WriteIntelligences( Common::MsgMissionParameter& asn ) const;
-    //@}
-
-    //! @name Helpers
-    //@{
-    typedef std::vector< MIL_IntelligenceOrder* >   T_IntelligenceOrders;
-    typedef T_IntelligenceOrders::const_iterator  CIT_IntelligenceOrders;
     //@}
 
 private:
     bool                 hasContext_;
     T_LimaVector         limas_;
-    T_IntelligenceOrders intelligences_;
     MIL_Fuseau           fuseau_;
     MT_Vector2D          dirDanger_;
 };
