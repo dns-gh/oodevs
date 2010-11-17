@@ -75,6 +75,7 @@ private:
     //@{
     std::string delay_;
     std::string type_;
+    const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types_;
     bool activated_;
     //@}
     // LTO end
