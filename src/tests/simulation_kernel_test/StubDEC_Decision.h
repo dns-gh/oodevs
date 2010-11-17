@@ -28,7 +28,7 @@ public:
     virtual std::string GetName() const { throw; }
     virtual void EndCleanStateAfterCrash() {}
     virtual void RegisterUserFunctions( directia::brain::Brain& ) {}
-    virtual void RegisterSelf( directia::brain::Brain& ) {}
+    virtual void RegisterSelf( directia::brain::Brain& /*brain*/, bool /*isMasalife*/, const std::string& /*groupName*/ ) {}
     virtual void UpdateMeKnowledge( directia::brain::Brain& ) {}
     template< typename FunctionType >
     void RegisterFunction( const std::string& strFunctionName, FunctionType function )
