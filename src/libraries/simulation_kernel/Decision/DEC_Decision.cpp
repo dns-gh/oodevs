@@ -1006,7 +1006,7 @@ namespace
     std::map< std::string, boost::shared_ptr< directia::brain::Brain > > brainTable;
 }
 
-bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool& isMasalife )
+bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool& isMasalife, const std::string& type, const std::string& groupName )
 {
     pArchetypeBrain = brainTable[brainFile];
     isMasalife = false;
@@ -1026,6 +1026,7 @@ bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, b
                 + "} cwd='" + includePath + "'";
             pBrain.reset( new directia::brain::Brain( brainInit ) );
             pArchetypeBrain = pBrain;
+            DEC_DecisionImpl::IncludeFile( *pArchetypeBrain, brainFile ,includePath, type, groupName );
             isMasalife = true;
             return true;
         }
@@ -1037,6 +1038,7 @@ bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, b
         std::string brainInit = plugins
             + "} cwd='" + includePath + "'";
         pArchetypeBrain.reset( new directia::brain::Brain( brainInit ) );
+        DEC_DecisionImpl::IncludeFile( *pArchetypeBrain, brainFile ,includePath, type, groupName );
         brainTable[brainFile] = pArchetypeBrain;
         pBrain.reset( new directia::brain::Brain( *pArchetypeBrain ) );
         return true;

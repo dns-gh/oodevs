@@ -44,7 +44,7 @@ namespace DEC_DecisionImpl
 {
     void RegisterCommonUserFunctions( directia::brain::Brain& brain , bool isMasalife );
     void RegisterMissionParameters( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
-    bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool& isMasalife );
+    bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool& isMasalife, const std::string& type, const std::string& groupName );
     void IncludeFile( directia::brain::Brain& brain, const std::string& brainFile ,const std::string& includePath,const std::string& type,const std::string& groupName );
 }
 
@@ -75,7 +75,7 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
     pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
     boost::shared_ptr< directia::brain::Brain > pArchetypeBrain;
 
-    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, includePath_, brainFile, isMasalife_ );
+    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, includePath_, brainFile, isMasalife_, type, groupName );
 
     if( newBrain )
     {
@@ -91,9 +91,6 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
     //Enregistrement à la main de BreakForDebug
     (*pBrain_)[ "BreakForDebug" ] =
         boost::function< void( const std::string& ) >( boost::bind( &DEC_DIAFunctions::BreakForDebug, pEntity_->GetID() ,_1 ) ) ;
-
-    if( newBrain )
-        DEC_DecisionImpl::IncludeFile( *pArchetypeBrain, brainFile ,includePath_, type, groupName );
 
     pRefs_.reset( new ScriptRefs( *pBrain_) );
     
