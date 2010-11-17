@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<primitives>
+    <primitive category="extract" name="operational-state" type="list(key,float)">
+        <comments><![CDATA[Unit operational state, in the interval [0,1].]]></comments>
+    </primitive>
+    <primitive category="extract" name="position" type="list(key,position)">
+        <comments><![CDATA[Unit position.]]></comments>
+    </primitive>
+    <primitive category="extract" name="resources" type="list(key,resources)">
+        <comments><![CDATA[Amount of specified resources.]]></comments>
+        <parameters>
+            <parameter name="resources" type="list(resource-type)" attribute="dotations"/>
+        </parameters>
+    </primitive>
+    <primitive category="extract" name="equipments" type="list(key,equipments)">
+        <comments><![CDATA[Amount of specified equipments into specified states.]]></comments>
+        <parameters>
+            <parameter name="equipments" type="list(equipment-type)" attribute="equipments"/>
+            <parameter name="states" type="list(equipment-state)" attribute="states"/>
+        </parameters>
+    </primitive>
+    <primitive category="extract" name="humans" type="list(key,humans)">
+        <comments><![CDATA[Amount of specified personel into specified states.]]></comments>
+        <parameters>
+            <parameter name="ranks" type="list(human-rank)" attribute="ranks"/>
+            <parameter name="states" type="list(human-state)" attribute="states"/>
+        </parameters>
+    </primitive>
+    <primitive category="extract" name="maintenance-handling-unit" type="list(key)">
+        <comments><![CDATA[Units carrying maintenance operations.]]></comments>
+    </primitive>
+    <primitive category="extract" name="direct-fire-unit" type="list(key)">
+        <comments><![CDATA[Units firing direct fires.]]></comments>
+    </primitive>
+    <primitive category="extract" name="fire-component-damage" type="list(key,damage)">
+        <comments><![CDATA[Amount of specified equipments damaged by direct fires.]]></comments>
+        <parameters>
+            <parameter name="equipments" type="list(equipment-type)" attribute="components"/>
+        </parameters>
+    </primitive>
+    <primitive category="extract" name="detecting-unit" type="list(key,key)">
+        <comments><![CDATA[Whether a specified unit is detected or not with specified perception level(s).]]></comments>
+        <parameters>
+            <parameter name="detected unit" type="unit" attribute="detected"/>
+            <parameter name="perception level" type="list(perception-level)" attribute="visibility"/>
+        </parameters>
+    </primitive>
+    <primitive category="extract" name="mounted" type="list(key,float)">
+        <comments><![CDATA[Unit mounted state (0: unmounted, 1: mounted)]]></comments>
+    </primitive>
+    <primitive category="transform" name="distance" type="float">
+        <comments><![CDATA[Computes distance between specified positions.]]></comments>
+        <parameters>
+            <parameter name="position1" type="position"/>
+            <parameter name="position2" type="position"/>
+        </parameters>
+    </primitive>
+    <primitive category="transform" name="contains" type="list(bool)">
+        <comments><![CDATA[Tests if area contains specified position.]]></comments>
+        <parameters>
+            <parameter name="area" type="zone"/>
+            <parameter name="position" type="list(position)"/>
+        </parameters>
+    </primitive>
+    <primitive category="transform" name="filter" type="list(_1)">
+        <comments><![CDATA[Filters provided elements to keep only input matching 'true' filter entries.]]></comments>
+        <parameters>
+            <parameter name="filter" type="list(bool)"/>
+            <parameter name="elements" type="list(_1)"/>
+        </parameters>
+    </primitive>
+    <primitive category="transform" name="is-one-of" type="list(bool)">
+        <comments><![CDATA[Tests if elements are in list.]]></comments>
+        <parameters>
+            <parameter name="needles" type="list(key)"/>
+            <parameter name="haystack" type="list(key)" attribute="select"/>
+        </parameters>
+    </primitive>
+    <primitive category="transform" name="derivate" type="list(_1)">
+        <comments><![CDATA[Computes difference between current and previous value.]]></comments>
+        <parameters>
+            <parameter name="value" type="list(_1)"/>
+            <parameter name="period" type="unsigned" attribute="period"/>
+        </parameters>
+    </primitive>
+    <primitive category="transform" name="integrate" type="list(_1)">
+        <comments><![CDATA[Computes sum between current and previous value.]]></comments>
+        <parameters>
+            <parameter name="value" type="list(_1)"/>
+        </parameters>
+    </primitive>
+    <primitive category="transform" name="domain" type="list(_1)">
+        <comments><![CDATA[Returns selected value for all elements from domain.]]></comments>
+        <parameters>
+            <parameter name="value" type="list(key,_1)"/>
+            <parameter name="domain" type="list(key)" attribute="select"/>
+        </parameters>
+    </primitive>
+    <primitive category="transform" name="compare" type="list(bool)">
+        <comments><![CDATA[Returns test result.]]></comments>
+        <parameters>
+            <parameter name="test" type="operator" attribute="operator"/>
+            <parameter name="operand1" type="_1"/>
+            <parameter name="operand2" type="_2"/>
+        </parameters>
+    </primitive>
+    <primitive category="transform" name="compose" type="list(key,_1)">
+        <comments><![CDATA[Returns inner join of inputs (values of 'input 1' matching elements from 'input 2').]]></comments>
+        <parameters>
+            <parameter name="input1" type="list(key,_1)"/>
+            <parameter name="input2" type="list(key)"/>
+        </parameters>
+    </primitive>
+    <primitive category="reduce" name="select" type="_1">
+        <comments><![CDATA[Returns input value for selected element.]]></comments>
+        <parameters>
+            <parameter name="value" type="list(key,_1)"/>
+            <parameter name="element" type="key" attribute="key"/>
+        </parameters>
+    </primitive>
+    <primitive category="reduce" name="count" type="unsigned">
+        <comments><![CDATA[Returns number of elements in list.]]></comments>
+        <parameters>
+            <parameter name="elements" type="list(key)"/>
+        </parameters>
+    </primitive>
+    <primitive category="reduce" name="minimum" type="_1">
+        <comments><![CDATA[Returns minimum value from list.]]></comments>
+        <parameters>
+            <parameter name="values" type="list(_1)"/>
+        </parameters>
+    </primitive>
+    <primitive category="reduce" name="maximum" type="_1">
+        <comments><![CDATA[Returns maximum value from list.]]></comments>
+        <parameters>
+            <parameter name="values" type="list(_1)"/>
+        </parameters>
+    </primitive>
+    <primitive category="reduce" name="sum" type="_1">
+        <comments><![CDATA[Returns the sum of values in list.]]></comments>
+        <parameters>
+            <parameter name="values" type="list(_1)"/>
+        </parameters>
+    </primitive>
+    <primitive category="reduce" name="mean" type="_1">
+        <comments><![CDATA[Returns the mean of values in list (sum / count).]]></comments>
+        <parameters>
+            <parameter name="values" type="list(_1)"/>
+        </parameters>
+    </primitive>
+    <primitive category="reduce" name="threshold" type="_2">
+        <comments><![CDATA[Returns the value from 'values' matching the threshold which input value is below.]]></comments>
+        <parameters>
+            <parameter name="thresholds" type="list(_1)" attribute="thresholds"/>
+            <parameter name="values" type="list(_1)" attribute="values"/>
+            <parameter name="input" type="list(_2)"/>
+        </parameters>
+    </primitive>
+    <primitive category="reduce" name="product" type="_1">
+        <comments><![CDATA[Returns the product of parameters.]]></comments>
+        <parameters>
+            <parameter name="input1" type="list(_1)"/>
+            <parameter name="input2" type="list(_2)"/>
+        </parameters>
+    </primitive>
+    <!-- results -->
+    <primitive category="result" name="indicator" type="_1">
+        <comments><![CDATA[Use the formula as a named indicator.]]></comments>
+        <parameters>
+            <parameter name="name" type="string" attribute="name"/>
+            <parameter name="input" type="_1"/>
+        </parameters>
+    </primitive>
+    <primitive category="result" name="plot" type="_1">
+        <comments><![CDATA[Plots the formula value as a graph.]]></comments>
+        <parameters>
+            <parameter name="input" type="_1"/>
+        </parameters>
+    </primitive>
+</primitives>

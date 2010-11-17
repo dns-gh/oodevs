@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<widgets>
+  <widget name="TerrainCreationPanel" page="index.htm"/>
+  <widget name="CreateExercisePanel"  page="index.htm"/>
+  <widget name="EditExercisePanel"    page="index.htm"/>
+  <widget name="StartExercisePanel"   page="index.htm"/>
+  <widget name="GameConfigPanel"      page="index.htm"/>
+  <widget name="RestartExercisePanel" page="index.htm"/>
+  <widget name="JoinExercisePanel"    page="index.htm"/>
+  <widget name="StartAnalysisPanel"   page="index.htm"/>
+  <widget name="JoinAnalysisPanel"    page="index.htm"/>
+</widgets>

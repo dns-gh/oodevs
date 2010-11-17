@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gradients>
+  <gradient name="default">
+    <color color="#faffca" position="1"/>
+    <color color="#feffd7" position="0"/>
+  </gradient>
+  <gradient name="grey levels">
+    <color color="#000000" position="1"/>
+    <color color="#ffffff" position="0"/>
+  </gradient>
+  <gradient name="topography">
+    <color color="#850601" position="0.5"/>
+    <color color="#f7faaa" position="0.14"/>
+    <color color="#0b8040" position="0.25"/>
+    <color color="#b0b0b0" position="0.75"/>
+    <color color="#69300d" position="0.62"/>
+    <color color="#ffffff" position="1"/>
+    <color color="#aff0dd" position="0"/>
+    <color color="#fcba03" position="0.37"/>
+  </gradient>
+</gradients>

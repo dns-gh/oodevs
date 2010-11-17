@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<widgets>
+  <widget name="MapWidget"               page="index.htm#workspace_overview/workspace_overview.htm"/>
+  <widget name="Widget3D"                page="index.htm#workspace_overview/workspace_overview.htm"/>
+  <widget name="HierarchyListView"       page="index.htm#workspace_overview/workspace_overview.htm"/>
+  <widget name="EntitySearchBox"         page="index.htm#workspace_overview/workspace_overview.htm"/>
+  <widget name="PreferencesDialog"       page="index.htm#workspace_overview/workspace_overview.htm"/>
+  <widget name="LayersPanel"             page="index.htm#workspace_overview/workspace_overview.htm"/>
+  <widget name="ElevationPanel"          page="index.htm#workspace_overview/workspace_overview.htm"/>
+  <widget name="GraphicsPanel"           page="index.htm#workspace_overview/workspace_overview.htm"/>
+  <widget name="LightingPanel"           page="index.htm#workspace_overview/workspace_overview.htm"/>
+  <widget name="automatic status bar"    page="index.htm#workspace_overview/workspace_overview.htm"/>
+  <widget name="location editor"         page="index.htm#workspace_overview/workspace_overview.htm"/>
+  <widget name="ChangeDiplomacyDialog"   page="index.htm#exercise_preparation/exercise_preparation.htm"/>
+  <widget name="UnitsPanel"              page="index.htm#exercise_preparation/exercise_preparation.htm"/>
+  <widget name="PopulationsPanel"        page="index.htm#exercise_preparation/exercise_preparation.htm"/>
+  <widget name="ObjectCreationPanel"     page="index.htm#exercise_preparation/exercise_preparation.htm"/>
+  <widget name="IntelligencesPanel"      page="index.htm#exercise_preparation/exercise_preparation.htm"/>
+  <widget name="ProfileWizardDialog"     page="index.htm#exercise_preparation/exercise_preparation.htm"/>
+  <widget name="ProfileDialog"           page="index.htm#exercise_preparation/exercise_preparation.htm"/>
+  <widget name="UserProfileList"         page="index.htm#exercise_preparation/exercise_preparation.htm"/>
+  <widget name="UserProfileWidget"       page="index.htm#exercise_preparation/exercise_preparation.htm"/>
+  <widget name="WeatherWidget"           page="index.htm#exercise_preparation/exercise_preparation.htm"/>
+  <widget name="WeatherPanel"            page="index.htm#exercise_preparation/exercise_preparation.htm"/>
+  <widget name="LocalWeathersList"       page="index.htm#exercise_preparation/exercise_preparation.htm"/>
+</widgets>

@@ -1,0 +1,7 @@
+<svg>
+  <g fill="none" stroke="black" stroke-width="10">
+    <path d="M -300,-50 l -50,0 l 0,500 l  50,0" />
+    <path d="M  300,-50 l  50,0 l 0,500 l -50,0" />
+  </g>
+</svg>
+

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<actions>
+    <action name="Simulation.Pause" function="sim:Pause">
+        <description>Pauses the simulation</description>
+    </action>
+    <action name="Client.Display" function="Display">
+        <description>Displays text message to the client</description>
+        <parameters>
+            <parameter name="message" default="My Message"/>
+        </parameters>
+    </action>
+</actions>

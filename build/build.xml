@@ -966,6 +966,12 @@
     configure
     ============================================================================
     -->
+    <target name="deploy-application-data" description="">
+        <copy todir="${run.dir}">
+            <fileset dir="${data.dir}/app-data" excludes="**/.svn"/>
+        </copy>
+    </target>
+    
     <target name="configure" description="initialize local project structure with libraries">
         <update name="geometry"/>
         <update name="geocoord"/>
@@ -1000,6 +1006,7 @@
         <update-database database="directia.core.bml" dir="${data.dir}/data/models/ada/decisional/directia5/models/directia.core"/>
         <update name="models/military" package="net.masagroup.military" todir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.military"/>
         <antcall target="generate-data"/>
+        <antcall target="deploy-application-data"/>
     </target>
 
     <!--

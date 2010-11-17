@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<preferences>
+  <terrains>
+    <terrain name="lisiere" type="lisiere">
+      <width>1</width>
+      <color>#aae2a4</color>
+    </terrain>
+    <terrain name="plantation" type="bord de plantation">
+      <width>1</width>
+      <color>#d3e0ad</color>
+    </terrain>
+    <terrain name="marais" type="bord de marais">
+      <width>1</width>
+      <color>#92d081</color>
+    </terrain>
+    <terrain name="urbain" type="banlieue">
+      <width>1</width>
+      <color>#c3c1c2</color>
+    </terrain>
+    <terrain name="etendue eau" type="cote">
+      <width>1</width>
+      <color>#aaaaff</color>
+    </terrain>
+    <terrain name="dune" type="bord de dune">
+      <width>1</width>
+      <color>#dce062</color>
+    </terrain>
+    <terrain name="glace" type="bord de glace">
+      <width>1</width>
+      <color>#c0c0ff</color>
+    </terrain>
+    <terrain name="montagne" type="bord de montagne">
+      <width>1</width>
+      <color>#909090</color>
+    </terrain>
+    <terrain name="foret" type="foret">
+      <width>1</width>
+      <color>#648040</color>
+    </terrain>
+    <terrain name="falaise" type="falaise">
+      <width>3</width>
+      <color>#a7a500</color>
+    </terrain>
+    <terrain name="autoroute" type="autoroute">
+      <width>3</width>
+      <color>#f7a500</color>
+    </terrain>
+    <terrain name="nationale" type="nationale">
+      <width>2</width>
+      <color>#f42020</color>
+    </terrain>
+    <terrain name="departementale" type="departementale">
+      <width>1.5</width>
+      <color>#c88033</color>
+    </terrain>
+    <terrain name="chemin" type="chemin">
+      <width>1</width>
+      <color>#b00000</color>
+    </terrain>
+    <terrain name="pont" type="pont">
+      <width>1</width>
+      <color>#a80000</color>
+    </terrain>
+    <terrain name="voie ferree" type="voie ferree">
+      <width>1</width>
+      <color>#b0b0b0</color>
+    </terrain>
+    <terrain name="riviere importante" type="riviere importante">
+      <width>1</width>
+      <color>#aaaaff</color>
+    </terrain>
+    <terrain name="riviere" type="riviere">
+      <width>2</width>
+      <color>#aaaaff</color>
+    </terrain>
+    <terrain name="ruisseau" type="ruisseau">
+      <width>1</width>
+      <color>#aaaaff</color>
+    </terrain>
+  </terrains>
+</preferences>

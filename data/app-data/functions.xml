@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<functions>
+  <function name="Operational state">
+    <comments><![CDATA[Operational state of the selected unit]]></comments>
+    <parameters>
+      <parameter name="Unit" type="unit"/>
+    </parameters>
+    <indicator>
+      <extract function='operational-state' id='1'/>
+      <reduce function='select' type='float' input='1' key='${Unit}' id='2'/>
+      <result function='plot' type='float' input='2'/>
+    </indicator>
+  </function>
+  
+  <function name="Mean operational state">
+    <comments><![CDATA[Operational state of the selected units]]></comments>
+    <parameters>
+      <parameter name='Units' type='unit list'/>
+    </parameters>
+    <indicator>
+      <extract function='operational-state' id='1'/>
+      <transform function='domain' type='float' select='${Units}' input='1' id='2'/>
+      <reduce function='mean' type='float' input='2' id='3'/>
+      <result function='plot' type='float' input='3'/>
+    </indicator>
+  </function>
+  
+  <function name="Distance between units">
+    <comments><![CDATA[Distance between the selected units]]></comments>
+    <parameters>
+      <parameter name="Unit 1" type="unit"/>
+      <parameter name="Unit 2" type="unit"/>
+    </parameters>
+    <indicator>
+      <extract function='position' id='1'/>
+      <reduce function='select' type='position' input='1' key='${Unit 1}' id='2'/>
+      <reduce function='select' type='position' input='1' key='${Unit 2}' id='3'/>
+      <transform function='distance' input='2,3' id='4'/>
+      <result function='plot' type='float' input='4'/>
+    </indicator>
+  </function>
+  
+  <function name="Number of breakdowns">
+    <comments><![CDATA[Number of breakdowns treated in the logistic chain. Requires logistic activation.]]></comments>
+    <parameters>
+      <parameter name="Units" type="unit list"/>
+    </parameters>
+    <indicator>
+      <extract function='maintenance-handling-unit' id='1'/>
+      <transform type='bool' function='is-one-of' select='${Units}' input='1' id='2'/>
+      <transform type='unsigned long' function='filter' input='2,1' id='3'/>
+      <reduce type='unsigned long' function='count' input='3' id='4'/>
+      <result function='plot' type='unsigned' input='4'/>
+    </indicator>
+  </function>
+  
+  <function name="Number of direct fires">
+    <comments><![CDATA[Number of simultaneous direct fires on the theater.]]></comments>
+    <parameters/>
+    <indicator>
+      <extract function='direct-fire-unit' id='fires'/>
+      <reduce type='unsigned long' function='count' input='fires' id='count'/>
+      <result function='plot' type='unsigned' input='count'/>
+    </indicator>
+  </function>
+
+  <function name="Component Damages">
+    <comments><![CDATA[Number of components destroyed by direct fires on the theater.]]></comments>
+    <parameters>
+      <parameter name='Components' type='equipment list'/>
+    </parameters>
+    <indicator>
+        <extract function='fire-component-damage' id='damages' components='${Components}'/>
+        <reduce type='float' function='sum' input='damages' id='sum'/>
+        <result function='plot' type='float' input='sum'/>
+    </indicator>
+  </function>
+  
+  <function name="Inflicted damage from direct fires from zone">
+    <comments><![CDATA[Number of components destroyed by direct fires by units situated within the designated zone.]]></comments>
+    <parameters>
+      <parameter name='Zone' type='zone'/>
+      <parameter name='Components' type='equipment list'/>
+    </parameters>
+    <indicator>
+          <extract function='fire-component-damage' id='damages' components='${Components}'/>
+          <extract function='direct-fire-unit' id='units'/>
+          <extract function='position' id='positions'/>
+          <constant type='zone' value='${Zone}' id='circle'/>
+          <transform function='compose' type='position' input='positions,units' id='fire-positions'/>
+          <transform function='contains' input='circle,fire-positions' id='selected-fires'/>
+          <transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>
+          <reduce type='float' function='sum' input='the-damages' id='sum'/>
+          <result function='plot' input='sum' type='float'/>
+    </indicator>
+  </function>
+  
+  <function name="Total resources for units">
+    <comments><![CDATA[Total number of resources for the selected units.]]></comments>
+    <parameters>
+      <parameter name='Units' type='unit list'/>
+      <parameter name='Dotations' type='dotation list'/>
+    </parameters>
+    <indicator>
+        <extract function='resources' id='1' dotations='${Dotations}'/>
+        <transform function='domain' type='int' select='${Units}' input='1' id='2'/>
+        <reduce type='int' function='sum' input='2' id='3'/>
+        <result function='plot' input='3' type='int'/>
+    </indicator>
+    </function>
+    
+    <function name="Resource consumptions for units">
+    <comments><![CDATA[Resources consumptions for the selected units.]]></comments>
+    <parameters>
+      <parameter name='Units' type='unit list'/>
+      <parameter name='Dotations' type='dotation list'/>
+    </parameters>
+    <indicator>
+        <extract function='resources' id='resources' dotations='${Dotations}'/>
+        <transform type='int' function='derivate' input='resources' id='resources-var'/>
+        <constant type='int' value='0' id='zero'/>
+        <transform function='compare' type='bool' operator='less' input='resources-var,zero' id='test'/>
+        <transform function='filter' type='int' input='test,resources-var' id='consumptions'/>
+        <transform function='domain' type='int' select='${Units}' input='consumptions' id='domained'/>
+        <reduce type='int' function='sum' input='domained' id='sum'/>
+        <transform function='integrate' id='total' input='sum' type='int'/>
+        <result function='plot' input='total' type='int'/>
+    </indicator>
+    </function>
+
+</functions>

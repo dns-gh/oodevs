@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<templates>
+    <template name="Default" type="text"/>
+    <template name="Dial" type="dial" angle="180"/>
+    <template name="Smileys" type="icons" path="images/gauges/smileys">
+        <icon file="1.png" key="0"/>
+        <icon file="2.png" key="0.25"/>
+        <icon file="3.png" key="0.5"/>
+        <icon file="4.png" key="0.75"/>
+        <icon file="5.png" key="1"/>
+    </template>
+</templates>
