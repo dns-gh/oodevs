@@ -47,10 +47,11 @@ namespace
     };
 
     template< typename T >
-    float ComputeEnemiesRatio( const MIL_Automate& caller, const T& boundaries, bool embarked )
+    float ComputeEnemiesRatio( const MIL_Automate& /*caller*/, const T& boundaries, bool embarked )
     {
         IntelligenceStatusAccumulator< T > accu( boundaries, embarked );
-        caller.GetOrderManager().Accept( accu );
+        //@TODO MGD replace by knowledge
+        //caller.GetOrderManager().Accept( accu );
         return accu.count_ == 0 ? 0.f : static_cast< float >( accu.sum_ ) / static_cast< float >( accu.count_ );
     }
 }
@@ -214,7 +215,8 @@ namespace
     {
         NoopHandler handler;
         FlankIntelligenceFinder< Filter, NoopHandler > finder( zone, automat, filter, handler );
-        automat.GetOrderManager().Accept( finder );
+        //@TODO MGD replace by knowledge
+        //automat.GetOrderManager().Accept( finder );
         return finder.result_;
     }
 
@@ -223,7 +225,8 @@ namespace
     {
         ClosestIntelligenceHandler handler( origin );
         FlankIntelligenceFinder< Filter, ClosestIntelligenceHandler > finder( zone, automat, filter, handler );
-        automat.GetOrderManager().Accept( finder );
+        //@TODO MGD replace by knowledge
+        //automat.GetOrderManager().Accept( finder );
         if( handler.closest_ )
             return handler.closest_->ComputeDirection( handler.origin_ );
         if( finder.leftFlank_ )

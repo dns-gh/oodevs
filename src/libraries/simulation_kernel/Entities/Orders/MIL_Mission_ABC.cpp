@@ -121,15 +121,6 @@ void MIL_Mission_ABC::Serialize( Common::MsgMissionParameters& asn ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Mission_ABC::Accept
-// Created: SBO 2007-11-13
-// -----------------------------------------------------------------------------
-void MIL_Mission_ABC::Accept( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const
-{
-    context_.Accept( visitor );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC::UsedByDIA
 // Created: LDC 2009-04-24
 // -----------------------------------------------------------------------------

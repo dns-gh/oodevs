@@ -182,16 +182,6 @@ const MIL_MissionType_ABC* MIL_OrderManager_ABC::GetCurrentMissionType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderManager_ABC::Accept
-// Created: SBO 2007-11-13
-// -----------------------------------------------------------------------------
-void MIL_OrderManager_ABC::Accept( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const
-{
-    if( pMission_ )
-        pMission_->Accept( visitor );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_OrderManager_ABC::IsNewMissionStarted
 // Created: NLD 2005-09-19
 // -----------------------------------------------------------------------------

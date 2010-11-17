@@ -66,7 +66,6 @@ public:
             MIL_LimaOrder* FindNextScheduledLima();
             void           AffectFuseau         ( const MIL_Fuseau& fuseau );
     virtual void           AffectDirection      ( const MT_Vector2D& direction );
-            void           Accept               ( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const;
             void           SetParameter         ( const std::string& name, boost::shared_ptr< MIL_MissionParameter_ABC > param );
             void           AppendToParameter    ( const std::string& name, boost::shared_ptr< TER_Localisation > pLocation );
             void           AppendToParameter    ( const std::string& name, boost::shared_ptr< DEC_Knowledge_Object > pObjectKnowledge );

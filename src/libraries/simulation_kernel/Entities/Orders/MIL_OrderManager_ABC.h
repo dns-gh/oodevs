@@ -50,7 +50,6 @@ public:
     const T_LimaVector& GetLimas() const;
     const MT_Vector2D& GetDirDanger() const;
     const std::string& GetMissionName() const;
-    void Accept( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Missions accessors
