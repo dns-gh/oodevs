@@ -166,6 +166,8 @@ message MsgClientToSim {
        optional MsgObjectMagicAction                   object_magic_action                  = 16;
        optional MsgKnowledgeMagicAction                knowledge_magic_action               = 17;
        optional MsgMagicAction                         magic_action                         = 18;
+       optional MsgControlCheckPointListRequest        control_checkpoint_list_request      = 19;
+       optional MsgControlCheckPointDeleteRequest      control_checkpoint_delete_request    = 20;
     }
     optional int32   context = 1;
     required Content message = 2;

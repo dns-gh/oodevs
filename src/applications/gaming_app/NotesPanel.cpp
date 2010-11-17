@@ -221,8 +221,8 @@ void NotesPanel::ConfirmDeleteAllTreeNote()
             T_Items::iterator it = itemsList_.find( item );
             if( it != itemsList_.end())
             {
-                plugins::messenger::NoteDestructionRequest message;
-                message().set_id( it->second->GetId() );
+                plugins::messenger::MarkerDestructionRequest message;
+                message().mutable_marker()->set_id( it->second->GetId() );
                 message().set_delete_all( true );
                 message.Send( publisher_ );
             }
@@ -246,10 +246,10 @@ void NotesPanel::ConfirmDeleteNote()
             T_Items::iterator it = itemsList_.find( item );
             if( it != itemsList_.end())
             {
-                plugins::messenger::NoteDestructionRequest asn;
-                asn().set_id( it->second->GetId() );
-                asn().set_delete_all( false );
-                asn.Send( publisher_ );
+                plugins::messenger::MarkerDestructionRequest message;
+                message().mutable_marker()->set_id( it->second->GetId() );
+                message().set_delete_all( false );
+                message.Send( publisher_ );
             }
     }
 }

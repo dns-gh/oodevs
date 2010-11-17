@@ -31,7 +31,7 @@ class Note : public kernel::Displayable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Note( kernel::Controller& controller, const MsgsMessengerToClient::MsgNoteCreation&  );
+             Note( kernel::Controller& controller, const MsgsMessengerToClient::MsgMarkerCreation&  );
     virtual ~Note();
     //@}
 
@@ -50,7 +50,7 @@ public:
     //! @name Operations
     //@{
     virtual void Display( QListViewItem* item ) const;
-            void Update( const MsgsMessengerToClient::MsgNoteUpdate& message );
+            void Update( const MsgsMessengerToClient::MsgMarkerUpdate& message );
             void Delete();
     //@}
 

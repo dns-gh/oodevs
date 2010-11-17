@@ -839,28 +839,29 @@ bool MIL_Automate::GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const
 // -----------------------------------------------------------------------------
 void MIL_Automate::SendCreation( unsigned int context ) const
 {
-    client::AutomatCreation asn;
-    asn().mutable_automat()->set_id( nID_ );
-    asn().mutable_type()->set_id( pType_->GetID() );
-    asn().mutable_party()->set_id( GetArmy().GetID() );
-    asn().mutable_knowledge_group()->set_id( GetKnowledgeGroup().GetId() );
-    asn().set_logistic_level( pBrainLogistic_.get() ?
+    client::AutomatCreation message;
+    message().mutable_automat()->set_id( nID_ );
+    message().mutable_type()->set_id( pType_->GetID() );
+    message().mutable_party()->set_id( GetArmy().GetID() );
+    message().mutable_knowledge_group()->set_id( GetKnowledgeGroup().GetId() );
+    message().set_app6symbol( "combat" );
+    message().set_logistic_level( pBrainLogistic_.get() ?
         (Common::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : Common::none );
-    asn().set_nom( GetName() );
+    message().set_nom( GetName() );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
     {
-        MsgsSimToClient::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+        MsgsSimToClient::Extension_Entry* entry = message().mutable_extension()->add_entries();
         entry->set_name( it->first );
         entry->set_value( it->second );
     }
     assert( pParentAutomate_ || pParentFormation_ );
     if( pParentAutomate_ )
-        asn().mutable_parent()->mutable_automat()->set_id( pParentAutomate_->GetID() );
+        message().mutable_parent()->mutable_automat()->set_id( pParentAutomate_->GetID() );
     else if( pParentFormation_ )
-        asn().mutable_parent()->mutable_formation()->set_id( pParentFormation_->GetID() );
-    asn.Send( NET_Publisher_ABC::Publisher(), context );
-    if( asn().has_extension() )
-        asn().mutable_extension()->mutable_entries()->Clear();
+        message().mutable_parent()->mutable_formation()->set_id( pParentFormation_->GetID() );
+    message.Send( NET_Publisher_ABC::Publisher(), context );
+    if( message().has_extension() )
+        message().mutable_extension()->mutable_entries()->Clear();
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         ( **it ).SendCreation();
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
@@ -873,11 +874,11 @@ void MIL_Automate::SendCreation( unsigned int context ) const
 // -----------------------------------------------------------------------------
 void MIL_Automate::SendFullState() const
 {
-    client::AutomatAttributes asn;
-    asn().mutable_automat()->set_id( nID_ );
-    asn().set_etat_automate( bEngaged_ ? Common::embraye : Common::debraye );
-    GetRole< DEC_AutomateDecision >().SendFullState( asn );
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    client::AutomatAttributes message;
+    message().mutable_automat()->set_id( nID_ );
+    message().set_etat_automate( bEngaged_ ? Common::embraye : Common::debraye );
+    GetRole< DEC_AutomateDecision >().SendFullState( message );
+    message.Send( NET_Publisher_ABC::Publisher() );
     SendLogisticLinks();
     pDotationSupplyManager_->SendFullState();
     pStockSupplyManager_->SendFullState();
@@ -905,21 +906,21 @@ void MIL_Automate::SendKnowledge() const
 // -----------------------------------------------------------------------------
 void MIL_Automate::SendLogisticLinks() const
 {
-    client::ChangeLogisticLinks asn;
-    asn().mutable_requester()->mutable_automat()->set_id( nID_ );
+    client::ChangeLogisticLinks message;
+    message().mutable_requester()->mutable_automat()->set_id( nID_ );
 
     if( pTC2_ )
     {
-        asn().mutable_tc2()->set_id( pTC2_->GetID() );
+        message().mutable_tc2()->set_id( pTC2_->GetID() );
     }
     if( pBrainLogistic_.get() && pBrainLogistic_->GetSuperior() )
     {
         if( pBrainLogistic_->GetSuperior()->GetAssociatedAutomat() )
-            asn().mutable_logistic_base()->mutable_automat()->set_id( pBrainLogistic_->GetSuperior()->GetID() );
+            message().mutable_logistic_base()->mutable_automat()->set_id( pBrainLogistic_->GetSuperior()->GetID() );
         else
-            asn().mutable_logistic_base()->mutable_formation()->set_id( pBrainLogistic_->GetSuperior()->GetID() );
+            message().mutable_logistic_base()->mutable_formation()->set_id( pBrainLogistic_->GetSuperior()->GetID() );
     }
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    message.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

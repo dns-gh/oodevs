@@ -30,7 +30,7 @@ namespace xml
 namespace Common
 {
     class ObjectAttributeMedicalTreatment;
-    class ObjectAttributeMedicalTreatmentBedCapacity;
+    class MedicalTreatmentBedCapacity;
 }
 
 // =============================================================================
@@ -64,9 +64,9 @@ public:
 
         MedicalCapacity() : baseline_( 0 ), occupied_( 4, 0 ), emergency_( 0 ), time_ ( 0 ), type_ ( 0 ) {}
 
-        void        Update( const Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity );
+        void        Update( const Common::MedicalTreatmentBedCapacity& capacity );
         void        Update( const Common::MsgMissionParameter_Value& capacity );
-        void        Send( Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity ) const;
+        void        Send( Common::MedicalTreatmentBedCapacity& capacity ) const;
         unsigned    Update( unsigned doctors, float delay );
 
         //! @name CheckPoints

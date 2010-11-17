@@ -48,9 +48,9 @@ public:
 
     //! @name Operations
     //@{
-    void Create( const MsgsMessengerToClient::MsgNoteCreation&    message );
-    void Update( const MsgsMessengerToClient::MsgNoteUpdate&      message );
-    void Delete( const MsgsMessengerToClient::MsgNoteDestruction& message );
+    void Create( const MsgsMessengerToClient::MsgMarkerCreation&    message );
+    void Update( const MsgsMessengerToClient::MsgMarkerUpdate&      message );
+    void Delete( const MsgsMessengerToClient::MsgMarkerDestruction& message );
     //@}
 
 private:

@@ -34,6 +34,7 @@ message UnitKnowledgeIdList                { repeated UnitKnowledgeId   elem = 1
 message UrbanObjectId                      { required uint32              id = 1; }
 message UrbanObjectKnowledgeId             { required uint32              id = 1; }
 message ClientObjectId                     { required uint32              id = 1; }
+message PlannedWorkId                      { required uint32              id = 1; }
 
 message Tasker {
     optional AutomatId    automat    = 1;
@@ -65,7 +66,7 @@ message MaintenanceRequestId  { required uint32 id = 1; }
 message MedicalRequestId      { required uint32 id = 1; }
 message SupplyRequestId       { required uint32 id = 1; }
 
-// Static types
+// Static types & categories
 message AutomatType           { required uint32 id = 1; }
 message BreakdownType         { required uint32 id = 1; }
 message EquipmentType         { required uint32 id = 1; }
@@ -77,6 +78,8 @@ message CrowdType             { required uint32 id = 1; }
 message ReportType            { required uint32 id = 1; }
 message ResourceType          { required uint32 id = 1; }
 message UnitType              { required uint32 id = 1; }
+message ReportCategory        { required uint32 id = 1; }
+message NationalityType       { required uint32 id = 1; }
 message ResourceNetworkType   { required string name = 1; }
 
 // Helpers
@@ -327,17 +330,19 @@ enum EnumLogMaintenanceRegimeTravail {
 
 enum EnumNatureLevel {
    none_naturelevel = 0;
-   o                = 1;
-   oo               = 2;
-   ooo              = 3;
-   i                = 4;
-   ii               = 5;
-   iii              = 6;
-   x                = 7;
-   xx               = 8;
-   xxx              = 9;
-   xxxx             = 10;
-   xxxxx            = 11;
+   b                = 1;
+   o                = 2;
+   c                = 3;
+   oo               = 4;
+   ooo              = 5;
+   i                = 6;
+   ii               = 7;
+   iii              = 8;
+   x                = 9;
+   xx               = 10;
+   xxx              = 11;
+   xxxx             = 12;
+   xxxxx            = 13;
 }
 
 enum EnumLogisticLevel {
@@ -345,7 +350,6 @@ enum EnumLogisticLevel {
    tc2           = 1;
    logistic_base = 2;
 }
-
 
 // Control messages
 message MsgControlStop   {}
@@ -436,6 +440,7 @@ message MsgPlannedWork {
    optional float                             densite             = 4;
    optional AutomatId                         tc2                 = 5;
    optional int32                             activity_time       = 6;
+   optional PlannedWorkId                     planned_work        = 7;
 }
 
 message MsgPlannedWorkList {
@@ -509,11 +514,8 @@ message MsgAtlasNature {
         vehicule         = 64;
         personnel_a_pied = 128;
         helicoptere      = 256;
-        indefini         = 512;
         asa              = 1024;
-        none             = 2048;
    }
-   // repeated AtlasNature nature = 1;
    required int32 nature = 1;
 }
 
@@ -763,7 +765,7 @@ message ObjectAttributeFire {
    required int32                       heat                = 2;
 }
 
-message ObjectAttributeMedicalTreatmentBedCapacity {
+message MedicalTreatmentBedCapacity {
     required int32 type_id = 1;  // Cf. Data/MedicalTreatment.xml
     optional uint32 baseline_count = 2;
     optional uint32 available_count = 3;
@@ -777,7 +779,7 @@ message ObjectAttributeMedicalTreatment {
         closed = 2;
     }
     optional string external_reference_id = 1;
-    repeated ObjectAttributeMedicalTreatmentBedCapacity bed_capacities = 2;
+    repeated MedicalTreatmentBedCapacity bed_capacities = 2;
     optional EnumMedicalTreatmentStatus facility_status = 3;
     optional uint32 doctors = 4;
     optional uint32 available_doctors = 5;
@@ -814,16 +816,13 @@ message ObjectAttributes {
    optional ObjectAttributeResourceNetwork   resource_networks    = 18;     //not in scipio V1.stab
 }
 
-
-// LTO Begin
-message MsgNote {
+message MsgMarker {
     required string                             name                = 1;
-    required string                             number	            = 2;
-    required string                             description         = 3;
-    required uint32                             parent              = 4;
+    required string                             description         = 2;
+	required MsgDateTime			            date		        = 3;
+    optional MarkerId                           parent              = 4;
+    optional string                             number	            = 5;
 }
-
-// LTO end
 
 // weather
 message MsgWeatherAttributes {

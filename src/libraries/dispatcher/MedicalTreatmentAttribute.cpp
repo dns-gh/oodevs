@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: MedicalTreatmentAttribute::Update
 // Created: JCR 2010-06-02
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::MedicalCapacity::Update( const Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity )
+void MedicalTreatmentAttribute::MedicalCapacity::Update( const Common::MedicalTreatmentBedCapacity& capacity )
 {
     typeId_ = capacity.type_id();
     if( capacity.has_baseline_count() )
@@ -33,7 +33,7 @@ void MedicalTreatmentAttribute::MedicalCapacity::Update( const Common::ObjectAtt
 // Name: MedicalTreatmentAttribute::Send
 // Created: JCR 2010-06-02
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::MedicalCapacity::Send( Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity ) const
+void MedicalTreatmentAttribute::MedicalCapacity::Send( Common::MedicalTreatmentBedCapacity& capacity ) const
 {
     if ( typeId_ >= 0 )
     {
@@ -96,7 +96,7 @@ void MedicalTreatmentAttribute::Update( const Common::ObjectAttributeMedicalTrea
         capacities_.swap( T_TreatmentCapacityVector( message.bed_capacities_size() ) );
     for( int i = 0 ; i < message.bed_capacities_size(); ++i )
 	{
-        const Common::ObjectAttributeMedicalTreatmentBedCapacity& bed_capacity = message.bed_capacities( i );
+        const Common::MedicalTreatmentBedCapacity& bed_capacity = message.bed_capacities( i );
         if( bed_capacity.has_type_id() )
         {
 		    if( capacities_.size() <= bed_capacity.type_id() )

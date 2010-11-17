@@ -187,11 +187,6 @@ class MsgControlCheckPointList;
 class MsgControlCheckPointDeleteAck;
 class MsgControlSendCurrentStateBegin;
 class MsgControlSendCurrentStateEnd;
-class MagicActionCreateUrban;
-class MagicActionUpdateUrban;
-class MagicActionDestroyUrban;
-class MsgUrbanMagicAction;
-class MsgUrbanMagicActionAck;
 class UrbanAttributes;
 class UrbanAttributes_Architecture;
 class UrbanAttributes_Structure;
@@ -595,29 +590,6 @@ inline bool MsgUnitAttributes_CrowdRoe_Parse(
     const ::std::string& name, MsgUnitAttributes_CrowdRoe* value) {
   return ::google::protobuf::internal::ParseNamedEnum<MsgUnitAttributes_CrowdRoe>(
     MsgUnitAttributes_CrowdRoe_descriptor(), name, value);
-}
-enum MsgUrbanMagicActionAck_ErrorCode {
-  MsgUrbanMagicActionAck_ErrorCode_no_error = 0,
-  MsgUrbanMagicActionAck_ErrorCode_error_invalid_urban = 1,
-  MsgUrbanMagicActionAck_ErrorCode_error_invalid_id = 2,
-  MsgUrbanMagicActionAck_ErrorCode_error_invalid_camp = 3,
-  MsgUrbanMagicActionAck_ErrorCode_error_invalid_localisation = 4,
-  MsgUrbanMagicActionAck_ErrorCode_error_missing_specific_attributes = 5,
-  MsgUrbanMagicActionAck_ErrorCode_error_invalid_specific_attributes = 6
-};
-bool MsgUrbanMagicActionAck_ErrorCode_IsValid(int value);
-const MsgUrbanMagicActionAck_ErrorCode MsgUrbanMagicActionAck_ErrorCode_ErrorCode_MIN = MsgUrbanMagicActionAck_ErrorCode_no_error;
-const MsgUrbanMagicActionAck_ErrorCode MsgUrbanMagicActionAck_ErrorCode_ErrorCode_MAX = MsgUrbanMagicActionAck_ErrorCode_error_invalid_specific_attributes;
-
-const ::google::protobuf::EnumDescriptor* MsgUrbanMagicActionAck_ErrorCode_descriptor();
-inline const ::std::string& MsgUrbanMagicActionAck_ErrorCode_Name(MsgUrbanMagicActionAck_ErrorCode value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    MsgUrbanMagicActionAck_ErrorCode_descriptor(), value);
-}
-inline bool MsgUrbanMagicActionAck_ErrorCode_Parse(
-    const ::std::string& name, MsgUrbanMagicActionAck_ErrorCode* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<MsgUrbanMagicActionAck_ErrorCode>(
-    MsgUrbanMagicActionAck_ErrorCode_descriptor(), name, value);
 }
 enum KnowledgeGroupAck_ErrorCode {
   KnowledgeGroupAck_ErrorCode_no_error = 0,
@@ -1275,12 +1247,12 @@ class MsgSetAutomatModeAck : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.AutomatId automat = 1;
-  inline bool has_automat() const;
-  inline void clear_automat();
-  static const int kAutomatFieldNumber = 1;
-  inline const ::Common::AutomatId& automat() const;
-  inline ::Common::AutomatId* mutable_automat();
+  // required .Common.AutomatId automate = 1;
+  inline bool has_automate() const;
+  inline void clear_automate();
+  static const int kAutomateFieldNumber = 1;
+  inline const ::Common::AutomatId& automate() const;
+  inline ::Common::AutomatId* mutable_automate();
   
   // required .MsgsSimToClient.MsgSetAutomatModeAck.ErrorCode error_code = 2;
   inline bool has_error_code() const;
@@ -1293,7 +1265,7 @@ class MsgSetAutomatModeAck : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::AutomatId* automat_;
+  ::Common::AutomatId* automate_;
   int error_code_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
@@ -4095,6 +4067,13 @@ class MsgPartyCreation : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::Extension& extension() const;
   inline ::MsgsSimToClient::Extension* mutable_extension();
   
+  // optional .Common.RgbColor color = 5;
+  inline bool has_color() const;
+  inline void clear_color();
+  static const int kColorFieldNumber = 5;
+  inline const ::Common::RgbColor& color() const;
+  inline ::Common::RgbColor* mutable_color();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -4104,11 +4083,12 @@ class MsgPartyCreation : public ::google::protobuf::Message {
   static const ::std::string _default_name_;
   int type_;
   ::MsgsSimToClient::Extension* extension_;
+  ::Common::RgbColor* color_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -4217,6 +4197,23 @@ class MsgFormationCreation : public ::google::protobuf::Message {
   inline void set_name(const char* value, size_t size);
   inline ::std::string* mutable_name();
   
+  // optional .MsgsSimToClient.Extension extension = 6;
+  inline bool has_extension() const;
+  inline void clear_extension();
+  static const int kExtensionFieldNumber = 6;
+  inline const ::MsgsSimToClient::Extension& extension() const;
+  inline ::MsgsSimToClient::Extension* mutable_extension();
+  
+  // required string app6symbol = 7;
+  inline bool has_app6symbol() const;
+  inline void clear_app6symbol();
+  static const int kApp6SymbolFieldNumber = 7;
+  inline const ::std::string& app6symbol() const;
+  inline void set_app6symbol(const ::std::string& value);
+  inline void set_app6symbol(const char* value);
+  inline void set_app6symbol(const char* value, size_t size);
+  inline ::std::string* mutable_app6symbol();
+  
   // required .Common.EnumLogisticLevel logistic_level = 8;
   inline bool has_logistic_level() const;
   inline void clear_logistic_level();
@@ -4224,19 +4221,19 @@ class MsgFormationCreation : public ::google::protobuf::Message {
   inline Common::EnumLogisticLevel logistic_level() const;
   inline void set_logistic_level(Common::EnumLogisticLevel value);
   
+  // optional .Common.RgbColor color = 9;
+  inline bool has_color() const;
+  inline void clear_color();
+  static const int kColorFieldNumber = 9;
+  inline const ::Common::RgbColor& color() const;
+  inline ::Common::RgbColor* mutable_color();
+  
   // optional .Common.ParentEntity logistic_base_organic = 10;
   inline bool has_logistic_base_organic() const;
   inline void clear_logistic_base_organic();
   static const int kLogisticBaseOrganicFieldNumber = 10;
   inline const ::Common::ParentEntity& logistic_base_organic() const;
   inline ::Common::ParentEntity* mutable_logistic_base_organic();
-  
-  // optional .MsgsSimToClient.Extension extension = 6;
-  inline bool has_extension() const;
-  inline void clear_extension();
-  static const int kExtensionFieldNumber = 6;
-  inline const ::MsgsSimToClient::Extension& extension() const;
-  inline ::MsgsSimToClient::Extension* mutable_extension();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -4248,14 +4245,17 @@ class MsgFormationCreation : public ::google::protobuf::Message {
   int level_;
   ::std::string* name_;
   static const ::std::string _default_name_;
-  int logistic_level_;
-  ::Common::ParentEntity* logistic_base_organic_;
   ::MsgsSimToClient::Extension* extension_;
+  ::std::string* app6symbol_;
+  static const ::std::string _default_app6symbol_;
+  int logistic_level_;
+  ::Common::RgbColor* color_;
+  ::Common::ParentEntity* logistic_base_organic_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -4378,12 +4378,29 @@ class MsgAutomatCreation : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::Extension& extension() const;
   inline ::MsgsSimToClient::Extension* mutable_extension();
   
+  // required string app6symbol = 8;
+  inline bool has_app6symbol() const;
+  inline void clear_app6symbol();
+  static const int kApp6SymbolFieldNumber = 8;
+  inline const ::std::string& app6symbol() const;
+  inline void set_app6symbol(const ::std::string& value);
+  inline void set_app6symbol(const char* value);
+  inline void set_app6symbol(const char* value, size_t size);
+  inline ::std::string* mutable_app6symbol();
+  
   // required .Common.EnumLogisticLevel logistic_level = 9;
   inline bool has_logistic_level() const;
   inline void clear_logistic_level();
   static const int kLogisticLevelFieldNumber = 9;
   inline Common::EnumLogisticLevel logistic_level() const;
   inline void set_logistic_level(Common::EnumLogisticLevel value);
+  
+  // optional .Common.RgbColor color = 10;
+  inline bool has_color() const;
+  inline void clear_color();
+  static const int kColorFieldNumber = 10;
+  inline const ::Common::RgbColor& color() const;
+  inline ::Common::RgbColor* mutable_color();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -4397,12 +4414,15 @@ class MsgAutomatCreation : public ::google::protobuf::Message {
   ::Common::PartyId* party_;
   ::Common::KnowledgeGroupId* knowledge_group_;
   ::MsgsSimToClient::Extension* extension_;
+  ::std::string* app6symbol_;
+  static const ::std::string _default_app6symbol_;
   int logistic_level_;
+  ::Common::RgbColor* color_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -4860,6 +4880,13 @@ class MsgUnitCreation : public ::google::protobuf::Message {
   inline bool pc() const;
   inline void set_pc(bool value);
   
+  // optional .Common.RgbColor color = 6;
+  inline bool has_color() const;
+  inline void clear_color();
+  static const int kColorFieldNumber = 6;
+  inline const ::Common::RgbColor& color() const;
+  inline ::Common::RgbColor* mutable_color();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -4870,11 +4897,12 @@ class MsgUnitCreation : public ::google::protobuf::Message {
   static const ::std::string _default_nom_;
   ::Common::AutomatId* automat_;
   bool pc_;
+  ::Common::RgbColor* color_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -5804,6 +5832,13 @@ class HumanDotations_HumanDotation : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 nb_utilises_pour_maintenance() const;
   inline void set_nb_utilises_pour_maintenance(::google::protobuf::int32 value);
   
+  // required int32 nb_blesses_non_evacues = 10;
+  inline bool has_nb_blesses_non_evacues() const;
+  inline void clear_nb_blesses_non_evacues();
+  static const int kNbBlessesNonEvacuesFieldNumber = 10;
+  inline ::google::protobuf::int32 nb_blesses_non_evacues() const;
+  inline void set_nb_blesses_non_evacues(::google::protobuf::int32 value);
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -5817,11 +5852,12 @@ class HumanDotations_HumanDotation : public ::google::protobuf::Message {
   ::google::protobuf::int32 nb_contamines_nbc_;
   ::google::protobuf::int32 nb_dans_chaine_sante_;
   ::google::protobuf::int32 nb_utilises_pour_maintenance_;
+  ::google::protobuf::int32 nb_blesses_non_evacues_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(10 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -9505,12 +9541,12 @@ class MsgReport : public ::google::protobuf::Message {
   inline const ::Common::ReportType& type() const;
   inline ::Common::ReportType* mutable_type();
   
-  // required .MsgsSimToClient.EnumReportType category = 4;
+  // required .Common.ReportCategory category = 4;
   inline bool has_category() const;
   inline void clear_category();
   static const int kCategoryFieldNumber = 4;
-  inline MsgsSimToClient::EnumReportType category() const;
-  inline void set_category(MsgsSimToClient::EnumReportType value);
+  inline const ::Common::ReportCategory& category() const;
+  inline ::Common::ReportCategory* mutable_category();
   
   // required .Common.MsgDateTime time = 5;
   inline bool has_time() const;
@@ -9533,7 +9569,7 @@ class MsgReport : public ::google::protobuf::Message {
   ::Common::ReportId* report_;
   ::Common::Tasker* source_;
   ::Common::ReportType* type_;
-  int category_;
+  ::Common::ReportCategory* category_;
   ::Common::MsgDateTime* time_;
   ::Common::MsgMissionParameters* parameters_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
@@ -11670,12 +11706,12 @@ class MsgUrbanKnowledgeUpdate : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 progress() const;
   inline void set_progress(::google::protobuf::int32 value);
   
-  // optional int32 max_progress = 5;
-  inline bool has_max_progress() const;
-  inline void clear_max_progress();
+  // optional int32 maxProgress = 5;
+  inline bool has_maxprogress() const;
+  inline void clear_maxprogress();
   static const int kMaxProgressFieldNumber = 5;
-  inline ::google::protobuf::int32 max_progress() const;
-  inline void set_max_progress(::google::protobuf::int32 value);
+  inline ::google::protobuf::int32 maxprogress() const;
+  inline void set_maxprogress(::google::protobuf::int32 value);
   
   // optional bool perceived = 6;
   inline bool has_perceived() const;
@@ -11699,7 +11735,7 @@ class MsgUrbanKnowledgeUpdate : public ::google::protobuf::Message {
   ::Common::PartyId* party_;
   ::Common::UrbanObjectId* urban_block_;
   ::google::protobuf::int32 progress_;
-  ::google::protobuf::int32 max_progress_;
+  ::google::protobuf::int32 maxprogress_;
   bool perceived_;
   ::Common::AutomatIdList* automat_perceptions_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
@@ -17637,496 +17673,6 @@ class MsgControlSendCurrentStateEnd : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MagicActionCreateUrban : public ::google::protobuf::Message {
- public:
-  MagicActionCreateUrban();
-  virtual ~MagicActionCreateUrban();
-  
-  MagicActionCreateUrban(const MagicActionCreateUrban& from);
-  
-  inline MagicActionCreateUrban& operator=(const MagicActionCreateUrban& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MagicActionCreateUrban& default_instance();
-  void Swap(MagicActionCreateUrban* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MagicActionCreateUrban* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MagicActionCreateUrban& from);
-  void MergeFrom(const MagicActionCreateUrban& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required string name = 1;
-  inline bool has_name() const;
-  inline void clear_name();
-  static const int kNameFieldNumber = 1;
-  inline const ::std::string& name() const;
-  inline void set_name(const ::std::string& value);
-  inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
-  inline ::std::string* mutable_name();
-  
-  // required .Common.MsgLocation location = 2;
-  inline bool has_location() const;
-  inline void clear_location();
-  static const int kLocationFieldNumber = 2;
-  inline const ::Common::MsgLocation& location() const;
-  inline ::Common::MsgLocation* mutable_location();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::std::string* name_;
-  static const ::std::string _default_name_;
-  ::Common::MsgLocation* location_;
-  friend void  protobuf_AddDesc_SimToClient_2eproto();
-  friend void protobuf_AssignDesc_SimToClient_2eproto();
-  friend void protobuf_ShutdownFile_SimToClient_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MagicActionCreateUrban* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MagicActionUpdateUrban : public ::google::protobuf::Message {
- public:
-  MagicActionUpdateUrban();
-  virtual ~MagicActionUpdateUrban();
-  
-  MagicActionUpdateUrban(const MagicActionUpdateUrban& from);
-  
-  inline MagicActionUpdateUrban& operator=(const MagicActionUpdateUrban& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MagicActionUpdateUrban& default_instance();
-  void Swap(MagicActionUpdateUrban* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MagicActionUpdateUrban* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MagicActionUpdateUrban& from);
-  void MergeFrom(const MagicActionUpdateUrban& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::uint32 oid_;
-  friend void  protobuf_AddDesc_SimToClient_2eproto();
-  friend void protobuf_AssignDesc_SimToClient_2eproto();
-  friend void protobuf_ShutdownFile_SimToClient_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MagicActionUpdateUrban* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MagicActionDestroyUrban : public ::google::protobuf::Message {
- public:
-  MagicActionDestroyUrban();
-  virtual ~MagicActionDestroyUrban();
-  
-  MagicActionDestroyUrban(const MagicActionDestroyUrban& from);
-  
-  inline MagicActionDestroyUrban& operator=(const MagicActionDestroyUrban& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MagicActionDestroyUrban& default_instance();
-  void Swap(MagicActionDestroyUrban* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MagicActionDestroyUrban* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MagicActionDestroyUrban& from);
-  void MergeFrom(const MagicActionDestroyUrban& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::uint32 oid_;
-  friend void  protobuf_AddDesc_SimToClient_2eproto();
-  friend void protobuf_AssignDesc_SimToClient_2eproto();
-  friend void protobuf_ShutdownFile_SimToClient_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MagicActionDestroyUrban* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgUrbanMagicAction : public ::google::protobuf::Message {
- public:
-  MsgUrbanMagicAction();
-  virtual ~MsgUrbanMagicAction();
-  
-  MsgUrbanMagicAction(const MsgUrbanMagicAction& from);
-  
-  inline MsgUrbanMagicAction& operator=(const MsgUrbanMagicAction& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgUrbanMagicAction& default_instance();
-  void Swap(MsgUrbanMagicAction* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgUrbanMagicAction* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgUrbanMagicAction& from);
-  void MergeFrom(const MsgUrbanMagicAction& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // optional .MsgsSimToClient.MagicActionCreateUrban create_urban = 1;
-  inline bool has_create_urban() const;
-  inline void clear_create_urban();
-  static const int kCreateUrbanFieldNumber = 1;
-  inline const ::MsgsSimToClient::MagicActionCreateUrban& create_urban() const;
-  inline ::MsgsSimToClient::MagicActionCreateUrban* mutable_create_urban();
-  
-  // optional .MsgsSimToClient.MagicActionUpdateUrban update_urban = 2;
-  inline bool has_update_urban() const;
-  inline void clear_update_urban();
-  static const int kUpdateUrbanFieldNumber = 2;
-  inline const ::MsgsSimToClient::MagicActionUpdateUrban& update_urban() const;
-  inline ::MsgsSimToClient::MagicActionUpdateUrban* mutable_update_urban();
-  
-  // optional .MsgsSimToClient.MagicActionDestroyUrban destroy_urban = 3;
-  inline bool has_destroy_urban() const;
-  inline void clear_destroy_urban();
-  static const int kDestroyUrbanFieldNumber = 3;
-  inline const ::MsgsSimToClient::MagicActionDestroyUrban& destroy_urban() const;
-  inline ::MsgsSimToClient::MagicActionDestroyUrban* mutable_destroy_urban();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::MsgsSimToClient::MagicActionCreateUrban* create_urban_;
-  ::MsgsSimToClient::MagicActionUpdateUrban* update_urban_;
-  ::MsgsSimToClient::MagicActionDestroyUrban* destroy_urban_;
-  friend void  protobuf_AddDesc_SimToClient_2eproto();
-  friend void protobuf_AssignDesc_SimToClient_2eproto();
-  friend void protobuf_ShutdownFile_SimToClient_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgUrbanMagicAction* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgUrbanMagicActionAck : public ::google::protobuf::Message {
- public:
-  MsgUrbanMagicActionAck();
-  virtual ~MsgUrbanMagicActionAck();
-  
-  MsgUrbanMagicActionAck(const MsgUrbanMagicActionAck& from);
-  
-  inline MsgUrbanMagicActionAck& operator=(const MsgUrbanMagicActionAck& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgUrbanMagicActionAck& default_instance();
-  void Swap(MsgUrbanMagicActionAck* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgUrbanMagicActionAck* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgUrbanMagicActionAck& from);
-  void MergeFrom(const MsgUrbanMagicActionAck& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  typedef MsgUrbanMagicActionAck_ErrorCode ErrorCode;
-  static const ErrorCode no_error = MsgUrbanMagicActionAck_ErrorCode_no_error;
-  static const ErrorCode error_invalid_urban = MsgUrbanMagicActionAck_ErrorCode_error_invalid_urban;
-  static const ErrorCode error_invalid_id = MsgUrbanMagicActionAck_ErrorCode_error_invalid_id;
-  static const ErrorCode error_invalid_camp = MsgUrbanMagicActionAck_ErrorCode_error_invalid_camp;
-  static const ErrorCode error_invalid_localisation = MsgUrbanMagicActionAck_ErrorCode_error_invalid_localisation;
-  static const ErrorCode error_missing_specific_attributes = MsgUrbanMagicActionAck_ErrorCode_error_missing_specific_attributes;
-  static const ErrorCode error_invalid_specific_attributes = MsgUrbanMagicActionAck_ErrorCode_error_invalid_specific_attributes;
-  static inline bool ErrorCode_IsValid(int value) {
-    return MsgUrbanMagicActionAck_ErrorCode_IsValid(value);
-  }
-  static const ErrorCode ErrorCode_MIN =
-    MsgUrbanMagicActionAck_ErrorCode_ErrorCode_MIN;
-  static const ErrorCode ErrorCode_MAX =
-    MsgUrbanMagicActionAck_ErrorCode_ErrorCode_MAX;
-  static inline const ::google::protobuf::EnumDescriptor*
-  ErrorCode_descriptor() {
-    return MsgUrbanMagicActionAck_ErrorCode_descriptor();
-  }
-  static inline const ::std::string& ErrorCode_Name(ErrorCode value) {
-    return MsgUrbanMagicActionAck_ErrorCode_Name(value);
-  }
-  static inline bool ErrorCode_Parse(const ::std::string& name,
-      ErrorCode* value) {
-    return MsgUrbanMagicActionAck_ErrorCode_Parse(name, value);
-  }
-  
-  // accessors -------------------------------------------------------
-  
-  // required .MsgsSimToClient.MsgUrbanMagicActionAck.ErrorCode error_code = 1;
-  inline bool has_error_code() const;
-  inline void clear_error_code();
-  static const int kErrorCodeFieldNumber = 1;
-  inline ::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode error_code() const;
-  inline void set_error_code(::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  int error_code_;
-  friend void  protobuf_AddDesc_SimToClient_2eproto();
-  friend void protobuf_AssignDesc_SimToClient_2eproto();
-  friend void protobuf_ShutdownFile_SimToClient_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgUrbanMagicActionAck* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class UrbanAttributes_Architecture : public ::google::protobuf::Message {
  public:
   UrbanAttributes_Architecture();
@@ -21261,6 +20807,27 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgControlLocalWeatherDestruction& control_local_weather_destruction() const;
   inline ::MsgsSimToClient::MsgControlLocalWeatherDestruction* mutable_control_local_weather_destruction();
   
+  // optional .MsgsSimToClient.MsgControlCheckPointListAck control_checkpoint_list_ack = 127;
+  inline bool has_control_checkpoint_list_ack() const;
+  inline void clear_control_checkpoint_list_ack();
+  static const int kControlCheckpointListAckFieldNumber = 127;
+  inline const ::MsgsSimToClient::MsgControlCheckPointListAck& control_checkpoint_list_ack() const;
+  inline ::MsgsSimToClient::MsgControlCheckPointListAck* mutable_control_checkpoint_list_ack();
+  
+  // optional .MsgsSimToClient.MsgControlCheckPointList control_checkpoint_list = 128;
+  inline bool has_control_checkpoint_list() const;
+  inline void clear_control_checkpoint_list();
+  static const int kControlCheckpointListFieldNumber = 128;
+  inline const ::MsgsSimToClient::MsgControlCheckPointList& control_checkpoint_list() const;
+  inline ::MsgsSimToClient::MsgControlCheckPointList* mutable_control_checkpoint_list();
+  
+  // optional .MsgsSimToClient.MsgControlCheckPointDeleteAck control_checkpoint_delete_ack = 129;
+  inline bool has_control_checkpoint_delete_ack() const;
+  inline void clear_control_checkpoint_delete_ack();
+  static const int kControlCheckpointDeleteAckFieldNumber = 129;
+  inline const ::MsgsSimToClient::MsgControlCheckPointDeleteAck& control_checkpoint_delete_ack() const;
+  inline ::MsgsSimToClient::MsgControlCheckPointDeleteAck* mutable_control_checkpoint_delete_ack();
+  
   // optional .MsgsSimToClient.MsgLogSupplyPullFlowAck log_supply_pull_flow_ack = 130;
   inline bool has_log_supply_pull_flow_ack() const;
   inline void clear_log_supply_pull_flow_ack();
@@ -21419,6 +20986,9 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgControlGlobalWeather* control_global_weather_;
   ::MsgsSimToClient::MsgControlLocalWeatherCreation* control_local_weather_creation_;
   ::MsgsSimToClient::MsgControlLocalWeatherDestruction* control_local_weather_destruction_;
+  ::MsgsSimToClient::MsgControlCheckPointListAck* control_checkpoint_list_ack_;
+  ::MsgsSimToClient::MsgControlCheckPointList* control_checkpoint_list_;
+  ::MsgsSimToClient::MsgControlCheckPointDeleteAck* control_checkpoint_delete_ack_;
   ::MsgsSimToClient::MsgLogSupplyPullFlowAck* log_supply_pull_flow_ack_;
   ::MsgsSimToClient::MsgFormationDestruction* formation_destruction_;
   ::MsgsSimToClient::MsgAutomatDestruction* automat_destruction_;
@@ -21427,7 +20997,7 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(130 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(133 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -21706,21 +21276,21 @@ inline void MsgFragOrderAck::set_error_code(::MsgsSimToClient::OrderAck_ErrorCod
 
 // MsgSetAutomatModeAck
 
-// required .Common.AutomatId automat = 1;
-inline bool MsgSetAutomatModeAck::has_automat() const {
+// required .Common.AutomatId automate = 1;
+inline bool MsgSetAutomatModeAck::has_automate() const {
   return _has_bit(0);
 }
-inline void MsgSetAutomatModeAck::clear_automat() {
-  if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
+inline void MsgSetAutomatModeAck::clear_automate() {
+  if (automate_ != NULL) automate_->::Common::AutomatId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::AutomatId& MsgSetAutomatModeAck::automat() const {
-  return automat_ != NULL ? *automat_ : *default_instance_->automat_;
+inline const ::Common::AutomatId& MsgSetAutomatModeAck::automate() const {
+  return automate_ != NULL ? *automate_ : *default_instance_->automate_;
 }
-inline ::Common::AutomatId* MsgSetAutomatModeAck::mutable_automat() {
+inline ::Common::AutomatId* MsgSetAutomatModeAck::mutable_automate() {
   _set_bit(0);
-  if (automat_ == NULL) automat_ = new ::Common::AutomatId;
-  return automat_;
+  if (automate_ == NULL) automate_ = new ::Common::AutomatId;
+  return automate_;
 }
 
 // required .MsgsSimToClient.MsgSetAutomatModeAck.ErrorCode error_code = 2;
@@ -22705,6 +22275,23 @@ inline ::MsgsSimToClient::Extension* MsgPartyCreation::mutable_extension() {
   return extension_;
 }
 
+// optional .Common.RgbColor color = 5;
+inline bool MsgPartyCreation::has_color() const {
+  return _has_bit(4);
+}
+inline void MsgPartyCreation::clear_color() {
+  if (color_ != NULL) color_->::Common::RgbColor::Clear();
+  _clear_bit(4);
+}
+inline const ::Common::RgbColor& MsgPartyCreation::color() const {
+  return color_ != NULL ? *color_ : *default_instance_->color_;
+}
+inline ::Common::RgbColor* MsgPartyCreation::mutable_color() {
+  _set_bit(4);
+  if (color_ == NULL) color_ = new ::Common::RgbColor;
+  return color_;
+}
+
 // -------------------------------------------------------------------
 
 // MsgFormationCreation
@@ -22819,55 +22406,114 @@ inline ::std::string* MsgFormationCreation::mutable_name() {
   return name_;
 }
 
+// optional .MsgsSimToClient.Extension extension = 6;
+inline bool MsgFormationCreation::has_extension() const {
+  return _has_bit(5);
+}
+inline void MsgFormationCreation::clear_extension() {
+  if (extension_ != NULL) extension_->::MsgsSimToClient::Extension::Clear();
+  _clear_bit(5);
+}
+inline const ::MsgsSimToClient::Extension& MsgFormationCreation::extension() const {
+  return extension_ != NULL ? *extension_ : *default_instance_->extension_;
+}
+inline ::MsgsSimToClient::Extension* MsgFormationCreation::mutable_extension() {
+  _set_bit(5);
+  if (extension_ == NULL) extension_ = new ::MsgsSimToClient::Extension;
+  return extension_;
+}
+
+// required string app6symbol = 7;
+inline bool MsgFormationCreation::has_app6symbol() const {
+  return _has_bit(6);
+}
+inline void MsgFormationCreation::clear_app6symbol() {
+  if (app6symbol_ != &_default_app6symbol_) {
+    app6symbol_->clear();
+  }
+  _clear_bit(6);
+}
+inline const ::std::string& MsgFormationCreation::app6symbol() const {
+  return *app6symbol_;
+}
+inline void MsgFormationCreation::set_app6symbol(const ::std::string& value) {
+  _set_bit(6);
+  if (app6symbol_ == &_default_app6symbol_) {
+    app6symbol_ = new ::std::string;
+  }
+  app6symbol_->assign(value);
+}
+inline void MsgFormationCreation::set_app6symbol(const char* value) {
+  _set_bit(6);
+  if (app6symbol_ == &_default_app6symbol_) {
+    app6symbol_ = new ::std::string;
+  }
+  app6symbol_->assign(value);
+}
+inline void MsgFormationCreation::set_app6symbol(const char* value, size_t size) {
+  _set_bit(6);
+  if (app6symbol_ == &_default_app6symbol_) {
+    app6symbol_ = new ::std::string;
+  }
+  app6symbol_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgFormationCreation::mutable_app6symbol() {
+  _set_bit(6);
+  if (app6symbol_ == &_default_app6symbol_) {
+    app6symbol_ = new ::std::string;
+  }
+  return app6symbol_;
+}
+
 // required .Common.EnumLogisticLevel logistic_level = 8;
 inline bool MsgFormationCreation::has_logistic_level() const {
-  return _has_bit(5);
+  return _has_bit(7);
 }
 inline void MsgFormationCreation::clear_logistic_level() {
   logistic_level_ = 0;
-  _clear_bit(5);
+  _clear_bit(7);
 }
 inline Common::EnumLogisticLevel MsgFormationCreation::logistic_level() const {
   return static_cast< Common::EnumLogisticLevel >(logistic_level_);
 }
 inline void MsgFormationCreation::set_logistic_level(Common::EnumLogisticLevel value) {
   GOOGLE_DCHECK(Common::EnumLogisticLevel_IsValid(value));
-  _set_bit(5);
+  _set_bit(7);
   logistic_level_ = value;
+}
+
+// optional .Common.RgbColor color = 9;
+inline bool MsgFormationCreation::has_color() const {
+  return _has_bit(8);
+}
+inline void MsgFormationCreation::clear_color() {
+  if (color_ != NULL) color_->::Common::RgbColor::Clear();
+  _clear_bit(8);
+}
+inline const ::Common::RgbColor& MsgFormationCreation::color() const {
+  return color_ != NULL ? *color_ : *default_instance_->color_;
+}
+inline ::Common::RgbColor* MsgFormationCreation::mutable_color() {
+  _set_bit(8);
+  if (color_ == NULL) color_ = new ::Common::RgbColor;
+  return color_;
 }
 
 // optional .Common.ParentEntity logistic_base_organic = 10;
 inline bool MsgFormationCreation::has_logistic_base_organic() const {
-  return _has_bit(6);
+  return _has_bit(9);
 }
 inline void MsgFormationCreation::clear_logistic_base_organic() {
   if (logistic_base_organic_ != NULL) logistic_base_organic_->::Common::ParentEntity::Clear();
-  _clear_bit(6);
+  _clear_bit(9);
 }
 inline const ::Common::ParentEntity& MsgFormationCreation::logistic_base_organic() const {
   return logistic_base_organic_ != NULL ? *logistic_base_organic_ : *default_instance_->logistic_base_organic_;
 }
 inline ::Common::ParentEntity* MsgFormationCreation::mutable_logistic_base_organic() {
-  _set_bit(6);
+  _set_bit(9);
   if (logistic_base_organic_ == NULL) logistic_base_organic_ = new ::Common::ParentEntity;
   return logistic_base_organic_;
-}
-
-// optional .MsgsSimToClient.Extension extension = 6;
-inline bool MsgFormationCreation::has_extension() const {
-  return _has_bit(7);
-}
-inline void MsgFormationCreation::clear_extension() {
-  if (extension_ != NULL) extension_->::MsgsSimToClient::Extension::Clear();
-  _clear_bit(7);
-}
-inline const ::MsgsSimToClient::Extension& MsgFormationCreation::extension() const {
-  return extension_ != NULL ? *extension_ : *default_instance_->extension_;
-}
-inline ::MsgsSimToClient::Extension* MsgFormationCreation::mutable_extension() {
-  _set_bit(7);
-  if (extension_ == NULL) extension_ = new ::MsgsSimToClient::Extension;
-  return extension_;
 }
 
 // -------------------------------------------------------------------
@@ -23018,21 +22664,80 @@ inline ::MsgsSimToClient::Extension* MsgAutomatCreation::mutable_extension() {
   return extension_;
 }
 
+// required string app6symbol = 8;
+inline bool MsgAutomatCreation::has_app6symbol() const {
+  return _has_bit(7);
+}
+inline void MsgAutomatCreation::clear_app6symbol() {
+  if (app6symbol_ != &_default_app6symbol_) {
+    app6symbol_->clear();
+  }
+  _clear_bit(7);
+}
+inline const ::std::string& MsgAutomatCreation::app6symbol() const {
+  return *app6symbol_;
+}
+inline void MsgAutomatCreation::set_app6symbol(const ::std::string& value) {
+  _set_bit(7);
+  if (app6symbol_ == &_default_app6symbol_) {
+    app6symbol_ = new ::std::string;
+  }
+  app6symbol_->assign(value);
+}
+inline void MsgAutomatCreation::set_app6symbol(const char* value) {
+  _set_bit(7);
+  if (app6symbol_ == &_default_app6symbol_) {
+    app6symbol_ = new ::std::string;
+  }
+  app6symbol_->assign(value);
+}
+inline void MsgAutomatCreation::set_app6symbol(const char* value, size_t size) {
+  _set_bit(7);
+  if (app6symbol_ == &_default_app6symbol_) {
+    app6symbol_ = new ::std::string;
+  }
+  app6symbol_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgAutomatCreation::mutable_app6symbol() {
+  _set_bit(7);
+  if (app6symbol_ == &_default_app6symbol_) {
+    app6symbol_ = new ::std::string;
+  }
+  return app6symbol_;
+}
+
 // required .Common.EnumLogisticLevel logistic_level = 9;
 inline bool MsgAutomatCreation::has_logistic_level() const {
-  return _has_bit(7);
+  return _has_bit(8);
 }
 inline void MsgAutomatCreation::clear_logistic_level() {
   logistic_level_ = 0;
-  _clear_bit(7);
+  _clear_bit(8);
 }
 inline Common::EnumLogisticLevel MsgAutomatCreation::logistic_level() const {
   return static_cast< Common::EnumLogisticLevel >(logistic_level_);
 }
 inline void MsgAutomatCreation::set_logistic_level(Common::EnumLogisticLevel value) {
   GOOGLE_DCHECK(Common::EnumLogisticLevel_IsValid(value));
-  _set_bit(7);
+  _set_bit(8);
   logistic_level_ = value;
+}
+
+// optional .Common.RgbColor color = 10;
+inline bool MsgAutomatCreation::has_color() const {
+  return _has_bit(9);
+}
+inline void MsgAutomatCreation::clear_color() {
+  if (color_ != NULL) color_->::Common::RgbColor::Clear();
+  _clear_bit(9);
+}
+inline const ::Common::RgbColor& MsgAutomatCreation::color() const {
+  return color_ != NULL ? *color_ : *default_instance_->color_;
+}
+inline ::Common::RgbColor* MsgAutomatCreation::mutable_color() {
+  _set_bit(9);
+  if (color_ == NULL) color_ = new ::Common::RgbColor;
+  return color_;
 }
 
 // -------------------------------------------------------------------
@@ -23294,6 +22999,23 @@ inline bool MsgUnitCreation::pc() const {
 inline void MsgUnitCreation::set_pc(bool value) {
   _set_bit(4);
   pc_ = value;
+}
+
+// optional .Common.RgbColor color = 6;
+inline bool MsgUnitCreation::has_color() const {
+  return _has_bit(5);
+}
+inline void MsgUnitCreation::clear_color() {
+  if (color_ != NULL) color_->::Common::RgbColor::Clear();
+  _clear_bit(5);
+}
+inline const ::Common::RgbColor& MsgUnitCreation::color() const {
+  return color_ != NULL ? *color_ : *default_instance_->color_;
+}
+inline ::Common::RgbColor* MsgUnitCreation::mutable_color() {
+  _set_bit(5);
+  if (color_ == NULL) color_ = new ::Common::RgbColor;
+  return color_;
 }
 
 // -------------------------------------------------------------------
@@ -23805,6 +23527,22 @@ inline ::google::protobuf::int32 HumanDotations_HumanDotation::nb_utilises_pour_
 inline void HumanDotations_HumanDotation::set_nb_utilises_pour_maintenance(::google::protobuf::int32 value) {
   _set_bit(8);
   nb_utilises_pour_maintenance_ = value;
+}
+
+// required int32 nb_blesses_non_evacues = 10;
+inline bool HumanDotations_HumanDotation::has_nb_blesses_non_evacues() const {
+  return _has_bit(9);
+}
+inline void HumanDotations_HumanDotation::clear_nb_blesses_non_evacues() {
+  nb_blesses_non_evacues_ = 0;
+  _clear_bit(9);
+}
+inline ::google::protobuf::int32 HumanDotations_HumanDotation::nb_blesses_non_evacues() const {
+  return nb_blesses_non_evacues_;
+}
+inline void HumanDotations_HumanDotation::set_nb_blesses_non_evacues(::google::protobuf::int32 value) {
+  _set_bit(9);
+  nb_blesses_non_evacues_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -26252,21 +25990,21 @@ inline ::Common::ReportType* MsgReport::mutable_type() {
   return type_;
 }
 
-// required .MsgsSimToClient.EnumReportType category = 4;
+// required .Common.ReportCategory category = 4;
 inline bool MsgReport::has_category() const {
   return _has_bit(3);
 }
 inline void MsgReport::clear_category() {
-  category_ = 0;
+  if (category_ != NULL) category_->::Common::ReportCategory::Clear();
   _clear_bit(3);
 }
-inline MsgsSimToClient::EnumReportType MsgReport::category() const {
-  return static_cast< MsgsSimToClient::EnumReportType >(category_);
+inline const ::Common::ReportCategory& MsgReport::category() const {
+  return category_ != NULL ? *category_ : *default_instance_->category_;
 }
-inline void MsgReport::set_category(MsgsSimToClient::EnumReportType value) {
-  GOOGLE_DCHECK(MsgsSimToClient::EnumReportType_IsValid(value));
+inline ::Common::ReportCategory* MsgReport::mutable_category() {
   _set_bit(3);
-  category_ = value;
+  if (category_ == NULL) category_ = new ::Common::ReportCategory;
+  return category_;
 }
 
 // required .Common.MsgDateTime time = 5;
@@ -27658,20 +27396,20 @@ inline void MsgUrbanKnowledgeUpdate::set_progress(::google::protobuf::int32 valu
   progress_ = value;
 }
 
-// optional int32 max_progress = 5;
-inline bool MsgUrbanKnowledgeUpdate::has_max_progress() const {
+// optional int32 maxProgress = 5;
+inline bool MsgUrbanKnowledgeUpdate::has_maxprogress() const {
   return _has_bit(4);
 }
-inline void MsgUrbanKnowledgeUpdate::clear_max_progress() {
-  max_progress_ = 0;
+inline void MsgUrbanKnowledgeUpdate::clear_maxprogress() {
+  maxprogress_ = 0;
   _clear_bit(4);
 }
-inline ::google::protobuf::int32 MsgUrbanKnowledgeUpdate::max_progress() const {
-  return max_progress_;
+inline ::google::protobuf::int32 MsgUrbanKnowledgeUpdate::maxprogress() const {
+  return maxprogress_;
 }
-inline void MsgUrbanKnowledgeUpdate::set_max_progress(::google::protobuf::int32 value) {
+inline void MsgUrbanKnowledgeUpdate::set_maxprogress(::google::protobuf::int32 value) {
   _set_bit(4);
-  max_progress_ = value;
+  maxprogress_ = value;
 }
 
 // optional bool perceived = 6;
@@ -31113,185 +30851,6 @@ inline void MsgControlCheckPointList::add_checkpoint(const char* value, size_t s
 
 // -------------------------------------------------------------------
 
-// MagicActionCreateUrban
-
-// required string name = 1;
-inline bool MagicActionCreateUrban::has_name() const {
-  return _has_bit(0);
-}
-inline void MagicActionCreateUrban::clear_name() {
-  if (name_ != &_default_name_) {
-    name_->clear();
-  }
-  _clear_bit(0);
-}
-inline const ::std::string& MagicActionCreateUrban::name() const {
-  return *name_;
-}
-inline void MagicActionCreateUrban::set_name(const ::std::string& value) {
-  _set_bit(0);
-  if (name_ == &_default_name_) {
-    name_ = new ::std::string;
-  }
-  name_->assign(value);
-}
-inline void MagicActionCreateUrban::set_name(const char* value) {
-  _set_bit(0);
-  if (name_ == &_default_name_) {
-    name_ = new ::std::string;
-  }
-  name_->assign(value);
-}
-inline void MagicActionCreateUrban::set_name(const char* value, size_t size) {
-  _set_bit(0);
-  if (name_ == &_default_name_) {
-    name_ = new ::std::string;
-  }
-  name_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* MagicActionCreateUrban::mutable_name() {
-  _set_bit(0);
-  if (name_ == &_default_name_) {
-    name_ = new ::std::string;
-  }
-  return name_;
-}
-
-// required .Common.MsgLocation location = 2;
-inline bool MagicActionCreateUrban::has_location() const {
-  return _has_bit(1);
-}
-inline void MagicActionCreateUrban::clear_location() {
-  if (location_ != NULL) location_->::Common::MsgLocation::Clear();
-  _clear_bit(1);
-}
-inline const ::Common::MsgLocation& MagicActionCreateUrban::location() const {
-  return location_ != NULL ? *location_ : *default_instance_->location_;
-}
-inline ::Common::MsgLocation* MagicActionCreateUrban::mutable_location() {
-  _set_bit(1);
-  if (location_ == NULL) location_ = new ::Common::MsgLocation;
-  return location_;
-}
-
-// -------------------------------------------------------------------
-
-// MagicActionUpdateUrban
-
-// required uint32 oid = 1;
-inline bool MagicActionUpdateUrban::has_oid() const {
-  return _has_bit(0);
-}
-inline void MagicActionUpdateUrban::clear_oid() {
-  oid_ = 0u;
-  _clear_bit(0);
-}
-inline ::google::protobuf::uint32 MagicActionUpdateUrban::oid() const {
-  return oid_;
-}
-inline void MagicActionUpdateUrban::set_oid(::google::protobuf::uint32 value) {
-  _set_bit(0);
-  oid_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MagicActionDestroyUrban
-
-// required uint32 oid = 1;
-inline bool MagicActionDestroyUrban::has_oid() const {
-  return _has_bit(0);
-}
-inline void MagicActionDestroyUrban::clear_oid() {
-  oid_ = 0u;
-  _clear_bit(0);
-}
-inline ::google::protobuf::uint32 MagicActionDestroyUrban::oid() const {
-  return oid_;
-}
-inline void MagicActionDestroyUrban::set_oid(::google::protobuf::uint32 value) {
-  _set_bit(0);
-  oid_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgUrbanMagicAction
-
-// optional .MsgsSimToClient.MagicActionCreateUrban create_urban = 1;
-inline bool MsgUrbanMagicAction::has_create_urban() const {
-  return _has_bit(0);
-}
-inline void MsgUrbanMagicAction::clear_create_urban() {
-  if (create_urban_ != NULL) create_urban_->::MsgsSimToClient::MagicActionCreateUrban::Clear();
-  _clear_bit(0);
-}
-inline const ::MsgsSimToClient::MagicActionCreateUrban& MsgUrbanMagicAction::create_urban() const {
-  return create_urban_ != NULL ? *create_urban_ : *default_instance_->create_urban_;
-}
-inline ::MsgsSimToClient::MagicActionCreateUrban* MsgUrbanMagicAction::mutable_create_urban() {
-  _set_bit(0);
-  if (create_urban_ == NULL) create_urban_ = new ::MsgsSimToClient::MagicActionCreateUrban;
-  return create_urban_;
-}
-
-// optional .MsgsSimToClient.MagicActionUpdateUrban update_urban = 2;
-inline bool MsgUrbanMagicAction::has_update_urban() const {
-  return _has_bit(1);
-}
-inline void MsgUrbanMagicAction::clear_update_urban() {
-  if (update_urban_ != NULL) update_urban_->::MsgsSimToClient::MagicActionUpdateUrban::Clear();
-  _clear_bit(1);
-}
-inline const ::MsgsSimToClient::MagicActionUpdateUrban& MsgUrbanMagicAction::update_urban() const {
-  return update_urban_ != NULL ? *update_urban_ : *default_instance_->update_urban_;
-}
-inline ::MsgsSimToClient::MagicActionUpdateUrban* MsgUrbanMagicAction::mutable_update_urban() {
-  _set_bit(1);
-  if (update_urban_ == NULL) update_urban_ = new ::MsgsSimToClient::MagicActionUpdateUrban;
-  return update_urban_;
-}
-
-// optional .MsgsSimToClient.MagicActionDestroyUrban destroy_urban = 3;
-inline bool MsgUrbanMagicAction::has_destroy_urban() const {
-  return _has_bit(2);
-}
-inline void MsgUrbanMagicAction::clear_destroy_urban() {
-  if (destroy_urban_ != NULL) destroy_urban_->::MsgsSimToClient::MagicActionDestroyUrban::Clear();
-  _clear_bit(2);
-}
-inline const ::MsgsSimToClient::MagicActionDestroyUrban& MsgUrbanMagicAction::destroy_urban() const {
-  return destroy_urban_ != NULL ? *destroy_urban_ : *default_instance_->destroy_urban_;
-}
-inline ::MsgsSimToClient::MagicActionDestroyUrban* MsgUrbanMagicAction::mutable_destroy_urban() {
-  _set_bit(2);
-  if (destroy_urban_ == NULL) destroy_urban_ = new ::MsgsSimToClient::MagicActionDestroyUrban;
-  return destroy_urban_;
-}
-
-// -------------------------------------------------------------------
-
-// MsgUrbanMagicActionAck
-
-// required .MsgsSimToClient.MsgUrbanMagicActionAck.ErrorCode error_code = 1;
-inline bool MsgUrbanMagicActionAck::has_error_code() const {
-  return _has_bit(0);
-}
-inline void MsgUrbanMagicActionAck::clear_error_code() {
-  error_code_ = 0;
-  _clear_bit(0);
-}
-inline ::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode MsgUrbanMagicActionAck::error_code() const {
-  return static_cast< ::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode >(error_code_);
-}
-inline void MsgUrbanMagicActionAck::set_error_code(::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode value) {
-  GOOGLE_DCHECK(::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode_IsValid(value));
-  _set_bit(0);
-  error_code_ = value;
-}
-
-// -------------------------------------------------------------------
-
 // UrbanAttributes_Architecture
 
 // required float height = 1;
@@ -34517,70 +34076,121 @@ inline ::MsgsSimToClient::MsgControlLocalWeatherDestruction* MsgSimToClient_Cont
   return control_local_weather_destruction_;
 }
 
+// optional .MsgsSimToClient.MsgControlCheckPointListAck control_checkpoint_list_ack = 127;
+inline bool MsgSimToClient_Content::has_control_checkpoint_list_ack() const {
+  return _has_bit(126);
+}
+inline void MsgSimToClient_Content::clear_control_checkpoint_list_ack() {
+  if (control_checkpoint_list_ack_ != NULL) control_checkpoint_list_ack_->::MsgsSimToClient::MsgControlCheckPointListAck::Clear();
+  _clear_bit(126);
+}
+inline const ::MsgsSimToClient::MsgControlCheckPointListAck& MsgSimToClient_Content::control_checkpoint_list_ack() const {
+  return control_checkpoint_list_ack_ != NULL ? *control_checkpoint_list_ack_ : *default_instance_->control_checkpoint_list_ack_;
+}
+inline ::MsgsSimToClient::MsgControlCheckPointListAck* MsgSimToClient_Content::mutable_control_checkpoint_list_ack() {
+  _set_bit(126);
+  if (control_checkpoint_list_ack_ == NULL) control_checkpoint_list_ack_ = new ::MsgsSimToClient::MsgControlCheckPointListAck;
+  return control_checkpoint_list_ack_;
+}
+
+// optional .MsgsSimToClient.MsgControlCheckPointList control_checkpoint_list = 128;
+inline bool MsgSimToClient_Content::has_control_checkpoint_list() const {
+  return _has_bit(127);
+}
+inline void MsgSimToClient_Content::clear_control_checkpoint_list() {
+  if (control_checkpoint_list_ != NULL) control_checkpoint_list_->::MsgsSimToClient::MsgControlCheckPointList::Clear();
+  _clear_bit(127);
+}
+inline const ::MsgsSimToClient::MsgControlCheckPointList& MsgSimToClient_Content::control_checkpoint_list() const {
+  return control_checkpoint_list_ != NULL ? *control_checkpoint_list_ : *default_instance_->control_checkpoint_list_;
+}
+inline ::MsgsSimToClient::MsgControlCheckPointList* MsgSimToClient_Content::mutable_control_checkpoint_list() {
+  _set_bit(127);
+  if (control_checkpoint_list_ == NULL) control_checkpoint_list_ = new ::MsgsSimToClient::MsgControlCheckPointList;
+  return control_checkpoint_list_;
+}
+
+// optional .MsgsSimToClient.MsgControlCheckPointDeleteAck control_checkpoint_delete_ack = 129;
+inline bool MsgSimToClient_Content::has_control_checkpoint_delete_ack() const {
+  return _has_bit(128);
+}
+inline void MsgSimToClient_Content::clear_control_checkpoint_delete_ack() {
+  if (control_checkpoint_delete_ack_ != NULL) control_checkpoint_delete_ack_->::MsgsSimToClient::MsgControlCheckPointDeleteAck::Clear();
+  _clear_bit(128);
+}
+inline const ::MsgsSimToClient::MsgControlCheckPointDeleteAck& MsgSimToClient_Content::control_checkpoint_delete_ack() const {
+  return control_checkpoint_delete_ack_ != NULL ? *control_checkpoint_delete_ack_ : *default_instance_->control_checkpoint_delete_ack_;
+}
+inline ::MsgsSimToClient::MsgControlCheckPointDeleteAck* MsgSimToClient_Content::mutable_control_checkpoint_delete_ack() {
+  _set_bit(128);
+  if (control_checkpoint_delete_ack_ == NULL) control_checkpoint_delete_ack_ = new ::MsgsSimToClient::MsgControlCheckPointDeleteAck;
+  return control_checkpoint_delete_ack_;
+}
+
 // optional .MsgsSimToClient.MsgLogSupplyPullFlowAck log_supply_pull_flow_ack = 130;
 inline bool MsgSimToClient_Content::has_log_supply_pull_flow_ack() const {
-  return _has_bit(126);
+  return _has_bit(129);
 }
 inline void MsgSimToClient_Content::clear_log_supply_pull_flow_ack() {
   if (log_supply_pull_flow_ack_ != NULL) log_supply_pull_flow_ack_->::MsgsSimToClient::MsgLogSupplyPullFlowAck::Clear();
-  _clear_bit(126);
+  _clear_bit(129);
 }
 inline const ::MsgsSimToClient::MsgLogSupplyPullFlowAck& MsgSimToClient_Content::log_supply_pull_flow_ack() const {
   return log_supply_pull_flow_ack_ != NULL ? *log_supply_pull_flow_ack_ : *default_instance_->log_supply_pull_flow_ack_;
 }
 inline ::MsgsSimToClient::MsgLogSupplyPullFlowAck* MsgSimToClient_Content::mutable_log_supply_pull_flow_ack() {
-  _set_bit(126);
+  _set_bit(129);
   if (log_supply_pull_flow_ack_ == NULL) log_supply_pull_flow_ack_ = new ::MsgsSimToClient::MsgLogSupplyPullFlowAck;
   return log_supply_pull_flow_ack_;
 }
 
 // optional .MsgsSimToClient.MsgFormationDestruction formation_destruction = 131;
 inline bool MsgSimToClient_Content::has_formation_destruction() const {
-  return _has_bit(127);
+  return _has_bit(130);
 }
 inline void MsgSimToClient_Content::clear_formation_destruction() {
   if (formation_destruction_ != NULL) formation_destruction_->::MsgsSimToClient::MsgFormationDestruction::Clear();
-  _clear_bit(127);
+  _clear_bit(130);
 }
 inline const ::MsgsSimToClient::MsgFormationDestruction& MsgSimToClient_Content::formation_destruction() const {
   return formation_destruction_ != NULL ? *formation_destruction_ : *default_instance_->formation_destruction_;
 }
 inline ::MsgsSimToClient::MsgFormationDestruction* MsgSimToClient_Content::mutable_formation_destruction() {
-  _set_bit(127);
+  _set_bit(130);
   if (formation_destruction_ == NULL) formation_destruction_ = new ::MsgsSimToClient::MsgFormationDestruction;
   return formation_destruction_;
 }
 
 // optional .MsgsSimToClient.MsgAutomatDestruction automat_destruction = 132;
 inline bool MsgSimToClient_Content::has_automat_destruction() const {
-  return _has_bit(128);
+  return _has_bit(131);
 }
 inline void MsgSimToClient_Content::clear_automat_destruction() {
   if (automat_destruction_ != NULL) automat_destruction_->::MsgsSimToClient::MsgAutomatDestruction::Clear();
-  _clear_bit(128);
+  _clear_bit(131);
 }
 inline const ::MsgsSimToClient::MsgAutomatDestruction& MsgSimToClient_Content::automat_destruction() const {
   return automat_destruction_ != NULL ? *automat_destruction_ : *default_instance_->automat_destruction_;
 }
 inline ::MsgsSimToClient::MsgAutomatDestruction* MsgSimToClient_Content::mutable_automat_destruction() {
-  _set_bit(128);
+  _set_bit(131);
   if (automat_destruction_ == NULL) automat_destruction_ = new ::MsgsSimToClient::MsgAutomatDestruction;
   return automat_destruction_;
 }
 
 // optional .MsgsSimToClient.MsgCrowdDestruction crowd_destruction = 133;
 inline bool MsgSimToClient_Content::has_crowd_destruction() const {
-  return _has_bit(129);
+  return _has_bit(132);
 }
 inline void MsgSimToClient_Content::clear_crowd_destruction() {
   if (crowd_destruction_ != NULL) crowd_destruction_->::MsgsSimToClient::MsgCrowdDestruction::Clear();
-  _clear_bit(129);
+  _clear_bit(132);
 }
 inline const ::MsgsSimToClient::MsgCrowdDestruction& MsgSimToClient_Content::crowd_destruction() const {
   return crowd_destruction_ != NULL ? *crowd_destruction_ : *default_instance_->crowd_destruction_;
 }
 inline ::MsgsSimToClient::MsgCrowdDestruction* MsgSimToClient_Content::mutable_crowd_destruction() {
-  _set_bit(129);
+  _set_bit(132);
   if (crowd_destruction_ == NULL) crowd_destruction_ = new ::MsgsSimToClient::MsgCrowdDestruction;
   return crowd_destruction_;
 }
@@ -34700,10 +34310,6 @@ inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgUnitAttrib
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgUnitAttributes_CrowdRoe>() {
   return ::MsgsSimToClient::MsgUnitAttributes_CrowdRoe_descriptor();
-}
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode>() {
-  return ::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::KnowledgeGroupAck_ErrorCode>() {

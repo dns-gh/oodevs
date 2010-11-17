@@ -17,15 +17,15 @@
 // Name: Note constructor
 // Created: HBD 2010-01-14
 // -----------------------------------------------------------------------------
-Note::Note( kernel::Controller& controller, const MsgsMessengerToClient::MsgNoteCreation& message )
+Note::Note( kernel::Controller& controller, const MsgsMessengerToClient::MsgMarkerCreation& message )
     : controller_( controller )
-    , parent_( message.note().parent() )
-    , name_( message.note().name() )
-    , noteText_( message.note().description() )
-    , noteId_( message.id() )
-    , noteNumber_( message.note().number() )
-    , creationTime_ (message.date().data() )
-    , lastUpdateTime_ (message.date().data() )
+    , parent_( message.definition().parent().id() )
+    , name_( message.definition().name() )
+    , noteText_( message.definition().description() )
+    , noteId_( message.marker().id() )
+    , noteNumber_( message.definition().number() )
+    , creationTime_ ( message.definition().date().data() )
+    , lastUpdateTime_ (message.definition().date().data() )
 {
      controller_.Create( *this );
 }
@@ -43,7 +43,7 @@ Note::~Note()
 // Name: Note::Update
 // Created: HBD 2010-01-14
 // -----------------------------------------------------------------------------
-void Note::Update(const MsgsMessengerToClient::MsgNoteUpdate& message)
+void Note::Update(const MsgsMessengerToClient::MsgMarkerUpdate& message)
 {
     if( message.has_name() )
         name_ = message.name();
@@ -52,7 +52,7 @@ void Note::Update(const MsgsMessengerToClient::MsgNoteUpdate& message)
     if( message.has_description() )
         noteText_ = message.description();
     if( message.has_parent() )
-        parent_ = message.parent();
+        parent_ = message.parent().id();
     lastUpdateTime_ = message.date().data();
     controller_.Update( *this );
 }

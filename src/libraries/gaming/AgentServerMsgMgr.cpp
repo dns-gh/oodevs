@@ -1500,7 +1500,7 @@ void AgentServerMsgMgr::OnReceiveMsgShapeDestructionRequestAck( const MsgsMessen
 // Name: AgentServerMsgMgr::OnReceiveMsgNoteCreation
 // Created: HBD 2010-02-04
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgNoteCreation( const MsgsMessengerToClient::MsgNoteCreation& message )
+void AgentServerMsgMgr::OnReceiveMsgNoteCreation( const MsgsMessengerToClient::MsgMarkerCreation& message )
 {
     GetModel().notes_.Create( message );
 }
@@ -1509,7 +1509,7 @@ void AgentServerMsgMgr::OnReceiveMsgNoteCreation( const MsgsMessengerToClient::M
 // Name: AgentServerMsgMgr::OnReceiveMsgNoteUpdate
 // Created: HBD 2010-02-04
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgNoteUpdate( const MsgsMessengerToClient::MsgNoteUpdate& message )
+void AgentServerMsgMgr::OnReceiveMsgNoteUpdate( const MsgsMessengerToClient::MsgMarkerUpdate& message )
 {
     GetModel().notes_.Update( message );
 }
@@ -1518,7 +1518,7 @@ void AgentServerMsgMgr::OnReceiveMsgNoteUpdate( const MsgsMessengerToClient::Msg
 // Name: AgentServerMsgMgr::OnReceiveMsgNoteDestruction
 // Created: HBD 2010-02-04
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgNoteDestruction( const MsgsMessengerToClient::MsgNoteDestruction& message )
+void AgentServerMsgMgr::OnReceiveMsgNoteDestruction( const MsgsMessengerToClient::MsgMarkerDestruction& message )
 {
     GetModel().notes_.Delete( message );
 }
@@ -2099,12 +2099,12 @@ void AgentServerMsgMgr::OnReceiveMsgMessengerToClient( const std::string&, const
         OnReceiveMsgShapeDestruction          ( wrapper.message().shape_destruction() );
     else if( wrapper.message().has_text_message() )
         OnReceiveMsgTextMessage( wrapper.message().text_message() );
-    else if (wrapper.message().has_note_creation() )
-        OnReceiveMsgNoteCreation              ( wrapper.message().note_creation()     );
-    else if (wrapper.message().has_note_update() )
-        OnReceiveMsgNoteUpdate                ( wrapper.message().note_update()       );
-    else if (wrapper.message().has_note_destruction() )
-        OnReceiveMsgNoteDestruction           ( wrapper.message().note_destruction()  );
+    else if (wrapper.message().has_marker_creation() )
+        OnReceiveMsgNoteCreation              ( wrapper.message().marker_creation()     );
+    else if (wrapper.message().has_marker_update() )
+        OnReceiveMsgNoteUpdate                ( wrapper.message().marker_update()       );
+    else if (wrapper.message().has_marker_destruction() )
+        OnReceiveMsgNoteDestruction           ( wrapper.message().marker_destruction()  );
     else
         UnhandledMessage( &wrapper.message() );
 }

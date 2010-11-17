@@ -111,7 +111,7 @@ message MsgShapeUpdate {
    required Common.DrawingId           id        = 1;
    optional string                     category  = 2;
    optional string                     color     = 3;
-   optional string                     pattern   = 4;
+   optional string                     template = 4;
    optional Common.MsgCoordLatLongList points    = 5;
 }
 message MsgShapeDestruction {
@@ -137,26 +137,44 @@ message MsgShapeDestructionRequestAck {
     required ShapeRequestAck.ErrorCode error_code = 1;
 }
 
-// LTO begin
-message MsgNoteCreation {
-    required uint32                     id          = 1;
-	required Common.MsgNote             note        = 2;
-	required string						date		= 3;
+// markers (used during exercise and in AAR)
+
+message MsgMarkerCreation {
+    required Common.MarkerId            marker      = 1;
+	required Common.MsgMarker           definition  = 2;
 }
 
-message MsgNoteUpdate {
-    required uint32                     id          = 1;
-    required string                     date        = 2;
+message MsgMarkerUpdate {
+    required Common.MarkerId            marker      = 1;
+    required Common.MsgDateTime         date        = 2;
     optional string                     name        = 3; 
-    optional string                     number	    = 4;
-    optional string                     description = 5;
-    optional uint32                     parent      = 6;
+    optional string                     description = 4;
+    optional Common.MarkerId            parent      = 5; 
+    optional string                     number	    = 6;
 }
 
-message MsgNoteDestruction {
-	required uint32                     id          = 1;
+message MsgMarkerDestruction {
+	required Common.MarkerId            marker      = 1;
 }
-// LTO end
+
+message MarkerRequestAck {
+    enum ErrorCode {
+        no_error                 = 0;
+        error_invalid_id         = 1;
+        error_invalid_parent     = 2;
+    }
+}
+message MsgMarkerCreationRequestAck {
+    required MarkerRequestAck.ErrorCode error_code = 1;
+}
+
+message MsgMarkerUpdateRequestAck {
+    optional MarkerRequestAck.ErrorCode error_code = 1;
+}
+
+message MsgMarkerDestructionRequestAck {
+    required MarkerRequestAck.ErrorCode error_code = 1;
+}
 
 // client objects
 
@@ -228,9 +246,9 @@ message MsgMessengerToClient {
         optional MsgShapeDestructionRequestAck          shape_destruction_request_ack           = 23;
         optional MsgShapeUpdateRequestAck               shape_update_request_ack                = 24;
         optional Common.MsgTextMessage                  text_message                            = 25;
-        optional MsgNoteCreation                        note_creation                           = 26;
-        optional MsgNoteUpdate                          note_update                             = 27;
-        optional MsgNoteDestruction                     note_destruction                        = 28;                
+        optional MsgMarkerCreation                      marker_creation                           = 26;
+        optional MsgMarkerUpdate                        marker_update                             = 27;
+        optional MsgMarkerDestruction                   marker_destruction                        = 28;
         optional MsgClientObjectCreation                client_object_creation                  = 29;
         optional MsgClientObjectUpdate                  client_object_update                    = 30;
         optional MsgClientObjectDestruction             client_object_destruction               = 31;

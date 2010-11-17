@@ -283,24 +283,25 @@ void MIL_Formation::SendCreation() const
 {
     assert( pLevel_ );
     assert( pArmy_ );
-    client::FormationCreation asn;
-    asn().mutable_formation()->set_id( nID_ );
-    asn().mutable_party()->set_id( pArmy_->GetID() );
-    asn().set_name( GetName() );
-    asn().set_level( pLevel_->GetAsnID() );
-    asn().set_logistic_level( pBrainLogistic_.get() ?
+    client::FormationCreation message;
+    message().mutable_formation()->set_id( nID_ );
+    message().mutable_party()->set_id( pArmy_->GetID() );
+    message().set_name( GetName() );
+    message().set_level( pLevel_->GetAsnID() );
+    message().set_app6symbol( "combat" );
+    message().set_logistic_level( pBrainLogistic_.get() ?
         (Common::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : Common::none );
     if( pParent_ )
-        asn().mutable_parent()->set_id( pParent_->GetID() );
+        message().mutable_parent()->set_id( pParent_->GetID() );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
     {
-        MsgsSimToClient::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+        MsgsSimToClient::Extension_Entry* entry = message().mutable_extension()->add_entries();
         entry->set_name( it->first );
         entry->set_value( it->second );
     }
-    asn.Send( NET_Publisher_ABC::Publisher() );
-    if( asn().has_extension() )
-        asn().mutable_extension()->mutable_entries()->Clear();
+    message.Send( NET_Publisher_ABC::Publisher() );
+    if( message().has_extension() )
+        message().mutable_extension()->mutable_entries()->Clear();
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1 ) );//@TODO MGD Move to factory
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendCreation, _1, 0 ) );
 }

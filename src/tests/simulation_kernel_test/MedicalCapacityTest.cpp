@@ -256,13 +256,13 @@ BOOST_AUTO_TEST_CASE( VerifyAsnUpdate )
         Common::ObjectAttributes asnUpdate;
         asnUpdate.mutable_medical_treatment()->set_doctors( 5 );
         {
-            Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity = *asnUpdate.mutable_medical_treatment()->add_bed_capacities();
+            Common::MedicalTreatmentBedCapacity& capacity = *asnUpdate.mutable_medical_treatment()->add_bed_capacities();
             capacity.set_type_id( 0 );
             capacity.set_available_count( 3 );
             capacity.set_baseline_count( 5 );
         }
         {
-            Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity = *asnUpdate.mutable_medical_treatment()->add_bed_capacities();
+            Common::MedicalTreatmentBedCapacity& capacity = *asnUpdate.mutable_medical_treatment()->add_bed_capacities();
             capacity.set_type_id( 1 );
             capacity.set_available_count( 5 );
             capacity.set_baseline_count( 3 );

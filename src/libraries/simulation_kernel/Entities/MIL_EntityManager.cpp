@@ -1073,7 +1073,7 @@ void MIL_EntityManager::OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrd
 void MIL_EntityManager::OnReceiveMsgSetAutomateMode( const MsgsClientToSim::MsgSetAutomatMode& message, unsigned int nCtx )
 {
     client::SetAutomatModeAck ack;
-    ack().mutable_automat()->set_id( message.automate().id() );
+    ack().mutable_automate()->set_id( message.automate().id() );
     ack().set_error_code( MsgsSimToClient::MsgSetAutomatModeAck::no_error );
     try
     {

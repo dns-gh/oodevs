@@ -26,7 +26,7 @@ namespace kernel
 namespace Common 
 {
     class ObjectAttributeMedicalTreatment;
-    class ObjectAttributeMedicalTreatmentBedCapacity;
+    class MedicalTreatmentBedCapacity;
 }
 
 namespace dispatcher
@@ -78,8 +78,8 @@ private:
     void UpdateDecon            ( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatment& object );
     void UpdateEvacuation       ( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatment& object );
     void UpdateCapacityStatus   ( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatment& object );
-    void UpdateBedStatus        ( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatmentBedCapacity& object );
-    void UpdateBedCapacity      ( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatmentBedCapacity& object );
+    void UpdateBedStatus        ( xml::xostream& xos, const Common::MedicalTreatmentBedCapacity& object );
+    void UpdateBedCapacity      ( xml::xostream& xos, const Common::MedicalTreatmentBedCapacity& object );
     //@}
 
 private:

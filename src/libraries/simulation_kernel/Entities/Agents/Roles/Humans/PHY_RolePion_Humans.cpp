@@ -475,7 +475,7 @@ void PHY_RolePion_Humans::NotifyHumanBackFromMedical( PHY_MedicalHumanState& hum
 // Name: PHY_RolePion_Humans::SendChangedState
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& asn ) const
+void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& message ) const
 {
     if( nNbrHumansDataChanged_ == 0 )
         return;
@@ -487,7 +487,7 @@ void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& asn ) const
         const PHY_HumanRank&           rank      = *itRank->second;
         const T_HumanData&             humanData = humansData_[ rank.GetID() ];
 
-        MsgsSimToClient::HumanDotations_HumanDotation& personnel = *asn().mutable_dotation_eff_personnel()->add_elem();
+        MsgsSimToClient::HumanDotations_HumanDotation& personnel = *message().mutable_dotation_eff_personnel()->add_elem();
 
         personnel.set_rang                         ( rank.GetAsnID() );
         personnel.set_nb_total                     ( humanData.nNbrTotal_ );
@@ -498,6 +498,7 @@ void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& asn ) const
         personnel.set_nb_contamines_nbc            ( humanData.nNbrNBC_ );
         personnel.set_nb_dans_chaine_sante         ( humanData.nNbrInLogisticMedical_ );
         personnel.set_nb_utilises_pour_maintenance ( humanData.nNbrInLogisticMaintenance_ );
+        personnel.set_nb_blesses_non_evacues       ( 0 );   //$$$ RPD TO IMPLEMENT
     }
     SendLogisticChangedState();
 }
@@ -506,14 +507,14 @@ void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& asn ) const
 // Name: PHY_RolePion_Humans::SendFullState
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& asn ) const
+void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
 {
     const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
     for( PHY_HumanRank::CIT_HumanRankMap itRank = ranks.begin(); itRank != ranks.end(); ++itRank )
     {
         const PHY_HumanRank&           rank      = *itRank->second;
         const T_HumanData&             humanData = humansData_[ rank.GetID() ];
-        MsgsSimToClient::HumanDotations_HumanDotation& personnel = *asn().mutable_dotation_eff_personnel()->add_elem();
+        MsgsSimToClient::HumanDotations_HumanDotation& personnel = *message().mutable_dotation_eff_personnel()->add_elem();
         personnel.set_rang                         ( rank.GetAsnID() );
         personnel.set_nb_total                     ( humanData.nNbrTotal_ );
         personnel.set_nb_operationnels             ( humanData.nNbrOperational_ );
@@ -523,6 +524,7 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& asn ) const
         personnel.set_nb_contamines_nbc            ( humanData.nNbrNBC_ );
         personnel.set_nb_dans_chaine_sante         ( humanData.nNbrInLogisticMedical_ );
         personnel.set_nb_utilises_pour_maintenance ( humanData.nNbrInLogisticMaintenance_ );
+        personnel.set_nb_blesses_non_evacues       ( 0 );   //$$$ RPD TO IMPLEMENT
     }
     SendLogisticFullState();
 }

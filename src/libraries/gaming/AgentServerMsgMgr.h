@@ -198,9 +198,9 @@ namespace MsgsMessengerToClient
     class MsgShapeCreationRequestAck;
     class MsgShapeUpdateRequestAck;
     class MsgShapeDestructionRequestAck;
-    class MsgNoteCreation;
-    class MsgNoteUpdate;
-    class MsgNoteDestruction;
+    class MsgMarkerCreation;
+    class MsgMarkerUpdate;
+    class MsgMarkerDestruction;
 }
 
 namespace MsgsAarToClient
@@ -479,9 +479,9 @@ private:
     void OnReceiveMsgShapeDestructionRequestAck( const MsgsMessengerToClient::MsgShapeDestructionRequestAck& message );
 
     // Notes
-    void OnReceiveMsgNoteCreation             ( const MsgsMessengerToClient::MsgNoteCreation&              message );
-    void OnReceiveMsgNoteUpdate               ( const MsgsMessengerToClient::MsgNoteUpdate&                message );
-    void OnReceiveMsgNoteDestruction          ( const MsgsMessengerToClient::MsgNoteDestruction&           message );
+    void OnReceiveMsgNoteCreation             ( const MsgsMessengerToClient::MsgMarkerCreation&              message );
+    void OnReceiveMsgNoteUpdate               ( const MsgsMessengerToClient::MsgMarkerUpdate&                message );
+    void OnReceiveMsgNoteDestruction          ( const MsgsMessengerToClient::MsgMarkerDestruction&           message );
 
 
     // Chat

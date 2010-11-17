@@ -1753,6 +1753,20 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   inline const ::MsgsClientToSim::MsgMagicAction& magic_action() const;
   inline ::MsgsClientToSim::MsgMagicAction* mutable_magic_action();
   
+  // optional .MsgsClientToSim.MsgControlCheckPointListRequest control_checkpoint_list_request = 19;
+  inline bool has_control_checkpoint_list_request() const;
+  inline void clear_control_checkpoint_list_request();
+  static const int kControlCheckpointListRequestFieldNumber = 19;
+  inline const ::MsgsClientToSim::MsgControlCheckPointListRequest& control_checkpoint_list_request() const;
+  inline ::MsgsClientToSim::MsgControlCheckPointListRequest* mutable_control_checkpoint_list_request();
+  
+  // optional .MsgsClientToSim.MsgControlCheckPointDeleteRequest control_checkpoint_delete_request = 20;
+  inline bool has_control_checkpoint_delete_request() const;
+  inline void clear_control_checkpoint_delete_request();
+  static const int kControlCheckpointDeleteRequestFieldNumber = 20;
+  inline const ::MsgsClientToSim::MsgControlCheckPointDeleteRequest& control_checkpoint_delete_request() const;
+  inline ::MsgsClientToSim::MsgControlCheckPointDeleteRequest* mutable_control_checkpoint_delete_request();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -1775,11 +1789,13 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   ::MsgsClientToSim::MsgObjectMagicAction* object_magic_action_;
   ::MsgsClientToSim::MsgKnowledgeMagicAction* knowledge_magic_action_;
   ::MsgsClientToSim::MsgMagicAction* magic_action_;
+  ::MsgsClientToSim::MsgControlCheckPointListRequest* control_checkpoint_list_request_;
+  ::MsgsClientToSim::MsgControlCheckPointDeleteRequest* control_checkpoint_delete_request_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(18 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(20 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -2714,6 +2730,40 @@ inline ::MsgsClientToSim::MsgMagicAction* MsgClientToSim_Content::mutable_magic_
   _set_bit(17);
   if (magic_action_ == NULL) magic_action_ = new ::MsgsClientToSim::MsgMagicAction;
   return magic_action_;
+}
+
+// optional .MsgsClientToSim.MsgControlCheckPointListRequest control_checkpoint_list_request = 19;
+inline bool MsgClientToSim_Content::has_control_checkpoint_list_request() const {
+  return _has_bit(18);
+}
+inline void MsgClientToSim_Content::clear_control_checkpoint_list_request() {
+  if (control_checkpoint_list_request_ != NULL) control_checkpoint_list_request_->::MsgsClientToSim::MsgControlCheckPointListRequest::Clear();
+  _clear_bit(18);
+}
+inline const ::MsgsClientToSim::MsgControlCheckPointListRequest& MsgClientToSim_Content::control_checkpoint_list_request() const {
+  return control_checkpoint_list_request_ != NULL ? *control_checkpoint_list_request_ : *default_instance_->control_checkpoint_list_request_;
+}
+inline ::MsgsClientToSim::MsgControlCheckPointListRequest* MsgClientToSim_Content::mutable_control_checkpoint_list_request() {
+  _set_bit(18);
+  if (control_checkpoint_list_request_ == NULL) control_checkpoint_list_request_ = new ::MsgsClientToSim::MsgControlCheckPointListRequest;
+  return control_checkpoint_list_request_;
+}
+
+// optional .MsgsClientToSim.MsgControlCheckPointDeleteRequest control_checkpoint_delete_request = 20;
+inline bool MsgClientToSim_Content::has_control_checkpoint_delete_request() const {
+  return _has_bit(19);
+}
+inline void MsgClientToSim_Content::clear_control_checkpoint_delete_request() {
+  if (control_checkpoint_delete_request_ != NULL) control_checkpoint_delete_request_->::MsgsClientToSim::MsgControlCheckPointDeleteRequest::Clear();
+  _clear_bit(19);
+}
+inline const ::MsgsClientToSim::MsgControlCheckPointDeleteRequest& MsgClientToSim_Content::control_checkpoint_delete_request() const {
+  return control_checkpoint_delete_request_ != NULL ? *control_checkpoint_delete_request_ : *default_instance_->control_checkpoint_delete_request_;
+}
+inline ::MsgsClientToSim::MsgControlCheckPointDeleteRequest* MsgClientToSim_Content::mutable_control_checkpoint_delete_request() {
+  _set_bit(19);
+  if (control_checkpoint_delete_request_ == NULL) control_checkpoint_delete_request_ = new ::MsgsClientToSim::MsgControlCheckPointDeleteRequest;
+  return control_checkpoint_delete_request_;
 }
 
 // -------------------------------------------------------------------

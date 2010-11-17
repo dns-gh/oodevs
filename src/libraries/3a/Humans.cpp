@@ -25,9 +25,9 @@ Humans::Humans()
 
 namespace
 {
-    const unsigned nHumanStates = 8;
+    const unsigned nHumanStates = 9;
     typedef google::protobuf::int32 (HumanDotations_HumanDotation::*HumanDotationsMemberFn)()const;
-    HumanDotationsMemberFn humanData[8] =
+    HumanDotationsMemberFn humanData[9] =
     {
         &HumanDotations_HumanDotation::nb_total,
         &HumanDotations_HumanDotation::nb_operationnels,
@@ -37,8 +37,9 @@ namespace
         &HumanDotations_HumanDotation::nb_contamines_nbc,
         &HumanDotations_HumanDotation::nb_dans_chaine_sante,
         &HumanDotations_HumanDotation::nb_utilises_pour_maintenance,
+        &HumanDotations_HumanDotation::nb_blesses_non_evacues,
     };
-    const char* humanStates[8] =
+    const char* humanStates[9] =
     {
         "total",
         "operational",
@@ -48,6 +49,7 @@ namespace
         "nbc",
         "in-treatment",
         "in-maintenance",
+        "wounded-not-evacuated",
     };
     int ReadMask( xml::xistream& xis, const char* attribute, const char** names, unsigned count )
     {

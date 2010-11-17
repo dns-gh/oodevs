@@ -29,7 +29,7 @@
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-NoteDialog::NoteDialog( QDockWindow* parent, Publisher_ABC &publisher)
+NoteDialog::NoteDialog( QDockWindow* parent, Publisher_ABC &publisher )
     : QDialog( parent, "New Note" ),
     publisher_( publisher )
 {
@@ -86,24 +86,24 @@ void NoteDialog::OnAccept()
 {
     if (update_)
     {
-        plugins::messenger::NoteUpdateRequest message;
+        plugins::messenger::MarkerUpdateRequest message;
         message().set_name( textName_->text().ascii() );
-        message().set_id( noteId_ );
+        message().mutable_marker()->set_id( noteId_ );
         message().set_number( textId_->text().ascii() );
         QString text = textDesc_->text();
         message().set_description( text.ascii() );
-        message().set_parent( note_ );
+        message().mutable_parent()->set_id( note_ );
         message.Send(publisher_);
     }
     else
     {
-        plugins::messenger::NoteCreationRequest message;
-        message().mutable_note()->set_name( textName_->text().ascii() );
-        message().mutable_note()->set_number( textId_->text().ascii() );
+        plugins::messenger::MarkerCreationRequest message;
+        message().mutable_marker()->set_name( textName_->text().ascii() );
+        message().mutable_marker()->set_number( textId_->text().ascii() );
         QString text = textDesc_->text();
-        message().mutable_note()->set_description( text.ascii() );
-        message().mutable_note()->set_parent( note_ );
-        message.Send(publisher_);
+        message().mutable_marker()->set_description( text.ascii() );
+        message().mutable_marker()->mutable_parent()->set_id( note_ );
+        message.Send( publisher_ );
     }
 
     // $$$$ _RC_ HBD 2010-02-04: Add control for id in number
@@ -141,7 +141,7 @@ void NoteDialog::OnReject()
 // Name: NoteDialog::SetParent
 // Created: HBD 2010-02-10
 // -----------------------------------------------------------------------------
-void NoteDialog::SetParent(unsigned int note)
+void NoteDialog::SetParent( unsigned int note )
 {
      update_ = false;
      note_ = note;
@@ -154,7 +154,7 @@ void NoteDialog::SetParent(unsigned int note)
 // Name: NoteDialog::SetUpdate
 // Created: HBD 2010-02-10
 // -----------------------------------------------------------------------------
-void NoteDialog::SetUpdate(const Note& note)
+void NoteDialog::SetUpdate( const Note& note )
 {
     update_ = true;
     note_ = note.GetParent();

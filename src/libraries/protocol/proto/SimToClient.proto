@@ -66,7 +66,7 @@ message MsgSetAutomatModeAck {
         error_invalid_unit = 1;
         error_not_allowed  = 2;
     }
-   required Common.AutomatId automat    = 1;
+   required Common.AutomatId automate   = 1;
    required ErrorCode        error_code = 2;
 }
 
@@ -269,6 +269,7 @@ message MsgPartyCreation {
    required string               name           = 2;
    required Common.EnumDiplomacy type           = 3;
    optional Extension            extension      = 4;
+   optional Common.RgbColor      color          = 5;
 }
 
 message MsgFormationCreation {
@@ -277,10 +278,11 @@ message MsgFormationCreation {
     optional Common.FormationId       parent                = 3;
     required Common.EnumNatureLevel   level                 = 4;
     required string                   name                  = 5;
+    optional Extension                extension             = 6;
+    required string                   app6symbol            = 7;
     required Common.EnumLogisticLevel logistic_level        = 8;
+    optional Common.RgbColor          color                 = 9;
     optional Common.ParentEntity      logistic_base_organic = 10;
-
-    optional Extension                extension       = 6;
 }
 
 message MsgAutomatCreation {
@@ -291,7 +293,9 @@ message MsgAutomatCreation {
     required Common.PartyId                party           = 5;
     optional Common.KnowledgeGroupId       knowledge_group = 6;
     optional Extension                     extension       = 7;
+    required string                        app6symbol      = 8;
     required Common.EnumLogisticLevel      logistic_level  = 9;
+    optional Common.RgbColor               color           = 10;
 }
 
 message RulesOfEngagement {
@@ -330,6 +334,7 @@ message MsgUnitCreation {
    required string           nom       = 3;
    required Common.AutomatId automat   = 4;
    required bool             pc        = 5;
+   optional Common.RgbColor        color       = 6;
 }
 
 message BorrowedEquipments {
@@ -381,6 +386,7 @@ message HumanDotations {
         required int32                nb_contamines_nbc            = 7;
         required int32                nb_dans_chaine_sante         = 8;
         required int32                nb_utilises_pour_maintenance = 9;
+        required int32                nb_blesses_non_evacues       = 10;
     }
     repeated HumanDotation elem = 1;
 }
@@ -639,7 +645,7 @@ message MsgReport {
     required Common.ReportId             report     = 1;
     required Common.Tasker               source     = 2;
     required Common.ReportType           type       = 3;
-    required EnumReportType              category   = 4;
+    required Common.ReportCategory       category   = 4;
     required Common.MsgDateTime          time       = 5;
     optional Common.MsgMissionParameters parameters = 6;
 }
@@ -769,7 +775,7 @@ message MsgUrbanKnowledgeUpdate {
     required Common.PartyId                party                = 2; //$$$ NLD - 2010-11-03 - A priori attribut inutile (historique du a Thales MOS)
     required Common.UrbanObjectId          urban_block          = 3; 
     optional int32                         progress             = 4;
-    optional int32                         max_progress         = 5;
+    optional int32                         maxProgress          = 5;
     optional bool                          perceived            = 6;
     optional Common.AutomatIdList          automat_perceptions  = 7;
 }
@@ -850,7 +856,7 @@ message MsgLogMaintenanceHandlingDestruction {
 }
 
 message MsgLogMaintenanceEquipmentAvailability {
-   required Common.EquipmentType equipment_type  = 1;
+   required Common.EquipmentType equipment_type = 1;
    required int32 nbr_total       = 2;
    required int32 nbr_disponibles = 3; 
    required int32 nbr_au_travail  = 4;
@@ -1103,41 +1109,6 @@ message MsgControlCheckPointDeleteAck    {}
 // Current State / Initialization
 message MsgControlSendCurrentStateBegin {}
 message MsgControlSendCurrentStateEnd   {}
-
-
-// Urban 
-message MagicActionCreateUrban {
-   required string             name     = 1;
-   required Common.MsgLocation location = 2;
-}
-
-message MagicActionUpdateUrban {
-   required uint32 oid = 1;
-}
-
-message MagicActionDestroyUrban {
-   required uint32 oid = 1;
-}
-
-message MsgUrbanMagicAction {
-   optional MagicActionCreateUrban  create_urban  = 1;
-   optional MagicActionUpdateUrban  update_urban  = 2;
-   optional MagicActionDestroyUrban destroy_urban = 3;
-}
-
-message MsgUrbanMagicActionAck {
-   enum ErrorCode
-   {
-        no_error                          = 0;
-        error_invalid_urban               = 1;
-        error_invalid_id                  = 2;
-        error_invalid_camp                = 3;
-        error_invalid_localisation        = 4;
-        error_missing_specific_attributes = 5;
-        error_invalid_specific_attributes = 6;
-   }
-   required ErrorCode error_code = 1;
-}
 
 message UrbanAttributes {
     message Architecture
@@ -1394,6 +1365,9 @@ message MsgSimToClient {
         optional MsgControlGlobalWeather			            control_global_weather                         = 124;
         optional MsgControlLocalWeatherCreation		            control_local_weather_creation                 = 125;
         optional MsgControlLocalWeatherDestruction		        control_local_weather_destruction              = 126;
+        optional MsgControlCheckPointListAck                    control_checkpoint_list_ack                    = 127;
+        optional MsgControlCheckPointList                       control_checkpoint_list                        = 128;
+        optional MsgControlCheckPointDeleteAck                  control_checkpoint_delete_ack                  = 129;
         optional MsgLogSupplyPullFlowAck                        log_supply_pull_flow_ack                       = 130;
         optional MsgFormationDestruction                        formation_destruction                          = 131;
         optional MsgAutomatDestruction                          automat_destruction                            = 132;

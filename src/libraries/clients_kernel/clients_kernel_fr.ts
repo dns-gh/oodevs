@@ -38,14 +38,6 @@
         <translation>Hélicoptère</translation>
     </message>
     <message>
-        <source>Undefined</source>
-        <translation>Non-défini</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Aucun</translation>
-    </message>
-    <message>
         <source>SAA</source>
         <translation>ASA</translation>
     </message>

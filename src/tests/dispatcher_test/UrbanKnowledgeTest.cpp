@@ -99,7 +99,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
         message.mutable_urban_block()->set_id( 0 );
         message.mutable_party()->set_id( side.GetId() );
         message.set_progress( 5 );
-        message.set_max_progress( 7 );
+        message.set_maxProgress( 7 );
         message.set_perceived( true );
         message.mutable_automat_perceptions()->add_elem()->set_id( automat.GetId() );
         result->Update( message );

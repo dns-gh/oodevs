@@ -62,8 +62,8 @@ void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& m
         bIsPerceived_ = message.perceived();
     if( message.has_progress() )
         rProgress_ = message.progress();
-    if( message.has_max_progress() )
-        rMaxProgress_ = message.max_progress();
+    if( message.has_maxprogress() )
+        rMaxProgress_ = message.maxprogress();
     Touch();
 }
 

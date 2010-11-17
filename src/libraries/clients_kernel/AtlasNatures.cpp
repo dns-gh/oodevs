@@ -31,8 +31,6 @@ AtlasNatures::AtlasNatures()
     AddField( tools::translate( "AtlasNature", "Footman")         , Common::MsgAtlasNature::personnel_a_pied );
     AddField( tools::translate( "AtlasNature", "Helicopter" )     , Common::MsgAtlasNature::helicoptere );
     AddField( tools::translate( "AtlasNature", "SAA" )            , Common::MsgAtlasNature::asa );
-    AddField( tools::translate( "AtlasNature", "Undefined" )      , Common::MsgAtlasNature::indefini );
-    AddField( tools::translate( "AtlasNature", "None" )           , Common::MsgAtlasNature::none );
 }
 
 // -----------------------------------------------------------------------------

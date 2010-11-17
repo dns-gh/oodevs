@@ -109,7 +109,7 @@ void Drawing::Update()
         message().set_category( style_.GetCategory().ascii() );
         std::string color = color_.name().ascii();
         message().set_color( color.c_str() );
-        message().set_pattern( style_.GetName().ascii() );
+        message().set_template_( style_.GetName().ascii() );
         SerializeLocation( *message().mutable_points() );
         message.Send( publisher_ );
     }

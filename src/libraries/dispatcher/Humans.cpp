@@ -71,4 +71,5 @@ void Humans::Send( MsgsSimToClient::HumanDotations_HumanDotation& message ) cons
     message.set_nb_contamines_nbc         ( nNbrNBC_ );
     message.set_nb_dans_chaine_sante      ( nNbrInLogisticMedical_ );
     message.set_nb_utilises_pour_maintenance( nNbrInLogisticMaintenance_ );
+    message.set_nb_blesses_non_evacues    ( 0 );    //$$$$ RPD TO IMPLEMENT
 }

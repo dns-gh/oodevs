@@ -218,7 +218,7 @@ void MedicalTreatmentAttribute::MedicalCapacity::save( MIL_CheckPointOutArchive&
 // Name: MedicalTreatmentAttribute::Update
 // Created: JCR 2010-06-05
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::MedicalCapacity::Update( const Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity )
+void MedicalTreatmentAttribute::MedicalCapacity::Update( const Common::MedicalTreatmentBedCapacity& capacity )
 {
     if( capacity.has_type_id() )
         type_ = MIL_MedicalTreatmentType::Find( capacity.type_id() );
@@ -256,7 +256,7 @@ void MedicalTreatmentAttribute::MedicalCapacity::Update( const Common::MsgMissio
 // Name: MedicalTreatmentAttribute::Send
 // Created: JCR 2010-06-05
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::MedicalCapacity::Send( Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity ) const
+void MedicalTreatmentAttribute::MedicalCapacity::Send( Common::MedicalTreatmentBedCapacity& capacity ) const
 {
     if( type_ )
     {
@@ -317,7 +317,7 @@ void MedicalTreatmentAttribute::Update( const Common::ObjectAttributeMedicalTrea
         capacities_.resize( message.bed_capacities_size() );
     for( int i = 0 ; i < message.bed_capacities_size(); ++i )
 	{
-        const Common::ObjectAttributeMedicalTreatmentBedCapacity& bed_capacity = message.bed_capacities( i );
+        const Common::MedicalTreatmentBedCapacity& bed_capacity = message.bed_capacities( i );
         if( bed_capacity.has_type_id() )
         {
 		    if( capacities_.size() <= static_cast< unsigned int >( bed_capacity.type_id() ) )

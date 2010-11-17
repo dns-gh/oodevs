@@ -40,7 +40,7 @@ class Note
 public:
     //! @name Constructors/Destructor
     //@{
-    Note(unsigned long id, const MsgsClientToMessenger::MsgNoteCreationRequest& message, std::string currentTime );
+    Note(unsigned long id, const MsgsClientToMessenger::MsgMarkerCreationRequest& message, std::string currentTime );
              Note(unsigned long id, std::vector<std::string>& values, unsigned int parent, std::string currentTime );
     virtual ~Note();
     //@}
@@ -60,7 +60,7 @@ public:
     void AddChild( unsigned long note );
     void SetParent(unsigned long note);
 
-    void Update( const MsgsClientToMessenger::MsgNoteUpdateRequest& message, std::string currentTime );
+    void Update( const MsgsClientToMessenger::MsgMarkerUpdateRequest& message, std::string currentTime );
     virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher, bool stateParent ) const;
     virtual void SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const;

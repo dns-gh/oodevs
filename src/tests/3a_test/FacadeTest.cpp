@@ -748,6 +748,7 @@ namespace
         personnel.set_nb_contamines_nbc( state[5] );
         personnel.set_nb_dans_chaine_sante( state[6] );
         personnel.set_nb_utilises_pour_maintenance( state[7] );
+        personnel.set_nb_blesses_non_evacues( 0 );
         return result;
     }
 }

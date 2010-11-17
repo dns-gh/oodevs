@@ -58,9 +58,13 @@ class ShapeRequestAck;
 class MsgShapeCreationRequestAck;
 class MsgShapeUpdateRequestAck;
 class MsgShapeDestructionRequestAck;
-class MsgNoteCreation;
-class MsgNoteUpdate;
-class MsgNoteDestruction;
+class MsgMarkerCreation;
+class MsgMarkerUpdate;
+class MsgMarkerDestruction;
+class MarkerRequestAck;
+class MsgMarkerCreationRequestAck;
+class MsgMarkerUpdateRequestAck;
+class MsgMarkerDestructionRequestAck;
 class ClientObjectAck;
 class MsgClientObjectCreation;
 class MsgClientObjectUpdate;
@@ -130,6 +134,25 @@ inline bool ShapeRequestAck_ErrorCode_Parse(
     const ::std::string& name, ShapeRequestAck_ErrorCode* value) {
   return ::google::protobuf::internal::ParseNamedEnum<ShapeRequestAck_ErrorCode>(
     ShapeRequestAck_ErrorCode_descriptor(), name, value);
+}
+enum MarkerRequestAck_ErrorCode {
+  MarkerRequestAck_ErrorCode_no_error = 0,
+  MarkerRequestAck_ErrorCode_error_invalid_id = 1,
+  MarkerRequestAck_ErrorCode_error_invalid_parent = 2
+};
+bool MarkerRequestAck_ErrorCode_IsValid(int value);
+const MarkerRequestAck_ErrorCode MarkerRequestAck_ErrorCode_ErrorCode_MIN = MarkerRequestAck_ErrorCode_no_error;
+const MarkerRequestAck_ErrorCode MarkerRequestAck_ErrorCode_ErrorCode_MAX = MarkerRequestAck_ErrorCode_error_invalid_parent;
+
+const ::google::protobuf::EnumDescriptor* MarkerRequestAck_ErrorCode_descriptor();
+inline const ::std::string& MarkerRequestAck_ErrorCode_Name(MarkerRequestAck_ErrorCode value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MarkerRequestAck_ErrorCode_descriptor(), value);
+}
+inline bool MarkerRequestAck_ErrorCode_Parse(
+    const ::std::string& name, MarkerRequestAck_ErrorCode* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MarkerRequestAck_ErrorCode>(
+    MarkerRequestAck_ErrorCode_descriptor(), name, value);
 }
 enum ClientObjectAck_ErrorCode {
   ClientObjectAck_ErrorCode_success = 0,
@@ -2205,15 +2228,15 @@ class MsgShapeUpdate : public ::google::protobuf::Message {
   inline void set_color(const char* value, size_t size);
   inline ::std::string* mutable_color();
   
-  // optional string pattern = 4;
-  inline bool has_pattern() const;
-  inline void clear_pattern();
-  static const int kPatternFieldNumber = 4;
-  inline const ::std::string& pattern() const;
-  inline void set_pattern(const ::std::string& value);
-  inline void set_pattern(const char* value);
-  inline void set_pattern(const char* value, size_t size);
-  inline ::std::string* mutable_pattern();
+  // optional string template = 4;
+  inline bool has_template_() const;
+  inline void clear_template_();
+  static const int kTemplateFieldNumber = 4;
+  inline const ::std::string& template_() const;
+  inline void set_template_(const ::std::string& value);
+  inline void set_template_(const char* value);
+  inline void set_template_(const char* value, size_t size);
+  inline ::std::string* mutable_template_();
   
   // optional .Common.MsgCoordLatLongList points = 5;
   inline bool has_points() const;
@@ -2231,8 +2254,8 @@ class MsgShapeUpdate : public ::google::protobuf::Message {
   static const ::std::string _default_category_;
   ::std::string* color_;
   static const ::std::string _default_color_;
-  ::std::string* pattern_;
-  static const ::std::string _default_pattern_;
+  ::std::string* template__;
+  static const ::std::string _default_template__;
   ::Common::MsgCoordLatLongList* points_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
@@ -2706,14 +2729,14 @@ class MsgShapeDestructionRequestAck : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgNoteCreation : public ::google::protobuf::Message {
+class MsgMarkerCreation : public ::google::protobuf::Message {
  public:
-  MsgNoteCreation();
-  virtual ~MsgNoteCreation();
+  MsgMarkerCreation();
+  virtual ~MsgMarkerCreation();
   
-  MsgNoteCreation(const MsgNoteCreation& from);
+  MsgMarkerCreation(const MsgMarkerCreation& from);
   
-  inline MsgNoteCreation& operator=(const MsgNoteCreation& from) {
+  inline MsgMarkerCreation& operator=(const MsgMarkerCreation& from) {
     CopyFrom(from);
     return *this;
   }
@@ -2727,16 +2750,16 @@ class MsgNoteCreation : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgNoteCreation& default_instance();
-  void Swap(MsgNoteCreation* other);
+  static const MsgMarkerCreation& default_instance();
+  void Swap(MsgMarkerCreation* other);
   
   // implements Message ----------------------------------------------
   
-  MsgNoteCreation* New() const;
+  MsgMarkerCreation* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgNoteCreation& from);
-  void MergeFrom(const MsgNoteCreation& from);
+  void CopyFrom(const MsgMarkerCreation& from);
+  void MergeFrom(const MsgMarkerCreation& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -2759,43 +2782,31 @@ class MsgNoteCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline ::google::protobuf::uint32 id() const;
-  inline void set_id(::google::protobuf::uint32 value);
+  // required .Common.MarkerId marker = 1;
+  inline bool has_marker() const;
+  inline void clear_marker();
+  static const int kMarkerFieldNumber = 1;
+  inline const ::Common::MarkerId& marker() const;
+  inline ::Common::MarkerId* mutable_marker();
   
-  // required .Common.MsgNote note = 2;
-  inline bool has_note() const;
-  inline void clear_note();
-  static const int kNoteFieldNumber = 2;
-  inline const ::Common::MsgNote& note() const;
-  inline ::Common::MsgNote* mutable_note();
-  
-  // required string date = 3;
-  inline bool has_date() const;
-  inline void clear_date();
-  static const int kDateFieldNumber = 3;
-  inline const ::std::string& date() const;
-  inline void set_date(const ::std::string& value);
-  inline void set_date(const char* value);
-  inline void set_date(const char* value, size_t size);
-  inline ::std::string* mutable_date();
+  // required .Common.MsgMarker definition = 2;
+  inline bool has_definition() const;
+  inline void clear_definition();
+  static const int kDefinitionFieldNumber = 2;
+  inline const ::Common::MsgMarker& definition() const;
+  inline ::Common::MsgMarker* mutable_definition();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 id_;
-  ::Common::MsgNote* note_;
-  ::std::string* date_;
-  static const ::std::string _default_date_;
+  ::Common::MarkerId* marker_;
+  ::Common::MsgMarker* definition_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
   friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -2809,18 +2820,18 @@ class MsgNoteCreation : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgNoteCreation* default_instance_;
+  static MsgMarkerCreation* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgNoteUpdate : public ::google::protobuf::Message {
+class MsgMarkerUpdate : public ::google::protobuf::Message {
  public:
-  MsgNoteUpdate();
-  virtual ~MsgNoteUpdate();
+  MsgMarkerUpdate();
+  virtual ~MsgMarkerUpdate();
   
-  MsgNoteUpdate(const MsgNoteUpdate& from);
+  MsgMarkerUpdate(const MsgMarkerUpdate& from);
   
-  inline MsgNoteUpdate& operator=(const MsgNoteUpdate& from) {
+  inline MsgMarkerUpdate& operator=(const MsgMarkerUpdate& from) {
     CopyFrom(from);
     return *this;
   }
@@ -2834,16 +2845,16 @@ class MsgNoteUpdate : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgNoteUpdate& default_instance();
-  void Swap(MsgNoteUpdate* other);
+  static const MsgMarkerUpdate& default_instance();
+  void Swap(MsgMarkerUpdate* other);
   
   // implements Message ----------------------------------------------
   
-  MsgNoteUpdate* New() const;
+  MsgMarkerUpdate* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgNoteUpdate& from);
-  void MergeFrom(const MsgNoteUpdate& from);
+  void CopyFrom(const MsgMarkerUpdate& from);
+  void MergeFrom(const MsgMarkerUpdate& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -2866,22 +2877,19 @@ class MsgNoteUpdate : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline ::google::protobuf::uint32 id() const;
-  inline void set_id(::google::protobuf::uint32 value);
+  // required .Common.MarkerId marker = 1;
+  inline bool has_marker() const;
+  inline void clear_marker();
+  static const int kMarkerFieldNumber = 1;
+  inline const ::Common::MarkerId& marker() const;
+  inline ::Common::MarkerId* mutable_marker();
   
-  // required string date = 2;
+  // required .Common.MsgDateTime date = 2;
   inline bool has_date() const;
   inline void clear_date();
   static const int kDateFieldNumber = 2;
-  inline const ::std::string& date() const;
-  inline void set_date(const ::std::string& value);
-  inline void set_date(const char* value);
-  inline void set_date(const char* value, size_t size);
-  inline ::std::string* mutable_date();
+  inline const ::Common::MsgDateTime& date() const;
+  inline ::Common::MsgDateTime* mutable_date();
   
   // optional string name = 3;
   inline bool has_name() const;
@@ -2893,47 +2901,46 @@ class MsgNoteUpdate : public ::google::protobuf::Message {
   inline void set_name(const char* value, size_t size);
   inline ::std::string* mutable_name();
   
-  // optional string number = 4;
-  inline bool has_number() const;
-  inline void clear_number();
-  static const int kNumberFieldNumber = 4;
-  inline const ::std::string& number() const;
-  inline void set_number(const ::std::string& value);
-  inline void set_number(const char* value);
-  inline void set_number(const char* value, size_t size);
-  inline ::std::string* mutable_number();
-  
-  // optional string description = 5;
+  // optional string description = 4;
   inline bool has_description() const;
   inline void clear_description();
-  static const int kDescriptionFieldNumber = 5;
+  static const int kDescriptionFieldNumber = 4;
   inline const ::std::string& description() const;
   inline void set_description(const ::std::string& value);
   inline void set_description(const char* value);
   inline void set_description(const char* value, size_t size);
   inline ::std::string* mutable_description();
   
-  // optional uint32 parent = 6;
+  // optional .Common.MarkerId parent = 5;
   inline bool has_parent() const;
   inline void clear_parent();
-  static const int kParentFieldNumber = 6;
-  inline ::google::protobuf::uint32 parent() const;
-  inline void set_parent(::google::protobuf::uint32 value);
+  static const int kParentFieldNumber = 5;
+  inline const ::Common::MarkerId& parent() const;
+  inline ::Common::MarkerId* mutable_parent();
+  
+  // optional string number = 6;
+  inline bool has_number() const;
+  inline void clear_number();
+  static const int kNumberFieldNumber = 6;
+  inline const ::std::string& number() const;
+  inline void set_number(const ::std::string& value);
+  inline void set_number(const char* value);
+  inline void set_number(const char* value, size_t size);
+  inline ::std::string* mutable_number();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 id_;
-  ::std::string* date_;
-  static const ::std::string _default_date_;
+  ::Common::MarkerId* marker_;
+  ::Common::MsgDateTime* date_;
   ::std::string* name_;
   static const ::std::string _default_name_;
-  ::std::string* number_;
-  static const ::std::string _default_number_;
   ::std::string* description_;
   static const ::std::string _default_description_;
-  ::google::protobuf::uint32 parent_;
+  ::Common::MarkerId* parent_;
+  ::std::string* number_;
+  static const ::std::string _default_number_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
   friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
@@ -2952,18 +2959,18 @@ class MsgNoteUpdate : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgNoteUpdate* default_instance_;
+  static MsgMarkerUpdate* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgNoteDestruction : public ::google::protobuf::Message {
+class MsgMarkerDestruction : public ::google::protobuf::Message {
  public:
-  MsgNoteDestruction();
-  virtual ~MsgNoteDestruction();
+  MsgMarkerDestruction();
+  virtual ~MsgMarkerDestruction();
   
-  MsgNoteDestruction(const MsgNoteDestruction& from);
+  MsgMarkerDestruction(const MsgMarkerDestruction& from);
   
-  inline MsgNoteDestruction& operator=(const MsgNoteDestruction& from) {
+  inline MsgMarkerDestruction& operator=(const MsgMarkerDestruction& from) {
     CopyFrom(from);
     return *this;
   }
@@ -2977,16 +2984,16 @@ class MsgNoteDestruction : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgNoteDestruction& default_instance();
-  void Swap(MsgNoteDestruction* other);
+  static const MsgMarkerDestruction& default_instance();
+  void Swap(MsgMarkerDestruction* other);
   
   // implements Message ----------------------------------------------
   
-  MsgNoteDestruction* New() const;
+  MsgMarkerDestruction* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgNoteDestruction& from);
-  void MergeFrom(const MsgNoteDestruction& from);
+  void CopyFrom(const MsgMarkerDestruction& from);
+  void MergeFrom(const MsgMarkerDestruction& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -3009,18 +3016,18 @@ class MsgNoteDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline ::google::protobuf::uint32 id() const;
-  inline void set_id(::google::protobuf::uint32 value);
+  // required .Common.MarkerId marker = 1;
+  inline bool has_marker() const;
+  inline void clear_marker();
+  static const int kMarkerFieldNumber = 1;
+  inline const ::Common::MarkerId& marker() const;
+  inline ::Common::MarkerId* mutable_marker();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 id_;
+  ::Common::MarkerId* marker_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
   friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
@@ -3039,7 +3046,370 @@ class MsgNoteDestruction : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgNoteDestruction* default_instance_;
+  static MsgMarkerDestruction* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MarkerRequestAck : public ::google::protobuf::Message {
+ public:
+  MarkerRequestAck();
+  virtual ~MarkerRequestAck();
+  
+  MarkerRequestAck(const MarkerRequestAck& from);
+  
+  inline MarkerRequestAck& operator=(const MarkerRequestAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MarkerRequestAck& default_instance();
+  void Swap(MarkerRequestAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MarkerRequestAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MarkerRequestAck& from);
+  void MergeFrom(const MarkerRequestAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  typedef MarkerRequestAck_ErrorCode ErrorCode;
+  static const ErrorCode no_error = MarkerRequestAck_ErrorCode_no_error;
+  static const ErrorCode error_invalid_id = MarkerRequestAck_ErrorCode_error_invalid_id;
+  static const ErrorCode error_invalid_parent = MarkerRequestAck_ErrorCode_error_invalid_parent;
+  static inline bool ErrorCode_IsValid(int value) {
+    return MarkerRequestAck_ErrorCode_IsValid(value);
+  }
+  static const ErrorCode ErrorCode_MIN =
+    MarkerRequestAck_ErrorCode_ErrorCode_MIN;
+  static const ErrorCode ErrorCode_MAX =
+    MarkerRequestAck_ErrorCode_ErrorCode_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  ErrorCode_descriptor() {
+    return MarkerRequestAck_ErrorCode_descriptor();
+  }
+  static inline const ::std::string& ErrorCode_Name(ErrorCode value) {
+    return MarkerRequestAck_ErrorCode_Name(value);
+  }
+  static inline bool ErrorCode_Parse(const ::std::string& name,
+      ErrorCode* value) {
+    return MarkerRequestAck_ErrorCode_Parse(name, value);
+  }
+  
+  // accessors -------------------------------------------------------
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  friend void  protobuf_AddDesc_MessengerToClient_2eproto();
+  friend void protobuf_AssignDesc_MessengerToClient_2eproto();
+  friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[1];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MarkerRequestAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgMarkerCreationRequestAck : public ::google::protobuf::Message {
+ public:
+  MsgMarkerCreationRequestAck();
+  virtual ~MsgMarkerCreationRequestAck();
+  
+  MsgMarkerCreationRequestAck(const MsgMarkerCreationRequestAck& from);
+  
+  inline MsgMarkerCreationRequestAck& operator=(const MsgMarkerCreationRequestAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgMarkerCreationRequestAck& default_instance();
+  void Swap(MsgMarkerCreationRequestAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgMarkerCreationRequestAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgMarkerCreationRequestAck& from);
+  void MergeFrom(const MsgMarkerCreationRequestAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+  inline bool has_error_code() const;
+  inline void clear_error_code();
+  static const int kErrorCodeFieldNumber = 1;
+  inline ::MsgsMessengerToClient::MarkerRequestAck_ErrorCode error_code() const;
+  inline void set_error_code(::MsgsMessengerToClient::MarkerRequestAck_ErrorCode value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  int error_code_;
+  friend void  protobuf_AddDesc_MessengerToClient_2eproto();
+  friend void protobuf_AssignDesc_MessengerToClient_2eproto();
+  friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgMarkerCreationRequestAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgMarkerUpdateRequestAck : public ::google::protobuf::Message {
+ public:
+  MsgMarkerUpdateRequestAck();
+  virtual ~MsgMarkerUpdateRequestAck();
+  
+  MsgMarkerUpdateRequestAck(const MsgMarkerUpdateRequestAck& from);
+  
+  inline MsgMarkerUpdateRequestAck& operator=(const MsgMarkerUpdateRequestAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgMarkerUpdateRequestAck& default_instance();
+  void Swap(MsgMarkerUpdateRequestAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgMarkerUpdateRequestAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgMarkerUpdateRequestAck& from);
+  void MergeFrom(const MsgMarkerUpdateRequestAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+  inline bool has_error_code() const;
+  inline void clear_error_code();
+  static const int kErrorCodeFieldNumber = 1;
+  inline ::MsgsMessengerToClient::MarkerRequestAck_ErrorCode error_code() const;
+  inline void set_error_code(::MsgsMessengerToClient::MarkerRequestAck_ErrorCode value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  int error_code_;
+  friend void  protobuf_AddDesc_MessengerToClient_2eproto();
+  friend void protobuf_AssignDesc_MessengerToClient_2eproto();
+  friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgMarkerUpdateRequestAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgMarkerDestructionRequestAck : public ::google::protobuf::Message {
+ public:
+  MsgMarkerDestructionRequestAck();
+  virtual ~MsgMarkerDestructionRequestAck();
+  
+  MsgMarkerDestructionRequestAck(const MsgMarkerDestructionRequestAck& from);
+  
+  inline MsgMarkerDestructionRequestAck& operator=(const MsgMarkerDestructionRequestAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgMarkerDestructionRequestAck& default_instance();
+  void Swap(MsgMarkerDestructionRequestAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgMarkerDestructionRequestAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgMarkerDestructionRequestAck& from);
+  void MergeFrom(const MsgMarkerDestructionRequestAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+  inline bool has_error_code() const;
+  inline void clear_error_code();
+  static const int kErrorCodeFieldNumber = 1;
+  inline ::MsgsMessengerToClient::MarkerRequestAck_ErrorCode error_code() const;
+  inline void set_error_code(::MsgsMessengerToClient::MarkerRequestAck_ErrorCode value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  int error_code_;
+  friend void  protobuf_AddDesc_MessengerToClient_2eproto();
+  friend void protobuf_AssignDesc_MessengerToClient_2eproto();
+  friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgMarkerDestructionRequestAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -3970,26 +4340,26 @@ class MsgMessengerToClient_Content : public ::google::protobuf::Message {
   inline const ::Common::MsgTextMessage& text_message() const;
   inline ::Common::MsgTextMessage* mutable_text_message();
   
-  // optional .MsgsMessengerToClient.MsgNoteCreation note_creation = 26;
-  inline bool has_note_creation() const;
-  inline void clear_note_creation();
-  static const int kNoteCreationFieldNumber = 26;
-  inline const ::MsgsMessengerToClient::MsgNoteCreation& note_creation() const;
-  inline ::MsgsMessengerToClient::MsgNoteCreation* mutable_note_creation();
+  // optional .MsgsMessengerToClient.MsgMarkerCreation marker_creation = 26;
+  inline bool has_marker_creation() const;
+  inline void clear_marker_creation();
+  static const int kMarkerCreationFieldNumber = 26;
+  inline const ::MsgsMessengerToClient::MsgMarkerCreation& marker_creation() const;
+  inline ::MsgsMessengerToClient::MsgMarkerCreation* mutable_marker_creation();
   
-  // optional .MsgsMessengerToClient.MsgNoteUpdate note_update = 27;
-  inline bool has_note_update() const;
-  inline void clear_note_update();
-  static const int kNoteUpdateFieldNumber = 27;
-  inline const ::MsgsMessengerToClient::MsgNoteUpdate& note_update() const;
-  inline ::MsgsMessengerToClient::MsgNoteUpdate* mutable_note_update();
+  // optional .MsgsMessengerToClient.MsgMarkerUpdate marker_update = 27;
+  inline bool has_marker_update() const;
+  inline void clear_marker_update();
+  static const int kMarkerUpdateFieldNumber = 27;
+  inline const ::MsgsMessengerToClient::MsgMarkerUpdate& marker_update() const;
+  inline ::MsgsMessengerToClient::MsgMarkerUpdate* mutable_marker_update();
   
-  // optional .MsgsMessengerToClient.MsgNoteDestruction note_destruction = 28;
-  inline bool has_note_destruction() const;
-  inline void clear_note_destruction();
-  static const int kNoteDestructionFieldNumber = 28;
-  inline const ::MsgsMessengerToClient::MsgNoteDestruction& note_destruction() const;
-  inline ::MsgsMessengerToClient::MsgNoteDestruction* mutable_note_destruction();
+  // optional .MsgsMessengerToClient.MsgMarkerDestruction marker_destruction = 28;
+  inline bool has_marker_destruction() const;
+  inline void clear_marker_destruction();
+  static const int kMarkerDestructionFieldNumber = 28;
+  inline const ::MsgsMessengerToClient::MsgMarkerDestruction& marker_destruction() const;
+  inline ::MsgsMessengerToClient::MsgMarkerDestruction* mutable_marker_destruction();
   
   // optional .MsgsMessengerToClient.MsgClientObjectCreation client_object_creation = 29;
   inline bool has_client_object_creation() const;
@@ -4062,9 +4432,9 @@ class MsgMessengerToClient_Content : public ::google::protobuf::Message {
   ::MsgsMessengerToClient::MsgShapeDestructionRequestAck* shape_destruction_request_ack_;
   ::MsgsMessengerToClient::MsgShapeUpdateRequestAck* shape_update_request_ack_;
   ::Common::MsgTextMessage* text_message_;
-  ::MsgsMessengerToClient::MsgNoteCreation* note_creation_;
-  ::MsgsMessengerToClient::MsgNoteUpdate* note_update_;
-  ::MsgsMessengerToClient::MsgNoteDestruction* note_destruction_;
+  ::MsgsMessengerToClient::MsgMarkerCreation* marker_creation_;
+  ::MsgsMessengerToClient::MsgMarkerUpdate* marker_update_;
+  ::MsgsMessengerToClient::MsgMarkerDestruction* marker_destruction_;
   ::MsgsMessengerToClient::MsgClientObjectCreation* client_object_creation_;
   ::MsgsMessengerToClient::MsgClientObjectUpdate* client_object_update_;
   ::MsgsMessengerToClient::MsgClientObjectDestruction* client_object_destruction_;
@@ -4976,46 +5346,46 @@ inline ::std::string* MsgShapeUpdate::mutable_color() {
   return color_;
 }
 
-// optional string pattern = 4;
-inline bool MsgShapeUpdate::has_pattern() const {
+// optional string template = 4;
+inline bool MsgShapeUpdate::has_template_() const {
   return _has_bit(3);
 }
-inline void MsgShapeUpdate::clear_pattern() {
-  if (pattern_ != &_default_pattern_) {
-    pattern_->clear();
+inline void MsgShapeUpdate::clear_template_() {
+  if (template__ != &_default_template__) {
+    template__->clear();
   }
   _clear_bit(3);
 }
-inline const ::std::string& MsgShapeUpdate::pattern() const {
-  return *pattern_;
+inline const ::std::string& MsgShapeUpdate::template_() const {
+  return *template__;
 }
-inline void MsgShapeUpdate::set_pattern(const ::std::string& value) {
+inline void MsgShapeUpdate::set_template_(const ::std::string& value) {
   _set_bit(3);
-  if (pattern_ == &_default_pattern_) {
-    pattern_ = new ::std::string;
+  if (template__ == &_default_template__) {
+    template__ = new ::std::string;
   }
-  pattern_->assign(value);
+  template__->assign(value);
 }
-inline void MsgShapeUpdate::set_pattern(const char* value) {
+inline void MsgShapeUpdate::set_template_(const char* value) {
   _set_bit(3);
-  if (pattern_ == &_default_pattern_) {
-    pattern_ = new ::std::string;
+  if (template__ == &_default_template__) {
+    template__ = new ::std::string;
   }
-  pattern_->assign(value);
+  template__->assign(value);
 }
-inline void MsgShapeUpdate::set_pattern(const char* value, size_t size) {
+inline void MsgShapeUpdate::set_template_(const char* value, size_t size) {
   _set_bit(3);
-  if (pattern_ == &_default_pattern_) {
-    pattern_ = new ::std::string;
+  if (template__ == &_default_template__) {
+    template__ = new ::std::string;
   }
-  pattern_->assign(reinterpret_cast<const char*>(value), size);
+  template__->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* MsgShapeUpdate::mutable_pattern() {
+inline ::std::string* MsgShapeUpdate::mutable_template_() {
   _set_bit(3);
-  if (pattern_ == &_default_pattern_) {
-    pattern_ = new ::std::string;
+  if (template__ == &_default_template__) {
+    template__ = new ::std::string;
   }
-  return pattern_;
+  return template__;
 }
 
 // optional .Common.MsgCoordLatLongList points = 5;
@@ -5125,180 +5495,115 @@ inline void MsgShapeDestructionRequestAck::set_error_code(::MsgsMessengerToClien
 
 // -------------------------------------------------------------------
 
-// MsgNoteCreation
+// MsgMarkerCreation
 
-// required uint32 id = 1;
-inline bool MsgNoteCreation::has_id() const {
+// required .Common.MarkerId marker = 1;
+inline bool MsgMarkerCreation::has_marker() const {
   return _has_bit(0);
 }
-inline void MsgNoteCreation::clear_id() {
-  id_ = 0u;
+inline void MsgMarkerCreation::clear_marker() {
+  if (marker_ != NULL) marker_->::Common::MarkerId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgNoteCreation::id() const {
-  return id_;
+inline const ::Common::MarkerId& MsgMarkerCreation::marker() const {
+  return marker_ != NULL ? *marker_ : *default_instance_->marker_;
 }
-inline void MsgNoteCreation::set_id(::google::protobuf::uint32 value) {
+inline ::Common::MarkerId* MsgMarkerCreation::mutable_marker() {
   _set_bit(0);
-  id_ = value;
+  if (marker_ == NULL) marker_ = new ::Common::MarkerId;
+  return marker_;
 }
 
-// required .Common.MsgNote note = 2;
-inline bool MsgNoteCreation::has_note() const {
+// required .Common.MsgMarker definition = 2;
+inline bool MsgMarkerCreation::has_definition() const {
   return _has_bit(1);
 }
-inline void MsgNoteCreation::clear_note() {
-  if (note_ != NULL) note_->::Common::MsgNote::Clear();
+inline void MsgMarkerCreation::clear_definition() {
+  if (definition_ != NULL) definition_->::Common::MsgMarker::Clear();
   _clear_bit(1);
 }
-inline const ::Common::MsgNote& MsgNoteCreation::note() const {
-  return note_ != NULL ? *note_ : *default_instance_->note_;
+inline const ::Common::MsgMarker& MsgMarkerCreation::definition() const {
+  return definition_ != NULL ? *definition_ : *default_instance_->definition_;
 }
-inline ::Common::MsgNote* MsgNoteCreation::mutable_note() {
+inline ::Common::MsgMarker* MsgMarkerCreation::mutable_definition() {
   _set_bit(1);
-  if (note_ == NULL) note_ = new ::Common::MsgNote;
-  return note_;
-}
-
-// required string date = 3;
-inline bool MsgNoteCreation::has_date() const {
-  return _has_bit(2);
-}
-inline void MsgNoteCreation::clear_date() {
-  if (date_ != &_default_date_) {
-    date_->clear();
-  }
-  _clear_bit(2);
-}
-inline const ::std::string& MsgNoteCreation::date() const {
-  return *date_;
-}
-inline void MsgNoteCreation::set_date(const ::std::string& value) {
-  _set_bit(2);
-  if (date_ == &_default_date_) {
-    date_ = new ::std::string;
-  }
-  date_->assign(value);
-}
-inline void MsgNoteCreation::set_date(const char* value) {
-  _set_bit(2);
-  if (date_ == &_default_date_) {
-    date_ = new ::std::string;
-  }
-  date_->assign(value);
-}
-inline void MsgNoteCreation::set_date(const char* value, size_t size) {
-  _set_bit(2);
-  if (date_ == &_default_date_) {
-    date_ = new ::std::string;
-  }
-  date_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* MsgNoteCreation::mutable_date() {
-  _set_bit(2);
-  if (date_ == &_default_date_) {
-    date_ = new ::std::string;
-  }
-  return date_;
+  if (definition_ == NULL) definition_ = new ::Common::MsgMarker;
+  return definition_;
 }
 
 // -------------------------------------------------------------------
 
-// MsgNoteUpdate
+// MsgMarkerUpdate
 
-// required uint32 id = 1;
-inline bool MsgNoteUpdate::has_id() const {
+// required .Common.MarkerId marker = 1;
+inline bool MsgMarkerUpdate::has_marker() const {
   return _has_bit(0);
 }
-inline void MsgNoteUpdate::clear_id() {
-  id_ = 0u;
+inline void MsgMarkerUpdate::clear_marker() {
+  if (marker_ != NULL) marker_->::Common::MarkerId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgNoteUpdate::id() const {
-  return id_;
+inline const ::Common::MarkerId& MsgMarkerUpdate::marker() const {
+  return marker_ != NULL ? *marker_ : *default_instance_->marker_;
 }
-inline void MsgNoteUpdate::set_id(::google::protobuf::uint32 value) {
+inline ::Common::MarkerId* MsgMarkerUpdate::mutable_marker() {
   _set_bit(0);
-  id_ = value;
+  if (marker_ == NULL) marker_ = new ::Common::MarkerId;
+  return marker_;
 }
 
-// required string date = 2;
-inline bool MsgNoteUpdate::has_date() const {
+// required .Common.MsgDateTime date = 2;
+inline bool MsgMarkerUpdate::has_date() const {
   return _has_bit(1);
 }
-inline void MsgNoteUpdate::clear_date() {
-  if (date_ != &_default_date_) {
-    date_->clear();
-  }
+inline void MsgMarkerUpdate::clear_date() {
+  if (date_ != NULL) date_->::Common::MsgDateTime::Clear();
   _clear_bit(1);
 }
-inline const ::std::string& MsgNoteUpdate::date() const {
-  return *date_;
+inline const ::Common::MsgDateTime& MsgMarkerUpdate::date() const {
+  return date_ != NULL ? *date_ : *default_instance_->date_;
 }
-inline void MsgNoteUpdate::set_date(const ::std::string& value) {
+inline ::Common::MsgDateTime* MsgMarkerUpdate::mutable_date() {
   _set_bit(1);
-  if (date_ == &_default_date_) {
-    date_ = new ::std::string;
-  }
-  date_->assign(value);
-}
-inline void MsgNoteUpdate::set_date(const char* value) {
-  _set_bit(1);
-  if (date_ == &_default_date_) {
-    date_ = new ::std::string;
-  }
-  date_->assign(value);
-}
-inline void MsgNoteUpdate::set_date(const char* value, size_t size) {
-  _set_bit(1);
-  if (date_ == &_default_date_) {
-    date_ = new ::std::string;
-  }
-  date_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* MsgNoteUpdate::mutable_date() {
-  _set_bit(1);
-  if (date_ == &_default_date_) {
-    date_ = new ::std::string;
-  }
+  if (date_ == NULL) date_ = new ::Common::MsgDateTime;
   return date_;
 }
 
 // optional string name = 3;
-inline bool MsgNoteUpdate::has_name() const {
+inline bool MsgMarkerUpdate::has_name() const {
   return _has_bit(2);
 }
-inline void MsgNoteUpdate::clear_name() {
+inline void MsgMarkerUpdate::clear_name() {
   if (name_ != &_default_name_) {
     name_->clear();
   }
   _clear_bit(2);
 }
-inline const ::std::string& MsgNoteUpdate::name() const {
+inline const ::std::string& MsgMarkerUpdate::name() const {
   return *name_;
 }
-inline void MsgNoteUpdate::set_name(const ::std::string& value) {
+inline void MsgMarkerUpdate::set_name(const ::std::string& value) {
   _set_bit(2);
   if (name_ == &_default_name_) {
     name_ = new ::std::string;
   }
   name_->assign(value);
 }
-inline void MsgNoteUpdate::set_name(const char* value) {
+inline void MsgMarkerUpdate::set_name(const char* value) {
   _set_bit(2);
   if (name_ == &_default_name_) {
     name_ = new ::std::string;
   }
   name_->assign(value);
 }
-inline void MsgNoteUpdate::set_name(const char* value, size_t size) {
+inline void MsgMarkerUpdate::set_name(const char* value, size_t size) {
   _set_bit(2);
   if (name_ == &_default_name_) {
     name_ = new ::std::string;
   }
   name_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* MsgNoteUpdate::mutable_name() {
+inline ::std::string* MsgMarkerUpdate::mutable_name() {
   _set_bit(2);
   if (name_ == &_default_name_) {
     name_ = new ::std::string;
@@ -5306,124 +5611,193 @@ inline ::std::string* MsgNoteUpdate::mutable_name() {
   return name_;
 }
 
-// optional string number = 4;
-inline bool MsgNoteUpdate::has_number() const {
+// optional string description = 4;
+inline bool MsgMarkerUpdate::has_description() const {
   return _has_bit(3);
 }
-inline void MsgNoteUpdate::clear_number() {
-  if (number_ != &_default_number_) {
-    number_->clear();
-  }
-  _clear_bit(3);
-}
-inline const ::std::string& MsgNoteUpdate::number() const {
-  return *number_;
-}
-inline void MsgNoteUpdate::set_number(const ::std::string& value) {
-  _set_bit(3);
-  if (number_ == &_default_number_) {
-    number_ = new ::std::string;
-  }
-  number_->assign(value);
-}
-inline void MsgNoteUpdate::set_number(const char* value) {
-  _set_bit(3);
-  if (number_ == &_default_number_) {
-    number_ = new ::std::string;
-  }
-  number_->assign(value);
-}
-inline void MsgNoteUpdate::set_number(const char* value, size_t size) {
-  _set_bit(3);
-  if (number_ == &_default_number_) {
-    number_ = new ::std::string;
-  }
-  number_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* MsgNoteUpdate::mutable_number() {
-  _set_bit(3);
-  if (number_ == &_default_number_) {
-    number_ = new ::std::string;
-  }
-  return number_;
-}
-
-// optional string description = 5;
-inline bool MsgNoteUpdate::has_description() const {
-  return _has_bit(4);
-}
-inline void MsgNoteUpdate::clear_description() {
+inline void MsgMarkerUpdate::clear_description() {
   if (description_ != &_default_description_) {
     description_->clear();
   }
-  _clear_bit(4);
+  _clear_bit(3);
 }
-inline const ::std::string& MsgNoteUpdate::description() const {
+inline const ::std::string& MsgMarkerUpdate::description() const {
   return *description_;
 }
-inline void MsgNoteUpdate::set_description(const ::std::string& value) {
-  _set_bit(4);
+inline void MsgMarkerUpdate::set_description(const ::std::string& value) {
+  _set_bit(3);
   if (description_ == &_default_description_) {
     description_ = new ::std::string;
   }
   description_->assign(value);
 }
-inline void MsgNoteUpdate::set_description(const char* value) {
-  _set_bit(4);
+inline void MsgMarkerUpdate::set_description(const char* value) {
+  _set_bit(3);
   if (description_ == &_default_description_) {
     description_ = new ::std::string;
   }
   description_->assign(value);
 }
-inline void MsgNoteUpdate::set_description(const char* value, size_t size) {
-  _set_bit(4);
+inline void MsgMarkerUpdate::set_description(const char* value, size_t size) {
+  _set_bit(3);
   if (description_ == &_default_description_) {
     description_ = new ::std::string;
   }
   description_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* MsgNoteUpdate::mutable_description() {
-  _set_bit(4);
+inline ::std::string* MsgMarkerUpdate::mutable_description() {
+  _set_bit(3);
   if (description_ == &_default_description_) {
     description_ = new ::std::string;
   }
   return description_;
 }
 
-// optional uint32 parent = 6;
-inline bool MsgNoteUpdate::has_parent() const {
-  return _has_bit(5);
+// optional .Common.MarkerId parent = 5;
+inline bool MsgMarkerUpdate::has_parent() const {
+  return _has_bit(4);
 }
-inline void MsgNoteUpdate::clear_parent() {
-  parent_ = 0u;
-  _clear_bit(5);
+inline void MsgMarkerUpdate::clear_parent() {
+  if (parent_ != NULL) parent_->::Common::MarkerId::Clear();
+  _clear_bit(4);
 }
-inline ::google::protobuf::uint32 MsgNoteUpdate::parent() const {
+inline const ::Common::MarkerId& MsgMarkerUpdate::parent() const {
+  return parent_ != NULL ? *parent_ : *default_instance_->parent_;
+}
+inline ::Common::MarkerId* MsgMarkerUpdate::mutable_parent() {
+  _set_bit(4);
+  if (parent_ == NULL) parent_ = new ::Common::MarkerId;
   return parent_;
 }
-inline void MsgNoteUpdate::set_parent(::google::protobuf::uint32 value) {
+
+// optional string number = 6;
+inline bool MsgMarkerUpdate::has_number() const {
+  return _has_bit(5);
+}
+inline void MsgMarkerUpdate::clear_number() {
+  if (number_ != &_default_number_) {
+    number_->clear();
+  }
+  _clear_bit(5);
+}
+inline const ::std::string& MsgMarkerUpdate::number() const {
+  return *number_;
+}
+inline void MsgMarkerUpdate::set_number(const ::std::string& value) {
   _set_bit(5);
-  parent_ = value;
+  if (number_ == &_default_number_) {
+    number_ = new ::std::string;
+  }
+  number_->assign(value);
+}
+inline void MsgMarkerUpdate::set_number(const char* value) {
+  _set_bit(5);
+  if (number_ == &_default_number_) {
+    number_ = new ::std::string;
+  }
+  number_->assign(value);
+}
+inline void MsgMarkerUpdate::set_number(const char* value, size_t size) {
+  _set_bit(5);
+  if (number_ == &_default_number_) {
+    number_ = new ::std::string;
+  }
+  number_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgMarkerUpdate::mutable_number() {
+  _set_bit(5);
+  if (number_ == &_default_number_) {
+    number_ = new ::std::string;
+  }
+  return number_;
 }
 
 // -------------------------------------------------------------------
 
-// MsgNoteDestruction
+// MsgMarkerDestruction
 
-// required uint32 id = 1;
-inline bool MsgNoteDestruction::has_id() const {
+// required .Common.MarkerId marker = 1;
+inline bool MsgMarkerDestruction::has_marker() const {
   return _has_bit(0);
 }
-inline void MsgNoteDestruction::clear_id() {
-  id_ = 0u;
+inline void MsgMarkerDestruction::clear_marker() {
+  if (marker_ != NULL) marker_->::Common::MarkerId::Clear();
   _clear_bit(0);
 }
-inline ::google::protobuf::uint32 MsgNoteDestruction::id() const {
-  return id_;
+inline const ::Common::MarkerId& MsgMarkerDestruction::marker() const {
+  return marker_ != NULL ? *marker_ : *default_instance_->marker_;
 }
-inline void MsgNoteDestruction::set_id(::google::protobuf::uint32 value) {
+inline ::Common::MarkerId* MsgMarkerDestruction::mutable_marker() {
   _set_bit(0);
-  id_ = value;
+  if (marker_ == NULL) marker_ = new ::Common::MarkerId;
+  return marker_;
+}
+
+// -------------------------------------------------------------------
+
+// MarkerRequestAck
+
+// -------------------------------------------------------------------
+
+// MsgMarkerCreationRequestAck
+
+// required .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+inline bool MsgMarkerCreationRequestAck::has_error_code() const {
+  return _has_bit(0);
+}
+inline void MsgMarkerCreationRequestAck::clear_error_code() {
+  error_code_ = 0;
+  _clear_bit(0);
+}
+inline ::MsgsMessengerToClient::MarkerRequestAck_ErrorCode MsgMarkerCreationRequestAck::error_code() const {
+  return static_cast< ::MsgsMessengerToClient::MarkerRequestAck_ErrorCode >(error_code_);
+}
+inline void MsgMarkerCreationRequestAck::set_error_code(::MsgsMessengerToClient::MarkerRequestAck_ErrorCode value) {
+  GOOGLE_DCHECK(::MsgsMessengerToClient::MarkerRequestAck_ErrorCode_IsValid(value));
+  _set_bit(0);
+  error_code_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgMarkerUpdateRequestAck
+
+// optional .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+inline bool MsgMarkerUpdateRequestAck::has_error_code() const {
+  return _has_bit(0);
+}
+inline void MsgMarkerUpdateRequestAck::clear_error_code() {
+  error_code_ = 0;
+  _clear_bit(0);
+}
+inline ::MsgsMessengerToClient::MarkerRequestAck_ErrorCode MsgMarkerUpdateRequestAck::error_code() const {
+  return static_cast< ::MsgsMessengerToClient::MarkerRequestAck_ErrorCode >(error_code_);
+}
+inline void MsgMarkerUpdateRequestAck::set_error_code(::MsgsMessengerToClient::MarkerRequestAck_ErrorCode value) {
+  GOOGLE_DCHECK(::MsgsMessengerToClient::MarkerRequestAck_ErrorCode_IsValid(value));
+  _set_bit(0);
+  error_code_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgMarkerDestructionRequestAck
+
+// required .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+inline bool MsgMarkerDestructionRequestAck::has_error_code() const {
+  return _has_bit(0);
+}
+inline void MsgMarkerDestructionRequestAck::clear_error_code() {
+  error_code_ = 0;
+  _clear_bit(0);
+}
+inline ::MsgsMessengerToClient::MarkerRequestAck_ErrorCode MsgMarkerDestructionRequestAck::error_code() const {
+  return static_cast< ::MsgsMessengerToClient::MarkerRequestAck_ErrorCode >(error_code_);
+}
+inline void MsgMarkerDestructionRequestAck::set_error_code(::MsgsMessengerToClient::MarkerRequestAck_ErrorCode value) {
+  GOOGLE_DCHECK(::MsgsMessengerToClient::MarkerRequestAck_ErrorCode_IsValid(value));
+  _set_bit(0);
+  error_code_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -6195,55 +6569,55 @@ inline ::Common::MsgTextMessage* MsgMessengerToClient_Content::mutable_text_mess
   return text_message_;
 }
 
-// optional .MsgsMessengerToClient.MsgNoteCreation note_creation = 26;
-inline bool MsgMessengerToClient_Content::has_note_creation() const {
+// optional .MsgsMessengerToClient.MsgMarkerCreation marker_creation = 26;
+inline bool MsgMessengerToClient_Content::has_marker_creation() const {
   return _has_bit(25);
 }
-inline void MsgMessengerToClient_Content::clear_note_creation() {
-  if (note_creation_ != NULL) note_creation_->::MsgsMessengerToClient::MsgNoteCreation::Clear();
+inline void MsgMessengerToClient_Content::clear_marker_creation() {
+  if (marker_creation_ != NULL) marker_creation_->::MsgsMessengerToClient::MsgMarkerCreation::Clear();
   _clear_bit(25);
 }
-inline const ::MsgsMessengerToClient::MsgNoteCreation& MsgMessengerToClient_Content::note_creation() const {
-  return note_creation_ != NULL ? *note_creation_ : *default_instance_->note_creation_;
+inline const ::MsgsMessengerToClient::MsgMarkerCreation& MsgMessengerToClient_Content::marker_creation() const {
+  return marker_creation_ != NULL ? *marker_creation_ : *default_instance_->marker_creation_;
 }
-inline ::MsgsMessengerToClient::MsgNoteCreation* MsgMessengerToClient_Content::mutable_note_creation() {
+inline ::MsgsMessengerToClient::MsgMarkerCreation* MsgMessengerToClient_Content::mutable_marker_creation() {
   _set_bit(25);
-  if (note_creation_ == NULL) note_creation_ = new ::MsgsMessengerToClient::MsgNoteCreation;
-  return note_creation_;
+  if (marker_creation_ == NULL) marker_creation_ = new ::MsgsMessengerToClient::MsgMarkerCreation;
+  return marker_creation_;
 }
 
-// optional .MsgsMessengerToClient.MsgNoteUpdate note_update = 27;
-inline bool MsgMessengerToClient_Content::has_note_update() const {
+// optional .MsgsMessengerToClient.MsgMarkerUpdate marker_update = 27;
+inline bool MsgMessengerToClient_Content::has_marker_update() const {
   return _has_bit(26);
 }
-inline void MsgMessengerToClient_Content::clear_note_update() {
-  if (note_update_ != NULL) note_update_->::MsgsMessengerToClient::MsgNoteUpdate::Clear();
+inline void MsgMessengerToClient_Content::clear_marker_update() {
+  if (marker_update_ != NULL) marker_update_->::MsgsMessengerToClient::MsgMarkerUpdate::Clear();
   _clear_bit(26);
 }
-inline const ::MsgsMessengerToClient::MsgNoteUpdate& MsgMessengerToClient_Content::note_update() const {
-  return note_update_ != NULL ? *note_update_ : *default_instance_->note_update_;
+inline const ::MsgsMessengerToClient::MsgMarkerUpdate& MsgMessengerToClient_Content::marker_update() const {
+  return marker_update_ != NULL ? *marker_update_ : *default_instance_->marker_update_;
 }
-inline ::MsgsMessengerToClient::MsgNoteUpdate* MsgMessengerToClient_Content::mutable_note_update() {
+inline ::MsgsMessengerToClient::MsgMarkerUpdate* MsgMessengerToClient_Content::mutable_marker_update() {
   _set_bit(26);
-  if (note_update_ == NULL) note_update_ = new ::MsgsMessengerToClient::MsgNoteUpdate;
-  return note_update_;
+  if (marker_update_ == NULL) marker_update_ = new ::MsgsMessengerToClient::MsgMarkerUpdate;
+  return marker_update_;
 }
 
-// optional .MsgsMessengerToClient.MsgNoteDestruction note_destruction = 28;
-inline bool MsgMessengerToClient_Content::has_note_destruction() const {
+// optional .MsgsMessengerToClient.MsgMarkerDestruction marker_destruction = 28;
+inline bool MsgMessengerToClient_Content::has_marker_destruction() const {
   return _has_bit(27);
 }
-inline void MsgMessengerToClient_Content::clear_note_destruction() {
-  if (note_destruction_ != NULL) note_destruction_->::MsgsMessengerToClient::MsgNoteDestruction::Clear();
+inline void MsgMessengerToClient_Content::clear_marker_destruction() {
+  if (marker_destruction_ != NULL) marker_destruction_->::MsgsMessengerToClient::MsgMarkerDestruction::Clear();
   _clear_bit(27);
 }
-inline const ::MsgsMessengerToClient::MsgNoteDestruction& MsgMessengerToClient_Content::note_destruction() const {
-  return note_destruction_ != NULL ? *note_destruction_ : *default_instance_->note_destruction_;
+inline const ::MsgsMessengerToClient::MsgMarkerDestruction& MsgMessengerToClient_Content::marker_destruction() const {
+  return marker_destruction_ != NULL ? *marker_destruction_ : *default_instance_->marker_destruction_;
 }
-inline ::MsgsMessengerToClient::MsgNoteDestruction* MsgMessengerToClient_Content::mutable_note_destruction() {
+inline ::MsgsMessengerToClient::MsgMarkerDestruction* MsgMessengerToClient_Content::mutable_marker_destruction() {
   _set_bit(27);
-  if (note_destruction_ == NULL) note_destruction_ = new ::MsgsMessengerToClient::MsgNoteDestruction;
-  return note_destruction_;
+  if (marker_destruction_ == NULL) marker_destruction_ = new ::MsgsMessengerToClient::MsgMarkerDestruction;
+  return marker_destruction_;
 }
 
 // optional .MsgsMessengerToClient.MsgClientObjectCreation client_object_creation = 29;
@@ -6403,6 +6777,10 @@ inline const EnumDescriptor* GetEnumDescriptor< ::MsgsMessengerToClient::Intelli
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsMessengerToClient::ShapeRequestAck_ErrorCode>() {
   return ::MsgsMessengerToClient::ShapeRequestAck_ErrorCode_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsMessengerToClient::MarkerRequestAck_ErrorCode>() {
+  return ::MsgsMessengerToClient::MarkerRequestAck_ErrorCode_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsMessengerToClient::ClientObjectAck_ErrorCode>() {

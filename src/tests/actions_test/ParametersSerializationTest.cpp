@@ -386,7 +386,6 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AtlasNature )
         bl::bind( bl::new_ptr< actions::parameters::AtlasNature >(), bl::_1, bl::_2, bl::var( natures ) ) ) );
     BOOST_CHECK_EQUAL( Common::MsgAtlasNature::blinde,   message->value().Get( 0 ).atlasnature().nature() & Common::MsgAtlasNature::blinde );
     BOOST_CHECK_EQUAL( Common::MsgAtlasNature::vehicule, message->value().Get( 0 ).atlasnature().nature() & Common::MsgAtlasNature::vehicule );
-    BOOST_CHECK_EQUAL( Common::MsgAtlasNature::none,     message->value().Get( 0 ).atlasnature().nature() & Common::MsgAtlasNature::none );
 }
 
 // -----------------------------------------------------------------------------

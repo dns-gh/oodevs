@@ -78,7 +78,7 @@ int MedicalTreatmentAttribute::GetAvailableDoctors() const
 
 namespace 
 {
-    void UpdateCapacity( const kernel::MedicalTreatmentType& type, const Common::ObjectAttributeMedicalTreatmentBedCapacity& message, MedicalTreatmentCapacity& capacity )
+    void UpdateCapacity( const kernel::MedicalTreatmentType& type, const Common::MedicalTreatmentBedCapacity& message, MedicalTreatmentCapacity& capacity )
     {
         capacity.type_ = &type;
         capacity.name_ = type.GetName();
@@ -112,7 +112,7 @@ void MedicalTreatmentAttribute::UpdateData( const Common::ObjectAttributeMedical
         capacities_.swap( T_TreatmentCapacities( message.bed_capacities_size() ) );
     for( int i = 0 ; i < message.bed_capacities_size(); i++ )
 	{
-        const Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity = message.bed_capacities( i );
+        const Common::MedicalTreatmentBedCapacity& capacity = message.bed_capacities( i );
         if( capacity.has_type_id() )
         {
             const kernel::MedicalTreatmentType* type = resolver_.Find( capacity.type_id() );

@@ -76,10 +76,10 @@ void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& m
         optionals_.progressPresent = 1;
         rProgress_ = message.progress();
     }
-    if( message.has_max_progress() )
+    if( message.has_maxprogress() )
     {
         optionals_.maxProgressPresent = 1;
-        rMaxProgress_ = message.max_progress();
+        rMaxProgress_ = message.maxprogress();
     }
     if( message.has_automat_perceptions() )
     {
@@ -118,7 +118,7 @@ void UrbanKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( optionals_.progressPresent )
         message().set_progress( rProgress_ );
     if( optionals_.maxProgressPresent )
-        message().set_max_progress( rMaxProgress_ );
+        message().set_maxprogress( rMaxProgress_ );
     if( optionals_.automat_perceptionPresent )
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
         {

@@ -101,8 +101,8 @@ void Drawing::Update( const MsgsClientToMessenger::MsgShapeUpdateRequest& asn )
         category_ = asn.category();
     if( asn.has_color() )
         color_ = asn.color();
-    if( asn.has_pattern() )
-        pattern_ = asn.pattern();
+    if( asn.has_template_() )
+        pattern_ = asn.template_();
     if( asn.has_points() )
     {
         points_.clear();
@@ -139,7 +139,7 @@ void Drawing::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
     message().mutable_id()->set_id( id_ );
     message().set_category( category_ );
     message().set_color( color_ );
-    message().set_pattern( pattern_ );
+    message().set_template_( pattern_ );
     for (T_Points::const_iterator iter(points_.begin()); iter != points_.end(); ++iter)
         *message().mutable_points()->add_elem() = *iter;
     message.Send( publisher );

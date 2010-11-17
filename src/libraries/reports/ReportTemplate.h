@@ -73,6 +73,7 @@ private:
     const ReportFactory& factory_;
     unsigned long id_;
     QString message_;
+    QString category_;
     T_EnumerationParameters enumerations_;
     //@}
 };

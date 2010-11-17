@@ -288,7 +288,7 @@ namespace
         
         for ( int i = 0; i < medical_treatment.bed_capacities_size(); ++i ) 
         {
-            const Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity = medical_treatment.bed_capacities( i );
+            const Common::MedicalTreatmentBedCapacity& capacity = medical_treatment.bed_capacities( i );
             
             // $$$$ JCR - HACK : Do not take into account NegativeFlowIsolation which is a subset of MedicalSurgical and the last registered element!! 
             // $$$$ TODO: ADD this information in the MedicalTreatment definition and the ASN message.

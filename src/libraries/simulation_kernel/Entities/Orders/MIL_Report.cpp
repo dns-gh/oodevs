@@ -174,16 +174,16 @@ bool MIL_Report::DoSend( unsigned int nSenderId, E_Type nType, const DEC_Knowled
         MT_LOG_ERROR_MSG( "Report '" << strMessage_ << "' send failed (invalid DIA parameters)" );
         return false;
     }
-    client::Report asn;
-    asn().mutable_report()->set_id( std::numeric_limits< unsigned int >::max() - ids_.GetFreeId() ); // descending order
-    asn().mutable_type()->set_id( nID_ );
+    client::Report message;
+    message().mutable_report()->set_id( std::numeric_limits< unsigned int >::max() - ids_.GetFreeId() ); // descending order
+    message().mutable_type()->set_id( nID_ );
     // $$$$ _RC_ PHC 2010-07-07: Besoin de récuperer model...
-    MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *asn().mutable_source(), nSenderId );
-    asn().set_category( MsgsSimToClient::EnumReportType( nType ) );
-    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *asn().mutable_time() );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_source(), nSenderId );
+    message().mutable_category()->set_id( MsgsSimToClient::EnumReportType( nType ) );
+    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *message().mutable_time() );
     for( unsigned int i = 0; i < parameters_.size(); ++i )
-        if( !parameters_[i]->Copy( *params[ i ], *asn().mutable_parameters()->add_elem(), knowledgeResolver, false /*not optional*/ ) )
+        if( !parameters_[i]->Copy( *params[ i ], *message().mutable_parameters()->add_elem(), knowledgeResolver, false /*not optional*/ ) )
             return false; //$$$ Memory leak
-    asn.Send( NET_Publisher_ABC::Publisher() );
+    message.Send( NET_Publisher_ABC::Publisher() );
     return true;
 }

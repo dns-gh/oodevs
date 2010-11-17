@@ -30,8 +30,8 @@ private:
     {
         MedicalCapacity() : typeId_ ( -1 ), baseline_ ( 0 ), available_ ( 0 ), emergency_ ( 0 ) {}
 
-        void Update( const Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity );
-        void Send( Common::ObjectAttributeMedicalTreatmentBedCapacity& capacity ) const;
+        void Update( const Common::MedicalTreatmentBedCapacity& capacity );
+        void Send( Common::MedicalTreatmentBedCapacity& capacity ) const;
 
         unsigned baseline_;
         unsigned available_;

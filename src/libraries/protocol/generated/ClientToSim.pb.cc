@@ -301,7 +301,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgClientToSim));
   MsgClientToSim_Content_descriptor_ = MsgClientToSim_descriptor_->nested_type(0);
-  static const int MsgClientToSim_Content_offsets_[18] = {
+  static const int MsgClientToSim_Content_offsets_[20] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_stop_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_pause_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_resume_),
@@ -320,6 +320,8 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, object_magic_action_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, knowledge_magic_action_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, magic_action_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_checkpoint_list_request_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_checkpoint_delete_request_),
   };
   MsgClientToSim_Content_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -484,10 +486,10 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
     "equency\030\001 \002(\005\"7\n!MsgControlCheckPointDel"
     "eteRequest\022\022\n\ncheckpoint\030\001 \002(\t\"!\n\037MsgCon"
     "trolCheckPointListRequest\"3\n\033MsgControlE"
-    "nableVisionCones\022\024\n\014vision_cones\030\001 \002(\010\"\323"
-    "\t\n\016MsgClientToSim\022\017\n\007context\030\001 \001(\005\0228\n\007me"
+    "nableVisionCones\022\024\n\014vision_cones\030\001 \002(\010\"\215"
+    "\013\n\016MsgClientToSim\022\017\n\007context\030\001 \001(\005\0228\n\007me"
     "ssage\030\002 \002(\0132\'.MsgsClientToSim.MsgClientT"
-    "oSim.Content\032\365\010\n\007Content\022,\n\014control_stop"
+    "oSim.Content\032\257\n\n\007Content\022,\n\014control_stop"
     "\030\001 \001(\0132\026.Common.MsgControlStop\022.\n\rcontro"
     "l_pause\030\002 \001(\0132\027.Common.MsgControlPause\0220"
     "\n\016control_resume\030\003 \001(\0132\030.Common.MsgContr"
@@ -515,7 +517,12 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
     "tToSim.MsgObjectMagicAction\022H\n\026knowledge"
     "_magic_action\030\021 \001(\0132(.MsgsClientToSim.Ms"
     "gKnowledgeMagicAction\0225\n\014magic_action\030\022 "
-    "\001(\0132\037.MsgsClientToSim.MsgMagicAction", 3876);
+    "\001(\0132\037.MsgsClientToSim.MsgMagicAction\022Y\n\037"
+    "control_checkpoint_list_request\030\023 \001(\01320."
+    "MsgsClientToSim.MsgControlCheckPointList"
+    "Request\022]\n!control_checkpoint_delete_req"
+    "uest\030\024 \001(\01322.MsgsClientToSim.MsgControlC"
+    "heckPointDeleteRequest", 4062);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToSim.proto", &protobuf_RegisterTypes);
   MsgControlDatetimeChange::default_instance_ = new MsgControlDatetimeChange();
@@ -4017,6 +4024,8 @@ const int MsgClientToSim_Content::kUnitMagicActionFieldNumber;
 const int MsgClientToSim_Content::kObjectMagicActionFieldNumber;
 const int MsgClientToSim_Content::kKnowledgeMagicActionFieldNumber;
 const int MsgClientToSim_Content::kMagicActionFieldNumber;
+const int MsgClientToSim_Content::kControlCheckpointListRequestFieldNumber;
+const int MsgClientToSim_Content::kControlCheckpointDeleteRequestFieldNumber;
 #endif  // !_MSC_VER
 
 MsgClientToSim_Content::MsgClientToSim_Content() {
@@ -4042,6 +4051,8 @@ void MsgClientToSim_Content::InitAsDefaultInstance() {
   object_magic_action_ = const_cast< ::MsgsClientToSim::MsgObjectMagicAction*>(&::MsgsClientToSim::MsgObjectMagicAction::default_instance());
   knowledge_magic_action_ = const_cast< ::MsgsClientToSim::MsgKnowledgeMagicAction*>(&::MsgsClientToSim::MsgKnowledgeMagicAction::default_instance());
   magic_action_ = const_cast< ::MsgsClientToSim::MsgMagicAction*>(&::MsgsClientToSim::MsgMagicAction::default_instance());
+  control_checkpoint_list_request_ = const_cast< ::MsgsClientToSim::MsgControlCheckPointListRequest*>(&::MsgsClientToSim::MsgControlCheckPointListRequest::default_instance());
+  control_checkpoint_delete_request_ = const_cast< ::MsgsClientToSim::MsgControlCheckPointDeleteRequest*>(&::MsgsClientToSim::MsgControlCheckPointDeleteRequest::default_instance());
 }
 
 MsgClientToSim_Content::MsgClientToSim_Content(const MsgClientToSim_Content& from) {
@@ -4069,6 +4080,8 @@ void MsgClientToSim_Content::SharedCtor() {
   object_magic_action_ = NULL;
   knowledge_magic_action_ = NULL;
   magic_action_ = NULL;
+  control_checkpoint_list_request_ = NULL;
+  control_checkpoint_delete_request_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4096,6 +4109,8 @@ void MsgClientToSim_Content::SharedDtor() {
     delete object_magic_action_;
     delete knowledge_magic_action_;
     delete magic_action_;
+    delete control_checkpoint_list_request_;
+    delete control_checkpoint_delete_request_;
   }
 }
 
@@ -4173,6 +4188,12 @@ void MsgClientToSim_Content::Clear() {
     }
     if (_has_bit(17)) {
       if (magic_action_ != NULL) magic_action_->::MsgsClientToSim::MsgMagicAction::Clear();
+    }
+    if (_has_bit(18)) {
+      if (control_checkpoint_list_request_ != NULL) control_checkpoint_list_request_->::MsgsClientToSim::MsgControlCheckPointListRequest::Clear();
+    }
+    if (_has_bit(19)) {
+      if (control_checkpoint_delete_request_ != NULL) control_checkpoint_delete_request_->::MsgsClientToSim::MsgControlCheckPointDeleteRequest::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -4414,6 +4435,32 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_magic_action:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_magic_action()));
+        if (input->ExpectTag(154)) goto parse_control_checkpoint_list_request;
+        break;
+      }
+      
+      // optional .MsgsClientToSim.MsgControlCheckPointListRequest control_checkpoint_list_request = 19;
+      case 19: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_control_checkpoint_list_request:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_control_checkpoint_list_request()));
+        if (input->ExpectTag(162)) goto parse_control_checkpoint_delete_request;
+        break;
+      }
+      
+      // optional .MsgsClientToSim.MsgControlCheckPointDeleteRequest control_checkpoint_delete_request = 20;
+      case 20: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_control_checkpoint_delete_request:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_control_checkpoint_delete_request()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -4550,6 +4597,18 @@ void MsgClientToSim_Content::SerializeWithCachedSizes(
       18, this->magic_action(), output);
   }
   
+  // optional .MsgsClientToSim.MsgControlCheckPointListRequest control_checkpoint_list_request = 19;
+  if (_has_bit(18)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      19, this->control_checkpoint_list_request(), output);
+  }
+  
+  // optional .MsgsClientToSim.MsgControlCheckPointDeleteRequest control_checkpoint_delete_request = 20;
+  if (_has_bit(19)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      20, this->control_checkpoint_delete_request(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -4682,6 +4741,20 @@ void MsgClientToSim_Content::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         18, this->magic_action(), target);
+  }
+  
+  // optional .MsgsClientToSim.MsgControlCheckPointListRequest control_checkpoint_list_request = 19;
+  if (_has_bit(18)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        19, this->control_checkpoint_list_request(), target);
+  }
+  
+  // optional .MsgsClientToSim.MsgControlCheckPointDeleteRequest control_checkpoint_delete_request = 20;
+  if (_has_bit(19)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        20, this->control_checkpoint_delete_request(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -4825,6 +4898,20 @@ int MsgClientToSim_Content::ByteSize() const {
           this->magic_action());
     }
     
+    // optional .MsgsClientToSim.MsgControlCheckPointListRequest control_checkpoint_list_request = 19;
+    if (has_control_checkpoint_list_request()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->control_checkpoint_list_request());
+    }
+    
+    // optional .MsgsClientToSim.MsgControlCheckPointDeleteRequest control_checkpoint_delete_request = 20;
+    if (has_control_checkpoint_delete_request()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->control_checkpoint_delete_request());
+    }
+    
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -4908,6 +4995,12 @@ void MsgClientToSim_Content::MergeFrom(const MsgClientToSim_Content& from) {
     if (from._has_bit(17)) {
       mutable_magic_action()->::MsgsClientToSim::MsgMagicAction::MergeFrom(from.magic_action());
     }
+    if (from._has_bit(18)) {
+      mutable_control_checkpoint_list_request()->::MsgsClientToSim::MsgControlCheckPointListRequest::MergeFrom(from.control_checkpoint_list_request());
+    }
+    if (from._has_bit(19)) {
+      mutable_control_checkpoint_delete_request()->::MsgsClientToSim::MsgControlCheckPointDeleteRequest::MergeFrom(from.control_checkpoint_delete_request());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -4968,6 +5061,9 @@ bool MsgClientToSim_Content::IsInitialized() const {
   if (has_magic_action()) {
     if (!this->magic_action().IsInitialized()) return false;
   }
+  if (has_control_checkpoint_delete_request()) {
+    if (!this->control_checkpoint_delete_request().IsInitialized()) return false;
+  }
   return true;
 }
 
@@ -4991,6 +5087,8 @@ void MsgClientToSim_Content::Swap(MsgClientToSim_Content* other) {
     std::swap(object_magic_action_, other->object_magic_action_);
     std::swap(knowledge_magic_action_, other->knowledge_magic_action_);
     std::swap(magic_action_, other->magic_action_);
+    std::swap(control_checkpoint_list_request_, other->control_checkpoint_list_request_);
+    std::swap(control_checkpoint_delete_request_, other->control_checkpoint_delete_request_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

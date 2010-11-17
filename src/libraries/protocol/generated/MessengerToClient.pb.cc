@@ -97,15 +97,28 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgShapeDestructionRequestAck_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgShapeDestructionRequestAck_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgNoteCreation_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* MsgMarkerCreation_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgNoteCreation_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgNoteUpdate_descriptor_ = NULL;
+  MsgMarkerCreation_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgMarkerUpdate_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgNoteUpdate_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgNoteDestruction_descriptor_ = NULL;
+  MsgMarkerUpdate_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgMarkerDestruction_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgNoteDestruction_reflection_ = NULL;
+  MsgMarkerDestruction_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MarkerRequestAck_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MarkerRequestAck_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* MarkerRequestAck_ErrorCode_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* MsgMarkerCreationRequestAck_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgMarkerCreationRequestAck_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgMarkerUpdateRequestAck_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgMarkerUpdateRequestAck_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgMarkerDestructionRequestAck_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgMarkerDestructionRequestAck_reflection_ = NULL;
 const ::google::protobuf::Descriptor* ClientObjectAck_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   ClientObjectAck_reflection_ = NULL;
@@ -477,7 +490,7 @@ void protobuf_AssignDesc_MessengerToClient_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdate, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdate, category_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdate, color_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdate, pattern_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdate, template__),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgShapeUpdate, points_),
   };
   MsgShapeUpdate_reflection_ =
@@ -566,59 +579,118 @@ void protobuf_AssignDesc_MessengerToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgShapeDestructionRequestAck));
-  MsgNoteCreation_descriptor_ = file->message_type(27);
-  static const int MsgNoteCreation_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteCreation, id_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteCreation, note_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteCreation, date_),
+  MsgMarkerCreation_descriptor_ = file->message_type(27);
+  static const int MsgMarkerCreation_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerCreation, marker_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerCreation, definition_),
   };
-  MsgNoteCreation_reflection_ =
+  MsgMarkerCreation_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgNoteCreation_descriptor_,
-      MsgNoteCreation::default_instance_,
-      MsgNoteCreation_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteCreation, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteCreation, _unknown_fields_),
+      MsgMarkerCreation_descriptor_,
+      MsgMarkerCreation::default_instance_,
+      MsgMarkerCreation_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerCreation, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerCreation, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgNoteCreation));
-  MsgNoteUpdate_descriptor_ = file->message_type(28);
-  static const int MsgNoteUpdate_offsets_[6] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteUpdate, id_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteUpdate, date_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteUpdate, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteUpdate, number_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteUpdate, description_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteUpdate, parent_),
+      sizeof(MsgMarkerCreation));
+  MsgMarkerUpdate_descriptor_ = file->message_type(28);
+  static const int MsgMarkerUpdate_offsets_[6] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerUpdate, marker_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerUpdate, date_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerUpdate, name_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerUpdate, description_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerUpdate, parent_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerUpdate, number_),
   };
-  MsgNoteUpdate_reflection_ =
+  MsgMarkerUpdate_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgNoteUpdate_descriptor_,
-      MsgNoteUpdate::default_instance_,
-      MsgNoteUpdate_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteUpdate, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteUpdate, _unknown_fields_),
+      MsgMarkerUpdate_descriptor_,
+      MsgMarkerUpdate::default_instance_,
+      MsgMarkerUpdate_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerUpdate, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerUpdate, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgNoteUpdate));
-  MsgNoteDestruction_descriptor_ = file->message_type(29);
-  static const int MsgNoteDestruction_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteDestruction, id_),
+      sizeof(MsgMarkerUpdate));
+  MsgMarkerDestruction_descriptor_ = file->message_type(29);
+  static const int MsgMarkerDestruction_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerDestruction, marker_),
   };
-  MsgNoteDestruction_reflection_ =
+  MsgMarkerDestruction_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgNoteDestruction_descriptor_,
-      MsgNoteDestruction::default_instance_,
-      MsgNoteDestruction_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteDestruction, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteDestruction, _unknown_fields_),
+      MsgMarkerDestruction_descriptor_,
+      MsgMarkerDestruction::default_instance_,
+      MsgMarkerDestruction_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerDestruction, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerDestruction, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgNoteDestruction));
-  ClientObjectAck_descriptor_ = file->message_type(30);
+      sizeof(MsgMarkerDestruction));
+  MarkerRequestAck_descriptor_ = file->message_type(30);
+  static const int MarkerRequestAck_offsets_[1] = {
+  };
+  MarkerRequestAck_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MarkerRequestAck_descriptor_,
+      MarkerRequestAck::default_instance_,
+      MarkerRequestAck_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MarkerRequestAck, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MarkerRequestAck, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MarkerRequestAck));
+  MarkerRequestAck_ErrorCode_descriptor_ = MarkerRequestAck_descriptor_->enum_type(0);
+  MsgMarkerCreationRequestAck_descriptor_ = file->message_type(31);
+  static const int MsgMarkerCreationRequestAck_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerCreationRequestAck, error_code_),
+  };
+  MsgMarkerCreationRequestAck_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgMarkerCreationRequestAck_descriptor_,
+      MsgMarkerCreationRequestAck::default_instance_,
+      MsgMarkerCreationRequestAck_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerCreationRequestAck, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerCreationRequestAck, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgMarkerCreationRequestAck));
+  MsgMarkerUpdateRequestAck_descriptor_ = file->message_type(32);
+  static const int MsgMarkerUpdateRequestAck_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerUpdateRequestAck, error_code_),
+  };
+  MsgMarkerUpdateRequestAck_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgMarkerUpdateRequestAck_descriptor_,
+      MsgMarkerUpdateRequestAck::default_instance_,
+      MsgMarkerUpdateRequestAck_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerUpdateRequestAck, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerUpdateRequestAck, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgMarkerUpdateRequestAck));
+  MsgMarkerDestructionRequestAck_descriptor_ = file->message_type(33);
+  static const int MsgMarkerDestructionRequestAck_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerDestructionRequestAck, error_code_),
+  };
+  MsgMarkerDestructionRequestAck_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgMarkerDestructionRequestAck_descriptor_,
+      MsgMarkerDestructionRequestAck::default_instance_,
+      MsgMarkerDestructionRequestAck_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerDestructionRequestAck, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerDestructionRequestAck, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgMarkerDestructionRequestAck));
+  ClientObjectAck_descriptor_ = file->message_type(34);
   static const int ClientObjectAck_offsets_[1] = {
   };
   ClientObjectAck_reflection_ =
@@ -633,7 +705,7 @@ void protobuf_AssignDesc_MessengerToClient_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ClientObjectAck));
   ClientObjectAck_ErrorCode_descriptor_ = ClientObjectAck_descriptor_->enum_type(0);
-  MsgClientObjectCreation_descriptor_ = file->message_type(31);
+  MsgClientObjectCreation_descriptor_ = file->message_type(35);
   static const int MsgClientObjectCreation_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectCreation, object_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectCreation, name_),
@@ -650,7 +722,7 @@ void protobuf_AssignDesc_MessengerToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgClientObjectCreation));
-  MsgClientObjectUpdate_descriptor_ = file->message_type(32);
+  MsgClientObjectUpdate_descriptor_ = file->message_type(36);
   static const int MsgClientObjectUpdate_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectUpdate, object_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectUpdate, name_),
@@ -667,7 +739,7 @@ void protobuf_AssignDesc_MessengerToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgClientObjectUpdate));
-  MsgClientObjectDestruction_descriptor_ = file->message_type(33);
+  MsgClientObjectDestruction_descriptor_ = file->message_type(37);
   static const int MsgClientObjectDestruction_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectDestruction, object_),
   };
@@ -682,7 +754,7 @@ void protobuf_AssignDesc_MessengerToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgClientObjectDestruction));
-  MsgClientObjectCreationRequestAck_descriptor_ = file->message_type(34);
+  MsgClientObjectCreationRequestAck_descriptor_ = file->message_type(38);
   static const int MsgClientObjectCreationRequestAck_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectCreationRequestAck, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectCreationRequestAck, error_code_),
@@ -698,7 +770,7 @@ void protobuf_AssignDesc_MessengerToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgClientObjectCreationRequestAck));
-  MsgClientObjectUpdateRequestAck_descriptor_ = file->message_type(35);
+  MsgClientObjectUpdateRequestAck_descriptor_ = file->message_type(39);
   static const int MsgClientObjectUpdateRequestAck_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectUpdateRequestAck, object_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectUpdateRequestAck, error_code_),
@@ -714,7 +786,7 @@ void protobuf_AssignDesc_MessengerToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgClientObjectUpdateRequestAck));
-  MsgClientObjectDestructionRequestAck_descriptor_ = file->message_type(36);
+  MsgClientObjectDestructionRequestAck_descriptor_ = file->message_type(40);
   static const int MsgClientObjectDestructionRequestAck_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectDestructionRequestAck, object_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientObjectDestructionRequestAck, error_code_),
@@ -730,7 +802,7 @@ void protobuf_AssignDesc_MessengerToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgClientObjectDestructionRequestAck));
-  MsgMessengerToClient_descriptor_ = file->message_type(37);
+  MsgMessengerToClient_descriptor_ = file->message_type(41);
   static const int MsgMessengerToClient_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMessengerToClient, context_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMessengerToClient, message_),
@@ -773,9 +845,9 @@ void protobuf_AssignDesc_MessengerToClient_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMessengerToClient_Content, shape_destruction_request_ack_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMessengerToClient_Content, shape_update_request_ack_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMessengerToClient_Content, text_message_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMessengerToClient_Content, note_creation_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMessengerToClient_Content, note_update_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMessengerToClient_Content, note_destruction_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMessengerToClient_Content, marker_creation_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMessengerToClient_Content, marker_update_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMessengerToClient_Content, marker_destruction_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMessengerToClient_Content, client_object_creation_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMessengerToClient_Content, client_object_update_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMessengerToClient_Content, client_object_destruction_),
@@ -861,11 +933,19 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgShapeDestructionRequestAck_descriptor_, &MsgShapeDestructionRequestAck::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgNoteCreation_descriptor_, &MsgNoteCreation::default_instance());
+    MsgMarkerCreation_descriptor_, &MsgMarkerCreation::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgNoteUpdate_descriptor_, &MsgNoteUpdate::default_instance());
+    MsgMarkerUpdate_descriptor_, &MsgMarkerUpdate::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgNoteDestruction_descriptor_, &MsgNoteDestruction::default_instance());
+    MsgMarkerDestruction_descriptor_, &MsgMarkerDestruction::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MarkerRequestAck_descriptor_, &MarkerRequestAck::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgMarkerCreationRequestAck_descriptor_, &MsgMarkerCreationRequestAck::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgMarkerUpdateRequestAck_descriptor_, &MsgMarkerUpdateRequestAck::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgMarkerDestructionRequestAck_descriptor_, &MsgMarkerDestructionRequestAck::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     ClientObjectAck_descriptor_, &ClientObjectAck::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -943,12 +1023,20 @@ void protobuf_ShutdownFile_MessengerToClient_2eproto() {
   delete MsgShapeUpdateRequestAck_reflection_;
   delete MsgShapeDestructionRequestAck::default_instance_;
   delete MsgShapeDestructionRequestAck_reflection_;
-  delete MsgNoteCreation::default_instance_;
-  delete MsgNoteCreation_reflection_;
-  delete MsgNoteUpdate::default_instance_;
-  delete MsgNoteUpdate_reflection_;
-  delete MsgNoteDestruction::default_instance_;
-  delete MsgNoteDestruction_reflection_;
+  delete MsgMarkerCreation::default_instance_;
+  delete MsgMarkerCreation_reflection_;
+  delete MsgMarkerUpdate::default_instance_;
+  delete MsgMarkerUpdate_reflection_;
+  delete MsgMarkerDestruction::default_instance_;
+  delete MsgMarkerDestruction_reflection_;
+  delete MarkerRequestAck::default_instance_;
+  delete MarkerRequestAck_reflection_;
+  delete MsgMarkerCreationRequestAck::default_instance_;
+  delete MsgMarkerCreationRequestAck_reflection_;
+  delete MsgMarkerUpdateRequestAck::default_instance_;
+  delete MsgMarkerUpdateRequestAck_reflection_;
+  delete MsgMarkerDestructionRequestAck::default_instance_;
+  delete MsgMarkerDestructionRequestAck_reflection_;
   delete ClientObjectAck::default_instance_;
   delete ClientObjectAck_reflection_;
   delete MsgClientObjectCreation::default_instance_;
@@ -1036,119 +1124,132 @@ void protobuf_AddDesc_MessengerToClient_2eproto() {
     "ent.IntelligenceRequestAck.ErrorCode\"R\n\020"
     "MsgShapeCreation\022\035\n\002id\030\001 \002(\0132\021.Common.Dr"
     "awingId\022\037\n\005shape\030\002 \002(\0132\020.Common.MsgShape"
-    "\"\216\001\n\016MsgShapeUpdate\022\035\n\002id\030\001 \002(\0132\021.Common"
+    "\"\217\001\n\016MsgShapeUpdate\022\035\n\002id\030\001 \002(\0132\021.Common"
     ".DrawingId\022\020\n\010category\030\002 \001(\t\022\r\n\005color\030\003 "
-    "\001(\t\022\017\n\007pattern\030\004 \001(\t\022+\n\006points\030\005 \001(\0132\033.C"
-    "ommon.MsgCoordLatLongList\"4\n\023MsgShapeDes"
-    "truction\022\035\n\002id\030\001 \002(\0132\021.Common.DrawingId\""
-    "_\n\017ShapeRequestAck\"L\n\tErrorCode\022\014\n\010no_er"
-    "ror\020\000\022\025\n\021error_invalid_oid\020\001\022\032\n\026error_in"
-    "valid_geometry\020\002\"b\n\032MsgShapeCreationRequ"
-    "estAck\022D\n\nerror_code\030\001 \002(\01620.MsgsMesseng"
-    "erToClient.ShapeRequestAck.ErrorCode\"`\n\030"
-    "MsgShapeUpdateRequestAck\022D\n\nerror_code\030\001"
-    " \001(\01620.MsgsMessengerToClient.ShapeReques"
-    "tAck.ErrorCode\"e\n\035MsgShapeDestructionReq"
+    "\001(\t\022\020\n\010template\030\004 \001(\t\022+\n\006points\030\005 \001(\0132\033."
+    "Common.MsgCoordLatLongList\"4\n\023MsgShapeDe"
+    "struction\022\035\n\002id\030\001 \002(\0132\021.Common.DrawingId"
+    "\"_\n\017ShapeRequestAck\"L\n\tErrorCode\022\014\n\010no_e"
+    "rror\020\000\022\025\n\021error_invalid_oid\020\001\022\032\n\026error_i"
+    "nvalid_geometry\020\002\"b\n\032MsgShapeCreationReq"
     "uestAck\022D\n\nerror_code\030\001 \002(\01620.MsgsMessen"
-    "gerToClient.ShapeRequestAck.ErrorCode\"J\n"
-    "\017MsgNoteCreation\022\n\n\002id\030\001 \002(\r\022\035\n\004note\030\002 \002"
-    "(\0132\017.Common.MsgNote\022\014\n\004date\030\003 \002(\t\"l\n\rMsg"
-    "NoteUpdate\022\n\n\002id\030\001 \002(\r\022\014\n\004date\030\002 \002(\t\022\014\n\004"
-    "name\030\003 \001(\t\022\016\n\006number\030\004 \001(\t\022\023\n\013descriptio"
-    "n\030\005 \001(\t\022\016\n\006parent\030\006 \001(\r\" \n\022MsgNoteDestru"
-    "ction\022\n\n\002id\030\001 \002(\r\"|\n\017ClientObjectAck\"i\n\t"
-    "ErrorCode\022\013\n\007success\020\000\022\034\n\030duplicate_attr"
-    "ibute_name\020\001\022\032\n\026invalid_attribute_name\020\002"
-    "\022\025\n\021invalid_object_id\020\003\"\201\001\n\027MsgClientObj"
-    "ectCreation\022&\n\006object\030\001 \002(\0132\026.Common.Cli"
-    "entObjectId\022\014\n\004name\030\002 \002(\t\0220\n\nproperties\030"
-    "\003 \003(\0132\034.Common.ClientObjectProperty\"\177\n\025M"
-    "sgClientObjectUpdate\022&\n\006object\030\001 \002(\0132\026.C"
-    "ommon.ClientObjectId\022\014\n\004name\030\002 \001(\t\0220\n\npr"
-    "operties\030\003 \003(\0132\034.Common.ClientObjectProp"
-    "erty\"D\n\032MsgClientObjectDestruction\022&\n\006ob"
-    "ject\030\001 \002(\0132\026.Common.ClientObjectId\"w\n!Ms"
-    "gClientObjectCreationRequestAck\022\014\n\004name\030"
-    "\001 \002(\t\022D\n\nerror_code\030\002 \002(\01620.MsgsMessenge"
-    "rToClient.ClientObjectAck.ErrorCode\"\217\001\n\037"
-    "MsgClientObjectUpdateRequestAck\022&\n\006objec"
-    "t\030\001 \002(\0132\026.Common.ClientObjectId\022D\n\nerror"
-    "_code\030\002 \002(\01620.MsgsMessengerToClient.Clie"
-    "ntObjectAck.ErrorCode\"\224\001\n$MsgClientObjec"
-    "tDestructionRequestAck\022&\n\006object\030\001 \002(\0132\026"
-    ".Common.ClientObjectId\022D\n\nerror_code\030\002 \002"
-    "(\01620.MsgsMessengerToClient.ClientObjectA"
-    "ck.ErrorCode\"\354\025\n\024MsgMessengerToClient\022\017\n"
-    "\007context\030\001 \001(\005\022D\n\007message\030\002 \002(\01323.MsgsMe"
-    "ssengerToClient.MsgMessengerToClient.Con"
-    "tent\032\374\024\n\007Content\022?\n\016limit_creation\030\001 \001(\013"
-    "2\'.MsgsMessengerToClient.MsgLimitCreatio"
-    "n\022;\n\014limit_update\030\002 \001(\0132%.MsgsMessengerT"
-    "oClient.MsgLimitUpdate\022E\n\021limit_destruct"
-    "ion\030\003 \001(\0132*.MsgsMessengerToClient.MsgLim"
-    "itDestruction\022U\n\032limit_creation_request_"
-    "ack\030\004 \001(\01321.MsgsMessengerToClient.MsgLim"
-    "itCreationRequestAck\022[\n\035limit_destructio"
-    "n_request_ack\030\005 \001(\01324.MsgsMessengerToCli"
-    "ent.MsgLimitDestructionRequestAck\022Q\n\030lim"
-    "it_update_request_ack\030\006 \001(\0132/.MsgsMessen"
-    "gerToClient.MsgLimitUpdateRequestAck\022=\n\r"
-    "lima_creation\030\007 \001(\0132&.MsgsMessengerToCli"
-    "ent.MsgLimaCreation\0229\n\013lima_update\030\010 \001(\013"
-    "2$.MsgsMessengerToClient.MsgLimaUpdate\022C"
-    "\n\020lima_destruction\030\t \001(\0132).MsgsMessenger"
-    "ToClient.MsgLimaDestruction\022S\n\031lima_crea"
-    "tion_request_ack\030\n \001(\01320.MsgsMessengerTo"
-    "Client.MsgLimaCreationRequestAck\022Y\n\034lima"
-    "_destruction_request_ack\030\013 \001(\01323.MsgsMes"
-    "sengerToClient.MsgLimaDestructionRequest"
-    "Ack\022O\n\027lima_update_request_ack\030\014 \001(\0132..M"
-    "sgsMessengerToClient.MsgLimaUpdateReques"
-    "tAck\022M\n\025intelligence_creation\030\r \001(\0132..Ms"
+    "gerToClient.ShapeRequestAck.ErrorCode\"`\n"
+    "\030MsgShapeUpdateRequestAck\022D\n\nerror_code\030"
+    "\001 \001(\01620.MsgsMessengerToClient.ShapeReque"
+    "stAck.ErrorCode\"e\n\035MsgShapeDestructionRe"
+    "questAck\022D\n\nerror_code\030\001 \002(\01620.MsgsMesse"
+    "ngerToClient.ShapeRequestAck.ErrorCode\"\\"
+    "\n\021MsgMarkerCreation\022 \n\006marker\030\001 \002(\0132\020.Co"
+    "mmon.MarkerId\022%\n\ndefinition\030\002 \002(\0132\021.Comm"
+    "on.MsgMarker\"\253\001\n\017MsgMarkerUpdate\022 \n\006mark"
+    "er\030\001 \002(\0132\020.Common.MarkerId\022!\n\004date\030\002 \002(\013"
+    "2\023.Common.MsgDateTime\022\014\n\004name\030\003 \001(\t\022\023\n\013d"
+    "escription\030\004 \001(\t\022 \n\006parent\030\005 \001(\0132\020.Commo"
+    "n.MarkerId\022\016\n\006number\030\006 \001(\t\"8\n\024MsgMarkerD"
+    "estruction\022 \n\006marker\030\001 \002(\0132\020.Common.Mark"
+    "erId\"]\n\020MarkerRequestAck\"I\n\tErrorCode\022\014\n"
+    "\010no_error\020\000\022\024\n\020error_invalid_id\020\001\022\030\n\024err"
+    "or_invalid_parent\020\002\"d\n\033MsgMarkerCreation"
+    "RequestAck\022E\n\nerror_code\030\001 \002(\01621.MsgsMes"
+    "sengerToClient.MarkerRequestAck.ErrorCod"
+    "e\"b\n\031MsgMarkerUpdateRequestAck\022E\n\nerror_"
+    "code\030\001 \001(\01621.MsgsMessengerToClient.Marke"
+    "rRequestAck.ErrorCode\"g\n\036MsgMarkerDestru"
+    "ctionRequestAck\022E\n\nerror_code\030\001 \002(\01621.Ms"
+    "gsMessengerToClient.MarkerRequestAck.Err"
+    "orCode\"|\n\017ClientObjectAck\"i\n\tErrorCode\022\013"
+    "\n\007success\020\000\022\034\n\030duplicate_attribute_name\020"
+    "\001\022\032\n\026invalid_attribute_name\020\002\022\025\n\021invalid"
+    "_object_id\020\003\"\201\001\n\027MsgClientObjectCreation"
+    "\022&\n\006object\030\001 \002(\0132\026.Common.ClientObjectId"
+    "\022\014\n\004name\030\002 \002(\t\0220\n\nproperties\030\003 \003(\0132\034.Com"
+    "mon.ClientObjectProperty\"\177\n\025MsgClientObj"
+    "ectUpdate\022&\n\006object\030\001 \002(\0132\026.Common.Clien"
+    "tObjectId\022\014\n\004name\030\002 \001(\t\0220\n\nproperties\030\003 "
+    "\003(\0132\034.Common.ClientObjectProperty\"D\n\032Msg"
+    "ClientObjectDestruction\022&\n\006object\030\001 \002(\0132"
+    "\026.Common.ClientObjectId\"w\n!MsgClientObje"
+    "ctCreationRequestAck\022\014\n\004name\030\001 \002(\t\022D\n\ner"
+    "ror_code\030\002 \002(\01620.MsgsMessengerToClient.C"
+    "lientObjectAck.ErrorCode\"\217\001\n\037MsgClientOb"
+    "jectUpdateRequestAck\022&\n\006object\030\001 \002(\0132\026.C"
+    "ommon.ClientObjectId\022D\n\nerror_code\030\002 \002(\016"
+    "20.MsgsMessengerToClient.ClientObjectAck"
+    ".ErrorCode\"\224\001\n$MsgClientObjectDestructio"
+    "nRequestAck\022&\n\006object\030\001 \002(\0132\026.Common.Cli"
+    "entObjectId\022D\n\nerror_code\030\002 \002(\01620.MsgsMe"
+    "ssengerToClient.ClientObjectAck.ErrorCod"
+    "e\"\370\025\n\024MsgMessengerToClient\022\017\n\007context\030\001 "
+    "\001(\005\022D\n\007message\030\002 \002(\01323.MsgsMessengerToCl"
+    "ient.MsgMessengerToClient.Content\032\210\025\n\007Co"
+    "ntent\022?\n\016limit_creation\030\001 \001(\0132\'.MsgsMess"
+    "engerToClient.MsgLimitCreation\022;\n\014limit_"
+    "update\030\002 \001(\0132%.MsgsMessengerToClient.Msg"
+    "LimitUpdate\022E\n\021limit_destruction\030\003 \001(\0132*"
+    ".MsgsMessengerToClient.MsgLimitDestructi"
+    "on\022U\n\032limit_creation_request_ack\030\004 \001(\01321"
+    ".MsgsMessengerToClient.MsgLimitCreationR"
+    "equestAck\022[\n\035limit_destruction_request_a"
+    "ck\030\005 \001(\01324.MsgsMessengerToClient.MsgLimi"
+    "tDestructionRequestAck\022Q\n\030limit_update_r"
+    "equest_ack\030\006 \001(\0132/.MsgsMessengerToClient"
+    ".MsgLimitUpdateRequestAck\022=\n\rlima_creati"
+    "on\030\007 \001(\0132&.MsgsMessengerToClient.MsgLima"
+    "Creation\0229\n\013lima_update\030\010 \001(\0132$.MsgsMess"
+    "engerToClient.MsgLimaUpdate\022C\n\020lima_dest"
+    "ruction\030\t \001(\0132).MsgsMessengerToClient.Ms"
+    "gLimaDestruction\022S\n\031lima_creation_reques"
+    "t_ack\030\n \001(\01320.MsgsMessengerToClient.MsgL"
+    "imaCreationRequestAck\022Y\n\034lima_destructio"
+    "n_request_ack\030\013 \001(\01323.MsgsMessengerToCli"
+    "ent.MsgLimaDestructionRequestAck\022O\n\027lima"
+    "_update_request_ack\030\014 \001(\0132..MsgsMessenge"
+    "rToClient.MsgLimaUpdateRequestAck\022M\n\025int"
+    "elligence_creation\030\r \001(\0132..MsgsMessenger"
+    "ToClient.MsgIntelligenceCreation\022I\n\023inte"
+    "lligence_update\030\016 \001(\0132,.MsgsMessengerToC"
+    "lient.MsgIntelligenceUpdate\022S\n\030intellige"
+    "nce_destruction\030\017 \001(\01321.MsgsMessengerToC"
+    "lient.MsgIntelligenceDestruction\022c\n!inte"
+    "lligence_creation_request_ack\030\020 \001(\01328.Ms"
     "gsMessengerToClient.MsgIntelligenceCreat"
-    "ion\022I\n\023intelligence_update\030\016 \001(\0132,.MsgsM"
-    "essengerToClient.MsgIntelligenceUpdate\022S"
-    "\n\030intelligence_destruction\030\017 \001(\01321.MsgsM"
-    "essengerToClient.MsgIntelligenceDestruct"
-    "ion\022c\n!intelligence_creation_request_ack"
-    "\030\020 \001(\01328.MsgsMessengerToClient.MsgIntell"
-    "igenceCreationRequestAck\022_\n\037intelligence"
-    "_update_request_ack\030\021 \001(\01326.MsgsMessenge"
-    "rToClient.MsgIntelligenceUpdateRequestAc"
-    "k\022i\n$intelligence_destruction_request_ac"
-    "k\030\022 \001(\0132;.MsgsMessengerToClient.MsgIntel"
-    "ligenceDestructionRequestAck\022?\n\016shape_cr"
-    "eation\030\023 \001(\0132\'.MsgsMessengerToClient.Msg"
-    "ShapeCreation\022;\n\014shape_update\030\024 \001(\0132%.Ms"
-    "gsMessengerToClient.MsgShapeUpdate\022E\n\021sh"
-    "ape_destruction\030\025 \001(\0132*.MsgsMessengerToC"
-    "lient.MsgShapeDestruction\022U\n\032shape_creat"
-    "ion_request_ack\030\026 \001(\01321.MsgsMessengerToC"
-    "lient.MsgShapeCreationRequestAck\022[\n\035shap"
-    "e_destruction_request_ack\030\027 \001(\01324.MsgsMe"
-    "ssengerToClient.MsgShapeDestructionReque"
-    "stAck\022Q\n\030shape_update_request_ack\030\030 \001(\0132"
-    "/.MsgsMessengerToClient.MsgShapeUpdateRe"
-    "questAck\022,\n\014text_message\030\031 \001(\0132\026.Common."
-    "MsgTextMessage\022=\n\rnote_creation\030\032 \001(\0132&."
-    "MsgsMessengerToClient.MsgNoteCreation\0229\n"
-    "\013note_update\030\033 \001(\0132$.MsgsMessengerToClie"
-    "nt.MsgNoteUpdate\022C\n\020note_destruction\030\034 \001"
-    "(\0132).MsgsMessengerToClient.MsgNoteDestru"
-    "ction\022N\n\026client_object_creation\030\035 \001(\0132.."
-    "MsgsMessengerToClient.MsgClientObjectCre"
-    "ation\022J\n\024client_object_update\030\036 \001(\0132,.Ms"
-    "gsMessengerToClient.MsgClientObjectUpdat"
-    "e\022T\n\031client_object_destruction\030\037 \001(\01321.M"
-    "sgsMessengerToClient.MsgClientObjectDest"
-    "ruction\022\\\n\032client_object_creation_ack\030  "
-    "\001(\01328.MsgsMessengerToClient.MsgClientObj"
-    "ectCreationRequestAck\022X\n\030client_object_u"
-    "pdate_ack\030! \001(\01326.MsgsMessengerToClient."
-    "MsgClientObjectUpdateRequestAck\022b\n\035clien"
-    "t_object_destruction_ack\030\" \001(\0132;.MsgsMes"
-    "sengerToClient.MsgClientObjectDestructio"
-    "nRequestAck", 6851);
+    "ionRequestAck\022_\n\037intelligence_update_req"
+    "uest_ack\030\021 \001(\01326.MsgsMessengerToClient.M"
+    "sgIntelligenceUpdateRequestAck\022i\n$intell"
+    "igence_destruction_request_ack\030\022 \001(\0132;.M"
+    "sgsMessengerToClient.MsgIntelligenceDest"
+    "ructionRequestAck\022?\n\016shape_creation\030\023 \001("
+    "\0132\'.MsgsMessengerToClient.MsgShapeCreati"
+    "on\022;\n\014shape_update\030\024 \001(\0132%.MsgsMessenger"
+    "ToClient.MsgShapeUpdate\022E\n\021shape_destruc"
+    "tion\030\025 \001(\0132*.MsgsMessengerToClient.MsgSh"
+    "apeDestruction\022U\n\032shape_creation_request"
+    "_ack\030\026 \001(\01321.MsgsMessengerToClient.MsgSh"
+    "apeCreationRequestAck\022[\n\035shape_destructi"
+    "on_request_ack\030\027 \001(\01324.MsgsMessengerToCl"
+    "ient.MsgShapeDestructionRequestAck\022Q\n\030sh"
+    "ape_update_request_ack\030\030 \001(\0132/.MsgsMesse"
+    "ngerToClient.MsgShapeUpdateRequestAck\022,\n"
+    "\014text_message\030\031 \001(\0132\026.Common.MsgTextMess"
+    "age\022A\n\017marker_creation\030\032 \001(\0132(.MsgsMesse"
+    "ngerToClient.MsgMarkerCreation\022=\n\rmarker"
+    "_update\030\033 \001(\0132&.MsgsMessengerToClient.Ms"
+    "gMarkerUpdate\022G\n\022marker_destruction\030\034 \001("
+    "\0132+.MsgsMessengerToClient.MsgMarkerDestr"
+    "uction\022N\n\026client_object_creation\030\035 \001(\0132."
+    ".MsgsMessengerToClient.MsgClientObjectCr"
+    "eation\022J\n\024client_object_update\030\036 \001(\0132,.M"
+    "sgsMessengerToClient.MsgClientObjectUpda"
+    "te\022T\n\031client_object_destruction\030\037 \001(\01321."
+    "MsgsMessengerToClient.MsgClientObjectDes"
+    "truction\022\\\n\032client_object_creation_ack\030 "
+    " \001(\01328.MsgsMessengerToClient.MsgClientOb"
+    "jectCreationRequestAck\022X\n\030client_object_"
+    "update_ack\030! \001(\01326.MsgsMessengerToClient"
+    ".MsgClientObjectUpdateRequestAck\022b\n\035clie"
+    "nt_object_destruction_ack\030\" \001(\0132;.MsgsMe"
+    "ssengerToClient.MsgClientObjectDestructi"
+    "onRequestAck", 7372);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "MessengerToClient.proto", &protobuf_RegisterTypes);
   TacticalLineAck::default_instance_ = new TacticalLineAck();
@@ -1178,9 +1279,13 @@ void protobuf_AddDesc_MessengerToClient_2eproto() {
   MsgShapeCreationRequestAck::default_instance_ = new MsgShapeCreationRequestAck();
   MsgShapeUpdateRequestAck::default_instance_ = new MsgShapeUpdateRequestAck();
   MsgShapeDestructionRequestAck::default_instance_ = new MsgShapeDestructionRequestAck();
-  MsgNoteCreation::default_instance_ = new MsgNoteCreation();
-  MsgNoteUpdate::default_instance_ = new MsgNoteUpdate();
-  MsgNoteDestruction::default_instance_ = new MsgNoteDestruction();
+  MsgMarkerCreation::default_instance_ = new MsgMarkerCreation();
+  MsgMarkerUpdate::default_instance_ = new MsgMarkerUpdate();
+  MsgMarkerDestruction::default_instance_ = new MsgMarkerDestruction();
+  MarkerRequestAck::default_instance_ = new MarkerRequestAck();
+  MsgMarkerCreationRequestAck::default_instance_ = new MsgMarkerCreationRequestAck();
+  MsgMarkerUpdateRequestAck::default_instance_ = new MsgMarkerUpdateRequestAck();
+  MsgMarkerDestructionRequestAck::default_instance_ = new MsgMarkerDestructionRequestAck();
   ClientObjectAck::default_instance_ = new ClientObjectAck();
   MsgClientObjectCreation::default_instance_ = new MsgClientObjectCreation();
   MsgClientObjectUpdate::default_instance_ = new MsgClientObjectUpdate();
@@ -1217,9 +1322,13 @@ void protobuf_AddDesc_MessengerToClient_2eproto() {
   MsgShapeCreationRequestAck::default_instance_->InitAsDefaultInstance();
   MsgShapeUpdateRequestAck::default_instance_->InitAsDefaultInstance();
   MsgShapeDestructionRequestAck::default_instance_->InitAsDefaultInstance();
-  MsgNoteCreation::default_instance_->InitAsDefaultInstance();
-  MsgNoteUpdate::default_instance_->InitAsDefaultInstance();
-  MsgNoteDestruction::default_instance_->InitAsDefaultInstance();
+  MsgMarkerCreation::default_instance_->InitAsDefaultInstance();
+  MsgMarkerUpdate::default_instance_->InitAsDefaultInstance();
+  MsgMarkerDestruction::default_instance_->InitAsDefaultInstance();
+  MarkerRequestAck::default_instance_->InitAsDefaultInstance();
+  MsgMarkerCreationRequestAck::default_instance_->InitAsDefaultInstance();
+  MsgMarkerUpdateRequestAck::default_instance_->InitAsDefaultInstance();
+  MsgMarkerDestructionRequestAck::default_instance_->InitAsDefaultInstance();
   ClientObjectAck::default_instance_->InitAsDefaultInstance();
   MsgClientObjectCreation::default_instance_->InitAsDefaultInstance();
   MsgClientObjectUpdate::default_instance_->InitAsDefaultInstance();
@@ -6193,12 +6302,12 @@ void MsgShapeCreation::Swap(MsgShapeCreation* other) {
 
 const ::std::string MsgShapeUpdate::_default_category_;
 const ::std::string MsgShapeUpdate::_default_color_;
-const ::std::string MsgShapeUpdate::_default_pattern_;
+const ::std::string MsgShapeUpdate::_default_template__;
 #ifndef _MSC_VER
 const int MsgShapeUpdate::kIdFieldNumber;
 const int MsgShapeUpdate::kCategoryFieldNumber;
 const int MsgShapeUpdate::kColorFieldNumber;
-const int MsgShapeUpdate::kPatternFieldNumber;
+const int MsgShapeUpdate::kTemplateFieldNumber;
 const int MsgShapeUpdate::kPointsFieldNumber;
 #endif  // !_MSC_VER
 
@@ -6221,7 +6330,7 @@ void MsgShapeUpdate::SharedCtor() {
   id_ = NULL;
   category_ = const_cast< ::std::string*>(&_default_category_);
   color_ = const_cast< ::std::string*>(&_default_color_);
-  pattern_ = const_cast< ::std::string*>(&_default_pattern_);
+  template__ = const_cast< ::std::string*>(&_default_template__);
   points_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -6237,8 +6346,8 @@ void MsgShapeUpdate::SharedDtor() {
   if (color_ != &_default_color_) {
     delete color_;
   }
-  if (pattern_ != &_default_pattern_) {
-    delete pattern_;
+  if (template__ != &_default_template__) {
+    delete template__;
   }
   if (this != default_instance_) {
     delete id_;
@@ -6277,8 +6386,8 @@ void MsgShapeUpdate::Clear() {
       }
     }
     if (_has_bit(3)) {
-      if (pattern_ != &_default_pattern_) {
-        pattern_->clear();
+      if (template__ != &_default_template__) {
+        template__->clear();
       }
     }
     if (_has_bit(4)) {
@@ -6335,21 +6444,21 @@ bool MsgShapeUpdate::MergePartialFromCodedStream(
         ::google::protobuf::internal::WireFormat::VerifyUTF8String(
           this->color().data(), this->color().length(),
           ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectTag(34)) goto parse_pattern;
+        if (input->ExpectTag(34)) goto parse_template;
         break;
       }
       
-      // optional string pattern = 4;
+      // optional string template = 4;
       case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_pattern:
+       parse_template:
         DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-              input, this->mutable_pattern()));
+              input, this->mutable_template_()));
         ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-          this->pattern().data(), this->pattern().length(),
+          this->template_().data(), this->template_().length(),
           ::google::protobuf::internal::WireFormat::PARSE);
         if (input->ExpectTag(42)) goto parse_points;
         break;
@@ -6416,13 +6525,13 @@ void MsgShapeUpdate::SerializeWithCachedSizes(
       3, this->color(), output);
   }
   
-  // optional string pattern = 4;
+  // optional string template = 4;
   if (_has_bit(3)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->pattern().data(), this->pattern().length(),
+      this->template_().data(), this->template_().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      4, this->pattern(), output);
+      4, this->template_(), output);
   }
   
   // optional .Common.MsgCoordLatLongList points = 5;
@@ -6466,14 +6575,14 @@ void MsgShapeUpdate::SerializeWithCachedSizes(
         3, this->color(), target);
   }
   
-  // optional string pattern = 4;
+  // optional string template = 4;
   if (_has_bit(3)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->pattern().data(), this->pattern().length(),
+      this->template_().data(), this->template_().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->pattern(), target);
+        4, this->template_(), target);
   }
   
   // optional .Common.MsgCoordLatLongList points = 5;
@@ -6515,11 +6624,11 @@ int MsgShapeUpdate::ByteSize() const {
           this->color());
     }
     
-    // optional string pattern = 4;
-    if (has_pattern()) {
+    // optional string template = 4;
+    if (has_template_()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->pattern());
+          this->template_());
     }
     
     // optional .Common.MsgCoordLatLongList points = 5;
@@ -6564,7 +6673,7 @@ void MsgShapeUpdate::MergeFrom(const MsgShapeUpdate& from) {
       set_color(from.color());
     }
     if (from._has_bit(3)) {
-      set_pattern(from.pattern());
+      set_template_(from.template_());
     }
     if (from._has_bit(4)) {
       mutable_points()->::Common::MsgCoordLatLongList::MergeFrom(from.points());
@@ -6602,7 +6711,7 @@ void MsgShapeUpdate::Swap(MsgShapeUpdate* other) {
     std::swap(id_, other->id_);
     std::swap(category_, other->category_);
     std::swap(color_, other->color_);
-    std::swap(pattern_, other->pattern_);
+    std::swap(template__, other->template__);
     std::swap(points_, other->points_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -7630,122 +7739,98 @@ void MsgShapeDestructionRequestAck::Swap(MsgShapeDestructionRequestAck* other) {
 
 // ===================================================================
 
-const ::std::string MsgNoteCreation::_default_date_;
 #ifndef _MSC_VER
-const int MsgNoteCreation::kIdFieldNumber;
-const int MsgNoteCreation::kNoteFieldNumber;
-const int MsgNoteCreation::kDateFieldNumber;
+const int MsgMarkerCreation::kMarkerFieldNumber;
+const int MsgMarkerCreation::kDefinitionFieldNumber;
 #endif  // !_MSC_VER
 
-MsgNoteCreation::MsgNoteCreation() {
+MsgMarkerCreation::MsgMarkerCreation() {
   SharedCtor();
 }
 
-void MsgNoteCreation::InitAsDefaultInstance() {
-  note_ = const_cast< ::Common::MsgNote*>(&::Common::MsgNote::default_instance());
+void MsgMarkerCreation::InitAsDefaultInstance() {
+  marker_ = const_cast< ::Common::MarkerId*>(&::Common::MarkerId::default_instance());
+  definition_ = const_cast< ::Common::MsgMarker*>(&::Common::MsgMarker::default_instance());
 }
 
-MsgNoteCreation::MsgNoteCreation(const MsgNoteCreation& from) {
+MsgMarkerCreation::MsgMarkerCreation(const MsgMarkerCreation& from) {
   SharedCtor();
   MergeFrom(from);
 }
 
-void MsgNoteCreation::SharedCtor() {
+void MsgMarkerCreation::SharedCtor() {
   _cached_size_ = 0;
-  id_ = 0u;
-  note_ = NULL;
-  date_ = const_cast< ::std::string*>(&_default_date_);
+  marker_ = NULL;
+  definition_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-MsgNoteCreation::~MsgNoteCreation() {
+MsgMarkerCreation::~MsgMarkerCreation() {
   SharedDtor();
 }
 
-void MsgNoteCreation::SharedDtor() {
-  if (date_ != &_default_date_) {
-    delete date_;
-  }
+void MsgMarkerCreation::SharedDtor() {
   if (this != default_instance_) {
-    delete note_;
+    delete marker_;
+    delete definition_;
   }
 }
 
-const ::google::protobuf::Descriptor* MsgNoteCreation::descriptor() {
+const ::google::protobuf::Descriptor* MsgMarkerCreation::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return MsgNoteCreation_descriptor_;
+  return MsgMarkerCreation_descriptor_;
 }
 
-const MsgNoteCreation& MsgNoteCreation::default_instance() {
+const MsgMarkerCreation& MsgMarkerCreation::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_MessengerToClient_2eproto();  return *default_instance_;
 }
 
-MsgNoteCreation* MsgNoteCreation::default_instance_ = NULL;
+MsgMarkerCreation* MsgMarkerCreation::default_instance_ = NULL;
 
-MsgNoteCreation* MsgNoteCreation::New() const {
-  return new MsgNoteCreation;
+MsgMarkerCreation* MsgMarkerCreation::New() const {
+  return new MsgMarkerCreation;
 }
 
-void MsgNoteCreation::Clear() {
+void MsgMarkerCreation::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    id_ = 0u;
-    if (_has_bit(1)) {
-      if (note_ != NULL) note_->::Common::MsgNote::Clear();
+    if (_has_bit(0)) {
+      if (marker_ != NULL) marker_->::Common::MarkerId::Clear();
     }
-    if (_has_bit(2)) {
-      if (date_ != &_default_date_) {
-        date_->clear();
-      }
+    if (_has_bit(1)) {
+      if (definition_ != NULL) definition_->::Common::MsgMarker::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool MsgNoteCreation::MergePartialFromCodedStream(
+bool MsgMarkerCreation::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 id = 1;
+      // required .Common.MarkerId marker = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &id_));
-        _set_bit(0);
-        if (input->ExpectTag(18)) goto parse_note;
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_marker()));
+        if (input->ExpectTag(18)) goto parse_definition;
         break;
       }
       
-      // required .Common.MsgNote note = 2;
+      // required .Common.MsgMarker definition = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_note:
+       parse_definition:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_note()));
-        if (input->ExpectTag(26)) goto parse_date;
-        break;
-      }
-      
-      // required string date = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_date:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-              input, this->mutable_date()));
-        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-          this->date().data(), this->date().length(),
-          ::google::protobuf::internal::WireFormat::PARSE);
+             input, mutable_definition()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -7766,32 +7851,24 @@ bool MsgNoteCreation::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void MsgNoteCreation::SerializeWithCachedSizes(
+void MsgMarkerCreation::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
   if (raw_buffer != NULL) {
-    MsgNoteCreation::SerializeWithCachedSizesToArray(raw_buffer);
+    MsgMarkerCreation::SerializeWithCachedSizesToArray(raw_buffer);
     return;
   }
   
-  // required uint32 id = 1;
+  // required .Common.MarkerId marker = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->marker(), output);
   }
   
-  // required .Common.MsgNote note = 2;
+  // required .Common.MsgMarker definition = 2;
   if (_has_bit(1)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->note(), output);
-  }
-  
-  // required string date = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->date().data(), this->date().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      3, this->date(), output);
+      2, this->definition(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -7800,28 +7877,20 @@ void MsgNoteCreation::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* MsgNoteCreation::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* MsgMarkerCreation::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 id = 1;
+  // required .Common.MarkerId marker = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->id(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->marker(), target);
   }
   
-  // required .Common.MsgNote note = 2;
+  // required .Common.MsgMarker definition = 2;
   if (_has_bit(1)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->note(), target);
-  }
-  
-  // required string date = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->date().data(), this->date().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->date(), target);
+        2, this->definition(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -7831,29 +7900,22 @@ void MsgNoteCreation::SerializeWithCachedSizes(
   return target;
 }
 
-int MsgNoteCreation::ByteSize() const {
+int MsgMarkerCreation::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 id = 1;
-    if (has_id()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->id());
-    }
-    
-    // required .Common.MsgNote note = 2;
-    if (has_note()) {
+    // required .Common.MarkerId marker = 1;
+    if (has_marker()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->note());
+          this->marker());
     }
     
-    // required string date = 3;
-    if (has_date()) {
+    // required .Common.MsgMarker definition = 2;
+    if (has_definition()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->date());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->definition());
     }
     
   }
@@ -7866,10 +7928,10 @@ int MsgNoteCreation::ByteSize() const {
   return total_size;
 }
 
-void MsgNoteCreation::MergeFrom(const ::google::protobuf::Message& from) {
+void MsgMarkerCreation::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const MsgNoteCreation* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgNoteCreation*>(
+  const MsgMarkerCreation* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMarkerCreation*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -7878,144 +7940,145 @@ void MsgNoteCreation::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void MsgNoteCreation::MergeFrom(const MsgNoteCreation& from) {
+void MsgMarkerCreation::MergeFrom(const MsgMarkerCreation& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_id(from.id());
+      mutable_marker()->::Common::MarkerId::MergeFrom(from.marker());
     }
     if (from._has_bit(1)) {
-      mutable_note()->::Common::MsgNote::MergeFrom(from.note());
-    }
-    if (from._has_bit(2)) {
-      set_date(from.date());
+      mutable_definition()->::Common::MsgMarker::MergeFrom(from.definition());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void MsgNoteCreation::CopyFrom(const ::google::protobuf::Message& from) {
+void MsgMarkerCreation::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void MsgNoteCreation::CopyFrom(const MsgNoteCreation& from) {
+void MsgMarkerCreation::CopyFrom(const MsgMarkerCreation& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MsgNoteCreation::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+bool MsgMarkerCreation::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   
-  if (has_note()) {
-    if (!this->note().IsInitialized()) return false;
+  if (has_marker()) {
+    if (!this->marker().IsInitialized()) return false;
+  }
+  if (has_definition()) {
+    if (!this->definition().IsInitialized()) return false;
   }
   return true;
 }
 
-void MsgNoteCreation::Swap(MsgNoteCreation* other) {
+void MsgMarkerCreation::Swap(MsgMarkerCreation* other) {
   if (other != this) {
-    std::swap(id_, other->id_);
-    std::swap(note_, other->note_);
-    std::swap(date_, other->date_);
+    std::swap(marker_, other->marker_);
+    std::swap(definition_, other->definition_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata MsgNoteCreation::GetMetadata() const {
+::google::protobuf::Metadata MsgMarkerCreation::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgNoteCreation_descriptor_;
-  metadata.reflection = MsgNoteCreation_reflection_;
+  metadata.descriptor = MsgMarkerCreation_descriptor_;
+  metadata.reflection = MsgMarkerCreation_reflection_;
   return metadata;
 }
 
 
 // ===================================================================
 
-const ::std::string MsgNoteUpdate::_default_date_;
-const ::std::string MsgNoteUpdate::_default_name_;
-const ::std::string MsgNoteUpdate::_default_number_;
-const ::std::string MsgNoteUpdate::_default_description_;
+const ::std::string MsgMarkerUpdate::_default_name_;
+const ::std::string MsgMarkerUpdate::_default_description_;
+const ::std::string MsgMarkerUpdate::_default_number_;
 #ifndef _MSC_VER
-const int MsgNoteUpdate::kIdFieldNumber;
-const int MsgNoteUpdate::kDateFieldNumber;
-const int MsgNoteUpdate::kNameFieldNumber;
-const int MsgNoteUpdate::kNumberFieldNumber;
-const int MsgNoteUpdate::kDescriptionFieldNumber;
-const int MsgNoteUpdate::kParentFieldNumber;
+const int MsgMarkerUpdate::kMarkerFieldNumber;
+const int MsgMarkerUpdate::kDateFieldNumber;
+const int MsgMarkerUpdate::kNameFieldNumber;
+const int MsgMarkerUpdate::kDescriptionFieldNumber;
+const int MsgMarkerUpdate::kParentFieldNumber;
+const int MsgMarkerUpdate::kNumberFieldNumber;
 #endif  // !_MSC_VER
 
-MsgNoteUpdate::MsgNoteUpdate() {
+MsgMarkerUpdate::MsgMarkerUpdate() {
   SharedCtor();
 }
 
-void MsgNoteUpdate::InitAsDefaultInstance() {
+void MsgMarkerUpdate::InitAsDefaultInstance() {
+  marker_ = const_cast< ::Common::MarkerId*>(&::Common::MarkerId::default_instance());
+  date_ = const_cast< ::Common::MsgDateTime*>(&::Common::MsgDateTime::default_instance());
+  parent_ = const_cast< ::Common::MarkerId*>(&::Common::MarkerId::default_instance());
 }
 
-MsgNoteUpdate::MsgNoteUpdate(const MsgNoteUpdate& from) {
+MsgMarkerUpdate::MsgMarkerUpdate(const MsgMarkerUpdate& from) {
   SharedCtor();
   MergeFrom(from);
 }
 
-void MsgNoteUpdate::SharedCtor() {
+void MsgMarkerUpdate::SharedCtor() {
   _cached_size_ = 0;
-  id_ = 0u;
-  date_ = const_cast< ::std::string*>(&_default_date_);
+  marker_ = NULL;
+  date_ = NULL;
   name_ = const_cast< ::std::string*>(&_default_name_);
-  number_ = const_cast< ::std::string*>(&_default_number_);
   description_ = const_cast< ::std::string*>(&_default_description_);
-  parent_ = 0u;
+  parent_ = NULL;
+  number_ = const_cast< ::std::string*>(&_default_number_);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-MsgNoteUpdate::~MsgNoteUpdate() {
+MsgMarkerUpdate::~MsgMarkerUpdate() {
   SharedDtor();
 }
 
-void MsgNoteUpdate::SharedDtor() {
-  if (date_ != &_default_date_) {
-    delete date_;
-  }
+void MsgMarkerUpdate::SharedDtor() {
   if (name_ != &_default_name_) {
     delete name_;
-  }
-  if (number_ != &_default_number_) {
-    delete number_;
   }
   if (description_ != &_default_description_) {
     delete description_;
   }
+  if (number_ != &_default_number_) {
+    delete number_;
+  }
   if (this != default_instance_) {
+    delete marker_;
+    delete date_;
+    delete parent_;
   }
 }
 
-const ::google::protobuf::Descriptor* MsgNoteUpdate::descriptor() {
+const ::google::protobuf::Descriptor* MsgMarkerUpdate::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return MsgNoteUpdate_descriptor_;
+  return MsgMarkerUpdate_descriptor_;
 }
 
-const MsgNoteUpdate& MsgNoteUpdate::default_instance() {
+const MsgMarkerUpdate& MsgMarkerUpdate::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_MessengerToClient_2eproto();  return *default_instance_;
 }
 
-MsgNoteUpdate* MsgNoteUpdate::default_instance_ = NULL;
+MsgMarkerUpdate* MsgMarkerUpdate::default_instance_ = NULL;
 
-MsgNoteUpdate* MsgNoteUpdate::New() const {
-  return new MsgNoteUpdate;
+MsgMarkerUpdate* MsgMarkerUpdate::New() const {
+  return new MsgMarkerUpdate;
 }
 
-void MsgNoteUpdate::Clear() {
+void MsgMarkerUpdate::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    id_ = 0u;
+    if (_has_bit(0)) {
+      if (marker_ != NULL) marker_->::Common::MarkerId::Clear();
+    }
     if (_has_bit(1)) {
-      if (date_ != &_default_date_) {
-        date_->clear();
-      }
+      if (date_ != NULL) date_->::Common::MsgDateTime::Clear();
     }
     if (_has_bit(2)) {
       if (name_ != &_default_name_) {
@@ -8023,52 +8086,50 @@ void MsgNoteUpdate::Clear() {
       }
     }
     if (_has_bit(3)) {
-      if (number_ != &_default_number_) {
-        number_->clear();
-      }
-    }
-    if (_has_bit(4)) {
       if (description_ != &_default_description_) {
         description_->clear();
       }
     }
-    parent_ = 0u;
+    if (_has_bit(4)) {
+      if (parent_ != NULL) parent_->::Common::MarkerId::Clear();
+    }
+    if (_has_bit(5)) {
+      if (number_ != &_default_number_) {
+        number_->clear();
+      }
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool MsgNoteUpdate::MergePartialFromCodedStream(
+bool MsgMarkerUpdate::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 id = 1;
+      // required .Common.MarkerId marker = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &id_));
-        _set_bit(0);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_marker()));
         if (input->ExpectTag(18)) goto parse_date;
         break;
       }
       
-      // required string date = 2;
+      // required .Common.MsgDateTime date = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
        parse_date:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-              input, this->mutable_date()));
-        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-          this->date().data(), this->date().length(),
-          ::google::protobuf::internal::WireFormat::PARSE);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_date()));
         if (input->ExpectTag(26)) goto parse_name;
         break;
       }
@@ -8085,28 +8146,12 @@ bool MsgNoteUpdate::MergePartialFromCodedStream(
         ::google::protobuf::internal::WireFormat::VerifyUTF8String(
           this->name().data(), this->name().length(),
           ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectTag(34)) goto parse_number;
+        if (input->ExpectTag(34)) goto parse_description;
         break;
       }
       
-      // optional string number = 4;
+      // optional string description = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_number:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-              input, this->mutable_number()));
-        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-          this->number().data(), this->number().length(),
-          ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectTag(42)) goto parse_description;
-        break;
-      }
-      
-      // optional string description = 5;
-      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -8117,20 +8162,35 @@ bool MsgNoteUpdate::MergePartialFromCodedStream(
         ::google::protobuf::internal::WireFormat::VerifyUTF8String(
           this->description().data(), this->description().length(),
           ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectTag(48)) goto parse_parent;
+        if (input->ExpectTag(42)) goto parse_parent;
         break;
       }
       
-      // optional uint32 parent = 6;
-      case 6: {
+      // optional .Common.MarkerId parent = 5;
+      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
        parse_parent:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &parent_));
-        _set_bit(5);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_parent()));
+        if (input->ExpectTag(50)) goto parse_number;
+        break;
+      }
+      
+      // optional string number = 6;
+      case 6: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_number:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+              input, this->mutable_number()));
+        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+          this->number().data(), this->number().length(),
+          ::google::protobuf::internal::WireFormat::PARSE);
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -8151,25 +8211,23 @@ bool MsgNoteUpdate::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void MsgNoteUpdate::SerializeWithCachedSizes(
+void MsgMarkerUpdate::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
   if (raw_buffer != NULL) {
-    MsgNoteUpdate::SerializeWithCachedSizesToArray(raw_buffer);
+    MsgMarkerUpdate::SerializeWithCachedSizesToArray(raw_buffer);
     return;
   }
   
-  // required uint32 id = 1;
+  // required .Common.MarkerId marker = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->marker(), output);
   }
   
-  // required string date = 2;
+  // required .Common.MsgDateTime date = 2;
   if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->date().data(), this->date().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       2, this->date(), output);
   }
   
@@ -8182,27 +8240,28 @@ void MsgNoteUpdate::SerializeWithCachedSizes(
       3, this->name(), output);
   }
   
-  // optional string number = 4;
+  // optional string description = 4;
   if (_has_bit(3)) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->number().data(), this->number().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      4, this->number(), output);
-  }
-  
-  // optional string description = 5;
-  if (_has_bit(4)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->description().data(), this->description().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      5, this->description(), output);
+      4, this->description(), output);
   }
   
-  // optional uint32 parent = 6;
+  // optional .Common.MarkerId parent = 5;
+  if (_has_bit(4)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      5, this->parent(), output);
+  }
+  
+  // optional string number = 6;
   if (_has_bit(5)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->parent(), output);
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->number().data(), this->number().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      6, this->number(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -8211,20 +8270,19 @@ void MsgNoteUpdate::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* MsgNoteUpdate::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* MsgMarkerUpdate::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 id = 1;
+  // required .Common.MarkerId marker = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->id(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->marker(), target);
   }
   
-  // required string date = 2;
+  // required .Common.MsgDateTime date = 2;
   if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->date().data(), this->date().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
         2, this->date(), target);
   }
   
@@ -8238,29 +8296,31 @@ void MsgNoteUpdate::SerializeWithCachedSizes(
         3, this->name(), target);
   }
   
-  // optional string number = 4;
+  // optional string description = 4;
   if (_has_bit(3)) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->number().data(), this->number().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->number(), target);
-  }
-  
-  // optional string description = 5;
-  if (_has_bit(4)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->description().data(), this->description().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        5, this->description(), target);
+        4, this->description(), target);
   }
   
-  // optional uint32 parent = 6;
+  // optional .Common.MarkerId parent = 5;
+  if (_has_bit(4)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        5, this->parent(), target);
+  }
+  
+  // optional string number = 6;
   if (_has_bit(5)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->parent(), target);
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->number().data(), this->number().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        6, this->number(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -8270,21 +8330,21 @@ void MsgNoteUpdate::SerializeWithCachedSizes(
   return target;
 }
 
-int MsgNoteUpdate::ByteSize() const {
+int MsgMarkerUpdate::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 id = 1;
-    if (has_id()) {
+    // required .Common.MarkerId marker = 1;
+    if (has_marker()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->id());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->marker());
     }
     
-    // required string date = 2;
+    // required .Common.MsgDateTime date = 2;
     if (has_date()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->date());
     }
     
@@ -8295,25 +8355,25 @@ int MsgNoteUpdate::ByteSize() const {
           this->name());
     }
     
-    // optional string number = 4;
-    if (has_number()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->number());
-    }
-    
-    // optional string description = 5;
+    // optional string description = 4;
     if (has_description()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->description());
     }
     
-    // optional uint32 parent = 6;
+    // optional .Common.MarkerId parent = 5;
     if (has_parent()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->parent());
+    }
+    
+    // optional string number = 6;
+    if (has_number()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->number());
     }
     
   }
@@ -8326,10 +8386,10 @@ int MsgNoteUpdate::ByteSize() const {
   return total_size;
 }
 
-void MsgNoteUpdate::MergeFrom(const ::google::protobuf::Message& from) {
+void MsgMarkerUpdate::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const MsgNoteUpdate* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgNoteUpdate*>(
+  const MsgMarkerUpdate* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMarkerUpdate*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -8338,68 +8398,77 @@ void MsgNoteUpdate::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void MsgNoteUpdate::MergeFrom(const MsgNoteUpdate& from) {
+void MsgMarkerUpdate::MergeFrom(const MsgMarkerUpdate& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_id(from.id());
+      mutable_marker()->::Common::MarkerId::MergeFrom(from.marker());
     }
     if (from._has_bit(1)) {
-      set_date(from.date());
+      mutable_date()->::Common::MsgDateTime::MergeFrom(from.date());
     }
     if (from._has_bit(2)) {
       set_name(from.name());
     }
     if (from._has_bit(3)) {
-      set_number(from.number());
-    }
-    if (from._has_bit(4)) {
       set_description(from.description());
     }
+    if (from._has_bit(4)) {
+      mutable_parent()->::Common::MarkerId::MergeFrom(from.parent());
+    }
     if (from._has_bit(5)) {
-      set_parent(from.parent());
+      set_number(from.number());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void MsgNoteUpdate::CopyFrom(const ::google::protobuf::Message& from) {
+void MsgMarkerUpdate::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void MsgNoteUpdate::CopyFrom(const MsgNoteUpdate& from) {
+void MsgMarkerUpdate::CopyFrom(const MsgMarkerUpdate& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MsgNoteUpdate::IsInitialized() const {
+bool MsgMarkerUpdate::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   
+  if (has_marker()) {
+    if (!this->marker().IsInitialized()) return false;
+  }
+  if (has_date()) {
+    if (!this->date().IsInitialized()) return false;
+  }
+  if (has_parent()) {
+    if (!this->parent().IsInitialized()) return false;
+  }
   return true;
 }
 
-void MsgNoteUpdate::Swap(MsgNoteUpdate* other) {
+void MsgMarkerUpdate::Swap(MsgMarkerUpdate* other) {
   if (other != this) {
-    std::swap(id_, other->id_);
+    std::swap(marker_, other->marker_);
     std::swap(date_, other->date_);
     std::swap(name_, other->name_);
-    std::swap(number_, other->number_);
     std::swap(description_, other->description_);
     std::swap(parent_, other->parent_);
+    std::swap(number_, other->number_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata MsgNoteUpdate::GetMetadata() const {
+::google::protobuf::Metadata MsgMarkerUpdate::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgNoteUpdate_descriptor_;
-  metadata.reflection = MsgNoteUpdate_reflection_;
+  metadata.descriptor = MsgMarkerUpdate_descriptor_;
+  metadata.reflection = MsgMarkerUpdate_reflection_;
   return metadata;
 }
 
@@ -8407,74 +8476,77 @@ void MsgNoteUpdate::Swap(MsgNoteUpdate* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MsgNoteDestruction::kIdFieldNumber;
+const int MsgMarkerDestruction::kMarkerFieldNumber;
 #endif  // !_MSC_VER
 
-MsgNoteDestruction::MsgNoteDestruction() {
+MsgMarkerDestruction::MsgMarkerDestruction() {
   SharedCtor();
 }
 
-void MsgNoteDestruction::InitAsDefaultInstance() {
+void MsgMarkerDestruction::InitAsDefaultInstance() {
+  marker_ = const_cast< ::Common::MarkerId*>(&::Common::MarkerId::default_instance());
 }
 
-MsgNoteDestruction::MsgNoteDestruction(const MsgNoteDestruction& from) {
+MsgMarkerDestruction::MsgMarkerDestruction(const MsgMarkerDestruction& from) {
   SharedCtor();
   MergeFrom(from);
 }
 
-void MsgNoteDestruction::SharedCtor() {
+void MsgMarkerDestruction::SharedCtor() {
   _cached_size_ = 0;
-  id_ = 0u;
+  marker_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-MsgNoteDestruction::~MsgNoteDestruction() {
+MsgMarkerDestruction::~MsgMarkerDestruction() {
   SharedDtor();
 }
 
-void MsgNoteDestruction::SharedDtor() {
+void MsgMarkerDestruction::SharedDtor() {
   if (this != default_instance_) {
+    delete marker_;
   }
 }
 
-const ::google::protobuf::Descriptor* MsgNoteDestruction::descriptor() {
+const ::google::protobuf::Descriptor* MsgMarkerDestruction::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return MsgNoteDestruction_descriptor_;
+  return MsgMarkerDestruction_descriptor_;
 }
 
-const MsgNoteDestruction& MsgNoteDestruction::default_instance() {
+const MsgMarkerDestruction& MsgMarkerDestruction::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_MessengerToClient_2eproto();  return *default_instance_;
 }
 
-MsgNoteDestruction* MsgNoteDestruction::default_instance_ = NULL;
+MsgMarkerDestruction* MsgMarkerDestruction::default_instance_ = NULL;
 
-MsgNoteDestruction* MsgNoteDestruction::New() const {
-  return new MsgNoteDestruction;
+MsgMarkerDestruction* MsgMarkerDestruction::New() const {
+  return new MsgMarkerDestruction;
 }
 
-void MsgNoteDestruction::Clear() {
+void MsgMarkerDestruction::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    id_ = 0u;
+    if (_has_bit(0)) {
+      if (marker_ != NULL) marker_->::Common::MarkerId::Clear();
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool MsgNoteDestruction::MergePartialFromCodedStream(
+bool MsgMarkerDestruction::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 id = 1;
+      // required .Common.MarkerId marker = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &id_));
-        _set_bit(0);
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_marker()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -8495,17 +8567,18 @@ bool MsgNoteDestruction::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void MsgNoteDestruction::SerializeWithCachedSizes(
+void MsgMarkerDestruction::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
   if (raw_buffer != NULL) {
-    MsgNoteDestruction::SerializeWithCachedSizesToArray(raw_buffer);
+    MsgMarkerDestruction::SerializeWithCachedSizesToArray(raw_buffer);
     return;
   }
   
-  // required uint32 id = 1;
+  // required .Common.MarkerId marker = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->marker(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -8514,11 +8587,13 @@ void MsgNoteDestruction::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* MsgNoteDestruction::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* MsgMarkerDestruction::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 id = 1;
+  // required .Common.MarkerId marker = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->id(), target);
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->marker(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -8528,15 +8603,15 @@ void MsgNoteDestruction::SerializeWithCachedSizes(
   return target;
 }
 
-int MsgNoteDestruction::ByteSize() const {
+int MsgMarkerDestruction::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 id = 1;
-    if (has_id()) {
+    // required .Common.MarkerId marker = 1;
+    if (has_marker()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->id());
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->marker());
     }
     
   }
@@ -8549,10 +8624,10 @@ int MsgNoteDestruction::ByteSize() const {
   return total_size;
 }
 
-void MsgNoteDestruction::MergeFrom(const ::google::protobuf::Message& from) {
+void MsgMarkerDestruction::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const MsgNoteDestruction* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgNoteDestruction*>(
+  const MsgMarkerDestruction* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMarkerDestruction*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -8561,48 +8636,848 @@ void MsgNoteDestruction::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void MsgNoteDestruction::MergeFrom(const MsgNoteDestruction& from) {
+void MsgMarkerDestruction::MergeFrom(const MsgMarkerDestruction& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_id(from.id());
+      mutable_marker()->::Common::MarkerId::MergeFrom(from.marker());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void MsgNoteDestruction::CopyFrom(const ::google::protobuf::Message& from) {
+void MsgMarkerDestruction::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void MsgNoteDestruction::CopyFrom(const MsgNoteDestruction& from) {
+void MsgMarkerDestruction::CopyFrom(const MsgMarkerDestruction& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MsgNoteDestruction::IsInitialized() const {
+bool MsgMarkerDestruction::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
+  if (has_marker()) {
+    if (!this->marker().IsInitialized()) return false;
+  }
   return true;
 }
 
-void MsgNoteDestruction::Swap(MsgNoteDestruction* other) {
+void MsgMarkerDestruction::Swap(MsgMarkerDestruction* other) {
   if (other != this) {
-    std::swap(id_, other->id_);
+    std::swap(marker_, other->marker_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata MsgNoteDestruction::GetMetadata() const {
+::google::protobuf::Metadata MsgMarkerDestruction::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgNoteDestruction_descriptor_;
-  metadata.reflection = MsgNoteDestruction_reflection_;
+  metadata.descriptor = MsgMarkerDestruction_descriptor_;
+  metadata.reflection = MsgMarkerDestruction_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+const ::google::protobuf::EnumDescriptor* MarkerRequestAck_ErrorCode_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MarkerRequestAck_ErrorCode_descriptor_;
+}
+bool MarkerRequestAck_ErrorCode_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#ifndef _MSC_VER
+const MarkerRequestAck_ErrorCode MarkerRequestAck::no_error;
+const MarkerRequestAck_ErrorCode MarkerRequestAck::error_invalid_id;
+const MarkerRequestAck_ErrorCode MarkerRequestAck::error_invalid_parent;
+const MarkerRequestAck_ErrorCode MarkerRequestAck::ErrorCode_MIN;
+const MarkerRequestAck_ErrorCode MarkerRequestAck::ErrorCode_MAX;
+#endif  // _MSC_VER
+#ifndef _MSC_VER
+#endif  // !_MSC_VER
+
+MarkerRequestAck::MarkerRequestAck() {
+  SharedCtor();
+}
+
+void MarkerRequestAck::InitAsDefaultInstance() {
+}
+
+MarkerRequestAck::MarkerRequestAck(const MarkerRequestAck& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MarkerRequestAck::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MarkerRequestAck::~MarkerRequestAck() {
+  SharedDtor();
+}
+
+void MarkerRequestAck::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* MarkerRequestAck::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MarkerRequestAck_descriptor_;
+}
+
+const MarkerRequestAck& MarkerRequestAck::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_MessengerToClient_2eproto();  return *default_instance_;
+}
+
+MarkerRequestAck* MarkerRequestAck::default_instance_ = NULL;
+
+MarkerRequestAck* MarkerRequestAck::New() const {
+  return new MarkerRequestAck;
+}
+
+void MarkerRequestAck::Clear() {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MarkerRequestAck::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      return true;
+    }
+    DO_(::google::protobuf::internal::WireFormat::SkipField(
+          input, tag, mutable_unknown_fields()));
+  }
+  return true;
+#undef DO_
+}
+
+void MarkerRequestAck::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MarkerRequestAck::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MarkerRequestAck::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MarkerRequestAck::ByteSize() const {
+  int total_size = 0;
+  
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MarkerRequestAck::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MarkerRequestAck* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MarkerRequestAck*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MarkerRequestAck::MergeFrom(const MarkerRequestAck& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MarkerRequestAck::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MarkerRequestAck::CopyFrom(const MarkerRequestAck& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MarkerRequestAck::IsInitialized() const {
+  
+  return true;
+}
+
+void MarkerRequestAck::Swap(MarkerRequestAck* other) {
+  if (other != this) {
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MarkerRequestAck::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MarkerRequestAck_descriptor_;
+  metadata.reflection = MarkerRequestAck_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgMarkerCreationRequestAck::kErrorCodeFieldNumber;
+#endif  // !_MSC_VER
+
+MsgMarkerCreationRequestAck::MsgMarkerCreationRequestAck() {
+  SharedCtor();
+}
+
+void MsgMarkerCreationRequestAck::InitAsDefaultInstance() {
+}
+
+MsgMarkerCreationRequestAck::MsgMarkerCreationRequestAck(const MsgMarkerCreationRequestAck& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgMarkerCreationRequestAck::SharedCtor() {
+  _cached_size_ = 0;
+  error_code_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgMarkerCreationRequestAck::~MsgMarkerCreationRequestAck() {
+  SharedDtor();
+}
+
+void MsgMarkerCreationRequestAck::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgMarkerCreationRequestAck::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgMarkerCreationRequestAck_descriptor_;
+}
+
+const MsgMarkerCreationRequestAck& MsgMarkerCreationRequestAck::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_MessengerToClient_2eproto();  return *default_instance_;
+}
+
+MsgMarkerCreationRequestAck* MsgMarkerCreationRequestAck::default_instance_ = NULL;
+
+MsgMarkerCreationRequestAck* MsgMarkerCreationRequestAck::New() const {
+  return new MsgMarkerCreationRequestAck;
+}
+
+void MsgMarkerCreationRequestAck::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    error_code_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgMarkerCreationRequestAck::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+        int value;
+        DO_(::google::protobuf::internal::WireFormatLite::ReadEnum(input, &value));
+        if (::MsgsMessengerToClient::MarkerRequestAck_ErrorCode_IsValid(value)) {
+          set_error_code(static_cast< ::MsgsMessengerToClient::MarkerRequestAck_ErrorCode >(value));
+        } else {
+          mutable_unknown_fields()->AddVarint(1, value);
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgMarkerCreationRequestAck::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgMarkerCreationRequestAck::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // required .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->error_code(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgMarkerCreationRequestAck::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+  if (_has_bit(0)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      1, this->error_code(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgMarkerCreationRequestAck::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+    if (has_error_code()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->error_code());
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgMarkerCreationRequestAck::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgMarkerCreationRequestAck* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMarkerCreationRequestAck*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgMarkerCreationRequestAck::MergeFrom(const MsgMarkerCreationRequestAck& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      set_error_code(from.error_code());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgMarkerCreationRequestAck::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgMarkerCreationRequestAck::CopyFrom(const MsgMarkerCreationRequestAck& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgMarkerCreationRequestAck::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  
+  return true;
+}
+
+void MsgMarkerCreationRequestAck::Swap(MsgMarkerCreationRequestAck* other) {
+  if (other != this) {
+    std::swap(error_code_, other->error_code_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgMarkerCreationRequestAck::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgMarkerCreationRequestAck_descriptor_;
+  metadata.reflection = MsgMarkerCreationRequestAck_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgMarkerUpdateRequestAck::kErrorCodeFieldNumber;
+#endif  // !_MSC_VER
+
+MsgMarkerUpdateRequestAck::MsgMarkerUpdateRequestAck() {
+  SharedCtor();
+}
+
+void MsgMarkerUpdateRequestAck::InitAsDefaultInstance() {
+}
+
+MsgMarkerUpdateRequestAck::MsgMarkerUpdateRequestAck(const MsgMarkerUpdateRequestAck& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgMarkerUpdateRequestAck::SharedCtor() {
+  _cached_size_ = 0;
+  error_code_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgMarkerUpdateRequestAck::~MsgMarkerUpdateRequestAck() {
+  SharedDtor();
+}
+
+void MsgMarkerUpdateRequestAck::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgMarkerUpdateRequestAck::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgMarkerUpdateRequestAck_descriptor_;
+}
+
+const MsgMarkerUpdateRequestAck& MsgMarkerUpdateRequestAck::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_MessengerToClient_2eproto();  return *default_instance_;
+}
+
+MsgMarkerUpdateRequestAck* MsgMarkerUpdateRequestAck::default_instance_ = NULL;
+
+MsgMarkerUpdateRequestAck* MsgMarkerUpdateRequestAck::New() const {
+  return new MsgMarkerUpdateRequestAck;
+}
+
+void MsgMarkerUpdateRequestAck::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    error_code_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgMarkerUpdateRequestAck::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+        int value;
+        DO_(::google::protobuf::internal::WireFormatLite::ReadEnum(input, &value));
+        if (::MsgsMessengerToClient::MarkerRequestAck_ErrorCode_IsValid(value)) {
+          set_error_code(static_cast< ::MsgsMessengerToClient::MarkerRequestAck_ErrorCode >(value));
+        } else {
+          mutable_unknown_fields()->AddVarint(1, value);
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgMarkerUpdateRequestAck::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgMarkerUpdateRequestAck::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // optional .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->error_code(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgMarkerUpdateRequestAck::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // optional .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+  if (_has_bit(0)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      1, this->error_code(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgMarkerUpdateRequestAck::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+    if (has_error_code()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->error_code());
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgMarkerUpdateRequestAck::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgMarkerUpdateRequestAck* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMarkerUpdateRequestAck*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgMarkerUpdateRequestAck::MergeFrom(const MsgMarkerUpdateRequestAck& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      set_error_code(from.error_code());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgMarkerUpdateRequestAck::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgMarkerUpdateRequestAck::CopyFrom(const MsgMarkerUpdateRequestAck& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgMarkerUpdateRequestAck::IsInitialized() const {
+  
+  return true;
+}
+
+void MsgMarkerUpdateRequestAck::Swap(MsgMarkerUpdateRequestAck* other) {
+  if (other != this) {
+    std::swap(error_code_, other->error_code_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgMarkerUpdateRequestAck::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgMarkerUpdateRequestAck_descriptor_;
+  metadata.reflection = MsgMarkerUpdateRequestAck_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgMarkerDestructionRequestAck::kErrorCodeFieldNumber;
+#endif  // !_MSC_VER
+
+MsgMarkerDestructionRequestAck::MsgMarkerDestructionRequestAck() {
+  SharedCtor();
+}
+
+void MsgMarkerDestructionRequestAck::InitAsDefaultInstance() {
+}
+
+MsgMarkerDestructionRequestAck::MsgMarkerDestructionRequestAck(const MsgMarkerDestructionRequestAck& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgMarkerDestructionRequestAck::SharedCtor() {
+  _cached_size_ = 0;
+  error_code_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgMarkerDestructionRequestAck::~MsgMarkerDestructionRequestAck() {
+  SharedDtor();
+}
+
+void MsgMarkerDestructionRequestAck::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgMarkerDestructionRequestAck::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgMarkerDestructionRequestAck_descriptor_;
+}
+
+const MsgMarkerDestructionRequestAck& MsgMarkerDestructionRequestAck::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_MessengerToClient_2eproto();  return *default_instance_;
+}
+
+MsgMarkerDestructionRequestAck* MsgMarkerDestructionRequestAck::default_instance_ = NULL;
+
+MsgMarkerDestructionRequestAck* MsgMarkerDestructionRequestAck::New() const {
+  return new MsgMarkerDestructionRequestAck;
+}
+
+void MsgMarkerDestructionRequestAck::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    error_code_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgMarkerDestructionRequestAck::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+        int value;
+        DO_(::google::protobuf::internal::WireFormatLite::ReadEnum(input, &value));
+        if (::MsgsMessengerToClient::MarkerRequestAck_ErrorCode_IsValid(value)) {
+          set_error_code(static_cast< ::MsgsMessengerToClient::MarkerRequestAck_ErrorCode >(value));
+        } else {
+          mutable_unknown_fields()->AddVarint(1, value);
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgMarkerDestructionRequestAck::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgMarkerDestructionRequestAck::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // required .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->error_code(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgMarkerDestructionRequestAck::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+  if (_has_bit(0)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      1, this->error_code(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgMarkerDestructionRequestAck::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .MsgsMessengerToClient.MarkerRequestAck.ErrorCode error_code = 1;
+    if (has_error_code()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->error_code());
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgMarkerDestructionRequestAck::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgMarkerDestructionRequestAck* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMarkerDestructionRequestAck*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgMarkerDestructionRequestAck::MergeFrom(const MsgMarkerDestructionRequestAck& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      set_error_code(from.error_code());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgMarkerDestructionRequestAck::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgMarkerDestructionRequestAck::CopyFrom(const MsgMarkerDestructionRequestAck& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgMarkerDestructionRequestAck::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  
+  return true;
+}
+
+void MsgMarkerDestructionRequestAck::Swap(MsgMarkerDestructionRequestAck* other) {
+  if (other != this) {
+    std::swap(error_code_, other->error_code_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgMarkerDestructionRequestAck::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgMarkerDestructionRequestAck_descriptor_;
+  metadata.reflection = MsgMarkerDestructionRequestAck_reflection_;
   return metadata;
 }
 
@@ -10420,9 +11295,9 @@ const int MsgMessengerToClient_Content::kShapeCreationRequestAckFieldNumber;
 const int MsgMessengerToClient_Content::kShapeDestructionRequestAckFieldNumber;
 const int MsgMessengerToClient_Content::kShapeUpdateRequestAckFieldNumber;
 const int MsgMessengerToClient_Content::kTextMessageFieldNumber;
-const int MsgMessengerToClient_Content::kNoteCreationFieldNumber;
-const int MsgMessengerToClient_Content::kNoteUpdateFieldNumber;
-const int MsgMessengerToClient_Content::kNoteDestructionFieldNumber;
+const int MsgMessengerToClient_Content::kMarkerCreationFieldNumber;
+const int MsgMessengerToClient_Content::kMarkerUpdateFieldNumber;
+const int MsgMessengerToClient_Content::kMarkerDestructionFieldNumber;
 const int MsgMessengerToClient_Content::kClientObjectCreationFieldNumber;
 const int MsgMessengerToClient_Content::kClientObjectUpdateFieldNumber;
 const int MsgMessengerToClient_Content::kClientObjectDestructionFieldNumber;
@@ -10461,9 +11336,9 @@ void MsgMessengerToClient_Content::InitAsDefaultInstance() {
   shape_destruction_request_ack_ = const_cast< ::MsgsMessengerToClient::MsgShapeDestructionRequestAck*>(&::MsgsMessengerToClient::MsgShapeDestructionRequestAck::default_instance());
   shape_update_request_ack_ = const_cast< ::MsgsMessengerToClient::MsgShapeUpdateRequestAck*>(&::MsgsMessengerToClient::MsgShapeUpdateRequestAck::default_instance());
   text_message_ = const_cast< ::Common::MsgTextMessage*>(&::Common::MsgTextMessage::default_instance());
-  note_creation_ = const_cast< ::MsgsMessengerToClient::MsgNoteCreation*>(&::MsgsMessengerToClient::MsgNoteCreation::default_instance());
-  note_update_ = const_cast< ::MsgsMessengerToClient::MsgNoteUpdate*>(&::MsgsMessengerToClient::MsgNoteUpdate::default_instance());
-  note_destruction_ = const_cast< ::MsgsMessengerToClient::MsgNoteDestruction*>(&::MsgsMessengerToClient::MsgNoteDestruction::default_instance());
+  marker_creation_ = const_cast< ::MsgsMessengerToClient::MsgMarkerCreation*>(&::MsgsMessengerToClient::MsgMarkerCreation::default_instance());
+  marker_update_ = const_cast< ::MsgsMessengerToClient::MsgMarkerUpdate*>(&::MsgsMessengerToClient::MsgMarkerUpdate::default_instance());
+  marker_destruction_ = const_cast< ::MsgsMessengerToClient::MsgMarkerDestruction*>(&::MsgsMessengerToClient::MsgMarkerDestruction::default_instance());
   client_object_creation_ = const_cast< ::MsgsMessengerToClient::MsgClientObjectCreation*>(&::MsgsMessengerToClient::MsgClientObjectCreation::default_instance());
   client_object_update_ = const_cast< ::MsgsMessengerToClient::MsgClientObjectUpdate*>(&::MsgsMessengerToClient::MsgClientObjectUpdate::default_instance());
   client_object_destruction_ = const_cast< ::MsgsMessengerToClient::MsgClientObjectDestruction*>(&::MsgsMessengerToClient::MsgClientObjectDestruction::default_instance());
@@ -10504,9 +11379,9 @@ void MsgMessengerToClient_Content::SharedCtor() {
   shape_destruction_request_ack_ = NULL;
   shape_update_request_ack_ = NULL;
   text_message_ = NULL;
-  note_creation_ = NULL;
-  note_update_ = NULL;
-  note_destruction_ = NULL;
+  marker_creation_ = NULL;
+  marker_update_ = NULL;
+  marker_destruction_ = NULL;
   client_object_creation_ = NULL;
   client_object_update_ = NULL;
   client_object_destruction_ = NULL;
@@ -10547,9 +11422,9 @@ void MsgMessengerToClient_Content::SharedDtor() {
     delete shape_destruction_request_ack_;
     delete shape_update_request_ack_;
     delete text_message_;
-    delete note_creation_;
-    delete note_update_;
-    delete note_destruction_;
+    delete marker_creation_;
+    delete marker_update_;
+    delete marker_destruction_;
     delete client_object_creation_;
     delete client_object_update_;
     delete client_object_destruction_;
@@ -10658,13 +11533,13 @@ void MsgMessengerToClient_Content::Clear() {
       if (text_message_ != NULL) text_message_->::Common::MsgTextMessage::Clear();
     }
     if (_has_bit(25)) {
-      if (note_creation_ != NULL) note_creation_->::MsgsMessengerToClient::MsgNoteCreation::Clear();
+      if (marker_creation_ != NULL) marker_creation_->::MsgsMessengerToClient::MsgMarkerCreation::Clear();
     }
     if (_has_bit(26)) {
-      if (note_update_ != NULL) note_update_->::MsgsMessengerToClient::MsgNoteUpdate::Clear();
+      if (marker_update_ != NULL) marker_update_->::MsgsMessengerToClient::MsgMarkerUpdate::Clear();
     }
     if (_has_bit(27)) {
-      if (note_destruction_ != NULL) note_destruction_->::MsgsMessengerToClient::MsgNoteDestruction::Clear();
+      if (marker_destruction_ != NULL) marker_destruction_->::MsgsMessengerToClient::MsgMarkerDestruction::Clear();
     }
     if (_has_bit(28)) {
       if (client_object_creation_ != NULL) client_object_creation_->::MsgsMessengerToClient::MsgClientObjectCreation::Clear();
@@ -11017,45 +11892,45 @@ bool MsgMessengerToClient_Content::MergePartialFromCodedStream(
        parse_text_message:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_text_message()));
-        if (input->ExpectTag(210)) goto parse_note_creation;
+        if (input->ExpectTag(210)) goto parse_marker_creation;
         break;
       }
       
-      // optional .MsgsMessengerToClient.MsgNoteCreation note_creation = 26;
+      // optional .MsgsMessengerToClient.MsgMarkerCreation marker_creation = 26;
       case 26: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_note_creation:
+       parse_marker_creation:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_note_creation()));
-        if (input->ExpectTag(218)) goto parse_note_update;
+             input, mutable_marker_creation()));
+        if (input->ExpectTag(218)) goto parse_marker_update;
         break;
       }
       
-      // optional .MsgsMessengerToClient.MsgNoteUpdate note_update = 27;
+      // optional .MsgsMessengerToClient.MsgMarkerUpdate marker_update = 27;
       case 27: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_note_update:
+       parse_marker_update:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_note_update()));
-        if (input->ExpectTag(226)) goto parse_note_destruction;
+             input, mutable_marker_update()));
+        if (input->ExpectTag(226)) goto parse_marker_destruction;
         break;
       }
       
-      // optional .MsgsMessengerToClient.MsgNoteDestruction note_destruction = 28;
+      // optional .MsgsMessengerToClient.MsgMarkerDestruction marker_destruction = 28;
       case 28: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_note_destruction:
+       parse_marker_destruction:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_note_destruction()));
+             input, mutable_marker_destruction()));
         if (input->ExpectTag(234)) goto parse_client_object_creation;
         break;
       }
@@ -11312,22 +12187,22 @@ void MsgMessengerToClient_Content::SerializeWithCachedSizes(
       25, this->text_message(), output);
   }
   
-  // optional .MsgsMessengerToClient.MsgNoteCreation note_creation = 26;
+  // optional .MsgsMessengerToClient.MsgMarkerCreation marker_creation = 26;
   if (_has_bit(25)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      26, this->note_creation(), output);
+      26, this->marker_creation(), output);
   }
   
-  // optional .MsgsMessengerToClient.MsgNoteUpdate note_update = 27;
+  // optional .MsgsMessengerToClient.MsgMarkerUpdate marker_update = 27;
   if (_has_bit(26)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      27, this->note_update(), output);
+      27, this->marker_update(), output);
   }
   
-  // optional .MsgsMessengerToClient.MsgNoteDestruction note_destruction = 28;
+  // optional .MsgsMessengerToClient.MsgMarkerDestruction marker_destruction = 28;
   if (_has_bit(27)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      28, this->note_destruction(), output);
+      28, this->marker_destruction(), output);
   }
   
   // optional .MsgsMessengerToClient.MsgClientObjectCreation client_object_creation = 29;
@@ -11549,25 +12424,25 @@ void MsgMessengerToClient_Content::SerializeWithCachedSizes(
         25, this->text_message(), target);
   }
   
-  // optional .MsgsMessengerToClient.MsgNoteCreation note_creation = 26;
+  // optional .MsgsMessengerToClient.MsgMarkerCreation marker_creation = 26;
   if (_has_bit(25)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        26, this->note_creation(), target);
+        26, this->marker_creation(), target);
   }
   
-  // optional .MsgsMessengerToClient.MsgNoteUpdate note_update = 27;
+  // optional .MsgsMessengerToClient.MsgMarkerUpdate marker_update = 27;
   if (_has_bit(26)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        27, this->note_update(), target);
+        27, this->marker_update(), target);
   }
   
-  // optional .MsgsMessengerToClient.MsgNoteDestruction note_destruction = 28;
+  // optional .MsgsMessengerToClient.MsgMarkerDestruction marker_destruction = 28;
   if (_has_bit(27)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        28, this->note_destruction(), target);
+        28, this->marker_destruction(), target);
   }
   
   // optional .MsgsMessengerToClient.MsgClientObjectCreation client_object_creation = 29;
@@ -11804,25 +12679,25 @@ int MsgMessengerToClient_Content::ByteSize() const {
           this->text_message());
     }
     
-    // optional .MsgsMessengerToClient.MsgNoteCreation note_creation = 26;
-    if (has_note_creation()) {
+    // optional .MsgsMessengerToClient.MsgMarkerCreation marker_creation = 26;
+    if (has_marker_creation()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->note_creation());
+          this->marker_creation());
     }
     
-    // optional .MsgsMessengerToClient.MsgNoteUpdate note_update = 27;
-    if (has_note_update()) {
+    // optional .MsgsMessengerToClient.MsgMarkerUpdate marker_update = 27;
+    if (has_marker_update()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->note_update());
+          this->marker_update());
     }
     
-    // optional .MsgsMessengerToClient.MsgNoteDestruction note_destruction = 28;
-    if (has_note_destruction()) {
+    // optional .MsgsMessengerToClient.MsgMarkerDestruction marker_destruction = 28;
+    if (has_marker_destruction()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->note_destruction());
+          this->marker_destruction());
     }
     
     // optional .MsgsMessengerToClient.MsgClientObjectCreation client_object_creation = 29;
@@ -11976,13 +12851,13 @@ void MsgMessengerToClient_Content::MergeFrom(const MsgMessengerToClient_Content&
       mutable_text_message()->::Common::MsgTextMessage::MergeFrom(from.text_message());
     }
     if (from._has_bit(25)) {
-      mutable_note_creation()->::MsgsMessengerToClient::MsgNoteCreation::MergeFrom(from.note_creation());
+      mutable_marker_creation()->::MsgsMessengerToClient::MsgMarkerCreation::MergeFrom(from.marker_creation());
     }
     if (from._has_bit(26)) {
-      mutable_note_update()->::MsgsMessengerToClient::MsgNoteUpdate::MergeFrom(from.note_update());
+      mutable_marker_update()->::MsgsMessengerToClient::MsgMarkerUpdate::MergeFrom(from.marker_update());
     }
     if (from._has_bit(27)) {
-      mutable_note_destruction()->::MsgsMessengerToClient::MsgNoteDestruction::MergeFrom(from.note_destruction());
+      mutable_marker_destruction()->::MsgsMessengerToClient::MsgMarkerDestruction::MergeFrom(from.marker_destruction());
     }
     if (from._has_bit(28)) {
       mutable_client_object_creation()->::MsgsMessengerToClient::MsgClientObjectCreation::MergeFrom(from.client_object_creation());
@@ -12067,14 +12942,14 @@ bool MsgMessengerToClient_Content::IsInitialized() const {
   if (has_text_message()) {
     if (!this->text_message().IsInitialized()) return false;
   }
-  if (has_note_creation()) {
-    if (!this->note_creation().IsInitialized()) return false;
+  if (has_marker_creation()) {
+    if (!this->marker_creation().IsInitialized()) return false;
   }
-  if (has_note_update()) {
-    if (!this->note_update().IsInitialized()) return false;
+  if (has_marker_update()) {
+    if (!this->marker_update().IsInitialized()) return false;
   }
-  if (has_note_destruction()) {
-    if (!this->note_destruction().IsInitialized()) return false;
+  if (has_marker_destruction()) {
+    if (!this->marker_destruction().IsInitialized()) return false;
   }
   if (has_client_object_creation()) {
     if (!this->client_object_creation().IsInitialized()) return false;
@@ -12124,9 +12999,9 @@ void MsgMessengerToClient_Content::Swap(MsgMessengerToClient_Content* other) {
     std::swap(shape_destruction_request_ack_, other->shape_destruction_request_ack_);
     std::swap(shape_update_request_ack_, other->shape_update_request_ack_);
     std::swap(text_message_, other->text_message_);
-    std::swap(note_creation_, other->note_creation_);
-    std::swap(note_update_, other->note_update_);
-    std::swap(note_destruction_, other->note_destruction_);
+    std::swap(marker_creation_, other->marker_creation_);
+    std::swap(marker_update_, other->marker_update_);
+    std::swap(marker_destruction_, other->marker_destruction_);
     std::swap(client_object_creation_, other->client_object_creation_);
     std::swap(client_object_update_, other->client_object_update_);
     std::swap(client_object_destruction_, other->client_object_destruction_);

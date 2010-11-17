@@ -50,9 +50,9 @@ public:
 
     //! @name Requests
     //@{
-    void HandleRequest( const MsgsClientToMessenger::MsgNoteCreationRequest&    message );
-    void HandleRequest( const MsgsClientToMessenger::MsgNoteDestructionRequest& message );
-    void HandleRequest( const MsgsClientToMessenger::MsgNoteUpdateRequest&      message );
+    void HandleRequest( const MsgsClientToMessenger::MsgMarkerCreationRequest&    message );
+    void HandleRequest( const MsgsClientToMessenger::MsgMarkerDestructionRequest& message );
+    void HandleRequest( const MsgsClientToMessenger::MsgMarkerUpdateRequest&      message );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
 
     void Publish( const Note& note );

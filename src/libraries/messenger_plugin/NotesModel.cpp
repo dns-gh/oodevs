@@ -57,7 +57,7 @@ NotesModel::~NotesModel()
 // Name: NotesModel::HandleRequest
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteCreationRequest& message )
+void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgMarkerCreationRequest& message )
 {
    std::auto_ptr< Note > note( new Note( idManager_.NextId(), message, currentTime_ ) );
    Register( note->GetId(), *note );
@@ -75,9 +75,9 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteCreationRequ
 // Name: NotesModel::HandleRequest
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteDestructionRequest& message )
+void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgMarkerDestructionRequest& message )
 {
-    Note* note = Find( message.id() );
+    Note* note = Find( message.marker().id() );
     if( note )
     {
         if( message.delete_all() )
@@ -92,15 +92,15 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteDestructionR
 // Name: NotesModel::HandleRequest
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteUpdateRequest& message )
+void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgMarkerUpdateRequest& message )
 {
-    Note* note = Find( message.id() );
+    Note* note = Find( message.marker().id() );
     if( note )
     {
         if( message.has_parent() )
         {
             Note* oldParent = Find( note->GetParent() );
-            Note* newParent = Find( message.parent() );
+            Note* newParent = Find( message.parent().id() );
             if( newParent != oldParent )
             {
                 if( oldParent )

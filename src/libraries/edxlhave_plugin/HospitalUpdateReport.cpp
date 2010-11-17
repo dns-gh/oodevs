@@ -107,7 +107,7 @@ void HospitalUpdateReport::UpdateCapacityStatus( xml::xostream& xos, const Commo
 // Name: HospitalUpdateReport::UpdateBedStatus
 // Created: JCR 2010-06-02
 // -----------------------------------------------------------------------------
-void HospitalUpdateReport::UpdateBedStatus( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatmentBedCapacity& bed )
+void HospitalUpdateReport::UpdateBedStatus( xml::xostream& xos, const Common::MedicalTreatmentBedCapacity& bed )
 {
     xos << xml::start( "BedCapacity" )
             << xml::start( "BedType" ) << resolver_.Get( bed.type_id() ).GetName() << xml::end
@@ -121,7 +121,7 @@ void HospitalUpdateReport::UpdateBedStatus( xml::xostream& xos, const Common::Ob
 // Name: HospitalUpdateReport::UpdateBedCapacity
 // Created: JCR 2010-06-02
 // -----------------------------------------------------------------------------
-void HospitalUpdateReport::UpdateBedCapacity( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatmentBedCapacity& bed )
+void HospitalUpdateReport::UpdateBedCapacity( xml::xostream& xos, const Common::MedicalTreatmentBedCapacity& bed )
 {
     xos << xml::content( "CapacityStatus", ( bed.available_count() > 0 ) ? std::string( "Vacant/Available" ) : std::string( "NotAvailable" ) )
         << xml::content( "AvailableCount", bed.available_count() )

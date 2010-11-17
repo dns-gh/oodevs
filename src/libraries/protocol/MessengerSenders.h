@@ -63,13 +63,13 @@ GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeCr
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeUpdate                        , shape_update                          )
 GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeDestruction                   , shape_destruction                     )
 
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, NoteCreationRequest                , note_creation_request                 )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, NoteUpdateRequest                  , note_update_request                   )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, NoteDestructionRequest             , note_destruction_request              )
+GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, MarkerCreationRequest                , marker_creation_request                 )
+GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, MarkerUpdateRequest                  , marker_update_request                   )
+GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, MarkerDestructionRequest             , marker_destruction_request              )
 
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, NoteCreation                       , note_creation                         )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, NoteUpdate                         , note_update                           )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, NoteDestruction                    , note_destruction                      )
+GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, MarkerCreation                       , marker_creation                         )
+GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, MarkerUpdate                         , marker_update                           )
+GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, MarkerDestruction                    , marker_destruction                      )
 
 GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, ClientObjectCreationRequest        , client_object_creation_request        )
 GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, ClientObjectUpdateRequest          , client_object_update_request          )

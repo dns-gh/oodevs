@@ -19,12 +19,12 @@ using namespace plugins::messenger;
 // Name: Note destructor
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-Note::Note(unsigned long id, const MsgsClientToMessenger::MsgNoteCreationRequest& message, std::string currentTime)
+Note::Note(unsigned long id, const MsgsClientToMessenger::MsgMarkerCreationRequest& message, std::string currentTime)
     : id_( id )
-    , name_( message.note().name() )
-    , number_( message.note().number() )
-    , description_( message.note().description() )
-    , parent_( message.note().parent() )
+    , name_( message.marker().name() )
+    , number_( message.marker().number() )
+    , description_( message.marker().description() )
+    , parent_( message.marker().parent().id() )
     , creationTime_ ( currentTime )
     , lastUpdateTime_( currentTime )
 {
@@ -75,7 +75,7 @@ unsigned long  Note::GetId() const
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void Note::Update( const MsgsClientToMessenger::MsgNoteUpdateRequest& message, std::string currentTime )
+void Note::Update( const MsgsClientToMessenger::MsgMarkerUpdateRequest& message, std::string currentTime )
 {
     if( message.has_name() )
         name_ = message.name();
@@ -84,7 +84,7 @@ void Note::Update( const MsgsClientToMessenger::MsgNoteUpdateRequest& message, s
     if( message.has_description() )
         description_ = message.description();
     if( message.has_parent() )
-        parent_ = message.parent();
+        parent_ = message.parent().id();
     lastUpdateTime_ = currentTime;
 }
 
@@ -96,13 +96,13 @@ void Note::Update( const MsgsClientToMessenger::MsgNoteUpdateRequest& message, s
 // -----------------------------------------------------------------------------
 void Note::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    messenger::NoteCreation message;
-    message().set_id( id_ );
-    message().mutable_note()->set_name( name_ );
-    message().mutable_note()->set_description( description_ );
-    message().mutable_note()->set_number( number_ );
-    message().mutable_note()->set_parent( parent_ );
-    message().set_date( creationTime_ );
+    messenger::MarkerCreation message;
+    message().mutable_marker()->set_id( id_ );
+    message().mutable_definition()->set_name( name_ );
+    message().mutable_definition()->set_description( description_ );
+    message().mutable_definition()->set_number( number_ );
+    message().mutable_definition()->mutable_parent()->set_id( parent_ );
+    message().mutable_definition()->mutable_date()->set_data( creationTime_ );
 
     message.Send( publisher );
 }
@@ -115,11 +115,11 @@ void Note::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void  Note::SendUpdate( dispatcher::ClientPublisher_ABC& publisher, bool modifParent ) const
 {
-    messenger::NoteUpdate message;
-    message().set_id( id_ );
-    if (modifParent)
+    messenger::MarkerUpdate message;
+    message().mutable_marker()->set_id( id_ );
+    if ( modifParent )
     {
-        message().set_parent( parent_ );
+        message().mutable_parent()->set_id( parent_ );
     }
     else
     {
@@ -128,7 +128,7 @@ void  Note::SendUpdate( dispatcher::ClientPublisher_ABC& publisher, bool modifPa
         message().set_number( number_ );
     }
 
-    message().set_date( lastUpdateTime_ );
+    message().mutable_date()->set_data( lastUpdateTime_ );
     message.Send( publisher );
 }
 
@@ -152,8 +152,8 @@ void  Note::SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void  Note::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    messenger::NoteDestruction message;
-    message().set_id( id_ );
+    messenger::MarkerDestruction message;
+    message().mutable_marker()->set_id( id_ );
     message.Send( publisher );
 }
 

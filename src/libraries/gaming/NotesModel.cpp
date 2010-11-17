@@ -37,19 +37,19 @@ NotesModel::~NotesModel()
 // Name: NotesModel::Create
 // Created: HBD 2010-02-04
 // -----------------------------------------------------------------------------
-void NotesModel::Create( const MsgsMessengerToClient::MsgNoteCreation& message )
+void NotesModel::Create( const MsgsMessengerToClient::MsgMarkerCreation& message )
 {
     Note* note = new Note( controller_, message );
-    Register( message.id(), *note );
+    Register( message.marker().id(), *note );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NotesModel::Update
 // Created: HBD 2010-02-04
 // -----------------------------------------------------------------------------
-void NotesModel::Update( const MsgsMessengerToClient::MsgNoteUpdate& message )
+void NotesModel::Update( const MsgsMessengerToClient::MsgMarkerUpdate& message )
 {
-    Note* note = Find( message.id() );
+    Note* note = Find( message.marker().id() );
     if( note )
     {
         note->Update( message );
@@ -60,12 +60,12 @@ void NotesModel::Update( const MsgsMessengerToClient::MsgNoteUpdate& message )
 // Name: NotesModel::Delete
 // Created: HBD 2010-02-04
 // -----------------------------------------------------------------------------
-void NotesModel::Delete( const MsgsMessengerToClient::MsgNoteDestruction& message )
+void NotesModel::Delete( const MsgsMessengerToClient::MsgMarkerDestruction& message )
 {
-    Note* note = Find( message.id() );
+    Note* note = Find( message.marker().id() );
     if( note )
     {
-        Remove( message.id() );
+        Remove( message.marker().id() );
         note->Delete();
     }
 }
