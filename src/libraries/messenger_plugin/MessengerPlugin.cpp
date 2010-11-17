@@ -126,12 +126,12 @@ void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, con
     if( wrapper.message().has_text_message() )
         chat_->OnReceive( wrapper.message().text_message() );
     // Notes
-    if( wrapper.message().has_note_creation_request() )
-        model_->notes_.HandleRequest( wrapper.message().note_creation_request() );
-    if( wrapper.message().has_note_update_request() )
-        model_->notes_.HandleRequest( wrapper.message().note_update_request() );
-    if( wrapper.message().has_note_destruction_request() )
-        model_->notes_.HandleRequest( wrapper.message().note_destruction_request() );
+    if( wrapper.message().has_marker_creation_request() )
+        model_->notes_.HandleRequest( wrapper.message().marker_creation_request() );
+    if( wrapper.message().has_marker_update_request() )
+        model_->notes_.HandleRequest( wrapper.message().marker_update_request() );
+    if( wrapper.message().has_marker_destruction_request() )
+        model_->notes_.HandleRequest( wrapper.message().marker_destruction_request() );
     // Client objects
     if( wrapper.message().has_client_object_creation_request() )
         model_->clientObjects_.HandleRequest( publisher, wrapper.message().client_object_creation_request() );
