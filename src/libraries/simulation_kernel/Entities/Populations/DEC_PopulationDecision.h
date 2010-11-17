@@ -120,7 +120,7 @@ protected:
 private:
     //! @name Helpers
     //@{
-    virtual void RegisterSelf( directia::brain::Brain& brain );
+    virtual void RegisterSelf( directia::brain::Brain& brain, bool isMasalife, const std::string& groupName );
     //@}
 
 private:

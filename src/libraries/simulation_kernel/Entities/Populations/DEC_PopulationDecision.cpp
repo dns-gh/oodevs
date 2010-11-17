@@ -517,7 +517,11 @@ std::string DEC_PopulationDecision::GetName() const
 // Name: DEC_PopulationDecision::RegisterSelf
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::RegisterSelf( directia::brain::Brain& brain )
+void DEC_PopulationDecision::RegisterSelf( directia::brain::Brain& brain, bool isMasalife, const std::string& groupName )
 {
     brain[ "myself" ] = (DEC_Decision_ABC*)this;
+    if( isMasalife )
+    {
+        brain[ "InitMe" ](  brain[ "net.masagroup.sword.military.world.CrowdAlly" ], brain[ "myself" ], groupName );
+    }
 }

@@ -173,7 +173,7 @@ private://! @name Helpers
     void HandleUpdateDecisionError ( const std::exception& error );
     virtual directia::brain::Brain& GetBrain();
 
-    virtual void RegisterSelf( directia::brain::Brain& brain ) = 0;
+    virtual void RegisterSelf( directia::brain::Brain& brain, bool isMasalife, const std::string& groupName ) = 0;
     //@}
 
 protected:

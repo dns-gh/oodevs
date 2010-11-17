@@ -86,7 +86,7 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
     RegisterUserFunctions( *pBrain_ );
 
     database_.InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
-    RegisterSelf( *pBrain_ );
+    RegisterSelf( *pBrain_, isMasalife_, groupName );
 
     //Enregistrement à la main de BreakForDebug
     (*pBrain_)[ "BreakForDebug" ] =
