@@ -72,7 +72,7 @@ RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, k
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         {
             filter_.reset( new ExerciseFilter( *host_, *port_ ) );
-            exercises_ = new ExerciseList( hbox, config, controllers, "", false, false, false, false );
+            exercises_ = new ExerciseList( hbox, config, controllers, false, false, false, false );
             exercises_->SetFilter( *filter_ );
             connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( SelectExercise( const frontend::Exercise_ABC& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
@@ -96,7 +96,7 @@ RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, k
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         {
             runningFilter_.reset( new ExerciseFilter( *host_, *port_, true ) );
-            runningExercises_ = new ExerciseList( hbox, config, controllers, "", false, false, false, false );
+            runningExercises_ = new ExerciseList( hbox, config, controllers, false, false, false, false );
             runningExercises_->SetFilter( *runningFilter_ );
             connect( runningExercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( SelectRunningExercise( const frontend::Exercise_ABC& ) ) );
             connect( runningExercises_, SIGNAL( ClearSelection() ), SLOT( ClearRunningSelection() ) );
@@ -166,7 +166,6 @@ void RemoteControlPage::UpdateExerciseList()
     ClearSelection();
     exercises_->Clear();
     Connect( host_->text().ascii(), static_cast< unsigned short >( port_->value() ) );
-    exercises_->Update();
 }
 
 // -----------------------------------------------------------------------------

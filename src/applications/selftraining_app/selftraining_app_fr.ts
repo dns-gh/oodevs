@@ -39,11 +39,11 @@
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>Launcher service cannot be started: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le service de lancement ne peut pas être démarré : %1.</translation>
     </message>
 </context>
 <context>
@@ -101,7 +101,7 @@
     </message>
     <message>
         <source>127.0.0.1</source>
-        <translation type="unfinished"></translation>
+        <translation>127.0.0.1</translation>
     </message>
 </context>
 <context>
@@ -123,7 +123,7 @@
     </message>
     <message>
         <source>Remote</source>
-        <translation type="unfinished"></translation>
+        <translation>Distant</translation>
     </message>
 </context>
 <context>
@@ -186,12 +186,27 @@
         <translation>Exercice:</translation>
     </message>
     <message>
-        <source>No briefing available</source>
-        <translation>Aucun briefing</translation>
-    </message>
-    <message>
         <source>Profile:</source>
         <translation>Profil:</translation>
+    </message>
+</context>
+<context>
+    <name>ExerciseProperties</name>
+    <message>
+        <source>Exercise parameters:</source>
+        <translation>Paramètres d&apos;exercice:</translation>
+    </message>
+    <message>
+        <source>Terrain:</source>
+        <translation>Terrain:</translation>
+    </message>
+    <message>
+        <source>Model:</source>
+        <translation>Modèle:</translation>
+    </message>
+    <message>
+        <source>No briefing available</source>
+        <translation>Aucun briefing</translation>
     </message>
 </context>
 <context>
@@ -309,6 +324,17 @@
     <message>
         <source>Input Scenario: </source>
         <translation>Scénario à importer: </translation>
+    </message>
+</context>
+<context>
+    <name>LauncherClientPage</name>
+    <message>
+        <source>Failed to connect to host: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erreur</translation>
     </message>
 </context>
 <context>
@@ -434,6 +460,56 @@
     </message>
 </context>
 <context>
+    <name>ReadProfile</name>
+    <message>
+        <source>anonymous</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RemoteControlPage</name>
+    <message>
+        <source>Remote control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Host:</source>
+        <translation type="unfinished">Hôte: </translation>
+    </message>
+    <message>
+        <source>127.0.0.1</source>
+        <translation type="unfinished">127.0.0.1</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation type="unfinished">Port: </translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished">Mise à jour</translation>
+    </message>
+    <message>
+        <source>Start game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start replay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Démarrer</translation>
+    </message>
+    <message>
+        <source>Stop running session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ReplayPage</name>
     <message>
         <source>Replay</source>
@@ -457,18 +533,6 @@
     <message>
         <source>Editing exercise</source>
         <translation>Edition exercice</translation>
-    </message>
-    <message>
-        <source>Terrain:</source>
-        <translation>Terrain:</translation>
-    </message>
-    <message>
-        <source>Model:</source>
-        <translation>Modèle:</translation>
-    </message>
-    <message>
-        <source>Exercise parameters:</source>
-        <translation>Parametres d&apos;exercice:</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -531,11 +595,11 @@
     </message>
     <message>
         <source>EDXL-HAVE</source>
-        <translation type="unfinished"></translation>
+        <translation>EDXL-HAVE</translation>
     </message>
     <message>
         <source>ERP/Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>ERP/Timeline</translation>
     </message>
     <message>
         <source>Session</source>
@@ -554,7 +618,7 @@
     </message>
     <message>
         <source>Control remote training sessions</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrôle les sessions d&apos;entrainement distantes</translation>
     </message>
 </context>
 <context>

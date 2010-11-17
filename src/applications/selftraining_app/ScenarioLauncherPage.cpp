@@ -147,7 +147,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
     {
         TabWidget* tabs = new TabWidget( box );
         {
-            exercises_ = new ExerciseList( tabs, config_, controllers, "", true, true, true, false );
+            exercises_ = new ExerciseList( tabs, config_, controllers, true, true, true, false );
             exercises_->setBackgroundOrigin( QWidget::WindowOrigin );
             connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC&, const Profile& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
@@ -207,7 +207,6 @@ void ScenarioLauncherPage::Update()
 {
     exercises_->Clear();
     Connect( "localhost", config_.GetLauncherPort() );
-    exercises_->Update();
 }
 
 // -----------------------------------------------------------------------------

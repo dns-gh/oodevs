@@ -15,7 +15,6 @@
 namespace frontend
 {
     class Exercise_ABC;
-    class RemoteExercise;
     class ExerciseFilter_ABC;
 }
 
@@ -29,11 +28,7 @@ namespace tools
     class GeneralConfig;
 }
 
-namespace xml
-{
-    class xistream;
-}
-
+class ExerciseProperties;
 class ProfileList;
 class Profile;
 class QListView;
@@ -54,7 +49,7 @@ class ExerciseList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, kernel::Controllers& controllers, const std::string& subDir = "", bool showBrief = true, bool showProfile = true, bool showParams = true, bool enableParams = true );
+             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, kernel::Controllers& controllers, bool showBrief = true, bool showProfile = true, bool showParams = true, bool enableParams = true );
     virtual ~ExerciseList();
     //@}
 
@@ -62,7 +57,7 @@ public:
     //@{
     void SetFilter( const frontend::ExerciseFilter_ABC& filter );
     bool Exists( const QString& exercise ) const;
-    void ChangeExerciceParameters( const std::string& exercice );
+    void ChangeExerciceParameters();
     //@}
 
 signals:
@@ -75,9 +70,7 @@ signals:
 public slots:
     //! @name Slots
     //@{
-    void Update();
     void Clear();
-    void ComboChanged( int index );
     //@}
 
 private slots:
@@ -102,7 +95,6 @@ private:
 
     virtual void customEvent( QCustomEvent* e );
     const frontend::Exercise_ABC* GetSelectedExercise() const;
-    void ReadBriefingText( xml::xistream& xis );
     QString GetExerciseDisplayName( const QString& exercise ) const;
     void AddExerciseEntry( const frontend::Exercise_ABC& exercise );
     void UpdateExerciseEntry( const frontend::Exercise_ABC& exercise );
@@ -112,20 +104,13 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig&  config_;
-    kernel::Controllers&         controllers_;
-    const std::string            subDir_;
-    QListView*                   exercises_;
-    QLabel*                      briefingImage_;
-    QTextEdit*                   briefingText_;
-    ProfileList*                 profiles_;
-    bool                         showBrief_;
-    const QString                language_;
-    bool                         parametersChanged_;    
-    QComboBox*                   editTerrainList_;
-    QComboBox*                   editModelList_;
+    const tools::GeneralConfig& config_;
+    kernel::Controllers& controllers_;
+    QListView* exercises_;
+    ProfileList* profiles_;
     const frontend::ExerciseFilter_ABC* filter_;
     std::auto_ptr< frontend::ExerciseFilter_ABC > defaultFilter_;
+    ExerciseProperties* properties_;
  //@}
 };
 

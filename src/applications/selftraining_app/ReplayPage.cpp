@@ -40,7 +40,7 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, const frontend:
         hbox->setMargin( 10 );
         hbox->setSpacing( 10 );
         {
-            exercises_ = new ExerciseList( hbox, config, controllers, "", false, true, false );
+            exercises_ = new ExerciseList( hbox, config, controllers, false, true, false );
             connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( OnSelectExercise( const frontend::Exercise_ABC&, const Profile& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
         }
@@ -70,7 +70,6 @@ void ReplayPage::Update()
 {
     exercises_->Clear();
     Connect( "localhost", config_.GetLauncherPort() );
-    exercises_->Update();
 }
 
 // -----------------------------------------------------------------------------

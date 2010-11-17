@@ -72,7 +72,7 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
     }
     {
         filter_.reset( new RunningExerciseFilter( *host_, *port_ ) );
-        exercises_ = new ExerciseList( box, config_, controllers, "", true, true, true, false );
+        exercises_ = new ExerciseList( box, config_, controllers, true, true, true, false );
         exercises_->SetFilter( *filter_ );
         connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( SelectExercise( const frontend::Exercise_ABC&, const Profile& ) ) );
         connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
@@ -141,13 +141,4 @@ void BattleCenterJoinPage::UpdateExerciseList()
 {
     exercises_->Clear();
     Connect( host_->text().ascii(), static_cast< unsigned short >( port_->value() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: BattleCenterJoinPage::Update
-// Created: SBO 2010-10-26
-// -----------------------------------------------------------------------------
-void BattleCenterJoinPage::Update()
-{
-    exercises_->Update();
 }

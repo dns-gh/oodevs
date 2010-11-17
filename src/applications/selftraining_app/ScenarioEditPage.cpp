@@ -56,7 +56,7 @@ ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, con
         mainTabs_ = new TabWidget( box );
         connect( mainTabs_, SIGNAL( currentChanged( QWidget* ) ), this, SLOT( UpdateEditButton( QWidget* ) ) );
         {
-            exercises_ = new ExerciseList( mainTabs_, config_, controllers, "", true, false );
+            exercises_ = new ExerciseList( mainTabs_, config_, controllers, true, false );
             connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC&, const Profile& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
             mainTabs_->addTab( exercises_, tools::translate( "ScenarioEditPage", "Edit" ) );
@@ -105,7 +105,6 @@ void ScenarioEditPage::Update()
     exercises_->Clear();
     Connect( "localhost", config_.GetLauncherPort() );
     createExerciceWidget_->Update();
-    exercises_->Update();
     exportWidget_->Update();
 }
 
@@ -120,7 +119,7 @@ void ScenarioEditPage::OnEdit()
     case 0: //edit
         if( exercise_ )
         {
-            exercises_->ChangeExerciceParameters( exercise_->GetName() );
+            exercises_->ChangeExerciceParameters();
             Edit( exercise_->GetName().c_str() );
         }
         break;
