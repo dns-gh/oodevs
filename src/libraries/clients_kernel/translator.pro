@@ -2,6 +2,7 @@ HEADERS =
 
 SOURCES = AtlasNatures.cpp \
 Circle.cpp \
+CommunicationHierarchies.inl \
 CoordinateSystems.cpp \
 EntityHierarchies.inl \
 Formatter.cpp \
@@ -11,6 +12,7 @@ Lines.cpp \
 Path.cpp \
 Point.cpp \
 Polygon.cpp \
+Rectangle.cpp \
 Tools.cpp \
 TristateOption.cpp \
 Units.cpp \

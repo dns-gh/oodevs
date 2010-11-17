@@ -11,9 +11,9 @@ AgentKnowledgePanel.cpp \
 AgentListView.cpp \
 AlarmsWidget.cpp \
 Application.cpp \
-AutomatsLayer.cpp \
 BorrowingsListView.cpp \
 BriefingDialog.cpp \
+ChangeDiplomacyDialog.cpp \
 ChangeHumanFactorsDialog.cpp \
 ChangeLogisticLinksDialog.cpp \
 ChatDock.cpp \
@@ -24,12 +24,13 @@ ClockEditDialog.cpp \
 ClockWidget.cpp \
 ConnectDialog.cpp \
 ConnectionMenu.cpp \
+CreateFormationDialog.cpp \
 DisconnectDialog.cpp \
 DotationsListView.cpp \
 EfficientRangeDialog.cpp \
 EquipmentsListView.cpp \
 EventToolbar.cpp \
-FireCreationPanel.cpp\
+FireCreationPanel.cpp \
 FireResultListView.cpp \
 FolkToolbar.cpp \
 HumansListView.cpp \
@@ -53,12 +54,14 @@ LendingsListView.cpp \
 LoginDialog.cpp \
 LogisticStatusWidgets.cpp \
 LogisticSupplyChangeQuotasDialog.cpp \
+LogisticSupplyPullFlowDialog.cpp \
 LogisticSupplyPushFlowDialog.cpp \
 LogisticSupplyRecompletionDialog.cpp \
 MainWindow.cpp \
 MaintenanceConsignsWidget.cpp \
 MaintenanceHaulersListView.cpp \
 MaintenanceRepairersListView.cpp \
+MedicalCapacityUpdateDialog.cpp \
 MedicalCollectAmbulancesListView.cpp \
 MedicalConsignsWidget.cpp \
 MedicalDoctorsListView.cpp \
@@ -72,8 +75,8 @@ ObjectCreationPanel.cpp \
 ObjectKnowledgePanel.cpp \
 ObjectMagicOrdersInterface.cpp \
 ObjectPanel.cpp \
-OrbatToolbar.cpp \
 OrbatAttributesDialog.cpp \
+OrbatToolbar.cpp \
 PopulationKnowledgePanel.cpp \
 PopulationMagicOrdersInterface.cpp \
 ProfilingPanel.cpp \
@@ -81,6 +84,7 @@ RcEntityResolver.cpp \
 ReplayerToolbar.cpp \
 ReportFilterOptions.cpp \
 ReportListView.cpp \
+ResourceLinksDialog.cpp \
 SIMControlToolbar.cpp \
 ScorePanel.cpp \
 StatisticsWidget.cpp \
@@ -100,8 +104,8 @@ UserProfileDialog.cpp \
 UserProfileList.cpp \
 UserProfileRights_ABC.cpp \
 UserProfileWidget.cpp \
-WeatherCreationPanel.cpp\
-WeatherWidget.cpp\
+WeatherCreationPanel.cpp \
+WeatherWidget.cpp \
 main.cpp \
 
 TRANSLATIONS = gaming_app_fr.ts

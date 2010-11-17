@@ -26,7 +26,7 @@
     </message>
     <message>
         <source>&#xa9; 2010 MASA Group</source>
-        <translation type="unfinished">© 2010 MASA Group</translation>
+        <translation>© 2010 MASA Group</translation>
     </message>
 </context>
 <context>
@@ -690,7 +690,7 @@
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>A propos</translation>
     </message>
 </context>
 <context>
@@ -1266,6 +1266,13 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Reset</source>
         <translation>Par défaut</translation>
+    </message>
+</context>
+<context>
+    <name>models::app6</name>
+    <message>
+        <source>undefined</source>
+        <translation>indéfini</translation>
     </message>
 </context>
 </TS>

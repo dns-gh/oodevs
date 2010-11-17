@@ -301,7 +301,7 @@
     <name>Block</name>
     <message>
         <source>Info/StructuralState</source>
-        <translation type="unfinished">Info/Etat Structurel</translation>
+        <translation>Info/Etat Structurel</translation>
     </message>
 </context>
 <context>
@@ -543,11 +543,11 @@
     </message>
     <message>
         <source>Logistic links/Superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Liens logistiques/Supérieur</translation>
     </message>
     <message>
         <source>Superior:</source>
-        <translation type="unfinished"></translation>
+        <translation>Supérieur:</translation>
     </message>
 </context>
 <context>
@@ -886,6 +886,14 @@
     <message>
         <source>Delay time:</source>
         <translation>Temps de retard:</translation>
+    </message>
+    <message>
+        <source>Decisionnal</source>
+        <translation>Décisionnel</translation>
+    </message>
+    <message>
+        <source>Sealing level:</source>
+        <translation>Niveau de bouclage:</translation>
     </message>
 </context>
 <context>

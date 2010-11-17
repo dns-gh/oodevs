@@ -324,19 +324,19 @@
     <name>Karma</name>
     <message>
         <source>Friend</source>
-        <translation type="unfinished">Ami</translation>
+        <translation>Ami</translation>
     </message>
     <message>
         <source>Enemy</source>
-        <translation type="unfinished">Ennemi</translation>
+        <translation>Ennemi</translation>
     </message>
     <message>
         <source>Neutral</source>
-        <translation type="unfinished">Neutre</translation>
+        <translation>Neutre</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished">Inconnu</translation>
+        <translation>Inconnu</translation>
     </message>
 </context>
 <context>
@@ -360,6 +360,10 @@
     <message>
         <source>Polygon</source>
         <translation>Polygone</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation>Rectangle</translation>
     </message>
 </context>
 <context>

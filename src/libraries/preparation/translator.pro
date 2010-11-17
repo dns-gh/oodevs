@@ -26,18 +26,18 @@ MineAttribute.cpp \
 NBCAttribute.cpp \
 Object.cpp \
 ObstacleAttribute.cpp \
+OccupantAttribute.cpp \
 Population.cpp \
 ProfileFactory.cpp \
 ProfilesModel.cpp \
 ScoresModel.cpp \
 Stocks.cpp \
+StructuralStateAttribute.cpp \
 SuccessFactorsModel.cpp \
 SupplyRouteAttribute.cpp \
 TacticalLine_ABC.cpp \
 Tc2States.cpp \
 Team.cpp \
-TeamKarmas.cpp \
 TeamsModel.cpp \
-
 
 TRANSLATIONS = preparation_fr.ts

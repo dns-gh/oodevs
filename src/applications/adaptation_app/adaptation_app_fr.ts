@@ -2014,14 +2014,25 @@ du tireur</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ListView_Urban_Type</name>
+    <name>ADN_ListView_UrbanMaterial_Type</name>
     <message>
         <source>New</source>
-        <translation type="unfinished">Nouveau</translation>
+        <translation>Nouveau</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ListView_Urban_Type</name>
+    <message>
+        <source>New</source>
+        <translation>Nouveau</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
@@ -2311,6 +2322,14 @@ du tireur</translation>
     <message>
         <source>Allowed types</source>
         <translation>Types autorisés</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <source>Allowed</source>
+        <translation>Autorisé</translation>
     </message>
 </context>
 <context>
@@ -2755,7 +2774,7 @@ du tireur</translation>
     </message>
     <message>
         <source>SealOff</source>
-        <translation type="unfinished"></translation>
+        <translation>Boucler</translation>
     </message>
     <message>
         <source>Medical</source>
@@ -3088,19 +3107,19 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <name>ADN_Radars_Wizard</name>
     <message>
         <source>New special sensor creation</source>
-        <translation type="unfinished">Création d&apos;un nouveau capteur spécial</translation>
+        <translation>Création d&apos;un nouveau capteur spécial</translation>
     </message>
     <message>
         <source>Special sensor</source>
-        <translation type="unfinished">Capteur spécial</translation>
+        <translation>Capteur spécial</translation>
     </message>
     <message>
         <source>Creation finished</source>
-        <translation type="unfinished">Création terminée</translation>
+        <translation>Création terminée</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new special sensor.</source>
-        <translation type="unfinished">Cliquez sur &quot;Terminer&quot; pour créer le nouveau capteur spécial.</translation>
+        <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouveau capteur spécial.</translation>
     </message>
 </context>
 <context>
@@ -3449,6 +3468,25 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Sensors_LimitedToSensorsListView</name>
+    <message>
+        <source>Sensors</source>
+        <translation>Capteurs</translation>
+    </message>
+    <message>
+        <source>Add sensor</source>
+        <translation>Ajouter un capteur</translation>
+    </message>
+    <message>
+        <source>Add special sensor</source>
+        <translation>Ajouter un capteur spécial</translation>
+    </message>
+    <message>
+        <source>Remove item</source>
+        <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Sensors_Meteos_GUI</name>
     <message>
         <source>Meteos</source>
@@ -3663,143 +3701,143 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <name>ADN_Tr</name>
     <message>
         <source>explosive</source>
-        <translation type="unfinished">explosif</translation>
+        <translation>explosif</translation>
     </message>
     <message>
         <source>grenade</source>
-        <translation type="unfinished"></translation>
+        <translation>grenade</translation>
     </message>
     <message>
         <source>anti tank</source>
-        <translation type="unfinished">anti char</translation>
+        <translation>anti char</translation>
     </message>
     <message>
         <source>smoke</source>
-        <translation type="unfinished">fumée</translation>
+        <translation>fumée</translation>
     </message>
     <message>
         <source>illumination shell</source>
-        <translation type="unfinished">obus éclairant</translation>
+        <translation>obus éclairant</translation>
     </message>
     <message>
         <source>mine</source>
-        <translation type="unfinished"></translation>
+        <translation>mine</translation>
     </message>
     <message>
         <source>effect</source>
-        <translation type="unfinished">effet</translation>
+        <translation>effet</translation>
     </message>
     <message>
         <source>unknown</source>
-        <translation type="unfinished">inconnu</translation>
+        <translation>inconnu</translation>
     </message>
     <message>
         <source>forest</source>
-        <translation type="unfinished">forêt</translation>
+        <translation>forêt</translation>
     </message>
     <message>
         <source>orchard</source>
-        <translation type="unfinished">verger</translation>
+        <translation>verger</translation>
     </message>
     <message>
         <source>swamp</source>
-        <translation type="unfinished">marais</translation>
+        <translation>marais</translation>
     </message>
     <message>
         <source>dune</source>
-        <translation type="unfinished"></translation>
+        <translation>dune</translation>
     </message>
     <message>
         <source>urban area</source>
-        <translation type="unfinished">zone urbaine</translation>
+        <translation>zone urbaine</translation>
     </message>
     <message>
         <source>lake</source>
-        <translation type="unfinished">lac</translation>
+        <translation>lac</translation>
     </message>
     <message>
         <source>glacier</source>
-        <translation type="unfinished"></translation>
+        <translation>glacier</translation>
     </message>
     <message>
         <source>forest edge</source>
-        <translation type="unfinished">lisière</translation>
+        <translation>lisière</translation>
     </message>
     <message>
         <source>suburb</source>
-        <translation type="unfinished">banlieue</translation>
+        <translation>banlieue</translation>
     </message>
     <message>
         <source>waterfront</source>
-        <translation type="unfinished">côte</translation>
+        <translation>côte</translation>
     </message>
     <message>
         <source>orchard edge</source>
-        <translation type="unfinished">lisière de verger</translation>
+        <translation>lisière de verger</translation>
     </message>
     <message>
         <source>swamp edge</source>
-        <translation type="unfinished">bord de marais</translation>
+        <translation>bord de marais</translation>
     </message>
     <message>
         <source>dune edge</source>
-        <translation type="unfinished">bord de dune</translation>
+        <translation>bord de dune</translation>
     </message>
     <message>
         <source>glacier edge</source>
-        <translation type="unfinished">bord de glacier</translation>
+        <translation>bord de glacier</translation>
     </message>
     <message>
         <source>country road</source>
-        <translation type="unfinished">route de campagne</translation>
+        <translation>route de campagne</translation>
     </message>
     <message>
         <source>highway</source>
-        <translation type="unfinished">autoroute</translation>
+        <translation>autoroute</translation>
     </message>
     <message>
         <source>main road</source>
-        <translation type="unfinished">route principale</translation>
+        <translation>route principale</translation>
     </message>
     <message>
         <source>secondary road</source>
-        <translation type="unfinished">route secondaire</translation>
+        <translation>route secondaire</translation>
     </message>
     <message>
         <source>stream</source>
-        <translation type="unfinished">ruisseau</translation>
+        <translation>ruisseau</translation>
     </message>
     <message>
         <source>river</source>
-        <translation type="unfinished">rivière</translation>
+        <translation>rivière</translation>
     </message>
     <message>
         <source>main river</source>
-        <translation type="unfinished">fleuve</translation>
+        <translation>fleuve</translation>
     </message>
     <message>
         <source>bridge</source>
-        <translation type="unfinished">pont</translation>
+        <translation>pont</translation>
     </message>
     <message>
         <source>cliff</source>
-        <translation type="unfinished">falaise</translation>
+        <translation>falaise</translation>
     </message>
     <message>
         <source>railroad</source>
-        <translation type="unfinished">chemin de fer</translation>
+        <translation>chemin de fer</translation>
     </message>
     <message>
         <source>crossroad</source>
-        <translation type="unfinished">carrefour</translation>
+        <translation>carrefour</translation>
     </message>
     <message>
         <source>mountain</source>
-        <translation type="unfinished">montagne</translation>
+        <translation>montagne</translation>
     </message>
     <message>
         <source>mountain edge</source>
-        <translation type="unfinished">bord de montagne</translation>
+        <translation>bord de montagne</translation>
     </message>
     <message>
         <source></source>
@@ -3807,19 +3845,19 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Parked, engine stopped</source>
-        <translation type="unfinished">à l&apos;arrêt, moteur éteint</translation>
+        <translation>à l&apos;arrêt, moteur éteint</translation>
     </message>
     <message>
         <source>Parked, engine running</source>
-        <translation type="unfinished">à l&apos;arrêt, moteur allumé</translation>
+        <translation>à l&apos;arrêt, moteur allumé</translation>
     </message>
     <message>
         <source>Moving</source>
-        <translation type="unfinished">En mouvement</translation>
+        <translation>En mouvement</translation>
     </message>
     <message>
         <source>Working</source>
-        <translation type="unfinished">En travaux</translation>
+        <translation>En travaux</translation>
     </message>
     <message>
         <source>Very sunny day</source>
@@ -3883,231 +3921,231 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>phase line</source>
-        <translation type="unfinished">Lima</translation>
+        <translation>Lima</translation>
     </message>
     <message>
         <source>Infantry</source>
-        <translation type="unfinished">Infanterie</translation>
+        <translation>Infanterie</translation>
     </message>
     <message>
         <source>Anti air</source>
-        <translation type="unfinished">Anti aérien</translation>
+        <translation>Anti aérien</translation>
     </message>
     <message>
         <source>Army aviation</source>
-        <translation type="unfinished">Surveillance aérienne</translation>
+        <translation>Surveillance aérienne</translation>
     </message>
     <message>
         <source>Intelligence</source>
-        <translation type="unfinished">Renseignement</translation>
+        <translation>Renseignement</translation>
     </message>
     <message>
         <source>NBC</source>
-        <translation type="unfinished">NBC</translation>
+        <translation>NBC</translation>
     </message>
     <message>
         <source>Armor</source>
-        <translation type="unfinished">Blindé</translation>
+        <translation>Blindé</translation>
     </message>
     <message>
         <source>Engineer</source>
-        <translation type="unfinished">Génie</translation>
+        <translation>Génie</translation>
     </message>
     <message>
         <source>Ground artillery</source>
-        <translation type="unfinished">Artillerie sol sol</translation>
+        <translation>Artillerie sol sol</translation>
     </message>
     <message>
         <source>Communication</source>
-        <translation type="unfinished">Transmissions</translation>
+        <translation>Transmissions</translation>
     </message>
     <message>
         <source>Logistic close support</source>
-        <translation type="unfinished">Logistique</translation>
+        <translation>Logistique</translation>
     </message>
     <message>
         <source>Medical system, brigade level</source>
-        <translation type="unfinished">Chaîne Médicale, niveau brigade</translation>
+        <translation>Chaîne Médicale, niveau brigade</translation>
     </message>
     <message>
         <source>Maintenance system, brigade level</source>
-        <translation type="unfinished">Chaîne Maintenance, niveau brigade</translation>
+        <translation>Chaîne Maintenance, niveau brigade</translation>
     </message>
     <message>
         <source>Supply system, brigade level</source>
-        <translation type="unfinished">Chaîne Ravitaillement, niveau brigade</translation>
+        <translation>Chaîne Ravitaillement, niveau brigade</translation>
     </message>
     <message>
         <source>Medical system, division level</source>
-        <translation type="unfinished">Chaîne Médicale, niveau division</translation>
+        <translation>Chaîne Médicale, niveau division</translation>
     </message>
     <message>
         <source>Maintenance system, division level</source>
-        <translation type="unfinished">Chaîne Médicale, niveau division</translation>
+        <translation>Chaîne Médicale, niveau division</translation>
     </message>
     <message>
         <source>Supply system, division level</source>
-        <translation type="unfinished">Chaîne Ravitaillement, niveau division</translation>
+        <translation>Chaîne Ravitaillement, niveau division</translation>
     </message>
     <message>
         <source>Convoy</source>
-        <translation type="unfinished">Convoi</translation>
+        <translation>Convoi</translation>
     </message>
     <message>
         <source>Movement support</source>
-        <translation type="unfinished">Circulation</translation>
+        <translation>Circulation</translation>
     </message>
     <message>
         <source>Refugee</source>
-        <translation type="unfinished">Réfugié</translation>
+        <translation>Réfugié</translation>
     </message>
     <message>
         <source>Militia</source>
-        <translation type="unfinished">Milice</translation>
+        <translation>Milice</translation>
     </message>
     <message>
         <source>Joint</source>
-        <translation type="unfinished">Interarme</translation>
+        <translation>Interarme</translation>
     </message>
     <message>
         <source>Asymetric threat</source>
-        <translation type="unfinished">Menace asymétrique</translation>
+        <translation>Menace asymétrique</translation>
     </message>
     <message>
         <source>Emergency management</source>
-        <translation type="unfinished">Sécurité civile</translation>
+        <translation>Sécurité civile</translation>
     </message>
     <message>
         <source>Commander, Combined Arms</source>
-        <translation type="unfinished">Commandant, Interarmes</translation>
+        <translation>Commandant, Interarmes</translation>
     </message>
     <message>
         <source>Commander, Infantry</source>
-        <translation type="unfinished">Commandant, Infanterie</translation>
+        <translation>Commandant, Infanterie</translation>
     </message>
     <message>
         <source>Commander, Anti air</source>
-        <translation type="unfinished">Commandant, Anti aérien</translation>
+        <translation>Commandant, Anti aérien</translation>
     </message>
     <message>
         <source>Commander, Army aviation</source>
-        <translation type="unfinished">Commandant, ALAT</translation>
+        <translation>Commandant, ALAT</translation>
     </message>
     <message>
         <source>Commander, Intelligence</source>
-        <translation type="unfinished">Commandant, Renseignement</translation>
+        <translation>Commandant, Renseignement</translation>
     </message>
     <message>
         <source>Commander, NBC</source>
-        <translation type="unfinished">Commandant, NBC</translation>
+        <translation>Commandant, NBC</translation>
     </message>
     <message>
         <source>Commander, Armor</source>
-        <translation type="unfinished">Commandant, ABC</translation>
+        <translation>Commandant, ABC</translation>
     </message>
     <message>
         <source>Commander, Engineer</source>
-        <translation type="unfinished">Commandant, Génie</translation>
+        <translation>Commandant, Génie</translation>
     </message>
     <message>
         <source>Commander, Ground artillery</source>
-        <translation type="unfinished">Commandant, Artillerie sol sol</translation>
+        <translation>Commandant, Artillerie sol sol</translation>
     </message>
     <message>
         <source>Commander, Communication</source>
-        <translation type="unfinished">Commandant, Transmissions</translation>
+        <translation>Commandant, Transmissions</translation>
     </message>
     <message>
         <source>Commander, Logistic close support</source>
-        <translation type="unfinished">Commandant, Logistique</translation>
+        <translation>Commandant, Logistique</translation>
     </message>
     <message>
         <source>Commander, Medical system, brigade level</source>
-        <translation type="unfinished">Commandant, Chaîne Santé, niveau brigade</translation>
+        <translation>Commandant, Chaîne Santé, niveau brigade</translation>
     </message>
     <message>
         <source>Commander, Maintenance system, brigade level</source>
-        <translation type="unfinished">Commandant, Chaîne Maintenance, niveau brigade</translation>
+        <translation>Commandant, Chaîne Maintenance, niveau brigade</translation>
     </message>
     <message>
         <source>Commander, Supply system, brigade level</source>
-        <translation type="unfinished">Commandant, Chaîne Ravitaillement, niveau brigade</translation>
+        <translation>Commandant, Chaîne Ravitaillement, niveau brigade</translation>
     </message>
     <message>
         <source>Commander, Medical system, division level</source>
-        <translation type="unfinished">Commandant, Chaîne Santé, niveau division</translation>
+        <translation>Commandant, Chaîne Santé, niveau division</translation>
     </message>
     <message>
         <source>Commander, Maintenance system, division level</source>
-        <translation type="unfinished">Commandant, Chaîne Maintenance, niveau division</translation>
+        <translation>Commandant, Chaîne Maintenance, niveau division</translation>
     </message>
     <message>
         <source>Commander, Supply system, division level</source>
-        <translation type="unfinished">Commandant, Chaîne Ravitaillement, niveau division</translation>
+        <translation>Commandant, Chaîne Ravitaillement, niveau division</translation>
     </message>
     <message>
         <source>Commander, Movement support</source>
-        <translation type="unfinished">Commandant, Circulation</translation>
+        <translation>Commandant, Circulation</translation>
     </message>
     <message>
         <source>Commander, Refugee</source>
-        <translation type="unfinished">Commandant, Réfugiés</translation>
+        <translation>Commandant, Réfugiés</translation>
     </message>
     <message>
         <source>Commander, Militia</source>
-        <translation type="unfinished">Commandant, Milice</translation>
+        <translation>Commandant, Milice</translation>
     </message>
     <message>
         <source>Commander, Joint</source>
-        <translation type="unfinished">Commandant, Interarmes</translation>
+        <translation>Commandant, Interarmes</translation>
     </message>
     <message>
         <source>Commander, Asymetric threat</source>
-        <translation type="unfinished">Commandant, Menace asymétrique</translation>
+        <translation>Commandant, Menace asymétrique</translation>
     </message>
     <message>
         <source>Commander, Emergency management</source>
-        <translation type="unfinished">Commandant, sécurité civile</translation>
+        <translation>Commandant, sécurité civile</translation>
     </message>
     <message>
         <source>CP</source>
-        <translation type="unfinished">PC</translation>
+        <translation>PC</translation>
     </message>
     <message>
         <source>Logistic</source>
-        <translation type="unfinished">Logistique</translation>
+        <translation>Logistique</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation type="unfinished">Autre</translation>
+        <translation>Autre</translation>
     </message>
     <message>
         <source>Mortar</source>
-        <translation type="unfinished">Mortier</translation>
+        <translation>Mortier</translation>
     </message>
     <message>
         <source>Rocket launcher</source>
-        <translation type="unfinished">Lance-roquette</translation>
+        <translation>Lance-roquette</translation>
     </message>
     <message>
         <source>Vehicle</source>
-        <translation type="unfinished">Véhicule</translation>
+        <translation>Véhicule</translation>
     </message>
     <message>
         <source>Dismounted infantry</source>
-        <translation type="unfinished">Infanterie débarquée</translation>
+        <translation>Infanterie débarquée</translation>
     </message>
     <message>
         <source>Helicopter</source>
-        <translation type="unfinished">Hélicoptère</translation>
+        <translation>Hélicoptère</translation>
     </message>
     <message>
         <source>Anti air artillery</source>
-        <translation type="unfinished">Artillerie sol air</translation>
+        <translation>Artillerie sol air</translation>
     </message>
     <message>
         <source>Undefined</source>
-        <translation type="unfinished">Indéfini</translation>
+        <translation>Indéfini</translation>
     </message>
     <message>
         <source>Slowest</source>
@@ -4139,23 +4177,23 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>equipment</source>
-        <translation type="unfinished">équipement</translation>
+        <translation>équipement</translation>
     </message>
     <message>
         <source>human</source>
-        <translation type="unfinished">humain</translation>
+        <translation>humain</translation>
     </message>
     <message>
         <source>Eletronic</source>
-        <translation type="unfinished">Electronique</translation>
+        <translation>Electronique</translation>
     </message>
     <message>
         <source>Mobility</source>
-        <translation type="unfinished">Mobilité</translation>
+        <translation>Mobilité</translation>
     </message>
     <message>
         <source>Seriousness level 1</source>
-        <translation type="unfinished">Gravité niveau 1</translation>
+        <translation>Gravité niveau 1</translation>
     </message>
     <message>
         <source>Seriousness level 2</source>
@@ -4167,127 +4205,127 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Shell</source>
-        <translation type="unfinished">Obus</translation>
+        <translation>Obus</translation>
     </message>
     <message>
         <source>Missile</source>
-        <translation type="unfinished"></translation>
+        <translation>Missile</translation>
     </message>
     <message>
         <source>Air missile</source>
-        <translation type="unfinished">Missile sol air</translation>
+        <translation>Missile sol air</translation>
     </message>
     <message>
         <source>Bullet</source>
-        <translation type="unfinished">Balle</translation>
+        <translation>Balle</translation>
     </message>
     <message>
         <source>radar</source>
-        <translation type="unfinished"></translation>
+        <translation>radar</translation>
     </message>
     <message>
         <source>listening</source>
-        <translation type="unfinished">écoute</translation>
+        <translation>écoute</translation>
     </message>
     <message>
         <source>radar listening</source>
-        <translation type="unfinished">écoute radar</translation>
+        <translation>écoute radar</translation>
     </message>
     <message>
         <source>Logistic - Fuel</source>
-        <translation type="unfinished">Logistique - carburant</translation>
+        <translation>Logistique - carburant</translation>
     </message>
     <message>
         <source>Logistic - Ammos</source>
-        <translation type="unfinished">Logistique - munitions</translation>
+        <translation>Logistique - munitions</translation>
     </message>
     <message>
         <source>Logistic - Shells</source>
-        <translation type="unfinished">Logistique - obus</translation>
+        <translation>Logistique - obus</translation>
     </message>
     <message>
         <source>Logistic - Water/food</source>
-        <translation type="unfinished">Logistique - eau/nourriture</translation>
+        <translation>Logistique - eau/nourriture</translation>
     </message>
     <message>
         <source>Logistic - Parts</source>
-        <translation type="unfinished">Logisituqe - pièces détachées</translation>
+        <translation>Logisituqe - pièces détachées</translation>
     </message>
     <message>
         <source>Maintenance support needed</source>
-        <translation type="unfinished">Réparable avec évacuation</translation>
+        <translation>Réparable avec évacuation</translation>
     </message>
     <message>
         <source>On site fixable</source>
-        <translation type="unfinished">Réparable sur place</translation>
+        <translation>Réparable sur place</translation>
     </message>
     <message>
         <source>Destroyed</source>
-        <translation type="unfinished">Détruit</translation>
+        <translation>Détruit</translation>
     </message>
     <message>
         <source>Agent</source>
-        <translation type="unfinished"></translation>
+        <translation>Agent</translation>
     </message>
     <message>
         <source>String</source>
-        <translation type="unfinished">Chaîne de caractères</translation>
+        <translation>Chaîne de caractères</translation>
     </message>
     <message>
         <source>Enumeration</source>
-        <translation type="unfinished"></translation>
+        <translation>Enumération</translation>
     </message>
     <message>
         <source>NatureAtlas</source>
-        <translation type="unfinished"></translation>
+        <translation>Nature ATLAS</translation>
     </message>
     <message>
         <source>AgentKnowledge</source>
-        <translation type="unfinished">Connaissance Agent</translation>
+        <translation>Connaissance Agent</translation>
     </message>
     <message>
         <source>ObjectKnowledge</source>
-        <translation type="unfinished">Connaissance Objet</translation>
+        <translation>Connaissance Objet</translation>
     </message>
     <message>
         <source>Objective</source>
-        <translation type="unfinished">Objectif</translation>
+        <translation>Objectif</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished">Itinéraire</translation>
+        <translation>Itinéraire</translation>
     </message>
     <message>
         <source>Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Point</translation>
     </message>
     <message>
         <source>Polygon</source>
-        <translation type="unfinished">Polygone</translation>
+        <translation>Polygone</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished">Localisation</translation>
+        <translation>Localisation</translation>
     </message>
     <message>
         <source>EquipmentType</source>
-        <translation type="unfinished">Type d&apos;Equipement</translation>
+        <translation>Type d&apos;Equipement</translation>
     </message>
     <message>
         <source>MaintenancePriorities</source>
-        <translation type="unfinished">Priorités de Maintenance</translation>
+        <translation>Priorités de Maintenance</translation>
     </message>
     <message>
         <source>MedicalPriorities</source>
-        <translation type="unfinished">Priorités Médicales</translation>
+        <translation>Priorités Médicales</translation>
     </message>
     <message>
         <source>IndirectFire</source>
-        <translation type="unfinished">Tir indirect</translation>
+        <translation>Tir indirect</translation>
     </message>
     <message>
         <source>Limit</source>
-        <translation type="unfinished">Limite</translation>
+        <translation>Limite</translation>
     </message>
     <message>
         <source>Urban block speed</source>
@@ -4327,43 +4365,43 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Heading</source>
-        <translation type="unfinished"></translation>
+        <translation>Direction</translation>
     </message>
     <message>
         <source>PhaseLine</source>
-        <translation type="unfinished"></translation>
+        <translation>Lima</translation>
     </message>
     <message>
         <source>Automat</source>
-        <translation type="unfinished"></translation>
+        <translation>Automate</translation>
     </message>
     <message>
         <source>Boolean</source>
-        <translation type="unfinished"></translation>
+        <translation>Booléen</translation>
     </message>
     <message>
         <source>Integer</source>
-        <translation type="unfinished"></translation>
+        <translation>Entier</translation>
     </message>
     <message>
         <source>DateTime</source>
-        <translation type="unfinished"></translation>
+        <translation>Date Heure</translation>
     </message>
     <message>
         <source>PlannedWork</source>
-        <translation type="unfinished"></translation>
+        <translation>travaux génie</translation>
     </message>
     <message>
         <source>ResourceType</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de dotation</translation>
     </message>
     <message>
         <source>UrbanKnowledge</source>
-        <translation type="unfinished"></translation>
+        <translation>Connaissance bloc urbain</translation>
     </message>
     <message>
         <source>CrowdKnowledge</source>
-        <translation type="unfinished"></translation>
+        <translation>Connaissance population</translation>
     </message>
 </context>
 <context>
@@ -5005,50 +5043,50 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <name>ActiveProtections_Data</name>
     <message>
         <source>Active Protection weapons</source>
-        <translation type="unfinished">Armes de protection active</translation>
+        <translation>Armes de protection active</translation>
     </message>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Equipment - Invalid amunition &apos;%1/%2&apos;</source>
-        <translation type="unfinished">Equipement - Munition invalide &apos;%1/%2&apos;</translation>
+        <translation>Equipement - Munition invalide &apos;%1/%2&apos;</translation>
     </message>
     <message>
         <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
-        <translation type="unfinished">Protection active &apos;%1&apos; - Type de munition invalide &apos;%2&apos;</translation>
+        <translation>Protection active &apos;%1&apos; - Type de munition invalide &apos;%2&apos;</translation>
     </message>
     <message>
         <source>Active Protection</source>
-        <translation type="unfinished">Protection active</translation>
+        <translation>Protection active</translation>
     </message>
 </context>
 <context>
     <name>AiEngine_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Op. Indicators - Thread management - Invalid relevance effect value(must be &gt;=0 and &lt;= 100)</source>
-        <translation type="unfinished">Facteurs Op. - Gestion de la menace - La valeur d&apos;effet de la pertinence doit être &gt;= 0 et &lt;= 100</translation>
+        <translation>Facteurs Op. - Gestion de la menace - La valeur d&apos;effet de la pertinence doit être &gt;= 0 et &lt;= 100</translation>
     </message>
     <message>
         <source>Op. Indicators - Thread management - Invalid operational state effect value (must be &gt;=0 and &lt;= 100)</source>
-        <translation type="unfinished">Facteurs Op. - Gestion de la menace - La valeur d&apos;effet du statut opérationnel doit être &gt;= 0 et &lt;= 100</translation>
+        <translation>Facteurs Op. - Gestion de la menace - La valeur d&apos;effet du statut opérationnel doit être &gt;= 0 et &lt;= 100</translation>
     </message>
     <message>
         <source>Op. Indicators - Thread management - Invalid neutralization state effect value (must be &gt;=0 and &lt;= 100)</source>
-        <translation type="unfinished">Facteurs Op. - Gestion de la menace - La valeur d&apos;effet de la neutralisation doit être &gt;= 0 et &lt;= 100</translation>
+        <translation>Facteurs Op. - Gestion de la menace - La valeur d&apos;effet de la neutralisation doit être &gt;= 0 et &lt;= 100</translation>
     </message>
     <message>
         <source>Op. Indicators - Op. state computation - Invalid equipment weight sum (must be &gt;=0 and &lt;= 1)</source>
-        <translation type="unfinished">Facteurs Op. - Calcul du statut opérationnel - La somme des poids des equipements doit être &gt;=0 et &lt;=1</translation>
+        <translation>Facteurs Op. - Calcul du statut opérationnel - La somme des poids des equipements doit être &gt;=0 et &lt;=1</translation>
     </message>
     <message>
         <source>Op. Indicators - Op. state computation - Invalid crew state weight (must be &gt;=0 and &lt;= 1)</source>
-        <translation type="unfinished">Facteurs Op. - Calcul du statut opérationnel - Le poids de l&apos;équipage doit être &gt;=0 et &lt;=1</translation>
+        <translation>Facteurs Op. - Calcul du statut opérationnel - Le poids de l&apos;équipage doit être &gt;=0 et &lt;=1</translation>
     </message>
 </context>
 <context>
@@ -5059,198 +5097,235 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
 </context>
 <context>
+    <name>ArmorInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Categories - Invalid armor type &apos;%1&apos;</source>
+        <translation>Catégories - Type de blindage &apos;%1&apos; non valide</translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated armor type name</source>
+        <translation>Catégories - Le nom de blindage existe déjà</translation>
+    </message>
+</context>
+<context>
+    <name>AttritionEffectOnHuman</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
+        <translation>Catégories - Etat d&apos;équipement &apos;%1&apos; non valide</translation>
+    </message>
+</context>
+<context>
     <name>Automata_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Automat - Invalid unit type &apos;%1&apos;</source>
-        <translation type="unfinished">Automate - Modèle invalide &apos;%1&apos;</translation>
+        <translation>Automate - Modèle invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Automat - Invalid doctrine model &apos;%1&apos;</source>
-        <translation type="unfinished">Automate - Modèle invalide &apos;%1&apos;</translation>
+        <translation>Automate - Modèle invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>Breakdown_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Breakdowns - Invalid part &apos;%1&apos;</source>
-        <translation type="unfinished">Pannes - Pièce invalide &apos;%1&apos;</translation>
+        <translation>Pannes - Pièce invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>New breakdown</source>
-        <translation type="unfinished">Nouvelle panne</translation>
+        <translation>Nouvelle panne</translation>
     </message>
     <message>
         <source>Breakdowns - Invalid breakdown type &apos;%1&apos;</source>
-        <translation type="unfinished">Pannes - Type de panne invalide &apos;%1&apos; </translation>
+        <translation>Pannes - Type de panne invalide &apos;%1&apos; </translation>
     </message>
 </context>
 <context>
     <name>Categories_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Categories - Duplicated volume type name &apos;%1&apos;</source>
-        <translation type="unfinished">Catégories - Type de volume déjà existant &apos;%1&apos;</translation>
+        <translation>Catégories - Type de volume déjà existant &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Categories - Duplicated resource nature type name &apos;%1&apos;</source>
-        <translation type="unfinished">Catégories - Nature de ressource déjà existante &apos;%1&apos;</translation>
+        <translation>Catégories - Nature de ressource déjà existante &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Categories - Duplicated volume type names</source>
-        <translation type="unfinished">Catégories - Deux types de volume ont le même nom</translation>
+        <translation>Catégories - Deux types de volume ont le même nom</translation>
     </message>
     <message>
         <source>Categories - Invalid volume type name</source>
-        <translation type="unfinished">Catégories - Type de volume invalide</translation>
+        <translation>Catégories - Type de volume invalide</translation>
     </message>
     <message>
         <source>Categories - Duplicated armor type names</source>
-        <translation type="unfinished">Catégories - Deux types de blindage ont le même nom</translation>
+        <translation>Catégories - Deux types de blindage ont le même nom</translation>
     </message>
     <message>
         <source>Categories - Duplicated resource nature names</source>
-        <translation type="unfinished">Catégories - Deux natures de ressource ont le même nom</translation>
+        <translation>Catégories - Deux natures de ressource ont le même nom</translation>
     </message>
     <message>
         <source>Categories - Invalid resource nature</source>
-        <translation type="unfinished">Catégories - Nature de ressource invalide</translation>
+        <translation>Catégories - Nature de ressource invalide</translation>
     </message>
 </context>
 <context>
     <name>Composante_Data</name>
     <message>
         <source>Missing breakdown</source>
-        <translation type="unfinished">Panne non définie</translation>
+        <translation>Panne non définie</translation>
     </message>
     <message>
         <source>Equipment - Shall contain at least one breakdown for </source>
-        <translation type="unfinished">Equipement - Aucune panne définie pour </translation>
+        <translation>Equipement - Aucune panne définie pour </translation>
     </message>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation type="unfinished">Equipement - Nature de ressource invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Nature de ressource invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid breakdown type &apos;%1&apos;</source>
-        <translation type="unfinished">Equipement - Type de panne invalide &apos;%1&apos; </translation>
+        <translation>Equipement - Type de panne invalide &apos;%1&apos; </translation>
     </message>
     <message>
         <source>Equipment - Invalid breakdown data : sum != 100</source>
-        <translation type="unfinished">Equipement - La somme des probabilités de panne doit être égale à 100%</translation>
+        <translation>Equipement - La somme des probabilités de panne doit être égale à 100%</translation>
     </message>
     <message>
         <source>Equipment - Invalid radar type &apos;%1&apos;</source>
-        <translation type="unfinished">Equipement - Type de radar invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Type de radar invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid weapon system &apos;%1/%2&apos;</source>
-        <translation type="unfinished">Catégories - Système d&apos;armes invalide &apos;%1/%2&apos;</translation>
+        <translation>Catégories - Système d&apos;armes invalide &apos;%1/%2&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid active protection type &apos;%1&apos;</source>
-        <translation type="unfinished">Equipement - Protection active de type &apos;%1&apos; invalide</translation>
+        <translation>Equipement - Protection active de type &apos;%1&apos; invalide</translation>
     </message>
     <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Equipement - Type de dotation invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid object type &apos;%1&apos;</source>
-        <translation type="unfinished">Equipement - Type d&apos;objet invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Type d&apos;objet invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid activty &apos;%1&apos;</source>
-        <translation type="unfinished">Equipement - Activité invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Activité invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid armor and/or volume</source>
-        <translation type="unfinished">Equipement - Blindage et/ou volume invalide</translation>
+        <translation>Equipement - Blindage et/ou volume invalide</translation>
     </message>
 </context>
 <context>
     <name>Equipment_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation type="unfinished">Equipement - Nature de ressource invalide &apos;%1&apos;</translation>
+        <translation>Equipement - Nature de ressource invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>Health_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
-        <translation type="unfinished">Chaîne médicale - Type de blessure invalide &apos;%1&apos;</translation>
+        <translation>Chaîne médicale - Type de blessure invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>Models_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Doctrine models - Invalid frag order &apos;%1&apos;</source>
-        <translation type="unfinished">Modèles - Ordre de conduite invalide &apos;%1&apos;</translation>
+        <translation>Modèles - Ordre de conduite invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
-        <translation type="unfinished">Modèles - Mission invalide &apos;%1&apos;</translation>
+        <translation>Modèles - Mission invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>NBC_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>NBC - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
-        <translation type="unfinished">NBC - La blessure &apos;%1&apos; ne peut être &lt;0 ou &gt;1</translation>
+        <translation>NBC - La blessure &apos;%1&apos; ne peut être &lt;0 ou &gt;1</translation>
     </message>
     <message>
         <source>NBC - Invalid wound type &apos;%1&apos;</source>
-        <translation type="unfinished">NBC - Type de blessure invalide &apos;%1&apos;</translation>
+        <translation>NBC - Type de blessure invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
-        <translation type="unfinished">NBC - Agent &apos;%1&apos; - La somme des effets d&apos;empoisonnement est &lt;100</translation>
+        <translation>NBC - Agent &apos;%1&apos; - La somme des effets d&apos;empoisonnement est &lt;100</translation>
+    </message>
+</context>
+<context>
+    <name>Object_Data</name>
+    <message>
+        <source>Objects - Invalid level &apos;%1&apos;</source>
+        <translation>Objets - Niveau invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Population types - Invalid population attitude &apos;%1&apos;</source>
+        <translation>Types de population - Attitude de population invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>Population_Data</name>
     <message>
         <source>Population types - Invalid behavior model &apos;%1&apos;</source>
-        <translation type="unfinished">Populations - Modèle invalide &apos;%1&apos;</translation>
+        <translation>Populations - Modèle invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Population types - Invalid population attitude &apos;%1&apos;</source>
-        <translation type="unfinished">Populations - Attitude invalide &apos;%1&apos;</translation>
+        <translation>Populations - Attitude invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Population types - Invalid population &apos;rules of engagment&apos; &apos;%1&apos;</source>
-        <translation type="unfinished">Populations - ROE invalide &apos;%1&apos;</translation>
+        <translation>Populations - ROE invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -5280,150 +5355,150 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <name>Radars_Data</name>
     <message>
         <source>Sensors - Invalid level &apos;%1&apos;</source>
-        <translation type="unfinished">Capteurs - Niveau invalide &apos;%1&apos;</translation>
+        <translation>Capteurs - Niveau invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>New special sensor</source>
-        <translation type="unfinished">Création d&apos;un nouveau capteur spécial</translation>
+        <translation>Création d&apos;un nouveau capteur spécial</translation>
     </message>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Sensors - Invalid radar type &apos;%1&apos;</source>
-        <translation type="unfinished">Capteurs - Type de radar invalide &apos;%1&apos;</translation>
+        <translation>Capteurs - Type de radar invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Sensors - Invalid activity &apos;%1&apos;</source>
-        <translation type="unfinished">Capteurs - Activité invalide &apos;%1&apos;</translation>
+        <translation>Capteurs - Activité invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>Sensor_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Sensors - Invalid stance &apos;%1&apos;</source>
-        <translation type="unfinished">Capteurs - Posture invalide &apos;%1&apos;</translation>
+        <translation>Capteurs - Posture invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Sensors - Invalid object &apos;%1&apos;</source>
-        <translation type="unfinished">Capteurs - Objet invalide &apos;%1&apos;</translation>
+        <translation>Capteurs - Objet invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Sensors - Invalid unit volume &apos;%1&apos;</source>
-        <translation type="unfinished">Capteurs - Volume invalide &apos;%1&apos;</translation>
+        <translation>Capteurs - Volume invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Sensors - Invalid weather &apos;%1&apos;</source>
-        <translation type="unfinished">Capteurs - Météo invalide &apos;%1&apos;</translation>
+        <translation>Capteurs - Météo invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>Supply_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
-        <translation type="unfinished">Chaîne ravitaillement - Pion invalide &apos;%1&apos;</translation>
+        <translation>Chaîne ravitaillement - Pion invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
-        <translation type="unfinished">Chaîne ravitaillement - Mission invalide &apos;%1&apos;</translation>
+        <translation>Chaîne ravitaillement - Mission invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Logistic supply systems - Convoy unit type not defined</source>
-        <translation type="unfinished">Chaîne ravitaillement - Type de convoi invalide &apos;%1&apos;</translation>
+        <translation>Chaîne ravitaillement - Type de convoi invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Logistic supply system - Invalid unit type for convoy units</source>
-        <translation type="unfinished">Chaîne ravitaillement - Type de convoi invalide &apos;%1&apos;</translation>
+        <translation>Chaîne ravitaillement - Type de convoi invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>Units_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Unit types - Invalid equipment &apos;%1&apos;</source>
-        <translation type="unfinished">Type de pion - équipement &quot;%1&quot; invalide</translation>
+        <translation>Type de pion - équipement &quot;%1&quot; invalide</translation>
     </message>
     <message>
         <source>Unit has no crew in equipment &apos;%1&apos;</source>
-        <translation type="unfinished">Le pion n&apos;a pas d&apos;équipage dans l&apos;équipement &quot;%1&quot;</translation>
+        <translation>Le pion n&apos;a pas d&apos;équipage dans l&apos;équipement &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Unit types - Invalid resource &apos;%1&apos;</source>
-        <translation type="unfinished">Type de pion - ressource &quot;%1&quot; invalide</translation>
+        <translation>Type de pion - ressource &quot;%1&quot; invalide</translation>
     </message>
     <message>
         <source>Unit types - Invalid stance &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de pion - Posture &quot;%1&quot; invalide</translation>
     </message>
     <message>
         <source>Unit types - Invalid unit type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de pion - Type d&apos;unité &quot;%1&quot; invalide</translation>
     </message>
     <message>
         <source>Unit types - Invalid doctrine model &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de pion - Modèle de doctrine &quot;%1&quot; invalide</translation>
     </message>
     <message>
         <source>Unit types - Invalid hierarchical level &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de pion - Niveau hiérarchique &quot;%1&quot; invalide</translation>
     </message>
     <message>
         <source>Unit types - Invalid &apos;Atlas&apos; attribute &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de pion - Type ATLAS &quot;%1&quot; invalide</translation>
     </message>
 </context>
 <context>
     <name>Urban_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Facade - Duplicated material type name &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Façade - Le type de matériaux &quot;%1&quot; existe déjà</translation>
     </message>
     <message>
         <source>Material - Duplicated volume type names</source>
-        <translation type="unfinished"></translation>
+        <translation>Matériaux - Le type de volume existe déjà</translation>
     </message>
     <message>
         <source>Facade - Invalid volume type name</source>
-        <translation type="unfinished"></translation>
+        <translation>Façade - Type de volume invalide</translation>
     </message>
     <message>
         <source>RoofShape - Invalid volume type name</source>
-        <translation type="unfinished"></translation>
+        <translation>Forme de toit - Type de volume invalide</translation>
     </message>
 </context>
 <context>
     <name>Weapons_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Donnée invalide</translation>
+        <translation>Donnée invalide</translation>
     </message>
     <message>
         <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
-        <translation type="unfinished"></translation>
+        <translation>Système d&apos;arme &apos;%1&apos;/&apos;%2&apos; - Type de lanceur invalide</translation>
     </message>
     <message>
         <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid ammunition type</source>
-        <translation type="unfinished"></translation>
+        <translation>Système d&apos;arme &apos;%1&apos;/&apos;%2&apos; - Type de munition invalide</translation>
     </message>
     <message>
         <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
-        <translation type="unfinished"></translation>
+        <translation>Arme %1 - Tir indirect - Portée max &lt; portée min</translation>
     </message>
 </context>
 </TS>

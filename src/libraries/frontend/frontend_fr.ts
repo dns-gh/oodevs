@@ -136,6 +136,41 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     </message>
 </context>
 <context>
+    <name>EdxlHavePluginConfigPanel</name>
+    <message>
+        <source>Enable EDXL-HAVE exchange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Host: </source>
+        <translation type="unfinished">Hôte:</translation>
+    </message>
+    <message>
+        <source>Use SSL: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Services configuration:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initialization service: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update service: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frequency: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HlaPluginConfigPanel</name>
     <message>
         <source>Enable HLA RPR-FOM export</source>
@@ -298,6 +333,57 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     <message>
         <source>Simulation started</source>
         <translation>Simulation démarrée</translation>
+    </message>
+</context>
+<context>
+    <name>TimelinePluginConfigPanel</name>
+    <message>
+        <source>Enable Timeline exchange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Host: </source>
+        <translation type="unfinished">Hôte:</translation>
+    </message>
+    <message>
+        <source>Use SSL: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Service configuration:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scenario information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scenario Id: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actor: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>id: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recorded orders: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Orders...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

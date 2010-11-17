@@ -12,8 +12,8 @@ BypassAttribute.cpp \
 ConstructionAttribute.cpp \
 Contaminations.cpp \
 CrossingSiteAttribute.cpp \
-DelayAttribute.cpp \
 Decisions.cpp \
+DelayAttribute.cpp \
 Dotations.cpp \
 Equipments.cpp \
 FireAttribute.cpp \
@@ -44,10 +44,11 @@ PopulationFlowKnowledge.cpp \
 PopulationKnowledge.cpp \
 Profile.cpp \
 Reinforcements.cpp \
-ResourceNetwork.cpp\
+ResourceNetwork.cpp \
 Score.cpp \
-StructuralStateAttribute.cpp \
+SealOffAttribute.cpp \
 StockAttribute.cpp \
+StructuralStateAttribute.cpp \
 SupplyRouteAttribute.cpp \
 SupplyStates.cpp \
 Team.cpp \

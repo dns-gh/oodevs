@@ -21,7 +21,7 @@
     <name>ActionTiming</name>
     <message>
         <source>Time</source>
-        <translation type="unfinished">Temps</translation>
+        <translation>Temps</translation>
     </message>
 </context>
 <context>
@@ -272,7 +272,7 @@
     </message>
     <message>
         <source> - Planning mode on</source>
-        <translation type="unfinished"> - Mode Planification</translation>
+        <translation> - Mode Planification</translation>
     </message>
     <message>
         <source>Error</source>
@@ -303,6 +303,13 @@
     <message>
         <source>Ok</source>
         <translation>Ok</translation>
+    </message>
+</context>
+<context>
+    <name>ChangeDiplomacyDialog</name>
+    <message>
+        <source>Change Diplomacy</source>
+        <translation>Changer la diplomatie</translation>
     </message>
 </context>
 <context>
@@ -489,6 +496,13 @@ Reason: %3
     <message>
         <source>&amp;Disconnect...</source>
         <translation>&amp;Déconnexion...</translation>
+    </message>
+</context>
+<context>
+    <name>CreateFormationDialog</name>
+    <message>
+        <source>Create formation</source>
+        <translation>Créer une formation</translation>
     </message>
 </context>
 <context>
@@ -1154,6 +1168,41 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>LogisticSupplyPullFlowDialog</name>
+    <message>
+        <source>Pull supply flow</source>
+        <translation>Tirer flux</translation>
+    </message>
+    <message>
+        <source>Target:</source>
+        <translation>Cible:</translation>
+    </message>
+    <message>
+        <source>Dotation</source>
+        <translation>Dotation</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation>Quantité</translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation>Disponible</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Log Supply Pull Flow</source>
+        <translation>Ravitaillement tirer flux</translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyPushFlowDialog</name>
     <message>
         <source>Push supply flow</source>
@@ -1464,6 +1513,53 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Resting</source>
         <translation>En repos</translation>
+    </message>
+</context>
+<context>
+    <name>MedicalCapacityUpdateDialog</name>
+    <message>
+        <source>Update medical capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MedicalTreatment Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hospital ID:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation>Statut</translation>
+    </message>
+    <message>
+        <source>Status:</source>
+        <translation>Statut:</translation>
+    </message>
+    <message>
+        <source>Doctors</source>
+        <translation>Docteurs</translation>
+    </message>
+    <message>
+        <source>Doctors:</source>
+        <translation>Docteurs:</translation>
+    </message>
+    <message>
+        <source>Bed Capacities (Patients/Baseline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation>Actions magiques</translation>
     </message>
 </context>
 <context>
@@ -2546,6 +2642,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Clear traces</source>
         <translation>Effacer les traces</translation>
+    </message>
+</context>
+<context>
+    <name>ResourceLinksDialog</name>
+    <message>
+        <source>Change resource links</source>
+        <translation>Changer les liens de ressources</translation>
     </message>
 </context>
 <context>

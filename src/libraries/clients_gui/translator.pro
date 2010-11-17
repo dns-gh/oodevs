@@ -26,7 +26,6 @@ HierarchyListView_ABC.cpp \
 HighlightColorModifier.cpp \
 InputPropagationPrototype_ABC.cpp \
 IntelligencesPanel.cpp \
-VisualisationScalesPanel.cpp \
 LayersPanel.cpp \
 LightingPanel.cpp \
 LocationCreator.cpp \
@@ -39,6 +38,7 @@ MetricsLayer.cpp \
 MinePrototype_ABC.cpp \
 MiniViews.cpp \
 NBCPrototype_ABC.cpp \
+NatureEditionCategory.cpp \
 ObjectListView.cpp \
 ObjectPanel.cpp \
 ObjectPreviewIcon.cpp \
@@ -47,22 +47,23 @@ ObstaclePrototype_ABC.cpp \
 OptionsPanel.cpp \
 PopulationListView.cpp \
 PopulationPanel.cpp \
-PopulationsPanel.cpp \
 PopulationTypesListView.cpp \
+PopulationsPanel.cpp \
 PreferencesDialog.cpp \
 PreferencesList.cpp \
 PresetDialog.cpp \
 PropertiesPanel.cpp \
-ResourceLinksDialog_ABC.cpp\
+ResourceLinksDialog_ABC.cpp \
 StatusBar.cpp \
 SupplyRoutePrototype_ABC.cpp \
-TerrainObjectProxy.cpp \
 TacticalLinesLayer.cpp \
+TerrainObjectProxy.cpp \
 TerrainPreference.cpp \
 TerrainProfile.cpp \
 TerrainProfiler.cpp \
 UnitListView.cpp \
 UnitPreviewIcon.cpp \
 UnitsPanel.cpp \
+VisualisationScalesPanel.cpp \
 
 TRANSLATIONS = clients_gui_fr.ts

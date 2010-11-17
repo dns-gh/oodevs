@@ -10,6 +10,7 @@ ParamAutomatList.cpp \
 ParamHumanWoundList.cpp \
 ParamIntelligenceList.cpp \
 ParamLimaList.cpp \
+ParamLocationCompositeList.cpp \
 ParamLocationList.cpp \
 ParamMissionObjective.cpp \
 ParamMissionObjectiveList.cpp \

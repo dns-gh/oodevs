@@ -37,10 +37,6 @@
         <translation>Unité exécutante non trouvée</translation>
     </message>
     <message>
-        <source>Automat creation</source>
-        <translation>Création d'automate</translation>
-    </message>
-    <message>
         <source>Crowd Creation</source>
         <translation>Création de foule</translation>
     </message>
@@ -53,8 +49,8 @@
         <translation>Création d&apos;unité</translation>
     </message>
     <message>
-        <source>New automat</source>
-        <translation>Nouvel automate</translation>
+        <source>Automat Creation</source>
+        <translation>Création d&apos;automate</translation>
     </message>
 </context>
 <context>

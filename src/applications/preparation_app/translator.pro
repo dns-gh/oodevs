@@ -3,8 +3,8 @@ HEADERS =
 SOURCES = Application.cpp \
 CommunicationListView.cpp \
 DotationsEditor.cpp \
-ExerciseDialog.cpp \
 ExerciseCreationDialog.cpp \
+ExerciseDialog.cpp \
 ExportDialog.cpp \
 ExportFilter.cpp \
 FileToolbar.cpp \

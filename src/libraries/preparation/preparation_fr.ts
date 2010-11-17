@@ -447,6 +447,14 @@
         <source>Object type:</source>
         <translation>Type d&apos;objet :</translation>
     </message>
+    <message>
+        <source>Occupant:</source>
+        <translation>Animateur:</translation>
+    </message>
+    <message>
+        <source>Info/Occupant attributes/Max Entities</source>
+        <translation>Info/Attributs animateurs/Animateurs max</translation>
+    </message>
 </context>
 <context>
     <name>Population</name>
@@ -527,6 +535,13 @@ Détail: %1.</translation>
     <message>
         <source>Stocks/Stocks</source>
         <translation>Stocks/Stocks</translation>
+    </message>
+</context>
+<context>
+    <name>StructuralStateAttribute</name>
+    <message>
+        <source>Info/StructuralState</source>
+        <translation>Info/Etat structurel</translation>
     </message>
 </context>
 <context>
