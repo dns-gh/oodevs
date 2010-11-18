@@ -11,6 +11,7 @@
 #define __MessageEncoder_h_
 
 #include "Message.h"
+#include <boost/shared_array.hpp>
 #pragma warning( push, 0 )
 #include <google/protobuf/Message.h>
 #include <google/protobuf/Descriptor.h>
@@ -40,27 +41,14 @@ public:
                 << "\" is missing required fields: " << message.InitializationErrorString();
             throw std::runtime_error( ss.str() );
         }
-
-        // $$$$ SEB 2009-10-27: Alternate implementation, little bit slower but uses stack instead of heap -> less fragmentation
-    //    std::string buffer;
-    //    if( !message.SerializeToString( &buffer ) )
-    //    {
-    //        std::stringstream ss;
-    //        ss << "Error serializing message of type \"" << message.GetDescriptor()->full_name() << "\"" << std::endl;
-    //        throw std::runtime_error( ss.str() );
-    //    }
-    //    message_.Write( buffer.c_str(), buffer.size() );
-
-        google::protobuf::uint8* buffer = new google::protobuf::uint8[ message.ByteSize() ];
-        if( !message.SerializeWithCachedSizesToArray( buffer ) )
+        boost::shared_array< google::protobuf::uint8 > buffer( new google::protobuf::uint8[ message.ByteSize() ] );
+        if( !message.SerializeWithCachedSizesToArray( buffer.get() ) )
         {
-            delete[] buffer; // $$$$ MAT : use boost::shared_array
             std::stringstream ss;
             ss << "Error serializing message of type \"" << message.GetDescriptor()->full_name() << "\"" << std::endl;
             throw std::runtime_error( ss.str() );
         }
-        message_.Write( (const char*)buffer, message.GetCachedSize() );
-        delete[] buffer;
+        message_.Write( (const char*)buffer.get(), message.GetCachedSize() );
     }
     //@}
 
