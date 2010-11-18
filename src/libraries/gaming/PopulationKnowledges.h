@@ -73,6 +73,8 @@ private:
 
     template< typename T >
     void UpdatePopulation( const T& message );
+    template< typename T >
+    void UpdatePopulationPart( const T& message );
     //@}
 
 private:

@@ -54,6 +54,20 @@ void PopulationKnowledges::UpdatePopulation( const T& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationKnowledges::UpdatePopulationPart
+// Created: LDC 2010-11-18
+// -----------------------------------------------------------------------------
+template< typename T >
+void PopulationKnowledges::UpdatePopulationPart( const T& message )
+{
+    if( PopulationKnowledge_ABC* k = Find( message.crowd().id() ) )
+    {
+        k->Update( message );
+        controller_.Update( *this );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
@@ -97,7 +111,7 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdKnowledgeDes
 // -----------------------------------------------------------------------------
 void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation& message )
 {
-    UpdatePopulation( message );
+    UpdatePopulationPart( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +120,7 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdConcentratio
 // -----------------------------------------------------------------------------
 void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& message )
 {
-    UpdatePopulation( message );
+    UpdatePopulationPart( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +129,7 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdConcentratio
 // -----------------------------------------------------------------------------
 void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction& message )
 {
-    UpdatePopulation( message );
+    UpdatePopulationPart( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +138,7 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdConcentratio
 // -----------------------------------------------------------------------------
 void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& message )
 {
-    UpdatePopulation( message );
+    UpdatePopulationPart( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +147,7 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledg
 // -----------------------------------------------------------------------------
 void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& message )
 {
-    UpdatePopulation( message );
+    UpdatePopulationPart( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,5 +156,5 @@ void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledg
 // -----------------------------------------------------------------------------
 void PopulationKnowledges::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction& message )
 {
-    UpdatePopulation( message );
+    UpdatePopulationPart( message );
 }
