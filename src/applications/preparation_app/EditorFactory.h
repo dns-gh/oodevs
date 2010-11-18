@@ -25,6 +25,7 @@ namespace kernel
     class KnowledgeGroupType;
     class Moveable_ABC;
     class NBCAgent;
+    class LogisticLevel;
 }
 
 class Model;
@@ -47,6 +48,7 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< IntelligenceKarma* >
                     , public tools::Caller< kernel::NBCAgent** >
                     , public tools::Caller< std::vector< kernel::NBCAgent* >* >
+                    , public tools::Caller< kernel::LogisticLevel** >
                     , public tools::Caller< Enum_PopulationAttitude* >
                     , public tools::Caller< Enum_DemolitionTargetType* >
                     , public tools::Caller< DotationsItem** >
@@ -71,6 +73,7 @@ public:
     virtual void Call( Enum_PopulationAttitude* const& value );
     virtual void Call( Enum_DemolitionTargetType* const& value );
     virtual void Call( DotationsItem** const& value );
+    virtual void Call( kernel::LogisticLevel** const& value );
     virtual void Call( kernel::Moveable_ABC** const& value );
     //@}
 

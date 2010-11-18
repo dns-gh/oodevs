@@ -42,18 +42,18 @@ Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& 
 // -----------------------------------------------------------------------------
 Formation::Formation( xml::xistream& xis, Controller& controller, const FormationLevels& levels, IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, 0, "" )
-    , logisticLevel_(&kernel::LogisticLevel::none_)
+    , logisticLevel_( &kernel::LogisticLevel::none_ )
 {
     std::string level, name;
     std::string logLevelName("none");
 
-    xis >> xml::attribute( "id", (int&)id_ )
+    xis >> xml::attribute( "id", ( int& ) id_ )
         >> xml::attribute( "level", level )
         >> xml::attribute( "name", name )
         >> xml::optional >> xml::attribute( "logistic-level", logLevelName );
     level_ = levels.Resolve( level.c_str() );
     name_  = name.empty() ? tools::translate( "Formation", "Formation [%1]" ).arg( id_ ) : name.c_str();
-    logisticLevel_ = &kernel::LogisticLevel::Resolve(logLevelName) ;
+    logisticLevel_ = const_cast< kernel::LogisticLevel* >( &kernel::LogisticLevel::Resolve( logLevelName ) );
     idManager.Lock( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );

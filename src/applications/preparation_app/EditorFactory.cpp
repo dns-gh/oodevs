@@ -17,6 +17,7 @@
 #include "preparation/FormationModel.h"
 #include "preparation/StaticModel.h"
 #include "preparation/TeamKarmas.h"
+#include "preparation/FormationLogisticLevel.h"
 #include "preparation/IntelligenceKarmas.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/Karma.h"
@@ -26,6 +27,7 @@
 #include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/CoordinateSystems.h"
 #include "PositionEditor.h"
 #include <qvalidator.h>
@@ -151,6 +153,18 @@ void EditorFactory::Call( IntelligenceKarma* const& value )
     editor->SetCurrentItem( *value );
     result_ = editor;
 }
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: HBD 2010-11-15
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( kernel::LogisticLevel** const& value )
+{
+    SimpleResolverEditor< kernel::LogisticLevel, FormationLogisticLevel >* editor = new SimpleResolverEditor< kernel::LogisticLevel, FormationLogisticLevel >( parent_, staticModel_.logisticLevels_ );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call

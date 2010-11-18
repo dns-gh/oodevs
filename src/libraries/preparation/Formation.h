@@ -70,7 +70,7 @@ private:
     //! @name Member data
     //@{
     const kernel::HierarchyLevel_ABC* level_;
-    const kernel::LogisticLevel* logisticLevel_;
+    kernel::LogisticLevel*  logisticLevel_;
     //@}
 };
 

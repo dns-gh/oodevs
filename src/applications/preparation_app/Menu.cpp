@@ -142,7 +142,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
 
     menu = pParent->createDockWindowMenu();
     insertItem( tools::translate( "Menu", "&Windows" ), menu );
-    menu->setDisabled( true );
+//    menu->setDisabled( true );
 
     menu = new QPopupMenu( this );
     menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Key_F1 );
