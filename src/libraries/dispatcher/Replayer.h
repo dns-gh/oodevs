@@ -67,11 +67,11 @@ private:
 private:
     //! @name Member data
     //@{
-    CompositePlugin                                    handler_;
-    dispatcher::CompositeRegistrable                   registrables_;
     std::auto_ptr< Services >                          services_;
     std::auto_ptr< kernel::StaticModel >               staticModel_;
     boost::shared_ptr< Model >                         model_;
+    CompositePlugin                                    handler_;
+    dispatcher::CompositeRegistrable                   registrables_;
     boost::shared_ptr< ClientsNetworker >              clientsNetworker_;
     boost::shared_ptr< SimulationDispatcher >          simulation_;
     std::auto_ptr< Loader >                            loader_;

@@ -66,6 +66,7 @@ private:
     void Flush();
     void TerminateFragment();
     void GenerateInfoFile() const;
+    void UpdateFragments();
     //@}
 
 private:

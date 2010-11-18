@@ -27,12 +27,6 @@ using namespace dispatcher;
 
 namespace
 {
-    boost::shared_ptr< Model > CreateModel( CompositePlugin& handler, const Config& config, const kernel::StaticModel& staticModel )
-    {
-        boost::shared_ptr< Model > result( new Model( config, staticModel ) );
-        handler.AddHandler( result );
-        return result;
-    }
     boost::shared_ptr< SimulationDispatcher > CreateSimulation( ClientPublisher_ABC& publisher, Model& model, CompositePlugin& handler )
     {
         boost::shared_ptr< SimulationDispatcher > result( new SimulationDispatcher( publisher, model ) );
@@ -48,12 +42,13 @@ namespace
 Replayer::Replayer( const Config& config )
     : services_        ( new Services() )
     , staticModel_     ( new StaticModel( config ) )
-    , model_           ( CreateModel( handler_, config, *staticModel_ ) )
+    , model_           ( new Model( config, *staticModel_ ) )
     , clientsNetworker_( new ClientsNetworker( config, handler_, *services_ ) )
     , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
     , loader_          ( new Loader( *simulation_, handler_, config ) )
     , plugin_          ( new plugins::replay::ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_, *simulation_ ) )
 {
+    handler_.AddHandler( model_ );
     handler_.AddHandler( clientsNetworker_ );
     // $$$$ AGE 2007-08-27: utiliser la PluginFactory => replay ESRI
     plugins::rights::RightsPlugin* rights = new plugins::rights::RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_, *clientsNetworker_, registrables_, 0 );

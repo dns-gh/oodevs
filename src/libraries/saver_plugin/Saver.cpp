@@ -52,49 +52,6 @@ Saver::~Saver()
 
 namespace
 {
-    unsigned int UpdateFragments( const boost::filesystem::path& recorderDirectory, unsigned int frameCount )
-    {
-        unsigned int ret = 0;
-        for( bfs::directory_iterator it( recorderDirectory ); it !=  bfs::directory_iterator(); ++it )
-            if( bfs::is_directory( it->status() ) )
-            {
-                const bfs::path infoFile = it->path() / "info";
-                if( bfs::exists( infoFile ) )
-                {
-                    try
-                    {
-                        std::ifstream stream;
-                        stream.open( infoFile.string().c_str(), std::ios_base::binary | std::ios_base::in );
-                        tools::InputBinaryWrapper wrapper( stream );
-                        unsigned int start;
-                        unsigned int end;
-                        wrapper >> start;
-                        wrapper >> end;
-                        stream.close();
-                        if( start >= frameCount )
-                            bfs::remove_all( it->path() );
-                        else if( frameCount > start && frameCount <= end )
-                        {
-                            std::ofstream stream;
-                            stream.open( infoFile.string().c_str(), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc );
-                            tools::OutputBinaryWrapper wrapper( stream );
-                            wrapper << start;
-                            wrapper << frameCount - 1;
-                            stream.close();
-                            ret = boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1;
-                        }
-                        else
-                            ret = std::max( ret, boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1 );
-                    }
-                    catch( const std::exception & )
-                    {
-                        // NOTHING
-                    }
-                }
-            }
-        return ret;
-    }
-
     std::string CreateFolderName( unsigned int frame )
     {
         std::string foldername;
@@ -114,12 +71,12 @@ void Saver::ControlInformation( const MsgsSimToClient::MsgControlInformation& co
 {
     frameCount_ = controlInformation.current_tick() - 1;
     fragmentFirstFrame_ = frameCount_;
-    const bfs::path recorderDirectory( recorderDirectory_, bfs::native );
-    if( bfs::exists( recorderDirectory ) )
+    if( hasCheckpoint_ )
+        UpdateFragments();
+    else
     {
-        if( hasCheckpoint_ )
-            currentFolder_ = UpdateFragments( recorderDirectory, frameCount_ );
-        else
+        const bfs::path recorderDirectory( recorderDirectory_, bfs::native );
+        if( bfs::exists( recorderDirectory ) )
             bfs::remove_all( recorderDirectory );
     }
     CreateNewFragment( true );
@@ -235,4 +192,56 @@ void Saver::GenerateInfoFile() const
     wrapper << fragmentFirstFrame_;
     wrapper << frameCount_ - 1;
     info.close();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Saver::UpdateFragments
+// Created: JSR 2010-11-16
+// -----------------------------------------------------------------------------
+void Saver::UpdateFragments()
+{
+    const bfs::path recorderDirectory( recorderDirectory_, bfs::native );
+    if( !bfs::exists( recorderDirectory ) )
+        return;
+    currentFolder_ = 0;
+    for( bfs::directory_iterator it( recorderDirectory ); it !=  bfs::directory_iterator(); ++it )
+        if( bfs::is_directory( it->status() ) )
+        {
+            const bfs::path infoFile = it->path() / "info";
+            if( bfs::exists( infoFile ) )
+            {
+                try
+                {
+                    std::ifstream stream;
+                    stream.open( infoFile.string().c_str(), std::ios_base::binary | std::ios_base::in );
+                    tools::InputBinaryWrapper wrapper( stream );
+                    unsigned int start;
+                    unsigned int end;
+                    wrapper >> start;
+                    wrapper >> end;
+                    stream.close();
+                    if( start >= frameCount_ )
+                        bfs::remove_all( it->path() );
+                    else if( frameCount_ > start && frameCount_ <= end )
+                    {
+                        std::ofstream stream;
+                        stream.open( infoFile.string().c_str(), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc );
+                        tools::OutputBinaryWrapper wrapper( stream );
+                        wrapper << start;
+                        wrapper << frameCount_ - 1;
+                        stream.close();
+                        if( it->path().leaf() == Saver::currentFolderName_ )
+                            bfs::rename( it->path(), bfs::path( recorderDirectory_, bfs::native ) / CreateFolderName( currentFolder_++ ) );
+                        else
+                            currentFolder_ = boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1;
+                    }
+                    else
+                        currentFolder_ = std::max( currentFolder_, boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1 );
+                }
+                catch( const std::exception & )
+                {
+                    // NOTHING
+                }
+            }
+        }
 }
