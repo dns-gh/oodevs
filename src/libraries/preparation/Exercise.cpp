@@ -40,7 +40,7 @@ void Exercise::Load( xml::xistream& xis )
 {
     std::string name, version;
     xis >> xml::start( "exercise" )
-        >> xml::attribute( "generator-version", version )
+        >> xml::attribute( "model-version", version )
         >> xml::optional >> xml::start( "meta" )
                 >> xml::optional >> xml::content( "name", name )
                 >> xml::optional >> xml::start( "briefing" )
@@ -115,7 +115,7 @@ void Exercise::Serialize( const std::string& file ) const
 {
     xml::xofstream xos( file, xml::encoding( "UTF-8" ) );
     xos << xml::start( "exercise" )
-        << xml::attribute( "generator-version", generatorVersion_.ascii() )
+        << xml::attribute( "model-version", generatorVersion_.ascii() )
             << xml::start( "meta" );
     if( ! name_.isEmpty() )
         xos << xml::start( "name" ) << xml::cdata( name_.ascii() ) << xml::end;
