@@ -60,6 +60,7 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAFormation )
         message.mutable_automat()->set_id( 1 );
         message.mutable_type()->set_id( 42 );
         message.set_nom( "test" );
+        message.set_app6symbol( "combat" );
         message.mutable_parent()->mutable_formation()->set_id( formation.GetId() );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
@@ -124,6 +125,7 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAnAutomat )
         message.mutable_automat()->set_id( 1 );
         message.mutable_type()->set_id( 42 );
         message.set_nom( "test" );
+        message.set_app6symbol( "combat" );
         message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
@@ -189,6 +191,7 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
+            message.set_app6symbol( "combat" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
@@ -263,6 +266,7 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
+            message.set_app6symbol( "combat" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup1.GetId() );
@@ -334,6 +338,7 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
+            message.set_app6symbol( "combat" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
@@ -410,6 +415,7 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
+            message.set_app6symbol( "combat" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
@@ -490,6 +496,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
+            message.set_app6symbol( "combat" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
@@ -571,6 +578,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogisticLinksCanBeChanged )
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
+            message.set_app6symbol( "combat" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
