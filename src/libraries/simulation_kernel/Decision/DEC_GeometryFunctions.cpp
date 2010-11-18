@@ -1046,6 +1046,23 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion,
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::IsPointInCity
+// Created: LDC 2010-11-18
+// -----------------------------------------------------------------------------
+bool DEC_GeometryFunctions::IsPointInCity( const MT_Vector2D& point )
+{
+    std::vector< const TER_Object_ABC* > objects;
+    TER_World::GetWorld().GetObjectManager().GetListWithinCircle2( point, 500, objects );
+    for (std::vector< const TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
+    {
+        const UrbanObjectWrapper* urbanObject = dynamic_cast< const UrbanObjectWrapper* >( *it );
+        if( urbanObject && urbanObject->GetLocalisation().GetArea() && urbanObject->IsInside( point ) )
+            return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeAreaSize
 // Created: PSN 2010-06-24
 // -----------------------------------------------------------------------------
