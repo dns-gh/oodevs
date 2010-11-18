@@ -330,11 +330,11 @@
     <name>LauncherClientPage</name>
     <message>
         <source>Failed to connect to host: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de se connecter à l&apos;hôte: %1.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Erreur</translation>
+        <translation>Erreur</translation>
     </message>
 </context>
 <context>
@@ -364,14 +364,6 @@
     <message>
         <source>Options</source>
         <translation>Options</translation>
-    </message>
-    <message>
-        <source>English</source>
-        <translation>English</translation>
-    </message>
-    <message>
-        <source>Fran&#xe7;ais</source>
-        <translation>Français</translation>
     </message>
     <message>
         <source>Language: </source>
@@ -404,6 +396,14 @@
     <message>
         <source>Administrator</source>
         <translation>Administration</translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation>English</translation>
+    </message>
+    <message>
+        <source>Fran&#xe7;ais</source>
+        <translation>Français</translation>
     </message>
 </context>
 <context>
@@ -463,50 +463,50 @@
     <name>ReadProfile</name>
     <message>
         <source>anonymous</source>
-        <translation type="unfinished"></translation>
+        <translation>Anonyme</translation>
     </message>
 </context>
 <context>
     <name>RemoteControlPage</name>
     <message>
         <source>Remote control</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrôle à distance</translation>
     </message>
     <message>
         <source>Host:</source>
-        <translation type="unfinished">Hôte: </translation>
+        <translation>Hôte: </translation>
     </message>
     <message>
         <source>127.0.0.1</source>
-        <translation type="unfinished">127.0.0.1</translation>
+        <translation>127.0.0.1</translation>
     </message>
     <message>
         <source>Port:</source>
-        <translation type="unfinished">Port: </translation>
+        <translation>Port: </translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Mise à jour</translation>
+        <translation>Mise à jour</translation>
     </message>
     <message>
         <source>Start game</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrer jeu</translation>
     </message>
     <message>
         <source>Start replay</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrer rejeu</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished">Démarrer</translation>
+        <translation>Démarrer</translation>
     </message>
     <message>
         <source>Stop running session</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrêter la session en cours</translation>
     </message>
     <message>
         <source>Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrôle</translation>
     </message>
 </context>
 <context>

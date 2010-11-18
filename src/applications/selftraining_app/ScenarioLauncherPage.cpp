@@ -126,7 +126,12 @@ namespace
             // NOTHING
         }
         return result;
-     }
+    }
+
+    QString MakeTitle( const QString& title )
+    {
+        return title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -134,11 +139,11 @@ namespace
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const frontend::Config& config, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter, const QString& title /*= ""*/ )
-    : LauncherClientPage( pages, title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title, previous, eButtonBack | eButtonStart, launcher )
+    : LauncherClientPage( pages, MakeTitle( title ), previous, eButtonBack | eButtonStart, launcher )
     , config_( config )
     , controllers_( controllers )
     , interpreter_( interpreter )
-    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title ) ) )
+    , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( MakeTitle( title ) ) ) )
     , exercise_( 0 )
 {
     QVBox* box = new QVBox( this );

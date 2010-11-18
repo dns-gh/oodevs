@@ -94,7 +94,7 @@
     <name>ParamHumanWoundList</name>
     <message>
         <source>Add...</source>
-        <translation>Ajouter</translation>
+        <translation>Ajouter...</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -127,7 +127,7 @@
     </message>
     <message>
         <source>Demolition target type:</source>
-        <translation>Type de cible de démolition</translation>
+        <translation>Type de cible de démolition:</translation>
     </message>
     <message>
         <source>Density</source>
