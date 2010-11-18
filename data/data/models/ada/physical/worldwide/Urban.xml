@@ -8,75 +8,75 @@
           <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
           <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
           <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
-          <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
           <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
           <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
         </attritions>
       </material-composition-type>
       <material-composition-type name="Beton">
         <attritions>
-          <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
-          <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
-          <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
-          <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
-          <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
-          <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
-          <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
         </attritions>
       </material-composition-type>
       <material-composition-type name="Brique">
         <attritions>
-          <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
-          <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
-          <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
-          <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
-          <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
-          <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
-          <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
         </attritions>
       </material-composition-type>
       <material-composition-type name="Metal">
         <attritions>
-          <attrition destruction="0.05" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
-          <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
-          <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
-          <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
-          <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
-          <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
-          <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+          <attrition destruction="0.05" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
         </attritions>
       </material-composition-type>
       <material-composition-type name="Torchis">
         <attritions>
-          <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
-          <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
-          <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
-          <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
-          <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
-          <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
-          <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
         </attritions>
       </material-composition-type>
       <material-composition-type name="Prefabrique">
         <attritions>
-          <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
-          <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
-          <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
-          <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
-          <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
-          <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
-          <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
         </attritions>
       </material-composition-type>
       <material-composition-type name="Vegetation">
         <attritions>
-          <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
-          <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
-          <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
-          <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
-          <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
-          <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
-          <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+          <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.05"/>
+          <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
+          <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.45" repairable-without-evacuation="0.35"/>
+          <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
+          <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
         </attritions>
       </material-composition-type>
     </material-composition-types>
