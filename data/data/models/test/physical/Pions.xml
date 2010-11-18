@@ -16,6 +16,20 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+      <category name="piece">
+        <resource capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 1" normalized-consumption="0"/>
+        <resource capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 2" normalized-consumption="0"/>
+        <resource capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 3" normalized-consumption="0"/>
+        <resource capacity="1000" logistic-threshold="10" name="Truc pour reparer l'electronique 1" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -41,6 +55,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -64,6 +86,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -89,6 +119,20 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+      <category name="piece">
+        <resource capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 1" normalized-consumption="0"/>
+        <resource capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 2" normalized-consumption="0"/>
+        <resource capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 3" normalized-consumption="0"/>
+        <resource capacity="1000" logistic-threshold="10" name="Truc pour reparer l'electronique 1" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -114,6 +158,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -140,6 +192,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -166,6 +226,20 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+      <category name="piece">
+        <resource capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 1" normalized-consumption="0"/>
+        <resource capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 2" normalized-consumption="0"/>
+        <resource capacity="1000" logistic-threshold="10" name="Truc pour reparer la mobilite 3" normalized-consumption="0"/>
+        <resource capacity="1000" logistic-threshold="10" name="Truc pour reparer l'electronique 1" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -191,6 +265,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -217,6 +299,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -243,6 +333,17 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Fusse a jupette 53mm" normalized-consumption="0"/>
+        <resource capacity="200" logistic-threshold="10" name="Obus 120 mm" normalized-consumption="0"/>
+        <resource capacity="200" logistic-threshold="10" name="Obus fumigene" normalized-consumption="0"/>
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="200" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -270,6 +371,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -294,6 +403,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -318,6 +435,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -344,6 +469,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -368,6 +501,14 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -392,6 +533,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -417,6 +566,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -440,6 +597,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -466,6 +631,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -491,6 +664,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -517,6 +698,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -542,6 +731,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -565,6 +762,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -590,6 +795,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -616,6 +829,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -641,6 +862,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -666,6 +895,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -693,6 +930,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -718,6 +963,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -745,6 +998,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -770,6 +1031,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -796,6 +1065,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -819,6 +1096,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -844,6 +1129,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="200" logistic-threshold="10" name="Balle Classique 12,7" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="100" logistic-threshold="10" name="gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>

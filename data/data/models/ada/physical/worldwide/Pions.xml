@@ -9,6 +9,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -32,6 +40,23 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
+      </category>
+      <category name="barbele">
+        <resource capacity="40" logistic-threshold="30" name="standard barbed wire" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -214,6 +239,23 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="2000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="18" logistic-threshold="30" name="68-mm Rocket" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -242,6 +284,15 @@
       <crew-rank count="2" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -268,6 +319,17 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="48" logistic-threshold="30" name="Antitank Missile" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -308,6 +370,18 @@
       <crew-rank count="7" type="Officier"/>
       <crew-rank count="57" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="40000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="12000" logistic-threshold="10" name="7.62-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="3000" logistic-threshold="10" name="9.00-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="400" logistic-threshold="40" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -348,6 +422,14 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -372,6 +454,14 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -395,6 +485,14 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -456,6 +554,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -523,6 +629,19 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="300" logistic-threshold="10" name="9.00-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="500" logistic-threshold="10" name="7.62-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="1200" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="60" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="30" logistic-threshold="5" name="standard landmine" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -586,6 +705,16 @@
       <crew-rank count="6" type="Officier"/>
       <crew-rank count="50" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="10000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -604,6 +733,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="1200" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -621,6 +758,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="1200" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -672,6 +817,15 @@
       <crew-rank count="6" type="Officier"/>
       <crew-rank count="29" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="10000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -692,6 +846,15 @@
       <crew-rank count="3" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -752,6 +915,15 @@
       <crew-rank count="10" type="Officier"/>
       <crew-rank count="81" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="10000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -773,6 +945,15 @@
       <crew-rank count="6" type="Officier"/>
       <crew-rank count="10" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -798,6 +979,15 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -823,6 +1013,15 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="1000" logistic-threshold="30" name="81-mm High Explosive Shell" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -869,6 +1068,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="1200" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -886,6 +1093,14 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -904,6 +1119,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -920,6 +1143,14 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -938,6 +1169,14 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -956,6 +1195,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -1014,6 +1261,15 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="7" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="400" logistic-threshold="40" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -1051,6 +1307,14 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="1200" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -1147,6 +1411,14 @@
       <crew-rank count="6" type="Officier"/>
       <crew-rank count="8" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="1200" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -1475,6 +1747,21 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="14,5-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="2000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1552,6 +1839,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1609,6 +1904,23 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
+      </category>
+      <category name="barbele">
+        <resource capacity="40" logistic-threshold="30" name="standard barbed wire" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1632,6 +1944,23 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
+      </category>
+      <category name="barbele">
+        <resource capacity="40" logistic-threshold="30" name="standard barbed wire" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1655,6 +1984,14 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1725,6 +2062,11 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="8" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1749,6 +2091,11 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="18" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1772,6 +2119,11 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1796,6 +2148,11 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="10" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1819,6 +2176,11 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1913,6 +2275,19 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="10" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="32" logistic-threshold="30" name="155-mm Antitank High Explosive Shell" normalized-consumption="0"/>
+        <resource capacity="36" logistic-threshold="30" name="155-mm High Explosive Shell Rear Skirt" normalized-consumption="0"/>
+        <resource capacity="32" logistic-threshold="30" name="155-mm Illumination Round" normalized-consumption="0"/>
+        <resource capacity="32" logistic-threshold="30" name="155-mm Smoke Shell" normalized-consumption="0"/>
+        <resource capacity="36" logistic-threshold="30" name="155-mm Sub-Munition Shell" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1937,6 +2312,16 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="200" logistic-threshold="20" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1962,6 +2347,16 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="9" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="277-mm Sub-Munition Rocket" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="2500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1985,6 +2380,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="20-mm Shell" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -2009,6 +2412,15 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="120-mm Hight Explosive Shell" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -2032,6 +2444,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="20-mm Shell" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -2409,6 +2829,15 @@
       <crew-rank count="6" type="Officier"/>
       <crew-rank count="29" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="10000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>

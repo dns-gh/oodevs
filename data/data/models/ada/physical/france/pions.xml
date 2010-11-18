@@ -1226,6 +1226,16 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="10" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="4" logistic-threshold="25" name="Obus 155 OACED" normalized-consumption="0"/>
+        <resource capacity="160" logistic-threshold="30" name="Obus 155 OE CCR F1" normalized-consumption="0"/>
+        <resource capacity="60" logistic-threshold="30" name="Obus 155 OE JUPE F2 RTC" normalized-consumption="0"/>
+        <resource capacity="20" logistic-threshold="30" name="Obus 155 OFUM PH" normalized-consumption="0"/>
+        <resource capacity="36" logistic-threshold="30" name="Obus 155 OGRE F1" normalized-consumption="0"/>
+        <resource capacity="20" logistic-threshold="30" name="Obus 155 OECL F1" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -1905,6 +1915,16 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="7" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="88" logistic-threshold="30" name="Obus 155 OE CCR F1" normalized-consumption="0"/>
+        <resource capacity="4" logistic-threshold="30" name="Obus 155 OACED" normalized-consumption="0"/>
+        <resource capacity="32" logistic-threshold="30" name="Obus 155 OE JUPE F2 RTC" normalized-consumption="0"/>
+        <resource capacity="8" logistic-threshold="30" name="Obus 155 OECL F1" normalized-consumption="0"/>
+        <resource capacity="8" logistic-threshold="30" name="Obus 155 OFUM PH" normalized-consumption="0"/>
+        <resource capacity="20" logistic-threshold="30" name="Obus 155 OGRE F1" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -2375,6 +2395,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="CART 20 AME" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -2399,6 +2427,15 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="Bd 12,7 PANA 4 ORD+1T" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="MO 120 EXPL PRY" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -2567,6 +2604,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="Bd 7.62mm 4 Ord-1 T" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -3246,6 +3291,16 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="11" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="4" logistic-threshold="25" name="Obus 155 OACED" normalized-consumption="0"/>
+        <resource capacity="160" logistic-threshold="30" name="Obus 155 OE CCR F1" normalized-consumption="0"/>
+        <resource capacity="60" logistic-threshold="30" name="Obus 155 OE JUPE F2 RTC" normalized-consumption="0"/>
+        <resource capacity="20" logistic-threshold="30" name="Obus 155 OFUM PH" normalized-consumption="0"/>
+        <resource capacity="36" logistic-threshold="30" name="Obus 155 OGRE F1" normalized-consumption="0"/>
+        <resource capacity="20" logistic-threshold="30" name="Obus 155 OECL F1" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -3625,6 +3680,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="Bd 7.62mm 4 Ord-1 T" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -4590,6 +4653,16 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="8" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="4" logistic-threshold="30" name="Obus 155 OACED" normalized-consumption="0"/>
+        <resource capacity="88" logistic-threshold="30" name="Obus 155 OE CCR F1" normalized-consumption="0"/>
+        <resource capacity="32" logistic-threshold="30" name="Obus 155 OE JUPE F2 RTC" normalized-consumption="0"/>
+        <resource capacity="8" logistic-threshold="30" name="Obus 155 OECL F1" normalized-consumption="0"/>
+        <resource capacity="20" logistic-threshold="30" name="Obus 155 OGRE F1" normalized-consumption="0"/>
+        <resource capacity="8" logistic-threshold="30" name="Obus 155 OFUM PH" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -5316,6 +5389,15 @@
       <crew-rank count="18" type="Officier"/>
       <crew-rank count="164" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="100" logistic-threshold="30" name="MIS HOT SOL-SOL" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="10000" logistic-threshold="30" name="F35 Kerosene" normalized-consumption="0"/>
+        <resource capacity="300" logistic-threshold="30" name="F57 Essence" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -6647,6 +6729,16 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="10" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="10000" logistic-threshold="1" name="Obus 155 OACED" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="1" name="Obus 155 OE CCR F1" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="1" name="Obus 155 OE JUPE F2 RTC" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="1" name="Obus 155 OECL F1" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="1" name="Obus 155 OFUM PH" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="1" name="Obus 155 OGRE F1" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -6670,6 +6762,11 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="9" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="10000" logistic-threshold="1" name="ROQUE LANC GR" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -6769,6 +6866,11 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="12" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="570" logistic-threshold="30" name="Obus 152 OE" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -6793,6 +6895,13 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="12" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="36" logistic-threshold="30" name="Obus 152 ACED" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="30" name="Obus 152 OE MPA" normalized-consumption="0"/>
+        <resource capacity="120" logistic-threshold="30" name="Obus 152 OE" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -6840,6 +6949,11 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="192" logistic-threshold="30" name="MO 120 EXPL" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -6864,6 +6978,11 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="1000" logistic-threshold="30" name="CPLT EXPL 81" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -7267,6 +7386,11 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="12" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="96" logistic-threshold="30" name="Roquette BM22" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -7290,6 +7414,11 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="12" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="72" logistic-threshold="30" name="Roquette BM30" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -7313,6 +7442,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="12" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="240" logistic-threshold="30" name="Obus 122 OE" normalized-consumption="0"/>
+        <resource capacity="120" logistic-threshold="30" name="Obus 122 OE MPA" normalized-consumption="0"/>
+        <resource capacity="60" logistic-threshold="30" name="Obus 122 OFUM" normalized-consumption="0"/>
+        <resource capacity="6" logistic-threshold="30" name="Obus 122 ACED" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -7336,6 +7473,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="12" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="216" logistic-threshold="30" name="Obus 152 OE" normalized-consumption="0"/>
+        <resource capacity="60" logistic-threshold="30" name="Obus 152 FUM" normalized-consumption="0"/>
+        <resource capacity="120" logistic-threshold="30" name="Obus 152 OE MPA" normalized-consumption="0"/>
+        <resource capacity="6" logistic-threshold="30" name="Obus 152 ACED" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -8006,6 +8151,13 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="108" logistic-threshold="50" name="MO 120 OE F2" normalized-consumption="0"/>
+        <resource capacity="29" logistic-threshold="50" name="MO 120 FUM PH PRY" normalized-consumption="0"/>
+        <resource capacity="7" logistic-threshold="50" name="MO 120ECL PRY" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -8031,6 +8183,13 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="180" logistic-threshold="50" name="MO 120 OE F2" normalized-consumption="0"/>
+        <resource capacity="48" logistic-threshold="50" name="MO 120 FUM PH PRY" normalized-consumption="0"/>
+        <resource capacity="12" logistic-threshold="50" name="MO 120ECL PRY" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -8056,6 +8215,13 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="180" logistic-threshold="50" name="MO 120 OE F2" normalized-consumption="0"/>
+        <resource capacity="48" logistic-threshold="50" name="MO 120ECL PRY" normalized-consumption="0"/>
+        <resource capacity="12" logistic-threshold="50" name="MO 120 FUM PH PRY" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -8081,6 +8247,13 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="180" logistic-threshold="50" name="MO 120 OE F2" normalized-consumption="0"/>
+        <resource capacity="48" logistic-threshold="50" name="MO 120 FUM PH PRY" normalized-consumption="0"/>
+        <resource capacity="12" logistic-threshold="50" name="MO 120ECL PRY" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -8106,6 +8279,13 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="7" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="180" logistic-threshold="50" name="MO 120 OE F2" normalized-consumption="0"/>
+        <resource capacity="48" logistic-threshold="50" name="MO 120 FUM PH PRY" normalized-consumption="0"/>
+        <resource capacity="24" logistic-threshold="50" name="MO 120ECL PRY" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -8250,6 +8430,13 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="108" logistic-threshold="50" name="MO 120 OE F2" normalized-consumption="0"/>
+        <resource capacity="29" logistic-threshold="50" name="MO 120 FUM PH PRY" normalized-consumption="0"/>
+        <resource capacity="7" logistic-threshold="50" name="MO 120ECL PRY" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -8273,6 +8460,11 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="12" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="720" logistic-threshold="30" name="Roquette BM21" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -8363,6 +8555,19 @@
       <crew-rank count="7" type="Officier"/>
       <crew-rank count="57" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="40000" logistic-threshold="30" name="Bd HOMO 5,56mm BO" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="Balle Classique 14,5" normalized-consumption="0"/>
+        <resource capacity="12000" logistic-threshold="10" name="Bd 7,62mm" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="Bd 12,7mm" normalized-consumption="0"/>
+        <resource capacity="5000" logistic-threshold="10" name="Charg 7,62" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="10000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <resource capacity="40" logistic-threshold="40" name="F57 Essence" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -8944,6 +9149,17 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="12" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="720" logistic-threshold="10" name="Charg 7,62" normalized-consumption="0"/>
+        <resource capacity="36" logistic-threshold="30" name="Obus 105 Fum" normalized-consumption="0"/>
+        <resource capacity="36" logistic-threshold="30" name="Obus 105 OE" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Obus 105 OE CA" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="120" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="0s"/>
       <posture name="Poste" setup-time="0s"/>
@@ -8961,6 +9177,17 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="12" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="720" logistic-threshold="10" name="Charg 7,62" normalized-consumption="0"/>
+        <resource capacity="10" logistic-threshold="30" name="Obus 130 Ecl" normalized-consumption="0"/>
+        <resource capacity="36" logistic-threshold="30" name="Obus 130  Fum" normalized-consumption="0"/>
+        <resource capacity="146" logistic-threshold="30" name="Obus 130 OE" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="030s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -9089,6 +9316,19 @@
       <crew-rank count="7" type="Officier"/>
       <crew-rank count="57" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="40000" logistic-threshold="30" name="Bd HOMO 5,56mm BO" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="Balle Classique 14,5" normalized-consumption="0"/>
+        <resource capacity="12000" logistic-threshold="10" name="Bd 7,62mm" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="Bd 12,7mm" normalized-consumption="0"/>
+        <resource capacity="5000" logistic-threshold="10" name="Charg 7,62" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="10000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <resource capacity="40" logistic-threshold="40" name="F57 Essence" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -9123,6 +9363,19 @@
       <crew-rank count="7" type="Officier"/>
       <crew-rank count="57" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="40000" logistic-threshold="30" name="Bd HOMO 5,56mm BO" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="Balle Classique 14,5" normalized-consumption="0"/>
+        <resource capacity="12000" logistic-threshold="10" name="Bd 7,62mm" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="Bd 12,7mm" normalized-consumption="0"/>
+        <resource capacity="5000" logistic-threshold="10" name="Charg 7,62" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="10000" logistic-threshold="30" name="F63 Gasoil" normalized-consumption="0"/>
+        <resource capacity="40" logistic-threshold="40" name="F57 Essence" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
       <posture name="Poste" setup-time="1800s"/>
@@ -10074,6 +10327,11 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="100" logistic-threshold="50" name="LTO Obus brouillage" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -10182,6 +10440,17 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="10" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="4" logistic-threshold="25" name="Obus 155 OACED" normalized-consumption="0"/>
+        <resource capacity="160" logistic-threshold="30" name="Obus 155 OE CCR F1" normalized-consumption="0"/>
+        <resource capacity="160" logistic-threshold="30" name="LTO Obus 155 OE CCR F1 GUIDED" normalized-consumption="0"/>
+        <resource capacity="60" logistic-threshold="30" name="Obus 155 OE JUPE F2 RTC" normalized-consumption="0"/>
+        <resource capacity="20" logistic-threshold="30" name="Obus 155 OFUM PH" normalized-consumption="0"/>
+        <resource capacity="36" logistic-threshold="30" name="Obus 155 OGRE F1" normalized-consumption="0"/>
+        <resource capacity="20" logistic-threshold="30" name="Obus 155 OECL F1" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -10263,6 +10532,11 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="100" logistic-threshold="50" name="LTO Obus brouillage" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -10309,6 +10583,11 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="4" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="100" logistic-threshold="50" name="LTO Obus brouillage" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>

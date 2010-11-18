@@ -1267,7 +1267,7 @@ void ADN_Composantes_Data::CategoryInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::CategoryInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "dotation" )
+    output << xml::start( "resource" )
             << xml::attribute( "name", ptrCategory_.GetData()->strName_ )
             << xml::attribute( "capacity", rNbr_ )
             << xml::attribute( "logistic-threshold", rLogThreshold_ )
@@ -1323,7 +1323,7 @@ void ADN_Composantes_Data::ResourceInfos::ReadCategory( xml::xistream& input )
     E_DotationFamily family = ENT_Tr::ConvertToDotationFamily( name );
     ADN_Equipement_Data::ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( family );
 
-    input >> xml::list( "dotation", *this, &ADN_Composantes_Data::ResourceInfos::ReadDotation, dotation );
+    input >> xml::list( "resource", *this, &ADN_Composantes_Data::ResourceInfos::ReadDotation, dotation );
 }
 
 // -----------------------------------------------------------------------------
@@ -1590,7 +1590,7 @@ void ADN_Composantes_Data::ConsumptionItem::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::ConsumptionItem::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "dotation" )
+    output << xml::start( "resource" )
             << xml::attribute( "category", ptrCategory_.GetData()->parentResource_.strName_ )
             << xml::attribute( "name", ptrCategory_.GetData()->strName_ )
             << xml::attribute( "value", nQuantityUsedPerHour_ )
@@ -1644,7 +1644,7 @@ void ADN_Composantes_Data::ConsumptionsInfos::ReadConsumption( xml::xistream& in
     E_ConsumptionType type = ADN_Tr::ConvertToConsumptionType( status );
     if( type == E_ConsumptionType( -1 ) )
         throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).ascii(), tools::translate( "Composante_Data",  "Equipment - Invalid activty '%1'" ).arg( status.c_str() ).ascii() );
-    input >> xml::list( "dotation", *this, &ADN_Composantes_Data::ConsumptionsInfos::ReadDotation, type );
+    input >> xml::list( "resource", *this, &ADN_Composantes_Data::ConsumptionsInfos::ReadDotation, type );
 }
 
 // -----------------------------------------------------------------------------
