@@ -19,11 +19,21 @@ using namespace resource;
 
 // -----------------------------------------------------------------------------
 // Name: NodeProperties constructor
+// Created: JSR 2010-11-17
+// -----------------------------------------------------------------------------
+NodeProperties::NodeProperties()
+    : tools_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeProperties constructor
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeProperties::NodeProperties( const ResourceTools_ABC& tools )
     : isFunctional_( true )
-    , tools_       ( tools )
+    , tools_       ( &tools )
 {
     // NOTHING
 }
@@ -34,7 +44,7 @@ NodeProperties::NodeProperties( const ResourceTools_ABC& tools )
 // -----------------------------------------------------------------------------
 NodeProperties::NodeProperties( xml::xistream& xis, const ResourceTools_ABC& tools )
     : isFunctional_( true )
-    , tools_       ( tools )
+    , tools_       ( &tools )
 {
     Update( xis );
 }
@@ -45,12 +55,12 @@ NodeProperties::NodeProperties( xml::xistream& xis, const ResourceTools_ABC& too
 // -----------------------------------------------------------------------------
 NodeProperties::NodeProperties( const urban::ResourceNetworkAttribute& urbanAttribute, const ResourceTools_ABC& tools )
     : isFunctional_( true )
-    , tools_       ( tools )
+    , tools_       ( &tools )
 {
     const urban::ResourceNetworkAttribute::T_ResourceNodes& nodes = urbanAttribute.GetResourceNodes();
     for( urban::ResourceNetworkAttribute::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
     {
-        unsigned long resourceId = tools_.GetResourceId( it->second.resource_ );
+        unsigned long resourceId = tools_->GetResourceId( it->second.resource_ );
         Register( resourceId, *new NodeElement( it->second, resourceId ) );
     }
 }
@@ -83,6 +93,15 @@ NodeProperties::~NodeProperties()
 void NodeProperties::SetModel( const ResourceNetworkModel& model )
 {
     Apply( boost::bind( &NodeElement::SetModel, _1, boost::cref( model ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeProperties::SetTools
+// Created: JSR 2010-11-17
+// -----------------------------------------------------------------------------
+void NodeProperties::SetTools( const ResourceTools_ABC& tools )
+{
+    tools_ = &tools;
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +177,7 @@ void NodeProperties::Update( const Common::MsgMissionParameter_Value& msg )
     for( int i = 0; i< msg.list_size(); ++i )
     {
         Common::MsgMissionParameter_Value node = msg.list( i );
-        unsigned int id = tools_.GetResourceId( node.list( 0 ).acharstr() );
+        unsigned int id = tools_->GetResourceId( node.list( 0 ).acharstr() );
         NodeElement* element = Find( id );
         if( element )
             element->Update( node );
@@ -172,7 +191,7 @@ void NodeProperties::Update( const Common::MsgMissionParameter_Value& msg )
 void NodeProperties::ReadNode( xml::xistream& xis )
 {
     std::string resourceName = xis.attribute< std::string >( "resource-type" );
-    unsigned long resourceId = tools_.GetResourceId( resourceName );
+    unsigned long resourceId = tools_->GetResourceId( resourceName );
     NodeElement* element = Find( resourceId );
     if( element )
         element->Update( xis );

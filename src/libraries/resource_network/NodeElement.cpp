@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "NodeElement.h"
-#include "ResourceLink.h"
 #include "ResourceNetworkModel.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>

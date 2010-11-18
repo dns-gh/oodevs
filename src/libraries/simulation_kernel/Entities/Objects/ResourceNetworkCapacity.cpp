@@ -92,15 +92,24 @@ void ResourceNetworkCapacity::Update( const Common::MsgMissionParameter_Value& m
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetworkCapacity::serialize
-// Created: JSR 2010-08-12
+// Name: ResourceNetworkCapacity::load
+// Created: JSR 2010-11-16
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void ResourceNetworkCapacity::serialize( Archive& file, const unsigned int )
+void ResourceNetworkCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    //TODO ?
-         //& nodeProperties_;
+    file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+         >> nodeProperties_;
+    nodeProperties_->SetTools( MIL_AgentServer::GetWorkspace().GetResourceTools() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::save
+// Created: JSR 2010-11-16
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+         << nodeProperties_;
 }
 
 // -----------------------------------------------------------------------------

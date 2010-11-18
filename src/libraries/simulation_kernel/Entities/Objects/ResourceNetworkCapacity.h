@@ -10,7 +10,9 @@
 #ifndef __ResourceNetworkCapacity_h_
 #define __ResourceNetworkCapacity_h_
 
+#include "MIL.h"
 #include "ObjectCapacity_ABC.h"
+#include <boost/serialization/export.hpp>
 
 namespace Common
 {
@@ -55,11 +57,17 @@ public:
     virtual ~ResourceNetworkCapacity();
     //@}
 
+    //! @name Checkpoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    //@}
+
     //! @name Operations
     //@{
     void Update( xml::xistream& xis, const MIL_Object_ABC& object );
     void Update( const Common::MsgMissionParameter_Value& msg );
-    template< typename Archive > void serialize( Archive& file, const unsigned int );
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     void RegisterNode( unsigned int id, bool urban );

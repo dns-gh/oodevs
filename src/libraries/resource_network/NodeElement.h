@@ -10,9 +10,11 @@
 #ifndef __NodeElement_h_
 #define __NodeElement_h_
 
+#include "ResourceLink.h"
 #include <map>
 #include <vector>
 #include <urban/ResourceNetworkAttribute.h>
+#include <boost/serialization/split_member.hpp>
 
 namespace Common
 {
@@ -27,7 +29,6 @@ namespace xml
 
 namespace resource
 {
-class ResourceLink;
 class ResourceNetworkModel;
 
 // =============================================================================
@@ -64,6 +65,15 @@ public:
     //@{
     void Serialize( Common::ResourceNetwork& msg ) const;
     void Update( const Common::MsgMissionParameter_Value& msg );
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    template< typename Archive >
+    void load( Archive&, const unsigned int );
+    template< typename Archive >
+    void save( Archive&, const unsigned int ) const;
     //@}
 
 private:
@@ -105,6 +115,54 @@ private:
     double modifier_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: NodeElement::load
+// Created: JSR 2010-11-17
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void NodeElement::load( Archive& file, const unsigned int )
+{
+    unsigned int linksSize;
+    file >> resourceId_
+         >> resourceName_
+         >> isActivated_
+         >> productionCapacity_
+         >> stockCapacity_
+         >> stockMaxCapacity_
+         >> consumptionAmount_
+         >> consumptionCritical_
+         >> modifier_
+         >> linksSize;
+    for( unsigned int i = 0; i < linksSize; ++i )
+    {
+        ResourceLink* link = 0;
+        file >> link;
+        links_.push_back( link );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeElement::save
+// Created: JSR 2010-11-17
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void NodeElement::save( Archive& file, const unsigned int ) const
+{
+    unsigned int linksSize = links_.size();
+    file << resourceId_
+         << resourceName_
+         << isActivated_
+         << productionCapacity_
+         << stockCapacity_
+         << stockMaxCapacity_
+         << consumptionAmount_
+         << consumptionCritical_
+         << modifier_
+         << linksSize;
+    for( unsigned int i = 0; i < linksSize; ++i )
+        file << links_[ i ];
+}
 
 }
 

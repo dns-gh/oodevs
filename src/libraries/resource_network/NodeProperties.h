@@ -12,6 +12,7 @@
 
 #include "NodeElement.h"
 #include "tools/Resolver.h"
+#include <boost/serialization/split_member.hpp>
 
 namespace Common
 {
@@ -49,6 +50,7 @@ class NodeProperties : private tools::Resolver< NodeElement >
 public:
     //! @name Constructors/Destructor
     //@{
+             NodeProperties();
     explicit NodeProperties( const ResourceTools_ABC& tools );
              NodeProperties( xml::xistream& xis, const ResourceTools_ABC& tools );
              NodeProperties( const urban::ResourceNetworkAttribute& urbanAttribute, const ResourceTools_ABC& tools );
@@ -59,6 +61,7 @@ public:
     //! @name Operations
     //@{
     void SetModel( const ResourceNetworkModel& model );
+    void SetTools( const ResourceTools_ABC& tools );
     void Update( xml::xistream& xis );
     void Update();
     void Push( int quantity, unsigned long resourceId );
@@ -70,6 +73,15 @@ public:
     void Serialize( MsgsSimToClient::UrbanAttributes_Infrastructures& msg ) const;
     void Serialize( Common::ObjectAttributeResourceNetwork& msg ) const;
     void Update( const Common::MsgMissionParameter_Value& msg );
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    template< typename Archive >
+    void load( Archive&, const unsigned int );
+    template< typename Archive >
+    void save( Archive&, const unsigned int ) const;
     //@}
 
 private:
@@ -88,9 +100,42 @@ private:
     //! @name Member data
     //@{
     bool isFunctional_;
-    const ResourceTools_ABC& tools_;
+    const ResourceTools_ABC* tools_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: NodeProperties::load
+// Created: JSR 2010-11-17
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void NodeProperties::load( Archive& file, const unsigned int )
+{
+    unsigned int nNbr;
+    file >> isFunctional_
+         >> nNbr;
+    unsigned long index;
+    while( nNbr-- )
+    {
+        file >> index;
+        file >> tools::Resolver< NodeElement >::elements_[ index ];
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeProperties::save
+// Created: JSR 2010-11-17
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void NodeProperties::save( Archive& file, const unsigned int ) const
+{
+    unsigned int size = tools::Resolver< NodeElement >::elements_.size();
+    file << isFunctional_
+         << size;
+    for( std::map< unsigned long, NodeElement* >::const_iterator it = tools::Resolver< NodeElement >::elements_.begin(); it != tools::Resolver< NodeElement >::elements_.end(); ++it )
+        file << it->first
+             << it->second;
+}
 
 }
 

@@ -11,6 +11,7 @@
 #define __ResourceLink_h_
 
 #include <vector>
+#include <boost/serialization/split_member.hpp>
 
 namespace Common
 {
@@ -43,6 +44,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             ResourceLink();
              ResourceLink( unsigned int target, ETargetKind kind, int capacity );
              ResourceLink( const ResourceLink& from );
     virtual ~ResourceLink();
@@ -63,6 +65,15 @@ public:
     void Serialize( Common::ResourceNetwork_Link& msg ) const;
     //@}
 
+    //! @name CheckPoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    template< typename Archive >
+    void load( Archive&, const unsigned int );
+    template< typename Archive >
+    void save( Archive&, const unsigned int ) const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -78,6 +89,30 @@ private:
     unsigned int flow_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLink::load
+// Created: JSR 2010-11-17
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void ResourceLink::load( Archive& file, const unsigned int )
+{
+    file >> target_
+         >> kind_
+         >> capacity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLink::save
+// Created: JSR 2010-11-17
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void ResourceLink::save( Archive& file, const unsigned int ) const
+{
+    file << target_
+         << kind_
+         << capacity_;
+}
 
 }
 

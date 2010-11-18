@@ -15,13 +15,26 @@ using namespace resource;
 
 // -----------------------------------------------------------------------------
 // Name: ResourceLink constructor
+// Created: JSR 2010-11-17
+// -----------------------------------------------------------------------------
+ResourceLink::ResourceLink()
+    : target_  ( 0 )
+    , kind_    ( eTargetKindUrban )
+    , capacity_( 0 )
+    , flow_    ( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLink constructor
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 ResourceLink::ResourceLink( unsigned int target, ETargetKind kind, int capacity )
-    : target_( target )
-    , kind_       ( kind )
-    , capacity_   ( capacity )
-    , flow_       ( 0 )
+    : target_  ( target )
+    , kind_    ( kind )
+    , capacity_( capacity )
+    , flow_    ( 0 )
 {
     // NOTHING
 }
@@ -31,10 +44,10 @@ ResourceLink::ResourceLink( unsigned int target, ETargetKind kind, int capacity 
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 ResourceLink::ResourceLink( const ResourceLink& from )
-    : target_( from.target_ )
-    , kind_       ( from.kind_ )
-    , capacity_   ( from.capacity_ )
-    , flow_       ( from.flow_ )
+    : target_  ( from.target_ )
+    , kind_    ( from.kind_ )
+    , capacity_( from.capacity_ )
+    , flow_    ( from.flow_ )
 {
     // NOTHING
 }
