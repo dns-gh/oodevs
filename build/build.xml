@@ -15,7 +15,7 @@
     </svn>
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword"/>
-    <property name="version.major" value="4.2.1"/>
+    <property name="version.major" value="4.2.2"/>
     <property name="version.minor" value="${version.major}.${svn.version}"/>
     <property name="version.version" value="${version.minor}"/><!-- required for version extension -->
 
