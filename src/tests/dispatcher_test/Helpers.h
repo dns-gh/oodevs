@@ -25,6 +25,11 @@ namespace
         BOOST_CHECK_EQUAL( lhs.DebugString(), rhs.DebugString() );
         return true;
     }
+
+    void CheckInitialized( const google::protobuf::Message& message )
+    {
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+    }
 }
 
 #endif // __Helpers_h_

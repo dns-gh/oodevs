@@ -38,7 +38,6 @@ namespace kernel
 
 namespace dispatcher
 {
-
     class Automat_ABC;
     class Formation_ABC;
     class DotationQuota;
@@ -49,16 +48,14 @@ namespace dispatcher
 */
 // Created: AHC 2010-10
 // =============================================================================
-class LogisticEntity
-    : public kernel::Extension_ABC
-    , public kernel::Updatable_ABC< Common::MsgChangeLogisticLinks >
-    , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyQuotas >
+class LogisticEntity : public kernel::Extension_ABC
+                     , public kernel::Updatable_ABC< Common::MsgChangeLogisticLinks >
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyQuotas >
 {
 public:
     //! @name Constructor/destructor
     //@{
-    LogisticEntity(const tools::Resolver_ABC< Formation_ABC >& formations, const tools::Resolver_ABC< Automat_ABC >& automates,
-            const kernel::LogisticLevel& level);
+             LogisticEntity( const tools::Resolver_ABC< Formation_ABC >& formations, const tools::Resolver_ABC< Automat_ABC >& automates, const kernel::LogisticLevel& level );
     virtual ~LogisticEntity();
     //@}
 
@@ -69,19 +66,22 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const Common::MsgChangeLogisticLinks&         msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas&    msg );
+    virtual void DoUpdate( const Common::MsgChangeLogisticLinks& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas& msg );
     void Fill( client::ChangeLogisticLinks& msg ) const;
     void Fill( client::LogSupplyQuotas& msg ) const;
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const tools::Resolver_ABC< Formation_ABC >& formations_;
     const tools::Resolver_ABC< Automat_ABC >& automats_;
-    const kernel::LogisticLevel*   pLogisticLevel_;
+    const kernel::LogisticLevel* pLogisticLevel_;
     Formation_ABC* pSuperiorFormation_;
     Automat_ABC* pSuperieurAutomat_;
     tools::Resolver< DotationQuota > quotas_;
+    //@}
 };
 
 } // namespace dispatcher

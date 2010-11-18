@@ -36,7 +36,7 @@ namespace dispatcher
 // Created: NLD 2006-09-19
 // =============================================================================
 class Formation : public dispatcher::Formation_ABC
-    , public kernel::Updatable_ABC< Common::MsgChangeLogisticLinks >
+                , public kernel::Updatable_ABC< Common::MsgChangeLogisticLinks >
 {
 public:
     //! @name Constructors/Destructor
@@ -93,6 +93,7 @@ private:
     const std::string                           name_;
     dispatcher::Team_ABC&                       team_;
     const kernel::HierarchyLevel_ABC&           level_;
+    std::string                                 symbol_;
     LogisticEntity                              logisticEntity_;
     dispatcher::Formation_ABC*                  parent_;
     tools::Resolver< dispatcher::Formation_ABC > formations_;

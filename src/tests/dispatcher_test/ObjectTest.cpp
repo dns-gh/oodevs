@@ -52,6 +52,8 @@ namespace
             message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 42. );
             message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );
             message.mutable_attributes();
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
             MOCK_EXPECT( team, RegisterObject ).once();
             result.reset( new dispatcher::Object( model, message, types ) );
             MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
@@ -89,6 +91,8 @@ BOOST_FIXTURE_TEST_CASE( Object_IsDestroyed, Fixture )
     createObject();
     MsgsSimToClient::MsgObjectDestruction& message = *expected.mutable_message()->mutable_object_destruction();
     message.mutable_object()->set_id( 1 );
+    BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
     MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
     result->SendDestruction( publisher );
     publisher.verify();
@@ -109,6 +113,8 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated, Fixture )
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 1. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 42. );
         message.mutable_attributes();
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
         result->Update( message );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
@@ -126,6 +132,8 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated, Fixture )
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 1. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 42. );
         message.mutable_attributes();
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
         publisher.verify();
@@ -143,6 +151,8 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated_With_No_Optional, Fixture )
         MsgsSimToClient::MsgObjectUpdate& message = *expected.mutable_message()->mutable_object_update();
         message.mutable_object()->set_id( 1 );
         message.mutable_attributes();
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
         result->Update( message );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
@@ -160,6 +170,8 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated_With_No_Optional, Fixture )
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 42. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );
         message.mutable_attributes();
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
         publisher.verify();

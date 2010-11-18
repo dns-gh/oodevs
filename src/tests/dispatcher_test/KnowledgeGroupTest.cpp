@@ -39,6 +39,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_CanBeUnderATeam )
         message.mutable_party()->set_id( side.GetId() );
         message.set_type( "Standard" );
         message.set_jam( true );
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         // creation
         MOCK_EXPECT( side, RegisterKnowledgeGroup ).once();
@@ -83,6 +84,8 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             message.mutable_party()->set_id( side.GetId() );
             message.set_type( "Standard" );
             message.set_jam( true );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
             // creation
             MOCK_EXPECT( side, RegisterKnowledgeGroup ).once();
             result.reset( new dispatcher::KnowledgeGroup( model, message ) );
@@ -96,6 +99,8 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             message.set_type( "GTIA" );
             message.set_enabled( false );
             message.mutable_parent()->set_id( knowledgeGroup.GetId() );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
             MOCK_EXPECT( side, RemoveKnowledgeGroup ).once().with( mock::same( *result ) );
             MOCK_EXPECT( knowledgeGroup, RegisterKnowledgeGroup ).once().with( mock::same( *result ) );
             result->Update( message );
@@ -109,6 +114,7 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             message.set_type( "GTIA" );
             message.set_jam( true );
             message.mutable_parent()->set_id( knowledgeGroup.GetId() );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             // network serialization
             MockClientPublisher publisher;

@@ -45,6 +45,7 @@ Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& m
     , nOperationalState_( Common::detruit_totalement )
     , nRoe_             ( MsgsSimToClient::RulesOfEngagement_Value_tir_interdit )
     , order_            ( 0 )
+    , symbol_           ( msg.app6symbol() )
 {
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
@@ -272,9 +273,9 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
         asn().mutable_automat()->set_id( GetId() );
         asn().mutable_type()->set_id( type_ );
         asn().set_nom( GetName() );
-        asn().set_app6symbol( "combat" );
         asn().mutable_party()->set_id( team_.GetId() );
         asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
+        asn().set_app6symbol( symbol_ );
         if( parentFormation_ )
             asn().mutable_parent()->mutable_formation()->set_id( parentFormation_->GetId() );
         if( parentAutomat_ )

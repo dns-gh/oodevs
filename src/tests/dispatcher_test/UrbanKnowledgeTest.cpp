@@ -43,6 +43,8 @@ namespace
             message.mutable_knowledge()->set_id( 1 );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_urban_block()->set_id( urban.GetId() );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
             result.reset( new dispatcher::UrbanKnowledge( model, message ) );
             MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
             result->SendCreation( publisher );
@@ -81,6 +83,8 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeDestroyedWithoutAttributes, Fixture
     MsgsSimToClient::MsgUrbanKnowledgeDestruction& message = *expected.mutable_message()->mutable_urban_knowledge_destruction();
     message.mutable_knowledge()->set_id( 1 );
     message.mutable_party()->set_id( side.GetId() );
+    BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
     MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
     result->SendDestruction( publisher );
     publisher.verify();
@@ -102,6 +106,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
         message.set_maxprogress( 7 );
         message.set_perceived( true );
         message.mutable_automat_perceptions()->add_elem()->set_id( automat.GetId() );
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
         result->Update( message );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
@@ -113,6 +118,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
         message.mutable_knowledge()->set_id( 1 );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_urban_block()->set_id( 0 );
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
         publisher.verify();

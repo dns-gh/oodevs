@@ -10,6 +10,7 @@
 #ifndef __dispatcher_ObjectAttributeContainer_h__
 #define __dispatcher_ObjectAttributeContainer_h__
 
+#include <boost/noncopyable.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 
 namespace Common
@@ -28,13 +29,13 @@ namespace dispatcher
 */
 // Created: SBO 2010-06-07
 // =============================================================================
-class ObjectAttributeContainer
+class ObjectAttributeContainer : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    ObjectAttributeContainer( const Model_ABC& model );
-    ~ObjectAttributeContainer();
+    explicit ObjectAttributeContainer( const Model_ABC& model );
+    virtual ~ObjectAttributeContainer();
     //@}
 
     //! @name Operations

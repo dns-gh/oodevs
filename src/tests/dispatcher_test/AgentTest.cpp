@@ -85,6 +85,7 @@ BOOST_AUTO_TEST_CASE( Agent_IsCreatedUnderAnAutomat )
         message.set_nom( "test" );
         message.mutable_automat()->set_id( automat.GetId() );
         message.set_pc( false );
+        BOOST_REQUIRE( message.IsInitialized() );
 
         // creation
         MOCK_EXPECT( automat, RegisterAgent ).once();
@@ -136,6 +137,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
             message.set_nom( "test" );
             message.mutable_automat()->set_id( automat.GetId() );
             message.set_pc( false );
+            BOOST_REQUIRE( message.IsInitialized() );
 
             // creation
             MOCK_EXPECT( automat, RegisterAgent ).once();
@@ -195,6 +197,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.mutable_surrendered_unit()->set_id( 0 );
                 message.set_prisonnier( true );
                 message.set_refugie_pris_en_compte( true );
+                BOOST_REQUIRE( message.IsInitialized() );
                 agents.Get( 1 ).Update( message );
             }
 
@@ -205,6 +208,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 Common::MsgUnitChangeSuperior& message = *expectedChangeSuperior.mutable_message()->mutable_unit_change_superior();
                 message.mutable_unit()->set_id( 1 );
                 message.mutable_parent()->set_id( automat.GetId() );
+                BOOST_REQUIRE( message.IsInitialized() );
             }
 
             // order no mission
@@ -214,6 +218,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 Common::MsgUnitOrder& message = *expectedNoMission.mutable_message()->mutable_unit_order();
                 message.mutable_tasker()->set_id( result->GetId() );
                 message.mutable_type()->set_id( 0 );
+                BOOST_REQUIRE( message.IsInitialized() );
             }
 
             // network serialization

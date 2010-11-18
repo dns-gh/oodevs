@@ -32,7 +32,8 @@ Formation::Formation( const Model_ABC& model, const MsgsSimToClient::MsgFormatio
     , name_  ( msg.name() )
     , team_  ( model.Sides().Get( msg.party().id() ) )
     , level_ ( levels.Get( msg.level() ) )
-    , logisticEntity_   ( model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve( msg.logistic_level() ) )
+    , symbol_( msg.app6symbol() )
+    , logisticEntity_( model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve( msg.logistic_level() ) )
     , parent_( msg.has_parent() ? &model.Formations().Get( msg.parent().id() ) : 0 )
 {
     if( msg.has_extension() )
@@ -42,7 +43,7 @@ Formation::Formation( const Model_ABC& model, const MsgsSimToClient::MsgFormatio
         parent_->Register( *this );
     else
         team_.Register( *this );
-    RegisterSelf(logisticEntity_);
+    RegisterSelf( logisticEntity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,9 +120,9 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
     message().mutable_party()->set_id( team_.GetId() );
     message().set_level( Common::EnumNatureLevel( level_.GetId() ) );
     message().set_name( name_ );
-    message().set_app6symbol( "combat" );
+    message().set_app6symbol( symbol_ );
     message().set_logistic_level( Common::EnumLogisticLevel( logisticEntity_.GetLogisticLevel().GetId() ) );
-
+    
     if( parent_ )
         message().mutable_parent()->set_id( parent_->GetId() );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )

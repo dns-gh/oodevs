@@ -60,12 +60,13 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAFormation )
         message.mutable_automat()->set_id( 1 );
         message.mutable_type()->set_id( 42 );
         message.set_nom( "test" );
-        message.set_app6symbol( "combat" );
         message.mutable_parent()->mutable_formation()->set_id( formation.GetId() );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
         message.set_logistic_level( Common::none );
-
+        message.set_app6symbol( "sfgpu----------" );
+        CheckInitialized( message );
+        
         // creation
         MOCK_EXPECT( formation, RegisterAutomat ).once();
         MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
@@ -125,11 +126,12 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAnAutomat )
         message.mutable_automat()->set_id( 1 );
         message.mutable_type()->set_id( 42 );
         message.set_nom( "test" );
-        message.set_app6symbol( "combat" );
         message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
         message.set_logistic_level( Common::none );
+        message.set_app6symbol( "sfgpu----------" );
+        CheckInitialized( message );
 
         // creation
         MOCK_EXPECT( automat, RegisterAutomat ).once();
@@ -191,10 +193,12 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
-            message.set_app6symbol( "combat" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
+            message.set_logistic_level( Common::none );
+            message.set_app6symbol( "sfgpu----------" );
+            CheckInitialized( message );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
@@ -206,6 +210,7 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
             Common::MsgAutomatChangeSuperior message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_superior()->mutable_formation()->set_id( 52 );
+            CheckInitialized( message );
 
             MOCK_EXPECT( automat, RemoveAutomat ).once();
             MOCK_EXPECT( formation, RegisterAutomat ).once();
@@ -266,10 +271,12 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
-            message.set_app6symbol( "combat" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup1.GetId() );
+            message.set_logistic_level( Common::none );
+            message.set_app6symbol( "sfgpu----------" );
+            CheckInitialized( message );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup1, RegisterAutomat ).once();
@@ -280,7 +287,9 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
             // change knowledge group
             Common::MsgAutomatChangeKnowledgeGroup message;
             message.mutable_automat()->set_id( 1 );
+            message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup2.GetId() );
+            CheckInitialized( message );
 
             MOCK_EXPECT( knowledgeGroup1, RemoveAutomat ).once();
             MOCK_EXPECT( knowledgeGroup2, RegisterAutomat ).once();
@@ -338,10 +347,12 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
-            message.set_app6symbol( "combat" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
+            message.set_logistic_level( Common::none );
+            message.set_app6symbol( "sfgpu----------" );
+            CheckInitialized( message );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
@@ -356,6 +367,7 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
             message.mutable_source()->mutable_automat()->set_id( 1 );
             message.set_key( "my variable" );
             message.set_value( "my value" );
+            CheckInitialized( message );
             automats.Get( 1 ).Update( message );
 
             // network serialization
@@ -415,10 +427,12 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
-            message.set_app6symbol( "combat" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
+            message.set_logistic_level( Common::none );
+            message.set_app6symbol( "sfgpu----------" );
+            CheckInitialized( message );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
@@ -436,6 +450,7 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
             message.set_combat_de_rencontre( Common::etat_esquive );
             message.set_etat_operationnel( Common::detruit_tactiquement );
             message.set_roe( MsgsSimToClient::RulesOfEngagement::tir_sur_riposte );
+            CheckInitialized( message );
             automats.Get( 1 ).Update( message );
 
             // network serialization
@@ -496,11 +511,12 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
-            message.set_app6symbol( "combat" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
             message.set_logistic_level( Common::tc2 );
+            message.set_app6symbol( "sfgpu----------" );
+            CheckInitialized( message );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
@@ -519,6 +535,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
             message.mutable_quotas()->add_elem();
             message.mutable_quotas()->mutable_elem( 1 )->mutable_ressource_id()->set_id( 69 );
             message.mutable_quotas()->mutable_elem( 1 )->set_quota_disponible( 6945 );
+            CheckInitialized( message );
             automats.Get( 1 ).Update( message );
 
             // network serialization
@@ -578,10 +595,12 @@ BOOST_AUTO_TEST_CASE( Automat_LogisticLinksCanBeChanged )
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
-            message.set_app6symbol( "combat" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
+            message.set_logistic_level( Common::none );
+            message.set_app6symbol( "sfgpu----------" );
+            CheckInitialized( message );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
@@ -596,6 +615,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogisticLinksCanBeChanged )
             message.mutable_requester()->mutable_automat()->set_id( 1 );
             message.mutable_tc2()->set_id( 1 );
             message.mutable_logistic_base()->mutable_automat()->set_id( 1 );
+            CheckInitialized( message );
             automats.Get( 1 ).Update( message );
 
             // network serialization

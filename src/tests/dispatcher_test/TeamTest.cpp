@@ -33,7 +33,8 @@ BOOST_AUTO_TEST_CASE( Team_CanBeCreated )
         message.mutable_party()->set_id( 1 );
         message.set_name( "test" );
         message.set_type( Common::friend_diplo );
-
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+        
         // creation
         std::auto_ptr< dispatcher::Team_ABC > result( new dispatcher::Side( model, message ) );
 
@@ -68,6 +69,7 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
             message.mutable_party()->set_id( 1 );
             message.set_name( "test" );
             message.set_type( Common::friend_diplo );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             // creation
             result.reset( new dispatcher::Side( model, message ) );
@@ -81,6 +83,7 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
             message.mutable_party1()->set_id( result->GetId() );
             message.mutable_party2()->set_id( side.GetId() );
             message.set_diplomatie( Common::enemy_diplo );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
             sides.Get( 1 ).Update( message );
 
             // network serialization
@@ -99,6 +102,7 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
                 message.mutable_party2()->set_id( side.GetId() );
                 message.set_diplomatie( Common::neutral_diplo );
                 message.set_error_code( MsgsSimToClient::MsgChangeDiplomacyAck::no_error_diplomacy );
+                BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
                 sides.Get( 1 ).Update( message );
             }
             MsgsSimToClient::MsgSimToClient expected;
@@ -107,6 +111,7 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
             message.mutable_party1()->set_id( result->GetId() );
             message.mutable_party2()->set_id( side.GetId() );
             message.set_diplomatie( Common::neutral_diplo );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             // network serialization
             MockClientPublisher publisher;

@@ -51,6 +51,8 @@ namespace
             message.mutable_type()->set_id( "mines" );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
             message.mutable_attributes();
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
             // creation
             result.reset( new dispatcher::ObjectKnowledge( model, message ) );
             MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
@@ -92,6 +94,8 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeDestroyedWithoutAttributes, Fixtur
     MsgsSimToClient::MsgObjectKnowledgeDestruction& message = *expected.mutable_message()->mutable_object_knowledge_destruction();
     message.mutable_knowledge()->set_id( 1 );
     message.mutable_party()->set_id( side.GetId() );
+    BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
     // network serialization
     MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
     result->SendDestruction( publisher );
@@ -119,6 +123,8 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeUpdatedWithoutAttributes, Fixture 
         result->Update( message );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
         // network serialization
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
@@ -133,6 +139,8 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeUpdatedWithoutAttributes, Fixture 
         message.mutable_type()->set_id( "mines" );
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
         message.mutable_attributes();
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
         // network serialization
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
