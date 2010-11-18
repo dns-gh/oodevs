@@ -3,6 +3,10 @@
     <xsl:output method="xml" indent="yes" encoding="UTF-8"/>
     
    
+ <xsl:template match="parameter[@type='intelligence']"/>
+ <xsl:template match="parameter[@type='Intelligence']"/>
+ <xsl:template match="parameter[@type='IntelligenceList']"/>
+
  <xsl:template match="node()|@*">
         <xsl:copy>
             <xsl:apply-templates select="node()|@*"/>
