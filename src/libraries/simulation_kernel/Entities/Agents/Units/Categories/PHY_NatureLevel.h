@@ -48,17 +48,19 @@ private:
     enum E_Type
     {
       eNatureLevel_none = 0,
-      eNatureLevel_o = 1,
-      eNatureLevel_oo = 2,
-      eNatureLevel_ooo = 3,
-      eNatureLevel_i = 4,
-      eNatureLevel_ii = 5,
-      eNatureLevel_iii = 6,
-      eNatureLevel_x = 7,
-      eNatureLevel_xx = 8,
-      eNatureLevel_xxx = 9,
-      eNatureLevel_xxxx = 10,
-      eNatureLevel_xxxxx = 11
+      eNatureLevel_b = 1,
+      eNatureLevel_o = 2,
+      eNatureLevel_c = 3,
+      eNatureLevel_oo = 4,
+      eNatureLevel_ooo = 5,
+      eNatureLevel_i = 6,
+      eNatureLevel_ii = 7,
+      eNatureLevel_iii = 8,
+      eNatureLevel_x = 9,
+      eNatureLevel_xx = 10,
+      eNatureLevel_xxx = 11,
+      eNatureLevel_xxxx = 12,
+      eNatureLevel_xxxxx = 13
     };
 
     typedef std::map< std::string, const PHY_NatureLevel*, sCaseInsensitiveLess > T_NatureLevelMap;

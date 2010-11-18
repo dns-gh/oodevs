@@ -834,5 +834,13 @@
         <source>Illumination shell</source>
         <translation>Eclairant</translation>
     </message>
+    <message>
+        <source>b</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>c</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

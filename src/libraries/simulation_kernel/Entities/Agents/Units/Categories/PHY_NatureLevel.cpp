@@ -22,7 +22,9 @@ PHY_NatureLevel::T_NatureLevelMap PHY_NatureLevel::natureLevels_;
 void PHY_NatureLevel::Initialize()
 {
     natureLevels_[ "none"  ] = new PHY_NatureLevel( "none" , eNatureLevel_none , Common::none_naturelevel  );
+    natureLevels_[ "b"     ] = new PHY_NatureLevel( "b"    , eNatureLevel_o    , Common::b     );
     natureLevels_[ "o"     ] = new PHY_NatureLevel( "o"    , eNatureLevel_o    , Common::o     );
+    natureLevels_[ "c"     ] = new PHY_NatureLevel( "c"    , eNatureLevel_o    , Common::c     );
     natureLevels_[ "oo"    ] = new PHY_NatureLevel( "oo"   , eNatureLevel_oo   , Common::oo    );
     natureLevels_[ "ooo"   ] = new PHY_NatureLevel( "ooo"  , eNatureLevel_ooo  , Common::ooo   );
     natureLevels_[ "i"     ] = new PHY_NatureLevel( "i"    , eNatureLevel_i    , Common::i     );

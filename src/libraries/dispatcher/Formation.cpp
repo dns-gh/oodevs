@@ -117,8 +117,9 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
     client::FormationCreation message;
     message().mutable_formation()->set_id( GetId() );
     message().mutable_party()->set_id( team_.GetId() );
-    message().set_name( name_ );
     message().set_level( Common::EnumNatureLevel( level_.GetId() ) );
+    message().set_name( name_ );
+    message().set_app6symbol( "combat" );
     message().set_logistic_level( Common::EnumLogisticLevel( logisticEntity_.GetLogisticLevel().GetId() ) );
 
     if( parent_ )

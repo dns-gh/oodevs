@@ -833,5 +833,13 @@
         <source>short stopping</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>b</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>c</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

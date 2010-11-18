@@ -20,8 +20,12 @@ namespace
 {
     Common::EnumNatureLevel ResolveLevel( const std::string& level )
     {
+      if( level == "b" )
+          return Common::b ;
       if( level == "o" )
           return Common::o ;
+      if( level == "c" )
+          return Common::c ;
       if( level == "oo" )
           return Common::oo ;
       if( level == "ooo" )
@@ -47,7 +51,9 @@ namespace
     {
         switch( level )
         {
+        case Common::b: return "b";
         case Common::o: return "o";
+        case Common::c: return "c";
         case Common::oo: return "oo";
         case Common::ooo: return "ooo";
         case Common::i: return "i";

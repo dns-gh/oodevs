@@ -53,9 +53,11 @@ Level* FormationLevels::AddLevel( SymbolFactory& factory, Level& root, const QSt
 // -----------------------------------------------------------------------------
 void FormationLevels::Initialize( SymbolFactory& factory )
 {
-    root_ = new Level( factory, "o", 0 );
+    root_ = new Level( factory, "b", 0 );
     Register( root_->GetId(), root_->GetName(), *root_ );
 
+    root_ = AddLevel( factory, *root_, "o" );
+    root_ = AddLevel( factory, *root_, "c" );
     root_ = AddLevel( factory, *root_, "oo" );
     root_ = AddLevel( factory, *root_, "ooo" );
     root_ = AddLevel( factory, *root_, "i" );

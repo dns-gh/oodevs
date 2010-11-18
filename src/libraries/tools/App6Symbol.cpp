@@ -139,38 +139,15 @@ void SetCommandPost( std::string& symbol, bool commandPost )
     Align( symbol );
     symbol[10] = commandPost ? 'A' : '-';
 }
-/*
-namespace
-{
-    char ToChar( const EnumNatureLevel& level )
-    {
-        switch( level )
-        {
-        case EnumNatureLevel::o:      return 'A';
-        case EnumNatureLevel::oo:     return 'C';
-        case EnumNatureLevel::ooo:    return 'D';
-        case EnumNatureLevel::i:      return 'E';
-        case EnumNatureLevel::ii:     return 'F';
-        case EnumNatureLevel::iii:    return 'G';
-        case EnumNatureLevel::x:      return 'H';
-        case EnumNatureLevel::xx:     return 'I';
-        case EnumNatureLevel::xxx:    return 'J';
-        case EnumNatureLevel::xxxx:   return 'K';
-        case EnumNatureLevel::none:
-        }
-        return '-';
-    }
-}
-*/
 // -----------------------------------------------------------------------------
 // Name: SetLevel
 // Created: SBO 2007-08-23
 // -----------------------------------------------------------------------------
 void SetLevel( std::string& symbol, unsigned int level )
 {
-    static const char levels[12] = { '-', 'A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'M' };
+    static const char levels[14] = { '-', 'B', 'A', 'C', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'M' };
     Align( symbol );
-    if( level < 12 )
+    if( level < 14 )
         symbol[11] = levels[level];
 }
 
@@ -180,9 +157,9 @@ void SetLevel( std::string& symbol, unsigned int level )
 // -----------------------------------------------------------------------------
 void SetLevel( std::string& symbol, const std::string& level )
 {
-    static const std::string levels[11] = { "o", "oo", "ooo", "i", "ii", "iii", "x", "xx", "xxx", "xxxx", "xxxxx" };
+    static const std::string levels[13] = { "b", "o", "c", "oo", "ooo", "i", "ii", "iii", "x", "xx", "xxx", "xxxx", "xxxxx" };
     const std::string stripped = level.substr( level.find_last_of( "/" ) + 1 );
-    for( unsigned int i = 0; i < 11; ++i )
+    for( unsigned int i = 0; i < 13; ++i )
         if( levels[i] == stripped )
         {
             SetLevel( symbol, i + 1 );
@@ -197,10 +174,10 @@ void SetLevel( std::string& symbol, const std::string& level )
 // -----------------------------------------------------------------------------
 unsigned int GetLevel( const std::string& symbol )
 {
-    static const char levels[12] = { '-', 'A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'M' };
-    if( symbol.length() < 12 )
+    static const char levels[14] = { '-', 'B', 'A', 'C', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'M' };
+    if( symbol.length() < 14 )
         return 0;
-    for( unsigned int i = 0; i < 12; ++i )
+    for( unsigned int i = 13; i >= 0; --i )
         if( symbol[11] == levels[i] )
             return i;
     return 0;

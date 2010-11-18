@@ -272,6 +272,7 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
         asn().mutable_automat()->set_id( GetId() );
         asn().mutable_type()->set_id( type_ );
         asn().set_nom( GetName() );
+        asn().set_app6symbol( "combat" );
         asn().mutable_party()->set_id( team_.GetId() );
         asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
         if( parentFormation_ )
