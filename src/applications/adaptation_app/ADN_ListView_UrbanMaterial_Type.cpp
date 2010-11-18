@@ -102,14 +102,13 @@ void ADN_ListView_UrbanMaterial_Type::ConnectItem( bool bConnect )
 // Name: ADN_ListView_UrbanMaterial_Type::OnContextMenu
 // Created: SLG 2010-03-10
 //-----------------------------------------------------------------------------
-void  ADN_ListView_UrbanMaterial_Type::OnContextMenu( const QPoint& /*pt*/)
+void  ADN_ListView_UrbanMaterial_Type::OnContextMenu( const QPoint& pt)
 {
     QPopupMenu popuMenu( this );
 
     popuMenu.insertItem( tr( "New" ), 0 );
     popuMenu.insertItem( tr( "Delete" ), 1 );
     popuMenu.setItemEnabled( 1, pCurData_ != 0 );
-    /*
 
     int nResult = popuMenu.exec( pt );
     switch ( nResult )
@@ -117,17 +116,16 @@ void  ADN_ListView_UrbanMaterial_Type::OnContextMenu( const QPoint& /*pt*/)
     case 0:
         {
             // create new sensor & add it to list
-            ADN_Urban_Data::UrbanMaterialInfos* pNewInfo = new ADN_Urban_Data::UrbanMaterialInfos();
-            pNewInfo->SetDataName( "le nom de la catégorie de volume" );
+             ADN_Urban_Data::UrbanMaterialInfos* pNewInfo = new ADN_Urban_Data::UrbanMaterialInfos();
 
             ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
             pCList->AddItem( pNewInfo );
 
             // Put the  new item at the top of the list (to be coherent with the application)
-            int pos = FindNdx( pNewInfo );
-            while( pos != 0 )
+            int pos= FindNdx( pNewInfo );
+            while( pos != 0 )   
             {
-                pCList->SwapItem( pos - 1, pos );
+                static_cast<ADN_Connector_Vector_ABC*>(&GetConnector())->SwapItem( pos - 1, pos );
                 --pos;
             }
 
@@ -137,18 +135,15 @@ void  ADN_ListView_UrbanMaterial_Type::OnContextMenu( const QPoint& /*pt*/)
         }
     case 1:
         {
-            ADN_Urban_Data::UrbanMaterialInfos* pCurSize=(ADN_Urban_Data::UrbanMaterialInfos*)pCurData_;
-            if ( pCurSize )
-            {
-                if( pCurSize->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )
-                    return;
+            ADN_Urban_Data::UrbanMaterialInfos* pCurMaterial= (ADN_Urban_Data::UrbanMaterialInfos*) pCurData_;
+            if( pCurMaterial->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )
+                return;
 
-                static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurSize);
-            }
+            static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurMaterial );
             break;
         }
     default:
         break;
     }
-    */
+
 }

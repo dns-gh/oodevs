@@ -20,6 +20,8 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tr.h"
 
+using namespace helpers;
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Urban_Data constructor
 // Created: SLG 2010-03-08
@@ -204,25 +206,9 @@ void ADN_Urban_Data::UrbanMaterialInfos::WriteMaterial( xml::xostream& output )
     output << xml::start( "material-composition-type" )
         << xml::attribute( "name",  trim( strData ) )
         << xml::start( "attritions" );
-    for( UrbanMaterialInfos::CIT_AttritionData_Vector it = vAttritionInfos_.begin(); it != vAttritionInfos_.end(); ++it )
-        ( *it )->WriteAttrition( output );
+    for( IT_AttritionInfos_Vector it = vAttritionInfos_.begin(); it != vAttritionInfos_.end(); ++it )
+        ( *it )->WriteArchive( output );
     output << xml::end()
-        << xml::end();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::WriteAttritions
-// Created: SLG 2010-07-05
-// -----------------------------------------------------------------------------
-void ADN_Urban_Data::UrbanMaterialInfos::AttritionData::WriteAttrition( xml::xostream& output )
-{
-    std::string strData = sProtection_.GetData();
-    output << xml::start( "attrition" )
-        << xml::attribute( "protection", trim( strData ) )
-        << xml::attribute( "destruction", rDestruction_.GetData() / 100 )
-        << xml::attribute( "repairable-with-evacuation", rRepairableWithEvac_.GetData() / 100 )
-        << xml::attribute( "repairable-without-evacuation", rRepairableNoEvac_.GetData() / 100 )
         << xml::end();
 }
 
@@ -231,11 +217,27 @@ void ADN_Urban_Data::UrbanMaterialInfos::AttritionData::WriteAttrition( xml::xos
 // Created: SLG 2010-07-01
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UrbanMaterialInfos::UrbanMaterialInfos( xml::xistream& input )
+    : strName_ ( "" )
+    , vAttritionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
 {
     input >> xml::attribute( "name", strName_ )
         >> xml::start( "attritions" )
         >> xml::list( "attrition", *this, &ADN_Urban_Data::UrbanMaterialInfos::ReadAttrition )
         >> xml::end();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::UrbanMaterialInfos
+// Created: HBD 2010-11-17
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::UrbanMaterialInfos::UrbanMaterialInfos()
+    : strName_ ( "" )
+    , vAttritionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
+{
+    strName_.SetDataName( "le nom du material" );
+    strName_.SetParentNode( *this );
+    //vAttritionInfos_ = CreateDefaultAttritionInfos();
 }
 
 // -----------------------------------------------------------------------------
@@ -248,25 +250,18 @@ ADN_Urban_Data::UrbanMaterialInfos::~UrbanMaterialInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::UrbanMaterialInfos::FindAttritions
-// Created: SLG 2010-07-01
-// -----------------------------------------------------------------------------
-ADN_Urban_Data::UrbanMaterialInfos::AttritionData* ADN_Urban_Data::UrbanMaterialInfos::FindAttritions( const std::string& strName )
-{
-    for( CIT_AttritionData_Vector it = vAttritionInfos_.begin(); it != vAttritionInfos_.end(); ++it )
-        if( **it == strName )
-            return *it;
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Urban_Data::UrbanMaterialInfos::ReadAttrition
 // Created: SLG 2010-06-30
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::UrbanMaterialInfos::ReadAttrition( xml::xistream& input )
 {
-    vAttritionInfos_.AddItem( new AttritionData( input ) );
+    std::string protection = input.attribute< std::string >( "protection" );
+    helpers::IT_AttritionInfos_Vector itAttrition = std::find_if( vAttritionInfos_.begin(), vAttritionInfos_.end(), helpers::AttritionInfos::Cmp( protection ));
+    if( itAttrition == vAttritionInfos_.end() )
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).ascii() );
+    (*itAttrition)->ReadArchive( input );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Urban_Data::UrbanMaterialInfos::GetNodeName

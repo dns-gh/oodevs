@@ -20,10 +20,10 @@ class ADN_ListView_UrbanMaterial_Type;
 class ADN_Urban_AttritionTable;
 
 // =============================================================================
-/** @class  ADN_Categories_GUI
-    @brief  ADN categories gui
+/** @class  ADN_Urban_GUI
+    @brief  ADN urban gui
 */
-// Created: APE 2004-12-06
+// Created: SLG 2010-03-08
 // =============================================================================
 class ADN_Urban_GUI
     : public ADN_GUI_ABC

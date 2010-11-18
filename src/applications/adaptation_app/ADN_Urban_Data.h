@@ -21,6 +21,7 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_AttritionInfos.h"
 
+
 class xml::xistream;
 
 //*****************************************************************************
@@ -37,46 +38,9 @@ public:
                              , public ADN_DataTreeNode_ABC
     {
         MT_COPYNOTALLOWED( UrbanMaterialInfos )
-
-    public:
-        //! @name Types
-        //@{
-        struct AttritionData : public ADN_Ref_ABC, public ADN_DataTreeNode_ABC
-        {
-            AttritionData( xml::xistream& xis )
-                : sProtection_        ( xis.attribute< std::string >( "protection" ) )
-                , rDestruction_       ( xis.attribute< double >( "destruction" ) * 100 )
-                , rRepairableWithEvac_( xis.attribute< double >( "repairable-with-evacuation" )  * 100 )
-                , rRepairableNoEvac_  ( xis.attribute< double >( "repairable-without-evacuation" ) * 100 )
-            {
-                // NOTHING
-            }
-            virtual std::string GetNodeName()
-            {
-                return std::string();
-            }
-            std::string GetItemName()
-            {
-                return sProtection_.GetData();
-            }
-            bool operator==( const std::string& str )
-            {
-                return sProtection_.GetData() == str;
-            }
-            void WriteAttrition( xml::xostream& output );
-            ADN_Type_String sProtection_;
-            ADN_Type_Double rDestruction_;
-            ADN_Type_Double rRepairableWithEvac_;
-            ADN_Type_Double rRepairableNoEvac_;
-        };
-
-        typedef ADN_Type_Vector_ABC< AttritionData >      T_AttritionData_Vector;
-        typedef T_AttritionData_Vector::iterator        IT_AttritionData_Vector;
-        typedef T_AttritionData_Vector::const_iterator CIT_AttritionData_Vector;
-        //@}
-
     public:
                   UrbanMaterialInfos( xml::xistream& input );
+                  UrbanMaterialInfos();
          virtual ~UrbanMaterialInfos();
 
         virtual std::string GetNodeName();
@@ -84,18 +48,18 @@ public:
         bool operator==( const std::string& str );
         void WriteMaterial( xml::xostream& output );
 
-        AttritionData* FindAttritions( const std::string& strName );
     private:
     //! @name Helpers 
     //@{
     void ReadAttrition( xml::xistream& input );
+    void CreateDefaultAttritionInfos();
     //@}
 
     public:
     //! @name Member Data
     //@{
-        ADN_Type_String strName_;
-        T_AttritionData_Vector vAttritionInfos_;
+        ADN_Type_String strName_; 
+        helpers::T_AttritionInfos_Vector vAttritionInfos_;
     //@}
     };
 

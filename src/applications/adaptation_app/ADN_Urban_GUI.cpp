@@ -85,7 +85,7 @@ void ADN_Urban_GUI::Build()
     QHBox* pGroupMaterial = new QHBox(pGroupMaterials);
 
     // materials list
-    T_ConnectorVector    vMaterialInfosConnectors(eNbrUrbanMaterialGuiElements,(ADN_Connector_ABC*)0 );
+    T_ConnectorVector    vMaterialInfosConnectors(eNbrUrbanMaterialGuiElements,( ADN_Connector_ABC* ) 0 );
     pListMaterial_= new ADN_ListView_UrbanMaterial_Type( pGroupMaterial, "Material" );
     static_cast<ADN_Connector_Vector_ABC*>( &pListMaterial_->GetConnector() )->Connect( &data_.GetMaterialsInfos() );
 
@@ -93,8 +93,8 @@ void ADN_Urban_GUI::Build()
     pGroupMaterials = new QVGroupBox( tr( "Material" ),pGroupMaterials);
     pGroupMaterials->setInsideMargin(20);
     pGroupMaterials->setInsideSpacing(20);
-    pEdit = new ADN_EditLine_String(pGroupMaterials);
-    vMaterialInfosConnectors[eUrbanMaterialName]=&pEdit->GetConnector();
+    pEdit = new ADN_EditLine_String( pGroupMaterials );
+    vMaterialInfosConnectors[eUrbanMaterialName] = &pEdit->GetConnector();
 
     pAttritionTable_ = new ADN_Urban_AttritionTable( pGroupMaterials );
     vMaterialInfosConnectors[eUrbanMaterialAttrition] = &pAttritionTable_->GetConnector();

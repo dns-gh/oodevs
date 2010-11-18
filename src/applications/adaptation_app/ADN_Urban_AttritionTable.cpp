@@ -40,9 +40,9 @@ public:
     void  AddSubItems( int i, void* pObj )
     {
         assert( pObj != 0 );
-        ADN_Urban_Data::UrbanMaterialInfos::AttritionData* pAttrition = (ADN_Urban_Data::UrbanMaterialInfos::AttritionData*)pObj;
+        helpers::AttritionInfos* pAttrition = ( helpers::AttritionInfos* )pObj;
 
-        tab_.verticalHeader()->setLabel( i, pAttrition->sProtection_.GetData().c_str() );
+        tab_.verticalHeader()->setLabel( i, pAttrition->ptrArmor_.GetData()->strName_.GetData().c_str() );
 
         // add a new row & set new values
         ADN_TableItem_Double* pItem0 = new ADN_TableItem_Double( &tab_, pObj );
@@ -50,34 +50,32 @@ public:
         pItem0->SetRangeForColor( 0.0, 100.0 );
         tab_.setItem( i, 0, pItem0 );
         ADN_PercentageValidator* pValidator0 = new ADN_PercentageValidator( pItem0 );
-        pValidator0->AddLinkedValue( pAttrition->rRepairableWithEvac_ );
-        pValidator0->AddLinkedValue( pAttrition->rRepairableNoEvac_ );
+        pValidator0->AddLinkedValue( pAttrition->rRepairWithEvac_ );
+        pValidator0->AddLinkedValue( pAttrition->rRepairNoEvac_ );
         pItem0->SetValidator( pValidator0 );
-        pItem0->GetConnector().Connect( & pAttrition->rDestruction_ );
+        pItem0->GetConnector().Connect( & pAttrition->rDestroy_ );
 
         ADN_TableItem_Double* pItem1 = new ADN_TableItem_Double( &tab_, pObj );
         pItem1->UseColor( true );
         pItem1->SetRangeForColor( 0.0, 100.0 );
         tab_.setItem( i, 1, pItem1 );
         ADN_PercentageValidator* pValidator1 = new ADN_PercentageValidator( pItem0 );
-        pValidator1->AddLinkedValue( pAttrition->rDestruction_ );
-        pValidator1->AddLinkedValue( pAttrition->rRepairableNoEvac_ );
+        pValidator1->AddLinkedValue( pAttrition->rDestroy_ );
+        pValidator1->AddLinkedValue( pAttrition->rRepairNoEvac_ );
         pItem1->SetValidator( pValidator1 );
-        pItem1->GetConnector().Connect( & pAttrition->rRepairableWithEvac_ );
+        pItem1->GetConnector().Connect( & pAttrition->rRepairWithEvac_ );
 
         ADN_TableItem_Double* pItem2 = new ADN_TableItem_Double( &tab_, pObj );
         pItem2->UseColor( true );
         pItem2->SetRangeForColor( 0.0, 100.0 );
         tab_.setItem( i, 2, pItem2 );
         ADN_PercentageValidator* pValidator2 = new ADN_PercentageValidator( pItem0 );
-        pValidator2->AddLinkedValue( pAttrition->rDestruction_ );
-        pValidator2->AddLinkedValue( pAttrition->rRepairableWithEvac_ );
+        pValidator2->AddLinkedValue( pAttrition->rDestroy_ );
+        pValidator2->AddLinkedValue( pAttrition->rRepairWithEvac_ );
         pItem2->SetValidator( pValidator2 );
-        pItem2->GetConnector().Connect( & pAttrition->rRepairableNoEvac_ );
+        pItem2->GetConnector().Connect( & pAttrition->rRepairNoEvac_ );
     }
 };
-
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Urban_AttritionTable constructor
@@ -123,5 +121,4 @@ ADN_Urban_AttritionTable::~ADN_Urban_AttritionTable()
 void ADN_Urban_AttritionTable::doValueChanged( int row, int col )
 {
     ADN_Table2::doValueChanged( row, col );
-    //ADN_Workspace::GetWorkspace().GetUrban().GetGui().UpdateGraph();
 }

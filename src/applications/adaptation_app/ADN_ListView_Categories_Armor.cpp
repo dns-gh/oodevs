@@ -80,11 +80,11 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
 //-----------------------------------------------------------------------------
 void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
 {
-    QPopupMenu * pMenu=new QPopupMenu(this);
-    pMenu->insertItem( tr( "New Armor-Plating" ),0);
-    pMenu->insertItem( tr( "Delete Armor-Plating" ),1);
-    pMenu->setItemEnabled(1,pCurData_!=0);
-    int nMenu=pMenu->exec(pt);
+    QPopupMenu * pMenu=new QPopupMenu( this );
+    pMenu->insertItem( tr( "New Armor-Plating" ), 0  );
+    pMenu->insertItem( tr( "Delete Armor-Plating" ), 1 );
+    pMenu->setItemEnabled( 1, pCurData_ != 0 );
+    int nMenu=pMenu->exec( pt );
     switch ( nMenu )
     {
         case 0:
@@ -109,7 +109,7 @@ void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
         }
         case 1:
         {
-            ArmorInfos* pCurArmor=(ArmorInfos*)pCurData_;
+            ArmorInfos* pCurArmor= ( ArmorInfos* ) pCurData_;
             if( pCurArmor->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )
                 return;
 
@@ -120,20 +120,21 @@ void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
             break;
     }
 }
+
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_Armor::CreateDefaultAttritionHumanEffect
 // Created: HBD 2010-05-06
 // -----------------------------------------------------------------------------
-void ADN_ListView_Categories_Armor::CreateDefaultAttritionHumanEffect   ()
+void ADN_ListView_Categories_Armor::CreateDefaultAttritionHumanEffect()
 {
     if( pCurData_ )
     {
-        ArmorInfos* pCurArmor=(ArmorInfos*)pCurData_;
+        ArmorInfos* pCurArmor = ( ArmorInfos* ) pCurData_;
         if( !pCurArmor->vAttritionEffects_.size() )
         {
             pCurArmor->CreateDefaultAttrition();
             void* pData = pCurData_;
-            SetCurrentItem( (void*) 0 );
+            SetCurrentItem( ( void* ) 0 );
             SetCurrentItem( pData );
         }
     }
