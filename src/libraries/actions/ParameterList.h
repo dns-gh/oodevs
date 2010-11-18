@@ -58,6 +58,7 @@ public:
     //@{
     virtual std::string GetType() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void Serialize( xml::xostream& xos ) const;
     virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
 

@@ -76,6 +76,17 @@ void ParameterList::Display( kernel::Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: LocationList::DisplayTooltip
+// Created: MGD 2010-11-18
+// -----------------------------------------------------------------------------
+void ParameterList::DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    Parameter< QString >::DisplayTooltip( viewport, tools );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->DisplayTooltip( viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParameterList::Serialize
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
