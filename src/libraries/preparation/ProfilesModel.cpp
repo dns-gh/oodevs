@@ -68,7 +68,7 @@ void ProfilesModel::Load( const std::string& file )
 // -----------------------------------------------------------------------------
 void ProfilesModel::Serialize( const std::string& file ) const
 {
-    xml::xofstream xos( file, xml::encoding( "ISO-8859-1" ) );
+    xml::xofstream xos( file );
     xos << xml::start( "profiles" );
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->Serialize( xos );

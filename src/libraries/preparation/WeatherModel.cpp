@@ -86,7 +86,7 @@ void WeatherModel::Load( const std::string& filename )
 // -----------------------------------------------------------------------------
 void WeatherModel::Serialize( const std::string& filename ) const
 {
-    xml::xofstream xos( filename, xml::encoding( "ISO-8859-1" ) );
+    xml::xofstream xos( filename );
     xos << xml::start( "weather" )
             << xml::start( "exercise-date" )
                 << xml::attribute( "value", time_.toString( "yyyyMMddThhmmss" ).ascii() )

@@ -223,7 +223,7 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
     {
         exercise_.Serialize( config.GetExerciseFile() );
         {
-            xml::xofstream xos( config.GetOrbatFile(), xml::encoding( "ISO-8859-1" ) );
+            xml::xofstream xos( config.GetOrbatFile() );
             xos << xml::start( "orbat" );
             teams_.Serialize( xos );
             xos << xml::end;
