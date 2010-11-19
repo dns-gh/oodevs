@@ -115,8 +115,8 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         msg.set_id( message.tirindirect().id() );
         ptr = new MIL_TirIndirectParameter( msg );
     }
-    else if( message.has_urbanblock() )
-        ptr = new MIL_UrbanBlockParameter( message.urbanblock(), resolver );
+    else if( message.has_urbanknowledge() )
+        ptr = new MIL_UrbanBlockParameter( message.urbanknowledge(), resolver );
     else if( message.has_datetime() )
         ptr = new MIL_DateTimeParameter( message.datetime() );
     else if( message.has_logmaintenancepriorities() )

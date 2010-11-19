@@ -21,7 +21,7 @@
 // Name: MIL_UrbanBlockParameter constructor
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
-MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const Common::UrbanObjectId& asn, const DEC_KnowledgeResolver_ABC& resolver )
+MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const Common::UrbanObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
 : pKnowledgeUrbanBlock_( resolver.ResolveKnowledgeUrban( asn.id() ) )
 {
 }

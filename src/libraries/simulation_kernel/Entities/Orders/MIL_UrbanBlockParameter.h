@@ -36,7 +36,7 @@ class MIL_UrbanBlockParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_UrbanBlockParameter( const Common::UrbanObjectId& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    explicit MIL_UrbanBlockParameter( const Common::UrbanObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
     explicit MIL_UrbanBlockParameter( boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock );
     virtual ~MIL_UrbanBlockParameter();
     //@}
