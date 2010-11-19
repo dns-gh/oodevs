@@ -4603,6 +4603,17 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
 </context>
 <context>
+    <name>ADN_Urban_Data::UrbanMaterialInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
+        <translation>Equipement - Type de blindage invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Urban_GUI</name>
     <message>
         <source>Materials</source>
