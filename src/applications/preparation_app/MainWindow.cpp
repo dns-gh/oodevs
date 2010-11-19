@@ -378,7 +378,6 @@ void MainWindow::New()
         {
             SetWindowTitle( true );
             LoadExercise();
-            menu_->EnableItems( true );
         }
     }
 }
@@ -406,7 +405,6 @@ void MainWindow::Open()
     {
         SetWindowTitle( true );
         LoadExercise();
-        menu_->EnableItems( true );
     }
 }
 
@@ -416,6 +414,7 @@ void MainWindow::Open()
 // -----------------------------------------------------------------------------
 bool MainWindow::Load()
 {
+    menu_->EnableItems( true );
     WriteOptions();
     try
     {
