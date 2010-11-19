@@ -11,9 +11,11 @@
 #include "CreateExercise.h"
 #include "tools/GeneralConfig.h"
 
+#pragma warning( push )
 #pragma warning( disable: 4127 4244 4245 )
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
+#pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;

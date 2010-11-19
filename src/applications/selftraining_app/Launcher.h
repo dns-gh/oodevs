@@ -10,7 +10,7 @@
 #ifndef __Launcher_h_
 #define __Launcher_h_
 
-#pragma warning( push, 0 )
+#pragma warning( push )
 #pragma warning( disable : 4244 )
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/thread.hpp>

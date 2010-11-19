@@ -10,16 +10,15 @@
 #include "frontend_pch.h"
 #include "Config.h"
 #include "clients_gui/Tools.h"
+#pragma warning( push )
+#pragma warning( disable: 4512 )
+#include <boost/program_options.hpp>
+#pragma warning( pop )
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <shlobj.h>
 #include <qsettings.h>
 #include <qapplication.h>
-
-#pragma warning( push )
-#pragma warning( disable: 4127 4511 4512 )
-#include <boost/program_options.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-#pragma warning( pop )
 
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;

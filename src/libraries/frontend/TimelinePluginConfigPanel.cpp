@@ -11,25 +11,22 @@
 #include "TimelinePluginConfigPanel.h"
 #include "moc_TimelinePluginConfigPanel.cpp"
 #include "CreateSession.h"
-#include "tools/GeneralConfig.h"
 #include "clients_gui/Tools.h"
-#include <qlineedit.h>
-#include <qspinbox.h>
-#include <qgroupbox.h>
-#include <qdatetimeedit.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <qfiledialog.h>
-#include <qpushbutton.h>
-#include <qhbox.h>
-
-#pragma warning( push, 0 )
-#pragma warning( disable: 4127 4244 4245 4996 )
+#include "tools/GeneralConfig.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
-#pragma warning( pop )
+#include <qcheckbox.h>
+#include <qdatetimeedit.h>
+#include <qfiledialog.h>
+#include <qgroupbox.h>
+#include <qhbox.h>
+#include <qlabel.h>
+#include <qlineedit.h>
+#include <qpushbutton.h>
+#include <qspinbox.h>
 
 namespace bfs = boost::filesystem;
+
 using namespace frontend;
 
 namespace

@@ -12,10 +12,7 @@
 
 #include <map>
 #include <sstream>
-#pragma warning( push )
-#pragma warning( disable: 4702 )
 #include <boost/lexical_cast.hpp>
-#pragma warning( pop )
 
 namespace xml
 {
@@ -105,11 +102,11 @@ void XmlNode::SetValue( const std::string& path, const T& value )
 template< typename T >
 T XmlNode::GetValue( const std::string& path ) const
 {
-    std::string str ;
+    std::string str;
     if( GetStringValue( path, str ) )
-        return boost::lexical_cast<T>(str) ;
+        return boost::lexical_cast< T >(str);
     else
-        throw ( std::exception( "XmlNode impossible to find path" ) ) ;
+        throw std::exception( "XmlNode impossible to find path" );
 }
 
 

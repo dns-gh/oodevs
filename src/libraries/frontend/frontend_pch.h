@@ -11,11 +11,11 @@
 #define __frontend_pch_h_
 
 #include <exception>
-#include <string>
 #include <memory>
 #pragma warning( push )
 #pragma warning( disable : 4996 )
 #include <qstring.h>
 #pragma warning( pop )
+#include <string>
 
 #endif // __frontend_pch_h_

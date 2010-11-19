@@ -11,8 +11,10 @@
 #include "JoinExercise.h"
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
-#pragma warning( disable: 4127 4511 4512 )
+#pragma warning( push )
+#pragma warning( disable: 4244 )
 #include <boost/thread.hpp>
+#pragma warning( pop )
 #include <boost/bind.hpp>
 
 using namespace frontend;

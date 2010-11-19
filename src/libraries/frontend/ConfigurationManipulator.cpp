@@ -10,10 +10,8 @@
 #include "frontend_pch.h"
 #include "ConfigurationManipulator.h"
 #include "tools/GeneralConfig.h"
-#include <xeumeuleu/xml.hpp>
-
-#pragma warning( disable: 4800 )
 #include <boost/filesystem.hpp>
+#include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
 

@@ -12,10 +12,10 @@
 #include "frontend/ProcessObserver_ABC.h"
 #include "frontend/SpawnCommand.h"
 #pragma warning( push )
-#pragma warning( disable : 4127 4244 4511 4512 )
+#pragma warning( disable: 4244 )
 #include <boost/thread.hpp>
-#include <boost/bind.hpp>
 #pragma warning( pop )
+#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: CompositeProcessWrapper constructor

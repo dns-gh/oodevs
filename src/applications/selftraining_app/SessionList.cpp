@@ -13,11 +13,8 @@
 #include "frontend/commands.h"
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
-#pragma warning( push )
-#pragma warning( disable: 4127 4244 4245 4996 )
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
-#pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 #include <qstringlist.h>
 

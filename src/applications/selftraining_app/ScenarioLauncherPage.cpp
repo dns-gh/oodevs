@@ -35,18 +35,14 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/LinkInterpreter_ABC.h"
 #include "clients_gui/Tools.h"
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem.hpp>
 #include <boost/foreach.hpp>
 #include <qfileinfo.h>
 #include <qtabbar.h>
 #include <qtabwidget.h>
 #include <xeumeuleu/xml.hpp>
-
-#pragma warning( push )
-#pragma warning( disable: 4127 4511 4512 )
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem.hpp>
-#pragma warning( pop )
 
 namespace bfs = boost::filesystem;
 namespace bpt = boost::posix_time;

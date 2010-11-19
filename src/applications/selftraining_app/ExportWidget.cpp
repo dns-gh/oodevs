@@ -14,17 +14,14 @@
 #include "clients_gui/tools.h"
 #include "frontend/commands.h"
 #include "tools/GeneralConfig.h"
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/convenience.hpp>
 #include <qfiledialog.h>
 #include <qheader.h>
 #include <qlistview.h>
 #include <qprogressbar.h>
 #include <xeumeuleu/xml.h>
-#pragma warning( push, 0 )
-#pragma warning( disable: 4127 4244 4245 4996 )
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
 #include <zipstream/zipstream.h>
-#pragma warning( pop )
 
 namespace bfs = boost::filesystem;
 

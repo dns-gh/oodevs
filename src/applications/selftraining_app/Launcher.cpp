@@ -10,9 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "Launcher.h"
 #include "launcher_dll/LauncherFacade.h"
-#pragma warning( push, 0 )
 #include <boost/thread.hpp>
-#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: Launcher constructor

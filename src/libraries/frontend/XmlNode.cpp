@@ -10,13 +10,11 @@
 #include "frontend_pch.h"
 #include "XmlNode.h"
 #pragma warning( push )
-#pragma warning( disable: 4702 4800 )
+#pragma warning( disable: 4800 )
 #include <boost/bind.hpp>
-#include <boost/filesystem/operations.hpp>
-#include <boost/lexical_cast.hpp>
 #pragma warning( pop )
+#include <boost/filesystem/operations.hpp>
 #include <xeumeuleu/xml.hpp>
-#include <cctype>
 
 using namespace frontend;
 

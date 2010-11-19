@@ -11,7 +11,7 @@
 #include "Config.h"
 
 #pragma warning( push )
-#pragma warning( disable: 4127 4511 4512 )
+#pragma warning( disable: 4512 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 
