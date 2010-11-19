@@ -71,7 +71,7 @@ Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& c
     , time_             ( new SimulationTime() )
     , agentsKnowledges_ ( new dispatcher::AgentKnowledgeConverter( model ) )
     , objectsKnowledges_( new dispatcher::ObjectKnowledgeConverter( model ) )
-    , urbansKnowledges_( new dispatcher::UrbanKnowledgeConverter( model ) )
+    , urbansKnowledges_ ( new dispatcher::UrbanKnowledgeConverter( model ) )
     , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, *urbansKnowledges_, controller ) )
     , factory_          ( new actions::ActionFactory( controller, *parameters_, *entities_, staticModel, *time_ ) )
 {

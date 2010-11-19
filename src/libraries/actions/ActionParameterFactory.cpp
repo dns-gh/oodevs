@@ -251,9 +251,7 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( parameterList );
         xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList );
     }
-    else if( type == "bool" )
-        param.reset( new actions::parameters::Bool( parameter, xis ) );
-    else if( type == "boolean" )
+    else if( type == "bool" || type == "boolean" )
         param.reset( new actions::parameters::Bool( parameter, xis ) );
     else if( type == "numeric" )
         param.reset( new actions::parameters::Numeric( parameter, xis ) );
@@ -313,7 +311,6 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new actions::parameters::KnowledgeGroup( parameter, xis, entities_, controller_ ) );
     else
         return false;
-
     return true;
 }
 
