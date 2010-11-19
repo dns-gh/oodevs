@@ -158,59 +158,63 @@ void AttributeFactory::Initialize( Object& object ) const
 // Name: AttributeFactory::Create
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void AttributeFactory::Create( Object& object, const Common::MsgMissionParameter_Value& attributes ) const
+void AttributeFactory::Create( Object& object, const Common::MsgMissionParameter& parameter ) const
 {
     Initialize( object );
-    for( int i = 0; i < attributes.list_size(); ++i )
+    if( parameter.value_size() )
     {
-        const Common::MsgMissionParameter_Value& attribute = attributes.list( i );
-        if( attribute.list_size() == 0 ) // it should be a list of lists
-            return;
-
-        unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
-        switch( actionId )
+        const Common::MsgMissionParameter_Value& attributes = parameter.value().Get( 0 );
+        for( int i = 0; i < attributes.list_size(); ++i )
         {
-        case MsgObjectMagicAction_Attribute_obstacle:
-            object.GetAttribute< ObstacleAttribute >() = ObstacleAttribute( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_mine:
-            object.GetAttribute< MineAttribute >() = MineAttribute( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_activity_time:
-            object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_bypass:
-            object.GetAttribute< BypassAttribute >() = BypassAttribute( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_effect_delay:
-            object.GetAttribute< DelayAttribute >() = DelayAttribute( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_logistic:
-            object.GetAttribute< LogisticAttribute >() = LogisticAttribute( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_nbc:
-            object.GetAttribute< NBCAttribute >() = NBCAttribute( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_crossing_site:
-            object.GetAttribute< CrossingSiteAttribute >() = CrossingSiteAttribute( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_supply_route:
-            object.GetAttribute< SupplyRouteAttribute >() = SupplyRouteAttribute( attribute );
-            break;
-        /*case MsgObjectMagicAction_Attribute_toxic_cloud:
-            object.GetAttribute< ??? >() = ???( attribute );
-            break;*/
-        case MsgObjectMagicAction_Attribute_fire:
-            object.GetAttribute< FireAttribute >() = FireAttribute( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_medical_treatment:
-            object.GetAttribute< MedicalTreatmentAttribute >() = MedicalTreatmentAttribute( attribute );
-            break;
-        case MsgObjectMagicAction_Attribute_interaction_height:
-            object.GetAttribute< InteractionHeightAttribute >() = InteractionHeightAttribute( attribute );
-            break;
-        default:
-            break;
+            const Common::MsgMissionParameter_Value& attribute = attributes.list( i );
+            if( attribute.list_size() == 0 ) // it should be a list of lists
+                return;
+
+            unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
+            switch( actionId )
+            {
+            case MsgObjectMagicAction_Attribute_obstacle:
+                object.GetAttribute< ObstacleAttribute >() = ObstacleAttribute( attribute );
+                break;
+            case MsgObjectMagicAction_Attribute_mine:
+                object.GetAttribute< MineAttribute >() = MineAttribute( attribute );
+                break;
+            case MsgObjectMagicAction_Attribute_activity_time:
+                object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attribute );
+                break;
+            case MsgObjectMagicAction_Attribute_bypass:
+                object.GetAttribute< BypassAttribute >() = BypassAttribute( attribute );
+                break;
+            case MsgObjectMagicAction_Attribute_effect_delay:
+                object.GetAttribute< DelayAttribute >() = DelayAttribute( attribute );
+                break;
+            case MsgObjectMagicAction_Attribute_logistic:
+                object.GetAttribute< LogisticAttribute >() = LogisticAttribute( attribute );
+                break;
+            case MsgObjectMagicAction_Attribute_nbc:
+                object.GetAttribute< NBCAttribute >() = NBCAttribute( attribute );
+                break;
+            case MsgObjectMagicAction_Attribute_crossing_site:
+                object.GetAttribute< CrossingSiteAttribute >() = CrossingSiteAttribute( attribute );
+                break;
+            case MsgObjectMagicAction_Attribute_supply_route:
+                object.GetAttribute< SupplyRouteAttribute >() = SupplyRouteAttribute( attribute );
+                break;
+            /*case MsgObjectMagicAction_Attribute_toxic_cloud:
+                object.GetAttribute< ??? >() = ???( attribute );
+                break;*/
+            case MsgObjectMagicAction_Attribute_fire:
+                object.GetAttribute< FireAttribute >() = FireAttribute( attribute );
+                break;
+            case MsgObjectMagicAction_Attribute_medical_treatment:
+                object.GetAttribute< MedicalTreatmentAttribute >() = MedicalTreatmentAttribute( attribute );
+                break;
+            case MsgObjectMagicAction_Attribute_interaction_height:
+                object.GetAttribute< InteractionHeightAttribute >() = InteractionHeightAttribute( attribute );
+                break;
+            default:
+                break;
+            }
         }
     }
 }

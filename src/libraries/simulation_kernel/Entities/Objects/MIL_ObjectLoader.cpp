@@ -166,7 +166,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const Common::MsgMissionParamete
     if( ! NET_ASN_Tools::ReadLocation( message.elem( 1 ).value().Get(0).location(), location ) )
         return 0;
     Object* pObject = new Object( *it->second, army, &location, message.elem( 2 ).value().Get(0).acharstr() );
-    attributes_->Create( *pObject, message.elem( 4 ).value().Get(0) );
+    attributes_->Create( *pObject, message.elem( 4 ) );
     pObject->Finalize();
     return pObject;
 }
