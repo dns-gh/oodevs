@@ -30,8 +30,8 @@ ADN_FragOrder_WizardSecondPage::ADN_FragOrder_WizardSecondPage( QWizard* pParent
     label2->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage",  "Add for all Automata" ) );
     QHBox* box3 = new QHBox( groupbox );
     addForAllPops_ = new QCheckBox( box3 );
-    QLabel* label3 = new QLabel( box3, qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Populations") );
-    label3->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Populations" ) );
+    QLabel* label3 = new QLabel( box3, qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Crowds") );
+    label3->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Crowds" ) );
 }
 
 // -----------------------------------------------------------------------------

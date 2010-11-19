@@ -26,7 +26,7 @@ using namespace kernel;
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
 PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory )
-    : InfoPanel_ABC( parent, panel, tools::translate( "PopulationsPanel", "Populations" ), "PopulationsPanel" )
+    : InfoPanel_ABC( parent, panel, tools::translate( "PopulationsPanel", "Crowds" ), "PopulationsPanel" )
     , controllers_( controllers )
     , selected_( 0 )
 {

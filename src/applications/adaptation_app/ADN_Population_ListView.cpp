@@ -25,7 +25,7 @@ ADN_Population_ListView::ADN_Population_ListView( QWidget* pParent, const char* 
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Populations" ) );
+    addColumn( tr( "Crowds" ) );
     setResizeMode( QListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<PopulationInfos>(*this);

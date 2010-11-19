@@ -64,7 +64,7 @@ void ADN_Population_GUI::Build()
     ADN_GuiBuilder builder;
 
     // Create the top widget.
-    pMainWidget_ = new QWidget( 0, "Population main widget" );
+    pMainWidget_ = new QWidget( 0, "Crowd main widget" );
 
     // Create the population listview.
     ADN_Population_ListView* pPopulationList = new ADN_Population_ListView( pMainWidget_ );
@@ -75,7 +75,7 @@ void ADN_Population_GUI::Build()
 
     // Global parameters
     QGroupBox* pGlobalGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Global parameters" ), pMainBox );
-    QGroupBox* pReloadingEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population effects on units firing capability" ), pGlobalGroup );
+    QGroupBox* pReloadingEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Crowd effects on units firing capability" ), pGlobalGroup );
 
     // Density
     builder.AddField<ADN_EditLine_Double>( pReloadingEffectGroup, tr( "Density" ), vInfosConnectors[eReloadingEffectDensity], tr( "people/m²" ), eGreaterZero );
@@ -86,7 +86,7 @@ void ADN_Population_GUI::Build()
     vInfosConnectors[eReloadingEffectModifier]->Connect( &data_.reloadingSpeedEffectInfos_.rModifier_ );
 
     // Population parameters
-    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Population" ), pMainBox );
+    QGroupBox* pGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Crowd" ), pMainBox );
 
     QGroupBox* pPropertiesGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Details" ), pGroup );
 
@@ -107,7 +107,7 @@ void ADN_Population_GUI::Build()
 
     // Speed effects
     //@{
-    QGroupBox* pSpeedEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population effects on units movement capability" ), pGroup );
+    QGroupBox* pSpeedEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Crowd effects on units movement capability" ), pGroup );
 
     ADN_Population_SpeedEffect_Attitude_ListView* pSpeedEffectAttitudeList = new ADN_Population_SpeedEffect_Attitude_ListView( pSpeedEffectGroup );
     vInfosConnectors[eSpeedEffectAttitude] = &pSpeedEffectAttitudeList->GetConnector();
@@ -125,7 +125,7 @@ void ADN_Population_GUI::Build()
     //@{
     QGroupBox* pFireEffectGlobalGroup = new QGroupBox( 0, Qt::Horizontal, tr( "Attritions" ), pGroup );
 
-    QGroupBox* pFireEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population -> Units" ), pFireEffectGlobalGroup );
+    QGroupBox* pFireEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Crowd -> Units" ), pFireEffectGlobalGroup );
     ADN_Population_FireEffect_Attitude_ListView* pFireEffectAttitudeList = new ADN_Population_FireEffect_Attitude_ListView( pFireEffectGroup );
     vInfosConnectors[eFireEffectAttitude] = &pFireEffectAttitudeList->GetConnector();
 
@@ -150,7 +150,7 @@ void ADN_Population_GUI::Build()
 
     // Fire Roe effects
     //@{
-    QGroupBox* pFireEffectRoeGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Units -> Population" ), pFireEffectGlobalGroup );
+    QGroupBox* pFireEffectRoeGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Units -> Crowd" ), pFireEffectGlobalGroup );
     ADN_Population_FireEffectRoe_GUI* pFireEffectRoe = new ADN_Population_FireEffectRoe_GUI( pFireEffectRoeGroup );
     vInfosConnectors[eFireEffectRoe] = &pFireEffectRoe->GetConnector();
     //@}

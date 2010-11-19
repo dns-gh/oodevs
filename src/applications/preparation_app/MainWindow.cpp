@@ -186,7 +186,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Population_ABC >( listsTabBox, controllers );
     new ::PopulationListView( listsTabBox, controllers, *factory, *modelBuilder_ );
-    pListsTabWidget->addTab( listsTabBox, tr( "Populations" ) );
+    pListsTabWidget->addTab( listsTabBox, tr( "Crowds" ) );
     pListsTabWidget->addTab( new IntelligenceList( controllers, *factory, *icons, PreparationProfile::GetProfile() ), tr( "Intelligences" ) );
     pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
@@ -331,7 +331,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     glProxy_->Register( limits );                                                                                   limits              .SetPasses( "main" );
     glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );    intelligences       .SetPasses( "main" );
     glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main" );
-    glProxy_->Register( populations );              preferences.AddLayer( tr( "Populations" ), populations );       populations         .SetPasses( "main" );
+    glProxy_->Register( populations );              preferences.AddLayer( tr( "Crowd" ), populations );             populations         .SetPasses( "main" );
     glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );                  agents              .SetPasses( "main" );
     glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );             automats            .SetPasses( "main" );
     glProxy_->Register( objectCreationLayer );                                                                      objectCreationLayer .SetPasses( "main" );

@@ -138,7 +138,7 @@ ADN_Workspace::ADN_Workspace()
     elements_[eKnowledgeGroups]   = new ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI>( tr( "Knowledge groups" ) );
     elements_[eHealth]            = new ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI>( tr( "Health" ) );
     elements_[eSupply]            = new ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>( tr( "Supply" ) );
-    elements_[ePopulation]        = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >( tr( "Populations" ) );
+    elements_[ePopulation]        = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >( tr( "Crowds" ) );
     elements_[eReports]           = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >( tr( "Reports" ) );
 }
 

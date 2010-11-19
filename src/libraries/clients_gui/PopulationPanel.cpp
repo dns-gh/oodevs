@@ -28,7 +28,7 @@ using namespace gui;
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
 PopulationPanel::PopulationPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC ( parent, panel, tools::translate( "PopulationPanel", "Population state" ) )
+    : InfoPanel_ABC ( parent, panel, tools::translate( "PopulationPanel", "Crowd state" ) )
     , controllers_  ( controllers )
     , selected_     ( controllers )
 {

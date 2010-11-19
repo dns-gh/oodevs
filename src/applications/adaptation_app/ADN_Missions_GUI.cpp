@@ -58,7 +58,7 @@ void ADN_Missions_GUI::Build()
 
     pTabWidget->addTab( BuildUnitMissions( pTabWidget ), tr( "Unit missions" ) );
     pTabWidget->addTab( BuildAutomatMissions( pTabWidget ), tr( "Automat missions" ) );
-    pTabWidget->addTab( BuildPopulationMissions( pTabWidget ), tr( "Population missions" ) );
+    pTabWidget->addTab( BuildPopulationMissions( pTabWidget ), tr( "Crowd missions" ) );
     pTabWidget->addTab( BuildFragOrders( pTabWidget ), tr( "Fragmentary orders" ) );
 
     QGridLayout* pMainLayout = new QGridLayout( pMainWidget_, 1, 1, 10, 10 );

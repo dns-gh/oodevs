@@ -69,7 +69,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         tabs->addTab( unitRights, tr( "Units" ) );
         unitRights_ = unitRights;
         UserProfilePopulationRights* populationRights = new UserProfilePopulationRights( tabs, controllers, factory );
-        tabs->addTab( populationRights, tr( "Populations" ) );
+        tabs->addTab( populationRights, tr( "Crowds" ) );
         populationRights_ = populationRights;
         addTab( box, tr( "Permissions" ) );
         connect( supervisor_, SIGNAL( toggled( bool ) ), SLOT( OnSupervisorChanged( bool ) ) );

@@ -171,7 +171,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     pTargetStance->setSelectionMode( QTable::SingleRow );
 
     // Population modifiers
-    QGroupBox* pPopulationModifiersGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population modifiers" ), pAgentParamGroupBox );
+    QGroupBox* pPopulationModifiersGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Crowd modifiers" ), pAgentParamGroupBox );
 
     QLineEdit* populationDensity = builder.AddField<ADN_EditLine_Double>( pPopulationModifiersGroup, tr( "Density" ) , vConnectors[ePopulationDensity ], tr( "people/m²" ), eGreaterEqualZero );
     QLineEdit* populationModifier = builder.AddField<ADN_EditLine_Double>( pPopulationModifiersGroup, tr( "Modifier" ), vConnectors[ePopulationModifier], 0, eGreaterEqualZero );
@@ -204,7 +204,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Detection range" ), vTargetConnectors[eObjDistDetect], tr( "m" ), eGreaterEqualZero );
 
     // Population modifiers
-    QGroupBox* pObjPopulationModifiersGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population modifiers" ), pTargetParamsGroupBox );
+    QGroupBox* pObjPopulationModifiersGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Crowd modifiers" ), pTargetParamsGroupBox );
 
     builder.AddField<ADN_EditLine_Double>( pObjPopulationModifiersGroup, tr( "Density" ) , vTargetConnectors[eObjPopulationDensity ], tr( "people/m²" ), eGreaterEqualZero );
     builder.AddField<ADN_EditLine_Double>( pObjPopulationModifiersGroup, tr( "Modifier" ), vTargetConnectors[eObjPopulationModifier], 0, eGreaterEqualZero );

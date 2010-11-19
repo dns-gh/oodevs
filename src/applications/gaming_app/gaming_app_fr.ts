@@ -1378,10 +1378,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Objets</translation>
     </message>
     <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
-    </message>
-    <message>
         <source>Orbat</source>
         <translation>ODB</translation>
     </message>
@@ -1452,6 +1448,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Watershed</source>
         <translation>Montée des eaux</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
     </message>
 </context>
 <context>
@@ -1891,16 +1891,16 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Débrayer</translation>
     </message>
     <message>
-        <source>Population missions</source>
-        <translation>Missions population</translation>
-    </message>
-    <message>
         <source>Fragmentary orders</source>
         <translation>Conduites à tenir</translation>
     </message>
     <message>
         <source></source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Crowd missions</source>
+        <translation>Missions foules</translation>
     </message>
 </context>
 <context>
@@ -2394,24 +2394,12 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 <context>
     <name>PopulationKnowledgePanel</name>
     <message>
-        <source>Population knowledges</source>
-        <translation>Connaissances de population</translation>
-    </message>
-    <message>
-        <source>Known populations</source>
-        <translation>Populations connues</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Détails</translation>
     </message>
     <message>
         <source>Identifier:</source>
         <translation>Identifiant:</translation>
-    </message>
-    <message>
-        <source>Associated population:</source>
-        <translation>Population associée:</translation>
     </message>
     <message>
         <source>Side:</source>
@@ -2453,6 +2441,18 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Speed:</source>
         <translation>Vitesse:</translation>
     </message>
+    <message>
+        <source>Crowd knowledges</source>
+        <translation>Connaissances de foule</translation>
+    </message>
+    <message>
+        <source>Known crowds</source>
+        <translation>Foules connues</translation>
+    </message>
+    <message>
+        <source>Associated crowd:</source>
+        <translation>Foule associée:</translation>
+    </message>
 </context>
 <context>
     <name>PopulationMagicOrdersInterface</name>
@@ -2466,7 +2466,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Kill all</source>
-        <translation>Tuer la population</translation>
+        <translation>Tuer la foule</translation>
     </message>
     <message>
         <source>Kill people:</source>
@@ -2477,10 +2477,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Ressusciter des personnes:</translation>
     </message>
     <message>
-        <source>Change population attitude</source>
-        <translation>Changer l&apos;attitude</translation>
-    </message>
-    <message>
         <source>Enter value</source>
         <translation>Saisir une valeur</translation>
     </message>
@@ -2489,20 +2485,24 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Saisir une valeur et appuyer sur &apos;Entrée&apos;</translation>
     </message>
     <message>
-        <source>Population Total Destruction</source>
-        <translation>Destruction totale de la population</translation>
+        <source>Change crowd attitude</source>
+        <translation>Changer l&apos;attitude</translation>
     </message>
     <message>
-        <source>Population Kill</source>
-        <translation>Tuer la population</translation>
+        <source>Crowd Total Destruction</source>
+        <translation>Destruction totale de la foule</translation>
     </message>
     <message>
-        <source>Population Resurrect</source>
-        <translation>Ressusciter la population</translation>
+        <source>Crowd Kill</source>
+        <translation>Tuer la foule</translation>
     </message>
     <message>
-        <source>Population Change Attitude</source>
-        <translation>Changer l&apos;attitude de la population</translation>
+        <source>Crowd Resurrect</source>
+        <translation>Ressusciter la foule</translation>
+    </message>
+    <message>
+        <source>Crowd Change Attitude</source>
+        <translation>Changer l&apos;attitude de la foule</translation>
     </message>
 </context>
 <context>
@@ -3098,10 +3098,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Unités</translation>
     </message>
     <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
-    </message>
-    <message>
         <source>Permissions</source>
         <translation>Droits</translation>
     </message>
@@ -3118,6 +3114,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 &apos;Write&apos; permission allows you to control an unit.</source>
         <translation>&apos;Lecture&apos; permet de voir une unité.
 &apos;Ecriture&apos; permet de contrôler une unité.</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
     </message>
 </context>
 <context>

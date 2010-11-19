@@ -32,19 +32,19 @@ using namespace gui;
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
 PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( parent, panel, tr( "Population knowledges" ) )
+    : InfoPanel_ABC( parent, panel, tr( "Crowd knowledges" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
     , subSelected_ ( controllers )
     , selectedPart_( controllers )
 {
     knowledgeList_ = new ListDisplayer< PopulationKnowledgePanel >( this, *this, factory );
-    knowledgeList_->AddColumn( tr( "Known populations" ) );
+    knowledgeList_->AddColumn( tr( "Known crowds" ) );
 
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( tr( "Details" ) )
                 .AddLabel( tr( "Identifier:" ) )
-                .AddLabel( tr( "Associated population:" ) )
+                .AddLabel( tr( "Associated crowd:" ) )
                 .AddLabel( tr( "Side:" ) );
 
     display_->AddGroup( tr( "Concentration" ) )

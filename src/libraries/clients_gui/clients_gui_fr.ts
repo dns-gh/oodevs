@@ -397,10 +397,6 @@
 <context>
     <name>PopulationPanel</name>
     <message>
-        <source>Population state</source>
-        <translation>Etat de la population</translation>
-    </message>
-    <message>
         <source>Information</source>
         <translation>Information</translation>
     </message>
@@ -436,23 +432,27 @@
         <source>Alive density</source>
         <translation>Densité des vivants</translation>
     </message>
+    <message>
+        <source>Crowd state</source>
+        <translation>Etat de la foule</translation>
+    </message>
 </context>
 <context>
     <name>PopulationTypesListView</name>
     <message>
-        <source>Population type</source>
-        <translation>Type de population</translation>
+        <source>Crowd type</source>
+        <translation>Type de foule</translation>
     </message>
 </context>
 <context>
     <name>PopulationsPanel</name>
     <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
-    </message>
-    <message>
         <source>Number:</source>
         <translation>Nombre:</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
     </message>
 </context>
 <context>

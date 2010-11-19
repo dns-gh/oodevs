@@ -1571,8 +1571,8 @@ Arrêt moteur allumé</translation>
         <translation>Ajouter à chaque automate</translation>
     </message>
     <message>
-        <source>Add for all Populations</source>
-        <translation>Ajouter à chaque population</translation>
+        <source>Add for all Crowds</source>
+        <translation>Ajouter à chaque foule</translation>
     </message>
 </context>
 <context>
@@ -1712,16 +1712,16 @@ Arrêt moteur allumé</translation>
         <translation>Durée d&apos;extrapolation</translation>
     </message>
     <message>
-        <source>Parameters on known populations</source>
-        <translation>Paramètres des populations connues</translation>
-    </message>
-    <message>
         <source>Delay Parameters</source>
         <translation>Paramètres de délai</translation>
     </message>
     <message>
         <source>Communication Delay</source>
         <translation>Délai de communication</translation>
+    </message>
+    <message>
+        <source>Parameters on known crowds</source>
+        <translation>Paramètres des foules connues</translation>
     </message>
 </context>
 <context>
@@ -1947,8 +1947,8 @@ du tireur</translation>
         <translation>Automate</translation>
     </message>
     <message>
-        <source>Population</source>
-        <translation>Population</translation>
+        <source>Crowd</source>
+        <translation>Foule</translation>
     </message>
 </context>
 <context>
@@ -2284,10 +2284,6 @@ du tireur</translation>
         <translation>Missions automates</translation>
     </message>
     <message>
-        <source>Population missions</source>
-        <translation>Missions populations</translation>
-    </message>
-    <message>
         <source>Mission</source>
         <translation>Mission</translation>
     </message>
@@ -2330,6 +2326,10 @@ du tireur</translation>
     <message>
         <source>Allowed</source>
         <translation>Autorisé</translation>
+    </message>
+    <message>
+        <source>Crowd missions</source>
+        <translation>Missions foules</translation>
     </message>
 </context>
 <context>
@@ -2378,12 +2378,12 @@ du tireur</translation>
         <translation>Missions</translation>
     </message>
     <message>
-        <source>Population models</source>
-        <translation>Modèles de populations</translation>
-    </message>
-    <message>
         <source>FragOrders</source>
         <translation>Ordres de conduite</translation>
+    </message>
+    <message>
+        <source>Crowds models</source>
+        <translation>Modèles de foules</translation>
     </message>
 </context>
 <context>
@@ -2907,10 +2907,6 @@ Assurez vous que le fichier existe.</translation>
 <context>
     <name>ADN_Population_GUI</name>
     <message>
-        <source>Population</source>
-        <translation>Population</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
@@ -2963,10 +2959,6 @@ Assurez vous que le fichier existe.</translation>
         <translation>Réparable sans évacuation</translation>
     </message>
     <message>
-        <source>Population effects on units firing capability</source>
-        <translation>Effet de la population sur les capacités de tir des pions</translation>
-    </message>
-    <message>
         <source>Behavior model</source>
         <translation>Modèle</translation>
     </message>
@@ -2979,27 +2971,35 @@ Assurez vous que le fichier existe.</translation>
         <translation>Vitesse moyenne de déplacement</translation>
     </message>
     <message>
-        <source>Population effects on units movement capability</source>
-        <translation>Effet de la population sur les capacités de déplacement des pions</translation>
-    </message>
-    <message>
         <source>Attritions</source>
         <translation>Attritions</translation>
     </message>
     <message>
-        <source>Population -&gt; Units</source>
-        <translation>Population -&gt; Pions</translation>
+        <source>Crowd effects on units firing capability</source>
+        <translation>Effet de la foule sur les capacités de tir des pions</translation>
     </message>
     <message>
-        <source>Units -&gt; Population</source>
-        <translation>Pions -&gt; Population</translation>
+        <source>Crowd</source>
+        <translation>Foule</translation>
+    </message>
+    <message>
+        <source>Crowd effects on units movement capability</source>
+        <translation>Effet de la foule sur les capacités de déplacement des pions</translation>
+    </message>
+    <message>
+        <source>Crowd -&gt; Units</source>
+        <translation>Foule - Unités</translation>
+    </message>
+    <message>
+        <source>Units -&gt; Crowd</source>
+        <translation>Unités - Foules</translation>
     </message>
 </context>
 <context>
     <name>ADN_Population_ListView</name>
     <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
+        <source>Crowds</source>
+        <translation>Foules</translation>
     </message>
 </context>
 <context>
@@ -3023,16 +3023,20 @@ Assurez vous que le fichier existe.</translation>
         <translation>Création d&apos;une nouvelle population</translation>
     </message>
     <message>
-        <source>Population</source>
-        <translation>Population</translation>
-    </message>
-    <message>
         <source>Creation finished</source>
         <translation>Création terminée</translation>
     </message>
     <message>
-        <source>Click &quot;Done&quot; to create the new population.</source>
-        <translation>Cliquez sur &quot;Terminer&quot; pour créer la nouvelle population.</translation>
+        <source>New crowd creation</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Crowd</source>
+        <translation>Foule</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new crowd.</source>
+        <translation>Cliquez sur &quot;Terminer&quot; pour créer la nouvelle foule</translation>
     </message>
 </context>
 <context>
@@ -3262,10 +3266,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <translation>Matériau urbain</translation>
     </message>
     <message>
-        <source>Population Value</source>
-        <translation>Densité de population</translation>
-    </message>
-    <message>
         <source>Urban Height Ratio</source>
         <translation>Rapport de hauteurs de blocs urbains</translation>
     </message>
@@ -3276,6 +3276,10 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Cannot be selected.</source>
         <translation>Non applicable</translation>
+    </message>
+    <message>
+        <source>Crowd Value</source>
+        <translation>Densité de foule</translation>
     </message>
 </context>
 <context>
@@ -3384,10 +3388,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <translation>/ha</translation>
     </message>
     <message>
-        <source>Population modifiers</source>
-        <translation>Modificateurs population</translation>
-    </message>
-    <message>
         <source>Density</source>
         <translation>Densité</translation>
     </message>
@@ -3454,6 +3454,10 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Firer Detection range</source>
         <translation>Distance de détection du tireur</translation>
+    </message>
+    <message>
+        <source>Crowd modifiers</source>
+        <translation>Modificateurs de foule</translation>
     </message>
 </context>
 <context>
@@ -4986,10 +4990,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Ravitaillement</translation>
     </message>
     <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
-    </message>
-    <message>
         <source>Reports</source>
         <translation>Comptes-rendus</translation>
     </message>
@@ -5048,6 +5048,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Resource networks</source>
         <translation>Réseaux de ressource</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
     </message>
 </context>
 <context>
@@ -5320,23 +5324,23 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Objets - Niveau invalide &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Population types - Invalid population attitude &apos;%1&apos;</source>
-        <translation>Types de population - Attitude de population invalide &apos;%1&apos;</translation>
+        <source>Crowd types - Invalid crowd attitude &apos;%1&apos;</source>
+        <translation>Types de foules - Attitude de foule invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>Population_Data</name>
     <message>
-        <source>Population types - Invalid behavior model &apos;%1&apos;</source>
-        <translation>Populations - Modèle invalide &apos;%1&apos;</translation>
+        <source>Crowd types - Invalid behavior model &apos;%1&apos;</source>
+        <translation>Foules - Modèle invalide &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Population types - Invalid population attitude &apos;%1&apos;</source>
-        <translation>Populations - Attitude invalide &apos;%1&apos;</translation>
+        <source>Crowd types - Invalid crowd attitude &apos;%1&apos;</source>
+        <translation>Foules - Attitude invalide &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Population types - Invalid population &apos;rules of engagment&apos; &apos;%1&apos;</source>
-        <translation>Populations - ROE invalide &apos;%1&apos;</translation>
+        <source>Crowd types - Invalid crowd &apos;rules of engagment&apos; &apos;%1&apos;</source>
+        <translation>Foules - ROE invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

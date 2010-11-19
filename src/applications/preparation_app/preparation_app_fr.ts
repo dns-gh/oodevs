@@ -266,10 +266,6 @@
         <translation>Objets</translation>
     </message>
     <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -290,6 +286,10 @@
 Please select an other orbat file to import.</source>
         <translation>Le fichier sélectionné n&apos;est pas un fichier d&apos;ordre de bataille valide.
 Merci de sélectionner un autre fichier à importer.</translation>
+    </message>
+    <message>
+        <source>Crowd</source>
+        <translation>Foule</translation>
     </message>
 </context>
 <context>
@@ -335,10 +335,6 @@ Merci de sélectionner un autre fichier à importer.</translation>
     <message>
         <source>Objects</source>
         <translation>Objets</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
     </message>
     <message>
         <source>Creation</source>
@@ -397,6 +393,14 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Watershed</source>
         <translation>Montée des eaux</translation>
+    </message>
+    <message>
+        <source>Crowd</source>
+        <translation>Foule</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
     </message>
 </context>
 <context>
@@ -1293,10 +1297,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Unités</translation>
     </message>
     <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
-    </message>
-    <message>
         <source>Invalid profile information</source>
         <translation>Information de profil invalide</translation>
     </message>
@@ -1309,6 +1309,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
 &apos;Write&apos; permission allows you to control an unit.</source>
         <translation>&apos;Lecture&apos; permet de voir une unité.
 &apos;Ecriture&apos; permet de contrôler une unité.</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
     </message>
 </context>
 <context>

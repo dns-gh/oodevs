@@ -122,7 +122,7 @@ void MissionPanel::NotifyContextMenu( const Population_ABC& entity, ContextMenu&
     {
         selectedEntity_ = &entity;
         const PopulationDecisions& decisions = entity.Get< PopulationDecisions >();
-        AddMissions( decisions, menu, tr( "Population missions" ), SLOT( ActivatePopulationMission( int ) ) );
+        AddMissions( decisions, menu, tr( "Crowd missions" ), SLOT( ActivatePopulationMission( int ) ) );
     }
 }
 

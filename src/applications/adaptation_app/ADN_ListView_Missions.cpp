@@ -135,7 +135,7 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
     }
     else
     {
-        pParent = new QCheckListItem( pMissionList, tr( "Population" ), QCheckListItem::CheckBoxController );
+        pParent = new QCheckListItem( pMissionList, tr( "Crowd" ), QCheckListItem::CheckBoxController );
         FillList( pParent, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions() );
     }
     if( cfgDlg.exec() != QDialog::Accepted )

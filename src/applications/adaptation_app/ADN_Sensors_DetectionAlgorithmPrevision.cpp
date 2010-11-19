@@ -117,8 +117,8 @@ ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision
         urbanMaterial_= new QLineEdit( group, tr( "Urban Material" ) );
         urbanMaterial_->setReadOnly( true );
         urbanMaterial_->setPaletteBackgroundColor( Qt::lightGray );
-        new QLabel( tr( "Population Value" ), group );
-        populationValue_ = new QLineEdit( group, tr( "Population Value" ) );
+        new QLabel( tr( "Crowd Value" ), group );
+        populationValue_ = new QLineEdit( group, tr( "Crowd Value" ) );
         populationValue_->setText( "0" );
         populationValue_->setValidator( new QDoubleValidator( populationValue_ ) );
         connect( populationValue_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnPopulationChanged( const QString& ) ) );

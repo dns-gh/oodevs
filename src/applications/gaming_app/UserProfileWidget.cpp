@@ -45,7 +45,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     tabs->addTab( unitRights, tr( "Units" ) );
     unitRights_ = unitRights;
     UserProfilePopulationRights* populationRights = new UserProfilePopulationRights( tabs, controllers, itemFactory, profile );
-    tabs->addTab( populationRights, tr( "Populations" ) );
+    tabs->addTab( populationRights, tr( "Crowds" ) );
     populationRights_ = populationRights;
     addTab( box, tr( "Permissions" ) );
     new QLabel( tr( "'Read' permission allows you to see an unit.\n"

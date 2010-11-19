@@ -56,7 +56,7 @@ ImportOrbatDialog::ImportOrbatDialog( QWidget* parent, const tools::ExerciseConf
         QGroupBox* box = new QGroupBox( 1, Qt::Horizontal, tr( "Import options:" ), this );
         QCheckBox* objectCheckBox = new QCheckBox( tr( "Objects" ), box );
         objectCheckBox->setChecked( importObjects_ );
-        QCheckBox* populationCheckBox = new QCheckBox( tr( "Populations" ), box );
+        QCheckBox* populationCheckBox = new QCheckBox( tr( "Crowd" ), box );
         populationCheckBox->setChecked( importPopulations_ );
         connect( objectCheckBox    , SIGNAL( toggled( bool ) ), SLOT( ToggleObjects( bool ) ) );
         connect( populationCheckBox, SIGNAL( toggled( bool ) ), SLOT( TogglePopulations( bool ) ) );

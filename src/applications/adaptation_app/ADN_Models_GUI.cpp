@@ -68,7 +68,7 @@ void ADN_Models_GUI::Build()
 
     pTabWidget->addTab( BuildPage( pGroupPawn_, pTabWidget, ADN_Models_Data::ModelInfos::ePawn       ), tr( "Unit models"       ) );
     pTabWidget->addTab( BuildPage( pGroupAutomat_, pTabWidget, ADN_Models_Data::ModelInfos::eAutomat    ), tr( "Automata models"   ) );
-    pTabWidget->addTab( BuildPage( pGroupPopulation_, pTabWidget, ADN_Models_Data::ModelInfos::ePopulation ), tr( "Population models" ) );
+    pTabWidget->addTab( BuildPage( pGroupPopulation_, pTabWidget, ADN_Models_Data::ModelInfos::ePopulation ), tr( "Crowds models" ) );
 
     QGridLayout* pMainLayout = new QGridLayout( pMainWidget_, 1, 1, 10, 10 );
     pMainLayout->addWidget( pTabWidget, 0, 0 );

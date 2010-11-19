@@ -227,7 +227,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     pListsTabWidget->addTab( new TacticalList    ( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Tactical" ) );
     pListsTabWidget->addTab( new AgentList       ( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Communication" ) );
     pListsTabWidget->addTab( new gui::ObjectList      ( controllers, *factory, profile ),                    tr( "Objects" ) );
-    pListsTabWidget->addTab( new gui::PopulationList  ( controllers, *factory, profile ),                    tr( "Populations" ) );
+    pListsTabWidget->addTab( new gui::PopulationList  ( controllers, *factory, profile ),                    tr( "Crowds" ) );
     pListsTabWidget->addTab( new gui::IntelligenceList( controllers, *factory, *icons, profile ),            tr( "Intelligences" ) );
     pListDockWnd_->setWidget( box );
     pListDockWnd_->setResizeEnabled( true );
@@ -440,7 +440,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( formationLayer );                                                                           formationLayer      .SetPasses( "main,miniviews" );
     glProxy_->Register( teamLayer );                                                                                teamLayer           .SetPasses( "main,miniviews" );
     glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main,miniviews" );
-    glProxy_->Register( populations );              preferences.AddLayer( tr( "Populations" ), populations );       populations         .SetPasses( "main,miniviews" );
+    glProxy_->Register( populations );              preferences.AddLayer( tr( "Crowds" ),  populations );           populations         .SetPasses( "main,miniviews" );
     glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );                  agents              .SetPasses( "main,miniviews" );
     glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );             automats            .SetPasses( "main,miniviews" );
     glProxy_->Register( missionsLayer );                                                                            missionsLayer       .SetPasses( "main,miniviews" );

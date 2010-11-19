@@ -35,15 +35,15 @@ typedef ADN_Population_Data::PopulationInfos PopulationInfos;
 ADN_Population_Wizard::ADN_Population_Wizard( QWidget* pParent, const char* szName )
 : ADN_Wizard_ABC<PopulationInfos>( pParent, szName )
 {
-    setCaption( qApp->translate( "ADN_Population_Wizard", "New population creation" ) );
+    setCaption( qApp->translate( "ADN_Population_Wizard", "New crowd creation" ) );
 
     ADN_Population_Data::T_PopulationInfosVector& automata = ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation();
     ADN_Wizard_FirstPage_Default<PopulationInfos>* pFirstPage = new ADN_Wizard_FirstPage_Default<PopulationInfos>( automata, this );
-    pFirstPage->SetCaptions( qApp->translate( "ADN_Population_Wizard", "New population creation" ), qApp->translate( "ADN_Population_Wizard", "Population" ) );
+    pFirstPage->SetCaptions( qApp->translate( "ADN_Population_Wizard", "New population creation" ), qApp->translate( "ADN_Population_Wizard", "Crowd" ) );
     pFirstPage_ = pFirstPage;
 
     new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Population_Wizard",  "Creation finished" ),
-        qApp->translate( "ADN_Population_Wizard", "Click \"Done\" to create the new population." ) );
+        qApp->translate( "ADN_Population_Wizard", "Click \"Done\" to create the new crowd." ) );
 }
 
 

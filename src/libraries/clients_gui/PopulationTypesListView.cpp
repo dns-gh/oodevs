@@ -29,7 +29,7 @@ PopulationTypesListView::PopulationTypesListView( QWidget* parent, kernel::Contr
     , types_( types )
 {
     setMinimumSize( 1, 1 );
-    addColumn( tools::translate( "PopulationTypesListView", "Population type" ) );
+    addColumn( tools::translate( "PopulationTypesListView", "Crowd type" ) );
     setRootIsDecorated( true );
     header()->hide();
     setSorting( -1 );
