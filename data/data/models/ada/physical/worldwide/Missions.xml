@@ -200,6 +200,10 @@
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASA_DefendreZoneAPartirPosition" dia-type="T_Mission_Pion_ASA_DefendreZoneAPartirPosition" id="23" name="Air Defense Artillery - defend area (from a position)">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the position and deploys. If an enemy is detected in the area to defend, Unit will automatically try to neutralize it.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -208,6 +212,10 @@
       <parameter dia-name="pointDeDeploiement_" name="Deployment point" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASA_Surveiller" dia-type="T_Mission_Pion_ASA_Surveiller" id="24" name="Air Defense Artillery - monitor">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position to monitor and faces the danger direction. It will open fire only to self-protect.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -344,6 +352,10 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_ReconnaitreAxe" dia-type="T_Mission_Pion_ABC_ReconnaitreAxe" id="39" name="Armor - recon in force (an axis)">
+      <descriptions>
+        <doctrine><![CDATA[Route reconnaissance is a form of reconnaissance that focuses along a specific line of communication, such as a road, railway, or cross-country mobility corridor.]]></doctrine>
+        <usage><![CDATA[Unit moves along the route reconnaissance. If an enemy is detected, Unit will engage it.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -351,6 +363,10 @@
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Soutenir" dia-type="T_Mission_Pion_ABC_Soutenir" id="40" name="Armor - support (dynamic)">
+	  <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to dinamycally support and follows it. If this unit is engaged, Unit will engage the enemy to change the force ratio and/or destroy it.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -358,6 +374,10 @@
       <parameter dia-name="uniteASoutenir_" name="Unit to support" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Couvrir" dia-type="T_Mission_Pion_ABC_Couvrir" id="41" name="Armor - cover">
+      <descriptions>
+        <doctrine><![CDATA[The action by land, air, or sea forces to protect by offense, defense, or threat of either or both.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position, installs and cover its allies by barring any enemy that could prevent the covered allies from fulfilling their missions.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -366,6 +386,11 @@
       <parameter dia-name="unitesACouvrir_" max-occurs="unbounded" min-occurs="1" name="Units to cover" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_FlancGarder" dia-type="T_Mission_Pion_ABC_FlancGarder" id="42" name="Armor - flank-guard">
+      <descriptions>
+        <doctrine><![CDATA[A security element operating to the flank of a moving or stationary
+force to protect it from enemy ground observation, direct fire, and surprise attack.]]></doctrine>
+        <usage><![CDATA[Unit moves along a designated route while coordinating with its allies.  Where necessary, it will fire upon enemies within weapons range.  After reaching its objective, the unit assumes a defensive posture.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -374,6 +399,10 @@
       <parameter dia-name="unitesACouvrir_" max-occurs="unbounded" min-occurs="1" name="Units to cover" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Reduire" dia-type="T_Mission_Pion_ABC_Reduire" id="43" name="Armor - destroy">
+      <descriptions>
+        <doctrine><![CDATA[A tactical mission task that physically renders an enemy force combat-ineffective until it is reconstituted.]]></doctrine>
+        <usage><![CDATA[Unit moves towards its targeted enemy and opens fire until it is operationally ineffective, or totally destroyed.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -381,6 +410,10 @@
       <parameter dia-name="uniteAReduire_" name="Unit to reduce" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Appuyer" dia-type="T_Mission_Pion_ABC_Appuyer" id="44" name="Armor - support">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to support, takes a support position that allows it to help this unit with fire, resources or movement, and follows it. If necessary, Unit will open fire.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -388,6 +421,10 @@
       <parameter dia-name="uniteAAppuyer_" name="Unit to support" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Fixer" dia-type="T_Mission_Pion_ABC_Fixer" id="45" name="Armor - fix">
+      <descriptions>
+        <doctrine><![CDATA[A tactical mission task where a unit prevents the enemy from moving any part of his force from a specific location for a specific period of time.]]></doctrine>
+        <usage><![CDATA[Unit moves towards an enemy and opens fire to prevent it from moving.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -395,6 +432,10 @@
       <parameter dia-name="uniteAFixer_" name="Unit to fix" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_RenseignerSur" dia-type="T_Mission_Pion_ABC_RenseignerSur" id="46" name="Armor - report information">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position to observe, stops when it has a good perception of this position and monitor the danger direction.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -402,6 +443,10 @@
       <parameter dia-name="pointARenseigner_" name="Observation area" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_ControlerZone" dia-type="T_Mission_Pion_ABC_ControlerZone" id="47" name="Armor - control">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task in which a force moves onto an objective, key terrain, or other manmade or natural terrain area and controls that entire area. The commander maintains physical influence over a specified area to prevent its use by an enemy.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the area to control, installs and controls the area, ie. detects and reduces any enemy present in the area. A unit controlling an area has a tactical advantage over its enemy units in this area.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -409,6 +454,10 @@
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Surveiller" dia-type="T_Mission_Pion_ABC_Surveiller" id="48" name="Armor - monitor">
+      <descriptions>
+        <doctrine><![CDATA[An element of assessment: continuous observation of the common operational picture to identify indicators of opportunities for success, threats to the force, and gaps in information.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position to monitor and faces the danger direction. It will open-fire only to self-protect.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -416,6 +465,14 @@
       <parameter dia-name="position_" name="Position" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Barrer" dia-type="T_Mission_Pion_ABC_Barrer" id="49" name="Armor - interdict">
+      <descriptions>
+        <doctrine><![CDATA[To divert, disrupt, delay, or destroy the enemy's
+surface military potential before it can be used
+effectively against friendly forces. It may include destruction, removal, contamination, or erection of
+obstructions.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position and will hold it at all costs, even if the force ratio is unfavorable.]]></usage>
+      </descriptions>
+
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -423,6 +480,10 @@
       <parameter dia-name="positionInstallation_" name="Deployment area" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Attaquer" dia-type="T_Mission_Pion_ABC_Attaquer" id="50" name="Armor - attack">
+      <descriptions>
+        <doctrine><![CDATA[An offensive operation that destroys or defeats enemy forces, seizes and secures terrain, or both.]]></doctrine>
+        <usage><![CDATA[Unit moves along the specified route and tries to inflict as much damage as possible to enemy units. After reaching its objective, the unit assumes a defensive posture.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -430,6 +491,10 @@
       <parameter dia-name="itineraireAssaut_" name="Assault route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_ReconnaitrePoint" dia-type="T_Mission_Pion_ABC_ReconnaitrePoint" id="51" name="Armor - recon in force">
+      <descriptions>
+        <doctrine><![CDATA[A mission undertaken to obtain, by visual observation or other detection methods, information about the activities and resources of an enemy or potential enemy.]]></doctrine>
+        <usage><![CDATA[Unit moves towards a designated reconnaissance point. If an enemy is detected, Unit will engage it.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -437,6 +502,10 @@
       <parameter dia-name="pointAReconnaitre_" name="Position to recon" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Eclairer" dia-type="T_Mission_Pion_ABC_Eclairer" id="52" name="Armor - recon">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves along the route to scout. Unit will engage enemy units only as retaliation.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -444,6 +513,11 @@
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Jalonner" dia-type="T_Mission_Pion_ABC_Jalonner" id="53" name="Armor - screen">
+      <descriptions>
+        <doctrine><![CDATA[A security element whose primary task is to observe, identify, and report information, and which only fights in self-protection.]]></doctrine>
+        <usage><![CDATA[The unit will maintain a tactical stand-by position, facing the danger direction, and wait for enemy units.  When an enemy unit is detected, the unit will move along the designated route to maintain visual contact on the enemy and avoid contact. Nevertheless, if Unit can, it will open fire as it progresses.]]></usage>
+      </descriptions>
+
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -458,6 +532,11 @@
       <parameter dia-name="itineraireAssaut_" name="Assault route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_SemparerZone" dia-type="T_Mission_Pion_ABC_SemparerZone" id="55" name="Armor - seize">
+      <descriptions>
+        <doctrine><![CDATA[A tactical mission task that involves taking possession of a designated area using
+overwhelming force.]]></doctrine>
+        <usage><![CDATA[Unit moves towards an observation point relevant for its objective. If an enemy unit is in the area to seize, Unit will reduce it, else Unit will take position in the area and hold it.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -465,6 +544,10 @@
       <parameter dia-name="zoneAPrendre_" name="Area to seize" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_ReleverUnite" dia-type="T_Mission_Pion_ABC_ReleverUnite" id="56" name="Armor - relieve">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to relieve and take its mission.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -479,6 +562,10 @@
       <parameter dia-name="pia_" name="Checkpoint" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_OuvrirItineraire" dia-type="T_Mission_Pion_ABC_OuvrirItineraire" id="58" name="Armor - open a route">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves along the route to open, with a lurking stance. Unit will engage enemy units only as retaliation.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -486,6 +573,10 @@
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Freiner" dia-type="T_Mission_Pion_ABC_Freiner" id="59" name="Armor - delay">
+      <descriptions>
+        <doctrine><![CDATA[A form of defensive operation that involves organized movement away from the enemy, in which a force under pressure trades space for time by slowing the enemy?s momentum and inflicting maximum damage on the enemy without, in principle, becoming decisively engaged.]]></doctrine>
+        <usage><![CDATA[The unit will maintain a tactical stand-by position, facing the danger direction, and wait for enemy units. When an enemy unit is detected, Unit engages it to stop its movement, then screens it before engage it again, and repeat the screen/engage cycle.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -493,6 +584,10 @@
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_EscorterUnite" dia-type="T_Mission_Pion_ABC_EscorterUnite" id="60" name="Armor - escort">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to escort and follows it. Unit will engage any detected enemy unit. If the unit to follow has a move mission, this unit will stop and wait for Unit. When close to it, Unit will take its objective and move towards this objective, followed by the unit to escort.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -500,6 +595,10 @@
       <parameter dia-name="uniteAEscorter_" name="Unit to escort" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_EscorterUnites" dia-type="T_Mission_Pion_ABC_EscorterUnites" id="61" name="Armor - escort units">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Instead of one unit, Unit will escort all sub-units of the selected company-level automat.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -507,6 +606,10 @@
       <parameter dia-name="automateAEscorter_" name="Units to escort" optional="false" type="Automat"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_ArmerPointDeControle" dia-type="T_Mission_Pion_ABC_ArmerPointDeControle" id="62" name="Armor - operate a checkpoint">
+      <descriptions>
+        <doctrine><![CDATA[A checkpoint is a predetermined point on the ground used to control movement, tactical maneuver, and orientation.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position of the checkpoint, builds (if not already done) and operates it. A checkpoint is effective only if it is operated by a unit. While operating a checkpoint, the unit can't fulfill other missions, but is still able to shoot, hide and emplace.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -521,6 +624,10 @@
       <parameter dia-name="positionInstallation_" name="Deployment area" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_AppuyerSurPosition" dia-type="T_Mission_Pion_ABC_AppuyerSurPosition" id="64" name="Armor - support (from a position)">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to support, takes the position and will engage any unit that engages the supported units.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -536,6 +643,10 @@
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_OuvrirItineraire" dia-type="T_Mission_Pion_GEN_OuvrirItineraire" id="66" name="Engineer - open a route">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves along the specified route and try to bypass, or else remove any detected obstacle. If Unit cannot remove a obstacle, it will wait for reinforcements.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -543,6 +654,10 @@
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_RetablirItineraire" dia-type="T_Mission_Pion_GEN_RetablirItineraire" id="67" name="Engineer - restore a route">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves along the specified route and try to remove any detected obstacle. If Unit cannot remove a obstacle, it will wait for reinforcements.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -550,6 +665,10 @@
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ReconnaitreItineraire" dia-type="T_Mission_Pion_GEN_ReconnaitreItineraire" id="68" name="Engineer - recon a route">
+      <descriptions>
+        <doctrine><![CDATA[Engineer reconnaissance focuses on the requirements to clear obstacles or improve routes, fords, bridges, and so forth, to assist in the uninterrupted movement of the main body force.]]></doctrine>
+        <usage><![CDATA[Unit moves along the specified route and tries to detect any present obstacle. If an obstacle is detected, Unit will try to avoid it.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -557,6 +676,10 @@
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ReconnaitreZone" dia-type="T_Mission_Pion_GEN_ReconnaitreZone" id="69" name="Engineer - recon an area">
+      <descriptions>
+        <doctrine><![CDATA[Engineer reconnaissance focuses on the requirements to clear obstacles or improve routes, fords, bridges, and so forth, to assist in the uninterrupted movement of the main body force.]]></doctrine>
+        <usage><![CDATA[Unit moves to the specified area and tries to detect any present obstacle.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -564,6 +687,11 @@
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ReconnaitreSiteFranchissement" dia-type="T_Mission_Pion_GEN_ReconnaitreSiteFranchissement" id="70" name="Engineer - recon a crossing site">
+      <descriptions>
+        <doctrine><![CDATA[Engineer reconnaissance focuses on the requirements to clear obstacles or improve routes, fords, bridges, and so forth, to assist in the uninterrupted movement of the main body force.]]></doctrine>
+        <usage><![CDATA[Unit moves to the specified site and tries to reconnoiter it.]]></usage>
+      </descriptions>
+
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -571,6 +699,11 @@
       <parameter dia-name="siteFranchissement_" name="Crossing site" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_EquiperExploiterSiteFranchissement" dia-type="T_Mission_Pion_GEN_EquiperExploiterSiteFranchissement" id="71" name="Engineer - support a crossing site">
+      <descriptions>
+        <doctrine><![CDATA[An operation required before ground combat power can be projected and sustained across a water obstacle. It is a centrally planned and controlled offensive operation that requires the allocation of external crossing means and a force dedicated to the security of the bridgehead.]]></doctrine>
+        <usage><![CDATA[Unit moves to the crossing site and operates it: Unit builds a pontoon bridge, then moves to the meeting point. This mission is available only if the site is reconnoitered first.]]></usage>
+      </descriptions>
+
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -595,6 +728,10 @@
       </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_DegagerObstacles" dia-type="T_Mission_Pion_GEN_DegagerObstacles" id="73" name="Engineer - breach">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task where any means available are employed to break through or secure a passage through an enemy defense, obstacle, minefield, or fortification.]]></doctrine>
+        <usage><![CDATA[Unit moves to the obstacle, and removes it.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -602,6 +739,10 @@
       <parameter dia-name="obstacles_" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ContournerObstacles" dia-type="T_Mission_Pion_GEN_ContournerObstacles" id="74" name="Engineer - bypass">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task that involves maneuvering around an obstacle, position, or enemy force to maintain the momentum of advance. Bypassed obstacles and enemy forces are reported to higher headquarters.]]></doctrine>
+        <usage><![CDATA[Unit moves to the obstacle and bypasses it. If the obstacle cannot be bypassed, Unit will try to remove it.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -609,6 +750,10 @@
       <parameter dia-name="obstacles_" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_DepolluerZone" dia-type="T_Mission_Pion_GEN_DepolluerZone" id="75" name="Engineer - breach (an area)">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task where any means available are employed to break through or secure a passage through an area.]]></doctrine>
+        <usage><![CDATA[Unit moves to the area and remove any known obstacle.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -616,6 +761,10 @@
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_Renforcer" dia-type="T_Mission_Pion_GEN_Renforcer" id="76" name="Engineer - reinforce">
+      <descriptions>
+        <doctrine><![CDATA[A mission in which one unit augments the capability of another similar-type unit.]]></doctrine>
+        <usage><![CDATA[Reinforcing Unit moves to its target, and will support it in its future actions.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -624,6 +773,10 @@
       <parameter dia-name="unite_" name="Unit" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_RealiserTravauxProtection" dia-type="T_Mission_Pion_GEN_RealiserTravauxProtection" id="77" name="Engineer - perform work">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit performs the specified works, in the given order.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -652,6 +805,10 @@
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ReprendreTravaux" dia-type="T_Mission_Pion_GEN_ReprendreTravaux" id="81" name="Engineer - resume work">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the working site and tries to resume the work.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -659,6 +816,10 @@
       <parameter dia-name="travail_" name="Work" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_AmeliorerMobilite" dia-type="T_Mission_Pion_GEN_AmeliorerMobilite" id="82" name="Engineer - enhance mobility">
+      <descriptions>
+        <doctrine><![CDATA[The development of terrain to enhance friendly mobility.]]></doctrine>
+        <usage><![CDATA[Unit moves to the area to improve, and build a "mobility enhanced area"]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -666,6 +827,10 @@
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_ActiverObstacle" dia-type="T_Mission_Pion_GEN_ActiverObstacle" id="83" name="Engineer - activate obstacle">
+      <descriptions>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves to the obstacle to activate, activates it and improves it if possible.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -673,6 +838,10 @@
       <parameter dia-name="obstacle_" name="Obstacle" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_ReconnaitreAxe" dia-type="T_Mission_Pion_INF_ReconnaitreAxe" id="84" name="Infantry - recon in force (an axis)">
+      <descriptions>
+        <doctrine><![CDATA[Route reconnaissance is a form of reconnaissance that focuses along a specific line of communication, such as a road, railway, or cross-country mobility corridor.]]></doctrine>
+        <usage><![CDATA[Unit moves along the route to recon. If an enemy is detected, Unit will engage it.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -680,6 +849,10 @@
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Couvrir" dia-type="T_Mission_Pion_INF_Couvrir" id="85" name="Infantry - cover">
+      <descriptions>
+        <doctrine><![CDATA[The action by land, air, or sea forces to protect by offense, defense, or threat of either or both.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position, installs and cover its allies by barring any enemy that could prevent the covered allies from fulfilling their missions.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -688,6 +861,10 @@
       <parameter dia-name="cible_" name="Target" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Reduire" dia-type="T_Mission_Pion_INF_Reduire" id="86" name="Infantry - destroy">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task to physically render an enemy force combat-ineffective unless it is reconstituted.]]></doctrine>
+        <usage><![CDATA[Unit moves towards its targeted enemy and opens fire to totally destroy it. Once the enemy unit destroyed, Unit will monitor the area.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -695,6 +872,10 @@
       <parameter dia-name="uniteAReduire_" name="Unit to destroy" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Appuyer" dia-type="T_Mission_Pion_INF_Appuyer" id="87" name="Infantry - support">
+      <descriptions>
+        <doctrine><![CDATA[The action of a force that aids, protects, complements or sustains another force in accordance with a directive requiring such action.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to support, takes a support position that allows it to help this unit with fire, resources or movement and follows it. If necessary, Unit will open fire.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -702,6 +883,10 @@
       <parameter dia-name="uniteAAppuyer_" name="Unit to support" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Fixer" dia-type="T_Mission_Pion_INF_Fixer" id="88" name="Infantry - fix">
+      <descriptions>
+        <doctrine><![CDATA[A tactical mission task where a unit prevents the enemy from moving any part of his force from a specific location for a specific period of time.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the enemy unit to fix and will open fire to prevent it from moving.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -709,6 +894,10 @@
       <parameter dia-name="ennemi_" name="Enemy" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_ControlerSecteur" dia-type="T_Mission_Pion_INF_ControlerSecteur" id="89" name="Infantry - control">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task in which a force moves onto an objective, key terrain, or other manmade or natural terrain area and controls that entire area. The commander maintains physical influence over a specified area to prevent its use by an enemy.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the area to control and monitors the area. If possible, Unit lays mines on the main access to the area, and then controls the area, ie. detects and reduces any enemy present in the area. A unit controlling an area as a tactical advantage over its enemy units in this area.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -717,6 +906,10 @@
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Boolean"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_SurveillerSecteur" dia-type="T_Mission_Pion_INF_SurveillerSecteur" id="90" name="Infantry - monitor">
+      <descriptions>
+        <doctrine><![CDATA[An element of assessment: continuous observation of the common operational picture to identify indicators of opportunities for success, threats to the force, and gaps in information.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the position to monitor and faces the danger direction. It will open-fire only to self-protect.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -731,6 +924,10 @@
       <parameter dia-name="positionABarrer_" name="Position to bar" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_ReconnaitrePoint" dia-type="T_Mission_Pion_INF_ReconnaitrePoint" id="92" name="Infantry - recon in force">
+      <descriptions>
+        <doctrine><![CDATA[An offensive operation designed to discover and/or test the enemy's strength or to obtain other information.]]></doctrine>
+        <usage><![CDATA[Unit moves towards the point to recon. If an enemy is detected, Unit will engage it.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -739,6 +936,10 @@
       <parameter dia-name="pointAReconnaitre_" name="Position to recon" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Eclairer" dia-type="T_Mission_Pion_INF_Eclairer" id="93" name="Infantry - recon">
+      <descriptions>
+        <doctrine><![CDATA[A mission undertaken to obtain, by visual observation or other detection methods, information about the activities and resources of an enemy or potential enemy.]]></doctrine>
+        <usage><![CDATA[Unit moves along the route to scout. Unit will engage enemy units only as retaliation.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -746,6 +947,10 @@
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Interdire" dia-type="T_Mission_Pion_INF_Interdire" id="94" name="Infantry - interdict">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task which is oriented on the enemy to prevent, hinder, or delay the use of an area or route by enemy forces.]]></doctrine>
+        <usage><![CDATA[Unit moves to a position that allow to open-fire on the position to deny, enhances it with obstacles and will hold it at all costs, even if the force ratio is unfavorable.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -754,6 +959,10 @@
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Boolean"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Semparer" dia-type="T_Mission_Pion_INF_Semparer" id="95" name="Infantry - seize">
+      <descriptions>
+        <doctrine><![CDATA[A tactical mission task that involves taking possession of a designated area using overwhelming force.]]></doctrine>
+        <usage><![CDATA[Unit moves towards an observation point relevant for its objective. If an enemy unit is in the area to seize, Unit will reduce it, else Unit will take position in the area and hold it.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -761,6 +970,10 @@
       <parameter dia-name="pointObjectif_" name="Objective" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_PrendrePreciserContact" dia-type="T_Mission_Pion_INF_PrendrePreciserContact" id="96" name="Infantry - movement to contact">
+      <descriptions>
+        <doctrine><![CDATA[A form of the offense designed to develop the situation and to establish or regain contact.]]></doctrine>
+        <usage><![CDATA[Unit moves towards its targeted enemy and engages it if the force ratio is favorable.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -768,6 +981,10 @@
       <parameter dia-name="ennemi_" name="Enemy" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_Defendre" dia-type="T_Mission_Pion_INF_Defendre" id="97" name="Infantry - hold">
+      <descriptions>
+        <doctrine><![CDATA[A tactical task to occupy and hold a terrain feature to ensure that it is free of enemy occupation or use.]]></doctrine>
+        <usage><![CDATA[Unit moves to the position to hold, enhances it with obstacles and will hold it at all costs, even if the force ratio is unfavorable.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -776,6 +993,10 @@
       <parameter dia-name="preparerTerrain_" name="Obstacle erection" optional="false" type="Boolean"/>
     </mission>
     <mission dia-behavior="MIS_Pion_INF_DetruireEmbuscade" dia-type="T_Mission_Pion_INF_DetruireEmbuscade" id="98" name="Infantry - ambush">
+      <descriptions>
+        <doctrine><![CDATA[A surprise attack by fire from concealed positions on a moving or temporarily halted enemy.]]></doctrine>
+        <usage><![CDATA[Unit moves to the ambush position, enhances it with obstacles and takes a firing position. When the targeted enemy is engaged in the obstacle, Unit will open fire and take contact, then withdraw to the meeting point.]]></usage>
+      </descriptions>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
