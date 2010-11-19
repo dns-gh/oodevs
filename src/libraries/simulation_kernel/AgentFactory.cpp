@@ -77,11 +77,19 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
     MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_ );
-    type.RegisterRoles( *pPion, database_, gcPause_, gcMult_ );
+    try
+    {
+        type.RegisterRoles( *pPion, database_, gcPause_, gcMult_ );
 
-    Initialize( *pPion, vPosition );
-    tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
-    return pPion;
+        Initialize( *pPion, vPosition );
+        tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
+        return pPion;
+    }
+    catch( ... )
+    {
+        delete pPion;
+        return 0;
+    }
 }
 
 // -----------------------------------------------------------------------------

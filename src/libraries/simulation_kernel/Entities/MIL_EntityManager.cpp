@@ -448,6 +448,8 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
     MIL_AgentPion* pPion = agentFactory_->Create( type, automate, vPosition );
+    if( !pPion )
+        throw std::runtime_error( "Pion couldn't be created." );
     if( hla_ )
         hla_->Register( *pPion );
     pPion->SendCreation ();
@@ -890,7 +892,7 @@ void MIL_EntityManager::ProcessMsgAutomatCreationRequest( const MsgsClientToSim:
             throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
         const Common::MsgMissionParameter& id = msg.parameters().elem( 0 );
-        if( id.value_size() == 1 || !id.value().Get(0).has_identifier() )
+        if( id.value_size() != 1 || !id.value().Get(0).has_identifier() )
             throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
         const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( id.value().Get(0).identifier() );
@@ -898,11 +900,11 @@ void MIL_EntityManager::ProcessMsgAutomatCreationRequest( const MsgsClientToSim:
             throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_unit );
 
         const Common::MsgMissionParameter& groupId = msg.parameters().elem( 1 );
-        if( groupId.value_size() == 1  || !groupId.value().Get(0).has_identifier() )
+        if( groupId.value_size() != 1  || !groupId.value().Get(0).has_identifier() )
             throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
 
         const Common::MsgMissionParameter& nameParam = msg.parameters().elem( 2 );
-        if( nameParam.value_size() == 1 || !nameParam.value().Get(0).has_acharstr() )
+        if( nameParam.value_size() != 1 || !nameParam.value().Get(0).has_acharstr() )
             throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
         const std::string name = nameParam.value().Get(0).acharstr();
         MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, groupId.value().Get(0).identifier(), name, entity, nCtx ); // auto-registration
@@ -953,9 +955,9 @@ void MIL_EntityManager::ProcessMsgCrowdCreationRequest( const MsgsClientToSim::M
     client::MagicActionAck ack;
     ack().set_error_code( MsgsSimToClient::MsgMagicActionAck::no_error );
     if( !message.has_parameters() || message.parameters().elem_size() != 4
-        || !message.parameters().elem( 0 ).value_size() == 1 || !message.parameters().elem( 0 ).value().Get(0).has_acharstr() 
-        || !message.parameters().elem( 1 ).value_size() == 1 || !message.parameters().elem( 1 ).value().Get(0).has_point() 
-        || !message.parameters().elem( 2 ).value_size() == 1 || !message.parameters().elem( 2 ).value().Get(0).has_areal() )
+        || message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get(0).has_acharstr() 
+        || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get(0).has_point() 
+        || message.parameters().elem( 2 ).value_size() != 1 || !message.parameters().elem( 2 ).value().Get(0).has_areal() )
     {
         ack().set_error_code( MsgsSimToClient::MsgMagicActionAck::error_invalid_attribute );
         return;
@@ -1445,7 +1447,7 @@ void MIL_EntityManager::ProcessMsgMagicActionCreateFireOrder( const MsgsClientTo
 
         // Target
         const Common::MsgMissionParameter& target = msg.parameters().elem( 0 );
-        if( !target.value_size() == 1 || !target.value().Get(0).has_identifier() )
+        if( target.value_size() != 1 || !target.value().Get(0).has_identifier() )
             throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
 
         boost::shared_ptr< DEC_Knowledge_Agent > targetKn = reporter->GetKnowledge().ResolveKnowledgeAgent( target.value().Get(0).identifier() );
@@ -1454,7 +1456,7 @@ void MIL_EntityManager::ProcessMsgMagicActionCreateFireOrder( const MsgsClientTo
 
         // Ammo
         const Common::MsgMissionParameter& ammo = msg.parameters().elem( 1 );
-        if( !ammo.value_size() == 1 || !ammo.value().Get(0).has_resourcetype() )
+        if( ammo.value_size() != 1 || !ammo.value().Get(0).has_resourcetype() )
             throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
@@ -1466,7 +1468,7 @@ void MIL_EntityManager::ProcessMsgMagicActionCreateFireOrder( const MsgsClientTo
 
         // Iterations
         const Common::MsgMissionParameter& iterations = msg.parameters().elem( 2 );
-        if( !iterations.value_size() == 1 || !iterations.value().Get(0).has_areal() )
+        if( iterations.value_size() != 1 || !iterations.value().Get(0).has_areal() )
             throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
 
         PHY_FireResults_Pion fireResult( *reporter , targetKn->GetPosition(), *pDotationCategory );

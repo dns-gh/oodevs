@@ -877,7 +877,7 @@ void MIL_Population::OnReceiveMsgCrowdMagicActionMoveTo( const MsgsClientToSim::
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck::ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     const Common::MsgMissionParameter& parametre = asn.parameters().elem( 0 );
-    if( !parametre.value_size() == 1 || !parametre.value().Get(0).has_point() )
+    if( parametre.value_size() != 1 || !parametre.value().Get(0).has_point() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck::ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     const Common::MsgPoint& point = parametre.value().Get(0).point();
     if( point.location().type() != Common::MsgLocation::point
@@ -920,7 +920,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const MsgsClientToSim::MsgUnitM
     if( !msg.has_parameters() )
         throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck::ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
     const Common::MsgMissionParameter& parametre = msg.parameters().elem( 0 );
-    if( !parametre.value_size() == 1 || !parametre.value().Get(0).has_enumeration() )
+    if( parametre.value_size() != 1 || !parametre.value().Get(0).has_enumeration() )
         throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck::ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( parametre.value().Get(0).enumeration() );
     if( !pAttitude )
@@ -974,7 +974,7 @@ void MIL_Population::OnReceiveMsgKill( const MsgsClientToSim::MsgUnitMagicAction
     if( !msg.has_parameters() )
         throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck::ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
     const Common::MsgMissionParameter& parametre = msg.parameters().elem( 0 );
-    if( !parametre.value_size() == 1 || !parametre.value().Get(0).has_quantity() )
+    if( parametre.value_size() != 1 || !parametre.value().Get(0).has_quantity() )
         throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck::ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
     unsigned int remainingKills = parametre.value().Get(0).quantity();
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -1000,7 +1000,7 @@ void MIL_Population::OnReceiveMsgResurrect( const MsgsClientToSim::MsgUnitMagicA
     if( !msg.has_parameters() )
         throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
     const Common::MsgMissionParameter& parametre = msg.parameters().elem( 0 );
-    if( !parametre.value_size() == 1 || !parametre.value().Get(0).has_quantity() )
+    if( parametre.value_size() != 1 || !parametre.value().Get(0).has_quantity() )
         throw NET_AsnException< MsgsSimToClient::MsgCrowdMagicActionAck_ErrorCode >( MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute );
     unsigned int remainingResurrections = parametre.value().Get(0).quantity();
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )

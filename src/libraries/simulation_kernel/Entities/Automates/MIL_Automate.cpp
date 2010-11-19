@@ -969,20 +969,27 @@ void MIL_Automate::OnReceiveMsgUnitCreationRequest( const MsgsClientToSim::MsgUn
     if( !msg.has_parameters() || msg.parameters().elem_size() != 2)
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     const Common::MsgMissionParameter& id = msg.parameters().elem( 0 );
-    if( !id.value_size() == 1 || !id.value().Get(0).has_identifier() )
+    if( id.value_size() != 1 || !id.value().Get(0).has_identifier() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( id.value().Get(0).identifier() );
     if( !pType )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_unit );
     const Common::MsgMissionParameter& location = msg.parameters().elem( 1 );
-    if( !location.value_size() == 1 || !location.value().Get(0).has_point() )
+    if( location.value_size() != 1 || !location.value().Get(0).has_point() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     const Common::MsgPoint& point = location.value().Get(0).point();
     if( point.location().type() != Common::MsgLocation::point || point.location().coordinates().elem_size() != 1 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     MT_Vector2D position;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), position );
-    MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position ); // Auto-registration
+    try
+    {
+        MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position ); // Auto-registration
+    }
+    catch( ... )
+    {
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_unit );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1030,7 +1037,7 @@ void MIL_Automate::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnit
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     const Common::MsgMissionParameter& parametre = msg.parameters().elem( 0 );
-    if( !parametre.value_size() == 1 || !parametre.value().Get(0).has_point() )
+    if( parametre.value_size() != 1 || !parametre.value().Get(0).has_point() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     const Common::MsgPoint& point = parametre.value().Get(0).point();
     if( point.location().type() != Common::MsgLocation::point || point.location().coordinates().elem_size() != 1 )
@@ -1054,9 +1061,9 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const MsgsClientToSim::MsgU
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     if( !msg.has_parameters() || msg.parameters().elem_size() != 2 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
-    if( !msg.parameters().elem( 0 ).value_size() == 1 || !msg.parameters().elem( 0 ).value().Get(0).has_knowledgegroup() )
+    if( msg.parameters().elem( 0 ).value_size() != 1 || !msg.parameters().elem( 0 ).value().Get(0).has_knowledgegroup() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
-    if( !msg.parameters().elem( 1 ).value_size() == 1 || !msg.parameters().elem( 1 ).value().Get(0).has_party() )
+    if( msg.parameters().elem( 1 ).value_size() != 1 || !msg.parameters().elem( 1 ).value().Get(0).has_party() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
     MIL_Army_ABC* pNewArmy = armies.Find( msg.parameters().elem( 1 ).value().Get(0).party().id() );
     if( !pNewArmy || *pNewArmy != GetArmy() )
