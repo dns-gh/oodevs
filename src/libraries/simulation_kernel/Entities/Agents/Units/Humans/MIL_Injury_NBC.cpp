@@ -15,7 +15,6 @@
 #include "MIL_Random.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Objects/NBCAttribute.h"
-#include "Entities/Objects/MIL_MedicalTreatmentType.h"
 
 //BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_NBC )
 
@@ -35,7 +34,7 @@ MIL_Injury_NBC::MIL_Injury_NBC()
 // Name: MIL_Injury_NBC::constructor
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-MIL_Injury_NBC::MIL_Injury_NBC( NBCTypeAttribute& attr , int injuryID )
+MIL_Injury_NBC::MIL_Injury_NBC( NBCTypeAttribute& attr, unsigned int injuryID )
     : pInjuryAttribute_( &attr )
     , injuryID_        ( injuryID )
     , injuryCategory_  ( MIL_MedicalTreatmentType::eNone )
@@ -60,7 +59,6 @@ MIL_Injury_NBC::MIL_Injury_NBC( const MIL_Injury_NBC& rhs )
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 MIL_Injury_NBC::~MIL_Injury_NBC()
-
 {
     // NOTHING
 }
@@ -69,7 +67,7 @@ MIL_Injury_NBC::~MIL_Injury_NBC()
 // Name: MIL_Injury_NBC::GetInjuryID
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-int MIL_Injury_NBC::GetInjuryID() const
+unsigned int MIL_Injury_NBC::GetInjuryID() const
 {
     return injuryID_;
 }
@@ -98,7 +96,7 @@ float MIL_Injury_NBC::GetLifeExpectancy( MIL_MedicalTreatmentType::E_InjuryCateg
 // -----------------------------------------------------------------------------
 float MIL_Injury_NBC::SetLifeExpectancy() const
 {
-    return static_cast< float >( MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ )*( 1 + 0.1*MIL_Random::rand_ii( -1 , 1 ) ) );
+    return MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ ) * ( 1 + 0.1f * static_cast< float >( MIL_Random::rand_ii( -1 , 1 ) ) );
 }
 
 // -----------------------------------------------------------------------------

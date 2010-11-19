@@ -80,7 +80,7 @@ public:
     static void ComputeLocalisationsInsideBlock( const urban::TerrainObject_ABC& terrainObject, bool onlyInsideBlock, std::vector< boost::shared_ptr< MT_Vector2D > >& result );
 
     static boost::shared_ptr< MT_Vector2D > ComputeTrafficableLocalisationBarycenter( MIL_AgentPion& pion, TER_Localisation* pLocalisation );
-    static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeTrafficableLocalisation( MIL_AgentPion& pion, const MT_Vector2D& point );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeTrafficableLocalisation( const MT_Vector2D& point );
     
     static bool IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight );
     static boost::shared_ptr< MT_Vector2D > ComputeCoverPosition( const std::vector< DEC_Decision_ABC* >& pions, MT_Vector2D* pDirection, float distance );

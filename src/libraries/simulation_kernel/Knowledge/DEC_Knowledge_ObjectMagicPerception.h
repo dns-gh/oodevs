@@ -20,22 +20,28 @@
 class DEC_Knowledge_ObjectMagicPerception
 {
 public:
-    DEC_Knowledge_ObjectMagicPerception( const DEC_Knowledge_Object& knowledge, const PHY_PerceptionLevel& perceptionLevel );
-    ~DEC_Knowledge_ObjectMagicPerception();
+    //! @name Constructors/Destructor
+    //@{
+             DEC_Knowledge_ObjectMagicPerception( const DEC_Knowledge_Object& knowledge, const PHY_PerceptionLevel& perceptionLevel );
+    virtual ~DEC_Knowledge_ObjectMagicPerception();
+    //@}
 
-    //! @name Main
+    //! @name Operations
     //@{
     template< typename T > const T* GetAttribute() const;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    DEC_Knowledge_ObjectMagicPerception( const DEC_Knowledge_ObjectMagicPerception& );            //!< Copy constructor
+    DEC_Knowledge_ObjectMagicPerception& operator=( const DEC_Knowledge_ObjectMagicPerception& ); //!< Assignment operator
     //@}
 
 private:
     const DEC_Knowledge_Object& knowledge_;
     const PHY_PerceptionLevel& perceptionLevel_;
 };
-
-// =============================================================================
-// Implementation
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectMagicPerception::GetAttribute
@@ -45,8 +51,7 @@ template< typename T > const T* DEC_Knowledge_ObjectMagicPerception::GetAttribut
 {
     const MIL_Object_ABC* pObject = knowledge_.GetObjectKnown();
     if( !pObject || perceptionLevel_ <= PHY_PerceptionLevel::notSeen_ )
-        return 0;
- 
+        return 0; 
     return pObject->RetrieveAttribute< T >();
 }
 

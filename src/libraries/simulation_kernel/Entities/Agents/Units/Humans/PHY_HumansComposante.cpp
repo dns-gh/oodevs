@@ -223,8 +223,7 @@ void PHY_HumansComposante::ApplyInjury( MIL_Injury_ABC& injury )
             //qui doit avoir une existence propre (mise a jour, que les autres sachent qu ils existent, position, peut etre une faculte de deplacement, ...)
         }
     }
-    if( injury_ )
-        delete injury_;
+    delete injury_;
     injury_ = new PHY_InjuredHuman( injury );
 }
 

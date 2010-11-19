@@ -8,7 +8,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
+#pragma warning( push )
+#pragma warning( disable : 4244 )
 #include <google/protobuf/message.h>
+#pragma warning( pop )
 #include <string>
 
 namespace

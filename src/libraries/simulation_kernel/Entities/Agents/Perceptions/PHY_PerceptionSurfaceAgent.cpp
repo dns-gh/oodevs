@@ -205,10 +205,6 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
     return GetLevelWithDelay( level, &target );
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionSurfaceAgent::SendFullState
 // Created: NLD 2004-09-10
@@ -216,7 +212,7 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
 void PHY_PerceptionSurfaceAgent::SendFullState( MsgsSimToClient::MsgVisionCone& msg ) const
 {
     NET_ASN_Tools::WritePoint( vOrigin_, *msg.mutable_origin() );
-    msg.set_height( rHeight_ );
+    msg.set_height( static_cast< int >( rHeight_ ) );
     msg.set_sensor( pSensorType_->GetType().GetName() );
     msg.mutable_directions();
     for( unsigned int i = 0u; i < sectors_.size(); ++i )

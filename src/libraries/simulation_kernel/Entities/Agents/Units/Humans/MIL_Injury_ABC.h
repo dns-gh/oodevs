@@ -30,9 +30,9 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
 
-    //! @name Get
+    //! @name Accessors
     //@{
-    virtual int GetInjuryID() const = 0;
+    virtual unsigned int GetInjuryID() const = 0;
     virtual MIL_MedicalTreatmentType::E_InjuryCategories GetInjuryCategory() const = 0;
     virtual float GetLifeExpectancy() const = 0;
     virtual float GetAgentDose() const = 0;

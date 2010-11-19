@@ -319,7 +319,7 @@ void PHY_RoleHLA_Composantes::ApplyInjury( MIL_Injury_ABC& /*injury*/ )
 // Name: PHY_RoleHLA_Composantes::GetConvoyTransportersUse
 // Created: AHC 2010-09-28
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Composantes::GetConvoyTransportersUse( T_ComposanteUseMap& composanteUse ) const
+void PHY_RoleHLA_Composantes::GetConvoyTransportersUse( T_ComposanteUseMap& /*composanteUse*/ ) const
 {
     // NOTHING
 }

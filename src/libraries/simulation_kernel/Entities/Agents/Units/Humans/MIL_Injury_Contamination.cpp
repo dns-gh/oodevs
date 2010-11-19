@@ -13,7 +13,6 @@
 #include "PHY_InjuredHuman.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Objects/MIL_NBCType.h"
-#include "Entities/Objects/MIL_MedicalTreatmentType.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Contamination )
@@ -35,7 +34,7 @@ MIL_Injury_Contamination::MIL_Injury_Contamination()
 // Name: MIL_Injury_Contamination::constructor
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-MIL_Injury_Contamination::MIL_Injury_Contamination( int agentConcentration, const std::string& NBCAgent, int injuryID )
+MIL_Injury_Contamination::MIL_Injury_Contamination( int agentConcentration, const std::string& NBCAgent, unsigned int injuryID )
     : agentConcentration_( agentConcentration )
     , NBCAgent_          ( NBCAgent )
     , injuryID_          ( injuryID )
@@ -66,10 +65,6 @@ MIL_Injury_Contamination::~MIL_Injury_Contamination( )
     // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::load
 // Created: JVT 2005-03-31
@@ -98,7 +93,7 @@ void MIL_Injury_Contamination::save( MIL_CheckPointOutArchive& file, const unsig
 // Name: MIL_Injury_Contamination::GetInjuryID
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-int MIL_Injury_Contamination::GetInjuryID() const
+unsigned int MIL_Injury_Contamination::GetInjuryID() const
 {
     return injuryID_;
 }
@@ -175,15 +170,12 @@ void MIL_Injury_Contamination::UpdateInjuryCategory()
     // NOTHING
 }
 
-// =============================================================================
-// FUNCTOR
-// =============================================================================
 namespace
 {
     //Be careful: do not confuse contamination and poisoning!
     struct PHY_ContaminationProtectionFunctor
     {
-        PHY_ContaminationProtectionFunctor( int agentConcentration, const std::string& NBCAgent, int injuryID )
+        PHY_ContaminationProtectionFunctor( int agentConcentration, const std::string& NBCAgent, unsigned int injuryID )
             : agentConcentration_( agentConcentration )
             , injuryID_          ( injuryID )
             , NBCAgent_          ( NBCAgent )
@@ -202,7 +194,7 @@ namespace
             return protectionValue_;
         }
         int agentConcentration_;
-        int injuryID_;
+        unsigned int injuryID_;
         std::string NBCAgent_;
         float protectionValue_;
     };
@@ -218,7 +210,7 @@ bool MIL_Injury_Contamination::IsInjured( const PHY_ComposantePion& pComposante 
     //pComposante.GetType().GetProtection().Get...
     PHY_ContaminationProtectionFunctor protection( agentConcentration_, NBCAgent_, injuryID_ );
     protection( pComposante );
-    const unsigned int injuryThreshold = static_cast< unsigned int >( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * agentConcentration_ *( 1 - protection.GetProtectionValue() ) );
+    double injuryThreshold = ( 1 + 0.2 * MIL_Random::rand_ii( 0, 1, MIL_Random::eWounds ) ) * agentConcentration_ * ( 1 - protection.GetProtectionValue() );
     if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetInjuryThreshold( MIL_MedicalTreatmentType::eUA ) )
     {
         PHY_InjuredHuman::InitializeInjuredHuman( *this , pComposante );
@@ -243,12 +235,12 @@ void MIL_Injury_Contamination::SetInjury( unsigned int nNbrAliveHumans , double 
     //Population doesn't have any protection
 
     //First we compute the number of persons caught in the fire
-    const unsigned int nNbrOfPossibleCasualties = std::min( nNbrAliveHumans, unsigned int( std::max( 1., rDensity * MIL_NBCType::GetLength() * MIL_NBCType::GetWidth() ) ) );
+    const unsigned int nNbrOfPossibleCasualties = std::min( nNbrAliveHumans, std::max( static_cast< unsigned int >( 1 ), static_cast< unsigned int >( rDensity * MIL_NBCType::GetLength() * MIL_NBCType::GetWidth() ) ) );
 
     //For, each of them, we will compute if they're going to be injured, and how
     for( unsigned int i = 0; i < nNbrOfPossibleCasualties; ++i )
     {
-        unsigned int injuryThreshold = ( unsigned int )( ( 1 + 0.2*MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) )*agentConcentration_ );
+        double injuryThreshold = ( 1 + 0.2 * MIL_Random::rand_ii( 0, 1, MIL_Random::eWounds ) ) * agentConcentration_;
         if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetInjuryThreshold( MIL_MedicalTreatmentType::eUA ) )
         {
             PHY_InjuredHuman::InitializeInjuredHuman( *this );
@@ -268,16 +260,16 @@ void MIL_Injury_Contamination::SetInjury( unsigned int nNbrAliveHumans , double 
 // -----------------------------------------------------------------------------
 void MIL_Injury_Contamination::Injure( PHY_InjuredHuman& injuredHuman )
 {
-    unsigned int injuryThreshold = static_cast< unsigned int >( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * agentConcentration_ );
+    double injuryThreshold = ( 1 + 0.2 * MIL_Random::rand_ii( 0, 1, MIL_Random::eWounds ) ) * agentConcentration_;
     //If injuredHuman has a protection, we compute its protection effect
     if( injuredHuman.GetComposantePion() != 0 )
     {
-        PHY_ContaminationProtectionFunctor protection( agentConcentration_ , NBCAgent_ , injuryID_ );
+        PHY_ContaminationProtectionFunctor protection( agentConcentration_, NBCAgent_, injuryID_ );
         protection( *injuredHuman.GetComposantePion() );
         injuryThreshold *= ( 1 - protection.GetProtectionValue() );
     }
     //If injuredHuman isn't already injured by this kind of injury, add possibly an injury of this kind
-    if( ! injuredHuman.FindInjury( injuryID_ ) )
+    if( !injuredHuman.FindInjury( injuryID_ ) )
     {
         if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetInjuryThreshold( MIL_MedicalTreatmentType::eUA ) )
         {

@@ -136,7 +136,7 @@ void ImprovableCapacity::Instanciate( MIL_Object_ABC& object ) const
     if( unitType_ == ConstructionCapacity::eRaw )
         object.GetAttribute< MineAttribute >() = MineAttribute( *dotation_, nFullNbrDotation_ );
     if( unitType_ == ConstructionCapacity::eDensity )
-        object.GetAttribute< MineAttribute >() = MineAttribute( *dotation_, nFullNbrDotation_ * object.GetLocalisation().GetArea() );
+        object.GetAttribute< MineAttribute >() = MineAttribute( *dotation_, static_cast< unsigned int >( nFullNbrDotation_ * object.GetLocalisation().GetArea() ) );
 }
 
 // -----------------------------------------------------------------------------

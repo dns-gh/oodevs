@@ -13,7 +13,6 @@
 #include "PHY_InjuredHuman.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Objects/MIL_FireClass.h"
-#include "Entities/Objects/MIL_MedicalTreatmentType.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Fire )
@@ -23,8 +22,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Fire )
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 MIL_Injury_Fire::MIL_Injury_Fire()
-    : MIL_Injury_ABC()
-    , heat_          ( 0 )
+    : heat_          ( 0 )
     , fireClass_     ( 0 )
     , injuryID_      ( 0 )
     , injuryCategory_( MIL_MedicalTreatmentType::eNone )
@@ -36,7 +34,7 @@ MIL_Injury_Fire::MIL_Injury_Fire()
 // Name: MIL_Injury_Fire::constructor
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-MIL_Injury_Fire::MIL_Injury_Fire( int heat , const std::string fireClass_ , int injuryID )
+MIL_Injury_Fire::MIL_Injury_Fire( int heat, const std::string fireClass_, unsigned int injuryID )
     : MIL_Injury_ABC()
     , heat_          ( heat )
     , fireClass_     ( fireClass_ )
@@ -99,7 +97,7 @@ void MIL_Injury_Fire::save( MIL_CheckPointOutArchive& file, const unsigned int )
 // Name: MIL_Injury_Fire::GetInjuryID
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-int MIL_Injury_Fire::GetInjuryID() const
+unsigned int MIL_Injury_Fire::GetInjuryID() const
 {
     return injuryID_;
 }

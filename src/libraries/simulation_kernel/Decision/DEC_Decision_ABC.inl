@@ -41,6 +41,9 @@ void DEC_Decision_ABC::SetScriptVariable( const T& source, T& dest )
     dest = source;
 }
 
+#pragma warning( push )
+#pragma warning( disable : 4700 ) // uninitialized local variable 'value' used
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision_ABC::GetVariable
 // Created: LDC 2009-07-31
@@ -56,6 +59,8 @@ T DEC_Decision_ABC::GetVariable( const std::string& name )
     GetBrain()[ "DEC_SetVariable__" ]( GetBrain()[ name ] );
     return value;
 }
+
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision_ABC::GetScalarVariable

@@ -85,7 +85,7 @@ geometry::Point2f InsideUrbanBlockPosition::GetTargetPosition(MIL_Agent_ABC& fir
     geometry::Vector2f vector( pfirst, pSecond );
     vector = vector * ( 1 - targetResult.urbanDeployment_ );
     geometry::Point2f pM = pfirst + vector;
-    vector = geometry::Vector2f( pM, pSecond ) * MIL_Random::rand_ii();
+    vector = geometry::Vector2f( pM, pSecond ) * static_cast< float >( MIL_Random::rand_ii() );
     return pM + vector;
 }
 

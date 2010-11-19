@@ -11,6 +11,7 @@
 #define __DetectorAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class MIL_Agent_ABC;
 
@@ -52,5 +53,7 @@ private:
     const MIL_Agent_ABC*    detector_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( DetectorAttribute )
 
 #endif // __DetectorAttribute_h_

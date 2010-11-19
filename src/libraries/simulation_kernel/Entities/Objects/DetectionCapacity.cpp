@@ -39,15 +39,9 @@ namespace
     template< typename T >
     bool ReadTime( xml::xistream& xis, const std::string& name, T& time )
     {
-        int seconds = 0;
         std::string timeString;
         xis >> xml::optional >> xml::attribute( name, timeString );
-        if( tools::DecodeTime( timeString, seconds ) )
-        {
-            time = seconds;
-            return true;
-        }
-        return false;
+        return tools::DecodeTime( timeString, time );
     }
 };
 

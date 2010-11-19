@@ -1013,7 +1013,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
 // @return a position which the agent can reach when the point is in an urban block
 // Created: LMT 2010-11-03
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTrafficableLocalisation( MIL_AgentPion& pion, const MT_Vector2D& point )
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTrafficableLocalisation( const MT_Vector2D& point )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( point ) )

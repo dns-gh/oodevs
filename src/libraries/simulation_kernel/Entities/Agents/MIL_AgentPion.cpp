@@ -849,12 +849,11 @@ void MIL_AgentPion::OnReceiveMsgCreateWound( const Common::MsgMissionParameters&
 {
     if( msg.elem( 0 ).value_size() == 1 && msg.elem( 1 ).value_size() == 1 ) // injury_id && injury_type
     {
-        MIL_Injury_Wound* injury = new MIL_Injury_Wound( msg.elem( 0 ).value().Get(0).identifier() );
-        injury->SetInjuryCategory( ( MIL_MedicalTreatmentType::E_InjuryCategories ) msg.elem( 1 ).value().Get(0).identifier() );
+        MIL_Injury_Wound* injury = new MIL_Injury_Wound( msg.elem( 0 ).value().Get( 0 ).identifier() );
+        injury->SetInjuryCategory( static_cast< MIL_MedicalTreatmentType::E_InjuryCategories >( msg.elem( 1 ).value().Get( 0 ).identifier() ) );
         GetRole< PHY_RolePion_Composantes >().ApplyInjury( *injury );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgUnitMagicAction
@@ -904,7 +903,6 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitM
         assert( false );
         break;
     }
-
     UpdatePhysicalState();
 }
 

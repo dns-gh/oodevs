@@ -21,23 +21,14 @@ class MedicalTreatmentAttribute;
 
 class PHY_InjuredHuman
 {
-private:
-    typedef std::list< MIL_Injury_ABC *>    InjuriesList;
-    typedef InjuriesList::const_iterator    CIT_InjuriesList;
-    typedef InjuriesList::iterator          IT_InjuriesList;
-
 public:
     //! @name Constructors/Destructor
     //@{
              PHY_InjuredHuman();
              PHY_InjuredHuman( MIL_Injury_ABC& injury , const PHY_ComposantePion& composantePion );
     explicit PHY_InjuredHuman( MIL_Injury_ABC& injury );
+             PHY_InjuredHuman( const PHY_InjuredHuman& rhs );
     virtual ~PHY_InjuredHuman();
-    //@}
-
-    //! @name
-    //@{
-    PHY_InjuredHuman( const PHY_InjuredHuman& rhs );
     //@}
 
 public:
@@ -50,17 +41,20 @@ public:
     //@}
 
 public:
+    //! @name Operations
+    //@{
     static void InitializeInjuredHuman( MIL_Injury_ABC& injury , const PHY_ComposantePion& composantePion );
     static void InitializeInjuredHuman( MIL_Injury_ABC& injury );
+    //@}
 
 public:
-    //! @name Get
+    //! @name Accessors
     //@{
-    int                                          GetLifeExpectancy() const;
+    int GetLifeExpectancy() const;
     MIL_MedicalTreatmentType::E_InjuryCategories GetInjuryCategory() const;
-    MIL_MedicalTreatmentType::E_InjuryCategories GetInjuryCategory( int injuryID ) const;
-    int                                          GetInjuryID() const;
-    const PHY_ComposantePion*                    GetComposantePion() const;
+    MIL_MedicalTreatmentType::E_InjuryCategories GetInjuryCategory( unsigned int injuryID ) const;
+    unsigned int GetInjuryID() const;
+    const PHY_ComposantePion* GetComposantePion() const;
     //@}
 
 public:
@@ -71,24 +65,32 @@ public:
     void UpdateInjuredHumanInfo( float currentTime );
     //@}
 
-    //! @nameHelpers
+    //! @name Helpers
     bool IsAlive() const;
     void AddInjury( MIL_Injury_ABC& injury );
     void TreatInjuredHuman( MedicalTreatmentAttribute& attr );
-    bool FindInjury( int injuryID );
+    bool FindInjury( unsigned int injuryID );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::list< MIL_Injury_ABC* >     InjuriesList;
+    typedef InjuriesList::iterator        IT_InjuriesList;
+    typedef InjuriesList::const_iterator CIT_InjuriesList;
     //@}
 
 private:
     //! @name Member data
     //@{
-    float                                           lifeExpectancy_;
-    MIL_MedicalTreatmentType::E_InjuryCategories    injuryCategory_;
-    int                                             injuryID_;
-    bool                                            isTreated_;
-    InjuriesList                                    injuriesList_;
-    const PHY_ComposantePion*                       pComposantePion_;
-    float                                           timeOfLastUpdate_;
-    MedicalTreatmentAttribute*                      treatment_;
+    float lifeExpectancy_;
+    MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory_;
+    unsigned int injuryID_;
+    bool isTreated_;
+    InjuriesList injuriesList_;
+    const PHY_ComposantePion* pComposantePion_;
+    float timeOfLastUpdate_;
+    MedicalTreatmentAttribute* treatment_;
     //@}
 };
 

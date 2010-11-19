@@ -836,7 +836,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool( MT_Vector2D&, bool ) >( boost::bind( &DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_IsPointInCity" ] = &DEC_GeometryFunctions::IsPointInCity;
     brain[ "DEC_Geometrie_CalculerTrafficablePointPourPoint" ] =
-        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::ComputeTrafficableLocalisation, boost::ref( GetPion() ), _1 ) );
+        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::ComputeTrafficableLocalisation, _1 ) );
 
     //Keypoint
     brain[ "DEC_Crossroads" ] =

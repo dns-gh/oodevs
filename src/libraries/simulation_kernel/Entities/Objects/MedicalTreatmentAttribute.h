@@ -14,11 +14,6 @@
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
-#include <boost/shared_ptr.hpp>
-#include <boost/serialization/export.hpp>
-#include <map>
-#include <list>
-#include <vector>
 
 class MIL_MedicalTreatmentType;
 
@@ -44,30 +39,53 @@ class MedicalTreatmentAttribute
     , public UpdatableAttribute_ABC
 {
 public:
-    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< MedicalTreatmentAttribute > T_KnowledgeProxyType;
-
-public:
-    typedef std::pair< float, int >                                      T_PatientDiagnosis; // Patient entry time, Category of injury (UA or UR)
-    typedef std::list< T_PatientDiagnosis >                              T_PatientDiagnosisList;
-    typedef T_PatientDiagnosisList::const_iterator                     CIT_PatientDiagnosisList;
-    typedef T_PatientDiagnosisList::iterator                            IT_PatientDiagnosisList;
-    typedef std::map< int, boost::shared_ptr< T_PatientDiagnosisList > > T_MedicalTreatmentMap;
-    typedef T_MedicalTreatmentMap::const_iterator                      CIT_MedicalTreatmentMap;
-    typedef T_MedicalTreatmentMap::iterator                             IT_MedicalTreatmentMap;
-
     //! @name Types
     //@{
+    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< MedicalTreatmentAttribute > T_KnowledgeProxyType;
+    typedef std::pair< float, int >                                      T_PatientDiagnosis; // Patient entry time, Category of injury (UA or UR)
+    typedef std::list< T_PatientDiagnosis >                              T_PatientDiagnosisList;
+    typedef T_PatientDiagnosisList::iterator                            IT_PatientDiagnosisList;
+    typedef T_PatientDiagnosisList::const_iterator                     CIT_PatientDiagnosisList;
+    typedef std::map< int, boost::shared_ptr< T_PatientDiagnosisList > > T_MedicalTreatmentMap;
+    typedef T_MedicalTreatmentMap::iterator                             IT_MedicalTreatmentMap;
+    typedef T_MedicalTreatmentMap::const_iterator                      CIT_MedicalTreatmentMap;
+
     class MedicalCapacity
     {
     public:
+        //! @name Types
+        //@{
         typedef std::vector< unsigned int > InjuryCategory; // None, UA, UR, Dead : E_InjuryCategories
+        //@}
 
-        MedicalCapacity() : baseline_( 0 ), occupied_( 4, 0 ), emergency_( 0 ), time_ ( 0 ), type_ ( 0 ) {}
+        //! @name Construtor
+        //@{
+        MedicalCapacity()
+            : baseline_ ( 0 )
+            , occupied_ ( 4, 0 )
+            , emergency_( 0 )
+            , time_     ( 0 )
+            , type_     ( 0 )
+        {
+            // NOTHING
+        }
+        //@}
 
-        void        Update( const Common::MedicalTreatmentBedCapacity& capacity );
-        void        Update( const Common::MsgMissionParameter_Value& capacity );
-        void        Send( Common::MedicalTreatmentBedCapacity& capacity ) const;
-        unsigned    Update( unsigned doctors, float delay );
+        //! @name Operations
+        //@{
+        void Update( const Common::MedicalTreatmentBedCapacity& capacity );
+        void Update( const Common::MsgMissionParameter_Value& capacity );
+        void Send( Common::MedicalTreatmentBedCapacity& capacity ) const;
+        unsigned int Update( unsigned int doctors, float delay );
+        bool operator==( const MedicalCapacity& rhs ) const
+        {
+            return baseline_ == rhs.baseline_ &&
+                   occupied_ == rhs.occupied_ &&
+                   emergency_ ==  rhs.emergency_ &&
+                   time_ == rhs.time_ && 
+                   type_ == rhs.type_;
+        }
+        //@}
 
         //! @name CheckPoints
         //@{ 
@@ -76,24 +94,15 @@ public:
         void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
         //@}
 
-        unsigned        baseline_;
-        InjuryCategory  occupied_;
-        unsigned        emergency_;
-        float           time_;
+        //! @name Member data
+        //@{
+        unsigned int baseline_;
+        InjuryCategory occupied_;
+        unsigned int emergency_;
+        float time_;
         const MIL_MedicalTreatmentType* type_;
-
-        bool operator==( const MedicalCapacity& rhs ) const
-        {
-            return baseline_ == rhs.baseline_ &&
-                   occupied_ == rhs.occupied_ &&
-                   emergency_ ==  rhs.emergency_ &&
-                   time_ == rhs.time_ && 
-                   type_ == rhs.type_;
-
-        }
-
+        //@}
     };
-
     typedef std::vector< MedicalCapacity > T_TreatmentCapacityVector;
     //@}
 
@@ -109,7 +118,7 @@ public:
 private:
     //! @name Initialize
     //@{
-    void InitializePatientDiagnosisList( int occupiedBeds , int occupiedDoctors );
+    void InitializePatientDiagnosisList( int occupiedBeds, int occupiedDoctors );
     //@}
 
 public:
@@ -120,7 +129,7 @@ public:
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
-    //! @name
+    //! @name Operations
     //@{
     void Instanciate( DEC_Knowledge_Object& object ) const;
     void Register( MIL_Object_ABC& object ) const;
@@ -128,6 +137,9 @@ public:
     void SendUpdate( Common::ObjectAttributes& asn ) const;
     void OnUpdate( const Common::MsgMissionParameter_Value& attribute );
     void WriteODB( xml::xostream& xos ) const;
+    void RegisterPatients( unsigned int injuryID, unsigned int category, int n );
+    bool CanTreatPatient( unsigned int injuryID ) const;
+    void Update( float time );
     //@}
 
     //! @name Operations
@@ -136,19 +148,11 @@ public:
     bool Update( const MedicalTreatmentAttribute& rhs );
     //@}
 
-    //! @name Get
+    //! @name Accessors
     //@{
     int GetDoctors() const;
     int GetAvailableDoctors() const;
     //@}
-
-    //! @name Operators
-    //@{
-    void RegisterPatients( unsigned injuryID, unsigned category, unsigned n );
-    bool CanTreatPatient( unsigned injuryID ) const;
-    void Update( float time );
-    //@}
-
 
 private:
     //! @name
@@ -167,13 +171,13 @@ private:
 private:
     //! @name Member data
     //@{
-    T_MedicalTreatmentMap     medicalTreatmentMap_;
-    int                       doctors_;
-    int                       availableDoctors_;
-    int                       initialDoctors_;
+    T_MedicalTreatmentMap medicalTreatmentMap_;
+    int doctors_;
+    int availableDoctors_;
+    int initialDoctors_;
     T_TreatmentCapacityVector capacities_;
-    std::string               referenceID_;
-    int                       status_;
+    std::string referenceID_;
+    int status_;
     //@}
 };
 

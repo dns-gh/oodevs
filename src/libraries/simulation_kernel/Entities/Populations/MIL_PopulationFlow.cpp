@@ -292,6 +292,9 @@ void MIL_PopulationFlow::NotifyMovingOnPathPoint( const DEC_PathPoint& point )
     flowShape_.insert( itTmp, point.GetPos() );
 }
 
+#pragma warning( push )
+#pragma warning( disable : 4127 ) // conditional expression is constant
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::UpdateTailPosition
 // Created: NLD 2005-10-04
@@ -344,6 +347,8 @@ void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
     }
 }
 
+#pragma warning( pop )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::ManageSplit
 // Created: NLD 2007-03-02
@@ -381,8 +386,8 @@ bool MIL_PopulationFlow::ManageSplit()
     DetachFromDestConcentration();
     pHeadPath_ = pTailPath_; ///$$$ Degueu : destruction de pHeadPath ... (newFlow.pHeadPath_ = pHeadPath_)
     pTailPath_.reset();
-    const double rNbrHumans = GetLocation().GetArea() * rDensityBeforeSplit;
-    newFlow.PushHumans( PullHumans( GetNbrHumans() - rNbrHumans ) );
+    const int nNbrHumans = static_cast< unsigned int >( GetLocation().GetArea() * rDensityBeforeSplit );
+    newFlow.PushHumans( PullHumans( GetNbrHumans() - nNbrHumans ) );
     UpdateDensity();
     return true;
 }
@@ -444,18 +449,18 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         return;
     const double rWalkedDistance = GetPopulation().GetMaxSpeed() /* * 1.*/; // vitesse en pixel/deltaT = metre/deltaT
     //$$ TMP
-    double rNbrHumans = 0.;
+    unsigned int nNbrHumans = 0;
     if( pSourceConcentration_ )
-        rNbrHumans = rWalkedDistance * pSourceConcentration_->GetPullingFlowsDensity();
+        nNbrHumans = static_cast< unsigned int >( rWalkedDistance * pSourceConcentration_->GetPullingFlowsDensity() );
     else
     {
         const double rArea = GetLocation().GetArea();
         if( rArea )
-            rNbrHumans = rWalkedDistance * ( GetNbrHumans() / rArea );
+            nNbrHumans = static_cast< unsigned int >( rWalkedDistance * ( GetNbrHumans() / rArea ) );
         else
-            rNbrHumans = GetNbrHumans();
+            nNbrHumans = GetNbrHumans();
     }
-    if( rNbrHumans == 0. )
+    if( nNbrHumans == 0 )
         return;
     SetDirection( direction );
     SetSpeed( rWalkedDistance );
@@ -467,10 +472,10 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         pDestConcentration_->RegisterPushingFlow( *this );
     }
     if( pDestConcentration_ )
-        pDestConcentration_->PushHumans( PullHumans( rNbrHumans ) );
+        pDestConcentration_->PushHumans( PullHumans( nNbrHumans ) );
     // Tail management
     if( pSourceConcentration_ )
-        PushHumans( pSourceConcentration_->PullHumans( rNbrHumans ) );
+        PushHumans( pSourceConcentration_->PullHumans( nNbrHumans ) );
     else
         UpdateTailPosition( rWalkedDistance );
     if( bFlowShapeUpdated_ )

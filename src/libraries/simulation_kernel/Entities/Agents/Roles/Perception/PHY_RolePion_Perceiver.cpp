@@ -848,11 +848,8 @@ namespace
     template< typename T >
     void Reset( T*& perception )
     {
-        if( perception )
-        {
-            delete perception;
-            perception = 0;
-        }
+        delete perception;
+        perception = 0;
     }
 }
 
@@ -875,13 +872,9 @@ void PHY_RolePion_Perceiver::DisableAllPerceptions()
     Reset( pPerceptionFlyingShell_ );
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 namespace
 {
-    const double maxBlockPerceptionDistance = 100.; // Distance under which we consider urban blocks for perception.
+    const float maxBlockPerceptionDistance = 100.f; // Distance under which we consider urban blocks for perception.
 }
 
 // -----------------------------------------------------------------------------

@@ -13,7 +13,6 @@
 #define __MIL_Injury_NBC_h_
 
 #include "MIL_Injury_ABC.h"
-#include "Entities/Objects/MIL_MedicalTreatmentType.h"
 
 class PHY_ComposantePion;
 class NBCTypeAttribute;
@@ -23,32 +22,32 @@ class MIL_Injury_NBC : public MIL_Injury_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MIL_Injury_NBC();
-    explicit MIL_Injury_NBC( NBCTypeAttribute& attr , int injuryID );
-    MIL_Injury_NBC( const MIL_Injury_NBC& rhs );
+             MIL_Injury_NBC();
+             MIL_Injury_NBC( NBCTypeAttribute& attr, unsigned int injuryID );
+             MIL_Injury_NBC( const MIL_Injury_NBC& rhs );
     virtual ~MIL_Injury_NBC();
     //@}
 
-    //! @name Get
+    //! @name Accessors
     //@{
-    int                                          GetInjuryID() const;
-    MIL_MedicalTreatmentType::E_InjuryCategories GetInjuryCategory() const;
-    float                                        GetLifeExpectancy( MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory ) const;
+    virtual unsigned int GetInjuryID() const;
+    virtual MIL_MedicalTreatmentType::E_InjuryCategories GetInjuryCategory() const;
+    virtual float GetLifeExpectancy( MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory ) const;
     //@}
 
     //! @name Helpers
     //@{
-    float SetLifeExpectancy() const;
-    bool  IsInjured( const PHY_ComposantePion& pComposante );
-    void  SetInjury( unsigned int nNbrAliveHumans , double rDensity );
-    void  SetInjuryCategory( MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory );
+    virtual float SetLifeExpectancy() const;
+    virtual bool IsInjured( const PHY_ComposantePion& pComposante );
+    virtual void SetInjury( unsigned int nNbrAliveHumans , double rDensity );
+    virtual void SetInjuryCategory( MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const NBCTypeAttribute*                          pInjuryAttribute_;
-    int                                          injuryID_;
+    const NBCTypeAttribute* pInjuryAttribute_;
+    unsigned int injuryID_;
     MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory_;
     //@}
 };

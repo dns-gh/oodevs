@@ -93,13 +93,16 @@ void MedicalTreatmentAttribute::Update( const Common::ObjectAttributeMedicalTrea
     
     const int size = static_cast<int>( capacities_.size() );
     if( message.bed_capacities_size() > size )
-        capacities_.swap( T_TreatmentCapacityVector( message.bed_capacities_size() ) );
+    {
+        T_TreatmentCapacityVector vector( message.bed_capacities_size() );
+        capacities_.swap( vector );
+    }
     for( int i = 0 ; i < message.bed_capacities_size(); ++i )
 	{
         const Common::MedicalTreatmentBedCapacity& bed_capacity = message.bed_capacities( i );
         if( bed_capacity.has_type_id() )
         {
-		    if( capacities_.size() <= bed_capacity.type_id() )
+		    if( capacities_.size() <= static_cast< unsigned int >( bed_capacity.type_id() ) )
 	            throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( bed_capacity.type_id() ) );
             capacities_[ bed_capacity.type_id() ].Update( bed_capacity );
         }

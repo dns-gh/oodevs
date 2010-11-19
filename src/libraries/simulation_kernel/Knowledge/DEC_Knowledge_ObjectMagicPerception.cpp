@@ -18,6 +18,7 @@ DEC_Knowledge_ObjectMagicPerception::DEC_Knowledge_ObjectMagicPerception( const 
     : knowledge_      ( knowledge )
     , perceptionLevel_( perceptionLevel )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -26,4 +27,5 @@ DEC_Knowledge_ObjectMagicPerception::DEC_Knowledge_ObjectMagicPerception( const 
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectMagicPerception::~DEC_Knowledge_ObjectMagicPerception()
 {
+    // NOTHING
 }

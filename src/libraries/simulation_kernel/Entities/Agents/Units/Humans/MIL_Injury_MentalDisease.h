@@ -15,21 +15,18 @@
 #include "MIL.h"
 #include "MIL_Injury_ABC.h"
 
-#include "Entities/Objects/MIL_MedicalTreatmentType.h"
-
 class PHY_ComposantePion;
 class FireAttribute;
 class PHY_InjuredHuman;
-
 
 class MIL_Injury_MentalDisease : public MIL_Injury_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    MIL_Injury_MentalDisease();
-    explicit MIL_Injury_MentalDisease( int injuryID );
-    MIL_Injury_MentalDisease( const MIL_Injury_MentalDisease& rhs );
+             MIL_Injury_MentalDisease();
+    explicit MIL_Injury_MentalDisease( unsigned int injuryID );
+             MIL_Injury_MentalDisease( const MIL_Injury_MentalDisease& rhs );
     virtual ~MIL_Injury_MentalDisease();
     //@}
 
@@ -42,36 +39,34 @@ public:
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
-    //! @name Get
+    //! @name Accessors
     //@{
-    int                                          GetInjuryID() const;
-    MIL_MedicalTreatmentType::E_InjuryCategories GetInjuryCategory() const;
-    float                                        GetLifeExpectancy() const;
-    float                                        GetAgentDose() const;
+    virtual unsigned int GetInjuryID() const;
+    virtual MIL_MedicalTreatmentType::E_InjuryCategories GetInjuryCategory() const;
+    virtual float GetLifeExpectancy() const;
+    virtual float GetAgentDose() const;
     //@}
 
     //! @name Helpers
     //@{
-    float SetLifeExpectancy() const;
-    //This function is used by pion and their composantes to set the injury
-    bool  IsInjured( const PHY_ComposantePion& pComposante );
-    //This function is used only by the population to set the injury
-    void  SetInjury( unsigned int nNbrAliveHumans , double rDensity );
-    void  Injure( PHY_InjuredHuman& injuredHuman );
-    void  SetInjuryCategory( MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory );
-    bool  CanInjuryBeDeadly();
+    virtual float SetLifeExpectancy() const;
+    virtual bool IsInjured( const PHY_ComposantePion& pComposante );
+    virtual void SetInjury( unsigned int nNbrAliveHumans, double rDensity );
+    virtual void Injure( PHY_InjuredHuman& injuredHuman );
+    virtual void SetInjuryCategory( MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory );
+    virtual bool CanInjuryBeDeadly();
     //@}
 
     //! @name Update
     //@{
-    void  UpdateLifeExpectancy( float time ) ;
-    void  UpdateInjuryCategory();
+    virtual void UpdateLifeExpectancy( float time ) ;
+    virtual void UpdateInjuryCategory();
     //@}
 
 private:
     //! @name Member data
     //@{
-    int                                          injuryID_;
+    unsigned int injuryID_;
     MIL_MedicalTreatmentType::E_InjuryCategories injuryCategory_;
     //@}
 };

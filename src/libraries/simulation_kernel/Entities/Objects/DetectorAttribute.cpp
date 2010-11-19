@@ -11,14 +11,14 @@
 #include "DetectorAttribute.h"
 #include "Object.h"
 
-BOOST_CLASS_EXPORT_GUID( DetectorAttribute, "AnimatorAttribute" )
+BOOST_CLASS_EXPORT_IMPLEMENT( DetectorAttribute )
 
 // -----------------------------------------------------------------------------
 // Name: DetectorAttribute constructor
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
 DetectorAttribute::DetectorAttribute()
-: detector_ ( 0 )
+    : detector_ ( 0 )
 {
     // NOTHING
 }
@@ -28,7 +28,7 @@ DetectorAttribute::DetectorAttribute()
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
 DetectorAttribute::DetectorAttribute( const MIL_Agent_ABC& agent )
-: detector_ ( &agent )
+    : detector_ ( &agent )
 {
     // NOTHING
 }
@@ -42,9 +42,8 @@ DetectorAttribute::~DetectorAttribute()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void DetectorAttribute::serialize
+// Name: DetectorAttribute::serialize
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
 template< typename Archive >
@@ -69,10 +68,9 @@ void DetectorAttribute::Register( MIL_Object_ABC& object ) const
 void DetectorAttribute::AddDetector( const MIL_Agent_ABC& agent )
 {
     if( detector_ )
-        throw( std::exception( " Detector already registered" ) );
+        throw( std::exception( "Detector already registered" ) );
     detector_ = &agent;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DetectorAttribute::GetAnimators

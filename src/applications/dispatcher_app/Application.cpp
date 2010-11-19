@@ -33,6 +33,8 @@ Application::~Application()
     // NOTHING
 }
 
+#pragma warning( disable : 4127 ) //conditional expression is constant
+
 // -----------------------------------------------------------------------------
 // Name: Application::Run
 // Created: NLD 2006-10-10

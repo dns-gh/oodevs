@@ -14,7 +14,6 @@
 #include "PHY_InjuredHuman.h"
 #include "MIL_Random.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Objects/MIL_MedicalTreatmentType.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
 
 //BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_Wound )
@@ -24,23 +23,23 @@
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 MIL_Injury_Wound::MIL_Injury_Wound()
-    : injuryID_        ( 0 )
-    , injuryCategory_  ( MIL_MedicalTreatmentType::eNone )
-    , lifeExpectancy_  ( 0 )
+    : injuryID_      ( 0 )
+    , injuryCategory_( MIL_MedicalTreatmentType::eNone )
+    , lifeExpectancy_( SetLifeExpectancy() )
 {
-    lifeExpectancy_ = SetLifeExpectancy();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Injury_Wound::constructor
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-MIL_Injury_Wound::MIL_Injury_Wound( int injuryID )
-    : injuryID_        ( injuryID )
-    , injuryCategory_  ( MIL_MedicalTreatmentType::eNone )
-    , lifeExpectancy_  ( 0 )
+MIL_Injury_Wound::MIL_Injury_Wound( unsigned int injuryID )
+    : injuryID_      ( injuryID )
+    , injuryCategory_( MIL_MedicalTreatmentType::eNone )
+    , lifeExpectancy_( SetLifeExpectancy() )
 {
-    lifeExpectancy_ = SetLifeExpectancy();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -59,15 +58,10 @@ MIL_Injury_Wound::MIL_Injury_Wound( const MIL_Injury_Wound& rhs )
 // Name: MIL_Injury_Wound::destructor
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-MIL_Injury_Wound::~MIL_Injury_Wound( )
-
+MIL_Injury_Wound::~MIL_Injury_Wound()
 {
     // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::load
@@ -95,7 +89,7 @@ void MIL_Injury_Wound::save( MIL_CheckPointOutArchive& file, const unsigned int 
 // Name: MIL_Injury_Wound::GetInjuryID
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-int MIL_Injury_Wound::GetInjuryID() const
+unsigned int MIL_Injury_Wound::GetInjuryID() const
 {
     return injuryID_;
 }
@@ -133,7 +127,7 @@ float MIL_Injury_Wound::GetAgentDose() const
 // -----------------------------------------------------------------------------
 float MIL_Injury_Wound::SetLifeExpectancy() const
 {
-    return static_cast< float >( MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ )*( 1 + 0.1*MIL_Random::rand_ii( -1 , 1 ) ) );
+    return MIL_MedicalTreatmentType::Find( injuryID_ )->GetLifeExpectancy( injuryCategory_ ) * ( 1.f + 0.1f * static_cast< float >( MIL_Random::rand_ii( -1 , 1 ) ) );
 }
 
 // -----------------------------------------------------------------------------

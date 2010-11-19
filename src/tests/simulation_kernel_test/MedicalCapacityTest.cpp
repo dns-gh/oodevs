@@ -5,7 +5,10 @@
 #include "MockMIL_Object_ABC.h"
 #include "MockMIL_Injury_ABC.h"
 #include <xeumeuleu/xml.hpp>
+#pragma warning( push )
+#pragma warning( disable : 4244 )
 #include "protocol/generated/Common.pb.h"
+#pragma warning( pop )
 #include "MockMIL_Time_ABC.h"
 #include "tools/MIL_Config.h"
 

@@ -13,7 +13,6 @@
 #include "PHY_InjuredHuman.h"
 #include "MIL_Injury_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Objects/MIL_MedicalTreatmentType.h"
 #include "Entities/Objects/MedicalTreatmentAttribute.h"
 #include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
@@ -25,12 +24,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_InjuredHuman )
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
 PHY_InjuredHuman::PHY_InjuredHuman()
-    : lifeExpectancy_   ( 0 )
-    , injuryCategory_   ( MIL_MedicalTreatmentType::eNone )
-    , injuryID_         ( 0 )
-    , pComposantePion_  ( 0 )
-    , timeOfLastUpdate_ ( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
-    , treatment_        ( 0 )
+    : lifeExpectancy_  ( 0 )
+    , injuryCategory_  ( MIL_MedicalTreatmentType::eNone )
+    , injuryID_        ( 0 )
+    , pComposantePion_ ( 0 )
+    , timeOfLastUpdate_( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
+    , treatment_       ( 0 )
 {
     // NOTHING
 }
@@ -164,11 +163,11 @@ MIL_MedicalTreatmentType::E_InjuryCategories PHY_InjuredHuman::GetInjuryCategory
 // Name: PHY_InjuredHuman GetInjuryCategory
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-MIL_MedicalTreatmentType::E_InjuryCategories PHY_InjuredHuman::GetInjuryCategory( int injuryID ) const
+MIL_MedicalTreatmentType::E_InjuryCategories PHY_InjuredHuman::GetInjuryCategory( unsigned int injuryID ) const
 {
     for( CIT_InjuriesList it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
-        if( (*it)->GetInjuryID() == injuryID )
-            return (*it)->GetInjuryCategory();
+        if( ( *it )->GetInjuryID() == injuryID )
+            return ( *it )->GetInjuryCategory();
     return MIL_MedicalTreatmentType::eNone;
 }
 
@@ -176,7 +175,7 @@ MIL_MedicalTreatmentType::E_InjuryCategories PHY_InjuredHuman::GetInjuryCategory
 // Name: PHY_InjuredHuman GetInjuryID
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-int PHY_InjuredHuman::GetInjuryID() const
+unsigned int PHY_InjuredHuman::GetInjuryID() const
 {
     return injuryID_;
 }
@@ -220,8 +219,8 @@ void PHY_InjuredHuman::UpdateInjuriesInfo( float currentTime )
 {
     for( IT_InjuriesList it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
     {
-        (*it)->UpdateLifeExpectancy( timeOfLastUpdate_ - currentTime );
-        (*it)->UpdateInjuryCategory();
+        ( *it )->UpdateLifeExpectancy( timeOfLastUpdate_ - currentTime );
+        ( *it )->UpdateInjuryCategory();
     }
 }
 
@@ -235,25 +234,25 @@ void PHY_InjuredHuman::UpdateInjuredHumanInfo( float currentTime )
     CIT_InjuriesList iter;
     for( CIT_InjuriesList it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
     {
-        if( lifeExpectancy != -1 && (*it)->CanInjuryBeDeadly() )
+        if( lifeExpectancy != -1 && ( *it )->CanInjuryBeDeadly() )
         {
-            lifeExpectancy  = std::min( (*it)->GetLifeExpectancy(), lifeExpectancy );
+            lifeExpectancy  = std::min( ( *it )->GetLifeExpectancy(), lifeExpectancy );
             iter = it;
         }
-        else if( (*it)->CanInjuryBeDeadly() )
+        else if( ( *it )->CanInjuryBeDeadly() )
         {
-            lifeExpectancy = (*it)->GetLifeExpectancy();
+            lifeExpectancy = ( *it )->GetLifeExpectancy();
             iter = it;
         }
     }
-    if( lifeExpectancy < ( lifeExpectancy_ - currentTime + timeOfLastUpdate_ ) )
+    if( lifeExpectancy < lifeExpectancy_ - currentTime + timeOfLastUpdate_ )
     {
         lifeExpectancy_ = lifeExpectancy;
-        injuryCategory_ = (*iter)->GetInjuryCategory();
-        injuryID_       = (*iter)->GetInjuryID();
+        injuryCategory_ = ( *iter )->GetInjuryCategory();
+        injuryID_ = ( *iter )->GetInjuryID();
     }
     else
-        lifeExpectancy_ = ( lifeExpectancy_ - currentTime + timeOfLastUpdate_ );
+        lifeExpectancy_ = lifeExpectancy_ - currentTime + timeOfLastUpdate_;
 }
 
 // -----------------------------------------------------------------------------
@@ -263,7 +262,7 @@ void PHY_InjuredHuman::UpdateInjuredHumanInfo( float currentTime )
 bool PHY_InjuredHuman::IsAlive() const
 {
     for( CIT_InjuriesList it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
-        if( (*it)->GetInjuryCategory() == MIL_MedicalTreatmentType::eDead )
+        if( ( *it )->GetInjuryCategory() == MIL_MedicalTreatmentType::eDead )
             return false;
     return true;
 }
@@ -292,10 +291,10 @@ void PHY_InjuredHuman::TreatInjuredHuman( MedicalTreatmentAttribute& attr )
 // Name: PHY_InjuredHuman FindInjury
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-bool PHY_InjuredHuman::FindInjury( int injuryID )
+bool PHY_InjuredHuman::FindInjury( unsigned int injuryID )
 {
     for( CIT_InjuriesList it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
-        if( (*it)->GetInjuryID() == injuryID )
+        if( ( *it )->GetInjuryID() == injuryID )
             return true;
     return false;
 }

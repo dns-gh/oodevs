@@ -83,7 +83,7 @@ PHY_SensorType::PHY_SensorType( const std::string& strName, xml::xistream& xis )
         >> xml::list( "object-detection", *this, &PHY_SensorType::newSensorTypeObject )
         >> xml::attribute( "detection-delay", time );
     tools::DecodeTime( time, delay_ );
-    delay_ = MIL_Tools::ConvertSecondsToSim( delay_ );
+    delay_ = static_cast< unsigned int>( MIL_Tools::ConvertSecondsToSim( delay_ ) );
 }
 
 // -----------------------------------------------------------------------------

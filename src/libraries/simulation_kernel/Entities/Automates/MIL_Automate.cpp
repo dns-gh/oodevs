@@ -457,7 +457,7 @@ void MIL_Automate::ReadOverloading( xml::xistream& /*refMission*/ )
 // Name: MIL_Automate::ReadLogisticLink
 // Created: NLD 2006-10-19
 // -----------------------------------------------------------------------------
-void MIL_Automate::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis )
+void MIL_Automate::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& )
 {
     pTC2_        = &superior;
     pNominalTC2_ = pTC2_;

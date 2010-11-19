@@ -13,10 +13,8 @@
 #include "MIL_Injury_MentalDisease.h"
 #include "PHY_InjuredHuman.h"
 #include "MIL_Random.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Objects/FireAttribute.h"
-#include "Entities/Objects/MIL_MedicalTreatmentType.h"
-#include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
+//#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+//#include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Injury_MentalDisease )
 
@@ -35,7 +33,7 @@ MIL_Injury_MentalDisease::MIL_Injury_MentalDisease()
 // Name: MIL_Injury_MentalDisease::constructor
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-MIL_Injury_MentalDisease::MIL_Injury_MentalDisease( int injuryID )
+MIL_Injury_MentalDisease::MIL_Injury_MentalDisease( unsigned int injuryID )
     : injuryID_        ( injuryID )
     , injuryCategory_  ( MIL_MedicalTreatmentType::eNone )
 {
@@ -91,7 +89,7 @@ void MIL_Injury_MentalDisease::save( MIL_CheckPointOutArchive& file, const unsig
 // Name: MIL_Injury_MentalDisease::GetInjuryID
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-int MIL_Injury_MentalDisease::GetInjuryID() const
+unsigned int MIL_Injury_MentalDisease::GetInjuryID() const
 {
     return injuryID_;
 }

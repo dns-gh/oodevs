@@ -83,7 +83,7 @@ void DEC_Path_ABC::DoExecute( TerrainPathfinder& pathfind )
     if( nMaxComputationDuration == std::numeric_limits< unsigned int >::max() )
         nComputationEndTime = std::numeric_limits< unsigned int >::max();
     else
-        nComputationEndTime = time( 0 ) + nMaxComputationDuration;
+        nComputationEndTime = static_cast< unsigned int >( time( 0 ) ) + nMaxComputationDuration;
     nState_ = eComputing;
     for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
     {
