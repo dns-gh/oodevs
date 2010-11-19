@@ -35,8 +35,9 @@ class MIL_PopulationConcentration : public MIL_PopulationElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis );
-     MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, unsigned int nHumans = 0 );
+             MIL_PopulationConcentration( MIL_Population& population, unsigned int id );
+             MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis );
+             MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, unsigned int nHumans = 0 );
     virtual ~MIL_PopulationConcentration();
     //@}
 

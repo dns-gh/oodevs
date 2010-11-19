@@ -35,20 +35,38 @@
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationConcentration )
 
 MIL_IDManager MIL_PopulationConcentration::idManager_;
+
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_PopulationConcentration* concentration, const unsigned int /*version*/ )
 {
     MIL_Population* const pPopulation = &concentration->GetPopulation();
-    archive << pPopulation << concentration->position_;
+    unsigned int nID = concentration->GetID();
+    archive << pPopulation << nID;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_PopulationConcentration* concentration, const unsigned int /*version*/ )
 {
     MIL_Population* pPopulation;
-    MT_Vector2D position;
-    archive >> pPopulation >> position;
-    ::new( concentration )MIL_PopulationConcentration( *pPopulation, position);
+    unsigned int nID;
+    archive >> pPopulation >> nID;
+    ::new( concentration )MIL_PopulationConcentration( *pPopulation, nID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration constructor
+// Created: JSR 2010-11-17
+// -----------------------------------------------------------------------------
+MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, unsigned int id )
+    : MIL_PopulationElement_ABC      ( population, id )
+    , TER_PopulationConcentration_ABC()
+    , location_                      ()
+    , pPullingFlow_                  ( 0 )
+    , pushingFlows_                  ()
+    , rPullingFlowsDensity_          ( population.GetDefaultFlowDensity() )
+    , pSplittingObject_              ( 0 )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -338,12 +356,12 @@ void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uns
     file >> boost::serialization::base_object< TER_PopulationConcentration_ABC >( *this );
     file >> boost::serialization::base_object< MIL_PopulationElement_ABC       >( *this );
     file >> position_
-         >> location_
          >> pPullingFlow_
          >> pushingFlows_
          >> rPullingFlowsDensity_
          >> const_cast< MIL_Object_ABC*& >( pSplittingObject_ );
     idManager_.Lock( MIL_PopulationElement_ABC::GetID() );
+    UpdateLocation();
 }
 
 // -----------------------------------------------------------------------------
@@ -355,7 +373,6 @@ void MIL_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const un
     file << boost::serialization::base_object< TER_PopulationConcentration_ABC >( *this );
     file << boost::serialization::base_object< MIL_PopulationElement_ABC       >( *this );
     file << position_
-         << location_
          << pPullingFlow_
          << pushingFlows_
          << rPullingFlowsDensity_
