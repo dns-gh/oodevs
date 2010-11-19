@@ -50,6 +50,15 @@ unsigned long ReportTemplate::GetId() const
     return id_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ReportTemplate::Message
+// Created: JCR 2010-11-19
+// -----------------------------------------------------------------------------
+const std::string& ReportTemplate::GetMessage() const
+{
+    return message_;
+}
+
 namespace
 {
     void SetParameter( std::string& message, unsigned int index, const std::string& value )
@@ -70,7 +79,7 @@ namespace
 // -----------------------------------------------------------------------------
 std::string ReportTemplate::RenderMessage( const MsgMissionParameters& message ) const
 {
-    std::string content = message_;
+    std::string content( GetMessage() );
     unsigned int enums = 0;
     for( int i = 0; i < message.elem_size(); ++i )
         if( message.elem(i).value().Get(0).has_enumeration() )

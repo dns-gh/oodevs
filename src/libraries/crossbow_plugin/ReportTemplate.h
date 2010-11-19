@@ -45,7 +45,8 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    std::string RenderMessage( const Common::MsgMissionParameters& message ) const;
+    const std::string& GetMessage() const;
+    std::string        RenderMessage( const Common::MsgMissionParameters& message ) const;
     //@}
 
 private:

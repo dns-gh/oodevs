@@ -385,7 +385,22 @@ void QueryDatabaseUpdater::UpdateObjectKnowledgeGeometry( const std::string& tab
     ObjectAttributeUpdater::UpdateObjectAttribute( database_, objectId, msg.attributes );
 }*/
 
-
+namespace 
+{
+    long ExtractTasker( const ::Common::Tasker& source )
+    {
+        if( source.has_automat() )
+            return (long)source.automat().id();
+        else if( source.has_crowd() )
+            return (long)source.crowd().id();
+        else if( source.has_unit() )
+            return (long)source.unit().id();
+        else if( source.has_formation() )
+            return (long)source.formation().id();
+        else
+            throw std::runtime_error( "unknown message reporter" );
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: QueryDatabaseUpdater::Update
 // Created: SBO 2007-08-30
@@ -395,10 +410,10 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgReport& msg )
     InsertQueryBuilder builder( database_.GetTableName( "Reports" ) );
 
     builder.SetId( "id" );
-    builder.SetField( "unit_id", (long)msg.report().id() );
+    builder.SetField( "unit_id", ExtractTasker( msg.source() ) );
     builder.SetField( "message", reportFactory_.CreateMessage( msg ) );
+    // builder.SetField( "time", msg.time().data() );
     builder.SetField( "session_id", session_.GetId() );
-    // builder.AddParameter( "timestamp", reportFactory_.CreateMessage( msg ) );
     database_.Execute( builder );
 }
 

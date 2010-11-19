@@ -63,18 +63,13 @@ void ReportFactory::ReadReport( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 std::string ReportFactory::CreateMessage( const MsgsSimToClient::MsgReport& message ) const
 {
-    CIT_Templates it;
-    if( message.source().has_automat() )
-        CIT_Templates it = templates_.find( message.source().automat().id() );
-    else if( message.source().has_crowd() )
-        CIT_Templates it = templates_.find( message.source().crowd().id() );
-    else if( message.source().has_unit() )
-        CIT_Templates it = templates_.find( message.source().unit().id() );
-    else if( message.source().has_formation() )
-        CIT_Templates it = templates_.find( message.source().formation().id() );
-    else
+    CIT_Templates it = templates_.find( message.report().id() );
+    if( it == templates_.end() )
         return "Unknown report";
-    return it->second->RenderMessage( message.parameters() );
+    if( message.has_parameters() )
+        return it->second->RenderMessage( message.parameters() );
+    else 
+        return it->second->GetMessage();
 }
 
 // -----------------------------------------------------------------------------
