@@ -83,25 +83,25 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
 {
     builderFunctors_["agent"]               = &MissionInterfaceBuilder::BuildAgent;
     builderFunctors_["agentlist"]           = &MissionInterfaceBuilder::BuildAgentList;
-    builderFunctors_["automat"]            = &MissionInterfaceBuilder::BuildAutomat;
-    builderFunctors_["automatlist"]        = &MissionInterfaceBuilder::BuildAutomatList;
-    builderFunctors_["plannedwork"]           = &MissionInterfaceBuilder::BuildGenObject;
-    builderFunctors_["plannedworklist"]       = &MissionInterfaceBuilder::BuildGenObjectList;
+    builderFunctors_["automat"]             = &MissionInterfaceBuilder::BuildAutomat;
+    builderFunctors_["automatlist"]         = &MissionInterfaceBuilder::BuildAutomatList;
+    builderFunctors_["plannedwork"]         = &MissionInterfaceBuilder::BuildGenObject;
+    builderFunctors_["plannedworklist"]     = &MissionInterfaceBuilder::BuildGenObjectList;
     builderFunctors_["objective"]           = &MissionInterfaceBuilder::BuildMissionObjective;
     builderFunctors_["objectivelist"]       = &MissionInterfaceBuilder::BuildMissionObjectiveList;
     builderFunctors_["resourcetype"]        = &MissionInterfaceBuilder::BuildDotation;
     builderFunctors_["natureatlas"]         = &MissionInterfaceBuilder::BuildAtlasNature;
 
-    builderFunctors_["loolean"]                = &MissionInterfaceBuilder::BuildBoolean;
+    builderFunctors_["boolean"]             = &MissionInterfaceBuilder::BuildBoolean;
     builderFunctors_["heading"]             = &MissionInterfaceBuilder::BuildDirection;
     builderFunctors_["integer"]             = &MissionInterfaceBuilder::BuildNumeric;
     builderFunctors_["datetime"]            = &MissionInterfaceBuilder::BuildParamDateTime;
 
-    builderFunctors_["agentknowledge"]        = &MissionInterfaceBuilder::BuildAgentKnowledge;
-    builderFunctors_["agentknowledgelist"]    = &MissionInterfaceBuilder::BuildAgentKnowledgeList;
-    builderFunctors_["objectknowledge"]       = &MissionInterfaceBuilder::BuildObjectKnowledge;
-    builderFunctors_["objectknowledgelist"]   = &MissionInterfaceBuilder::BuildObjectKnowledgeList;
-    builderFunctors_["crowdknowledge"]   = &MissionInterfaceBuilder::BuildPopulationKnowledge;
+    builderFunctors_["agentknowledge"]      = &MissionInterfaceBuilder::BuildAgentKnowledge;
+    builderFunctors_["agentknowledgelist"]  = &MissionInterfaceBuilder::BuildAgentKnowledgeList;
+    builderFunctors_["objectknowledge"]     = &MissionInterfaceBuilder::BuildObjectKnowledge;
+    builderFunctors_["objectknowledgelist"] = &MissionInterfaceBuilder::BuildObjectKnowledgeList;
+    builderFunctors_["crowdknowledge"]      = &MissionInterfaceBuilder::BuildPopulationKnowledge;
 
     builderFunctors_["path"]                = &MissionInterfaceBuilder::BuildPath;
     builderFunctors_["pathlist"]            = &MissionInterfaceBuilder::BuildPathList;
@@ -120,11 +120,11 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
     builderFunctors_["phaseline"]             = &MissionInterfaceBuilder::BuildLima;
     builderFunctors_["phaselinelist"]         = &MissionInterfaceBuilder::BuildLimaList;
 
-    builderFunctors_["resourcetypelist"]          = &MissionInterfaceBuilder::BuildDotationTypeList;
+    builderFunctors_["resourcetypelist"]      = &MissionInterfaceBuilder::BuildDotationTypeList;
 
-    builderFunctors_["urbanknowledge"]          = &MissionInterfaceBuilder::BuildUrbanBlock;
-    builderFunctors_["locationcomposite"]       = &MissionInterfaceBuilder::BuildLocationComposite;
-    builderFunctors_["locationcompositelist"]   = &MissionInterfaceBuilder::BuildLocationCompositeList;
+    builderFunctors_["urbanknowledge"]        = &MissionInterfaceBuilder::BuildUrbanBlock;
+    builderFunctors_["locationcomposite"]     = &MissionInterfaceBuilder::BuildLocationComposite;
+    builderFunctors_["locationcompositelist"] = &MissionInterfaceBuilder::BuildLocationCompositeList;
 }
 
 // -----------------------------------------------------------------------------
