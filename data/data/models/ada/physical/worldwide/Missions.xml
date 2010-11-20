@@ -1802,18 +1802,24 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="population_" name="Population" optional="false" type="CrowdKnowledge"/>
+      <parameter dia-name="destination_" name="Target Destination" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Emergency_EvacuateWounded" dia-type="T_Mission_Pion_Emergency_EvacuateWounded" id="408" name="Emergency - evacuate wounded">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="wounded_" name="Wounded" optional="false" type="Agent"/>
+      <parameter dia-name="hospitals_" min-occurs="1" max-occurs="unbounded" name="Hospitals" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="garage_" name="Garage" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_JOINT_AIR_Loiter" dia-type="T_Mission_Pion_JOINT_AIR_Loiter" id="410" name="Joint Air - Loiter">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="itineraire_" name="path" optional="false" type="Path"/>
     </mission>
   </units>
   <automats>
@@ -2142,6 +2148,9 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automat"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Attaquer" dia-type="T_Mission_Automate_ABC_Attaquer" id="221" mrt-dia-behavior="MIS_Automate_MRT_ABC_Attaquer" name="Armor - attack">
+      <description>
+        <usage><![CDATA[If a Line of Departure (LD) is specified, Units will first move to this phase line, wait for the fragmentary order to cross the line, and then attack.]]></usage>
+      </description>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2169,6 +2178,9 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="compagnie_" name="Unit" optional="false" type="Automat"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_DonnerCoupArret" dia-type="T_Mission_Automate_ABC_DonnerCoupArret" id="225" mrt-dia-behavior="MIS_Automate_MRT_ABC_DonnerCoupArret" name="Armor - block">
+      <description>
+        <usage><![CDATA[Units move to positions close to the Blocking Line (BL) and bar ennemies from taking them. When the force ratio becomes defavorable, Units move to the meeting point.]]></usage>
+      </description>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2188,18 +2200,27 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Interdire" dia-type="T_Mission_Automate_ABC_Interdire" id="228" mrt-dia-behavior="MIS_Automate_MRT_ABC_Interdire" name="Armor - interdict">
+      <description>
+        <usage><![CDATA[Units interdict near the specified Denial Line (DL)]]></usage>
+      </description>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_Jalonner" dia-type="T_Mission_Automate_ABC_Jalonner" id="229" mrt-dia-behavior="MIS_Automate_MRT_ABC_Jalonner" name="Armor - screen">
+      <description>
+        <usage><![CDATA[While screening, Units try to keep a coherent formation to prevent any enemy infiltration. Yet, the screen concerns "big" enemy units only, thus some small units, like scout units, can breach the screen. In addition, Units will withdraw if they cross a Recognition and Reception Line (RRL) or a Handover Line (HL).]]></usage>
+      </description>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ABC_PrendrePreciserContact" dia-type="T_Mission_Automate_ABC_PrendrePreciserContact" id="230" mrt-dia-behavior="MIS_Automate_MRT_ABC_PrendrePreciserContact" name="Armor - movement to contact">
+      <description>
+        <usage><![CDATA[Units move to cover the area between the boundary limits and engage the enemy if the force ratio is favorable.]]></usage>
+      </description>
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
