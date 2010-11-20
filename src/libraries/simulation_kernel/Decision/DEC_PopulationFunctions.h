@@ -17,6 +17,7 @@ class MIL_Population;
 class MIL_Mission_ABC;
 class TER_Localisation;
 class MT_Vector2D;
+class DEC_Knowledge_Object;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -41,13 +42,13 @@ public:
     static int GetKnowledgeAgentRoePopulation ( unsigned int agentId );
 
     // Knowledge objects
-    static boost::shared_ptr<MT_Vector2D> GetKnowledgeObjectLocalisation( int knowledgeId);
-    static bool IsKnowledgeObjectValid( unsigned int nID );
-    static std::vector< unsigned int > GetObjectsInZone( const TER_Localisation* pZone, const std::vector< std::string >& parameters );
-    static int DamageObject( int knowledgeId, double damageFactor ) ;
-    static float GetKnowledgeObjectDistance( const MIL_Population& callerPopulation, int knowledgeId ) ;
-    static boost::shared_ptr<MT_Vector2D> GetKnowledgeObjectClosestPoint( const MIL_Population& callerPopulation, int knowledgeId ) ;
-    static int IsEnemy( const MIL_Population& callerPopulation, int knowledgeId );
+    static const TER_Localisation* GetKnowledgeObjectLocalisation( boost::shared_ptr< DEC_Knowledge_Object > knowledge );
+    static bool IsKnowledgeObjectValid( boost::shared_ptr< DEC_Knowledge_Object > knowledge );
+    static std::vector< boost::shared_ptr< DEC_Knowledge_Object > > GetObjectsInZone( const MIL_Population& caller, const TER_Localisation* pZone, const std::vector< std::string >& parameters );
+    static int DamageObject( boost::shared_ptr< DEC_Knowledge_Object > knowledge, double damageFactor ) ;
+    static float GetKnowledgeObjectDistance( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > knowledge ) ;
+    static boost::shared_ptr<MT_Vector2D> GetKnowledgeObjectClosestPoint( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > knowledge ) ;
+    static int IsEnemy( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > knowledge );
     
 
     // Etat decisionnel

@@ -22,7 +22,9 @@
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/QueryValidity.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
@@ -109,19 +111,20 @@ int DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation( unsigned int agentI
 // Name: DEC_PopulationFunctions::GetObjectsInZone
 // Created: NLD 2005-12-05
 // -----------------------------------------------------------------------------
-std::vector< unsigned int > DEC_PopulationFunctions::GetObjectsInZone( const TER_Localisation* pZone, const std::vector< std::string >& parameters )
+std::vector< boost::shared_ptr< DEC_Knowledge_Object > > DEC_PopulationFunctions::GetObjectsInZone( const MIL_Population& caller, const TER_Localisation* pZone, const std::vector< std::string >& parameters )
 {
+    typedef std::vector< boost::shared_ptr< DEC_Knowledge_Object > >::iterator IT_KnowledgeObject;
+
     assert( pZone );
-    std::vector< unsigned int > knowledges;
     MIL_ObjectFilter filter( parameters );
-    TER_Object_ABC::T_ObjectVector  objects;
-    TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( *pZone, objects );
-    for( TER_Object_ABC::CIT_ObjectVector it = objects.begin(); it != objects.end(); ++it )
+    std::vector< boost::shared_ptr< DEC_Knowledge_Object > > knowledges; //T_KnowledgeObjectDiaIDVector
+    caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, *pZone );
+    for ( IT_KnowledgeObject it = knowledges.begin(); it != knowledges.end(); )
     {
-        MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
-        if( !object().CanBePerceived() || !filter.Test( object.GetType() ) )
-            continue;
-        knowledges.push_back( object.GetID() );
+        if( ! IsKnowledgeObjectValid( *it ) )
+            it = knowledges.erase( it );
+        else
+            ++it;
     }
     return knowledges;
 }
@@ -130,33 +133,35 @@ std::vector< unsigned int > DEC_PopulationFunctions::GetObjectsInZone( const TER
 // Name: DEC_PopulationFunctions::GetKnowledgeObjectLocalisation
 // Created: NLD 2005-12-05
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MT_Vector2D> DEC_PopulationFunctions::GetKnowledgeObjectLocalisation  ( int knowledgeId)
+const TER_Localisation* DEC_PopulationFunctions::GetKnowledgeObjectLocalisation( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( knowledgeId );
-    if( !( pObject && (*pObject)().CanBePerceived() ) )
-        return boost::shared_ptr<MT_Vector2D>();
-    return boost::shared_ptr<MT_Vector2D>((MT_Vector2D *)&pObject->GetLocalisation()) ;//, &DEC_Tools::GetTypeLocalisation(), 1 );
+    if( pKnowledge && pKnowledge->IsValid() )
+        return &pKnowledge->GetLocalisation();
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::IsKnowledgeObjectValid
 // Created: NLD 2005-12-05
 // -----------------------------------------------------------------------------
-bool DEC_PopulationFunctions::IsKnowledgeObjectValid( unsigned int nID )
+bool DEC_PopulationFunctions::IsKnowledgeObjectValid( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( nID );
-    return ( pObject && (*pObject)().CanBePerceived() );
+    bool isValid = pKnowledge && pKnowledge->IsValid();
+    const MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
+    return isValid && pObject && (*pObject)().CanBePerceived();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::DamageObject
 // Created: NLD 2005-12-05
 // -----------------------------------------------------------------------------
-int DEC_PopulationFunctions::DamageObject( int knowledgeId, double damageFactor )
+int DEC_PopulationFunctions::DamageObject( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, double damageFactor )
 {
-    MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( knowledgeId );
-    if( !( pObject && (*pObject)().CanBePerceived() ) )
-        return  (int)eQueryInvalid ;
+    if( !( pKnowledge && pKnowledge->IsValid() ) )
+        return  (int)eQueryInvalid;
+    MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
+    if( !pObject )
+        return  (int)eQueryInvalid;
     (*pObject)().Destroy( damageFactor );
     return (int)eQueryValid;
 }
@@ -165,27 +170,25 @@ int DEC_PopulationFunctions::DamageObject( int knowledgeId, double damageFactor 
 // Name: DEC_PopulationFunctions::GetKnowledgeObjectDistance
 // Created: SBO 2005-12-13
 // -----------------------------------------------------------------------------
-float DEC_PopulationFunctions::GetKnowledgeObjectDistance( const MIL_Population& callerPopulation, int knowledgeId )
+float DEC_PopulationFunctions::GetKnowledgeObjectDistance( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( knowledgeId );
-    if( !( pObject && (*pObject)().CanBePerceived() ) )
+    if( !( pKnowledge && pKnowledge->IsValid() ) )
         return 0.0f;
-    return (float)callerPopulation.GetDistanceTo( pObject->GetLocalisation() ) ;
+    return (float)callerPopulation.GetDistanceTo( pKnowledge->GetLocalisation() ) ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint
 // Created: SBO 2005-12-13
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MT_Vector2D> DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint(const MIL_Population& callerPopulation, int knowledgeId )
+boost::shared_ptr< MT_Vector2D > DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( knowledgeId );
-    if( !( pObject && (*pObject)().CanBePerceived() ) )
+    if( !( pKnowledge && pKnowledge->IsValid() ) )
         return boost::shared_ptr<MT_Vector2D>();
     else
     {
-        MT_Vector2D* pPoint = new MT_Vector2D( callerPopulation.GetClosestPoint( pObject->GetLocalisation() ) );
-        return boost::shared_ptr<MT_Vector2D>(pPoint);
+        MT_Vector2D* pPoint = new MT_Vector2D( callerPopulation.GetClosestPoint( pKnowledge->GetLocalisation() ) );
+        return boost::shared_ptr<MT_Vector2D>( pPoint );
     }
 }
 
@@ -193,19 +196,18 @@ boost::shared_ptr<MT_Vector2D> DEC_PopulationFunctions::GetKnowledgeObjectCloses
 // Name: DEC_PopulationFunctions::IsEnemy
 // Created: HME 2005-12-29
 // -----------------------------------------------------------------------------
-int DEC_PopulationFunctions::IsEnemy(const MIL_Population& callerPopulation, int knowledgeId  )
+int DEC_PopulationFunctions::IsEnemy( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    const MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia(knowledgeId);
-    if( !( pObject && (*pObject)().CanBePerceived() ) )
-        return 0;
-    return (int)callerPopulation.GetArmy().IsAnEnemy( *pObject->GetArmy() ) ;
+    if( !( pKnowledge && pKnowledge->IsValid() ) )
+        return int( eTristate_DontKnow );
+    return int( pKnowledge->IsAnEnemy( callerPopulation.GetArmy() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::NotifyDominationStateChanged
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::NotifyDominationStateChanged( MIL_Population& callerPopulation, double dominationState)
+void DEC_PopulationFunctions::NotifyDominationStateChanged( MIL_Population& callerPopulation, double dominationState )
 {
     callerPopulation.GetDecision().NotifyDominationStateChanged( dominationState );
 }
