@@ -38,11 +38,7 @@ ToxicCloudAttribute::~ToxicCloudAttribute()
 void ToxicCloudAttribute::Update( const Common::ObjectAttributes& message )
 {
     if( message.has_toxic_cloud() )
-    {
-        quantities_.Clear();
-        for( int i = 0; i < message.toxic_cloud().quantities().elem_size(); ++i )
-            *quantities_.add_elem() = message.toxic_cloud().quantities().elem( i );
-    }
+        quantities_ = message.toxic_cloud().quantities();
 }
 
 // -----------------------------------------------------------------------------
@@ -51,6 +47,5 @@ void ToxicCloudAttribute::Update( const Common::ObjectAttributes& message )
 // -----------------------------------------------------------------------------
 void ToxicCloudAttribute::Send( Common::ObjectAttributes& message ) const
 {
-    for( int i = 0; i < quantities_.elem_size(); ++i )
-        *message.mutable_toxic_cloud()->mutable_quantities()->add_elem() = quantities_.elem( i );
+    message.mutable_toxic_cloud()->mutable_quantities()->CopyFrom( quantities_ );
 }

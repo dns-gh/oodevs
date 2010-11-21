@@ -13,8 +13,8 @@
 #define __DEC_MedicalTreatmentFunctions_h_
 
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 
+class DEC_Decision_ABC;
 class MIL_AgentPion;
 
 // =============================================================================
@@ -25,9 +25,9 @@ class DEC_MedicalTreatmentFunctions
 public:
     //! @name Functions
     //@{
-    static void                                         TakeCareOfThePatient    ( const MIL_Agent_ABC&, boost::shared_ptr< DEC_Knowledge_Agent > agent, boost::shared_ptr< DEC_Knowledge_Object > object );
-    static boost::shared_ptr< DEC_Knowledge_Object >    DetermineHospital       ( const MIL_Agent_ABC& caller, boost::shared_ptr< DEC_Knowledge_Agent > agent, std::vector< boost::shared_ptr< DEC_Knowledge_Object > > knowledges  );
-    static bool                                         CanHospitalTreatWound   ( const MIL_Agent_ABC&, boost::shared_ptr< DEC_Knowledge_Agent > agent, boost::shared_ptr< DEC_Knowledge_Object > object );
+    static void                                         TakeCareOfThePatient    ( const MIL_Agent_ABC&, const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > object );
+    static boost::shared_ptr< DEC_Knowledge_Object >    DetermineHospital       ( const MIL_Agent_ABC& caller, const DEC_Decision_ABC* agent, std::vector< boost::shared_ptr< DEC_Knowledge_Object > > knowledges  );
+    static bool                                         CanHospitalTreatWound   ( const MIL_Agent_ABC&, const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > object );
     //@}
 };
 

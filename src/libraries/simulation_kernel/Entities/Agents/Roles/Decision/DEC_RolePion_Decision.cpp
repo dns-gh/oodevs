@@ -885,11 +885,11 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
 
     // Hospitals
     brain[ "DEC_DeterminerHopital" ] =
-        boost::function< boost::shared_ptr< DEC_Knowledge_Object > ( boost::shared_ptr< DEC_Knowledge_Agent >, T_KnowledgeObjectDiaIDVector ) >( boost::bind( &DEC_MedicalTreatmentFunctions::DetermineHospital, boost::cref( GetPion() ), _1, _2 ) );
+        boost::function< boost::shared_ptr< DEC_Knowledge_Object > ( const DEC_Decision_ABC*, T_KnowledgeObjectDiaIDVector ) >( boost::bind( &DEC_MedicalTreatmentFunctions::DetermineHospital, boost::cref( GetPion() ), _1, _2 ) );
     brain[ "DEC_CanHospitalTreatWound" ] =
-        boost::function< bool ( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MedicalTreatmentFunctions::CanHospitalTreatWound, boost::cref( GetPion() ), _1, _2 ) );
+        boost::function< bool ( const DEC_Decision_ABC*, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MedicalTreatmentFunctions::CanHospitalTreatWound, boost::cref( GetPion() ), _1, _2 ) );
     brain[ "DEC_DebarqueBlesseDansHopital" ] =
-        boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MedicalTreatmentFunctions::TakeCareOfThePatient, boost::cref( GetPion() ), _1, _2 ) );
+        boost::function< void ( const DEC_Decision_ABC*, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MedicalTreatmentFunctions::TakeCareOfThePatient, boost::cref( GetPion() ), _1, _2 ) );
 
     // RC
     brain[ "DEC_RC1" ] =

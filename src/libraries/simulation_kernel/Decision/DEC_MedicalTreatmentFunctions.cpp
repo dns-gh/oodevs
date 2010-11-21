@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_MedicalTreatmentFunctions.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -24,9 +25,9 @@
 
 namespace
 {
-    PHY_InjuredHuman* GetWound( DEC_Knowledge_Agent& wounded )
+    PHY_InjuredHuman* GetWound( const DEC_Decision_ABC& wounded )
     {
-        PHY_InjuredHuman* injuredHuman = wounded.GetAgentKnown().GetRole< PHY_RolePion_Composantes >().GetMajorComposante()->GetInjury();
+        PHY_InjuredHuman* injuredHuman = wounded.GetPion().GetRole< PHY_RolePion_Composantes >().GetMajorComposante()->GetInjury();
         return injuredHuman;
     }
 }
@@ -35,7 +36,7 @@ namespace
 // Name: DEC_MedicalTreatmentFunctions::TakeCareOfThePatient
 // Created: RFT 2008
 // -----------------------------------------------------------------------------
-void DEC_MedicalTreatmentFunctions::TakeCareOfThePatient( const MIL_Agent_ABC& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Agent > patient, boost::shared_ptr< DEC_Knowledge_Object > knowledge )
+void DEC_MedicalTreatmentFunctions::TakeCareOfThePatient( const MIL_Agent_ABC& /*callerAgent*/, const DEC_Decision_ABC* patient, boost::shared_ptr< DEC_Knowledge_Object > knowledge )
 {
     MIL_Object_ABC* pHospital = knowledge->GetObjectKnown();
     PHY_InjuredHuman* injuredHuman = GetWound( *patient );
@@ -47,7 +48,7 @@ void DEC_MedicalTreatmentFunctions::TakeCareOfThePatient( const MIL_Agent_ABC& /
 // Name: DEC_MedicalTreatmentFunctions::DetermineHospital
 // Created: LDC 2010-07-01
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_MedicalTreatmentFunctions::DetermineHospital( const MIL_Agent_ABC& caller, boost::shared_ptr< DEC_Knowledge_Agent > patient, std::vector< boost::shared_ptr< DEC_Knowledge_Object > > hospitals )
+boost::shared_ptr< DEC_Knowledge_Object > DEC_MedicalTreatmentFunctions::DetermineHospital( const MIL_Agent_ABC& caller, const DEC_Decision_ABC* patient, std::vector< boost::shared_ptr< DEC_Knowledge_Object > > hospitals )
 {
     typedef std::vector< boost::shared_ptr< DEC_Knowledge_Object > >::const_iterator const_iterator;
 
@@ -78,7 +79,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_MedicalTreatmentFunctions::Determi
 // Name: DEC_MedicalTreatmentFunctions::CanHospitalTreatWound
 // Created: LDC 2010-07-01
 // -----------------------------------------------------------------------------
-bool DEC_MedicalTreatmentFunctions::CanHospitalTreatWound( const MIL_Agent_ABC& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Agent > patient, boost::shared_ptr< DEC_Knowledge_Object > hospital )
+bool DEC_MedicalTreatmentFunctions::CanHospitalTreatWound( const MIL_Agent_ABC& /*callerAgent*/, const DEC_Decision_ABC* patient, boost::shared_ptr< DEC_Knowledge_Object > hospital )
 {
     PHY_InjuredHuman* injuredHuman = GetWound( *patient );
     if ( !injuredHuman )

@@ -173,7 +173,7 @@ int DEC_PopulationFunctions::DamageObject( boost::shared_ptr< DEC_Knowledge_Obje
 float DEC_PopulationFunctions::GetKnowledgeObjectDistance( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( !( pKnowledge && pKnowledge->IsValid() ) )
-        return 0.0f;
+        return std::numeric_limits< float >::max();
     return (float)callerPopulation.GetDistanceTo( pKnowledge->GetLocalisation() ) ;
 }
 

@@ -116,7 +116,8 @@ void DEC_PopulationDecision::RegisterUserArchetypeFunctions ( directia::brain::B
 {
     // Knowledge objects
     brain[ "DEC_IsValidKnowledgeObject" ] = &DEC_PopulationFunctions::IsKnowledgeObjectValid;
-    brain[ "DEC_ObjectKnowledgesInZone" ] = &DEC_PopulationFunctions::GetObjectsInZone;
+    brain[ "DEC_ObjectKnowledgesInZone" ] = 
+        boost::function<  std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::vector< std::string >& ) >( boost::bind( &DEC_PopulationFunctions::GetObjectsInZone, boost::cref( GetPopulation() ), _1, _2 ) );
 
     // Former szName_, mission_, automate_:
     brain[ "DEC_GetSzName" ] = &DEC_PopulationFunctions::GetSzName;
@@ -156,16 +157,14 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
             boost::function< std::vector<unsigned int>() >(boost::bind(&DEC_PopulationKnowledge::GetPionsSecuring, boost::cref( GetPopulation().GetKnowledge() ) ) );
 
     // Knowledge objects
-    brain[ "DEC_ConnaissanceObjet_Localisation" ] =
-        boost::function< boost::shared_ptr< MT_Vector2D > ( int ) > ( boost::bind(&DEC_PopulationFunctions::GetKnowledgeObjectLocalisation , _1) );
-    brain[ "DEC_ConnaissanceObjet_Degrader" ] =
-            boost::function< int ( int , float )> ( boost::bind(&DEC_PopulationFunctions::DamageObject, _1, _2)      );
+    brain[ "DEC_ConnaissanceObjet_Localisation" ] = &DEC_PopulationFunctions::GetKnowledgeObjectLocalisation;
+    brain[ "DEC_ConnaissanceObjet_Degrader" ] = &DEC_PopulationFunctions::DamageObject;
     brain[ "DEC_ConnaissanceObjet_Distance" ] =
-            boost::function< float ( int )> ( boost::bind(&DEC_PopulationFunctions::GetKnowledgeObjectDistance, boost::cref(GetPopulation()), _1 ) );
+            boost::function< float ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_PopulationFunctions::GetKnowledgeObjectDistance, boost::cref( GetPopulation() ), _1 ) );
     brain[ "DEC_ConnaissanceObjet_PointPlusProche" ] =
-            boost::function< boost::shared_ptr< MT_Vector2D > ( int ) > ( boost::bind (&DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint, boost::cref( GetPopulation() ) , _1 ) );
+            boost::function< boost::shared_ptr< MT_Vector2D > ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint, boost::cref( GetPopulation() ) ,_1 ) );
     brain[ "DEC_ConnaissanceObjet_EstEnnemi" ] =
-            boost::function< int ( int ) > ( boost::bind(&DEC_PopulationFunctions::IsEnemy, boost::ref( GetPopulation() ), _1 ) );
+            boost::function< int ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_PopulationFunctions::IsEnemy, boost::ref( GetPopulation() ), _1 ) );
 
     // Debug
     brain[ "DEC_DebugAffichePoint"   ] =
