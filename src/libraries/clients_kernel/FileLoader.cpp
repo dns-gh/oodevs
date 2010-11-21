@@ -39,7 +39,7 @@ namespace
 {
     struct CheckedLoader
     {
-        typedef boost::function< void ( xml::xistream& ) > T_Loader;
+        typedef boost::function< void ( xml::xisubstream ) > T_Loader;
 
         CheckedLoader( const std::string& file, const tools::ExerciseConfig& config, T_Loader loader )
             : path_( config.BuildPhysicalChildFile( file ) )
@@ -53,21 +53,22 @@ namespace
     private:
         void LoadFile( const std::string&, xml::xistream& xis )
         {
-            std::auto_ptr< xml::grammar > grammar( new xml::null_grammar() );
             const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
-            if( !schema.empty() )
+            if( schema.empty() )
+                loader_( xml::xifstream( path_ ) );
+            else
             {
                 CheckedLoader::GetModelVersion( schema );
-                grammar.reset( new xml::external_grammar( config_.BuildResourceChildFile( schema ) ) );
+                loader_( xml::xifstream( path_, xml::external_grammar( config_.BuildResourceChildFile( schema ) ) ) );
             }
-            xml::xifstream input( path_, *grammar );
-            loader_( input );
         }
 
         void GetModelVersion( const std::string& grammarPath )
         {
             xml::xifstream xis( config_.BuildResourceChildFile( grammarPath ) );
-            xis >> xml::start( "xs:schema" ) >> xml::optional >> xml::attribute( "version", modelVersion_ ) >> xml::end;
+            xis >> xml::start( "xs:schema" )
+                    >> xml::optional >> xml::attribute( "version", modelVersion_ )
+                >> xml::end;
         }
 
         CheckedLoader& operator=( const CheckedLoader& );
