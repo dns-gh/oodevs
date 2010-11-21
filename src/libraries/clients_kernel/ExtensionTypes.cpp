@@ -49,7 +49,6 @@ void ExtensionTypes::Load( const std::string& file )
     if( ! bfs::exists( bfs::path( file, bfs::native ) ) )
         return;
     xml::xifstream xis( file );
-    std::auto_ptr< xml::grammar > grammar( new xml::null_grammar() );
     const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
     if( schema.empty() )
         ReadExtensions( xml::xifstream( file ) );
