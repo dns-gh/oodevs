@@ -74,11 +74,11 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     end
 
                     _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eDeterminerSite then
+                    cases_switch_1[1] = true
+                 elseif switch_1 == eterminerSite then
                     self.positionHopital = 0
                     self.hopital = DEC_DeterminerHopital( self._namedParams.mission.wounded_, self._namedParams.mission.hospitals_ )
-                    if( self.hopital == 0 ) then
+                    if( self.hopital == nil ) then
                         do
                             self.ePhase = eFinMission
                             DEC_RC( eRC_MissionImpossible )
@@ -87,7 +87,7 @@ elseif switch_1 == eDeterminerSite then
                         end
                     end
 
-                        if _continue then
+                    if _continue then
                         Activate( self.activations.ACT_RC_SurPion, 1, { eRC_TransportUnitePrete, self._namedParams.mission.wounded_, } )
                         Activate( self.activations.ACT_RC, 1, { eRC_TransportEmbarquement, } )
                         Activate( self.activations.ACT_EmbarquerBlesse, 1, { self._namedParams.mission.wounded_, } )
@@ -100,11 +100,10 @@ elseif switch_1 == eDeterminerSite then
                                 cases_switch_1[2] = true
 elseif switch_1 == eTransporter then
                     Activate( self.activations.ACT_RC, 1, { eRC_TransportEnCours, } )
-                    if( self.positionHopital == 0 ) then
+                    if( self.positionHopital == nil ) then
                         do
                             local localisationHopital = DEC_ConnaissanceObjet_Localisation( self.hopital )
-                            local eReturnCode = eNoError
-                            self.positionHopital = DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( localisationHopital, eReturnCode )
+                            self.positionHopital = DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( localisationHopital )
                         end
                     end
 
