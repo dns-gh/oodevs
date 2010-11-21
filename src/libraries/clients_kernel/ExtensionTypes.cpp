@@ -13,8 +13,7 @@
 #include "ExtensionType.h"
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 4511 )
+#pragma warning( push, 0 )
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
@@ -47,17 +46,26 @@ ExtensionTypes::~ExtensionTypes()
 // -----------------------------------------------------------------------------
 void ExtensionTypes::Load( const std::string& file )
 {
-    if( !bfs::exists( bfs::path( file, bfs::native ) ) )
+    if( ! bfs::exists( bfs::path( file, bfs::native ) ) )
         return;
     xml::xifstream xis( file );
     std::auto_ptr< xml::grammar > grammar( new xml::null_grammar() );
     const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
-    if( !schema.empty() )
-        grammar.reset( new xml::external_grammar( tools::GeneralConfig::BuildResourceChildFile( schema ) ) );
-    xml::xifstream input( file, *grammar );
+    if( schema.empty() )
+        ReadExtensions( xml::xifstream( file ) );
+    else
+        ReadExtensions( xml::xifstream( file,
+            xml::external_grammar( tools::GeneralConfig::BuildResourceChildFile( schema ) ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtensionTypes::ReadExtensions
+// Created: MCO 2010-11-21
+// -----------------------------------------------------------------------------
+void ExtensionTypes::ReadExtensions( xml::xisubstream xis )
+{
     xis >> xml::start( "extensions" )
-        >> xml::list( *this, &ExtensionTypes::ReadElement )
-        >> xml::end;
+            >> xml::list( *this, &ExtensionTypes::ReadElement );
 }
 
 // -----------------------------------------------------------------------------

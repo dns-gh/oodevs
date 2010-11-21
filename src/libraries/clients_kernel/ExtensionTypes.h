@@ -15,16 +15,17 @@
 namespace xml
 {
     class xistream;
+    class xisubstream;
 }
 
 namespace kernel
 {
-class DictionaryType;
-class ExtensionType;
+    class DictionaryType;
+    class ExtensionType;
 
 // =============================================================================
 /** @class  ExtensionTypes
-    @brief  ExtensionTypes
+    @brief  Extension types
 */
 // Created: JSR 2010-10-01
 // =============================================================================
@@ -55,6 +56,7 @@ private:
     //@{
     void ReadElement( const std::string& name, xml::xistream& xis );
     void ReadDictionary( xml::xistream& xis );
+    void ReadExtensions( xml::xisubstream xis );
     //@}
 };
 
