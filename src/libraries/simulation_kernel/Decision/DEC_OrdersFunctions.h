@@ -19,6 +19,7 @@ class MIL_Mission_ABC;
 class MIL_AutomateMission;
 class MIL_Fuseau;
 class MT_Vector2D;
+class MIL_LimaOrder;
 
 // =============================================================================
 // Created: NLD 2004-07-08
@@ -33,7 +34,7 @@ public:
 
     // Limas
     template< typename T > static unsigned int GetLima                   ( const T& caller, unsigned int limaId );
-    template< typename T > static unsigned int GetNextScheduledLima      ( const T& caller );
+    template< typename T > static MIL_LimaOrder* GetNextScheduledLima    ( const T& caller );
     template< typename T > static const MIL_Fuseau& GetFuseau            ( const T& caller );
     template< typename T > static bool GetMissionLimaFlag                ( const T& caller, unsigned int limaId );
                            static void PionSetMissionLimaFlag            ( MIL_AgentPion& caller, unsigned int limaId, bool flag );

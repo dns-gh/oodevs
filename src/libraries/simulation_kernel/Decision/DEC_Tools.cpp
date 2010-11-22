@@ -40,6 +40,8 @@ namespace directia
     void ReleasedByDIA( MIL_FragOrder* ) {}
     void UsedByDIA( MIL_Fuseau* ) {}
     void ReleasedByDIA( MIL_Fuseau* ) {}
+    void UsedByDIA( MIL_LimaOrder* ) {}
+    void ReleasedByDIA( MIL_LimaOrder* ) {}
     void UsedByDIA( MIL_ParameterType_MedicalPriorities* ) {}
     void ReleasedByDIA( MIL_ParameterType_MedicalPriorities* ) {}
     void UsedByDIA( MIL_ParameterType_MaintenancePriorities* ) {}

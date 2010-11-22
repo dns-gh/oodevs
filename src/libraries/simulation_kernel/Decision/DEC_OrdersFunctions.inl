@@ -54,14 +54,9 @@ unsigned int DEC_OrdersFunctions::GetLima( const T& caller, unsigned int limaId 
 // Created: NLD 2007-04-30
 // -----------------------------------------------------------------------------
 template< typename T >
-unsigned int DEC_OrdersFunctions::GetNextScheduledLima( const T& caller )
+MIL_LimaOrder* DEC_OrdersFunctions::GetNextScheduledLima( const T& caller )
 {
-    MIL_LimaOrder* pLima = caller.GetOrderManager().FindNextScheduledLima();
-    if( !pLima )
-    {
-        return 0;
-    }
-    return pLima->GetID() ;
+    return caller.GetOrderManager().FindNextScheduledLima();
 }
 
 // -----------------------------------------------------------------------------
