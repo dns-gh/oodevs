@@ -10,9 +10,9 @@
 #include "frontend_pch.h"
 #include "LauncherClient.h"
 #include "ConnectionHandler_ABC.h"
-#include "Host_ABC.h"
-#include "Model.h"
 #include "LauncherPublisher.h"
+#include "RemoteHost.h"
+#include "ResponseHandlerProxy.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/LauncherSenders.h"
@@ -24,10 +24,12 @@ using namespace frontend;
 // Name: LauncherClient constructor
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-LauncherClient::LauncherClient( const tools::GeneralConfig& config, kernel::Controller& controller )
+LauncherClient::LauncherClient( kernel::Controller& controller )
     : tools::ClientNetworker( "", false )
-    , model_( new frontend::Model( config, controller ) )
-    , host_( 0 )
+    , controller_( controller )
+    , handler_( 0 )
+    , publisher_( new LauncherPublisher( *this ) )
+    , responseHandler_( new ResponseHandlerProxy() )
     , connected_( false )
 {
     RegisterMessage( *this, &LauncherClient::HandleLauncherToAdmin );
@@ -58,11 +60,8 @@ void LauncherClient::Connect( const std::string& host, unsigned int port, fronte
 // -----------------------------------------------------------------------------
 void LauncherClient::ConnectionSucceeded( const std::string& endpoint )
 {
-    // $$$$ SBO 2010-11-05: TODO, check if not already connected to same host
-    if( host_ )
-        model_->RemoveHost( *host_ );
-    publisher_.reset( new LauncherPublisher( *this, endpoint ) );
-    host_ = &model_->CreateHost( *publisher_, endpoint );
+    publisher_->SetHost( endpoint );
+    responseHandler_->SetMainHandler( boost::shared_ptr< ResponseHandler_ABC >( new RemoteHost( *publisher_, endpoint, controller_ ) ) );
     launcher::ConnectionRequest message;
     message().mutable_client_version()->set_value( Version::ProtocolVersion().value() );
     message.Send( *publisher_ );
@@ -151,7 +150,7 @@ namespace
 // Name: LauncherClient::HandleLauncherToAdmin
 // Created: SBO 2010-09-30
 // -----------------------------------------------------------------------------
-void LauncherClient::HandleLauncherToAdmin( const std::string& endpoint, const MsgsLauncherToAdmin::MsgLauncherToAdmin& message )
+void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, const MsgsLauncherToAdmin::MsgLauncherToAdmin& message )
 {
     if( message.message().has_connection_ack() )
     {
@@ -169,20 +168,22 @@ void LauncherClient::HandleLauncherToAdmin( const std::string& endpoint, const M
         }
     }
     else if( message.message().has_exercise_list_response() )
-        model_->Update( endpoint, message.message().exercise_list_response() );
+        responseHandler_->Handle( message.message().exercise_list_response() );
+    else if( message.message().has_profiles_description() )
+        responseHandler_->Handle( message.message().profiles_description() );
     else if( message.message().has_control_start_ack() )
     {
         if( message.message().control_start_ack().error_code() != MsgsLauncherToAdmin::MsgControlStartAck::success )
             handler_->OnError( tools::translate( "LauncherClient", "Failed to start exercise: %1." )
                                 .arg( MessageString( message.message().control_start_ack().error_code() ) ).ascii() );
-        model_->Update( endpoint, message.message().control_start_ack() );
+        responseHandler_->Handle( message.message().control_start_ack() );
     }
     else if( message.message().has_control_stop_ack() )
     {
         if( message.message().control_stop_ack().error_code() != MsgsLauncherToAdmin::MsgControlStopAck::success )
             handler_->OnError( tools::translate( "LauncherClient", "Failed to stop exercise: %1." )
                                 .arg( MessageString( message.message().control_stop_ack().error_code() ) ).ascii() );
-        model_->Update( endpoint, message.message().control_stop_ack() );
+        responseHandler_->Handle( message.message().control_stop_ack() );
     }
 }
 
@@ -200,16 +201,34 @@ void LauncherClient::QueryExerciseList()
 }
 
 // -----------------------------------------------------------------------------
+// Name: LauncherClient::QueryProfileList
+// Created: SBO 2010-11-22
+// -----------------------------------------------------------------------------
+void LauncherClient::QueryProfileList()
+{
+    if( Connected() )
+    {
+        launcher::ProfilesListRequest message;
+        message.Send( *publisher_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: LauncherClient::ResetConnection
 // Created: SBO 2010-10-22
 // -----------------------------------------------------------------------------
 void LauncherClient::ResetConnection()
 {
-    if( host_ )
-    {
-        Disconnect();
-        model_->RemoveHost( *host_ );
-        host_ = 0;
-    }
+    Disconnect();
+    responseHandler_->ResetMainHandler();
     connected_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherClient::Register
+// Created: SBO 2010-11-22
+// -----------------------------------------------------------------------------
+void LauncherClient::Register( boost::shared_ptr< ResponseHandler_ABC > handler )
+{
+    responseHandler_->Register( handler );
 }

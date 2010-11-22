@@ -22,7 +22,10 @@ namespace xml
     class xistream;
 }
 
-class Profile;
+namespace frontend
+{
+    class Profile;
+}
 
 // =============================================================================
 /** @class  ProfileList
@@ -53,7 +56,7 @@ public slots:
 signals:
     //! @name
     //@{
-    void Select( const Profile& profile );
+    void Select( const frontend::Profile& profile );
     //@}
 
 private:
@@ -73,7 +76,7 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    std::vector< Profile > profiles_;
+    std::vector< frontend::Profile > profiles_;
     //@}
 };
 

@@ -7,9 +7,14 @@
 //
 // *****************************************************************************
 
-#include "selftraining_app_pch.h"
+#include "frontend_pch.h"
 #include "Profile.h"
+#include "ProfileVisitor_ABC.h"
+#include "protocol/Authentication.h"
+#include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.hpp>
+
+using namespace frontend;
 
 Profile Profile::Invalid;
 
@@ -29,6 +34,7 @@ Profile::Profile()
 // -----------------------------------------------------------------------------
 Profile::Profile( xml::xistream& xis )
     : login_( xis.attribute< std::string >( "name" ) )
+    , password_( xis.attribute< std::string >( "password" ) )
     , supervisor_( false )
     , valid_( true )
 {
@@ -69,4 +75,49 @@ bool Profile::IsSupervision() const
 bool Profile::IsValid() const
 {
     return valid_;
+}
+
+namespace
+{
+    struct ProfileReader
+    {
+        void ReadProfile( xml::xistream& xis, ProfileVisitor_ABC& visitor )
+        {
+            Profile profile( xis );
+            visitor.Visit( profile );
+        }
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::VisitProfiles
+// Created: SBO 2010-11-22
+// -----------------------------------------------------------------------------
+void Profile::VisitProfiles( const tools::GeneralConfig& config, const std::string& exercise, ProfileVisitor_ABC& visitor )
+{
+    const std::string exerciseFile = config.GetExerciseFile( exercise );
+    std::string profilesFile;
+    {
+        xml::xifstream xis( exerciseFile ) ;
+        xis >> xml::start( "exercise" )
+                >> xml::start( "profiles" )
+                    >> xml::attribute( "file", profilesFile );
+    }
+    {
+        xml::xifstream xis( config.BuildChildPath( exerciseFile, profilesFile ) );
+        ProfileReader reader;
+        xis >> xml::start( "profiles" )
+                >> xml::list( "profile", reader, &ProfileReader::ReadProfile, visitor );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::Send
+// Created: SBO 2010-11-22
+// -----------------------------------------------------------------------------
+void Profile::Send( MsgsAuthenticationToClient::MsgProfileDescription& message ) const
+{
+    message.set_login( login_ );
+    message.set_password( !password_.empty() );
+    message.set_supervisor( supervisor_ );
 }

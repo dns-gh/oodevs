@@ -18,9 +18,8 @@ using namespace frontend;
 // Name: LauncherPublisher constructor
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-LauncherPublisher::LauncherPublisher( tools::MessageSender_ABC& sender, const std::string& endpoint )
+LauncherPublisher::LauncherPublisher( tools::MessageSender_ABC& sender )
     : sender_( sender )
-    , endpoint_( endpoint )
 {
     // NOTHING
 }
@@ -32,6 +31,24 @@ LauncherPublisher::LauncherPublisher( tools::MessageSender_ABC& sender, const st
 LauncherPublisher::~LauncherPublisher()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherPublisher::IsSame
+// Created: SBO 2010-11-22
+// -----------------------------------------------------------------------------
+bool LauncherPublisher::IsSame( const std::string& endpoint ) const
+{
+    return endpoint_ == endpoint; // $$$$ SBO 2010-11-22: find something better, resolve host
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherPublisher::SetHost
+// Created: SBO 2010-11-22
+// -----------------------------------------------------------------------------
+void LauncherPublisher::SetHost( const std::string& endpoint )
+{
+    endpoint_ = endpoint;
 }
 
 // -----------------------------------------------------------------------------

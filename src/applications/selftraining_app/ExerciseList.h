@@ -16,6 +16,7 @@ namespace frontend
 {
     class Exercise_ABC;
     class ExerciseFilter_ABC;
+    class Profile;
 }
 
 namespace kernel
@@ -30,7 +31,6 @@ namespace tools
 
 class ExerciseProperties;
 class ProfileList;
-class Profile;
 class QListView;
 class QListViewItem;
 
@@ -63,7 +63,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void Select( const frontend::Exercise_ABC& exercise, const Profile& profile );
+    void Select( const frontend::Exercise_ABC& exercise, const frontend::Profile& profile );
     void ClearSelection();
     //@}
 
@@ -77,7 +77,7 @@ private slots:
     //! @name Slots
     //@{
     void SelectExercise( QListViewItem* item );
-    void SelectProfile( const Profile& profile );
+    void SelectProfile( const frontend::Profile& profile );
     //@}
 
 private:

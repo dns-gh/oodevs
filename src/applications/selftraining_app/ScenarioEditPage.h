@@ -27,7 +27,6 @@ class CreateExerciceWidget;
 class ExerciseList;
 class ExportWidget;
 class ImportWidget;
-class Profile;
 class ProgressPage;
 class QTabWidget;
 
@@ -63,7 +62,7 @@ private slots:
     //@{
     virtual void OnEdit();
     void Update();
-    void OnSelect( const frontend::Exercise_ABC& exercise, const Profile& profile );
+    void OnSelect( const frontend::Exercise_ABC& exercise );
     void ClearSelection();
     void EditNameChanged( const QString& string );
     void ComboChanged( int index );

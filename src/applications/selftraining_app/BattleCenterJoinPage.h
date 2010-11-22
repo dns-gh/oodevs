@@ -11,7 +11,7 @@
 #define __BattleCenterJoinPage_h_
 
 #include "LauncherClientPage.h"
-#include "Profile.h"
+#include "frontend/Profile.h"
 
 namespace frontend
 {
@@ -50,7 +50,7 @@ private slots:
     //! @name Slots
     //@{
     virtual void OnJoin();
-    void SelectExercise( const frontend::Exercise_ABC& exercise, const Profile& profile );
+    void SelectExercise( const frontend::Exercise_ABC& exercise, const frontend::Profile& profile );
     void ClearSelection();
     void UpdateExerciseList();
     //@}
@@ -72,7 +72,7 @@ private:
     QSpinBox* port_;
     ExerciseList* exercises_;
     const frontend::Exercise_ABC* exercise_;
-    Profile profile_;
+    frontend::Profile profile_;
     std::auto_ptr< frontend::ExerciseFilter_ABC > filter_;
     //@}
 };

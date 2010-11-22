@@ -74,7 +74,7 @@ RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, k
             filter_.reset( new ExerciseFilter( *host_, *port_ ) );
             exercises_ = new ExerciseList( hbox, config, controllers, false, false, false, false );
             exercises_->SetFilter( *filter_ );
-            connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( SelectExercise( const frontend::Exercise_ABC& ) ) );
+            connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( SelectExercise( const frontend::Exercise_ABC& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
         }
         {
@@ -98,7 +98,7 @@ RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, k
             runningFilter_.reset( new ExerciseFilter( *host_, *port_, true ) );
             runningExercises_ = new ExerciseList( hbox, config, controllers, false, false, false, false );
             runningExercises_->SetFilter( *runningFilter_ );
-            connect( runningExercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( SelectRunningExercise( const frontend::Exercise_ABC& ) ) );
+            connect( runningExercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( SelectRunningExercise( const frontend::Exercise_ABC& ) ) );
             connect( runningExercises_, SIGNAL( ClearSelection() ), SLOT( ClearRunningSelection() ) );
         }
         {

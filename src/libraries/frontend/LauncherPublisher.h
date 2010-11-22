@@ -10,6 +10,8 @@
 #ifndef __LauncherPublisher_h_
 #define __LauncherPublisher_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace MsgsAdminToLauncher { class MsgAdminToLauncher; }
 namespace MsgsLauncherToAdmin { class MsgLauncherToAdmin; }
 
@@ -27,14 +29,20 @@ namespace frontend
 */
 // Created: SBO 2010-09-29
 // =============================================================================
-class LauncherPublisher
+class LauncherPublisher : private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LauncherPublisher( tools::MessageSender_ABC& sender, const std::string& endpoint );
+    explicit LauncherPublisher( tools::MessageSender_ABC& sender );
     virtual ~LauncherPublisher();
+    //@}
+
+    //! @name Accessors
+    //@{
+    bool IsSame( const std::string& endpoint ) const;
+    void SetHost( const std::string& endpoint );
     //@}
 
     //! @name Operations
@@ -44,21 +52,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LauncherPublisher( const LauncherPublisher& );            //!< Copy constructor
-    LauncherPublisher& operator=( const LauncherPublisher& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
     //! @name Member data
     //@{
     tools::MessageSender_ABC& sender_;
-    const std::string endpoint_;
+    std::string endpoint_;
     //@}
 };
 

@@ -30,9 +30,9 @@ namespace tools
 namespace frontend
 {
     class ConnectionHandler_ABC;
-    class Host_ABC;
     class LauncherPublisher;
-    class Model;
+    class ResponseHandler_ABC;
+    class ResponseHandlerProxy;
 
 // =============================================================================
 /** @class  LauncherClient
@@ -46,7 +46,7 @@ class LauncherClient : public tools::ClientNetworker
 public:
     //! @name Constructors/Destructor
     //@{
-             LauncherClient( const tools::GeneralConfig& config, kernel::Controller& controller );
+    explicit LauncherClient( kernel::Controller& controller );
     virtual ~LauncherClient();
     //@}
 
@@ -54,7 +54,9 @@ public:
     //@{
     void Connect( const std::string& host, unsigned int port, frontend::ConnectionHandler_ABC& handler );
     bool Connected() const;
+    void Register( boost::shared_ptr< ResponseHandler_ABC > handler );
     void QueryExerciseList();
+    void QueryProfileList();
     //@}
 
 private:
@@ -76,10 +78,10 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Model > model_;
-    std::auto_ptr< LauncherPublisher > publisher_;
-    Host_ABC* host_;
+    kernel::Controller& controller_;
     ConnectionHandler_ABC* handler_;
+    std::auto_ptr< LauncherPublisher > publisher_;
+    std::auto_ptr< ResponseHandlerProxy > responseHandler_;
     bool connected_;
     //@}
 };

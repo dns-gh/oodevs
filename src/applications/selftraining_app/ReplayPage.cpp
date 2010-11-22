@@ -41,7 +41,7 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, const frontend:
         hbox->setSpacing( 10 );
         {
             exercises_ = new ExerciseList( hbox, config, controllers, false, true, false );
-            connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( OnSelectExercise( const frontend::Exercise_ABC&, const Profile& ) ) );
+            connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelectExercise( const frontend::Exercise_ABC&, const Profile& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
         }
         {
@@ -104,7 +104,7 @@ void ReplayPage::OnStart()
 // Name: ReplayPage::OnSelectExercise
 // Created: RDS 2008-09-02
 // -----------------------------------------------------------------------------
-void ReplayPage::OnSelectExercise( const frontend::Exercise_ABC& exercise, const Profile& profile )
+void ReplayPage::OnSelectExercise( const frontend::Exercise_ABC& exercise, const frontend::Profile& profile )
 {
     if( exercise_ != &exercise )
     {
@@ -123,7 +123,7 @@ void ReplayPage::OnSelectExercise( const frontend::Exercise_ABC& exercise, const
 void ReplayPage::ClearSelection()
 {
     exercise_ = 0;
-    profile_ = Profile::Invalid;
+    profile_ = frontend::Profile::Invalid;
     session_ = "";
     sessions_->Update( "" );
     EnableButton( eButtonStart, false );

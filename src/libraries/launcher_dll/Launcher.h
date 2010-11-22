@@ -19,6 +19,7 @@ namespace MsgsAdminToLauncher
     class MsgControlStart;
     class MsgControlStop;
     class MsgExercicesListRequest;
+    class MsgProfilesListRequest;
 }
 
 namespace kernel
@@ -67,6 +68,7 @@ private:
     void HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgExercicesListRequest& message );
     void HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgControlStart& message );
     void HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgControlStop& message );
+    void HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgProfilesListRequest& message );
     //@}
 
 private:

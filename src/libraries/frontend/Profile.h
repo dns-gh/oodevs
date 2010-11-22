@@ -7,13 +7,27 @@
 //
 // *****************************************************************************
 
-#ifndef __Profile_h_
-#define __Profile_h_
+#ifndef __frontend_Profile_h_
+#define __frontend_Profile_h_
+
+namespace MsgsAuthenticationToClient
+{
+    class MsgProfileDescription;
+}
 
 namespace xml
 {
     class xistream;
 }
+
+namespace tools
+{
+    class GeneralConfig;
+}
+
+namespace frontend
+{
+    class ProfileVisitor_ABC;
 
 // =============================================================================
 /** @class  Profile
@@ -44,13 +58,22 @@ public:
     bool IsValid() const;
     //@}
 
+    //! @name Operations
+    //@{
+    static void VisitProfiles( const tools::GeneralConfig& config, const std::string& exercise, ProfileVisitor_ABC& visitor );
+    void Send( MsgsAuthenticationToClient::MsgProfileDescription& message ) const;
+    //@}
+
 private:
     //! @name Member data
     //@{
     std::string login_;
+    std::string password_;
     bool supervisor_;
     bool valid_;
     //@}
 };
 
-#endif // __Profile_h_
+}
+
+#endif // __frontend_Profile_h_

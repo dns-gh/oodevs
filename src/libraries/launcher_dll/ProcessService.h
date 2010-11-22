@@ -20,16 +20,6 @@
 #include <boost/noncopyable.hpp>
 #include <boost/weak_ptr.hpp>
 
-namespace MsgsAdminToLauncher
-{
-    class MsgControlStart;
-}
-
-namespace MsgsLauncherToAdmin
-{
-    class MsgExercicesListResponse;
-}
-
 namespace tools
 {
     class GeneralConfig;
@@ -66,6 +56,7 @@ public:
     void SendExerciseList( MsgsLauncherToAdmin::MsgExercicesListResponse& message );
     MsgsLauncherToAdmin::MsgControlStartAck::ErrorCode StartExercise( const MsgsAdminToLauncher::MsgControlStart& message );
     MsgsLauncherToAdmin::MsgControlStopAck::ErrorCode StopExercise( const MsgsAdminToLauncher::MsgControlStop& message );
+    void SendProfileList( MsgsAuthenticationToClient::MsgProfileDescriptionList& message );
     bool IsRunning( const std::string& exercise ) const;
     virtual void ProcessStopped();
     //@}

@@ -74,7 +74,7 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
         filter_.reset( new RunningExerciseFilter( *host_, *port_ ) );
         exercises_ = new ExerciseList( box, config_, controllers, true, true, true, false );
         exercises_->SetFilter( *filter_ );
-        connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( SelectExercise( const frontend::Exercise_ABC&, const Profile& ) ) );
+        connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( SelectExercise( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
         connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
     }
     EnableButton( eButtonJoin, false );
@@ -94,7 +94,7 @@ BattleCenterJoinPage::~BattleCenterJoinPage()
 // Name: BattleCenterJoinPage::SelectExercise
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-void BattleCenterJoinPage::SelectExercise( const frontend::Exercise_ABC& exercise, const Profile& profile )
+void BattleCenterJoinPage::SelectExercise( const frontend::Exercise_ABC& exercise, const frontend::Profile& profile )
 {
     exercise_ = &exercise;
     profile_ = profile;
@@ -108,7 +108,7 @@ void BattleCenterJoinPage::SelectExercise( const frontend::Exercise_ABC& exercis
 void BattleCenterJoinPage::ClearSelection()
 {
     exercise_ = 0;
-    profile_ = Profile::Invalid;
+    profile_ = frontend::Profile::Invalid;
     EnableButton( eButtonJoin, false );
 }
 

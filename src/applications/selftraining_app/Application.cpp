@@ -48,7 +48,7 @@ Application::Application( int argc, char** argv )
     , config_( GetConfig() )
     , controllers_( new kernel::Controllers() )
     , launcher_( new Launcher( argc, argv ) )
-    , launcherClient_( new frontend::LauncherClient( *config_, controllers_->controller_ ) )
+    , launcherClient_( new frontend::LauncherClient( controllers_->controller_ ) )
     , mainWindow_( 0 )
     , timer_( new QTimer( this ) )
 {

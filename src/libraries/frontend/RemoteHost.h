@@ -12,15 +12,9 @@
 
 #include "ExerciseIdentifierFactory_ABC.h"
 #include "Host_ABC.h"
+#include "ResponseHandler_ABC.h"
 #include <boost/shared_ptr.hpp>
 #include <map>
-
-namespace MsgsLauncherToAdmin
-{
-    class MsgControlStartAck;
-    class MsgControlStopAck;
-    class MsgExercicesListResponse;
-}
 
 namespace kernel
 {
@@ -40,6 +34,7 @@ namespace frontend
 // =============================================================================
 class RemoteHost : public Host_ABC
                  , private ExerciseIdentifierFactory_ABC
+                 , public ResponseHandler_ABC
 {
 
 public:
@@ -59,9 +54,10 @@ public:
 
     //! @name Operation
     //@{
-    void Update( const MsgsLauncherToAdmin::MsgExercicesListResponse& message );
-    void Update( const MsgsLauncherToAdmin::MsgControlStartAck& message );
-    void Update( const MsgsLauncherToAdmin::MsgControlStopAck& message );
+    virtual void Handle( const MsgsLauncherToAdmin::MsgExercicesListResponse& message );
+    virtual void Handle( const MsgsLauncherToAdmin::MsgControlStartAck& message );
+    virtual void Handle( const MsgsLauncherToAdmin::MsgControlStopAck& message );
+    virtual void Handle( const MsgsAuthenticationToClient::MsgProfileDescriptionList& message );
     //@}
 
 private:

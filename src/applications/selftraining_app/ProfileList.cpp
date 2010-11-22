@@ -8,11 +8,11 @@
 // *****************************************************************************
 
 #include "selftraining_app_pch.h"
-#include "Profile.h"
-#include "Side.h"
 #include "ProfileList.h"
 #include "moc_ProfileList.cpp"
+#include "Side.h"
 #include "frontend/commands.h"
+#include "frontend/Profile.h"
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.hpp>
@@ -85,7 +85,7 @@ void ProfileList::ReadProfiles( const std::string& exercise )
 // -----------------------------------------------------------------------------
 void ProfileList::ReadProfile( xml::xistream& xis )
 {
-    const Profile profile( xis );
+    const frontend::Profile profile( xis );
     const QString name = profile.GetLogin() != "" ?  profile.GetLogin() : tools::translate( "ReadProfile", "anonymous" );
     if( profile.IsSupervision() )
         insertItem( QImage( "resources/images/selftraining/commandpost.xpm" ), name );
@@ -103,5 +103,5 @@ void ProfileList::OnSelect( int index )
     if( index < int( profiles_.size() ) )
         emit Select( profiles_[index] );
     else
-        emit Select( Profile::Invalid );
+        emit Select( frontend::Profile::Invalid );
 }

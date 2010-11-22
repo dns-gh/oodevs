@@ -96,10 +96,10 @@ void RemoteHost::StopSession( const std::string& exercise, const std::string& /*
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteHost::Update
+// Name: RemoteHost::Handle
 // Created: SBO 2010-10-21
 // -----------------------------------------------------------------------------
-void RemoteHost::Update( const MsgsLauncherToAdmin::MsgExercicesListResponse& message )
+void RemoteHost::Handle( const MsgsLauncherToAdmin::MsgExercicesListResponse& message )
 {
     exercises_.clear();
     for( int i = 0; i < message.exercise().size(); ++i )
@@ -110,10 +110,10 @@ void RemoteHost::Update( const MsgsLauncherToAdmin::MsgExercicesListResponse& me
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteHost::Update
+// Name: RemoteHost::Handle
 // Created: SBO 2010-10-25
 // -----------------------------------------------------------------------------
-void RemoteHost::Update( const MsgsLauncherToAdmin::MsgControlStartAck& message )
+void RemoteHost::Handle( const MsgsLauncherToAdmin::MsgControlStartAck& message )
 {
     boost::shared_ptr< Exercise_ABC > exercise( exercises_[ message.exercise().name() ] );
     if( !exercise.get() )
@@ -122,10 +122,19 @@ void RemoteHost::Update( const MsgsLauncherToAdmin::MsgControlStartAck& message 
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteHost::Update
+// Name: RemoteHost::Handle
+// Created: SBO 2010-11-22
+// -----------------------------------------------------------------------------
+void RemoteHost::Handle( const MsgsAuthenticationToClient::MsgProfileDescriptionList& message )
+{
+    // $$$$ SBO 2010-11-22: TODO, handle profile list
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteHost::Handle
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void RemoteHost::Update( const MsgsLauncherToAdmin::MsgControlStopAck& message )
+void RemoteHost::Handle( const MsgsLauncherToAdmin::MsgControlStopAck& message )
 {
     std::map< std::string, boost::shared_ptr< Exercise_ABC > >::iterator it = exercises_.find( message.exercise().name() );
     if( it != exercises_.end() )

@@ -150,7 +150,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
         {
             exercises_ = new ExerciseList( tabs, config_, controllers, true, true, true, false );
             exercises_->setBackgroundOrigin( QWidget::WindowOrigin );
-            connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC&, const Profile& ) ) );
+            connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
             tabs->addTab( exercises_, tools::translate( "ScenarioLauncherPage", "General" ) );
         }
@@ -163,7 +163,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
             tabs->addTab( configBox, tools::translate( "ScenarioLauncherPage", "Settings" ) );
             {
                 frontend::CheckpointConfigPanel* panel = AddPlugin< frontend::CheckpointConfigPanel >( config, tools::translate( "ScenarioLauncherPage", "Checkpoints" ) );
-                connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), panel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
+                connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), panel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
                 connect( exercises_, SIGNAL( ClearSelection() ), panel, SLOT( ClearSelection() ) );
                 connect( panel, SIGNAL( CheckpointSelected( const QString&, const QString& ) ), SLOT( OnSelectCheckpoint( const QString&, const QString& ) ) );
                 AddPlugin< frontend::SessionConfigPanel >( config, tools::translate( "ScenarioLauncherPage", "Session" ) );
@@ -292,7 +292,7 @@ void ScenarioLauncherPage::CreateSession( const QString& exercise, const QString
 // Name: ScenarioLauncherPage::OnSelect
 // Created: SBO 2008-10-31
 // -----------------------------------------------------------------------------
-void ScenarioLauncherPage::OnSelect( const frontend::Exercise_ABC& exercise, const Profile& profile )
+void ScenarioLauncherPage::OnSelect( const frontend::Exercise_ABC& exercise, const frontend::Profile& profile )
 {
     exercise_ = &exercise;
     profile_ = profile;
@@ -306,7 +306,7 @@ void ScenarioLauncherPage::OnSelect( const frontend::Exercise_ABC& exercise, con
 void ScenarioLauncherPage::ClearSelection()
 {
     exercise_ = 0;
-    profile_ = Profile::Invalid;
+    profile_ = frontend::Profile::Invalid;
     EnableButton( eButtonStart, false );
 }
 

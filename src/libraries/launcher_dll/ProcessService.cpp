@@ -14,9 +14,10 @@
 #include "frontend/ConfigurationManipulator.h"
 #include "frontend/CreateSession.h"
 #include "frontend/ProcessWrapper.h"
+#include "frontend/Profile.h"
+#include "frontend/ProfileVisitor_ABC.h"
 #include "frontend/StartExercise.h"
 #include "frontend/StartReplay.h"
-#include "protocol/LauncherSenders.h"
 #include <qstringlist.h>
 
 using namespace launcher;
@@ -147,4 +148,35 @@ void ProcessService::ProcessStopped()
             it = processes_.erase( it );
         else
             ++it;
+}
+
+namespace
+{
+    struct ProfileCollector : public frontend::ProfileVisitor_ABC
+    {
+        explicit ProfileCollector( MsgsAuthenticationToClient::MsgProfileDescriptionList& message ) : message_( message ) {}
+        virtual void Visit( const frontend::Profile& profile )
+        {
+            profile.Send( *message_.add_elem() );
+        }
+        MsgsAuthenticationToClient::MsgProfileDescriptionList& message_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessService::SendProfileList
+// @brief fills 'message' with profiles from first running exercise...
+//        exercise name should be added to profile list request
+// Created: SBO 2010-11-19
+// -----------------------------------------------------------------------------
+void ProcessService::SendProfileList( MsgsAuthenticationToClient::MsgProfileDescriptionList& message )
+{
+    boost::recursive_mutex::scoped_lock locker( mutex_ );
+    for( std::map< std::string, boost::weak_ptr< frontend::ProcessWrapper > >::const_iterator it = processes_.begin(); it != processes_.end(); ++it )
+        if( !it->second.expired() )
+        {
+            ProfileCollector collector( message );
+            frontend::Profile::VisitProfiles( config_, it->first, collector );
+            return;
+        }
 }

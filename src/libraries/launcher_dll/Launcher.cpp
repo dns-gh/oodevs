@@ -63,6 +63,8 @@ void Launcher::HandleAdminToLauncher( const std::string& endpoint, const MsgsAdm
         HandleRequest( endpoint, message.message().control_start() );
     else if( message.message().has_control_stop() )
         HandleRequest( endpoint, message.message().control_stop() );
+    else if( message.message().has_profile_list_request() )
+        HandleRequest( endpoint, message.message().profile_list_request() );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,5 +122,16 @@ void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLaun
     response().mutable_exercise()->set_port( message.exercise().port() );
     response().set_error_code( processes_->StopExercise( message ) );
     response().mutable_exercise()->set_running( false );
+    response.Send( server_->ResolveClient( endpoint ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Launcher::HandleRequest
+// Created: SBO 2010-11-19
+// -----------------------------------------------------------------------------
+void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgProfilesListRequest& /*message*/ )
+{
+    launcher::ProfileDescriptionList response;
+    processes_->SendProfileList( response() );
     response.Send( server_->ResolveClient( endpoint ) );
 }

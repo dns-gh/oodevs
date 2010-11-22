@@ -13,15 +13,13 @@
 #include "Launcher.h"
 #include "Senders.h"
 
-#pragma warning( push, 0 )
-#pragma warning( disable : 4003 )
-
 namespace launcher
 {
     struct Service {};
 
 GENERATE_ASN_MSG_SENDER( AdminToLauncher, MsgsAdminToLauncher, ConnectionRequest, connection_request )
 GENERATE_ASN_MSG_SENDER( AdminToLauncher, MsgsAdminToLauncher, ExercicesListRequest, exercise_list_request )
+GENERATE_ASN_MSG_SENDER( AdminToLauncher, MsgsAdminToLauncher, ProfilesListRequest, profile_list_request )
 GENERATE_ASN_MSG_SENDER( AdminToLauncher, MsgsAdminToLauncher, ControlStart, control_start )
 GENERATE_ASN_MSG_SENDER( AdminToLauncher, MsgsAdminToLauncher, ControlStop, control_stop )
 
@@ -29,10 +27,9 @@ GENERATE_ASN_MSG_SENDER( LauncherToAdmin, MsgsLauncherToAdmin, ConnectionAck, co
 GENERATE_ASN_MSG_SENDER( LauncherToAdmin, MsgsLauncherToAdmin, ExercicesListResponse, exercise_list_response )
 GENERATE_ASN_MSG_SENDER( LauncherToAdmin, MsgsLauncherToAdmin, ControlStartAck, control_start_ack )
 GENERATE_ASN_MSG_SENDER( LauncherToAdmin, MsgsLauncherToAdmin, ControlStopAck, control_stop_ack )
+GENERATE_ASN_MSG_SENDER( LauncherToAdmin, MsgsAuthenticationToClient, ProfileDescriptionList, profiles_description )
 
 }
-
-#pragma warning( pop )
 
 #endif // __protocol_LauncherSenders_h_
 

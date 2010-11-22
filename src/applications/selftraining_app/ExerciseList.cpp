@@ -11,10 +11,10 @@
 #include "ExerciseList.h"
 #include "moc_ExerciseList.cpp"
 #include "ExerciseProperties.h"
-#include "Profile.h"
 #include "ProfileList.h"
 #include "frontend/Exercise_ABC.h"
 #include "frontend/LocalExerciseFilter.h"
+#include "frontend/Profile.h"
 #include "tools/GeneralConfig.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_gui/Tools.h"
@@ -89,7 +89,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         label->setShown( showProfile );
         profiles_->setShown( showProfile );
 
-        connect( profiles_ , SIGNAL( Select( const Profile& ) ), this, SLOT( SelectProfile( const Profile& ) ) );
+        connect( profiles_ , SIGNAL( Select( const frontend::Profile& ) ), this, SLOT( SelectProfile( const frontend::Profile& ) ) );
         connect( exercises_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( SelectExercise( QListViewItem* ) ) );
     }
     {
@@ -155,7 +155,7 @@ void ExerciseList::SelectExercise( QListViewItem* item )
     if( const frontend::Exercise_ABC* selected = GetSelectedExercise() )
     {
         properties_->Select( selected );
-        emit Select( *selected, Profile() );
+        emit Select( *selected, frontend::Profile() );
     }
     else
     {
@@ -206,7 +206,7 @@ const frontend::Exercise_ABC* ExerciseList::GetSelectedExercise() const
 // Name: ExerciseList::SelectProfile
 // Created: SBO 2008-10-31
 // -----------------------------------------------------------------------------
-void ExerciseList::SelectProfile( const Profile& profile )
+void ExerciseList::SelectProfile( const frontend::Profile& profile )
 {
     if( const frontend::Exercise_ABC* exercise = GetSelectedExercise() )
         emit Select( *exercise, profile );

@@ -13,6 +13,7 @@
 #include "frontend/ConnectionHandler_ABC.h"
 #include "frontend/Exercise_ABC.h"
 #include "frontend/LauncherClient.h"
+#include "frontend/ResponseHandler_ABC.h"
 #include "launcher_dll/LauncherFacade.h"
 #include "protocol/LauncherSenders.h"
 #include "tools/ElementObserver_ABC.h"
@@ -74,7 +75,7 @@ BOOST_AUTO_TEST_CASE( ClientCanConnectToServer )
     LauncherFacade launcher( qApp->argc(), qApp->argv() );
     BOOST_REQUIRE( launcher.IsInitialized() );
     kernel::Controllers controllers;
-    frontend::LauncherClient client( frontend::Config(), controllers.controller_ );
+    frontend::LauncherClient client( controllers.controller_ );
     MockConnectionHandler handler;
     MOCK_EXPECT( handler, OnConnectionSucceeded ).once();
     client.Connect( defaultHost, defaultPort, handler );
@@ -96,7 +97,6 @@ namespace
     public:
         explicit ExerciseListener( kernel::Controllers& controllers )
             : controllers_( controllers )
-            , hasExercise_( false )
         {
             controllers_.Register( *this );
         }
@@ -104,16 +104,16 @@ namespace
         {
             controllers_.Unregister( *this );
         }
-        virtual void NotifyCreated( const frontend::Exercise_ABC& /*exercise*/ )
+        virtual void NotifyCreated( const frontend::Exercise_ABC& exercise )
         {
-            hasExercise_ = true;
+            exercises_.push_back( &exercise );
         }
         bool Check() const
         {
-            return hasExercise_;
+            return exercises_.size() > 0;
         }
         kernel::Controllers& controllers_;
-        bool hasExercise_;
+        std::vector< const frontend::Exercise_ABC* > exercises_;
     };
 }
 
@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_CASE( ClientCanListAvailableExercises )
     LauncherFacade launcher( qApp->argc(), qApp->argv() );
     BOOST_REQUIRE( launcher.IsInitialized() );
     kernel::Controllers controllers;
-    frontend::LauncherClient client( frontend::Config(), controllers.controller_ );
+    frontend::LauncherClient client( controllers.controller_ );
     MockConnectionHandler handler;
     MOCK_EXPECT( handler, OnConnectionSucceeded ).once();
     client.Connect( defaultHost, defaultPort, handler );
@@ -149,5 +149,75 @@ BOOST_AUTO_TEST_CASE( ClientCanListAvailableExercises )
             launcher.Update();
         }
         BOOST_REQUIRE( listener.Check() );
+    }
+}
+
+namespace
+{
+    MOCK_BASE_CLASS( MockResponseHandler, frontend::ResponseHandler_ABC )
+    {
+        MOCK_METHOD_EXT( Handle, 1, void ( const MsgsLauncherToAdmin::MsgExercicesListResponse& ), HandleExercisesListResponse );
+        MOCK_METHOD_EXT( Handle, 1, void ( const MsgsLauncherToAdmin::MsgControlStartAck& ), HandleControlStartAck );
+        MOCK_METHOD_EXT( Handle, 1, void ( const MsgsLauncherToAdmin::MsgControlStopAck& ), HandleControlStopAck );
+        MOCK_METHOD_EXT( Handle, 1, void ( const MsgsAuthenticationToClient::MsgProfileDescriptionList& ), HandleProfileDescriptionList );
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientCanStartExercise
+// Created: SBO 2010-11-22
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( ClientCanStartExercise )
+{
+    LauncherFacade launcher( qApp->argc(), qApp->argv() );
+    BOOST_REQUIRE( launcher.IsInitialized() );
+    kernel::Controllers controllers;
+    frontend::LauncherClient client( controllers.controller_ );
+    MockConnectionHandler handler;
+    MOCK_EXPECT( handler, OnConnectionSucceeded ).once();
+    client.Connect( defaultHost, defaultPort, handler );
+    Timeout timeout( timeOut );
+    {
+        while( !client.Connected() && !timeout.Expired() )
+        {
+            client.Update();
+            launcher.Update();
+        }
+        BOOST_REQUIRE( client.Connected() );
+    }
+    {
+        ExerciseListener listener( controllers );
+        client.QueryExerciseList();
+        timeout.Start();
+        while( !listener.Check() && !timeout.Expired() )
+        {
+            client.Update();
+            launcher.Update();
+        }
+        BOOST_REQUIRE( listener.Check() );
+        {
+            const frontend::Exercise_ABC* exercise = listener.exercises_.front();
+            BOOST_REQUIRE( exercise != 0 );
+            exercise->Start( "default" );
+            timeout.Start();
+            while( !exercise->IsRunning() && !timeout.Expired() )
+            {
+                client.Update();
+                launcher.Update();
+            }
+            BOOST_REQUIRE( exercise->IsRunning() );
+            {
+                boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
+                MOCK_EXPECT( handler, HandleProfileDescriptionList ).once();
+                client.Register( handler );
+                client.QueryProfileList();
+                timeout.Start();
+                while( !timeout.Expired() )
+                {
+                    client.Update();
+                    launcher.Update();
+                }
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@
 #define __ReplayPage_h_
 
 #include "LauncherClientPage.h"
-#include "Profile.h"
+#include "frontend/Profile.h"
 
 namespace frontend
 {
@@ -49,7 +49,7 @@ private slots:
     //! @name Operations
     //@{
     virtual void OnStart();
-    void OnSelectExercise( const frontend::Exercise_ABC& exercise, const Profile& profile );
+    void OnSelectExercise( const frontend::Exercise_ABC& exercise, const frontend::Profile& profile );
     void ClearSelection();
     void OnSelectSession( const QString& session );
     //@}
@@ -77,7 +77,7 @@ private:
     ExerciseList* exercises_;
     SessionList* sessions_;
     const frontend::Exercise_ABC* exercise_;
-    Profile profile_;
+    frontend::Profile profile_;
     QString session_;
     QListBox* sessionList_;
     //@}

@@ -13,9 +13,6 @@
 #include "Authentication.h"
 #include "Senders.h"
 
-#pragma warning( push, 0 )
-#pragma warning( disable : 4003 )
-
 namespace authentication
 {
     struct Service {};
@@ -34,7 +31,5 @@ GENERATE_ASN_MSG_SENDER( AuthenticationToClient, MsgsAuthenticationToClient, Pro
 GENERATE_ASN_MSG_SENDER( AuthenticationToClient, MsgsAuthenticationToClient, ProfileDestructionRequestAck , profile_destruction_request_ack )
 
 }
-
-#pragma warning( pop )
 
 #endif // __protocol_AuthenticationSenders_h_
