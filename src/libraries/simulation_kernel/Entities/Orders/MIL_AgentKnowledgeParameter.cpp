@@ -12,8 +12,6 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/protocol.h"
-#include "simulation_orders/MIL_ParameterType_AgentKnowledge.h"
-#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentKnowledgeParameter constructor
@@ -48,20 +46,10 @@ MIL_AgentKnowledgeParameter::~MIL_AgentKnowledgeParameter()
 // Name: MIL_AgentKnowledgeParameter::IsOfType
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AgentKnowledgeParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_AgentKnowledgeParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return dynamic_cast<const MIL_ParameterType_AgentKnowledge*>( &type ) != 0
-        || dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentKnowledgeParameter::ToAgentKnowledge
-// Created: LDC 2009-05-26
-// -----------------------------------------------------------------------------
-bool MIL_AgentKnowledgeParameter::ToAgentKnowledge( Common::UnitKnowledgeId& asn ) const
-{
-    asn.set_id( pKnowledgeAgent_->GetID() );
-    return true;
+    return type == MIL_ParameterType_ABC::eAgentKnowledge
+        || type == MIL_ParameterType_ABC::eLocationComposite;
 }
 
 // -----------------------------------------------------------------------------
@@ -80,6 +68,6 @@ bool MIL_AgentKnowledgeParameter::ToAgentKnowledge( boost::shared_ptr< DEC_Knowl
 // -----------------------------------------------------------------------------
 bool MIL_AgentKnowledgeParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
 {
-    ToAgentKnowledge( *elem.mutable_agentknowledge() );
+    elem.mutable_agentknowledge()->set_id( pKnowledgeAgent_->GetID() );
     return true;
 }

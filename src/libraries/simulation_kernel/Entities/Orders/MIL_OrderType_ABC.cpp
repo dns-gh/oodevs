@@ -13,7 +13,7 @@
 #include "MIL_OrderContext.h"
 #include "Decision/DEC_Tools.h"
 #include "protocol/protocol.h"
-#include "simulation_orders/MIL_MissionParameter_ABC.h"
+#include "MIL_MissionParameter_ABC.h"
 #include "MIL_MissionParameterFactory.h"
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
@@ -66,7 +66,7 @@ MIL_OrderType_ABC::~MIL_OrderType_ABC()
 // Name: MIL_OrderType_ABC::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, Common::MsgMissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const
+bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, Common::MsgMissionParameters& to, const MIL_OrderContext& context ) const
 {
     if( from.size() < (int)parameters_.size()  )//|| from.GetType() != *pDIAType_ )
         return false;
@@ -76,7 +76,7 @@ bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionP
         to.add_elem();
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >::const_iterator fromIt = from.begin();
     for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++index, ++fromIt )
-        if( !(**it).Copy( **fromIt, *to.mutable_elem( index ), knowledgeResolver ) )
+        if( !(**it).Copy( **fromIt, *to.mutable_elem( index ) ) )
         {
             assert( false );
             to.mutable_elem()->Clear();

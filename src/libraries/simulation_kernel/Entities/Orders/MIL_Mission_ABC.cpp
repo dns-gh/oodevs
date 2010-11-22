@@ -11,13 +11,13 @@
 #include "MIL_Mission_ABC.h"
 #include "MIL_ListParameter.h"
 #include "MIL_MissionType_ABC.h"
+#include "MIL_MissionParameter_ABC.h"
 #include "MIL_MissionParameterFactory.h"
 #include "MIL_MissionParameterVisitor_ABC.h"
 #include "MIL_NullParameter.h"
 #include "MIL_OrderTypeParameter.h"
 #include "simulation_kernel/Entities/Agents/MIL_AgentPion.h"
 #include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "simulation_orders/MIL_MissionParameter_ABC.h"
 #include "protocol/protocol.h"
 
 namespace
@@ -114,7 +114,7 @@ const std::string& MIL_Mission_ABC::GetName() const
 // -----------------------------------------------------------------------------
 void MIL_Mission_ABC::Serialize( Common::MsgMissionParameters& asn ) const
 {
-    if( type_.Copy( parameters_, asn, knowledgeResolver_, context_ ) )
+    if( type_.Copy( parameters_, asn, context_ ) )
         context_.Serialize( asn );
     else
         throw std::runtime_error( std::string( "Mission " ) + GetName() + " impossible to serialize parameters" );

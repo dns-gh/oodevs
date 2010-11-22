@@ -34,8 +34,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsOfType( const MIL_ParameterType_ABC& ) const;
+    virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const;
     
+    virtual bool ToElement( Common::MsgMissionParameter_Value& ) const;
     virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& message ) const;
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& result ) const;
 

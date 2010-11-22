@@ -9,8 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PointParameter.h"
-#include "simulation_orders/MIL_ParameterType_Point.h"
-#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/protocol.h"
 #include "tools/MIL_Tools.h"
@@ -54,20 +52,10 @@ MIL_PointParameter::~MIL_PointParameter()
 // Name: MIL_PointParameter::IsOfType
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_PointParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_PointParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return dynamic_cast< const MIL_ParameterType_Point* >( &type ) != 0
-        || dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PointParameter::ToPoint
-// Created: LDC 2009-05-22
-// -----------------------------------------------------------------------------
-bool MIL_PointParameter::ToPoint( Common::MsgPoint& asn ) const
-{
-    NET_ASN_Tools::WritePoint( *pPoint_, asn );
-    return true;
+    return type == MIL_ParameterType_ABC::ePoint
+        || type == MIL_ParameterType_ABC::eLocationComposite;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,6 +74,6 @@ bool MIL_PointParameter::ToPoint( boost::shared_ptr< MT_Vector2D >& result ) con
 // -----------------------------------------------------------------------------
 bool MIL_PointParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
 {
-    ToPoint( *elem.mutable_point() );
+    NET_ASN_Tools::WritePoint( *pPoint_, *elem.mutable_point() );
     return true;
 }

@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_LogMaintenancePrioritiesParameter.h"
-#include "simulation_orders/MIL_ParameterType_MaintenancePriorities.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "protocol/protocol.h"
 
@@ -43,25 +42,12 @@ MIL_LogMaintenancePrioritiesParameter::~MIL_LogMaintenancePrioritiesParameter()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_LogMaintenancePrioritiesParameter::IsOfType
-// Created: LDC 2009-06-05
+// Name: MIL_LogMedicalPrioritiesParameter::IsOfType
+// Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_LogMaintenancePrioritiesParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_LogMaintenancePrioritiesParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_MaintenancePriorities*>( &type ) != 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_LogMaintenancePrioritiesParameter::ToMaintenancePriorities
-// Created: LDC 2009-06-05
-// -----------------------------------------------------------------------------
-bool MIL_LogMaintenancePrioritiesParameter::ToMaintenancePriorities( Common::MsgLogMaintenancePriorities& asn ) const
-{
-    unsigned int size = priorities_.size();
-    if( size )
-        for( unsigned int i = 0; i < size; ++i )
-            asn.add_elem()->set_id( priorities_[ i ]->GetMosID().id() );
-    return true;
+    return type == MIL_ParameterType_ABC::eMaintenancePriorities;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,5 +57,18 @@ bool MIL_LogMaintenancePrioritiesParameter::ToMaintenancePriorities( Common::Msg
 bool MIL_LogMaintenancePrioritiesParameter::ToMaintenancePriorities( T_MaintenancePriorityVector& value ) const
 {
     value = priorities_;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LogMaintenancePrioritiesParameter::ToElement
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+bool MIL_LogMaintenancePrioritiesParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    unsigned int size = priorities_.size();
+    if( size )
+        for( unsigned int i = 0; i < size; ++i )
+            elem.mutable_logmaintenancepriorities()->add_elem()->set_id( priorities_[ i ]->GetMosID().id() );
     return true;
 }

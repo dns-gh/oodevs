@@ -31,13 +31,13 @@ public:
 
     //! @name Type checking
     //@{
-    virtual bool IsOfType( const MIL_ParameterType_ABC& type ) const;
+    virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const;
     //@}
 
     //! @name Conversions
     //@{
-    virtual bool ToGDH( Common::MsgDateTime& ) const;
     virtual bool ToGDH( float& value ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

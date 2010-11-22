@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PlannedWorkParameter.h"
-#include "simulation_orders/MIL_ParameterType_GenObject.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "protocol/protocol.h"
 
@@ -44,21 +43,11 @@ MIL_PlannedWorkParameter::~MIL_PlannedWorkParameter()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PlannedWorkParameter::IsOfType
-// Created: LDC 2009-06-04
+// Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_PlannedWorkParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_PlannedWorkParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_GenObject*>( &type ) != 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PlannedWorkParameter::ToGenObject
-// Created: LDC 2009-06-04
-// -----------------------------------------------------------------------------
-bool MIL_PlannedWorkParameter::ToGenObject( Common::MsgPlannedWork& asn ) const
-{
-    pGenObject_->Serialize( asn );
-    return true;
+    return type == MIL_ParameterType_ABC::ePlannedWork;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,6 +66,6 @@ bool MIL_PlannedWorkParameter::ToGenObject( boost::shared_ptr< DEC_Gen_Object >&
 // -----------------------------------------------------------------------------
 bool MIL_PlannedWorkParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
 {
-    ToGenObject( *elem.mutable_plannedwork() );
+    pGenObject_->Serialize( *elem.mutable_plannedwork() );
     return true;
 }

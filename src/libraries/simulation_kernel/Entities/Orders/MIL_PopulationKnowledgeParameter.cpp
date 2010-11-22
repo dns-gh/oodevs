@@ -9,8 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationKnowledgeParameter.h"
-#include "simulation_orders/MIL_ParameterType_PopulationKnowledge.h"
-#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "protocol/protocol.h"
@@ -46,22 +44,12 @@ MIL_PopulationKnowledgeParameter::~MIL_PopulationKnowledgeParameter()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationKnowledgeParameter::IsOfType
-// Created: LDC 2009-06-04
+// Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_PopulationKnowledgeParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_PopulationKnowledgeParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return dynamic_cast<const MIL_ParameterType_PopulationKnowledge*>( &type ) != 0
-        || dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationKnowledgeParameter::ToPopulationKnowledge
-// Created: LDC 2009-06-04
-// -----------------------------------------------------------------------------
-bool MIL_PopulationKnowledgeParameter::ToPopulationKnowledge( Common::CrowdKnowledgeId& asn ) const
-{
-    asn.set_id( pKnowledgePopulation_->GetID() );
-    return true;
+    return type == MIL_ParameterType_ABC::eCrowdKnowledge
+        || type == MIL_ParameterType_ABC::eLocationComposite;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,5 +59,15 @@ bool MIL_PopulationKnowledgeParameter::ToPopulationKnowledge( Common::CrowdKnowl
 bool MIL_PopulationKnowledgeParameter::ToPopulationKnowledge( DEC_Knowledge_Population*& value ) const
 {
     value = pKnowledgePopulation_;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationKnowledgeParameter::ToElement
+// Created: MGD 2010-11-19
+// -----------------------------------------------------------------------------
+bool MIL_PopulationKnowledgeParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    elem.mutable_crowdknowledge()->set_id( pKnowledgePopulation_->GetID() );
     return true;
 }

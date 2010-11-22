@@ -53,7 +53,7 @@ public:
 
     //! @name Copy operations
     //@{
-    bool Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, Common::MsgMissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const;
+    bool Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, Common::MsgMissionParameters& to, const MIL_OrderContext& context ) const;
     //@}
 
 protected:

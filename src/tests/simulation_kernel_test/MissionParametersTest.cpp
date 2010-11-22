@@ -51,14 +51,15 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Network/NET_ASN_Tools.h"
-#include "simulation_orders/MIL_ParameterType_ABC.h"
+#include "Entities/Orders/MIL_ParameterType_ABC.h"
 #include "simulation_terrain/TER_World.h"
 
 using namespace Common;
 
-/* @TODO MGD Update all test with new protocol
+/*
 // -----------------------------------------------------------------------------
-// Name: TestMIL_AgentKnowledgeListParameter_ToASN
+// Name: TestMIL_ListParameter_ToASN
+$$$$ MGD need mil_entitymanager singleton
 // Created: LDC 2009-06-09
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter_ToASN )
@@ -72,14 +73,16 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter_ToASN )
     MOCK_EXPECT( resolver, ResolveKnowledgeAgentFromMessage ).once().returns( knowledge );
     
     xml::xistringstream xisParam("<parameter dia-name='pointAReconnaitre_' name='Point a reconnaitre' optional='false' type='AgentKnowledge'/>");
+    xisParam >> xml::start( "parameter" );
+    MIL_ParameterType_ABC::Initialize();
     MIL_OrderTypeParameter orderType( xisParam );
+    xisParam >> xml::end();
     boost::shared_ptr<MIL_MissionParameter_ABC> param = MIL_MissionParameterFactory::Create( orderType, asnIn, resolver ); 
     
-    asnIn.Clear();
     MsgMissionParameter asnOut;
     BOOST_CHECK_EQUAL( true, param->ToList( *asnOut.mutable_value() ) );
     BOOST_CHECK_EQUAL( 1, asnOut.value_size() );
-    BOOST_CHECK_EQUAL( 1, asnOut.value().Get( 0 ).has_agentknowledge() );
+    BOOST_CHECK_EQUAL( true, asnOut.value().Get( 0 ).has_agentknowledge() );
     BOOST_CHECK_EQUAL( 0u, asnOut.value().Get( 0 ).agentknowledge().id() ); // $$$$ LDC: = knowledge's id
     asnOut.Clear();
 }*/
@@ -98,35 +101,11 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeParameter_ToASN )
     boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent() ); // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgeAgentFromMessage ).once().returns( knowledge );
     MIL_AgentKnowledgeParameter param( asnIn, resolver );
-    UnitKnowledgeId asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToAgentKnowledge( asnOut ) );
-    BOOST_CHECK_EQUAL( 0u, asnOut.id() ); // $$$$ LDC: = knowledge's id
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_agentknowledge() );
+    BOOST_CHECK_EQUAL( 0u, asnOut.agentknowledge().id() ); // $$$$ LDC: = knowledge's id
 }
-
-/*
-// -----------------------------------------------------------------------------
-// Name: TestMIL_AgentListParameter_ToASN
-// Created: LDC 2009-06-09
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestMIL_AgentListParameter_ToASN )
-{
-    UnitIdList asnIn;
-    asnIn.add_elem()->set_id( 12 );
-    MockMIL_EntityManager_ABC entityManager;
-    MIL_EffectManager effectManager;
-    FixturePion fixture( effectManager );
-    StubDEC_Database database;
-    fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, database, 100, 100 ) );
-    MOCK_EXPECT( entityManager, FindAgentPion ).once().returns( fixture.pPion_.get() );
-    MIL_AgentListParameter param( asnIn, entityManager );
-    asnIn.Clear();
-    UnitIdList asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToAgentList( asnOut ) );
-    BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( 12u, asnOut.elem(0).id() );
-    asnOut.Clear();
-}
-*/
 
 // -----------------------------------------------------------------------------
 // Name: TestMIL_AgentParameter_ToASN
@@ -143,9 +122,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter_ToASN )
     fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, database, 100, 100 ) );
     MOCK_EXPECT( entityManager, FindAgentPion ).once().returns( fixture.pPion_.get() );
     MIL_AgentParameter param( asnIn, entityManager );
-    UnitId asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToAgent( asnOut ) );
-    BOOST_CHECK_EQUAL( 12u, asnOut.id() );
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_agent() );
+    BOOST_CHECK_EQUAL( 12u, asnOut.agent().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,33 +141,11 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatParameter_ToASN )
     //fixture.pAutomat_->RegisterRole( *new DEC_AutomateDecision( *fixture.pAutomat_ ) );
     MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
     MIL_AutomatParameter param( asnIn, entityManager );
-    AutomatId asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToAutomat( asnOut ) );
-    BOOST_CHECK_EQUAL( 0u, asnOut.id() );
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_automat() );
+    BOOST_CHECK_EQUAL( 0u, asnOut.automat().id() );
 }
-
-/*
-// -----------------------------------------------------------------------------
-// Name: TestMIL_AutomatListParameter_ToASN
-// Created: LDC 2009-06-10
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestMIL_AutomatListParameter_ToASN )
-{
-    AutomatIdList asnIn;
-    asnIn.add_elem()->set_id( 0 );
-    MockMIL_EntityManager_ABC entityManager;
-    FixtureAutomate fixture;
-    //fixture.pAutomat_->RegisterRole( *new DEC_AutomateDecision( *fixture.pAutomat_ ) );
-    MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
-    MIL_AutomatListParameter param( asnIn, entityManager );
-    asnIn.Clear();
-    AutomatIdList asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToAutomatList( asnOut ) );
-    BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( 0u, asnOut.elem(0).id() );
-    asnOut.Clear();
-}
-*/
 
 // -----------------------------------------------------------------------------
 // Name: TestMIL_AtlasNatureParameter_ToASN
@@ -199,11 +157,12 @@ BOOST_AUTO_TEST_CASE( TestMIL_AtlasNatureParameter_ToASN )
     asnIn.set_nature( MsgAtlasNature::blinde | MsgAtlasNature::log | MsgAtlasNature::asa );
 
     MIL_AtlasNatureParameter param( asnIn );
-    MsgAtlasNature asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToNatureAtlas( asnOut ) );
-    BOOST_CHECK_EQUAL( MsgAtlasNature::blinde, asnOut.nature() & MsgAtlasNature::blinde );
-    BOOST_CHECK_EQUAL( MsgAtlasNature::log,    asnOut.nature() & MsgAtlasNature::log );
-    BOOST_CHECK_EQUAL( MsgAtlasNature::asa,    asnOut.nature() & MsgAtlasNature::asa );
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_atlasnature() );
+    BOOST_CHECK_EQUAL( MsgAtlasNature::blinde, asnOut.atlasnature().nature() & MsgAtlasNature::blinde );
+    BOOST_CHECK_EQUAL( MsgAtlasNature::log,    asnOut.atlasnature().nature() & MsgAtlasNature::log );
+    BOOST_CHECK_EQUAL( MsgAtlasNature::asa,    asnOut.atlasnature().nature() & MsgAtlasNature::asa );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,15 +173,17 @@ BOOST_AUTO_TEST_CASE( TestMIL_BoolParameter_ToASN )
 {
     {
         MIL_BoolParameter param( true );
-        bool asnOut;
-        BOOST_CHECK_EQUAL( true, param.ToBool( asnOut ) );
-        BOOST_CHECK_EQUAL( true, asnOut );
+        MsgMissionParameter_Value asnOut;
+        BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+        BOOST_CHECK_EQUAL( true, asnOut.has_booleanvalue() );
+        BOOST_CHECK_EQUAL( true, asnOut.booleanvalue() );
     }
     {
         MIL_BoolParameter param( false );
-        bool asnOut;
-        BOOST_CHECK_EQUAL( true, param.ToBool( asnOut ) );
-        BOOST_CHECK_EQUAL( false, asnOut );
+        MsgMissionParameter_Value asnOut;
+        BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+        BOOST_CHECK_EQUAL( true, asnOut.has_booleanvalue() );
+        BOOST_CHECK_EQUAL( false, asnOut.booleanvalue() );
     }
 }
 
@@ -235,9 +196,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_DateTimeParameter_ToASN )
     MsgDateTime asnIn;
     NET_ASN_Tools::WriteGDH( 42, asnIn );
     MIL_DateTimeParameter param( asnIn );
-    MsgDateTime asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToGDH( asnOut ) );
-    BOOST_CHECK_EQUAL( asnOut.data(), "19700101T000042" );
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_datetime() );
+    BOOST_CHECK_EQUAL( asnOut.datetime().data(), "19700101T000042" );
 }
 
 // -----------------------------------------------------------------------------
@@ -249,9 +211,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_DirectionParameter_ToASN )
     MsgHeading asnIn;
     asnIn.set_heading( 42 );
     MIL_DirectionParameter param( asnIn );
-    MsgHeading asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToDirection( asnOut ) );
-    BOOST_CHECK_EQUAL( 42, asnOut.heading() );
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_heading() );
+    BOOST_CHECK_EQUAL( 42, asnOut.heading().heading() );
 }
 
 // -----------------------------------------------------------------------------
@@ -283,9 +246,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter_ToASN )
     ResourceType asnIn;
     asnIn.set_id( 42 );
     MIL_DotationTypeParameter param( asnIn );
-    ResourceType asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToDotationType( asnOut ) );
-    BOOST_CHECK_EQUAL( 42u, asnOut.id() );
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_resourcetype() );
+    BOOST_CHECK_EQUAL( 42u, asnOut.resourcetype().id() );
     UrbanType::Terminate();
 }
 
@@ -297,9 +261,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_EnumerationParameter_ToASN )
 {
     int asnIn = 42;
     MIL_EnumerationParameter param( asnIn );
-    int asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToId( asnOut ) );
-    BOOST_CHECK_EQUAL( 42, asnOut );
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_enumeration() );
+    BOOST_CHECK_EQUAL( 42, asnOut.enumeration() );
 }
 
 // -----------------------------------------------------------------------------
@@ -334,13 +299,12 @@ namespace
         asnIn.mutable_coordinates()->mutable_elem(0)->set_longitude( 2.17f );
     }
 
-    void CompareLocationToRlyeh( MsgLocation& asnOut )
+    void CompareLocationToRlyeh( const MsgLocation& asnOut )
     {
         BOOST_CHECK_EQUAL( Common::MsgLocation_Geometry_point, asnOut.type() );
         BOOST_CHECK_EQUAL( 1, asnOut.coordinates().elem_size() );
         BOOST_CHECK_CLOSE( 48.52, asnOut.coordinates().elem(0).latitude(), 1. );
         BOOST_CHECK_CLOSE( 2.17, asnOut.coordinates().elem(0).longitude(), 1. );
-        asnOut.mutable_coordinates()->Clear();
     }
 
     void FillPolygonLocation( MsgLocation& asnIn, float offset )
@@ -354,7 +318,7 @@ namespace
         asnIn.mutable_coordinates()->mutable_elem(2)->set_longitude( 3.17f + offset );
     }
 
-    void CompareLocationToPolygon( MsgLocation& asnOut, float offset )
+    void CompareLocationToPolygon( const MsgLocation& asnOut, float offset )
     {
         BOOST_CHECK_EQUAL( Common::MsgLocation_Geometry_polygon, asnOut.type() );
         BOOST_CHECK_EQUAL( 4, asnOut.coordinates().elem_size() );
@@ -366,7 +330,6 @@ namespace
         BOOST_CHECK_CLOSE( 3.17 + offset, asnOut.coordinates().elem(2).longitude(), 1. );
         BOOST_CHECK_EQUAL( asnOut.coordinates().elem(0).latitude(), asnOut.coordinates().elem(3).latitude() );
         BOOST_CHECK_EQUAL( asnOut.coordinates().elem(0).longitude(), asnOut.coordinates().elem(3).longitude() );
-        asnOut.mutable_coordinates()->clear_elem();
     }
 }
 
@@ -381,34 +344,12 @@ BOOST_AUTO_TEST_CASE( TestMIL_LocationParameter_ToASN )
     FillRlyehLocation( asnIn );
     MIL_LocationParameter param( asnIn );
     asnIn.mutable_coordinates()->clear_elem();
-    MsgLocation asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToLocation( asnOut ) );
-    CompareLocationToRlyeh( asnOut );
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_location() );
+    CompareLocationToRlyeh( asnOut.location() );
     TER_World::DestroyWorld();
 }
-
-/*
-// -----------------------------------------------------------------------------
-// Name: TestMIL_LocationListParameter_ToASN
-// Created: LDC 2009-06-10
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestMIL_LocationListParameter_ToASN )
-{
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
-    MsgLocationList asnIn;
-    FillRlyehLocation( *asnIn.add_elem() );
-    MIL_LocationListParameter param( asnIn );
-    asnIn.mutable_elem(0)->mutable_coordinates()->Clear();
-    //asnIn.Clear();
-    MsgLocationList asnOut;
-    //asnOut.add_elem();
-    BOOST_CHECK_EQUAL( true, param.ToLocationList( asnOut ) );
-    BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    CompareLocationToRlyeh( *asnOut.mutable_elem(0) );
-    asnOut.Clear();
-    TER_World::DestroyWorld();
-}
-*/
 
 // -----------------------------------------------------------------------------
 // Name: TestMIL_LogMaintenancePrioritiesParameter_ToASN
@@ -435,11 +376,11 @@ BOOST_AUTO_TEST_CASE( TestMIL_LogMaintenancePrioritiesParameter_ToASN )
     asnIn.add_elem( Common::blesse_urgence_2 );
     MIL_LogMedicalPrioritiesParameter param( asnIn );
     asnIn.clear_elem();
-    MsgLogMedicalPriorities asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToMedicalPriorities( asnOut ) );
-    BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( Common::blesse_urgence_2, asnOut.elem(0) );
-    asnOut.clear_elem();
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_logmedicalpriorities() );
+    BOOST_CHECK_EQUAL( 1, asnOut.logmedicalpriorities().elem_size() );
+    BOOST_CHECK_EQUAL( Common::blesse_urgence_2, asnOut.logmedicalpriorities().elem(0) );
 }
 
 // -----------------------------------------------------------------------------
@@ -485,35 +426,11 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeParameter_ToASN )
     MOCK_EXPECT( resolver, ResolveKnowledgeObjectFromMessage ).once().returns( knowledge );
 
     MIL_ObjectKnowledgeParameter param( asnIn, resolver );
-    ObjectKnowledgeId asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToObjectKnowledge( asnOut ) );
-    BOOST_CHECK_EQUAL( 0u, asnOut.id() ); // $$$$ LDC: = knowledge's id
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_objectknowledge() );
+    BOOST_CHECK_EQUAL( 0u, asnOut.objectknowledge().id() ); // $$$$ LDC: = knowledge's id
 }
-
-/*
-// -----------------------------------------------------------------------------
-// Name: TestMIL_ObjectKnowledgeListParameter_ToASN
-// Created: LDC 2009-06-11
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeListParameter_ToASN )
-{
-    ObjectKnowledgeIdList asnIn;
-    asnIn.add_elem()->set_id( 0 );
-    MockDEC_KnowledgeResolver_ABC resolver;
-    MockMIL_Time_ABC time;
-    MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
-    boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object() ); // $$$$ LDC: id == 0... :(
-    MOCK_EXPECT( resolver, ResolveKnowledgeObjectFromMessage ).once().returns( knowledge );
-
-    MIL_ObjectKnowledgeListParameter param( asnIn, resolver );
-    asnIn.clear_elem();
-    ObjectKnowledgeIdList asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToObjectKnowledgeList( asnOut ) );
-    BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( 0u, asnOut.elem(0).id() ); // $$$$ LDC: = knowledge's id
-    asnOut.clear_elem();
-}
-*/
 
 // -----------------------------------------------------------------------------
 // Name: TestMIL_PathParameter_Throw
@@ -545,48 +462,17 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_ToASN )
     asnIn.mutable_location()->mutable_coordinates()->mutable_elem(1)->set_longitude( 3.17f );
     MIL_PathParameter param( asnIn );
     asnIn.mutable_location()->mutable_coordinates()->clear_elem();
-    MsgPath asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToPath( asnOut ) );
-    BOOST_CHECK_EQUAL( Common::MsgLocation_Geometry_line , asnOut.location().type() );
-    BOOST_CHECK_EQUAL( 2, asnOut.location().coordinates().elem_size() );
-    BOOST_CHECK_CLOSE( 48.52, asnOut.location().coordinates().elem(0).latitude(), 1. );
-    BOOST_CHECK_CLOSE( 2.17, asnOut.location().coordinates().elem(0).longitude(), 1. );
-    BOOST_CHECK_CLOSE( 49.52, asnOut.location().coordinates().elem(1).latitude(), 1. );
-    BOOST_CHECK_CLOSE( 3.17, asnOut.location().coordinates().elem(1).longitude(), 1. );
-    asnOut.mutable_location()->mutable_coordinates()->clear_elem();
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_path() );
+    BOOST_CHECK_EQUAL( Common::MsgLocation_Geometry_line , asnOut.path().location().type() );
+    BOOST_CHECK_EQUAL( 2, asnOut.path().location().coordinates().elem_size() );
+    BOOST_CHECK_CLOSE( 48.52, asnOut.path().location().coordinates().elem(0).latitude(), 1. );
+    BOOST_CHECK_CLOSE( 2.17, asnOut.path().location().coordinates().elem(0).longitude(), 1. );
+    BOOST_CHECK_CLOSE( 49.52, asnOut.path().location().coordinates().elem(1).latitude(), 1. );
+    BOOST_CHECK_CLOSE( 3.17, asnOut.path().location().coordinates().elem(1).longitude(), 1. );
     TER_World::DestroyWorld();
 }
-
-/*
-// -----------------------------------------------------------------------------
-// Name: TestMIL_PathListParameter_ToASN
-// Created: LDC 2009-06-11
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestMIL_PathListParameter_ToASN )
-{
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
-    MsgPathList asnIn;
-
-    asnIn.add_elem()->mutable_location()->set_type( Common::MsgLocation_Geometry_line );
-    asnIn.mutable_elem(0)->mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 48.52f );
-    asnIn.mutable_elem(0)->mutable_location()->mutable_coordinates()->mutable_elem(0)->set_longitude( 2.17f );
-    asnIn.mutable_elem(0)->mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 49.52f );
-    asnIn.mutable_elem(0)->mutable_location()->mutable_coordinates()->mutable_elem(1)->set_longitude( 3.17f );
-    MIL_PathListParameter param( asnIn );
-    asnIn.mutable_elem(0)->mutable_location()->mutable_coordinates()->Clear();
-    MsgPathList asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToPathList( asnOut ) );
-    BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( Common::MsgLocation_Geometry_line, asnOut.elem(0).location().type() );
-    BOOST_CHECK_EQUAL( 2, asnOut.elem(0).location().coordinates().elem_size() );
-    BOOST_CHECK_CLOSE( 48.52, asnOut.elem(0).location().coordinates().elem(0).latitude(), 1. );
-    BOOST_CHECK_CLOSE( 2.17, asnOut.elem(0).location().coordinates().elem(0).longitude(), 1. );
-    BOOST_CHECK_CLOSE( 49.52, asnOut.elem(0).location().coordinates().elem(1).latitude(), 1. );
-    BOOST_CHECK_CLOSE( 3.17, asnOut.elem(0).location().coordinates().elem(1).longitude(), 1. );
-    asnOut.mutable_elem(0)->mutable_location()->mutable_coordinates()->Clear();
-    TER_World::DestroyWorld();
-}
-*/
 
 // -----------------------------------------------------------------------------
 // Name: TestMIL_PlannedWorkParameter_ToASN
@@ -612,63 +498,17 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
 //    MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
     MIL_PlannedWorkParameter param( asnIn, entityManager );
     asnIn.mutable_position()->mutable_coordinates()->Clear();
-    MsgPlannedWork asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToGenObject( asnOut ) );
-    BOOST_CHECK_EQUAL( typeName, asnOut.type() );
-    CompareLocationToRlyeh( *asnOut.mutable_position() );
-    BOOST_CHECK_EQUAL( ObstacleType_DemolitionTargetType_reserved, asnOut.type_obstacle() );
-    BOOST_CHECK_EQUAL( 1, asnOut.densite() );
-    BOOST_CHECK_EQUAL( 0u, asnOut.tc2().id() );
-    BOOST_CHECK_EQUAL( 2, asnOut.activity_time() );
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_plannedwork() );
+    BOOST_CHECK_EQUAL( typeName, asnOut.plannedwork().type() );
+    CompareLocationToRlyeh( asnOut.plannedwork().position() );
+    BOOST_CHECK_EQUAL( ObstacleType_DemolitionTargetType_reserved, asnOut.plannedwork().type_obstacle() );
+    BOOST_CHECK_EQUAL( 1, asnOut.plannedwork().densite() );
+    BOOST_CHECK_EQUAL( 0u, asnOut.plannedwork().tc2().id() );
+    BOOST_CHECK_EQUAL( 2, asnOut.plannedwork().activity_time() );
     TER_World::DestroyWorld();
 }
-
-/*
-// -----------------------------------------------------------------------------
-// Name: TestMIL_PlannedWorkListParameter_ToASN
-// Created: LDC 2009-06-11
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkListParameter_ToASN )
-{
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
-
-    try
-    {
-        const std::string typeName( "type" );
-        MsgPlannedWorkList asnIn;
-        asnIn.add_elem()->set_type( typeName.c_str() );
-        FillRlyehLocation( *asnIn.mutable_elem(0)->mutable_position());
-        asnIn.mutable_elem(0)->set_type_obstacle( ObstacleType_DemolitionTargetType_reserved );
-        asnIn.mutable_elem(0)->set_densite( 1 );
-        asnIn.mutable_elem(0)->mutable_tc2()->set_id( 0 );
-        asnIn.mutable_elem(0)->set_activity_time( 2 );
-        MockMIL_EntityManager_ABC entityManager;
-        MockMIL_ObjectType_ABC objectType;
-        MOCK_EXPECT( entityManager, FindObjectType ).once().returns( boost::cref( objectType ) );
-        // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
-    //    FixtureAutomate fixture;
-    //    MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
-        MIL_PlannedWorkListParameter param( asnIn, entityManager );
-        asnIn.mutable_elem(0)->mutable_position()->mutable_coordinates()->Clear();
-        asnIn.clear_elem();
-        MsgPlannedWorkList asnOut;
-        BOOST_CHECK_EQUAL( true, param.ToGenObjectList( asnOut ) );
-        BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-        BOOST_CHECK_EQUAL( typeName, asnOut.elem(0).type() );
-        CompareLocationToRlyeh( *asnOut.mutable_elem(0)->mutable_position() );
-        BOOST_CHECK_EQUAL( ObstacleType_DemolitionTargetType_reserved, asnOut.elem(0).type_obstacle() );
-        BOOST_CHECK_EQUAL( 1, asnOut.elem(0).densite() );
-        BOOST_CHECK_EQUAL( 0u, asnOut.elem(0).tc2().id() );
-        BOOST_CHECK_EQUAL( 2, asnOut.elem(0).activity_time() );
-    }
-    catch( ... )
-    {
-        TER_World::DestroyWorld();
-        throw;
-    }
-    TER_World::DestroyWorld();
-}
-*/
 
 // -----------------------------------------------------------------------------
 // Name: TestMIL_PointParameter_ToASN
@@ -681,34 +521,12 @@ BOOST_AUTO_TEST_CASE( TestMIL_PointParameter_ToASN )
     FillRlyehLocation( *asnIn.mutable_location() );
     MIL_PointParameter param( asnIn );
     asnIn.mutable_location()->mutable_coordinates()->clear_elem();
-    MsgPoint asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToPoint( asnOut ) );
-    CompareLocationToRlyeh( *asnOut.mutable_location() );
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_point() );
+    CompareLocationToRlyeh( asnOut.point().location() );
     TER_World::DestroyWorld();
 }
-
-/*
-// -----------------------------------------------------------------------------
-// Name: TestMIL_PointListParameter_ToASN
-// Created: LDC 2009-06-10
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestMIL_PointListParameter_ToASN )
-{
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
-    MsgPointList asnIn;
-    FillRlyehLocation( *asnIn.add_elem()->mutable_location() );
-    //FillRlyehLocation( *asnIn.mutable_elem( 0 )->mutable_location() );
-    MIL_PointListParameter param( asnIn );
-    asnIn.mutable_elem(0)->mutable_location()->mutable_coordinates()->Clear();
-    asnIn.clear_elem();
-    MsgPointList asnOut;
-
-    BOOST_CHECK_EQUAL( true, param.ToPointList( asnOut ) );
-    BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    CompareLocationToRlyeh( *asnOut.mutable_elem(0)->mutable_location() );
-    asnOut.clear_elem();
-    TER_World::DestroyWorld();
-}*/
 
 // -----------------------------------------------------------------------------
 // Name: TestMIL_PolygonParameter_ToASN
@@ -721,36 +539,12 @@ BOOST_AUTO_TEST_CASE( TestMIL_PolygonParameter_ToASN )
     FillPolygonLocation( *asnIn.mutable_location(), 0.f );
     MIL_PolygonParameter param( asnIn );
     asnIn.mutable_location()->mutable_coordinates()->clear_elem();
-    MsgPolygon asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToPolygon( asnOut ) );
-    CompareLocationToPolygon( *asnOut.mutable_location(), 0.f );
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_area() );
+    CompareLocationToPolygon( asnOut.area().location(), 0.f );
     TER_World::DestroyWorld();
 }
-
-/*
-// -----------------------------------------------------------------------------
-// Name: TestMIL_PolygonListParameter_ToASN
-// Created: LDC 2009-06-10
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( TestMIL_PolygonListParameter_ToASN )
-{
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
-    MsgPolygonList asnIn;
-    FillPolygonLocation( *asnIn.add_elem()->mutable_location(), 0.f );
-    FillPolygonLocation( *asnIn.add_elem()->mutable_location(), 0.01f );
-    MIL_PolygonListParameter param( asnIn );
-    asnIn.mutable_elem(0)->mutable_location()->mutable_coordinates()->clear_elem();
-    asnIn.mutable_elem(1)->mutable_location()->mutable_coordinates()->clear_elem();
-    asnIn.clear_elem();
-    MsgPolygonList asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToPolygonList( asnOut ) );
-    BOOST_CHECK_EQUAL( 2, asnOut.elem_size() );
-    CompareLocationToPolygon( *asnOut.mutable_elem(0)->mutable_location(), 0.f );
-    CompareLocationToPolygon( *asnOut.mutable_elem(1)->mutable_location(), 0.01f );
-    asnOut.clear_elem();
-    TER_World::DestroyWorld();
-}
-*/
 
 // -----------------------------------------------------------------------------
 // Name: TestMIL_PopulationKnowledgeParameter_ToASN
@@ -766,9 +560,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_PopulationKnowledgeParameter_ToASN )
     DEC_Knowledge_Population knowledge; // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgePopulationFromMessage ).once().returns( &knowledge );
     MIL_PopulationKnowledgeParameter param( asnIn, resolver );
-    CrowdKnowledgeId asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToPopulationKnowledge( asnOut ) );
-    BOOST_CHECK_EQUAL( 0u, asnOut.id() ); // $$$$ LDC: = knowledge's id
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_crowdknowledge() );
+    BOOST_CHECK_EQUAL( 0u, asnOut.crowdknowledge().id() ); // $$$$ LDC: = knowledge's id
 }
 
 // -----------------------------------------------------------------------------
@@ -779,9 +574,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_RealParameter_ToASN )
 {
     float asnIn = 42;
     MIL_RealParameter param( asnIn );
-    float asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToNumeric( asnOut ) );
-    BOOST_CHECK_EQUAL( 42, asnOut );
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_areal() );
+    BOOST_CHECK_EQUAL( 42, asnOut.areal() );
 }
 
 // -----------------------------------------------------------------------------
@@ -792,9 +588,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_StringParameter_ToASN )
 {
     std::string asnIn( "value" );
     MIL_StringParameter param( asnIn );
-    std::string asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToString( asnOut ) );
-    BOOST_CHECK_EQUAL( asnIn, asnOut );
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_acharstr() );
+    BOOST_CHECK_EQUAL( asnIn, asnOut.acharstr() );
 }
 
 // -----------------------------------------------------------------------------
@@ -806,9 +603,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_TirIndirectParameter_ToASN )
     FireId asnIn;
     asnIn.set_id( 33 );
     MIL_TirIndirectParameter param( asnIn );
-    FireId asnOut;
-    BOOST_CHECK_EQUAL( true, param.ToIndirectFire( asnOut ) );
-    BOOST_CHECK_EQUAL( 33u, asnOut.id() );
+    MsgMissionParameter_Value asnOut;
+    BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
+    BOOST_CHECK_EQUAL( true, asnOut.has_tirindirect() );
+    BOOST_CHECK_EQUAL( 33u, asnOut.tirindirect().id() );
 }
 
 namespace
@@ -861,7 +659,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_MissionWithNullParameters )
     //MIL_MissionPion missionpion( MIL_PionMissionType::Find( id ), pion, order );
 }
 
-/*
+
 // -----------------------------------------------------------------------------
 // Name: TestMIL_CompositeLocationParameter
 // Created: LDC 2010-08-18
@@ -874,7 +672,6 @@ BOOST_AUTO_TEST_CASE( TestMIL_CompositeLocationParameter )
             "<parameter dia-name='phaseLines_' max-occurs='unbounded' min-occurs='1' name='Limas' optional='true' type='PhaseLine'/>"
             "<parameter dia-name='boundaryLimit1_' name='Limit 1' optional='true' type='Limit'/>"
             "<parameter dia-name='boundaryLimit2_' name='Limit 2' optional='true' type='Limit'/>"
-            "<parameter dia-name='intelligences_' max-occurs='unbounded' min-occurs='1' name='Renseignements' optional='true' type='Intelligence'/>"    
             "<parameter dia-name='objectif' name='Objectif' type='LocationComposite'>"
                 "<choice>"
                     "<parameter type='Point'/>"
@@ -888,6 +685,6 @@ BOOST_AUTO_TEST_CASE( TestMIL_CompositeLocationParameter )
     xis >> xml::start( "mission" );
     MIL_ParameterType_ABC::Initialize();
     MIL_PionMissionType type( 0, xis );
-    const MIL_ParameterType_ABC& paramType = type.GetParameterType( 0 );
+    const MIL_ParameterType_ABC& paramType = type.GetParameterType( 0 ).GetType();
     BOOST_CHECK_EQUAL( paramType.GetName(), "LocationComposite" );
-}*/
+}

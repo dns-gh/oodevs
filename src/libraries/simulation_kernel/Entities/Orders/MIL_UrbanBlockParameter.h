@@ -17,7 +17,6 @@ class DEC_Knowledge_Urban;
 
 namespace Common
 {
-    class UrbanObjectId;
     class UrbanObjectKnowledgeId;
 }
 
@@ -44,13 +43,13 @@ public:
 
     //! @name Type checking
     //@{
-    virtual bool IsOfType( const MIL_ParameterType_ABC& ) const;
+    virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const;
     //@}
 
     //! @name Conversions
     //@{
-    virtual bool ToUrbanBlock( Common::UrbanObjectId& ) const;
     virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

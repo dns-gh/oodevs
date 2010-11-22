@@ -9,10 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_LocationParameter.h"
-#include "simulation_orders/MIL_ParameterType_Location.h"
-#include "simulation_orders/MIL_ParameterType_Polygon.h"
-#include "simulation_orders/MIL_ParameterType_Point.h"
-#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/protocol.h"
 
@@ -47,29 +43,13 @@ MIL_LocationParameter::~MIL_LocationParameter()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LocationParameter::IsOfType
-// Created: LDC 2009-05-25
+// Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_LocationParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_LocationParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    if( dynamic_cast< const MIL_ParameterType_Location* >( &type ) != 0 )
-        return true;
-    if( dynamic_cast< const MIL_ParameterType_Polygon* >( &type ) != 0 )
-        return pLocalisation_->GetType() == TER_Localisation::ePolygon;
-    if( dynamic_cast< const MIL_ParameterType_Point* >( &type ) != 0 )
-        return pLocalisation_->GetType() == TER_Localisation::ePoint;
-    if( dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0 )
-        return true;
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_LocationParameter::ToLocation
-// Created: LDC 2009-05-25
-// -----------------------------------------------------------------------------
-bool MIL_LocationParameter::ToLocation( Common::MsgLocation& asn ) const
-{
-    NET_ASN_Tools::WriteLocation( *pLocalisation_, asn );
-    return true;
+    return type == MIL_ParameterType_ABC::eLocation
+        || ( type == MIL_ParameterType_ABC::ePolygon && pLocalisation_->GetType() == TER_Localisation::ePolygon )
+        || ( type == MIL_ParameterType_ABC::ePoint && pLocalisation_->GetType() == TER_Localisation::ePoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,35 +66,11 @@ bool MIL_LocationParameter::ToLocation( boost::shared_ptr< TER_Localisation >& v
 // Name: MIL_LocationParameter::ToPolygon
 // Created: LDC 2009-07-27
 // -----------------------------------------------------------------------------
-bool MIL_LocationParameter::ToPolygon( Common::MsgPolygon& asn ) const
-{
-    if( pLocalisation_->GetType() != TER_Localisation::ePolygon )
-        return false;
-    NET_ASN_Tools::WriteLocation( *pLocalisation_, *asn.mutable_location() );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_LocationParameter::ToPolygon
-// Created: LDC 2009-07-27
-// -----------------------------------------------------------------------------
 bool MIL_LocationParameter::ToPolygon( boost::shared_ptr< TER_Localisation >& value ) const
 {
     if( pLocalisation_->GetType() != TER_Localisation::ePolygon )
         return false;
     value = pLocalisation_;
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_LocationParameter::ToPoint
-// Created: LDC 2010-10-12
-// -----------------------------------------------------------------------------
-bool MIL_LocationParameter::ToPoint( Common::MsgPoint& asn ) const
-{
-    if( pLocalisation_->GetType() != TER_Localisation::ePoint )
-        return false;
-    NET_ASN_Tools::WriteLocation( *pLocalisation_, *asn.mutable_location() );
     return true;
 }
 
@@ -136,6 +92,6 @@ bool MIL_LocationParameter::ToPoint( boost::shared_ptr< MT_Vector2D >& value ) c
 // -----------------------------------------------------------------------------
 bool MIL_LocationParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
 {
-    ToLocation( *elem.mutable_location() );
+    NET_ASN_Tools::WriteLocation( *pLocalisation_, *elem.mutable_location() );
     return true;
 }

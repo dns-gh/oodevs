@@ -9,8 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PathParameter.h"
-#include "simulation_orders/MIL_ParameterType_Path.h"
-#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 #include "Network/NET_ASN_Tools.h"
 #include "tools/MIL_Tools.h"
 #include "protocol/protocol.h"
@@ -63,23 +61,10 @@ MIL_PathParameter::~MIL_PathParameter()
 // Name: MIL_PathParameter::IsOfType
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_PathParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_PathParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return dynamic_cast< const MIL_ParameterType_Path* >( &type ) != 0
-        || dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PathParameter::ToPath
-// Created: LDC 2009-05-22
-// -----------------------------------------------------------------------------
-bool MIL_PathParameter::ToPath( Common::MsgPath& asn ) const
-{
-    asn.mutable_location()->set_type( Common::MsgLocation_Geometry_line );
-    const unsigned int size = path_.size();
-    for( unsigned int i = 0; i < size; ++i )
-        MIL_Tools::ConvertCoordSimToMos( *path_[i], *asn.mutable_location()->mutable_coordinates()->add_elem() );
-    return true;
+    return type == MIL_ParameterType_ABC::ePath
+        || type == MIL_ParameterType_ABC::eLocationComposite;
 }
 
 // -----------------------------------------------------------------------------
@@ -98,6 +83,9 @@ bool MIL_PathParameter::ToPath( std::vector< boost::shared_ptr< MT_Vector2D > >&
 // -----------------------------------------------------------------------------
 bool MIL_PathParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
 {
-    ToPath( *elem.mutable_path() );
+    elem.mutable_path()->mutable_location()->set_type( Common::MsgLocation_Geometry_line );
+    const unsigned int size = path_.size();
+    for( unsigned int i = 0; i < size; ++i )
+        MIL_Tools::ConvertCoordSimToMos( *path_[i], *elem.mutable_path()->mutable_location()->mutable_coordinates()->add_elem() );
     return true;
 }

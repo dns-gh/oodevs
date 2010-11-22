@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_TirIndirectParameter.h"
-#include "simulation_orders/MIL_ParameterType_IndirectFire.h"
 #include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
@@ -33,19 +32,29 @@ MIL_TirIndirectParameter::~MIL_TirIndirectParameter()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_TirIndirectParameter::IsOfType
-// Created: LDC 2009-06-05
+// Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_TirIndirectParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_TirIndirectParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_IndirectFire*>( &type ) != 0 );
+    return type == MIL_ParameterType_ABC::eIndirectFire;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_TirIndirectParameter::ToId
+// Created: MGD 2010-11-19
+// -----------------------------------------------------------------------------
+bool MIL_TirIndirectParameter::ToId( int& id ) const
+{
+    id = data_;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_TirIndirectParameter::ToIndirectFire
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-bool MIL_TirIndirectParameter::ToIndirectFire( Common::FireId& asn ) const
+bool MIL_TirIndirectParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
 {
-    asn.set_id( data_ );
+    elem.mutable_tirindirect()->set_id( data_ );
     return true;
 }

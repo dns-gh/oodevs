@@ -31,6 +31,36 @@ class MIL_MissionParameter_ABC;
 class MIL_ParameterType_ABC : private boost::noncopyable
 {
 public:
+    enum E_Type
+    {
+        eBool        = 0,
+        eEnumeration = 1,
+        ePoint       = 2,
+        ePolygon     = 3,
+        eLocation    = 4,
+        ePath        = 5,
+        eDirection   = 6,
+        eNatureAtlas = 7,
+        eAutomat     = 8,
+        eAgent       = 9,
+        eAgentKnowledge  = 10,
+        eObjectKnowledge = 11,
+        eCrowdKnowledge  = 12,
+        eResourceType    = 13,
+        eEquipmentType   = 14,
+        eDateTime        = 15,
+        eInteger         = 16,
+        eNumeric         = 17,
+        ePlannedWork     = 18,
+        eMaintenancePriorities = 19,
+        eMedicalPriorities = 20,
+        eIndirectFire = 21,
+        eString = 22,
+        eUrbanKnowledge = 23,
+        eLocationComposite = 24,
+        ePhaseLine = 25,
+    };
+
     //! @name Factory
     //@{
     static void Initialize();
@@ -40,25 +70,20 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName() const;
+    E_Type GetType() const;
     //@}
 
-    //! @name Operations
-    //@{
-    virtual bool Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const = 0;
-    //@}
-
-protected:
+private:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_ParameterType_ABC( const std::string& strName );
+    explicit MIL_ParameterType_ABC( const std::string& strName, E_Type type );
     virtual ~MIL_ParameterType_ABC();
     //@}
 
 private:
     //! @name Initialization
     //@{
-    template< typename T > static void RegisterParameterType();
-    template< typename T > static void RegisterParameterType( const std::string& name );
+    static void RegisterParameterType( const std::string& name, E_Type type );
     //@}
 
 private:
@@ -72,6 +97,7 @@ private:
     //! @name Member data
     //@{
     const std::string strName_;
+    const E_Type type_;
     //@}
 
 private:

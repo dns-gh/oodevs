@@ -29,23 +29,12 @@ public:
 
     //! @name Type checking
     //@{
-    virtual bool IsOfType( const MIL_ParameterType_ABC& ) const;
+    virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const;
     //@}
 
     //! @name Conversions
     //@{
-    // Conversions to empty lists are allowed.
-    virtual bool ToPointList( Common::MsgPointList& ) const;
-    virtual bool ToPolygonList( Common::MsgPolygonList& ) const;
-    virtual bool ToAgentKnowledgeList( Common::UnitKnowledgeIdList& asn ) const;
-    virtual bool ToAgentList( Common::UnitIdList& asn ) const;
-    virtual bool ToAutomatList( Common::AutomatIdList& ) const;
-    virtual bool ToGenObjectList( Common::MsgPlannedWorkList& ) const;
-    virtual bool ToLocationList( Common::MsgLocationList& ) const;
-    virtual bool ToObjectiveList( Common::MsgMissionObjectiveList& asn ) const;
-    virtual bool ToObjectKnowledgeList( Common::ObjectKnowledgeIdList& asn ) const;
-    virtual bool ToPathList( Common::MsgPathList& asn ) const;
-    virtual bool ToNatureAtlas( Common::MsgAtlasNature& asn ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& ) const;
     virtual bool ToList( std::vector< Common::MsgMissionParameter_Value >& ) const;
     //@}
 

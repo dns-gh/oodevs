@@ -31,7 +31,7 @@ public:
 
     //! @name Type checking
     //@{
-    virtual bool IsOfType( const MIL_ParameterType_ABC& ) const;
+    virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const;
     //@}
 
     //! @name Conversions
@@ -40,6 +40,7 @@ public:
     virtual bool ToLimaList( Common::MsgLimasOrder& message ) const;
     virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const;
     virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

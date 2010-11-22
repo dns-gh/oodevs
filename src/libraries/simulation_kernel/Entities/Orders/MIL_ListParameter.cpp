@@ -48,9 +48,9 @@ MIL_ListParameter::~MIL_ListParameter()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ListParameter::IsOfType
-// Created: LDC 2010-09-21
+// Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_ListParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_ListParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
     for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
         if( !(*it)->IsOfType( type ) )
@@ -68,6 +68,15 @@ bool MIL_ListParameter::ToList( ::google::protobuf::RepeatedPtrField< ::Common::
         if( !(*it)->ToElement( *message.Add() ) )
             return false;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ListParameter::ToElement
+// Created: MGD 2010-11-19
+// -----------------------------------------------------------------------------
+bool MIL_ListParameter::ToElement( Common::MsgMissionParameter_Value& message ) const
+{
+    return ToList( *message.mutable_list() );
 }
 
 // -----------------------------------------------------------------------------

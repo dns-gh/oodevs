@@ -458,7 +458,7 @@ private:
     template< typename T >
     static void PostEvent( const T& receiver, E_EngineReport nReport, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters );
 
-    bool DoSend( unsigned int nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const;
+    bool DoSend( unsigned int nSenderID, E_Type nType, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params ) const;
     //@}
 
     //! @name Helpers

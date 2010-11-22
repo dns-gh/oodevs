@@ -43,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    bool Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
+    bool Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to ) const;
     //@}
 
     //! @name Accessors

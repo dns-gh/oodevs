@@ -9,8 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AtlasNatureParameter.h"
-#include "simulation_orders/MIL_ParameterType_NatureAtlas.h"
 #include "Network/NET_ASN_Tools.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AtlasNatureParameter constructor
@@ -42,20 +42,11 @@ MIL_AtlasNatureParameter::~MIL_AtlasNatureParameter()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AtlasNatureParameter::IsOfType
-// Created: LDC 2009-05-26
+// Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_AtlasNatureParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_AtlasNatureParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_NatureAtlas*>( &type ) != 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AtlasNatureParameter::ToNatureAtlas
-// Created: LDC 2009-05-26
-// -----------------------------------------------------------------------------
-bool MIL_AtlasNatureParameter::ToNatureAtlas( Common::MsgAtlasNature& asn ) const
-{
-    return NET_ASN_Tools::CopyNatureAtlas( nature_, asn );
+    return type == MIL_ParameterType_ABC::eNatureAtlas;
 }
 
 // -----------------------------------------------------------------------------
@@ -66,4 +57,13 @@ bool MIL_AtlasNatureParameter::ToNatureAtlas( int& atlas ) const
 {
     atlas = nature_;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AtlasNatureParameter::ToElement
+// Created: MGD 2010-11-19
+// -----------------------------------------------------------------------------
+bool MIL_AtlasNatureParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    return NET_ASN_Tools::CopyNatureAtlas( nature_, *elem.mutable_atlasnature() );
 }

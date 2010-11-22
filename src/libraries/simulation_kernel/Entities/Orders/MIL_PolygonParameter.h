@@ -29,12 +29,11 @@ public:
 
     //! @name Type checking
     //@{
-    virtual bool IsOfType( const MIL_ParameterType_ABC& ) const;
+    virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const;
     //@}
 
     //! @name Conversions
     //@{
-    virtual bool ToPolygon( Common::MsgPolygon& ) const;
     virtual bool ToPolygon( boost::shared_ptr< TER_Localisation >& ) const;
     virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     //@}

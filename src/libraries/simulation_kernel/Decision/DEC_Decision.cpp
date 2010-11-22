@@ -10,8 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Decision.h"
 #include "DEC_Tools.h"
-#include "simulation_orders/MIL_MissionParameter_ABC.h"
-#include "simulation_orders/MIL_ParameterType_ABC.h"
+#include "Entities/Orders/MIL_MissionParameter_ABC.h"
+#include "Entities/Orders/MIL_ParameterType_ABC.h"
 #include "Decision/DEC_DIAFunctions.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_LogisticFunctions.h"
@@ -746,10 +746,9 @@ void MedicalPrioritiesFunction( const directia::tools::binders::ScriptRef& refMi
 }
 void IndirectFireFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    Common::FireId fire;
-    fire.set_id( 0 );
-    if( element.ToIndirectFire( fire ) && fire.id() )
-        refMission[ name ] = fire.id();
+    int idIndirectFire;
+    if( element.ToId( idIndirectFire ) )
+        refMission[ name ] = idIndirectFire;
 }
 void StringFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {

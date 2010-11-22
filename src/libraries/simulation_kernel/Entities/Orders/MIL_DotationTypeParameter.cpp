@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_DotationTypeParameter.h"
-#include "simulation_orders/MIL_ParameterType_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "protocol/protocol.h"
@@ -45,23 +44,11 @@ MIL_DotationTypeParameter::~MIL_DotationTypeParameter()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationTypeParameter::IsOfType
-// Created: LDC 2009-06-05
+// Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_DotationTypeParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_DotationTypeParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_DotationType*>( &type ) != 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_DotationTypeParameter::ToDotationType
-// Created: LDC 2009-06-05
-// -----------------------------------------------------------------------------
-bool MIL_DotationTypeParameter::ToDotationType( Common::ResourceType& asn ) const
-{
-    if( !pCategory_ )
-        return false;
-    asn.set_id( pCategory_->GetMosID() );
-    return true;
+    return type == MIL_ParameterType_ABC::eResourceType;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,5 +58,18 @@ bool MIL_DotationTypeParameter::ToDotationType( Common::ResourceType& asn ) cons
 bool MIL_DotationTypeParameter::ToDotationType( const PHY_DotationCategory*& value ) const
 {
     value = pCategory_;
+    return true;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationTypeParameter::ToElement
+// Created: MGD 2010-11-19
+// -----------------------------------------------------------------------------
+bool MIL_DotationTypeParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    if( !pCategory_ )
+        return false;
+    elem.mutable_resourcetype()->set_id( pCategory_->GetMosID() );
     return true;
 }

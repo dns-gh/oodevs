@@ -16,9 +16,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "protocol/protocol.h"
-#include "simulation_orders/MIL_MissionParameter_ABC.h"
-#include "simulation_orders/MIL_ParameterType_MedicalPriorities.h"
-#include "simulation_orders/MIL_ParameterType_MaintenancePriorities.h"
+#include "MIL_MissionParameter_ABC.h"
 #include <directia/brain/Brain.h>
 
 #include <directia/brain/Brain.h>

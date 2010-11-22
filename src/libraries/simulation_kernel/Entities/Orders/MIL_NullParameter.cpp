@@ -34,108 +34,18 @@ MIL_NullParameter::~MIL_NullParameter()
 // Name: MIL_NullParameter::IsOfType
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::IsOfType( const MIL_ParameterType_ABC& ) const
+bool MIL_NullParameter::IsOfType( MIL_ParameterType_ABC::E_Type /*type*/ ) const
 {
     return true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_NullParameter::ToPointList
-// Created: LDC 2009-05-25
-// -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToPointList( Common::MsgPointList& /*asn*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_NullParameter::ToPolygonList
-// Created: LDC 2009-05-25
-// -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToPolygonList( Common::MsgPolygonList& /*asn*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_NullParameter::ToAgentKnowledgeList
-// Created: LDC 2009-05-25
-// -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToAgentKnowledgeList( Common::UnitKnowledgeIdList& /*asn*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_NullParameter::ToAgentList
-// Created: LDC 2009-05-25
-// -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToAgentList( Common::UnitIdList& /*asn*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_NullParameter::ToAutomatList
-// Created: LDC 2009-05-25
-// -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToAutomatList( Common::AutomatIdList& /*asn*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_NullParameter::ToGenObjectList
-// Created: LDC 2009-05-25
-// -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToGenObjectList( Common::MsgPlannedWorkList& /*asn*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_NullParameter::ToLocationList
-// Created: LDC 2009-05-25
-// -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToLocationList( Common::MsgLocationList& /*asn*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_NullParameter::ToObjectiveList
-// Created: LDC 2009-05-25
-// -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToObjectiveList( Common::MsgMissionObjectiveList& /*asn*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_NullParameter::ToObjectKnowledgeList
-// Created: LDC 2009-05-25
-// -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToObjectKnowledgeList( Common::ObjectKnowledgeIdList& /*asn*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_NullParameter::ToPathList
-// Created: LDC 2009-05-25
-// -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToPathList( Common::MsgPathList& /*asn*/ ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_NullParameter::ToNatureAtlas
+// Name: MIL_NullParameter::ToElement
 // Created: LDC 2009-11-03
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToNatureAtlas( Common::MsgAtlasNature& asn ) const
+bool MIL_NullParameter::ToElement( Common::MsgMissionParameter_Value& ) const
 {
-    return NET_ASN_Tools::CopyNatureAtlas( 0, asn );
+    return false;
 }
 
 // -----------------------------------------------------------------------------

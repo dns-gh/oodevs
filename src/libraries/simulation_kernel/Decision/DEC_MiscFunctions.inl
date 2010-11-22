@@ -10,7 +10,7 @@
 // *****************************************************************************
 
 #include "Entities/Orders/MIL_Report.h"
-#include "simulation_orders/MIL_MissionParameter_ABC.h"
+#include "Entities/Orders/MIL_MissionParameter_ABC.h"
 #include "Entities/Orders/MIL_MissionParameterFactory.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Tools.h"

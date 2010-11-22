@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_EquipmentTypeParameter.h"
-#include "simulation_orders/MIL_ParameterType_EquipmentType.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 
 // -----------------------------------------------------------------------------
@@ -41,25 +40,14 @@ MIL_EquipmentTypeParameter::~MIL_EquipmentTypeParameter()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_EquipmentTypeParameter::IsOfType
-// Created: LDC 2009-06-05
-// -----------------------------------------------------------------------------
-bool MIL_EquipmentTypeParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
-{
-    return( dynamic_cast<const MIL_ParameterType_EquipmentType*>( &type ) != 0 );
-}
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EquipmentTypeParameter::ToEquipmentType
-// Created: LDC 2009-06-05
+// Name: MIL_EquipmentTypeParameter::IsOfType
+// Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_EquipmentTypeParameter::ToEquipmentType( Common::EquipmentType& asn ) const
+bool MIL_EquipmentTypeParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    if( !pType_ )
-        return false;
-    asn = pType_->GetMosID();
-    return true;
+    return type == MIL_ParameterType_ABC::eEquipmentType;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,3 +59,16 @@ bool MIL_EquipmentTypeParameter::ToEquipmentType( const PHY_ComposanteTypePion*&
     value = pType_;
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EquipmentTypeParameter::ToElement
+// Created: MGD 2010-11-19
+// -----------------------------------------------------------------------------
+bool MIL_EquipmentTypeParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    if( !pType_ )
+        return false;
+    *elem.mutable_equipmenttype() = pType_->GetMosID();
+    return true;
+}
+

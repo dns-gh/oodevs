@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_EnumerationParameter.h"
-#include "simulation_orders/MIL_ParameterType_Enumeration.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EnumerationParameter constructor
@@ -34,9 +34,9 @@ MIL_EnumerationParameter::~MIL_EnumerationParameter()
 // Name: MIL_EnumerationParameter::IsOfType
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_EnumerationParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_EnumerationParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_Enumeration*>( &type ) != 0 );
+    return type == MIL_ParameterType_ABC::eEnumeration;
 }
 
 // -----------------------------------------------------------------------------
@@ -48,3 +48,14 @@ bool MIL_EnumerationParameter::ToId( int& value ) const
     value = value_;
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EnumerationParameter::ToElement
+// Created: MGD 2010-11-19
+// -----------------------------------------------------------------------------
+bool MIL_EnumerationParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    elem.set_enumeration( value_ );
+    return true;
+}
+

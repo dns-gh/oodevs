@@ -30,12 +30,12 @@ public:
 
     //! @name Type checking
     //@{
-    virtual bool IsOfType( const MIL_ParameterType_ABC& ) const;
+    virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const;
     //@}
 
     //! @name Conversions
     //@{
-    virtual bool ToNatureAtlas( Common::MsgAtlasNature& asn ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     virtual bool ToNatureAtlas( int& atlas ) const;
     //@}
 

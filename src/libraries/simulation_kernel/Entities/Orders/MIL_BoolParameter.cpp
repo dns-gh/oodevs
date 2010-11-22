@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_BoolParameter.h"
-#include "simulation_orders/MIL_ParameterType_Bool.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_BoolParameter constructor
@@ -34,10 +34,11 @@ MIL_BoolParameter::~MIL_BoolParameter()
 // Name: MIL_BoolParameter::IsOfType
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_BoolParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_BoolParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_Bool*>( &type ) != 0 );
+    return type == MIL_ParameterType_ABC::eBool;
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_BoolParameter::ToBool
@@ -46,5 +47,16 @@ bool MIL_BoolParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 bool MIL_BoolParameter::ToBool( bool& value ) const
 {
     value = value_;
+    return true;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BoolParameter::ToElement
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+bool MIL_BoolParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    elem.set_booleanvalue( value_ );
     return true;
 }

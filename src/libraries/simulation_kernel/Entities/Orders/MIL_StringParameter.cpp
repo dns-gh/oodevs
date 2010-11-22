@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_StringParameter.h"
-#include "simulation_orders/MIL_ParameterType_String.h"
 #include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
@@ -33,11 +32,11 @@ MIL_StringParameter::~MIL_StringParameter()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StringParameter::IsOfType
-// Created: LDC 2009-06-05
+// Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_StringParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_StringParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_String*>( &type ) != 0 );
+    return type == MIL_ParameterType_ABC::eString;
 }
 
 // -----------------------------------------------------------------------------
@@ -49,3 +48,14 @@ bool MIL_StringParameter::ToString( std::string& value ) const
     value = value_;
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_StringParameter::ToElement
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+bool MIL_StringParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    elem.set_acharstr( value_ );
+    return true;
+}
+

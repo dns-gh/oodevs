@@ -14,7 +14,8 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "simulation_orders/MIL_ParameterType_ABC.h"
+#include "MIL_ParameterType_ABC.h"
+#include "MIL_MissionParameter_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 MIL_Report::T_ReportMap      MIL_Report::reports_;
@@ -167,7 +168,7 @@ void MIL_Report::ReadParameter( xml::xistream& xis )
 // Name: MIL_Report::DoSend
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-bool MIL_Report::DoSend( unsigned int nSenderId, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
+bool MIL_Report::DoSend( unsigned int nSenderId, E_Type nType, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
 {
     if( params.size() != parameters_.size() )
     {
@@ -182,8 +183,13 @@ bool MIL_Report::DoSend( unsigned int nSenderId, E_Type nType, const DEC_Knowled
     message().mutable_category()->set_id( MsgsSimToClient::EnumReportType( nType ) );
     NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *message().mutable_time() );
     for( unsigned int i = 0; i < parameters_.size(); ++i )
-        if( !parameters_[i]->Copy( *params[ i ], *message().mutable_parameters()->add_elem(), knowledgeResolver, false /*not optional*/ ) )
-            return false; //$$$ Memory leak
+    {
+        if( !params[ i ]->IsOfType( parameters_[i]->GetType() ) )
+            return false;
+        Common::MsgMissionParameter& paramProtobuff = *message().mutable_parameters()->add_elem();
+        if( !params[ i ]->ToElement( *paramProtobuff.mutable_value()->Add() ) )
+            return false;
+    }
     message.Send( NET_Publisher_ABC::Publisher() );
     return true;
 }

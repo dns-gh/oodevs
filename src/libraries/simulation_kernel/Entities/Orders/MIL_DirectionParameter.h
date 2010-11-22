@@ -30,12 +30,12 @@ public:
 
     //! @name Type checking
     //@{
-    virtual bool IsOfType( const MIL_ParameterType_ABC& ) const;
+    virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const;
     //@}
 
     //! @name Conversions
     //@{
-    virtual bool ToDirection( Common::MsgHeading& ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     virtual bool ToDirection( boost::shared_ptr< MT_Vector2D >& ) const;
     //@}
 

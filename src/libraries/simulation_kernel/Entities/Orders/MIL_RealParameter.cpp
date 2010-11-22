@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_RealParameter.h"
-#include "simulation_orders/MIL_ParameterType_Numeric.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RealParameter constructor
@@ -34,9 +34,9 @@ MIL_RealParameter::~MIL_RealParameter()
 // Name: MIL_RealParameter::IsOfType
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_RealParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_RealParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return dynamic_cast< const MIL_ParameterType_Numeric* >( &type ) != 0;
+    return type == MIL_ParameterType_ABC::eNumeric;
 }
 
 // -----------------------------------------------------------------------------
@@ -46,5 +46,15 @@ bool MIL_RealParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 bool MIL_RealParameter::ToNumeric( float& value ) const
 {
     value = value_;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealParameter::ToElement
+// Created: MGD 2010-11-19
+// -----------------------------------------------------------------------------
+bool MIL_RealParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    elem.set_areal( value_ );
     return true;
 }

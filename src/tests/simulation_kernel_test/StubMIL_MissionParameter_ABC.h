@@ -10,7 +10,7 @@
 #ifndef __StubMIL_MissionParameter_ABC_h_
 #define __StubMIL_MissionParameter_ABC_h_
 
-#include "simulation_orders/MIL_MissionParameter_ABC.h"
+#include "Entities/Orders/MIL_MissionParameter_ABC.h"
 
 // =============================================================================
 /** @class  StubMIL_MissionParameter_ABC
@@ -32,7 +32,7 @@ public:
 
     //! @name Type checking
     //@{
-    virtual bool IsOfType( const MIL_ParameterType_ABC& )const
+    virtual bool IsOfType( MIL_ParameterType_ABC::E_Type )const
     { throw; }
     //@}
 

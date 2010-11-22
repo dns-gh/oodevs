@@ -9,8 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomatParameter.h"
-#include "simulation_orders/MIL_ParameterType_Automat.h"
-#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Network/NET_ASN_Tools.h"
@@ -49,24 +47,12 @@ MIL_AutomatParameter::~MIL_AutomatParameter()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomatParameter::IsOfType
-// Created: LDC 2009-05-26
+// Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_AutomatParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_AutomatParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return dynamic_cast<const MIL_ParameterType_Automat*>( &type ) != 0
-        || dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomatParameter::ToAutomat
-// Created: LDC 2009-05-26
-// -----------------------------------------------------------------------------
-bool MIL_AutomatParameter::ToAutomat( Common::AutomatId& asn ) const
-{
-    if( !pDecision_ )
-        return false;
-    NET_ASN_Tools::WriteAutomate( *pDecision_, asn );
-    return true;
+    return type == MIL_ParameterType_ABC::eAutomat
+        || type == MIL_ParameterType_ABC::eLocationComposite;
 }
 
 // -----------------------------------------------------------------------------
@@ -85,6 +71,8 @@ bool MIL_AutomatParameter::ToAutomat( DEC_Decision_ABC*& value ) const
 // -----------------------------------------------------------------------------
 bool MIL_AutomatParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
 {
-    ToAutomat( *elem.mutable_automat() );
+    if( !pDecision_ )
+        return false;
+    NET_ASN_Tools::WriteAutomate( *pDecision_, *elem.mutable_automat() );
     return true;
 }

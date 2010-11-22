@@ -71,19 +71,18 @@ MIL_OrderTypeParameter::~MIL_OrderTypeParameter()
 // Name: MIL_OrderTypeParameter::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-bool MIL_OrderTypeParameter::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const
+bool MIL_OrderTypeParameter::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to ) const
 {
+    if( !from.IsOfType( pParameter_->GetType() ) )
+        return false;
+    
     if( bIsList_ )
-    {
-        if( !from.IsOfType( *pParameter_ ) )
-            return false;
         to.set_null_value( !from.ToList( *to.mutable_value() ) );
-        if( to.null_value() )
-            to.clear_value();
-        return !to.null_value() || bIsOptional_;
-    }
     else
-        return pParameter_->Copy( from, to, knowledgeResolver, bIsOptional_ );
+        to.set_null_value( !from.ToElement( *to.mutable_value()->Add() ) );
+    if( to.null_value() )
+        to.clear_value();
+    return !to.null_value() || bIsOptional_;
 }
 
 // -----------------------------------------------------------------------------

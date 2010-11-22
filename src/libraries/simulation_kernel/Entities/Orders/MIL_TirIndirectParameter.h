@@ -29,12 +29,13 @@ public:
 
     //! @name Type checking
     //@{
-    virtual bool IsOfType( const MIL_ParameterType_ABC& type ) const;
+    virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const;
     //@}
 
     //! @name Conversions
     //@{
-    virtual bool ToIndirectFire( Common::FireId& fire ) const;
+    virtual bool ToId( int& ) const;
+    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

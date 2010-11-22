@@ -10,8 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_UrbanBlockParameter.h"
 #include "protocol/protocol.h"
-#include "simulation_orders/MIL_ParameterType_UrbanBlock.h"
-#include "simulation_orders/MIL_ParameterType_LocationComposite.h"
 #include "simulation_kernel/knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "simulation_kernel/knowledge/DEC_Knowledge_Urban.h"
 #include "UrbanModel.h"
@@ -45,24 +43,15 @@ MIL_UrbanBlockParameter::~MIL_UrbanBlockParameter()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_UrbanBlockParameter::IsOfType
-// Created: MGD 2009-11-02
-// -----------------------------------------------------------------------------
-bool MIL_UrbanBlockParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
-{
-    return dynamic_cast< const MIL_ParameterType_UrbanBlock* >( &type ) != 0
-        || dynamic_cast< const MIL_ParameterType_LocationComposite* >( &type ) != 0;
-}
 
 // -----------------------------------------------------------------------------
-// Name: MIL_UrbanBlockParameter::ToUrbanBlock
-// Created: MGD 2009-11-02
+// Name: MIL_UrbanBlockParameter::IsOfType
+// Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_UrbanBlockParameter::ToUrbanBlock( Common::UrbanObjectId& asn ) const
+bool MIL_UrbanBlockParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    asn.set_id( pKnowledgeUrbanBlock_->GetId() );
-    return true;
+    return type == MIL_ParameterType_ABC::eUrbanKnowledge
+        || type == MIL_ParameterType_ABC::eLocationComposite;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,3 +63,14 @@ bool MIL_UrbanBlockParameter::ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urb
     value = pKnowledgeUrbanBlock_;
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanBlockParameter::ToElement
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+bool MIL_UrbanBlockParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    elem.mutable_urbanknowledge()->set_id( pKnowledgeUrbanBlock_->GetId() );
+    return true;
+}
+

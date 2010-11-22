@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_LogMedicalPrioritiesParameter.h"
-#include "simulation_orders/MIL_ParameterType_MedicalPriorities.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "protocol/protocol.h"
 
@@ -42,26 +41,14 @@ MIL_LogMedicalPrioritiesParameter::~MIL_LogMedicalPrioritiesParameter()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_LogMedicalPrioritiesParameter::IsOfType
-// Created: LDC 2009-06-05
-// -----------------------------------------------------------------------------
-bool MIL_LogMedicalPrioritiesParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
-{
-    return( dynamic_cast<const MIL_ParameterType_MedicalPriorities*>( &type ) != 0 );
-}
 
 // -----------------------------------------------------------------------------
-// Name: MIL_LogMedicalPrioritiesParameter::ToMedicalPriorities
-// Created: LDC 2009-06-05
+// Name: MIL_LogMedicalPrioritiesParameter::IsOfType
+// Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_LogMedicalPrioritiesParameter::ToMedicalPriorities( Common::MsgLogMedicalPriorities& asn ) const
+bool MIL_LogMedicalPrioritiesParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    unsigned int size = priorities_.size();
-    if( size )
-        for( unsigned int i = 0; i < size; ++i )
-            asn.add_elem( priorities_[ i ]->GetAsnID() );
-    return true;
+    return type == MIL_ParameterType_ABC::eMedicalPriorities;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,3 +60,17 @@ bool MIL_LogMedicalPrioritiesParameter::ToMedicalPriorities( T_MedicalPriorityVe
     value = priorities_;
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LogMedicalPrioritiesParameter::ToElement
+// Created: MGD 2010-11-12
+// -----------------------------------------------------------------------------
+bool MIL_LogMedicalPrioritiesParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    unsigned int size = priorities_.size();
+    if( size )
+        for( unsigned int i = 0; i < size; ++i )
+            elem.mutable_logmedicalpriorities()->add_elem( priorities_[ i ]->GetAsnID() );
+    return true;
+}
+

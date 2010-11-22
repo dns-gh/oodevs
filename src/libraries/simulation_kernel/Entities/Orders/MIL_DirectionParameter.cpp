@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_DirectionParameter.h"
 #include "MT_Tools/MT_Vector2D.h"
-#include "simulation_orders/MIL_ParameterType_Direction.h"
 #include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
@@ -45,26 +44,15 @@ MIL_DirectionParameter::~MIL_DirectionParameter()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DirectionParameter::IsOfType
-// Created: LDC 2009-05-26
+// Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_DirectionParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
+bool MIL_DirectionParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_Direction*>( &type ) != 0 );
+    return type == MIL_ParameterType_ABC::eDirection;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DirectionParameter::ToDirection
-// Created: LDC 2009-05-26
-// -----------------------------------------------------------------------------
-bool MIL_DirectionParameter::ToDirection( Common::MsgHeading& asn ) const
-{
-    asn.set_heading( heading_ );
-    return true;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: MIL_BaseParameter::ToDirection
 // Created: MGD 2010-05-03
 // -----------------------------------------------------------------------------
 bool MIL_DirectionParameter::ToDirection( boost::shared_ptr< MT_Vector2D >& dir ) const
@@ -72,5 +60,16 @@ bool MIL_DirectionParameter::ToDirection( boost::shared_ptr< MT_Vector2D >& dir 
     MT_Vector2D direction( 0,1 );
     direction.Rotate( ( heading_ / 360.f ) * MT_PI * 2 );
     dir.reset( new MT_Vector2D( direction ) );
+    return true;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DirectionParameter::ToElement
+// Created: MGD 2010-11-19
+// -----------------------------------------------------------------------------
+bool MIL_DirectionParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+{
+    elem.mutable_heading()->set_heading( heading_ );
     return true;
 }

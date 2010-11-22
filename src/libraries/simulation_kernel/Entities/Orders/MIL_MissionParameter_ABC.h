@@ -13,6 +13,8 @@
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
+#include "MIL_ParameterType_ABC.h"
+
 namespace google
 {
     namespace protobuf
@@ -100,50 +102,18 @@ public:
 
     //! @name Type checking
     //@{
-    virtual bool IsOfType( const MIL_ParameterType_ABC& ) const = 0;
+    virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const = 0;
     //@}
 
     //! @name Conversions
     //@{
     virtual bool ToBool( bool& ) const = 0;
     virtual bool ToId( int& ) const = 0;
-    virtual bool ToPoint( Common::MsgPoint& ) const = 0;
-    virtual bool ToPointList( Common::MsgPointList& ) const = 0;
-    virtual bool ToPolygon( Common::MsgPolygon& ) const = 0;
-    virtual bool ToPolygonList( Common::MsgPolygonList& ) const = 0;
-    virtual bool ToAgent( Common::UnitId& ) const = 0;
-    virtual bool ToAgentKnowledge( Common::UnitKnowledgeId& ) const = 0;
-    virtual bool ToAgentKnowledgeList( Common::UnitKnowledgeIdList& asn ) const = 0;
-    virtual bool ToAgentList( Common::UnitIdList& asn ) const = 0;
-    virtual bool ToAutomat( Common::AutomatId& ) const = 0;
-    virtual bool ToAutomatList( Common::AutomatIdList& ) const = 0;
-    virtual bool ToDirection( Common::MsgHeading& ) const = 0;
-    virtual bool ToDotationType( Common::ResourceType& ) const = 0;
-    virtual bool ToEquipmentType( Common::EquipmentType& ) const = 0;
-    virtual bool ToGDH( Common::MsgDateTime& ) const = 0;
-    virtual bool ToGenObject( Common::MsgPlannedWork& ) const = 0;
-    virtual bool ToGenObjectList( Common::MsgPlannedWorkList& ) const = 0;
-    virtual bool ToIndirectFire( Common::FireId& ) const = 0;
-    virtual bool ToLocation( Common::MsgLocation& ) const = 0;
-    virtual bool ToLocationList( Common::MsgLocationList& ) const = 0;
-    virtual bool ToMaintenancePriorities( Common::MsgLogMaintenancePriorities& ) const = 0;
-    virtual bool ToMedicalPriorities( Common::MsgLogMedicalPriorities& ) const = 0;
-    virtual bool ToNatureAtlas( Common::MsgAtlasNature& diaTo ) const = 0;
     virtual bool ToNumeric( float& ) const = 0;
-    virtual bool ToObjectiveList( Common::MsgMissionObjectiveList& asn ) const = 0;
-    virtual bool ToObjectKnowledge( Common::ObjectKnowledgeId& asn ) const = 0;
-    virtual bool ToObjectKnowledgeList( Common::ObjectKnowledgeIdList& asn ) const = 0;
-    virtual bool ToPath( Common::MsgPath& asn ) const = 0;
-    virtual bool ToPathList( Common::MsgPathList& asn ) const = 0;
-    virtual bool ToPopulationKnowledge( Common::CrowdKnowledgeId& asn ) const = 0;
     virtual bool ToString( std::string& asn ) const = 0;
-    virtual bool ToUrbanBlock( Common::UrbanObjectId& ) const = 0;
     virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& ) const = 0;
     virtual bool ToElement( Common::MsgMissionParameter_Value& ) const = 0;
-    virtual bool ToLima( Common::MsgLimasOrder& ) const = 0;
-    virtual bool ToLimaList( Common::MsgLimasOrder& ) const = 0;
 
-    //virtual bool ToString( std::string& ) const = 0;
     // The lifecycle of pointers in all functions below must be handled by MIL_MissionParameter_ABC
     virtual bool ToDirection( boost::shared_ptr< MT_Vector2D >& ) const = 0;
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const = 0;

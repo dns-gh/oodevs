@@ -134,15 +134,11 @@
         <build-lib name="simulation_terrain" pattern="lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
-    <target name="library.simulation_kernel" description="build simulation_kernel static library" depends="library.tools,library.protocol,library.simulation_terrain,library.simulation_orders,library.meteo,library.resource_network">
+    <target name="library.simulation_kernel" description="build simulation_kernel static library" depends="library.tools,library.protocol,library.simulation_terrain,library.meteo,library.resource_network">
         <build-lib name="simulation_kernel" pattern="lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" suffix="-gd" excludes="**/DEC_Knowledge_ObjectAttributeProxy_ABC.h">
             <includepath path="${libraries.dir}/simulation_kernel"/> <!-- pour MIL.h -->
             <defineset define="USE_DLL"/> <!-- folk use dll -->
         </build-lib>
-    </target>
-
-    <target name="library.simulation_orders" description="build simulation_orders static library" depends="library.tools,library.protocol">
-        <build-lib name="simulation_orders" pattern="lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
     <target name="library.clients_kernel" description="build clients_kernel static library" depends="library.tools,library.ENT">
@@ -367,7 +363,6 @@
                   lib${ant.project.name}_resource_network-${platform}-mt@{suffix},
                   lib${ant.project.name}_meteo-${platform}-mt@{suffix},
                   lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
-                  lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix},
                   lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}">
             <syslibset libs="dbghelp,psapi,shell32,iphlpapi,advapi32"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>
@@ -736,7 +731,6 @@
                    lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                    lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                    lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
-                   lib${ant.project.name}_simulation_orders-${platform}-mt@{suffix},
                    lib${ant.project.name}_resource_network-${platform}-mt@{suffix},
                    lib${ant.project.name}_meteo-${platform}-mt@{suffix},
                    lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}"

@@ -33,12 +33,11 @@ public:
 
     //! @name Type checking
     //@{
-    virtual bool IsOfType( const MIL_ParameterType_ABC& type ) const;
+    virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const;
     //@}
 
     //! @name Conversions
     //@{
-    virtual bool ToObjectKnowledge( Common::ObjectKnowledgeId& asn ) const;
     virtual bool ToObjectKnowledge( boost::shared_ptr< DEC_Knowledge_Object >& ) const;
     virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
     //@}
