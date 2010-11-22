@@ -193,7 +193,7 @@ node "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX"
         self.pointDebarquement = self.pointDebarquement or DEC_Geometrie_CreerPoint()
         local distanceBuffer = 0
         local bCreerPlots = false
-        local pionTC2 = DEC_Automate_PcTC2()
+        local pionTC2 = DEC_Automate_PcDeTC2()
         self.listePionsIMEX = {}
         self.listePionsTransportPlots = {}
         self.listePionsPourHeliporterPlots = {}
