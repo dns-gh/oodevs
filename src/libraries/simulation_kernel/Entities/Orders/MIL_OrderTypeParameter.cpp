@@ -10,8 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_OrderTypeParameter.h"
 #include "MIL_OrderType_ABC.h"
-#include "simulation_orders/MIL_MissionParameter_ABC.h"
-#include "simulation_orders/MIL_ParameterType_ABC.h"
+#include "Entities/Orders/MIL_MissionParameter_ABC.h"
+#include "Entities/Orders/MIL_ParameterType_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
