@@ -1811,7 +1811,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="wounded_" name="Wounded" optional="false" type="Agent"/>
-      <parameter dia-name="hospitals_" min-occurs="1" max-occurs="unbounded" name="Hospitals" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="hospitals_" max-occurs="unbounded" min-occurs="1" name="Hospitals" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="garage_" name="Garage" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_JOINT_AIR_Loiter" dia-type="T_Mission_Pion_JOINT_AIR_Loiter" id="410" name="Joint Air - Loiter">
