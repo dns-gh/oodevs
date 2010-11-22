@@ -18,6 +18,7 @@ class DEC_Knowledge_Urban;
 namespace Common
 {
     class UrbanObjectId;
+    class UrbanObjectKnowledgeId;
 }
 
 namespace urban
