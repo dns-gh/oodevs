@@ -155,7 +155,7 @@ void ADN_Urban_Data::ReadUrban( xml::xistream& input )
 void ADN_Urban_Data::WriteUrban( xml::xostream& output ) const
 {
     output  << xml::start( "urban" );
-    ADN_Tools::AddSchema( output, "Urban" );
+    ADN_Tools::AddSchema( output, "UrbanTypes" );
     output  << xml::start( "urban-block-types" );
     WriteMaterials( output );
     WriteFacades( output );

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.2.6">
 	<xs:element name="urban">
 		<xs:annotation>
@@ -6,72 +7,63 @@
 			<xs:documentation xml:lang="fr">Types d'objets et de paramètres utilisés en zone urbaine</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
-			<xs:all>
-				<xs:element name="material-types">
-					<xs:annotation>
-						<xs:documentation xml:lang="en">Material types</xs:documentation>
-						<xs:documentation xml:lang="fr">Types de matériau</xs:documentation>
-					</xs:annotation>
+			<xs:sequence>
+				<xs:element name="urban-block-types">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="material-type" minOccurs="0" maxOccurs="unbounded">
-								<xs:annotation>
-									<xs:documentation xml:lang="en">Given material type</xs:documentation>
-									<xs:documentation xml:lang="fr">Type donné de matériau</xs:documentation>
-								</xs:annotation>
+							<xs:element name="material-composition-types">
 								<xs:complexType>
-									<xs:attribute name="name" type="xs:string" use="required">
-										<xs:annotation>
-											<xs:documentation xml:lang="en">Material name</xs:documentation>
-											<xs:documentation xml:lang="fr">Nom du matériau</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
+									<xs:sequence minOccurs="0" maxOccurs="unbounded">
+										<xs:element name="material-composition-type">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="attritions">
+														<xs:complexType>
+															<xs:sequence minOccurs="0" maxOccurs="unbounded">
+																<xs:element name="attrition">
+																	<xs:complexType>
+																		<xs:attribute name="protection" type="xs:string" use="required"/>
+																		<xs:attribute name="destruction" type="xs:float"/>
+																		<xs:attribute name="repairable-with-evacuation" type="xs:float" use="required"/>
+																		<xs:attribute name="repairable-without-evacuation" type="xs:float" use="required"/>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="name" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="facade-types">
+								<xs:complexType>
+									<xs:sequence minOccurs="0" maxOccurs="unbounded">
+										<xs:element name="facade-type">
+											<xs:complexType>
+												<xs:attribute name="name" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="roof-shape-types">
+								<xs:complexType>
+									<xs:sequence minOccurs="0" maxOccurs="unbounded">
+										<xs:element name="roof-shape-type">
+											<xs:complexType>
+												<xs:attribute name="name" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="facade-types">
-					<xs:annotation>
-						<xs:documentation xml:lang="en">Facade types</xs:documentation>
-						<xs:documentation xml:lang="fr">Types de façade</xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="material-type" minOccurs="0" maxOccurs="unbounded">
-								<xs:annotation>
-									<xs:documentation xml:lang="en">Given facade type</xs:documentation>
-									<xs:documentation xml:lang="fr">Type donné de façade</xs:documentation>
-								</xs:annotation>
-								<xs:complexType>
-									<xs:attribute name="name" type="xs:string" use="required"/>
-									<xs:attribute name="coefficient" type="xs:decimal" use="required"/>
-								</xs:complexType>
-							</xs:element>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="roof-types">
-					<xs:annotation>
-						<xs:documentation xml:lang="en">Roof types</xs:documentation>
-						<xs:documentation xml:lang="fr">Types de toit</xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="roof-type" minOccurs="0" maxOccurs="unbounded">
-								<xs:annotation>
-									<xs:documentation xml:lang="en">Given roof type</xs:documentation>
-									<xs:documentation xml:lang="fr">Type donné de toit</xs:documentation>
-								</xs:annotation>
-								<xs:complexType>
-									<xs:attribute name="name" type="xs:string" use="required"/>
-									<xs:attribute name="accessible" type="xs:boolean" use="required"/>
-								</xs:complexType>
-							</xs:element>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-			</xs:all>
+			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>
