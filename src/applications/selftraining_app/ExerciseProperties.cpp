@@ -134,16 +134,19 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
                 >> xml::start( "model" )
                     >> xml::attribute( "dataset", data )
                     >> xml::attribute( "physical", physical )
-                >> xml::end
-                >> xml::optional >> xml::start( "meta" )
+                >> xml::end;
+        if( briefingText_ )
+        {
+            xis >> xml::optional >> xml::start( "meta" )
                     >> xml::optional >> xml::start( "briefing" )
                         >> xml::optional  >> xml::content( "image", image )
                             >> xml::list( "text", *this, &ExerciseProperties::ReadBriefingText );
-        if( briefingText_ && !image.empty() )
-        {
-            const std::string imagePath = config_.GetExerciseDir( QString( "%1/%2" ).arg( exercise->GetName().c_str() ).arg( image.c_str() ).ascii() );
-            const QImage pix( imagePath.c_str() );
-            briefingImage_->setPixmap( pix );
+            if( !image.empty() )
+            {
+                const std::string imagePath = config_.GetExerciseDir( QString( "%1/%2" ).arg( exercise->GetName().c_str() ).arg( image.c_str() ).ascii() );
+                const QImage pix( imagePath.c_str() );
+                briefingImage_->setPixmap( pix );
+            }
         }
         if( terrainList_ )
         {
