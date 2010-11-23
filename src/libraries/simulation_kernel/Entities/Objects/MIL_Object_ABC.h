@@ -27,6 +27,14 @@ namespace MsgsSimToClient
     enum MsgObjectMagicActionAck_ErrorCode;
 }
 
+namespace google
+{
+    namespace protobuf
+    {
+        template< typename T > class RepeatedPtrField;
+    }
+}
+
 namespace Common
 {
     class MsgMissionParameter_Value;
@@ -164,7 +172,7 @@ public:
     //! @name Network
     //@{
     virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const Common::MsgMissionParameter_Value& msg ) = 0;
-    virtual MsgsSimToClient::MsgMagicActionAck_ErrorCode OnUpdateResourceLinks( const Common::MsgMissionParameter_Value& msg );
+    virtual MsgsSimToClient::MsgMagicActionAck_ErrorCode OnUpdateResourceLinks( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list );
     virtual void SendCreation() const = 0;
     virtual void SendDestruction() const = 0;
     virtual void SendFullState() const = 0;

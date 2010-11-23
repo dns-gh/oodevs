@@ -14,6 +14,14 @@
 #include "tools/Resolver.h"
 #include <boost/serialization/split_member.hpp>
 
+namespace google
+{
+    namespace protobuf
+    {
+        template< typename T > class RepeatedPtrField;
+    }
+}
+
 namespace Common
 {
     class ObjectAttributeResourceNetwork;
@@ -72,7 +80,7 @@ public:
     //@{
     void Serialize( MsgsSimToClient::UrbanAttributes_Infrastructures& msg ) const;
     void Serialize( Common::ObjectAttributeResourceNetwork& msg ) const;
-    void Update( const Common::MsgMissionParameter_Value& msg );
+    void Update( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list  );
     //@}
 
     //! @name CheckPoints

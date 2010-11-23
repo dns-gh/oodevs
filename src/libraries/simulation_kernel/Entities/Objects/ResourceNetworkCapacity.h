@@ -14,6 +14,14 @@
 #include "ObjectCapacity_ABC.h"
 #include <boost/serialization/export.hpp>
 
+namespace google
+{
+    namespace protobuf
+    {
+        template< typename T > class RepeatedPtrField;
+    }
+}
+
 namespace Common
 {
     class MsgMissionParameter_Value;
@@ -67,7 +75,7 @@ public:
     //! @name Operations
     //@{
     void Update( xml::xistream& xis, const MIL_Object_ABC& object );
-    void Update( const Common::MsgMissionParameter_Value& msg );
+    void Update( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list );
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     void RegisterNode( unsigned int id, bool urban );

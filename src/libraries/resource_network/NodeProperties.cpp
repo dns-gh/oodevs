@@ -172,11 +172,11 @@ void NodeProperties::Serialize( Common::ObjectAttributeResourceNetwork& msg ) co
 // Name: NodeProperties::Update
 // Created: JSR 2010-08-26
 // -----------------------------------------------------------------------------
-void NodeProperties::Update( const Common::MsgMissionParameter_Value& msg )
+void NodeProperties::Update( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list  )
 {
-    for( int i = 0; i< msg.list_size(); ++i )
+    for( int i = 0; i< list.size(); ++i )
     {
-        Common::MsgMissionParameter_Value node = msg.list( i );
+        Common::MsgMissionParameter_Value node = list.Get( i );
         unsigned int id = tools_->GetResourceId( node.list( 0 ).acharstr() );
         NodeElement* element = Find( id );
         if( element )
