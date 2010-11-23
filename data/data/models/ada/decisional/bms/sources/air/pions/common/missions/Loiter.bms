@@ -54,7 +54,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             end
         end
 
-        Activate( self.activations.BEH_Pion_JOINT_AIR_GererOrdre_AppliquerFeux, 10, {} )
+        Activate( self.activations.BEH_Pion_JOINT_AIR_GererOrdre_AppliquerFeux, 1, {} )
          do
             local _continue = true
             local switch_1 = self.ePhase
@@ -66,14 +66,14 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     _continue = false--[[// behavior BEH_Eni_Pion_AIR_EffectuerRaid( mission.zone_ ) : strength = DIA_GetMotivation( MOT_ManoeuvrerSurEnis );
 ]]
                                 cases_switch_1[1] = true
-                elseif switch_1 == eFinMission then
+elseif switch_1 == eFinMission then
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
                                                         do
-                                F_Pion_SetobjectifEsquive( myself, 0 )
+                                F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
-                                self:SendFeedback( eActionEffectuee )
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
