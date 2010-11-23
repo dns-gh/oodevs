@@ -67,24 +67,32 @@ namespace
         if( message.attributes().has_color() )
         {
             const Common::RgbaColor& color = message.attributes().color();
-            urban::ColorAttribute* colorAttribute = new urban::ColorAttribute( object );
+            urban::ColorAttribute* colorAttribute = object.Retrieve< urban::ColorAttribute >();
+            if( !colorAttribute )
+            {
+                colorAttribute = new urban::ColorAttribute( object );
+                object.Attach( *colorAttribute );
+            }
             colorAttribute->SetRed( static_cast< unsigned short >( color.red() ) );
             colorAttribute->SetGreen( static_cast< unsigned short >( color.green() ) );
             colorAttribute->SetBlue( static_cast< unsigned short >( color.blue() ) );
             colorAttribute->SetAlpha( color.alpha() );
-            object.Attach( *colorAttribute );
         }
         if( message.attributes().has_architecture() )
         {
             const MsgsSimToClient::UrbanAttributes::Architecture& architecture = message.attributes().architecture();
-            urban::Architecture* attribute = new urban::Architecture( object );
+            urban::Architecture* attribute = object.Retrieve< urban::Architecture >();
+            if( !attribute )
+            {
+                attribute = new urban::Architecture( object );
+                object.Attach( *attribute );
+            }
             attribute->SetHeight( architecture.height() );
             attribute->SetFloorNumber( architecture.floor_number() );
             attribute->SetRoofShape( architecture.roof_shape() );
             attribute->SetMaterial( architecture.material() );
             attribute->SetOccupation( architecture.occupation() );
             attribute->SetTrafficability( architecture.trafficability() );
-            object.Attach( *attribute );
         }
     }
 }
