@@ -27,7 +27,7 @@
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
-        <mission name="MELEE Reconnaitre un Bloc Urbain"/>
+        <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Recueillir"/>
         <mission name="MELEE Relever"/>
         <mission name="MELEE S'emparer De"/>
@@ -89,7 +89,7 @@
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Jalonner"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
-        <mission name="MELEE Reconnaitre un Bloc Urbain"/>
+        <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Reduire"/>
         <mission name="MELEE Relever"/>
         <mission name="MELEE Soutenir"/>
@@ -143,7 +143,7 @@
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre Itineraire"/>
-        <mission name="MELEE Reconnaitre un Bloc Urbain"/>
+        <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Relever"/>
         <mission name="MELEE S'emparer De"/>
         <mission name="MELEE Tenir"/>
