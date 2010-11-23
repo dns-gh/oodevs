@@ -39,6 +39,17 @@ MagicActionType::MagicActionType( const std::string& name, unsigned long id )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MagicActionType constructor
+// Created: FDS 2010-11-23
+// -----------------------------------------------------------------------------
+MagicActionType::MagicActionType( const std::string& name )
+    : OrderType()
+{
+    name_ = name;
+    Initialize();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MagicActionType destructor
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
@@ -258,4 +269,6 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "KnowledgeGroup", "identifier" );
         CreateOrderParameter( "Location", "point" );
     }
+
+
 }

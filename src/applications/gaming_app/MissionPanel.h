@@ -141,7 +141,7 @@ private:
     const kernel::GlTools_ABC& tools_;
     const kernel::Profile_ABC& profile_;
     std::auto_ptr< CommandPublisher > commandPublisher_;
-
+    const kernel::Time_ABC& simulation_;
     actions::gui::MissionInterface_ABC* pMissionInterface_;
     MissionInterfaceBuilder* interfaceBuilder_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;

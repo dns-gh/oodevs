@@ -82,6 +82,7 @@ private:
     actions::Action_ABC* CreateUnitMagicAction( xml::xistream& xis, bool readonly ) const;
     actions::Action_ABC* CreateObjectMagicAction( xml::xistream& xis, bool readonly ) const;
     actions::Action_ABC* CreateKnowledgeGroupMagicAction( xml::xistream& xis, bool readonly ) const;
+    actions::Action_ABC* AutomateChangeModeMagicAction( xml::xistream& xis, bool readonly ) const;
 
     actions::Action_ABC* CreateStubMission( xml::xistream& xis ) const;
     actions::Action_ABC* CreateStubFragOrder( xml::xistream& xis ) const;

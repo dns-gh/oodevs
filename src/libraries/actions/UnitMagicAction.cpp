@@ -18,6 +18,7 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "tools/iterator.h"
 
 using namespace actions;
 

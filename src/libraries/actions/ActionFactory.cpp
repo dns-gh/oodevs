@@ -14,6 +14,7 @@
 #include "ActionTiming.h"
 #include "AgentMission.h"
 #include "AutomatMission.h"
+#include "EngageMagicAction.h"
 #include "FragOrder.h"
 #include "Identifier.h"
 #include "KnowledgeGroupMagicAction.h"
@@ -152,6 +153,8 @@ actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis, bool reado
         return CreateObjectMagicAction( xis, readonly );
     if( type == "magicknowledge" )
         return CreateKnowledgeGroupMagicAction( xis, readonly );
+    if( type == "change_mode" )
+        return AutomateChangeModeMagicAction( xis, readonly );
     return 0;
 }
 
@@ -433,6 +436,40 @@ actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis, b
     return action.release();
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::AutomateChangeModeMagicAction
+// Created: FDS 2010-11-23
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::AutomateChangeModeMagicAction( xml::xistream& xis, bool readonly ) const
+{
+    const unsigned long targetid = xis.attribute< unsigned long >( "target" );
+    const std::string type = xis.attribute< std::string >( "type" );
+    std::string name;
+    xis >> xml::optional >> xml::attribute( "name", name );
+    bool engaged;
+    xis >> xml::attribute( "engaged", engaged );
+
+    std::auto_ptr< actions::EngageMagicAction > action;
+    const kernel::Entity_ABC* target = entities_.FindAgent( targetid );
+    if( !target )
+        target = entities_.FindAutomat( targetid );
+    if( !target )
+        target = entities_.FindPopulation( targetid );
+    if( !target )
+        target = entities_.FindFormation( targetid );
+    if( !target )
+        target = entities_.FindTeam( targetid );
+    if( !target )
+        throw TargetNotFound( targetid );
+
+    action.reset( new actions::EngageMagicAction( xis, controller_, magicActions_.Get( type ), *target, name.c_str(), engaged ) );
+    action->Attach( *new ActionTiming( xis, controller_, simulation_ ) );
+    action->Attach( *new ActionTasker( target, readonly ) );
+    action->Polish();
+
+    return action.release();
+}
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateObjectMagicAction
 // Created: SBO 2010-05-07

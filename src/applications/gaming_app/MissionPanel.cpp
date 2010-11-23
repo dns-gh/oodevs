@@ -1,4 +1,4 @@
-// *****************************************************************************
+    // *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
@@ -39,6 +39,12 @@
 #include "clients_gui/ParametersLayer.h"
 #include "icons.h"
 
+#include "actions/ActionTasker.h"
+#include "actions/EngageMagicAction.h"
+#include "actions/ActionTiming.h"
+#include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/Entity_ABC.h"
+
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -60,6 +66,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_, layer_, knowledgeConverter, objectKnowledgeConverter, urbanKnowledgeConverter, static_, simulation ) )
     , selectedEntity_          ( controllers )
     , isPlanifMode_            ( false )
+    , simulation_              (simulation)
 {
     setResizeEnabled( true );
     setCaption( tr( "Mission" ) );
@@ -402,7 +409,15 @@ void MissionPanel::Draw( Viewport_ABC& viewport )
 void MissionPanel::Engage()
 {
     AutomatDecisions* decisions = selectedEntity_ ? selectedEntity_.ConstCast()->Retrieve< AutomatDecisions >() : 0;
+
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_mode" );
+    actions::EngageMagicAction* action = new actions::EngageMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Engage" ), true, true );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+    action->Attach( *new actions::ActionTasker( selectedEntity_, false ) );
+    action->RegisterAndPublish( actionsModel_ );
+
     decisions->Engage();
+
 }
 
 // -----------------------------------------------------------------------------
@@ -412,6 +427,13 @@ void MissionPanel::Engage()
 void MissionPanel::Disengage()
 {
     AutomatDecisions* decisions = selectedEntity_ ? selectedEntity_.ConstCast()->Retrieve< AutomatDecisions >() : 0;
+
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_mode" );
+    actions::EngageMagicAction* action = new actions::EngageMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Disengage" ), false, true );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+    action->Attach( *new actions::ActionTasker( selectedEntity_, false ) );
+    action->RegisterAndPublish( actionsModel_ );
+
     decisions->Disengage();
 }
 

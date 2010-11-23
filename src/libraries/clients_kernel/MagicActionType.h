@@ -27,6 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MagicActionType();
+    explicit MagicActionType( const std::string& name );
     explicit MagicActionType( const std::string& name, unsigned long id );
     virtual ~MagicActionType();
     //@}

@@ -387,4 +387,7 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "change_diplomacy", MsgsClientToSim::MsgMagicAction::change_diplomacy ) );
     RegisterActionType( *new MagicActionType( "create_knowledge_group", MsgsClientToSim::MsgMagicAction::create_knowledge_group ) );
     RegisterActionType( *new MagicActionType( "change_resource_links", MsgsClientToSim::MsgMagicAction::change_resource_network_properties ) );
+
+    RegisterActionType( *new MagicActionType( "change_mode" ) ); 
+    
 }
