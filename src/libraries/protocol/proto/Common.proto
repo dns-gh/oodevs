@@ -819,9 +819,8 @@ message ObjectAttributes {
 message MsgMarker {
     required string                             name                = 1;
     required string                             description         = 2;
-	required MsgDateTime			            date		        = 3;
-    optional MarkerId                           parent              = 4;
-    optional string                             number	            = 5;
+    optional MarkerId                           parent              = 3;
+    optional string                             number	            = 4;
 }
 
 // weather

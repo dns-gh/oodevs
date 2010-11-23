@@ -24,8 +24,8 @@ Note::Note( kernel::Controller& controller, const MsgsMessengerToClient::MsgMark
     , noteText_( message.definition().description() )
     , noteId_( message.marker().id() )
     , noteNumber_( message.definition().number() )
-    , creationTime_ ( message.definition().date().data() )
-    , lastUpdateTime_ (message.definition().date().data() )
+    , creationTime_ ( message.date().data() )
+    , lastUpdateTime_ ( creationTime_ )
 {
      controller_.Create( *this );
 }

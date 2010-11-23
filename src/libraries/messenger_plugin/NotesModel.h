@@ -39,7 +39,7 @@ class NotesModel : public tools::Resolver< Note >
 public:
     //! @name Constructors/Destructor
     //@{
-             NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager , std::string file);
+             NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager , const std::string& file);
     virtual ~NotesModel();
     //@}
 
@@ -82,13 +82,13 @@ private:
     //! @name Types
     //@{
     typedef std::list< unsigned long > T_List;
-    typedef T_List::iterator          IT_List;
+    typedef T_List::const_iterator     CIT_List;
     //@}
 
 private:
     //! @name Member data
     //@{
-    static const unsigned int headerLines_ = 6;
+    static const unsigned int        headerLines_ = 6;
     const dispatcher::Config&        config_;
     dispatcher::ClientPublisher_ABC& clients_;
     IdManager&                       idManager_;

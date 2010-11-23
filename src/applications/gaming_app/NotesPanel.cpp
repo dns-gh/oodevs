@@ -267,7 +267,7 @@ void NotesPanel::PreCreationProcess()
         if( it != itemsList_.end())
             parent = it->second->GetId();
     }
-    noteDialog_->SetParent( parent );
+    noteDialog_->ChangeParent( parent );
     noteDialog_->show();
 }
 

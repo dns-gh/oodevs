@@ -40,27 +40,23 @@ class Note
 public:
     //! @name Constructors/Destructor
     //@{
-    Note(unsigned long id, const MsgsClientToMessenger::MsgMarkerCreationRequest& message, std::string currentTime );
-             Note(unsigned long id, std::vector<std::string>& values, unsigned int parent, std::string currentTime );
+             Note( unsigned long id, const MsgsClientToMessenger::MsgMarkerCreationRequest& message,  const std::string& currentTime );
+             Note( unsigned long id, std::vector<std::string>& values, unsigned int parent,  const std::string& currentTime );
     virtual ~Note();
     //@}
 
     //! @name Operations
     //@{
-    const std::string& GetName() const;
-    std::string GetNumber() const;
-    std::string GetDesc() const;
+    void WriteNote( std::ofstream& file, int parentLine ) const;
     unsigned long GetId() const;
     unsigned long GetParent() const;
-    std::string GetCreationTime() const;
-    std::string GetLastUpdateTime() const;
 
-     std::list<unsigned long>& GetChildren() const;
+    const std::list< unsigned long >& GetChildren() const;
     void RemoveChild( unsigned long note );
     void AddChild( unsigned long note );
     void SetParent(unsigned long note);
 
-    void Update( const MsgsClientToMessenger::MsgMarkerUpdateRequest& message, std::string currentTime );
+    void Update( const MsgsClientToMessenger::MsgMarkerUpdateRequest& message, const std::string& currentTime );
     virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher, bool stateParent ) const;
     virtual void SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const;
@@ -82,7 +78,7 @@ private:
     std::string number_;
     std::string description_;
     unsigned long parent_;
-    std::list<unsigned long>* children_;
+    std::list<unsigned long> children_;
     std::string creationTime_;
     std::string lastUpdateTime_;
     //@}

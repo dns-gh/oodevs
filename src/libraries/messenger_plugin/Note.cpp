@@ -9,9 +9,12 @@
 
 #include "messenger_plugin_pch.h"
 #include "Note.h"
-
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/MessengerSenders.h"
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/tokenizer.hpp>
+#include <fstream>
 
 using namespace plugins::messenger;
 
@@ -19,7 +22,7 @@ using namespace plugins::messenger;
 // Name: Note destructor
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-Note::Note(unsigned long id, const MsgsClientToMessenger::MsgMarkerCreationRequest& message, std::string currentTime)
+Note::Note(unsigned long id, const MsgsClientToMessenger::MsgMarkerCreationRequest& message, const std::string& currentTime)
     : id_( id )
     , name_( message.marker().name() )
     , number_( message.marker().number() )
@@ -28,14 +31,13 @@ Note::Note(unsigned long id, const MsgsClientToMessenger::MsgMarkerCreationReque
     , creationTime_ ( currentTime )
     , lastUpdateTime_( currentTime )
 {
-    children_ = new std::list<unsigned long>();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Note constructor
 // Created: HBD 2010-02-17
 // -----------------------------------------------------------------------------
-Note::Note(unsigned long id, std::vector<std::string>& values, unsigned int parent, std::string currentTime )
+Note::Note(unsigned long id, std::vector<std::string>& values, unsigned int parent, const std::string& currentTime )
     : id_( id )
     , name_( values[ 0 ] )
     , number_( values[ 2 ] )
@@ -44,7 +46,6 @@ Note::Note(unsigned long id, std::vector<std::string>& values, unsigned int pare
     , creationTime_ ( values[ 4 ] )
     , lastUpdateTime_( currentTime )
 {
-     children_ = new std::list<unsigned long>();
 }
 
 
@@ -54,19 +55,6 @@ Note::Note(unsigned long id, std::vector<std::string>& values, unsigned int pare
 // -----------------------------------------------------------------------------
 Note::~Note()
 {
-    delete children_;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: Note::GetId
-/** @return
-*/
-// Created: HBD 2010-02-03
-// -----------------------------------------------------------------------------
-unsigned long  Note::GetId() const
-{
-    return this->id_;
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +63,7 @@ unsigned long  Note::GetId() const
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void Note::Update( const MsgsClientToMessenger::MsgMarkerUpdateRequest& message, std::string currentTime )
+void Note::Update( const MsgsClientToMessenger::MsgMarkerUpdateRequest& message, const std::string& currentTime )
 {
     if( message.has_name() )
         name_ = message.name();
@@ -98,11 +86,11 @@ void Note::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     messenger::MarkerCreation message;
     message().mutable_marker()->set_id( id_ );
+    message().mutable_date()->set_data( creationTime_ );
     message().mutable_definition()->set_name( name_ );
     message().mutable_definition()->set_description( description_ );
     message().mutable_definition()->set_number( number_ );
     message().mutable_definition()->mutable_parent()->set_id( parent_ );
-    message().mutable_definition()->mutable_date()->set_data( creationTime_ );
 
     message.Send( publisher );
 }
@@ -139,7 +127,7 @@ void  Note::SendUpdate( dispatcher::ClientPublisher_ABC& publisher, bool modifPa
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void  Note::SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const
+void  Note::SendFullState( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     SendCreation( publisher );
 }
@@ -161,43 +149,34 @@ void  Note::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const
 // Name: Note::GetChildren
 // Created: HBD 2010-02-10
 // -----------------------------------------------------------------------------
-std::list<unsigned long>& Note::GetChildren() const
+const std::list<unsigned long>& Note::GetChildren() const
 {
-    return *children_;
+    return children_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Note::AddChild
 // Created: HBD 2010-02-10
 // -----------------------------------------------------------------------------
-void Note::AddChild( unsigned long note)
+void Note::AddChild( unsigned long note )
 {
-    children_->push_back(note);
+    children_.push_back(note);
 }
 
 // -----------------------------------------------------------------------------
 // Name: Note::removeChild
 // Created: HBD 2010-02-10
 // -----------------------------------------------------------------------------
-void Note::RemoveChild( unsigned long note)
+void Note::RemoveChild( unsigned long note )
 {
-    children_->remove(note);
-}
-
-// -----------------------------------------------------------------------------
-// Name: Note::GetParent
-// Created: HBD 2010-02-10
-// -----------------------------------------------------------------------------
-unsigned long Note::GetParent() const
-{
-    return parent_;
+    children_.remove(note);
 }
 
 // -----------------------------------------------------------------------------
 // Name: Note::SetParent
 // Created: HBD 2010-02-12
 // -----------------------------------------------------------------------------
-void Note::SetParent(unsigned long note)
+void Note::SetParent( unsigned long note )
 {
     parent_ = note;
 }
@@ -206,44 +185,31 @@ void Note::SetParent(unsigned long note)
 // Name: Note::GetName
 // Created: HBD 2010-02-15
 // -----------------------------------------------------------------------------
-const std::string& Note::GetName() const
+unsigned long Note::GetId() const
 {
-    return name_;
+    return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Note::GetParent
+// Created: HBD 2010-11-22
+// -----------------------------------------------------------------------------
+unsigned long Note::GetParent() const
+{
+    return parent_;
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: Note::GetNumber
-// Created: HBD 2010-02-15
+// Name: Note::WriteNote
+// Created: HBD 2010-11-19
 // -----------------------------------------------------------------------------
-std::string Note::GetNumber() const
+void Note::WriteNote( std::ofstream& file, int parentLine ) const
 {
-    return number_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Note::GetDesc
-// Created: HBD 2010-02-15
-// -----------------------------------------------------------------------------
-std::string Note::GetDesc() const
-{
-    return description_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Note::GetCreationTime
-// Created: HBD 2010-02-24
-// -----------------------------------------------------------------------------
-std::string Note::GetCreationTime() const
-{
-    return creationTime_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Note::GetLastUpdateTime
-// Created: HBD 2010-02-24
-// -----------------------------------------------------------------------------
-std::string Note::GetLastUpdateTime() const
-{
-    return lastUpdateTime_;
+    file << name_  << ";";
+    file << parentLine;
+    std::string desc = description_;
+    boost::algorithm::replace_all( desc, "\n", "<br>" );
+    file << ";\"" + number_ + "\";\"" + desc + "\"" ;
+    file << ";\"" + creationTime_+ "\";\"" + lastUpdateTime_ + "\"" << std::endl;
 }

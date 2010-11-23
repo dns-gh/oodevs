@@ -51,9 +51,7 @@ void NotesModel::Update( const MsgsMessengerToClient::MsgMarkerUpdate& message )
 {
     Note* note = Find( message.marker().id() );
     if( note )
-    {
         note->Update( message );
-    }
 }
 
 // -----------------------------------------------------------------------------

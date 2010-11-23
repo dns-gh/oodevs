@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    void         SetParent( unsigned int note );
+    void         ChangeParent( unsigned int note );
     void         SetUpdate( const Note& note );
     void         SetUpdate( bool updateStatus );
     unsigned int GetCurrentNoteEdited();
@@ -59,14 +59,14 @@ private:
 private:
     //! @name Member data
     //@{
-    QLineEdit* textName_;
-    QLineEdit* textId_;
-    QTextEdit* textDesc_;
-    QPushButton* buttonOk_;
-    Publisher_ABC &publisher_;
-    unsigned int note_;
-    bool        update_;
-    unsigned int noteId_;
+    Publisher_ABC   &publisher_;
+    QLineEdit*      textName_;
+    QLineEdit*      textId_;
+    QTextEdit*      textDesc_;
+    QPushButton*    buttonOk_;
+    unsigned int    note_;
+    bool            update_;
+    unsigned int    noteId_;
 
     //@}
 };

@@ -2627,10 +2627,9 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ObjectAttributes));
   MsgMarker_descriptor_ = file->message_type(129);
-  static const int MsgMarker_offsets_[5] = {
+  static const int MsgMarker_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarker, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarker, description_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarker, date_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarker, parent_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarker, number_),
   };
@@ -3573,98 +3572,97 @@ void protobuf_AddDesc_Common_2eproto() {
     "jectAttributeEffectDelay\0220\n\010seal_off\030\021 \001"
     "(\0132\036.Common.ObjectAttributeSealOff\022A\n\021re"
     "source_networks\030\022 \001(\0132&.Common.ObjectAtt"
-    "ributeResourceNetwork\"\203\001\n\tMsgMarker\022\014\n\004n"
-    "ame\030\001 \002(\t\022\023\n\013description\030\002 \002(\t\022!\n\004date\030\003"
-    " \002(\0132\023.Common.MsgDateTime\022 \n\006parent\030\004 \001("
-    "\0132\020.Common.MarkerId\022\016\n\006number\030\005 \001(\t\"\220\002\n\024"
-    "MsgWeatherAttributes\022\023\n\013temperature\030\001 \002("
-    "\005\022\022\n\nwind_speed\030\002 \002(\005\022*\n\016wind_direction\030"
-    "\003 \002(\0132\022.Common.MsgHeading\022\023\n\013cloud_floor"
-    "\030\004 \002(\005\022\025\n\rcloud_ceiling\030\005 \002(\005\022\025\n\rcloud_d"
-    "ensity\030\006 \002(\005\0224\n\rprecipitation\030\007 \002(\0162\035.Co"
-    "mmon.EnumPrecipitationType\022*\n\010lighting\030\010"
-    " \002(\0162\030.Common.EnumLightingType*m\n\022EnumDo"
-    "tationFamily\022\014\n\010munition\020\000\022\r\n\tcarburant\020"
-    "\001\022\014\n\010explosif\020\002\022\010\n\004mine\020\003\022\013\n\007barbele\020\004\022\t"
-    "\n\005piece\020\005\022\n\n\006ration\020\006*Q\n\024EnumAmmunitionF"
-    "amily\022\010\n\004obus\020\000\022\017\n\013missile_sol\020\001\022\017\n\013miss"
-    "ile_air\020\002\022\r\n\tmitraille\020\003*w\n\025EnumPrecipit"
-    "ationType\022\030\n\024pas_de_precipitation\020\000\022\021\n\rt"
-    "empete_sable\020\001\022\016\n\nbrouillard\020\002\022\013\n\007crachi"
-    "n\020\003\022\t\n\005pluie\020\004\022\t\n\005neige\020\005**\n\022EnumFireEff"
-    "ectType\022\t\n\005smoke\020\000\022\t\n\005light\020\001*(\n\014UnitFir"
-    "eType\022\n\n\006direct\020\000\022\014\n\010indirect\020\001*\245\002\n\020Enum"
-    "LightingType\022\023\n\017jour_sans_nuage\020\000\022\024\n\020jou"
-    "r_peu_nuageux\020\001\022\034\n\030jour_moyennement_nuag"
-    "eux\020\002\022\026\n\022jour_assez_nuageux\020\003\022\025\n\021jour_tr"
-    "es_nuageux\020\004\022\024\n\020nuit_pleine_lune\020\005\022\034\n\030nu"
-    "it_trois_quart_de_lune\020\006\022\022\n\016nuit_demi_lu"
-    "ne\020\007\022\026\n\022nuit_quart_de_lune\020\010\022\026\n\022nuit_nou"
-    "velle_lune\020\t\022\r\n\teclairant\020\n\022\022\n\016global_we"
-    "ather\020\013*\264\003\n EnumLogMaintenanceHandlingSt"
-    "atus\022\033\n\027deplacement_vers_chaine\020\000\022$\n att"
-    "ente_disponibilite_remorqueur\020\001\022 \n\034remor"
-    "queur_deplacement_aller\020\002\022\031\n\025remorqueur_"
-    "chargement\020\003\022!\n\035remorqueur_deplacement_r"
-    "etour\020\004\022\033\n\027remorqueur_dechargement\020\005\022\034\n\030"
-    "diagnostique_maintenance\020\006\0220\n,attente_pr"
-    "ise_en_charge_par_niveau_superieur\020\007\022 \n\034"
-    "attente_disponibilite_pieces\020\010\022$\n attent"
-    "e_disponibilite_reparateur\020\t\022\016\n\nreparati"
-    "on\020\n\022\017\n\013retour_pion\020\013\022\027\n\023termine_mainten"
-    "ance\020\014*\364\005\n\034EnumLogMedicalHandlingStatus\022"
-    "*\n&attente_disponibilite_ambulance_relev"
-    "e\020\000\022&\n\"ambulance_releve_deplacement_alle"
-    "r\020\001\022\037\n\033ambulance_releve_chargement\020\002\022/\n+"
-    "attente_chargement_complet_ambulance_rel"
-    "eve\020\003\022\'\n#ambulance_releve_deplacement_re"
-    "tour\020\004\022!\n\035ambulance_releve_dechargement\020"
-    "\005\0223\n/attente_disponibilite_medecin_pour_"
-    "diagnostique\020\006\022\020\n\014diagnostique\020\007\022\031\n\025rech"
-    "erche_secteur_tri\020\010\022*\n&attente_disponibi"
-    "lite_medecin_pour_tri\020\t\022\007\n\003tri\020\n\022\032\n\026rech"
-    "erche_secteur_soin\020\013\022+\n\'attente_disponib"
-    "ilite_medecin_pour_soin\020\014\022\010\n\004soin\020\r\022\023\n\017h"
-    "ospitalisation\020\016\022-\n)attente_disponibilit"
-    "e_ambulance_ramassage\020\017\022\"\n\036ambulance_ram"
-    "assage_chargement\020\020\0222\n.attente_chargemen"
-    "t_complet_ambulance_ramassage\020\021\022)\n%ambul"
-    "ance_ramassage_deplacement_aller\020\022\022$\n am"
-    "bulance_ramassage_dechargement\020\023\022\013\n\007term"
-    "ine\020\024*_\n\022EnumUnitVisibility\022\r\n\tinvisible"
-    "\020\000\022\014\n\010detected\020\001\022\016\n\nrecognized\020\002\022\016\n\niden"
-    "tified\020\003\022\014\n\010recorded\020\004*H\n\023EnumSimulation"
-    "State\022\013\n\007running\020\000\022\n\n\006paused\020\001\022\013\n\007stoppe"
-    "d\020\002\022\013\n\007loading\020\003*5\n\023EnumDispatcherState\022"
-    "\r\n\tavailable\020\000\022\017\n\013unavailable\020\001*l\n\033EnumM"
-    "eetingEngagementStatus\022\020\n\014none_meeting\020\000"
-    "\022\020\n\014etat_esquive\020\001\022\r\n\tetat_fixe\020\002\022\032\n\026eta"
-    "t_poursuite_mission\020\003*[\n\025EnumOperational"
-    "Status\022\026\n\022detruit_totalement\020\000\022\030\n\024detrui"
-    "t_tactiquement\020\001\022\020\n\014operationnel\020\002*+\n\017En"
-    "umAutomatMode\022\013\n\007embraye\020\000\022\013\n\007debraye\020\001*"
-    "F\n\021EnumCrowdAttitude\022\t\n\005calme\020\000\022\n\n\006agite"
-    "e\020\001\022\013\n\007excitee\020\002\022\r\n\tagressive\020\003*8\n\021EnumU"
-    "nitTiredness\022\n\n\006normal\020\000\022\013\n\007fatigue\020\001\022\n\n"
-    "\006epuise\020\002*@\n\016EnumUnitMorale\022\r\n\tfanatique"
-    "\020\000\022\007\n\003bon\020\001\022\t\n\005moyen\020\002\022\013\n\007mauvais\020\003*@\n\022E"
-    "numUnitExperience\022\013\n\007veteran\020\000\022\017\n\013experi"
-    "mente\020\001\022\014\n\010conscrit\020\002*8\n\rEnumHumanRank\022\014"
-    "\n\010officier\020\000\022\020\n\014sous_officer\020\001\022\007\n\003mdr\020\002*"
-    "X\n\rEnumDiplomacy\022\021\n\runknown_diplo\020\000\022\020\n\014f"
-    "riend_diplo\020\001\022\017\n\013enemy_diplo\020\002\022\021\n\rneutra"
-    "l_diplo\020\003*\210\001\n\016EnumHumanWound\022\016\n\nnon_bles"
-    "se\020\000\022\010\n\004mort\020\001\022\024\n\020blesse_urgence_1\020\002\022\024\n\020"
-    "blesse_urgence_2\020\003\022\024\n\020blesse_urgence_3\020\004"
-    "\022\032\n\026blesse_urgence_extreme\020\005*Y\n\037EnumLogM"
-    "aintenanceRegimeTravail\022\014\n\010regime_1\020\000\022\014\n"
-    "\010regime_2\020\001\022\014\n\010regime_3\020\002\022\014\n\010regime_4\020\003*"
-    "\222\001\n\017EnumNatureLevel\022\024\n\020none_naturelevel\020"
-    "\000\022\005\n\001b\020\001\022\005\n\001o\020\002\022\005\n\001c\020\003\022\006\n\002oo\020\004\022\007\n\003ooo\020\005\022"
-    "\005\n\001i\020\006\022\006\n\002ii\020\007\022\007\n\003iii\020\010\022\005\n\001x\020\t\022\006\n\002xx\020\n\022\007"
-    "\n\003xxx\020\013\022\010\n\004xxxx\020\014\022\t\n\005xxxxx\020\r*9\n\021EnumLogi"
-    "sticLevel\022\010\n\004none\020\000\022\007\n\003tc2\020\001\022\021\n\rlogistic"
-    "_base\020\002", 16287);
+    "ributeResourceNetwork\"`\n\tMsgMarker\022\014\n\004na"
+    "me\030\001 \002(\t\022\023\n\013description\030\002 \002(\t\022 \n\006parent\030"
+    "\003 \001(\0132\020.Common.MarkerId\022\016\n\006number\030\004 \001(\t\""
+    "\220\002\n\024MsgWeatherAttributes\022\023\n\013temperature\030"
+    "\001 \002(\005\022\022\n\nwind_speed\030\002 \002(\005\022*\n\016wind_direct"
+    "ion\030\003 \002(\0132\022.Common.MsgHeading\022\023\n\013cloud_f"
+    "loor\030\004 \002(\005\022\025\n\rcloud_ceiling\030\005 \002(\005\022\025\n\rclo"
+    "ud_density\030\006 \002(\005\0224\n\rprecipitation\030\007 \002(\0162"
+    "\035.Common.EnumPrecipitationType\022*\n\010lighti"
+    "ng\030\010 \002(\0162\030.Common.EnumLightingType*m\n\022En"
+    "umDotationFamily\022\014\n\010munition\020\000\022\r\n\tcarbur"
+    "ant\020\001\022\014\n\010explosif\020\002\022\010\n\004mine\020\003\022\013\n\007barbele"
+    "\020\004\022\t\n\005piece\020\005\022\n\n\006ration\020\006*Q\n\024EnumAmmunit"
+    "ionFamily\022\010\n\004obus\020\000\022\017\n\013missile_sol\020\001\022\017\n\013"
+    "missile_air\020\002\022\r\n\tmitraille\020\003*w\n\025EnumPrec"
+    "ipitationType\022\030\n\024pas_de_precipitation\020\000\022"
+    "\021\n\rtempete_sable\020\001\022\016\n\nbrouillard\020\002\022\013\n\007cr"
+    "achin\020\003\022\t\n\005pluie\020\004\022\t\n\005neige\020\005**\n\022EnumFir"
+    "eEffectType\022\t\n\005smoke\020\000\022\t\n\005light\020\001*(\n\014Uni"
+    "tFireType\022\n\n\006direct\020\000\022\014\n\010indirect\020\001*\245\002\n\020"
+    "EnumLightingType\022\023\n\017jour_sans_nuage\020\000\022\024\n"
+    "\020jour_peu_nuageux\020\001\022\034\n\030jour_moyennement_"
+    "nuageux\020\002\022\026\n\022jour_assez_nuageux\020\003\022\025\n\021jou"
+    "r_tres_nuageux\020\004\022\024\n\020nuit_pleine_lune\020\005\022\034"
+    "\n\030nuit_trois_quart_de_lune\020\006\022\022\n\016nuit_dem"
+    "i_lune\020\007\022\026\n\022nuit_quart_de_lune\020\010\022\026\n\022nuit"
+    "_nouvelle_lune\020\t\022\r\n\teclairant\020\n\022\022\n\016globa"
+    "l_weather\020\013*\264\003\n EnumLogMaintenanceHandli"
+    "ngStatus\022\033\n\027deplacement_vers_chaine\020\000\022$\n"
+    " attente_disponibilite_remorqueur\020\001\022 \n\034r"
+    "emorqueur_deplacement_aller\020\002\022\031\n\025remorqu"
+    "eur_chargement\020\003\022!\n\035remorqueur_deplaceme"
+    "nt_retour\020\004\022\033\n\027remorqueur_dechargement\020\005"
+    "\022\034\n\030diagnostique_maintenance\020\006\0220\n,attent"
+    "e_prise_en_charge_par_niveau_superieur\020\007"
+    "\022 \n\034attente_disponibilite_pieces\020\010\022$\n at"
+    "tente_disponibilite_reparateur\020\t\022\016\n\nrepa"
+    "ration\020\n\022\017\n\013retour_pion\020\013\022\027\n\023termine_mai"
+    "ntenance\020\014*\364\005\n\034EnumLogMedicalHandlingSta"
+    "tus\022*\n&attente_disponibilite_ambulance_r"
+    "eleve\020\000\022&\n\"ambulance_releve_deplacement_"
+    "aller\020\001\022\037\n\033ambulance_releve_chargement\020\002"
+    "\022/\n+attente_chargement_complet_ambulance"
+    "_releve\020\003\022\'\n#ambulance_releve_deplacemen"
+    "t_retour\020\004\022!\n\035ambulance_releve_dechargem"
+    "ent\020\005\0223\n/attente_disponibilite_medecin_p"
+    "our_diagnostique\020\006\022\020\n\014diagnostique\020\007\022\031\n\025"
+    "recherche_secteur_tri\020\010\022*\n&attente_dispo"
+    "nibilite_medecin_pour_tri\020\t\022\007\n\003tri\020\n\022\032\n\026"
+    "recherche_secteur_soin\020\013\022+\n\'attente_disp"
+    "onibilite_medecin_pour_soin\020\014\022\010\n\004soin\020\r\022"
+    "\023\n\017hospitalisation\020\016\022-\n)attente_disponib"
+    "ilite_ambulance_ramassage\020\017\022\"\n\036ambulance"
+    "_ramassage_chargement\020\020\0222\n.attente_charg"
+    "ement_complet_ambulance_ramassage\020\021\022)\n%a"
+    "mbulance_ramassage_deplacement_aller\020\022\022$"
+    "\n ambulance_ramassage_dechargement\020\023\022\013\n\007"
+    "termine\020\024*_\n\022EnumUnitVisibility\022\r\n\tinvis"
+    "ible\020\000\022\014\n\010detected\020\001\022\016\n\nrecognized\020\002\022\016\n\n"
+    "identified\020\003\022\014\n\010recorded\020\004*H\n\023EnumSimula"
+    "tionState\022\013\n\007running\020\000\022\n\n\006paused\020\001\022\013\n\007st"
+    "opped\020\002\022\013\n\007loading\020\003*5\n\023EnumDispatcherSt"
+    "ate\022\r\n\tavailable\020\000\022\017\n\013unavailable\020\001*l\n\033E"
+    "numMeetingEngagementStatus\022\020\n\014none_meeti"
+    "ng\020\000\022\020\n\014etat_esquive\020\001\022\r\n\tetat_fixe\020\002\022\032\n"
+    "\026etat_poursuite_mission\020\003*[\n\025EnumOperati"
+    "onalStatus\022\026\n\022detruit_totalement\020\000\022\030\n\024de"
+    "truit_tactiquement\020\001\022\020\n\014operationnel\020\002*+"
+    "\n\017EnumAutomatMode\022\013\n\007embraye\020\000\022\013\n\007debray"
+    "e\020\001*F\n\021EnumCrowdAttitude\022\t\n\005calme\020\000\022\n\n\006a"
+    "gitee\020\001\022\013\n\007excitee\020\002\022\r\n\tagressive\020\003*8\n\021E"
+    "numUnitTiredness\022\n\n\006normal\020\000\022\013\n\007fatigue\020"
+    "\001\022\n\n\006epuise\020\002*@\n\016EnumUnitMorale\022\r\n\tfanat"
+    "ique\020\000\022\007\n\003bon\020\001\022\t\n\005moyen\020\002\022\013\n\007mauvais\020\003*"
+    "@\n\022EnumUnitExperience\022\013\n\007veteran\020\000\022\017\n\013ex"
+    "perimente\020\001\022\014\n\010conscrit\020\002*8\n\rEnumHumanRa"
+    "nk\022\014\n\010officier\020\000\022\020\n\014sous_officer\020\001\022\007\n\003md"
+    "r\020\002*X\n\rEnumDiplomacy\022\021\n\runknown_diplo\020\000\022"
+    "\020\n\014friend_diplo\020\001\022\017\n\013enemy_diplo\020\002\022\021\n\rne"
+    "utral_diplo\020\003*\210\001\n\016EnumHumanWound\022\016\n\nnon_"
+    "blesse\020\000\022\010\n\004mort\020\001\022\024\n\020blesse_urgence_1\020\002"
+    "\022\024\n\020blesse_urgence_2\020\003\022\024\n\020blesse_urgence"
+    "_3\020\004\022\032\n\026blesse_urgence_extreme\020\005*Y\n\037Enum"
+    "LogMaintenanceRegimeTravail\022\014\n\010regime_1\020"
+    "\000\022\014\n\010regime_2\020\001\022\014\n\010regime_3\020\002\022\014\n\010regime_"
+    "4\020\003*\222\001\n\017EnumNatureLevel\022\024\n\020none_naturele"
+    "vel\020\000\022\005\n\001b\020\001\022\005\n\001o\020\002\022\005\n\001c\020\003\022\006\n\002oo\020\004\022\007\n\003oo"
+    "o\020\005\022\005\n\001i\020\006\022\006\n\002ii\020\007\022\007\n\003iii\020\010\022\005\n\001x\020\t\022\006\n\002xx"
+    "\020\n\022\007\n\003xxx\020\013\022\010\n\004xxxx\020\014\022\t\n\005xxxxx\020\r*9\n\021Enum"
+    "LogisticLevel\022\010\n\004none\020\000\022\007\n\003tc2\020\001\022\021\n\rlogi"
+    "stic_base\020\002", 16251);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Common.proto", &protobuf_RegisterTypes);
   AutomatId::default_instance_ = new AutomatId();
@@ -39361,7 +39359,6 @@ const ::std::string MsgMarker::_default_number_;
 #ifndef _MSC_VER
 const int MsgMarker::kNameFieldNumber;
 const int MsgMarker::kDescriptionFieldNumber;
-const int MsgMarker::kDateFieldNumber;
 const int MsgMarker::kParentFieldNumber;
 const int MsgMarker::kNumberFieldNumber;
 #endif  // !_MSC_VER
@@ -39371,7 +39368,6 @@ MsgMarker::MsgMarker() {
 }
 
 void MsgMarker::InitAsDefaultInstance() {
-  date_ = const_cast< ::Common::MsgDateTime*>(&::Common::MsgDateTime::default_instance());
   parent_ = const_cast< ::Common::MarkerId*>(&::Common::MarkerId::default_instance());
 }
 
@@ -39384,7 +39380,6 @@ void MsgMarker::SharedCtor() {
   _cached_size_ = 0;
   name_ = const_cast< ::std::string*>(&_default_name_);
   description_ = const_cast< ::std::string*>(&_default_description_);
-  date_ = NULL;
   parent_ = NULL;
   number_ = const_cast< ::std::string*>(&_default_number_);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -39405,7 +39400,6 @@ void MsgMarker::SharedDtor() {
     delete number_;
   }
   if (this != default_instance_) {
-    delete date_;
     delete parent_;
   }
 }
@@ -39438,12 +39432,9 @@ void MsgMarker::Clear() {
       }
     }
     if (_has_bit(2)) {
-      if (date_ != NULL) date_->::Common::MsgDateTime::Clear();
-    }
-    if (_has_bit(3)) {
       if (parent_ != NULL) parent_->::Common::MarkerId::Clear();
     }
-    if (_has_bit(4)) {
+    if (_has_bit(3)) {
       if (number_ != &_default_number_) {
         number_->clear();
       }
@@ -39486,25 +39477,12 @@ bool MsgMarker::MergePartialFromCodedStream(
         ::google::protobuf::internal::WireFormat::VerifyUTF8String(
           this->description().data(), this->description().length(),
           ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectTag(26)) goto parse_date;
+        if (input->ExpectTag(26)) goto parse_parent;
         break;
       }
       
-      // required .Common.MsgDateTime date = 3;
+      // optional .Common.MarkerId parent = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_date:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_date()));
-        if (input->ExpectTag(34)) goto parse_parent;
-        break;
-      }
-      
-      // optional .Common.MarkerId parent = 4;
-      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -39512,12 +39490,12 @@ bool MsgMarker::MergePartialFromCodedStream(
        parse_parent:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_parent()));
-        if (input->ExpectTag(42)) goto parse_number;
+        if (input->ExpectTag(34)) goto parse_number;
         break;
       }
       
-      // optional string number = 5;
-      case 5: {
+      // optional string number = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -39574,25 +39552,19 @@ void MsgMarker::SerializeWithCachedSizes(
       2, this->description(), output);
   }
   
-  // required .Common.MsgDateTime date = 3;
+  // optional .Common.MarkerId parent = 3;
   if (_has_bit(2)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      3, this->date(), output);
+      3, this->parent(), output);
   }
   
-  // optional .Common.MarkerId parent = 4;
+  // optional string number = 4;
   if (_has_bit(3)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      4, this->parent(), output);
-  }
-  
-  // optional string number = 5;
-  if (_has_bit(4)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->number().data(), this->number().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      5, this->number(), output);
+      4, this->number(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -39623,28 +39595,21 @@ void MsgMarker::SerializeWithCachedSizes(
         2, this->description(), target);
   }
   
-  // required .Common.MsgDateTime date = 3;
+  // optional .Common.MarkerId parent = 3;
   if (_has_bit(2)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        3, this->date(), target);
+        3, this->parent(), target);
   }
   
-  // optional .Common.MarkerId parent = 4;
+  // optional string number = 4;
   if (_has_bit(3)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        4, this->parent(), target);
-  }
-  
-  // optional string number = 5;
-  if (_has_bit(4)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->number().data(), this->number().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        5, this->number(), target);
+        4, this->number(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -39672,21 +39637,14 @@ int MsgMarker::ByteSize() const {
           this->description());
     }
     
-    // required .Common.MsgDateTime date = 3;
-    if (has_date()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->date());
-    }
-    
-    // optional .Common.MarkerId parent = 4;
+    // optional .Common.MarkerId parent = 3;
     if (has_parent()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->parent());
     }
     
-    // optional string number = 5;
+    // optional string number = 4;
     if (has_number()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -39725,12 +39683,9 @@ void MsgMarker::MergeFrom(const MsgMarker& from) {
       set_description(from.description());
     }
     if (from._has_bit(2)) {
-      mutable_date()->::Common::MsgDateTime::MergeFrom(from.date());
-    }
-    if (from._has_bit(3)) {
       mutable_parent()->::Common::MarkerId::MergeFrom(from.parent());
     }
-    if (from._has_bit(4)) {
+    if (from._has_bit(3)) {
       set_number(from.number());
     }
   }
@@ -39750,11 +39705,8 @@ void MsgMarker::CopyFrom(const MsgMarker& from) {
 }
 
 bool MsgMarker::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   
-  if (has_date()) {
-    if (!this->date().IsInitialized()) return false;
-  }
   if (has_parent()) {
     if (!this->parent().IsInitialized()) return false;
   }
@@ -39765,7 +39717,6 @@ void MsgMarker::Swap(MsgMarker* other) {
   if (other != this) {
     std::swap(name_, other->name_);
     std::swap(description_, other->description_);
-    std::swap(date_, other->date_);
     std::swap(parent_, other->parent_);
     std::swap(number_, other->number_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);

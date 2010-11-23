@@ -2796,17 +2796,25 @@ class MsgMarkerCreation : public ::google::protobuf::Message {
   inline const ::Common::MsgMarker& definition() const;
   inline ::Common::MsgMarker* mutable_definition();
   
+  // required .Common.MsgDateTime date = 3;
+  inline bool has_date() const;
+  inline void clear_date();
+  static const int kDateFieldNumber = 3;
+  inline const ::Common::MsgDateTime& date() const;
+  inline ::Common::MsgDateTime* mutable_date();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
   ::Common::MarkerId* marker_;
   ::Common::MsgMarker* definition_;
+  ::Common::MsgDateTime* date_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
   friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -5529,6 +5537,23 @@ inline ::Common::MsgMarker* MsgMarkerCreation::mutable_definition() {
   _set_bit(1);
   if (definition_ == NULL) definition_ = new ::Common::MsgMarker;
   return definition_;
+}
+
+// required .Common.MsgDateTime date = 3;
+inline bool MsgMarkerCreation::has_date() const {
+  return _has_bit(2);
+}
+inline void MsgMarkerCreation::clear_date() {
+  if (date_ != NULL) date_->::Common::MsgDateTime::Clear();
+  _clear_bit(2);
+}
+inline const ::Common::MsgDateTime& MsgMarkerCreation::date() const {
+  return date_ != NULL ? *date_ : *default_instance_->date_;
+}
+inline ::Common::MsgDateTime* MsgMarkerCreation::mutable_date() {
+  _set_bit(2);
+  if (date_ == NULL) date_ = new ::Common::MsgDateTime;
+  return date_;
 }
 
 // -------------------------------------------------------------------

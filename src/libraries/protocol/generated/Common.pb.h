@@ -14135,24 +14135,17 @@ class MsgMarker : public ::google::protobuf::Message {
   inline void set_description(const char* value, size_t size);
   inline ::std::string* mutable_description();
   
-  // required .Common.MsgDateTime date = 3;
-  inline bool has_date() const;
-  inline void clear_date();
-  static const int kDateFieldNumber = 3;
-  inline const ::Common::MsgDateTime& date() const;
-  inline ::Common::MsgDateTime* mutable_date();
-  
-  // optional .Common.MarkerId parent = 4;
+  // optional .Common.MarkerId parent = 3;
   inline bool has_parent() const;
   inline void clear_parent();
-  static const int kParentFieldNumber = 4;
+  static const int kParentFieldNumber = 3;
   inline const ::Common::MarkerId& parent() const;
   inline ::Common::MarkerId* mutable_parent();
   
-  // optional string number = 5;
+  // optional string number = 4;
   inline bool has_number() const;
   inline void clear_number();
-  static const int kNumberFieldNumber = 5;
+  static const int kNumberFieldNumber = 4;
   inline const ::std::string& number() const;
   inline void set_number(const ::std::string& value);
   inline void set_number(const char* value);
@@ -14167,7 +14160,6 @@ class MsgMarker : public ::google::protobuf::Message {
   static const ::std::string _default_name_;
   ::std::string* description_;
   static const ::std::string _default_description_;
-  ::Common::MsgDateTime* date_;
   ::Common::MarkerId* parent_;
   ::std::string* number_;
   static const ::std::string _default_number_;
@@ -14175,7 +14167,7 @@ class MsgMarker : public ::google::protobuf::Message {
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -20712,76 +20704,59 @@ inline ::std::string* MsgMarker::mutable_description() {
   return description_;
 }
 
-// required .Common.MsgDateTime date = 3;
-inline bool MsgMarker::has_date() const {
-  return _has_bit(2);
-}
-inline void MsgMarker::clear_date() {
-  if (date_ != NULL) date_->::Common::MsgDateTime::Clear();
-  _clear_bit(2);
-}
-inline const ::Common::MsgDateTime& MsgMarker::date() const {
-  return date_ != NULL ? *date_ : *default_instance_->date_;
-}
-inline ::Common::MsgDateTime* MsgMarker::mutable_date() {
-  _set_bit(2);
-  if (date_ == NULL) date_ = new ::Common::MsgDateTime;
-  return date_;
-}
-
-// optional .Common.MarkerId parent = 4;
+// optional .Common.MarkerId parent = 3;
 inline bool MsgMarker::has_parent() const {
-  return _has_bit(3);
+  return _has_bit(2);
 }
 inline void MsgMarker::clear_parent() {
   if (parent_ != NULL) parent_->::Common::MarkerId::Clear();
-  _clear_bit(3);
+  _clear_bit(2);
 }
 inline const ::Common::MarkerId& MsgMarker::parent() const {
   return parent_ != NULL ? *parent_ : *default_instance_->parent_;
 }
 inline ::Common::MarkerId* MsgMarker::mutable_parent() {
-  _set_bit(3);
+  _set_bit(2);
   if (parent_ == NULL) parent_ = new ::Common::MarkerId;
   return parent_;
 }
 
-// optional string number = 5;
+// optional string number = 4;
 inline bool MsgMarker::has_number() const {
-  return _has_bit(4);
+  return _has_bit(3);
 }
 inline void MsgMarker::clear_number() {
   if (number_ != &_default_number_) {
     number_->clear();
   }
-  _clear_bit(4);
+  _clear_bit(3);
 }
 inline const ::std::string& MsgMarker::number() const {
   return *number_;
 }
 inline void MsgMarker::set_number(const ::std::string& value) {
-  _set_bit(4);
+  _set_bit(3);
   if (number_ == &_default_number_) {
     number_ = new ::std::string;
   }
   number_->assign(value);
 }
 inline void MsgMarker::set_number(const char* value) {
-  _set_bit(4);
+  _set_bit(3);
   if (number_ == &_default_number_) {
     number_ = new ::std::string;
   }
   number_->assign(value);
 }
 inline void MsgMarker::set_number(const char* value, size_t size) {
-  _set_bit(4);
+  _set_bit(3);
   if (number_ == &_default_number_) {
     number_ = new ::std::string;
   }
   number_->assign(reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* MsgMarker::mutable_number() {
-  _set_bit(4);
+  _set_bit(3);
   if (number_ == &_default_number_) {
     number_ = new ::std::string;
   }

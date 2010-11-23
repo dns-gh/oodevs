@@ -15,11 +15,9 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "clients_kernel/Tools.h"
-#include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/tokenizer.hpp>
 #include <boost/filesystem/path.hpp>
 #include <fstream>
 #include <iostream>
@@ -31,7 +29,7 @@ using namespace plugins::messenger;
 // Name: NotesModel constructor
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-NotesModel::NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager, std::string file )
+NotesModel::NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager, const std::string& file )
     : config_( config )
     , clients_( clients )
     , idManager_ ( idManager )
@@ -61,7 +59,7 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgMarkerCreationRe
 {
    std::auto_ptr< Note > note( new Note( idManager_.NextId(), message, currentTime_ ) );
    Register( note->GetId(), *note );
-   if (note->GetParent() != 0)
+   if ( note->GetParent() != 0)
    {
      Note *parent = Find( note->GetParent() );
      parent->AddChild( note->GetId() );
@@ -84,8 +82,8 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgMarkerDestructio
             HandleRequestDestructCascade( note );
         else
             HandleRequestDestructSingle( note );
-    }
-    SaveNotes();
+        SaveNotes();
+   }
 }
 
 // -----------------------------------------------------------------------------
@@ -111,8 +109,8 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgMarkerUpdateRequ
         }
         note->Update( message, currentTime_ );
         note->SendUpdate( clients_, false );
+        SaveNotes(); 
     }
-    SaveNotes();
 }
 
 // -----------------------------------------------------------------------------
@@ -132,10 +130,12 @@ void NotesModel::SendStateToNewClient( dispatcher::ClientPublisher_ABC& publishe
 void NotesModel::HandleRequestDestructSingle(Note* note)
 {
     Note *parent = Find( note->GetParent() );
-    T_List& noteChildren = note->GetChildren();
+    const T_List& noteChildren = note->GetChildren();
+    
     if( parent )
         parent->RemoveChild( note->GetId() );
-    for( IT_List it = noteChildren.begin(); it != noteChildren.end(); ++it )
+
+    for( CIT_List it = noteChildren.begin(); it != noteChildren.end(); ++it )
     {
         Note* child = Find( *it );
         if( parent )
@@ -154,14 +154,13 @@ void NotesModel::HandleRequestDestructSingle(Note* note)
 void NotesModel::HandleRequestDestructCascade( Note* note )
 {
     Note *parent = Find( note->GetParent() );
-    T_List& noteChildren = note->GetChildren();
-    IT_List it = noteChildren.begin();
     if( parent )
         parent->RemoveChild( note->GetId() );
-    while( it != noteChildren.end() )
+
+    const T_List& noteChildren = note->GetChildren();
+    for( CIT_List it = noteChildren.begin(); it != noteChildren.end(); ++it )
     {
         Note* child = Find( *it );
-        ++it;
         HandleRequestDestructCascade( child );
     }
     note->SendDestruction( clients_ );
@@ -180,13 +179,7 @@ void NotesModel::SaveNotes()
     file_.open( fileName_.c_str() ,  std::ios::out | std::ios_base::trunc );
     CreateHeader();
     int linenum = headerLines_ - 1;
-    std::string str = tools::translate( "NoteModel", "Note name" ) + ";";
-    str += tools::translate( "NoteModel", "Parent" ) + ";";
-    str += tools::translate( "NoteModel", "Value" ) + ";";
-    str += tools::translate( "NoteModel", "Comments" );
-    file_ << str << std::endl;
-    tools::Iterator< const Note& > it = CreateIterator();
-    while( it.HasMoreElements() )
+    for( tools::Iterator< const Note& > it = CreateIterator(); it.HasMoreElements();   )
     {
         const Note& note = it.NextElement();
         if( note.GetParent() == 0 )
@@ -214,6 +207,12 @@ void NotesModel::CreateHeader()
     file_ << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Physical base" ) ) + ":;" + physicalBase << std::endl;
     file_ << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Decisional base" ) ) + ":;" + decisionalBase << std::endl;
     file_ << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Terrain" ) ) + ":;" + terrain << std::endl;
+
+    file_ << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Note name" ) ) + ";";
+    file_ << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Parent" ) ) + ";";
+    file_ << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Value" ) ) + ";";
+    file_ << boost::lexical_cast< std::string >( tools::translate( "NoteModel", "Comments" ) ) << std::endl;
+
 }
 
 // -----------------------------------------------------------------------------
@@ -223,15 +222,10 @@ void NotesModel::CreateHeader()
 void NotesModel::WriteNote( const Note& note, int& lineNumber, int parentLine )
 {
     ++lineNumber;
-    file_ << note.GetName() << ";";
-    file_ << parentLine;
-    std::string tmp = note.GetDesc();
-    boost::algorithm::replace_all( tmp, "\n", "<br>" );
-    file_ << ";\"" + note.GetNumber() + "\";\"" + tmp + "\"" ;
-    file_ << ";\"" + note.GetCreationTime()+ "\";\"" + note.GetLastUpdateTime() + "\"" << std::endl;
-    T_List& noteChildren = note.GetChildren();
+    note.WriteNote( file_, parentLine );
+    const T_List& noteChildren = note.GetChildren();
     int currentLine = lineNumber;
-    for( IT_List it = noteChildren.begin(); it != noteChildren.end(); ++it )
+    for( CIT_List it = noteChildren.begin(); it != noteChildren.end(); ++it )
         if( Note* child = Find( *it ))
             WriteNote( *child, lineNumber, currentLine);
 }
@@ -252,7 +246,7 @@ void NotesModel::LoadNotes( const std::string filename )
     std::string currentLine;
     // Skip first lines (header)
     for ( int i = 1; i < headerLines_; ++i )
-    std::getline( file, currentLine);
+        std::getline( file, currentLine);
     while( std::getline( file, currentLine ) )
         ReadNote( currentLine, notes );
 }

@@ -142,6 +142,7 @@ message MsgShapeDestructionRequestAck {
 message MsgMarkerCreation {
     required Common.MarkerId            marker      = 1;
 	required Common.MsgMarker           definition  = 2;
+	required Common.MsgDateTime		    date	    = 3;
 }
 
 message MsgMarkerUpdate {

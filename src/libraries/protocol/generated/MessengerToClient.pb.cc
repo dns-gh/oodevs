@@ -580,9 +580,10 @@ void protobuf_AssignDesc_MessengerToClient_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgShapeDestructionRequestAck));
   MsgMarkerCreation_descriptor_ = file->message_type(27);
-  static const int MsgMarkerCreation_offsets_[2] = {
+  static const int MsgMarkerCreation_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerCreation, marker_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerCreation, definition_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMarkerCreation, date_),
   };
   MsgMarkerCreation_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -1138,118 +1139,119 @@ void protobuf_AddDesc_MessengerToClient_2eproto() {
     "\001 \001(\01620.MsgsMessengerToClient.ShapeReque"
     "stAck.ErrorCode\"e\n\035MsgShapeDestructionRe"
     "questAck\022D\n\nerror_code\030\001 \002(\01620.MsgsMesse"
-    "ngerToClient.ShapeRequestAck.ErrorCode\"\\"
+    "ngerToClient.ShapeRequestAck.ErrorCode\"\177"
     "\n\021MsgMarkerCreation\022 \n\006marker\030\001 \002(\0132\020.Co"
     "mmon.MarkerId\022%\n\ndefinition\030\002 \002(\0132\021.Comm"
-    "on.MsgMarker\"\253\001\n\017MsgMarkerUpdate\022 \n\006mark"
-    "er\030\001 \002(\0132\020.Common.MarkerId\022!\n\004date\030\002 \002(\013"
-    "2\023.Common.MsgDateTime\022\014\n\004name\030\003 \001(\t\022\023\n\013d"
-    "escription\030\004 \001(\t\022 \n\006parent\030\005 \001(\0132\020.Commo"
-    "n.MarkerId\022\016\n\006number\030\006 \001(\t\"8\n\024MsgMarkerD"
-    "estruction\022 \n\006marker\030\001 \002(\0132\020.Common.Mark"
-    "erId\"]\n\020MarkerRequestAck\"I\n\tErrorCode\022\014\n"
-    "\010no_error\020\000\022\024\n\020error_invalid_id\020\001\022\030\n\024err"
-    "or_invalid_parent\020\002\"d\n\033MsgMarkerCreation"
+    "on.MsgMarker\022!\n\004date\030\003 \002(\0132\023.Common.MsgD"
+    "ateTime\"\253\001\n\017MsgMarkerUpdate\022 \n\006marker\030\001 "
+    "\002(\0132\020.Common.MarkerId\022!\n\004date\030\002 \002(\0132\023.Co"
+    "mmon.MsgDateTime\022\014\n\004name\030\003 \001(\t\022\023\n\013descri"
+    "ption\030\004 \001(\t\022 \n\006parent\030\005 \001(\0132\020.Common.Mar"
+    "kerId\022\016\n\006number\030\006 \001(\t\"8\n\024MsgMarkerDestru"
+    "ction\022 \n\006marker\030\001 \002(\0132\020.Common.MarkerId\""
+    "]\n\020MarkerRequestAck\"I\n\tErrorCode\022\014\n\010no_e"
+    "rror\020\000\022\024\n\020error_invalid_id\020\001\022\030\n\024error_in"
+    "valid_parent\020\002\"d\n\033MsgMarkerCreationReque"
+    "stAck\022E\n\nerror_code\030\001 \002(\01621.MsgsMessenge"
+    "rToClient.MarkerRequestAck.ErrorCode\"b\n\031"
+    "MsgMarkerUpdateRequestAck\022E\n\nerror_code\030"
+    "\001 \001(\01621.MsgsMessengerToClient.MarkerRequ"
+    "estAck.ErrorCode\"g\n\036MsgMarkerDestruction"
     "RequestAck\022E\n\nerror_code\030\001 \002(\01621.MsgsMes"
     "sengerToClient.MarkerRequestAck.ErrorCod"
-    "e\"b\n\031MsgMarkerUpdateRequestAck\022E\n\nerror_"
-    "code\030\001 \001(\01621.MsgsMessengerToClient.Marke"
-    "rRequestAck.ErrorCode\"g\n\036MsgMarkerDestru"
-    "ctionRequestAck\022E\n\nerror_code\030\001 \002(\01621.Ms"
-    "gsMessengerToClient.MarkerRequestAck.Err"
-    "orCode\"|\n\017ClientObjectAck\"i\n\tErrorCode\022\013"
-    "\n\007success\020\000\022\034\n\030duplicate_attribute_name\020"
-    "\001\022\032\n\026invalid_attribute_name\020\002\022\025\n\021invalid"
-    "_object_id\020\003\"\201\001\n\027MsgClientObjectCreation"
-    "\022&\n\006object\030\001 \002(\0132\026.Common.ClientObjectId"
-    "\022\014\n\004name\030\002 \002(\t\0220\n\nproperties\030\003 \003(\0132\034.Com"
-    "mon.ClientObjectProperty\"\177\n\025MsgClientObj"
-    "ectUpdate\022&\n\006object\030\001 \002(\0132\026.Common.Clien"
-    "tObjectId\022\014\n\004name\030\002 \001(\t\0220\n\nproperties\030\003 "
-    "\003(\0132\034.Common.ClientObjectProperty\"D\n\032Msg"
-    "ClientObjectDestruction\022&\n\006object\030\001 \002(\0132"
-    "\026.Common.ClientObjectId\"w\n!MsgClientObje"
-    "ctCreationRequestAck\022\014\n\004name\030\001 \002(\t\022D\n\ner"
-    "ror_code\030\002 \002(\01620.MsgsMessengerToClient.C"
-    "lientObjectAck.ErrorCode\"\217\001\n\037MsgClientOb"
-    "jectUpdateRequestAck\022&\n\006object\030\001 \002(\0132\026.C"
-    "ommon.ClientObjectId\022D\n\nerror_code\030\002 \002(\016"
-    "20.MsgsMessengerToClient.ClientObjectAck"
-    ".ErrorCode\"\224\001\n$MsgClientObjectDestructio"
-    "nRequestAck\022&\n\006object\030\001 \002(\0132\026.Common.Cli"
-    "entObjectId\022D\n\nerror_code\030\002 \002(\01620.MsgsMe"
-    "ssengerToClient.ClientObjectAck.ErrorCod"
-    "e\"\370\025\n\024MsgMessengerToClient\022\017\n\007context\030\001 "
-    "\001(\005\022D\n\007message\030\002 \002(\01323.MsgsMessengerToCl"
-    "ient.MsgMessengerToClient.Content\032\210\025\n\007Co"
-    "ntent\022?\n\016limit_creation\030\001 \001(\0132\'.MsgsMess"
-    "engerToClient.MsgLimitCreation\022;\n\014limit_"
-    "update\030\002 \001(\0132%.MsgsMessengerToClient.Msg"
-    "LimitUpdate\022E\n\021limit_destruction\030\003 \001(\0132*"
-    ".MsgsMessengerToClient.MsgLimitDestructi"
-    "on\022U\n\032limit_creation_request_ack\030\004 \001(\01321"
-    ".MsgsMessengerToClient.MsgLimitCreationR"
-    "equestAck\022[\n\035limit_destruction_request_a"
-    "ck\030\005 \001(\01324.MsgsMessengerToClient.MsgLimi"
-    "tDestructionRequestAck\022Q\n\030limit_update_r"
-    "equest_ack\030\006 \001(\0132/.MsgsMessengerToClient"
-    ".MsgLimitUpdateRequestAck\022=\n\rlima_creati"
-    "on\030\007 \001(\0132&.MsgsMessengerToClient.MsgLima"
-    "Creation\0229\n\013lima_update\030\010 \001(\0132$.MsgsMess"
-    "engerToClient.MsgLimaUpdate\022C\n\020lima_dest"
-    "ruction\030\t \001(\0132).MsgsMessengerToClient.Ms"
-    "gLimaDestruction\022S\n\031lima_creation_reques"
-    "t_ack\030\n \001(\01320.MsgsMessengerToClient.MsgL"
-    "imaCreationRequestAck\022Y\n\034lima_destructio"
-    "n_request_ack\030\013 \001(\01323.MsgsMessengerToCli"
-    "ent.MsgLimaDestructionRequestAck\022O\n\027lima"
-    "_update_request_ack\030\014 \001(\0132..MsgsMessenge"
-    "rToClient.MsgLimaUpdateRequestAck\022M\n\025int"
-    "elligence_creation\030\r \001(\0132..MsgsMessenger"
-    "ToClient.MsgIntelligenceCreation\022I\n\023inte"
-    "lligence_update\030\016 \001(\0132,.MsgsMessengerToC"
-    "lient.MsgIntelligenceUpdate\022S\n\030intellige"
-    "nce_destruction\030\017 \001(\01321.MsgsMessengerToC"
-    "lient.MsgIntelligenceDestruction\022c\n!inte"
-    "lligence_creation_request_ack\030\020 \001(\01328.Ms"
-    "gsMessengerToClient.MsgIntelligenceCreat"
-    "ionRequestAck\022_\n\037intelligence_update_req"
-    "uest_ack\030\021 \001(\01326.MsgsMessengerToClient.M"
-    "sgIntelligenceUpdateRequestAck\022i\n$intell"
-    "igence_destruction_request_ack\030\022 \001(\0132;.M"
-    "sgsMessengerToClient.MsgIntelligenceDest"
-    "ructionRequestAck\022?\n\016shape_creation\030\023 \001("
-    "\0132\'.MsgsMessengerToClient.MsgShapeCreati"
-    "on\022;\n\014shape_update\030\024 \001(\0132%.MsgsMessenger"
-    "ToClient.MsgShapeUpdate\022E\n\021shape_destruc"
-    "tion\030\025 \001(\0132*.MsgsMessengerToClient.MsgSh"
-    "apeDestruction\022U\n\032shape_creation_request"
-    "_ack\030\026 \001(\01321.MsgsMessengerToClient.MsgSh"
-    "apeCreationRequestAck\022[\n\035shape_destructi"
-    "on_request_ack\030\027 \001(\01324.MsgsMessengerToCl"
-    "ient.MsgShapeDestructionRequestAck\022Q\n\030sh"
-    "ape_update_request_ack\030\030 \001(\0132/.MsgsMesse"
-    "ngerToClient.MsgShapeUpdateRequestAck\022,\n"
-    "\014text_message\030\031 \001(\0132\026.Common.MsgTextMess"
-    "age\022A\n\017marker_creation\030\032 \001(\0132(.MsgsMesse"
-    "ngerToClient.MsgMarkerCreation\022=\n\rmarker"
-    "_update\030\033 \001(\0132&.MsgsMessengerToClient.Ms"
-    "gMarkerUpdate\022G\n\022marker_destruction\030\034 \001("
-    "\0132+.MsgsMessengerToClient.MsgMarkerDestr"
-    "uction\022N\n\026client_object_creation\030\035 \001(\0132."
-    ".MsgsMessengerToClient.MsgClientObjectCr"
-    "eation\022J\n\024client_object_update\030\036 \001(\0132,.M"
-    "sgsMessengerToClient.MsgClientObjectUpda"
-    "te\022T\n\031client_object_destruction\030\037 \001(\01321."
-    "MsgsMessengerToClient.MsgClientObjectDes"
-    "truction\022\\\n\032client_object_creation_ack\030 "
-    " \001(\01328.MsgsMessengerToClient.MsgClientOb"
-    "jectCreationRequestAck\022X\n\030client_object_"
-    "update_ack\030! \001(\01326.MsgsMessengerToClient"
-    ".MsgClientObjectUpdateRequestAck\022b\n\035clie"
-    "nt_object_destruction_ack\030\" \001(\0132;.MsgsMe"
-    "ssengerToClient.MsgClientObjectDestructi"
-    "onRequestAck", 7372);
+    "e\"|\n\017ClientObjectAck\"i\n\tErrorCode\022\013\n\007suc"
+    "cess\020\000\022\034\n\030duplicate_attribute_name\020\001\022\032\n\026"
+    "invalid_attribute_name\020\002\022\025\n\021invalid_obje"
+    "ct_id\020\003\"\201\001\n\027MsgClientObjectCreation\022&\n\006o"
+    "bject\030\001 \002(\0132\026.Common.ClientObjectId\022\014\n\004n"
+    "ame\030\002 \002(\t\0220\n\nproperties\030\003 \003(\0132\034.Common.C"
+    "lientObjectProperty\"\177\n\025MsgClientObjectUp"
+    "date\022&\n\006object\030\001 \002(\0132\026.Common.ClientObje"
+    "ctId\022\014\n\004name\030\002 \001(\t\0220\n\nproperties\030\003 \003(\0132\034"
+    ".Common.ClientObjectProperty\"D\n\032MsgClien"
+    "tObjectDestruction\022&\n\006object\030\001 \002(\0132\026.Com"
+    "mon.ClientObjectId\"w\n!MsgClientObjectCre"
+    "ationRequestAck\022\014\n\004name\030\001 \002(\t\022D\n\nerror_c"
+    "ode\030\002 \002(\01620.MsgsMessengerToClient.Client"
+    "ObjectAck.ErrorCode\"\217\001\n\037MsgClientObjectU"
+    "pdateRequestAck\022&\n\006object\030\001 \002(\0132\026.Common"
+    ".ClientObjectId\022D\n\nerror_code\030\002 \002(\01620.Ms"
+    "gsMessengerToClient.ClientObjectAck.Erro"
+    "rCode\"\224\001\n$MsgClientObjectDestructionRequ"
+    "estAck\022&\n\006object\030\001 \002(\0132\026.Common.ClientOb"
+    "jectId\022D\n\nerror_code\030\002 \002(\01620.MsgsMesseng"
+    "erToClient.ClientObjectAck.ErrorCode\"\370\025\n"
+    "\024MsgMessengerToClient\022\017\n\007context\030\001 \001(\005\022D"
+    "\n\007message\030\002 \002(\01323.MsgsMessengerToClient."
+    "MsgMessengerToClient.Content\032\210\025\n\007Content"
+    "\022?\n\016limit_creation\030\001 \001(\0132\'.MsgsMessenger"
+    "ToClient.MsgLimitCreation\022;\n\014limit_updat"
+    "e\030\002 \001(\0132%.MsgsMessengerToClient.MsgLimit"
+    "Update\022E\n\021limit_destruction\030\003 \001(\0132*.Msgs"
+    "MessengerToClient.MsgLimitDestruction\022U\n"
+    "\032limit_creation_request_ack\030\004 \001(\01321.Msgs"
+    "MessengerToClient.MsgLimitCreationReques"
+    "tAck\022[\n\035limit_destruction_request_ack\030\005 "
+    "\001(\01324.MsgsMessengerToClient.MsgLimitDest"
+    "ructionRequestAck\022Q\n\030limit_update_reques"
+    "t_ack\030\006 \001(\0132/.MsgsMessengerToClient.MsgL"
+    "imitUpdateRequestAck\022=\n\rlima_creation\030\007 "
+    "\001(\0132&.MsgsMessengerToClient.MsgLimaCreat"
+    "ion\0229\n\013lima_update\030\010 \001(\0132$.MsgsMessenger"
+    "ToClient.MsgLimaUpdate\022C\n\020lima_destructi"
+    "on\030\t \001(\0132).MsgsMessengerToClient.MsgLima"
+    "Destruction\022S\n\031lima_creation_request_ack"
+    "\030\n \001(\01320.MsgsMessengerToClient.MsgLimaCr"
+    "eationRequestAck\022Y\n\034lima_destruction_req"
+    "uest_ack\030\013 \001(\01323.MsgsMessengerToClient.M"
+    "sgLimaDestructionRequestAck\022O\n\027lima_upda"
+    "te_request_ack\030\014 \001(\0132..MsgsMessengerToCl"
+    "ient.MsgLimaUpdateRequestAck\022M\n\025intellig"
+    "ence_creation\030\r \001(\0132..MsgsMessengerToCli"
+    "ent.MsgIntelligenceCreation\022I\n\023intellige"
+    "nce_update\030\016 \001(\0132,.MsgsMessengerToClient"
+    ".MsgIntelligenceUpdate\022S\n\030intelligence_d"
+    "estruction\030\017 \001(\01321.MsgsMessengerToClient"
+    ".MsgIntelligenceDestruction\022c\n!intellige"
+    "nce_creation_request_ack\030\020 \001(\01328.MsgsMes"
+    "sengerToClient.MsgIntelligenceCreationRe"
+    "questAck\022_\n\037intelligence_update_request_"
+    "ack\030\021 \001(\01326.MsgsMessengerToClient.MsgInt"
+    "elligenceUpdateRequestAck\022i\n$intelligenc"
+    "e_destruction_request_ack\030\022 \001(\0132;.MsgsMe"
+    "ssengerToClient.MsgIntelligenceDestructi"
+    "onRequestAck\022?\n\016shape_creation\030\023 \001(\0132\'.M"
+    "sgsMessengerToClient.MsgShapeCreation\022;\n"
+    "\014shape_update\030\024 \001(\0132%.MsgsMessengerToCli"
+    "ent.MsgShapeUpdate\022E\n\021shape_destruction\030"
+    "\025 \001(\0132*.MsgsMessengerToClient.MsgShapeDe"
+    "struction\022U\n\032shape_creation_request_ack\030"
+    "\026 \001(\01321.MsgsMessengerToClient.MsgShapeCr"
+    "eationRequestAck\022[\n\035shape_destruction_re"
+    "quest_ack\030\027 \001(\01324.MsgsMessengerToClient."
+    "MsgShapeDestructionRequestAck\022Q\n\030shape_u"
+    "pdate_request_ack\030\030 \001(\0132/.MsgsMessengerT"
+    "oClient.MsgShapeUpdateRequestAck\022,\n\014text"
+    "_message\030\031 \001(\0132\026.Common.MsgTextMessage\022A"
+    "\n\017marker_creation\030\032 \001(\0132(.MsgsMessengerT"
+    "oClient.MsgMarkerCreation\022=\n\rmarker_upda"
+    "te\030\033 \001(\0132&.MsgsMessengerToClient.MsgMark"
+    "erUpdate\022G\n\022marker_destruction\030\034 \001(\0132+.M"
+    "sgsMessengerToClient.MsgMarkerDestructio"
+    "n\022N\n\026client_object_creation\030\035 \001(\0132..Msgs"
+    "MessengerToClient.MsgClientObjectCreatio"
+    "n\022J\n\024client_object_update\030\036 \001(\0132,.MsgsMe"
+    "ssengerToClient.MsgClientObjectUpdate\022T\n"
+    "\031client_object_destruction\030\037 \001(\01321.MsgsM"
+    "essengerToClient.MsgClientObjectDestruct"
+    "ion\022\\\n\032client_object_creation_ack\030  \001(\0132"
+    "8.MsgsMessengerToClient.MsgClientObjectC"
+    "reationRequestAck\022X\n\030client_object_updat"
+    "e_ack\030! \001(\01326.MsgsMessengerToClient.MsgC"
+    "lientObjectUpdateRequestAck\022b\n\035client_ob"
+    "ject_destruction_ack\030\" \001(\0132;.MsgsMesseng"
+    "erToClient.MsgClientObjectDestructionReq"
+    "uestAck", 7407);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "MessengerToClient.proto", &protobuf_RegisterTypes);
   TacticalLineAck::default_instance_ = new TacticalLineAck();
@@ -7742,6 +7744,7 @@ void MsgShapeDestructionRequestAck::Swap(MsgShapeDestructionRequestAck* other) {
 #ifndef _MSC_VER
 const int MsgMarkerCreation::kMarkerFieldNumber;
 const int MsgMarkerCreation::kDefinitionFieldNumber;
+const int MsgMarkerCreation::kDateFieldNumber;
 #endif  // !_MSC_VER
 
 MsgMarkerCreation::MsgMarkerCreation() {
@@ -7751,6 +7754,7 @@ MsgMarkerCreation::MsgMarkerCreation() {
 void MsgMarkerCreation::InitAsDefaultInstance() {
   marker_ = const_cast< ::Common::MarkerId*>(&::Common::MarkerId::default_instance());
   definition_ = const_cast< ::Common::MsgMarker*>(&::Common::MsgMarker::default_instance());
+  date_ = const_cast< ::Common::MsgDateTime*>(&::Common::MsgDateTime::default_instance());
 }
 
 MsgMarkerCreation::MsgMarkerCreation(const MsgMarkerCreation& from) {
@@ -7762,6 +7766,7 @@ void MsgMarkerCreation::SharedCtor() {
   _cached_size_ = 0;
   marker_ = NULL;
   definition_ = NULL;
+  date_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -7773,6 +7778,7 @@ void MsgMarkerCreation::SharedDtor() {
   if (this != default_instance_) {
     delete marker_;
     delete definition_;
+    delete date_;
   }
 }
 
@@ -7798,6 +7804,9 @@ void MsgMarkerCreation::Clear() {
     }
     if (_has_bit(1)) {
       if (definition_ != NULL) definition_->::Common::MsgMarker::Clear();
+    }
+    if (_has_bit(2)) {
+      if (date_ != NULL) date_->::Common::MsgDateTime::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -7831,6 +7840,19 @@ bool MsgMarkerCreation::MergePartialFromCodedStream(
        parse_definition:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_definition()));
+        if (input->ExpectTag(26)) goto parse_date;
+        break;
+      }
+      
+      // required .Common.MsgDateTime date = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_date:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_date()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -7871,6 +7893,12 @@ void MsgMarkerCreation::SerializeWithCachedSizes(
       2, this->definition(), output);
   }
   
+  // required .Common.MsgDateTime date = 3;
+  if (_has_bit(2)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      3, this->date(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -7891,6 +7919,13 @@ void MsgMarkerCreation::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, this->definition(), target);
+  }
+  
+  // required .Common.MsgDateTime date = 3;
+  if (_has_bit(2)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        3, this->date(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -7916,6 +7951,13 @@ int MsgMarkerCreation::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->definition());
+    }
+    
+    // required .Common.MsgDateTime date = 3;
+    if (has_date()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->date());
     }
     
   }
@@ -7949,6 +7991,9 @@ void MsgMarkerCreation::MergeFrom(const MsgMarkerCreation& from) {
     if (from._has_bit(1)) {
       mutable_definition()->::Common::MsgMarker::MergeFrom(from.definition());
     }
+    if (from._has_bit(2)) {
+      mutable_date()->::Common::MsgDateTime::MergeFrom(from.date());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -7966,13 +8011,16 @@ void MsgMarkerCreation::CopyFrom(const MsgMarkerCreation& from) {
 }
 
 bool MsgMarkerCreation::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
   
   if (has_marker()) {
     if (!this->marker().IsInitialized()) return false;
   }
   if (has_definition()) {
     if (!this->definition().IsInitialized()) return false;
+  }
+  if (has_date()) {
+    if (!this->date().IsInitialized()) return false;
   }
   return true;
 }
@@ -7981,6 +8029,7 @@ void MsgMarkerCreation::Swap(MsgMarkerCreation* other) {
   if (other != this) {
     std::swap(marker_, other->marker_);
     std::swap(definition_, other->definition_);
+    std::swap(date_, other->date_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
