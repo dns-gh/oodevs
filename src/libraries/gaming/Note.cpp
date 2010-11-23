@@ -127,20 +127,3 @@ QString Note::GetNumber() const
     return noteNumber_.c_str();
 }
 
-// -----------------------------------------------------------------------------
-// Name: Note::GetCreationTime
-// Created: HBD 2010-02-24
-// -----------------------------------------------------------------------------
-const std::string& Note::GetCreationTime() const
-{
-    return creationTime_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Note::GetLastUpdateTime
-// Created: HBD 2010-02-24
-// -----------------------------------------------------------------------------
-const std::string& Note::GetLastUpdateTime() const
-{
-    return lastUpdateTime_;
-}

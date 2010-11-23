@@ -155,9 +155,9 @@ void NoteDialog::SetUpdate( const Note& note )
     update_ = true;
     note_ = note.GetParent();
     noteId_  = note.GetId();
-    textDesc_->setText(note.GetDesc());
-    textId_->setText(note.GetNumber());
-    textName_->setText(note.GetName());
+    textDesc_->setText( note.GetDesc() );
+    textId_->setText( note.GetNumber() ) ;
+    textName_->setText( note.GetName() );
 }
 
 // -----------------------------------------------------------------------------

@@ -42,8 +42,6 @@ public:
     QString      GetNumber() const;
     unsigned int GetId() const;
     unsigned int GetParent() const;
-    const std::string&  GetCreationTime() const;
-    const std::string&  GetLastUpdateTime() const;
 
     //@}
 
