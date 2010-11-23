@@ -73,7 +73,7 @@ elseif switch_1 == eFinMission then
                                                         do
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
-                                                                self:SendFeedback( eActionEffectuee )
+                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 
@@ -93,7 +93,7 @@ self.done_BEH_Dep_Pion_AIR_SePoser = function( self, _, v ) self.eEtat = v[1] en
     end,
 
     destroy = function( self )
-                F_Pion_SetobjectifEsquive( myself, 0 )
+                F_Pion_SetobjectifEsquive( myself, nil )
     end,
 
 }
