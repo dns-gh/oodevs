@@ -34,7 +34,8 @@ BOOST_AUTO_TEST_CASE( TestComputePolygonHull )
     input.Add( Point6 );
     input.Add( Point7 );
     input.Add( Point8 );
-    geometry::Polygon2f output = MIL_Geometry::ComputeHull( input );
+    geometry::Polygon2f output;
+    MIL_Geometry::ComputeHull( output, input );
 
     geometry::Polygon2f result;
     result.Add( Point2 );
@@ -62,7 +63,8 @@ BOOST_AUTO_TEST_CASE( TestComputePolygonScale )
     input.Add( Point3 );
     input.Add( Point4 );
     input.Add( Point5 );
-    geometry::Polygon2f output = MIL_Geometry::Scale( input, 10.f );
+    geometry::Polygon2f output;
+    MIL_Geometry::Scale( output, input, 10.f );
     geometry::Polygon2f result;
     geometry::Point2f Point6( -20, 0 );
     geometry::Point2f Point7( 0, 20 );

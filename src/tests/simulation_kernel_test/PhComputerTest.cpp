@@ -20,7 +20,6 @@
 #include "Entities/Objects/MIL_ObjectLoader.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Fixture.h"
-#include "UrbanModel.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockAgent.h"
 #include "MockRoleInterface_Posture.h"

@@ -24,7 +24,6 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
-#include "UrbanModel.h"
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -102,7 +101,6 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     std::auto_ptr< MIL_KnowledgeGroup > group2( CreateKnowledgeGroup( army, *armyGroup, 3, "GTIA" ) );
     MockNET_Publisher_ABC mockPublisher;
     MOCK_EXPECT( mockPublisher, Send ).once();
-    UrbanModel urbanModel; // (needed for the blackboard through singleton...)
     DEC_KnowledgeBlackBoard_Army blackboard( army );
     MOCK_EXPECT( army, GetKnowledge ).returns( boost::ref( blackboard ) );
     MockAgentWithPerceiver jammedAgent;
@@ -232,7 +230,6 @@ BOOST_AUTO_TEST_CASE( TestLatentRelevance )
     MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     std::auto_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1 ) );
     std::auto_ptr< MIL_KnowledgeGroup > knowledgeGroup   ( CreateKnowledgeGroup( army, *armyGroup, 2, "GTIA" ) );
-    UrbanModel urbanModel; // (needed for the blackboard through singleton...)
     DEC_KnowledgeBlackBoard_Army blackboard( army );
     MOCK_EXPECT( army, GetKnowledge ).returns( boost::ref( blackboard ) );
     MockAgentWithPerceiver mockAgent;

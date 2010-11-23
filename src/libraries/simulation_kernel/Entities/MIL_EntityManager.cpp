@@ -11,6 +11,18 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_EntityManager.h"
+#include "AgentFactory.h"
+#include "ArmyFactory.h"
+#include "AutomateFactory.h"
+#include "FormationFactory.h"
+#include "MIL_Army.h"
+#include "MIL_Formation.h"
+#include "MIL_Singletons.h"
+#include "PopulationFactory.h"
+#include "PHY_ResourceNetworkType.h"
+#include "UrbanType.h"
+#include "Agents/MIL_AgentTypePion.h"
+#include "Agents/MIL_AgentPion.h"
 #include "Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Agents/Units/Categories/PHY_NatureAtlas.h"
@@ -51,18 +63,17 @@
 #include "Agents/Perceptions/PHY_PerceptionRecoSurveillance.h"
 #include "Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Agents/MIL_AgentTypePion.h"
-#include "Agents/MIL_AgentPion.h"
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
+#include "Decision/DEC_Workspace.h"
 #include "Effects/MIL_EffectManager.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "hla/HLA_Federate.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/KnowledgeGroupFactory.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
-#include "MIL_Army.h"
-#include "MIL_Formation.h"
-#include "MIL_Singletons.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Objects/MIL_FireClass.h"
@@ -76,18 +87,6 @@
 #include "Populations/MIL_PopulationType.h"
 #include "Populations/MIL_PopulationAttitude.h"
 #include "Populations/MIL_Population.h"
-#include "simulation_kernel/Decision/DEC_Workspace.h"
-#include "simulation_kernel/AgentFactory.h"
-#include "simulation_kernel/ArmyFactory.h"
-#include "simulation_kernel/AutomateFactory.h"
-#include "simulation_kernel/FormationFactory.h"
-#include "simulation_kernel/PopulationFactory.h"
-#include "simulation_kernel/Knowledge/KnowledgeGroupFactory.h"
-#include "simulation_kernel/Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
-#include "simulation_kernel/Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "simulation_kernel/PHY_ResourceNetworkType.h"
-#include "simulation_kernel/UrbanModel.h"
-#include "simulation_kernel/UrbanType.h"
 #include "tools/MIL_IDManager.h"
 #include "tools/MIL_ProfilerMgr.h"
 #include "tools/MIL_Tools.h"
@@ -95,6 +94,7 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/protocol.h"
+#include <urban/Model.h>
 #include <urban/ObjectVisitor_ABC.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
@@ -283,25 +283,28 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     UpdateStates();
 }
 
-class MIL_EntityManager::UrbanWrapperVisitor : public urban::ObjectVisitor_ABC
+namespace 
 {
-public:
-    UrbanWrapperVisitor( MIL_EntityManager& manager ) : manager_( manager )
-    {}
-    ~UrbanWrapperVisitor(){}
-    virtual void Visit( const urban::TerrainObject_ABC& object )
+    class UrbanWrapperVisitor : public urban::ObjectVisitor_ABC
     {
-        manager_.CreateUrbanObject( object );
-    }
-private:
-    MIL_EntityManager& manager_;
-};
+    public:
+        UrbanWrapperVisitor( MIL_EntityManager& manager ) : manager_( manager )
+        {}
+        ~UrbanWrapperVisitor(){}
+        virtual void Visit( const urban::TerrainObject_ABC& object )
+        {
+            manager_.CreateUrbanObject( object );
+        }
+    private:
+        MIL_EntityManager& manager_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::CreateUrbanObjects
 // Created: SLG 2010-06-23
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateUrbanObjects( UrbanModel& urbanModel, const MIL_Config& config )
+void MIL_EntityManager::CreateUrbanObjects( urban::Model& urbanModel, const MIL_Config& config )
 {
     UrbanWrapperVisitor visitor( *this );
     urbanModel.Accept( visitor );

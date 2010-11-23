@@ -9,9 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectManipulator.h"
+#include "MIL_AgentServer.h"
 #include "ResourceNetworkCapacity.h"
 #include "StructuralCapacity.h"
-#include "UrbanModel.h"
 #include "UrbanObjectWrapper.h"
 #include "UrbanType.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -29,6 +29,7 @@
 #include <urban/Architecture.h>
 #include <urban/ColorAttribute.h>
 #include <urban/GeometryAttribute.h>
+#include <urban/Model.h>
 #include <urban/ResourceNetworkAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/StaticModel.h>
@@ -111,7 +112,7 @@ void UrbanObjectWrapper::load( MIL_CheckPointInArchive& file, const unsigned int
     file >> boost::serialization::base_object< MIL_Object_ABC >( *this );
     file >> id_
          >> urbanId;
-    object_ = UrbanModel::GetSingleton().FindUrbanObject( urbanId );
+    object_ = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( urbanId );
     T_Capacities capacities;
     file >> capacities;
     std::for_each( capacities.begin(), capacities.end(), boost::bind( &ObjectCapacity_ABC::Register, _1, boost::ref( *this ) ) );

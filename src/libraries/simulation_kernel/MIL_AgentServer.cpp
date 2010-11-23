@@ -4,7 +4,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentServer.h"
-#include "UrbanModel.h"
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Workspace.h"
@@ -22,8 +21,11 @@
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/filesystem/path.hpp>
 #include <tools/thread/Thread.h>
 #include <tools/win32/ProcessMonitor.h>
+#include <urban/model.h>
+#include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.hpp>
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
@@ -51,7 +53,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pCheckPointManager_   ( 0 )
     , pAgentServer_         ( 0 )
     , pFederate_            ( 0 )
-    , pUrbanModel_          ( new UrbanModel() )
+    , pUrbanModel_          ( new urban::Model() )
     , pResourceTools_       ( new ResourceTools() )
     , pResourceNetworkModel_( new resource::ResourceNetworkModel() )
     , pProcessMonitor_      ( new ProcessMonitor() )
@@ -61,7 +63,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     pTheAgentServer_ = this;
     config_.AddFileToCRC( config_.GetExerciseFile() );
     ReadStaticData();
-    pUrbanModel_->ReadUrbanModel( config_ );
+    ReadUrbanModel();
     if( config_.HasCheckpoint() )
         pCheckPointManager_->LoadCheckPoint( config_ );
     else
@@ -127,6 +129,28 @@ void MIL_AgentServer::ReadStaticData()
     if( !config_.IsDataTestMode() )
         pPathFindManager_ = new DEC_PathFind_Manager( config_ );
     ReadHLA();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::ReadUrbanModel
+// Created: JSR 2010-11-22
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::ReadUrbanModel()
+{
+    MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
+    MT_LOG_STARTUP_MESSAGE( "----  Loading UrbanModel    ----" );
+    MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
+    std::string directoryPath = boost::filesystem::path( config_.GetTerrainFile() ).branch_path().string();
+    try
+    {
+         MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) )
+         urban::WorldParameters world( directoryPath );
+         pUrbanModel_->Load( directoryPath, world );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Exception in loading Urban Model caught : " << e.what() );
+    }
 }
 
 //-----------------------------------------------------------------------------

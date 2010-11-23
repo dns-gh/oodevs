@@ -200,7 +200,7 @@ MIL_EntityManager& MIL_AgentServer::GetEntityManager() const
 // Created: SLG 2009-10-11
 // -----------------------------------------------------------------------------
 inline
-UrbanModel& MIL_AgentServer::GetUrbanModel() const
+urban::Model& MIL_AgentServer::GetUrbanModel() const
 {
     assert( pUrbanModel_ );
     return *pUrbanModel_;
@@ -263,3 +263,14 @@ void MIL_AgentServer::DestroyWorkspace()
         pTheAgentServer_ = 0;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::IsInitialized
+// Created: JSR 2010-11-22
+// -----------------------------------------------------------------------------
+inline
+bool MIL_AgentServer::IsInitialized()
+{
+    return pTheAgentServer_ != 0;
+}
+

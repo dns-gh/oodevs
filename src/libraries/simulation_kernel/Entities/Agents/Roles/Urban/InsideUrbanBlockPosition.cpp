@@ -15,11 +15,9 @@
 #include "UrbanLocationComputer_ABC.h"
 #include "UrbanLocationComputerFactory_ABC.h"
 #include "UrbanType.h"
-#include "UrbanModel.h"
 #include "tools/MIL_Geometry.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include <urban/TerrainObject_ABC.h>
-#include <urban/Model.h>
 #include <urban/Architecture.h>
 #include <urban/MaterialCompositionType.h>
 #include <urban/StaticModel.h>
@@ -93,13 +91,13 @@ geometry::Point2f InsideUrbanBlockPosition::GetTargetPosition(MIL_Agent_ABC& fir
 // Name: InsideUrbanBlockPosition::GetNearestUrbanBlockPoint
 // Created: SLG 2010-04-13
 // -----------------------------------------------------------------------------
-geometry::Point2f InsideUrbanBlockPosition::GetNearestUrbanBlockPoint( const geometry::Point2f pionPosition, const std::vector< geometry::Point2f > points ) const
+geometry::Point2f InsideUrbanBlockPosition::GetNearestUrbanBlockPoint( const geometry::Point2f& pionPosition, const std::vector< geometry::Point2f >& points ) const
 {
     geometry::Point2f nearestPosition;
     float distance = std::numeric_limits< float >::max();
     for( std::vector< geometry::Point2f >::const_iterator it = points.begin(); it != points.end(); ++it )
     {
-        float distanceTemp = (*it).Distance( pionPosition );
+        float distanceTemp = ( *it ).Distance( pionPosition );
         if( distanceTemp < distance )
         {
             distance = distanceTemp;
@@ -113,13 +111,13 @@ geometry::Point2f InsideUrbanBlockPosition::GetNearestUrbanBlockPoint( const geo
 // Name: InsideUrbanBlockPosition::GetFurthestUrbanBlockPoint
 // Created: SLG 2010-04-13
 // -----------------------------------------------------------------------------
-geometry::Point2f InsideUrbanBlockPosition::GetFurthestUrbanBlockPoint( const geometry::Point2f pionPosition, const std::vector< geometry::Point2f > points ) const
+geometry::Point2f InsideUrbanBlockPosition::GetFurthestUrbanBlockPoint( const geometry::Point2f& pionPosition, const std::vector< geometry::Point2f >& points ) const
 {
     geometry::Point2f furthestPosition;
     float distance = 0;
     for( std::vector< geometry::Point2f >::const_iterator it = points.begin(); it != points.end(); ++it )
     {
-        float distanceTemp = (*it).Distance( pionPosition );
+        float distanceTemp = ( *it ).Distance( pionPosition );
         if( distanceTemp > distance )
         {
             distance = distanceTemp;
@@ -137,37 +135,33 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
 {
     std::vector< bg::point_xy< double > > ellipseKeyPoints;
     bg::polygon< bg::point_xy< double > > attritionPolygon;
-    ellipseKeyPoints.push_back( bg::point_xy< double >( attritionSurface.GetMajorAxisHighPoint().rX_ + attritionSurface.GetMinorAxisHighPoint().rX_ - attritionSurface.GetCenter().rX_,
-        attritionSurface.GetMajorAxisHighPoint().rY_ + attritionSurface.GetMinorAxisHighPoint().rY_ - attritionSurface.GetCenter().rY_ ) );
-    ellipseKeyPoints.push_back( bg::point_xy< double >(attritionSurface.GetMajorAxisHighPoint().rX_ - attritionSurface.GetMinorAxisHighPoint().rX_ + attritionSurface.GetCenter().rX_,
-        attritionSurface.GetMajorAxisHighPoint().rY_ - attritionSurface.GetMinorAxisHighPoint().rY_ + attritionSurface.GetCenter().rY_ ) ) ;
-    ellipseKeyPoints.push_back( bg::point_xy< double >( 3 * attritionSurface.GetCenter().rX_ - attritionSurface.GetMajorAxisHighPoint().rX_ - attritionSurface.GetMinorAxisHighPoint().rX_,
-        3 * attritionSurface.GetCenter().rY_ - attritionSurface.GetMajorAxisHighPoint().rY_ - attritionSurface.GetMinorAxisHighPoint().rY_ ) );
-    ellipseKeyPoints.push_back( bg::point_xy< double >( attritionSurface.GetCenter().rX_ - attritionSurface.GetMajorAxisHighPoint().rX_ + attritionSurface.GetMinorAxisHighPoint().rX_,
-        attritionSurface.GetCenter().rY_ - attritionSurface.GetMajorAxisHighPoint().rY_ + attritionSurface.GetMinorAxisHighPoint().rY_ ) );
+    MT_Vector2D major = attritionSurface.GetMajorAxisHighPoint();
+    MT_Vector2D minor = attritionSurface.GetMinorAxisHighPoint();
+    MT_Vector2D center = attritionSurface.GetCenter();
+    ellipseKeyPoints.push_back( bg::point_xy< double >( major.rX_ + minor.rX_ - center.rX_, major.rY_ + minor.rY_ - center.rY_ ) );
+    ellipseKeyPoints.push_back( bg::point_xy< double >( major.rX_ - minor.rX_ + center.rX_, major.rY_ - minor.rY_ + center.rY_ ) ) ;
+    ellipseKeyPoints.push_back( bg::point_xy< double >( 3 * center.rX_ - major.rX_ - minor.rX_, 3 * center.rY_ - major.rY_ - minor.rY_ ) );
+    ellipseKeyPoints.push_back( bg::point_xy< double >( center.rX_ - major.rX_ + minor.rX_, center.rY_ - major.rY_ + minor.rY_ ) );
     bg::assign( attritionPolygon, ellipseKeyPoints );
     bg::correct( attritionPolygon );
 
-    geometry::Polygon2f::T_Vertices urbanBlockVertices = urbanObject_->GetFootprint()->Vertices();
+    const geometry::Polygon2f::T_Vertices& urbanBlockVertices = urbanObject_->GetFootprint()->Vertices();
     bg::polygon< bg::point_xy< double > > blockGeometry;
     std::vector< bg::point_xy< double > > vectorTemp;
-    for ( geometry::Polygon2f::CIT_Vertices it = urbanBlockVertices.begin(); it != urbanBlockVertices.end(); ++it )
+    for( geometry::Polygon2f::CIT_Vertices it = urbanBlockVertices.begin(); it != urbanBlockVertices.end(); ++it )
     {
         bg::point_xy< double > p( it->X(), it->Y() );
         vectorTemp.push_back( p );
-
     }
     bg::assign( blockGeometry, vectorTemp );
     bg::correct( blockGeometry );
 
     std::vector< bg::polygon< bg::point_xy< double > > > polygonResult;
-    bg::intersection_inserter<boost::geometry::polygon< bg::point_xy< double > > >(attritionPolygon, blockGeometry, std::back_inserter( polygonResult ) );
+    bg::intersection_inserter< boost::geometry::polygon< bg::point_xy< double > > >(attritionPolygon, blockGeometry, std::back_inserter( polygonResult ) );
     double intersectArea = 0;
     for( std::vector< bg::polygon< bg::point_xy< double > > >::const_iterator it = polygonResult.begin(); it != polygonResult.end(); ++it  )
-    {
         intersectArea += area( *it );
-    }
-    return float( ( intersectArea / ( urbanObject_->GetFootprint()->ComputeArea() ) ) * result.urbanDeployment_ );
+    return static_cast< float >( ( intersectArea / ( urbanObject_->GetFootprint()->ComputeArea() ) ) * result.urbanDeployment_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,8 +195,8 @@ double InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCateg
     const urban::Architecture* architecture = urbanObject_->Retrieve< urban::Architecture >();
     if( architecture )
     {
-        unsigned materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();
-        return ( 1 - dotationCategory.GetUrbanAttritionModifer( materialID ) ) * ( architecture->GetOccupation() );
+        unsigned int materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();
+        return ( 1 - dotationCategory.GetUrbanAttritionModifer( materialID ) ) * architecture->GetOccupation();
     }
     return 0.;
 }

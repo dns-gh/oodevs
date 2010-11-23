@@ -40,7 +40,6 @@
 #include "simulation_terrain/TER_World.h"
 #include "DotationComputer_ABC.h"
 #include "WeaponAvailabilityComputer_ABC.h"
-#include "UrbanModel.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -139,7 +138,6 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         MOCK_EXPECT( urbanRole, ComputeRatioPionInsideEllipse ).once().returns( 1.f );
         MOCK_EXPECT( composanteRole, ApplyIndirectFire ).once();
         MOCK_EXPECT( mockArmy, IsAFriend ).once().returns( eTristate_False );
-        UrbanModel urbanModel;
         effectManager.Update();
         entityManager.verify();
         PHY_IndirectFireDotationClass::Terminate();

@@ -15,13 +15,9 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "UrbanModel.h"
 #include "protocol/protocol.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
-#include <urban/Architecture.h>
-#include <urban/Model.h>
-#include <urban/TerrainObject_ABC.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathWalker constructor
@@ -39,7 +35,7 @@ DEC_PathWalker::DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity )
     , bForcePathCheck_   ( true )
     , bHasMoved_         ( false )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

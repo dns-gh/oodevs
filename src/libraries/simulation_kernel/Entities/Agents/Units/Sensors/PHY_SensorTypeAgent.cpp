@@ -11,6 +11,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_SensorTypeAgent.h"
+#include "AlgorithmsFactories.h"
+#include "DetectionComputerFactory_ABC.h"
+#include "PerceptionDistanceComputer_ABC.h"
+#include "UrbanType.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -29,13 +33,8 @@
 #include "Meteo/PHY_Precipitation.h"
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Simulation_kernel/UrbanModel.h"
-#include "Simulation_kernel/UrbanType.h"
 #include "tools/MIL_Tools.h"
 #include "tools/Resolver.h"
-#include "AlgorithmsFactories.h"
-#include "DetectionComputerFactory_ABC.h"
-#include "PerceptionDistanceComputer_ABC.h"
 #include <geometry/Types.h>
 #include <urban/Architecture.h>
 #include <urban/TerrainObject_ABC.h>
@@ -505,7 +504,7 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
     geometry::Point2f vTargetPoint( static_cast< float >( vTarget.rX_ ), static_cast< float >( vTarget.rY_ ) );
 
     std::set< const urban::TerrainObject_ABC* > list;
-    UrbanModel::GetSingleton().GetModel().GetListWithinSegment( vSourcePoint, vTargetPoint, list );
+    MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinSegment( vSourcePoint, vTargetPoint, list );
 
     if( !list.empty() )
     {

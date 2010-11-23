@@ -35,9 +35,9 @@ public:
 
     //! @name Operations
     //@{
-    template< typename T > static geometry::Polygon2< T > Scale( geometry::Polygon2< T > polygon, T distance );
-    template< typename T > static geometry::Polygon2< T > ComputeHull( geometry::Polygon2< T > polygon );
-    template< typename T > static T IntersectionArea( const geometry::Polygon2< T > polygon1, const geometry::Polygon2< T > polygon2 );
+    template< typename T > static void Scale( geometry::Polygon2< T >& result, const geometry::Polygon2< T >& polygon, T distance );
+    template< typename T > static void ComputeHull( geometry::Polygon2< T >& result, const geometry::Polygon2< T >& polygon );
+    template< typename T > static T IntersectionArea( const geometry::Polygon2< T > &polygon1, const geometry::Polygon2< T >& polygon2 );
     //@}
 
 private:
@@ -49,7 +49,7 @@ private:
 
     //! @name Helpers
     //@{
-    template< typename T > static bool FindOuterPoint( const std::vector< geometry::Point2< T > > vertices, const geometry::Point2< T >& from, const geometry::Vector2< T >& direction, geometry::Point2< T >& worst );
+    template< typename T > static bool FindOuterPoint( const typename geometry::Polygon2< T >::T_Vertices& vertices, const geometry::Point2< T >& from, const geometry::Vector2< T >& direction, geometry::Point2< T >& worst );
     //@}
 };
 
@@ -58,19 +58,17 @@ private:
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
 template< typename T >
-geometry::Polygon2< T > MIL_Geometry::Scale( geometry::Polygon2< T > polygon, T distance )
+void MIL_Geometry::Scale( geometry::Polygon2< T >& result, const geometry::Polygon2< T >& polygon, T distance )
 {
-    geometry::Polygon2< T > hull   = ComputeHull( polygon );
+    geometry::Polygon2< T > hull;
+    ComputeHull( hull, polygon );
     geometry::Point2< T > barycenter = hull.Barycenter();
-    const std::vector< geometry::Point2< T > > vertices = hull.Vertices();
-    geometry::Polygon2< T > result;
+    const std::vector< geometry::Point2< T > >& vertices = hull.Vertices();
     for( std::vector< geometry::Point2< T > >::const_iterator it = vertices.begin(); it != vertices.end(); ++it )
     {
         geometry::Vector2< T > scaleVector( *it, barycenter );
-        geometry::Vector2< T > scaleVector2 = scaleVector.Normalized();
-        result.Add( barycenter + scaleVector + scaleVector2 * distance );
+        result.Add( barycenter + scaleVector + scaleVector.Normalized() * distance );
     }
-    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,22 +76,21 @@ geometry::Polygon2< T > MIL_Geometry::Scale( geometry::Polygon2< T > polygon, T 
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
 template< typename T >
-geometry::Polygon2< T > MIL_Geometry::ComputeHull( geometry::Polygon2< T > polygon )
+void MIL_Geometry::ComputeHull( geometry::Polygon2< T >& result, const geometry::Polygon2< T >& polygon )
 {
-    const std::vector< geometry::Point2< T > > vertices = polygon.Vertices();
-    geometry::Point2< T > maxLeft = *( vertices.begin() );
-    geometry::Point2< T > maxRight = *( vertices.begin() );
+    const geometry::Polygon2< T >::T_Vertices& vertices = polygon.Vertices();
+    std::vector< geometry::Point2< T > >::const_iterator maxLeft = vertices.begin();
+    std::vector< geometry::Point2< T > >::const_iterator maxRight = vertices.begin();
     for( std::vector< geometry::Point2< T > >::const_iterator it = vertices.begin(); it != vertices.end() ; ++it )
     {
-        if( it->X() < maxLeft.X() )
-            maxLeft = *it;
-        if( it->X() > maxRight.X() )
-            maxRight = *it;
+        if( it->X() < maxLeft->X() )
+            maxLeft = it;
+        if( it->X() > maxRight->X() )
+            maxRight = it;
     }
     std::vector< geometry::Point2< T > > hull;
-    hull.resize( 0 );
-    hull.push_back( maxLeft );
-    hull.push_back( maxRight );
+    hull.push_back( *maxLeft );
+    hull.push_back( *maxRight );
     unsigned int nPoint = 0;
     while( nPoint != hull.size() )
     {
@@ -109,22 +106,21 @@ geometry::Polygon2< T > MIL_Geometry::ComputeHull( geometry::Polygon2< T > polyg
         else
             ++nPoint;
     }
-    return geometry::Polygon2< T >( hull );
+    result = geometry::Polygon2< T >( hull );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Geometry::ComputeHull
+// Name: MIL_Geometry::FindOuterPoint
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
 template< typename T >
-bool MIL_Geometry::FindOuterPoint( const std::vector< geometry::Point2< T > > vertices, const geometry::Point2< T >& from, const geometry::Vector2< T >& direction, geometry::Point2< T >& worst )
+bool MIL_Geometry::FindOuterPoint( const typename geometry::Polygon2< T >::T_Vertices& vertices, const geometry::Point2< T >& from, const geometry::Vector2< T >& direction, geometry::Point2< T >& worst )
 {
     bool bFound = false;
     float rMaxProjection = 0;
-    for( std::vector< geometry::Point2< T > >::const_iterator it = vertices.begin(); it != vertices.end(); ++it )
+    for( geometry::Polygon2< T >::T_Vertices::const_iterator it = vertices.begin(); it != vertices.end(); ++it )
     {
-        const geometry::Vector2< T > v( from, *it );
-        const float rProjection = direction.CrossProduct( v );
+        const float rProjection = direction.CrossProduct( geometry::Vector2< T >( from, *it ) );
         if( rProjection < -1 ) // epsilon
         {
             bFound = true;
@@ -143,29 +139,23 @@ bool MIL_Geometry::FindOuterPoint( const std::vector< geometry::Point2< T > > ve
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
 template< typename T >
-T MIL_Geometry::IntersectionArea( const geometry::Polygon2< T > polygon1, const geometry::Polygon2< T > polygon2 )
+T MIL_Geometry::IntersectionArea( const geometry::Polygon2< T >& polygon1, const geometry::Polygon2< T >& polygon2 )
 {
     bg::polygon< bg::point_xy< T > > poly1;
     bg::polygon< bg::point_xy< T > > poly2;
     {
-        geometry::Polygon2< T >::T_Vertices vertices1 = polygon1.Vertices();
+        const geometry::Polygon2< T >::T_Vertices& vertices1 = polygon1.Vertices();
         std::vector< bg::point_xy< T > > vectorTemp;
         for( geometry::Polygon2< T >::CIT_Vertices it = vertices1.begin(); it != vertices1.end(); ++it )
-        {
-            bg::point_xy< T > p( it->X(), it->Y() );
-            vectorTemp.push_back( p );
-        }
+            vectorTemp.push_back( bg::point_xy< T >( it->X(), it->Y() ) );
         bg::assign( poly1, vectorTemp );
         bg::correct( poly1 );
     }
     {
-        geometry::Polygon2< T >::T_Vertices vertices2 = polygon2.Vertices();
+        const geometry::Polygon2< T >::T_Vertices& vertices2 = polygon2.Vertices();
         std::vector< bg::point_xy< T > > vectorTemp;
         for( geometry::Polygon2< T >::CIT_Vertices it = vertices2.begin(); it != vertices2.end(); ++it )
-        {
-            bg::point_xy< T > p( it->X(), it->Y() );
-            vectorTemp.push_back( p );
-        }
+            vectorTemp.push_back( bg::point_xy< T >( it->X(), it->Y() ) );
         bg::assign( poly2, vectorTemp );
         bg::correct( poly2 );
     }
@@ -173,7 +163,7 @@ T MIL_Geometry::IntersectionArea( const geometry::Polygon2< T > polygon1, const 
     bg::intersection_inserter< bg::polygon< bg::point_xy< T > > >( poly2, poly1, std::back_inserter( polygonResult ) );
     T intersectArea = 0;
     for( std::vector< bg::polygon< bg::point_xy< T > > >::const_iterator it = polygonResult.begin(); it != polygonResult.end(); ++it  )
-        intersectArea += float( area( *it ) );
+        intersectArea += static_cast< float >( area( *it ) );
     return intersectArea;
 }
 

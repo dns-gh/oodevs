@@ -13,9 +13,8 @@
 #include "DEC_PathResult.h"
 #include "Entities/Effects/MIL_Effect_Move.h"
 #include "MT_Tools/MT_Vector2D.h"
-#include <pathfind/TerrainData.h>
-#include <geometry/Types.h>
 #include <boost/shared_ptr.hpp>
+#include <pathfind/TerrainData.h>
 
 namespace Common
 {
@@ -28,7 +27,6 @@ namespace MsgsSimToClient
 }
 
 class MIL_Object_ABC;
-class TerrainData;
 class PHY_MovingEntity_ABC;
 
 // =============================================================================
@@ -60,20 +58,18 @@ public:
 
     //! @name Operations
     //@{
-    int  Move         ( boost::shared_ptr< DEC_PathResult > pPath );
+    int Move( boost::shared_ptr< DEC_PathResult > pPath );
     void MoveSuspended( boost::shared_ptr< DEC_PathResult > pPath );
-    void MoveCanceled ( boost::shared_ptr< DEC_PathResult > pPath );
-
+    void MoveCanceled( boost::shared_ptr< DEC_PathResult > pPath );
     void Apply(); // Called by MIL_Effect_Move
-
     void Clean();
     //@}
 
     //! @name Tools
     //@{
-    bool        ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
-    MT_Vector2D ExtrapolatePosition         ( const MT_Vector2D& position, const double rSpeed, const double rTime, const bool bBoundOnPath ) const;
-    bool        IsMovingOn                  ( const DEC_Path_ABC& path ) const;
+    bool ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
+    MT_Vector2D ExtrapolatePosition( const MT_Vector2D& position, const double rSpeed, const double rTime, const bool bBoundOnPath ) const;
+    bool IsMovingOn( const DEC_Path_ABC& path ) const;
     //@}
 
     //! @name Network
@@ -86,7 +82,7 @@ private:
      //! @name Types
     //@{
     typedef std::set< const MIL_Object_ABC* > T_ObjectSet;
-    typedef T_ObjectSet::const_iterator CIT_ObjectSet;
+    typedef T_ObjectSet::const_iterator     CIT_ObjectSet;
 
     // Struct used to store the steps when moving from a point to another : manage the collision with the dynamic objects
     struct T_MoveStep
@@ -119,8 +115,8 @@ private:
     };
 
     typedef std::set< T_MoveStep, sMoveStepCmp > T_MoveStepSet;
-    typedef T_MoveStepSet::iterator              IT_MoveStepSet;
-    typedef T_MoveStepSet::const_iterator        CIT_MoveStepSet;
+    typedef T_MoveStepSet::iterator             IT_MoveStepSet;
+    typedef T_MoveStepSet::const_iterator      CIT_MoveStepSet;
     //@}
 
 private:
@@ -132,35 +128,33 @@ private:
 
     //! @name Tools
     //@{
-    bool TryToMoveToNextStep        ( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining, bool bFirstMove );
-    bool TryToMoveTo                ( const DEC_PathResult& path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining );
-    void ComputeObjectsCollision    ( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet );
-    void ComputeCurrentSpeed        ();
-    void InitializeEnvironment      ( const DEC_PathResult& path );
-    bool GoToNextNavPoint           ( const DEC_PathResult& path );
-    bool SetCurrentPath             ( boost::shared_ptr< DEC_PathResult > pPath );
+    bool TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining, bool bFirstMove );
+    bool TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining );
+    void ComputeObjectsCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet );
+    void ComputeCurrentSpeed();
+    void InitializeEnvironment( const DEC_PathResult& path );
+    bool GoToNextNavPoint( const DEC_PathResult& path );
+    bool SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath );
      //@}
 
 private:
+    //! @name Member data
+    //@{
     PHY_MovingEntity_ABC& movingEntity_;
-
-    TerrainData                       environment_;
+    TerrainData environment_;
     DEC_PathResult::CIT_PathPointList itNextPathPoint_;
     DEC_PathResult::CIT_PathPointList itCurrentPathPoint_;
-
     // Effect
     MIL_Effect_Move effectMove_;
-    MT_Vector2D     vNewPos_;
-    MT_Vector2D     vNewDir_;
-    double        rCurrentSpeed_;
-    double        rWalkedDistance_;
-
-    bool            bForcePathCheck_;
-    bool            bHasMoved_;
-
+    MT_Vector2D vNewPos_;
+    MT_Vector2D vNewDir_;
+    double rCurrentSpeed_;
+    double rWalkedDistance_;
+    bool bForcePathCheck_;
+    bool bHasMoved_;
     boost::shared_ptr< DEC_PathResult > pCurrentPath_;
+    //@}
 };
-
 
 #include "DEC_PathWalker.inl"
 

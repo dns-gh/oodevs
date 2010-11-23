@@ -16,7 +16,6 @@
 #include "OnComponentComputer_ABC.h"
 #include "OnComponentFunctorComputerFactory_ABC.h"
 #include "OnComponentFunctor_ABC.h"
-#include "UrbanModel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
@@ -50,7 +49,6 @@
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
-#include "simulation_kernel/UrbanModel.h"
 #include "tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
 

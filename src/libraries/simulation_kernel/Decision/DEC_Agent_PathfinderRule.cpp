@@ -16,7 +16,6 @@
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/PHY_MeteoDataManager.h"
-#include "UrbanModel.h"
 #include <urban/Model.h>
 
 // -----------------------------------------------------------------------------
@@ -130,13 +129,15 @@ double DEC_Agent_PathfinderRule::GetDangerDirectionCost( const MT_Vector2D& to )
     return 0.;
 }
 
+#define VECTOR_TO_POINT( point ) geometry::Point2f( static_cast< float >( ( point ).rX_ ), static_cast< float >( ( point ).rY_ ) )
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::GetUrbanBlockCost
 // Created: RPD 2009-11-20
 // -----------------------------------------------------------------------------
 double DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
-    return MIL_AgentServer::GetWorkspace().GetUrbanModel().GetUrbanBlockCost( path_.GetUnitMajorWeight(), from, to );
+    return MIL_AgentServer::GetWorkspace().GetUrbanModel().GetUrbanBlockCost( static_cast< float >( path_.GetUnitMajorWeight() ), VECTOR_TO_POINT( from ), VECTOR_TO_POINT( to ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -12,10 +12,11 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_ABC.h"
-#include "UrbanModel.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "tools/MIL_IDManager.h"
+#include <urban/model.h>
 #include <urban/TerrainObject_ABC.h>
 
 namespace urban
@@ -112,7 +113,7 @@ inline void load_construct_data( Archive& archive, DEC_Knowledge_UrbanPerception
     unsigned long id;
     archive >> perceiver
             >> id;
-    const urban::TerrainObject_ABC* object = UrbanModel::GetSingleton().FindUrbanObject( id );
+    const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( id );
     if( object )
         ::new( perception )DEC_Knowledge_UrbanPerception( *perceiver, *object );
 }

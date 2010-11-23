@@ -16,6 +16,7 @@
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include <urban/Architecture.h>
+#include <urban/Model.h>
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Urban )
@@ -87,7 +88,7 @@ void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const unsigned in
 
     unsigned long urbanId;
     file >> urbanId;
-    object_ = UrbanModel::GetSingleton().FindUrbanObject( urbanId );
+    object_ = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( urbanId );
 
     file >> const_cast< MIL_Army_ABC*& >( army_ );
 

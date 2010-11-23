@@ -31,29 +31,30 @@ public:
     //@{
     struct Distances
     {
-        Distances():identificationDist( 0 ), recognitionDist( 0 ), detectionDist( 0 ){}
-        double identificationDist;
-        double recognitionDist;
-        double detectionDist;
+        Distances() : identificationDist_( 0 ), recognitionDist_( 0 ), detectionDist_( 0 ) {}
+        double identificationDist_;
+        double recognitionDist_;
+        double detectionDist_;
 
     };
     struct Polygons
     {
-        geometry::Polygon2f identificationPolygon;
-        geometry::Polygon2f recognitionPolygon;
-        geometry::Polygon2f detectionPolygon;
+        geometry::Polygon2f identificationPolygon_;
+        geometry::Polygon2f recognitionPolygon_;
+        geometry::Polygon2f detectionPolygon_;
     };
     struct BestSensorsParameters
     {
-        Distances distances;
-        unsigned int delay;
+        BestSensorsParameters() : delay_( 0 ) {}
+        Distances distances_;
+        unsigned int delay_;
     };
 //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_ZURBPerceptionComputer( const MIL_Agent_ABC& perceiver, float roll, int tick );
+             PHY_ZURBPerceptionComputer( const MIL_Agent_ABC& perceiver, float roll, unsigned int tick );
     virtual ~PHY_ZURBPerceptionComputer();
     //@}
 
@@ -71,11 +72,11 @@ private:
 
     //! @name Helpers
     //@{
-    const Polygons ComputePerceptionPolygon( const MIL_Agent_ABC& target, BestSensorsParameters& parameters ) const;
-    const BestSensorsParameters ComputeParametersPerception( const MIL_Agent_ABC& target ) const;
+    void ComputePerceptionPolygon( const MIL_Agent_ABC& target, BestSensorsParameters& parameters, Polygons& polygons ) const;
+    void ComputeParametersPerception( const MIL_Agent_ABC& target, BestSensorsParameters& parameters ) const;
     const PHY_PerceptionLevel& GetLevelWithDelay( unsigned int delay, const PHY_PerceptionLevel& level ) const;
-    geometry::Polygon2f MakePolygon( const urban::TerrainObject_ABC& block, double distance ) const;
-    geometry::Polygon2f MakePolygon( const geometry::Point2f targetPosition, double distance ) const;
+    void MakePolygon( geometry::Polygon2f& polygon, const urban::TerrainObject_ABC& block, double distance ) const;
+    void MakePolygon( geometry::Polygon2f& polygon, const geometry::Point2f& targetPosition, double distance ) const;
     //@}
 
 private:

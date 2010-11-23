@@ -15,7 +15,6 @@
 #include "MockObjectManager.h"
 #include "MockPopulationFactory.h"
 #include "simulation_kernel/ArmyFactory.h"
-#include "simulation_kernel/UrbanModel.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -30,7 +29,6 @@ BOOST_AUTO_TEST_CASE( FactoriesTest_ArmyFactory )
      MockPopulationFactory populationFactory;
      MockObjectManager objetFactory;
      MockKnowledgeGroupFactory knowledgeGroupFactory; // LTO
-     std::auto_ptr< UrbanModel > urbanModel( new UrbanModel() );
      ArmyFactory armyFactory( automateFactory, agentFactory, formationFactory, objetFactory, populationFactory, knowledgeGroupFactory /*LTO*/ );
      xml::xistringstream xis(
          "<party id='1' name='Local militia' type='enemy'>"

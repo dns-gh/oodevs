@@ -9,6 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ZURBPerceptionComputer.h"
+#include "AlgorithmsFactories.h"
+#include "MIL_AgentServer.h"
+#include "OnComponentComputer_ABC.h"
+#include "OnComponentFunctorComputerFactory_ABC.h"
+#include "OnComponentFunctor_ABC.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -21,11 +26,6 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "tools/MIL_Geometry.h"
-#include "AlgorithmsFactories.h"
-#include "OnComponentComputer_ABC.h"
-#include "OnComponentFunctorComputerFactory_ABC.h"
-#include "OnComponentFunctor_ABC.h"
-#include "UrbanModel.h"
 #include <urban/Architecture.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
@@ -35,18 +35,21 @@
 #pragma warning( pop )
 
 namespace bg = boost::geometry;
+
+#define VECTOR_TO_POINT( point ) geometry::Point2f( static_cast< float >( ( point ).rX_ ), static_cast< float >( ( point ).rY_ ) )
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ZURBPerceptionComputer constructor
 // Created: SLG 2010-04-29
 // -----------------------------------------------------------------------------
-PHY_ZURBPerceptionComputer::PHY_ZURBPerceptionComputer( const MIL_Agent_ABC& perceiver, float roll, int tick )
+PHY_ZURBPerceptionComputer::PHY_ZURBPerceptionComputer( const MIL_Agent_ABC& perceiver, float roll, unsigned int tick )
     : PHY_PerceptionComputer_ABC( perceiver )
-    , roll_( roll )
-    , tick_( tick )
-
+    , roll_                     ( roll )
+    , tick_                     ( tick )
 {
     // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ZURBPerceptionComputer destructor
 // Created: SLG 2010-04-29
@@ -63,17 +66,17 @@ PHY_ZURBPerceptionComputer::~PHY_ZURBPerceptionComputer()
 const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::ComputePerception( const MIL_Agent_ABC& target ) const
 {
     BestSensorsParameters bestSensorParameters;
-    const Polygons perceptionPolygons = ComputePerceptionPolygon( target, bestSensorParameters );
-    float identificationPercentage = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.identificationPolygon, roll_ );
-    float recognitionPercentage = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.recognitionPolygon, roll_ );
-    float detectionPercentage  = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.detectionPolygon, roll_ );
-    unsigned int delay = bestSensorParameters.delay;
+    Polygons perceptionPolygons;
+    ComputePerceptionPolygon( target, bestSensorParameters, perceptionPolygons );
+    float identificationPercentage = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.identificationPolygon_, roll_ );
+    float recognitionPercentage = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.recognitionPolygon_, roll_ );
+    float detectionPercentage  = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( perceptionPolygons.detectionPolygon_, roll_ );
     if( roll_ < identificationPercentage )
-        return GetLevelWithDelay( delay, PHY_PerceptionLevel::identified_ );
+        return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::identified_ );
     else if( roll_ < recognitionPercentage )
-        return GetLevelWithDelay( delay, PHY_PerceptionLevel::recognized_ );
+        return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::recognized_ );
     else if( roll_ < detectionPercentage )
-        return GetLevelWithDelay( delay, PHY_PerceptionLevel::detected_ );
+        return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::detected_ );
     else
         return PHY_PerceptionLevel::notSeen_;
 }
@@ -82,59 +85,52 @@ const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::ComputePerception( const 
 // Name: PHY_ZURBPerceptionComputer::ComputePerceptionPolygon
 // Created: SLG 2010-04-29
 // -----------------------------------------------------------------------------
-const PHY_ZURBPerceptionComputer::Polygons PHY_ZURBPerceptionComputer::ComputePerceptionPolygon( const MIL_Agent_ABC& target, BestSensorsParameters& sensorPerception ) const
+void PHY_ZURBPerceptionComputer::ComputePerceptionPolygon( const MIL_Agent_ABC& target, BestSensorsParameters& sensorPerception, Polygons& polygons ) const
 {
-    sensorPerception = ComputeParametersPerception( target );
-    Distances distancePerception = sensorPerception .distances;
+    ComputeParametersPerception( target, sensorPerception );
+    const Distances& distancePerception = sensorPerception.distances_;
     const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
     const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
-    Polygons returnValue;
     if( perceiverUrbanBlock && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) )
     {
-        returnValue.identificationPolygon = MakePolygon( perceiverUrbanBlock->GetObject(), distancePerception.identificationDist );
-        returnValue.recognitionPolygon = MakePolygon( perceiverUrbanBlock->GetObject(), distancePerception.recognitionDist );
-        returnValue.detectionPolygon = MakePolygon( perceiverUrbanBlock->GetObject(), distancePerception.detectionDist );
+        MakePolygon( polygons.identificationPolygon_, perceiverUrbanBlock->GetObject(), distancePerception.identificationDist_ );
+        MakePolygon( polygons.recognitionPolygon_, perceiverUrbanBlock->GetObject(), distancePerception.recognitionDist_ );
+        MakePolygon( polygons.detectionPolygon_, perceiverUrbanBlock->GetObject(), distancePerception.detectionDist_ );
     }
     else
     {
         const MT_Vector2D& perceiverPosition = perceiver_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-        returnValue.identificationPolygon = MakePolygon( geometry::Point2f( static_cast< float >( perceiverPosition.rX_ ), static_cast< float >( perceiverPosition.rY_ ) ), distancePerception.identificationDist );
-        returnValue.recognitionPolygon = MakePolygon( geometry::Point2f( static_cast< float >( perceiverPosition.rX_ ), static_cast< float >( perceiverPosition.rY_ ) ), distancePerception.recognitionDist );
-        returnValue.detectionPolygon = MakePolygon( geometry::Point2f( static_cast< float >( perceiverPosition.rX_ ), static_cast< float >( perceiverPosition.rY_ ) ), distancePerception.detectionDist );
+        geometry::Point2f pos = VECTOR_TO_POINT( perceiverPosition );
+        MakePolygon( polygons.identificationPolygon_, pos, distancePerception.identificationDist_ );
+        MakePolygon( polygons.recognitionPolygon_, pos, distancePerception.recognitionDist_ );
+        MakePolygon( polygons.detectionPolygon_, pos, distancePerception.detectionDist_ );
     }
-    return returnValue;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ZURBPerceptionComputer::MakePolygon
 // Created: SLG 2010-04-29
 // -----------------------------------------------------------------------------
-geometry::Polygon2f PHY_ZURBPerceptionComputer::MakePolygon( const urban::TerrainObject_ABC& block, double distance ) const
+void PHY_ZURBPerceptionComputer::MakePolygon( geometry::Polygon2f& polygon, const urban::TerrainObject_ABC& block, double distance ) const
 {
-    geometry::Polygon2f polygon = MIL_Geometry::Scale( *( block.GetFootprint() ), static_cast< float >( distance ) );
-    return polygon;
+    MIL_Geometry::Scale( polygon, *block.GetFootprint(), static_cast< float >( distance ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ZURBPerceptionComputer::MakePolygon
 // Created: SLG 2010-04-29
 // -----------------------------------------------------------------------------
-geometry::Polygon2f PHY_ZURBPerceptionComputer::MakePolygon( const geometry::Point2f targetPosition, double distance ) const
+void PHY_ZURBPerceptionComputer::MakePolygon( geometry::Polygon2f& polygon, const geometry::Point2f& targetPosition, double distance ) const
 {
-    geometry::Point2f bottomLeftPoint( static_cast< float >( targetPosition.X() - distance ), static_cast< float >( targetPosition.Y() - distance ) );
-    geometry::Point2f topLeftPoint( static_cast< float >( targetPosition.X() - distance ), static_cast< float >( targetPosition.Y() + distance ) );
-    geometry::Point2f topRightPoint( static_cast< float >( targetPosition.X() + distance ), static_cast< float >( targetPosition.Y() + distance ) );
-    geometry::Point2f bottomeRightPoint( static_cast< float >( targetPosition.X() + distance ), static_cast< float >( targetPosition.Y() - distance ) );
-    geometry::Polygon2f polygon;
-    polygon.Add( bottomLeftPoint );
-    polygon.Add( topLeftPoint );
-    polygon.Add( topRightPoint );
-    polygon.Add( bottomeRightPoint );
-    return polygon;
+    float fDistance = static_cast< float >( distance );
+    polygon.Add( geometry::Point2f( targetPosition.X() - fDistance, targetPosition.Y() - fDistance ) ); // bottom left
+    polygon.Add( geometry::Point2f( targetPosition.X() - fDistance , targetPosition.Y() + fDistance ) ); // top left
+    polygon.Add( geometry::Point2f( targetPosition.X() + fDistance , targetPosition.Y() + fDistance ) ); // top right
+    polygon.Add( geometry::Point2f( targetPosition.X() + fDistance, targetPosition.Y() - fDistance ) ); // bottom right
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ZURBPerceptionComputer::MakePolygon
+// Name: PHY_ZURBPerceptionComputer::GetLevelWithDelay
 // Created: SLG 2010-05-06
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::GetLevelWithDelay( unsigned int delay, const PHY_PerceptionLevel& level ) const
@@ -149,7 +145,7 @@ namespace
     class CollateSensorFunctor
     {
     public:
-        CollateSensorFunctor( std::set<const PHY_SensorTypeAgent*>& sensors ) : sensors_( sensors ) {}
+        CollateSensorFunctor( std::set< const PHY_SensorTypeAgent* >& sensors ) : sensors_( sensors ) {}
         void operator() ( const PHY_Sensor& sensor )
         {
             const PHY_SensorTypeAgent* sensorTypeAgent = sensor.GetType().GetTypeAgent();
@@ -157,7 +153,7 @@ namespace
                 sensors_.insert( sensorTypeAgent );
         }
     private:
-        std::set<const PHY_SensorTypeAgent*>& sensors_;
+        std::set< const PHY_SensorTypeAgent* >& sensors_;
     };
 
     class CollateSensorComponentFunctor : public OnComponentFunctor_ABC
@@ -170,7 +166,7 @@ namespace
             CollateSensorFunctor dataFunctor( sensors_ );
             composante.ApplyOnSensors( dataFunctor );
         }
-        std::set<const PHY_SensorTypeAgent*> sensors_;
+        std::set< const PHY_SensorTypeAgent* > sensors_;
     };
 }
 
@@ -178,19 +174,18 @@ namespace
 // Name: PHY_ZURBPerceptionComputer::ComputeDistancePerception
 // Created: SLG 2010-04-29
 // -----------------------------------------------------------------------------
-const PHY_ZURBPerceptionComputer::BestSensorsParameters PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_ABC& target ) const
+void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_ABC& target, BestSensorsParameters& sensorsParameters ) const
 {
-    BestSensorsParameters sensorsParameters;
-    sensorsParameters.delay = std::numeric_limits< int >::max();
+    sensorsParameters.delay_ = std::numeric_limits< int >::max();
 
     MT_Vector2D targetPosition = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
     MT_Vector2D perceiverPosition = perceiver_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    geometry::Point2f vSourcePoint( static_cast< float >( perceiverPosition.rX_ ), static_cast< float >( perceiverPosition.rY_ ) );
-    geometry::Point2f vTargetPoint( static_cast< float >( targetPosition.rX_ ), static_cast< float >( targetPosition.rY_ ) );
+    geometry::Point2f vSourcePoint( VECTOR_TO_POINT( perceiverPosition ) );
+    geometry::Point2f vTargetPoint( VECTOR_TO_POINT( targetPosition ) );
     geometry::Segment2f segment( vSourcePoint, vTargetPoint );
 
     std::set< const urban::TerrainObject_ABC* > list;
-    UrbanModel::GetSingleton().GetModel().GetListWithinSegment( vSourcePoint, vTargetPoint, list );
+    MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinSegment( vSourcePoint, vTargetPoint, list );
     const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
 
@@ -202,45 +197,37 @@ const PHY_ZURBPerceptionComputer::BestSensorsParameters PHY_ZURBPerceptionComput
     {
         double worstFactor = 1.;
         if( !list.empty() )
-        {
-            for( std::set< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; it++ )
-            {
+            for( std::set< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; ++it )
                 if( perceiverUrbanBlock == 0 || !( &perceiverUrbanBlock->GetObject() == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
                 {
                     const urban::TerrainObject_ABC& object = **it;
                     const geometry::Polygon2f* footPrint = object.GetFootprint();
-                    std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( segment );
-                    if( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
+                    if( footPrint )
                     {
-                        float perceiverUrbanBlockHeight = 2; //2 = SensorHeight
-                        float objectHeight = 2; //2 = SensorHeight
-                        double urbanFactor = (*itSensor)->GetUrbanBlockFactor( object );
-                        const urban::Architecture* architecture = object.Retrieve< urban::Architecture >();
-                        if( perceiverUrbanBlock )
+                        std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( segment );
+                        if( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
                         {
-                            const urban::Architecture* perceiverUrbanBlockArchitecture = perceiverUrbanBlock->GetObject().Retrieve< urban::Architecture >();
-                            if( perceiverUrbanBlockArchitecture )
-                                perceiverUrbanBlockHeight += perceiverUrbanBlockArchitecture->GetHeight();
+                            float perceiverUrbanBlockHeight = 2; //2 = SensorHeight
+                            float objectHeight = 2; //2 = SensorHeight
+                            const urban::Architecture* architecture = object.Retrieve< urban::Architecture >();
+                            if( perceiverUrbanBlock )
+                                if( const urban::Architecture* perceiverUrbanBlockArchitecture = perceiverUrbanBlock->GetObject().Retrieve< urban::Architecture >() )
+                                    perceiverUrbanBlockHeight += perceiverUrbanBlockArchitecture->GetHeight();
+                            if( architecture )
+                                objectHeight += architecture->GetHeight();
+                            double urbanFactor = ( *itSensor )->GetUrbanBlockFactor( object ) * perceiverUrbanBlockHeight / objectHeight;
+                            if( architecture )
+                                urbanFactor = 1. + architecture->GetOccupation() * ( urbanFactor - 1. ) ;
+                            worstFactor = std::min( worstFactor, urbanFactor );
                         }
-                        if( architecture )
-                            objectHeight += architecture->GetHeight();
-                        urbanFactor *= static_cast< double >( perceiverUrbanBlockHeight / objectHeight );
-                        if( architecture )
-                            urbanFactor = 1. + architecture->GetOccupation() * ( urbanFactor -1. ) ;
-
-                        worstFactor = std::min( worstFactor, urbanFactor );
                     }
-                }
-            }
         }
-        sensorsParameters.distances.identificationDist = std::max( sensorsParameters.distances.identificationDist,
-            worstFactor * (*itSensor)->ComputeIdentificationDist( perceiver_, target ) );
-        sensorsParameters.distances.recognitionDist = std::max( sensorsParameters.distances.recognitionDist,
-            worstFactor * (*itSensor)->ComputeRecognitionDist( perceiver_, target ) );
-        sensorsParameters.distances.detectionDist = std::max( sensorsParameters.distances.detectionDist,
-            worstFactor * (*itSensor)->ComputeDetectionDist( perceiver_, target ) );
-
-        sensorsParameters.delay = std::min( sensorsParameters.delay, (*itSensor)->GetDelay() );
+        sensorsParameters.distances_.identificationDist_ = std::max( sensorsParameters.distances_.identificationDist_,
+            worstFactor * ( *itSensor )->ComputeIdentificationDist( perceiver_, target ) );
+        sensorsParameters.distances_.recognitionDist_ = std::max( sensorsParameters.distances_.recognitionDist_,
+            worstFactor * ( *itSensor )->ComputeRecognitionDist( perceiver_, target ) );
+        sensorsParameters.distances_.detectionDist_ = std::max( sensorsParameters.distances_.detectionDist_,
+            worstFactor * ( *itSensor )->ComputeDetectionDist( perceiver_, target ) );
+        sensorsParameters.delay_ = std::min( sensorsParameters.delay_, ( *itSensor )->GetDelay() );
     }
-    return sensorsParameters;
 }

@@ -12,8 +12,7 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Urban.h"
 #include "MIL_AgentServer.h"
-#include "simulation_kernel/Entities/MIL_Army_ABC.h"
-#include "simulation_kernel/UrbanModel.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
@@ -53,8 +52,11 @@ namespace
 DEC_BlackBoard_CanContainKnowledgeUrban::DEC_BlackBoard_CanContainKnowledgeUrban( const MIL_Army_ABC& army )
     : army_( army )
 {
-    UrbanBlockKnowledgeCreator visitor( urbanMapFromConcrete_, urbanKnowledgeMapFromKnowledgeId_, army );
-    UrbanModel::GetSingleton().Accept( visitor );
+    if( MIL_AgentServer::IsInitialized() )
+    {
+        UrbanBlockKnowledgeCreator visitor( urbanMapFromConcrete_, urbanKnowledgeMapFromKnowledgeId_, army );
+        MIL_AgentServer::GetWorkspace().GetUrbanModel().Accept( visitor );
+    }
 }
 
 // -----------------------------------------------------------------------------

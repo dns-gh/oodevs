@@ -12,16 +12,15 @@
 #include "protocol/protocol.h"
 #include "simulation_kernel/knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "simulation_kernel/knowledge/DEC_Knowledge_Urban.h"
-#include "UrbanModel.h"
-#include <urban/Model.h>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanBlockParameter constructor
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
 MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const Common::UrbanObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
-: pKnowledgeUrbanBlock_( resolver.ResolveKnowledgeUrban( asn.id() ) )
+    : pKnowledgeUrbanBlock_( resolver.ResolveKnowledgeUrban( asn.id() ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,7 +28,7 @@ MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const Common::UrbanObjectKnowl
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
 MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock )
-: pKnowledgeUrbanBlock_( urbanBlock )
+    : pKnowledgeUrbanBlock_( urbanBlock )
 {
     // NOTHING
 }

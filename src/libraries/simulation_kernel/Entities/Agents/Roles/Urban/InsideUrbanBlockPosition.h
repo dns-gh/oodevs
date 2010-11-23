@@ -29,17 +29,17 @@ class InsideUrbanBlockPosition : public UrbanBlockPosition_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InsideUrbanBlockPosition( const urban::TerrainObject_ABC* urbanObject );
+    explicit InsideUrbanBlockPosition( const urban::TerrainObject_ABC* urbanObject );
     virtual ~InsideUrbanBlockPosition();
     //@}
 
     //! @name Operations
     //@{
-    virtual geometry::Point2f   GetFirerPosition( MIL_Agent_ABC& target, urbanLocation::UrbanLocationComputer_ABC::Results& firerResult ) const;
-    virtual geometry::Point2f   GetTargetPosition( MIL_Agent_ABC& firer, urbanLocation::UrbanLocationComputer_ABC::Results& targetResult ) const;
-    virtual float               ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const;
-    virtual float               ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float modificator ) const;
-    virtual double            ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const;
+    virtual geometry::Point2f GetFirerPosition( MIL_Agent_ABC& target, urbanLocation::UrbanLocationComputer_ABC::Results& firerResult ) const;
+    virtual geometry::Point2f GetTargetPosition( MIL_Agent_ABC& firer, urbanLocation::UrbanLocationComputer_ABC::Results& targetResult ) const;
+    virtual float ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const;
+    virtual float ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float modificator ) const;
+    virtual double ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const;
     //@}
 
 private:
@@ -51,8 +51,8 @@ private:
 
     //! @name Helpers
     //@{
-    geometry::Point2f GetNearestUrbanBlockPoint( const geometry::Point2f pionPosition, const std::vector< geometry::Point2f > points ) const;
-    geometry::Point2f GetFurthestUrbanBlockPoint( const geometry::Point2f pionPosition, const std::vector< geometry::Point2f > points ) const;
+    geometry::Point2f GetNearestUrbanBlockPoint( const geometry::Point2f& pionPosition, const std::vector< geometry::Point2f >& points ) const;
+    geometry::Point2f GetFurthestUrbanBlockPoint( const geometry::Point2f& pionPosition, const std::vector< geometry::Point2f >& points ) const;
     //@}
 
 private:

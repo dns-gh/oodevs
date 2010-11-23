@@ -23,6 +23,11 @@ namespace resource
     class ResourceTools_ABC;
 }
 
+namespace urban
+{
+    class Model;
+}
+
 namespace xml
 {
     class xostream;
@@ -40,7 +45,6 @@ class MIL_TacticalLineManager;
 class NET_AgentServer;
 class PHY_MeteoDataManager;
 class ProcessMonitor;
-class UrbanModel;
 
 //*****************************************************************************
 // Created: DFT 02-02-28
@@ -102,7 +106,7 @@ public:
     //! @name Accessors
     //@{
     MIL_EntityManager& GetEntityManager() const;
-    UrbanModel& GetUrbanModel() const;
+    urban::Model& GetUrbanModel() const;
     DEC_Workspace& GetWorkspaceDIA() const;
     NET_AgentServer& GetAgentServer() const;
     MIL_TacticalLineManager& GetTacticalLineManager() const;
@@ -122,6 +126,7 @@ public:
     static MIL_AgentServer& GetWorkspace();
     static void CreateWorkspace( MIL_Config& config );
     static void DestroyWorkspace();
+    static bool IsInitialized();
     //@}
 
     //! @name Time management
@@ -142,6 +147,7 @@ private:
     //! @name
     //@{
     void ReadStaticData();
+    void ReadUrbanModel();
     void ReadTerData();
     void ReadHLA();
     //@}
@@ -180,7 +186,7 @@ private:
     MIL_CheckPointManager* pCheckPointManager_;
     NET_AgentServer* pAgentServer_;
     HLA_Federate* pFederate_;
-    UrbanModel* pUrbanModel_;
+    urban::Model* pUrbanModel_;
     resource::ResourceNetworkModel* pResourceNetworkModel_;
     resource::ResourceTools_ABC* pResourceTools_;
     ProcessMonitor* pProcessMonitor_;

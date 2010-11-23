@@ -54,7 +54,6 @@
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
-#include "UrbanModel.h"
 #include <urban/model.h>
 #include <urban/TerrainObject_ABC.h>
 #include <boost/serialization/map.hpp>
@@ -899,7 +898,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
             (**itPerception).Execute( perceivableObjects );
 
         std::vector< const urban::TerrainObject_ABC* > perceivableUrbanBlock;
-        MIL_AgentServer::GetWorkspace().GetUrbanModel().GetModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( perceiverPosition_->rX_ ),
+        MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( perceiverPosition_->rX_ ),
                                                                                                            static_cast< float >( perceiverPosition_->rY_ ) ),
                                                                                         maxBlockPerceptionDistance,
                                                                                         perceivableUrbanBlock );

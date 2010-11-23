@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectFire.h"
 #include "PHY_DotationCategory.h"
-#include "UrbanModel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -117,7 +116,8 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle(vTargetPosition, 500., allTargets );
         
         std::vector< const urban::TerrainObject_ABC* > urbanList;
-        UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( vTargetPosition.rX_ ), static_cast< float >( vTargetPosition.rY_ ) ),
+        if( MIL_AgentServer::IsInitialized() )
+            MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( vTargetPosition.rX_ ), static_cast< float >( vTargetPosition.rY_ ) ),
                                                                    static_cast< float >( rInterventionTypeFired * rDispersionX_ ), urbanList );
         
         for( TER_Agent_ABC::CIT_AgentPtrVector itAllTarget = allTargets.begin(); itAllTarget != allTargets.end(); ++itAllTarget )

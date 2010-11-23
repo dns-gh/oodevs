@@ -51,6 +51,7 @@ namespace MsgsClientToSim
 
 namespace urban
 {
+    class Model;
     class TerrainObject_ABC;
 }
 
@@ -88,8 +89,6 @@ class MIL_ProfilerMgr;
 class MIL_Time_ABC;
 class PopulationFactory_ABC;
 class TER_Localisation;
-class UrbanModel;
-
 class HLA_Federate;
 
 // =============================================================================
@@ -106,13 +105,13 @@ public:
 
     //! @name Factory
     //@{
-    void CreateAutomat     ( xml::xistream& xis, MIL_Entity_ABC&  parent );
-    void CreateAutomat     ( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int nCtx );
+    void CreateAutomat( xml::xistream& xis, MIL_Entity_ABC&  parent );
+    void CreateAutomat( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int nCtx );
     void CreateIntelligence( xml::xistream& xis, MIL_Formation& formation );
-    MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate&  automate , xml::xistream& xis );
-    MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
-
-    void            CreateObject( xml::xistream& xis, MIL_Army_ABC& army );
+    MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate&  automate , xml::xistream& xis );
+    MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
+    void CreateObject( xml::xistream& xis, MIL_Army_ABC& army );
+    void CreateUrbanObject( const urban::TerrainObject_ABC& object );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
@@ -149,7 +148,7 @@ public:
     //! @name Operations
     //@{
     void ReadODB             ( const MIL_Config& config );
-    void CreateUrbanObjects  ( UrbanModel& urbanModel, const MIL_Config& config );
+    void CreateUrbanObjects  ( urban::Model& urbanModel, const MIL_Config& config );
     void SendStateToNewClient() const;
     void Update              ();
     void Clean               ();
@@ -235,7 +234,6 @@ private:
 
     //! @name Urban
     //@{
-    void CreateUrbanObject( const urban::TerrainObject_ABC& object );
     void LoadUrbanStates( const MIL_Config& config );
     void NotifyPionsInsideUrbanObject();
     //@}
@@ -253,9 +251,8 @@ private:
     //@}
 
 private:
-    class UrbanWrapperVisitor;
-
-private:
+    //! @name Member data
+    //@{
     const MIL_Time_ABC& time_;
     HLA_Federate*       hla_;
     MIL_EffectManager&  effectManager_;
@@ -287,6 +284,7 @@ private:
     unsigned int  gcPause_;
     unsigned int  gcMult_;
     bool          infiniteDotations_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_EntityManager )
