@@ -10,18 +10,20 @@
 #include "gaming_pch.h"
 #include "ObjectAttributesFactory.h"
 
-#include "ConstructionAttribute.h"
-#include "BypassAttribute.h"
-#include "ObstacleAttribute.h"
-#include "MineAttribute.h"
-#include "SupplyRouteAttribute.h"
-#include "CrossingSiteAttribute.h"
-#include "LogisticAttribute.h"
 #include "ActivityTimeAttribute.h"
+#include "BypassAttribute.h"
+#include "ConstructionAttribute.h"
+#include "CrossingSiteAttribute.h"
 #include "DelayAttribute.h"
-#include "NBCAttribute.h"
 #include "FireAttribute.h"
+#include "LogisticAttribute.h"
 #include "MedicalTreatmentAttribute.h"
+#include "MineAttribute.h"
+#include "NBCAttribute.h"
+#include "ObstacleAttribute.h"
+#include "SealOffAttribute.h"
+#include "SupplyRouteAttribute.h"
+#include "ToxicCloudAttribute.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
@@ -90,6 +92,14 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const Common
 
     if( attributes.has_medical_treatment() && entity.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
         entity.Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
+
+    if ( attributes.has_toxic_cloud() && entity.Retrieve< kernel::ToxicCloudAttribute_ABC >() == 0 )
+        entity.Attach< kernel::ToxicCloudAttribute_ABC >( *new ToxicCloudAttribute( controllers_.controller_, static_.coordinateConverter_ ) );
+
+    if ( attributes.has_seal_off() && entity.Retrieve< kernel::SealOffAttribute_ABC >() == 0 )
+        entity.Attach< kernel::SealOffAttribute_ABC >( *new SealOffAttribute( controllers_.controller_ ) );
+
+    
 }
 
 
