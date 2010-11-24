@@ -36,7 +36,7 @@ MIL_RealParameter::~MIL_RealParameter()
 // -----------------------------------------------------------------------------
 bool MIL_RealParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    return type == MIL_ParameterType_ABC::eNumeric;
+    return type == MIL_ParameterType_ABC::eNumeric || MIL_ParameterType_ABC::eInteger;
 }
 
 // -----------------------------------------------------------------------------
