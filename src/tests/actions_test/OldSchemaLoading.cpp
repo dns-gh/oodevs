@@ -56,7 +56,7 @@ namespace xml
         remove_prolog( result );
         remove_crlf( result );
         replace( result, "\"", "'" );
-        replace( result, " ", "" );
+        replace( result, "  ", " " );
         replace( result, " <", "<" );
         replace( result, "< ", "<" );
         replace( result, "> ", ">" );
