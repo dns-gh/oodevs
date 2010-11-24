@@ -175,7 +175,7 @@ void Model::Load( const tools::ExerciseConfig& config, std::string& loadingError
         try
         {
             urban::WorldParameters world( directoryPath );
-            urban_.Load( directoryPath, world );
+            urban_.Load( directoryPath, world, loadingErrors );
             const std::string urbanStateFile = config.GetUrbanStateFile() ;
             if( bfs::exists( bfs::path( urbanStateFile, bfs::native ) ) )
             {

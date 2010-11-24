@@ -14,10 +14,13 @@
 #include "EquipmentType.h"
 #include "FileLoader.h"
 #include "FireClass.h"
+#include "FacadeType.h"
+#include "MaterialCompositionType.h"
 #include "MedicalTreatmentType.h"
 #include "NBCAgent.h"
 #include "ObjectType.h"
 #include "ResourceNetworkType.h"
+#include "RoofShapeType.h"
 #include "VolumeType.h"
 #include "WeaponSystemType.h"
 #include <boost/bind.hpp>
@@ -62,7 +65,8 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
         .Load( "fire", boost::bind( &ObjectTypes::ReadFire, this, _1 ) )
         .Load( "medical-treatment", boost::bind( &ObjectTypes::ReadMedicalTreatment, this, _1 ) )
         .Load( "breakdowns", boost::bind( &ObjectTypes::ReadBreakdowns, this, _1 ) )
-        .Load( "resource-networks", boost::bind( &ObjectTypes::ReadResourceNetworks, this, _1 ) );
+        .Load( "resource-networks", boost::bind( &ObjectTypes::ReadResourceNetworks, this, _1 ) )
+        .Load( "urban", boost::bind( &ObjectTypes::ReadUrbanTypes, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,11 +80,14 @@ void ObjectTypes::Purge()
     tools::Resolver< EquipmentType >::DeleteAll();
     tools::Resolver< WeaponSystemType, std::string >::DeleteAll();
     Resolver2< DotationType >::DeleteAll();
-     tools::StringResolver< ObjectType >::DeleteAll();
+    tools::StringResolver< ObjectType >::DeleteAll();
     Resolver2< FireClass >::DeleteAll();
     Resolver2< MedicalTreatmentType >::DeleteAll();
     tools::Resolver< VolumeType >::DeleteAll();
     tools::StringResolver< ResourceNetworkType >::DeleteAll();
+    tools::StringResolver< FacadeType >::DeleteAll();
+    tools::StringResolver< MaterialCompositionType >::DeleteAll();
+    tools::StringResolver< RoofShapeType >::DeleteAll();
     nVolumeId = 0;
 }
 
@@ -289,4 +296,83 @@ void ObjectTypes::ReadResourceNetwork( xml::xistream& xis )
 {
     ResourceNetworkType* type = new ResourceNetworkType( xis );
     tools::StringResolver< ResourceNetworkType >::Register( type->GetName(), *type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadUrbanTypes
+// Created: SLG 2010-11-17
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadUrbanTypes( xml::xistream& xis )
+{
+    xis >> xml::start( "urban" )
+        >> xml::start( "urban-block-types" );
+    ReadFacadeTypes( xis );
+    ReadMaterialCompositionTypes( xis );
+    ReadRoofShapeTypes( xis );
+    xis >> xml::end
+        >> xml::end;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: StaticModel::ReadFacadeTypes
+// Created: SLG 2010-11-17
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadFacadeTypes( xml::xistream& xis )
+{
+    xis >> xml::start( "facade-types" )
+        >> xml::list ( "facade-type", *this, &ObjectTypes::ReadFacadeType )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadFacadeType
+// Created: SLG 2010-11-17
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadFacadeType( xml::xistream& xis )
+{
+    FacadeType* type = new FacadeType( xis );
+    StringResolver< FacadeType >::Register( type->GetName(), *type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadMaterialCompositionTypes
+// Created: SLG 2010-11-17
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadMaterialCompositionTypes( xml::xistream& xis )
+{
+    xis >> xml::start( "material-composition-types" )
+        >> xml::list ( "material-composition-type", *this, &ObjectTypes::ReadMaterialCompositionType )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadMaterialCompositionType
+// Created: SLG 2010-11-17
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadMaterialCompositionType( xml::xistream& xis )
+{
+    MaterialCompositionType* type = new MaterialCompositionType( xis );
+    StringResolver< MaterialCompositionType >::Register( type->GetName(), *type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadRoofShapeTypes
+// Created: SLG 2010-11-17
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadRoofShapeTypes( xml::xistream& xis )
+{
+    xis >> xml::start( "roof-shape-types" )
+        >> xml::list ( "roof-shape-type", *this, &ObjectTypes::ReadRoofShapeType )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadRoofShapeType
+// Created: SLG 2010-11-17
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadRoofShapeType( xml::xistream& xis )
+{
+    RoofShapeType* type = new RoofShapeType( xis );
+    StringResolver< RoofShapeType >::Register( type->GetName(), *type );
 }

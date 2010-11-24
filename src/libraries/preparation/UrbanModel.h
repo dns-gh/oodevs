@@ -48,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    bool Load( const std::string& directoryPath, urban::WorldParameters& world );
+    bool Load( const std::string& directoryPath, urban::WorldParameters& world, std::string& loadingErrors );
     void Serialize( const std::string& filename ) const;
     void LoadUrbanState( xml::xistream& xis );
     void Purge();

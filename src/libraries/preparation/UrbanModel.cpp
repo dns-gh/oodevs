@@ -18,12 +18,15 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/MaterialCompositionType.h"
+#include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
+#include <urban/Architecture.h>
 #include <urban/ResourceNetworkAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
@@ -63,16 +66,24 @@ namespace
     class UrbanSendingCreationVisitor : public urban::TerrainObjectVisitor_ABC
     {
     public:
-        UrbanSendingCreationVisitor( UrbanModel& model ) : model_( model )
+        UrbanSendingCreationVisitor( UrbanModel& model, const StaticModel& staticModel, std::string& loadingErrors ) : model_( model ), static_( staticModel ), loadingErrors_( loadingErrors )
         {}
         ~UrbanSendingCreationVisitor()
         {}
         virtual void VisitBlock( urban::TerrainObject_ABC& urbanObject )
         {
+            const urban::Architecture* architecture = urbanObject.Retrieve< urban::Architecture >();
+            if( architecture && ( !static_.objectTypes_.StringResolver< kernel::MaterialCompositionType >::Find( architecture->GetMaterial() ) || !static_.objectTypes_.StringResolver< kernel::RoofShapeType >::Find( architecture->GetRoofShape() ) ) )
+            {
+                loadingErrors_ += "Urban Bloc : " + urbanObject.GetName() + "\n";
+                return;
+            }
             model_.SendCreation( urbanObject );
         }
     private:
         UrbanModel& model_;
+        const StaticModel& static_;
+        std::string& loadingErrors_;
     };
 }
 
@@ -80,13 +91,13 @@ namespace
 // Name: UrbanModel::Load
 // Created: SBO 2010-06-10
 // -----------------------------------------------------------------------------
-bool UrbanModel::Load( const std::string& directoryPath, urban::WorldParameters& world )
+bool UrbanModel::Load( const std::string& directoryPath, urban::WorldParameters& world, std::string& loadingErrors )
 {
     Purge();
     bool ret = urban::Model::Load( directoryPath, world );
     if( ret )
     {
-        UrbanSendingCreationVisitor visitor( *this );
+        UrbanSendingCreationVisitor visitor( *this, static_, loadingErrors );
         Accept( visitor );
     }
     return ret;

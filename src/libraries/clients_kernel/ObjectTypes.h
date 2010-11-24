@@ -35,6 +35,9 @@ namespace kernel
     class MedicalTreatmentType;
     class ResourceNetworkType;
     class VolumeType;
+    class MaterialCompositionType;
+    class FacadeType;
+    class RoofShapeType;
 
 // =============================================================================
 /** @class  ObjectTypes
@@ -53,6 +56,9 @@ class ObjectTypes
     , public tools::Resolver< BreakdownType >
     , public tools::Resolver< VolumeType >
     , public tools::StringResolver< ResourceNetworkType >
+    , public tools::StringResolver< MaterialCompositionType >
+    , public tools::StringResolver< FacadeType >
+    , public tools::StringResolver< RoofShapeType >
 {
 public:
     //! @name Constructors/Destructor
@@ -98,6 +104,13 @@ private:
     void ReadVolume( xml::xistream& xis );
     void ReadResourceNetworks( xml::xistream& xis );
     void ReadResourceNetwork( xml::xistream& xis );
+    void ReadUrbanTypes( xml::xistream& xis );
+    void ReadFacadeTypes( xml::xistream& xis );
+    void ReadFacadeType( xml::xistream& xis );
+    void ReadMaterialCompositionTypes( xml::xistream& xis );
+    void ReadMaterialCompositionType( xml::xistream& xis );
+    void ReadRoofShapeTypes( xml::xistream& xis );
+    void ReadRoofShapeType( xml::xistream& xis );
     //@}
 
 private:

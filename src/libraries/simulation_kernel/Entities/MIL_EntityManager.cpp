@@ -95,7 +95,10 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/protocol.h"
 #include <urban/Model.h>
+#include <urban/Architecture.h>
 #include <urban/ObjectVisitor_ABC.h>
+#include <urban/StaticModel.h>
+#include <urban/TerrainObject_ABC.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/filesystem/path.hpp>
@@ -293,7 +296,13 @@ namespace
         ~UrbanWrapperVisitor(){}
         virtual void Visit( const urban::TerrainObject_ABC& object )
         {
-            manager_.CreateUrbanObject( object );
+            const urban::Architecture* architecture = object.Retrieve< urban::Architecture >();
+        	if( architecture && ( !UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() ) || !UrbanType::GetUrbanType().GetStaticModel().FindType< urban::RoofShapeType >( architecture->GetRoofShape() ) ) )
+        	{
+            	MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetId(), object.GetName().c_str() ) );
+            	return;
+        	}
+        	manager_.CreateUrbanObject( object );
         }
     private:
         MIL_EntityManager& manager_;

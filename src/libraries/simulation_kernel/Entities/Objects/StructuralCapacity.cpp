@@ -119,7 +119,8 @@ void StructuralCapacity::Instanciate( MIL_Object_ABC& object ) const
         if( architecture )
         {
             urban::MaterialCompositionType* material = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() );
-            object.GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
+            if( material )
+                object.GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
         }
     }
     object.ApplyStructuralState( structuralState_ );
