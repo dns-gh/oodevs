@@ -1,8 +1,6 @@
-#include "StdAfx.h"
+#include "wise_driver_dll_pch.h"
 #include "SWORDDriver.h"
 #include "SwordFacade.h"
-
-
 
 CSWORDDriver::CSWORDDriver(void) :
     CWISEDriver()

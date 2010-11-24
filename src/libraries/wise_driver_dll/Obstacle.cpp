@@ -7,14 +7,17 @@
 //
 // *****************************************************************************
 
-#include "stdafx.h"
+#include "wise_driver_dll_pch.h"
 #include "Obstacle.h"
 #include "Model.h"
 #include "Party.h"
 #include "protocol/Simulation.h"
-#include <iwisedriversink.h>
 #include <sstream>
-#include <wisedriver.h>
+#pragma warning( push )
+#pragma warning( disable: 4100 4201 )
+#include <wise/iwisedriversink.h>
+#include <wise/wisedriver.h>
+#pragma warning( pop )
 
 namespace
 {
@@ -39,7 +42,7 @@ Obstacle::Obstacle( const Model& model, const MsgsSimToClient::MsgObjectCreation
     , name_( message.name().begin(), message.name().end() )
     , type_( message.type().id().begin(), message.type().id().end() )
     , party_( model.ResolveParty( message.party().id() ) )
-    , geometry_( message.location().type() )
+    , geometry_( unsigned char( message.location().type() ) )
     , points_( ReadPoints( message.location() ) )
     , handle_( WISE_INVALID_HANDLE )
 {

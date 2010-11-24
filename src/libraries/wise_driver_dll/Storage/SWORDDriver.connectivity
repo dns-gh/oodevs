@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <connectivity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./schemas/connectivity.xsd">
-    <info author="Unknown" copyright="" modified="2010-10-11T13:59:52Z" version="1.0.0.0" description="Project for testing of MASA Group.SWORD driver." />
+    <info author="Unknown" copyright="" modified="2010-10-11T13:59:52Z" version="1.0.0.0" description="Project for testing of MASAGroup.SWORD driver." />
     <variables>
       <variable name="SimulationHostAddress" datatype="string" default="127.0.0.1" validvalues="{IPAddress}" category="Communication" description="Host address of simulation server to connect to." />
       <variable name="SimulationPort" datatype="long" default="10001" validvalues="1-65535" category="Communication" description="Simulation server port accepting connections." />
@@ -8,7 +8,7 @@
     </variables>
     <drivers>
         <driver id="NULLBackbone1" name="STS.NULL" description="Backbone LVC version 1.0 on a local NULL driver." />
-        <driver id="SwordDriver" name="MASA Group.SWORD" description="SWORD connectivity driver">
+        <driver id="SwordDriver" name="MASAGroup.SWORD" description="SWORD connectivity driver">
             <setting name="SimulationHost" value="@SimulationHostAddress" />
             <setting name="SimulationPort" value="@SimulationPort" />
             <setting name="ExerciseProfile" value="@ExerciseProfile" />

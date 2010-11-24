@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "stdafx.h"
+#include "wise_driver_dll_pch.h"
 #include "Agent.h"
 #include "Automat.h"
 #include "Equipment.h"
@@ -15,9 +15,12 @@
 #include "Personnel.h"
 #include "Resource.h"
 #include "protocol/Simulation.h"
-#include <iwisedriversink.h>
 #include <sstream>
-#include <wisedriver.h>
+#pragma warning( push )
+#pragma warning( disable: 4100 4201 )
+#include <wise/iwisedriversink.h>
+#include <wise/wisedriver.h>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: Agent constructor

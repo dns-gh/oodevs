@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <templatedatabase>
 
-  <info author="Unknown" copyright="" description="Template Database for MASA Group.SWORD." modified="2010-10-27T20:20:18.612Z" version="1.0.0.0"/>
+  <info author="Unknown" copyright="" description="Template Database for MASAGroup.SWORD." modified="2010-10-27T20:20:18.612Z" version="1.0.0.0"/>
 
   <datatypes>
     <integers>

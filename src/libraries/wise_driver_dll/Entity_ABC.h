@@ -10,7 +10,10 @@
 #ifndef __Entity_ABC_h_
 #define __Entity_ABC_h_
 
-#include <wiseinterfacetypes.h>
+#pragma warning( push )
+#pragma warning( disable: 4201 )
+#include <wise/wiseinterfacetypes.h>
+#pragma warning( pop )
 
 class CWISEDriver;
 

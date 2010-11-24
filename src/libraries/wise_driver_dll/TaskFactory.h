@@ -10,7 +10,7 @@
 #ifndef __TaskFactory_h_
 #define __TaskFactory_h_
 
-#include <wiseinterfacetypes.h>
+#include <wise/wiseinterfacetypes.h>
 
 class CWISEDriver;
 class Model;

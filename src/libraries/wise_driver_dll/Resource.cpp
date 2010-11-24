@@ -7,10 +7,13 @@
 //
 // *****************************************************************************
 
-#include "stdafx.h"
+#include "wise_driver_dll_pch.h"
 #include "Resource.h"
-#include <iwisedriversink.h>
-#include <WISEAttributeGroupConverter.h> 
+#pragma warning( push )
+#pragma warning( disable: 4201 )
+#include <wise/iwisedriversink.h>
+#include <wise/WISEAttributeGroupConverter.h> 
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: Resource constructor

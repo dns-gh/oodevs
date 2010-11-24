@@ -7,14 +7,17 @@
 //
 // *****************************************************************************
 
-#include "stdafx.h"
+#include "wise_driver_dll_pch.h"
 #include "FireEngagement.h"
 #include "Agent.h"
 #include "Model.h"
 #include "protocol/Simulation.h"
-#include <iwisedriversink.h>
-#include <WISEAttributeGroupConverter.h> 
-#include <wisedriver.h>
+#pragma warning( push )
+#pragma warning( disable: 4100 4201 )
+#include <wise/iwisedriversink.h>
+#include <wise/WISEAttributeGroupConverter.h> 
+#include <wise/wisedriver.h>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: FireEngagement constructor
@@ -53,7 +56,7 @@ unsigned long FireEngagement::GetId() const
 // Name: FireEngagement::Update
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-void FireEngagement::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const MsgsSimToClient::MsgStopUnitFire& message )
+void FireEngagement::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& /*currentTime*/, const MsgsSimToClient::MsgStopUnitFire& message )
 {
     try
     {

@@ -7,15 +7,18 @@
 //
 // *****************************************************************************
 
-#include "stdafx.h"
+#include "wise_driver_dll_pch.h"
 #include "Automat.h"
 #include "Formation.h"
 #include "Model.h"
 #include "Party.h"
 #include "protocol/Simulation.h"
-#include <iwisedriversink.h>
 #include <sstream>
-#include <wisedriver.h>
+#pragma warning( push )
+#pragma warning( disable: 4100 4201 )
+#include <wise/iwisedriversink.h>
+#include <wise/wisedriver.h>
+#pragma warning( pop )
 
 namespace
 {

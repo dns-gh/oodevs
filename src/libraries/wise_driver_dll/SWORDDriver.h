@@ -3,7 +3,10 @@
 ////////////////////////////////////////////////
 // Includes
 //
-#include "WISEDriver.h"
+#pragma warning( push )
+#pragma warning( disable: 4100 4201 )
+#include <wise/WISEDriver.h>
+#pragma warning( pop )
 
 class SwordFacade;
 

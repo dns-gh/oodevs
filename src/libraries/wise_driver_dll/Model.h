@@ -12,7 +12,10 @@
 
 #include "client_proxy/SwordMessageHandler_ABC.h"
 #include <map>
-#include <wiseinterfacetypes.h>
+#pragma warning( push )
+#pragma warning( disable: 4201 )
+#include <wise/wiseinterfacetypes.h>
+#pragma warning( pop )
 
 class Agent;
 class Automat;

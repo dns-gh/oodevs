@@ -12,7 +12,7 @@
 
 #include "Entity_ABC.h"
 #include <list>
-#include <wisevec3.h>
+#include <wise/wisevec3.h>
 
 namespace MsgsSimToClient { class MsgObjectCreation; }
 

@@ -7,11 +7,14 @@
 //
 // *****************************************************************************
 
-#include "stdafx.h"
+#include "wise_driver_dll_pch.h"
 #include "Party.h"
 #include "protocol/Simulation.h"
-#include <iwisedriversink.h>
-#include <wisedriver.h>
+#pragma warning( push )
+#pragma warning( disable: 4100 4201 )
+#include <wise/iwisedriversink.h>
+#include <wise/wisedriver.h>
+#pragma warning( pop )
 
 namespace
 {
@@ -19,7 +22,7 @@ namespace
     {
         if( diplomacy == Common::unknown_diplo )
             return Common::friend_diplo;
-        return diplomacy - 1;
+        return char( diplomacy ) - 1;
     }
 }
 
@@ -30,7 +33,7 @@ namespace
 Party::Party( const Model& /*model*/, const MsgsSimToClient::MsgPartyCreation& message )
     : id_( message.party().id() )
     , name_( message.name().begin(), message.name().end() )
-    , alignment_( message.type() )
+    , alignment_( unsigned char( message.type() ) )
     , handle_( WISE_INVALID_HANDLE )
 {
     // NOTHING

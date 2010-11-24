@@ -2,7 +2,7 @@
 <connection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schemas/connection.xsd" >
     <info author="Unknown" copyright="" 
           modified="2010-10-11T13:59:52Z" version="1.0" 
-          description="Connection between LVC and MASA Group.SWORD object models." />
+          description="Connection between LVC and MASAGroup.SWORD object models." />
     <databases>
         <database id="LVC" url="LVCOM.templatedb" />
         <database id="SWORD" url="SWORD.templatedb" />

@@ -7,20 +7,23 @@
 //
 // *****************************************************************************
 
-#include "stdafx.h"
+#include "wise_driver_dll_pch.h"
 #include "DetectionEvents.h"
 #include "Agent.h"
 #include "Model.h"
 #include "Obstacle.h"
 #include "protocol/SimulationSenders.h"
-#include <iwisedriversink.h>
-#include <wisedriver.h>
+#pragma warning( push )
+#pragma warning( disable: 4100 4201 )
+#include <wise/iwisedriversink.h>
+#include <wise/wisedriver.h>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: DetectionEvents::Trigger
 // Created: SEB 2010-10-27
 // -----------------------------------------------------------------------------
-void DetectionEvents::Trigger( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Model& model, const MsgsSimToClient::MsgUnitDetection& message )
+void DetectionEvents::Trigger( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& /*currentTime*/, const Model& model, const MsgsSimToClient::MsgUnitDetection& message )
 {
     try
     {
@@ -47,7 +50,7 @@ void DetectionEvents::Trigger( CWISEDriver& driver, const WISE_HANDLE& database,
 // Name: DetectionEvents::Trigger
 // Created: SEB 2010-10-27
 // -----------------------------------------------------------------------------
-void DetectionEvents::Trigger( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Model& model, const MsgsSimToClient::MsgObjectDetection& message )
+void DetectionEvents::Trigger( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& /*currentTime*/, const Model& model, const MsgsSimToClient::MsgObjectDetection& message )
 {
     try
     {

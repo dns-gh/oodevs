@@ -11,7 +11,10 @@
 #define __Simulation_h_
 
 #include <map>
-#include <wiseinterfacetypes.h>
+#pragma warning( push )
+#pragma warning( disable: 4201 )
+#include <wise/wiseinterfacetypes.h>
+#pragma warning( pop )
 
 namespace MsgsSimToClient
 {

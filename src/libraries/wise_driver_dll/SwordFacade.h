@@ -12,7 +12,10 @@
 
 #include "client_proxy/SwordConnectionHandler_ABC.h"
 #include <memory>
-#include <wiseinterfacetypes.h>
+#pragma warning( push )
+#pragma warning( disable: 4201 )
+#include <wise/wiseinterfacetypes.h>
+#pragma warning( pop )
 
 class CWISEDriver;
 class IWISEDriverSettings;

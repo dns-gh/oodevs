@@ -7,11 +7,14 @@
 //
 // *****************************************************************************
 
-#include "stdafx.h"
+#include "wise_driver_dll_pch.h"
 #include "Simulation.h"
 #include "client_proxy/SwordMessagePublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
-#include <wisedriver.h>
+#pragma warning( push )
+#pragma warning( disable: 4100 4201 )
+#include <wise/wisedriver.h>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: Simulation constructor

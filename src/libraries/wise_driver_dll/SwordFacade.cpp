@@ -7,13 +7,16 @@
 //
 // *****************************************************************************
 
-#include "stdafx.h"
+#include "wise_driver_dll_pch.h"
 #include "SwordFacade.h"
 #include "Model.h"
 #include "client_proxy/SwordProxy.h"
-#include <wisedriver.h>
 #include <sstream>
-#include <iwisedriversettings.h>
+#pragma warning( push )
+#pragma warning( disable: 4100 4201 )
+#include <wise/iwisedriversettings.h>
+#include <wise/wisedriver.h>
+#pragma warning( pop )
 
 namespace
 {

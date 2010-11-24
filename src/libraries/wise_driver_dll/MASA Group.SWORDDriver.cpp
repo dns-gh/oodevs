@@ -3,10 +3,12 @@
 ////////////////////////////////////////////////
 // Includes
 //
-#include "stdafx.h"
-#include "WISEDLLDriverExports.h"
+#include "wise_driver_dll_pch.h"
 #include "SWORDDriver.h"
-
+#pragma warning( push )
+#pragma warning( disable: 4100 4201 )
+#include <wise/WISEDLLDriverExports.h>
+#pragma warning( pop )
 
 DLLDRIVER_API long CreateMarshalledDriverInstance( IWISEGenericStub** ppDriver )
 {

@@ -11,7 +11,7 @@
 #define __Agent_h_
 
 #include "Entity_ABC.h"
-#include <wisevec3.h>
+#include <wise/wisevec3.h>
 #include <map>
 
 namespace MsgsSimToClient

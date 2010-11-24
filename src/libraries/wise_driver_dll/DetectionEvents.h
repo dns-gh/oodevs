@@ -10,7 +10,10 @@
 #ifndef __DetectionEvents_h_
 #define __DetectionEvents_h_
 
-#include <wiseinterfacetypes.h>
+#pragma warning( push )
+#pragma warning( disable: 4201 )
+#include <wise/wiseinterfacetypes.h>
+#pragma warning( pop )
 
 namespace MsgsSimToClient
 {
