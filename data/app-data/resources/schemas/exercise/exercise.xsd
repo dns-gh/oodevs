@@ -6,6 +6,7 @@
 			<xs:all>
 				<xs:element ref="meta"/>
 				<xs:element ref="model"/>
+				<xs:element ref="urbanstate" minOccurs="0"/>
 				<xs:element ref="population" minOccurs="0"/>
 				<xs:element ref="terrain"/>
 				<xs:element name="orbat" type="T_FileReference">
@@ -44,7 +45,7 @@
 					</xs:annotation>
 				</xs:element>
 			</xs:all>
-			<xs:attribute name="model-version" type="T_Version" use="required">
+			<xs:attribute name="model-version" type="T_Version" use="optional">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Defines model version used for exercise generation.</xs:documentation>
 				</xs:annotation>
@@ -54,7 +55,7 @@
 	<xs:element name="meta">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="name" maxOccurs="1">
+				<xs:element name="name" minOccurs="0" maxOccurs="1">
 					<xs:annotation>
 						<xs:documentation xml:lang="en">Defines the display name of the exercise.</xs:documentation>
 					</xs:annotation>
@@ -161,6 +162,18 @@
 			<xs:attribute name="name" type="xs:string" use="required">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Defines the population model to be used.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="urbanstate">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the urbanstate file used to specialise urban blocks.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="file" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the urbanstate file to be used.</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>

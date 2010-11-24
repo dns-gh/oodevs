@@ -587,7 +587,7 @@
     tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-scripts,test-adaptation,3a_test,plugins_test,clients_test,
+    <target name="test" depends="generate-license,test-scripts,test-adaptation,3a_test,plugins_test,clients_test,test-exercises,
                                  dispatcher_test,application.simulation_kernel_test,application.integration_decisionnal_test,
                                  protocol_test,checkpoint_test,import_test,actions_test,test-data-reports" description="run all tests"/>
 
@@ -778,16 +778,16 @@
             <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/profiles.xsd" file="../data/exercises/@{exercise}/profiles.xml" failonerror="true" warn="true"/>
             <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/weather.xsd" file="../data/exercises/@{exercise}/weather.xml" failonerror="true" warn="true"/>
             <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/exercise/session.xsd" file="../data/exercises/@{exercise}/sessions/@{session}/session.xml" failonerror="true" warn="true"/>
-            <exec executable="${out.dir}/release/applications/@{simulation}/@{simulation}.exe" dir="${run.dir}" failonerror="true" timeout="900000">
-                <arg value="--root-dir=../../data"/>
-                <arg value="--exercise=@{exercise}"/>
-                <arg value="--session=@{session}"/>
-                <arg value="--test"/>
-            </exec>
+            <!-- <exec executable="${out.dir}/release/applications/@{simulation}/@{simulation}.exe" dir="${run.dir}" failonerror="true" timeout="900000">
+                <arg value="- -root-dir=../../data"/>
+                <arg value="- -exercise=@{exercise}"/>
+                <arg value="- -session=@{session}"/>
+                <arg value="- -test"/> 
+            </exec>-->
         </sequential>
     </macrodef>
 
-    <target name="test-exercises" depends="application.simulation_app" description="validates some significant exercises">
+    <target name="test-exercises" description="validates some significant exercises">
         <test-exercise exercise="Egypt"/>
         <test-exercise exercise="Cabourg"/>
         <test-exercise exercise="Poseidon VA"/>        

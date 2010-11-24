@@ -93,39 +93,53 @@
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Defines ephemerides information.</xs:documentation>
 		</xs:annotation>
-		<xs:complexType>
-			<xs:attribute name="moon" type="T_LightingKind" use="required">
-				<xs:annotation>
-					<xs:documentation xml:lang="en">Defines the type of moon to be used for the exercise.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-			<xs:attribute name="sunrise" type="T_SimulationTime" use="required">
-				<xs:annotation>
-					<xs:documentation xml:lang="en">Defines the time of sunrise for the exercise.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-			<xs:attribute name="sunset" type="T_SimulationTime" use="required">
-				<xs:annotation>
-					<xs:documentation xml:lang="en">Defines the time of sunset for the exercise.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-		</xs:complexType>
-	</xs:element>
-	<xs:complexType name="T_Weather">
-		<xs:annotation>
-			<xs:documentation xml:lang="en">Defines weather conditions.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="wind">
-				<xs:annotation>
-					<xs:documentation xml:lang="en">Defines wind conditions.</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:attribute name="direction" type="T_Direction" use="required">
-						<xs:annotation>
-							<xs:documentation xml:lang="en">Defines the wind direction.</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
+    <xs:complexType>
+      <xs:attribute name="day-lighting" type="T_LightingKind" use="optional">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the type of lighting to be used for the exercise during day.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="night-lighting" type="T_LightingKind" use="optional">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the type of lighting to be used for the exercise during night.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="moon" type="T_LightingKind" use="optional">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the type of moon to be used for the exercise.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="sunrise" type="T_SimulationTime" use="required">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the time of sunrise for the exercise.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="sunset" type="T_SimulationTime" use="required">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines the time of sunset for the exercise.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+    <xs:key name="moonOrdaylight">
+      <xs:selector xpath="."/>
+      <xs:field xpath="@moon|@day-lighting"/>
+    </xs:key>
+  </xs:element>
+  <xs:complexType name="T_Weather">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Defines weather conditions.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="wind">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defines wind conditions.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="direction" type="T_Direction" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the wind direction.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
 					<xs:attribute name="speed" type="xs:float" use="required">
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Defines the wind speed.</xs:documentation>

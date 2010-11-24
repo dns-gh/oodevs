@@ -156,7 +156,7 @@
 		<xs:complexType>
 			<xs:complexContent>
 				<xs:extension base="entityType">
-					<xs:all>
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
 						<xs:element name="communication">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">Defines communication hierarchy.</xs:documentation>
@@ -201,12 +201,23 @@
 						</xs:element>
 						<xs:element name="populations">
 							<xs:annotation>
-								<xs:documentation xml:lang="en">Defines populations belonging to party.</xs:documentation>
-								<xs:documentation xml:lang="fr">Définit les populations appartenant au camp.</xs:documentation>
+								<xs:documentation xml:lang="en">Defines crowds belonging to party.</xs:documentation>
+								<xs:documentation xml:lang="fr">Définit les foules appartenant au camp.</xs:documentation>
 							</xs:annotation>
 							<xs:complexType>
 								<xs:sequence>
 									<xs:element ref="population" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+                        <xs:element name="inhabitants" minOccurs="0" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Defines populations belonging to party.</xs:documentation>
+								<xs:documentation xml:lang="fr">Définit les populations couvrantes appartenant au camp.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="inhabitant" minOccurs="0" maxOccurs="unbounded"/>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
@@ -221,7 +232,7 @@
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-					</xs:all>
+					</xs:choice>
 					<xs:attribute name="type" type="karmaType" use="required">
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Defines party type (karma).</xs:documentation>
@@ -411,7 +422,7 @@
 		<xs:complexType>
 			<xs:complexContent>
 				<xs:extension base="entityType">
-					<xs:all>
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
 						<xs:element name="shape" type="shapeType">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">Defines the location and shape of the object.</xs:documentation>
@@ -566,7 +577,7 @@
 										</xs:annotation>
 										<xs:complexType>
 											<xs:sequence>
-												<xs:element name="activation-time">
+												<xs:element name="activation-time" minOccurs="0">
 													<xs:complexType>
 														<xs:attribute name="value" type="xs:nonNegativeInteger" use="required"/>
 													</xs:complexType>
@@ -613,19 +624,19 @@
 									</xs:element>
 									<xs:element name="supply-route" minOccurs="0">
 										<xs:complexType>
-											<xs:sequence>
+											<xs:all>
 												<xs:element name="flow" type="xs:nonNegativeInteger"/>
 												<xs:element name="width" type="xs:nonNegativeInteger"/>
 												<xs:element name="length" type="xs:nonNegativeInteger"/>
 												<xs:element name="max-weight" type="xs:nonNegativeInteger"/>
 												<xs:element name="equipped" type="xs:boolean"/>
-											</xs:sequence>
+											</xs:all>
 										</xs:complexType>
 									</xs:element>
 								</xs:all>
 							</xs:complexType>
 						</xs:element>
-					</xs:all>
+					</xs:choice>
 					<xs:attribute name="type" type="objectType" use="required">
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Defines the type of the object. This is a reference to an existing object type from "Objects.xml".</xs:documentation>
@@ -707,40 +718,125 @@
 	</xs:simpleType>
 	<xs:element name="population">
 		<xs:annotation>
-			<xs:documentation xml:lang="en">Defines a population.</xs:documentation>
-			<xs:documentation xml:lang="fr">Définit une population.</xs:documentation>
+			<xs:documentation xml:lang="en">Defines a crowd.</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit une foule.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:complexContent>
 				<xs:extension base="entityType">
 					<xs:attribute name="attitude" type="populationAttitudeType" use="required">
 						<xs:annotation>
-							<xs:documentation xml:lang="en">Defines the initial population attitude.</xs:documentation>
-							<xs:documentation xml:lang="fr">Définit l'attitude initiale de la population.</xs:documentation>
+							<xs:documentation xml:lang="en">Defines the initial crowd attitude.</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit l'attitude initiale de la population couvrante.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 					<xs:attribute name="humans" type="xs:positiveInteger" use="required">
 						<xs:annotation>
-							<xs:documentation xml:lang="en">Defines the initial number of people composing the population.</xs:documentation>
-							<xs:documentation xml:lang="fr">Définit le nombre initial d'individus formant la population.</xs:documentation>
+							<xs:documentation xml:lang="en">Defines the initial number of people composing the crowd.</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit le nombre initial d'individus formant la population couvrante.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 					<xs:attribute name="position" type="utmCoordinatesType" use="required">
 						<xs:annotation>
-							<xs:documentation xml:lang="en">Defines the initial position of the center of the population concentration.</xs:documentation>
-							<xs:documentation xml:lang="fr">Définit la géolocalisation initiale du centre de la population.</xs:documentation>
+							<xs:documentation xml:lang="en">Defines the initial position of the center of the crowd concentration.</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit la géolocalisation initiale du centre de la population couvrante.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 					<xs:attribute name="type" type="xs:string" use="required">
 						<xs:annotation>
-							<xs:documentation xml:lang="en">Defines the type of population. References an existing population type from "Populations.xml".</xs:documentation>
-							<xs:documentation xml:lang="fr">Définit le type de la population. Renvoie vers "Populations.xml".</xs:documentation>
+							<xs:documentation xml:lang="en">Defines the type of crowd. References an existing crowd type from "Populations.xml".</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit le type de la population couvrante. Renvoie vers "Populations.xml".</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
+    <xs:element name="inhabitant">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines a population.</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit une population couvrante.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+            <xs:all>
+                <xs:element name="extensions" type="T_ExtensionsType" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="text" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="living-area" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="composition" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="adhesions" minOccurs="1" maxOccurs="1"/>
+            </xs:all>
+            <xs:attribute name="name" type="xs:string" use="required">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Defines the population name.</xs:documentation>
+                    <xs:documentation xml:lang="fr">Définit le nom de la population.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="type" type="xs:nonNegativeInteger" use="required">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Defines the type of population. References an existing population type from "Populations.xml".</xs:documentation>
+                    <xs:documentation xml:lang="fr">Définit le type de la population. Renvoie vers "Populations.xml".</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+		</xs:complexType>
+	</xs:element>
+    <xs:element name="living-area">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the living area of a population.</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit la zone de vie d'une population couvrante.</xs:documentation>
+		</xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="urban-block" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+		</xs:complexType>
+	</xs:element>
+    <xs:element name="urban-block">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines a reference to an urban block.</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit une référence à un bloc urbain.</xs:documentation>
+		</xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+        </xs:complexType>
+	</xs:element>
+    <xs:element name="composition">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the composition of a population (number of healthy, wounded and dead people).</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit la composition d'une population couvrante (nombre de personnes en bonne santé, blessées et mortes).</xs:documentation>
+		</xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="healthy" type="xs:nonNegativeInteger" use="required"/>
+            <xs:attribute name="wounded" type="xs:nonNegativeInteger" use="required"/>
+            <xs:attribute name="dead" type="xs:nonNegativeInteger" use="required"/>
+        </xs:complexType>
+	</xs:element>
+    <xs:element name="adhesions">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the adhesions of a population to the various parties.</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit l'adhésion d'une population couvrante aux différents camps.</xs:documentation>
+		</xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="adhesion" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+	</xs:element>
+    <xs:element name="adhesion">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the adhesion of a population to a party.</xs:documentation>
+			<xs:documentation xml:lang="fr">Définit l'adhésion d'une population couvrante à un camp.</xs:documentation>
+		</xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="party" type="xs:nonNegativeInteger" use="required"/>
+            <xs:attribute name="value" type="MinusOneToOneFloat" use="required"/>
+        </xs:complexType>
+	</xs:element>
+    <xs:simpleType name="MinusOneToOneFloat">
+        <xs:restriction base="xs:float">
+            <xs:minInclusive value="-1"/>
+            <xs:maxInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
 	<xs:simpleType name="utmCoordinatesType">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Defines Universal Transverse Mercator geographic coordinates.</xs:documentation>
@@ -876,14 +972,14 @@
 		<xs:complexType>
 			<xs:complexContent>
 				<xs:extension base="entityType">
-					<xs:sequence>
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
 						<xs:element ref="automat" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element ref="formation" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element ref="intelligence" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
-					</xs:sequence>
+					</xs:choice>
 					<xs:attribute name="level" type="hierarchicalLevelType" use="required">
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Defines the hierarchical level of the formation.</xs:documentation>
@@ -941,14 +1037,14 @@
 		<xs:complexType>
 			<xs:complexContent>
 				<xs:extension base="entityType">
-					<xs:sequence>
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
 						<xs:element ref="unit" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element ref="automat" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element name="lima" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element name="limit" type="tacticalLineType" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element ref="intelligence" minOccurs="0" maxOccurs="unbounded"/>
 						<xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
-					</xs:sequence>
+					</xs:choice>
 					<xs:attribute name="engaged" type="xs:boolean" use="required">
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Defines whether automat is initially engaged or not.</xs:documentation>
