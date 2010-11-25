@@ -154,8 +154,8 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
         return new actions::parameters::LimaList( parameter, converter_, message.limasorder() );
     if( message.has_datetime() )
         return new actions::parameters::DateTime( parameter, message.datetime() );
-    if( message.has_urbanblock() )
-        return new actions::parameters::UrbanBlock( parameter, message.urbanblock().id(), urbanKnowledgeConverter_, entity, controller_  );
+    if( message.has_urbanknowledge() )
+        return new actions::parameters::UrbanBlock( parameter, message.urbanknowledge().id(), urbanKnowledgeConverter_, entity, controller_  );
     if( message.has_party() )
         return new actions::parameters::Army( parameter, message.party().id(), entities_, controller_ );
     if( message.has_formation() )
