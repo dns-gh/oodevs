@@ -35,10 +35,11 @@ include "bit.lua"
         local Activate = Activate
         local _munitions = myself.munitions_
         local _nbIT = myself.nbIT_
+		DEC_Trace( "Indirect fire requested: " .. tostring( _nbIT ) )
         Activate( self.activations.ACT_Info_Trace, 1, { "Ordre : AppliquerFeux", } )
         Activate( self.activations.ACT_RC, 1, { eRC_ReceptionOrdreDeFeu, } )
         if( _munitions ~= nil and _nbIT > 0 ) then
-            Activate( self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 1, { _munitions, _nbIT, myself.cible_, } )
+            Activate( self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 10, { _munitions, _nbIT, myself.cible_, } )
         end
 
     end,
@@ -709,6 +710,9 @@ self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
 }
 
 connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ASS_AppliquerFeux, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ASS_AppliquerFeux, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ASS_AppliquerFeux, "BEH_Tir_Pion_ASS_AppliquerFeux", nodes.BEH_Tir_Pion_ASS_AppliquerFeux }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, "ACT_RC", nodes.ACT_RC }
