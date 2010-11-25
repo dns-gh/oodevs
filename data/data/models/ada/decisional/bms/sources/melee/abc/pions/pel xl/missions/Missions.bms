@@ -59,5 +59,7 @@ include "Melee/Abc/Pions/Pel XL/Missions/RenseignerSur.bms"
 
 include "Melee/Abc/Pions/Pel XL/Missions/ArmerPIA.bms"
 
+include "Melee/Abc/Pions/Pel XL/Missions/ArmerPointControle.bms"
+
 include "Melee/Abc/Pions/Pel XL/Missions/Escorter.bms"
 
