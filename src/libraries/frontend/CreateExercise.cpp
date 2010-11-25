@@ -26,7 +26,7 @@ namespace
     {
         xml::xofstream xos( file );
         xos << xml::start( "exercise" )
-                << xml::attribute( "generator-version", "V4.0.0" );
+                << xml::attribute( "model-version", "4.2.7" );
         if( keepMeta && boost::filesystem::exists( file ) )
         {
             xml::xifstream xis( file );
