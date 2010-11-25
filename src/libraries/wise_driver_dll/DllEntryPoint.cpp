@@ -1,10 +1,10 @@
-// MASA Group.SWORDDriver.cpp : Defines the entry point for the DLL application.
+// DllEntryPoint.cpp : Defines the entry point for the DLL application.
 
 ////////////////////////////////////////////////
 // Includes
 //
 #include "wise_driver_dll_pch.h"
-#include "SWORDDriver.h"
+#include "Driver.h"
 #pragma warning( push )
 #pragma warning( disable: 4100 4201 )
 #include <wise/WISEDLLDriverExports.h>
@@ -51,7 +51,7 @@ DLLDRIVER_API long CreateDriverInstance( IWISEDriver** ppDriver )
     CHECK_VALID_POINTER( ppDriver, WISE_FACILITY_COM_ADAPTER );
 
     // Create instance of the driver
-    CSWORDDriver* pSWORDDriver = new CSWORDDriver();
+    Driver* pSWORDDriver = new Driver();
     
     // Cast to IWISEDriver interface and return...
     *ppDriver = static_cast<IWISEDriver*>( pSWORDDriver );
@@ -62,7 +62,7 @@ DLLDRIVER_API long CreateDriverInstance( IWISEDriver** ppDriver )
 DLLDRIVER_API long DestroyDriverInstance( IWISEDriver* pDriver )
 {
     // Make sure the pointer is actually pointing to a valid driver instance...
-    CSWORDDriver* pSWORDDriver = dynamic_cast<CSWORDDriver*>( pDriver );
+    Driver* pSWORDDriver = dynamic_cast<Driver*>( pDriver );
     if( pSWORDDriver == NULL )
     {
         return MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_E_DOES_NOT_EXIST );

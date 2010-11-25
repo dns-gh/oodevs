@@ -1,17 +1,30 @@
 #include "wise_driver_dll_pch.h"
-#include "SWORDDriver.h"
+#include "Driver.h"
 #include "SwordFacade.h"
 
-CSWORDDriver::CSWORDDriver(void) :
-    CWISEDriver()
+// -----------------------------------------------------------------------------
+// Name: Driver constructor
+// Created: SEB 2010-10-12
+// -----------------------------------------------------------------------------
+Driver::Driver()
 {
+    // NOTHING
 }
 
-CSWORDDriver::~CSWORDDriver(void)
+// -----------------------------------------------------------------------------
+// Name: Driver destructor
+// Created: SEB 2010-10-12
+// -----------------------------------------------------------------------------
+Driver::~Driver()
 {
+    // NOTHING
 }
 
-WISE_RESULT CSWORDDriver::OnInitialize( IWISEDriverSettings* pSettings )
+// -----------------------------------------------------------------------------
+// Name: Driver::OnInitialize
+// Created: SEB 2010-10-12
+// -----------------------------------------------------------------------------
+WISE_RESULT Driver::OnInitialize( IWISEDriverSettings* pSettings )
 {
     WISE_RESULT wResult = WISE_OK;
     
@@ -31,7 +44,11 @@ WISE_RESULT CSWORDDriver::OnInitialize( IWISEDriverSettings* pSettings )
     return wResult;
 }
 
-WISE_RESULT CSWORDDriver::OnUninitialize( void )
+// -----------------------------------------------------------------------------
+// Name: Driver::OnUninitialize
+// Created: SEB 2010-10-12
+// -----------------------------------------------------------------------------
+WISE_RESULT Driver::OnUninitialize( void )
 {
     WISE_RESULT wResult = WISE_OK;
     
@@ -47,7 +64,11 @@ WISE_RESULT CSWORDDriver::OnUninitialize( void )
     return wResult;
 }
 
-WISE_RESULT CSWORDDriver::OnCreateDatabase( const std::wstring& strDatabaseName, 
+// -----------------------------------------------------------------------------
+// Name: Driver::OnCreateDatabase
+// Created: SEB 2010-10-12
+// -----------------------------------------------------------------------------
+WISE_RESULT Driver::OnCreateDatabase( const std::wstring& strDatabaseName, 
         const WISE_HANDLE& hDatabase, const WISE_HANDLE& hTemplateDatabase,
         const WISEDatabaseDistType& eDatabaseDistType, const WISEDatabaseType& eDatabaseType, 
         const WALOwnershipMode& eModeOwnership, const WALAttributeQualityMode& eModeAttributeQuality,
@@ -75,7 +96,11 @@ WISE_RESULT CSWORDDriver::OnCreateDatabase( const std::wstring& strDatabaseName,
     return wResult;
 }
 
-WISE_RESULT CSWORDDriver::OnCloseDatabase( const WISE_HANDLE& hDatabase )
+// -----------------------------------------------------------------------------
+// Name: Driver::OnCloseDatabase
+// Created: SEB 2010-10-12
+// -----------------------------------------------------------------------------
+WISE_RESULT Driver::OnCloseDatabase( const WISE_HANDLE& hDatabase )
 {
     WISE_RESULT wResult = WISE_OK;
 
@@ -100,7 +125,11 @@ WISE_RESULT CSWORDDriver::OnCloseDatabase( const WISE_HANDLE& hDatabase )
     return wResult;
 }
 
-WISE_RESULT CSWORDDriver::OnAddObject( const timeb& timeStamp, const WISE_HANDLE& hDatabase, 
+// -----------------------------------------------------------------------------
+// Name: Driver::OnAddObject
+// Created: SEB 2010-10-12
+// -----------------------------------------------------------------------------
+WISE_RESULT Driver::OnAddObject( const timeb& timeStamp, const WISE_HANDLE& hDatabase, 
         const WISE_HANDLE& hObject, const std::wstring& strObjectName,
         const std::map<std::wstring, WISE_HANDLE >& associatedObjects, 
         const std::map<std::wstring, std::list<WISE_HANDLE> >& associatedObjectLists )
@@ -137,7 +166,11 @@ WISE_RESULT CSWORDDriver::OnAddObject( const timeb& timeStamp, const WISE_HANDLE
     return wResult;
 }
 
-WISE_RESULT CSWORDDriver::OnRemoveObject( const timeb& timeStamp, const WISE_HANDLE& hDatabase, 
+// -----------------------------------------------------------------------------
+// Name: Driver::OnRemoveObject
+// Created: SEB 2010-10-12
+// -----------------------------------------------------------------------------
+WISE_RESULT Driver::OnRemoveObject( const timeb& timeStamp, const WISE_HANDLE& hDatabase, 
         const WISE_HANDLE& hObject )
 {
     WISE_RESULT wResult = WISE_OK;
@@ -169,7 +202,11 @@ WISE_RESULT CSWORDDriver::OnRemoveObject( const timeb& timeStamp, const WISE_HAN
     return wResult;
 }
 
-WISE_RESULT CSWORDDriver::OnSendEvent( const timeb& timeStamp, const WISE_HANDLE& hDatabase, 
+// -----------------------------------------------------------------------------
+// Name: Driver::OnSendEvent
+// Created: SEB 2010-10-12
+// -----------------------------------------------------------------------------
+WISE_RESULT Driver::OnSendEvent( const timeb& timeStamp, const WISE_HANDLE& hDatabase, 
         const WISE_HANDLE& hEvent, const std::map<std::wstring, WISE_HANDLE >& associatedObjects, 
         const std::map<std::wstring, std::list<WISE_HANDLE> >& associatedObjectLists )
 {
@@ -196,7 +233,11 @@ WISE_RESULT CSWORDDriver::OnSendEvent( const timeb& timeStamp, const WISE_HANDLE
     return wResult;
 }
 
-WISE_RESULT CSWORDDriver::OnUpdateAttribute( const timeb& timeStamp, 
+// -----------------------------------------------------------------------------
+// Name: Driver::OnUpdateAttribute
+// Created: SEB 2010-10-12
+// -----------------------------------------------------------------------------
+WISE_RESULT Driver::OnUpdateAttribute( const timeb& timeStamp, 
         const WISE_HANDLE& hDatabase, const WISE_HANDLE& hObject, const WISE_HANDLE& hAttribute, 
         const CWISEValueUnion& value, const WISE_ATTRIBUTE_QUALITY& quality )
 {
@@ -222,10 +263,10 @@ WISE_RESULT CSWORDDriver::OnUpdateAttribute( const timeb& timeStamp,
 }
 
 // -----------------------------------------------------------------------------
-// Name: CSWORDDriver::OnRun
+// Name: Driver::OnRun
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------
-void CSWORDDriver::OnRun()
+void Driver::OnRun()
 {
     try
     {
@@ -238,7 +279,7 @@ void CSWORDDriver::OnRun()
     }
     catch( ... )
     {
-        NotifyErrorMessage( L"Exception occurred in CSWORDDriver::OnRun()! Thread will terminate.", 
+        NotifyErrorMessage( L"Exception occurred in Driver::OnRun()! Thread will terminate.", 
             MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_ERROR ) );
     }
 }

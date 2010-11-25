@@ -11,18 +11,18 @@
 class SwordFacade;
 
 //! \brief  Implementation of WISE driver for SWORD.
-class CSWORDDriver : 
+class Driver : 
     public CWISEDriver
 
 {
 public:
     //! \brief  Class constructor. 
     //!         Initializes the object on construction.
-    CSWORDDriver();
+    Driver();
     
     //! \brief  Class destructor. 
     //!         Performs clean-up on object destruction.
-    virtual ~CSWORDDriver(void);
+    virtual ~Driver(void);
 
 protected:
 
