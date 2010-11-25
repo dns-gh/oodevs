@@ -1290,9 +1290,9 @@ message MsgPopulationUpdate {
         optional float                  safety      = 5;
     }
     required Common.PopulationId  id           = 1;
-    optional unit32               healthy      = 2;
-    optional unit32               wounded      = 3;
-    optional unit32               dead         = 4;
+    optional int32                 healthy      = 2;
+    optional int32                 wounded      = 3;
+    optional int32                 dead         = 4;
     repeated Common.PartyAdhesion adhesions    = 5;
     optional Satisfaction         satisfaction = 6;
 }
