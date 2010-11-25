@@ -149,9 +149,9 @@ message MsgControlEnableVisionCones {
 message MsgChangePopulationMagicAction {
   required Common.PopulationId   tasker     = 1;
   repeated Common.PartyAdhesion  adhesions  = 2;
-  optional unit32                healthy    = 3;
-  optional unit32                wounded    = 4;
-  optional unit32                dead       = 5;
+  optional int32                 healthy    = 3;
+  optional int32                 wounded    = 4;
+  optional int32                 dead       = 5;
   optional Common.MotivationType motivation = 6;
 }
 
