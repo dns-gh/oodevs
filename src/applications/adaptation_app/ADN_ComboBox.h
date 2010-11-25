@@ -68,8 +68,10 @@ signals:
 
 protected:
     void*                       pCurData_;
-    T_ConnectorVector        vItemConnectors_;
+    T_ConnectorVector           vItemConnectors_;
     T_PtrComboBoxItem_Vector    vItems_;
+    std::vector< int >          vItemsEnum_;
+    bool                        fromView_;
 
 private slots:
     void    ItemSelected( int ndx );
