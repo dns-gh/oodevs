@@ -13,6 +13,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Attaquer"/>
         <mission name="MELEE Boucler"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Couvrir"/>
@@ -80,6 +81,7 @@
         <mission name="MELEE Contre Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
+        <mission name="MELEE Detruire"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Couvrir"/>
         <mission name="MELEE Eclairer"/>
@@ -131,6 +133,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Attaquer"/>
         <mission name="MELEE Boucler"/>
         <mission name="MELEE Contre Attaquer">
           <fragorder name="Deboucher"/>
