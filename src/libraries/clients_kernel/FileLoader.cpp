@@ -12,6 +12,7 @@
 #include "tools/ExerciseConfig.h"
 #include <boost/filesystem.hpp>
 #include <xeumeuleu/xml.hpp>
+#include <xeuseuleu/xsl.hpp>
 
 using namespace kernel;
 
@@ -41,25 +42,41 @@ namespace
     {
         typedef boost::function< void ( xml::xisubstream ) > T_Loader;
 
-        CheckedLoader( const std::string& file, const tools::ExerciseConfig& config, T_Loader loader )
-            : path_( config.BuildPhysicalChildFile( file ) )
+        CheckedLoader( const std::string& path, const tools::ExerciseConfig& config, T_Loader loader, const std::string& xslTransform )
+            : path_( path )
             , config_( config )
             , loader_( loader )
         {
             xml::xifstream xis( path_ );
-            xis >> xml::list( *this, &CheckedLoader::LoadFile );
+            LoadFile( xis, xslTransform );
         }
 
     private:
-        void LoadFile( const std::string&, xml::xistream& xis )
+        void LoadFile( xml::xistream& xis, const std::string& xslTransform )
         {
             const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
-            if( schema.empty() )
-                loader_( xml::xifstream( path_ ) );
+            if( !xslTransform.empty() )
+            {
+                xsl::xstringtransform xst( xslTransform );
+                xst << xml::xifstream( path_ );
+                std::string updatedFile = xst.str();
+                if( schema.empty() )
+                    loader_( xml::xistringstream( updatedFile ) );
+                else
+                {
+                    CheckedLoader::GetModelVersion( schema );
+                    loader_( xml::xistringstream( updatedFile, xml::external_grammar( config_.BuildResourceChildFile( schema ) ) ) );
+                }
+            }
             else
             {
-                CheckedLoader::GetModelVersion( schema );
-                loader_( xml::xifstream( path_, xml::external_grammar( config_.BuildResourceChildFile( schema ) ) ) );
+                if( schema.empty() )
+                    loader_( xml::xifstream( path_ ) );
+                else
+                {
+                    CheckedLoader::GetModelVersion( schema );
+                    loader_( xml::xifstream( path_, xml::external_grammar( config_.BuildResourceChildFile( schema ) ) ) );
+                }
             }
         }
 
@@ -81,12 +98,47 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: FileLoader::Load
-// Created: SBO 2009-08-20
+// Created: LDC 2010-11-25
 // -----------------------------------------------------------------------------
 FileLoader& FileLoader::Load( const std::string& rootTag, T_Loader loader )
 {
+    std::string empty;
+    return Load( rootTag, loader, empty );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileLoader::LoadExercise
+// Created: LDC 2010-11-25
+// -----------------------------------------------------------------------------
+FileLoader& FileLoader::LoadExercise( const std::string& rootTag, T_Loader loader )
+{
+    std::string empty;
+    return LoadExercise( rootTag, loader, empty );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileLoader::Load
+// Created: SBO 2009-08-20
+// -----------------------------------------------------------------------------
+FileLoader& FileLoader::Load( const std::string& rootTag, T_Loader loader, const std::string& xslTransform )
+{
     std::string file;
     *xis_ >> xml::start( rootTag ) >> xml::attribute( "file", file ) >> xml::end;
-    CheckedLoader( file, config_, loader );
+    CheckedLoader( config_.BuildPhysicalChildFile( file ), config_, loader, xslTransform );
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileLoader::LoadExercise
+// Created: LDC 2010-11-25
+// -----------------------------------------------------------------------------
+FileLoader& FileLoader::LoadExercise( const std::string& rootTag, T_Loader loader, const std::string& xslTransform )
+{
+    xml::xifstream xis( config_.GetExerciseFile() );
+    std::string file;
+    xis >> xml::start( "exercise" )
+            >> xml::start( rootTag ) 
+                >> xml::attribute( "file", file );
+    CheckedLoader( config_.BuildExerciseChildFile( file ), config_, loader, xslTransform );
     return *this;
 }

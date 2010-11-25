@@ -124,7 +124,7 @@ void MIL_Config::ReadSessionFile( const std::string& file )
                         >> xml::optional >> xml::attribute( "paused", bPausedAtStartup_ )
                     >> xml::end
                     >> xml::optional
-                    >> xml::start( "parametresGC" )
+                    >> xml::start( "GarbageCollector" )
                         >> xml::attribute( "setpause", setpause_ )
                         >> xml::attribute( "setstepmul", setstepmul_ )
                     >> xml::end

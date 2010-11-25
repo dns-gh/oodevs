@@ -21,7 +21,7 @@ message ObjectKnowledgeIdList              { repeated ObjectKnowledgeId elem = 1
 message PartyId                            { required uint32              id = 1; }
 message PartyIdList                        { repeated PartyId           elem = 1; }
 message CrowdId                            { required uint32              id = 1; }
-message CrowdIdList                        { repeated CrowdId      elem = 1; }
+message CrowdIdList                        { repeated CrowdId           elem = 1; }
 message CrowdKnowledgeId                   { required uint32              id = 1; }
 message CrowdConcentrationId               { required uint32              id = 1; }
 message CrowdConcentrationKnowledgeId      { required uint32              id = 1; }
@@ -35,6 +35,7 @@ message UrbanObjectId                      { required uint32              id = 1
 message UrbanObjectKnowledgeId             { required uint32              id = 1; }
 message ClientObjectId                     { required uint32              id = 1; }
 message PlannedWorkId                      { required uint32              id = 1; }
+message PopulationId                       { required uint32              id = 1; }
 
 message Tasker {
     optional AutomatId    automat    = 1;
@@ -81,6 +82,8 @@ message UnitType              { required uint32 id = 1; }
 message ReportCategory        { required uint32 id = 1; }
 message NationalityType       { required uint32 id = 1; }
 message ResourceNetworkType   { required string name = 1; }
+message PopulationType        { required uint32 id = 1; }
+message MotivationType        { required uint32 id = 1; }
 
 // Helpers
 message MsgHeading {
@@ -833,4 +836,10 @@ message MsgWeatherAttributes {
    required int32                 cloud_density   = 6;
    required EnumPrecipitationType precipitation   = 7;
    required EnumLightingType      lighting        = 8;
+}
+
+//adhesions
+message PartyAdhesion {
+    required PartyId party = 1;
+    required float value = 2;
 }

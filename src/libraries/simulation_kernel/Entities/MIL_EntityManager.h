@@ -225,10 +225,10 @@ private:
     //@{
 
     // ODB
+    void ReadOrbat( xml::xistream& xis );
     void InitializeArmies     ( xml::xistream& xis );
     void InitializeDiplomacy  ( xml::xistream& xis );
     void InitializeDotations  ( xml::xistream& xis );
-    void InitializePopulations( xml::xistream& xis );
     void ReadDiplomacy        ( xml::xistream& xis );
     //@}
 

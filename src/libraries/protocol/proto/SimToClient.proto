@@ -191,11 +191,31 @@ message MsgActionCreateFireOrderAck {
     enum EnumActionCreateFireOrderErrorCode {
         no_error                    = 0;
         error_invalid_reporter      = 1;
-        error_invalid_target	    = 2;
+        error_invalid_target        = 2;
         error_invalid_munition      = 3;
         error_target_no_illuminated = 4;
     }
     required EnumActionCreateFireOrderErrorCode  error_code = 2;
+}
+
+message MsgChangePopulationMagicActionAck {
+    enum ErrorCode {
+       no_error                     = 0;
+       error_invalid_population     = 1;
+       error_invalid_adhesion       = 2; // unknown party for instance
+       error_invalid_number         = 3; // negative number of dead for instance?
+    }
+  required ErrorCode error_code = 1;
+}
+
+message MsgUrbanMagicActionAck {
+    enum ErrorCode {
+       no_error                     = 0;
+       error_invalid_urbanblock     = 1;
+       error_invalid_role           = 2;
+       error_invalid_threshold      = 3;
+    }
+  required ErrorCode error_code = 1;
 }
 
 message MsgControlInformation {
@@ -285,6 +305,10 @@ message MsgFormationCreation {
     optional Common.ParentEntity      logistic_base_organic = 10;
 }
 
+message MsgFormationDestruction {
+   required Common.FormationId formation = 1;
+}
+
 message MsgAutomatCreation {
     required Common.AutomatId              automat         = 1;
     required Common.AutomatType            type            = 2;
@@ -325,6 +349,10 @@ message MsgAutomatAttributes {
    optional RulesOfEngagement.Value            roe                   = 6;
    optional Common.AutomatId                   tc2_organic           = 7;
    optional Common.ParentEntity                logistic_base_organic = 8;
+}
+
+message MsgAutomatDestruction {
+   required Common.AutomatId automat = 1;
 }
 
 
@@ -949,6 +977,10 @@ message MsgCrowdUpdate {
    optional int32          etat_domination = 2;
 }
 
+message MsgCrowdDestruction {
+   required Common.CrowdId crowd = 1;
+}
+
 message MsgCrowdConcentrationCreation {
    required Common.CrowdConcentrationId concentration = 1;
    required Common.CrowdId              crowd         = 2;
@@ -1124,15 +1156,21 @@ message UrbanAttributes {
     {
         required uint32 state = 1;
     }
-    message Infrastructures
-    {
+    message Infrastructures {
+        message Infrastructure {
+          required string type      = 1;
+          required bool   active    = 2;
+          required float  threshold = 3;
+        }
         repeated Common.ResourceNetwork resource_network = 1;
+        optional Infrastructure infrastructure = 2;
     }
 
-    optional Architecture     architecture    = 1;
-    optional Structure        structure       = 2;    
-    optional Common.RgbaColor color           = 3;
-    optional Infrastructures  infrastructures = 4;
+    optional Architecture          architecture    = 1;
+    optional Structure             structure       = 2;    
+    optional Common.RgbaColor      color           = 3;
+    optional Infrastructures       infrastructures = 4;
+    optional Common.MotivationType role            = 5;
 }
 
 message MsgUrbanCreation {
@@ -1224,16 +1262,39 @@ message MsgControlLocalWeatherDestruction {
    required Common.WeatherId weather = 1;
 }
 
-message MsgFormationDestruction {
-   required Common.FormationId formation = 1;
+// Populations
+message MsgPopulationCreation {
+    required Common.PopulationId   id        = 1;
+    required Common.PartyId        party     = 2;
+    required Common.PopulationType type      = 3;
+    required string                name      = 4;
+    required string                text      = 5;
+    optional Extension             extension = 6;
+    repeated Common.UrbanObjectId  blocks    = 7;
 }
 
-message MsgAutomatDestruction {
-   required Common.AutomatId automat = 1;
-}
-
-message MsgCrowdDestruction {
-   required Common.CrowdId crowd = 1;
+message MsgPopulationUpdate {
+    message MotivationSatisfaction {
+        required Common.MotivationType motivation = 1; // motivationType = "home", "office", ...
+        required float                 value      = 2;
+    }
+    message ResourceSatisfaction {
+        required Common.ResourceType resource = 1;
+        required float               value    = 2;
+    }
+    message Satisfaction {
+        repeated ResourceSatisfaction   resources   = 1;
+        repeated MotivationSatisfaction motivations = 2;
+        optional float                  lodging     = 3;
+        optional float                  health      = 4;
+        optional float                  safety      = 5;
+    }
+    required Common.PopulationId  id           = 1;
+    optional unit32               healthy      = 2;
+    optional unit32               wounded      = 3;
+    optional unit32               dead         = 4;
+    repeated Common.PartyAdhesion adhesions    = 5;
+    optional Satisfaction         satisfaction = 6;
 }
 
 // Message container
@@ -1362,9 +1423,9 @@ message MsgSimToClient {
         optional MsgKnowledgeGroupUpdateAck                     knowledge_group_update_ack                     = 121;
         optional MsgKnowledgeGroupDestruction                   knowledge_group_destruction                    = 122;
         optional MsgActionCreateFireOrderAck                    action_create_fire_order_ack                   = 123;
-        optional MsgControlGlobalWeather			            control_global_weather                         = 124;
-        optional MsgControlLocalWeatherCreation		            control_local_weather_creation                 = 125;
-        optional MsgControlLocalWeatherDestruction		        control_local_weather_destruction              = 126;
+        optional MsgControlGlobalWeather                        control_global_weather                         = 124;
+        optional MsgControlLocalWeatherCreation                 control_local_weather_creation                 = 125;
+        optional MsgControlLocalWeatherDestruction              control_local_weather_destruction              = 126;
         optional MsgControlCheckPointListAck                    control_checkpoint_list_ack                    = 127;
         optional MsgControlCheckPointList                       control_checkpoint_list                        = 128;
         optional MsgControlCheckPointDeleteAck                  control_checkpoint_delete_ack                  = 129;
@@ -1372,6 +1433,10 @@ message MsgSimToClient {
         optional MsgFormationDestruction                        formation_destruction                          = 131;
         optional MsgAutomatDestruction                          automat_destruction                            = 132;
         optional MsgCrowdDestruction                            crowd_destruction                              = 133;
+        optional MsgPopulationCreation                          population_creation                            = 134;
+        optional MsgPopulationUpdate                            population_update                              = 135;
+        optional MsgChangePopulationMagicActionAck              change_population_magic_action_ack             = 136;
+        optional MsgUrbanMagicActionAck                         urban_magic_action_ack                         = 137;
     }
     optional int32   context = 1;
     required Content message = 2;

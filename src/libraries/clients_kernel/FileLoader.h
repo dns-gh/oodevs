@@ -49,6 +49,9 @@ public:
     //! @name Operations
     //@{
     FileLoader& Load( const std::string& rootTag, T_Loader loader );
+    FileLoader& Load( const std::string& rootTag, T_Loader loader, const std::string& xslTransform );
+    FileLoader& LoadExercise( const std::string& rootTag, T_Loader loader );
+    FileLoader& LoadExercise( const std::string& rootTag, T_Loader loader, const std::string& xslTransform );
     //@}
 
 private:

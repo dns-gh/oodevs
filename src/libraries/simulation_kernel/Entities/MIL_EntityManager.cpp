@@ -65,6 +65,7 @@
 #include "Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
+#include "clients_kernel/FileLoader.h"
 #include "Decision/DEC_Workspace.h"
 #include "Effects/MIL_EffectManager.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
@@ -254,18 +255,12 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     const std::string strOrbat = config.GetOrbatFile();
     MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strOrbat.c_str() ) );
 
-    xml::xifstream xis( strOrbat );
-    xis >> xml::start( "orbat" );
-
-    InitializeDotations( xis );
-    InitializeArmies   ( xis );
-    InitializeDiplomacy( xis );
+    kernel::FileLoader loader ( config );
+    loader.LoadExercise( "orbat", boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ) ); //, "resources/orbat0-4.2.xsl" );
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
-
-    xis >> xml::end;
 
     // Check automate composition
     if( config.CheckAutomateComposition() )
@@ -286,27 +281,39 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     UpdateStates();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ReadOrbat
+// Created: LDC 2010-11-24
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::ReadOrbat( xml::xistream& xis )
+{
+    xis >> xml::start( "orbat" );
+    InitializeDotations( xis );
+    InitializeArmies   ( xis );
+    InitializeDiplomacy( xis );
+}
+
 namespace 
 {
     class UrbanWrapperVisitor : public urban::ObjectVisitor_ABC
     {
-    public:
-        UrbanWrapperVisitor( MIL_EntityManager& manager ) : manager_( manager )
-        {}
-        ~UrbanWrapperVisitor(){}
-        virtual void Visit( const urban::TerrainObject_ABC& object )
-        {
+public:
+    UrbanWrapperVisitor( MIL_EntityManager& manager ) : manager_( manager )
+    {}
+    ~UrbanWrapperVisitor(){}
+    virtual void Visit( const urban::TerrainObject_ABC& object )
+    {
             const urban::Architecture* architecture = object.Retrieve< urban::Architecture >();
         	if( architecture && ( !UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() ) || !UrbanType::GetUrbanType().GetStaticModel().FindType< urban::RoofShapeType >( architecture->GetRoofShape() ) ) )
         	{
             	MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetId(), object.GetName().c_str() ) );
             	return;
         	}
-        	manager_.CreateUrbanObject( object );
-        }
-    private:
-        MIL_EntityManager& manager_;
-    };
+        manager_.CreateUrbanObject( object );
+    }
+private:
+    MIL_EntityManager& manager_;
+};
 }
 
 // -----------------------------------------------------------------------------
