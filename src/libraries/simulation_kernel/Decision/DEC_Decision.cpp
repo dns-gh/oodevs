@@ -12,6 +12,7 @@
 #include "DEC_Tools.h"
 #include "Entities/Orders/MIL_MissionParameter_ABC.h"
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
+#include "Decision/DEC_AgentFunctions.h"
 #include "Decision/DEC_DIAFunctions.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_LogisticFunctions.h"
@@ -66,6 +67,7 @@ namespace DEC_DecisionImpl
 // -----------------------------------------------------------------------------
 void RegisterGeometryFunctions( directia::brain::Brain& brain)
 {
+    brain[ "DEC_Agent_PositionPtr" ] = &DEC_AgentFunctions::GetAgentPositionPtr;
     brain[ "DEC_Geometrie_DecouperListePoints" ] = &DEC_GeometryFunctions::SplitListPoints;
     brain[ "DEC_Geometrie_CalculerPositionCouverture" ] = &DEC_GeometryFunctions::ComputeCoverPosition;
     brain[ "DEC_Geometrie_CalculerBarycentreAgents" ] = &DEC_GeometryFunctions::ComputeAgentsBarycenter;

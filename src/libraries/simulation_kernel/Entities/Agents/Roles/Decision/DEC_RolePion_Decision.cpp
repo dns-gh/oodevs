@@ -246,7 +246,6 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain.Register( "DEC_Agent_EstNeutralise", &DEC_Decision_ABC::IsNeutralized );
     brain.Register( "DEC_Agent_AutomateEstEmbraye", &DEC_Decision_ABC::IsAutomateEngaged );
     brain.Register( "DEC_Agent_Position", &DEC_Decision_ABC::GetPosition );
-    brain[ "DEC_Agent_PositionPtr" ] = &DEC_AgentFunctions::GetAgentPositionPtr;
     brain.Register( "DEC_Agent_EstMort", &DEC_Decision_ABC::IsDead );
     brain[ "DEC_Agent_PeutIllumine" ] = &DEC_AgentFunctions::CanIlluminate;
 
