@@ -113,15 +113,15 @@ node "BEH_Eni_Pion_ASS_AppliquerFeux"
             do
                 local mission = DEC_GetMission( myself )
                 self.listePoints = DEC_Geometrie_PositionsParRapportALocalisation( self.sPions, self._namedParams.ordre:GetzoneCible_(), DEC_GetDirectionEnnemi( mission ), 1000 )
-                --[[//-----------------------------------------------------------------------------
-]]--[[// Gestion erreur
-]]--[[//-----------------------------------------------------------------------------
-]]if( self.listePoints ~= 0 ) then
+                --[[//-----------------------------------------------------------------------------]]
+                --[[// Gestion erreur ]]
+                --[[//-----------------------------------------------------------------------------]]
+                if( #self.listePoints > 0 ) then
                     do
-                        for _,pion in pairs( --[[//-----------------------------------------------------------------------------
-]]--[[// Assignation des mission aux pions
-]]--[[//-----------------------------------------------------------------------------
-]]self.sPions or {} ) do
+                        for _,pion in pairs( --[[//-----------------------------------------------------------------------------]]
+                        --[[// Assignation des mission aux pions]]
+                        --[[//-----------------------------------------------------------------------------]]
+                        self.sPions or {} ) do
                         local _continue = true
                             do
                                 if( self.rIterateurPoint == DEC_ListePoints_Size( self.listePoints ) ) then
@@ -130,7 +130,7 @@ node "BEH_Eni_Pion_ASS_AppliquerFeux"
 
                                 local point = DEC_ListePoints_GetAt( self.listePoints, self.rIterateurPoint )
                                 StartActivateOverride( self, self.activations.ACT_MOT_Automate_ASS_DemandeAppliqerFeux, 1, { pion, self._namedParams.ordre, point, } )
-                                                                self.rIterateurPoint = self.rIterateurPoint + 1
+                                self.rIterateurPoint = self.rIterateurPoint + 1
                             end
 
                         end
@@ -144,7 +144,6 @@ node "BEH_Eni_Pion_ASS_AppliquerFeux"
     end,
 
     destroy = function( self )
-                self.listePoints = 0
     end,
 
 --[[// ----------------------------------------------------------------------------

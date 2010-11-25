@@ -185,9 +185,9 @@ self.done_ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA = function( self, _, v 
     end,
 
 --[[// *****************************************************************************
-]]--[[// BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition
+]]--[[// BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA
 ]]--[[// 
-]]--[[// Commentaires: Ajouter par JCR le 23/08/2010
+]]--[[// Commentaires: Ajouter par LLS le 23/10/2008
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]}
@@ -240,15 +240,14 @@ elseif switch_1 == eActionHalt
 self.done_ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition = function( self, _, v ) self.eActionCreation = v[1] end
     end,
 
-}
-
 --[[// *****************************************************************************
 ]]--[[// BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA
 ]]--[[// 
 ]]--[[// Commentaires: Ajouter par LLS le 23/10/2008
 ]]--[[//
 ]]--[[// *****************************************************************************
-]]
+]]}
+
 node "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA"
 {
     feedbacks = { { { "done_BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA" }, "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA" } },
@@ -305,14 +304,14 @@ connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AcquerirObjec
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AcquerirObjectifsA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AcquerirObjectifsA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AcquerirObjectifsA, "ACT_Mission_Automate_ASS_AcquerirObjectifsA", nodes.ACT_Mission_Automate_ASS_AcquerirObjectifsA }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition, "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition", nodes.ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones", nodes.ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition, "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition", nodes.ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvreSurPosition }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }

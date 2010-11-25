@@ -93,10 +93,13 @@ end
 function S_Tir_EstTropLoinPourToucher( repEni, rPh )
     local _returnValue = false
     local rPorteeMax = DEC_Tir_PorteeMaxPourTirerSurUnite( repEni, rPh )
-    local rDistanceAEni = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( repEni ) )
-    _returnValue = rDistanceAEni > rPorteeMax
     if( rPorteeMax == -1 ) then
         _returnValue = false
+    else
+do
+            local rDistanceAEni = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( repEni ) )
+            _returnValue = rDistanceAEni > rPorteeMax
+        end
     end
 
     do return _returnValue end
@@ -105,10 +108,13 @@ end
 function S_Tir_EstTropProchePourToucher( repEni, rPh )
     local _returnValue = false
     local rPorteeMin = DEC_Tir_PorteeMinPourTirerSurUnite( repEni, rPh )
-    local rDistanceAEni = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( repEni ) )
-    _returnValue = rDistanceAEni < rPorteeMin
     if( rPorteeMin == -1 ) then
         _returnValue = false
+    else
+do
+            local rDistanceAEni = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( repEni ) )
+            _returnValue = rDistanceAEni < rPorteeMin
+        end
     end
 
     do return _returnValue end
@@ -125,10 +131,13 @@ end
 function S_Tir_EstTropLoinPourToucherPosturesReelles( repEni, rPh )
     local _returnValue = false
     local rPorteeMax = DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( repEni, rPh )
-    local rDistanceAEni = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( repEni ) )
-    _returnValue = rDistanceAEni > rPorteeMax
     if( rPorteeMax == -1 ) then
         _returnValue = false
+    else
+do
+            local rDistanceAEni = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( repEni ) )
+            _returnValue = rDistanceAEni > rPorteeMax
+        end
     end
 
     do return _returnValue end
@@ -137,10 +146,13 @@ end
 function S_Tir_EstTropProchePourToucherPosturesReelles( repEni, rPh )
     local _returnValue = false
     local rPorteeMin = DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles( repEni, rPh )
-    local rDistanceAEni = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( repEni ) )
-    _returnValue = rDistanceAEni < rPorteeMin
     if( rPorteeMin == -1 ) then
         _returnValue = false
+    else
+do
+            local rDistanceAEni = DEC_Geometrie_Distance( myself:DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( repEni ) )
+            _returnValue = rDistanceAEni < rPorteeMin
+        end
     end
 
     do return _returnValue end
@@ -156,17 +168,15 @@ end
 
 function S_Tir_EfficaceSur( repEni, rEtatInitial )
     local _returnValue = false
-    _returnValue = false
     if( rEtatInitial == 0 ) then
-        do
-            _returnValue = false
-                        do return _returnValue end
-
+        _returnValue = false
+    else
+do
+            local rEfficacite = ( rEtatInitial - DEC_ConnaissanceAgent_EtatOps( repEni ) ) / rEtatInitial
+            _returnValue = ( rEfficacite < 0.5 )
         end
     end
 
-    local rEfficacite = ( rEtatInitial - DEC_ConnaissanceAgent_EtatOps( repEni ) ) / rEtatInitial
-    _returnValue = ( rEfficacite < 0.5 )
     do return _returnValue end
 end
 
@@ -179,10 +189,17 @@ end
 
 function S_Tir_DistancePorteeIndirect_EstValide( dotation, ptCible )
     local _returnValue = false
-    local rPorteeMax = DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( dotation )
-    local rPorteeMin = DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( dotation )
-    local rDist = DEC_Geometrie_Distance( DEC_Agent_Position(), ptCible )
-    _returnValue = ( rDist >= rPorteeMin ) and ( rDist < rPorteeMax )
+    if( ptCible ~= nil ) then
+        do
+            local rPorteeMax = DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( dotation )
+            local rPorteeMin = DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( dotation )
+            local rDist = DEC_Geometrie_Distance( DEC_Agent_Position(), ptCible )
+            _returnValue = ( rDist >= rPorteeMin ) and ( rDist < rPorteeMax )
+        end
+    else
+        _returnValue = false
+    end
+
     do return _returnValue end
 end
 

@@ -41,7 +41,7 @@ include "bit.lua"
         self.ePhase = self.ePhase or eRejoindre
         local pionTC2 = DEC_Pion_PcDeTC2()
         if( pionTC2 == nil ) then
-do
+            do
                 DEC_Warning( eRC_MissionImpossible )
                                 self:SendFeedback( eActionImpossible )
                 Halt( self )

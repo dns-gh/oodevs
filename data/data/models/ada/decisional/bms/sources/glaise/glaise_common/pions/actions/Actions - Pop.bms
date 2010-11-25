@@ -121,7 +121,7 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Pop.bms"] = 
 ]]--[[//---------------------------------------------------------------------
 ]]        end
 
-        DEC_ConnaisanceObjet_ChangeDensitePopulationSortante( self._namedParams.posteControle, self._namedParams.permeabilite )
+        DEC_ConnaissanceObjet_ChangeDensitePopulationSortante( self._namedParams.posteControle, self._namedParams.permeabilite )
         --[[//---------------------------------------------------------------------
 ]]--[[// Reprise après focus loss
 ]]--[[//---------------------------------------------------------------------        

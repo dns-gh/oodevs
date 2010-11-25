@@ -114,6 +114,9 @@ includedFiles["sources/population/populations/Functions.bms"] = true
 ]]--[[//                1 + ( dist / 1000 )
 ]]--[[//
 ]]--[[//===============================================================================
+]]--[[// ----------------------------------------------------------------------------
+]]--[[// Retourne true si la distance entre ptDest et ptTest est < a rEcart
+]]--[[// ----------------------------------------------------------------------------
 ]]function S_EffetTirSurDomination( roe )
     local _returnValue = 0
     local rValeurNominale = -3 * g_NaturalEvolutionDomination * 12

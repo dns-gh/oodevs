@@ -3,4 +3,6 @@ includedFiles["sources/appui/artfdp/pions/sam/Motivations.bms"] = true
 
 include "Common/Pions/Motivations.bms"
 
+include "Appui/ArtFdp/Pions/Common/Motivations.bms"
+
 

@@ -54,7 +54,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             end
         end
 
-        Activate( self.activations.BEH_Pion_JOINT_AIR_GererOrdre_AppliquerFeux, 1, {} )
+        Activate( self.activations.BEH_Pion_JOINT_AIR_GererOrdre_AppliquerFeux, 10, {} )
          do
             local _continue = true
             local switch_1 = self.ePhase
@@ -63,7 +63,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAttaque, } )
                     Activate( self.activations.BEH_Dep_Pion_AIR_Voler, 1, {} )
                     Activate( self.activations.BEH_Dep_ProgressionSur, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.itineraire_, eProgressionDefaut, eTypeItiInfiltration, } )
-                    _continue = false--[[// behavior BEH_Eni_Pion_AIR_EffectuerRaid( mission.zone_ ) : strength = DIA_GetMotivation( MOT_ManoeuvrerSurEnis );
+                    _continue = false--[[// behavior BEH_Eni_Pion_AIR_EffectuerRaid( mission.zoneCible_ ) : strength = DIA_GetMotivation( MOT_ManoeuvrerSurEnis );
 ]]
                                 cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
@@ -73,7 +73,7 @@ elseif switch_1 == eFinMission then
                                                         do
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
-                                self:SendFeedback( eActionEffectuee )
+                                                                self:SendFeedback( eActionEffectuee )
                                 Halt( self )
                                 do return end
 

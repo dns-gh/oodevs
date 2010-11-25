@@ -623,9 +623,13 @@ eEtatDeploiement_omnidirectionnel = 1
 
 --[[// Sections de tir
 ]]--[[// ----------------------------------------------------------------------------
+]]--[[// Parametres utililés et initialisés lorsque l'automate recois un ordre 
+]]--[[// de tir
 ]]
 
-
+--[[// Parametres utililés et initialisés lorsque l'automate recois un ordre 
+]]--[[// de tir
+]]
 
 --[[// Observations
 ]]--[[// ----------------------------------------------------------------------------

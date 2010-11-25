@@ -74,9 +74,9 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     end
 
                     _continue = false
-                    cases_switch_1[1] = true
-                 elseif switch_1 == eterminerSite then
-                    self.positionHopital = 0
+                                cases_switch_1[1] = true
+elseif switch_1 == eDeterminerSite then
+                    self.positionHopital = nil
                     self.hopital = DEC_DeterminerHopital( self._namedParams.mission.wounded_, self._namedParams.mission.hospitals_ )
                     if( self.hopital == nil ) then
                         do
@@ -87,7 +87,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                         end
                     end
 
-                    if _continue then
+                        if _continue then
                         Activate( self.activations.ACT_RC_SurPion, 1, { eRC_TransportUnitePrete, self._namedParams.mission.wounded_, } )
                         Activate( self.activations.ACT_RC, 1, { eRC_TransportEmbarquement, } )
                         Activate( self.activations.ACT_EmbarquerBlesse, 1, { self._namedParams.mission.wounded_, } )

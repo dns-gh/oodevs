@@ -3,44 +3,6 @@ includedFiles["sources/appui/artfdp/pions/common/missions/MettreEnOeuvre.bms"] =
 
 include "bit.lua"
 
-node "BEH_MOT_Pion_ASS_AppliquerFeux"
-{
-    feedbacks = { { { "done_BEH_MOT_Pion_ASS_AppliquerFeux" }, "BEH_MOT_Pion_ASS_AppliquerFeux" } },
-    
-    SendFeedback = function( self, value ) 
-        Feedback( self.feedbacks.done_BEH_MOT_Pion_ASS_AppliquerFeux, {value} ) 
-    end,
-    
-    activations =
-    {
-        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
-        { "ACT_RC", { "done_ACT_RC" } },
-        { "BEH_Tir_Pion_ASS_AppliquerFeux", { "done_BEH_Tir_Pion_ASS_AppliquerFeux" } },
-    },
-    
-    create = function( self )
-        self._namedParams = {}
-    end,
-    
-    activate = function( self )
-        local Activate = Activate
-        local _munitions = myself.munitions_
-        local _nbIT = myself.nbIT_
-        
-        DEC_Debug( "nb of requested it: "  .. tostring( _nbIT ) );
-        
-        --[[// Prise en charge de l'ordre d'application des feux ]]
-        --[[//---------------------------------------------------------------------]]
-        Activate( self.activations.ACT_Info_Trace, 1, { "Ordre : AppliquerFeux", } )
-        Activate( self.activations.ACT_RC, 1, { eRC_ReceptionOrdreDeFeu, } )
-        if( _munitions ~= nil and _nbIT > 0 ) then 
-            do
-                StartActivateOverride( self, self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 1, { _munitions, _nbIT, myself.cible_, } )
-            end
-        end
-    end,
-}
-
 
 --[[// *****************************************************************************
 ]]--[[//
@@ -53,6 +15,36 @@ node "BEH_MOT_Pion_ASS_AppliquerFeux"
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]
+--[[// Comportement déclenché lorsque l'automate active la motivation du pion
+]]--[[//
+]]node "BEH_MOT_Pion_ASS_AppliquerFeux"
+{
+    feedbacks = { { { "done_BEH_MOT_Pion_ASS_AppliquerFeux" }, "BEH_MOT_Pion_ASS_AppliquerFeux" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_Pion_ASS_AppliquerFeux, {value} ) end,
+    activations =
+    {
+        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_RC", { "done_ACT_RC" } },
+        { "BEH_Tir_Pion_ASS_AppliquerFeux", { "done_BEH_Tir_Pion_ASS_AppliquerFeux" } },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        local _munitions = myself.munitions_
+        local _nbIT = myself.nbIT_
+        Activate( self.activations.ACT_Info_Trace, 1, { "Ordre : AppliquerFeux", } )
+        Activate( self.activations.ACT_RC, 1, { eRC_ReceptionOrdreDeFeu, } )
+        if( _munitions ~= nil and _nbIT > 0 ) then
+            Activate( self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 1, { _munitions, _nbIT, myself.cible_, } )
+        end
+
+    end,
+
+}
+
 node "BEH_Pion_ASS_GererOrdre_AppliquerFeux"
 {
     feedbacks = { { { "done_BEH_Pion_ASS_GererOrdre_AppliquerFeux" }, "BEH_Pion_ASS_GererOrdre_AppliquerFeux" } },

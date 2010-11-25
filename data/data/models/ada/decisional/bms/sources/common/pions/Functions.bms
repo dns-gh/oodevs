@@ -7,6 +7,8 @@ include "Common/Fonctions.bms"
 
 include "Common/Pions/Fonctions/Functions - Misc.bms"
 
+include "Common/Pions/Fonctions/Functions - Dep.bms"
+
 include "Common/Pions/Fonctions/Functions - Eni.bms"
 
 include "Common/Pions/Fonctions/Functions - Mot.bms"

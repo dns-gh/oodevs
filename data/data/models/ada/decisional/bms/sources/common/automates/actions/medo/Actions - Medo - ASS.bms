@@ -304,12 +304,11 @@ elseif switch_1 == ePhase_CDT then
             do return end
         end
 
-        --[[//-----------------------------------------------------------------------------
+        --[[//-----------------------------------------------------------------------------		
 ]]if( ModuleBegins() ) then
             do
             end
---[[//DEC_Debug(  "Assigne mission 'Assurer Mise En Oeuvre' à " + DEC_GetSzName( pion )  );
-]]        else
+        else
             self:SendFeedback( eActionEffectuee )
             do return end
         end
@@ -317,10 +316,8 @@ elseif switch_1 == ePhase_CDT then
         --[[// Infos globales	    
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[//Insertion des données des deux zones d'implantation de tir dans les paramètres de la mission
-]]
-        DEC_AssignMissionParameter( self.missionPion, "positionImplantation_", self._namedParams.position )
+]]DEC_AssignMissionParameter( self.missionPion, "positionImplantation_", self._namedParams.position )
         DEC_AssignMissionParameter( self.missionPion, "presenceContreBatterie_", false )
-        
         --[[// Marquage échelon
 ]]F_Pion_SeteEtatEchelon( self._namedParams.pion, eEtatEchelon_Premier )
         --[[//-----------------------------------------------------------------------------
