@@ -986,6 +986,37 @@ double MIL_Fuseau::ComputeAverageDistanceFromObjective( const DEC_Objective& obj
     return rDist2 - rDist1;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::ComputeAdvance
+// Created: LDC 2010-11-26
+// -----------------------------------------------------------------------------
+double MIL_Fuseau::ComputeAdvance( const MT_Vector2D& position ) const
+{
+    const T_PointVector& points = pLeftLimit_->GetPoints().size() > pRightLimit_->GetPoints().size() ? pRightLimit_->GetPoints() : pLeftLimit_->GetPoints();
+    
+    double result = - std::numeric_limits<double>::max();
+    double currentDistance  = 0.;
+    double minDistance = std::numeric_limits<double>::max();
+    MT_Vector2D startPoint = points.front();
+    MT_Vector2D nearestPoint;
+    for( CIT_PointVector it = points.begin(); ++it != points.end(); )
+    {
+        MT_Line line( startPoint, *it );
+        startPoint = *it;
+        double advance = line.ProjectPointOnLine( position, nearestPoint );
+        double distance = position.Distance( nearestPoint );
+        if( minDistance > distance )
+        {
+            advance *= line.Magnitude();
+            advance += currentDistance;
+            result = advance;
+            minDistance = distance;
+        }
+        currentDistance += line.Magnitude();
+    }
+    return result;
+}
+
 // =============================================================================
 // PATH FINDER
 // =============================================================================

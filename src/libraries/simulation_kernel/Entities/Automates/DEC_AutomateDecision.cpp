@@ -341,6 +341,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) );
     brain[ "DEC_Geometrie_CalculerRetardSurObjectifs" ] =
         boost::function< float( const MIL_Fuseau*, const std::vector< DEC_Decision_ABC* >&, const std::vector< DEC_Objective* >& ) >( boost::bind( &DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) );
+    brain[ "DEC_Geometrie_AdvanceAlongFuseau" ] =
+        boost::function< double( DEC_Decision_ABC* ) >( boost::bind( &DEC_GeometryFunctions::ComputeAdvanceAlongFuseau, boost::ref( GetAutomate() ), _1 ) );
 
     // Orders
     brain[ "DEC_NouvelleMission" ] =

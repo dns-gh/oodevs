@@ -47,14 +47,15 @@ public:
     bool IntersectWithBorder( const MT_Line& line ) const;
     bool IntersectWithBorder( const MT_Line& line, T_PointSet& res ) const;
 
-    bool     ComputeFurthestExtremityPoint      ( MT_Vector2D& vResult ) const;
-    bool     ComputeClosestExtremityPoint       ( MT_Vector2D& vResult ) const;
-    bool     ComputePointBeforeLima             ( const MIL_LimaOrder& lima, double rDistBefore, MT_Vector2D&   vResult ) const;
-    bool     ComputePointsBeforeLima            ( const MIL_LimaOrder& lima, double rDistBefore, unsigned int nNbPoints, T_PointVector& results ) const;
-    void     ComputeNearestEntryPoint           ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
-    void     ComputeEntryPoint                  ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
+    bool   ComputeFurthestExtremityPoint      ( MT_Vector2D& vResult ) const;
+    bool   ComputeClosestExtremityPoint       ( MT_Vector2D& vResult ) const;
+    bool   ComputePointBeforeLima             ( const MIL_LimaOrder& lima, double rDistBefore, MT_Vector2D&   vResult ) const;
+    bool   ComputePointsBeforeLima            ( const MIL_LimaOrder& lima, double rDistBefore, unsigned int nNbPoints, T_PointVector& results ) const;
+    void   ComputeNearestEntryPoint           ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
+    void   ComputeEntryPoint                  ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
     double ComputeAverageDistanceFromLima     ( const MIL_LimaOrder& lima     , const MT_Vector2D& refPoint ) const;
     double ComputeAverageDistanceFromObjective( const DEC_Objective& objective, const MT_Vector2D& refPoint ) const;
+    double ComputeAdvance                     ( const MT_Vector2D& position ) const;
 
     float ComputeOpenTerrainRatio  () const;
     float ComputeClosedTerrainRatio() const;
