@@ -20,7 +20,7 @@
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Eclairer"/>
-        <mission name="MELEE Fixer unite"/>
+        <mission name="MELEE Fixer"/>
         <mission name="MELEE Freiner"/>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Illuminer"/>
@@ -85,7 +85,7 @@
         <mission name="MELEE Controler"/>
         <mission name="MELEE Couvrir"/>
         <mission name="MELEE Eclairer"/>
-        <mission name="MELEE Fixer unite"/>
+        <mission name="MELEE Fixer"/>
         <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Freiner"/>
         <mission name="MELEE Interdire"/>
