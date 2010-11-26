@@ -140,9 +140,13 @@ public:
     virtual double GetMajorOperationalState() const = 0;
     virtual bool IsAutomateEngaged() const = 0;
     virtual bool IsDead() const = 0;
-
     virtual boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const double time, bool bBoundOnPath ) const = 0;
     virtual boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const double time, bool bBoundOnPath ) const = 0;
+    //@}
+
+    //! @name Error management
+    //@{
+    virtual void LogError( const std::exception* error = 0 ) const = 0;
     //@}
 
     //! @name Serialization

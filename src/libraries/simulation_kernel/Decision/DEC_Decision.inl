@@ -136,7 +136,7 @@ void DEC_Decision< T >::UpdateDecision( float duration )
     }
     catch( std::runtime_error& e )
     {
-        HandleUpdateDecisionError( e );
+        HandleUpdateDecisionError( &e );
     }
 }
 
@@ -181,10 +181,11 @@ void DEC_Decision< T >::CleanStateAfterCrash()
 // Created: LDC 2009-03-02
 // -----------------------------------------------------------------------------
 template< class T >
-void DEC_Decision< T >::HandleUpdateDecisionError( const std::exception& error )
+void DEC_Decision< T >::HandleUpdateDecisionError( const std::exception* error )
 {
     assert( pEntity_ );
-    LogCrash( error );
+    if( error )
+        LogError( error );
     CleanStateAfterCrash();
     MIL_Report::PostEvent( *pEntity_, MIL_Report::eReport_MissionImpossible_ );
     pEntity_->GetOrderManager().CancelMission();
@@ -211,14 +212,15 @@ void DEC_Decision< T >::RemoveCallback( unsigned int actionId )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Decision::LogCrash
+// Name: DEC_Decision::LogError
 // Created: LDC 2009-03-02
 // -----------------------------------------------------------------------------
 template< class T >
-void DEC_Decision< T >::LogCrash( const std::exception& e ) const
+void DEC_Decision< T >::LogError( const std::exception* e ) const
 {
     MT_LOG_ERROR_MSG( "Entity " << pEntity_->GetID() << "('" << pEntity_->GetName() << "') : Mission '" << pEntity_->GetOrderManager().GetMissionName() << "' impossible" );
-    MT_LOG_ERROR_MSG( e.what() );
+    if( e )
+        MT_LOG_ERROR_MSG( e->what() );
 }
 
 // -----------------------------------------------------------------------------

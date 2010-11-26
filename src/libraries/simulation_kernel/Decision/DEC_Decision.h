@@ -151,7 +151,6 @@ protected:
 
     void StartDefaultBehavior     ();
     void StopDefaultBehavior      ();
-    void LogCrash                 ( const std::exception& error ) const;
 
     void ActivateOrder( const std::string& strBehavior, const boost::shared_ptr< MIL_Mission_ABC > mission );
     void StopMission( const std::string& strBehavior );
@@ -170,7 +169,9 @@ protected:
 
 private://! @name Helpers
     //@{
-    void HandleUpdateDecisionError ( const std::exception& error );
+    void HandleUpdateDecisionError( const std::exception* error = 0 );
+    /* virtual */ void LogError   ( const std::exception* error = 0 ) const;
+
     virtual directia::brain::Brain& GetBrain();
 
     virtual void RegisterSelf( directia::brain::Brain& brain, bool isMasalife, const std::string& groupName ) = 0;

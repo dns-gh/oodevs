@@ -79,7 +79,7 @@ void CrossbowPluginConfigPanel::Commit( const std::string& exercise, const std::
         frontend::CreateSession action( config_, exercise, session );
         action.SetOption( "session/config/dispatcher/plugins/crossbow/geometry/@connection", featureDb_->text() );
         action.SetOption( "session/config/dispatcher/plugins/crossbow/flat/@connection", flatDb_->text() );
-        action.SetOption( "session/config/simulation/dispatcher/@embedded", false );
+        action.SetOption( "session/config/simulation/dispatcher/@embedded", true );
         // action.SetOption( "session/config/simulation/dispatcher/@path", "./dispatcher/" );
         action.Commit();
     }

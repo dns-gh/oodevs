@@ -325,6 +325,10 @@
         <source>Input Scenario: </source>
         <translation>Scénario à importer: </translation>
     </message>
+    <message>
+        <source>otpak corrupted: unable to load content properly</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LauncherClientPage</name>

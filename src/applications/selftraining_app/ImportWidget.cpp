@@ -321,6 +321,8 @@ void ImportWidget::PackageBrowseClicked()
         packageContent_->clear();
         if( ReadPackageContentFile() )
             packageContent_->insertStringList( frontend::commands::ListPackageFiles( package_->text().ascii() ) );
+        else
+            packageName_->setText( tools::translate( "ImportWidget", "otpak corrupted: unable to load content properly" ) );
     }
     page_.UpdateEditButton();
 }
