@@ -19,65 +19,7 @@
   </xs:element>
   <xs:complexType name="UrbanObjects">
     <xs:sequence>
-      <xs:element name="urban-object" minOccurs="0" maxOccurs="unbounded">
-        <xs:complexType>
-          <xs:all>
-            <xs:element name="structural-state" type="StructuralState" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="infrastructure" type="Infrastructure" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="resources" type="Resources" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="roles" type="Roles" minOccurs="0" maxOccurs="1"/>
-          </xs:all>
-          <xs:attribute name="id" type="xs:positiveInteger"/>
-        </xs:complexType>
-      </xs:element>
+      <xs:element name="urban-object" minOccurs="0" maxOccurs="unbounded" type="T_ObjectAttributes"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="Infrastructure">
-    <xs:attribute name="enabled" type="xs:boolean"/>
-    <xs:attribute name="role" type="xs:string"/>
-    <xs:attribute name="threshold" type="xs:float"/>
-  </xs:complexType>
-  <xs:complexType name="StructuralState">
-    <xs:attribute name="value" type="xs:nonNegativeInteger"/>
-  </xs:complexType>
-  <xs:complexType name="Roles">
-    <xs:sequence>
-      <xs:element name="role" minOccurs="0" maxOccurs="unbounded">
-        <xs:complexType>
-          <xs:attribute name="name" type="xs:string"/>
-          <xs:attribute name="proportion" type="xs:float"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="Resources">
-    <xs:sequence>
-      <xs:element name="node" minOccurs="0" maxOccurs="unbounded">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="link" minOccurs="0" maxOccurs="unbounded">
-              <xs:complexType>
-                <xs:attribute name="kind" type="TargetType"/>
-                <xs:attribute name="target" type="xs:positiveInteger"/>
-                <xs:attribute name="capacity" type="xs:integer"/>
-              </xs:complexType>
-            </xs:element>
-          </xs:sequence>
-          <xs:attribute name="resource-type" type="xs:string"/>
-          <xs:attribute name="enabled" type="xs:boolean"/>
-          <xs:attribute name="production" type="xs:nonNegativeInteger"/>
-          <xs:attribute name="consumption" type="xs:nonNegativeInteger"/>
-          <xs:attribute name="stock" type="xs:nonNegativeInteger"/>
-          <xs:attribute name="initial-stock" type="xs:nonNegativeInteger"/>
-          <xs:attribute name="critical-consumption" type="xs:boolean"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:simpleType name="TargetType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="urban-object"/>
-      <xs:enumeration value="terrain-object"/>
-    </xs:restriction>
-  </xs:simpleType>
 </xs:schema>

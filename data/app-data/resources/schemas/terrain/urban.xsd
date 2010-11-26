@@ -73,9 +73,9 @@
 	</xs:complexType>
 	<xs:complexType name="Infrastructures">
 		<xs:sequence>
-			<xs:element name="infrastructure" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="infrastructure" minOccurs="0" maxOccurs="1">
 				<xs:complexType>
-					<xs:attribute name="name" type="xs:string"/>
+					<xs:attribute name="type" type="xs:string" use="required"/>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>

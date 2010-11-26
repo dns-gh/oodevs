@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.2.6">
+  <xs:include schemaLocation="Objects.xsd"/>
   <xs:element name="urban">
     <xs:annotation>
       <xs:documentation xml:lang="en">Object and parameter types used in urban area</xs:documentation>
@@ -85,6 +86,9 @@
             <xs:sequence minOccurs="0" maxOccurs="unbounded">
               <xs:element name="infrastructure">
                 <xs:complexType>
+                  <xs:sequence minOccurs="0" maxOccurs="1">
+                  <xs:element name="capacities" type="T_ObjectCapacities"/>
+                  </xs:sequence>
                   <xs:attribute name="name" type="xs:string" use="required"/>
                   <xs:attribute name="symbol" type="xs:string" use="required">
                   </xs:attribute>

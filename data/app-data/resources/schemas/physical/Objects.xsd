@@ -127,8 +127,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="object">
-    <xs:complexType>
+  <xs:complexType name="T_Object">
+    <xs:complexContent>
+      <xs:extension base="T_ObjectCapacities">
+        <xs:attribute name="geometry" type="T_GeometryList" use="optional"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="symbol" type="T_App6Symbol" use="optional"/>
+        <xs:attribute name="type" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="T_ObjectCapacities">
       <xs:all>
         <xs:element name="activable" minOccurs="0"/>
         <xs:element name="attrition" minOccurs="0">
@@ -344,10 +353,7 @@
         </xs:element>
         <xs:element name="crowd-obstacle" minOccurs="0"/>
       </xs:all>
-      <xs:attribute name="geometry" type="T_GeometryList" use="optional"/>
-      <xs:attribute name="name" type="xs:string" use="required"/>
-      <xs:attribute name="symbol" type="T_App6Symbol" use="optional"/>
-      <xs:attribute name="type" type="xs:string" use="required"/>
     </xs:complexType>
-  </xs:element>
+
+  <xs:element name="object" type="T_Object"/>
 </xs:schema>
