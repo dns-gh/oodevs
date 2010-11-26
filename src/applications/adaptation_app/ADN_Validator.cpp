@@ -10,7 +10,6 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Validator.h"
-
 #include "ADN_EditLine.h"
 
 #pragma warning( disable : 4355 )
@@ -20,20 +19,20 @@
 // Created: JDY 03-09-04
 //-----------------------------------------------------------------------------
 ADN_IntValidator::ADN_IntValidator( QObject* pParent, const char* szName )
-: QIntValidator( pParent, szName )
+    : QIntValidator( pParent, szName )
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_IntValidator constructor
 // Created: JDY 03-09-04
 //-----------------------------------------------------------------------------
 ADN_IntValidator::ADN_IntValidator( int nBottom, int nTop, QObject* pParent, const char* szName )
-: QIntValidator( nBottom, nTop, pParent, szName )
+    : QIntValidator( nBottom, nTop, pParent, szName )
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_IntValidator destructor
@@ -41,8 +40,8 @@ ADN_IntValidator::ADN_IntValidator( int nBottom, int nTop, QObject* pParent, con
 //-----------------------------------------------------------------------------
 ADN_IntValidator::~ADN_IntValidator()
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_IntValidator::validate
@@ -54,13 +53,12 @@ QValidator::State ADN_IntValidator::validate( QString& input, int& nPos ) const
 {
     int b = bottom();
     int t = top();
-
     QString stripped = input.stripWhiteSpace();
-    if( stripped.isEmpty() || (b < 0 && stripped == "-") )
+    if( stripped.isEmpty() || ( b < 0 && stripped == "-" ) )
         return Intermediate;
     bool ok;
     long entered = input.toLong( &ok );
-    if( !ok || (entered < 0 && b >= 0) || entered > t)
+    if( !ok || ( entered < 0 && b >= 0 ) || entered > t )
     {
         this->fixup( input );
         nPos = input.length();
@@ -71,7 +69,6 @@ QValidator::State ADN_IntValidator::validate( QString& input, int& nPos ) const
     else
         return Acceptable;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_IntValidator::fixup
@@ -84,42 +81,37 @@ void ADN_IntValidator::fixup( QString& strInput ) const
         strInput = QString::number( std::numeric_limits< int >::max() );
         return;
     }
-    double b = bottom();
-    double t = top();
-
+    int b = bottom();
+    int t = top();
     bool bOk = true;
-    double rValue = strInput.toDouble( &bOk );
+    int nValue = strInput.toInt( &bOk );
     if( ! bOk )
         return;
-
-    if( rValue > t )
-        strInput = QString::number( std::numeric_limits< int >::max() );
-    else if( rValue < b )
-        strInput = QString::number( std::numeric_limits< int >::min() );
+    if( nValue > t )
+        strInput = QString::number( t );
+    else if( nValue < b )
+        strInput = QString::number( b );
 }
-
-
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_DoubleValidator constructor
 // Created: JDY 03-09-04
 //-----------------------------------------------------------------------------
 ADN_DoubleValidator::ADN_DoubleValidator( QObject* pParent, const char* szName )
-: QDoubleValidator( pParent, szName )
+    : QDoubleValidator( pParent, szName )
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_DoubleValidator constructor
 // Created: JDY 03-09-04
 //-----------------------------------------------------------------------------
 ADN_DoubleValidator::ADN_DoubleValidator( double rBottom, double rTop, int nDecimals, QObject* pParent, const char* szName )
-: QDoubleValidator( rBottom, rTop, nDecimals, pParent, szName )
+    : QDoubleValidator( rBottom, rTop, nDecimals, pParent, szName )
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_DoubleValidator destructor
@@ -127,8 +119,8 @@ ADN_DoubleValidator::ADN_DoubleValidator( double rBottom, double rTop, int nDeci
 //-----------------------------------------------------------------------------
 ADN_DoubleValidator::~ADN_DoubleValidator()
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_DoubleValidator::validate
@@ -141,14 +133,12 @@ QValidator::State ADN_DoubleValidator::validate( QString& input, int& nPos ) con
     double b = bottom();
     double t = top();
     int d = decimals();
-
-    QRegExp empty( QString::fromLatin1(" *-?\\.? *") );
-    if( b >= 0 &&
-     input.stripWhiteSpace().startsWith(QString::fromLatin1("-")) )
+    QRegExp empty( QString::fromLatin1( " *-?\\.? *" ) );
+    if( b >= 0 && input.stripWhiteSpace().startsWith( QString::fromLatin1( "-" ) ) )
         return Invalid;
-    if ( input.stripWhiteSpace() == ".")
+    if( input.stripWhiteSpace() == "." )
         return Invalid;
-    if( empty.exactMatch(input) )
+    if( empty.exactMatch( input ) )
         return Intermediate;
     bool ok = TRUE;
     double entered = input.toDouble( &ok );
@@ -156,14 +146,14 @@ QValidator::State ADN_DoubleValidator::validate( QString& input, int& nPos ) con
     if( !ok )
     {
         // explicit exponent regexp
-        QRegExp expexpexp( QString::fromLatin1("[Ee][+-]?\\d*$") );
+        QRegExp expexpexp( QString::fromLatin1( "[Ee][+-]?\\d*$" ) );
         int eeePos = expexpexp.search( input );
         if( eeePos > 0 && nume == 1 )
         {
             QString mantissa = input.left( eeePos );
             entered = mantissa.toDouble( &ok );
             if( !ok )
-            return Invalid;
+                return Invalid;
         }
         else if( eeePos == 0 )
             return Intermediate;
@@ -173,19 +163,18 @@ QValidator::State ADN_DoubleValidator::validate( QString& input, int& nPos ) con
 
     int i = input.find( '.' );
     if( i >= 0 )
-        if( d==0 )
+        if( d == 0 )
             return Invalid;
         else if( nume == 0 )
         {
             // has decimal point (but no E), now count digits after that
-            i++;
+            ++i;
             int j = i;
-            while( input[j].isDigit() )
-                j++;
+            while( input[ j ].isDigit() )
+                ++j;
             if( j - i > d )
                 return Invalid;
         }
-
     if( entered > t )
     {
         this->fixup( input );
@@ -198,7 +187,6 @@ QValidator::State ADN_DoubleValidator::validate( QString& input, int& nPos ) con
         return Acceptable;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Validator::fixup
 // Created: APE 2005-04-13
@@ -207,32 +195,26 @@ void ADN_DoubleValidator::fixup( QString& strInput ) const
 {
     double b = bottom();
     double t = top();
-
     bool bOk = true;
     double rValue = strInput.toDouble( &bOk );
     if( ! bOk )
         return;
-
     if( rValue > t )
         strInput = QString::number( t );
     else if( rValue < b )
         strInput = QString::number( b );
 }
 
-
-
-
-
 // -----------------------------------------------------------------------------
 // Name: ADN_PercentageValidator::ADN_PercentageValidator
 // Created: APE 2005-04-15
 // -----------------------------------------------------------------------------
 ADN_PercentageValidator::ADN_PercentageValidator( QObject* pParent, const char* szName )
-: ADN_DoubleValidator( pParent, szName )
-, doubleValidator_   ( *new ADN_DoubleValidator( 0, 100, 2, this ) )
+    : ADN_DoubleValidator( pParent, szName )
+    , doubleValidator_   ( *new ADN_DoubleValidator( 0, 100, 2, this ) )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_PercentageValidator::~ADN_PercentageValidator
@@ -240,8 +222,8 @@ ADN_PercentageValidator::ADN_PercentageValidator( QObject* pParent, const char* 
 // -----------------------------------------------------------------------------
 ADN_PercentageValidator::~ADN_PercentageValidator()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_PercentageValidator::AddLinkedValue
@@ -251,7 +233,6 @@ void ADN_PercentageValidator::AddLinkedValue( ADN_Type_Double& value )
 {
     linkedValues_.push_back( &value );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_PercentageValidator::validate
@@ -263,11 +244,9 @@ QValidator::State ADN_PercentageValidator::validate( QString& strInput, int& nPo
     this->fixup( strInput );
     if( doubleValidator_.validate( strInput, nPos ) == QValidator::Invalid )
         return QValidator::Invalid;
-
     nPos = strInput.length();
     return QValidator::Acceptable;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_PercentageValidator::fixup
@@ -277,21 +256,16 @@ void ADN_PercentageValidator::fixup( QString& strInput ) const
 {
     double rSum = 0;
     for( CIT_ValuesVector it = linkedValues_.begin(); it != linkedValues_.end(); ++it )
-    {
-        rSum += (*it)->GetData();
-    }
-
+        rSum += ( *it )->GetData();
     if( rSum >= 100.0 )
     {
         strInput = QString::number( 0.0 );
         return;
     }
-
     bool bOk = true;
     double rValue = strInput.toDouble( &bOk );
     if( ! bOk )
         return;
-
     if( rSum + rValue > 100.0 )
         strInput = QString::number( 100.0 - rSum );
 }

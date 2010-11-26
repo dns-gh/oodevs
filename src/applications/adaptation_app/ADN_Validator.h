@@ -12,9 +12,7 @@
 #ifndef __ADN_Validator_h_
 #define __ADN_Validator_h_
 
-
 #include <qvalidator.h>
-
 
 // =============================================================================
 /** @class  ADN_IntValidator
@@ -23,17 +21,16 @@
 // Created: APE 2005-01-03
 // =============================================================================
 class ADN_IntValidator
-: public QIntValidator
+    : public QIntValidator
 {
 public:
-    ADN_IntValidator( QObject* pParent, const char* szName = 0 );
-    ADN_IntValidator( int nBottom, int nTop, QObject* pParent, const char* szName = 0 );
+    explicit ADN_IntValidator( QObject* pParent, const char* szName = 0 );
+             ADN_IntValidator( int nBottom, int nTop, QObject* pParent, const char* szName = 0 );
     virtual ~ADN_IntValidator();
 
     QValidator::State validate( QString& strInput, int& nPos ) const;
     void fixup( QString& strInput ) const;
 };
-
 
 // =============================================================================
 /** @class  ADN_DoubleValidator
@@ -42,11 +39,11 @@ public:
 // Created: APE 2005-01-03
 // =============================================================================
 class ADN_DoubleValidator
-: public QDoubleValidator
+    : public QDoubleValidator
 {
 public:
-    ADN_DoubleValidator( QObject* pParent, const char* szName = 0 );
-    ADN_DoubleValidator( double rBottom, double rTop, int nDecimals, QObject* pParent, const char* szName = 0 );
+    explicit ADN_DoubleValidator( QObject* pParent, const char* szName = 0 );
+             ADN_DoubleValidator( double rBottom, double rTop, int nDecimals, QObject* pParent, const char* szName = 0 );
     virtual ~ADN_DoubleValidator();
 
     QValidator::State validate( QString& strInput, int& nPos ) const;
@@ -54,6 +51,7 @@ public:
 };
 
 #include "ADN_Types.h"
+
 // =============================================================================
 /** @class  ADN_PercentageValidator
     @brief
@@ -64,7 +62,7 @@ class ADN_PercentageValidator
     : public ADN_DoubleValidator
 {
 public:
-    ADN_PercentageValidator( QObject* pParent, const char* szName = 0 );
+    explicit ADN_PercentageValidator( QObject* pParent, const char* szName = 0 );
     virtual ~ADN_PercentageValidator();
 
     void AddLinkedValue( ADN_Type_Double& value );
@@ -73,13 +71,11 @@ public:
     void fixup( QString& strInput ) const;
 
 private:
-    typedef std::vector<ADN_Type_Double*>  T_ValuesVector;
-    typedef T_ValuesVector::const_iterator  CIT_ValuesVector;
+    typedef std::vector<ADN_Type_Double*>    T_ValuesVector;
+    typedef T_ValuesVector::const_iterator CIT_ValuesVector;
 
     ADN_DoubleValidator doubleValidator_;
     T_ValuesVector linkedValues_;
 };
-
-
 
 #endif // __ADN_Validator_h_
