@@ -89,6 +89,7 @@
 #include "Populations/MIL_PopulationAttitude.h"
 #include "Populations/MIL_Population.h"
 #include "tools/MIL_IDManager.h"
+#include "tools/MIL_Config.h"
 #include "tools/MIL_ProfilerMgr.h"
 #include "tools/MIL_Tools.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -253,6 +254,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
 
     const std::string strOrbat = config.GetOrbatFile();
+    MIL_Tools::CheckXmlCrc32Signature( strOrbat );
     MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strOrbat.c_str() ) );
 
     kernel::FileLoader loader ( config );
@@ -349,6 +351,7 @@ void MIL_EntityManager::LoadUrbanStates( const MIL_Config& config )
 
     MT_LOG_INFO_MSG( MT_FormatString( "UrbanState file name : '%s'", strUrbanState.c_str() ) );
 
+    MIL_Tools::CheckXmlCrc32Signature( strUrbanState );
     xml::xifstream xis( strUrbanState );
     xis >> xml::start( "urban-state" )
             >> xml::start( "urban-objects" )

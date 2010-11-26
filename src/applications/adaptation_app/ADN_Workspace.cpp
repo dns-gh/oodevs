@@ -244,7 +244,7 @@ void ADN_Workspace::Reset(const std::string& filename, bool bVisible )
 // Name: ADN_Workspace::Load
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-void ADN_Workspace::Load( const std::string& filename )
+void ADN_Workspace::Load( const std::string& filename, std::string& invalidSignedFiles )
 {
     Reset( filename, false );
 
@@ -254,14 +254,14 @@ void ADN_Workspace::Load( const std::string& filename )
     pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
 
     projectData_->SetFile( filename );
-    projectData_->Load();
+    projectData_->Load( invalidSignedFiles );
     pProgressIndicator_->Increment();
 
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
     {
         pProgressIndicator_->Increment( tr( "Loading: %1..." ).arg( elements_[n]->GetName() ) );
         qApp->processEvents();
-        elements_[n]->GetDataABC().Load();
+        elements_[n]->GetDataABC().Load( invalidSignedFiles );
     }
     ResetProgressIndicator();
 

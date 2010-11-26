@@ -2145,6 +2145,10 @@ du tireur</translation>
         <source>Sword Adaptation Tool - %1</source>
         <translation>Sword Adaptation - %1</translation>
     </message>
+    <message>
+        <source>The signatures for the following files do not exist or are invalid : </source>
+        <translation>Les signatures des fichiers suivants n&apos;existent pas ou bien sont invalides:</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>

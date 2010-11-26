@@ -68,7 +68,7 @@ void MIL_EntityManagerStaticMethods::InitializeType( xml::xistream& xis, MIL_Con
         >> xml::end;
 
     strFile = config.BuildPhysicalChildFile( strFile );
-
+    MIL_Tools::CheckXmlCrc32Signature( strFile );
     xml::xifstream xisType( strFile );
     config.AddFileToCRC( strFile );
 

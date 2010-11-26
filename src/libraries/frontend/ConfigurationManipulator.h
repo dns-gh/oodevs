@@ -69,6 +69,7 @@ private:
 private:
     //! @name Member data
     //@{
+    std::string outputPath_;
     std::auto_ptr< XmlNode > document_;
     std::auto_ptr< xml::xostream > output_;
     //@}

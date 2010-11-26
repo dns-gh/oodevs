@@ -177,6 +177,7 @@ void MIL_EntityManagerStaticMethods::InitializeSensors( xml::xistream& xis, MIL_
             >> xml::attribute( "file", strFile )
         >> xml::end;
     strFile = config.BuildPhysicalChildFile( strFile );
+    MIL_Tools::CheckXmlCrc32Signature( strFile );
     xml::xifstream xisSensors( strFile );
     config.AddFileToCRC( strFile );
     xisSensors >> xml::start( "sensors" );
@@ -199,6 +200,7 @@ void MIL_EntityManagerStaticMethods::InitializeMedical( xml::xistream& xis, MIL_
             >> xml::attribute( "file", strFile )
         >> xml::end;
     strFile = config.BuildPhysicalChildFile( strFile );
+    MIL_Tools::CheckXmlCrc32Signature( strFile );
     xml::xifstream xisHealth( strFile );
     xisHealth >> xml::start( "health" );
     config.AddFileToCRC( strFile );
@@ -217,6 +219,7 @@ void MIL_EntityManagerStaticMethods::InitializeComposantes( xml::xistream& xis, 
             >> xml::attribute( "file", strFile )
         >> xml::end;
     strFile = config.BuildPhysicalChildFile( strFile );
+    MIL_Tools::CheckXmlCrc32Signature( strFile );
     xml::xifstream xisComponents( strFile );
     config.AddFileToCRC( strFile );
     PHY_ComposanteTypePion::Initialize( time, xisComponents );
@@ -233,6 +236,7 @@ void MIL_EntityManagerStaticMethods::InitializeWeapons( xml::xistream& xis, MIL_
             >> xml::attribute( "file", strFile )
         >> xml::end;
     strFile = config.BuildPhysicalChildFile( strFile );
+    MIL_Tools::CheckXmlCrc32Signature( strFile );
     xml::xifstream xisWeapons( strFile );
     config.AddFileToCRC( strFile );
     PHY_WeaponType::Initialize( time, xisWeapons );
@@ -248,11 +252,9 @@ void MIL_EntityManagerStaticMethods::InitializeMedicalTreatment( xml::xistream& 
     xis >> xml::start( "medical-treatment" )
             >> xml::attribute( "file", strFile )
         >> xml::end;
-
     strFile = config.BuildPhysicalChildFile( strFile );
-
+    MIL_Tools::CheckXmlCrc32Signature( strFile );
     xml::xifstream xisType( strFile );
     config.AddFileToCRC( strFile );
-
     MIL_MedicalTreatmentType::Initialize( xisType, time );//verfifier tous les initialize
 }

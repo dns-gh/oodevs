@@ -18,6 +18,7 @@
 #include "ADN_AiEngine_Data.h"
 #include "ADN_Tr.h"
 #include <boost/bind.hpp>
+#include <tools/XmlCrc32Signature.h>
 #include <xeuseuleu/xsl.hpp>
 
 IdentifierFactory ADN_Missions_Data::idFactory_;
@@ -618,19 +619,20 @@ void ADN_Missions_Data::Reset()
 // Name: ADN_Missions_Data::Load
 // Created: LDC 2010-09-24
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::Load()
+void ADN_Missions_Data::Load( std::string& invalidSignedFiles )
 {
     T_StringList fileList;
     FilesNeeded( fileList );
     if( ! fileList.empty() )
     {
         const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + fileList.front();
-        
+        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( strFile );
+        if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+            invalidSignedFiles.append( "\n" + fileList.front() );
         xsl::xstringtransform xst( "resources/ordCompatibility.xsl" );
         xst << xml::xifstream( strFile );
         std::string updatedFile = xst.str();
         xml::xistringstream input( updatedFile );
-
         ReadArchive( input );
     }
 }

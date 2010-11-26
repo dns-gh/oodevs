@@ -19,8 +19,10 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/CompositeRegistrable.h"
+#include "MT_Tools/MT_Logger.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
 #include <direct.h>
 
@@ -89,34 +91,37 @@ void Model::Save( const std::string& name ) const
 
     ::_mkdir( directory.c_str() );
 
-    xml::xofstream xos( GetCheckPointFileName( directory ) );
-
-    std::map< unsigned int, std::set< const Entity_ABC* > > formations;
-    std::map< unsigned int, std::set< const Entity_ABC* > > automats;
-
-    tacticalLines_.CollectAutomats( automats );
-    tacticalLines_.CollectFormations( formations );
-    intelligences_.CollectFormations( formations );
-
-    xos << xml::start( "messenger" );
-    for( std::map< unsigned int, std::set< const Entity_ABC* > >::iterator it = formations.begin(); it != formations.end(); ++it )
     {
-        xos << xml::start( "formation" )
-                << xml::attribute( "id", it->first );
-        for( std::set< const Entity_ABC*>::iterator eit = it->second.begin(); eit != it->second.end(); ++eit)
-            (*eit)->Write( xos, *converter_ );
+        xml::xofstream xos( GetCheckPointFileName( directory ) );
+
+        std::map< unsigned int, std::set< const Entity_ABC* > > formations;
+        std::map< unsigned int, std::set< const Entity_ABC* > > automats;
+
+        tacticalLines_.CollectAutomats( automats );
+        tacticalLines_.CollectFormations( formations );
+        intelligences_.CollectFormations( formations );
+
+        xos << xml::start( "messenger" );
+        for( std::map< unsigned int, std::set< const Entity_ABC* > >::iterator it = formations.begin(); it != formations.end(); ++it )
+        {
+            xos << xml::start( "formation" )
+                    << xml::attribute( "id", it->first );
+            for( std::set< const Entity_ABC*>::iterator eit = it->second.begin(); eit != it->second.end(); ++eit)
+                (*eit)->Write( xos, *converter_ );
+            xos << xml::end;
+        }
+        for( std::map< unsigned int, std::set< const Entity_ABC* > >::iterator it = automats.begin(); it!=automats.end(); ++it )
+        {
+            xos << xml::start( "automat" )
+                    << xml::attribute( "id", it->first );
+            for( std::set< const Entity_ABC* >::iterator eit = it->second.begin(); eit != it->second.end(); ++eit )
+                (*eit)->Write( xos, *converter_ );
+            xos << xml::end;
+        }
+        clientObjects_.Write( xos );
         xos << xml::end;
     }
-    for( std::map< unsigned int, std::set< const Entity_ABC* > >::iterator it = automats.begin(); it!=automats.end(); ++it )
-    {
-        xos << xml::start( "automat" )
-                << xml::attribute( "id", it->first );
-        for( std::set< const Entity_ABC* >::iterator eit = it->second.begin(); eit != it->second.end(); ++eit )
-            (*eit)->Write( xos, *converter_ );
-        xos << xml::end;
-    }
-    clientObjects_.Write( xos );
-    xos << xml::end;
+    tools::WriteXmlCrc32Signature( GetCheckPointFileName( directory ) );
 
     drawings_.Save( directory );
     notes_.SaveNotes();
@@ -130,7 +135,13 @@ void Model::Load()
 {
     if( config_.HasCheckpoint() )
     {
-        xml::xifstream xis( GetCheckPointFileName( config_.GetCheckpointDirectory() ) );
+        std::string filename = GetCheckPointFileName( config_.GetCheckpointDirectory() );
+        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename );
+        if( error == tools::eXmlCrc32SignatureError_Invalid )
+            MT_LOG_WARNING_MSG( "The signature for the file " << bfs::path( filename, bfs::native ).leaf() << " is invalid." )
+        else if( error == tools::eXmlCrc32SignatureError_NotSigned )
+            MT_LOG_WARNING_MSG( "The file " << bfs::path( filename, bfs::native ).leaf() << " is not signed." )
+        xml::xifstream xis( filename );
         xis >> xml::start( "messenger" )
                 >> xml::optional >> xml::start( "client-objects" )
                     >> xml::list( "client-object", clientObjects_, &ClientObjectsModel::ReadClientObject )

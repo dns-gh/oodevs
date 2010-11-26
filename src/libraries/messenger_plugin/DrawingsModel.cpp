@@ -16,9 +16,11 @@
 #include "dispatcher/Config.h"
 #include "dispatcher/Position.h"
 #include "directia/brain/Brain.h"
+#include "MT_Tools/MT_Logger.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>
+#include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.h>
 
 #include "protocol/protocol.h"
@@ -76,10 +78,17 @@ void DrawingsModel::Load( const dispatcher::Config& config )
         const std::string filename = BuildDrawingsFile( config );
         if( bfs::exists( filename ) )
         {
-            xml::xifstream xis( filename );
-            xis >> xml::start( "shapes" )
-                    >> xml::list( "shape", *this, &DrawingsModel::ReadShape )
-                >> xml::end();
+            {
+                xml::xifstream xis( filename );
+                xis >> xml::start( "shapes" )
+                        >> xml::list( "shape", *this, &DrawingsModel::ReadShape )
+                    >> xml::end();
+            }
+            tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename );
+            if( error == tools::eXmlCrc32SignatureError_Invalid )
+                MT_LOG_WARNING_MSG( "The signature for the file " << bfs::path( filename, bfs::native ).leaf() << " is invalid." )
+            else if( error == tools::eXmlCrc32SignatureError_NotSigned )
+                MT_LOG_WARNING_MSG( "The file " << bfs::path( filename, bfs::native ).leaf() << " is not signed." )
         }
     }
     catch( std::exception& )
@@ -106,11 +115,15 @@ void DrawingsModel::ReadShape( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void DrawingsModel::Save( const std::string& directory ) const
 {
-    xml::xofstream xos( ( bfs::path( directory, bfs::native ) / bfs::path( "drawings.xml", bfs::native ) ).native_file_string() );
-    xos << xml::start( "shapes" );
-    std::for_each( elements_.begin(), elements_.end(), boost::bind( &Drawing::Serialize
-                 , boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( xos ) ) );
-    xos << xml::end();
+    std::string filename = ( bfs::path( directory, bfs::native ) / bfs::path( "drawings.xml", bfs::native ) ).native_file_string();
+    {
+        xml::xofstream xos( filename );
+        xos << xml::start( "shapes" );
+        std::for_each( elements_.begin(), elements_.end(), boost::bind( &Drawing::Serialize
+                     , boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( xos ) ) );
+        xos << xml::end();
+    }
+    tools::WriteXmlCrc32Signature( filename );
 }
 
 // -----------------------------------------------------------------------------

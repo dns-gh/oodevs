@@ -11,19 +11,38 @@
 #include "FileLoader.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/filesystem.hpp>
+#include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
 #include <xeuseuleu/xsl.hpp>
 
 using namespace kernel;
+namespace bfs = boost::filesystem;
+
+// -----------------------------------------------------------------------------
+// Name: FileLoader constructor
+// Created: JSR 2010-11-26
+// -----------------------------------------------------------------------------
+FileLoader::FileLoader( const tools::ExerciseConfig& config )
+    : config_               ( config )
+    , xis_                  ( new xml::xifstream( config.GetPhysicalFile() ) )
+    , invalidSignatureFiles_( 0 )
+{
+    *xis_ >> xml::start( "physical" );
+}
 
 // -----------------------------------------------------------------------------
 // Name: FileLoader constructor
 // Created: SBO 2009-08-20
 // -----------------------------------------------------------------------------
-FileLoader::FileLoader( const tools::ExerciseConfig& config )
-    : config_( config )
-    , xis_( new xml::xifstream( config.GetPhysicalFile() ) )
+FileLoader::FileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles )
+    : config_               ( config )
+    , xis_                  ( new xml::xifstream( config.GetPhysicalFile() ) )
+    , invalidSignatureFiles_( &invalidSignatureFiles )
 {
+    std::string filename = config.GetPhysicalFile();
+    tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename );
+    if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+        invalidSignatureFiles_->append( "\n" + bfs::path( filename, bfs::native ).leaf() );
     *xis_ >> xml::start( "physical" );
 }
 
@@ -42,11 +61,17 @@ namespace
     {
         typedef boost::function< void ( xml::xisubstream ) > T_Loader;
 
-        CheckedLoader( const std::string& path, const tools::ExerciseConfig& config, T_Loader loader, const std::string& xslTransform )
+        CheckedLoader( const std::string& path, const tools::ExerciseConfig& config, T_Loader loader, const std::string& xslTransform, std::string* invalidSignatureFiles )
             : path_( path )
             , config_( config )
             , loader_( loader )
         {
+            if( invalidSignatureFiles )
+            {
+                tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( path_ );
+                if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+                    invalidSignatureFiles->append( "\n" + bfs::path( path_, bfs::native ).leaf() );
+            }
             xml::xifstream xis( path_ );
             LoadFile( xis, xslTransform );
         }
@@ -124,7 +149,7 @@ FileLoader& FileLoader::Load( const std::string& rootTag, T_Loader loader, const
 {
     std::string file;
     *xis_ >> xml::start( rootTag ) >> xml::attribute( "file", file ) >> xml::end;
-    CheckedLoader( config_.BuildPhysicalChildFile( file ), config_, loader, xslTransform );
+    CheckedLoader( config_.BuildPhysicalChildFile( file ), config_, loader, xslTransform, invalidSignatureFiles_ );
     return *this;
 }
 
@@ -139,6 +164,6 @@ FileLoader& FileLoader::LoadExercise( const std::string& rootTag, T_Loader loade
     xis >> xml::start( "exercise" )
             >> xml::start( rootTag ) 
                 >> xml::attribute( "file", file );
-    CheckedLoader( config_.BuildExerciseChildFile( file ), config_, loader, xslTransform );
+    CheckedLoader( config_.BuildExerciseChildFile( file ), config_, loader, xslTransform, invalidSignatureFiles_ );
     return *this;
 }

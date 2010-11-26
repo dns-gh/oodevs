@@ -50,13 +50,23 @@ AgentTypes::AgentTypes( const tools::ExerciseConfig& config )
 
 // -----------------------------------------------------------------------------
 // Name: AgentTypes::Load
-// Created: AGE 2006-04-28
+// Created: JSR 2010-11-25
 // -----------------------------------------------------------------------------
 void AgentTypes::Load( const tools::ExerciseConfig& config )
 {
+    std::string unusedString;
+    Load( config, unusedString );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentTypes::Load
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void AgentTypes::Load( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles )
+{
     Purge();
     symbolFactory_ = new SymbolFactory();
-    FileLoader( config )
+    FileLoader( config, invalidSignatureFiles )
         .Load( "components", boost::bind( &AgentTypes::ReadComponents, this, _1 ) )
         .Load( "missions", boost::bind( &AgentTypes::ReadOrderTypes, this, _1 ) )
         //.Load( "magic-orders", boost::bind( &AgentTypes::ReadMagicOrderTypes, this, _1 ) )

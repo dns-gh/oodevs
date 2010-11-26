@@ -109,6 +109,7 @@
 #include "tools/ExerciseConfig.h"
 
 #include <graphics/DragMovementLayer.h>
+#include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
 
 #pragma warning( push )
@@ -367,13 +368,17 @@ void MainWindow::New()
 {
     static ExerciseCreationDialog* exerciseCreationDialog_ = new ExerciseCreationDialog( this, config_ );
     if( exerciseCreationDialog_->exec() == QDialog::Accepted )
-    {    
+    {
+        invalidSignedFiles_.clear();
         QString filename = exerciseCreationDialog_->GetFileName();
         if( filename.isEmpty() )
             return;
         if( filename.startsWith( "//" ) )
             filename.replace( "/", "\\" );
         config_.LoadExercise( filename.ascii() );
+        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename.ascii() );
+        if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned)
+            invalidSignedFiles_.append( "\n" + bfs::path( filename.ascii(), bfs::native ).leaf()  );
         if( Load() )
         {
             SetWindowTitle( true );
@@ -390,17 +395,18 @@ void MainWindow::Open()
 {
     if( model_.IsLoaded() && !CheckSaving())
         return;
-
     // Open exercise file dialog 
     QString filename = QFileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (exercise.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
-    
     // Load exercise
     if( filename.isEmpty() )
         return;
-
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
+    invalidSignedFiles_.clear();
     config_.LoadExercise( filename.ascii() );
+    tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename.ascii() );
+    if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned)
+        invalidSignedFiles_.append( "\n" + bfs::path( filename.ascii(), bfs::native ).leaf() );
     if( Load() )
     {
         SetWindowTitle( true );
@@ -421,7 +427,7 @@ bool MainWindow::Load()
         model_.Purge();
         selector_->Close();
         selector_->Load();
-        staticModel_.Load( config_ );
+        staticModel_.Load( config_, invalidSignedFiles_ );
         if( staticModel_.extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" ) )
             setAppropriate( pOrbatAttributes_, true );
         else
@@ -468,13 +474,21 @@ void MainWindow::LoadExercise()
     {
         loading_ = true;
         std::string loadingErrors;
-        model_.Load( config_, loadingErrors );
+        model_.Load( config_, loadingErrors, invalidSignedFiles_ );
         loading_ = false;
         bool errors = !loadingErrors.empty();
         SetWindowTitle( errors );
         if( errors )
             QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                , ( tr( "The following entities cannot be loaded: " ) + "\n" + loadingErrors.c_str() ).ascii() );
+                , tr( "The following entities cannot be loaded: " ) + "\n" + loadingErrors.c_str() );
+        if( !invalidSignedFiles_.empty() )
+        {
+            QSettings settings;
+            settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+            if( settings.readNumEntry( "/Common/NoSignatureCheck", 0 ) != 1 )
+                QMessageBox::warning( this, tools::translate( "Application", "SWORD" )
+                    , tr( "The signatures for the following files do not exist or are invalid : " ) + "\n" + invalidSignedFiles_.c_str() );
+        }
     }
     catch( std::exception& e )
     {

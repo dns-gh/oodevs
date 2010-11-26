@@ -15,6 +15,7 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_DataException.h"
 #include "ADN_Tools.h"
+#include <tools/XmlCrc32Signature.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Data_ABC constructor
@@ -39,13 +40,16 @@ ADN_Data_ABC::~ADN_Data_ABC()
 // Name: ADN_Data_ABC::Load
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
-void ADN_Data_ABC::Load()
+void ADN_Data_ABC::Load( std::string& invalidSignedFiles )
 {
     T_StringList fileList;
     FilesNeeded( fileList );
     if( ! fileList.empty() )
     {
         const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + fileList.front();
+        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( strFile );
+        if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+            invalidSignedFiles.append( "\n" + fileList.front() );
         xml::xifstream input( strFile );
         ReadArchive( input );
     }
@@ -63,8 +67,11 @@ void ADN_Data_ABC::Save()
     {
         std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + fileList.front();
         ADN_Tools::CreatePathToFile( strFile );
-        xml::xofstream output( strFile );
-        WriteArchive( output );
+        {
+            xml::xofstream output( strFile );
+            WriteArchive( output );
+        }
+        tools::WriteXmlCrc32Signature( strFile );
     }
 }
 

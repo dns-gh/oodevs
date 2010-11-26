@@ -42,7 +42,6 @@ public:
         ADN_Type_String szUrban_;
         ADN_Type_String szArmors_;
         ADN_Type_String szActiveProtections_;
-        ADN_Type_String szHumanProtections_;
         ADN_Type_String szDotationNatures_;
         ADN_Type_String szObjects_;
         ADN_Type_String szEquipements_;
@@ -64,13 +63,14 @@ public:
         ADN_Type_String szReports_;
         ADN_Type_String szModels_;
         ADN_Type_String szMissions_;
-        ADN_Type_String szFire_;
-        ADN_Type_String szMedicalTreatment_ ;
         ADN_Type_String szResourceNetworks_;
 
         // $$$$ NLD 2007-01-15: files not loaded!
+        ADN_Type_String szFire_;
         ADN_Type_String szPathfinder_;
         ADN_Type_String szObjectNames_;
+        ADN_Type_String szHumanProtections_;
+        ADN_Type_String szMedicalTreatment_;
     };
 
 //*****************************************************************************
@@ -138,10 +138,10 @@ public:
 
     void SetFile( const std::string& strFile );
 
-    void FilesNeeded( T_StringList& vFiles ) const;
-    void Reset();
-    void Load();
-    void Save();
+    virtual void FilesNeeded( T_StringList& vFiles ) const;
+    virtual void Reset();
+    virtual void Load( std::string& invalidSignedFiles );
+    virtual void Save();
 
     DataInfos&           GetDataInfos();
     const DataInfos&     GetDataInfos() const;

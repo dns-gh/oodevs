@@ -16,6 +16,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
 #pragma warning( pop )
+#include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
@@ -58,12 +59,15 @@ namespace frontend
     {
         const std::string dir = config.GetExerciseDir( name );
         bfs::create_directories( dir );
+        const std::string filename( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).native_file_string() );
+        CreateExerciseXml( filename, terrain, model, physical, false );
+        tools::WriteXmlCrc32Signature( filename );
 
-        CreateExerciseXml( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).native_file_string(), terrain, model, physical, false );
     }
     void EditExerciseParameters( const tools::GeneralConfig& config, const std::string& name, const std::string& terrain, const std::string& model, const std::string& physical )
     {
-        const std::string dir = config.GetExerciseDir( name );
-        CreateExerciseXml( ( bfs::path( dir, bfs::native ) / "exercise.xml" ).native_file_string(), terrain, model, physical, true );
+        const std::string filename( ( bfs::path( config.GetExerciseDir( name ), bfs::native ) / "exercise.xml" ).native_file_string() );
+        CreateExerciseXml( filename, terrain, model, physical, true );
+        tools::WriteXmlCrc32Signature( filename );
     }
 }

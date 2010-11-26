@@ -60,17 +60,6 @@ void SuccessFactorsModel::Load( const std::string& file )
 
 // -----------------------------------------------------------------------------
 // Name: SuccessFactorsModel::Serialize
-// Created: SBO 2009-06-15
-// -----------------------------------------------------------------------------
-void SuccessFactorsModel::Serialize( const tools::ExerciseConfig& config ) const
-{
-    const std::string file = config.GetSuccessFactorsFile();
-    Serialize( file );
-    SerializeScript( file, config.BuildExerciseChildFile( "scripts/success-factors.lua" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SuccessFactorsModel::Serialize
 // Created: SBO 2009-06-17
 // -----------------------------------------------------------------------------
 void SuccessFactorsModel::Serialize( const std::string& file ) const
@@ -95,10 +84,10 @@ void SuccessFactorsModel::Serialize( xml::xostream& xos ) const
 // Name: SuccessFactorsModel::SerializeScript
 // Created: SBO 2009-06-17
 // -----------------------------------------------------------------------------
-void SuccessFactorsModel::SerializeScript( const std::string& inputFile, const std::string& outputFile ) const
+void SuccessFactorsModel::SerializeScript( const tools::ExerciseConfig& config ) const
 {
-    xsl::xftransform xft( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" ), outputFile );
-    xft << xml::xifstream( inputFile );
+    xsl::xftransform xft( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" ), config.BuildExerciseChildFile( "scripts/success-factors.lua" ) );
+    xft << xml::xifstream( config.GetSuccessFactorsFile() );
 }
 
 // -----------------------------------------------------------------------------

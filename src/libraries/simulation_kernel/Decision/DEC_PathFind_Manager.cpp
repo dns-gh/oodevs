@@ -18,6 +18,7 @@
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "tools/MIL_Config.h"
+#include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -42,6 +43,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
         >> xml::end;
     strPathFindFile = config.BuildPhysicalChildFile( strPathFindFile );
 
+    MIL_Tools::CheckXmlCrc32Signature( strPathFindFile );
     xml::xifstream xisPathfind( strPathFindFile );
     config.AddFileToCRC( strPathFindFile );
 

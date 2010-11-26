@@ -85,7 +85,7 @@ public:
 public:
     void Build( ADN_MainWindow& mainWindow );
     void Reset( const std::string& filename, bool bVisible = true );
-    void Load( const std::string& filename );
+    void Load( const std::string& filename, std::string& invalidSignedFiles );
     bool Save();
     bool SaveAs( const std::string& filename );
     void ExportHtml( const std::string& strPath );

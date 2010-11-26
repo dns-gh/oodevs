@@ -78,6 +78,7 @@ public:
     //! @name CRC
     //@{
     static boost::crc_32_type::value_type ComputeCRC( const std::string& strFileName );
+    static void CheckXmlCrc32Signature( const std::string& filename );
     //@}
 
 private:

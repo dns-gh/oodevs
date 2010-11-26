@@ -68,8 +68,8 @@ void SetConsolePos( const int nPosX, const int nPosY )
     coord.Y = 25;
 
     SMALL_RECT rcPos;
-    rcPos.Left = nPosX;
-    rcPos.Top = nPosY;
+    rcPos.Left = static_cast< SHORT >( nPosX );
+    rcPos.Top = static_cast< SHORT >( nPosY );
     rcPos.Right = rcPos.Left + coord.X-1;
     rcPos.Bottom = rcPos.Top + coord.Y-1;
 

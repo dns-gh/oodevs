@@ -83,6 +83,7 @@ DEC_Workspace::~DEC_Workspace()
 void DEC_Workspace::InitializeConfig( MIL_Config& config )
 {
     // $$$$ NLD 2007-01-11: A DEPLACER
+    MIL_Tools::CheckXmlCrc32Signature( config.GetPhysicalFile() );
     xml::xifstream xis( config.GetPhysicalFile() );
 
     std::string strDecFile;
@@ -93,6 +94,7 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
         >> xml::end;
 
     strDecFile = config.BuildPhysicalChildFile( strDecFile );
+    MIL_Tools::CheckXmlCrc32Signature( strDecFile );
 
     xml::xifstream xisDecisional( strDecFile );
     config.AddFileToCRC( strDecFile );
@@ -211,6 +213,7 @@ void DEC_Workspace::InitializeMissions( MIL_Config& config )
 
     strMissionsFile = config.BuildPhysicalChildFile( strMissionsFile );
 
+    MIL_Tools::CheckXmlCrc32Signature( strMissionsFile );
     xml::xifstream xisMission( strMissionsFile );
 
     config.AddFileToCRC( strMissionsFile );
@@ -238,6 +241,7 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::s
 
     strModelsFile = config.BuildPhysicalChildFile( strModelsFile );
 
+    MIL_Tools::CheckXmlCrc32Signature( strModelsFile );
     xml::xifstream xisModels( strModelsFile );
 
     config.AddFileToCRC( strModelsFile );
@@ -323,6 +327,7 @@ void DEC_Workspace::InitializeObjectNames( MIL_Config& config )
 
     strFile = config.BuildPhysicalChildFile( strFile );
 
+    MIL_Tools::CheckXmlCrc32Signature( strFile );
     xml::xifstream xisObjectNames( strFile );
     DEC_ObjectFunctions::RegisterObjectNames( xisObjectNames );
 }

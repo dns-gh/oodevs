@@ -43,6 +43,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit FileLoader( const tools::ExerciseConfig& config );
+             FileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles );
     virtual ~FileLoader();
     //@}
 
@@ -66,6 +67,7 @@ private:
     //@{
     const tools::ExerciseConfig& config_;
     std::auto_ptr< xml::xistream > xis_;
+    std::string* invalidSignatureFiles_;
     //@}
 };
 

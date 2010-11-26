@@ -32,6 +32,7 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
     weather::PHY_Precipitation::Initialize();
     weather::PHY_Lighting::Initialize();
     const std::string fileName = config.GetWeatherFile();
+    MIL_Tools::CheckXmlCrc32Signature( fileName );
     xml::xifstream xisWeather( fileName );
     config.AddFileToCRC( fileName );
     xisWeather >> xml::start( "weather" );

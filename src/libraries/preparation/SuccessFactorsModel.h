@@ -48,9 +48,9 @@ public:
     void Delete( const SuccessFactor& factor );
     void Purge();
     void Load( const std::string& file );
-    void Serialize( const std::string& file ) const;
-    void Serialize( const tools::ExerciseConfig& config ) const;
     bool CheckValidity( ModelChecker_ABC& checker ) const;
+    void Serialize( const std::string& file ) const;
+    void SerializeScript( const tools::ExerciseConfig& config ) const;
     //@}
 
 private:
@@ -63,7 +63,6 @@ private:
     //! @name Helpers
     //@{
     void Serialize( xml::xostream& xos ) const;
-    void SerializeScript( const std::string& inputFile, const std::string& ouputFile ) const;
     void ReadFactor( xml::xistream& xis );
     //@}
 

@@ -13,20 +13,23 @@
 #include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "hla/HLA_Federate.h"
 #include "Meteo/PHY_MeteoDataManager.h"
+#include "MT_Tools/MT_FormatString.h"
+#include "MT_Tools/MT_Logger.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "resource_network/ResourceNetworkModel.h"
-#include "tools/MIL_ProfilerMgr.h"
 #include "simulation_terrain/TER_World.h"
-#include "MT_Tools/MT_FormatString.h"
-#include "MT_Tools/MT_Logger.h"
+#include "tools/MIL_ProfilerMgr.h"
+#include "tools/MIL_Tools.h"
 #include <boost/filesystem/path.hpp>
 #include <tools/thread/Thread.h>
 #include <tools/win32/ProcessMonitor.h>
 #include <urban/model.h>
 #include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.hpp>
+
+namespace bfs = boost::filesystem;
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 
@@ -69,7 +72,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     else
     {
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
-        pEntityManager_     = new MIL_EntityManager    ( *this, *pEffectManager_, *pProfilerMgr_, pFederate_, pWorkspaceDIA_->GetDatabase(), config_.ReadGCParameter_setPause(), config.ReadGCParameter_setStepMul() );
+        pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pProfilerMgr_, pFederate_, pWorkspaceDIA_->GetDatabase(), config_.ReadGCParameter_setPause(), config.ReadGCParameter_setStepMul() );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );
         pEntityManager_->CreateUrbanObjects( *pUrbanModel_, config_ );
@@ -116,15 +119,15 @@ MIL_AgentServer::~MIL_AgentServer()
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::ReadStaticData()
 {
-    nSimState_         = eSimPaused;
+    nSimState_ = eSimPaused;
     nTimeStepDuration_ = config_.GetTimeStep();
-    nTimeFactor_       = config_.GetTimeFactor();
+    nTimeFactor_ = config_.GetTimeFactor();
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation tick duration : %d seconds", nTimeStepDuration_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );
     pAgentServer_ = new NET_AgentServer( config_, *this, *this );
     ReadTerData();
     pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
-    pWorkspaceDIA_     = new DEC_Workspace       ( config_ );
+    pWorkspaceDIA_ = new DEC_Workspace( config_ );
     MIL_EntityManager::Initialize( config_, *this );
     if( !config_.IsDataTestMode() )
         pPathFindManager_ = new DEC_PathFind_Manager( config_ );
@@ -140,11 +143,12 @@ void MIL_AgentServer::ReadUrbanModel()
     MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "----  Loading UrbanModel    ----" );
     MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
-    std::string directoryPath = boost::filesystem::path( config_.GetTerrainFile() ).branch_path().string();
+    std::string directoryPath = bfs::path( config_.GetTerrainFile() ).branch_path().string();
     try
     {
          MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) )
          urban::WorldParameters world( directoryPath );
+         MIL_Tools::CheckXmlCrc32Signature( ( bfs::path( directoryPath, bfs::native ) / "urban" / "urban.xml" ).native_file_string() );
          pUrbanModel_->Load( directoryPath, world );
     }
     catch( std::exception& e )
@@ -176,7 +180,7 @@ void MIL_AgentServer::ReadHLA()
         return;
     MT_LOG_INFO_MSG( "Initializing HLA" );
     pFederate_ = new HLA_Federate( config_.GetHLAFederate(), config_.GetHLAHost(), config_.GetHLAPort() );
-    if( ! pFederate_->Join( config_.GetHLAFederation() ) )
+    if( !pFederate_->Join( config_.GetHLAFederation() ) )
     {
         MT_LOG_WARNING_MSG( "Could not join federation '" << config_.GetHLAFederation() << "'" );
         delete pFederate_;
@@ -204,7 +208,7 @@ MIL_AgentServer::E_SimState MIL_AgentServer::Update()
 void MIL_AgentServer::WaitForNextStep()
 {
     assert( pAgentServer_ );
-    pAgentServer_    ->Update();
+    pAgentServer_->Update();
     pPathFindManager_->Update();
     if( pFederate_ )
         pFederate_->Tick();
@@ -228,7 +232,7 @@ void MIL_AgentServer::WaitForNextStep()
 //-----------------------------------------------------------------------------
 void MIL_AgentServer::OnTimer()
 {
-    nSimTime_  += nTimeStepDuration_;
+    nSimTime_ += nTimeStepDuration_;
     nRealTime_ += nTimeStepDuration_;
     lastStep_ = clock();
     MainSimLoop();
@@ -383,7 +387,7 @@ void MIL_AgentServer::SendControlInformation() const
     client::ControlInformation message;
     message().set_current_tick( GetCurrentTimeStep() );
     NET_ASN_Tools::WriteGDH( nInitialRealTime_, *message().mutable_initial_date_time() );
-    NET_ASN_Tools::WriteGDH( nRealTime_       , *message().mutable_date_time() );
+    NET_ASN_Tools::WriteGDH( nRealTime_, *message().mutable_date_time() );
     message().set_tick_duration( GetTimeStepDuration() );
     message().set_time_factor( nTimeFactor_ );
     message().set_status( Common::EnumSimulationState( GetSimState() ) );
@@ -401,13 +405,13 @@ void MIL_AgentServer::Stop()
 {
     client::ControlStopAck msg;
     if( nSimState_ == eSimStopped )
-        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_error_not_started );
+        msg().set_error_code( MsgsSimToClient::ControlAck::error_not_started );
     else
     {
         nSimState_ = eSimStopped;
         MT_Timer_ABC::Stop();
         MT_LOG_INFO_MSG( "Simulation stopped" );
-        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_no_error );
+        msg().set_error_code( MsgsSimToClient::ControlAck::no_error );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -420,13 +424,13 @@ void MIL_AgentServer::Pause()
 {
     client::ControlPauseAck msg;
     if( nSimState_ != eSimRunning )
-        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_error_already_paused );
+        msg().set_error_code( MsgsSimToClient::ControlAck::error_already_paused );
     else
     {
         nSimState_ = eSimPaused;
         MT_Timer_ABC::Stop();
         MT_LOG_INFO_MSG( "Simulation paused" );
-        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_no_error );
+        msg().set_error_code( MsgsSimToClient::ControlAck::no_error );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -439,13 +443,13 @@ void MIL_AgentServer::Resume()
 {
     client::ControlResumeAck msg;
     if( nSimState_ != eSimPaused )
-        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_error_not_paused );
+        msg().set_error_code( MsgsSimToClient::ControlAck::error_not_paused );
     else
     {
         nSimState_ = eSimRunning;
         MT_Timer_ABC::Start( static_cast< int >( 1000 * nTimeStepDuration_ / nTimeFactor_ ) );
         MT_LOG_INFO_MSG( "Simulation resumed" );
-        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_no_error );
+        msg().set_error_code( MsgsSimToClient::ControlAck::no_error );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -454,11 +458,11 @@ void MIL_AgentServer::Resume()
 // Name: MIL_AgentServer::SetTimeFactor
 // Created: AGE 2007-08-10
 // -----------------------------------------------------------------------------
-void MIL_AgentServer::SetTimeFactor( unsigned timeFactor )
+void MIL_AgentServer::SetTimeFactor( unsigned int timeFactor )
 {
     client::ControlChangeTimeFactorAck msg;
     if( timeFactor == 0 )
-        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_error_invalid_time_factor );
+        msg().set_error_code( MsgsSimToClient::ControlAck::error_invalid_time_factor );
     else
     {
         nTimeFactor_ = timeFactor;
@@ -467,7 +471,7 @@ void MIL_AgentServer::SetTimeFactor( unsigned timeFactor )
             MT_Timer_ABC::Start( static_cast< int >( 1000 * nTimeStepDuration_ / nTimeFactor_ ) );
             MT_LOG_INFO_MSG( MT_FormatString( "Time factor set to %d", nTimeFactor_ ).c_str() )
         }
-        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_no_error );
+        msg().set_error_code( MsgsSimToClient::ControlAck::no_error );
     }
     msg().set_time_factor( nTimeFactor_ );
     msg.Send( NET_Publisher_ABC::Publisher() );
@@ -485,11 +489,11 @@ void MIL_AgentServer::SetRealTime( const std::string& realTime )
     NET_ASN_Tools::ReadGDH( datetime, secs );
     client::ControlDatetimeChangeAck ack;
     if( secs < nInitialRealTime_ )
-        ack().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_error_invalid_date_time );
+        ack().set_error_code( MsgsSimToClient::ControlAck::error_invalid_date_time );
     else
     {
         nRealTime_ = secs;
-        ack().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_no_error );
+        ack().set_error_code( MsgsSimToClient::ControlAck::no_error );
     }
     ack.Send( NET_Publisher_ABC::Publisher() );
 }

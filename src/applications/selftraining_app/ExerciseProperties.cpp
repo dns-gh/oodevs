@@ -76,7 +76,7 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralCon
             terrainList_->setBackgroundOrigin( QWidget::WindowOrigin );
             terrainList_->insertItem( tools::translate( "ExerciseProperties", "Terrain:" ) );
             terrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
-            connect( terrainList_, SIGNAL( activated( int ) ), SLOT( ModelChanged( int ) ) );
+            connect( terrainList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
         }
         {
             modelList_ = new QComboBox( editBox );
@@ -95,7 +95,7 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralCon
                     modelList_->setCurrentItem( 1 );
                 modelList_->setShown( modelList_->count() > 2 );
             }
-            connect( modelList_, SIGNAL( activated( int ) ), SLOT( ModelChanged( int ) ) );
+            connect( modelList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
         }
     }
     setShown( briefing || models );

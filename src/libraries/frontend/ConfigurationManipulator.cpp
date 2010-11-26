@@ -11,6 +11,7 @@
 #include "ConfigurationManipulator.h"
 #include "tools/GeneralConfig.h"
 #include <boost/filesystem.hpp>
+#include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
@@ -22,8 +23,9 @@ using namespace frontend;
 // Created: SBO 2008-02-25
 // -----------------------------------------------------------------------------
 ConfigurationManipulator::ConfigurationManipulator( const std::string& filename )
-    : document_( new XmlNode( filename ) )
-    , output_  ( new xml::xofstream( filename ) )
+    : outputPath_( filename )
+    , document_  ( new XmlNode( filename ) )
+    , output_    ( new xml::xofstream( filename ) )
 {
     // NOTHING
 }
@@ -33,8 +35,9 @@ ConfigurationManipulator::ConfigurationManipulator( const std::string& filename 
 // Created: RDS 2008-08-21
 // -----------------------------------------------------------------------------
 ConfigurationManipulator::ConfigurationManipulator( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
-    : document_( new XmlNode( GetSessionXml( config, exercise, session ) ) )
-    , output_  ( new xml::xofstream( GetSessionXml( config, exercise, session ) ) )
+    : outputPath_( GetSessionXml( config, exercise, session ) )
+    , document_  ( new XmlNode( outputPath_ ) )
+    , output_    ( new xml::xofstream( outputPath_ ) )
 {
     // NOTHING
 }
@@ -67,4 +70,5 @@ void ConfigurationManipulator::Commit()
 {
     if( document_.get() && output_.get() )
         document_->Serialize( *output_ );
+    tools::WriteXmlCrc32Signature( outputPath_ );
 }

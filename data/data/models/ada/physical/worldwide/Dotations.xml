@@ -790,3 +790,4 @@
   <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="60" id-nature="3" name="Food" nature="Solid" package-mass="0.015" package-size="10" package-volume="0.01"/>
   <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="61" id-nature="3" name="Water" nature="Solid" package-mass="1" package-size="1000" package-volume="1"/>
 </resources>
+<!-- signature="0390421264" -->

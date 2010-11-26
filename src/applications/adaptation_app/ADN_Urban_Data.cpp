@@ -69,32 +69,6 @@ void ADN_Urban_Data::Reset()
     vRoofShapes_.Reset();
 }
 
-//-----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::Load
-// Created: SLG 2010-03-08
-//-----------------------------------------------------------------------------
-void ADN_Urban_Data::Load()
-{
-    std::string szMaterialsFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_.GetData();
-    xml::xifstream sizesInput( szMaterialsFile );
-    ReadUrban( sizesInput );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::Save
-// Created: SLG 2010-03-08
-//-----------------------------------------------------------------------------
-void ADN_Urban_Data::Save()
-{
-    std::string szSizesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_.GetData();
-    ADN_Tools::CreatePathToFile( szSizesFile );
-    xml::xofstream sizeOutput( szSizesFile );
-    WriteUrban( sizeOutput );
-}
-
-
 class ADN_String_Cmp : public std::unary_function< ADN_Type_String* , bool >
 {
 public:
@@ -134,10 +108,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::ReadUrban
+// Name: ADN_Urban_Data::ReadArchive
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::ReadUrban( xml::xistream& input )
+void ADN_Urban_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "urban" )
             >> xml::start( "urban-block-types" );
@@ -149,10 +123,10 @@ void ADN_Urban_Data::ReadUrban( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::WriteUrban
+// Name: ADN_Urban_Data::WriteArchive
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
-void ADN_Urban_Data::WriteUrban( xml::xostream& output ) const
+void ADN_Urban_Data::WriteArchive( xml::xostream& output )
 {
     output  << xml::start( "urban" );
     ADN_Tools::AddSchema( output, "UrbanTypes" );

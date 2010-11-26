@@ -412,18 +412,27 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isNo
     pTab_->hide();
 
     QApplication::setOverrideCursor( waitCursor ); // this might take time
+    std::string invalidSignedFiles;
     if( QString( szFilename.c_str() ).startsWith( "//" ) )
     {
         std::string res( szFilename );
         std::replace( res.begin(), res.end(), '/', '\\' );
-        workspace_.Load( res );
+        workspace_.Load( res, invalidSignedFiles );
     }
     else
-        workspace_.Load( szFilename );
+        workspace_.Load( szFilename, invalidSignedFiles );
     QApplication::restoreOverrideCursor();    // restore original cursor
     setCaption( tr( "Sword Adaptation Tool - %1" ).arg( szFilename.c_str() ) );
     SetMenuEnabled( true );
     pTab_->show();
+    if( !isNormalMode && !invalidSignedFiles.empty() )
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        if( settings.readNumEntry( "/Common/NoSignatureCheck", 0 ) != 1 )
+            QMessageBox::warning( this, qApp->translate( "Application", "SWORD" )
+                    , tr( "The signatures for the following files do not exist or are invalid : " ) + "\n" + invalidSignedFiles.c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------

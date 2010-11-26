@@ -140,6 +140,7 @@ private:
     QDockWindow* pOrbatAttributes_;
     bool loading_;
     bool needsSaving_;
+    std::string invalidSignedFiles_;
     //@}
 };
 

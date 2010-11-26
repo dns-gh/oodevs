@@ -18,6 +18,7 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tr.h"
+#include <tools/XmlCrc32Signature.h>
 
 IdentifierFactory ADN_Categories_Data::idFactory_;
 // =============================================================================
@@ -75,22 +76,35 @@ void ADN_Categories_Data::Reset()
     idFactory_.Reset();
 }
 
+namespace
+{
+    void CheckSignature( const std::string& filename, std::string& invalidSignedFiles )
+    {
+        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + filename );
+        if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+            invalidSignedFiles.append( "\n" + filename );
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::Load
 // Created: JDY 03-08-27
 //-----------------------------------------------------------------------------
-void ADN_Categories_Data::Load()
+void ADN_Categories_Data::Load( std::string& invalidSignedFiles )
 {
-    std::string szArmorsFile= ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
+    CheckSignature( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData(), invalidSignedFiles );
+    std::string szArmorsFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
                       + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
     xml::xifstream armorsInput( szArmorsFile );
     ReadArmors( armorsInput );
 
+    CheckSignature( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData(), invalidSignedFiles );
     std::string szSizesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
     xml::xifstream sizesInput( szSizesFile );
     ReadSizes( sizesInput );
 
+    CheckSignature( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData(), invalidSignedFiles );
     std::string szDotationNaturesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
     xml::xifstream dotationNaturesInput( szDotationNaturesFile );
@@ -103,28 +117,32 @@ void ADN_Categories_Data::Load()
 //-----------------------------------------------------------------------------
 void ADN_Categories_Data::Save()
 {
+    std::string szArmorFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
+        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
     {
-        std::string szArmorFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
-            + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
         ADN_Tools::CreatePathToFile( szArmorFile );
         xml::xofstream armorOutput( szArmorFile );
         WriteArmors( armorOutput );
     }
+    tools::WriteXmlCrc32Signature( szArmorFile );
 
+    std::string szSizesFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
+        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
     {
-        std::string szSizesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
-            + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
         ADN_Tools::CreatePathToFile( szSizesFile );
         xml::xofstream sizeOutput( szSizesFile );
         WriteSizes( sizeOutput );
     }
+    tools::WriteXmlCrc32Signature( szSizesFile );
+
+    std::string szNaturesFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
+        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
     {
-        std::string szNaturesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
-            + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
         ADN_Tools::CreatePathToFile( szNaturesFile );
         xml::xofstream naturesOutput( szNaturesFile );
         WriteDotationNatures( naturesOutput );
     }
+    tools::WriteXmlCrc32Signature( szNaturesFile );
 }
 
 

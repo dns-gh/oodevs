@@ -15,9 +15,14 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "protocol/protocol.h"
 #include "simulation_terrain/TER_World.h"
+#include "MT_Tools/MT_Logger.h"
 #include "tools/MIL_Tools.h"
-#include <sys/timeb.h>
 #include <fstream>
+#include <boost/filesystem/path.hpp>
+#include <sys/timeb.h>
+#include <tools/XmlCrc32Signature.h>
+
+namespace bfs = boost::filesystem;
 
 MIL_Tools::converter< PHY_RawVisionData::E_VisionObject > MIL_Tools::environnementConverter_[] =
 {
@@ -70,6 +75,18 @@ boost::crc_32_type::value_type MIL_Tools::ComputeCRC( const std::string& fileNam
     return CRC.checksum();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Tools::CheckXmlCrc32Signature
+// Created: JSR 2010-11-25
+// -----------------------------------------------------------------------------
+void MIL_Tools::CheckXmlCrc32Signature( const std::string& filename )
+{
+    tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename );
+    if( error == tools::eXmlCrc32SignatureError_Invalid )
+        MT_LOG_WARNING_MSG( "The signature for the file " << bfs::path( filename, bfs::native ).leaf() << " is invalid." )
+    else if( error == tools::eXmlCrc32SignatureError_NotSigned )
+        MT_LOG_WARNING_MSG( "The file " << bfs::path( filename, bfs::native ).leaf() << " is not signed." )
+}
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Tools::ConvertCoordMosToSim

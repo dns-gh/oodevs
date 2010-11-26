@@ -43,7 +43,7 @@ void ADN_Tools::CreatePathToFile( const std::string& strFilePath )
 bool ADN_Tools::CopyFileToFile( const std::string& strSrc, const std::string& strDest )
 {
     CreatePathToFile( strDest );
-    return (bool)::CopyFile( strSrc.c_str(), strDest.c_str(), false );
+    return ::CopyFile( strSrc.c_str(), strDest.c_str(), false ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,13 +69,13 @@ std::string ADN_Tools::Scriptify( const std::string& strFieldName )
 {
     std::string strResult;
     assert( strFieldName.size() >= 1 );
-    strResult += std::toupper( strFieldName[0] );
+    strResult += static_cast< char >( std::toupper( strFieldName[0] ) );
     for( uint n = 1; n < strFieldName.length(); ++n )
     {
         if( strFieldName[n] == ' ' )
             continue;
         if( strFieldName[n-1] == ' ' )
-            strResult += std::toupper( strFieldName[n] );
+            strResult += static_cast< char>( std::toupper( strFieldName[n] ) );
         else
             strResult += strFieldName[n];
     }

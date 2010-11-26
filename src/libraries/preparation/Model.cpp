@@ -38,6 +38,7 @@
 #include "clients_gui/DrawerModel.h"
 #include "indicators/GaugeTypes.h"
 #include "tools/ExerciseConfig.h"
+#include <tools/XmlCrc32Signature.h>
 #include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -46,6 +47,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
+
 namespace bfs = boost::filesystem;
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
@@ -139,14 +141,18 @@ void Model::Purge()
 namespace
 {
     template< typename M >
-    bool LoadOptional( const std::string& file, M& model )
+    bool LoadOptional( const std::string& file, M& model, std::string& invalidSignedFiles )
     {
         if( bfs::exists( file ) )
         {
+            tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( file );
+            if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+                invalidSignedFiles.append( "\n" + bfs::path( file, bfs::native ).leaf() );
             model.Load( file );
             return true;
         }
         model.Serialize( file );
+        tools::WriteXmlCrc32Signature( file );
         return false;
     }
 }
@@ -155,30 +161,44 @@ namespace
 // Name: Model::Load
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors )
+void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors, std::string& invalidSignedFiles )
 {
+    const std::string exerciseFile = config.GetExerciseFile();
+    tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( exerciseFile );
+    if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+        invalidSignedFiles.append( "\n" + bfs::path( exerciseFile, bfs::native ).leaf() );
     {
-        xml::xifstream xis( config.GetExerciseFile() );
+        xml::xifstream xis( exerciseFile );
         exercise_.Load( xis );
     }
     {
         const std::string orbatFile = config.GetOrbatFile() ;
         if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
         {
+            tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( orbatFile );
+            if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+                invalidSignedFiles.append( "\n" + bfs::path( orbatFile, bfs::native ).leaf() );
             UpdateName( orbatFile );
             xml::xifstream xis( orbatFile );
             teams_.Load( xis, *this, loadingErrors );
         }
     }
     {
-        std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().string();
+        std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();
         try
         {
             urban::WorldParameters world( directoryPath );
+            const bfs::path urbanFile = bfs::path( directoryPath, bfs::native ) / "urban" / "urban.xml";
+            tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( urbanFile.string() );
+            if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+                invalidSignedFiles.append( "\nurban.xml" );
             urban_.Load( directoryPath, world, loadingErrors );
             const std::string urbanStateFile = config.GetUrbanStateFile() ;
             if( bfs::exists( bfs::path( urbanStateFile, bfs::native ) ) )
             {
+                tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( urbanStateFile );
+                if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+                    invalidSignedFiles.append( "\n" + bfs::path( urbanStateFile, bfs::native ).leaf() );
                 xml::xifstream xis( urbanStateFile );
                 urban_.LoadUrbanState( xis );
             }
@@ -187,11 +207,11 @@ void Model::Load( const tools::ExerciseConfig& config, std::string& loadingError
         {
         }
     }
-    if( ! LoadOptional( config.GetWeatherFile(), weather_ ) )
+    if( ! LoadOptional( config.GetWeatherFile(), weather_, invalidSignedFiles ) )
         controllers_.controller_.Update( weather_);
-    LoadOptional( config.GetProfilesFile(), profiles_ );
-    LoadOptional( config.GetScoresFile(), scores_ );
-    LoadOptional( config.GetSuccessFactorsFile(), successFactors_ );
+    LoadOptional( config.GetProfilesFile(), profiles_, invalidSignedFiles );
+    LoadOptional( config.GetScoresFile(), scores_, invalidSignedFiles );
+    LoadOptional( config.GetSuccessFactorsFile(), successFactors_, invalidSignedFiles );
     SetLoaded( true );
 }
 
@@ -208,6 +228,16 @@ void Model::Import( const std::string& orbat, const OrbatImportFilter& filter, s
     teams_.Load( newXis, *this, loadingErrors );
 }
 
+namespace
+{
+    template< class T >
+    void SerializeAndSign( const std::string& path, T& model )
+    {
+        model.Serialize( path );
+        tools::WriteXmlCrc32Signature( path );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Model::Save
 // Created: SBO 2006-11-21
@@ -221,18 +251,20 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
                     && successFactors_.CheckValidity( checker );
     if( valid )
     {
-        exercise_.Serialize( config.GetExerciseFile() );
+        SerializeAndSign( config.GetExerciseFile(), exercise_ );
         {
             xml::xofstream xos( config.GetOrbatFile() );
             xos << xml::start( "orbat" );
             teams_.Serialize( xos );
             xos << xml::end;
         }
-        urban_.Serialize( config.GetUrbanStateFile() );
-        weather_.Serialize( config.GetWeatherFile() );
-        profiles_.Serialize( config.GetProfilesFile() );
-        scores_.Serialize( config.GetScoresFile() );
-        successFactors_.Serialize( config );
+        tools::WriteXmlCrc32Signature( config.GetOrbatFile() );
+        SerializeAndSign( config.GetUrbanStateFile(), urban_ );
+        SerializeAndSign( config.GetWeatherFile(), weather_ );
+        SerializeAndSign( config.GetProfilesFile(), profiles_ );
+        SerializeAndSign( config.GetScoresFile(), scores_ );
+        SerializeAndSign( config.GetSuccessFactorsFile(), successFactors_ );
+        successFactors_.SerializeScript( config );
         UpdateName( config.GetOrbatFile() );
     }
     return valid;

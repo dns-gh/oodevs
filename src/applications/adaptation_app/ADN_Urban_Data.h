@@ -81,10 +81,10 @@ public:
              ADN_Urban_Data();
     virtual ~ADN_Urban_Data();
 
-    void FilesNeeded(T_StringList& l) const;
-    void Reset();
-    void Load();
-    void Save();
+    virtual void FilesNeeded(T_StringList& l) const;
+    virtual void Reset();
+    virtual void ReadArchive( xml::xistream& input );
+    virtual void WriteArchive( xml::xostream& output );
 
     T_UrbanMaterialInfos_Vector&  GetMaterialsInfos();  
     UrbanMaterialInfos*           FindMaterial( const std::string& strName );
@@ -96,9 +96,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ReadUrban      ( xml::xistream& input  );
-    void WriteUrban     ( xml::xostream& output ) const;
-
     void ReadMaterial   ( xml::xistream& input  );
     void ReadMaterials  ( xml::xistream& input  );
     void WriteMaterials ( xml::xostream& output ) const;

@@ -41,7 +41,7 @@ public:
     //@{
     virtual void FilesNeeded( T_StringList& vFiles ) const = 0;
     virtual void Reset() = 0;
-    virtual void Load();
+    virtual void Load( std::string& invalidSignedFiles );
     virtual void Save();
     //@}
 

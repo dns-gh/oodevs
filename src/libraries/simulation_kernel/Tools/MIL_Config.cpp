@@ -94,6 +94,7 @@ void MIL_Config::ReadSessionFile( const std::string& file )
 {
     setpause_ = 100;
     setstepmul_ = 200;
+    MIL_Tools::CheckXmlCrc32Signature( file );
     xml::xifstream xis( file );
     xis >> xml::start( "session" )
             >> xml::start( "config" )

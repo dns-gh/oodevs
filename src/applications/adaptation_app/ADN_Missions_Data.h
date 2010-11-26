@@ -193,8 +193,8 @@ public:
 
     //! @name Operations
     //@{
-    void FilesNeeded( T_StringList& vFiles ) const;
-    void Reset();
+    virtual void FilesNeeded( T_StringList& vFiles ) const;
+    virtual void Reset();
 
     T_FragOrder_Vector& GetFragOrders();
     T_Mission_Vector&   GetUnitMissions();
@@ -202,7 +202,7 @@ public:
     T_Mission_Vector&   GetPopulationMissions();
     FragOrder*          FindFragOrder( const std::string& strName );
     Mission*            FindMission( T_Mission_Vector& missions, const std::string& strName );
-    virtual void Load();
+    virtual void Load( std::string& invalidSignedFiles );
     //@}
 
 private:

@@ -18,6 +18,7 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_DataException.h"
 
+#include <tools/XmlCrc32Signature.h>
 #include <windows.h>
 
 ADN_Project_Data::WorkDirInfos  ADN_Project_Data::workDir_;
@@ -204,6 +205,8 @@ std::string ADN_Project_Data::WorkDirInfos::GetRelativePath( const std::string& 
         return full.substr( dir.size(), full.size() - dir.size() );
 }
 
+#pragma warning( push )
+#pragma warning( disable : 4996 )
 
 //-----------------------------------------------------------------------------
 // Name: WorkDirInfos::SetWorkingDirectory
@@ -221,6 +224,7 @@ void ADN_Project_Data::WorkDirInfos::SetWorkingDirectory( const std::string& fil
     szWorkingDir_ = std::string( szPath );
 }
 
+#pragma warning( pop )
 
 //-----------------------------------------------------------------------------
 // Name: WorkDirInfos::UseTempDirectory
@@ -300,17 +304,39 @@ void ADN_Project_Data::Reset()
     dataInfos_.ReadArchive( defaultFile );
 }
 
+namespace
+{
+    void CheckSignature( const std::string& workingDir, const std::string& filename, std::string& invalidSignedFiles )
+    {
+        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( workingDir + filename );
+        if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+            invalidSignedFiles.append( "\n" + filename );
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Project_Data::Load
 // Created: JDY 03-06-20
 //-----------------------------------------------------------------------------
-void ADN_Project_Data::Load()
+void ADN_Project_Data::Load( std::string& invalidSignedFiles )
 {
     assert( ! szFile_.GetFileName().GetData().empty() );
 
+    CheckSignature( workDir_.GetWorkingDirectory().GetData(), szFile_.GetFileName().GetData(), invalidSignedFiles );
     // Read main file
     xml::xifstream input( szFile_.GetFileNameFull() );
     dataInfos_.ReadArchive( input );
+    // Check XML Validity for files not loaded
+    CheckSignature( workDir_.GetWorkingDirectory().GetData(), dataInfos_.szFire_.GetData(), invalidSignedFiles );
+    CheckSignature( workDir_.GetWorkingDirectory().GetData(), dataInfos_.szPathfinder_.GetData(), invalidSignedFiles );
+    CheckSignature( workDir_.GetWorkingDirectory().GetData(), dataInfos_.szObjectNames_.GetData(), invalidSignedFiles );
+    CheckSignature( workDir_.GetWorkingDirectory().GetData(), dataInfos_.szHumanProtections_.GetData(), invalidSignedFiles );
+    CheckSignature( workDir_.GetWorkingDirectory().GetData(), dataInfos_.szMedicalTreatment_.GetData(), invalidSignedFiles );
+    CheckSignature( workDir_.GetWorkingDirectory().GetData(), "dis.xml", invalidSignedFiles );
+    CheckSignature( workDir_.GetWorkingDirectory().GetData(), "DrawingTemplates.xml", invalidSignedFiles );
+    CheckSignature( workDir_.GetWorkingDirectory().GetData(), "FOM.xml", invalidSignedFiles );
+    CheckSignature( workDir_.GetWorkingDirectory().GetData(), "mapping.xml", invalidSignedFiles );
+    CheckSignature( workDir_.GetWorkingDirectory().GetData(), "templates.xml", invalidSignedFiles );
 }
 
 //-----------------------------------------------------------------------------
@@ -321,8 +347,22 @@ void ADN_Project_Data::Save()
 {
     assert( ! szFile_.GetFileName().GetData().empty() );
 
-    std::string szFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()  + szFile_.GetFileName().GetData();
+    std::string szFile = workDir_.GetSaveDirectory() + szFile_.GetFileName().GetData();
     ADN_Tools::CreatePathToFile( szFile );
-    xml::xofstream output( szFile );
-    dataInfos_.WriteArchive( output );
+    {
+        xml::xofstream output( szFile );
+        dataInfos_.WriteArchive( output );
+    }
+    tools::WriteXmlCrc32Signature( szFile );
+    // Save XML Signature for files not loaded, bypassing "temp" folder
+    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szFire_.GetData() );
+    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData() );
+    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szObjectNames_.GetData() );
+    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData() );
+    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData() );
+    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "dis.xml" );
+    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "DrawingTemplates.xml" );
+    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "FOM.xml" );
+    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "mapping.xml" );
+    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "templates.xml" );
 }
