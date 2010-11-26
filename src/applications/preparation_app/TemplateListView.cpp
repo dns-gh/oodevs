@@ -15,6 +15,7 @@
 #include "clients_gui/ValuedDragObject.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
@@ -112,11 +113,14 @@ void TemplateListView::LoadTemplates( const std::string& filename )
 // -----------------------------------------------------------------------------
 void TemplateListView::SaveTemplates( const std::string& filename ) const
 {
-    xml::xofstream output( filename );
-    output << xml::start( "templates" );
-    for( CIT_Templates it = templates_.begin(); it != templates_.end(); ++it )
-        (*it)->Serialize( output );
-    output << xml::end;
+    {
+        xml::xofstream output( filename );
+        output << xml::start( "templates" );
+        for( CIT_Templates it = templates_.begin(); it != templates_.end(); ++it )
+            (*it)->Serialize( output );
+        output << xml::end;
+    }
+    tools::WriteXmlCrc32Signature( filename );
 }
 
 // -----------------------------------------------------------------------------
