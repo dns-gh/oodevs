@@ -98,8 +98,8 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
         OptionMenu< char >* resourceMenu = new OptionMenu< char >( subMenu, controllers.options_, "ResourceNetworks" );
         resourceMenu->AddItem( tools::translate( "Menu", "On" ), 0 );
         resourceMenu->AddItem( tools::translate( "Menu", "Off" ), 1 );
-        resourceMenu->AddItem( tools::translate( "Menu", "Selected all" ), 2 );
-        resourceMenu->AddItem( tools::translate( "Menu", "Selected outgoing" ), 3 );
+        resourceMenu->AddItem( tools::translate( "Menu", "Selected: all links" ), 2 );
+        resourceMenu->AddItem( tools::translate( "Menu", "Selected: outgoing links" ), 3 );
         subMenu->insertItem( MakePixmap( "logistic_links" ), tools::translate( "Menu", "Resource networks" ), resourceMenu );
     }
     menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu );

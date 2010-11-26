@@ -574,12 +574,12 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>On</translation>
     </message>
     <message>
-        <source>Selected all</source>
-        <translation>Sélectionné tout</translation>
+        <source>Selected: all links</source>
+        <translation>Sélectionné: tous les liens</translation>
     </message>
     <message>
-        <source>Selected outgoing</source>
-        <translation>Sélectionné sortant</translation>
+        <source>Selected: outgoing links</source>
+        <translation>Sélectionné: liens sortants</translation>
     </message>
 </context>
 <context>

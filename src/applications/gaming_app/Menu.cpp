@@ -164,8 +164,8 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, kernel::ObjectTypes&
         CompositeMenu< char > composite( subMenu, toolBar, tools::translate( "Menu", "Resource networks" ), MakePixmap( "logistic_links" ), controllers.options_, "ResourceNetworks" );
         composite.AddItem( tools::translate( "Menu", "On" ), 0 );
         composite.AddItem( tools::translate( "Menu", "Off" ), 1 );
-        composite.AddItem( tools::translate( "Menu", "Selected all" ), 2 );
-        composite.AddItem( tools::translate( "Menu", "Selected outgoing" ), 3 );
+        composite.AddItem( tools::translate( "Menu", "Selected: all links" ), 2 );
+        composite.AddItem( tools::translate( "Menu", "Selected: outgoing links" ), 3 );
     }
     menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu );
 
