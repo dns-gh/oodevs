@@ -79,7 +79,7 @@ end
 
 -- Save data to specific file (csv format with headers)
 function Recorder.Save( filename )
-    local output = io.open( filename, "w+" )
+    local output = io.open( events.indicators:PrependSessionPath( filename ), "w+" )
     Recorder._SaveHeader( output )
     local last = {}
     for i = 1, Recorder.ticks, 1 do

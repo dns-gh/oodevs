@@ -20,6 +20,7 @@
 #include "IndicatorConditions.h"
 #include "MiscEvents.h"
 #include "directia/brain/Brain.h"
+#include "dispatcher/Config.h"
 
 using namespace plugins::script;
 
@@ -27,7 +28,7 @@ using namespace plugins::script;
 // Name: ConditionFacade constructor
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-ConditionFacade::ConditionFacade( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const dispatcher::Model_ABC& model )
+ConditionFacade::ConditionFacade( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const dispatcher::Model_ABC& model, const dispatcher::Config& config  )
     : controller_( controller )
 {
     Add( new SimulationConditions( controller ) );
@@ -37,7 +38,7 @@ ConditionFacade::ConditionFacade( kernel::Controller& controller, const kernel::
     Add( new PopulationConditions( controller, converter ) );
     Add( new ClientConditions( controller, model ) );
     Add( new ScriptConditions( controller ) );
-    Add( new IndicatorConditions( controller ) );
+    Add( new IndicatorConditions( controller, config ) );
 }
 
 // -----------------------------------------------------------------------------

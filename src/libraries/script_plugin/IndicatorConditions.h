@@ -18,6 +18,11 @@ namespace kernel
     class Controller;
 }
 
+namespace dispatcher
+{
+    class Config;
+}
+
 namespace plugins
 {
 namespace script
@@ -36,13 +41,14 @@ class IndicatorConditions : public dispatcher::Registrable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IndicatorConditions( kernel::Controller& controller );
+             IndicatorConditions( kernel::Controller& controller, const dispatcher::Config& config );
     virtual ~IndicatorConditions();
     //@}
 
     //! @name Operations
     //@{
     virtual void RegisterIn( directia::brain::Brain& brain );
+    std::string PrependSessionPath( const std::string& filename );
     //@}
 
 private:
@@ -61,6 +67,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    const dispatcher::Config& config_; 
     //@}
 };
 

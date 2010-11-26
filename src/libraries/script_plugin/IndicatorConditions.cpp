@@ -12,6 +12,7 @@
 #include "EventCondition.h"
 #include "MiscEvents.h"
 #include "directia/brain/Brain.h"
+#include "dispatcher/Config.h"
 
 using namespace plugins::script;
 
@@ -19,8 +20,9 @@ using namespace plugins::script;
 // Name: IndicatorConditions constructor
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
-IndicatorConditions::IndicatorConditions( kernel::Controller& controller )
+IndicatorConditions::IndicatorConditions( kernel::Controller& controller, const dispatcher::Config& config )
     : controller_( controller )
+    , config_ ( config )
 {
     // NOTHING
 }
@@ -42,7 +44,17 @@ void IndicatorConditions::RegisterIn( directia::brain::Brain& brain )
 {
     brain[ "events.indicators" ] = this;
     brain.Register( "IndicatorChanged", &IndicatorConditions::IndicatorChanged );
+    brain.Register( "PrependSessionPath", &IndicatorConditions::PrependSessionPath );
 }
+// -----------------------------------------------------------------------------
+// Name: IndicatorConditions::PrependSessionPath
+// Created: HBD 2010-11-26
+// -----------------------------------------------------------------------------
+std::string IndicatorConditions::PrependSessionPath( const std::string& filename )
+{
+    return config_.BuildSessionChildFile( filename );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorConditions::IndicatorChanged

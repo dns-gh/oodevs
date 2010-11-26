@@ -32,7 +32,7 @@ namespace
         std::string workingDirectory = ( foundHere == std::string::npos ) ? "." : path.substr( 0, foundHere );
         std::string brainInit = std::string( "brain={file='" ) + path + "',type='brain'}plugins={} cwd='" + workingDirectory + "'";
         return new directia::brain::Brain( brainInit );
-    }
+    }   
 }
 
 // -----------------------------------------------------------------------------
