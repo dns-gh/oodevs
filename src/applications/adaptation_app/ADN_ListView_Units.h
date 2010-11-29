@@ -15,17 +15,16 @@
 #include "ADN_Types.h"
 #include "ADN_ListView.h"
 
-
 //*****************************************************************************
 // Created: JDY 03-07-28
 //*****************************************************************************
 class ADN_ListView_Units
-: public ADN_ListView
+    : public ADN_ListView
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_ListView_Units( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    explicit ADN_ListView_Units( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
     virtual ~ADN_ListView_Units();
     //@}
 
@@ -34,10 +33,8 @@ private:
     //@{
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
-
     std::string GetToolTipFor( QListViewItem& item );
     //@}
 };
-
 
 #endif // __ADN_ListView_Units_h_

@@ -363,7 +363,7 @@ void ADN_GuiBuilder::SetValidator( ADN_IntValidator& validator, E_Validator nVal
         validator.setRange( 0, INT_MAX );
         break;
     case ePercentage:
-        validator.setRange( 1, 100 );
+        validator.setRange( 0, 100 );
         break;
     default:
         assert( 0 );

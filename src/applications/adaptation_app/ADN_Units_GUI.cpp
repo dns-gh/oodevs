@@ -186,6 +186,20 @@ void ADN_Units_GUI::Build()
     pStockLogThreshold_ = new ADN_Units_LogThreshold_GUI( pStockGroup_ );
     vInfosConnectors[eStock] = &pStockLogThreshold_->GetConnector();
 
+    // Efficiencies
+    QGroupBox* pEfficienciesGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Efficiencies" ), pGroup );
+    pEfficienciesGroup->setInsideMargin(20);
+    pEfficienciesGroup->setInsideSpacing(10);
+
+    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Recon" ), vInfosConnectors[ eRecon ], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Combat support" ), vInfosConnectors[ eCombatSupport ], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Combat" ), vInfosConnectors[ eCombat ], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Mobility support" ), vInfosConnectors[ eMobilitySupport ], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Counter mobility support" ), vInfosConnectors[ eCounterMobilitySupport ], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Protection support" ), vInfosConnectors[ eProtectionSupport ], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Engineering recon" ), vInfosConnectors[ eEngineeringRecon ], tr( "%" ), ePercentage );
+    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Urban area efficiency" ), vInfosConnectors[ eUrbanAreaEfficiency ], tr( "%" ), ePercentage );
+
     // set list units auto connectors
     pListUnits_->SetItemConnectors( vInfosConnectors );
 
@@ -203,8 +217,9 @@ void ADN_Units_GUI::Build()
     pGroupLayout->addMultiCellWidget( pDistancesGroup, 2, 2, 0, 1 );
     pGroupLayout->addMultiCellWidget( postureInstallationBox, 2, 2, 2, 3 );
     pGroupLayout->addMultiCellWidget( pComposantesGroup, 2, 2, 4, 5 );
-    pGroupLayout->addMultiCellWidget( pDotationsGroup, 3, 3, 0, 2 );
-    pGroupLayout->addMultiCellWidget( pStockGroup_, 3, 3, 3, 5 );
+    pGroupLayout->addMultiCellWidget( pDotationsGroup, 3, 3, 0, 1 );
+    pGroupLayout->addMultiCellWidget( pStockGroup_, 3, 3, 2, 3 );
+    pGroupLayout->addMultiCellWidget( pEfficienciesGroup, 3, 3, 4, 5 );
 }
 
 // -----------------------------------------------------------------------------

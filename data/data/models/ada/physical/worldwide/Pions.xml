@@ -30,6 +30,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Deployment support platoon" id="2" name="Deployment support platoon" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
@@ -70,6 +71,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Very Short Range Surface To Air Battery CP" id="3" name="Very Short Range Surface To Air Battery CP" type="Pion ASA">
     <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense/missile/light/motorized"/>
@@ -97,6 +99,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Very Short Range Surface To Air Defense Troop" id="4" name="Very Short Range Surface To Air Defense Troop" type="Pion ASA">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/air defense/missile/light/motorized"/>
@@ -123,6 +126,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Short Range Surface To Air Defense Troop" id="5" name="Short Range Surface To Air Defense Troop" type="Pion ASA">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/air defense/missile/light/motorized"/>
@@ -151,6 +155,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit can-fly="true" decisional-model="Antitank Helicopter Patrol" id="6" name="Antitank Helicopter Patrol" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/scout"/>
@@ -176,6 +181,7 @@
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit can-fly="true" decisional-model="Escort And Close Support Helicopter Patrol" id="7" name="Light Escort and Close Support Helicopter Patrol" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing"/>
@@ -201,6 +207,7 @@
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit can-fly="true" decisional-model="Transport Helicopter Patrol" id="8" name="Transport Helicopter Patrol" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/utility"/>
@@ -226,6 +233,7 @@
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Infantry platoon" id="9" name="Infantry platoon" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
@@ -270,6 +278,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Infantry company CP" id="10" name="Infantry company CP" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
@@ -307,6 +316,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="LRA infantry platoon" id="11" name="LRA infantry platoon" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/anti armor/armored/wheeled"/>
@@ -344,6 +354,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="PC TC2" id="12" name="Teeth arms battalion CT" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
@@ -390,6 +401,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Truck convoy" id="13" name="Convoy" type="Pion LOG Convoi">
     <nature atlas-nature="Blinde" level="oo" nature-app6="combat service support/transportation"/>
@@ -411,6 +423,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Artillery locating radar group" id="14" name="Artillery locating radar group" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/target acquisition/radar"/>
@@ -443,6 +456,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Firefinder radar" id="15" name="Firefinder radar" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/target acquisition/radar"/>
@@ -475,6 +489,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Field artillery reconnaissance" id="16" name="Firefinder reconnaissance platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/target acquisition/radar"/>
@@ -507,6 +522,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Peloton Transport Blindes" id="17" name="Medium transportation platoon" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
@@ -526,6 +542,7 @@
       <posture name="PostePrepareGenie" setup-time="5400s"/>
     </postures>
     <nbc decontamination-delay="7800s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Refugee" id="18" name="Refugee" type="Pion REFUGIE">
     <nature atlas-nature="None" level="none" nature-app6="mootw/refugees"/>
@@ -543,6 +560,7 @@
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
     <nbc decontamination-delay="600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="LRSD" id="19" name="Artillery LRSD" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
@@ -575,6 +593,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Command post" id="20" name="Major units command post" type="Pion TRANS">
     <nature atlas-nature="PC" level="x" nature-app6="combat support/signal unit"/>
@@ -592,6 +611,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="9300s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Theater High Altitude Defense Troop" id="21" name="Theater High Altitude Defense Troop" type="Pion ASA">
     <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense/missile/h_mad/hawk"/>
@@ -619,6 +639,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Commando troop" id="22" name="Commando troop" type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/infantry"/>
@@ -656,6 +677,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="1000" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Theater High Altitude Aera Defense CP" id="23" name="Theatre High Altitude Aera Defense CP" type="Pion ASA">
     <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense"/>
@@ -682,6 +704,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="PC TC2" id="24" name="Battalion CT" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply/class iv"/>
@@ -723,6 +746,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="PC Log" id="25" name="Supply CP (division)" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
@@ -748,6 +772,7 @@
       <posture name="PostePrepareGenie" setup-time="5400s"/>
     </postures>
     <nbc decontamination-delay="2250s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="PC Log" id="26" name="Medical CP (division)" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
@@ -773,6 +798,7 @@
       <posture name="PostePrepareGenie" setup-time="5400s"/>
     </postures>
     <nbc decontamination-delay="2250s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="PC Appui Mob" id="27" name="Transportation platoon (transportation squadron)" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
@@ -795,6 +821,7 @@
     </postures>
     <nbc decontamination-delay="750s"/>
     <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="PC TC2" id="28" name="Logistic CT" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
@@ -834,6 +861,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Battery CP" id="29" name="Battery CP" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
@@ -868,6 +896,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Landing Craft" id="30" name="Landing Crafts" type="Pion JOINT">
     <nature atlas-nature="None" level="ooo" nature-app6="combat support/landing support"/>
@@ -891,6 +920,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="PC TC2" id="31" name="Combined arms battalion CT" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
@@ -932,6 +962,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Command post" id="32" name="Battle group command post" type="Pion TRANS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/track"/>
@@ -967,6 +998,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="MRA infantry platoon" id="33" name="MRA troop" type="Pion INF">
     <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery"/>
@@ -1001,6 +1033,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Mortar support troop" id="34" name="Mortar troop" type="Pion INF">
     <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/mortar"/>
@@ -1035,6 +1068,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="SD" id="35" name="Artillery SD" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery"/>
@@ -1058,6 +1092,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="PC Log" id="36" name="Maintenance CP  (division)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
@@ -1083,6 +1118,7 @@
       <posture name="PostePrepareGenie" setup-time="5400s"/>
     </postures>
     <nbc decontamination-delay="2250s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Pion stock" id="37" name="Ammo supply group OFF TT- D" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
@@ -1109,6 +1145,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="1950s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Pion stock" id="38" name="Ammo supply group SOFF TT - D" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
@@ -1135,6 +1172,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="1950s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Pion stock" id="39" name="Water supply group" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class ii"/>
@@ -1159,6 +1197,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2250s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Pion stock" id="40" name="Ammo supply group" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
@@ -1185,6 +1224,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="1950s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Pion stock" id="41" name="Ammo supply group SOFF TD" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
@@ -1211,6 +1251,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="1950s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Pion stock" id="42" name="Magazin section CAP" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class ii"/>
@@ -1229,6 +1270,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="6000s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Peloton Transport" id="43" name="Supply group 60m3" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
@@ -1248,6 +1290,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2700s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Peloton Transport" id="44" name="Supply platoon (PR)" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
@@ -1278,6 +1321,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="4200s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Peloton Transport" id="45" name="Supply Transportation platoon (PT)" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
@@ -1297,6 +1341,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="8850s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Groupe Ramassage" id="46" name="Medical group VAB" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/medical"/>
@@ -1323,6 +1368,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2400s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Groupe Ramassage" id="47" name="Casualty evacuation group" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/medical"/>
@@ -1341,6 +1387,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="450s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="ACA" id="48" name="Medical section" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
@@ -1361,6 +1408,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Unite PSY" id="49" name="Psychological section" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical/psychological"/>
@@ -1379,6 +1427,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="300s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Health unit" id="50" name="Chirurgicale section (modular)" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
@@ -1400,6 +1449,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="4650s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Decontamination NBC" id="51" name="Logistic decontamination section" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat support/nbc/decontamination"/>
@@ -1427,6 +1477,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Section Triage Modulaire" id="52" name="Casualty assessment section" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
@@ -1450,6 +1501,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2700s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Health unit" id="53" name="Chirurgicale section HMC" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
@@ -1470,6 +1522,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Section Maintenance" id="54" name="Mobility repairs section (division)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
@@ -1490,6 +1543,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2850s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Section Maintenance" id="55" name="Repairs section (division)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
@@ -1510,6 +1564,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="8400s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Groupe Maintenance Evacuation" id="56" name="Maintenance evacuation group" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
@@ -1530,6 +1585,7 @@
       <posture name="PostePrepareGenie" setup-time="5400s"/>
     </postures>
     <nbc decontamination-delay="3450s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Section Maintenance" id="57" name="Firing mobility repairs section  (division)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
@@ -1550,6 +1606,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2850s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Peloton Transport Blindes" id="58" name="Heavy transportation platoon" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
@@ -1569,6 +1626,7 @@
       <posture name="PostePrepareGenie" setup-time="5400s"/>
     </postures>
     <nbc decontamination-delay="7800s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Section Maintenance" id="59" name="Firing mobility repairs section (corps)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
@@ -1589,6 +1647,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2850s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Section Maintenance" id="60" name="Mobility repairs section (corps)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
@@ -1609,6 +1668,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2850s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Section Maintenance" id="61" name="Repairs section (corps)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
@@ -1629,6 +1689,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="8400s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Peloton Transport" id="62" name="Supply Transportation platoon" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
@@ -1648,6 +1709,7 @@
       <posture name="PostePrepareGenie" setup-time="5400s"/>
     </postures>
     <nbc decontamination-delay="8850s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Peloton Transport" id="63" name="Supply group 35m3" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
@@ -1668,6 +1730,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2700s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Peloton Transport" id="64" name="Supply group180m3" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
@@ -1687,6 +1750,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="2700s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Short Range Surface To Air Defense Battery CP" id="65" name="Short Range Surface To Air Defense Battery CP" type="Pion ASA">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/air defense/short range"/>
@@ -1713,6 +1777,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Terroriste" id="66" name="Terrorist" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
@@ -1736,6 +1801,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Militia" id="67" name="Militia" type="Pion MILICE">
     <nature atlas-nature="None" level="none" nature-app6="combat"/>
@@ -1776,6 +1842,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="MBT platoon" id="68" name="MBT platoon" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
@@ -1801,6 +1868,7 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Light armored platoon" id="69" name="Light armored platoon" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled/medium"/>
@@ -1828,6 +1896,7 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Armored squadron CP" id="70" name="Armored squadron CP" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/wheeled"/>
@@ -1860,6 +1929,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Antitank patrol" id="71" name="Antitank patrol" type="Pion ABC">
     <nature atlas-nature="PC" level="oo" nature-app6="combat/reconnaissance"/>
@@ -1877,6 +1947,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="300s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Scout patrol" id="72" name="Scout patrol" type="Pion ABC">
     <nature atlas-nature="PC" level="oo" nature-app6="combat/reconnaissance"/>
@@ -1894,6 +1965,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="300s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Countermobility platoon" id="73" name="Countermobility platoon" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
@@ -1934,6 +2006,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Mobility support platoon" id="74" name="Mobility support platoon" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
@@ -1974,6 +2047,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Bridging troop" id="75" name="Bridging troop" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
@@ -2005,6 +2079,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="LRS troop" id="76" name="LRS troop" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/reconnaissance/marine/light armored reconnaissance"/>
@@ -2029,6 +2104,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit can-fly="true" decisional-model="Drone" id="77" is-autonomous="true" name="Drone (real time)" type="Pion RENS">
     <nature atlas-nature="Indefini" level="oo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed wing"/>
@@ -2052,6 +2128,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Drones station_" id="78" name="Drones station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed wing"/>
@@ -2080,6 +2157,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Listening station" id="79" name="Listening Station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
@@ -2109,6 +2187,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Jamming station" id="80" name="Jamming station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/jamming"/>
@@ -2137,6 +2216,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Radar detection station" id="81" name="Radar detection station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
@@ -2166,6 +2246,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Ground radar surveillance" id="82" name="Ground surveillance radar" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/target acquisition/radar"/>
@@ -2194,6 +2275,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="NBC reconnaissance troop" id="83" name="NBC reconnaissance troop" type="Pion NBC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="combat support/nbc/chemical/recon"/>
@@ -2218,6 +2300,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="NBC ROTA troop" id="84" name="NBC ROTA troop" type="Pion NBC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="combat support/nbc/chemical/recon"/>
@@ -2242,6 +2325,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="NBC decontamination troop" id="85" name="NBC decontamination troop" type="Pion NBC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="combat support/nbc/decontamination"/>
@@ -2265,6 +2349,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Firing platoon" id="86" name="Artillery firing platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
@@ -2301,6 +2386,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Field artillery reconnaissance" id="87" name="Artillery reconnaissance platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
@@ -2336,6 +2422,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="MLRS firing platoon" id="88" name="MLRS firing platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery"/>
@@ -2370,6 +2457,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Field artillery reconnaissance" id="89" name="MLRS reconnaissance platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/artillery survey"/>
@@ -2402,6 +2490,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Firing platoon" id="90" name="Mortar firing platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
@@ -2434,6 +2523,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="Field artillery reconnaissance" id="91" name="Mortar reconnaissance platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/artillery survey"/>
@@ -2466,6 +2556,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit can-fly="true" decisional-model="AAC CP" id="92" name="AAC CP" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing"/>
@@ -2491,6 +2582,7 @@
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit can-fly="true" decisional-model="Air Defence Helicopter Patrol" id="93" name="Air Defence Helicopter Patrol" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/scout"/>
@@ -2516,6 +2608,7 @@
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit can-fly="true" decisional-model="Escort And Close Support Helicopter Patrol" id="94" name="Heavy Escort and Close Support Helicopter Patrol" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing"/>
@@ -2541,6 +2634,7 @@
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit can-fly="true" decisional-model="General Purpose Helicopter Patrol" id="95" name="General Purpose Helicopter Patrol" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing"/>
@@ -2566,6 +2660,7 @@
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit can-fly="true" decisional-model="Strategic Bomber Patrol" id="96" name="Strategic Bomber Patrol" type="Pion JOINT">
     <nature atlas-nature="Indefini" level="ooo" nature-app6="combat/aviation/fixed wing/attack"/>
@@ -2591,6 +2686,7 @@
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit can-fly="true" decisional-model="Air CP" id="97" name="Air CP" type="Pion JOINT">
     <nature atlas-nature="Indefini" level="ooo" nature-app6="combat/aviation/fixed wing"/>
@@ -2616,6 +2712,7 @@
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="HS - Firefighter" id="98" name="HS - Fire_Suppression" type="Pion Emergency">
     <nature atlas-nature="None" level="none" nature-app6="emergency/firefighter/operation/fire suppression"/>
@@ -2633,6 +2730,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="HS - Police" id="99" name="HS - Law_Police" type="Pion Emergency">
     <nature atlas-nature="PC" level="none" nature-app6="emergency/police/operation/police"/>
@@ -2650,6 +2748,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="HS - Medical" id="100" name="HS - Med_Ambulance" type="Pion Emergency">
     <nature atlas-nature="PC" level="none" nature-app6="emergency/medical/evacuation/ambulance"/>
@@ -2667,6 +2766,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="HS - Firefighter" id="101" name="HS - Fire_Station" type="Pion Emergency">
     <nature atlas-nature="None" level="none" nature-app6="emergency/firefighter/fire station"/>
@@ -2684,6 +2784,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit can-fly="true" decisional-model="Transport Helicopter Patrol" id="102" name="HS - Med_Evacuation_Helicopter" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="emergency/medical/evacuation/helicopter"/>
@@ -2709,6 +2810,7 @@
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="NBC decontamination troop" id="103" name="HS - Chemical Decontamination" type="Pion NBC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="emergency/nbc/chemical/recon/wheeled armored vehicle"/>
@@ -2732,6 +2834,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="NBC reconnaissance troop" id="104" name="HS - Chemical Recognition" type="Pion NBC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="emergency/nbc/chemical/recon/wheeled armored vehicle"/>
@@ -2756,6 +2859,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="HS - Firefighter" id="105" name="HS - Fire_Station_CP" type="Pion Emergency">
     <nature atlas-nature="None" level="none" nature-app6="emergency/firefighter/fire station"/>
@@ -2773,6 +2877,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="HS - Firefighter" id="106" name="HS - Fire_Suppression_CP" type="Pion Emergency">
     <nature atlas-nature="None" level="none" nature-app6="emergency/firefighter/operation/fire suppression"/>
@@ -2790,6 +2895,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="HS - Police" id="107" name="HS - Law_Police_CP" type="Pion Emergency">
     <nature atlas-nature="PC" level="none" nature-app6="emergency/police/operation/police"/>
@@ -2807,6 +2913,7 @@
       <posture name="PostePrepareGenie" setup-time="0s"/>
     </postures>
     <nbc decontamination-delay="600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
   <unit decisional-model="PC TC2" id="108" name="HS - Logistic Support" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="emergency/public safety/operation/operation center"/>
@@ -2846,6 +2953,7 @@
     </postures>
     <setup installation-time="60s" uninstallation-time="60s"/>
     <nbc decontamination-delay="21600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
 </units>
-<!-- signature="0810772327" -->
+<!-- signature="2906015283" -->

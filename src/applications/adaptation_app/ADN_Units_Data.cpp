@@ -417,30 +417,38 @@ void ADN_Units_Data::PostureInfos::WriteArchive( xml::xostream& output )
 // Created: JDY 03-07-25
 //-----------------------------------------------------------------------------
 ADN_Units_Data::UnitInfos::UnitInfos()
-: ADN_Ref_ABC()
-, eTypeId_((E_AgentTypePion)0)
-, strName_()
-, nMosId_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetNextId() )
-, ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos(), 0 )
-, eNatureLevel_((E_NatureLevel)0)
-, nNbOfficer_(0)
-, nNbNCOfficer_(0)
-, decontaminationDelay_( "0s" )
-, vComposantes_()
-, vPostures_( false )
-, vPointInfos_( false )
-, bProbe_(false)
-, bStock_( false )
-, stocks_()
-, bStrengthRatioFeedbackTime_( false )
-, strengthRatioFeedbackTime_( "0s" )
-, rProbeWidth_(0)
-, rProbeLength_(0)
-, bCanFly_( false )
-, bIsAutonomous_( false )
-, bInstallationDelay_( false )
-, installationDelay_( "0s" )
-, uninstallationDelay_( "0s" )
+    : ADN_Ref_ABC()
+    , eTypeId_( static_cast< E_AgentTypePion >( 0 ) )
+    , strName_()
+    , nMosId_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetNextId() )
+    , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos(), 0 )
+    , eNatureLevel_( static_cast< E_NatureLevel >( 0 ) )
+    , nNbOfficer_( 0 )
+    , nNbNCOfficer_( 0 )
+    , decontaminationDelay_( "0s" )
+    , vComposantes_()
+    , vPostures_( false )
+    , vPointInfos_( false )
+    , bProbe_( false )
+    , bStock_( false )
+    , stocks_()
+    , bStrengthRatioFeedbackTime_( false )
+    , strengthRatioFeedbackTime_( "0s" )
+    , rProbeWidth_( 0 )
+    , rProbeLength_( 0 )
+    , bCanFly_( false )
+    , bIsAutonomous_( false )
+    , bInstallationDelay_( false )
+    , installationDelay_( "0s" )
+    , uninstallationDelay_( "0s" )
+    , nReconEfficiency_( 50 )
+    , nCombatSupportEfficiency_( 50 )
+    , nCombatEfficiency_( 50 )
+    , nMobilitySupportEfficiency_( 50 )
+    , nCounterMobilitySupportEfficiency_( 50 )
+    , nProtectionSupportEfficiency_( 50 )
+    , nEngineeringReconEfficiency_( 50 )
+    , nUrbanAreaEfficiency_( 50 )
 {
     BindExistenceTo(&ptrModel_);
 
@@ -555,6 +563,15 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->bInstallationDelay_  = bInstallationDelay_.GetData();
     pCopy->installationDelay_   = installationDelay_.GetData();
     pCopy->uninstallationDelay_ = uninstallationDelay_.GetData();
+
+    pCopy->nReconEfficiency_ = nReconEfficiency_.GetData();
+    pCopy->nCombatSupportEfficiency_ = nCombatSupportEfficiency_.GetData();
+    pCopy->nCombatEfficiency_ = nCombatEfficiency_.GetData();
+    pCopy->nMobilitySupportEfficiency_ = nMobilitySupportEfficiency_.GetData();
+    pCopy->nCounterMobilitySupportEfficiency_ = nCounterMobilitySupportEfficiency_.GetData();
+    pCopy->nProtectionSupportEfficiency_ = nProtectionSupportEfficiency_.GetData();
+    pCopy->nEngineeringReconEfficiency_ = nEngineeringReconEfficiency_.GetData();
+    pCopy->nUrbanAreaEfficiency_ = nUrbanAreaEfficiency_.GetData();
 
     return pCopy;
 }
@@ -686,6 +703,18 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
     bProbe_ = rProbeWidth_ != 0. || rProbeLength_ != 0.;
     bStrengthRatioFeedbackTime_ = strengthRatioFeedbackTime_ != "0s";
 
+    input >> xml::optional
+            >> xml::start( "efficiencies" )
+                >> xml::attribute( "recon", nReconEfficiency_ )
+                >> xml::attribute( "combat-support", nCombatSupportEfficiency_ )
+                >> xml::attribute( "combat", nCombatEfficiency_ )
+                >> xml::attribute( "mobility-support", nMobilitySupportEfficiency_ )
+                >> xml::attribute( "counter-mobility-support", nCounterMobilitySupportEfficiency_ )
+                >> xml::attribute( "protection-support", nProtectionSupportEfficiency_ )
+                >> xml::attribute( "engineering-support", nEngineeringReconEfficiency_ )
+                >> xml::attribute( "urban-area", nUrbanAreaEfficiency_ )
+            >> xml::end; 
+
     input >> xml::optional >> xml::attribute( "can-fly", bCanFly_ );
     input >> xml::optional >> xml::attribute( "is-autonomous", bIsAutonomous_ );
 }
@@ -767,6 +796,17 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
         output << xml::start( "force-ratio" )
                 << xml::attribute( "feedback-time", strengthRatioFeedbackTime_ )
                << xml::end;
+
+    output << xml::start( "efficiencies" )
+            << xml::attribute( "recon", nReconEfficiency_ )
+            << xml::attribute( "combat-support", nCombatSupportEfficiency_ )
+            << xml::attribute( "combat", nCombatEfficiency_ )
+            << xml::attribute( "mobility-support", nMobilitySupportEfficiency_ )
+            << xml::attribute( "counter-mobility-support", nCounterMobilitySupportEfficiency_ )
+            << xml::attribute( "protection-support", nProtectionSupportEfficiency_ )
+            << xml::attribute( "engineering-support", nEngineeringReconEfficiency_ )
+            << xml::attribute( "urban-area", nUrbanAreaEfficiency_ )
+           << xml::end; 
 
     if( bCanFly_.GetData() )
         output << xml::attribute( "can-fly", bCanFly_ );

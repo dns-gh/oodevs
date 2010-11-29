@@ -249,6 +249,15 @@ public:
         ADN_Type_Bool                                               bInstallationDelay_;
         ADN_Type_Time                                               installationDelay_;
         ADN_Type_Time                                               uninstallationDelay_;
+
+        ADN_Type_Int                                                nReconEfficiency_;
+        ADN_Type_Int                                                nCombatSupportEfficiency_;
+        ADN_Type_Int                                                nCombatEfficiency_;
+        ADN_Type_Int                                                nMobilitySupportEfficiency_;
+        ADN_Type_Int                                                nCounterMobilitySupportEfficiency_;
+        ADN_Type_Int                                                nProtectionSupportEfficiency_;
+        ADN_Type_Int                                                nEngineeringReconEfficiency_;
+        ADN_Type_Int                                                nUrbanAreaEfficiency_;
     };
 
     typedef ADN_Type_Vector_ABC<UnitInfos>    T_UnitInfos_Vector;

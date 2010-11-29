@@ -4572,6 +4572,46 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Stock</source>
         <translation>Stock</translation>
     </message>
+    <message>
+        <source>Efficiencies</source>
+        <translation>Efficacités</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <source>Recon</source>
+        <translation>Reconnaissance de l&apos;avant (rens)</translation>
+    </message>
+    <message>
+        <source>Combat support</source>
+        <translation>Appui combat (feu)</translation>
+    </message>
+    <message>
+        <source>Combat</source>
+        <translation>Combat</translation>
+    </message>
+    <message>
+        <source>Mobility support</source>
+        <translation>Appui gen mobilité</translation>
+    </message>
+    <message>
+        <source>Counter mobility support</source>
+        <translation>Appui gen contre mobilité</translation>
+    </message>
+    <message>
+        <source>Protection support</source>
+        <translation>Appui gen protection</translation>
+    </message>
+    <message>
+        <source>Engineering recon</source>
+        <translation>Appui gen reconnaissance</translation>
+    </message>
+    <message>
+        <source>Urban area efficiency</source>
+        <translation>Efficacité zone urbaine</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>

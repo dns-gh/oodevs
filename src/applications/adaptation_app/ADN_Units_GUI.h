@@ -64,6 +64,14 @@ public:
         eHasInstallation,
         eInstallationDelay,
         eUninstallationDelay,
+        eRecon,
+        eCombatSupport,
+        eCombat,
+        eMobilitySupport,
+        eCounterMobilitySupport,
+        eProtectionSupport,
+        eEngineeringRecon,
+        eUrbanAreaEfficiency,
         eNbrGuiElements
     };
     //@}
