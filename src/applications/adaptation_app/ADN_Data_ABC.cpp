@@ -36,6 +36,24 @@ ADN_Data_ABC::~ADN_Data_ABC()
     // NOTHING
 }
 
+namespace
+{
+    class SchemaReader
+    {
+    public:
+    void ReadSchema( const std::string&, xml::xistream& xis )
+    {
+        schema_ = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
+    }
+    const std::string& GetSchema()
+    {
+        return schema_;
+    }
+    private:
+        std::string schema_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Data_ABC::Load
 // Created: APE 2005-03-17
@@ -50,8 +68,20 @@ void ADN_Data_ABC::Load( std::string& invalidSignedFiles )
         tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( strFile );
         if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
             invalidSignedFiles.append( "\n" + fileList.front() );
-        xml::xifstream input( strFile );
-        ReadArchive( input );
+        xml::xifstream xis( strFile );
+        SchemaReader reader;
+        xis >> xml::list( reader, &SchemaReader::ReadSchema );
+        const std::string& schema = reader.GetSchema();
+        if( schema.empty() )
+        {
+            xml::xifstream input( strFile );
+            ReadArchive( input );
+        }
+        else
+        {
+            xml::xifstream input( strFile, xml::external_grammar( std::string( "resources/" ) + schema ) );
+            ReadArchive( input );
+        }
     }
 }
 

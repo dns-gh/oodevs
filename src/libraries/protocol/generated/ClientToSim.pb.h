@@ -44,6 +44,9 @@ class MsgControlCheckPointSetFrequency;
 class MsgControlCheckPointDeleteRequest;
 class MsgControlCheckPointListRequest;
 class MsgControlEnableVisionCones;
+class MsgChangePopulationMagicAction;
+class MsgUrbanMagicAction;
+class MsgUrbanMagicAction_Infrastructure;
 class MsgClientToSim;
 class MsgClientToSim_Content;
 
@@ -1574,6 +1577,336 @@ class MsgControlEnableVisionCones : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgChangePopulationMagicAction : public ::google::protobuf::Message {
+ public:
+  MsgChangePopulationMagicAction();
+  virtual ~MsgChangePopulationMagicAction();
+  
+  MsgChangePopulationMagicAction(const MsgChangePopulationMagicAction& from);
+  
+  inline MsgChangePopulationMagicAction& operator=(const MsgChangePopulationMagicAction& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgChangePopulationMagicAction& default_instance();
+  void Swap(MsgChangePopulationMagicAction* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgChangePopulationMagicAction* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgChangePopulationMagicAction& from);
+  void MergeFrom(const MsgChangePopulationMagicAction& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.PopulationId tasker = 1;
+  inline bool has_tasker() const;
+  inline void clear_tasker();
+  static const int kTaskerFieldNumber = 1;
+  inline const ::Common::PopulationId& tasker() const;
+  inline ::Common::PopulationId* mutable_tasker();
+  
+  // repeated .Common.PartyAdhesion adhesions = 2;
+  inline int adhesions_size() const;
+  inline void clear_adhesions();
+  static const int kAdhesionsFieldNumber = 2;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::PartyAdhesion >& adhesions() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::PartyAdhesion >* mutable_adhesions();
+  inline const ::Common::PartyAdhesion& adhesions(int index) const;
+  inline ::Common::PartyAdhesion* mutable_adhesions(int index);
+  inline ::Common::PartyAdhesion* add_adhesions();
+  
+  // optional int32 healthy = 3;
+  inline bool has_healthy() const;
+  inline void clear_healthy();
+  static const int kHealthyFieldNumber = 3;
+  inline ::google::protobuf::int32 healthy() const;
+  inline void set_healthy(::google::protobuf::int32 value);
+  
+  // optional int32 wounded = 4;
+  inline bool has_wounded() const;
+  inline void clear_wounded();
+  static const int kWoundedFieldNumber = 4;
+  inline ::google::protobuf::int32 wounded() const;
+  inline void set_wounded(::google::protobuf::int32 value);
+  
+  // optional int32 dead = 5;
+  inline bool has_dead() const;
+  inline void clear_dead();
+  static const int kDeadFieldNumber = 5;
+  inline ::google::protobuf::int32 dead() const;
+  inline void set_dead(::google::protobuf::int32 value);
+  
+  // optional .Common.MotivationType motivation = 6;
+  inline bool has_motivation() const;
+  inline void clear_motivation();
+  static const int kMotivationFieldNumber = 6;
+  inline const ::Common::MotivationType& motivation() const;
+  inline ::Common::MotivationType* mutable_motivation();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::PopulationId* tasker_;
+  ::google::protobuf::RepeatedPtrField< ::Common::PartyAdhesion > adhesions_;
+  ::google::protobuf::int32 healthy_;
+  ::google::protobuf::int32 wounded_;
+  ::google::protobuf::int32 dead_;
+  ::Common::MotivationType* motivation_;
+  friend void  protobuf_AddDesc_ClientToSim_2eproto();
+  friend void protobuf_AssignDesc_ClientToSim_2eproto();
+  friend void protobuf_ShutdownFile_ClientToSim_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgChangePopulationMagicAction* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgUrbanMagicAction_Infrastructure : public ::google::protobuf::Message {
+ public:
+  MsgUrbanMagicAction_Infrastructure();
+  virtual ~MsgUrbanMagicAction_Infrastructure();
+  
+  MsgUrbanMagicAction_Infrastructure(const MsgUrbanMagicAction_Infrastructure& from);
+  
+  inline MsgUrbanMagicAction_Infrastructure& operator=(const MsgUrbanMagicAction_Infrastructure& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgUrbanMagicAction_Infrastructure& default_instance();
+  void Swap(MsgUrbanMagicAction_Infrastructure* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgUrbanMagicAction_Infrastructure* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgUrbanMagicAction_Infrastructure& from);
+  void MergeFrom(const MsgUrbanMagicAction_Infrastructure& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional bool active = 1;
+  inline bool has_active() const;
+  inline void clear_active();
+  static const int kActiveFieldNumber = 1;
+  inline bool active() const;
+  inline void set_active(bool value);
+  
+  // optional float threshold = 2;
+  inline bool has_threshold() const;
+  inline void clear_threshold();
+  static const int kThresholdFieldNumber = 2;
+  inline float threshold() const;
+  inline void set_threshold(float value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  bool active_;
+  float threshold_;
+  friend void  protobuf_AddDesc_ClientToSim_2eproto();
+  friend void protobuf_AssignDesc_ClientToSim_2eproto();
+  friend void protobuf_ShutdownFile_ClientToSim_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgUrbanMagicAction_Infrastructure* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgUrbanMagicAction : public ::google::protobuf::Message {
+ public:
+  MsgUrbanMagicAction();
+  virtual ~MsgUrbanMagicAction();
+  
+  MsgUrbanMagicAction(const MsgUrbanMagicAction& from);
+  
+  inline MsgUrbanMagicAction& operator=(const MsgUrbanMagicAction& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgUrbanMagicAction& default_instance();
+  void Swap(MsgUrbanMagicAction* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgUrbanMagicAction* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgUrbanMagicAction& from);
+  void MergeFrom(const MsgUrbanMagicAction& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  typedef MsgUrbanMagicAction_Infrastructure Infrastructure;
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.UrbanObjectId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::UrbanObjectId& id() const;
+  inline ::Common::UrbanObjectId* mutable_id();
+  
+  // optional .Common.MotivationType role = 2;
+  inline bool has_role() const;
+  inline void clear_role();
+  static const int kRoleFieldNumber = 2;
+  inline const ::Common::MotivationType& role() const;
+  inline ::Common::MotivationType* mutable_role();
+  
+  // optional .MsgsClientToSim.MsgUrbanMagicAction.Infrastructure infrastructure = 3;
+  inline bool has_infrastructure() const;
+  inline void clear_infrastructure();
+  static const int kInfrastructureFieldNumber = 3;
+  inline const ::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure& infrastructure() const;
+  inline ::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure* mutable_infrastructure();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::UrbanObjectId* id_;
+  ::Common::MotivationType* role_;
+  ::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure* infrastructure_;
+  friend void  protobuf_AddDesc_ClientToSim_2eproto();
+  friend void protobuf_AssignDesc_ClientToSim_2eproto();
+  friend void protobuf_ShutdownFile_ClientToSim_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgUrbanMagicAction* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgClientToSim_Content : public ::google::protobuf::Message {
  public:
   MsgClientToSim_Content();
@@ -1767,6 +2100,20 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   inline const ::MsgsClientToSim::MsgControlCheckPointDeleteRequest& control_checkpoint_delete_request() const;
   inline ::MsgsClientToSim::MsgControlCheckPointDeleteRequest* mutable_control_checkpoint_delete_request();
   
+  // optional .MsgsClientToSim.MsgChangePopulationMagicAction change_population_magic_action = 21;
+  inline bool has_change_population_magic_action() const;
+  inline void clear_change_population_magic_action();
+  static const int kChangePopulationMagicActionFieldNumber = 21;
+  inline const ::MsgsClientToSim::MsgChangePopulationMagicAction& change_population_magic_action() const;
+  inline ::MsgsClientToSim::MsgChangePopulationMagicAction* mutable_change_population_magic_action();
+  
+  // optional .MsgsClientToSim.MsgUrbanMagicAction urban_magic_action = 22;
+  inline bool has_urban_magic_action() const;
+  inline void clear_urban_magic_action();
+  static const int kUrbanMagicActionFieldNumber = 22;
+  inline const ::MsgsClientToSim::MsgUrbanMagicAction& urban_magic_action() const;
+  inline ::MsgsClientToSim::MsgUrbanMagicAction* mutable_urban_magic_action();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -1791,11 +2138,13 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   ::MsgsClientToSim::MsgMagicAction* magic_action_;
   ::MsgsClientToSim::MsgControlCheckPointListRequest* control_checkpoint_list_request_;
   ::MsgsClientToSim::MsgControlCheckPointDeleteRequest* control_checkpoint_delete_request_;
+  ::MsgsClientToSim::MsgChangePopulationMagicAction* change_population_magic_action_;
+  ::MsgsClientToSim::MsgUrbanMagicAction* urban_magic_action_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(20 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(22 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -2424,6 +2773,208 @@ inline void MsgControlEnableVisionCones::set_vision_cones(bool value) {
 
 // -------------------------------------------------------------------
 
+// MsgChangePopulationMagicAction
+
+// required .Common.PopulationId tasker = 1;
+inline bool MsgChangePopulationMagicAction::has_tasker() const {
+  return _has_bit(0);
+}
+inline void MsgChangePopulationMagicAction::clear_tasker() {
+  if (tasker_ != NULL) tasker_->::Common::PopulationId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::PopulationId& MsgChangePopulationMagicAction::tasker() const {
+  return tasker_ != NULL ? *tasker_ : *default_instance_->tasker_;
+}
+inline ::Common::PopulationId* MsgChangePopulationMagicAction::mutable_tasker() {
+  _set_bit(0);
+  if (tasker_ == NULL) tasker_ = new ::Common::PopulationId;
+  return tasker_;
+}
+
+// repeated .Common.PartyAdhesion adhesions = 2;
+inline int MsgChangePopulationMagicAction::adhesions_size() const {
+  return adhesions_.size();
+}
+inline void MsgChangePopulationMagicAction::clear_adhesions() {
+  adhesions_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Common::PartyAdhesion >&
+MsgChangePopulationMagicAction::adhesions() const {
+  return adhesions_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Common::PartyAdhesion >*
+MsgChangePopulationMagicAction::mutable_adhesions() {
+  return &adhesions_;
+}
+inline const ::Common::PartyAdhesion& MsgChangePopulationMagicAction::adhesions(int index) const {
+  return adhesions_.Get(index);
+}
+inline ::Common::PartyAdhesion* MsgChangePopulationMagicAction::mutable_adhesions(int index) {
+  return adhesions_.Mutable(index);
+}
+inline ::Common::PartyAdhesion* MsgChangePopulationMagicAction::add_adhesions() {
+  return adhesions_.Add();
+}
+
+// optional int32 healthy = 3;
+inline bool MsgChangePopulationMagicAction::has_healthy() const {
+  return _has_bit(2);
+}
+inline void MsgChangePopulationMagicAction::clear_healthy() {
+  healthy_ = 0;
+  _clear_bit(2);
+}
+inline ::google::protobuf::int32 MsgChangePopulationMagicAction::healthy() const {
+  return healthy_;
+}
+inline void MsgChangePopulationMagicAction::set_healthy(::google::protobuf::int32 value) {
+  _set_bit(2);
+  healthy_ = value;
+}
+
+// optional int32 wounded = 4;
+inline bool MsgChangePopulationMagicAction::has_wounded() const {
+  return _has_bit(3);
+}
+inline void MsgChangePopulationMagicAction::clear_wounded() {
+  wounded_ = 0;
+  _clear_bit(3);
+}
+inline ::google::protobuf::int32 MsgChangePopulationMagicAction::wounded() const {
+  return wounded_;
+}
+inline void MsgChangePopulationMagicAction::set_wounded(::google::protobuf::int32 value) {
+  _set_bit(3);
+  wounded_ = value;
+}
+
+// optional int32 dead = 5;
+inline bool MsgChangePopulationMagicAction::has_dead() const {
+  return _has_bit(4);
+}
+inline void MsgChangePopulationMagicAction::clear_dead() {
+  dead_ = 0;
+  _clear_bit(4);
+}
+inline ::google::protobuf::int32 MsgChangePopulationMagicAction::dead() const {
+  return dead_;
+}
+inline void MsgChangePopulationMagicAction::set_dead(::google::protobuf::int32 value) {
+  _set_bit(4);
+  dead_ = value;
+}
+
+// optional .Common.MotivationType motivation = 6;
+inline bool MsgChangePopulationMagicAction::has_motivation() const {
+  return _has_bit(5);
+}
+inline void MsgChangePopulationMagicAction::clear_motivation() {
+  if (motivation_ != NULL) motivation_->::Common::MotivationType::Clear();
+  _clear_bit(5);
+}
+inline const ::Common::MotivationType& MsgChangePopulationMagicAction::motivation() const {
+  return motivation_ != NULL ? *motivation_ : *default_instance_->motivation_;
+}
+inline ::Common::MotivationType* MsgChangePopulationMagicAction::mutable_motivation() {
+  _set_bit(5);
+  if (motivation_ == NULL) motivation_ = new ::Common::MotivationType;
+  return motivation_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgUrbanMagicAction_Infrastructure
+
+// optional bool active = 1;
+inline bool MsgUrbanMagicAction_Infrastructure::has_active() const {
+  return _has_bit(0);
+}
+inline void MsgUrbanMagicAction_Infrastructure::clear_active() {
+  active_ = false;
+  _clear_bit(0);
+}
+inline bool MsgUrbanMagicAction_Infrastructure::active() const {
+  return active_;
+}
+inline void MsgUrbanMagicAction_Infrastructure::set_active(bool value) {
+  _set_bit(0);
+  active_ = value;
+}
+
+// optional float threshold = 2;
+inline bool MsgUrbanMagicAction_Infrastructure::has_threshold() const {
+  return _has_bit(1);
+}
+inline void MsgUrbanMagicAction_Infrastructure::clear_threshold() {
+  threshold_ = 0;
+  _clear_bit(1);
+}
+inline float MsgUrbanMagicAction_Infrastructure::threshold() const {
+  return threshold_;
+}
+inline void MsgUrbanMagicAction_Infrastructure::set_threshold(float value) {
+  _set_bit(1);
+  threshold_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgUrbanMagicAction
+
+// required .Common.UrbanObjectId id = 1;
+inline bool MsgUrbanMagicAction::has_id() const {
+  return _has_bit(0);
+}
+inline void MsgUrbanMagicAction::clear_id() {
+  if (id_ != NULL) id_->::Common::UrbanObjectId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::UrbanObjectId& MsgUrbanMagicAction::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
+}
+inline ::Common::UrbanObjectId* MsgUrbanMagicAction::mutable_id() {
+  _set_bit(0);
+  if (id_ == NULL) id_ = new ::Common::UrbanObjectId;
+  return id_;
+}
+
+// optional .Common.MotivationType role = 2;
+inline bool MsgUrbanMagicAction::has_role() const {
+  return _has_bit(1);
+}
+inline void MsgUrbanMagicAction::clear_role() {
+  if (role_ != NULL) role_->::Common::MotivationType::Clear();
+  _clear_bit(1);
+}
+inline const ::Common::MotivationType& MsgUrbanMagicAction::role() const {
+  return role_ != NULL ? *role_ : *default_instance_->role_;
+}
+inline ::Common::MotivationType* MsgUrbanMagicAction::mutable_role() {
+  _set_bit(1);
+  if (role_ == NULL) role_ = new ::Common::MotivationType;
+  return role_;
+}
+
+// optional .MsgsClientToSim.MsgUrbanMagicAction.Infrastructure infrastructure = 3;
+inline bool MsgUrbanMagicAction::has_infrastructure() const {
+  return _has_bit(2);
+}
+inline void MsgUrbanMagicAction::clear_infrastructure() {
+  if (infrastructure_ != NULL) infrastructure_->::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure::Clear();
+  _clear_bit(2);
+}
+inline const ::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure& MsgUrbanMagicAction::infrastructure() const {
+  return infrastructure_ != NULL ? *infrastructure_ : *default_instance_->infrastructure_;
+}
+inline ::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure* MsgUrbanMagicAction::mutable_infrastructure() {
+  _set_bit(2);
+  if (infrastructure_ == NULL) infrastructure_ = new ::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure;
+  return infrastructure_;
+}
+
+// -------------------------------------------------------------------
+
 // MsgClientToSim_Content
 
 // optional .Common.MsgControlStop control_stop = 1;
@@ -2764,6 +3315,40 @@ inline ::MsgsClientToSim::MsgControlCheckPointDeleteRequest* MsgClientToSim_Cont
   _set_bit(19);
   if (control_checkpoint_delete_request_ == NULL) control_checkpoint_delete_request_ = new ::MsgsClientToSim::MsgControlCheckPointDeleteRequest;
   return control_checkpoint_delete_request_;
+}
+
+// optional .MsgsClientToSim.MsgChangePopulationMagicAction change_population_magic_action = 21;
+inline bool MsgClientToSim_Content::has_change_population_magic_action() const {
+  return _has_bit(20);
+}
+inline void MsgClientToSim_Content::clear_change_population_magic_action() {
+  if (change_population_magic_action_ != NULL) change_population_magic_action_->::MsgsClientToSim::MsgChangePopulationMagicAction::Clear();
+  _clear_bit(20);
+}
+inline const ::MsgsClientToSim::MsgChangePopulationMagicAction& MsgClientToSim_Content::change_population_magic_action() const {
+  return change_population_magic_action_ != NULL ? *change_population_magic_action_ : *default_instance_->change_population_magic_action_;
+}
+inline ::MsgsClientToSim::MsgChangePopulationMagicAction* MsgClientToSim_Content::mutable_change_population_magic_action() {
+  _set_bit(20);
+  if (change_population_magic_action_ == NULL) change_population_magic_action_ = new ::MsgsClientToSim::MsgChangePopulationMagicAction;
+  return change_population_magic_action_;
+}
+
+// optional .MsgsClientToSim.MsgUrbanMagicAction urban_magic_action = 22;
+inline bool MsgClientToSim_Content::has_urban_magic_action() const {
+  return _has_bit(21);
+}
+inline void MsgClientToSim_Content::clear_urban_magic_action() {
+  if (urban_magic_action_ != NULL) urban_magic_action_->::MsgsClientToSim::MsgUrbanMagicAction::Clear();
+  _clear_bit(21);
+}
+inline const ::MsgsClientToSim::MsgUrbanMagicAction& MsgClientToSim_Content::urban_magic_action() const {
+  return urban_magic_action_ != NULL ? *urban_magic_action_ : *default_instance_->urban_magic_action_;
+}
+inline ::MsgsClientToSim::MsgUrbanMagicAction* MsgClientToSim_Content::mutable_urban_magic_action() {
+  _set_bit(21);
+  if (urban_magic_action_ == NULL) urban_magic_action_ = new ::MsgsClientToSim::MsgUrbanMagicAction;
+  return urban_magic_action_;
 }
 
 // -------------------------------------------------------------------

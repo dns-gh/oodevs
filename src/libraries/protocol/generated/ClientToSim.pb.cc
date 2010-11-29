@@ -57,6 +57,15 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgControlEnableVisionCones_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgControlEnableVisionCones_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgChangePopulationMagicAction_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgChangePopulationMagicAction_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgUrbanMagicAction_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgUrbanMagicAction_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgUrbanMagicAction_Infrastructure_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgUrbanMagicAction_Infrastructure_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgClientToSim_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgClientToSim_reflection_ = NULL;
@@ -284,7 +293,60 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlEnableVisionCones));
-  MsgClientToSim_descriptor_ = file->message_type(13);
+  MsgChangePopulationMagicAction_descriptor_ = file->message_type(13);
+  static const int MsgChangePopulationMagicAction_offsets_[6] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgChangePopulationMagicAction, tasker_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgChangePopulationMagicAction, adhesions_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgChangePopulationMagicAction, healthy_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgChangePopulationMagicAction, wounded_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgChangePopulationMagicAction, dead_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgChangePopulationMagicAction, motivation_),
+  };
+  MsgChangePopulationMagicAction_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgChangePopulationMagicAction_descriptor_,
+      MsgChangePopulationMagicAction::default_instance_,
+      MsgChangePopulationMagicAction_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgChangePopulationMagicAction, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgChangePopulationMagicAction, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgChangePopulationMagicAction));
+  MsgUrbanMagicAction_descriptor_ = file->message_type(14);
+  static const int MsgUrbanMagicAction_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanMagicAction, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanMagicAction, role_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanMagicAction, infrastructure_),
+  };
+  MsgUrbanMagicAction_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgUrbanMagicAction_descriptor_,
+      MsgUrbanMagicAction::default_instance_,
+      MsgUrbanMagicAction_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanMagicAction, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanMagicAction, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgUrbanMagicAction));
+  MsgUrbanMagicAction_Infrastructure_descriptor_ = MsgUrbanMagicAction_descriptor_->nested_type(0);
+  static const int MsgUrbanMagicAction_Infrastructure_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanMagicAction_Infrastructure, active_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanMagicAction_Infrastructure, threshold_),
+  };
+  MsgUrbanMagicAction_Infrastructure_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgUrbanMagicAction_Infrastructure_descriptor_,
+      MsgUrbanMagicAction_Infrastructure::default_instance_,
+      MsgUrbanMagicAction_Infrastructure_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanMagicAction_Infrastructure, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanMagicAction_Infrastructure, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgUrbanMagicAction_Infrastructure));
+  MsgClientToSim_descriptor_ = file->message_type(15);
   static const int MsgClientToSim_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim, context_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim, message_),
@@ -301,7 +363,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgClientToSim));
   MsgClientToSim_Content_descriptor_ = MsgClientToSim_descriptor_->nested_type(0);
-  static const int MsgClientToSim_Content_offsets_[20] = {
+  static const int MsgClientToSim_Content_offsets_[22] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_stop_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_pause_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_resume_),
@@ -322,6 +384,8 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, magic_action_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_checkpoint_list_request_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_checkpoint_delete_request_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, change_population_magic_action_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, urban_magic_action_),
   };
   MsgClientToSim_Content_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -373,6 +437,12 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgControlEnableVisionCones_descriptor_, &MsgControlEnableVisionCones::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgChangePopulationMagicAction_descriptor_, &MsgChangePopulationMagicAction::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgUrbanMagicAction_descriptor_, &MsgUrbanMagicAction::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgUrbanMagicAction_Infrastructure_descriptor_, &MsgUrbanMagicAction_Infrastructure::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgClientToSim_descriptor_, &MsgClientToSim::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgClientToSim_Content_descriptor_, &MsgClientToSim_Content::default_instance());
@@ -407,6 +477,12 @@ void protobuf_ShutdownFile_ClientToSim_2eproto() {
   delete MsgControlCheckPointListRequest_reflection_;
   delete MsgControlEnableVisionCones::default_instance_;
   delete MsgControlEnableVisionCones_reflection_;
+  delete MsgChangePopulationMagicAction::default_instance_;
+  delete MsgChangePopulationMagicAction_reflection_;
+  delete MsgUrbanMagicAction::default_instance_;
+  delete MsgUrbanMagicAction_reflection_;
+  delete MsgUrbanMagicAction_Infrastructure::default_instance_;
+  delete MsgUrbanMagicAction_Infrastructure_reflection_;
   delete MsgClientToSim::default_instance_;
   delete MsgClientToSim_reflection_;
   delete MsgClientToSim_Content::default_instance_;
@@ -486,43 +562,58 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
     "equency\030\001 \002(\005\"7\n!MsgControlCheckPointDel"
     "eteRequest\022\022\n\ncheckpoint\030\001 \002(\t\"!\n\037MsgCon"
     "trolCheckPointListRequest\"3\n\033MsgControlE"
-    "nableVisionCones\022\024\n\014vision_cones\030\001 \002(\010\"\215"
-    "\013\n\016MsgClientToSim\022\017\n\007context\030\001 \001(\005\0228\n\007me"
-    "ssage\030\002 \002(\0132\'.MsgsClientToSim.MsgClientT"
-    "oSim.Content\032\257\n\n\007Content\022,\n\014control_stop"
-    "\030\001 \001(\0132\026.Common.MsgControlStop\022.\n\rcontro"
-    "l_pause\030\002 \001(\0132\027.Common.MsgControlPause\0220"
-    "\n\016control_resume\030\003 \001(\0132\030.Common.MsgContr"
-    "olResume\022F\n\032control_change_time_factor\030\004"
-    " \001(\0132\".Common.MsgControlChangeTimeFactor"
-    "\022K\n\030control_date_time_change\030\005 \001(\0132).Msg"
-    "sClientToSim.MsgControlDatetimeChange\022Q\n"
-    "\033control_checkpoint_save_now\030\006 \001(\0132,.Msg"
-    "sClientToSim.MsgControlCheckPointSaveNow"
-    "\022[\n control_checkpoint_set_frequency\030\007 \001"
-    "(\01321.MsgsClientToSim.MsgControlCheckPoin"
-    "tSetFrequency\022Q\n\033control_toggle_vision_c"
-    "ones\030\010 \001(\0132,.MsgsClientToSim.MsgControlE"
-    "nableVisionCones\022(\n\nunit_order\030\t \001(\0132\024.C"
-    "ommon.MsgUnitOrder\022.\n\rautomat_order\030\n \001("
-    "\0132\027.Common.MsgAutomatOrder\022*\n\013crowd_orde"
-    "r\030\013 \001(\0132\025.Common.MsgCrowdOrder\0221\n\nfrag_o"
-    "rder\030\014 \001(\0132\035.MsgsClientToSim.MsgFragOrde"
-    "r\022<\n\020set_automat_mode\030\r \001(\0132\".MsgsClient"
-    "ToSim.MsgSetAutomatMode\022F\n\025unit_creation"
-    "_request\030\016 \001(\0132\'.MsgsClientToSim.MsgUnit"
-    "CreationRequest\022>\n\021unit_magic_action\030\017 \001"
-    "(\0132#.MsgsClientToSim.MsgUnitMagicAction\022"
-    "B\n\023object_magic_action\030\020 \001(\0132%.MsgsClien"
-    "tToSim.MsgObjectMagicAction\022H\n\026knowledge"
-    "_magic_action\030\021 \001(\0132(.MsgsClientToSim.Ms"
-    "gKnowledgeMagicAction\0225\n\014magic_action\030\022 "
-    "\001(\0132\037.MsgsClientToSim.MsgMagicAction\022Y\n\037"
-    "control_checkpoint_list_request\030\023 \001(\01320."
-    "MsgsClientToSim.MsgControlCheckPointList"
-    "Request\022]\n!control_checkpoint_delete_req"
-    "uest\030\024 \001(\01322.MsgsClientToSim.MsgControlC"
-    "heckPointDeleteRequest", 4062);
+    "nableVisionCones\022\024\n\014vision_cones\030\001 \002(\010\"\314"
+    "\001\n\036MsgChangePopulationMagicAction\022$\n\006tas"
+    "ker\030\001 \002(\0132\024.Common.PopulationId\022(\n\tadhes"
+    "ions\030\002 \003(\0132\025.Common.PartyAdhesion\022\017\n\007hea"
+    "lthy\030\003 \001(\005\022\017\n\007wounded\030\004 \001(\005\022\014\n\004dead\030\005 \001("
+    "\005\022*\n\nmotivation\030\006 \001(\0132\026.Common.Motivatio"
+    "nType\"\340\001\n\023MsgUrbanMagicAction\022!\n\002id\030\001 \002("
+    "\0132\025.Common.UrbanObjectId\022$\n\004role\030\002 \001(\0132\026"
+    ".Common.MotivationType\022K\n\016infrastructure"
+    "\030\003 \001(\01323.MsgsClientToSim.MsgUrbanMagicAc"
+    "tion.Infrastructure\0323\n\016Infrastructure\022\016\n"
+    "\006active\030\001 \001(\010\022\021\n\tthreshold\030\002 \001(\002\"\250\014\n\016Msg"
+    "ClientToSim\022\017\n\007context\030\001 \001(\005\0228\n\007message\030"
+    "\002 \002(\0132\'.MsgsClientToSim.MsgClientToSim.C"
+    "ontent\032\312\013\n\007Content\022,\n\014control_stop\030\001 \001(\013"
+    "2\026.Common.MsgControlStop\022.\n\rcontrol_paus"
+    "e\030\002 \001(\0132\027.Common.MsgControlPause\0220\n\016cont"
+    "rol_resume\030\003 \001(\0132\030.Common.MsgControlResu"
+    "me\022F\n\032control_change_time_factor\030\004 \001(\0132\""
+    ".Common.MsgControlChangeTimeFactor\022K\n\030co"
+    "ntrol_date_time_change\030\005 \001(\0132).MsgsClien"
+    "tToSim.MsgControlDatetimeChange\022Q\n\033contr"
+    "ol_checkpoint_save_now\030\006 \001(\0132,.MsgsClien"
+    "tToSim.MsgControlCheckPointSaveNow\022[\n co"
+    "ntrol_checkpoint_set_frequency\030\007 \001(\01321.M"
+    "sgsClientToSim.MsgControlCheckPointSetFr"
+    "equency\022Q\n\033control_toggle_vision_cones\030\010"
+    " \001(\0132,.MsgsClientToSim.MsgControlEnableV"
+    "isionCones\022(\n\nunit_order\030\t \001(\0132\024.Common."
+    "MsgUnitOrder\022.\n\rautomat_order\030\n \001(\0132\027.Co"
+    "mmon.MsgAutomatOrder\022*\n\013crowd_order\030\013 \001("
+    "\0132\025.Common.MsgCrowdOrder\0221\n\nfrag_order\030\014"
+    " \001(\0132\035.MsgsClientToSim.MsgFragOrder\022<\n\020s"
+    "et_automat_mode\030\r \001(\0132\".MsgsClientToSim."
+    "MsgSetAutomatMode\022F\n\025unit_creation_reque"
+    "st\030\016 \001(\0132\'.MsgsClientToSim.MsgUnitCreati"
+    "onRequest\022>\n\021unit_magic_action\030\017 \001(\0132#.M"
+    "sgsClientToSim.MsgUnitMagicAction\022B\n\023obj"
+    "ect_magic_action\030\020 \001(\0132%.MsgsClientToSim"
+    ".MsgObjectMagicAction\022H\n\026knowledge_magic"
+    "_action\030\021 \001(\0132(.MsgsClientToSim.MsgKnowl"
+    "edgeMagicAction\0225\n\014magic_action\030\022 \001(\0132\037."
+    "MsgsClientToSim.MsgMagicAction\022Y\n\037contro"
+    "l_checkpoint_list_request\030\023 \001(\01320.MsgsCl"
+    "ientToSim.MsgControlCheckPointListReques"
+    "t\022]\n!control_checkpoint_delete_request\030\024"
+    " \001(\01322.MsgsClientToSim.MsgControlCheckPo"
+    "intDeleteRequest\022W\n\036change_population_ma"
+    "gic_action\030\025 \001(\0132/.MsgsClientToSim.MsgCh"
+    "angePopulationMagicAction\022@\n\022urban_magic"
+    "_action\030\026 \001(\0132$.MsgsClientToSim.MsgUrban"
+    "MagicAction", 4651);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToSim.proto", &protobuf_RegisterTypes);
   MsgControlDatetimeChange::default_instance_ = new MsgControlDatetimeChange();
@@ -538,6 +629,9 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
   MsgControlCheckPointDeleteRequest::default_instance_ = new MsgControlCheckPointDeleteRequest();
   MsgControlCheckPointListRequest::default_instance_ = new MsgControlCheckPointListRequest();
   MsgControlEnableVisionCones::default_instance_ = new MsgControlEnableVisionCones();
+  MsgChangePopulationMagicAction::default_instance_ = new MsgChangePopulationMagicAction();
+  MsgUrbanMagicAction::default_instance_ = new MsgUrbanMagicAction();
+  MsgUrbanMagicAction_Infrastructure::default_instance_ = new MsgUrbanMagicAction_Infrastructure();
   MsgClientToSim::default_instance_ = new MsgClientToSim();
   MsgClientToSim_Content::default_instance_ = new MsgClientToSim_Content();
   MsgControlDatetimeChange::default_instance_->InitAsDefaultInstance();
@@ -553,6 +647,9 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
   MsgControlCheckPointDeleteRequest::default_instance_->InitAsDefaultInstance();
   MsgControlCheckPointListRequest::default_instance_->InitAsDefaultInstance();
   MsgControlEnableVisionCones::default_instance_->InitAsDefaultInstance();
+  MsgChangePopulationMagicAction::default_instance_->InitAsDefaultInstance();
+  MsgUrbanMagicAction::default_instance_->InitAsDefaultInstance();
+  MsgUrbanMagicAction_Infrastructure::default_instance_->InitAsDefaultInstance();
   MsgClientToSim::default_instance_->InitAsDefaultInstance();
   MsgClientToSim_Content::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_ClientToSim_2eproto);
@@ -4006,6 +4103,960 @@ void MsgControlEnableVisionCones::Swap(MsgControlEnableVisionCones* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int MsgChangePopulationMagicAction::kTaskerFieldNumber;
+const int MsgChangePopulationMagicAction::kAdhesionsFieldNumber;
+const int MsgChangePopulationMagicAction::kHealthyFieldNumber;
+const int MsgChangePopulationMagicAction::kWoundedFieldNumber;
+const int MsgChangePopulationMagicAction::kDeadFieldNumber;
+const int MsgChangePopulationMagicAction::kMotivationFieldNumber;
+#endif  // !_MSC_VER
+
+MsgChangePopulationMagicAction::MsgChangePopulationMagicAction() {
+  SharedCtor();
+}
+
+void MsgChangePopulationMagicAction::InitAsDefaultInstance() {
+  tasker_ = const_cast< ::Common::PopulationId*>(&::Common::PopulationId::default_instance());
+  motivation_ = const_cast< ::Common::MotivationType*>(&::Common::MotivationType::default_instance());
+}
+
+MsgChangePopulationMagicAction::MsgChangePopulationMagicAction(const MsgChangePopulationMagicAction& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgChangePopulationMagicAction::SharedCtor() {
+  _cached_size_ = 0;
+  tasker_ = NULL;
+  healthy_ = 0;
+  wounded_ = 0;
+  dead_ = 0;
+  motivation_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgChangePopulationMagicAction::~MsgChangePopulationMagicAction() {
+  SharedDtor();
+}
+
+void MsgChangePopulationMagicAction::SharedDtor() {
+  if (this != default_instance_) {
+    delete tasker_;
+    delete motivation_;
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgChangePopulationMagicAction::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgChangePopulationMagicAction_descriptor_;
+}
+
+const MsgChangePopulationMagicAction& MsgChangePopulationMagicAction::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
+}
+
+MsgChangePopulationMagicAction* MsgChangePopulationMagicAction::default_instance_ = NULL;
+
+MsgChangePopulationMagicAction* MsgChangePopulationMagicAction::New() const {
+  return new MsgChangePopulationMagicAction;
+}
+
+void MsgChangePopulationMagicAction::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (_has_bit(0)) {
+      if (tasker_ != NULL) tasker_->::Common::PopulationId::Clear();
+    }
+    healthy_ = 0;
+    wounded_ = 0;
+    dead_ = 0;
+    if (_has_bit(5)) {
+      if (motivation_ != NULL) motivation_->::Common::MotivationType::Clear();
+    }
+  }
+  adhesions_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgChangePopulationMagicAction::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .Common.PopulationId tasker = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_tasker()));
+        if (input->ExpectTag(18)) goto parse_adhesions;
+        break;
+      }
+      
+      // repeated .Common.PartyAdhesion adhesions = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_adhesions:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+              input, add_adhesions()));
+        if (input->ExpectTag(18)) goto parse_adhesions;
+        if (input->ExpectTag(24)) goto parse_healthy;
+        break;
+      }
+      
+      // optional int32 healthy = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_healthy:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+              input, &healthy_));
+        _set_bit(2);
+        if (input->ExpectTag(32)) goto parse_wounded;
+        break;
+      }
+      
+      // optional int32 wounded = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_wounded:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+              input, &wounded_));
+        _set_bit(3);
+        if (input->ExpectTag(40)) goto parse_dead;
+        break;
+      }
+      
+      // optional int32 dead = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_dead:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+              input, &dead_));
+        _set_bit(4);
+        if (input->ExpectTag(50)) goto parse_motivation;
+        break;
+      }
+      
+      // optional .Common.MotivationType motivation = 6;
+      case 6: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_motivation:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_motivation()));
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgChangePopulationMagicAction::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgChangePopulationMagicAction::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // required .Common.PopulationId tasker = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->tasker(), output);
+  }
+  
+  // repeated .Common.PartyAdhesion adhesions = 2;
+  for (int i = 0; i < this->adhesions_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      2, this->adhesions(i), output);
+  }
+  
+  // optional int32 healthy = 3;
+  if (_has_bit(2)) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->healthy(), output);
+  }
+  
+  // optional int32 wounded = 4;
+  if (_has_bit(3)) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->wounded(), output);
+  }
+  
+  // optional int32 dead = 5;
+  if (_has_bit(4)) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->dead(), output);
+  }
+  
+  // optional .Common.MotivationType motivation = 6;
+  if (_has_bit(5)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      6, this->motivation(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgChangePopulationMagicAction::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required .Common.PopulationId tasker = 1;
+  if (_has_bit(0)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->tasker(), target);
+  }
+  
+  // repeated .Common.PartyAdhesion adhesions = 2;
+  for (int i = 0; i < this->adhesions_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->adhesions(i), target);
+  }
+  
+  // optional int32 healthy = 3;
+  if (_has_bit(2)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->healthy(), target);
+  }
+  
+  // optional int32 wounded = 4;
+  if (_has_bit(3)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->wounded(), target);
+  }
+  
+  // optional int32 dead = 5;
+  if (_has_bit(4)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->dead(), target);
+  }
+  
+  // optional .Common.MotivationType motivation = 6;
+  if (_has_bit(5)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        6, this->motivation(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgChangePopulationMagicAction::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .Common.PopulationId tasker = 1;
+    if (has_tasker()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->tasker());
+    }
+    
+    // optional int32 healthy = 3;
+    if (has_healthy()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->healthy());
+    }
+    
+    // optional int32 wounded = 4;
+    if (has_wounded()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->wounded());
+    }
+    
+    // optional int32 dead = 5;
+    if (has_dead()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->dead());
+    }
+    
+    // optional .Common.MotivationType motivation = 6;
+    if (has_motivation()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->motivation());
+    }
+    
+  }
+  // repeated .Common.PartyAdhesion adhesions = 2;
+  total_size += 1 * this->adhesions_size();
+  for (int i = 0; i < this->adhesions_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->adhesions(i));
+  }
+  
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgChangePopulationMagicAction::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgChangePopulationMagicAction* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgChangePopulationMagicAction*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgChangePopulationMagicAction::MergeFrom(const MsgChangePopulationMagicAction& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  adhesions_.MergeFrom(from.adhesions_);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      mutable_tasker()->::Common::PopulationId::MergeFrom(from.tasker());
+    }
+    if (from._has_bit(2)) {
+      set_healthy(from.healthy());
+    }
+    if (from._has_bit(3)) {
+      set_wounded(from.wounded());
+    }
+    if (from._has_bit(4)) {
+      set_dead(from.dead());
+    }
+    if (from._has_bit(5)) {
+      mutable_motivation()->::Common::MotivationType::MergeFrom(from.motivation());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgChangePopulationMagicAction::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgChangePopulationMagicAction::CopyFrom(const MsgChangePopulationMagicAction& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgChangePopulationMagicAction::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  
+  if (has_tasker()) {
+    if (!this->tasker().IsInitialized()) return false;
+  }
+  for (int i = 0; i < adhesions_size(); i++) {
+    if (!this->adhesions(i).IsInitialized()) return false;
+  }
+  if (has_motivation()) {
+    if (!this->motivation().IsInitialized()) return false;
+  }
+  return true;
+}
+
+void MsgChangePopulationMagicAction::Swap(MsgChangePopulationMagicAction* other) {
+  if (other != this) {
+    std::swap(tasker_, other->tasker_);
+    adhesions_.Swap(&other->adhesions_);
+    std::swap(healthy_, other->healthy_);
+    std::swap(wounded_, other->wounded_);
+    std::swap(dead_, other->dead_);
+    std::swap(motivation_, other->motivation_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgChangePopulationMagicAction::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgChangePopulationMagicAction_descriptor_;
+  metadata.reflection = MsgChangePopulationMagicAction_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgUrbanMagicAction_Infrastructure::kActiveFieldNumber;
+const int MsgUrbanMagicAction_Infrastructure::kThresholdFieldNumber;
+#endif  // !_MSC_VER
+
+MsgUrbanMagicAction_Infrastructure::MsgUrbanMagicAction_Infrastructure() {
+  SharedCtor();
+}
+
+void MsgUrbanMagicAction_Infrastructure::InitAsDefaultInstance() {
+}
+
+MsgUrbanMagicAction_Infrastructure::MsgUrbanMagicAction_Infrastructure(const MsgUrbanMagicAction_Infrastructure& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgUrbanMagicAction_Infrastructure::SharedCtor() {
+  _cached_size_ = 0;
+  active_ = false;
+  threshold_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgUrbanMagicAction_Infrastructure::~MsgUrbanMagicAction_Infrastructure() {
+  SharedDtor();
+}
+
+void MsgUrbanMagicAction_Infrastructure::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgUrbanMagicAction_Infrastructure::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgUrbanMagicAction_Infrastructure_descriptor_;
+}
+
+const MsgUrbanMagicAction_Infrastructure& MsgUrbanMagicAction_Infrastructure::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
+}
+
+MsgUrbanMagicAction_Infrastructure* MsgUrbanMagicAction_Infrastructure::default_instance_ = NULL;
+
+MsgUrbanMagicAction_Infrastructure* MsgUrbanMagicAction_Infrastructure::New() const {
+  return new MsgUrbanMagicAction_Infrastructure;
+}
+
+void MsgUrbanMagicAction_Infrastructure::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    active_ = false;
+    threshold_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgUrbanMagicAction_Infrastructure::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional bool active = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
+              input, &active_));
+        _set_bit(0);
+        if (input->ExpectTag(21)) goto parse_threshold;
+        break;
+      }
+      
+      // optional float threshold = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+          goto handle_uninterpreted;
+        }
+       parse_threshold:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadFloat(
+              input, &threshold_));
+        _set_bit(1);
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgUrbanMagicAction_Infrastructure::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgUrbanMagicAction_Infrastructure::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // optional bool active = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->active(), output);
+  }
+  
+  // optional float threshold = 2;
+  if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(2, this->threshold(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgUrbanMagicAction_Infrastructure::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // optional bool active = 1;
+  if (_has_bit(0)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->active(), target);
+  }
+  
+  // optional float threshold = 2;
+  if (_has_bit(1)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(2, this->threshold(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgUrbanMagicAction_Infrastructure::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional bool active = 1;
+    if (has_active()) {
+      total_size += 1 + 1;
+    }
+    
+    // optional float threshold = 2;
+    if (has_threshold()) {
+      total_size += 1 + 4;
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgUrbanMagicAction_Infrastructure::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgUrbanMagicAction_Infrastructure* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgUrbanMagicAction_Infrastructure*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgUrbanMagicAction_Infrastructure::MergeFrom(const MsgUrbanMagicAction_Infrastructure& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      set_active(from.active());
+    }
+    if (from._has_bit(1)) {
+      set_threshold(from.threshold());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgUrbanMagicAction_Infrastructure::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgUrbanMagicAction_Infrastructure::CopyFrom(const MsgUrbanMagicAction_Infrastructure& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgUrbanMagicAction_Infrastructure::IsInitialized() const {
+  
+  return true;
+}
+
+void MsgUrbanMagicAction_Infrastructure::Swap(MsgUrbanMagicAction_Infrastructure* other) {
+  if (other != this) {
+    std::swap(active_, other->active_);
+    std::swap(threshold_, other->threshold_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgUrbanMagicAction_Infrastructure::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgUrbanMagicAction_Infrastructure_descriptor_;
+  metadata.reflection = MsgUrbanMagicAction_Infrastructure_reflection_;
+  return metadata;
+}
+
+
+// -------------------------------------------------------------------
+
+#ifndef _MSC_VER
+const int MsgUrbanMagicAction::kIdFieldNumber;
+const int MsgUrbanMagicAction::kRoleFieldNumber;
+const int MsgUrbanMagicAction::kInfrastructureFieldNumber;
+#endif  // !_MSC_VER
+
+MsgUrbanMagicAction::MsgUrbanMagicAction() {
+  SharedCtor();
+}
+
+void MsgUrbanMagicAction::InitAsDefaultInstance() {
+  id_ = const_cast< ::Common::UrbanObjectId*>(&::Common::UrbanObjectId::default_instance());
+  role_ = const_cast< ::Common::MotivationType*>(&::Common::MotivationType::default_instance());
+  infrastructure_ = const_cast< ::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure*>(&::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure::default_instance());
+}
+
+MsgUrbanMagicAction::MsgUrbanMagicAction(const MsgUrbanMagicAction& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgUrbanMagicAction::SharedCtor() {
+  _cached_size_ = 0;
+  id_ = NULL;
+  role_ = NULL;
+  infrastructure_ = NULL;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgUrbanMagicAction::~MsgUrbanMagicAction() {
+  SharedDtor();
+}
+
+void MsgUrbanMagicAction::SharedDtor() {
+  if (this != default_instance_) {
+    delete id_;
+    delete role_;
+    delete infrastructure_;
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgUrbanMagicAction::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgUrbanMagicAction_descriptor_;
+}
+
+const MsgUrbanMagicAction& MsgUrbanMagicAction::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
+}
+
+MsgUrbanMagicAction* MsgUrbanMagicAction::default_instance_ = NULL;
+
+MsgUrbanMagicAction* MsgUrbanMagicAction::New() const {
+  return new MsgUrbanMagicAction;
+}
+
+void MsgUrbanMagicAction::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (_has_bit(0)) {
+      if (id_ != NULL) id_->::Common::UrbanObjectId::Clear();
+    }
+    if (_has_bit(1)) {
+      if (role_ != NULL) role_->::Common::MotivationType::Clear();
+    }
+    if (_has_bit(2)) {
+      if (infrastructure_ != NULL) infrastructure_->::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure::Clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgUrbanMagicAction::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required .Common.UrbanObjectId id = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_id()));
+        if (input->ExpectTag(18)) goto parse_role;
+        break;
+      }
+      
+      // optional .Common.MotivationType role = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_role:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_role()));
+        if (input->ExpectTag(26)) goto parse_infrastructure;
+        break;
+      }
+      
+      // optional .MsgsClientToSim.MsgUrbanMagicAction.Infrastructure infrastructure = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_infrastructure:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_infrastructure()));
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgUrbanMagicAction::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgUrbanMagicAction::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // required .Common.UrbanObjectId id = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->id(), output);
+  }
+  
+  // optional .Common.MotivationType role = 2;
+  if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      2, this->role(), output);
+  }
+  
+  // optional .MsgsClientToSim.MsgUrbanMagicAction.Infrastructure infrastructure = 3;
+  if (_has_bit(2)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      3, this->infrastructure(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgUrbanMagicAction::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required .Common.UrbanObjectId id = 1;
+  if (_has_bit(0)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->id(), target);
+  }
+  
+  // optional .Common.MotivationType role = 2;
+  if (_has_bit(1)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->role(), target);
+  }
+  
+  // optional .MsgsClientToSim.MsgUrbanMagicAction.Infrastructure infrastructure = 3;
+  if (_has_bit(2)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        3, this->infrastructure(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgUrbanMagicAction::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required .Common.UrbanObjectId id = 1;
+    if (has_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->id());
+    }
+    
+    // optional .Common.MotivationType role = 2;
+    if (has_role()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->role());
+    }
+    
+    // optional .MsgsClientToSim.MsgUrbanMagicAction.Infrastructure infrastructure = 3;
+    if (has_infrastructure()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->infrastructure());
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgUrbanMagicAction::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgUrbanMagicAction* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgUrbanMagicAction*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgUrbanMagicAction::MergeFrom(const MsgUrbanMagicAction& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      mutable_id()->::Common::UrbanObjectId::MergeFrom(from.id());
+    }
+    if (from._has_bit(1)) {
+      mutable_role()->::Common::MotivationType::MergeFrom(from.role());
+    }
+    if (from._has_bit(2)) {
+      mutable_infrastructure()->::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure::MergeFrom(from.infrastructure());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgUrbanMagicAction::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgUrbanMagicAction::CopyFrom(const MsgUrbanMagicAction& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgUrbanMagicAction::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  
+  if (has_id()) {
+    if (!this->id().IsInitialized()) return false;
+  }
+  if (has_role()) {
+    if (!this->role().IsInitialized()) return false;
+  }
+  return true;
+}
+
+void MsgUrbanMagicAction::Swap(MsgUrbanMagicAction* other) {
+  if (other != this) {
+    std::swap(id_, other->id_);
+    std::swap(role_, other->role_);
+    std::swap(infrastructure_, other->infrastructure_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgUrbanMagicAction::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgUrbanMagicAction_descriptor_;
+  metadata.reflection = MsgUrbanMagicAction_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
 const int MsgClientToSim_Content::kControlStopFieldNumber;
 const int MsgClientToSim_Content::kControlPauseFieldNumber;
 const int MsgClientToSim_Content::kControlResumeFieldNumber;
@@ -4026,6 +5077,8 @@ const int MsgClientToSim_Content::kKnowledgeMagicActionFieldNumber;
 const int MsgClientToSim_Content::kMagicActionFieldNumber;
 const int MsgClientToSim_Content::kControlCheckpointListRequestFieldNumber;
 const int MsgClientToSim_Content::kControlCheckpointDeleteRequestFieldNumber;
+const int MsgClientToSim_Content::kChangePopulationMagicActionFieldNumber;
+const int MsgClientToSim_Content::kUrbanMagicActionFieldNumber;
 #endif  // !_MSC_VER
 
 MsgClientToSim_Content::MsgClientToSim_Content() {
@@ -4053,6 +5106,8 @@ void MsgClientToSim_Content::InitAsDefaultInstance() {
   magic_action_ = const_cast< ::MsgsClientToSim::MsgMagicAction*>(&::MsgsClientToSim::MsgMagicAction::default_instance());
   control_checkpoint_list_request_ = const_cast< ::MsgsClientToSim::MsgControlCheckPointListRequest*>(&::MsgsClientToSim::MsgControlCheckPointListRequest::default_instance());
   control_checkpoint_delete_request_ = const_cast< ::MsgsClientToSim::MsgControlCheckPointDeleteRequest*>(&::MsgsClientToSim::MsgControlCheckPointDeleteRequest::default_instance());
+  change_population_magic_action_ = const_cast< ::MsgsClientToSim::MsgChangePopulationMagicAction*>(&::MsgsClientToSim::MsgChangePopulationMagicAction::default_instance());
+  urban_magic_action_ = const_cast< ::MsgsClientToSim::MsgUrbanMagicAction*>(&::MsgsClientToSim::MsgUrbanMagicAction::default_instance());
 }
 
 MsgClientToSim_Content::MsgClientToSim_Content(const MsgClientToSim_Content& from) {
@@ -4082,6 +5137,8 @@ void MsgClientToSim_Content::SharedCtor() {
   magic_action_ = NULL;
   control_checkpoint_list_request_ = NULL;
   control_checkpoint_delete_request_ = NULL;
+  change_population_magic_action_ = NULL;
+  urban_magic_action_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4111,6 +5168,8 @@ void MsgClientToSim_Content::SharedDtor() {
     delete magic_action_;
     delete control_checkpoint_list_request_;
     delete control_checkpoint_delete_request_;
+    delete change_population_magic_action_;
+    delete urban_magic_action_;
   }
 }
 
@@ -4194,6 +5253,12 @@ void MsgClientToSim_Content::Clear() {
     }
     if (_has_bit(19)) {
       if (control_checkpoint_delete_request_ != NULL) control_checkpoint_delete_request_->::MsgsClientToSim::MsgControlCheckPointDeleteRequest::Clear();
+    }
+    if (_has_bit(20)) {
+      if (change_population_magic_action_ != NULL) change_population_magic_action_->::MsgsClientToSim::MsgChangePopulationMagicAction::Clear();
+    }
+    if (_has_bit(21)) {
+      if (urban_magic_action_ != NULL) urban_magic_action_->::MsgsClientToSim::MsgUrbanMagicAction::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -4461,6 +5526,32 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_control_checkpoint_delete_request:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_control_checkpoint_delete_request()));
+        if (input->ExpectTag(170)) goto parse_change_population_magic_action;
+        break;
+      }
+      
+      // optional .MsgsClientToSim.MsgChangePopulationMagicAction change_population_magic_action = 21;
+      case 21: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_change_population_magic_action:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_change_population_magic_action()));
+        if (input->ExpectTag(178)) goto parse_urban_magic_action;
+        break;
+      }
+      
+      // optional .MsgsClientToSim.MsgUrbanMagicAction urban_magic_action = 22;
+      case 22: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_urban_magic_action:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_urban_magic_action()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -4609,6 +5700,18 @@ void MsgClientToSim_Content::SerializeWithCachedSizes(
       20, this->control_checkpoint_delete_request(), output);
   }
   
+  // optional .MsgsClientToSim.MsgChangePopulationMagicAction change_population_magic_action = 21;
+  if (_has_bit(20)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      21, this->change_population_magic_action(), output);
+  }
+  
+  // optional .MsgsClientToSim.MsgUrbanMagicAction urban_magic_action = 22;
+  if (_has_bit(21)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      22, this->urban_magic_action(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -4755,6 +5858,20 @@ void MsgClientToSim_Content::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         20, this->control_checkpoint_delete_request(), target);
+  }
+  
+  // optional .MsgsClientToSim.MsgChangePopulationMagicAction change_population_magic_action = 21;
+  if (_has_bit(20)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        21, this->change_population_magic_action(), target);
+  }
+  
+  // optional .MsgsClientToSim.MsgUrbanMagicAction urban_magic_action = 22;
+  if (_has_bit(21)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        22, this->urban_magic_action(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -4912,6 +6029,20 @@ int MsgClientToSim_Content::ByteSize() const {
           this->control_checkpoint_delete_request());
     }
     
+    // optional .MsgsClientToSim.MsgChangePopulationMagicAction change_population_magic_action = 21;
+    if (has_change_population_magic_action()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->change_population_magic_action());
+    }
+    
+    // optional .MsgsClientToSim.MsgUrbanMagicAction urban_magic_action = 22;
+    if (has_urban_magic_action()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->urban_magic_action());
+    }
+    
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -5001,6 +6132,12 @@ void MsgClientToSim_Content::MergeFrom(const MsgClientToSim_Content& from) {
     if (from._has_bit(19)) {
       mutable_control_checkpoint_delete_request()->::MsgsClientToSim::MsgControlCheckPointDeleteRequest::MergeFrom(from.control_checkpoint_delete_request());
     }
+    if (from._has_bit(20)) {
+      mutable_change_population_magic_action()->::MsgsClientToSim::MsgChangePopulationMagicAction::MergeFrom(from.change_population_magic_action());
+    }
+    if (from._has_bit(21)) {
+      mutable_urban_magic_action()->::MsgsClientToSim::MsgUrbanMagicAction::MergeFrom(from.urban_magic_action());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -5064,6 +6201,12 @@ bool MsgClientToSim_Content::IsInitialized() const {
   if (has_control_checkpoint_delete_request()) {
     if (!this->control_checkpoint_delete_request().IsInitialized()) return false;
   }
+  if (has_change_population_magic_action()) {
+    if (!this->change_population_magic_action().IsInitialized()) return false;
+  }
+  if (has_urban_magic_action()) {
+    if (!this->urban_magic_action().IsInitialized()) return false;
+  }
   return true;
 }
 
@@ -5089,6 +6232,8 @@ void MsgClientToSim_Content::Swap(MsgClientToSim_Content* other) {
     std::swap(magic_action_, other->magic_action_);
     std::swap(control_checkpoint_list_request_, other->control_checkpoint_list_request_);
     std::swap(control_checkpoint_delete_request_, other->control_checkpoint_delete_request_);
+    std::swap(change_population_magic_action_, other->change_population_magic_action_);
+    std::swap(urban_magic_action_, other->urban_magic_action_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

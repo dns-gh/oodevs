@@ -53,6 +53,8 @@ class MsgLogSupplyPushFlowAck;
 class MsgLogSupplyPullFlowAck;
 class MsgLogSupplyChangeQuotasAck;
 class MsgActionCreateFireOrderAck;
+class MsgChangePopulationMagicActionAck;
+class MsgUrbanMagicActionAck;
 class MsgControlInformation;
 class MsgControlProfilingInformation;
 class MsgControlBeginTick;
@@ -65,10 +67,12 @@ class MsgControlPauseAck;
 class MsgControlResumeAck;
 class MsgPartyCreation;
 class MsgFormationCreation;
+class MsgFormationDestruction;
 class MsgAutomatCreation;
 class RulesOfEngagement;
 class ForceRatio;
 class MsgAutomatAttributes;
+class MsgAutomatDestruction;
 class MsgUnitCreation;
 class BorrowedEquipments;
 class BorrowedEquipments_BorrowedEquipment;
@@ -155,6 +159,7 @@ class MsgLogSupplyState;
 class MsgLogSupplyQuotas;
 class MsgCrowdCreation;
 class MsgCrowdUpdate;
+class MsgCrowdDestruction;
 class MsgCrowdConcentrationCreation;
 class MsgCrowdConcentrationDestruction;
 class MsgCrowdConcentrationUpdate;
@@ -191,6 +196,7 @@ class UrbanAttributes;
 class UrbanAttributes_Architecture;
 class UrbanAttributes_Structure;
 class UrbanAttributes_Infrastructures;
+class UrbanAttributes_Infrastructures_Infrastructure;
 class MsgUrbanCreation;
 class MsgUrbanDetection;
 class MsgUrbanUpdate;
@@ -206,9 +212,11 @@ class MsgControlLocalWeatherAck;
 class MsgControlGlobalWeather;
 class MsgControlLocalWeatherCreation;
 class MsgControlLocalWeatherDestruction;
-class MsgFormationDestruction;
-class MsgAutomatDestruction;
-class MsgCrowdDestruction;
+class MsgPopulationCreation;
+class MsgPopulationUpdate;
+class MsgPopulationUpdate_MotivationSatisfaction;
+class MsgPopulationUpdate_ResourceSatisfaction;
+class MsgPopulationUpdate_Satisfaction;
 class MsgSimToClient;
 class MsgSimToClient_Content;
 
@@ -464,6 +472,46 @@ inline bool MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_Parse
     const ::std::string& name, MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode* value) {
   return ::google::protobuf::internal::ParseNamedEnum<MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode>(
     MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_descriptor(), name, value);
+}
+enum MsgChangePopulationMagicActionAck_ErrorCode {
+  MsgChangePopulationMagicActionAck_ErrorCode_no_error = 0,
+  MsgChangePopulationMagicActionAck_ErrorCode_error_invalid_population = 1,
+  MsgChangePopulationMagicActionAck_ErrorCode_error_invalid_adhesion = 2,
+  MsgChangePopulationMagicActionAck_ErrorCode_error_invalid_number = 3
+};
+bool MsgChangePopulationMagicActionAck_ErrorCode_IsValid(int value);
+const MsgChangePopulationMagicActionAck_ErrorCode MsgChangePopulationMagicActionAck_ErrorCode_ErrorCode_MIN = MsgChangePopulationMagicActionAck_ErrorCode_no_error;
+const MsgChangePopulationMagicActionAck_ErrorCode MsgChangePopulationMagicActionAck_ErrorCode_ErrorCode_MAX = MsgChangePopulationMagicActionAck_ErrorCode_error_invalid_number;
+
+const ::google::protobuf::EnumDescriptor* MsgChangePopulationMagicActionAck_ErrorCode_descriptor();
+inline const ::std::string& MsgChangePopulationMagicActionAck_ErrorCode_Name(MsgChangePopulationMagicActionAck_ErrorCode value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MsgChangePopulationMagicActionAck_ErrorCode_descriptor(), value);
+}
+inline bool MsgChangePopulationMagicActionAck_ErrorCode_Parse(
+    const ::std::string& name, MsgChangePopulationMagicActionAck_ErrorCode* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MsgChangePopulationMagicActionAck_ErrorCode>(
+    MsgChangePopulationMagicActionAck_ErrorCode_descriptor(), name, value);
+}
+enum MsgUrbanMagicActionAck_ErrorCode {
+  MsgUrbanMagicActionAck_ErrorCode_no_error = 0,
+  MsgUrbanMagicActionAck_ErrorCode_error_invalid_urbanblock = 1,
+  MsgUrbanMagicActionAck_ErrorCode_error_invalid_role = 2,
+  MsgUrbanMagicActionAck_ErrorCode_error_invalid_threshold = 3
+};
+bool MsgUrbanMagicActionAck_ErrorCode_IsValid(int value);
+const MsgUrbanMagicActionAck_ErrorCode MsgUrbanMagicActionAck_ErrorCode_ErrorCode_MIN = MsgUrbanMagicActionAck_ErrorCode_no_error;
+const MsgUrbanMagicActionAck_ErrorCode MsgUrbanMagicActionAck_ErrorCode_ErrorCode_MAX = MsgUrbanMagicActionAck_ErrorCode_error_invalid_threshold;
+
+const ::google::protobuf::EnumDescriptor* MsgUrbanMagicActionAck_ErrorCode_descriptor();
+inline const ::std::string& MsgUrbanMagicActionAck_ErrorCode_Name(MsgUrbanMagicActionAck_ErrorCode value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MsgUrbanMagicActionAck_ErrorCode_descriptor(), value);
+}
+inline bool MsgUrbanMagicActionAck_ErrorCode_Parse(
+    const ::std::string& name, MsgUrbanMagicActionAck_ErrorCode* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MsgUrbanMagicActionAck_ErrorCode>(
+    MsgUrbanMagicActionAck_ErrorCode_descriptor(), name, value);
 }
 enum ControlAck_ErrorCode {
   ControlAck_ErrorCode_no_error = 0,
@@ -2950,6 +2998,228 @@ class MsgActionCreateFireOrderAck : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgChangePopulationMagicActionAck : public ::google::protobuf::Message {
+ public:
+  MsgChangePopulationMagicActionAck();
+  virtual ~MsgChangePopulationMagicActionAck();
+  
+  MsgChangePopulationMagicActionAck(const MsgChangePopulationMagicActionAck& from);
+  
+  inline MsgChangePopulationMagicActionAck& operator=(const MsgChangePopulationMagicActionAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgChangePopulationMagicActionAck& default_instance();
+  void Swap(MsgChangePopulationMagicActionAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgChangePopulationMagicActionAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgChangePopulationMagicActionAck& from);
+  void MergeFrom(const MsgChangePopulationMagicActionAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  typedef MsgChangePopulationMagicActionAck_ErrorCode ErrorCode;
+  static const ErrorCode no_error = MsgChangePopulationMagicActionAck_ErrorCode_no_error;
+  static const ErrorCode error_invalid_population = MsgChangePopulationMagicActionAck_ErrorCode_error_invalid_population;
+  static const ErrorCode error_invalid_adhesion = MsgChangePopulationMagicActionAck_ErrorCode_error_invalid_adhesion;
+  static const ErrorCode error_invalid_number = MsgChangePopulationMagicActionAck_ErrorCode_error_invalid_number;
+  static inline bool ErrorCode_IsValid(int value) {
+    return MsgChangePopulationMagicActionAck_ErrorCode_IsValid(value);
+  }
+  static const ErrorCode ErrorCode_MIN =
+    MsgChangePopulationMagicActionAck_ErrorCode_ErrorCode_MIN;
+  static const ErrorCode ErrorCode_MAX =
+    MsgChangePopulationMagicActionAck_ErrorCode_ErrorCode_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  ErrorCode_descriptor() {
+    return MsgChangePopulationMagicActionAck_ErrorCode_descriptor();
+  }
+  static inline const ::std::string& ErrorCode_Name(ErrorCode value) {
+    return MsgChangePopulationMagicActionAck_ErrorCode_Name(value);
+  }
+  static inline bool ErrorCode_Parse(const ::std::string& name,
+      ErrorCode* value) {
+    return MsgChangePopulationMagicActionAck_ErrorCode_Parse(name, value);
+  }
+  
+  // accessors -------------------------------------------------------
+  
+  // required .MsgsSimToClient.MsgChangePopulationMagicActionAck.ErrorCode error_code = 1;
+  inline bool has_error_code() const;
+  inline void clear_error_code();
+  static const int kErrorCodeFieldNumber = 1;
+  inline ::MsgsSimToClient::MsgChangePopulationMagicActionAck_ErrorCode error_code() const;
+  inline void set_error_code(::MsgsSimToClient::MsgChangePopulationMagicActionAck_ErrorCode value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  int error_code_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgChangePopulationMagicActionAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgUrbanMagicActionAck : public ::google::protobuf::Message {
+ public:
+  MsgUrbanMagicActionAck();
+  virtual ~MsgUrbanMagicActionAck();
+  
+  MsgUrbanMagicActionAck(const MsgUrbanMagicActionAck& from);
+  
+  inline MsgUrbanMagicActionAck& operator=(const MsgUrbanMagicActionAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgUrbanMagicActionAck& default_instance();
+  void Swap(MsgUrbanMagicActionAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgUrbanMagicActionAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgUrbanMagicActionAck& from);
+  void MergeFrom(const MsgUrbanMagicActionAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  typedef MsgUrbanMagicActionAck_ErrorCode ErrorCode;
+  static const ErrorCode no_error = MsgUrbanMagicActionAck_ErrorCode_no_error;
+  static const ErrorCode error_invalid_urbanblock = MsgUrbanMagicActionAck_ErrorCode_error_invalid_urbanblock;
+  static const ErrorCode error_invalid_role = MsgUrbanMagicActionAck_ErrorCode_error_invalid_role;
+  static const ErrorCode error_invalid_threshold = MsgUrbanMagicActionAck_ErrorCode_error_invalid_threshold;
+  static inline bool ErrorCode_IsValid(int value) {
+    return MsgUrbanMagicActionAck_ErrorCode_IsValid(value);
+  }
+  static const ErrorCode ErrorCode_MIN =
+    MsgUrbanMagicActionAck_ErrorCode_ErrorCode_MIN;
+  static const ErrorCode ErrorCode_MAX =
+    MsgUrbanMagicActionAck_ErrorCode_ErrorCode_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  ErrorCode_descriptor() {
+    return MsgUrbanMagicActionAck_ErrorCode_descriptor();
+  }
+  static inline const ::std::string& ErrorCode_Name(ErrorCode value) {
+    return MsgUrbanMagicActionAck_ErrorCode_Name(value);
+  }
+  static inline bool ErrorCode_Parse(const ::std::string& name,
+      ErrorCode* value) {
+    return MsgUrbanMagicActionAck_ErrorCode_Parse(name, value);
+  }
+  
+  // accessors -------------------------------------------------------
+  
+  // required .MsgsSimToClient.MsgUrbanMagicActionAck.ErrorCode error_code = 1;
+  inline bool has_error_code() const;
+  inline void clear_error_code();
+  static const int kErrorCodeFieldNumber = 1;
+  inline ::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode error_code() const;
+  inline void set_error_code(::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  int error_code_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgUrbanMagicActionAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgControlInformation : public ::google::protobuf::Message {
  public:
   MsgControlInformation();
@@ -4273,6 +4543,93 @@ class MsgFormationCreation : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgFormationDestruction : public ::google::protobuf::Message {
+ public:
+  MsgFormationDestruction();
+  virtual ~MsgFormationDestruction();
+  
+  MsgFormationDestruction(const MsgFormationDestruction& from);
+  
+  inline MsgFormationDestruction& operator=(const MsgFormationDestruction& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgFormationDestruction& default_instance();
+  void Swap(MsgFormationDestruction* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgFormationDestruction* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgFormationDestruction& from);
+  void MergeFrom(const MsgFormationDestruction& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.FormationId formation = 1;
+  inline bool has_formation() const;
+  inline void clear_formation();
+  static const int kFormationFieldNumber = 1;
+  inline const ::Common::FormationId& formation() const;
+  inline ::Common::FormationId* mutable_formation();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::FormationId* formation_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgFormationDestruction* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgAutomatCreation : public ::google::protobuf::Message {
  public:
   MsgAutomatCreation();
@@ -4786,6 +5143,93 @@ class MsgAutomatAttributes : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static MsgAutomatAttributes* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgAutomatDestruction : public ::google::protobuf::Message {
+ public:
+  MsgAutomatDestruction();
+  virtual ~MsgAutomatDestruction();
+  
+  MsgAutomatDestruction(const MsgAutomatDestruction& from);
+  
+  inline MsgAutomatDestruction& operator=(const MsgAutomatDestruction& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgAutomatDestruction& default_instance();
+  void Swap(MsgAutomatDestruction* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgAutomatDestruction* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgAutomatDestruction& from);
+  void MergeFrom(const MsgAutomatDestruction& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.AutomatId automat = 1;
+  inline bool has_automat() const;
+  inline void clear_automat();
+  static const int kAutomatFieldNumber = 1;
+  inline const ::Common::AutomatId& automat() const;
+  inline ::Common::AutomatId* mutable_automat();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::AutomatId* automat_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgAutomatDestruction* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -14448,6 +14892,93 @@ class MsgCrowdUpdate : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgCrowdDestruction : public ::google::protobuf::Message {
+ public:
+  MsgCrowdDestruction();
+  virtual ~MsgCrowdDestruction();
+  
+  MsgCrowdDestruction(const MsgCrowdDestruction& from);
+  
+  inline MsgCrowdDestruction& operator=(const MsgCrowdDestruction& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgCrowdDestruction& default_instance();
+  void Swap(MsgCrowdDestruction* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgCrowdDestruction* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgCrowdDestruction& from);
+  void MergeFrom(const MsgCrowdDestruction& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.CrowdId crowd = 1;
+  inline bool has_crowd() const;
+  inline void clear_crowd();
+  static const int kCrowdFieldNumber = 1;
+  inline const ::Common::CrowdId& crowd() const;
+  inline ::Common::CrowdId* mutable_crowd();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::CrowdId* crowd_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgCrowdDestruction* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgCrowdConcentrationCreation : public ::google::protobuf::Message {
  public:
   MsgCrowdConcentrationCreation();
@@ -17895,6 +18426,113 @@ class UrbanAttributes_Structure : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class UrbanAttributes_Infrastructures_Infrastructure : public ::google::protobuf::Message {
+ public:
+  UrbanAttributes_Infrastructures_Infrastructure();
+  virtual ~UrbanAttributes_Infrastructures_Infrastructure();
+  
+  UrbanAttributes_Infrastructures_Infrastructure(const UrbanAttributes_Infrastructures_Infrastructure& from);
+  
+  inline UrbanAttributes_Infrastructures_Infrastructure& operator=(const UrbanAttributes_Infrastructures_Infrastructure& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UrbanAttributes_Infrastructures_Infrastructure& default_instance();
+  void Swap(UrbanAttributes_Infrastructures_Infrastructure* other);
+  
+  // implements Message ----------------------------------------------
+  
+  UrbanAttributes_Infrastructures_Infrastructure* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const UrbanAttributes_Infrastructures_Infrastructure& from);
+  void MergeFrom(const UrbanAttributes_Infrastructures_Infrastructure& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required string type = 1;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 1;
+  inline const ::std::string& type() const;
+  inline void set_type(const ::std::string& value);
+  inline void set_type(const char* value);
+  inline void set_type(const char* value, size_t size);
+  inline ::std::string* mutable_type();
+  
+  // required bool active = 2;
+  inline bool has_active() const;
+  inline void clear_active();
+  static const int kActiveFieldNumber = 2;
+  inline bool active() const;
+  inline void set_active(bool value);
+  
+  // required float threshold = 3;
+  inline bool has_threshold() const;
+  inline void clear_threshold();
+  static const int kThresholdFieldNumber = 3;
+  inline float threshold() const;
+  inline void set_threshold(float value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* type_;
+  static const ::std::string _default_type_;
+  bool active_;
+  float threshold_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static UrbanAttributes_Infrastructures_Infrastructure* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class UrbanAttributes_Infrastructures : public ::google::protobuf::Message {
  public:
   UrbanAttributes_Infrastructures();
@@ -17946,6 +18584,8 @@ class UrbanAttributes_Infrastructures : public ::google::protobuf::Message {
   
   // nested types ----------------------------------------------------
   
+  typedef UrbanAttributes_Infrastructures_Infrastructure Infrastructure;
+  
   // accessors -------------------------------------------------------
   
   // repeated .Common.ResourceNetwork resource_network = 1;
@@ -17958,16 +18598,24 @@ class UrbanAttributes_Infrastructures : public ::google::protobuf::Message {
   inline ::Common::ResourceNetwork* mutable_resource_network(int index);
   inline ::Common::ResourceNetwork* add_resource_network();
   
+  // optional .MsgsSimToClient.UrbanAttributes.Infrastructures.Infrastructure infrastructure = 2;
+  inline bool has_infrastructure() const;
+  inline void clear_infrastructure();
+  static const int kInfrastructureFieldNumber = 2;
+  inline const ::MsgsSimToClient::UrbanAttributes_Infrastructures_Infrastructure& infrastructure() const;
+  inline ::MsgsSimToClient::UrbanAttributes_Infrastructures_Infrastructure* mutable_infrastructure();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
   ::google::protobuf::RepeatedPtrField< ::Common::ResourceNetwork > resource_network_;
+  ::MsgsSimToClient::UrbanAttributes_Infrastructures_Infrastructure* infrastructure_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -18070,6 +18718,13 @@ class UrbanAttributes : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::UrbanAttributes_Infrastructures& infrastructures() const;
   inline ::MsgsSimToClient::UrbanAttributes_Infrastructures* mutable_infrastructures();
   
+  // optional .Common.MotivationType role = 5;
+  inline bool has_role() const;
+  inline void clear_role();
+  static const int kRoleFieldNumber = 5;
+  inline const ::Common::MotivationType& role() const;
+  inline ::Common::MotivationType* mutable_role();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -18078,11 +18733,12 @@ class UrbanAttributes : public ::google::protobuf::Message {
   ::MsgsSimToClient::UrbanAttributes_Structure* structure_;
   ::Common::RgbaColor* color_;
   ::MsgsSimToClient::UrbanAttributes_Infrastructures* infrastructures_;
+  ::Common::MotivationType* role_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -19611,14 +20267,14 @@ class MsgControlLocalWeatherDestruction : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgFormationDestruction : public ::google::protobuf::Message {
+class MsgPopulationCreation : public ::google::protobuf::Message {
  public:
-  MsgFormationDestruction();
-  virtual ~MsgFormationDestruction();
+  MsgPopulationCreation();
+  virtual ~MsgPopulationCreation();
   
-  MsgFormationDestruction(const MsgFormationDestruction& from);
+  MsgPopulationCreation(const MsgPopulationCreation& from);
   
-  inline MsgFormationDestruction& operator=(const MsgFormationDestruction& from) {
+  inline MsgPopulationCreation& operator=(const MsgPopulationCreation& from) {
     CopyFrom(from);
     return *this;
   }
@@ -19632,16 +20288,16 @@ class MsgFormationDestruction : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgFormationDestruction& default_instance();
-  void Swap(MsgFormationDestruction* other);
+  static const MsgPopulationCreation& default_instance();
+  void Swap(MsgPopulationCreation* other);
   
   // implements Message ----------------------------------------------
   
-  MsgFormationDestruction* New() const;
+  MsgPopulationCreation* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgFormationDestruction& from);
-  void MergeFrom(const MsgFormationDestruction& from);
+  void CopyFrom(const MsgPopulationCreation& from);
+  void MergeFrom(const MsgPopulationCreation& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -19664,23 +20320,82 @@ class MsgFormationDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.FormationId formation = 1;
-  inline bool has_formation() const;
-  inline void clear_formation();
-  static const int kFormationFieldNumber = 1;
-  inline const ::Common::FormationId& formation() const;
-  inline ::Common::FormationId* mutable_formation();
+  // required .Common.PopulationId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::PopulationId& id() const;
+  inline ::Common::PopulationId* mutable_id();
+  
+  // required .Common.PartyId party = 2;
+  inline bool has_party() const;
+  inline void clear_party();
+  static const int kPartyFieldNumber = 2;
+  inline const ::Common::PartyId& party() const;
+  inline ::Common::PartyId* mutable_party();
+  
+  // required .Common.PopulationType type = 3;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 3;
+  inline const ::Common::PopulationType& type() const;
+  inline ::Common::PopulationType* mutable_type();
+  
+  // required string name = 4;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 4;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  
+  // required string text = 5;
+  inline bool has_text() const;
+  inline void clear_text();
+  static const int kTextFieldNumber = 5;
+  inline const ::std::string& text() const;
+  inline void set_text(const ::std::string& value);
+  inline void set_text(const char* value);
+  inline void set_text(const char* value, size_t size);
+  inline ::std::string* mutable_text();
+  
+  // optional .MsgsSimToClient.Extension extension = 6;
+  inline bool has_extension() const;
+  inline void clear_extension();
+  static const int kExtensionFieldNumber = 6;
+  inline const ::MsgsSimToClient::Extension& extension() const;
+  inline ::MsgsSimToClient::Extension* mutable_extension();
+  
+  // repeated .Common.UrbanObjectId blocks = 7;
+  inline int blocks_size() const;
+  inline void clear_blocks();
+  static const int kBlocksFieldNumber = 7;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::UrbanObjectId >& blocks() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::UrbanObjectId >* mutable_blocks();
+  inline const ::Common::UrbanObjectId& blocks(int index) const;
+  inline ::Common::UrbanObjectId* mutable_blocks(int index);
+  inline ::Common::UrbanObjectId* add_blocks();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::FormationId* formation_;
+  ::Common::PopulationId* id_;
+  ::Common::PartyId* party_;
+  ::Common::PopulationType* type_;
+  ::std::string* name_;
+  static const ::std::string _default_name_;
+  ::std::string* text_;
+  static const ::std::string _default_text_;
+  ::MsgsSimToClient::Extension* extension_;
+  ::google::protobuf::RepeatedPtrField< ::Common::UrbanObjectId > blocks_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -19694,18 +20409,18 @@ class MsgFormationDestruction : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgFormationDestruction* default_instance_;
+  static MsgPopulationCreation* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgAutomatDestruction : public ::google::protobuf::Message {
+class MsgPopulationUpdate_MotivationSatisfaction : public ::google::protobuf::Message {
  public:
-  MsgAutomatDestruction();
-  virtual ~MsgAutomatDestruction();
+  MsgPopulationUpdate_MotivationSatisfaction();
+  virtual ~MsgPopulationUpdate_MotivationSatisfaction();
   
-  MsgAutomatDestruction(const MsgAutomatDestruction& from);
+  MsgPopulationUpdate_MotivationSatisfaction(const MsgPopulationUpdate_MotivationSatisfaction& from);
   
-  inline MsgAutomatDestruction& operator=(const MsgAutomatDestruction& from) {
+  inline MsgPopulationUpdate_MotivationSatisfaction& operator=(const MsgPopulationUpdate_MotivationSatisfaction& from) {
     CopyFrom(from);
     return *this;
   }
@@ -19719,16 +20434,16 @@ class MsgAutomatDestruction : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgAutomatDestruction& default_instance();
-  void Swap(MsgAutomatDestruction* other);
+  static const MsgPopulationUpdate_MotivationSatisfaction& default_instance();
+  void Swap(MsgPopulationUpdate_MotivationSatisfaction* other);
   
   // implements Message ----------------------------------------------
   
-  MsgAutomatDestruction* New() const;
+  MsgPopulationUpdate_MotivationSatisfaction* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgAutomatDestruction& from);
-  void MergeFrom(const MsgAutomatDestruction& from);
+  void CopyFrom(const MsgPopulationUpdate_MotivationSatisfaction& from);
+  void MergeFrom(const MsgPopulationUpdate_MotivationSatisfaction& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -19751,23 +20466,31 @@ class MsgAutomatDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.AutomatId automat = 1;
-  inline bool has_automat() const;
-  inline void clear_automat();
-  static const int kAutomatFieldNumber = 1;
-  inline const ::Common::AutomatId& automat() const;
-  inline ::Common::AutomatId* mutable_automat();
+  // required .Common.MotivationType motivation = 1;
+  inline bool has_motivation() const;
+  inline void clear_motivation();
+  static const int kMotivationFieldNumber = 1;
+  inline const ::Common::MotivationType& motivation() const;
+  inline ::Common::MotivationType* mutable_motivation();
+  
+  // required float value = 2;
+  inline bool has_value() const;
+  inline void clear_value();
+  static const int kValueFieldNumber = 2;
+  inline float value() const;
+  inline void set_value(float value);
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::AutomatId* automat_;
+  ::Common::MotivationType* motivation_;
+  float value_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -19781,18 +20504,18 @@ class MsgAutomatDestruction : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgAutomatDestruction* default_instance_;
+  static MsgPopulationUpdate_MotivationSatisfaction* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgCrowdDestruction : public ::google::protobuf::Message {
+class MsgPopulationUpdate_ResourceSatisfaction : public ::google::protobuf::Message {
  public:
-  MsgCrowdDestruction();
-  virtual ~MsgCrowdDestruction();
+  MsgPopulationUpdate_ResourceSatisfaction();
+  virtual ~MsgPopulationUpdate_ResourceSatisfaction();
   
-  MsgCrowdDestruction(const MsgCrowdDestruction& from);
+  MsgPopulationUpdate_ResourceSatisfaction(const MsgPopulationUpdate_ResourceSatisfaction& from);
   
-  inline MsgCrowdDestruction& operator=(const MsgCrowdDestruction& from) {
+  inline MsgPopulationUpdate_ResourceSatisfaction& operator=(const MsgPopulationUpdate_ResourceSatisfaction& from) {
     CopyFrom(from);
     return *this;
   }
@@ -19806,16 +20529,16 @@ class MsgCrowdDestruction : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgCrowdDestruction& default_instance();
-  void Swap(MsgCrowdDestruction* other);
+  static const MsgPopulationUpdate_ResourceSatisfaction& default_instance();
+  void Swap(MsgPopulationUpdate_ResourceSatisfaction* other);
   
   // implements Message ----------------------------------------------
   
-  MsgCrowdDestruction* New() const;
+  MsgPopulationUpdate_ResourceSatisfaction* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgCrowdDestruction& from);
-  void MergeFrom(const MsgCrowdDestruction& from);
+  void CopyFrom(const MsgPopulationUpdate_ResourceSatisfaction& from);
+  void MergeFrom(const MsgPopulationUpdate_ResourceSatisfaction& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -19838,23 +20561,31 @@ class MsgCrowdDestruction : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.CrowdId crowd = 1;
-  inline bool has_crowd() const;
-  inline void clear_crowd();
-  static const int kCrowdFieldNumber = 1;
-  inline const ::Common::CrowdId& crowd() const;
-  inline ::Common::CrowdId* mutable_crowd();
+  // required .Common.ResourceType resource = 1;
+  inline bool has_resource() const;
+  inline void clear_resource();
+  static const int kResourceFieldNumber = 1;
+  inline const ::Common::ResourceType& resource() const;
+  inline ::Common::ResourceType* mutable_resource();
+  
+  // required float value = 2;
+  inline bool has_value() const;
+  inline void clear_value();
+  static const int kValueFieldNumber = 2;
+  inline float value() const;
+  inline void set_value(float value);
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::CrowdId* crowd_;
+  ::Common::ResourceType* resource_;
+  float value_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -19868,7 +20599,266 @@ class MsgCrowdDestruction : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgCrowdDestruction* default_instance_;
+  static MsgPopulationUpdate_ResourceSatisfaction* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgPopulationUpdate_Satisfaction : public ::google::protobuf::Message {
+ public:
+  MsgPopulationUpdate_Satisfaction();
+  virtual ~MsgPopulationUpdate_Satisfaction();
+  
+  MsgPopulationUpdate_Satisfaction(const MsgPopulationUpdate_Satisfaction& from);
+  
+  inline MsgPopulationUpdate_Satisfaction& operator=(const MsgPopulationUpdate_Satisfaction& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgPopulationUpdate_Satisfaction& default_instance();
+  void Swap(MsgPopulationUpdate_Satisfaction* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgPopulationUpdate_Satisfaction* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgPopulationUpdate_Satisfaction& from);
+  void MergeFrom(const MsgPopulationUpdate_Satisfaction& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // repeated .MsgsSimToClient.MsgPopulationUpdate.ResourceSatisfaction resources = 1;
+  inline int resources_size() const;
+  inline void clear_resources();
+  static const int kResourcesFieldNumber = 1;
+  inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_ResourceSatisfaction >& resources() const;
+  inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_ResourceSatisfaction >* mutable_resources();
+  inline const ::MsgsSimToClient::MsgPopulationUpdate_ResourceSatisfaction& resources(int index) const;
+  inline ::MsgsSimToClient::MsgPopulationUpdate_ResourceSatisfaction* mutable_resources(int index);
+  inline ::MsgsSimToClient::MsgPopulationUpdate_ResourceSatisfaction* add_resources();
+  
+  // repeated .MsgsSimToClient.MsgPopulationUpdate.MotivationSatisfaction motivations = 2;
+  inline int motivations_size() const;
+  inline void clear_motivations();
+  static const int kMotivationsFieldNumber = 2;
+  inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_MotivationSatisfaction >& motivations() const;
+  inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_MotivationSatisfaction >* mutable_motivations();
+  inline const ::MsgsSimToClient::MsgPopulationUpdate_MotivationSatisfaction& motivations(int index) const;
+  inline ::MsgsSimToClient::MsgPopulationUpdate_MotivationSatisfaction* mutable_motivations(int index);
+  inline ::MsgsSimToClient::MsgPopulationUpdate_MotivationSatisfaction* add_motivations();
+  
+  // optional float lodging = 3;
+  inline bool has_lodging() const;
+  inline void clear_lodging();
+  static const int kLodgingFieldNumber = 3;
+  inline float lodging() const;
+  inline void set_lodging(float value);
+  
+  // optional float health = 4;
+  inline bool has_health() const;
+  inline void clear_health();
+  static const int kHealthFieldNumber = 4;
+  inline float health() const;
+  inline void set_health(float value);
+  
+  // optional float safety = 5;
+  inline bool has_safety() const;
+  inline void clear_safety();
+  static const int kSafetyFieldNumber = 5;
+  inline float safety() const;
+  inline void set_safety(float value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_ResourceSatisfaction > resources_;
+  ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_MotivationSatisfaction > motivations_;
+  float lodging_;
+  float health_;
+  float safety_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgPopulationUpdate_Satisfaction* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgPopulationUpdate : public ::google::protobuf::Message {
+ public:
+  MsgPopulationUpdate();
+  virtual ~MsgPopulationUpdate();
+  
+  MsgPopulationUpdate(const MsgPopulationUpdate& from);
+  
+  inline MsgPopulationUpdate& operator=(const MsgPopulationUpdate& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgPopulationUpdate& default_instance();
+  void Swap(MsgPopulationUpdate* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgPopulationUpdate* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgPopulationUpdate& from);
+  void MergeFrom(const MsgPopulationUpdate& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  typedef MsgPopulationUpdate_MotivationSatisfaction MotivationSatisfaction;
+  typedef MsgPopulationUpdate_ResourceSatisfaction ResourceSatisfaction;
+  typedef MsgPopulationUpdate_Satisfaction Satisfaction;
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.PopulationId id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::Common::PopulationId& id() const;
+  inline ::Common::PopulationId* mutable_id();
+  
+  // optional int32 healthy = 2;
+  inline bool has_healthy() const;
+  inline void clear_healthy();
+  static const int kHealthyFieldNumber = 2;
+  inline ::google::protobuf::int32 healthy() const;
+  inline void set_healthy(::google::protobuf::int32 value);
+  
+  // optional int32 wounded = 3;
+  inline bool has_wounded() const;
+  inline void clear_wounded();
+  static const int kWoundedFieldNumber = 3;
+  inline ::google::protobuf::int32 wounded() const;
+  inline void set_wounded(::google::protobuf::int32 value);
+  
+  // optional int32 dead = 4;
+  inline bool has_dead() const;
+  inline void clear_dead();
+  static const int kDeadFieldNumber = 4;
+  inline ::google::protobuf::int32 dead() const;
+  inline void set_dead(::google::protobuf::int32 value);
+  
+  // repeated .Common.PartyAdhesion adhesions = 5;
+  inline int adhesions_size() const;
+  inline void clear_adhesions();
+  static const int kAdhesionsFieldNumber = 5;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::PartyAdhesion >& adhesions() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::PartyAdhesion >* mutable_adhesions();
+  inline const ::Common::PartyAdhesion& adhesions(int index) const;
+  inline ::Common::PartyAdhesion* mutable_adhesions(int index);
+  inline ::Common::PartyAdhesion* add_adhesions();
+  
+  // optional .MsgsSimToClient.MsgPopulationUpdate.Satisfaction satisfaction = 6;
+  inline bool has_satisfaction() const;
+  inline void clear_satisfaction();
+  static const int kSatisfactionFieldNumber = 6;
+  inline const ::MsgsSimToClient::MsgPopulationUpdate_Satisfaction& satisfaction() const;
+  inline ::MsgsSimToClient::MsgPopulationUpdate_Satisfaction* mutable_satisfaction();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::PopulationId* id_;
+  ::google::protobuf::int32 healthy_;
+  ::google::protobuf::int32 wounded_;
+  ::google::protobuf::int32 dead_;
+  ::google::protobuf::RepeatedPtrField< ::Common::PartyAdhesion > adhesions_;
+  ::MsgsSimToClient::MsgPopulationUpdate_Satisfaction* satisfaction_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgPopulationUpdate* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -20856,6 +21846,34 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgCrowdDestruction& crowd_destruction() const;
   inline ::MsgsSimToClient::MsgCrowdDestruction* mutable_crowd_destruction();
   
+  // optional .MsgsSimToClient.MsgPopulationCreation population_creation = 134;
+  inline bool has_population_creation() const;
+  inline void clear_population_creation();
+  static const int kPopulationCreationFieldNumber = 134;
+  inline const ::MsgsSimToClient::MsgPopulationCreation& population_creation() const;
+  inline ::MsgsSimToClient::MsgPopulationCreation* mutable_population_creation();
+  
+  // optional .MsgsSimToClient.MsgPopulationUpdate population_update = 135;
+  inline bool has_population_update() const;
+  inline void clear_population_update();
+  static const int kPopulationUpdateFieldNumber = 135;
+  inline const ::MsgsSimToClient::MsgPopulationUpdate& population_update() const;
+  inline ::MsgsSimToClient::MsgPopulationUpdate* mutable_population_update();
+  
+  // optional .MsgsSimToClient.MsgChangePopulationMagicActionAck change_population_magic_action_ack = 136;
+  inline bool has_change_population_magic_action_ack() const;
+  inline void clear_change_population_magic_action_ack();
+  static const int kChangePopulationMagicActionAckFieldNumber = 136;
+  inline const ::MsgsSimToClient::MsgChangePopulationMagicActionAck& change_population_magic_action_ack() const;
+  inline ::MsgsSimToClient::MsgChangePopulationMagicActionAck* mutable_change_population_magic_action_ack();
+  
+  // optional .MsgsSimToClient.MsgUrbanMagicActionAck urban_magic_action_ack = 137;
+  inline bool has_urban_magic_action_ack() const;
+  inline void clear_urban_magic_action_ack();
+  static const int kUrbanMagicActionAckFieldNumber = 137;
+  inline const ::MsgsSimToClient::MsgUrbanMagicActionAck& urban_magic_action_ack() const;
+  inline ::MsgsSimToClient::MsgUrbanMagicActionAck* mutable_urban_magic_action_ack();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -20993,11 +22011,15 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgFormationDestruction* formation_destruction_;
   ::MsgsSimToClient::MsgAutomatDestruction* automat_destruction_;
   ::MsgsSimToClient::MsgCrowdDestruction* crowd_destruction_;
+  ::MsgsSimToClient::MsgPopulationCreation* population_creation_;
+  ::MsgsSimToClient::MsgPopulationUpdate* population_update_;
+  ::MsgsSimToClient::MsgChangePopulationMagicActionAck* change_population_magic_action_ack_;
+  ::MsgsSimToClient::MsgUrbanMagicActionAck* urban_magic_action_ack_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(133 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(137 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -21693,6 +22715,48 @@ inline ::MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderE
 }
 inline void MsgActionCreateFireOrderAck::set_error_code(::MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode value) {
   GOOGLE_DCHECK(::MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_IsValid(value));
+  _set_bit(0);
+  error_code_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgChangePopulationMagicActionAck
+
+// required .MsgsSimToClient.MsgChangePopulationMagicActionAck.ErrorCode error_code = 1;
+inline bool MsgChangePopulationMagicActionAck::has_error_code() const {
+  return _has_bit(0);
+}
+inline void MsgChangePopulationMagicActionAck::clear_error_code() {
+  error_code_ = 0;
+  _clear_bit(0);
+}
+inline ::MsgsSimToClient::MsgChangePopulationMagicActionAck_ErrorCode MsgChangePopulationMagicActionAck::error_code() const {
+  return static_cast< ::MsgsSimToClient::MsgChangePopulationMagicActionAck_ErrorCode >(error_code_);
+}
+inline void MsgChangePopulationMagicActionAck::set_error_code(::MsgsSimToClient::MsgChangePopulationMagicActionAck_ErrorCode value) {
+  GOOGLE_DCHECK(::MsgsSimToClient::MsgChangePopulationMagicActionAck_ErrorCode_IsValid(value));
+  _set_bit(0);
+  error_code_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgUrbanMagicActionAck
+
+// required .MsgsSimToClient.MsgUrbanMagicActionAck.ErrorCode error_code = 1;
+inline bool MsgUrbanMagicActionAck::has_error_code() const {
+  return _has_bit(0);
+}
+inline void MsgUrbanMagicActionAck::clear_error_code() {
+  error_code_ = 0;
+  _clear_bit(0);
+}
+inline ::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode MsgUrbanMagicActionAck::error_code() const {
+  return static_cast< ::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode >(error_code_);
+}
+inline void MsgUrbanMagicActionAck::set_error_code(::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode value) {
+  GOOGLE_DCHECK(::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode_IsValid(value));
   _set_bit(0);
   error_code_ = value;
 }
@@ -22518,6 +23582,27 @@ inline ::Common::ParentEntity* MsgFormationCreation::mutable_logistic_base_organ
 
 // -------------------------------------------------------------------
 
+// MsgFormationDestruction
+
+// required .Common.FormationId formation = 1;
+inline bool MsgFormationDestruction::has_formation() const {
+  return _has_bit(0);
+}
+inline void MsgFormationDestruction::clear_formation() {
+  if (formation_ != NULL) formation_->::Common::FormationId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::FormationId& MsgFormationDestruction::formation() const {
+  return formation_ != NULL ? *formation_ : *default_instance_->formation_;
+}
+inline ::Common::FormationId* MsgFormationDestruction::mutable_formation() {
+  _set_bit(0);
+  if (formation_ == NULL) formation_ = new ::Common::FormationId;
+  return formation_;
+}
+
+// -------------------------------------------------------------------
+
 // MsgAutomatCreation
 
 // required .Common.AutomatId automat = 1;
@@ -22886,6 +23971,27 @@ inline ::Common::ParentEntity* MsgAutomatAttributes::mutable_logistic_base_organ
   _set_bit(7);
   if (logistic_base_organic_ == NULL) logistic_base_organic_ = new ::Common::ParentEntity;
   return logistic_base_organic_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgAutomatDestruction
+
+// required .Common.AutomatId automat = 1;
+inline bool MsgAutomatDestruction::has_automat() const {
+  return _has_bit(0);
+}
+inline void MsgAutomatDestruction::clear_automat() {
+  if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::AutomatId& MsgAutomatDestruction::automat() const {
+  return automat_ != NULL ? *automat_ : *default_instance_->automat_;
+}
+inline ::Common::AutomatId* MsgAutomatDestruction::mutable_automat() {
+  _set_bit(0);
+  if (automat_ == NULL) automat_ = new ::Common::AutomatId;
+  return automat_;
 }
 
 // -------------------------------------------------------------------
@@ -29218,6 +30324,27 @@ inline void MsgCrowdUpdate::set_etat_domination(::google::protobuf::int32 value)
 
 // -------------------------------------------------------------------
 
+// MsgCrowdDestruction
+
+// required .Common.CrowdId crowd = 1;
+inline bool MsgCrowdDestruction::has_crowd() const {
+  return _has_bit(0);
+}
+inline void MsgCrowdDestruction::clear_crowd() {
+  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::CrowdId& MsgCrowdDestruction::crowd() const {
+  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
+}
+inline ::Common::CrowdId* MsgCrowdDestruction::mutable_crowd() {
+  _set_bit(0);
+  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
+  return crowd_;
+}
+
+// -------------------------------------------------------------------
+
 // MsgCrowdConcentrationCreation
 
 // required .Common.CrowdConcentrationId concentration = 1;
@@ -31023,6 +32150,84 @@ inline void UrbanAttributes_Structure::set_state(::google::protobuf::uint32 valu
 
 // -------------------------------------------------------------------
 
+// UrbanAttributes_Infrastructures_Infrastructure
+
+// required string type = 1;
+inline bool UrbanAttributes_Infrastructures_Infrastructure::has_type() const {
+  return _has_bit(0);
+}
+inline void UrbanAttributes_Infrastructures_Infrastructure::clear_type() {
+  if (type_ != &_default_type_) {
+    type_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& UrbanAttributes_Infrastructures_Infrastructure::type() const {
+  return *type_;
+}
+inline void UrbanAttributes_Infrastructures_Infrastructure::set_type(const ::std::string& value) {
+  _set_bit(0);
+  if (type_ == &_default_type_) {
+    type_ = new ::std::string;
+  }
+  type_->assign(value);
+}
+inline void UrbanAttributes_Infrastructures_Infrastructure::set_type(const char* value) {
+  _set_bit(0);
+  if (type_ == &_default_type_) {
+    type_ = new ::std::string;
+  }
+  type_->assign(value);
+}
+inline void UrbanAttributes_Infrastructures_Infrastructure::set_type(const char* value, size_t size) {
+  _set_bit(0);
+  if (type_ == &_default_type_) {
+    type_ = new ::std::string;
+  }
+  type_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* UrbanAttributes_Infrastructures_Infrastructure::mutable_type() {
+  _set_bit(0);
+  if (type_ == &_default_type_) {
+    type_ = new ::std::string;
+  }
+  return type_;
+}
+
+// required bool active = 2;
+inline bool UrbanAttributes_Infrastructures_Infrastructure::has_active() const {
+  return _has_bit(1);
+}
+inline void UrbanAttributes_Infrastructures_Infrastructure::clear_active() {
+  active_ = false;
+  _clear_bit(1);
+}
+inline bool UrbanAttributes_Infrastructures_Infrastructure::active() const {
+  return active_;
+}
+inline void UrbanAttributes_Infrastructures_Infrastructure::set_active(bool value) {
+  _set_bit(1);
+  active_ = value;
+}
+
+// required float threshold = 3;
+inline bool UrbanAttributes_Infrastructures_Infrastructure::has_threshold() const {
+  return _has_bit(2);
+}
+inline void UrbanAttributes_Infrastructures_Infrastructure::clear_threshold() {
+  threshold_ = 0;
+  _clear_bit(2);
+}
+inline float UrbanAttributes_Infrastructures_Infrastructure::threshold() const {
+  return threshold_;
+}
+inline void UrbanAttributes_Infrastructures_Infrastructure::set_threshold(float value) {
+  _set_bit(2);
+  threshold_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // UrbanAttributes_Infrastructures
 
 // repeated .Common.ResourceNetwork resource_network = 1;
@@ -31048,6 +32253,23 @@ inline ::Common::ResourceNetwork* UrbanAttributes_Infrastructures::mutable_resou
 }
 inline ::Common::ResourceNetwork* UrbanAttributes_Infrastructures::add_resource_network() {
   return resource_network_.Add();
+}
+
+// optional .MsgsSimToClient.UrbanAttributes.Infrastructures.Infrastructure infrastructure = 2;
+inline bool UrbanAttributes_Infrastructures::has_infrastructure() const {
+  return _has_bit(1);
+}
+inline void UrbanAttributes_Infrastructures::clear_infrastructure() {
+  if (infrastructure_ != NULL) infrastructure_->::MsgsSimToClient::UrbanAttributes_Infrastructures_Infrastructure::Clear();
+  _clear_bit(1);
+}
+inline const ::MsgsSimToClient::UrbanAttributes_Infrastructures_Infrastructure& UrbanAttributes_Infrastructures::infrastructure() const {
+  return infrastructure_ != NULL ? *infrastructure_ : *default_instance_->infrastructure_;
+}
+inline ::MsgsSimToClient::UrbanAttributes_Infrastructures_Infrastructure* UrbanAttributes_Infrastructures::mutable_infrastructure() {
+  _set_bit(1);
+  if (infrastructure_ == NULL) infrastructure_ = new ::MsgsSimToClient::UrbanAttributes_Infrastructures_Infrastructure;
+  return infrastructure_;
 }
 
 // -------------------------------------------------------------------
@@ -31120,6 +32342,23 @@ inline ::MsgsSimToClient::UrbanAttributes_Infrastructures* UrbanAttributes::muta
   _set_bit(3);
   if (infrastructures_ == NULL) infrastructures_ = new ::MsgsSimToClient::UrbanAttributes_Infrastructures;
   return infrastructures_;
+}
+
+// optional .Common.MotivationType role = 5;
+inline bool UrbanAttributes::has_role() const {
+  return _has_bit(4);
+}
+inline void UrbanAttributes::clear_role() {
+  if (role_ != NULL) role_->::Common::MotivationType::Clear();
+  _clear_bit(4);
+}
+inline const ::Common::MotivationType& UrbanAttributes::role() const {
+  return role_ != NULL ? *role_ : *default_instance_->role_;
+}
+inline ::Common::MotivationType* UrbanAttributes::mutable_role() {
+  _set_bit(4);
+  if (role_ == NULL) role_ = new ::Common::MotivationType;
+  return role_;
 }
 
 // -------------------------------------------------------------------
@@ -31869,65 +33108,470 @@ inline ::Common::WeatherId* MsgControlLocalWeatherDestruction::mutable_weather()
 
 // -------------------------------------------------------------------
 
-// MsgFormationDestruction
+// MsgPopulationCreation
 
-// required .Common.FormationId formation = 1;
-inline bool MsgFormationDestruction::has_formation() const {
+// required .Common.PopulationId id = 1;
+inline bool MsgPopulationCreation::has_id() const {
   return _has_bit(0);
 }
-inline void MsgFormationDestruction::clear_formation() {
-  if (formation_ != NULL) formation_->::Common::FormationId::Clear();
+inline void MsgPopulationCreation::clear_id() {
+  if (id_ != NULL) id_->::Common::PopulationId::Clear();
   _clear_bit(0);
 }
-inline const ::Common::FormationId& MsgFormationDestruction::formation() const {
-  return formation_ != NULL ? *formation_ : *default_instance_->formation_;
+inline const ::Common::PopulationId& MsgPopulationCreation::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
 }
-inline ::Common::FormationId* MsgFormationDestruction::mutable_formation() {
+inline ::Common::PopulationId* MsgPopulationCreation::mutable_id() {
   _set_bit(0);
-  if (formation_ == NULL) formation_ = new ::Common::FormationId;
-  return formation_;
+  if (id_ == NULL) id_ = new ::Common::PopulationId;
+  return id_;
+}
+
+// required .Common.PartyId party = 2;
+inline bool MsgPopulationCreation::has_party() const {
+  return _has_bit(1);
+}
+inline void MsgPopulationCreation::clear_party() {
+  if (party_ != NULL) party_->::Common::PartyId::Clear();
+  _clear_bit(1);
+}
+inline const ::Common::PartyId& MsgPopulationCreation::party() const {
+  return party_ != NULL ? *party_ : *default_instance_->party_;
+}
+inline ::Common::PartyId* MsgPopulationCreation::mutable_party() {
+  _set_bit(1);
+  if (party_ == NULL) party_ = new ::Common::PartyId;
+  return party_;
+}
+
+// required .Common.PopulationType type = 3;
+inline bool MsgPopulationCreation::has_type() const {
+  return _has_bit(2);
+}
+inline void MsgPopulationCreation::clear_type() {
+  if (type_ != NULL) type_->::Common::PopulationType::Clear();
+  _clear_bit(2);
+}
+inline const ::Common::PopulationType& MsgPopulationCreation::type() const {
+  return type_ != NULL ? *type_ : *default_instance_->type_;
+}
+inline ::Common::PopulationType* MsgPopulationCreation::mutable_type() {
+  _set_bit(2);
+  if (type_ == NULL) type_ = new ::Common::PopulationType;
+  return type_;
+}
+
+// required string name = 4;
+inline bool MsgPopulationCreation::has_name() const {
+  return _has_bit(3);
+}
+inline void MsgPopulationCreation::clear_name() {
+  if (name_ != &_default_name_) {
+    name_->clear();
+  }
+  _clear_bit(3);
+}
+inline const ::std::string& MsgPopulationCreation::name() const {
+  return *name_;
+}
+inline void MsgPopulationCreation::set_name(const ::std::string& value) {
+  _set_bit(3);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgPopulationCreation::set_name(const char* value) {
+  _set_bit(3);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void MsgPopulationCreation::set_name(const char* value, size_t size) {
+  _set_bit(3);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgPopulationCreation::mutable_name() {
+  _set_bit(3);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+
+// required string text = 5;
+inline bool MsgPopulationCreation::has_text() const {
+  return _has_bit(4);
+}
+inline void MsgPopulationCreation::clear_text() {
+  if (text_ != &_default_text_) {
+    text_->clear();
+  }
+  _clear_bit(4);
+}
+inline const ::std::string& MsgPopulationCreation::text() const {
+  return *text_;
+}
+inline void MsgPopulationCreation::set_text(const ::std::string& value) {
+  _set_bit(4);
+  if (text_ == &_default_text_) {
+    text_ = new ::std::string;
+  }
+  text_->assign(value);
+}
+inline void MsgPopulationCreation::set_text(const char* value) {
+  _set_bit(4);
+  if (text_ == &_default_text_) {
+    text_ = new ::std::string;
+  }
+  text_->assign(value);
+}
+inline void MsgPopulationCreation::set_text(const char* value, size_t size) {
+  _set_bit(4);
+  if (text_ == &_default_text_) {
+    text_ = new ::std::string;
+  }
+  text_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgPopulationCreation::mutable_text() {
+  _set_bit(4);
+  if (text_ == &_default_text_) {
+    text_ = new ::std::string;
+  }
+  return text_;
+}
+
+// optional .MsgsSimToClient.Extension extension = 6;
+inline bool MsgPopulationCreation::has_extension() const {
+  return _has_bit(5);
+}
+inline void MsgPopulationCreation::clear_extension() {
+  if (extension_ != NULL) extension_->::MsgsSimToClient::Extension::Clear();
+  _clear_bit(5);
+}
+inline const ::MsgsSimToClient::Extension& MsgPopulationCreation::extension() const {
+  return extension_ != NULL ? *extension_ : *default_instance_->extension_;
+}
+inline ::MsgsSimToClient::Extension* MsgPopulationCreation::mutable_extension() {
+  _set_bit(5);
+  if (extension_ == NULL) extension_ = new ::MsgsSimToClient::Extension;
+  return extension_;
+}
+
+// repeated .Common.UrbanObjectId blocks = 7;
+inline int MsgPopulationCreation::blocks_size() const {
+  return blocks_.size();
+}
+inline void MsgPopulationCreation::clear_blocks() {
+  blocks_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Common::UrbanObjectId >&
+MsgPopulationCreation::blocks() const {
+  return blocks_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Common::UrbanObjectId >*
+MsgPopulationCreation::mutable_blocks() {
+  return &blocks_;
+}
+inline const ::Common::UrbanObjectId& MsgPopulationCreation::blocks(int index) const {
+  return blocks_.Get(index);
+}
+inline ::Common::UrbanObjectId* MsgPopulationCreation::mutable_blocks(int index) {
+  return blocks_.Mutable(index);
+}
+inline ::Common::UrbanObjectId* MsgPopulationCreation::add_blocks() {
+  return blocks_.Add();
 }
 
 // -------------------------------------------------------------------
 
-// MsgAutomatDestruction
+// MsgPopulationUpdate_MotivationSatisfaction
 
-// required .Common.AutomatId automat = 1;
-inline bool MsgAutomatDestruction::has_automat() const {
+// required .Common.MotivationType motivation = 1;
+inline bool MsgPopulationUpdate_MotivationSatisfaction::has_motivation() const {
   return _has_bit(0);
 }
-inline void MsgAutomatDestruction::clear_automat() {
-  if (automat_ != NULL) automat_->::Common::AutomatId::Clear();
+inline void MsgPopulationUpdate_MotivationSatisfaction::clear_motivation() {
+  if (motivation_ != NULL) motivation_->::Common::MotivationType::Clear();
   _clear_bit(0);
 }
-inline const ::Common::AutomatId& MsgAutomatDestruction::automat() const {
-  return automat_ != NULL ? *automat_ : *default_instance_->automat_;
+inline const ::Common::MotivationType& MsgPopulationUpdate_MotivationSatisfaction::motivation() const {
+  return motivation_ != NULL ? *motivation_ : *default_instance_->motivation_;
 }
-inline ::Common::AutomatId* MsgAutomatDestruction::mutable_automat() {
+inline ::Common::MotivationType* MsgPopulationUpdate_MotivationSatisfaction::mutable_motivation() {
   _set_bit(0);
-  if (automat_ == NULL) automat_ = new ::Common::AutomatId;
-  return automat_;
+  if (motivation_ == NULL) motivation_ = new ::Common::MotivationType;
+  return motivation_;
+}
+
+// required float value = 2;
+inline bool MsgPopulationUpdate_MotivationSatisfaction::has_value() const {
+  return _has_bit(1);
+}
+inline void MsgPopulationUpdate_MotivationSatisfaction::clear_value() {
+  value_ = 0;
+  _clear_bit(1);
+}
+inline float MsgPopulationUpdate_MotivationSatisfaction::value() const {
+  return value_;
+}
+inline void MsgPopulationUpdate_MotivationSatisfaction::set_value(float value) {
+  _set_bit(1);
+  value_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// MsgCrowdDestruction
+// MsgPopulationUpdate_ResourceSatisfaction
 
-// required .Common.CrowdId crowd = 1;
-inline bool MsgCrowdDestruction::has_crowd() const {
+// required .Common.ResourceType resource = 1;
+inline bool MsgPopulationUpdate_ResourceSatisfaction::has_resource() const {
   return _has_bit(0);
 }
-inline void MsgCrowdDestruction::clear_crowd() {
-  if (crowd_ != NULL) crowd_->::Common::CrowdId::Clear();
+inline void MsgPopulationUpdate_ResourceSatisfaction::clear_resource() {
+  if (resource_ != NULL) resource_->::Common::ResourceType::Clear();
   _clear_bit(0);
 }
-inline const ::Common::CrowdId& MsgCrowdDestruction::crowd() const {
-  return crowd_ != NULL ? *crowd_ : *default_instance_->crowd_;
+inline const ::Common::ResourceType& MsgPopulationUpdate_ResourceSatisfaction::resource() const {
+  return resource_ != NULL ? *resource_ : *default_instance_->resource_;
 }
-inline ::Common::CrowdId* MsgCrowdDestruction::mutable_crowd() {
+inline ::Common::ResourceType* MsgPopulationUpdate_ResourceSatisfaction::mutable_resource() {
   _set_bit(0);
-  if (crowd_ == NULL) crowd_ = new ::Common::CrowdId;
-  return crowd_;
+  if (resource_ == NULL) resource_ = new ::Common::ResourceType;
+  return resource_;
+}
+
+// required float value = 2;
+inline bool MsgPopulationUpdate_ResourceSatisfaction::has_value() const {
+  return _has_bit(1);
+}
+inline void MsgPopulationUpdate_ResourceSatisfaction::clear_value() {
+  value_ = 0;
+  _clear_bit(1);
+}
+inline float MsgPopulationUpdate_ResourceSatisfaction::value() const {
+  return value_;
+}
+inline void MsgPopulationUpdate_ResourceSatisfaction::set_value(float value) {
+  _set_bit(1);
+  value_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgPopulationUpdate_Satisfaction
+
+// repeated .MsgsSimToClient.MsgPopulationUpdate.ResourceSatisfaction resources = 1;
+inline int MsgPopulationUpdate_Satisfaction::resources_size() const {
+  return resources_.size();
+}
+inline void MsgPopulationUpdate_Satisfaction::clear_resources() {
+  resources_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_ResourceSatisfaction >&
+MsgPopulationUpdate_Satisfaction::resources() const {
+  return resources_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_ResourceSatisfaction >*
+MsgPopulationUpdate_Satisfaction::mutable_resources() {
+  return &resources_;
+}
+inline const ::MsgsSimToClient::MsgPopulationUpdate_ResourceSatisfaction& MsgPopulationUpdate_Satisfaction::resources(int index) const {
+  return resources_.Get(index);
+}
+inline ::MsgsSimToClient::MsgPopulationUpdate_ResourceSatisfaction* MsgPopulationUpdate_Satisfaction::mutable_resources(int index) {
+  return resources_.Mutable(index);
+}
+inline ::MsgsSimToClient::MsgPopulationUpdate_ResourceSatisfaction* MsgPopulationUpdate_Satisfaction::add_resources() {
+  return resources_.Add();
+}
+
+// repeated .MsgsSimToClient.MsgPopulationUpdate.MotivationSatisfaction motivations = 2;
+inline int MsgPopulationUpdate_Satisfaction::motivations_size() const {
+  return motivations_.size();
+}
+inline void MsgPopulationUpdate_Satisfaction::clear_motivations() {
+  motivations_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_MotivationSatisfaction >&
+MsgPopulationUpdate_Satisfaction::motivations() const {
+  return motivations_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_MotivationSatisfaction >*
+MsgPopulationUpdate_Satisfaction::mutable_motivations() {
+  return &motivations_;
+}
+inline const ::MsgsSimToClient::MsgPopulationUpdate_MotivationSatisfaction& MsgPopulationUpdate_Satisfaction::motivations(int index) const {
+  return motivations_.Get(index);
+}
+inline ::MsgsSimToClient::MsgPopulationUpdate_MotivationSatisfaction* MsgPopulationUpdate_Satisfaction::mutable_motivations(int index) {
+  return motivations_.Mutable(index);
+}
+inline ::MsgsSimToClient::MsgPopulationUpdate_MotivationSatisfaction* MsgPopulationUpdate_Satisfaction::add_motivations() {
+  return motivations_.Add();
+}
+
+// optional float lodging = 3;
+inline bool MsgPopulationUpdate_Satisfaction::has_lodging() const {
+  return _has_bit(2);
+}
+inline void MsgPopulationUpdate_Satisfaction::clear_lodging() {
+  lodging_ = 0;
+  _clear_bit(2);
+}
+inline float MsgPopulationUpdate_Satisfaction::lodging() const {
+  return lodging_;
+}
+inline void MsgPopulationUpdate_Satisfaction::set_lodging(float value) {
+  _set_bit(2);
+  lodging_ = value;
+}
+
+// optional float health = 4;
+inline bool MsgPopulationUpdate_Satisfaction::has_health() const {
+  return _has_bit(3);
+}
+inline void MsgPopulationUpdate_Satisfaction::clear_health() {
+  health_ = 0;
+  _clear_bit(3);
+}
+inline float MsgPopulationUpdate_Satisfaction::health() const {
+  return health_;
+}
+inline void MsgPopulationUpdate_Satisfaction::set_health(float value) {
+  _set_bit(3);
+  health_ = value;
+}
+
+// optional float safety = 5;
+inline bool MsgPopulationUpdate_Satisfaction::has_safety() const {
+  return _has_bit(4);
+}
+inline void MsgPopulationUpdate_Satisfaction::clear_safety() {
+  safety_ = 0;
+  _clear_bit(4);
+}
+inline float MsgPopulationUpdate_Satisfaction::safety() const {
+  return safety_;
+}
+inline void MsgPopulationUpdate_Satisfaction::set_safety(float value) {
+  _set_bit(4);
+  safety_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgPopulationUpdate
+
+// required .Common.PopulationId id = 1;
+inline bool MsgPopulationUpdate::has_id() const {
+  return _has_bit(0);
+}
+inline void MsgPopulationUpdate::clear_id() {
+  if (id_ != NULL) id_->::Common::PopulationId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::PopulationId& MsgPopulationUpdate::id() const {
+  return id_ != NULL ? *id_ : *default_instance_->id_;
+}
+inline ::Common::PopulationId* MsgPopulationUpdate::mutable_id() {
+  _set_bit(0);
+  if (id_ == NULL) id_ = new ::Common::PopulationId;
+  return id_;
+}
+
+// optional int32 healthy = 2;
+inline bool MsgPopulationUpdate::has_healthy() const {
+  return _has_bit(1);
+}
+inline void MsgPopulationUpdate::clear_healthy() {
+  healthy_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 MsgPopulationUpdate::healthy() const {
+  return healthy_;
+}
+inline void MsgPopulationUpdate::set_healthy(::google::protobuf::int32 value) {
+  _set_bit(1);
+  healthy_ = value;
+}
+
+// optional int32 wounded = 3;
+inline bool MsgPopulationUpdate::has_wounded() const {
+  return _has_bit(2);
+}
+inline void MsgPopulationUpdate::clear_wounded() {
+  wounded_ = 0;
+  _clear_bit(2);
+}
+inline ::google::protobuf::int32 MsgPopulationUpdate::wounded() const {
+  return wounded_;
+}
+inline void MsgPopulationUpdate::set_wounded(::google::protobuf::int32 value) {
+  _set_bit(2);
+  wounded_ = value;
+}
+
+// optional int32 dead = 4;
+inline bool MsgPopulationUpdate::has_dead() const {
+  return _has_bit(3);
+}
+inline void MsgPopulationUpdate::clear_dead() {
+  dead_ = 0;
+  _clear_bit(3);
+}
+inline ::google::protobuf::int32 MsgPopulationUpdate::dead() const {
+  return dead_;
+}
+inline void MsgPopulationUpdate::set_dead(::google::protobuf::int32 value) {
+  _set_bit(3);
+  dead_ = value;
+}
+
+// repeated .Common.PartyAdhesion adhesions = 5;
+inline int MsgPopulationUpdate::adhesions_size() const {
+  return adhesions_.size();
+}
+inline void MsgPopulationUpdate::clear_adhesions() {
+  adhesions_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Common::PartyAdhesion >&
+MsgPopulationUpdate::adhesions() const {
+  return adhesions_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Common::PartyAdhesion >*
+MsgPopulationUpdate::mutable_adhesions() {
+  return &adhesions_;
+}
+inline const ::Common::PartyAdhesion& MsgPopulationUpdate::adhesions(int index) const {
+  return adhesions_.Get(index);
+}
+inline ::Common::PartyAdhesion* MsgPopulationUpdate::mutable_adhesions(int index) {
+  return adhesions_.Mutable(index);
+}
+inline ::Common::PartyAdhesion* MsgPopulationUpdate::add_adhesions() {
+  return adhesions_.Add();
+}
+
+// optional .MsgsSimToClient.MsgPopulationUpdate.Satisfaction satisfaction = 6;
+inline bool MsgPopulationUpdate::has_satisfaction() const {
+  return _has_bit(5);
+}
+inline void MsgPopulationUpdate::clear_satisfaction() {
+  if (satisfaction_ != NULL) satisfaction_->::MsgsSimToClient::MsgPopulationUpdate_Satisfaction::Clear();
+  _clear_bit(5);
+}
+inline const ::MsgsSimToClient::MsgPopulationUpdate_Satisfaction& MsgPopulationUpdate::satisfaction() const {
+  return satisfaction_ != NULL ? *satisfaction_ : *default_instance_->satisfaction_;
+}
+inline ::MsgsSimToClient::MsgPopulationUpdate_Satisfaction* MsgPopulationUpdate::mutable_satisfaction() {
+  _set_bit(5);
+  if (satisfaction_ == NULL) satisfaction_ = new ::MsgsSimToClient::MsgPopulationUpdate_Satisfaction;
+  return satisfaction_;
 }
 
 // -------------------------------------------------------------------
@@ -34195,6 +35839,74 @@ inline ::MsgsSimToClient::MsgCrowdDestruction* MsgSimToClient_Content::mutable_c
   return crowd_destruction_;
 }
 
+// optional .MsgsSimToClient.MsgPopulationCreation population_creation = 134;
+inline bool MsgSimToClient_Content::has_population_creation() const {
+  return _has_bit(133);
+}
+inline void MsgSimToClient_Content::clear_population_creation() {
+  if (population_creation_ != NULL) population_creation_->::MsgsSimToClient::MsgPopulationCreation::Clear();
+  _clear_bit(133);
+}
+inline const ::MsgsSimToClient::MsgPopulationCreation& MsgSimToClient_Content::population_creation() const {
+  return population_creation_ != NULL ? *population_creation_ : *default_instance_->population_creation_;
+}
+inline ::MsgsSimToClient::MsgPopulationCreation* MsgSimToClient_Content::mutable_population_creation() {
+  _set_bit(133);
+  if (population_creation_ == NULL) population_creation_ = new ::MsgsSimToClient::MsgPopulationCreation;
+  return population_creation_;
+}
+
+// optional .MsgsSimToClient.MsgPopulationUpdate population_update = 135;
+inline bool MsgSimToClient_Content::has_population_update() const {
+  return _has_bit(134);
+}
+inline void MsgSimToClient_Content::clear_population_update() {
+  if (population_update_ != NULL) population_update_->::MsgsSimToClient::MsgPopulationUpdate::Clear();
+  _clear_bit(134);
+}
+inline const ::MsgsSimToClient::MsgPopulationUpdate& MsgSimToClient_Content::population_update() const {
+  return population_update_ != NULL ? *population_update_ : *default_instance_->population_update_;
+}
+inline ::MsgsSimToClient::MsgPopulationUpdate* MsgSimToClient_Content::mutable_population_update() {
+  _set_bit(134);
+  if (population_update_ == NULL) population_update_ = new ::MsgsSimToClient::MsgPopulationUpdate;
+  return population_update_;
+}
+
+// optional .MsgsSimToClient.MsgChangePopulationMagicActionAck change_population_magic_action_ack = 136;
+inline bool MsgSimToClient_Content::has_change_population_magic_action_ack() const {
+  return _has_bit(135);
+}
+inline void MsgSimToClient_Content::clear_change_population_magic_action_ack() {
+  if (change_population_magic_action_ack_ != NULL) change_population_magic_action_ack_->::MsgsSimToClient::MsgChangePopulationMagicActionAck::Clear();
+  _clear_bit(135);
+}
+inline const ::MsgsSimToClient::MsgChangePopulationMagicActionAck& MsgSimToClient_Content::change_population_magic_action_ack() const {
+  return change_population_magic_action_ack_ != NULL ? *change_population_magic_action_ack_ : *default_instance_->change_population_magic_action_ack_;
+}
+inline ::MsgsSimToClient::MsgChangePopulationMagicActionAck* MsgSimToClient_Content::mutable_change_population_magic_action_ack() {
+  _set_bit(135);
+  if (change_population_magic_action_ack_ == NULL) change_population_magic_action_ack_ = new ::MsgsSimToClient::MsgChangePopulationMagicActionAck;
+  return change_population_magic_action_ack_;
+}
+
+// optional .MsgsSimToClient.MsgUrbanMagicActionAck urban_magic_action_ack = 137;
+inline bool MsgSimToClient_Content::has_urban_magic_action_ack() const {
+  return _has_bit(136);
+}
+inline void MsgSimToClient_Content::clear_urban_magic_action_ack() {
+  if (urban_magic_action_ack_ != NULL) urban_magic_action_ack_->::MsgsSimToClient::MsgUrbanMagicActionAck::Clear();
+  _clear_bit(136);
+}
+inline const ::MsgsSimToClient::MsgUrbanMagicActionAck& MsgSimToClient_Content::urban_magic_action_ack() const {
+  return urban_magic_action_ack_ != NULL ? *urban_magic_action_ack_ : *default_instance_->urban_magic_action_ack_;
+}
+inline ::MsgsSimToClient::MsgUrbanMagicActionAck* MsgSimToClient_Content::mutable_urban_magic_action_ack() {
+  _set_bit(136);
+  if (urban_magic_action_ack_ == NULL) urban_magic_action_ack_ = new ::MsgsSimToClient::MsgUrbanMagicActionAck;
+  return urban_magic_action_ack_;
+}
+
 // -------------------------------------------------------------------
 
 // MsgSimToClient
@@ -34286,6 +35998,14 @@ inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgLogSupplyC
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode>() {
   return ::MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgChangePopulationMagicActionAck_ErrorCode>() {
+  return ::MsgsSimToClient::MsgChangePopulationMagicActionAck_ErrorCode_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode>() {
+  return ::MsgsSimToClient::MsgUrbanMagicActionAck_ErrorCode_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::ControlAck_ErrorCode>() {

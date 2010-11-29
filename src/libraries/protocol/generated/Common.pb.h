@@ -55,6 +55,7 @@ class UrbanObjectId;
 class UrbanObjectKnowledgeId;
 class ClientObjectId;
 class PlannedWorkId;
+class PopulationId;
 class Tasker;
 class ParentEntity;
 class DrawingId;
@@ -82,6 +83,8 @@ class UnitType;
 class ReportCategory;
 class NationalityType;
 class ResourceNetworkType;
+class PopulationType;
+class MotivationType;
 class MsgHeading;
 class MsgDateTime;
 class MsgDotationStock;
@@ -165,6 +168,7 @@ class ObjectAttributeSealOff;
 class ObjectAttributes;
 class MsgMarker;
 class MsgWeatherAttributes;
+class PartyAdhesion;
 
 enum MsgLocation_Geometry {
   MsgLocation_Geometry_circle = 0,
@@ -3014,6 +3018,93 @@ class PlannedWorkId : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class PopulationId : public ::google::protobuf::Message {
+ public:
+  PopulationId();
+  virtual ~PopulationId();
+  
+  PopulationId(const PopulationId& from);
+  
+  inline PopulationId& operator=(const PopulationId& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PopulationId& default_instance();
+  void Swap(PopulationId* other);
+  
+  // implements Message ----------------------------------------------
+  
+  PopulationId* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PopulationId& from);
+  void MergeFrom(const PopulationId& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required uint32 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 id() const;
+  inline void set_id(::google::protobuf::uint32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::uint32 id_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static PopulationId* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class Tasker : public ::google::protobuf::Message {
  public:
   Tasker();
@@ -5408,6 +5499,180 @@ class ResourceNetworkType : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static ResourceNetworkType* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class PopulationType : public ::google::protobuf::Message {
+ public:
+  PopulationType();
+  virtual ~PopulationType();
+  
+  PopulationType(const PopulationType& from);
+  
+  inline PopulationType& operator=(const PopulationType& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PopulationType& default_instance();
+  void Swap(PopulationType* other);
+  
+  // implements Message ----------------------------------------------
+  
+  PopulationType* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PopulationType& from);
+  void MergeFrom(const PopulationType& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required uint32 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 id() const;
+  inline void set_id(::google::protobuf::uint32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::uint32 id_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static PopulationType* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MotivationType : public ::google::protobuf::Message {
+ public:
+  MotivationType();
+  virtual ~MotivationType();
+  
+  MotivationType(const MotivationType& from);
+  
+  inline MotivationType& operator=(const MotivationType& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MotivationType& default_instance();
+  void Swap(MotivationType* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MotivationType* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MotivationType& from);
+  void MergeFrom(const MotivationType& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required uint32 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::uint32 id() const;
+  inline void set_id(::google::protobuf::uint32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::uint32 id_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MotivationType* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -14326,6 +14591,101 @@ class MsgWeatherAttributes : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static MsgWeatherAttributes* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class PartyAdhesion : public ::google::protobuf::Message {
+ public:
+  PartyAdhesion();
+  virtual ~PartyAdhesion();
+  
+  PartyAdhesion(const PartyAdhesion& from);
+  
+  inline PartyAdhesion& operator=(const PartyAdhesion& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PartyAdhesion& default_instance();
+  void Swap(PartyAdhesion* other);
+  
+  // implements Message ----------------------------------------------
+  
+  PartyAdhesion* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PartyAdhesion& from);
+  void MergeFrom(const PartyAdhesion& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.PartyId party = 1;
+  inline bool has_party() const;
+  inline void clear_party();
+  static const int kPartyFieldNumber = 1;
+  inline const ::Common::PartyId& party() const;
+  inline ::Common::PartyId* mutable_party();
+  
+  // required float value = 2;
+  inline bool has_value() const;
+  inline void clear_value();
+  static const int kValueFieldNumber = 2;
+  inline float value() const;
+  inline void set_value(float value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::PartyId* party_;
+  float value_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static PartyAdhesion* default_instance_;
+};
 // ===================================================================
 
 
@@ -14891,6 +15251,26 @@ inline ::google::protobuf::uint32 PlannedWorkId::id() const {
   return id_;
 }
 inline void PlannedWorkId::set_id(::google::protobuf::uint32 value) {
+  _set_bit(0);
+  id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// PopulationId
+
+// required uint32 id = 1;
+inline bool PopulationId::has_id() const {
+  return _has_bit(0);
+}
+inline void PopulationId::clear_id() {
+  id_ = 0u;
+  _clear_bit(0);
+}
+inline ::google::protobuf::uint32 PopulationId::id() const {
+  return id_;
+}
+inline void PopulationId::set_id(::google::protobuf::uint32 value) {
   _set_bit(0);
   id_ = value;
 }
@@ -15572,6 +15952,46 @@ inline ::std::string* ResourceNetworkType::mutable_name() {
     name_ = new ::std::string;
   }
   return name_;
+}
+
+// -------------------------------------------------------------------
+
+// PopulationType
+
+// required uint32 id = 1;
+inline bool PopulationType::has_id() const {
+  return _has_bit(0);
+}
+inline void PopulationType::clear_id() {
+  id_ = 0u;
+  _clear_bit(0);
+}
+inline ::google::protobuf::uint32 PopulationType::id() const {
+  return id_;
+}
+inline void PopulationType::set_id(::google::protobuf::uint32 value) {
+  _set_bit(0);
+  id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MotivationType
+
+// required uint32 id = 1;
+inline bool MotivationType::has_id() const {
+  return _has_bit(0);
+}
+inline void MotivationType::clear_id() {
+  id_ = 0u;
+  _clear_bit(0);
+}
+inline ::google::protobuf::uint32 MotivationType::id() const {
+  return id_;
+}
+inline void MotivationType::set_id(::google::protobuf::uint32 value) {
+  _set_bit(0);
+  id_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -20896,6 +21316,43 @@ inline void MsgWeatherAttributes::set_lighting(Common::EnumLightingType value) {
   GOOGLE_DCHECK(Common::EnumLightingType_IsValid(value));
   _set_bit(7);
   lighting_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// PartyAdhesion
+
+// required .Common.PartyId party = 1;
+inline bool PartyAdhesion::has_party() const {
+  return _has_bit(0);
+}
+inline void PartyAdhesion::clear_party() {
+  if (party_ != NULL) party_->::Common::PartyId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::PartyId& PartyAdhesion::party() const {
+  return party_ != NULL ? *party_ : *default_instance_->party_;
+}
+inline ::Common::PartyId* PartyAdhesion::mutable_party() {
+  _set_bit(0);
+  if (party_ == NULL) party_ = new ::Common::PartyId;
+  return party_;
+}
+
+// required float value = 2;
+inline bool PartyAdhesion::has_value() const {
+  return _has_bit(1);
+}
+inline void PartyAdhesion::clear_value() {
+  value_ = 0;
+  _clear_bit(1);
+}
+inline float PartyAdhesion::value() const {
+  return value_;
+}
+inline void PartyAdhesion::set_value(float value) {
+  _set_bit(1);
+  value_ = value;
 }
 
 
