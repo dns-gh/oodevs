@@ -67,32 +67,24 @@ namespace
         if( message.attributes().has_color() )
         {
             const Common::RgbaColor& color = message.attributes().color();
-            urban::ColorAttribute* colorAttribute = object.Retrieve< urban::ColorAttribute >();
-            if( !colorAttribute )
-            {
-                colorAttribute = new urban::ColorAttribute( object );
-                object.Attach( *colorAttribute );
-            }
+            urban::ColorAttribute* colorAttribute = new urban::ColorAttribute( object );
             colorAttribute->SetRed( static_cast< unsigned short >( color.red() ) );
             colorAttribute->SetGreen( static_cast< unsigned short >( color.green() ) );
             colorAttribute->SetBlue( static_cast< unsigned short >( color.blue() ) );
             colorAttribute->SetAlpha( color.alpha() );
+            object.Attach( *colorAttribute );
         }
         if( message.attributes().has_architecture() )
         {
             const MsgsSimToClient::UrbanAttributes::Architecture& architecture = message.attributes().architecture();
-            urban::Architecture* attribute = object.Retrieve< urban::Architecture >();
-            if( !attribute )
-            {
-                attribute = new urban::Architecture( object );
-                object.Attach( *attribute );
-            }
+            urban::Architecture* attribute = new urban::Architecture( object );
             attribute->SetHeight( architecture.height() );
             attribute->SetFloorNumber( architecture.floor_number() );
             attribute->SetRoofShape( architecture.roof_shape() );
             attribute->SetMaterial( architecture.material() );
             attribute->SetOccupation( architecture.occupation() );
             attribute->SetTrafficability( architecture.trafficability() );
+            object.Attach( *attribute );
         }
     }
 }
@@ -111,23 +103,30 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
     urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( id, name, &footPrint );
     AttachExtensions( *object, message );
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controller_, *object, message.urban_object().id(), QString( message.name().c_str() ) );
-    if( message.has_attributes() )
-    {
-        if( message.attributes().has_structure() )
-            pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controller_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
-        if( message.attributes().has_infrastructures() )
-        {
-            if( message.attributes().infrastructures().resource_network_size() > 0 )
-                model_.resourceNetwork_.Create( *pTerrainObject, message.attributes().infrastructures() );
-            // TODO update infrastructures other than resource network
-        }
-    }
     pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( *object, message.location(), static_.coordinateConverter_ ) );
     pTerrainObject->Update( message );
     pTerrainObject->Polish();
     if( !Find( id ) )
         Register( id, *pTerrainObject );
     urbanBlockDetectionMap_.AddUrbanBlock( *object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkModel Update
+// Created: MGD 2010-11-29
+// -----------------------------------------------------------------------------
+void UrbanModel::Update( const MsgsSimToClient::MsgUrbanUpdate& message )
+{
+    if( message.has_attributes() )
+    {
+        gui::TerrainObjectProxy* pTerrainObject = Find( message.urban_object().id() );
+        if( pTerrainObject )
+        {
+            if( message.attributes().has_structure() && pTerrainObject->Retrieve< kernel::StructuralStateAttribute_ABC >() == 0 )
+                pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controller_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
+        }
+    }
+    GetObject( message.urban_object().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------

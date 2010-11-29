@@ -326,9 +326,9 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate(
 // Created: JSR 2010-09-17
 // -----------------------------------------------------------------------------
 template < typename T >
-void UrbanObjectWrapper::SendCapacity( MsgsSimToClient::UrbanAttributes& msg) const
+void UrbanObjectWrapper::SendCapacity( MsgsSimToClient::UrbanAttributes& msg)
 {
-    const T* capacity = Retrieve< T >();
+    T* capacity = Retrieve< T >();
     if( capacity )
         capacity->SendState( msg );
 }
@@ -365,8 +365,6 @@ void UrbanObjectWrapper::SendCreation() const
         message().mutable_attributes()->mutable_architecture()->set_occupation( architecture->GetOccupation() );
         message().mutable_attributes()->mutable_architecture()->set_trafficability( architecture->GetTrafficability() );
     }
-    SendCapacity< StructuralCapacity >( *message().mutable_attributes() );
-    SendCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -402,7 +400,8 @@ void UrbanObjectWrapper::UpdateState()
     message().mutable_urban_object()->set_id( object_->GetId() );
     SendCapacity< StructuralCapacity >( *message().mutable_attributes() );
     SendCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
-    message.Send( NET_Publisher_ABC::Publisher() );
+    if ( message().attributes().has_structure() || message().attributes().has_infrastructures() )
+        message.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

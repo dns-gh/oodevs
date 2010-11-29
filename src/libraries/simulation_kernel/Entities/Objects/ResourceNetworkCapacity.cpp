@@ -162,7 +162,7 @@ void ResourceNetworkCapacity::RegisterNode( unsigned int id, bool urban )
 // Name: ResourceNetworkCapacity::SendState
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::SendState( MsgsSimToClient::UrbanAttributes& message ) const
+void ResourceNetworkCapacity::SendState( MsgsSimToClient::UrbanAttributes& message )
 {
     if( nodeProperties_ == 0 )
         throw std::exception( "RegisterResource : Node Properties not instanciated" );

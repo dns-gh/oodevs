@@ -10,25 +10,26 @@
 #include "gaming_pch.h"
 #include "ObjectAttributesFactory.h"
 
-#include "ActivityTimeAttribute.h"
-#include "BypassAttribute.h"
 #include "ConstructionAttribute.h"
-#include "CrossingSiteAttribute.h"
-#include "DelayAttribute.h"
-#include "FireAttribute.h"
-#include "LogisticAttribute.h"
-#include "MedicalTreatmentAttribute.h"
-#include "MineAttribute.h"
-#include "NBCAttribute.h"
+#include "BypassAttribute.h"
 #include "ObstacleAttribute.h"
-#include "SealOffAttribute.h"
+#include "MineAttribute.h"
 #include "SupplyRouteAttribute.h"
-#include "ToxicCloudAttribute.h"
+#include "CrossingSiteAttribute.h"
+#include "LogisticAttribute.h"
+#include "ActivityTimeAttribute.h"
+#include "DelayAttribute.h"
+#include "NBCAttribute.h"
+#include "FireAttribute.h"
+#include "MedicalTreatmentAttribute.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
+#include "ResourceNetwork.h"
+#include "ResourceNetworkModel.h"
 #include "StaticModel.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/PropertiesDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributesFactory constructor
@@ -93,13 +94,11 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const Common
     if( attributes.has_medical_treatment() && entity.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
         entity.Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
 
-    if ( attributes.has_toxic_cloud() && entity.Retrieve< kernel::ToxicCloudAttribute_ABC >() == 0 )
-        entity.Attach< kernel::ToxicCloudAttribute_ABC >( *new ToxicCloudAttribute( controllers_.controller_, static_.coordinateConverter_ ) );
+    if( attributes.has_medical_treatment() && entity.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
+        entity.Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
 
-    if ( attributes.has_seal_off() && entity.Retrieve< kernel::SealOffAttribute_ABC >() == 0 )
-        entity.Attach< kernel::SealOffAttribute_ABC >( *new SealOffAttribute( controllers_.controller_ ) );
-
-    
+    if( attributes.has_resource_networks() && entity.Retrieve< kernel::ResourceNetwork_ABC >() == 0 )
+        model_.resourceNetwork_.Create( entity, attributes.resource_networks() );
 }
 
 

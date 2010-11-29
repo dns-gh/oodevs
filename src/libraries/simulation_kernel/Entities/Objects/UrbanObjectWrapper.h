@@ -99,7 +99,7 @@ public:
     virtual void SendFullState() const;
     virtual void UpdateState();
     template < typename T >
-    void SendCapacity( MsgsSimToClient::UrbanAttributes& msg) const;
+    void SendCapacity( MsgsSimToClient::UrbanAttributes& msg);
     //@}
 
     //! @name Accessors

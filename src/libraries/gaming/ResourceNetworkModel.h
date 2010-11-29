@@ -10,12 +10,27 @@
 #ifndef __ResourceNetworkModel_h_
 #define __ResourceNetworkModel_h_
 
-class Model;
-class StaticModel;
+#include "tools/Resolver.h"
+
+#include "clients_kernel/ObjectTypes.h"
+#include "Model.h"
+#include "ObjectsModel.h"
+#include "StaticModel.h"
+#include "UrbanModel.h"
 
 namespace kernel
 {
     class ResourceNetworkSelectionObserver;
+}
+
+namespace gui
+{
+    class TerrainObjectProxy;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgUrbanUpdate;
 }
 
 // =============================================================================
@@ -24,17 +39,18 @@ namespace kernel
 */
 // Created: JSR 2010-08-18
 // =============================================================================
-class ResourceNetworkModel
+class ResourceNetworkModel : public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetworkModel( kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel );
+             ResourceNetworkModel( kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, tools::Resolver< gui::TerrainObjectProxy >& urbanObjects );
     virtual ~ResourceNetworkModel();
     //@}
 
     //! @name Operations
     //@{
+    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& message );
     template< typename T >
     void Create( kernel::Entity_ABC& entity, const T& msg );
     //@}
@@ -52,6 +68,7 @@ private:
     kernel::Controllers& controllers_;
     const Model& model_;
     const StaticModel& staticModel_;
+    tools::Resolver< gui::TerrainObjectProxy >& urbanObjects_;
     kernel::ResourceNetworkSelectionObserver& observer_;
     //@}
 };

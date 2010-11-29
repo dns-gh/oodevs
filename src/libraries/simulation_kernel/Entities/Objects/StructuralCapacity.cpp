@@ -36,6 +36,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity()
     : structuralState_( 100 )
+    , lastStructuralState_( 0 )
     , materialType_   ( 0 )
 {
     // NOTHING
@@ -47,6 +48,7 @@ StructuralCapacity::StructuralCapacity()
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity( xml::xistream& xis )
     : structuralState_( xis.attribute< unsigned int >( "value" ) )
+    , lastStructuralState_( 0 )
 {
     // NOTHING
 }
@@ -57,6 +59,7 @@ StructuralCapacity::StructuralCapacity( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity( const StructuralCapacity& from )
     : structuralState_( from.structuralState_ )
+    , lastStructuralState_( 0 )
 {
     // NOTHING
 }
@@ -230,9 +233,14 @@ void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PH
 // Name: StructuralCapacity::SendState
 // Created: SLG 2010-06-21
 // -----------------------------------------------------------------------------
-void StructuralCapacity::SendState( MsgsSimToClient::UrbanAttributes& message ) const
+void StructuralCapacity::SendState( MsgsSimToClient::UrbanAttributes& message )
 {
-    message.mutable_structure()->set_state( structuralState_ );
+    int diff = structuralState_ - lastStructuralState_;
+    if( std::abs( diff ) > 5 )
+    {
+        message.mutable_structure()->set_state( structuralState_ );
+        lastStructuralState_ = structuralState_;
+    }
 }
 
 // -----------------------------------------------------------------------------

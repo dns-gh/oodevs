@@ -1586,7 +1586,8 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanCreation( const MsgsSimToClient::MsgUrb
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUrbanUpdate( const MsgsSimToClient::MsgUrbanUpdate& message )
 {
-    GetModel().urbanObjects_.GetObject( message.urban_object().id() ).Update( message );
+    GetModel().urbanObjects_.Update( message );
+    GetModel().resourceNetwork_.DoUpdate( message );
 }
 
 // -----------------------------------------------------------------------------
