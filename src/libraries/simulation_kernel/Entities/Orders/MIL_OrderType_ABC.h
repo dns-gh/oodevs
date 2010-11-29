@@ -53,6 +53,7 @@ public:
 
     //! @name Copy operations
     //@{
+    void InitializeDefault( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters ) const;
     bool Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, Common::MsgMissionParameters& to, const MIL_OrderContext& context ) const;
     //@}
 

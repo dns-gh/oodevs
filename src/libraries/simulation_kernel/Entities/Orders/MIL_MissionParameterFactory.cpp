@@ -44,6 +44,15 @@
 #include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
+// Created: LMT 2010-04-19
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const MIL_OrderTypeParameter& type )
+{
+    return boost::shared_ptr<MIL_MissionParameter_ABC>( new MIL_NullParameter() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::Create
 // Created: LDC 2009-04-29
 // -----------------------------------------------------------------------------

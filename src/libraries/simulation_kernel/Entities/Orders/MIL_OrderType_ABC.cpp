@@ -86,6 +86,16 @@ bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionP
 }
 
 //-----------------------------------------------------------------------------
+// Name: MIL_OrderType_ABC::InitializeDefault
+// Created: LMT 2010-04-19
+// ----------------------------------------------------------------------------
+void MIL_OrderType_ABC::InitializeDefault( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters ) const
+{
+    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it )
+        parameters.push_back( MIL_MissionParameterFactory::Create( **it ) );
+}
+
+//-----------------------------------------------------------------------------
 // Name: MIL_OrderType_ABC::GetDIAType
 // Created: NLD 2003-04-10
 //-----------------------------------------------------------------------------

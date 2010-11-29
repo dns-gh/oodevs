@@ -48,6 +48,7 @@ MIL_LocationParameter::~MIL_LocationParameter()
 bool MIL_LocationParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
     return type == MIL_ParameterType_ABC::eLocation
+        || type == MIL_ParameterType_ABC::eLocationComposite
         || ( type == MIL_ParameterType_ABC::ePolygon && pLocalisation_->GetType() == TER_Localisation::ePolygon )
         || ( type == MIL_ParameterType_ABC::ePoint && pLocalisation_->GetType() == TER_Localisation::ePoint );
 }
