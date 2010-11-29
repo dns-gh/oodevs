@@ -24,8 +24,6 @@ namespace bfs = boost::filesystem;
 
 using namespace plugins::saver;
 
-const std::string Saver::currentFolderName_( "current" );
-
 // -----------------------------------------------------------------------------
 // Name: Saver constructor
 // Created: AGE 2007-04-10
@@ -47,21 +45,7 @@ Saver::Saver( const dispatcher::Config& config )
 Saver::~Saver()
 {
     Flush();
-    TerminateFragment();
 }
-
-namespace
-{
-    std::string CreateFolderName( unsigned int frame )
-    {
-        std::string foldername;
-        std::string number = boost::lexical_cast< std::string >( frame );
-        foldername.assign( 8 - number.size(), '0' );
-        foldername.append( number );
-        return foldername;
-    }
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: Saver::ControlInformation
@@ -90,6 +74,9 @@ void Saver::CreateNewFragment( bool first /*= false*/ )
 {
     if( !first )
         TerminateFragment();
+    std::string number = boost::lexical_cast< std::string >( currentFolder_++ );
+    currentFolderName_.assign( 8 - number.size(), '0' );
+    currentFolderName_.append( number );
     const bfs::path currentDirectory = bfs::path( recorderDirectory_, bfs::native ) / currentFolderName_;
     bfs::create_directories( currentDirectory );
     index_   .open( ( currentDirectory / "index"    ).string().c_str(), std::ios_base::binary | std::ios_base::out );
@@ -175,7 +162,6 @@ void Saver::TerminateFragment()
     keyIndex_.close();
     key_.close();
     update_.close();
-    bfs::rename( currentDirectory, bfs::path( recorderDirectory_, bfs::native ) / CreateFolderName( currentFolder_++ ) );
     fragmentFirstFrame_ = frameCount_;
 }
 
@@ -230,10 +216,7 @@ void Saver::UpdateFragments()
                         wrapper << start;
                         wrapper << frameCount_ - 1;
                         stream.close();
-                        if( it->path().leaf() == Saver::currentFolderName_ )
-                            bfs::rename( it->path(), bfs::path( recorderDirectory_, bfs::native ) / CreateFolderName( currentFolder_++ ) );
-                        else
-                            currentFolder_ = boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1;
+                        currentFolder_ = boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1;
                     }
                     else
                         currentFolder_ = std::max( currentFolder_, boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1 );

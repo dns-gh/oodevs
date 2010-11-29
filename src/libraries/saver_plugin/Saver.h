@@ -72,7 +72,7 @@ private:
 private:
     //! @name Member data
     //@{
-    static const std::string currentFolderName_;
+    std::string currentFolderName_;
     std::string recorderDirectory_;
     dispatcher::Frame current_;
     std::ofstream index_;
