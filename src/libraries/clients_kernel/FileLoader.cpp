@@ -27,7 +27,6 @@ FileLoader::FileLoader( const tools::ExerciseConfig& config )
     , xis_                  ( new xml::xifstream( config.GetPhysicalFile() ) )
     , invalidSignatureFiles_( 0 )
 {
-    *xis_ >> xml::start( "physical" );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +42,6 @@ FileLoader::FileLoader( const tools::ExerciseConfig& config, std::string& invali
     tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename );
     if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
         invalidSignatureFiles_->append( "\n" + bfs::path( filename, bfs::native ).leaf() );
-    *xis_ >> xml::start( "physical" );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,6 +139,29 @@ FileLoader& FileLoader::LoadExercise( const std::string& rootTag, T_Loader loade
     return LoadExercise( rootTag, loader, empty );
 }
 
+namespace
+{
+    class AttributeReader
+    {
+    public:
+        AttributeReader( const std::string& rootTag, std::string& file )
+            : rootTag_( rootTag )
+            , file_( file )
+        {
+            // NOTHING
+        }
+        void LoadTag( const std::string&, xml::xistream& xis )
+        {
+            xis >> xml::start( rootTag_ ) >> xml::attribute( "file", file_ ) >> xml::end;
+        }
+    private:
+        AttributeReader& operator= ( const AttributeReader& );
+
+        const std::string& rootTag_;
+        std::string& file_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: FileLoader::Load
 // Created: SBO 2009-08-20
@@ -148,7 +169,8 @@ FileLoader& FileLoader::LoadExercise( const std::string& rootTag, T_Loader loade
 FileLoader& FileLoader::Load( const std::string& rootTag, T_Loader loader, const std::string& xslTransform )
 {
     std::string file;
-    *xis_ >> xml::start( rootTag ) >> xml::attribute( "file", file ) >> xml::end;
+    AttributeReader fileAttributeReader( rootTag, file );
+    *xis_ >> xml::list( fileAttributeReader, &AttributeReader::LoadTag );
     CheckedLoader( config_.BuildPhysicalChildFile( file ), config_, loader, xslTransform, invalidSignatureFiles_ );
     return *this;
 }
@@ -161,9 +183,8 @@ FileLoader& FileLoader::LoadExercise( const std::string& rootTag, T_Loader loade
 {
     xml::xifstream xis( config_.GetExerciseFile() );
     std::string file;
-    xis >> xml::start( "exercise" )
-            >> xml::start( rootTag ) 
-                >> xml::attribute( "file", file );
+    AttributeReader fileAttributeReader( rootTag, file );
+    xis >> xml::list( fileAttributeReader, &AttributeReader::LoadTag );
     CheckedLoader( config_.BuildExerciseChildFile( file ), config_, loader, xslTransform, invalidSignatureFiles_ );
     return *this;
 }

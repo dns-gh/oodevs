@@ -258,7 +258,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strOrbat.c_str() ) );
 
     kernel::FileLoader loader ( config );
-    loader.LoadExercise( "orbat", boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ) ); //, "resources/orbat0-4.2.xsl" );
+    loader.LoadExercise( "orbat", boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ), "resources/orbat0-4.2.xsl" );
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
