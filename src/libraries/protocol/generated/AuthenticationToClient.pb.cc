@@ -200,7 +200,7 @@ void protobuf_AssignDesc_AuthenticationToClient_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(RoleType));
   MsgProfile_descriptor_ = file->message_type(8);
-  static const int MsgProfile_offsets_[12] = {
+  static const int MsgProfile_offsets_[13] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, login_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, password_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, read_only_formations_),
@@ -211,6 +211,7 @@ void protobuf_AssignDesc_AuthenticationToClient_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, read_write_camps_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, read_only_crowds_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, read_write_crowds_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, write_population_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, supervisor_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfile, role_),
   };
@@ -411,7 +412,7 @@ void protobuf_AddDesc_AuthenticationToClient_2eproto() {
     "gProfileDestructionRequestAck.ErrorCode\022"
     "\r\n\005login\030\002 \002(\t\":\n\tErrorCode\022\013\n\007success\020\000"
     "\022\023\n\017invalid_profile\020\001\022\013\n\007failure\020\002\"\026\n\010Ro"
-    "leType\022\n\n\002id\030\001 \002(\r\"\211\004\n\nMsgProfile\022\r\n\005log"
+    "leType\022\n\n\002id\030\001 \002(\r\"\275\004\n\nMsgProfile\022\r\n\005log"
     "in\030\001 \002(\t\022\020\n\010password\030\002 \001(\t\0225\n\024read_only_"
     "formations\030\003 \001(\0132\027.Common.FormationIdLis"
     "t\0226\n\025read_write_formations\030\004 \001(\0132\027.Commo"
@@ -422,33 +423,34 @@ void protobuf_AddDesc_AuthenticationToClient_2eproto() {
     "tyIdList\022-\n\020read_write_camps\030\010 \001(\0132\023.Com"
     "mon.PartyIdList\022-\n\020read_only_crowds\030\t \001("
     "\0132\023.Common.CrowdIdList\022.\n\021read_write_cro"
-    "wds\030\n \001(\0132\023.Common.CrowdIdList\022\022\n\nsuperv"
-    "isor\030\013 \002(\010\0222\n\004role\030\014 \001(\0132$.MsgsAuthentic"
-    "ationToClient.RoleType\"\\\n\031MsgProfileDesc"
-    "riptionList\022?\n\004elem\030\001 \003(\01321.MsgsAuthenti"
-    "cationToClient.MsgProfileDescription\"\200\001\n"
-    "\025MsgProfileDescription\022\r\n\005login\030\001 \002(\t\022\020\n"
-    "\010password\030\002 \002(\010\022\022\n\nsupervisor\030\003 \002(\010\0222\n\004r"
-    "ole\030\004 \001(\0132$.MsgsAuthenticationToClient.R"
-    "oleType\"\342\005\n\031MsgAuthenticationToClient\022\017\n"
-    "\007context\030\001 \001(\005\022N\n\007message\030\002 \002(\0132=.MsgsAu"
-    "thenticationToClient.MsgAuthenticationTo"
-    "Client.Content\032\343\004\n\007Content\022V\n\027authentica"
-    "tion_response\030\001 \001(\01325.MsgsAuthentication"
-    "ToClient.MsgAuthenticationResponse\022H\n\020pr"
-    "ofile_creation\030\002 \001(\0132..MsgsAuthenticatio"
-    "nToClient.MsgProfileCreation\022^\n\034profile_"
-    "creation_request_ack\030\003 \001(\01328.MsgsAuthent"
-    "icationToClient.MsgProfileCreationReques"
-    "tAck\022D\n\016profile_update\030\004 \001(\0132,.MsgsAuthe"
-    "nticationToClient.MsgProfileUpdate\022Z\n\032pr"
-    "ofile_update_request_ack\030\005 \001(\01326.MsgsAut"
-    "henticationToClient.MsgProfileUpdateRequ"
-    "estAck\022N\n\023profile_destruction\030\006 \001(\01321.Ms"
-    "gsAuthenticationToClient.MsgProfileDestr"
-    "uction\022d\n\037profile_destruction_request_ac"
-    "k\030\007 \001(\0132;.MsgsAuthenticationToClient.Msg"
-    "ProfileDestructionRequestAck", 2948);
+    "wds\030\n \001(\0132\023.Common.CrowdIdList\0222\n\020write_"
+    "population\030\013 \001(\0132\030.Common.PopulationIdLi"
+    "st\022\022\n\nsupervisor\030\014 \002(\010\0222\n\004role\030\r \001(\0132$.M"
+    "sgsAuthenticationToClient.RoleType\"\\\n\031Ms"
+    "gProfileDescriptionList\022?\n\004elem\030\001 \003(\01321."
+    "MsgsAuthenticationToClient.MsgProfileDes"
+    "cription\"\200\001\n\025MsgProfileDescription\022\r\n\005lo"
+    "gin\030\001 \002(\t\022\020\n\010password\030\002 \002(\010\022\022\n\nsuperviso"
+    "r\030\003 \002(\010\0222\n\004role\030\004 \001(\0132$.MsgsAuthenticati"
+    "onToClient.RoleType\"\342\005\n\031MsgAuthenticatio"
+    "nToClient\022\017\n\007context\030\001 \001(\005\022N\n\007message\030\002 "
+    "\002(\0132=.MsgsAuthenticationToClient.MsgAuth"
+    "enticationToClient.Content\032\343\004\n\007Content\022V"
+    "\n\027authentication_response\030\001 \001(\01325.MsgsAu"
+    "thenticationToClient.MsgAuthenticationRe"
+    "sponse\022H\n\020profile_creation\030\002 \001(\0132..MsgsA"
+    "uthenticationToClient.MsgProfileCreation"
+    "\022^\n\034profile_creation_request_ack\030\003 \001(\01328"
+    ".MsgsAuthenticationToClient.MsgProfileCr"
+    "eationRequestAck\022D\n\016profile_update\030\004 \001(\013"
+    "2,.MsgsAuthenticationToClient.MsgProfile"
+    "Update\022Z\n\032profile_update_request_ack\030\005 \001"
+    "(\01326.MsgsAuthenticationToClient.MsgProfi"
+    "leUpdateRequestAck\022N\n\023profile_destructio"
+    "n\030\006 \001(\01321.MsgsAuthenticationToClient.Msg"
+    "ProfileDestruction\022d\n\037profile_destructio"
+    "n_request_ack\030\007 \001(\0132;.MsgsAuthentication"
+    "ToClient.MsgProfileDestructionRequestAck", 3000);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "AuthenticationToClient.proto", &protobuf_RegisterTypes);
   MsgAuthenticationResponse::default_instance_ = new MsgAuthenticationResponse();
@@ -2752,6 +2754,7 @@ const int MsgProfile::kReadOnlyCampsFieldNumber;
 const int MsgProfile::kReadWriteCampsFieldNumber;
 const int MsgProfile::kReadOnlyCrowdsFieldNumber;
 const int MsgProfile::kReadWriteCrowdsFieldNumber;
+const int MsgProfile::kWritePopulationFieldNumber;
 const int MsgProfile::kSupervisorFieldNumber;
 const int MsgProfile::kRoleFieldNumber;
 #endif  // !_MSC_VER
@@ -2769,6 +2772,7 @@ void MsgProfile::InitAsDefaultInstance() {
   read_write_camps_ = const_cast< ::Common::PartyIdList*>(&::Common::PartyIdList::default_instance());
   read_only_crowds_ = const_cast< ::Common::CrowdIdList*>(&::Common::CrowdIdList::default_instance());
   read_write_crowds_ = const_cast< ::Common::CrowdIdList*>(&::Common::CrowdIdList::default_instance());
+  write_population_ = const_cast< ::Common::PopulationIdList*>(&::Common::PopulationIdList::default_instance());
   role_ = const_cast< ::MsgsAuthenticationToClient::RoleType*>(&::MsgsAuthenticationToClient::RoleType::default_instance());
 }
 
@@ -2789,6 +2793,7 @@ void MsgProfile::SharedCtor() {
   read_write_camps_ = NULL;
   read_only_crowds_ = NULL;
   read_write_crowds_ = NULL;
+  write_population_ = NULL;
   supervisor_ = false;
   role_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -2814,6 +2819,7 @@ void MsgProfile::SharedDtor() {
     delete read_write_camps_;
     delete read_only_crowds_;
     delete read_write_crowds_;
+    delete write_population_;
     delete role_;
   }
 }
@@ -2871,8 +2877,11 @@ void MsgProfile::Clear() {
     if (_has_bit(9)) {
       if (read_write_crowds_ != NULL) read_write_crowds_->::Common::CrowdIdList::Clear();
     }
+    if (_has_bit(10)) {
+      if (write_population_ != NULL) write_population_->::Common::PopulationIdList::Clear();
+    }
     supervisor_ = false;
-    if (_has_bit(11)) {
+    if (_has_bit(12)) {
       if (role_ != NULL) role_->::MsgsAuthenticationToClient::RoleType::Clear();
     }
   }
@@ -3017,12 +3026,25 @@ bool MsgProfile::MergePartialFromCodedStream(
        parse_read_write_crowds:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_read_write_crowds()));
-        if (input->ExpectTag(88)) goto parse_supervisor;
+        if (input->ExpectTag(90)) goto parse_write_population;
         break;
       }
       
-      // required bool supervisor = 11;
+      // optional .Common.PopulationIdList write_population = 11;
       case 11: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_write_population:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_write_population()));
+        if (input->ExpectTag(96)) goto parse_supervisor;
+        break;
+      }
+      
+      // required bool supervisor = 12;
+      case 12: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
@@ -3030,13 +3052,13 @@ bool MsgProfile::MergePartialFromCodedStream(
        parse_supervisor:
         DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
               input, &supervisor_));
-        _set_bit(10);
-        if (input->ExpectTag(98)) goto parse_role;
+        _set_bit(11);
+        if (input->ExpectTag(106)) goto parse_role;
         break;
       }
       
-      // optional .MsgsAuthenticationToClient.RoleType role = 12;
-      case 12: {
+      // optional .MsgsAuthenticationToClient.RoleType role = 13;
+      case 13: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -3138,15 +3160,21 @@ void MsgProfile::SerializeWithCachedSizes(
       10, this->read_write_crowds(), output);
   }
   
-  // required bool supervisor = 11;
+  // optional .Common.PopulationIdList write_population = 11;
   if (_has_bit(10)) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(11, this->supervisor(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      11, this->write_population(), output);
   }
   
-  // optional .MsgsAuthenticationToClient.RoleType role = 12;
+  // required bool supervisor = 12;
   if (_has_bit(11)) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(12, this->supervisor(), output);
+  }
+  
+  // optional .MsgsAuthenticationToClient.RoleType role = 13;
+  if (_has_bit(12)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      12, this->role(), output);
+      13, this->role(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -3233,16 +3261,23 @@ void MsgProfile::SerializeWithCachedSizes(
         10, this->read_write_crowds(), target);
   }
   
-  // required bool supervisor = 11;
+  // optional .Common.PopulationIdList write_population = 11;
   if (_has_bit(10)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(11, this->supervisor(), target);
-  }
-  
-  // optional .MsgsAuthenticationToClient.RoleType role = 12;
-  if (_has_bit(11)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        12, this->role(), target);
+        11, this->write_population(), target);
+  }
+  
+  // required bool supervisor = 12;
+  if (_has_bit(11)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(12, this->supervisor(), target);
+  }
+  
+  // optional .MsgsAuthenticationToClient.RoleType role = 13;
+  if (_has_bit(12)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        13, this->role(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -3328,12 +3363,19 @@ int MsgProfile::ByteSize() const {
           this->read_write_crowds());
     }
     
-    // required bool supervisor = 11;
+    // optional .Common.PopulationIdList write_population = 11;
+    if (has_write_population()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->write_population());
+    }
+    
+    // required bool supervisor = 12;
     if (has_supervisor()) {
       total_size += 1 + 1;
     }
     
-    // optional .MsgsAuthenticationToClient.RoleType role = 12;
+    // optional .MsgsAuthenticationToClient.RoleType role = 13;
     if (has_role()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -3398,9 +3440,12 @@ void MsgProfile::MergeFrom(const MsgProfile& from) {
       mutable_read_write_crowds()->::Common::CrowdIdList::MergeFrom(from.read_write_crowds());
     }
     if (from._has_bit(10)) {
-      set_supervisor(from.supervisor());
+      mutable_write_population()->::Common::PopulationIdList::MergeFrom(from.write_population());
     }
     if (from._has_bit(11)) {
+      set_supervisor(from.supervisor());
+    }
+    if (from._has_bit(12)) {
       mutable_role()->::MsgsAuthenticationToClient::RoleType::MergeFrom(from.role());
     }
   }
@@ -3420,7 +3465,7 @@ void MsgProfile::CopyFrom(const MsgProfile& from) {
 }
 
 bool MsgProfile::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000401) != 0x00000401) return false;
+  if ((_has_bits_[0] & 0x00000801) != 0x00000801) return false;
   
   if (has_read_only_formations()) {
     if (!this->read_only_formations().IsInitialized()) return false;
@@ -3464,6 +3509,7 @@ void MsgProfile::Swap(MsgProfile* other) {
     std::swap(read_write_camps_, other->read_write_camps_);
     std::swap(read_only_crowds_, other->read_only_crowds_);
     std::swap(read_write_crowds_, other->read_write_crowds_);
+    std::swap(write_population_, other->write_population_);
     std::swap(supervisor_, other->supervisor_);
     std::swap(role_, other->role_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);

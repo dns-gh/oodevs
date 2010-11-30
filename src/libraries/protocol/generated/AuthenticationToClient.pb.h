@@ -1145,17 +1145,24 @@ class MsgProfile : public ::google::protobuf::Message {
   inline const ::Common::CrowdIdList& read_write_crowds() const;
   inline ::Common::CrowdIdList* mutable_read_write_crowds();
   
-  // required bool supervisor = 11;
+  // optional .Common.PopulationIdList write_population = 11;
+  inline bool has_write_population() const;
+  inline void clear_write_population();
+  static const int kWritePopulationFieldNumber = 11;
+  inline const ::Common::PopulationIdList& write_population() const;
+  inline ::Common::PopulationIdList* mutable_write_population();
+  
+  // required bool supervisor = 12;
   inline bool has_supervisor() const;
   inline void clear_supervisor();
-  static const int kSupervisorFieldNumber = 11;
+  static const int kSupervisorFieldNumber = 12;
   inline bool supervisor() const;
   inline void set_supervisor(bool value);
   
-  // optional .MsgsAuthenticationToClient.RoleType role = 12;
+  // optional .MsgsAuthenticationToClient.RoleType role = 13;
   inline bool has_role() const;
   inline void clear_role();
-  static const int kRoleFieldNumber = 12;
+  static const int kRoleFieldNumber = 13;
   inline const ::MsgsAuthenticationToClient::RoleType& role() const;
   inline ::MsgsAuthenticationToClient::RoleType* mutable_role();
   
@@ -1175,13 +1182,14 @@ class MsgProfile : public ::google::protobuf::Message {
   ::Common::PartyIdList* read_write_camps_;
   ::Common::CrowdIdList* read_only_crowds_;
   ::Common::CrowdIdList* read_write_crowds_;
+  ::Common::PopulationIdList* write_population_;
   bool supervisor_;
   ::MsgsAuthenticationToClient::RoleType* role_;
   friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
   friend void protobuf_AssignDesc_AuthenticationToClient_2eproto();
   friend void protobuf_ShutdownFile_AuthenticationToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(12 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -2334,35 +2342,52 @@ inline ::Common::CrowdIdList* MsgProfile::mutable_read_write_crowds() {
   return read_write_crowds_;
 }
 
-// required bool supervisor = 11;
-inline bool MsgProfile::has_supervisor() const {
+// optional .Common.PopulationIdList write_population = 11;
+inline bool MsgProfile::has_write_population() const {
   return _has_bit(10);
+}
+inline void MsgProfile::clear_write_population() {
+  if (write_population_ != NULL) write_population_->::Common::PopulationIdList::Clear();
+  _clear_bit(10);
+}
+inline const ::Common::PopulationIdList& MsgProfile::write_population() const {
+  return write_population_ != NULL ? *write_population_ : *default_instance_->write_population_;
+}
+inline ::Common::PopulationIdList* MsgProfile::mutable_write_population() {
+  _set_bit(10);
+  if (write_population_ == NULL) write_population_ = new ::Common::PopulationIdList;
+  return write_population_;
+}
+
+// required bool supervisor = 12;
+inline bool MsgProfile::has_supervisor() const {
+  return _has_bit(11);
 }
 inline void MsgProfile::clear_supervisor() {
   supervisor_ = false;
-  _clear_bit(10);
+  _clear_bit(11);
 }
 inline bool MsgProfile::supervisor() const {
   return supervisor_;
 }
 inline void MsgProfile::set_supervisor(bool value) {
-  _set_bit(10);
+  _set_bit(11);
   supervisor_ = value;
 }
 
-// optional .MsgsAuthenticationToClient.RoleType role = 12;
+// optional .MsgsAuthenticationToClient.RoleType role = 13;
 inline bool MsgProfile::has_role() const {
-  return _has_bit(11);
+  return _has_bit(12);
 }
 inline void MsgProfile::clear_role() {
   if (role_ != NULL) role_->::MsgsAuthenticationToClient::RoleType::Clear();
-  _clear_bit(11);
+  _clear_bit(12);
 }
 inline const ::MsgsAuthenticationToClient::RoleType& MsgProfile::role() const {
   return role_ != NULL ? *role_ : *default_instance_->role_;
 }
 inline ::MsgsAuthenticationToClient::RoleType* MsgProfile::mutable_role() {
-  _set_bit(11);
+  _set_bit(12);
   if (role_ == NULL) role_ = new ::MsgsAuthenticationToClient::RoleType;
   return role_;
 }

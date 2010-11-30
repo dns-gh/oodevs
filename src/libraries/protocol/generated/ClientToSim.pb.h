@@ -1864,12 +1864,15 @@ class MsgUrbanMagicAction : public ::google::protobuf::Message {
   inline const ::Common::UrbanObjectId& id() const;
   inline ::Common::UrbanObjectId* mutable_id();
   
-  // optional .Common.MotivationType role = 2;
-  inline bool has_role() const;
-  inline void clear_role();
-  static const int kRoleFieldNumber = 2;
-  inline const ::Common::MotivationType& role() const;
-  inline ::Common::MotivationType* mutable_role();
+  // repeated .Common.UrbanUsage usages = 2;
+  inline int usages_size() const;
+  inline void clear_usages();
+  static const int kUsagesFieldNumber = 2;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::UrbanUsage >& usages() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::UrbanUsage >* mutable_usages();
+  inline const ::Common::UrbanUsage& usages(int index) const;
+  inline ::Common::UrbanUsage* mutable_usages(int index);
+  inline ::Common::UrbanUsage* add_usages();
   
   // optional .MsgsClientToSim.MsgUrbanMagicAction.Infrastructure infrastructure = 3;
   inline bool has_infrastructure() const;
@@ -1878,18 +1881,26 @@ class MsgUrbanMagicAction : public ::google::protobuf::Message {
   inline const ::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure& infrastructure() const;
   inline ::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure* mutable_infrastructure();
   
+  // optional uint32 structural_state = 4;
+  inline bool has_structural_state() const;
+  inline void clear_structural_state();
+  static const int kStructuralStateFieldNumber = 4;
+  inline ::google::protobuf::uint32 structural_state() const;
+  inline void set_structural_state(::google::protobuf::uint32 value);
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
   ::Common::UrbanObjectId* id_;
-  ::Common::MotivationType* role_;
+  ::google::protobuf::RepeatedPtrField< ::Common::UrbanUsage > usages_;
   ::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure* infrastructure_;
+  ::google::protobuf::uint32 structural_state_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -2939,21 +2950,29 @@ inline ::Common::UrbanObjectId* MsgUrbanMagicAction::mutable_id() {
   return id_;
 }
 
-// optional .Common.MotivationType role = 2;
-inline bool MsgUrbanMagicAction::has_role() const {
-  return _has_bit(1);
+// repeated .Common.UrbanUsage usages = 2;
+inline int MsgUrbanMagicAction::usages_size() const {
+  return usages_.size();
 }
-inline void MsgUrbanMagicAction::clear_role() {
-  if (role_ != NULL) role_->::Common::MotivationType::Clear();
-  _clear_bit(1);
+inline void MsgUrbanMagicAction::clear_usages() {
+  usages_.Clear();
 }
-inline const ::Common::MotivationType& MsgUrbanMagicAction::role() const {
-  return role_ != NULL ? *role_ : *default_instance_->role_;
+inline const ::google::protobuf::RepeatedPtrField< ::Common::UrbanUsage >&
+MsgUrbanMagicAction::usages() const {
+  return usages_;
 }
-inline ::Common::MotivationType* MsgUrbanMagicAction::mutable_role() {
-  _set_bit(1);
-  if (role_ == NULL) role_ = new ::Common::MotivationType;
-  return role_;
+inline ::google::protobuf::RepeatedPtrField< ::Common::UrbanUsage >*
+MsgUrbanMagicAction::mutable_usages() {
+  return &usages_;
+}
+inline const ::Common::UrbanUsage& MsgUrbanMagicAction::usages(int index) const {
+  return usages_.Get(index);
+}
+inline ::Common::UrbanUsage* MsgUrbanMagicAction::mutable_usages(int index) {
+  return usages_.Mutable(index);
+}
+inline ::Common::UrbanUsage* MsgUrbanMagicAction::add_usages() {
+  return usages_.Add();
 }
 
 // optional .MsgsClientToSim.MsgUrbanMagicAction.Infrastructure infrastructure = 3;
@@ -2971,6 +2990,22 @@ inline ::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure* MsgUrbanMagicActio
   _set_bit(2);
   if (infrastructure_ == NULL) infrastructure_ = new ::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure;
   return infrastructure_;
+}
+
+// optional uint32 structural_state = 4;
+inline bool MsgUrbanMagicAction::has_structural_state() const {
+  return _has_bit(3);
+}
+inline void MsgUrbanMagicAction::clear_structural_state() {
+  structural_state_ = 0u;
+  _clear_bit(3);
+}
+inline ::google::protobuf::uint32 MsgUrbanMagicAction::structural_state() const {
+  return structural_state_;
+}
+inline void MsgUrbanMagicAction::set_structural_state(::google::protobuf::uint32 value) {
+  _set_bit(3);
+  structural_state_ = value;
 }
 
 // -------------------------------------------------------------------

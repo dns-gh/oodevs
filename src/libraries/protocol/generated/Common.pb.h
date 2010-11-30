@@ -56,6 +56,7 @@ class UrbanObjectKnowledgeId;
 class ClientObjectId;
 class PlannedWorkId;
 class PopulationId;
+class PopulationIdList;
 class Tasker;
 class ParentEntity;
 class DrawingId;
@@ -141,6 +142,7 @@ class MsgTacticalLine_Diffusion;
 class MsgShape;
 class MsgChatTarget;
 class MsgTextMessage;
+class UrbanUsage;
 class ResourceNetwork;
 class ResourceNetwork_Link;
 class ObjectAttributeResourceNetwork;
@@ -3102,6 +3104,97 @@ class PopulationId : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static PopulationId* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class PopulationIdList : public ::google::protobuf::Message {
+ public:
+  PopulationIdList();
+  virtual ~PopulationIdList();
+  
+  PopulationIdList(const PopulationIdList& from);
+  
+  inline PopulationIdList& operator=(const PopulationIdList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PopulationIdList& default_instance();
+  void Swap(PopulationIdList* other);
+  
+  // implements Message ----------------------------------------------
+  
+  PopulationIdList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PopulationIdList& from);
+  void MergeFrom(const PopulationIdList& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // repeated uint32 id = 1;
+  inline int id_size() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >& id() const
+      ;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >* mutable_id();
+  inline ::google::protobuf::uint32 id(int index) const;
+  inline void set_id(int index, ::google::protobuf::uint32 value);
+  inline void add_id(::google::protobuf::uint32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > id_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static PopulationIdList* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -11635,6 +11728,101 @@ class MsgTextMessage : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class UrbanUsage : public ::google::protobuf::Message {
+ public:
+  UrbanUsage();
+  virtual ~UrbanUsage();
+  
+  UrbanUsage(const UrbanUsage& from);
+  
+  inline UrbanUsage& operator=(const UrbanUsage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UrbanUsage& default_instance();
+  void Swap(UrbanUsage* other);
+  
+  // implements Message ----------------------------------------------
+  
+  UrbanUsage* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const UrbanUsage& from);
+  void MergeFrom(const UrbanUsage& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.MotivationType role = 1;
+  inline bool has_role() const;
+  inline void clear_role();
+  static const int kRoleFieldNumber = 1;
+  inline const ::Common::MotivationType& role() const;
+  inline ::Common::MotivationType* mutable_role();
+  
+  // required uint32 value = 2;
+  inline bool has_value() const;
+  inline void clear_value();
+  static const int kValueFieldNumber = 2;
+  inline ::google::protobuf::uint32 value() const;
+  inline void set_value(::google::protobuf::uint32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::MotivationType* role_;
+  ::google::protobuf::uint32 value_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static UrbanUsage* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class ResourceNetwork_Link : public ::google::protobuf::Message {
  public:
   ResourceNetwork_Link();
@@ -11882,6 +12070,27 @@ class ResourceNetwork : public ::google::protobuf::Message {
   inline bool critical() const;
   inline void set_critical(bool value);
   
+  // optional uint32 initial_stock = 9;
+  inline bool has_initial_stock() const;
+  inline void clear_initial_stock();
+  static const int kInitialStockFieldNumber = 9;
+  inline ::google::protobuf::uint32 initial_stock() const;
+  inline void set_initial_stock(::google::protobuf::uint32 value);
+  
+  // optional uint32 max_production = 10;
+  inline bool has_max_production() const;
+  inline void clear_max_production();
+  static const int kMaxProductionFieldNumber = 10;
+  inline ::google::protobuf::uint32 max_production() const;
+  inline void set_max_production(::google::protobuf::uint32 value);
+  
+  // optional uint32 max_consumption = 11;
+  inline bool has_max_consumption() const;
+  inline void clear_max_consumption();
+  static const int kMaxConsumptionFieldNumber = 11;
+  inline ::google::protobuf::uint32 max_consumption() const;
+  inline void set_max_consumption(::google::protobuf::uint32 value);
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -11894,11 +12103,14 @@ class ResourceNetwork : public ::google::protobuf::Message {
   ::google::protobuf::uint32 production_;
   ::google::protobuf::uint32 consumption_;
   bool critical_;
+  ::google::protobuf::uint32 initial_stock_;
+  ::google::protobuf::uint32 max_production_;
+  ::google::protobuf::uint32 max_consumption_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -15273,6 +15485,35 @@ inline ::google::protobuf::uint32 PopulationId::id() const {
 inline void PopulationId::set_id(::google::protobuf::uint32 value) {
   _set_bit(0);
   id_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// PopulationIdList
+
+// repeated uint32 id = 1;
+inline int PopulationIdList::id_size() const {
+  return id_.size();
+}
+inline void PopulationIdList::clear_id() {
+  id_.Clear();
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+PopulationIdList::id() const {
+  return id_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+PopulationIdList::mutable_id() {
+  return &id_;
+}
+inline ::google::protobuf::uint32 PopulationIdList::id(int index) const {
+  return id_.Get(index);
+}
+inline void PopulationIdList::set_id(int index, ::google::protobuf::uint32 value) {
+  id_.Set(index, value);
+}
+inline void PopulationIdList::add_id(::google::protobuf::uint32 value) {
+  id_.Add(value);
 }
 
 // -------------------------------------------------------------------
@@ -19533,6 +19774,43 @@ inline ::std::string* MsgTextMessage::mutable_message() {
 
 // -------------------------------------------------------------------
 
+// UrbanUsage
+
+// required .Common.MotivationType role = 1;
+inline bool UrbanUsage::has_role() const {
+  return _has_bit(0);
+}
+inline void UrbanUsage::clear_role() {
+  if (role_ != NULL) role_->::Common::MotivationType::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::MotivationType& UrbanUsage::role() const {
+  return role_ != NULL ? *role_ : *default_instance_->role_;
+}
+inline ::Common::MotivationType* UrbanUsage::mutable_role() {
+  _set_bit(0);
+  if (role_ == NULL) role_ = new ::Common::MotivationType;
+  return role_;
+}
+
+// required uint32 value = 2;
+inline bool UrbanUsage::has_value() const {
+  return _has_bit(1);
+}
+inline void UrbanUsage::clear_value() {
+  value_ = 0u;
+  _clear_bit(1);
+}
+inline ::google::protobuf::uint32 UrbanUsage::value() const {
+  return value_;
+}
+inline void UrbanUsage::set_value(::google::protobuf::uint32 value) {
+  _set_bit(1);
+  value_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // ResourceNetwork_Link
 
 // required .Common.ResourceNetwork.Link.TargetKind kind = 1;
@@ -19740,6 +20018,54 @@ inline bool ResourceNetwork::critical() const {
 inline void ResourceNetwork::set_critical(bool value) {
   _set_bit(7);
   critical_ = value;
+}
+
+// optional uint32 initial_stock = 9;
+inline bool ResourceNetwork::has_initial_stock() const {
+  return _has_bit(8);
+}
+inline void ResourceNetwork::clear_initial_stock() {
+  initial_stock_ = 0u;
+  _clear_bit(8);
+}
+inline ::google::protobuf::uint32 ResourceNetwork::initial_stock() const {
+  return initial_stock_;
+}
+inline void ResourceNetwork::set_initial_stock(::google::protobuf::uint32 value) {
+  _set_bit(8);
+  initial_stock_ = value;
+}
+
+// optional uint32 max_production = 10;
+inline bool ResourceNetwork::has_max_production() const {
+  return _has_bit(9);
+}
+inline void ResourceNetwork::clear_max_production() {
+  max_production_ = 0u;
+  _clear_bit(9);
+}
+inline ::google::protobuf::uint32 ResourceNetwork::max_production() const {
+  return max_production_;
+}
+inline void ResourceNetwork::set_max_production(::google::protobuf::uint32 value) {
+  _set_bit(9);
+  max_production_ = value;
+}
+
+// optional uint32 max_consumption = 11;
+inline bool ResourceNetwork::has_max_consumption() const {
+  return _has_bit(10);
+}
+inline void ResourceNetwork::clear_max_consumption() {
+  max_consumption_ = 0u;
+  _clear_bit(10);
+}
+inline ::google::protobuf::uint32 ResourceNetwork::max_consumption() const {
+  return max_consumption_;
+}
+inline void ResourceNetwork::set_max_consumption(::google::protobuf::uint32 value) {
+  _set_bit(10);
+  max_consumption_ = value;
 }
 
 // -------------------------------------------------------------------

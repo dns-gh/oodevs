@@ -18305,6 +18305,13 @@ class UrbanAttributes_Architecture : public ::google::protobuf::Message {
   inline float trafficability() const;
   inline void set_trafficability(float value);
   
+  // required bool parking_available = 7 [default = false];
+  inline bool has_parking_available() const;
+  inline void clear_parking_available();
+  static const int kParkingAvailableFieldNumber = 7;
+  inline bool parking_available() const;
+  inline void set_parking_available(bool value);
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -18317,11 +18324,12 @@ class UrbanAttributes_Architecture : public ::google::protobuf::Message {
   static const ::std::string _default_material_;
   float occupation_;
   float trafficability_;
+  bool parking_available_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -18718,12 +18726,15 @@ class UrbanAttributes : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::UrbanAttributes_Infrastructures& infrastructures() const;
   inline ::MsgsSimToClient::UrbanAttributes_Infrastructures* mutable_infrastructures();
   
-  // optional .Common.MotivationType role = 5;
-  inline bool has_role() const;
-  inline void clear_role();
-  static const int kRoleFieldNumber = 5;
-  inline const ::Common::MotivationType& role() const;
-  inline ::Common::MotivationType* mutable_role();
+  // repeated .Common.UrbanUsage usages = 5;
+  inline int usages_size() const;
+  inline void clear_usages();
+  static const int kUsagesFieldNumber = 5;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::UrbanUsage >& usages() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::UrbanUsage >* mutable_usages();
+  inline const ::Common::UrbanUsage& usages(int index) const;
+  inline ::Common::UrbanUsage* mutable_usages(int index);
+  inline ::Common::UrbanUsage* add_usages();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -18733,7 +18744,7 @@ class UrbanAttributes : public ::google::protobuf::Message {
   ::MsgsSimToClient::UrbanAttributes_Structure* structure_;
   ::Common::RgbaColor* color_;
   ::MsgsSimToClient::UrbanAttributes_Infrastructures* infrastructures_;
-  ::Common::MotivationType* role_;
+  ::google::protobuf::RepeatedPtrField< ::Common::UrbanUsage > usages_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
@@ -32128,6 +32139,22 @@ inline void UrbanAttributes_Architecture::set_trafficability(float value) {
   trafficability_ = value;
 }
 
+// required bool parking_available = 7 [default = false];
+inline bool UrbanAttributes_Architecture::has_parking_available() const {
+  return _has_bit(6);
+}
+inline void UrbanAttributes_Architecture::clear_parking_available() {
+  parking_available_ = false;
+  _clear_bit(6);
+}
+inline bool UrbanAttributes_Architecture::parking_available() const {
+  return parking_available_;
+}
+inline void UrbanAttributes_Architecture::set_parking_available(bool value) {
+  _set_bit(6);
+  parking_available_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // UrbanAttributes_Structure
@@ -32344,21 +32371,29 @@ inline ::MsgsSimToClient::UrbanAttributes_Infrastructures* UrbanAttributes::muta
   return infrastructures_;
 }
 
-// optional .Common.MotivationType role = 5;
-inline bool UrbanAttributes::has_role() const {
-  return _has_bit(4);
+// repeated .Common.UrbanUsage usages = 5;
+inline int UrbanAttributes::usages_size() const {
+  return usages_.size();
 }
-inline void UrbanAttributes::clear_role() {
-  if (role_ != NULL) role_->::Common::MotivationType::Clear();
-  _clear_bit(4);
+inline void UrbanAttributes::clear_usages() {
+  usages_.Clear();
 }
-inline const ::Common::MotivationType& UrbanAttributes::role() const {
-  return role_ != NULL ? *role_ : *default_instance_->role_;
+inline const ::google::protobuf::RepeatedPtrField< ::Common::UrbanUsage >&
+UrbanAttributes::usages() const {
+  return usages_;
 }
-inline ::Common::MotivationType* UrbanAttributes::mutable_role() {
-  _set_bit(4);
-  if (role_ == NULL) role_ = new ::Common::MotivationType;
-  return role_;
+inline ::google::protobuf::RepeatedPtrField< ::Common::UrbanUsage >*
+UrbanAttributes::mutable_usages() {
+  return &usages_;
+}
+inline const ::Common::UrbanUsage& UrbanAttributes::usages(int index) const {
+  return usages_.Get(index);
+}
+inline ::Common::UrbanUsage* UrbanAttributes::mutable_usages(int index) {
+  return usages_.Mutable(index);
+}
+inline ::Common::UrbanUsage* UrbanAttributes::add_usages() {
+  return usages_.Add();
 }
 
 // -------------------------------------------------------------------

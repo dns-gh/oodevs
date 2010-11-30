@@ -314,10 +314,11 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgChangePopulationMagicAction));
   MsgUrbanMagicAction_descriptor_ = file->message_type(14);
-  static const int MsgUrbanMagicAction_offsets_[3] = {
+  static const int MsgUrbanMagicAction_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanMagicAction, id_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanMagicAction, role_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanMagicAction, usages_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanMagicAction, infrastructure_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUrbanMagicAction, structural_state_),
   };
   MsgUrbanMagicAction_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -568,52 +569,52 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
     "ions\030\002 \003(\0132\025.Common.PartyAdhesion\022\017\n\007hea"
     "lthy\030\003 \001(\005\022\017\n\007wounded\030\004 \001(\005\022\014\n\004dead\030\005 \001("
     "\005\022*\n\nmotivation\030\006 \001(\0132\026.Common.Motivatio"
-    "nType\"\340\001\n\023MsgUrbanMagicAction\022!\n\002id\030\001 \002("
-    "\0132\025.Common.UrbanObjectId\022$\n\004role\030\002 \001(\0132\026"
-    ".Common.MotivationType\022K\n\016infrastructure"
-    "\030\003 \001(\01323.MsgsClientToSim.MsgUrbanMagicAc"
-    "tion.Infrastructure\0323\n\016Infrastructure\022\016\n"
-    "\006active\030\001 \001(\010\022\021\n\tthreshold\030\002 \001(\002\"\250\014\n\016Msg"
-    "ClientToSim\022\017\n\007context\030\001 \001(\005\0228\n\007message\030"
-    "\002 \002(\0132\'.MsgsClientToSim.MsgClientToSim.C"
-    "ontent\032\312\013\n\007Content\022,\n\014control_stop\030\001 \001(\013"
-    "2\026.Common.MsgControlStop\022.\n\rcontrol_paus"
-    "e\030\002 \001(\0132\027.Common.MsgControlPause\0220\n\016cont"
-    "rol_resume\030\003 \001(\0132\030.Common.MsgControlResu"
-    "me\022F\n\032control_change_time_factor\030\004 \001(\0132\""
-    ".Common.MsgControlChangeTimeFactor\022K\n\030co"
-    "ntrol_date_time_change\030\005 \001(\0132).MsgsClien"
-    "tToSim.MsgControlDatetimeChange\022Q\n\033contr"
-    "ol_checkpoint_save_now\030\006 \001(\0132,.MsgsClien"
-    "tToSim.MsgControlCheckPointSaveNow\022[\n co"
-    "ntrol_checkpoint_set_frequency\030\007 \001(\01321.M"
-    "sgsClientToSim.MsgControlCheckPointSetFr"
-    "equency\022Q\n\033control_toggle_vision_cones\030\010"
-    " \001(\0132,.MsgsClientToSim.MsgControlEnableV"
-    "isionCones\022(\n\nunit_order\030\t \001(\0132\024.Common."
-    "MsgUnitOrder\022.\n\rautomat_order\030\n \001(\0132\027.Co"
-    "mmon.MsgAutomatOrder\022*\n\013crowd_order\030\013 \001("
-    "\0132\025.Common.MsgCrowdOrder\0221\n\nfrag_order\030\014"
-    " \001(\0132\035.MsgsClientToSim.MsgFragOrder\022<\n\020s"
-    "et_automat_mode\030\r \001(\0132\".MsgsClientToSim."
-    "MsgSetAutomatMode\022F\n\025unit_creation_reque"
-    "st\030\016 \001(\0132\'.MsgsClientToSim.MsgUnitCreati"
-    "onRequest\022>\n\021unit_magic_action\030\017 \001(\0132#.M"
-    "sgsClientToSim.MsgUnitMagicAction\022B\n\023obj"
-    "ect_magic_action\030\020 \001(\0132%.MsgsClientToSim"
-    ".MsgObjectMagicAction\022H\n\026knowledge_magic"
-    "_action\030\021 \001(\0132(.MsgsClientToSim.MsgKnowl"
-    "edgeMagicAction\0225\n\014magic_action\030\022 \001(\0132\037."
-    "MsgsClientToSim.MsgMagicAction\022Y\n\037contro"
-    "l_checkpoint_list_request\030\023 \001(\01320.MsgsCl"
-    "ientToSim.MsgControlCheckPointListReques"
-    "t\022]\n!control_checkpoint_delete_request\030\024"
-    " \001(\01322.MsgsClientToSim.MsgControlCheckPo"
-    "intDeleteRequest\022W\n\036change_population_ma"
-    "gic_action\030\025 \001(\0132/.MsgsClientToSim.MsgCh"
-    "angePopulationMagicAction\022@\n\022urban_magic"
-    "_action\030\026 \001(\0132$.MsgsClientToSim.MsgUrban"
-    "MagicAction", 4651);
+    "nType\"\370\001\n\023MsgUrbanMagicAction\022!\n\002id\030\001 \002("
+    "\0132\025.Common.UrbanObjectId\022\"\n\006usages\030\002 \003(\013"
+    "2\022.Common.UrbanUsage\022K\n\016infrastructure\030\003"
+    " \001(\01323.MsgsClientToSim.MsgUrbanMagicActi"
+    "on.Infrastructure\022\030\n\020structural_state\030\004 "
+    "\001(\r\0323\n\016Infrastructure\022\016\n\006active\030\001 \001(\010\022\021\n"
+    "\tthreshold\030\002 \001(\002\"\250\014\n\016MsgClientToSim\022\017\n\007c"
+    "ontext\030\001 \001(\005\0228\n\007message\030\002 \002(\0132\'.MsgsClie"
+    "ntToSim.MsgClientToSim.Content\032\312\013\n\007Conte"
+    "nt\022,\n\014control_stop\030\001 \001(\0132\026.Common.MsgCon"
+    "trolStop\022.\n\rcontrol_pause\030\002 \001(\0132\027.Common"
+    ".MsgControlPause\0220\n\016control_resume\030\003 \001(\013"
+    "2\030.Common.MsgControlResume\022F\n\032control_ch"
+    "ange_time_factor\030\004 \001(\0132\".Common.MsgContr"
+    "olChangeTimeFactor\022K\n\030control_date_time_"
+    "change\030\005 \001(\0132).MsgsClientToSim.MsgContro"
+    "lDatetimeChange\022Q\n\033control_checkpoint_sa"
+    "ve_now\030\006 \001(\0132,.MsgsClientToSim.MsgContro"
+    "lCheckPointSaveNow\022[\n control_checkpoint"
+    "_set_frequency\030\007 \001(\01321.MsgsClientToSim.M"
+    "sgControlCheckPointSetFrequency\022Q\n\033contr"
+    "ol_toggle_vision_cones\030\010 \001(\0132,.MsgsClien"
+    "tToSim.MsgControlEnableVisionCones\022(\n\nun"
+    "it_order\030\t \001(\0132\024.Common.MsgUnitOrder\022.\n\r"
+    "automat_order\030\n \001(\0132\027.Common.MsgAutomatO"
+    "rder\022*\n\013crowd_order\030\013 \001(\0132\025.Common.MsgCr"
+    "owdOrder\0221\n\nfrag_order\030\014 \001(\0132\035.MsgsClien"
+    "tToSim.MsgFragOrder\022<\n\020set_automat_mode\030"
+    "\r \001(\0132\".MsgsClientToSim.MsgSetAutomatMod"
+    "e\022F\n\025unit_creation_request\030\016 \001(\0132\'.MsgsC"
+    "lientToSim.MsgUnitCreationRequest\022>\n\021uni"
+    "t_magic_action\030\017 \001(\0132#.MsgsClientToSim.M"
+    "sgUnitMagicAction\022B\n\023object_magic_action"
+    "\030\020 \001(\0132%.MsgsClientToSim.MsgObjectMagicA"
+    "ction\022H\n\026knowledge_magic_action\030\021 \001(\0132(."
+    "MsgsClientToSim.MsgKnowledgeMagicAction\022"
+    "5\n\014magic_action\030\022 \001(\0132\037.MsgsClientToSim."
+    "MsgMagicAction\022Y\n\037control_checkpoint_lis"
+    "t_request\030\023 \001(\01320.MsgsClientToSim.MsgCon"
+    "trolCheckPointListRequest\022]\n!control_che"
+    "ckpoint_delete_request\030\024 \001(\01322.MsgsClien"
+    "tToSim.MsgControlCheckPointDeleteRequest"
+    "\022W\n\036change_population_magic_action\030\025 \001(\013"
+    "2/.MsgsClientToSim.MsgChangePopulationMa"
+    "gicAction\022@\n\022urban_magic_action\030\026 \001(\0132$."
+    "MsgsClientToSim.MsgUrbanMagicAction", 4675);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToSim.proto", &protobuf_RegisterTypes);
   MsgControlDatetimeChange::default_instance_ = new MsgControlDatetimeChange();
@@ -4755,8 +4756,9 @@ void MsgUrbanMagicAction_Infrastructure::Swap(MsgUrbanMagicAction_Infrastructure
 
 #ifndef _MSC_VER
 const int MsgUrbanMagicAction::kIdFieldNumber;
-const int MsgUrbanMagicAction::kRoleFieldNumber;
+const int MsgUrbanMagicAction::kUsagesFieldNumber;
 const int MsgUrbanMagicAction::kInfrastructureFieldNumber;
+const int MsgUrbanMagicAction::kStructuralStateFieldNumber;
 #endif  // !_MSC_VER
 
 MsgUrbanMagicAction::MsgUrbanMagicAction() {
@@ -4765,7 +4767,6 @@ MsgUrbanMagicAction::MsgUrbanMagicAction() {
 
 void MsgUrbanMagicAction::InitAsDefaultInstance() {
   id_ = const_cast< ::Common::UrbanObjectId*>(&::Common::UrbanObjectId::default_instance());
-  role_ = const_cast< ::Common::MotivationType*>(&::Common::MotivationType::default_instance());
   infrastructure_ = const_cast< ::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure*>(&::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure::default_instance());
 }
 
@@ -4777,8 +4778,8 @@ MsgUrbanMagicAction::MsgUrbanMagicAction(const MsgUrbanMagicAction& from) {
 void MsgUrbanMagicAction::SharedCtor() {
   _cached_size_ = 0;
   id_ = NULL;
-  role_ = NULL;
   infrastructure_ = NULL;
+  structural_state_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4789,7 +4790,6 @@ MsgUrbanMagicAction::~MsgUrbanMagicAction() {
 void MsgUrbanMagicAction::SharedDtor() {
   if (this != default_instance_) {
     delete id_;
-    delete role_;
     delete infrastructure_;
   }
 }
@@ -4814,13 +4814,12 @@ void MsgUrbanMagicAction::Clear() {
     if (_has_bit(0)) {
       if (id_ != NULL) id_->::Common::UrbanObjectId::Clear();
     }
-    if (_has_bit(1)) {
-      if (role_ != NULL) role_->::Common::MotivationType::Clear();
-    }
     if (_has_bit(2)) {
       if (infrastructure_ != NULL) infrastructure_->::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure::Clear();
     }
+    structural_state_ = 0u;
   }
+  usages_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -4839,19 +4838,20 @@ bool MsgUrbanMagicAction::MergePartialFromCodedStream(
         }
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_id()));
-        if (input->ExpectTag(18)) goto parse_role;
+        if (input->ExpectTag(18)) goto parse_usages;
         break;
       }
       
-      // optional .Common.MotivationType role = 2;
+      // repeated .Common.UrbanUsage usages = 2;
       case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_role:
+       parse_usages:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_role()));
+              input, add_usages()));
+        if (input->ExpectTag(18)) goto parse_usages;
         if (input->ExpectTag(26)) goto parse_infrastructure;
         break;
       }
@@ -4865,6 +4865,20 @@ bool MsgUrbanMagicAction::MergePartialFromCodedStream(
        parse_infrastructure:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_infrastructure()));
+        if (input->ExpectTag(32)) goto parse_structural_state;
+        break;
+      }
+      
+      // optional uint32 structural_state = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_structural_state:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
+              input, &structural_state_));
+        _set_bit(3);
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -4899,16 +4913,21 @@ void MsgUrbanMagicAction::SerializeWithCachedSizes(
       1, this->id(), output);
   }
   
-  // optional .Common.MotivationType role = 2;
-  if (_has_bit(1)) {
+  // repeated .Common.UrbanUsage usages = 2;
+  for (int i = 0; i < this->usages_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->role(), output);
+      2, this->usages(i), output);
   }
   
   // optional .MsgsClientToSim.MsgUrbanMagicAction.Infrastructure infrastructure = 3;
   if (_has_bit(2)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       3, this->infrastructure(), output);
+  }
+  
+  // optional uint32 structural_state = 4;
+  if (_has_bit(3)) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->structural_state(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -4926,11 +4945,11 @@ void MsgUrbanMagicAction::SerializeWithCachedSizes(
         1, this->id(), target);
   }
   
-  // optional .Common.MotivationType role = 2;
-  if (_has_bit(1)) {
+  // repeated .Common.UrbanUsage usages = 2;
+  for (int i = 0; i < this->usages_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->role(), target);
+        2, this->usages(i), target);
   }
   
   // optional .MsgsClientToSim.MsgUrbanMagicAction.Infrastructure infrastructure = 3;
@@ -4938,6 +4957,11 @@ void MsgUrbanMagicAction::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         3, this->infrastructure(), target);
+  }
+  
+  // optional uint32 structural_state = 4;
+  if (_has_bit(3)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->structural_state(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -4958,13 +4982,6 @@ int MsgUrbanMagicAction::ByteSize() const {
           this->id());
     }
     
-    // optional .Common.MotivationType role = 2;
-    if (has_role()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->role());
-    }
-    
     // optional .MsgsClientToSim.MsgUrbanMagicAction.Infrastructure infrastructure = 3;
     if (has_infrastructure()) {
       total_size += 1 +
@@ -4972,7 +4989,22 @@ int MsgUrbanMagicAction::ByteSize() const {
           this->infrastructure());
     }
     
+    // optional uint32 structural_state = 4;
+    if (has_structural_state()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->structural_state());
+    }
+    
   }
+  // repeated .Common.UrbanUsage usages = 2;
+  total_size += 1 * this->usages_size();
+  for (int i = 0; i < this->usages_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->usages(i));
+  }
+  
   if (!unknown_fields().empty()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
@@ -4996,15 +5028,16 @@ void MsgUrbanMagicAction::MergeFrom(const ::google::protobuf::Message& from) {
 
 void MsgUrbanMagicAction::MergeFrom(const MsgUrbanMagicAction& from) {
   GOOGLE_CHECK_NE(&from, this);
+  usages_.MergeFrom(from.usages_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
       mutable_id()->::Common::UrbanObjectId::MergeFrom(from.id());
     }
-    if (from._has_bit(1)) {
-      mutable_role()->::Common::MotivationType::MergeFrom(from.role());
-    }
     if (from._has_bit(2)) {
       mutable_infrastructure()->::MsgsClientToSim::MsgUrbanMagicAction_Infrastructure::MergeFrom(from.infrastructure());
+    }
+    if (from._has_bit(3)) {
+      set_structural_state(from.structural_state());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -5028,8 +5061,8 @@ bool MsgUrbanMagicAction::IsInitialized() const {
   if (has_id()) {
     if (!this->id().IsInitialized()) return false;
   }
-  if (has_role()) {
-    if (!this->role().IsInitialized()) return false;
+  for (int i = 0; i < usages_size(); i++) {
+    if (!this->usages(i).IsInitialized()) return false;
   }
   return true;
 }
@@ -5037,8 +5070,9 @@ bool MsgUrbanMagicAction::IsInitialized() const {
 void MsgUrbanMagicAction::Swap(MsgUrbanMagicAction* other) {
   if (other != this) {
     std::swap(id_, other->id_);
-    std::swap(role_, other->role_);
+    usages_.Swap(&other->usages_);
     std::swap(infrastructure_, other->infrastructure_);
+    std::swap(structural_state_, other->structural_state_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

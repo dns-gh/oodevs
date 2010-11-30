@@ -1145,12 +1145,13 @@ message MsgControlSendCurrentStateEnd   {}
 message UrbanAttributes {
     message Architecture
     {
-        required float  height         = 1;
-        required int32  floor_number   = 2;
-        required string roof_shape     = 3;
-        required string material       = 4;
-        required float  occupation     = 5;
-        required float  trafficability = 6;
+        required float  height              = 1;
+        required int32  floor_number        = 2;
+        required string roof_shape          = 3;
+        required string material            = 4;
+        required float  occupation          = 5;
+        required float  trafficability      = 6;
+        required bool   parking_available   = 7 [default = false];
     }
     message Structure
     {
@@ -1170,7 +1171,7 @@ message UrbanAttributes {
     optional Structure             structure       = 2;    
     optional Common.RgbaColor      color           = 3;
     optional Infrastructures       infrastructures = 4;
-    optional Common.MotivationType role            = 5;
+    repeated Common.UrbanUsage     usages          = 5;
 }
 
 message MsgUrbanCreation {
