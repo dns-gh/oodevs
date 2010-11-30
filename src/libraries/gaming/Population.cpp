@@ -349,8 +349,8 @@ const kernel::PopulationType& Population::GetType() const
 void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Item( "" ).Start( Styles::bold ).Add( (Population_ABC*)this ).End();
-    displayer.Display( tools::translate( "Population", "Alive:" ), GetLivingHumans() );
-    displayer.Display( tools::translate( "Population", "Domination:" ), nDomination_ );
+    displayer.Display( tools::translate( "Crowd", "Alive:" ), GetLivingHumans() );
+    displayer.Display( tools::translate( "Crowd", "Domination:" ), nDomination_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -371,9 +371,9 @@ void Population::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
     if( !displayers_.empty() )
     {
         for( std::set< kernel::Displayer_ABC* >::iterator it = displayers_.begin(); it != displayers_.end(); ++it )
-            (*it)->Display( tools::translate( "Population", "Alive:" ), GetLivingHumans() )
-                  .Display( tools::translate( "Population", "Dead:" ), GetDeadHumans() )
-                  .Display( tools::translate( "Population", "Domination:" ), nDomination_ );
+            (*it)->Display( tools::translate( "Crowd", "Alive:" ), GetLivingHumans() )
+                  .Display( tools::translate( "Crowd", "Dead:" ), GetDeadHumans() )
+                  .Display( tools::translate( "Crowd", "Domination:" ), nDomination_ );
         displayers_.clear();
     }
 }

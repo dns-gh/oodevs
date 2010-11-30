@@ -108,16 +108,16 @@ void PopulationFlowKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowl
 // -----------------------------------------------------------------------------
 void PopulationFlowKnowledge::Display( Displayer_ABC& displayer ) const
 {
-    Displayer_ABC& group = displayer.Group( tools::translate( "Population", "Flow" ) );
-    group.Display( tools::translate( "Population", "Heading:" ), rDirection_ * Units::degrees )
-         .Display( tools::translate( "Population", "Speed:" ), rSpeed_ * Units::kilometersPerHour )
-         .Display( tools::translate( "Population", "Alive people:" ), nNbrAliveHumans_ )
-         .Display( tools::translate( "Population", "Dead people:" ), nNbrDeadHumans_ )
-         .Display( tools::translate( "Population", "Perceived:" ), bIsPerceived_ );
+    Displayer_ABC& group = displayer.Group( tools::translate( "Crowd", "Flow" ) );
+    group.Display( tools::translate( "Crowd", "Heading:" ), rDirection_ * Units::degrees )
+         .Display( tools::translate( "Crowd", "Speed:" ), rSpeed_ * Units::kilometersPerHour )
+         .Display( tools::translate( "Crowd", "Alive people:" ), nNbrAliveHumans_ )
+         .Display( tools::translate( "Crowd", "Dead people:" ), nNbrDeadHumans_ )
+         .Display( tools::translate( "Crowd", "Perceived:" ), bIsPerceived_ );
     if( eAttitude_.IsSet() )
-        group.Display( tools::translate( "Population", "Mood:" ), tools::ToString( eAttitude_ ) );
+        group.Display( tools::translate( "Crowd", "Mood:" ), tools::ToString( eAttitude_ ) );
     else
-        group.Display( tools::translate( "Population", "Mood:" ), ValueNotSet() );
+        group.Display( tools::translate( "Crowd", "Mood:" ), ValueNotSet() );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +126,7 @@ void PopulationFlowKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void PopulationFlowKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Population", "Known populations" ) ).Start( tools::translate( "Population", "Flow - " ) ).Add( nID_ ).End();
+    displayer.Display( tools::translate( "Crowd", "Known crowds" ) ).Start( tools::translate( "Crowd", "Flow - " ) ).Add( nID_ ).End();
 }
 
 namespace

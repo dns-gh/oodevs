@@ -85,15 +85,15 @@ void PopulationConcentrationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowd
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::Display( Displayer_ABC& displayer ) const
 {
-    Displayer_ABC& group = displayer.Group( tools::translate( "Population", "Concentration" ) );
-    group.Display( tools::translate( "Population", "Alive people:" ), nNbrAliveHumans_ )
-         .Display( tools::translate( "Population", "Dead people:" ), nNbrDeadHumans_ )
-         .Display( tools::translate( "Population", "Perceived:" ), bIsPerceived_ )
-         .Display( tools::translate( "Population", "Relevance:" ), rRelevance_ );
+    Displayer_ABC& group = displayer.Group( tools::translate( "Crowd", "Concentration" ) );
+    group.Display( tools::translate( "Crowd", "Alive people:" ), nNbrAliveHumans_ )
+         .Display( tools::translate( "Crowd", "Dead people:" ), nNbrDeadHumans_ )
+         .Display( tools::translate( "Crowd", "Perceived:" ), bIsPerceived_ )
+         .Display( tools::translate( "Crowd", "Relevance:" ), rRelevance_ );
     if( eAttitude_.IsSet() )
-        group.Display( tools::translate( "Population", "Mood:" ), tools::ToString( eAttitude_ ) );
+        group.Display( tools::translate( "Crowd", "Mood:" ), tools::ToString( eAttitude_ ) );
     else
-        group.Display( tools::translate( "Population", "Mood:" ), ValueNotSet() );
+        group.Display( tools::translate( "Crowd", "Mood:" ), ValueNotSet() );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,8 +102,8 @@ void PopulationConcentrationKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Population", "Known populations" ) )
-                .Start( tools::translate( "Population", "Concentration - " ) ).Add( nID_ ).End();
+    displayer.Display( tools::translate( "Crowd", "Known crowds" ) )
+                .Start( tools::translate( "Crowd", "Concentration - " ) ).Add( nID_ ).End();
 }
 
 namespace

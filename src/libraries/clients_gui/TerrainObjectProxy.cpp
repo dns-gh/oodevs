@@ -168,3 +168,14 @@ geometry::Point2f TerrainObjectProxy::Barycenter() const
 {
     return object_->GetFootprint()->Barycenter();
 }
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::GetObject
+// Created: JSR 2010-11-30
+// -----------------------------------------------------------------------------
+const urban::TerrainObject_ABC* TerrainObjectProxy::GetObject() const
+{
+    // $$$$ JSR 2010-11-30: Utilisé pour le display dans UrbanKnowledge pour kernel::Formatter< TerrainObject_ABC >
+    // A supprimer quand TerrainObjectProxy sera passé dans clients_kernel
+    return object_;
+}

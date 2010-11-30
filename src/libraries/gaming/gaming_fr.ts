@@ -215,10 +215,6 @@
         <translation>Règles d&apos;engagement:</translation>
     </message>
     <message>
-        <source>Population RoE:</source>
-        <translation>RoE population:</translation>
-    </message>
-    <message>
         <source>Force ratio:</source>
         <translation>Rapport de force:</translation>
     </message>
@@ -274,6 +270,10 @@
         <source>Radio Receiver silence:</source>
         <translation>Silence radio réception:</translation>
     </message>
+    <message>
+        <source>Crowd RoE:</source>
+        <translation>RoE foule:</translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>
@@ -302,6 +302,85 @@
     <message>
         <source>Info/StructuralState</source>
         <translation>Info/Etat Structurel</translation>
+    </message>
+</context>
+<context>
+    <name>Crowd</name>
+    <message>
+        <source>Alive:</source>
+        <translation>Vivants:</translation>
+    </message>
+    <message>
+        <source>Domination:</source>
+        <translation>Domination:</translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation>Morts:</translation>
+    </message>
+    <message>
+        <source>Concentration</source>
+        <translation>Concentration</translation>
+    </message>
+    <message>
+        <source>Alive people:</source>
+        <translation>Personnes en vie:</translation>
+    </message>
+    <message>
+        <source>Dead people:</source>
+        <translation>Personnes décédées:</translation>
+    </message>
+    <message>
+        <source>Perceived:</source>
+        <translation>Perçue:</translation>
+    </message>
+    <message>
+        <source>Relevance:</source>
+        <translation>Pertinence:</translation>
+    </message>
+    <message>
+        <source>Mood:</source>
+        <translation>Attitude:</translation>
+    </message>
+    <message>
+        <source>Known crowds</source>
+        <translation>Foules connues</translation>
+    </message>
+    <message>
+        <source>Concentration - </source>
+        <translation>Concentration - </translation>
+    </message>
+    <message>
+        <source>Flow</source>
+        <translation>Flux</translation>
+    </message>
+    <message>
+        <source>Heading:</source>
+        <translation>Direction:</translation>
+    </message>
+    <message>
+        <source>Speed:</source>
+        <translation>Vitesse:</translation>
+    </message>
+    <message>
+        <source>Flow - </source>
+        <translation>Flux - </translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Détails</translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identifiant:</translation>
+    </message>
+    <message>
+        <source>Associated crowd:</source>
+        <translation>Foule associée:</translation>
+    </message>
+    <message>
+        <source>Side:</source>
+        <translation>Camp:</translation>
     </message>
 </context>
 <context>
@@ -894,85 +973,6 @@
     <message>
         <source>Sealing level:</source>
         <translation>Niveau de bouclage:</translation>
-    </message>
-</context>
-<context>
-    <name>Population</name>
-    <message>
-        <source>Concentration</source>
-        <translation>Concentration</translation>
-    </message>
-    <message>
-        <source>Concentration - </source>
-        <translation>Concentration - </translation>
-    </message>
-    <message>
-        <source>Flow - </source>
-        <translation>Flux - </translation>
-    </message>
-    <message>
-        <source>Domination:</source>
-        <translation>Domination:</translation>
-    </message>
-    <message>
-        <source>Alive:</source>
-        <translation>Vivants:</translation>
-    </message>
-    <message>
-        <source>Identifier:</source>
-        <translation>Identifiant:</translation>
-    </message>
-    <message>
-        <source>Alive people:</source>
-        <translation>Personnes en vie:</translation>
-    </message>
-    <message>
-        <source>Dead people:</source>
-        <translation>Personnes décédées:</translation>
-    </message>
-    <message>
-        <source>Mood:</source>
-        <translation>Attitude:</translation>
-    </message>
-    <message>
-        <source>Perceived:</source>
-        <translation>Perçue:</translation>
-    </message>
-    <message>
-        <source>Relevance:</source>
-        <translation>Pertinence:</translation>
-    </message>
-    <message>
-        <source>Known populations</source>
-        <translation>Populations connues</translation>
-    </message>
-    <message>
-        <source>Flow</source>
-        <translation>Flux</translation>
-    </message>
-    <message>
-        <source>Speed:</source>
-        <translation>Vitesse:</translation>
-    </message>
-    <message>
-        <source>Details</source>
-        <translation>Détails</translation>
-    </message>
-    <message>
-        <source>Associated population:</source>
-        <translation>Population associée:</translation>
-    </message>
-    <message>
-        <source>Side:</source>
-        <translation>Camp:</translation>
-    </message>
-    <message>
-        <source>Heading:</source>
-        <translation>Direction:</translation>
-    </message>
-    <message>
-        <source>Dead:</source>
-        <translation>Morts:</translation>
     </message>
 </context>
 <context>

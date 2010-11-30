@@ -67,6 +67,7 @@ public:
     virtual void Draw( urban::Drawer_ABC& drawer, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
     geometry::Point2f Barycenter() const;
+    const urban::TerrainObject_ABC* GetObject() const;
     //@}
 
     //! @name Helpers

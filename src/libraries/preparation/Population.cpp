@@ -91,11 +91,11 @@ void Population::CreateDictionary( kernel::Controller& controller )
     kernel::PropertiesDictionary& dictionary = *new kernel::PropertiesDictionary( controller );
     Attach( dictionary );
     const Population& constSelf = *this;
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Population", "Info/Identifier" ), constSelf.id_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Population", "Info/Name" ), name_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Population", "Info/Type" ), constSelf.type_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Population", "Info/Humans" ), (int&)livingHumans_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Population", "Info/Mood" ), attitude_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Crowd", "Info/Identifier" ), constSelf.id_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Crowd", "Info/Name" ), name_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Crowd", "Info/Type" ), constSelf.type_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Crowd", "Info/Humans" ), (int&)livingHumans_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Crowd", "Info/Mood" ), attitude_ );
 }
 
 // -----------------------------------------------------------------------------

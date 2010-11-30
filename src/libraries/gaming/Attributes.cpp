@@ -229,7 +229,7 @@ void Attributes::Display( Displayer_ABC& displayer ) const
     displayer.Group( tools::translate( "Attributes", "Decisional state" ) )
                 .Display( tools::translate( "Attributes", "Operational state:" ), nOpState_ )
                 .Display( tools::translate( "Attributes", "Rules of engagement:" ), nRulesOfEngagementState_ )
-                .Display( tools::translate( "Attributes", "Population RoE:" ), nRulesOfEngagementPopulationState_ )
+                .Display( tools::translate( "Attributes", "Crowd RoE:" ), nRulesOfEngagementPopulationState_ )
                 .Display( tools::translate( "Attributes", "Force ratio:" ), nFightRateState_ )
                 .Display( tools::translate( "Attributes", "Indirect fire availability:" ), nIndirectFireAvailability_ )
                 .Display( tools::translate( "Attributes", "Intention:" ), nCloseCombatState_ );
