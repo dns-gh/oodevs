@@ -83,7 +83,8 @@ function Recorder.Save( filename )
     Recorder._SaveHeader( output )
     local last = {}
     for i = 1, Recorder.ticks, 1 do
-        local line = {}
+		local line = {}
+		table.insert( line, i )
         for k, values in pairs( Recorder.data ) do
             if values[i] then
                 last[k] = values[i]
@@ -97,6 +98,7 @@ end
 
 function Recorder._SaveHeader( output )
     local headers = {}
+    table.insert( headers, "time" )
     for k, _ in pairs( Recorder.data ) do
         table.insert( headers, k )
     end
@@ -104,7 +106,7 @@ function Recorder._SaveHeader( output )
 end
 
 function Recorder._SaveLine( output, line )
-    output:write( table.concat( line, "," ) .. ";\n" )
+    output:write( table.concat( line, "," ) .. ",\n" )
 end
 
 --------------------------------------------------------------------------------
