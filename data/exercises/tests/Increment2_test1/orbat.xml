@@ -24,7 +24,7 @@
             <unit command-post="false" id="18" name="Groupe GEN . EBG" position="29TNF3277957761" type="Groupe GEN . EBG"/>
             <unit command-post="false" id="19" name="PIA Dominante ABC" position="29TNF3309757657" type="PIA Dominante ABC"/>
             <unit command-post="false" id="20" name="PIA Dominante INF" position="29TNF3271057443" type="PIA Dominante INF"/>
-            <unit command-post="false" id="21" name="PIA Dominante RENS" position="29TNF3330158136" type="PIA Dominante RENS"/>
+            <unit command-post="false" id="21" name="PIA Dominante Reco" position="29TNF3330158136" type="PIA Dominante Reco"/>
           </automat>
           <automat engaged="true" id="34" knowledge-group="95" logistic-level="tc2" name="TC2 LOG [34]" type="LOG - TC2 LOG">
             <unit command-post="true" id="35" name="TC2 LOG" position="29TNF3111159270" type="LOG - TC2"/>
@@ -53,7 +53,7 @@
             <unit command-post="false" id="29" name="Groupe GEN . EBG" position="29TNF3450458846" type="Groupe GEN . EBG"/>
             <unit command-post="false" id="30" name="PIA Dominante ABC" position="29TNF3460258815" type="PIA Dominante ABC"/>
             <unit command-post="false" id="31" name="PIA Dominante INF" position="29TNF3416858526" type="PIA Dominante INF"/>
-            <unit command-post="false" id="32" name="PIA Dominante RENS" position="29TNF3513058899" type="PIA Dominante RENS"/>
+            <unit command-post="false" id="32" name="PIA Dominante Reco" position="29TNF3513058899" type="PIA Dominante Reco"/>
           </automat>
         </formation>
       </tactical>
@@ -211,7 +211,7 @@
             <unit command-post="false" id="110" name="Groupe GEN . EBG" position="29TNF3277957761" type="Groupe GEN . EBG"/>
             <unit command-post="false" id="111" name="PIA Dominante ABC" position="29TNF3309757657" type="PIA Dominante ABC"/>
             <unit command-post="false" id="112" name="PIA Dominante INF" position="29TNF3271057443" type="PIA Dominante INF"/>
-            <unit command-post="false" id="113" name="PIA Dominante RENS" position="29TNF3330158136" type="PIA Dominante RENS"/>
+            <unit command-post="false" id="113" name="PIA Dominante Reco" position="29TNF3330158136" type="PIA Dominante Reco"/>
           </automat>
           <automat engaged="true" id="114" knowledge-group="98" name="SGTIA ABC [22]" type="SGTIA ABC">
             <unit command-post="true" id="115" name="Peloton . LECLERC CDT ESC" position="29TNF3462859298" type="Peloton . LECLERC CDT ESC"/>
@@ -223,7 +223,7 @@
             <unit command-post="false" id="121" name="Groupe GEN . EBG" position="29TNF3450458846" type="Groupe GEN . EBG"/>
             <unit command-post="false" id="122" name="PIA Dominante ABC" position="29TNF3460258815" type="PIA Dominante ABC"/>
             <unit command-post="false" id="123" name="PIA Dominante INF" position="29TNF3416858526" type="PIA Dominante INF"/>
-            <unit command-post="false" id="124" name="PIA Dominante RENS" position="29TNF3513058899" type="PIA Dominante RENS"/>
+            <unit command-post="false" id="124" name="PIA Dominante Reco" position="29TNF3513058899" type="PIA Dominante Reco"/>
           </automat>
           <automat engaged="true" id="126" knowledge-group="98" name="TC2 LOG [34]" type="LOG - TC2 LOG">
             <unit command-post="true" id="127" name="TC2 LOG" position="29TNF3111159270" type="LOG - TC2"/>

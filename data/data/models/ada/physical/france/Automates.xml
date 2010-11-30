@@ -1043,7 +1043,7 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC SGTIA"/>
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante ABC"/>
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante INF"/>
-    <unit max-occurs="3" min-occurs="1" type="PIA Dominante RENS"/>
+    <unit max-occurs="3" min-occurs="1" type="PIA Dominante Reco"/>
   </automat>
   <automat decisional-model="net.masagroup.sword.military.company.roles.Company" id="672" name="SGTIA INF" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Section . CDT CIE INF VAB"/>
@@ -1054,7 +1054,7 @@
     <unit max-occurs="1" min-occurs="1" type="Groupe GEN . EBG"/>
     <unit max-occurs="3" type="PIA Dominante ABC"/>
     <unit max-occurs="3" type="PIA Dominante INF"/>
-    <unit max-occurs="3" type="PIA Dominante RENS"/>
+    <unit max-occurs="3" type="PIA Dominante Reco"/>
   </automat>
   <automat decisional-model="net.masagroup.sword.military.company.roles.Company" id="673" name="SGTIA ABC" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton . LECLERC CDT ESC"/>
@@ -1065,7 +1065,7 @@
     <unit max-occurs="1" type="Groupe GEN . EBG"/>
     <unit max-occurs="3" type="PIA Dominante ABC"/>
     <unit max-occurs="3" type="PIA Dominante INF"/>
-    <unit max-occurs="3" type="PIA Dominante RENS"/>
+    <unit max-occurs="3" type="PIA Dominante Reco"/>
   </automat>
 </automats>
-<!-- signature="1254028005" -->
+<!-- signature="3257217754" -->

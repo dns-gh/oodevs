@@ -105,7 +105,7 @@
             <unit command-post="false" id="202" name="PIA INF 1" position="31TCM1027186842" type="PIA Dominante INF"/>
             <unit command-post="false" id="203" name="PIA INF 1" position="31TCM1027186842" type="PIA Dominante INF"/>
             <unit command-post="false" id="204" name="PIA ABC 1" position="31TCM1027186842" type="PIA Dominante ABC"/>
-            <unit command-post="false" id="205" name="PIA RENS 1" position="31TCM1027186842" type="PIA Dominante RENS"/>
+            <unit command-post="false" id="205" name="PIA RENS 1" position="31TCM1027186842" type="PIA Dominante Reco"/>
           </automat>
           <automat engaged="true" id="29" knowledge-group="2" name="SGTIA Engaged" type="SGTIA">
             <unit command-post="true" id="30" name="Section CDT CIE INF VAB" position="31TCM1135691013" type="Section . CDT CIE INF VAB"/>

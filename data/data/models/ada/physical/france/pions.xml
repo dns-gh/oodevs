@@ -11254,7 +11254,7 @@
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
-  <unit decisional-model="net.masagroup.sword.military.platoon.roles.PIA" id="443" name="PIA Dominante RENS" type="Pion RENS">
+  <unit decisional-model="net.masagroup.sword.military.platoon.roles.PIA" id="443" name="PIA Dominante Reco" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VBL MILAN"/>
@@ -11457,4 +11457,4 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
   </unit>
 </units>
-<!-- signature="3067893125" -->
+<!-- signature="3005857876" -->
