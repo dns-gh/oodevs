@@ -65,7 +65,7 @@
 #include "Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
-#include "clients_kernel/FileLoader.h"
+#include "clients_kernel/ExerciseFileLoader.h"
 #include "Decision/DEC_Workspace.h"
 #include "Effects/MIL_EffectManager.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
@@ -257,8 +257,8 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MIL_Tools::CheckXmlCrc32Signature( strOrbat );
     MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strOrbat.c_str() ) );
 
-    kernel::FileLoader loader ( config );
-    loader.LoadExercise( "orbat", boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ), "resources/orbat0-4.2.xsl" );
+    kernel::ExerciseFileLoader loader ( config );
+    loader.LoadAndUpdate( "orbat", boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ), "resources/orbat0-4.2.xsl" );
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );

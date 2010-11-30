@@ -50,9 +50,15 @@ public:
     //! @name Operations
     //@{
     FileLoader& Load( const std::string& rootTag, T_Loader loader );
-    FileLoader& Load( const std::string& rootTag, T_Loader loader, const std::string& xslTransform );
-    FileLoader& LoadExercise( const std::string& rootTag, T_Loader loader );
-    FileLoader& LoadExercise( const std::string& rootTag, T_Loader loader, const std::string& xslTransform );
+    virtual FileLoader& LoadAndUpdate( const std::string& rootTag, T_Loader loader, const std::string& xslTransform ) = 0;
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    void CheckSignatures( const std::string& file, std::string& invalidSignatureFiles ) const;
+    void GetFile( const std::string& rootTag, xml::xistream& xis, std::string& file ) const;
+    void Check( const std::string& file, T_Loader loader, const std::string& xslTransform ) const;
     //@}
 
 private:
@@ -62,11 +68,10 @@ private:
     FileLoader& operator=( const FileLoader& ); //!< Assignment operator
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     const tools::ExerciseConfig& config_;
-    std::auto_ptr< xml::xistream > xis_;
     std::string* invalidSignatureFiles_;
     //@}
 };

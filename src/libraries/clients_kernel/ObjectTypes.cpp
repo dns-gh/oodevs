@@ -12,7 +12,7 @@
 #include "BreakdownType.h"
 #include "DotationType.h"
 #include "EquipmentType.h"
-#include "FileLoader.h"
+#include "PhysicalFileLoader.h"
 #include "FireClass.h"
 #include "FacadeType.h"
 #include "MaterialCompositionType.h"
@@ -65,7 +65,7 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
 void ObjectTypes::Load( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles )
 {
     Purge();
-    FileLoader( config, invalidSignatureFiles )
+    PhysicalFileLoader( config, invalidSignatureFiles )
         .Load( "objects", boost::bind( &ObjectTypes::ReadObjectTypes, this, _1 ) )
         .Load( "resources", boost::bind( &ObjectTypes::ReadDotations, this, _1 ) )
         .Load( "volumes", boost::bind( &ObjectTypes::ReadVolumes, this, _1 ) )

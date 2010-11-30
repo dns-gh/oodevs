@@ -24,9 +24,9 @@ namespace bfs = boost::filesystem;
 // -----------------------------------------------------------------------------
 FileLoader::FileLoader( const tools::ExerciseConfig& config )
     : config_               ( config )
-    , xis_                  ( new xml::xifstream( config.GetPhysicalFile() ) )
     , invalidSignatureFiles_( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,13 +35,10 @@ FileLoader::FileLoader( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 FileLoader::FileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles )
     : config_               ( config )
-    , xis_                  ( new xml::xifstream( config.GetPhysicalFile() ) )
     , invalidSignatureFiles_( &invalidSignatureFiles )
 {
     std::string filename = config.GetPhysicalFile();
-    tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename );
-    if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
-        invalidSignatureFiles_->append( "\n" + bfs::path( filename, bfs::native ).leaf() );
+    CheckSignatures( filename, invalidSignatureFiles );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,6 +48,17 @@ FileLoader::FileLoader( const tools::ExerciseConfig& config, std::string& invali
 FileLoader::~FileLoader()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileLoader::CheckSignatures
+// Created: LDC 2010-11-29
+// -----------------------------------------------------------------------------
+void FileLoader::CheckSignatures( const std::string& file, std::string& invalidSignatureFiles ) const
+{
+    tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( file );
+    if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+        invalidSignatureFiles.append( "\n" + bfs::path( file, bfs::native ).leaf() );
 }
 
 namespace
@@ -126,17 +134,7 @@ namespace
 FileLoader& FileLoader::Load( const std::string& rootTag, T_Loader loader )
 {
     std::string empty;
-    return Load( rootTag, loader, empty );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FileLoader::LoadExercise
-// Created: LDC 2010-11-25
-// -----------------------------------------------------------------------------
-FileLoader& FileLoader::LoadExercise( const std::string& rootTag, T_Loader loader )
-{
-    std::string empty;
-    return LoadExercise( rootTag, loader, empty );
+    return LoadAndUpdate( rootTag, loader, empty );
 }
 
 namespace
@@ -163,28 +161,21 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: FileLoader::Load
-// Created: SBO 2009-08-20
+// Name: FileLoader::GetFile
+// Created: LDC 2010-11-29
 // -----------------------------------------------------------------------------
-FileLoader& FileLoader::Load( const std::string& rootTag, T_Loader loader, const std::string& xslTransform )
+void FileLoader::GetFile( const std::string& rootTag, xml::xistream& xis, std::string& file ) const
 {
-    std::string file;
     AttributeReader fileAttributeReader( rootTag, file );
-    *xis_ >> xml::list( fileAttributeReader, &AttributeReader::LoadTag );
-    CheckedLoader( config_.BuildPhysicalChildFile( file ), config_, loader, xslTransform, invalidSignatureFiles_ );
-    return *this;
+    xis >> xml::list( fileAttributeReader, &AttributeReader::LoadTag );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FileLoader::LoadExercise
-// Created: LDC 2010-11-25
+// Name: FileLoader::Check
+// Created: LDC 2010-11-29
 // -----------------------------------------------------------------------------
-FileLoader& FileLoader::LoadExercise( const std::string& rootTag, T_Loader loader, const std::string& xslTransform )
+void FileLoader::Check( const std::string& file, T_Loader loader, const std::string& xslTransform ) const
 {
-    xml::xifstream xis( config_.GetExerciseFile() );
-    std::string file;
-    AttributeReader fileAttributeReader( rootTag, file );
-    xis >> xml::list( fileAttributeReader, &AttributeReader::LoadTag );
-    CheckedLoader( config_.BuildExerciseChildFile( file ), config_, loader, xslTransform, invalidSignatureFiles_ );
-    return *this;
+    CheckedLoader( file, config_, loader, xslTransform, invalidSignatureFiles_ );
 }
+
