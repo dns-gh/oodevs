@@ -22,7 +22,9 @@ using namespace resource;
 // Created: JSR 2010-11-17
 // -----------------------------------------------------------------------------
 NodeProperties::NodeProperties()
-    : tools_( 0 )
+    : isFunctional_( true )
+    , tools_       ( 0 )
+    , needUpdate_  ( true )
 {
     // NOTHING
 }
@@ -34,6 +36,7 @@ NodeProperties::NodeProperties()
 NodeProperties::NodeProperties( const ResourceTools_ABC& tools )
     : isFunctional_( true )
     , tools_       ( &tools )
+    , needUpdate_  ( true )
 {
     // NOTHING
 }
@@ -45,6 +48,7 @@ NodeProperties::NodeProperties( const ResourceTools_ABC& tools )
 NodeProperties::NodeProperties( xml::xistream& xis, const ResourceTools_ABC& tools )
     : isFunctional_( true )
     , tools_       ( &tools )
+    , needUpdate_  ( true )
 {
     Update( xis );
 }
@@ -56,6 +60,7 @@ NodeProperties::NodeProperties( xml::xistream& xis, const ResourceTools_ABC& too
 NodeProperties::NodeProperties( const urban::ResourceNetworkAttribute& urbanAttribute, const ResourceTools_ABC& tools )
     : isFunctional_( true )
     , tools_       ( &tools )
+    , needUpdate_  ( true )
 {
     const urban::ResourceNetworkAttribute::T_ResourceNodes& nodes = urbanAttribute.GetResourceNodes();
     for( urban::ResourceNetworkAttribute::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
@@ -72,6 +77,7 @@ NodeProperties::NodeProperties( const urban::ResourceNetworkAttribute& urbanAttr
 NodeProperties::NodeProperties( const NodeProperties& from )
     : isFunctional_( true )
     , tools_       ( from.tools_ )
+    , needUpdate_  ( true )
 {
     for( CIT_Elements it = from.elements_.begin(); it != from.elements_.end(); ++it )
         Register( it->first, *new NodeElement( *it->second ) );
@@ -119,12 +125,14 @@ void NodeProperties::Update( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void NodeProperties::Update()
 {
+    bool oldFunctional = isFunctional_;
     // update intermediate stocks
     Apply( boost::bind( &NodeElement::UpdateImmediateStock, _1, isFunctional_ ) );
     // apply consumptions
     isFunctional_ = true;
     Apply( boost::bind( &NodeElement::Consume, _1, boost::ref( isFunctional_ ) ) );
     Apply( boost::bind( &NodeElement::DistributeResource, _1, isFunctional_ ) );
+    needUpdate_ = oldFunctional != isFunctional_;
 }
 
 // -----------------------------------------------------------------------------
@@ -148,6 +156,21 @@ void NodeProperties::SetModifier( unsigned int modifier )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeProperties::NeedUpdate
+// Created: JSR 2010-11-30
+// -----------------------------------------------------------------------------
+bool NodeProperties::NeedUpdate() const
+{
+    if( needUpdate_ )
+        return true;
+    tools::Iterator< const NodeElement& > it = CreateIterator();
+    while( it.HasMoreElements() )
+        if( it.NextElement().NeedUpdate() )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeProperties::Serialize
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
@@ -156,6 +179,7 @@ void NodeProperties::Serialize( MsgsSimToClient::UrbanAttributes_Infrastructures
     // TODO sérialiser isFunctional_?
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Serialize( *msg.add_resource_network() );
+    needUpdate_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -166,6 +190,7 @@ void NodeProperties::Serialize( Common::ObjectAttributeResourceNetwork& msg ) co
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Serialize( *msg.add_network() );
+    needUpdate_ = false;
 }
 
 // -----------------------------------------------------------------------------

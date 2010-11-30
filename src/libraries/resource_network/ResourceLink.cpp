@@ -18,10 +18,12 @@ using namespace resource;
 // Created: JSR 2010-11-17
 // -----------------------------------------------------------------------------
 ResourceLink::ResourceLink()
-    : target_  ( 0 )
-    , kind_    ( eTargetKindUrban )
-    , capacity_( 0 )
-    , flow_    ( 0 )
+    : target_    ( 0 )
+    , kind_      ( eTargetKindUrban )
+    , capacity_  ( 0 )
+    , flow_      ( 0 )
+    , oldFlow_   ( 0 )
+    , needUpdate_( true )
 {
     // NOTHING
 }
@@ -31,10 +33,12 @@ ResourceLink::ResourceLink()
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 ResourceLink::ResourceLink( unsigned int target, ETargetKind kind, int capacity )
-    : target_  ( target )
-    , kind_    ( kind )
-    , capacity_( capacity )
-    , flow_    ( 0 )
+    : target_    ( target )
+    , kind_      ( kind )
+    , capacity_  ( capacity )
+    , flow_      ( 0 )
+    , oldFlow_   ( 0 )
+    , needUpdate_( true )
 {
     // NOTHING
 }
@@ -44,10 +48,12 @@ ResourceLink::ResourceLink( unsigned int target, ETargetKind kind, int capacity 
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 ResourceLink::ResourceLink( const ResourceLink& from )
-    : target_  ( from.target_ )
-    , kind_    ( from.kind_ )
-    , capacity_( from.capacity_ )
-    , flow_    ( from.flow_ )
+    : target_    ( from.target_ )
+    , kind_      ( from.kind_ )
+    , capacity_  ( from.capacity_ )
+    , flow_      ( from.flow_ )
+    , oldFlow_   ( 0 )
+    , needUpdate_( true )
 {
     // NOTHING
 }
@@ -80,6 +86,8 @@ ResourceLink::ETargetKind ResourceLink::FindTargetKind( const std::string& kind 
 // -----------------------------------------------------------------------------
 void ResourceLink::SetCapacity( int capacity )
 {
+    if( capacity != capacity_ )
+        needUpdate_ = true;
     capacity_ = capacity;
 }
 
@@ -114,12 +122,36 @@ ResourceLink::ETargetKind ResourceLink::GetTargetKind() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceLink::ResetFlow
+// Created: JSR 2010-11-30
+// -----------------------------------------------------------------------------
+void ResourceLink::ResetFlow()
+{
+    oldFlow_ = flow_;
+    flow_ = 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceLink::SetFlow
 // Created: JSR 2010-08-26
 // -----------------------------------------------------------------------------
 void ResourceLink::SetFlow( unsigned int flow )
 {
+    if( flow != oldFlow_ )
+    {
+        needUpdate_ = true;
+        oldFlow_ = flow;
+    }
     flow_ = flow;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLink::NeedUpdate
+// Created: JSR 2010-11-30
+// -----------------------------------------------------------------------------
+bool ResourceLink::NeedUpdate() const
+{
+    return needUpdate_;
 }
 
 // -----------------------------------------------------------------------------
@@ -133,4 +165,5 @@ void ResourceLink::Serialize( Common::ResourceNetwork_Link& msg ) const
     msg.set_target_id( target_ );
     msg.set_capacity( capacity_ );
     msg.set_flow( flow_ );
+    needUpdate_ = false;
 }

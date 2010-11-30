@@ -36,7 +36,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity()
     : structuralState_( 100 )
-    , lastStructuralState_( 0 )
+    , lastStructuralState_( std::numeric_limits< unsigned int >::max() )
     , materialType_   ( 0 )
 {
     // NOTHING
@@ -48,7 +48,7 @@ StructuralCapacity::StructuralCapacity()
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity( xml::xistream& xis )
     : structuralState_( xis.attribute< unsigned int >( "value" ) )
-    , lastStructuralState_( 0 )
+    , lastStructuralState_( std::numeric_limits< unsigned int >::max() )
 {
     // NOTHING
 }
@@ -59,7 +59,7 @@ StructuralCapacity::StructuralCapacity( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity( const StructuralCapacity& from )
     : structuralState_( from.structuralState_ )
-    , lastStructuralState_( 0 )
+    , lastStructuralState_( std::numeric_limits< unsigned int >::max() )
 {
     // NOTHING
 }

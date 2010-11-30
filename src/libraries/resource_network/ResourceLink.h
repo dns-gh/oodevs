@@ -57,7 +57,9 @@ public:
     int GetEfficientCapacity() const;
     unsigned int GetTarget() const;
     ETargetKind GetTargetKind() const;
+    void ResetFlow();
     void SetFlow( unsigned int flow );
+    bool NeedUpdate() const;
     //@}
 
     //! @name Network
@@ -87,6 +89,8 @@ private:
     ETargetKind kind_;
     int capacity_;
     unsigned int flow_;
+    unsigned int oldFlow_;
+    mutable bool needUpdate_;
     //@}
 };
 

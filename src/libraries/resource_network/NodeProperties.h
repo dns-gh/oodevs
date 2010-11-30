@@ -74,6 +74,7 @@ public:
     void Update();
     void Push( int quantity, unsigned long resourceId );
     void SetModifier( unsigned int modifier );
+    bool NeedUpdate() const;
     //@}
 
     //! @name Network
@@ -109,6 +110,7 @@ private:
     //@{
     bool isFunctional_;
     const ResourceTools_ABC* tools_;
+    mutable bool needUpdate_;
     //@}
 };
 

@@ -31,6 +31,7 @@ NodeElement::NodeElement()
     , consumptionAmount_  ( 0 )
     , consumptionCritical_( false )
     , modifier_           ( 1. )
+    , needUpdate_         ( true )
 {
     // NOTHING
 }
@@ -52,6 +53,7 @@ NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const st
     , consumptionAmount_  ( 0 )
     , consumptionCritical_( false )
     , modifier_           ( 1. )
+    , needUpdate_         ( true )
 {
     Update( xis );
 }
@@ -72,7 +74,8 @@ NodeElement::NodeElement( const urban::ResourceNetworkAttribute::ResourceNode& n
     , receivedQuantity_   ( 0 )
     , consumptionAmount_  ( node.consumption_ )
     , consumptionCritical_( node.critical_ )
-    , modifier_           ( 1. ) 
+    , modifier_           ( 1. )
+    , needUpdate_         ( true )
 {
     for( std::vector< urban::ResourceNetworkAttribute::ResourceLink >::const_iterator it = node.links_.begin(); it != node.links_.end(); ++it )
         links_.push_back( new ResourceLink( it->id_, ResourceLink::eTargetKindUrban, it->capacity_ ) );
@@ -96,6 +99,7 @@ NodeElement::NodeElement( const NodeElement& from )
     , consumptionAmount_  ( from.consumptionAmount_ )
     , consumptionCritical_( from.consumptionCritical_ )
     , modifier_           ( from.modifier_ )
+    , needUpdate_         ( true )
 {
     for( CIT_ResourceLinks it = from.links_.begin(); it != from.links_.end(); ++it )
         links_.push_back( new ResourceLink( **it ) );
@@ -177,7 +181,7 @@ void NodeElement::Consume( bool& isFunctional )
 void NodeElement::DistributeResource( bool isFunctional )
 {
     for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
-        ( *it )->SetFlow( 0 );
+        ( *it )->ResetFlow();
     if( !isActivated_ || !isFunctional )
         return;
     if( immediateStock_ != 0 && links_.size() > 0 )
@@ -186,7 +190,10 @@ void NodeElement::DistributeResource( bool isFunctional )
         DoDistributeResource( links );
     }
     // finally update stock
+    int oldStockCapacity = stockCapacity_;
     stockCapacity_ = std::min( immediateStock_, static_cast< unsigned int >( modifier_ * stockMaxCapacity_ ) );
+    if( std::abs( static_cast< float >( oldStockCapacity - stockCapacity_ ) ) / stockMaxCapacity_ > 0.05f )
+        needUpdate_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -271,6 +278,20 @@ void NodeElement::SetModifier( unsigned int modifier )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeElement::NeedUpdate
+// Created: JSR 2010-11-30
+// -----------------------------------------------------------------------------
+bool NodeElement::NeedUpdate() const
+{
+    if( needUpdate_ )
+        return true;
+    for( CIT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+        if( ( *it )->NeedUpdate() )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeElement::Serialize
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
@@ -289,6 +310,7 @@ void NodeElement::Serialize( Common::ResourceNetwork& msg ) const
     msg.set_critical( consumptionCritical_ );
     for( CIT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
         ( *it )->Serialize( *msg.add_link() );
+    needUpdate_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -297,6 +319,11 @@ void NodeElement::Serialize( Common::ResourceNetwork& msg ) const
 // -----------------------------------------------------------------------------
 void NodeElement::Update( const Common::MsgMissionParameter_Value& msg )
 {
+    bool oldActivated = isActivated_;
+    unsigned int oldProductionCapacity = productionCapacity_;
+    unsigned int oldStockMaxCapacity = stockMaxCapacity_;
+    unsigned int oldConsumptionAmount = consumptionAmount_;
+    bool oldConsumptionCritical = consumptionCritical_;
     consumptionAmount_ = msg.list( 1 ).quantity();
     consumptionCritical_ = msg.list( 2 ).booleanvalue();
     isActivated_ = msg.list( 3 ).booleanvalue();
@@ -309,6 +336,9 @@ void NodeElement::Update( const Common::MsgMissionParameter_Value& msg )
         if( index < links_.size() )
             links_[ index ]->SetCapacity( link.list( 1 ).quantity() );
     }
+    if( oldActivated != isActivated_ || oldProductionCapacity != productionCapacity_ || oldStockMaxCapacity != stockMaxCapacity_
+        || oldConsumptionAmount !=  consumptionAmount_ || oldConsumptionCritical != consumptionCritical_ )
+        needUpdate_ = true;
 }
 
 // -----------------------------------------------------------------------------

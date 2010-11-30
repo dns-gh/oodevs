@@ -59,6 +59,7 @@ public:
     void DistributeResource( bool isFunctional );
     void Push( int quantity );
     void SetModifier( unsigned int modifier );
+    bool NeedUpdate() const;
     //@}
 
     //! @name Network
@@ -113,6 +114,7 @@ private:
     unsigned int consumptionAmount_;
     bool consumptionCritical_;
     double modifier_;
+    mutable bool needUpdate_;
     //@}
 };
 

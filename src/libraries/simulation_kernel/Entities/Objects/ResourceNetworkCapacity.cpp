@@ -166,7 +166,8 @@ void ResourceNetworkCapacity::SendState( MsgsSimToClient::UrbanAttributes& messa
 {
     if( nodeProperties_ == 0 )
         throw std::exception( "RegisterResource : Node Properties not instanciated" );
-    nodeProperties_->Serialize( *message.mutable_infrastructures() );
+    if( nodeProperties_->NeedUpdate() )
+        nodeProperties_->Serialize( *message.mutable_infrastructures() );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +178,8 @@ void ResourceNetworkCapacity::SendState( Common::ObjectAttributes& asn ) const
 {
     if( nodeProperties_ == 0 )
         throw std::exception( "RegisterResource : Node Properties not instanciated" );
-    nodeProperties_->Serialize( *asn.mutable_resource_networks() );
+    if( nodeProperties_->NeedUpdate() )
+        nodeProperties_->Serialize( *asn.mutable_resource_networks() );
 }
 
 // -----------------------------------------------------------------------------
