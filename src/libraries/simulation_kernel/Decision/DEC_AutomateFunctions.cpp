@@ -15,6 +15,7 @@
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -330,6 +331,16 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::ComputePionNearestLocali
 {
     assert( pion );
     return DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau( pion->GetPion(), location );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::GetPionEfficiency
+// Created: JSR 2010-11-29
+// -----------------------------------------------------------------------------
+unsigned int DEC_AutomateFunctions::GetPionEfficiency( const DEC_Decision_ABC* pion, int pionEfficiency )
+{
+    assert( pion );
+    return pion->GetPion().GetType().GetUnitType().GetPionEfficiency( static_cast< E_PionEfficiency >( pionEfficiency ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -43,4 +43,16 @@ enum E_OperationalState
     eOpStateOperational,
 };
 
+enum E_PionEfficiency
+{
+    ePionEfficiencyRecon,
+    ePionEfficiencyCombatSupport,
+    ePionEfficiencyCombat,
+    ePionEfficiencyMobilitySupport,
+    ePionEfficiencyCounterMobilitySupport,
+    ePionEfficiencyProtectionSupport,
+    ePionEfficiencyEngineeringSupport,
+    ePionEfficiencyUrbanArea
+};
+
 #endif // __MT_Scipio_enum_h_

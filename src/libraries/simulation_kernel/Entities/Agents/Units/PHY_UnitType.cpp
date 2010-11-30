@@ -18,6 +18,7 @@
 #include "Dotations/PHY_DotationLogisticType.h"
 #include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
+#include "MT_Tools/MT_Scipio_enum.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -39,18 +40,26 @@ PHY_UnitType::sComposanteTypeData::sComposanteTypeData()
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
 PHY_UnitType::PHY_UnitType( xml::xistream& xis )
-    : dotationCapacitiesTC1_          ( "logistics", xis )
-    , stockLogisticThresholdRatios_   ( PHY_DotationLogisticType::GetDotationLogisticTypes().size(), 0.1 )
-    , composanteTypes_                ()
-    , postureTimes_                   ( PHY_Posture::GetPostures().size(), 0 )
-    , rInstallationTime_              ( 0. )
-    , rUninstallationTime_            ( 0. )
-    , rCoupDeSondeLength_             ( 0. )
-    , rCoupDeSondeWidth_              ( 0. )
-    , commandersRepartition_          ()
-    , rCoefDecontaminationPerTimeStep_( 0. )
-    , bCanFly_                        ( false )
-    , bIsAutonomous_                  ( false )
+    : dotationCapacitiesTC1_            ( "logistics", xis )
+    , stockLogisticThresholdRatios_     ( PHY_DotationLogisticType::GetDotationLogisticTypes().size(), 0.1 )
+    , composanteTypes_                  ()
+    , postureTimes_                     ( PHY_Posture::GetPostures().size(), 0 )
+    , rInstallationTime_                ( 0. )
+    , rUninstallationTime_              ( 0. )
+    , rCoupDeSondeLength_               ( 0. )
+    , rCoupDeSondeWidth_                ( 0. )
+    , commandersRepartition_            ()
+    , rCoefDecontaminationPerTimeStep_  ( 0. )
+    , bCanFly_                          ( false )
+    , bIsAutonomous_                    ( false )
+    , nReconEfficiency_                 ( 50 )
+    , nCombatSupportEfficiency_         ( 50 )
+    , nCombatEfficiency_                ( 50 )
+    , nMobilitySupportEfficiency_       ( 50 )
+    , nCounterMobilitySupportEfficiency_( 50 )
+    , nProtectionSupportEfficiency_     ( 50 )
+    , nEngineeringReconEfficiency_      ( 50 )
+    , nUrbanAreaEfficiency_             ( 50 )
 {
     xis >> xml::optional
             >> xml::attribute( "can-fly", bCanFly_ )
@@ -64,6 +73,7 @@ PHY_UnitType::PHY_UnitType( xml::xistream& xis )
     InitializeCoupDeSonde                 ( xis );
     InitializeNBC                         ( xis );
     InitializeStockLogisticThresholdRatios( xis );
+    InitializeEfficiencies                ( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,27 +98,38 @@ void PHY_UnitType::InitializeStockLogisticThresholdRatios( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_UnitType::InitializeEfficiencies
+// Created: JSR 2010-11-29
+// -----------------------------------------------------------------------------
+void PHY_UnitType::InitializeEfficiencies( xml::xistream& xis )
+{
+    xis >> xml::optional
+            >> xml::start( "efficiencies" )
+                >> xml::attribute( "recon", nReconEfficiency_ )
+                >> xml::attribute( "combat-support", nCombatSupportEfficiency_ )
+                >> xml::attribute( "combat", nCombatEfficiency_ )
+                >> xml::attribute( "mobility-support", nMobilitySupportEfficiency_ )
+                >> xml::attribute( "counter-mobility-support", nCounterMobilitySupportEfficiency_ )
+                >> xml::attribute( "protection-support", nProtectionSupportEfficiency_ )
+                >> xml::attribute( "engineering-support", nEngineeringReconEfficiency_ )
+                >> xml::attribute( "urban-area", nUrbanAreaEfficiency_ )
+            >> xml::end; 
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_UnitType::ReadStock
 // Created: ABL 2007-07-23
 // -----------------------------------------------------------------------------
 void PHY_UnitType::ReadStock( xml::xistream& xis )
 {
-    std::string strCategory;
-    xis >> xml::attribute( "category", strCategory );
-
-    const PHY_DotationLogisticType* pType = PHY_DotationLogisticType::Find( strCategory );
+    const PHY_DotationLogisticType* pType = PHY_DotationLogisticType::Find( xis.attribute< std::string >( "category" ) );
     if( !pType )
         xis.error( "Unknown logistic dotation type" );
-
     assert( stockLogisticThresholdRatios_.size() > pType->GetID() );
-
-    double rThreshold = 0.;
-    xis >> xml::attribute( "threshold", rThreshold );
+    double rThreshold = xis.attribute< double >( "threshold" );
     if( rThreshold < 0 || rThreshold > 100 )
-        xis.error( "stock: thresolh not in [0..100]" );
-
+        xis.error( "stock: threshold not in [0..100]" );
     rThreshold /= 100.;
-
     stockLogisticThresholdRatios_[ pType->GetID() ] = rThreshold;
 }
 
@@ -144,22 +165,16 @@ void PHY_UnitType::InitializeComposantes( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_UnitType::ReadEquipment( xml::xistream& xis )
 {
-    std::string strComposanteType;
-    xis >> xml::attribute( "type", strComposanteType );
-
-    const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( strComposanteType );
+    const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( xis.attribute< std::string >( "type" ) );
     if( !pComposanteType )
         xis.error( "Unknown composante type" );
-
     if( composanteTypes_.find( pComposanteType ) != composanteTypes_.end() )
         xis.error( "Composante type already exist" );
-
     sComposanteTypeData& compData = composanteTypes_[ pComposanteType ];
     compData.bMajor_ = false;
     compData.bLoadable_ = false;
     compData.bCanBePartOfConvoy_ = false;
     compData.nNbrHumanInCrew_ = 0;
-
     xis >> xml::optional
             >> xml::attribute( "major", compData.bMajor_ )
         >> xml::optional
@@ -167,13 +182,10 @@ void PHY_UnitType::ReadEquipment( xml::xistream& xis )
         >> xml::optional
             >> xml::attribute( "convoyer", compData.bCanBePartOfConvoy_ )
         >> xml::attribute( "crew", compData.nNbrHumanInCrew_ );
-
     if( compData.nNbrHumanInCrew_ < 0 )
         xis.error( "equipment: crew < 0" );
-
     if( compData.nNbrHumanInCrew_ == 0 && !IsAutonomous() )
         xis.error( "Composante not viable : no humans in crew" );
-
     xis >> xml::attribute( "count", compData.nNbr_ );
 }
 
@@ -195,20 +207,13 @@ void PHY_UnitType::InitializeCommanderRepartition( xml::xistream& xis )
 void PHY_UnitType::ReadCrewRank( xml::xistream& xis )
 {
     const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
-    std::string crewType;
-
-    xis >> xml::attribute( "type", crewType );
-
-    PHY_HumanRank::CIT_HumanRankMap it = ranks.find( crewType );
+    PHY_HumanRank::CIT_HumanRankMap it = ranks.find( xis.attribute< std::string >( "type" ) );
     const PHY_HumanRank& rank = *it->second;
     if( !rank.IsCommander() )
         return;
-
     if( commandersRepartition_.find( &rank ) != commandersRepartition_.end() )
         xis.error( "crew-rank: type undefined" );
-
-    unsigned int nValue = 0;
-    xis >> xml::attribute( "count", nValue );
+    unsigned int nValue = xis.attribute< unsigned int >( "count" );
     if( nValue > 0 )
         commandersRepartition_[ &rank ] = nValue;
 }
@@ -231,17 +236,12 @@ void PHY_UnitType::InitializePostureTimes( xml::xistream& xis )
 void PHY_UnitType::ReadPosture( xml::xistream& xis )
 {
     const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
-    std::string postureName;
-
-    xis >> xml::attribute( "name", postureName );
-
-    PHY_Posture::CIT_PostureMap it = postures.find( postureName );
+    PHY_Posture::CIT_PostureMap it = postures.find( xis.attribute< std::string >( "name" ) );
     const PHY_Posture& posture = *it->second;
-
     assert( postureTimes_.size() > posture.GetID() );
     double rTime;
     tools::ReadTimeAttribute( xis, "setup-time", rTime );
-    postureTimes_[ posture.GetID() ] = (unsigned int)MIL_Tools::ConvertSecondsToSim( rTime );
+    postureTimes_[ posture.GetID() ] = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rTime ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -261,14 +261,12 @@ void PHY_UnitType::ReadSetup( xml::xistream& xis )
 {
     tools::ReadTimeAttribute( xis, "installation-time", rInstallationTime_ );
     tools::ReadTimeAttribute( xis, "uninstallation-time", rUninstallationTime_ );
-
     if( rInstallationTime_ < 0 )
         xis.error( "setup: installation-time < 0" );
     if( rUninstallationTime_ < 0 )
         xis.error( "setup: uninstallation-time < 0" );
-
-    rInstallationTime_   = (unsigned int)MIL_Tools::ConvertSecondsToSim( rInstallationTime_   );
-    rUninstallationTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( rUninstallationTime_ );
+    rInstallationTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rInstallationTime_ ) );
+    rUninstallationTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rUninstallationTime_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -278,7 +276,7 @@ void PHY_UnitType::ReadSetup( xml::xistream& xis )
 void PHY_UnitType::InitializeCoupDeSonde( xml::xistream& xis )
 {
     rCoupDeSondeLength_ = 0.;
-    rCoupDeSondeWidth_  = 0.;
+    rCoupDeSondeWidth_ = 0.;
     xis >> xml::list( "drill-blow", *this, &PHY_UnitType::ReadDrill );
 }
 
@@ -290,10 +288,8 @@ void PHY_UnitType::ReadDrill( xml::xistream& xis )
 {
     xis >> xml::attribute( "width", rCoupDeSondeWidth_ )
         >> xml::attribute( "length", rCoupDeSondeLength_ );
-
     if( rCoupDeSondeLength_ < rCoupDeSondeWidth_ )
         xis.error( "Length should be greater than width" );
-
     rCoupDeSondeLength_ = MIL_Tools::ConvertMeterToSim( rCoupDeSondeLength_ );
     rCoupDeSondeWidth_  = MIL_Tools::ConvertMeterToSim( rCoupDeSondeWidth_  );
 }
@@ -318,10 +314,6 @@ double PHY_UnitType::GetStockLogisticThresholdRatio( const PHY_DotationLogisticT
     return stockLogisticThresholdRatios_[ type.GetID() ];
 }
 
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_UnitType::InstanciateComposantes
 // Created: NLD 2004-08-12
@@ -331,8 +323,7 @@ void PHY_UnitType::InstanciateComposantes( PHY_RolePion_Composantes& role ) cons
     for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
     {
         const PHY_ComposanteTypePion& compType = *itComposanteType->first;
-        const sComposanteTypeData&    compData =  itComposanteType->second;
-
+        const sComposanteTypeData& compData = itComposanteType->second;
         for( unsigned int i = 0; i < compData.nNbr_; ++i )
             compType.InstanciateComposante( role, compData.nNbrHumanInCrew_, compData.bMajor_, compData.bLoadable_, compData.bCanBePartOfConvoy_ );
     }
@@ -417,4 +408,33 @@ double PHY_UnitType::GetInstallationTime() const
 double PHY_UnitType::GetUninstallationTime() const
 {
     return rUninstallationTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetPionEfficiency
+// Created: JSR 2010-11-30
+// -----------------------------------------------------------------------------
+unsigned int PHY_UnitType::GetPionEfficiency( E_PionEfficiency pionEfficiency ) const
+{
+    switch( pionEfficiency )
+    {
+    case ePionEfficiencyRecon:
+        return nReconEfficiency_;
+    case ePionEfficiencyCombatSupport:
+        return nCombatSupportEfficiency_;
+    case ePionEfficiencyCombat:
+        return nCombatEfficiency_;
+    case ePionEfficiencyMobilitySupport:
+        return nMobilitySupportEfficiency_;
+    case ePionEfficiencyCounterMobilitySupport:
+        return nCounterMobilitySupportEfficiency_;
+    case ePionEfficiencyProtectionSupport:
+        return nProtectionSupportEfficiency_;
+    case ePionEfficiencyEngineeringSupport:
+        return nEngineeringReconEfficiency_;
+    case ePionEfficiencyUrbanArea:
+        return nUrbanAreaEfficiency_;
+    default:
+        throw std::exception( "GetPionEfficiency : bad value" );
+    }
 }

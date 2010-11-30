@@ -780,6 +780,7 @@ bool MIL_PopulationFlow::HasChanged() const
 void MIL_PopulationFlow::UnregisterSourceConcentration( MIL_PopulationConcentration& concentration )
 {
     assert( pSourceConcentration_ == &concentration );
+    ( void )concentration; // remove warning in release
     pSourceConcentration_ = 0;
 }
 

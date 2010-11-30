@@ -163,6 +163,7 @@ void DEC_AutomateDecision::RegisterUserArchetypeFunctions ( directia::brain::Bra
     // Accesseurs sur les pions
     brain.Register( "DEC_Automate_PionEstNeutralise", &DEC_AutomateDecision::IsPionNeutralized );
     brain[ "DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion" ] = &DEC_AutomateFunctions::ComputePionNearestLocalisationPointInFuseau;
+    brain[ "DEC_Automate_GetEfficacite" ] = &DEC_AutomateFunctions::GetPionEfficiency;
 
     // Objects
     brain[ "DEC_DetruireObjetSansDelais" ] = &DEC_ObjectFunctions::MagicDestroyObject;
@@ -173,6 +174,7 @@ void DEC_AutomateDecision::RegisterUserArchetypeFunctions ( directia::brain::Bra
     brain[ "DEC_GetDirectionEnnemi" ] = &DEC_MiscFunctions::GetDirectionEnnemi;
     brain[ "DEC_Copie_DirectionDanger_Mission" ] = &DEC_MiscFunctions::CopyDirectionDanger;
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::RegisterUserFunctions
 // Created: LDC 2009-04-09
