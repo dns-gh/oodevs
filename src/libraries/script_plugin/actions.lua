@@ -342,15 +342,11 @@ function Mission.create( target, id )
     local phaseLineParameter = { name = "Phase lines", type = "PhaseLine" }
     phaseLineParameter[ "min-occurs" ] = "1"
     phaseLineParameter[ "max-occurs" ] = "unbounded"
-    local intelligencesParameter = { name = "Intelligences", type = "Intelligence" }
-    intelligencesParameter[ "min-occurs" ] = "1"
-    intelligencesParameter[ "max-occurs" ] = "unbounded"
     local new = Order.create( target, id, "mission" )
         :With( { name = "Danger direction", type = "Heading", value = 360 } )
         :With( phaseLineParameter )
         :With( { name = "Boundary limit 1", type = "Limit" } )
         :With( { name = "Boundary limit 2", type = "Limit" } )
-        :With( intelligencesParameter )
     return new
 end
 
