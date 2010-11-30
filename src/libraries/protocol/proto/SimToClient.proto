@@ -1290,12 +1290,20 @@ message MsgPopulationUpdate {
         optional float                  health      = 4;
         optional float                  safety      = 5;
     }
-    required Common.PopulationId  id           = 1;
+    message BlockOccupation {
+         required Common.UrbanObjectId  block = 1;
+         required int32 number = 2;
+     }
+
+    required Common.PopulationId   id           = 1;
     optional int32                 healthy      = 2;
     optional int32                 wounded      = 3;
     optional int32                 dead         = 4;
-    repeated Common.PartyAdhesion adhesions    = 5;
-    optional Satisfaction         satisfaction = 6;
+    repeated Common.PartyAdhesion  adhesions    = 5;
+    optional Satisfaction          satisfaction = 6;
+    optional Common.MotivationType motivation   = 7; 
+    repeated BlockOccupation       occupations  = 8;
+
 }
 
 // Message container

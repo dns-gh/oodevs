@@ -217,6 +217,7 @@ class MsgPopulationUpdate;
 class MsgPopulationUpdate_MotivationSatisfaction;
 class MsgPopulationUpdate_ResourceSatisfaction;
 class MsgPopulationUpdate_Satisfaction;
+class MsgPopulationUpdate_BlockOccupation;
 class MsgSimToClient;
 class MsgSimToClient_Content;
 
@@ -20739,6 +20740,101 @@ class MsgPopulationUpdate_Satisfaction : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgPopulationUpdate_BlockOccupation : public ::google::protobuf::Message {
+ public:
+  MsgPopulationUpdate_BlockOccupation();
+  virtual ~MsgPopulationUpdate_BlockOccupation();
+  
+  MsgPopulationUpdate_BlockOccupation(const MsgPopulationUpdate_BlockOccupation& from);
+  
+  inline MsgPopulationUpdate_BlockOccupation& operator=(const MsgPopulationUpdate_BlockOccupation& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgPopulationUpdate_BlockOccupation& default_instance();
+  void Swap(MsgPopulationUpdate_BlockOccupation* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgPopulationUpdate_BlockOccupation* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgPopulationUpdate_BlockOccupation& from);
+  void MergeFrom(const MsgPopulationUpdate_BlockOccupation& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.UrbanObjectId block = 1;
+  inline bool has_block() const;
+  inline void clear_block();
+  static const int kBlockFieldNumber = 1;
+  inline const ::Common::UrbanObjectId& block() const;
+  inline ::Common::UrbanObjectId* mutable_block();
+  
+  // required int32 number = 2;
+  inline bool has_number() const;
+  inline void clear_number();
+  static const int kNumberFieldNumber = 2;
+  inline ::google::protobuf::int32 number() const;
+  inline void set_number(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::UrbanObjectId* block_;
+  ::google::protobuf::int32 number_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgPopulationUpdate_BlockOccupation* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgPopulationUpdate : public ::google::protobuf::Message {
  public:
   MsgPopulationUpdate();
@@ -20793,6 +20889,7 @@ class MsgPopulationUpdate : public ::google::protobuf::Message {
   typedef MsgPopulationUpdate_MotivationSatisfaction MotivationSatisfaction;
   typedef MsgPopulationUpdate_ResourceSatisfaction ResourceSatisfaction;
   typedef MsgPopulationUpdate_Satisfaction Satisfaction;
+  typedef MsgPopulationUpdate_BlockOccupation BlockOccupation;
   
   // accessors -------------------------------------------------------
   
@@ -20841,6 +20938,23 @@ class MsgPopulationUpdate : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgPopulationUpdate_Satisfaction& satisfaction() const;
   inline ::MsgsSimToClient::MsgPopulationUpdate_Satisfaction* mutable_satisfaction();
   
+  // optional .Common.MotivationType motivation = 7;
+  inline bool has_motivation() const;
+  inline void clear_motivation();
+  static const int kMotivationFieldNumber = 7;
+  inline const ::Common::MotivationType& motivation() const;
+  inline ::Common::MotivationType* mutable_motivation();
+  
+  // repeated .MsgsSimToClient.MsgPopulationUpdate.BlockOccupation occupations = 8;
+  inline int occupations_size() const;
+  inline void clear_occupations();
+  static const int kOccupationsFieldNumber = 8;
+  inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_BlockOccupation >& occupations() const;
+  inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_BlockOccupation >* mutable_occupations();
+  inline const ::MsgsSimToClient::MsgPopulationUpdate_BlockOccupation& occupations(int index) const;
+  inline ::MsgsSimToClient::MsgPopulationUpdate_BlockOccupation* mutable_occupations(int index);
+  inline ::MsgsSimToClient::MsgPopulationUpdate_BlockOccupation* add_occupations();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -20851,11 +20965,13 @@ class MsgPopulationUpdate : public ::google::protobuf::Message {
   ::google::protobuf::int32 dead_;
   ::google::protobuf::RepeatedPtrField< ::Common::PartyAdhesion > adhesions_;
   ::MsgsSimToClient::MsgPopulationUpdate_Satisfaction* satisfaction_;
+  ::Common::MotivationType* motivation_;
+  ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_BlockOccupation > occupations_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -33500,6 +33616,43 @@ inline void MsgPopulationUpdate_Satisfaction::set_safety(float value) {
 
 // -------------------------------------------------------------------
 
+// MsgPopulationUpdate_BlockOccupation
+
+// required .Common.UrbanObjectId block = 1;
+inline bool MsgPopulationUpdate_BlockOccupation::has_block() const {
+  return _has_bit(0);
+}
+inline void MsgPopulationUpdate_BlockOccupation::clear_block() {
+  if (block_ != NULL) block_->::Common::UrbanObjectId::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::UrbanObjectId& MsgPopulationUpdate_BlockOccupation::block() const {
+  return block_ != NULL ? *block_ : *default_instance_->block_;
+}
+inline ::Common::UrbanObjectId* MsgPopulationUpdate_BlockOccupation::mutable_block() {
+  _set_bit(0);
+  if (block_ == NULL) block_ = new ::Common::UrbanObjectId;
+  return block_;
+}
+
+// required int32 number = 2;
+inline bool MsgPopulationUpdate_BlockOccupation::has_number() const {
+  return _has_bit(1);
+}
+inline void MsgPopulationUpdate_BlockOccupation::clear_number() {
+  number_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 MsgPopulationUpdate_BlockOccupation::number() const {
+  return number_;
+}
+inline void MsgPopulationUpdate_BlockOccupation::set_number(::google::protobuf::int32 value) {
+  _set_bit(1);
+  number_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // MsgPopulationUpdate
 
 // required .Common.PopulationId id = 1;
@@ -33607,6 +33760,48 @@ inline ::MsgsSimToClient::MsgPopulationUpdate_Satisfaction* MsgPopulationUpdate:
   _set_bit(5);
   if (satisfaction_ == NULL) satisfaction_ = new ::MsgsSimToClient::MsgPopulationUpdate_Satisfaction;
   return satisfaction_;
+}
+
+// optional .Common.MotivationType motivation = 7;
+inline bool MsgPopulationUpdate::has_motivation() const {
+  return _has_bit(6);
+}
+inline void MsgPopulationUpdate::clear_motivation() {
+  if (motivation_ != NULL) motivation_->::Common::MotivationType::Clear();
+  _clear_bit(6);
+}
+inline const ::Common::MotivationType& MsgPopulationUpdate::motivation() const {
+  return motivation_ != NULL ? *motivation_ : *default_instance_->motivation_;
+}
+inline ::Common::MotivationType* MsgPopulationUpdate::mutable_motivation() {
+  _set_bit(6);
+  if (motivation_ == NULL) motivation_ = new ::Common::MotivationType;
+  return motivation_;
+}
+
+// repeated .MsgsSimToClient.MsgPopulationUpdate.BlockOccupation occupations = 8;
+inline int MsgPopulationUpdate::occupations_size() const {
+  return occupations_.size();
+}
+inline void MsgPopulationUpdate::clear_occupations() {
+  occupations_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_BlockOccupation >&
+MsgPopulationUpdate::occupations() const {
+  return occupations_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::MsgsSimToClient::MsgPopulationUpdate_BlockOccupation >*
+MsgPopulationUpdate::mutable_occupations() {
+  return &occupations_;
+}
+inline const ::MsgsSimToClient::MsgPopulationUpdate_BlockOccupation& MsgPopulationUpdate::occupations(int index) const {
+  return occupations_.Get(index);
+}
+inline ::MsgsSimToClient::MsgPopulationUpdate_BlockOccupation* MsgPopulationUpdate::mutable_occupations(int index) {
+  return occupations_.Mutable(index);
+}
+inline ::MsgsSimToClient::MsgPopulationUpdate_BlockOccupation* MsgPopulationUpdate::add_occupations() {
+  return occupations_.Add();
 }
 
 // -------------------------------------------------------------------
