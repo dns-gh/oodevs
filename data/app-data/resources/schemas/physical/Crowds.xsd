@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.2.6">
-
+<!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.3.0">
 	<xs:include schemaLocation="tools.xsd"/>
-
 	<xs:element name="populations">
 		<xs:complexType>
 			<xs:sequence>
@@ -25,12 +24,12 @@
 						<xs:attribute name="concentration-density" type="T_NonNegativeDouble" use="required"/>
 						<xs:attribute name="moving-base-density" type="T_NonNegativeDouble" use="required"/>
 						<xs:attribute name="moving-speed" type="xs:nonNegativeInteger" use="required"/>
+						<xs:attribute name="moving-mode" type="T_MovingType"/>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	
 	<xs:complexType name="T_SlowingEffects">
 		<xs:sequence>
 			<xs:element name="slowing-effect" minOccurs="0" maxOccurs="unbounded">
@@ -49,7 +48,6 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	
 	<xs:complexType name="T_AttritionEffects">
 		<xs:sequence>
 			<xs:element name="attrition-effect" minOccurs="0" maxOccurs="unbounded">
@@ -71,7 +69,6 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	
 	<xs:complexType name="T_UnitFireEffects">
 		<xs:sequence>
 			<xs:element name="unit" minOccurs="0" maxOccurs="unbounded">
@@ -83,5 +80,10 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	
+	<xs:simpleType name="T_MovingType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="walking"/>
+			<xs:enumeration value="motorized"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>

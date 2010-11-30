@@ -2,7 +2,7 @@
 <extensions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation=".\Extensions.xsd">
 	<dictionaries>
 		<dictionary name="T_SIC_TypeSIOC" alias="Unite.TypeSIOC">
-			<entry id="1" name="" alias="ATLAS">
+			<entry id="1" name="ATLAS" alias="ATLAS">
 				<labels>
 					<label text="ATLAS" language="fr-FR" kind="short"/>
 					<label text="ATLAS" language="fr-FR" kind="long"/>
@@ -10,7 +10,7 @@
 					<label text="ATLAS" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
-			<entry id="2"  name="" alias="GRANITE">
+			<entry id="2" name="GRANITE" alias="GRANITE">
 				<labels>
 					<label text="GRANITE" language="fr-FR" kind="short"/>
 					<label text="GRANITE" language="fr-FR" kind="long"/>
@@ -18,7 +18,7 @@
 					<label text="GRANITE" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
-			<entry id="3"  name="" alias="MAESTRO">
+			<entry id="3" name="MAESTRO" alias="MAESTRO">
 				<labels>
 					<label text="MAESTRO" language="fr-FR" kind="short"/>
 					<label text="MAESTRO" language="fr-FR" kind="long"/>
@@ -26,7 +26,7 @@
 					<label text="MAESTRO" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
-			<entry id="4"  name="" alias="MARTHA">
+			<entry id="4" name="MARTHA" alias="MARTHA">
 				<labels>
 					<label text="MARTHA" language="fr-FR" kind="short"/>
 					<label text="MARTHA" language="fr-FR" kind="long"/>
@@ -34,7 +34,7 @@
 					<label text="MARTHA" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
-			<entry id="5"  name="" alias="SICF">
+			<entry id="5" name="SICF" alias="SICF">
 				<labels>
 					<label text="SICF" language="fr-FR" kind="short"/>
 					<label text="SICF" language="fr-FR" kind="long"/>
@@ -42,7 +42,7 @@
 					<label text="SICF" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
-			<entry id="6"  name=""  alias="SIR">
+			<entry id="6" name="SIR" alias="SIR">
 				<labels>
 					<label text="SIR" language="fr-FR" kind="short"/>
 					<label text="SIR" language="fr-FR" kind="long"/>
@@ -50,7 +50,7 @@
 					<label text="SIR" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
-			<entry id="7"  name="" alias="SIT">
+			<entry id="7" name="SIT" alias="SIT">
 				<labels>
 					<label text="SIT" language="fr-FR" kind="short"/>
 					<label text="SIT" language="fr-FR" kind="long"/>
@@ -58,10 +58,11 @@
 					<label text="SIT" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
-			<entry id="8"  name="" alias="SITEL">
+			<entry id="8" name="SITEL" alias="SITEL">
 				<labels>
 					<label text="SITEL" language="fr-FR" kind="short"/>
 					<label text="SITEL" language="fr-FR" kind="long"/>
+					<label text="SITEL" language="en-GB" kind="short"/>
 					<label text="SITEL" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
@@ -98,2352 +99,2516 @@
 				</labels>
 			</entry>
 		</dictionary>
-		<dictionary name="T_SIC_IdCdB" alias="IdCDB">
+		<dictionary name="T_SIC_IdCDB" alias="IdCDB">
 			<entry id="0" name="1RF" alias="1RF">
 				<labels>
+					<label text="1RF" language="fr-FR" kind="short"/>
 					<label text="1RF" language="fr-FR" kind="long"/>
+					<label text="1RF" language="en-GB" kind="short"/>
 					<label text="1RF" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="1" name="1RG" alias="1RG">
 				<labels>
+					<label text="1RG" language="fr-FR" kind="short"/>
 					<label text="1RG" language="fr-FR" kind="long"/>
+					<label text="1RG" language="en-GB" kind="short"/>
 					<label text="1RG" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="2" name="1RH" alias="1RH">
 				<labels>
+					<label text="1RH" language="fr-FR" kind="short"/>
 					<label text="1RH" language="fr-FR" kind="long"/>
+					<label text="1RH" language="en-GB" kind="short"/>
 					<label text="1RH" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="3" name="1RI" alias="1RI">
 				<labels>
+					<label text="1RI" language="fr-FR" kind="short"/>
 					<label text="1RI" language="fr-FR" kind="long"/>
+					<label text="1RI" language="en-GB" kind="short"/>
 					<label text="1RI" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="4" name="1RJ" alias="1RJ">
 				<labels>
+					<label text="1RJ" language="fr-FR" kind="short"/>
 					<label text="1RJ" language="fr-FR" kind="long"/>
+					<label text="1RJ" language="en-GB" kind="short"/>
 					<label text="1RJ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="5" name="1RK" alias="1RK">
 				<labels>
+					<label text="1RK" language="fr-FR" kind="short"/>
 					<label text="1RK" language="fr-FR" kind="long"/>
+					<label text="1RK" language="en-GB" kind="short"/>
 					<label text="1RK" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="6" name="1RL" alias="1RL">
 				<labels>
+					<label text="1RL" language="fr-FR" kind="short"/>
 					<label text="1RL" language="fr-FR" kind="long"/>
+					<label text="1RL" language="en-GB" kind="short"/>
 					<label text="1RL" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="7" name="1RM" alias="1RM">
 				<labels>
+					<label text="1RM" language="fr-FR" kind="short"/>
 					<label text="1RM" language="fr-FR" kind="long"/>
+					<label text="1RM" language="en-GB" kind="short"/>
 					<label text="1RM" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="8" name="1RN" alias="1RN">
 				<labels>
+					<label text="1RN" language="fr-FR" kind="short"/>
 					<label text="1RN" language="fr-FR" kind="long"/>
+					<label text="1RN" language="en-GB" kind="short"/>
 					<label text="1RN" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="9" name="1RO" alias="1RO">
 				<labels>
+					<label text="1RO" language="fr-FR" kind="short"/>
 					<label text="1RO" language="fr-FR" kind="long"/>
+					<label text="1RO" language="en-GB" kind="short"/>
 					<label text="1RO" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="10" name="1RP" alias="1RP">
 				<labels>
+					<label text="1RP" language="fr-FR" kind="short"/>
 					<label text="1RP" language="fr-FR" kind="long"/>
+					<label text="1RP" language="en-GB" kind="short"/>
 					<label text="1RP" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="11" name="1RQ" alias="1RQ">
 				<labels>
+					<label text="1RQ" language="fr-FR" kind="short"/>
 					<label text="1RQ" language="fr-FR" kind="long"/>
+					<label text="1RQ" language="en-GB" kind="short"/>
 					<label text="1RQ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="12" name="1RR" alias="1RR">
 				<labels>
+					<label text="1RR" language="fr-FR" kind="short"/>
 					<label text="1RR" language="fr-FR" kind="long"/>
+					<label text="1RR" language="en-GB" kind="short"/>
 					<label text="1RR" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="13" name="1RS" alias="1RS">
 				<labels>
+					<label text="1RS" language="fr-FR" kind="short"/>
 					<label text="1RS" language="fr-FR" kind="long"/>
+					<label text="1RS" language="en-GB" kind="short"/>
 					<label text="1RS" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="14" name="1RT" alias="1RT">
 				<labels>
+					<label text="1RT" language="fr-FR" kind="short"/>
 					<label text="1RT" language="fr-FR" kind="long"/>
+					<label text="1RT" language="en-GB" kind="short"/>
 					<label text="1RT" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="15" name="1RU" alias="1RU">
 				<labels>
+					<label text="1RU" language="fr-FR" kind="short"/>
 					<label text="1RU" language="fr-FR" kind="long"/>
+					<label text="1RU" language="en-GB" kind="short"/>
 					<label text="1RU" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="16" name="1RV" alias="1RV">
 				<labels>
+					<label text="1RV" language="fr-FR" kind="short"/>
 					<label text="1RV" language="fr-FR" kind="long"/>
+					<label text="1RV" language="en-GB" kind="short"/>
 					<label text="1RV" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="17" name="1RW" alias="1RW">
 				<labels>
+					<label text="1RW" language="fr-FR" kind="short"/>
 					<label text="1RW" language="fr-FR" kind="long"/>
+					<label text="1RW" language="en-GB" kind="short"/>
 					<label text="1RW" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="18" name="1RX" alias="1RX">
 				<labels>
+					<label text="1RX" language="fr-FR" kind="short"/>
 					<label text="1RX" language="fr-FR" kind="long"/>
+					<label text="1RX" language="en-GB" kind="short"/>
 					<label text="1RX" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="19" name="1RY" alias="1RY">
 				<labels>
+					<label text="1RY" language="fr-FR" kind="short"/>
 					<label text="1RY" language="fr-FR" kind="long"/>
+					<label text="1RY" language="en-GB" kind="short"/>
 					<label text="1RY" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="20" name="1RZ" alias="1RZ">
 				<labels>
+					<label text="1RZ" language="fr-FR" kind="short"/>
 					<label text="1RZ" language="fr-FR" kind="long"/>
+					<label text="1RZ" language="en-GB" kind="short"/>
 					<label text="1RZ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="21" name="1SA" alias="1SA">
 				<labels>
+					<label text="1SA" language="fr-FR" kind="short"/>
 					<label text="1SA" language="fr-FR" kind="long"/>
+					<label text="1SA" language="en-GB" kind="short"/>
 					<label text="1SA" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="22" name="1SB" alias="1SB">
 				<labels>
+					<label text="1SB" language="fr-FR" kind="short"/>
 					<label text="1SB" language="fr-FR" kind="long"/>
+					<label text="1SB" language="en-GB" kind="short"/>
 					<label text="1SB" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="23" name="1SC" alias="1SC">
 				<labels>
+					<label text="1SC" language="fr-FR" kind="short"/>
 					<label text="1SC" language="fr-FR" kind="long"/>
+					<label text="1SC" language="en-GB" kind="short"/>
 					<label text="1SC" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="24" name="1SD" alias="1SD">
 				<labels>
+					<label text="1SD" language="fr-FR" kind="short"/>
 					<label text="1SD" language="fr-FR" kind="long"/>
+					<label text="1SD" language="en-GB" kind="short"/>
 					<label text="1SD" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="25" name="1SE" alias="1SE">
 				<labels>
+					<label text="1SE" language="fr-FR" kind="short"/>
 					<label text="1SE" language="fr-FR" kind="long"/>
+					<label text="1SE" language="en-GB" kind="short"/>
 					<label text="1SE" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="26" name="1SF" alias="1SF">
 				<labels>
+					<label text="1SF" language="fr-FR" kind="short"/>
 					<label text="1SF" language="fr-FR" kind="long"/>
+					<label text="1SF" language="en-GB" kind="short"/>
 					<label text="1SF" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="27" name="1SG" alias="1SG">
 				<labels>
+					<label text="1SG" language="fr-FR" kind="short"/>
 					<label text="1SG" language="fr-FR" kind="long"/>
+					<label text="1SG" language="en-GB" kind="short"/>
 					<label text="1SG" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="28" name="1SH" alias="1SH">
 				<labels>
+					<label text="1SH" language="fr-FR" kind="short"/>
 					<label text="1SH" language="fr-FR" kind="long"/>
+					<label text="1SH" language="en-GB" kind="short"/>
 					<label text="1SH" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="29" name="1SI" alias="1SI">
 				<labels>
+					<label text="1SI" language="fr-FR" kind="short"/>
 					<label text="1SI" language="fr-FR" kind="long"/>
+					<label text="1SI" language="en-GB" kind="short"/>
 					<label text="1SI" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="30" name="1SJ" alias="1SJ">
 				<labels>
+					<label text="1SJ" language="fr-FR" kind="short"/>
 					<label text="1SJ" language="fr-FR" kind="long"/>
+					<label text="1SJ" language="en-GB" kind="short"/>
 					<label text="1SJ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="31" name="1SK" alias="1SK">
 				<labels>
+					<label text="1SK" language="fr-FR" kind="short"/>
 					<label text="1SK" language="fr-FR" kind="long"/>
+					<label text="1SK" language="en-GB" kind="short"/>
 					<label text="1SK" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="32" name="1SM" alias="1SM">
 				<labels>
+					<label text="1SM" language="fr-FR" kind="short"/>
 					<label text="1SM" language="fr-FR" kind="long"/>
+					<label text="1SM" language="en-GB" kind="short"/>
 					<label text="1SM" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="33" name="1SN" alias="1SN">
 				<labels>
+					<label text="1SN" language="fr-FR" kind="short"/>
 					<label text="1SN" language="fr-FR" kind="long"/>
+					<label text="1SN" language="en-GB" kind="short"/>
 					<label text="1SN" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="34" name="1SO" alias="1SO">
 				<labels>
+					<label text="1SO" language="fr-FR" kind="short"/>
 					<label text="1SO" language="fr-FR" kind="long"/>
+					<label text="1SO" language="en-GB" kind="short"/>
 					<label text="1SO" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="35" name="1SP" alias="1SP">
 				<labels>
+					<label text="1SP" language="fr-FR" kind="short"/>
 					<label text="1SP" language="fr-FR" kind="long"/>
+					<label text="1SP" language="en-GB" kind="short"/>
 					<label text="1SP" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="36" name="1SQ" alias="1SQ">
 				<labels>
+					<label text="1SQ" language="fr-FR" kind="short"/>
 					<label text="1SQ" language="fr-FR" kind="long"/>
+					<label text="1SQ" language="en-GB" kind="short"/>
 					<label text="1SQ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="37" name="1SR" alias="1SR">
 				<labels>
+					<label text="1SR" language="fr-FR" kind="short"/>
 					<label text="1SR" language="fr-FR" kind="long"/>
+					<label text="1SR" language="en-GB" kind="short"/>
 					<label text="1SR" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="38" name="1SS" alias="1SS">
 				<labels>
+					<label text="1SS" language="fr-FR" kind="short"/>
 					<label text="1SS" language="fr-FR" kind="long"/>
+					<label text="1SS" language="en-GB" kind="short"/>
 					<label text="1SS" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="39" name="1ST" alias="1ST">
 				<labels>
+					<label text="1ST" language="fr-FR" kind="short"/>
 					<label text="1ST" language="fr-FR" kind="long"/>
+					<label text="1ST" language="en-GB" kind="short"/>
 					<label text="1ST" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="40" name="1SU" alias="1SU">
 				<labels>
+					<label text="1SU" language="fr-FR" kind="short"/>
 					<label text="1SU" language="fr-FR" kind="long"/>
+					<label text="1SU" language="en-GB" kind="short"/>
 					<label text="1SU" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="41" name="1SV" alias="1SV">
 				<labels>
+					<label text="1SV" language="fr-FR" kind="short"/>
 					<label text="1SV" language="fr-FR" kind="long"/>
+					<label text="1SV" language="en-GB" kind="short"/>
 					<label text="1SV" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="42" name="1SW" alias="1SW">
 				<labels>
+					<label text="1SW" language="fr-FR" kind="short"/>
 					<label text="1SW" language="fr-FR" kind="long"/>
+					<label text="1SW" language="en-GB" kind="short"/>
 					<label text="1SW" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="43" name="1SX" alias="1SX">
 				<labels>
+					<label text="1SX" language="fr-FR" kind="short"/>
 					<label text="1SX" language="fr-FR" kind="long"/>
+					<label text="1SX" language="en-GB" kind="short"/>
 					<label text="1SX" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="44" name="1SY" alias="1SY">
 				<labels>
+					<label text="1SY" language="fr-FR" kind="short"/>
 					<label text="1SY" language="fr-FR" kind="long"/>
+					<label text="1SY" language="en-GB" kind="short"/>
 					<label text="1SY" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="45" name="1SZ" alias="1SZ">
 				<labels>
+					<label text="1SZ" language="fr-FR" kind="short"/>
 					<label text="1SZ" language="fr-FR" kind="long"/>
+					<label text="1SZ" language="en-GB" kind="short"/>
 					<label text="1SZ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="46" name="1TA" alias="1TA">
 				<labels>
+					<label text="1TA" language="fr-FR" kind="short"/>
 					<label text="1TA" language="fr-FR" kind="long"/>
+					<label text="1TA" language="en-GB" kind="short"/>
 					<label text="1TA" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="47" name="1TB" alias="1TB">
 				<labels>
+					<label text="1TB" language="fr-FR" kind="short"/>
 					<label text="1TB" language="fr-FR" kind="long"/>
+					<label text="1TB" language="en-GB" kind="short"/>
 					<label text="1TB" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="48" name="1TC" alias="1TC">
 				<labels>
+					<label text="1TC" language="fr-FR" kind="short"/>
 					<label text="1TC" language="fr-FR" kind="long"/>
+					<label text="1TC" language="en-GB" kind="short"/>
 					<label text="1TC" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="49" name="1TD" alias="1TD">
 				<labels>
+					<label text="1TD" language="fr-FR" kind="short"/>
 					<label text="1TD" language="fr-FR" kind="long"/>
+					<label text="1TD" language="en-GB" kind="short"/>
 					<label text="1TD" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="50" name="1TE" alias="1TE">
 				<labels>
+					<label text="1TE" language="fr-FR" kind="short"/>
 					<label text="1TE" language="fr-FR" kind="long"/>
+					<label text="1TE" language="en-GB" kind="short"/>
 					<label text="1TE" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="51" name="1TF" alias="1TF">
 				<labels>
+					<label text="1TF" language="fr-FR" kind="short"/>
 					<label text="1TF" language="fr-FR" kind="long"/>
+					<label text="1TF" language="en-GB" kind="short"/>
 					<label text="1TF" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="52" name="1TG" alias="1TG">
 				<labels>
+					<label text="1TG" language="fr-FR" kind="short"/>
 					<label text="1TG" language="fr-FR" kind="long"/>
+					<label text="1TG" language="en-GB" kind="short"/>
 					<label text="1TG" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="53" name="1TH" alias="1TH">
 				<labels>
+					<label text="1TH" language="fr-FR" kind="short"/>
 					<label text="1TH" language="fr-FR" kind="long"/>
+					<label text="1TH" language="en-GB" kind="short"/>
 					<label text="1TH" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="54" name="1TI" alias="1TI">
 				<labels>
+					<label text="1TI" language="fr-FR" kind="short"/>
 					<label text="1TI" language="fr-FR" kind="long"/>
+					<label text="1TI" language="en-GB" kind="short"/>
 					<label text="1TI" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="55" name="1TJ" alias="1TJ">
 				<labels>
+					<label text="1TJ" language="fr-FR" kind="short"/>
 					<label text="1TJ" language="fr-FR" kind="long"/>
+					<label text="1TJ" language="en-GB" kind="short"/>
 					<label text="1TJ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="56" name="1TK" alias="1TK">
 				<labels>
+					<label text="1TK" language="fr-FR" kind="short"/>
 					<label text="1TK" language="fr-FR" kind="long"/>
+					<label text="1TK" language="en-GB" kind="short"/>
 					<label text="1TK" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="57" name="1TL" alias="1TL">
 				<labels>
+					<label text="1TL" language="fr-FR" kind="short"/>
 					<label text="1TL" language="fr-FR" kind="long"/>
+					<label text="1TL" language="en-GB" kind="short"/>
 					<label text="1TL" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="58" name="1TM" alias="1TM">
 				<labels>
+					<label text="1TM" language="fr-FR" kind="short"/>
 					<label text="1TM" language="fr-FR" kind="long"/>
+					<label text="1TM" language="en-GB" kind="short"/>
 					<label text="1TM" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="59" name="1TN" alias="1TN">
 				<labels>
+					<label text="1TN" language="fr-FR" kind="short"/>
 					<label text="1TN" language="fr-FR" kind="long"/>
+					<label text="1TN" language="en-GB" kind="short"/>
 					<label text="1TN" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="60" name="1TO" alias="1TO">
 				<labels>
+					<label text="1TO" language="fr-FR" kind="short"/>
 					<label text="1TO" language="fr-FR" kind="long"/>
+					<label text="1TO" language="en-GB" kind="short"/>
 					<label text="1TO" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="61" name="1TP" alias="1TP">
 				<labels>
+					<label text="1TP" language="fr-FR" kind="short"/>
 					<label text="1TP" language="fr-FR" kind="long"/>
+					<label text="1TP" language="en-GB" kind="short"/>
 					<label text="1TP" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="62" name="1TQ" alias="1TQ">
 				<labels>
+					<label text="1TQ" language="fr-FR" kind="short"/>
 					<label text="1TQ" language="fr-FR" kind="long"/>
+					<label text="1TQ" language="en-GB" kind="short"/>
 					<label text="1TQ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="63" name="1TR" alias="1TR">
 				<labels>
+					<label text="1TR" language="fr-FR" kind="short"/>
 					<label text="1TR" language="fr-FR" kind="long"/>
+					<label text="1TR" language="en-GB" kind="short"/>
 					<label text="1TR" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="64" name="1TS" alias="1TS">
 				<labels>
+					<label text="1TS" language="fr-FR" kind="short"/>
 					<label text="1TS" language="fr-FR" kind="long"/>
+					<label text="1TS" language="en-GB" kind="short"/>
 					<label text="1TS" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="65" name="1TT" alias="1TT">
 				<labels>
+					<label text="1TT" language="fr-FR" kind="short"/>
 					<label text="1TT" language="fr-FR" kind="long"/>
+					<label text="1TT" language="en-GB" kind="short"/>
 					<label text="1TT" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="66" name="1TU" alias="1TU">
 				<labels>
+					<label text="1TU" language="fr-FR" kind="short"/>
 					<label text="1TU" language="fr-FR" kind="long"/>
+					<label text="1TU" language="en-GB" kind="short"/>
 					<label text="1TU" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="67" name="1TV" alias="1TV">
 				<labels>
+					<label text="1TV" language="fr-FR" kind="short"/>
 					<label text="1TV" language="fr-FR" kind="long"/>
+					<label text="1TV" language="en-GB" kind="short"/>
 					<label text="1TV" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="68" name="1TW" alias="1TW">
 				<labels>
+					<label text="1TW" language="fr-FR" kind="short"/>
 					<label text="1TW" language="fr-FR" kind="long"/>
+					<label text="1TW" language="en-GB" kind="short"/>
 					<label text="1TW" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="69" name="1TX" alias="1TX">
 				<labels>
+					<label text="1TX" language="fr-FR" kind="short"/>
 					<label text="1TX" language="fr-FR" kind="long"/>
+					<label text="1TX" language="en-GB" kind="short"/>
 					<label text="1TX" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="70" name="1TY" alias="1TY">
 				<labels>
+					<label text="1TY" language="fr-FR" kind="short"/>
 					<label text="1TY" language="fr-FR" kind="long"/>
+					<label text="1TY" language="en-GB" kind="short"/>
 					<label text="1TY" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="71" name="1TZ" alias="1TZ">
 				<labels>
+					<label text="1TZ" language="fr-FR" kind="short"/>
 					<label text="1TZ" language="fr-FR" kind="long"/>
+					<label text="1TZ" language="en-GB" kind="short"/>
 					<label text="1TZ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="72" name="1UA" alias="1UA">
 				<labels>
+					<label text="1UA" language="fr-FR" kind="short"/>
 					<label text="1UA" language="fr-FR" kind="long"/>
+					<label text="1UA" language="en-GB" kind="short"/>
 					<label text="1UA" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="73" name="1UB" alias="1UB">
 				<labels>
+					<label text="1UB" language="fr-FR" kind="short"/>
 					<label text="1UB" language="fr-FR" kind="long"/>
+					<label text="1UB" language="en-GB" kind="short"/>
 					<label text="1UB" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="74" name="1UC" alias="1UC">
 				<labels>
+					<label text="1UC" language="fr-FR" kind="short"/>
 					<label text="1UC" language="fr-FR" kind="long"/>
+					<label text="1UC" language="en-GB" kind="short"/>
 					<label text="1UC" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="75" name="1UD" alias="1UD">
 				<labels>
+					<label text="1UD" language="fr-FR" kind="short"/>
 					<label text="1UD" language="fr-FR" kind="long"/>
+					<label text="1UD" language="en-GB" kind="short"/>
 					<label text="1UD" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="76" name="1UE" alias="1UE">
 				<labels>
+					<label text="1UE" language="fr-FR" kind="short"/>
 					<label text="1UE" language="fr-FR" kind="long"/>
+					<label text="1UE" language="en-GB" kind="short"/>
 					<label text="1UE" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="77" name="1UF" alias="1UF">
 				<labels>
+					<label text="1UF" language="fr-FR" kind="short"/>
 					<label text="1UF" language="fr-FR" kind="long"/>
+					<label text="1UF" language="en-GB" kind="short"/>
 					<label text="1UF" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="78" name="1UG" alias="1UG">
 				<labels>
+					<label text="1UG" language="fr-FR" kind="short"/>
 					<label text="1UG" language="fr-FR" kind="long"/>
+					<label text="1UG" language="en-GB" kind="short"/>
 					<label text="1UG" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="79" name="1UH" alias="1UH">
 				<labels>
+					<label text="1UH" language="fr-FR" kind="short"/>
 					<label text="1UH" language="fr-FR" kind="long"/>
+					<label text="1UH" language="en-GB" kind="short"/>
 					<label text="1UH" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="80" name="1UI" alias="1UI">
 				<labels>
+					<label text="1UI" language="fr-FR" kind="short"/>
 					<label text="1UI" language="fr-FR" kind="long"/>
+					<label text="1UI" language="en-GB" kind="short"/>
 					<label text="1UI" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="81" name="1UJ" alias="1UJ">
 				<labels>
+					<label text="1UJ" language="fr-FR" kind="short"/>
 					<label text="1UJ" language="fr-FR" kind="long"/>
+					<label text="1UJ" language="en-GB" kind="short"/>
 					<label text="1UJ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="82" name="ABW" alias="ABW">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ABW" language="fr-FR" kind="short"/>
 					<label text="ABW" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ABW" language="en-GB" kind="short"/>
 					<label text="ABW" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="83" name="ABX" alias="ABX">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ABX" language="fr-FR" kind="short"/>
 					<label text="ABX" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ABX" language="en-GB" kind="short"/>
 					<label text="ABX" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="84" name="ABY" alias="ABY">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ABY" language="fr-FR" kind="short"/>
 					<label text="ABY" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ABY" language="en-GB" kind="short"/>
 					<label text="ABY" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="85" name="ABZ" alias="ABZ">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ABZ" language="fr-FR" kind="short"/>
 					<label text="ABZ" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ABZ" language="en-GB" kind="short"/>
 					<label text="ABZ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="86" name="ACA" alias="ACA">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACA" language="fr-FR" kind="short"/>
 					<label text="ACA" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACA" language="en-GB" kind="short"/>
 					<label text="ACA" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="87" name="ACB" alias="ACB">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACB" language="fr-FR" kind="short"/>
 					<label text="ACB" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACB" language="en-GB" kind="short"/>
 					<label text="ACB" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="88" name="ACC" alias="ACC">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACC" language="fr-FR" kind="short"/>
 					<label text="ACC" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACC" language="en-GB" kind="short"/>
 					<label text="ACC" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="89" name="ACD" alias="ACD">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACD" language="fr-FR" kind="short"/>
 					<label text="ACD" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACD" language="en-GB" kind="short"/>
 					<label text="ACD" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="90" name="ACE" alias="ACE">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACE" language="fr-FR" kind="short"/>
 					<label text="ACE" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACE" language="en-GB" kind="short"/>
 					<label text="ACE" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="91" name="ACF" alias="ACF">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACF" language="fr-FR" kind="short"/>
 					<label text="ACF" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACF" language="en-GB" kind="short"/>
 					<label text="ACF" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="92" name="ACG" alias="ACG">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACG" language="fr-FR" kind="short"/>
 					<label text="ACG" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACG" language="en-GB" kind="short"/>
 					<label text="ACG" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="93" name="ACH" alias="ACH">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACH" language="fr-FR" kind="short"/>
 					<label text="ACH" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACH" language="en-GB" kind="short"/>
 					<label text="ACH" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="94" name="ACI" alias="ACI">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACI" language="fr-FR" kind="short"/>
 					<label text="ACI" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACI" language="en-GB" kind="short"/>
 					<label text="ACI" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="95" name="ACJ" alias="ACJ">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACJ" language="fr-FR" kind="short"/>
 					<label text="ACJ" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACJ" language="en-GB" kind="short"/>
 					<label text="ACJ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="96" name="ACK" alias="ACK">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACK" language="fr-FR" kind="short"/>
 					<label text="ACK" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACK" language="en-GB" kind="short"/>
 					<label text="ACK" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="97" name="ACL" alias="ACL">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACL" language="fr-FR" kind="short"/>
 					<label text="ACL" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACL" language="en-GB" kind="short"/>
 					<label text="ACL" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="98" name="ACM" alias="ACM">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACM" language="fr-FR" kind="short"/>
 					<label text="ACM" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACM" language="en-GB" kind="short"/>
 					<label text="ACM" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="99" name="ACN" alias="ACN">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACN" language="fr-FR" kind="short"/>
 					<label text="ACN" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACN" language="en-GB" kind="short"/>
 					<label text="ACN" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="100" name="ACO" alias="ACO">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACO" language="fr-FR" kind="short"/>
 					<label text="ACO" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACO" language="en-GB" kind="short"/>
 					<label text="ACO" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="101" name="ACP" alias="ACP">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACP" language="fr-FR" kind="short"/>
 					<label text="ACP" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACP" language="en-GB" kind="short"/>
 					<label text="ACP" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="102" name="ACQ" alias="ACQ">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACQ" language="fr-FR" kind="short"/>
 					<label text="ACQ" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACQ" language="en-GB" kind="short"/>
 					<label text="ACQ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="103" name="ACR" alias="ACR">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACR" language="fr-FR" kind="short"/>
 					<label text="ACR" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACR" language="en-GB" kind="short"/>
 					<label text="ACR" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="104" name="ACS" alias="ACS">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACS" language="fr-FR" kind="short"/>
 					<label text="ACS" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACS" language="en-GB" kind="short"/>
 					<label text="ACS" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="105" name="ACT" alias="ACT">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACT" language="fr-FR" kind="short"/>
 					<label text="ACT" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACT" language="en-GB" kind="short"/>
 					<label text="ACT" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="106" name="ACU" alias="ACU">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACU" language="fr-FR" kind="short"/>
 					<label text="ACU" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACU" language="en-GB" kind="short"/>
 					<label text="ACU" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="107" name="ACV" alias="ACV">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACV" language="fr-FR" kind="short"/>
 					<label text="ACV" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACV" language="en-GB" kind="short"/>
 					<label text="ACV" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="108" name="ACW" alias="ACW">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACW" language="fr-FR" kind="short"/>
 					<label text="ACW" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACW" language="en-GB" kind="short"/>
 					<label text="ACW" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="109" name="ACX" alias="ACX">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACX" language="fr-FR" kind="short"/>
 					<label text="ACX" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACX" language="en-GB" kind="short"/>
 					<label text="ACX" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="110" name="ACY" alias="ACY">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACY" language="fr-FR" kind="short"/>
 					<label text="ACY" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACY" language="en-GB" kind="short"/>
 					<label text="ACY" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="111" name="ACZ" alias="ACZ">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ACZ" language="fr-FR" kind="short"/>
 					<label text="ACZ" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ACZ" language="en-GB" kind="short"/>
 					<label text="ACZ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="112" name="ADA" alias="ADA">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ADA" language="fr-FR" kind="short"/>
 					<label text="ADA" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ADA" language="en-GB" kind="short"/>
 					<label text="ADA" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="113" name="ADB" alias="ADB">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ADB" language="fr-FR" kind="short"/>
 					<label text="ADB" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ADB" language="en-GB" kind="short"/>
 					<label text="ADB" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="114" name="ADC" alias="ADC">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ADC" language="fr-FR" kind="short"/>
 					<label text="ADC" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ADC" language="en-GB" kind="short"/>
 					<label text="ADC" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="115" name="ADD" alias="ADD">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ADD" language="fr-FR" kind="short"/>
 					<label text="ADD" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ADD" language="en-GB" kind="short"/>
 					<label text="ADD" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="116" name="ADE" alias="ADE">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ADE" language="fr-FR" kind="short"/>
 					<label text="ADE" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ADE" language="en-GB" kind="short"/>
 					<label text="ADE" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="117" name="ADF" alias="ADF">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ADF" language="fr-FR" kind="short"/>
 					<label text="ADF" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ADF" language="en-GB" kind="short"/>
 					<label text="ADF" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="118" name="ADG" alias="ADG">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ADG" language="fr-FR" kind="short"/>
 					<label text="ADG" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ADG" language="en-GB" kind="short"/>
 					<label text="ADG" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="119" name="ADH" alias="ADH">
 				<labels>
-					<label text="SICF" language="fr-FR" kind="short"/>
+					<label text="ADH" language="fr-FR" kind="short"/>
 					<label text="ADH" language="fr-FR" kind="long"/>
-					<label text="SICF" language="en-GB" kind="short"/>
+					<label text="ADH" language="en-GB" kind="short"/>
 					<label text="ADH" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="120" name="LYG" alias="LYG">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYG" language="fr-FR" kind="short"/>
 					<label text="LYG" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYG" language="en-GB" kind="short"/>
 					<label text="LYG" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="121" name="LYH" alias="LYH">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYH" language="fr-FR" kind="short"/>
 					<label text="LYH" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYH" language="en-GB" kind="short"/>
 					<label text="LYH" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="122" name="LYI" alias="LYI">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYI" language="fr-FR" kind="short"/>
 					<label text="LYI" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYI" language="en-GB" kind="short"/>
 					<label text="LYI" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="123" name="LYJ" alias="LYJ">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYJ" language="fr-FR" kind="short"/>
 					<label text="LYJ" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYJ" language="en-GB" kind="short"/>
 					<label text="LYJ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="124" name="LYK" alias="LYK">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYK" language="fr-FR" kind="short"/>
 					<label text="LYK" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYK" language="en-GB" kind="short"/>
 					<label text="LYK" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="125" name="LYL" alias="LYL">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYL" language="fr-FR" kind="short"/>
 					<label text="LYL" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYL" language="en-GB" kind="short"/>
 					<label text="LYL" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="126" name="LYM" alias="LYM">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYM" language="fr-FR" kind="short"/>
 					<label text="LYM" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYM" language="en-GB" kind="short"/>
 					<label text="LYM" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="127" name="LYN" alias="LYN">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYN" language="fr-FR" kind="short"/>
 					<label text="LYN" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYN" language="en-GB" kind="short"/>
 					<label text="LYN" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="128" name="LYO" alias="LYO">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYO" language="fr-FR" kind="short"/>
 					<label text="LYO" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYO" language="en-GB" kind="short"/>
 					<label text="LYO" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="129" name="LYP" alias="LYP">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYP" language="fr-FR" kind="short"/>
 					<label text="LYP" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYP" language="en-GB" kind="short"/>
 					<label text="LYP" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="130" name="LYQ" alias="LYQ">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYQ" language="fr-FR" kind="short"/>
 					<label text="LYQ" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYQ" language="en-GB" kind="short"/>
 					<label text="LYQ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="131" name="LYR" alias="LYR">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYR" language="fr-FR" kind="short"/>
 					<label text="LYR" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYR" language="en-GB" kind="short"/>
 					<label text="LYR" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="132" name="LYS" alias="LYS">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYS" language="fr-FR" kind="short"/>
 					<label text="LYS" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYS" language="en-GB" kind="short"/>
 					<label text="LYS" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="133" name="LYT" alias="LYT">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYT" language="fr-FR" kind="short"/>
 					<label text="LYT" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYT" language="en-GB" kind="short"/>
 					<label text="LYT" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="134" name="LYU" alias="LYU">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYU" language="fr-FR" kind="short"/>
 					<label text="LYU" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYU" language="en-GB" kind="short"/>
 					<label text="LYU" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="135" name="LYV" alias="LYV">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYV" language="fr-FR" kind="short"/>
 					<label text="LYV" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYV" language="en-GB" kind="short"/>
 					<label text="LYV" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="136" name="LYW" alias="LYW">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYW" language="fr-FR" kind="short"/>
 					<label text="LYW" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYW" language="en-GB" kind="short"/>
 					<label text="LYW" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="137" name="LYX" alias="LYX">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYX" language="fr-FR" kind="short"/>
 					<label text="LYX" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYX" language="en-GB" kind="short"/>
 					<label text="LYX" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="138" name="LYY" alias="LYY">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYY" language="fr-FR" kind="short"/>
 					<label text="LYY" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYY" language="en-GB" kind="short"/>
 					<label text="LYY" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="139" name="LYZ" alias="LYZ">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LYZ" language="fr-FR" kind="short"/>
 					<label text="LYZ" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LYZ" language="en-GB" kind="short"/>
 					<label text="LYZ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="140" name="LZA" alias="LZA">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZA" language="fr-FR" kind="short"/>
 					<label text="LZA" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZA" language="en-GB" kind="short"/>
 					<label text="LZA" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="141" name="LZB" alias="LZB">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZB" language="fr-FR" kind="short"/>
 					<label text="LZB" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZB" language="en-GB" kind="short"/>
 					<label text="LZB" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="142" name="LZC" alias="LZC">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZC" language="fr-FR" kind="short"/>
 					<label text="LZC" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZC" language="en-GB" kind="short"/>
 					<label text="LZC" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="143" name="LZD" alias="LZD">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZD" language="fr-FR" kind="short"/>
 					<label text="LZD" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZD" language="en-GB" kind="short"/>
 					<label text="LZD" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="144" name="LZE" alias="LZE">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZE" language="fr-FR" kind="short"/>
 					<label text="LZE" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZE" language="en-GB" kind="short"/>
 					<label text="LZE" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="145" name="LZF" alias="LZF">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZF" language="fr-FR" kind="short"/>
 					<label text="LZF" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZF" language="en-GB" kind="short"/>
 					<label text="LZF" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="146" name="LZG" alias="LZG">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZG" language="fr-FR" kind="short"/>
 					<label text="LZG" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZG" language="en-GB" kind="short"/>
 					<label text="LZG" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="147" name="LZH" alias="LZH">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZH" language="fr-FR" kind="short"/>
 					<label text="LZH" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZH" language="en-GB" kind="short"/>
 					<label text="LZH" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="148" name="LZI" alias="LZI">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZI" language="fr-FR" kind="short"/>
 					<label text="LZI" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZI" language="en-GB" kind="short"/>
 					<label text="LZI" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="149" name="LZJ" alias="LZJ">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZJ" language="fr-FR" kind="short"/>
 					<label text="LZJ" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZJ" language="en-GB" kind="short"/>
 					<label text="LZJ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="150" name="LZK" alias="LZK">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZK" language="fr-FR" kind="short"/>
 					<label text="LZK" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZK" language="en-GB" kind="short"/>
 					<label text="LZK" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="151" name="LZL" alias="LZL">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZL" language="fr-FR" kind="short"/>
 					<label text="LZL" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZL" language="en-GB" kind="short"/>
 					<label text="LZL" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="152" name="LZM" alias="LZM">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZM" language="fr-FR" kind="short"/>
 					<label text="LZM" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZM" language="en-GB" kind="short"/>
 					<label text="LZM" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="153" name="LZN" alias="LZN">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZN" language="fr-FR" kind="short"/>
 					<label text="LZN" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZN" language="en-GB" kind="short"/>
 					<label text="LZN" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="154" name="LZO" alias="LZO">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZO" language="fr-FR" kind="short"/>
 					<label text="LZO" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZO" language="en-GB" kind="short"/>
 					<label text="LZO" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="155" name="LZP" alias="LZP">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZP" language="fr-FR" kind="short"/>
 					<label text="LZP" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZP" language="en-GB" kind="short"/>
 					<label text="LZP" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="156" name="LZQ" alias="LZQ">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZQ" language="fr-FR" kind="short"/>
 					<label text="LZQ" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZQ" language="en-GB" kind="short"/>
 					<label text="LZQ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="157" name="LZR" alias="LZR">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZR" language="fr-FR" kind="short"/>
 					<label text="LZR" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZR" language="en-GB" kind="short"/>
 					<label text="LZR" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="158" name="LZS" alias="LZS">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZS" language="fr-FR" kind="short"/>
 					<label text="LZS" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZS" language="en-GB" kind="short"/>
 					<label text="LZS" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="159" name="LZT" alias="LZT">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZT" language="fr-FR" kind="short"/>
 					<label text="LZT" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZT" language="en-GB" kind="short"/>
 					<label text="LZT" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="160" name="LZU" alias="LZU">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZU" language="fr-FR" kind="short"/>
 					<label text="LZU" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZU" language="en-GB" kind="short"/>
 					<label text="LZU" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="161" name="LZV" alias="LZV">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZV" language="fr-FR" kind="short"/>
 					<label text="LZV" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZV" language="en-GB" kind="short"/>
 					<label text="LZV" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="162" name="LZW" alias="LZW">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZW" language="fr-FR" kind="short"/>
 					<label text="LZW" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZW" language="en-GB" kind="short"/>
 					<label text="LZW" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="163" name="LZX" alias="LZX">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZX" language="fr-FR" kind="short"/>
 					<label text="LZX" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZX" language="en-GB" kind="short"/>
 					<label text="LZX" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="164" name="LZY" alias="LZY">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZY" language="fr-FR" kind="short"/>
 					<label text="LZY" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZY" language="en-GB" kind="short"/>
 					<label text="LZY" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="165" name="LZZ" alias="LZZ">
 				<labels>
-					<label text="ATLAS" language="fr-FR" kind="short"/>
+					<label text="LZZ" language="fr-FR" kind="short"/>
 					<label text="LZZ" language="fr-FR" kind="long"/>
-					<label text="ATLAS" language="en-GB" kind="short"/>
+					<label text="LZZ" language="en-GB" kind="short"/>
 					<label text="LZZ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="166" name="OOZ" alias="OOZ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OOZ" language="fr-FR" kind="short"/>
 					<label text="OOZ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OOZ" language="en-GB" kind="short"/>
 					<label text="OOZ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="167" name="OPA" alias="OPA">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPA" language="fr-FR" kind="short"/>
 					<label text="OPA" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPA" language="en-GB" kind="short"/>
 					<label text="OPA" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="168" name="OPB" alias="OPB">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPB" language="fr-FR" kind="short"/>
 					<label text="OPB" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPB" language="en-GB" kind="short"/>
 					<label text="OPB" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="169" name="OPC" alias="OPC">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPC" language="fr-FR" kind="short"/>
 					<label text="OPC" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPC" language="en-GB" kind="short"/>
 					<label text="OPC" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="170" name="OPD" alias="OPD">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPD" language="fr-FR" kind="short"/>
 					<label text="OPD" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPD" language="en-GB" kind="short"/>
 					<label text="OPD" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="171" name="OPE" alias="OPE">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPE" language="fr-FR" kind="short"/>
 					<label text="OPE" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPE" language="en-GB" kind="short"/>
 					<label text="OPE" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="172" name="OPF" alias="OPF">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPF" language="fr-FR" kind="short"/>
 					<label text="OPF" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPF" language="en-GB" kind="short"/>
 					<label text="OPF" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="173" name="OPG" alias="OPG">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPG" language="fr-FR" kind="short"/>
 					<label text="OPG" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPG" language="en-GB" kind="short"/>
 					<label text="OPG" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="174" name="OPH" alias="OPH">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPH" language="fr-FR" kind="short"/>
 					<label text="OPH" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPH" language="en-GB" kind="short"/>
 					<label text="OPH" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="175" name="OPI" alias="OPI">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPI" language="fr-FR" kind="short"/>
 					<label text="OPI" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPI" language="en-GB" kind="short"/>
 					<label text="OPI" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="176" name="OPJ" alias="OPJ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPJ" language="fr-FR" kind="short"/>
 					<label text="OPJ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPJ" language="en-GB" kind="short"/>
 					<label text="OPJ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="177" name="OPK" alias="OPK">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPK" language="fr-FR" kind="short"/>
 					<label text="OPK" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPK" language="en-GB" kind="short"/>
 					<label text="OPK" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="178" name="OPL" alias="OPL">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPL" language="fr-FR" kind="short"/>
 					<label text="OPL" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPL" language="en-GB" kind="short"/>
 					<label text="OPL" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="179" name="OPM" alias="OPM">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPM" language="fr-FR" kind="short"/>
 					<label text="OPM" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPM" language="en-GB" kind="short"/>
 					<label text="OPM" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="180" name="OPN" alias="OPN">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPN" language="fr-FR" kind="short"/>
 					<label text="OPN" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPN" language="en-GB" kind="short"/>
 					<label text="OPN" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="181" name="OPO" alias="OPO">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPO" language="fr-FR" kind="short"/>
 					<label text="OPO" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPO" language="en-GB" kind="short"/>
 					<label text="OPO" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="182" name="OPP" alias="OPP">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPP" language="fr-FR" kind="short"/>
 					<label text="OPP" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPP" language="en-GB" kind="short"/>
 					<label text="OPP" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="183" name="OPQ" alias="OPQ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPQ" language="fr-FR" kind="short"/>
 					<label text="OPQ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPQ" language="en-GB" kind="short"/>
 					<label text="OPQ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="184" name="OPR" alias="OPR">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPR" language="fr-FR" kind="short"/>
 					<label text="OPR" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPR" language="en-GB" kind="short"/>
 					<label text="OPR" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="185" name="OPS" alias="OPS">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPS" language="fr-FR" kind="short"/>
 					<label text="OPS" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPS" language="en-GB" kind="short"/>
 					<label text="OPS" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="186" name="OPT" alias="OPT">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPT" language="fr-FR" kind="short"/>
 					<label text="OPT" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPT" language="en-GB" kind="short"/>
 					<label text="OPT" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="187" name="OPU" alias="OPU">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPU" language="fr-FR" kind="short"/>
 					<label text="OPU" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPU" language="en-GB" kind="short"/>
 					<label text="OPU" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="188" name="OPV" alias="OPV">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPV" language="fr-FR" kind="short"/>
 					<label text="OPV" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPV" language="en-GB" kind="short"/>
 					<label text="OPV" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="189" name="OPW" alias="OPW">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPW" language="fr-FR" kind="short"/>
 					<label text="OPW" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPW" language="en-GB" kind="short"/>
 					<label text="OPW" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="190" name="OPX" alias="OPX">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPX" language="fr-FR" kind="short"/>
 					<label text="OPX" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPX" language="en-GB" kind="short"/>
 					<label text="OPX" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="191" name="OPY" alias="OPY">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPY" language="fr-FR" kind="short"/>
 					<label text="OPY" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPY" language="en-GB" kind="short"/>
 					<label text="OPY" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="192" name="OPZ" alias="OPZ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OPZ" language="fr-FR" kind="short"/>
 					<label text="OPZ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OPZ" language="en-GB" kind="short"/>
 					<label text="OPZ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="193" name="OQA" alias="OQA">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQA" language="fr-FR" kind="short"/>
 					<label text="OQA" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQA" language="en-GB" kind="short"/>
 					<label text="OQA" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="194" name="OQB" alias="OQB">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQB" language="fr-FR" kind="short"/>
 					<label text="OQB" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQB" language="en-GB" kind="short"/>
 					<label text="OQB" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="195" name="OQC" alias="OQC">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQC" language="fr-FR" kind="short"/>
 					<label text="OQC" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQC" language="en-GB" kind="short"/>
 					<label text="OQC" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="196" name="OQD" alias="OQD">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQD" language="fr-FR" kind="short"/>
 					<label text="OQD" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQD" language="en-GB" kind="short"/>
 					<label text="OQD" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="197" name="OQE" alias="OQE">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQE" language="fr-FR" kind="short"/>
 					<label text="OQE" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQE" language="en-GB" kind="short"/>
 					<label text="OQE" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="198" name="OQF" alias="OQF">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQF" language="fr-FR" kind="short"/>
 					<label text="OQF" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQF" language="en-GB" kind="short"/>
 					<label text="OQF" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="199" name="OQG" alias="OQG">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQG" language="fr-FR" kind="short"/>
 					<label text="OQG" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQG" language="en-GB" kind="short"/>
 					<label text="OQG" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="200" name="OQH" alias="OQH">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQH" language="fr-FR" kind="short"/>
 					<label text="OQH" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQH" language="en-GB" kind="short"/>
 					<label text="OQH" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="201" name="OQI" alias="OQI">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQI" language="fr-FR" kind="short"/>
 					<label text="OQI" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQI" language="en-GB" kind="short"/>
 					<label text="OQI" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="202" name="OQJ" alias="OQJ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQJ" language="fr-FR" kind="short"/>
 					<label text="OQJ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQJ" language="en-GB" kind="short"/>
 					<label text="OQJ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="203" name="OQK" alias="OQK">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQK" language="fr-FR" kind="short"/>
 					<label text="OQK" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQK" language="en-GB" kind="short"/>
 					<label text="OQK" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="204" name="OQL" alias="OQL">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQL" language="fr-FR" kind="short"/>
 					<label text="OQL" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQL" language="en-GB" kind="short"/>
 					<label text="OQL" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="205" name="OQM" alias="OQM">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQM" language="fr-FR" kind="short"/>
 					<label text="OQM" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQM" language="en-GB" kind="short"/>
 					<label text="OQM" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="206" name="OQN" alias="OQN">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQN" language="fr-FR" kind="short"/>
 					<label text="OQN" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQN" language="en-GB" kind="short"/>
 					<label text="OQN" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="207" name="OQO" alias="OQO">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQO" language="fr-FR" kind="short"/>
 					<label text="OQO" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQO" language="en-GB" kind="short"/>
 					<label text="OQO" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="208" name="OQP" alias="OQP">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQP" language="fr-FR" kind="short"/>
 					<label text="OQP" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQP" language="en-GB" kind="short"/>
 					<label text="OQP" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="209" name="OQQ" alias="OQQ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQQ" language="fr-FR" kind="short"/>
 					<label text="OQQ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQQ" language="en-GB" kind="short"/>
 					<label text="OQQ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="210" name="OQR" alias="OQR">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQR" language="fr-FR" kind="short"/>
 					<label text="OQR" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQR" language="en-GB" kind="short"/>
 					<label text="OQR" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="211" name="OQS" alias="OQS">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQS" language="fr-FR" kind="short"/>
 					<label text="OQS" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQS" language="en-GB" kind="short"/>
 					<label text="OQS" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="212" name="OQT" alias="OQT">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQT" language="fr-FR" kind="short"/>
 					<label text="OQT" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQT" language="en-GB" kind="short"/>
 					<label text="OQT" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="213" name="OQU" alias="OQU">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQU" language="fr-FR" kind="short"/>
 					<label text="OQU" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQU" language="en-GB" kind="short"/>
 					<label text="OQU" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="214" name="OQV" alias="OQV">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQV" language="fr-FR" kind="short"/>
 					<label text="OQV" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQV" language="en-GB" kind="short"/>
 					<label text="OQV" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="215" name="OQW" alias="OQW">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQW" language="fr-FR" kind="short"/>
 					<label text="OQW" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQW" language="en-GB" kind="short"/>
 					<label text="OQW" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="216" name="OQX" alias="OQX">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQX" language="fr-FR" kind="short"/>
 					<label text="OQX" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQX" language="en-GB" kind="short"/>
 					<label text="OQX" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="217" name="OQY" alias="OQY">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQY" language="fr-FR" kind="short"/>
 					<label text="OQY" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQY" language="en-GB" kind="short"/>
 					<label text="OQY" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="218" name="OQZ" alias="OQZ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OQZ" language="fr-FR" kind="short"/>
 					<label text="OQZ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OQZ" language="en-GB" kind="short"/>
 					<label text="OQZ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="219" name="OSG" alias="OSG">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSG" language="fr-FR" kind="short"/>
 					<label text="OSG" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSG" language="en-GB" kind="short"/>
 					<label text="OSG" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="220" name="OSH" alias="OSH">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSH" language="fr-FR" kind="short"/>
 					<label text="OSH" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSH" language="en-GB" kind="short"/>
 					<label text="OSH" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="221" name="OSI" alias="OSI">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSI" language="fr-FR" kind="short"/>
 					<label text="OSI" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSI" language="en-GB" kind="short"/>
 					<label text="OSI" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="222" name="OSJ" alias="OSJ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSJ" language="fr-FR" kind="short"/>
 					<label text="OSJ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSJ" language="en-GB" kind="short"/>
 					<label text="OSJ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="223" name="OSK" alias="OSK">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSK" language="fr-FR" kind="short"/>
 					<label text="OSK" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSK" language="en-GB" kind="short"/>
 					<label text="OSK" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="224" name="OSL" alias="OSL">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSL" language="fr-FR" kind="short"/>
 					<label text="OSL" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSL" language="en-GB" kind="short"/>
 					<label text="OSL" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="225" name="OSM" alias="OSM">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSM" language="fr-FR" kind="short"/>
 					<label text="OSM" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSM" language="en-GB" kind="short"/>
 					<label text="OSM" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="226" name="OSN" alias="OSN">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSN" language="fr-FR" kind="short"/>
 					<label text="OSN" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSN" language="en-GB" kind="short"/>
 					<label text="OSN" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="227" name="OSO" alias="OSO">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSO" language="fr-FR" kind="short"/>
 					<label text="OSO" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSO" language="en-GB" kind="short"/>
 					<label text="OSO" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="228" name="OSP" alias="OSP">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSP" language="fr-FR" kind="short"/>
 					<label text="OSP" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSP" language="en-GB" kind="short"/>
 					<label text="OSP" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="229" name="OSQ" alias="OSQ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSQ" language="fr-FR" kind="short"/>
 					<label text="OSQ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSQ" language="en-GB" kind="short"/>
 					<label text="OSQ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="230" name="OSR" alias="OSR">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSR" language="fr-FR" kind="short"/>
 					<label text="OSR" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSR" language="en-GB" kind="short"/>
 					<label text="OSR" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="231" name="OSS" alias="OSS">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSS" language="fr-FR" kind="short"/>
 					<label text="OSS" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSS" language="en-GB" kind="short"/>
 					<label text="OSS" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="232" name="OST" alias="OST">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OST" language="fr-FR" kind="short"/>
 					<label text="OST" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OST" language="en-GB" kind="short"/>
 					<label text="OST" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="233" name="OSU" alias="OSU">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSU" language="fr-FR" kind="short"/>
 					<label text="OSU" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSU" language="en-GB" kind="short"/>
 					<label text="OSU" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="234" name="OSV" alias="OSV">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSV" language="fr-FR" kind="short"/>
 					<label text="OSV" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSV" language="en-GB" kind="short"/>
 					<label text="OSV" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="235" name="OSW" alias="OSW">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSW" language="fr-FR" kind="short"/>
 					<label text="OSW" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSW" language="en-GB" kind="short"/>
 					<label text="OSW" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="236" name="OSX" alias="OSX">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSX" language="fr-FR" kind="short"/>
 					<label text="OSX" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSX" language="en-GB" kind="short"/>
 					<label text="OSX" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="237" name="OSY" alias="OSY">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSY" language="fr-FR" kind="short"/>
 					<label text="OSY" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSY" language="en-GB" kind="short"/>
 					<label text="OSY" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="238" name="OSZ" alias="OSZ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OSZ" language="fr-FR" kind="short"/>
 					<label text="OSZ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OSZ" language="en-GB" kind="short"/>
 					<label text="OSZ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="239" name="OTA" alias="OTA">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTA" language="fr-FR" kind="short"/>
 					<label text="OTA" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTA" language="en-GB" kind="short"/>
 					<label text="OTA" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="240" name="OTB" alias="OTB">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTB" language="fr-FR" kind="short"/>
 					<label text="OTB" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTB" language="en-GB" kind="short"/>
 					<label text="OTB" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="241" name="OTC" alias="OTC">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTC" language="fr-FR" kind="short"/>
 					<label text="OTC" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTC" language="en-GB" kind="short"/>
 					<label text="OTC" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="242" name="OTD" alias="OTD">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTD" language="fr-FR" kind="short"/>
 					<label text="OTD" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTD" language="en-GB" kind="short"/>
 					<label text="OTD" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="243" name="OTE" alias="OTE">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTE" language="fr-FR" kind="short"/>
 					<label text="OTE" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTE" language="en-GB" kind="short"/>
 					<label text="OTE" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="244" name="OTF" alias="OTF">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTF" language="fr-FR" kind="short"/>
 					<label text="OTF" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTF" language="en-GB" kind="short"/>
 					<label text="OTF" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="245" name="OTG" alias="OTG">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTG" language="fr-FR" kind="short"/>
 					<label text="OTG" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTG" language="en-GB" kind="short"/>
 					<label text="OTG" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="246" name="OTH" alias="OTH">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTH" language="fr-FR" kind="short"/>
 					<label text="OTH" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTH" language="en-GB" kind="short"/>
 					<label text="OTH" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="247" name="OTI" alias="OTI">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTI" language="fr-FR" kind="short"/>
 					<label text="OTI" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTI" language="en-GB" kind="short"/>
 					<label text="OTI" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="248" name="OTJ" alias="OTJ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTJ" language="fr-FR" kind="short"/>
 					<label text="OTJ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTJ" language="en-GB" kind="short"/>
 					<label text="OTJ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="249" name="OTK" alias="OTK">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTK" language="fr-FR" kind="short"/>
 					<label text="OTK" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTK" language="en-GB" kind="short"/>
 					<label text="OTK" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="250" name="OTL" alias="OTL">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTL" language="fr-FR" kind="short"/>
 					<label text="OTL" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTL" language="en-GB" kind="short"/>
 					<label text="OTL" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="251" name="OTM" alias="OTM">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTM" language="fr-FR" kind="short"/>
 					<label text="OTM" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTM" language="en-GB" kind="short"/>
 					<label text="OTM" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="252" name="OTN" alias="OTN">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTN" language="fr-FR" kind="short"/>
 					<label text="OTN" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTN" language="en-GB" kind="short"/>
 					<label text="OTN" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="253" name="OTO" alias="OTO">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTO" language="fr-FR" kind="short"/>
 					<label text="OTO" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTO" language="en-GB" kind="short"/>
 					<label text="OTO" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="254" name="OTP" alias="OTP">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTP" language="fr-FR" kind="short"/>
 					<label text="OTP" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTP" language="en-GB" kind="short"/>
 					<label text="OTP" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="255" name="OTQ" alias="OTQ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTQ" language="fr-FR" kind="short"/>
 					<label text="OTQ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTQ" language="en-GB" kind="short"/>
 					<label text="OTQ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="256" name="OTR" alias="OTR">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTR" language="fr-FR" kind="short"/>
 					<label text="OTR" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTR" language="en-GB" kind="short"/>
 					<label text="OTR" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="257" name="OTS" alias="OTS">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTS" language="fr-FR" kind="short"/>
 					<label text="OTS" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTS" language="en-GB" kind="short"/>
 					<label text="OTS" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="258" name="OTT" alias="OTT">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTT" language="fr-FR" kind="short"/>
 					<label text="OTT" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTT" language="en-GB" kind="short"/>
 					<label text="OTT" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="259" name="OTU" alias="OTU">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTU" language="fr-FR" kind="short"/>
 					<label text="OTU" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTU" language="en-GB" kind="short"/>
 					<label text="OTU" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="260" name="OTV" alias="OTV">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTV" language="fr-FR" kind="short"/>
 					<label text="OTV" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTV" language="en-GB" kind="short"/>
 					<label text="OTV" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="261" name="OTW" alias="OTW">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTW" language="fr-FR" kind="short"/>
 					<label text="OTW" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTW" language="en-GB" kind="short"/>
 					<label text="OTW" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="262" name="OTX" alias="OTX">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTX" language="fr-FR" kind="short"/>
 					<label text="OTX" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTX" language="en-GB" kind="short"/>
 					<label text="OTX" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="263" name="OTY" alias="OTY">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTY" language="fr-FR" kind="short"/>
 					<label text="OTY" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTY" language="en-GB" kind="short"/>
 					<label text="OTY" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="264" name="OTZ" alias="OTZ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OTZ" language="fr-FR" kind="short"/>
 					<label text="OTZ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OTZ" language="en-GB" kind="short"/>
 					<label text="OTZ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="265" name="OUA" alias="OUA">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUA" language="fr-FR" kind="short"/>
 					<label text="OUA" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUA" language="en-GB" kind="short"/>
 					<label text="OUA" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="266" name="OUB" alias="OUB">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUB" language="fr-FR" kind="short"/>
 					<label text="OUB" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUB" language="en-GB" kind="short"/>
 					<label text="OUB" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="267" name="OUC" alias="OUC">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUC" language="fr-FR" kind="short"/>
 					<label text="OUC" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUC" language="en-GB" kind="short"/>
 					<label text="OUC" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="268" name="OUD" alias="OUD">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUD" language="fr-FR" kind="short"/>
 					<label text="OUD" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUD" language="en-GB" kind="short"/>
 					<label text="OUD" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="269" name="OUE" alias="OUE">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUE" language="fr-FR" kind="short"/>
 					<label text="OUE" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUE" language="en-GB" kind="short"/>
 					<label text="OUE" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="270" name="OUF" alias="OUF">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUF" language="fr-FR" kind="short"/>
 					<label text="OUF" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUF" language="en-GB" kind="short"/>
 					<label text="OUF" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="271" name="OUG" alias="OUG">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUG" language="fr-FR" kind="short"/>
 					<label text="OUG" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUG" language="en-GB" kind="short"/>
 					<label text="OUG" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="272" name="OUH" alias="OUH">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUH" language="fr-FR" kind="short"/>
 					<label text="OUH" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUH" language="en-GB" kind="short"/>
 					<label text="OUH" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="273" name="OUI" alias="OUI">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUI" language="fr-FR" kind="short"/>
 					<label text="OUI" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUI" language="en-GB" kind="short"/>
 					<label text="OUI" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="274" name="OUJ" alias="OUJ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUJ" language="fr-FR" kind="short"/>
 					<label text="OUJ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUJ" language="en-GB" kind="short"/>
 					<label text="OUJ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="275" name="OUK" alias="OUK">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUK" language="fr-FR" kind="short"/>
 					<label text="OUK" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUK" language="en-GB" kind="short"/>
 					<label text="OUK" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="276" name="OUL" alias="OUL">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUL" language="fr-FR" kind="short"/>
 					<label text="OUL" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUL" language="en-GB" kind="short"/>
 					<label text="OUL" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="277" name="OUM" alias="OUM">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUM" language="fr-FR" kind="short"/>
 					<label text="OUM" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUM" language="en-GB" kind="short"/>
 					<label text="OUM" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="278" name="OUN" alias="OUN">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUN" language="fr-FR" kind="short"/>
 					<label text="OUN" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUN" language="en-GB" kind="short"/>
 					<label text="OUN" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="279" name="OUO" alias="OUO">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUO" language="fr-FR" kind="short"/>
 					<label text="OUO" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUO" language="en-GB" kind="short"/>
 					<label text="OUO" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="280" name="OUP" alias="OUP">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUP" language="fr-FR" kind="short"/>
 					<label text="OUP" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUP" language="en-GB" kind="short"/>
 					<label text="OUP" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="281" name="OUQ" alias="OUQ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUQ" language="fr-FR" kind="short"/>
 					<label text="OUQ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUQ" language="en-GB" kind="short"/>
 					<label text="OUQ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="282" name="OUR" alias="OUR">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUR" language="fr-FR" kind="short"/>
 					<label text="OUR" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUR" language="en-GB" kind="short"/>
 					<label text="OUR" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="283" name="OUS" alias="OUS">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUS" language="fr-FR" kind="short"/>
 					<label text="OUS" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUS" language="en-GB" kind="short"/>
 					<label text="OUS" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="284" name="OUT" alias="OUT">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUT" language="fr-FR" kind="short"/>
 					<label text="OUT" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUT" language="en-GB" kind="short"/>
 					<label text="OUT" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="285" name="OUU" alias="OUU">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUU" language="fr-FR" kind="short"/>
 					<label text="OUU" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUU" language="en-GB" kind="short"/>
 					<label text="OUU" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="286" name="OUV" alias="OUV">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUV" language="fr-FR" kind="short"/>
 					<label text="OUV" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUV" language="en-GB" kind="short"/>
 					<label text="OUV" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="287" name="OUW" alias="OUW">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUW" language="fr-FR" kind="short"/>
 					<label text="OUW" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUW" language="en-GB" kind="short"/>
 					<label text="OUW" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="288" name="OUX" alias="OUX">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUX" language="fr-FR" kind="short"/>
 					<label text="OUX" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUX" language="en-GB" kind="short"/>
 					<label text="OUX" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="289" name="OUY" alias="OUY">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUY" language="fr-FR" kind="short"/>
 					<label text="OUY" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUY" language="en-GB" kind="short"/>
 					<label text="OUY" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="290" name="OUZ" alias="OUZ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OUZ" language="fr-FR" kind="short"/>
 					<label text="OUZ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OUZ" language="en-GB" kind="short"/>
 					<label text="OUZ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="291" name="OVA" alias="OVA">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVA" language="fr-FR" kind="short"/>
 					<label text="OVA" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVA" language="en-GB" kind="short"/>
 					<label text="OVA" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="292" name="OVB" alias="OVB">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVB" language="fr-FR" kind="short"/>
 					<label text="OVB" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVB" language="en-GB" kind="short"/>
 					<label text="OVB" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="293" name="OVC" alias="OVC">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVC" language="fr-FR" kind="short"/>
 					<label text="OVC" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVC" language="en-GB" kind="short"/>
 					<label text="OVC" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="294" name="OVD" alias="OVD">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVD" language="fr-FR" kind="short"/>
 					<label text="OVD" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVD" language="en-GB" kind="short"/>
 					<label text="OVD" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="295" name="OVE" alias="OVE">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVE" language="fr-FR" kind="short"/>
 					<label text="OVE" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVE" language="en-GB" kind="short"/>
 					<label text="OVE" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="296" name="OVF" alias="OVF">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVF" language="fr-FR" kind="short"/>
 					<label text="OVF" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVF" language="en-GB" kind="short"/>
 					<label text="OVF" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="297" name="OVG" alias="OVG">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVG" language="fr-FR" kind="short"/>
 					<label text="OVG" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVG" language="en-GB" kind="short"/>
 					<label text="OVG" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="298" name="OVH" alias="OVH">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVH" language="fr-FR" kind="short"/>
 					<label text="OVH" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVH" language="en-GB" kind="short"/>
 					<label text="OVH" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="299" name="OVI" alias="OVI">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVI" language="fr-FR" kind="short"/>
 					<label text="OVI" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVI" language="en-GB" kind="short"/>
 					<label text="OVI" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="300" name="OVJ" alias="OVJ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVJ" language="fr-FR" kind="short"/>
 					<label text="OVJ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVJ" language="en-GB" kind="short"/>
 					<label text="OVJ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="301" name="OVK" alias="OVK">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVK" language="fr-FR" kind="short"/>
 					<label text="OVK" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVK" language="en-GB" kind="short"/>
 					<label text="OVK" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="302" name="OVL" alias="OVL">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVL" language="fr-FR" kind="short"/>
 					<label text="OVL" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVL" language="en-GB" kind="short"/>
 					<label text="OVL" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="303" name="OVM" alias="OVM">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVM" language="fr-FR" kind="short"/>
 					<label text="OVM" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVM" language="en-GB" kind="short"/>
 					<label text="OVM" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="304" name="OVN" alias="OVN">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVN" language="fr-FR" kind="short"/>
 					<label text="OVN" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVN" language="en-GB" kind="short"/>
 					<label text="OVN" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="305" name="OVO" alias="OVO">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVO" language="fr-FR" kind="short"/>
 					<label text="OVO" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVO" language="en-GB" kind="short"/>
 					<label text="OVO" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="306" name="OVP" alias="OVP">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVP" language="fr-FR" kind="short"/>
 					<label text="OVP" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVP" language="en-GB" kind="short"/>
 					<label text="OVP" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="307" name="OVQ" alias="OVQ">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVQ" language="fr-FR" kind="short"/>
 					<label text="OVQ" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVQ" language="en-GB" kind="short"/>
 					<label text="OVQ" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="308" name="OVR" alias="OVR">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVR" language="fr-FR" kind="short"/>
 					<label text="OVR" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVR" language="en-GB" kind="short"/>
 					<label text="OVR" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="309" name="OVS" alias="OVS">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVS" language="fr-FR" kind="short"/>
 					<label text="OVS" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVS" language="en-GB" kind="short"/>
 					<label text="OVS" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="310" name="OVT" alias="OVT">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVT" language="fr-FR" kind="short"/>
 					<label text="OVT" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVT" language="en-GB" kind="short"/>
 					<label text="OVT" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="311" name="OVU" alias="OVU">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVU" language="fr-FR" kind="short"/>
 					<label text="OVU" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVU" language="en-GB" kind="short"/>
 					<label text="OVU" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="312" name="OVV" alias="OVV">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVV" language="fr-FR" kind="short"/>
 					<label text="OVV" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVV" language="en-GB" kind="short"/>
 					<label text="OVV" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
 			<entry id="313" name="OVW" alias="OVW">
 				<labels>
-					<label text="SIR" language="fr-FR" kind="short"/>
+					<label text="OVW" language="fr-FR" kind="short"/>
 					<label text="OVW" language="fr-FR" kind="long"/>
-					<label text="SIR" language="en-GB" kind="short"/>
+					<label text="OVW" language="en-GB" kind="short"/>
 					<label text="OVW" language="en-GB" kind="long"/>
 				</labels>
 			</entry>
@@ -4902,7 +5067,7 @@
 		</dictionary>
 	</dictionaries>
 	<orbat-attributes>
-		<attribute extends="unit;formation;crowd" name="TypeSIOC" type="dictionary" dictionary="T_SIC_TypeSIOC" dictionary-kind="short">
+		<attribute extends="unit;formation" name="TypeSIOC" type="dictionary" dictionary="T_SIC_TypeSIOC" dictionary-kind="short">
 			<labels>
 			   <label text="Type SIOC" language="fr"/>
 			</labels>
@@ -4917,12 +5082,12 @@
 			   <label text="Type PC" language="fr"/>
 			</labels>
 		</attribute>
-		<attribute extends="unit;formation" name="IndRadio" type="numeric" min-length="3" max-length="3">
+		<attribute extends="unit;automat;formation" name="IndRadio" type="numeric" min-length="3" max-length="3">
 			<labels>
 			   <label text="Indicatif radio" language="fr"/>
 			</labels>
 		</attribute>	
-		<attribute extends="unit;formation" name="IdCdB" type="loosy-dictionary" dictionary="T_SIC_IdCdB" dictionary-kind="short" min-length="3" max-length="3">
+		<attribute extends="unit;formation" name="IdCDB" type="loosy-dictionary" dictionary="T_SIC_IdCDB" dictionary-kind="short" min-length="3" max-length="3">
 			<labels>
 			   <label text="Identifiant Champ de Bataille" language="fr"/>
 			</labels>
@@ -4951,6 +5116,3 @@
 		</attribute>		
 	</profile-attributes>
 </extensions>
-
-
-

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.2.3">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.3.0">
 	<xs:include schemaLocation="../exercise/common.xsd"/>
 	<xs:element name="urban">
 		<xs:complexType>
@@ -32,7 +32,12 @@
 						<xs:element name="footprint" type="Footprint" minOccurs="0"/>
 						<xs:element name="color" type="Color" minOccurs="0"/>
 						<xs:element name="urban-objects" type="UrbanObjects" minOccurs="0"/>
-						<xs:element name="physical" type="Physical" minOccurs="0"/>
+						<xs:element name="physical" type="Physical" minOccurs="0">
+							<xs:unique name="usageUnicity">
+								<xs:selector xpath=".//usages/usage"/>
+								<xs:field xpath="@type"/>
+							</xs:unique>
+						</xs:element>
 						<xs:element name="infrastructures" type="Infrastructures" minOccurs="0"/>
 						<xs:element name="resources" type="Resources" minOccurs="0"/>
 					</xs:all>
@@ -67,37 +72,28 @@
 					<xs:attribute name="material" type="xs:string"/>
 					<xs:attribute name="occupation" type="T_ZeroToOneDouble"/>
 					<xs:attribute name="trafficability" type="T_NonNegativeDouble"/>
+					<xs:attribute name="parking-availability" type="xs:boolean"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="usages" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="usage" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="type" type="xs:string" use="required"/>
+								<xs:attribute name="proportion" type="T_ZeroTo100Integer" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Infrastructures">
 		<xs:sequence>
-			<xs:element name="infrastructure" minOccurs="0" maxOccurs="1">
+			<xs:element name="infrastructure" minOccurs="0">
 				<xs:complexType>
 					<xs:attribute name="type" type="xs:string" use="required"/>
-				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="Resources">
-		<xs:sequence>
-			<xs:element name="node" minOccurs="0" maxOccurs="unbounded">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="link" minOccurs="0" maxOccurs="unbounded">
-							<xs:complexType>
-								<xs:attribute name="target" type="xs:positiveInteger"/>
-								<xs:attribute name="capacity" type="xs:integer"/>
-							</xs:complexType>
-						</xs:element>
-					</xs:sequence>
-					<xs:attribute name="resource-type" type="xs:string"/>
-					<xs:attribute name="production" type="xs:nonNegativeInteger"/>
-					<xs:attribute name="consumption" type="xs:nonNegativeInteger"/>
-					<xs:attribute name="stock" type="xs:nonNegativeInteger"/>
-					<xs:attribute name="critical-consumption" type="xs:boolean"/>
-					<xs:attribute name="enabled" type="xs:boolean"/>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
