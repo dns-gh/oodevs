@@ -12,7 +12,6 @@
 #ifndef __PHY_ComposantePredicates_h_
 #define __PHY_ComposantePredicates_h_
 
-#include "MIL.h"
 #include "OnComponentFunctor_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
