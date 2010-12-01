@@ -73,4 +73,6 @@ void ArchitectureAttribute::Send( MsgsSimToClient::UrbanAttributes& message ) co
     message.mutable_architecture()->set_material( material_.c_str() );
     message.mutable_architecture()->set_occupation( occupation_ );
     message.mutable_architecture()->set_trafficability( trafficability_ );
+    // TODO parking
+    message.mutable_architecture()->set_parking_available( false );
 }

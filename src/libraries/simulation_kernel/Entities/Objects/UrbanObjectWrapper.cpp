@@ -364,6 +364,8 @@ void UrbanObjectWrapper::SendCreation() const
         message().mutable_attributes()->mutable_architecture()->set_material( architecture->GetMaterial().c_str() );
         message().mutable_attributes()->mutable_architecture()->set_occupation( architecture->GetOccupation() );
         message().mutable_attributes()->mutable_architecture()->set_trafficability( architecture->GetTrafficability() );
+        // TODO parking
+        message().mutable_attributes()->mutable_architecture()->set_parking_available( false );
     }
     message.Send( NET_Publisher_ABC::Publisher() );
 }
