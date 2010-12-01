@@ -835,12 +835,10 @@ void InitFunctions()
 {
     if( functors.empty() )
     {
-        functors[ "bool" ] = BoolFunction;
         functors[ "Boolean" ] = BoolFunction;
         functors[ "string" ] = StringFunction;
         functors[ "enumeration" ] = EnumerationFunction;
         functors[ "DateTime" ] = GDHFunction;
-        functors[ "datetime" ] = GDHFunction;
         functors[ "GDH" ] = GDHFunction;
         functors[ "Point" ] = PointFunction;
         functors[ "PointList" ] = PointListFunction;
@@ -851,10 +849,9 @@ void InitFunctions()
         functors[ "Path" ] = PathFunction;
         functors[ "PathList" ] = PathListFunction;
         functors[ "Heading" ] = DirectionFunction;
-        functors[ "Direction" ] = DirectionFunction;
         functors[ "NatureAtlas" ] = NatureAtlasFunction;
         functors[ "Automat" ] = AutomatFunction;
-        functors[ "AutomateList" ] = AutomatListFunction;
+        functors[ "AutomatList" ] = AutomatListFunction;
         functors[ "Agent" ] = AgentFunction;
         functors[ "AgentList" ] = AgentListFunction;
         functors[ "AgentKnowledge" ] = AgentKnowledgeFunction;
@@ -863,24 +860,20 @@ void InitFunctions()
         functors[ "ObjectKnowledgeList" ] = ObjectKnowledgeListFunction;
         functors[ "PopulationKnowledge" ] = PopulationKnowledgeFunction;
         functors[ "CrowdKnowledge" ] = PopulationKnowledgeFunction;
-        functors[ "DotationType" ] = DotationTypeFunction;
         functors[ "ResourceType" ] = DotationTypeFunction;
         functors[ "EquipmentType" ] = EquipmentTypeFunction;
         functors[ "Numeric" ] = NumericFunction;
         functors[ "Integer" ] = NumericFunction;
-        functors[ "GenObject" ] = GenObjectFunction;
         functors[ "PlannedWork" ] = GenObjectFunction;
-        functors[ "GenObjectList" ] = GenObjectListFunction;
+        functors[ "PlannedWorkList" ] = GenObjectListFunction;
         functors[ "MaintenancePriorities" ] = MaintenancePrioritiesFunction;
         functors[ "MedicalPriorities" ] = MedicalPrioritiesFunction;
         functors[ "IndirectFire" ] = IndirectFireFunction;
         functors[ "ObjectiveList" ] = ObjectiveListFunction;
 
-        functorsBM[ "bool" ] = BoolFunctionBM;
         functorsBM[ "Boolean" ] = BoolFunctionBM;
         functorsBM[ "string" ] = StringFunctionBM;
         functorsBM[ "enumeration" ] = EnumerationFunctionBM;
-        functorsBM[ "datetime" ] = GDHFunctionBM;
         functorsBM[ "DateTime" ] = GDHFunctionBM;
         functorsBM[ "GDH" ] = GDHFunctionBM;
         functorsBM[ "NatureAtlas" ] = NatureAtlasFunctionBM;
@@ -892,9 +885,8 @@ void InitFunctions()
         functorsBM[ "PolygonList" ] = AreaListFunctionBM;
         functorsBM[ "Path" ] = PathFunctionBM;
         functorsBM[ "Heading" ] = DirectionFunctionBM;
-        functorsBM[ "Automate" ] = AutomatFunctionBM;
         functorsBM[ "Automat" ] = AutomatFunctionBM;
-        functorsBM[ "AutomateList" ] = AutomatListFunctionBM;
+        functorsBM[ "AutomatList" ] = AutomatListFunctionBM;
         functorsBM[ "Agent" ] = AgentFunctionBM;
         functorsBM[ "AgentList" ] = AgentListFunctionBM;
         functorsBM[ "AgentKnowledge" ] = AgentKnowledgeFunctionBM;
@@ -903,11 +895,8 @@ void InitFunctions()
         functorsBM[ "ObjectKnowledgeList" ] = ObjectKnowledgeListFunctionBM;
         functorsBM[ "PopulationKnowledge" ] = PopulationKnowledgeFunctionBM;
         functorsBM[ "CrowdKnowledge" ] = PopulationKnowledgeFunctionBM;
-        functorsBM[ "GenObject" ] = GenObjectFunctionBM;
-        functorsBM[ "GenObjectList" ] = GenObjectListFunctionBM;
         functorsBM[ "PlannedWork" ] = GenObjectFunctionBM;
         functorsBM[ "PlannedWorkList" ] = GenObjectListFunctionBM;
-        functorsBM[ "UrbanBlock" ] = UrbanBlockFunctionBM;
         functorsBM[ "UrbanKnowledge" ] = UrbanBlockFunctionBM;
         functorsBM[ "LocationComposite" ] = LocationCompositeFunctionBM;
         functorsBM[ "LocationCompositeList" ] = LocationCompositeListFunctionBM;

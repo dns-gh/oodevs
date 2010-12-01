@@ -185,14 +185,15 @@ void MIL_Mission_ABC::SetParameter( const std::string& name, boost::shared_ptr< 
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC::AppendToParameter
-// Created: LDC 2009-07-31
+// Created: MGD 2009-12-01
 // -----------------------------------------------------------------------------
 void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_ptr< TER_Localisation > pLocation )
 {
     unsigned int index = type_.GetParameterIndex( name );
     if( parameters_.size() <= index || !parameters_[index] )
-    {
         EnsureParameters( parameters_, index );
+    if( dynamic_cast< MIL_NullParameter* >( parameters_[index].get() ) != 0 )
+    {
         boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( GetPion().GetKnowledge(), std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >() ) );
         parameters_[index] = param;
     }
@@ -201,14 +202,15 @@ void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC::AppendToParameter
-// Created: JSR 2010-03-04
+// Created: MGD 2009-12-01
 // -----------------------------------------------------------------------------
 void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject )
 {
     unsigned int index = type_.GetParameterIndex( name );
     if( parameters_.size() <= index || !parameters_[index] )
-    {
         EnsureParameters( parameters_, index );
+    if( dynamic_cast< MIL_NullParameter* >( parameters_[index].get() ) != 0 )
+    {
         boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( GetPion().GetKnowledge(), std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >() ) );
         parameters_[index] = param;
     }
@@ -217,17 +219,19 @@ void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC::AppendToParameter
-// Created: LDC 2010-04-14
+// Created: MGD 2009-12-01
 // -----------------------------------------------------------------------------
 void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_ptr< DEC_Gen_Object > pGenObject )
 {
     unsigned int index = type_.GetParameterIndex( name );
     if( parameters_.size() <= index || !parameters_[index] )
-    {
         EnsureParameters( parameters_, index );
+    if( dynamic_cast< MIL_NullParameter* >( parameters_[index].get() ) != 0 )
+    {
         boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( GetPion().GetKnowledge(), std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >() ) );
         parameters_[index] = param;
     }
+
     parameters_[index]->Append(  MIL_MissionParameterFactory::Create( pGenObject ) );
 }
 
