@@ -36,7 +36,6 @@ function TestActions:test_Mission_HasDefaultParameters()
             "<parameter max-occurs=\"unbounded\" min-occurs=\"1\" name=\"Phase lines\" type=\"PhaseLine\"/>\n" ..
             "<parameter name=\"Boundary limit 1\" type=\"Limit\"/>\n" ..
             "<parameter name=\"Boundary limit 2\" type=\"Limit\"/>\n" ..
-            "<parameter max-occurs=\"unbounded\" min-occurs=\"1\" name=\"Intelligences\" type=\"Intelligence\"/>\n" ..
         "</action>\n";
     assertEquals( Mission.create( 42, 51 ):ToXml(), expectation )
 end
@@ -48,7 +47,6 @@ function TestActions:test_Mission_WithAddsParameters()
             "<parameter max-occurs=\"unbounded\" min-occurs=\"1\" name=\"Phase lines\" type=\"PhaseLine\"/>\n" ..
             "<parameter name=\"Boundary limit 1\" type=\"Limit\"/>\n" ..
             "<parameter name=\"Boundary limit 2\" type=\"Limit\"/>\n" ..
-            "<parameter max-occurs=\"unbounded\" min-occurs=\"1\" name=\"Intelligences\" type=\"Intelligence\"/>\n" ..
             "<parameter name=\"Route\" type=\"Path\">\n" ..
                 "<parameter name=\"Destination\" type=\"pathpoint\">\n" ..
                     "<location type=\"point\">\n" ..
