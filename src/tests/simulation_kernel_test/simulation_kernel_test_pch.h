@@ -23,4 +23,9 @@
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
+#include <vector>
+#include <list>
+#include <map>
+#include <set>
+
 #endif // __simulation_kernel_test_pch_h_
