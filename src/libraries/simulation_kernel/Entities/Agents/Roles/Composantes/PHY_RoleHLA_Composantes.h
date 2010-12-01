@@ -11,7 +11,6 @@
 
 #include "PHY_RoleInterface_Composantes.h"
 #include "protocol/ClientSenders.h"
-#include "Decision/DEC_Decision_ABC.h"
 
 class PHY_ComposanteHLA;
 class HLA_InteractionManager_ABC;

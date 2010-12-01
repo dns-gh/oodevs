@@ -16,7 +16,6 @@
 #include "PHY_Composante_ABC.h"
 #include "PHY_ComposanteState.h"
 #include "PHY_ComposanteTypePion.h"
-#include "MIL_Random.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
 
 class AttritionCapacity;

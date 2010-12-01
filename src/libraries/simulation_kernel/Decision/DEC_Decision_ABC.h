@@ -24,14 +24,6 @@ class MT_Vector2D;
 class PHY_DotationCategory;
 class MT_Vector2D;
 
-namespace directia
-{
-namespace brain
-{
-    class Brain;
-}
-}
-
 // =============================================================================
 /** @class  DEC_Decision_ABC
     @brief  DEC_Decision_ABC

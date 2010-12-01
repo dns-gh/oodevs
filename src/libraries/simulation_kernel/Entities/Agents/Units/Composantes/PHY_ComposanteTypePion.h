@@ -17,8 +17,6 @@
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCapacities.h"
 #include "MIL_Random.h"
-#include <map>
-#include <set>
 
 namespace Common
 {
