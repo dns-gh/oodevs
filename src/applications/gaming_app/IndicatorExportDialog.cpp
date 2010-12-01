@@ -112,7 +112,7 @@ void IndicatorExportDialog::OnAccept()
 {
     try
     {
-        std::ofstream file( config_.BuildSessionChildFile( file_->text().ascii() ).c_str() );
+        std::ofstream file( file_->text().ascii() );
         const std::string sep = separator_->text().ascii();
         if( header_->isChecked() )
         {
