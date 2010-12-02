@@ -65,6 +65,8 @@ class ADN_KnowledgeGroups_Data;
 class ADN_KnowledgeGroups_GUI;
 class ADN_ResourceNetworks_Data;
 class ADN_ResourceNetworks_GUI;
+class ADN_LocalFireClass_Data;
+class ADN_LocalFireClass_GUI;
 enum E_OpenMode;
 
 // =============================================================================
@@ -114,6 +116,7 @@ public:
     ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>& GetSupply();
     ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& GetKnowledgeGroups();
     ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >& GetResourceNetworks();
+    ADN_WorkspaceElement< ADN_LocalFireClass_Data, ADN_LocalFireClass_GUI >& GetLocalFireClasses();
 
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
     void ResetProgressIndicator();
@@ -157,6 +160,7 @@ private:
         eHealth,
         ePopulation,
         eReports,
+        eLocalFireClasses,
         eNbrWorkspaceElements
     };
 
@@ -423,6 +427,16 @@ inline
 ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >& ADN_Workspace::GetResourceNetworks()
 {
     return ( ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >& )( *elements_[ eResourceNetworks ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_WorkspaceElement< ADN_LocalFireClass_Data, ADN_LocalFireClass_GUI >& ADN_Workspace::GetLocalFireClasses
+// Created: JSR 2010-12-02
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_LocalFireClass_Data, ADN_LocalFireClass_GUI >& ADN_Workspace::GetLocalFireClasses()
+{
+    return static_cast< ADN_WorkspaceElement< ADN_LocalFireClass_Data, ADN_LocalFireClass_GUI >& >( *elements_[ eLocalFireClasses ] );
 }
 
 // -----------------------------------------------------------------------------

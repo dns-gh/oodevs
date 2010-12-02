@@ -48,6 +48,7 @@ enum E_DotationFamily
     eDotationFamily_Barbele,
     eDotationFamily_Piece,
     eDotationFamily_Ration,
+    eDotationFamily_AgentExtincteur,
     eNbrDotationFamily
 };
 

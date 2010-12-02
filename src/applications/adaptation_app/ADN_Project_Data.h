@@ -64,6 +64,7 @@ public:
         ADN_Type_String szModels_;
         ADN_Type_String szMissions_;
         ADN_Type_String szResourceNetworks_;
+        ADN_Type_String szLocalFireClasses_;
 
         // $$$$ NLD 2007-01-15: files not loaded!
         ADN_Type_String szFire_;

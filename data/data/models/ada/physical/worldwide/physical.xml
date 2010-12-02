@@ -16,6 +16,7 @@
   <automats file="Automates.xml"/>
   <nbc file="NBC.xml"/>
   <fire file="Fire.xml"/>
+  <local-fire-classes file="LocalFireClasses.xml"/>
   <medical-treatment file="MedicalTreatment.xml"/>
   <health file="Sante.xml"/>
   <human-factors file="FacteursHumains.xml"/>
@@ -33,4 +34,4 @@
   <urban file="Urban.xml"/>
   <resource-networks file="ResourceNetworks.xml"/>
 </physical>
-<!-- signature="0701200152" -->
+<!-- signature="0362107642" -->

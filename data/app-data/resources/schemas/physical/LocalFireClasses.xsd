@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.2.6">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:element name="local-fire-classes">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="local-fire-class" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="extinguisher-agents">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="extinguisher-agent" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="heat-decrease-rate" type="xs:nonNegativeInteger" use="required"/>
+												<xs:attribute name="agent" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="weather-effects">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="weather-effect" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="heat-decrease-rate" use="required"/>
+												<xs:attribute name="weather" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="initial-heat" type="xs:nonNegativeInteger" use="required"/>
+						<xs:attribute name="max-heat" type="xs:nonNegativeInteger" use="required"/>
+						<xs:attribute name="increase-rate" type="xs:nonNegativeInteger" use="required"/>
+						<xs:attribute name="decrease-rate" type="xs:nonNegativeInteger" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

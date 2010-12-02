@@ -74,8 +74,6 @@ public:
         ADN_Type_String strCodeEMAT8_;
         ADN_Type_String strCodeLFRIL_;
         ADN_Type_String strCodeNNO_;
-        ADN_Type_String strDotationNature_;
-        ADN_Type_Int    nDotationNatureId_;
         ADN_TypePtr_InVector_ABC<helpers::ResourceNatureInfos> ptrResourceNature_;
         ADN_Type_Double rNbrInPackage_;
         ADN_Type_Double rPackageVolume_;

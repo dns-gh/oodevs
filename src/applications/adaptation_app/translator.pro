@@ -89,6 +89,9 @@ ADN_ListView_Models.cpp \
 ADN_ListView_Objects.cpp \
 ADN_ListView_Orders.cpp \
 ADN_ListView_ResourceNetworks.cpp \
+ADN_LocalFireClass_ListView.cpp \
+ADN_LocalFireClass_Wizard.cpp \
+ADN_LocalFireClass_GUI.cpp \
 ADN_ListView_Sensors.cpp \
 ADN_ListView_Units.cpp \
 ADN_ListView_UrbanMaterial_Type.cpp \

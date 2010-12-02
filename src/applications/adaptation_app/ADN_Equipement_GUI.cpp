@@ -88,6 +88,7 @@ void ADN_Equipement_GUI::Build()
     this->BuildGeneric( eDotationFamily_Explosif, pTabWidget );
     this->BuildGeneric( eDotationFamily_Barbele, pTabWidget );
     this->BuildGeneric( eDotationFamily_Ration, pTabWidget );
+    this->BuildGeneric( eDotationFamily_AgentExtincteur, pTabWidget );
     this->BuildGeneric( eDotationFamily_Piece, pTabWidget );
 
     QGridLayout* pMainLayout = new QGridLayout( pMainWidget_, 1, 1, 10, 10 );

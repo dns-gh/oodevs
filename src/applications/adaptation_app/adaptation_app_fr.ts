@@ -2036,6 +2036,59 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_LocalFireClass_GUI</name>
+    <message>
+        <source>Local fire class</source>
+        <translation>Classe de feu</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Initial heat</source>
+        <translation>Température de départ</translation>
+    </message>
+    <message>
+        <source>Max heat</source>
+        <translation>Température maximale</translation>
+    </message>
+    <message>
+        <source>Increase rate</source>
+        <translation>Coefficient d’augmentation</translation>
+    </message>
+    <message>
+        <source>Decrease rate</source>
+        <translation>Coefficient de diminution</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_LocalFireClass_ListView</name>
+    <message>
+        <source>Local fire classes</source>
+        <translation>Classes de feu</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_LocalFireClass_Wizard</name>
+    <message>
+        <source>New local fire class creation</source>
+        <translation>Création d&apos;une classe de feu</translation>
+    </message>
+    <message>
+        <source>Local fire class</source>
+        <translation>Classe de feu</translation>
+    </message>
+    <message>
+        <source>Creation finished</source>
+        <translation>Création terminée</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new local fire class.</source>
+        <translation>Cliquez sur &quot;Terminer&quot; pour créer la nouvelle classe de feu.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_MainWindow</name>
     <message>
         <source>&amp;New</source>
@@ -4257,7 +4310,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Logistic - Parts</source>
-        <translation>Logisituqe - pièces détachées</translation>
+        <translation>Logistique - pièces détachées</translation>
     </message>
     <message>
         <source>Maintenance support needed</source>
@@ -5024,6 +5077,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Knowledge groups</source>
         <translation>Groupes de connaissance</translation>
+    </message>
+    <message>
+        <source>Local fire</source>
+        <translation>Incendie</translation>
     </message>
     <message>
         <source>Health</source>

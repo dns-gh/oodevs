@@ -58,18 +58,18 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo()
 ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
 : ADN_Ref_ABC           ( "ADN_Equipement_Data::CategoryInfo" )
 , ADN_DataTreeNode_ABC  ()
+, parentResource_       ( parentDotation )
+, strName_              ()
+, category_             ( ENT_Tr::ConvertFromDotationFamily( parentDotation.nType_ ) )
+, nMosId_               ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNextCatId() )
 , strCodeEMAT6_         ()
 , strCodeEMAT8_         ()
 , strCodeLFRIL_         ()
 , strCodeNNO_           ()
 , ptrResourceNature_    ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
-, parentResource_       ( parentDotation )
-, strName_              ()
-, nMosId_               ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNextCatId() )
 , rNbrInPackage_        ( 0. )
 , rPackageVolume_       ( 0. )
 , rPackageWeight_       ( 0. )
-, nDotationNatureId_    ( 0 )
 {
     strName_.SetDataName( "le nom d'" );
     strName_.SetParentNode( *this );
@@ -120,7 +120,7 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( xml::xistream& input )
     strCodeLFRIL_ = strName_.GetData();
     strCodeNNO_   = strName_.GetData();
     input >> xml::attribute( "category", category_ );
-
+    std::string dotationNature;
     input >> xml::optional >> xml::attribute( "codeEMAT6", strCodeEMAT6_ )
           >> xml::optional >> xml::attribute( "codeEMAT8", strCodeEMAT8_ )
           >> xml::optional >> xml::attribute( "codeLFRIL", strCodeLFRIL_ )
@@ -128,12 +128,11 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "package-size", rNbrInPackage_ )
           >> xml::attribute( "package-mass", rPackageWeight_ )
           >> xml::attribute( "package-volume", rPackageVolume_ )
-          >> xml::attribute( "nature", strDotationNature_ );
-    helpers::ResourceNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( strDotationNature_.GetData() );
+          >> xml::attribute( "nature", dotationNature );
+    helpers::ResourceNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( dotationNature );
     if( !pNature )
-        throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).ascii(), tools::translate( "Equipment_Data", "Equipment - Invalid resource nature '%1'" ).arg( strDotationNature_.GetData().c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).ascii(), tools::translate( "Equipment_Data", "Equipment - Invalid resource nature '%1'" ).arg( dotationNature.c_str() ).ascii() );
     ptrResourceNature_ = pNature;
-    nDotationNatureId_ = pNature->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -159,8 +158,8 @@ void ADN_Equipement_Data::CategoryInfo::WriteContent( xml::xostream& output )
            << xml::attribute( "package-size", rNbrInPackage_ )
            << xml::attribute( "package-mass", rPackageWeight_ )
            << xml::attribute( "package-volume", rPackageVolume_ )
-           << xml::attribute( "nature", strDotationNature_ )
-           << xml::attribute( "id-nature", nDotationNatureId_ )
+           << xml::attribute( "nature", ptrResourceNature_.GetData()->GetData() )
+           << xml::attribute( "id-nature", ptrResourceNature_.GetData()->GetId() )
            << xml::attribute( "codeEMAT6", strCodeEMAT6_ )
            << xml::attribute( "codeEMAT8", strCodeEMAT8_ )
            << xml::attribute( "codeLFRIL", strCodeLFRIL_ )

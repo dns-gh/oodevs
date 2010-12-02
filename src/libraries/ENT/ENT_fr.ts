@@ -842,5 +842,9 @@
         <source>c</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>extinguisher agent</source>
+        <translation>Agent extincteur</translation>
+    </message>
 </context>
 </TS>

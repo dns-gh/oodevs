@@ -73,6 +73,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "automats", szAutomata_);
     ReadFile( input, "nbc", szNBC_);
     ReadFile( input, "fire", szFire_ );
+    ReadFile( input, "local-fire-classes", szLocalFireClasses_ );
     ReadFile( input, "medical-treatment", szMedicalTreatment_ );
     ReadFile( input, "health", szHealth_);
     ReadFile( input, "human-factors", szHumanFactors_);
@@ -117,6 +118,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "automats", szAutomata_ );
     WriteFile( output, "nbc", szNBC_ );
     WriteFile( output, "fire", szFire_ );
+    WriteFile( output, "local-fire-classes", szLocalFireClasses_ );
     WriteFile( output, "medical-treatment", szMedicalTreatment_ );
     WriteFile( output, "health", szHealth_ );
     WriteFile( output, "human-factors", szHumanFactors_ );

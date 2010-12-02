@@ -69,6 +69,8 @@
 #include "ADN_MainWindow.h"
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_ActiveProtections_GUI.h"
+#include "ADN_LocalFireClass_Data.h"
+#include "ADN_LocalFireClass_GUI.h"
 #include "qtundo.h"
 #include <io.h>
 #include <qtimer.h>
@@ -116,7 +118,7 @@ ADN_Workspace::ADN_Workspace()
 
     projectData_ = new ADN_Project_Data();
     elements_[eCategories]        = new ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >( tr( "Categories" ) );
-    elements_[eUrban]        = new ADN_WorkspaceElement< ADN_Urban_Data, ADN_Urban_GUI >( tr( "Urban" ) );
+    elements_[eUrban]             = new ADN_WorkspaceElement< ADN_Urban_Data, ADN_Urban_GUI >( tr( "Urban" ) );
     elements_[eNBC]               = new ADN_WorkspaceElement< ADN_NBC_Datas, ADN_NBC_GUI >( tr( "NBC" ) );
     elements_[eLaunchers]         = new ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >( tr( "Launchers" ) );
     elements_[eEquipement]        = new ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >( tr( "Resources" ) );
@@ -140,6 +142,7 @@ ADN_Workspace::ADN_Workspace()
     elements_[eSupply]            = new ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>( tr( "Supply" ) );
     elements_[ePopulation]        = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >( tr( "Crowds" ) );
     elements_[eReports]           = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >( tr( "Reports" ) );
+    elements_[eLocalFireClasses]         = new ADN_WorkspaceElement< ADN_LocalFireClass_Data, ADN_LocalFireClass_GUI >( tr( "Local fire" ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -188,6 +191,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     mainWindow.AddPage( elements_[eModels]->GetName(), * elements_[eModels]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eObjects]->GetName(), * elements_[eObjects]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eNBC]->GetName(), * elements_[eNBC]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eLocalFireClasses]->GetName(), * elements_[eLocalFireClasses]->GetGuiABC().GetMainWidget() );
 
     QWidget* pLogPage = new QWidget();
     QVBoxLayout* pLayout = new QVBoxLayout( pLogPage );
