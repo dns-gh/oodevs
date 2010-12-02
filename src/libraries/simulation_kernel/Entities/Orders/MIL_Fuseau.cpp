@@ -1001,7 +1001,8 @@ double MIL_Fuseau::ComputeAdvance( const MT_Vector2D& position ) const
     MT_Vector2D nearestPoint;
     for( CIT_PointVector it = points.begin(); ++it != points.end(); )
     {
-        MT_Line line( startPoint, *it );
+        MT_Vector2D firstPoint = startPoint;
+        MT_Line line( firstPoint, *it );
         startPoint = *it;
         double advance = line.ProjectPointOnLine( position, nearestPoint );
         double distance = position.Distance( nearestPoint );
