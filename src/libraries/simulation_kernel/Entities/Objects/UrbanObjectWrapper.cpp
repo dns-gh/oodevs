@@ -316,7 +316,7 @@ void UrbanObjectWrapper::Serialize( HLA_UpdateFunctor& /*functor*/ ) const
 // Name: UrbanObjectWrapper::OnUpdate
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const Common::MsgMissionParameter_Value& /*asn*/ )
+MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& /*attributes*/ )
 {
     return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
 }

@@ -107,7 +107,7 @@ public:
     //! @name Network
     //@{
     virtual void UpdateState();
-    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const Common::MsgMissionParameter_Value& list );
+    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& attributes );
     void SendCreation() const;
     void SendDestruction() const;
     void SendFullState() const;

@@ -343,11 +343,11 @@ const MIL_ObjectManipulator_ABC& Object::operator()() const
 // Name: Object::OnUpdate
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode Object::OnUpdate( const MsgMissionParameter_Value& attributes )
+MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode Object::OnUpdate( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& attributes )
 {
-    for( int i = 0; i < attributes.list_size(); ++i )
+    for( int i = 0; i < attributes.size(); ++i )
     {
-        const MsgMissionParameter_Value& attribute = attributes.list( i );
+        const MsgMissionParameter_Value& attribute = attributes.Get( i );
         if( attribute.list_size() == 0 ) // it should be a list of lists
             return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
         const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type

@@ -171,7 +171,7 @@ public:
 
     //! @name Network
     //@{
-    virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const Common::MsgMissionParameter_Value& msg ) = 0;
+    virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& attributes ) = 0;
     virtual MsgsSimToClient::MsgMagicActionAck_ErrorCode OnUpdateResourceLinks( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list );
     virtual void SendCreation() const = 0;
     virtual void SendDestruction() const = 0;

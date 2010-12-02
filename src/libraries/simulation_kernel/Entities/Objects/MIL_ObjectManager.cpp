@@ -325,7 +325,7 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
         {
             const Common::MsgMissionParameters& params = msg.parameters();
             if( params.elem_size() && params.elem( 0 ).value_size() && params.elem( 0 ).value().Get( 0 ).list_size() )
-                nErrorCode = pObject->OnUpdate( params.elem( 0 ).value().Get( 0 ) );
+                nErrorCode = pObject->OnUpdate( params.elem( 0 ).value() );
         }
     }
     client::ObjectMagicActionAck asnReplyMsg;
