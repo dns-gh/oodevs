@@ -25,7 +25,6 @@ namespace xml
 class MIL_AutomateTypeInjuredHuman;
 class PHY_InjuredHuman;
 class MIL_Injury_ABC;
-class DEC_DataBase;
 class PHY_ComposantePion;
 
 // =============================================================================
@@ -41,10 +40,9 @@ public:
              MIL_AutomateInjuredHuman(  const MIL_AutomateTypeInjuredHuman& type
                                         , unsigned int nID, MIL_Entity_ABC& parent
                                         , xml::xistream& xis
-                                        , DEC_DataBase& database
                                         , unsigned int gcPause 
                                         , unsigned int gcMult );
-             MIL_AutomateInjuredHuman( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult, unsigned int context );
+             MIL_AutomateInjuredHuman( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, unsigned int context );
     
     virtual ~MIL_AutomateInjuredHuman();
 

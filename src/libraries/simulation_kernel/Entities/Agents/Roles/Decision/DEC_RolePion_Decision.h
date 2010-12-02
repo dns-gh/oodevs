@@ -46,7 +46,7 @@ class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
 {
 
 public:
-             DEC_RolePion_Decision( MIL_AgentPion& pion, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult );
     virtual ~DEC_RolePion_Decision();
 
     //! @name CheckPoints
@@ -256,11 +256,9 @@ BOOST_CLASS_EXPORT_KEY( DEC_RolePion_Decision )
 template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_RolePion_Decision* role, const unsigned int /*version*/ )
 {
-    const DEC_DataBase* const database = &role->database_;
     unsigned int gcPause = role->gcPause_;
     unsigned int gcMult = role->gcMult_;
     archive << role->pEntity_
-        << database
         << gcPause
         << gcMult;
 }
@@ -269,14 +267,12 @@ template< typename Archive >
 void load_construct_data( Archive& archive, DEC_RolePion_Decision* role, const unsigned int /*version*/ )
 {
     MIL_AgentPion* pion;
-    DEC_DataBase* database;
     unsigned int gcPause;
     unsigned int gcMult;
     archive >> pion
-        >> database
         >> gcPause
         >> gcMult;
-    ::new( role )DEC_RolePion_Decision( *pion, *database, gcPause, gcMult );
+    ::new( role )DEC_RolePion_Decision( *pion, gcPause, gcMult );
 }
 
 #endif // __DEC_RolePion_Decision_h_

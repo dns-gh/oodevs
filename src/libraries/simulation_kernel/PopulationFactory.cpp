@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "PopulationFactory.h"
 #include "FormationFactory_ABC.h"
-#include "Decision/DEC_DataBase.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include <boost/serialization/map.hpp>
 #include <boost/serialization/vector.hpp>
@@ -22,9 +21,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFactory )
 // Name: PopulationFactory constructor
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
-PopulationFactory::PopulationFactory( DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
-    : database_( database )
-    , gcPause_ ( gcPause )
+PopulationFactory::PopulationFactory( unsigned int gcPause, unsigned int gcMult )
+    : gcPause_ ( gcPause )
     , gcMult_  ( gcMult )
 {
     // NOTHING
@@ -49,7 +47,7 @@ MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army_ABC& arm
     const MIL_PopulationType* pType = MIL_PopulationType::Find( strType );
     if( !pType )
         xis.error( "Unknown population type" );
-    MIL_Population& population = *new MIL_Population( xis, *pType, army, database_, gcPause_, gcMult_ );
+    MIL_Population& population = *new MIL_Population( xis, *pType, army, gcPause_, gcMult_ );
     Register( population.GetID(), population );
     return population;
 }
@@ -63,7 +61,7 @@ MIL_Population& PopulationFactory::Create( const std::string& type, const MT_Vec
     const MIL_PopulationType* pType = MIL_PopulationType::Find( type );
     if( !pType )
         throw std::runtime_error( "Unknown population type" );
-    MIL_Population& population = *new MIL_Population( *pType, army, point, number, name, database_, gcPause_, gcMult_ );
+    MIL_Population& population = *new MIL_Population( *pType, army, point, number, name, gcPause_, gcMult_ );
     Register( population.GetID(), population );
     return population;
 }

@@ -64,7 +64,6 @@ namespace xml
 class ArmyFactory_ABC;
 class AgentFactory_ABC;
 class AutomateFactory_ABC;
-class DEC_DataBase;
 class FormationFactory_ABC;
 class KnowledgeGroupFactory_ABC;
 class MIL_AgentTypePion;
@@ -100,7 +99,7 @@ class MIL_EntityManager : public MIL_EntityManager_ABC,
                           private boost::noncopyable
 {
 public:
-             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla, unsigned int gcPause, unsigned int gcMult );
     virtual ~MIL_EntityManager();
 
     //! @name Factory

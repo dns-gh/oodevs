@@ -170,18 +170,6 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "Starting DirectIA debug server on port %d", config.GetDiaDebuggerPort() ) );
     }
-
-    //BM
-    if( xis.has_child( "BMDatabase" ) )
-    {
-        xis >> xml::start( "BMDatabase" );
-        dataBase_.reset( new DEC_DataBase( xis, strSourcePaths["net.masagroup"] ) );
-        xis >> xml::end;
-    }
-    else
-    {
-        dataBase_.reset( new DEC_DataBase( std::vector< std::string >(), std::vector< const std::string >() ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -330,23 +318,4 @@ void DEC_Workspace::InitializeObjectNames( MIL_Config& config )
     MIL_Tools::CheckXmlCrc32Signature( strFile );
     xml::xifstream xisObjectNames( strFile );
     DEC_ObjectFunctions::RegisterObjectNames( xisObjectNames );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Workspace::InitKnowledges
-// Created: MGD 2009-10-23
-// -----------------------------------------------------------------------------
-void DEC_Workspace::InitKnowledges( directia::brain::Brain& brain ) const
-{
-    if( dataBase_.get() )
-        dataBase_->InitKnowledges( brain );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Workspace::GetBMDatabase
-// Created: MGD 2009-10-27
-// -----------------------------------------------------------------------------
-DEC_DataBase& DEC_Workspace::GetDatabase() const
-{
-    return *dataBase_;
 }

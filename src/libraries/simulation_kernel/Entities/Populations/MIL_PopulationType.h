@@ -21,7 +21,6 @@ namespace xml
     class xistream;
 }
 
-class DEC_DataBase;
 class DEC_Model_ABC;
 class MIL_Army_ABC;
 class MIL_Population;
@@ -58,7 +57,7 @@ public:
 
     //! @name Operations
     //@{
-    MIL_Population& InstanciatePopulation( xml::xistream& xis, MIL_Army_ABC& army, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const;
+    MIL_Population& InstanciatePopulation( xml::xistream& xis, MIL_Army_ABC& army, unsigned int gcPause, unsigned int gcMult ) const;
     //@}
 
     //! @name Effects

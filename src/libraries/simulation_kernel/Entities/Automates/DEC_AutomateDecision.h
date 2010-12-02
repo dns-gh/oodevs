@@ -32,7 +32,7 @@ class DEC_AutomateDecision : public DEC_Decision< MIL_Automate >
                            , private boost::noncopyable
 {
 public:
-             DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             DEC_AutomateDecision( MIL_Automate& automate, unsigned int gcPause, unsigned int gcMult );
     virtual ~DEC_AutomateDecision();
 
     //! @name CheckPoints
@@ -156,9 +156,7 @@ BOOST_CLASS_EXPORT_KEY( DEC_AutomateDecision )
 template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, const unsigned int /*version*/ )
 {
-    const DEC_DataBase* const database = &role->database_;
     archive << role->pEntity_
-        << database
         << role->gcPause_
         << role->gcMult_;
 }
@@ -167,14 +165,12 @@ template< typename Archive >
 void load_construct_data( Archive& archive, DEC_AutomateDecision* role, const unsigned int /*version*/ )
 {
     MIL_Automate* automate;
-    DEC_DataBase* database;
     unsigned int gcPause;
     unsigned int gcMult;
     archive >> automate
-        >> database
         >> gcPause
         >> gcMult;
-    ::new( role )DEC_AutomateDecision( *automate, *database, gcPause, gcMult );
+    ::new( role )DEC_AutomateDecision( *automate, gcPause, gcMult );
 }
 
 #endif // __DEC_AutomateDecision_h_

@@ -277,18 +277,18 @@ void MIL_AutomateType::InitializeDiaFunctions()
 // Name: MIL_AutomateType::InstanciateAutomate
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const
+MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult ) const
 {
-    return *new MIL_Automate( *this, nID, parent, xis, database, gcPause, gcMult );
+    return *new MIL_Automate( *this, nID, parent, xis, gcPause, gcMult );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateType::InstanciateAutomate
 // Created: LDC 2010-10-05
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Entity_ABC&  parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult, unsigned int context ) const
+MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Entity_ABC&  parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, unsigned int context ) const
 {
-    return *new MIL_Automate( *this, nID, parent, knowledgeGroup, name, database, gcPause, gcMult, context );
+    return *new MIL_Automate( *this, nID, parent, knowledgeGroup, name, gcPause, gcMult, context );
 }    
 
 // -----------------------------------------------------------------------------

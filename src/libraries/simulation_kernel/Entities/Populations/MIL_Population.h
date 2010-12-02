@@ -32,7 +32,6 @@ namespace xml
     class xistream;
 }
 
-class DEC_DataBase;
 class DEC_PopulationDecision;
 class DEC_PopulationKnowledge;
 class MIL_Formation;
@@ -57,8 +56,8 @@ class MIL_Population : public MIL_Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
-             MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, unsigned int gcPause, unsigned int gcMult );
+             MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, unsigned int gcPause, unsigned int gcMult );
     virtual ~MIL_Population();
     //@}
 

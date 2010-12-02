@@ -87,7 +87,7 @@ void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigne
 // Name: MIL_Automate constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult )
     : MIL_Entity_ABC                     ( xis )
     , pType_                             ( &type )
     , nID_                               ( nID )
@@ -110,7 +110,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pDotationSupplyManager_            ( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_               ( new MIL_StockSupplyManager( *this ) )
 {
-    Initialize( xis, database, gcPause, gcMult );
+    Initialize( xis, gcPause, gcMult );
     if( pParentFormation_ )
         pParentFormation_->RegisterAutomate( *this );
     else if( pParentAutomate_ )
@@ -149,7 +149,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
 // Name: MIL_Automate constructor
 // Created: LDC 2010-10-05
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult, unsigned int context )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, unsigned int context )
     : MIL_Entity_ABC                     ( name )
     , pType_                             ( &type )
     , nID_                               ( nID )
@@ -178,7 +178,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
         throw std::runtime_error( "Unknown knowledge group" );
     pKnowledgeGroup_->RegisterAutomate( *this );
 
-    RegisterRole( *new DEC_AutomateDecision( *this, database, gcPause, gcMult ) ) ;
+    RegisterRole( *new DEC_AutomateDecision( *this, gcPause, gcMult ) ) ;
     RegisterRole( *new DEC_Representations() );
 
     if( pParentFormation_ )
@@ -324,12 +324,12 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
 // Name: MIL_Automate::Initialize
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-void MIL_Automate::Initialize( xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigned int gcMult )
 {
     xis >> xml::optional() >> xml::attribute( "engaged", bEngaged_ );
     unsigned int nKnowledgeGroup;
     xis >> xml::attribute( "knowledge-group", nKnowledgeGroup );
-    RegisterRole( *new DEC_AutomateDecision( *this, database, gcPause, gcMult ) ) ;
+    RegisterRole( *new DEC_AutomateDecision( *this, gcPause, gcMult ) ) ;
     RegisterRole( *new DEC_Representations() );
     xis >> xml::list( "unit", *this, &MIL_Automate::ReadUnitSubordinate )
         >> xml::list( "automat", *this, &MIL_Automate::ReadAutomatSubordinate );

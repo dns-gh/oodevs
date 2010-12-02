@@ -13,7 +13,6 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Automates/MIL_AutomateType.h"
-#include "simulation_kernel/Decision/DEC_DataBase.h"
 #include "Tools/MIL_IDManager.h"
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/vector.hpp>
@@ -26,9 +25,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AutomateFactory )
 // Name: AutomateFactory constructor
 // Created: MGD 2009-08-17
 // -----------------------------------------------------------------------------
-AutomateFactory::AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+AutomateFactory::AutomateFactory( MIL_IDManager& idManager, unsigned int gcPause, unsigned int gcMult )
     : idManager_( idManager )
-    , database_( database )
     , gcPause_( gcPause )
     , gcMult_( gcMult )
 {
@@ -60,7 +58,7 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Entity_ABC& paren
     if( !pType )
         xis.error( "Unknown automat type" );
 
-    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, database_, gcPause_, gcMult_ );
+    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, gcPause_, gcMult_ );
     automate.ReadOverloading( xis );
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
 
@@ -73,7 +71,7 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Entity_ABC& paren
 // -----------------------------------------------------------------------------
 MIL_Automate& AutomateFactory::Create( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int context )
 {
-    MIL_Automate& automate = type.InstanciateAutomate( idManager_.GetFreeId(), parent, knowledgeGroup, name, database_, gcPause_, gcMult_, context );
+    MIL_Automate& automate = type.InstanciateAutomate( idManager_.GetFreeId(), parent, knowledgeGroup, name, gcPause_, gcMult_, context );
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
 
     return automate;

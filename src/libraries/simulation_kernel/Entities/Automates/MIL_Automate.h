@@ -39,7 +39,6 @@ namespace xml
 }
 
 class DEC_AutomateDecision;
-class DEC_DataBase;
 class DEC_Knowledge_Agent;
 class DEC_KnowledgeBlackBoard_Automate;
 class DEC_Knowledge_Object;
@@ -88,8 +87,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
-             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult, unsigned int context );
+             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult );
+             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, unsigned int context );
     virtual ~MIL_Automate();
     //@}
 
@@ -248,7 +247,7 @@ protected:
 private:
     //! @name Tools
     //@{
-    void Initialize( xml::xistream& xis, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+    void Initialize( xml::xistream& xis, unsigned int gcPause, unsigned int gcMult );
     //@}
 
     //! @name Helpers

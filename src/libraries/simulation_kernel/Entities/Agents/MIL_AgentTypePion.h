@@ -29,7 +29,6 @@ namespace brain
 }
 
 class AlgorithmsFactories;
-class DEC_DataBase;
 class DEC_Model_ABC;
 class MIL_Automate;
 class MIL_AgentPion;
@@ -61,7 +60,7 @@ public:
     //@{
     virtual MIL_AgentPion* InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const;
     virtual MIL_AgentPion* InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const;
-    virtual void RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const;
+    virtual void RegisterRoles( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult ) const;
     //@}
 
     //! @name Accessors

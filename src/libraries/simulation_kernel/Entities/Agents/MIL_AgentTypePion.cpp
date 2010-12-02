@@ -311,7 +311,7 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( MIL_Automate& automate, const
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in factory
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const
+void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult ) const
 {
     const bool bIsAutonomous = pion.IsAutonomous();
     pion.RegisterRole( *new network::NET_RolePion_Dotations( pion ) );
@@ -340,7 +340,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& databa
     pion.RegisterRole( *new firing::PHY_RoleAction_DirectFiring( pion ) );
     pion.RegisterRole( *new firing::PHY_RoleAction_IndirectFiring( pion ) );
     pion.RegisterRole( *new PHY_RolePion_Illumination( pion ) ); // LTO
-    pion.RegisterRole( *new DEC_RolePion_Decision( pion, database, gcPause, gcMult ) );
+    pion.RegisterRole( *new DEC_RolePion_Decision( pion, gcPause, gcMult ) );
     pion.RegisterRole( *new PHY_RoleAction_FolkInfluence() );
     pion.RegisterRole( *new DEC_Representations() );
     pion.RegisterRole( *new PHY_RolePion_TerrainAnalysis( pion ) );

@@ -15,7 +15,6 @@
 #include "MT_Tools/MT_Logger.h"
 #include <directia/brain/Brain.h>
 
-class DEC_DataBase;
 class DEC_Knowledge_Object;
 class DEC_Model_ABC;
 class MIL_Entity_ABC;
@@ -45,7 +44,7 @@ class DEC_Decision : public DEC_Decision_ABC
 public:
     //! @name Constructor
     //@{
-             DEC_Decision( T& entity, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult );
     virtual ~DEC_Decision();
     //@}
 
@@ -183,7 +182,6 @@ protected:
     T*                              pEntity_;
     boost::shared_ptr< MIL_Mission_ABC > pMission_;
     std::string                     diaType_;
-    DEC_DataBase&                   database_;
     unsigned int                    gcPause_;
     unsigned int                    gcMult_;
     //@}

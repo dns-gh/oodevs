@@ -32,7 +32,6 @@ namespace MsgsClientToSim
     class MsgUnitMagicAction;
 }
 
-class DEC_DataBase;
 class MIL_Agent_ABC;
 class MIL_AutomateTypeLOG;
 class PHY_MaintenanceComposanteState;

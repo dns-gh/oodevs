@@ -63,7 +63,7 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
 // Name: MIL_Population constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, unsigned int gcPause, unsigned int gcMult )
     : MIL_Entity_ABC          ( xis )
     , pType_                  ( &type )
     , nID_                    ( xis.attribute< unsigned int >( "id" ) )
@@ -84,7 +84,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     if( !pDefaultAttitude_ )
         xis.error( "Unknown attitude" );
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
-    RegisterRole( *new DEC_PopulationDecision( *this, database, gcPause, gcMult ) );
+    RegisterRole( *new DEC_PopulationDecision( *this, gcPause, gcMult ) );
     RegisterRole( *new DEC_Representations() );
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
     concentrations_.push_back( pConcentration );
@@ -124,7 +124,7 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
 // Name: MIL_Population constructor
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, unsigned int gcPause, unsigned int gcMult )
     : MIL_Entity_ABC          ( name )
     , pType_                  ( &type )
     , nID_                    ( idManager_.GetFreeId() )
@@ -140,7 +140,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
 {
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( "calme" );
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
-    RegisterRole( *new DEC_PopulationDecision( *this, database, gcPause, gcMult ) );
+    RegisterRole( *new DEC_PopulationDecision( *this, gcPause, gcMult ) );
     RegisterRole( *new DEC_Representations() );
     SendCreation();
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, point, number );

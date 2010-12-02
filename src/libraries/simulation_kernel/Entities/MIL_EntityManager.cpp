@@ -157,7 +157,6 @@ void load_construct_data( Archive& /*archive*/, MIL_EntityManager* role, const u
 {
     ::new( role )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_EffectManager::GetEffectManager(),
                                     MIL_Singletons::GetProfiler(), MIL_Singletons::GetHla(),
-                                    MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().GetDatabase(),
                                     MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setPause(), 
                                     MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setStepMul() );
 }
@@ -166,7 +165,7 @@ void load_construct_data( Archive& /*archive*/, MIL_EntityManager* role, const u
 // Name: MIL_EntityManager constructor
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla, unsigned int gcPause, unsigned int gcMult )
     : time_                         ( time )
     , hla_                          ( hla )
     , effectManager_                ( effects )
@@ -181,9 +180,9 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , rStatesTime_                  ( 0. )
     , idManager_                    ( new MIL_IDManager() )
     , pObjectManager_               ( new MIL_ObjectManager() )
-    , populationFactory_            ( new PopulationFactory( database, gcPause, gcMult ) )
-    , agentFactory_                 ( new AgentFactory( *idManager_, database, gcPause, gcMult ) )
-    , automateFactory_              ( new AutomateFactory( *idManager_, database, gcPause, gcMult ) )
+    , populationFactory_            ( new PopulationFactory( gcPause, gcMult ) )
+    , agentFactory_                 ( new AgentFactory( *idManager_, gcPause, gcMult ) )
+    , automateFactory_              ( new AutomateFactory( *idManager_, gcPause, gcMult ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *agentFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *knowledgeGroupFactory_ ) )

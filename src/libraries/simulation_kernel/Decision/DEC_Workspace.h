@@ -13,7 +13,6 @@ namespace xml
     class xistream;
 }
 
-class DEC_DataBase;
 class DEC_Model_ABC;
 class DEC_DataBase;
 class MIL_MissionType_ABC;
@@ -49,9 +48,6 @@ public:
     const DEC_Model_ABC* FindModelAutomate( const std::string& strModelName  ) const;
     const DEC_Model_ABC* FindModelPopulation( const std::string& strModelName  ) const;
     //@}
-
-    void InitKnowledges( directia::brain::Brain& brain ) const;
-    DEC_DataBase& GetDatabase() const;
 
 private:
     //! @name Init

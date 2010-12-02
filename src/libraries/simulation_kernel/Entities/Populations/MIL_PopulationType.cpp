@@ -250,9 +250,9 @@ void MIL_PopulationType::InitializeDiaFunctions()
 // Name: MIL_PopulationType::InstanciatePopulation
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_Population& MIL_PopulationType::InstanciatePopulation( xml::xistream& xis, MIL_Army_ABC& army, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const
+MIL_Population& MIL_PopulationType::InstanciatePopulation( xml::xistream& xis, MIL_Army_ABC& army, unsigned int gcPause, unsigned int gcMult ) const
 {
-    return *new MIL_Population( xis, *this, army, database, gcPause, gcMult );
+    return *new MIL_Population( xis, *this, army, gcPause, gcMult );
 }
 
 // -----------------------------------------------------------------------------

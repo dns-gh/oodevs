@@ -13,7 +13,6 @@
 #include "AgentFactory_ABC.h"
 #include "tools/Resolver.h"
 
-class DEC_DataBase;
 class MIL_IDManager;
 class AlgorithmsFactories;
 
@@ -28,7 +27,7 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( MIL_IDManager& idManager, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             AgentFactory( MIL_IDManager& idManager, unsigned int gcPause, unsigned int gcMult );
     virtual ~AgentFactory();
     //@}
 
@@ -70,7 +69,6 @@ private:
     //@{
     MIL_IDManager& idManager_;
     std::auto_ptr< AlgorithmsFactories > algorithmsFactories_;
-    DEC_DataBase& database_;
     unsigned int gcPause_;
     unsigned int gcMult_;
     //@}
@@ -82,9 +80,7 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const AgentFactory* factory, const unsigned int /*version*/ )
 {
     const MIL_IDManager* const idManager = &factory->idManager_;
-    const DEC_DataBase* const database = &factory->database_;
     archive << idManager
-        << database
         << factory->gcPause_
         << factory->gcMult_;
 }
@@ -92,14 +88,12 @@ template< typename Archive >
 void load_construct_data( Archive& archive, AgentFactory* factory, const unsigned int /*version*/ )
 {
     MIL_IDManager* idManager;
-    DEC_DataBase* database;
     unsigned int gcPause;
     unsigned int gcMult;
     archive >> idManager
-        >> database
         >> gcPause
         >> gcMult;
-    ::new( factory )AgentFactory( *idManager, *database, gcPause, gcMult );
+    ::new( factory )AgentFactory( *idManager, gcPause, gcMult );
 }
 
 #endif // __AgentFactory_h_

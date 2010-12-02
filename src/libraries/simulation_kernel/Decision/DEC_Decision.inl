@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "DEC_Model_ABC.h"
-#include "Decision/DEC_DataBase.h"
 #include "Decision/DEC_PathFunctions.h"
 #include "Decision/DEC_DIAFunctions.h"
 #include "Entities/MIL_EntityManager.h"
@@ -21,9 +20,8 @@
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------
 template< class T >
-DEC_Decision< T >::DEC_Decision( T& entity, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
+DEC_Decision< T >::DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult )
     : pEntity_ ( &entity )
-    , database_( database )
     , gcPause_ ( gcPause)
     , gcMult_  ( gcMult )
 {
@@ -85,7 +83,6 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
 
     RegisterUserFunctions( *pBrain_ );
 
-    database_.InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
     RegisterSelf( *pBrain_, isMasalife_, groupName );
 
     //Enregistrement à la main de BreakForDebug

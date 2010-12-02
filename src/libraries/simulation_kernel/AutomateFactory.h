@@ -12,7 +12,6 @@
 
 #include "AutomateFactory_ABC.h"
 
-class DEC_DataBase;
 class MIL_IDManager;
 
 // =============================================================================
@@ -26,7 +25,7 @@ class AutomateFactory : public AutomateFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomateFactory( MIL_IDManager& idManager, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             AutomateFactory( MIL_IDManager& idManager, unsigned int gcPause, unsigned int gcMult );
     virtual ~AutomateFactory();
     //@}
 
@@ -54,7 +53,6 @@ private:
     unsigned int gcPause_;
     unsigned int gcMult_;
     MIL_IDManager& idManager_;
-    DEC_DataBase& database_;
     //@}
 };
 
@@ -64,9 +62,7 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const AutomateFactory* factory, const unsigned int /*version*/ )
 {
     const MIL_IDManager* const idManager = &factory->idManager_;
-    const DEC_DataBase* const database = &factory->database_;
     archive << idManager
-        << database
         << factory->gcPause_
         << factory->gcMult_;
 }
@@ -74,14 +70,12 @@ template< typename Archive >
 void load_construct_data( Archive& archive, AutomateFactory* factory, const unsigned int /*version*/ )
 {
     MIL_IDManager* idManager;
-    DEC_DataBase* database;
     unsigned int gcPause;
     unsigned int gcMult;
     archive >> idManager
-        >> database
         >> gcPause
         >> gcMult;
-    ::new( factory )AutomateFactory( *idManager, *database, gcPause, gcMult );
+    ::new( factory )AutomateFactory( *idManager, gcPause, gcMult );
 }
 
 #endif // __AutomateFactory_h_

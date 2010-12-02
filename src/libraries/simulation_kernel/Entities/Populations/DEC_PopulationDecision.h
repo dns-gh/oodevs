@@ -31,7 +31,7 @@ class DEC_PopulationDecision : public DEC_Decision< MIL_Population >
 {
 
 public:
-             DEC_PopulationDecision( MIL_Population& population, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             DEC_PopulationDecision( MIL_Population& population, unsigned int gcPause, unsigned int gcMult );
     virtual ~DEC_PopulationDecision();
 
     //! @name CheckPoints
@@ -139,9 +139,7 @@ BOOST_CLASS_EXPORT_KEY( DEC_PopulationDecision )
 template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_PopulationDecision* role, const unsigned int /*version*/ )
 {
-    const DEC_DataBase* const database = &role->database_;
     archive << role->pEntity_
-        << database
         << role->gcPause_
         << role->gcMult_;
 }
@@ -150,14 +148,12 @@ template< typename Archive >
 void load_construct_data( Archive& archive, DEC_PopulationDecision* role, const unsigned int /*version*/ )
 {
     MIL_Population* population;
-    DEC_DataBase* database;
     unsigned int gcPause;
     unsigned int gcMult;
     archive >> population
-        >> database
         >> gcPause
         >> gcMult;
-    ::new( role )DEC_PopulationDecision( *population, *database, gcPause, gcMult );
+    ::new( role )DEC_PopulationDecision( *population, gcPause, gcMult );
 }
 
 

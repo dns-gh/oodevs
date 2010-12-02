@@ -33,7 +33,7 @@ public:
     //@{
     virtual MIL_AgentPion* InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const;
     virtual MIL_AgentPion* InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const;
-    virtual void RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult ) const;
+    virtual void RegisterRoles( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult ) const;
     //@}
     static const MIL_AgentTypePion* Create( const std::string& strName, const std::string& strType, xml::xistream& xis );
 };

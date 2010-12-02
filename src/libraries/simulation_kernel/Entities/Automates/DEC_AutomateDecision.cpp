@@ -37,8 +37,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_AutomateDecision )
 // Name: DEC_AutomateDecision constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult )
-    : DEC_Decision            ( automate, database, gcMult, gcPause )
+DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, unsigned int gcPause, unsigned int gcMult )
+    : DEC_Decision            ( automate, gcMult, gcPause )
     , nRulesOfEngagementState_( eRoeStateNone )
     , nCloseCombatState_      ( eCloseCombatStateNone )
     , nOperationalState_      ( eOpStateOperational )
