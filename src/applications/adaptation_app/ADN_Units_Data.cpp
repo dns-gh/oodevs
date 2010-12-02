@@ -713,7 +713,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
                 >> xml::attribute( "protection-support", nProtectionSupportEfficiency_ )
                 >> xml::attribute( "engineering-support", nEngineeringReconEfficiency_ )
                 >> xml::attribute( "urban-area", nUrbanAreaEfficiency_ )
-            >> xml::end; 
+            >> xml::end;
 
     input >> xml::optional >> xml::attribute( "can-fly", bCanFly_ );
     input >> xml::optional >> xml::attribute( "is-autonomous", bIsAutonomous_ );

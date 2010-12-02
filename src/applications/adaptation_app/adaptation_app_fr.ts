@@ -1508,17 +1508,6 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Equipement_UrbanAttritionTable</name>
-    <message>
-        <source>Material</source>
-        <translation>Matériau</translation>
-    </message>
-    <message>
-        <source>Modifiers</source>
-        <translation>Modificateurs</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Equipement_Wizard</name>
     <message>
         <source>New resource creation</source>
@@ -2036,6 +2025,40 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_LocalFireClass_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Local fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
+        <translation>Incendie - Blessure &apos;%1&apos; data &lt; 0 or &gt; 1</translation>
+    </message>
+    <message>
+        <source>Local fire - Invalid wound type &apos;%1&apos;</source>
+        <translation>Incendie - Type de blessure invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Local fire - Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
+        <translation>Incendie - Feu &apos;%1&apos; - Somme des blessures &gt; 100</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_LocalFireClass_Data::LocalFireClassInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Fire class - Invalid extinguisher agent &apos;%1&apos;</source>
+        <translation>Incendie - Agent extincteur invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Fire class - Invalid urban Material type &apos;%1&apos;</source>
+        <translation>Incendie - Type de matériau urbain invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_LocalFireClass_GUI</name>
     <message>
         <source>Local fire class</source>
@@ -2060,6 +2083,38 @@ du tireur</translation>
     <message>
         <source>Decrease rate</source>
         <translation>Coefficient de diminution</translation>
+    </message>
+    <message>
+        <source>Injuries</source>
+        <translation>Blessures</translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 1</source>
+        <translation>Blessure gravité niveau 1</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 2</source>
+        <translation>Blessure gravité niveau 2</translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 3</source>
+        <translation>Blessure gravité niveau 3</translation>
+    </message>
+    <message>
+        <source>Wounded extreme seriousness</source>
+        <translation>Blessure extrêmement grave</translation>
+    </message>
+    <message>
+        <source>Killed</source>
+        <translation>Tués</translation>
+    </message>
+    <message>
+        <source>Urban attrition</source>
+        <translation>Attrition urbaine</translation>
     </message>
 </context>
 <context>
@@ -4686,6 +4741,17 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Time to activate</source>
         <translation>Temps avant activation</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_UrbanModifiersTable</name>
+    <message>
+        <source>Material</source>
+        <translation>Matériau</translation>
+    </message>
+    <message>
+        <source>Modifiers</source>
+        <translation>Modificateurs</translation>
     </message>
 </context>
 <context>

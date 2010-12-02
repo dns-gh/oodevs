@@ -35,7 +35,7 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_Equipement_GenericListView.h"
 #include "ADN_Equipement_AttritionTable.h"
-#include "ADN_Equipement_UrbanAttritionTable.h"
+#include "ADN_UrbanModifiersTable.h"
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_Equipement_AttritionGraph.h"
 #include "ADN_EditLine.h"
@@ -50,16 +50,36 @@
 #include "ADN_TimeField.h"
 #include "ADN_ComboBox_Equipment_Nature.h"
 
+class ADN_Equipement_UrbanModifiersTable : public helpers::ADN_UrbanModifiersTable
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit ADN_Equipement_UrbanModifiersTable( QWidget* pParent, ADN_Connector_ABC*& pGuiConnector ) : ADN_UrbanModifiersTable( pParent, pGuiConnector ) {}
+    virtual ~ADN_Equipement_UrbanModifiersTable() {}
+    //@}
+
+protected slots:
+    //! @name Slots
+    //@{
+    virtual void doValueChanged( int row, int col )
+    {
+        ADN_UrbanModifiersTable::doValueChanged( row, col );
+        ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
+    }
+    //@}
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GUI constructor
 // Created: APE 2004-12-13
 // -----------------------------------------------------------------------------
 ADN_Equipement_GUI::ADN_Equipement_GUI( ADN_Equipement_Data& data )
-: ADN_GUI_ABC            ( "ADN_Equipement_GUI" )
-, data_                  ( data )
+    : ADN_GUI_ABC( "ADN_Equipement_GUI" )
+    , data_      ( data )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GUI destructor
@@ -177,11 +197,10 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     QGroupBox* pTablesGroup = new QGroupBox( 2, Qt::Vertical, pDirectGroup );
     pTablesGroup->setFrameShape( QFrame::NoFrame );
 
-    pAttritionTable_ = new ADN_Equipement_AttritionTable( pTablesGroup );
-    vConnectors[eAttritions] = &pAttritionTable_->GetConnector();
+    ADN_Equipement_AttritionTable* pAttritionTable = new ADN_Equipement_AttritionTable( pTablesGroup );
+    vConnectors[eAttritions] = &pAttritionTable->GetConnector();
 
-    pUrbanAttritionTable_ = new ADN_Equipement_UrbanAttritionTable( pTablesGroup );
-    vConnectors[eUrbanAttritions] = &pUrbanAttritionTable_->GetConnector();
+    new ADN_Equipement_UrbanModifiersTable( pTablesGroup, vConnectors[ eUrbanAttritions ] );
 
     QGroupBox* pAttritionVisualisation = new QGroupBox( 2, Qt::Vertical, tr( "Simulation" ), pDirectGroup );
 
@@ -190,7 +209,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     pArmorCombo_ = builder.AddField< ADN_ComboBox_Vector< helpers::ArmorInfos > >( pComboGroup, tr( "Armor-Plating" ), vConnectors[eArmor] );
     connect( pArmorCombo_, SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated( int ) ) );
 
-    pMaterialCombo_ = builder.AddField< ADN_ComboBox_Vector< ADN_Equipement_Data::UrbanAttritionInfos > >( pComboGroup, tr( "Urban material" ), vConnectors[eMaterial] );
+    pMaterialCombo_ = builder.AddField< ADN_ComboBox_Vector< helpers::ADN_UrbanAttritionInfos > >( pComboGroup, tr( "Urban material" ), vConnectors[eMaterial] );
     connect( pMaterialCombo_, SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated( int ) ) );
 
     pAttritionGraph_ = new ADN_Equipement_AttritionGraph( pAttritionVisualisation );
@@ -306,9 +325,9 @@ helpers::ArmorInfos* ADN_Equipement_GUI::GetSelectedArmor() const
 // Name: ADN_Equipement_GUI::GetSelectedMaterial
 // Created: JSR 2010-05-03
 // -----------------------------------------------------------------------------
-ADN_Equipement_Data::UrbanAttritionInfos* ADN_Equipement_GUI::GetSelectedMaterial() const
+helpers::ADN_UrbanAttritionInfos* ADN_Equipement_GUI::GetSelectedMaterial() const
 {
-    return ( ADN_Equipement_Data::UrbanAttritionInfos* ) pMaterialCombo_->GetCurrentData();
+    return static_cast< helpers::ADN_UrbanAttritionInfos* >( pMaterialCombo_->GetCurrentData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -321,17 +340,14 @@ void ADN_Equipement_GUI::IndirectTypeComboActivated( int nIndex )
     pFlareParametersGroup_->hide();
     pEffectParametersGroup_->hide();
     pMineParametersGroup_->hide();
-
-    if( (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Explosif
-        || (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Aced
-        || (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Grenade )
+    E_TypeMunitionTirIndirect type = static_cast< E_TypeMunitionTirIndirect >( nIndex );
+    if( type == eTypeMunitionTirIndirect_Explosif || type == eTypeMunitionTirIndirect_Aced || type == eTypeMunitionTirIndirect_Grenade )
         pExplosiveParametersGroup_->show();
-    else if( (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Eclairant
-            ||(E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Fumigene )
+    else if( type == eTypeMunitionTirIndirect_Eclairant || type == eTypeMunitionTirIndirect_Fumigene )
         pFlareParametersGroup_->show();
-    else if( (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Mine )
+    else if( type == eTypeMunitionTirIndirect_Mine )
         pMineParametersGroup_->show();
-    else if( (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Effect )
+    else if( type == eTypeMunitionTirIndirect_Effect )
         pEffectParametersGroup_->show();
 }
 

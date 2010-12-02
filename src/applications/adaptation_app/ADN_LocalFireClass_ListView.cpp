@@ -53,6 +53,12 @@ void ADN_LocalFireClass_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_LocalFireClass_GUI::eMaxHeat ]->Connect( &pInfos->maxHeat_, bConnect );
     vItemConnectors_[ ADN_LocalFireClass_GUI::eIncreaseRate ]->Connect( &pInfos->increaseRate_, bConnect );
     vItemConnectors_[ ADN_LocalFireClass_GUI::eDecreaseRate ]->Connect( &pInfos->decreaseRate_, bConnect );
+    vItemConnectors_[ ADN_LocalFireClass_GUI::eNbrHurtU1 ]->Connect( &pInfos->injuryInfos_.nNbHurtHumans1_, bConnect );
+    vItemConnectors_[ ADN_LocalFireClass_GUI::eNbrHurtU2 ]->Connect( &pInfos->injuryInfos_.nNbHurtHumans2_, bConnect );
+    vItemConnectors_[ ADN_LocalFireClass_GUI::eNbrHurtU3 ]->Connect( &pInfos->injuryInfos_.nNbHurtHumans3_, bConnect );
+    vItemConnectors_[ ADN_LocalFireClass_GUI::eNbrHurtUE ]->Connect( &pInfos->injuryInfos_.nNbHurtHumansE_, bConnect );
+    vItemConnectors_[ ADN_LocalFireClass_GUI::eNbrDead ]->Connect( &pInfos->injuryInfos_.nNbDeadHumans_, bConnect );
+    vItemConnectors_[ ADN_LocalFireClass_GUI::eUrbanAttrition ]->Connect( &pInfos->modifUrbanBlocks_, bConnect );
 }
 
 // -----------------------------------------------------------------------------

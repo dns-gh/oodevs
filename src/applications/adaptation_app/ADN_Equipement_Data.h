@@ -27,10 +27,9 @@
 #include "ADN_Enums.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_ResourceNatureInfos.h"
-#include "ADN_Urban_Data.h"
+#include "ADN_UrbanAttritionInfos.h"
 
 class xml::xistream;
-
 
 // =============================================================================
 /** @class  ADN_Equipement_Data
@@ -82,63 +81,6 @@ public:
 
     typedef ADN_Type_Vector_ABC<CategoryInfo> T_CategoryInfos_Vector;
     typedef T_CategoryInfos_Vector::iterator  IT_CategoryInfos_Vector;
-
-// *****************************************************************************
-    class UrbanAttritionInfos : public ADN_Ref_ABC
-                              , public ADN_DataTreeNode_ABC
-    {
-        MT_COPYNOTALLOWED( UrbanAttritionInfos );
-
-    public:
-        explicit UrbanAttritionInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr );
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
-        void CopyFrom( UrbanAttritionInfos& attritions );
-
-        void ReadArchive( xml::xistream& );
-        void WriteArchive( xml::xostream&, const std::string& tag = "urban-modifier" );
-
-    public:
-        ADN_TypePtr_InVector_ABC< ADN_Urban_Data::UrbanMaterialInfos > ptrMaterial_;
-        ADN_Type_Double                                        rCoeff_;
-        ADN_Type_String&                                       strName_;
-        ADN_TypePtr_InVector_ABC< ADN_Urban_Data::UrbanInfos > ptrMaterial2_;
-
-    public:
-        typedef ADN_Urban_Data::UrbanMaterialInfos T_Item;
-
-        class CmpRef : public std::unary_function< UrbanAttritionInfos* , bool >
-        {
-        public:
-            CmpRef( ADN_Urban_Data::UrbanMaterialInfos* val ) : val_(val) {}
-            
-            bool operator()( UrbanAttritionInfos* tgtnfos ) const
-            {   
-                return tgtnfos->ptrMaterial_.GetData() == val_;
-            }
-        private:
-            ADN_Urban_Data::UrbanMaterialInfos* val_;
-        };
-
-        class Cmp : public std::unary_function< UrbanAttritionInfos* , bool >
-        {
-        public:
-            Cmp(const std::string& val) : val_(val) {}
-            ~Cmp() {}
-
-            bool operator()( UrbanAttritionInfos* tgtnfos ) const
-            { 
-                return tgtnfos->ptrMaterial_.GetData() && tgtnfos->ptrMaterial_.GetData()->strName_ == val_;
-            }
-        private:
-            std::string val_;
-        };
-    };
-
-    typedef ADN_Type_VectorFixed_ABC< UrbanAttritionInfos > T_UrbanAttritionInfos_Vector;
-    typedef T_UrbanAttritionInfos_Vector::iterator         IT_UrbanAttritionInfos_Vector;
 
 //*****************************************************************************
     class ModificatorPostureInfos
@@ -244,7 +186,7 @@ public:
         ADN_Type_Bool bIndirect_;
 
         helpers::T_AttritionInfos_Vector attritions_;
-        T_UrbanAttritionInfos_Vector modifUrbanBlocks_;
+        helpers::T_UrbanAttritionInfos_Vector modifUrbanBlocks_;
         ADN_Type_Bool bIlluminating_;
         ADN_Type_Bool bMaintainIllumination_;
         ADN_Type_Double fRange_;

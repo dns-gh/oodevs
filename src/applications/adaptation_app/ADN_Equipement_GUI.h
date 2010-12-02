@@ -30,7 +30,6 @@
 class ADN_Table;
 class ADN_Equipement_AttritionTable;
 class ADN_Equipement_AttritionGraph;
-class ADN_Equipement_UrbanAttritionTable;
 class ADN_Equipement_AmmoListView;
 class ADN_ComboBox;
 template < class T > class ADN_ComboBox_Vector;
@@ -39,6 +38,10 @@ class QWidget;
 class QTabWidget;
 class QGroupBox;
 
+namespace helpers
+{
+    class ADN_UrbanAttritionInfos;
+}
 
 // =============================================================================
 /** @class  ADN_Equipement_GUI
@@ -125,7 +128,7 @@ public:
     void UpdateGraph();
     void InitializeSimulationCombos();
     helpers::ArmorInfos* GetSelectedArmor() const;
-    ADN_Equipement_Data::UrbanAttritionInfos* GetSelectedMaterial() const;
+    helpers::ADN_UrbanAttritionInfos* GetSelectedMaterial() const;
     //@}
 
 private:
@@ -146,12 +149,11 @@ private:
 
     ADN_Equipement_AmmoListView*        pAmmoListView_;
     ADN_Equipement_AttritionTable*      pAttritionTable_;
-    ADN_Equipement_UrbanAttritionTable* pUrbanAttritionTable_;
 
     ADN_ComboBox* pIndirectTypeCombo_;
     ADN_Equipement_AttritionGraph* pAttritionGraph_;
     ADN_ComboBox_Vector< helpers::ArmorInfos >* pArmorCombo_;
-    ADN_ComboBox_Vector< ADN_Equipement_Data::UrbanAttritionInfos >* pMaterialCombo_;
+    ADN_ComboBox_Vector< helpers::ADN_UrbanAttritionInfos >* pMaterialCombo_;
 
     QGroupBox* pExplosiveParametersGroup_;
     QGroupBox* pFlareParametersGroup_;

@@ -10,18 +10,18 @@
 #include "adaptation_app_pch.h"
 #include "ADN_LocalFireClass_GUI.h"
 #include "moc_ADN_LocalFireClass_GUI.cpp"
-
 #include "ADN_LocalFireClass_ListView.h"
 #include "ADN_LocalFireClass_Data.h"
 #include "ADN_GuiBuilder.h"
+#include "ADN_UrbanModifiersTable.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_LocalFireClass_GUI constructor
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
 ADN_LocalFireClass_GUI::ADN_LocalFireClass_GUI( ADN_LocalFireClass_Data& data )
-: ADN_GUI_ABC( "ADN_LocalFireClass_GUI" )
-, data_( data )
+    : ADN_GUI_ABC( "ADN_LocalFireClass_GUI" )
+    , data_( data )
 {
     // NOTHING
 }
@@ -61,6 +61,17 @@ void ADN_LocalFireClass_GUI::Build()
     builder.AddField< ADN_EditLine_Int >( pHolder, tr( "Max heat" ), vInfosConnectors[ eMaxHeat ] );
     builder.AddField< ADN_EditLine_Int >( pHolder, tr( "Increase rate" ), vInfosConnectors[ eIncreaseRate ] );
     builder.AddField< ADN_EditLine_Int >( pHolder, tr( "Decrease rate" ), vInfosConnectors[ eDecreaseRate ] );
+
+    QGroupBox* pInjuriesGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Injuries" ), pLocalFireClassDataGroup );
+    QWidget* pInjuriesHolder = builder.AddFieldHolder( pInjuriesGroup );
+    builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 1" ), vInfosConnectors[ eNbrHurtU1 ], tr( "%" ), ePercentage  );
+    builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 2" ), vInfosConnectors[ eNbrHurtU2 ], tr( "%" ), ePercentage  );
+    builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 3" ), vInfosConnectors[ eNbrHurtU3 ], tr( "%" ), ePercentage  );
+    builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded extreme seriousness" ), vInfosConnectors[ eNbrHurtUE ], tr( "%" ), ePercentage  );
+    builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Killed" ), vInfosConnectors[ eNbrDead ], tr( "%" ), ePercentage  );
+
+    QGroupBox* pUrbanModifiersGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Urban attrition" ), pLocalFireClassDataGroup );
+    new helpers::ADN_UrbanModifiersTable( pUrbanModifiersGroup, vInfosConnectors[ eUrbanAttrition ] );
 
     pLocalFireClassListView->SetItemConnectors( vInfosConnectors );
 

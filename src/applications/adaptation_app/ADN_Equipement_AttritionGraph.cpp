@@ -185,7 +185,7 @@ void ADN_Equipement_AttritionGraph::Update()
         return;
 
     double urbanProtection = 0.;
-    ADN_Equipement_Data::UrbanAttritionInfos* material = ADN_Workspace::GetWorkspace().GetEquipements().GetGui().GetSelectedMaterial();
+    helpers::ADN_UrbanAttritionInfos* material = ADN_Workspace::GetWorkspace().GetEquipements().GetGui().GetSelectedMaterial();
     if( material )
         urbanProtection = material->rCoeff_.GetData();
 

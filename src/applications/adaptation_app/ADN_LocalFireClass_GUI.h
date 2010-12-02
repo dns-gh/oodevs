@@ -30,6 +30,12 @@ public:
         eMaxHeat,
         eIncreaseRate,
         eDecreaseRate,
+        eNbrHurtU1,
+        eNbrHurtU2,
+        eNbrHurtU3,
+        eNbrHurtUE,
+        eNbrDead,
+        eUrbanAttrition,
         eNbrGuiElements
     };
 

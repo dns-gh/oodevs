@@ -60,7 +60,7 @@ ADN_Equipement_AttritionTable.cpp \
 ADN_Equipement_Data.cpp \
 ADN_Equipement_GUI.cpp \
 ADN_Equipement_Postures_GUI.cpp \
-ADN_Equipement_UrbanAttritionTable.cpp \
+ADN_UrbanModifiersTable.cpp \
 ADN_Equipement_Wizard.cpp \
 ADN_FragOrder_Wizard.cpp \
 ADN_FragOrder_WizardSecondPage.cpp \
@@ -89,6 +89,7 @@ ADN_ListView_Models.cpp \
 ADN_ListView_Objects.cpp \
 ADN_ListView_Orders.cpp \
 ADN_ListView_ResourceNetworks.cpp \
+ADN_LocalFireClass_Data.cpp \
 ADN_LocalFireClass_ListView.cpp \
 ADN_LocalFireClass_Wizard.cpp \
 ADN_LocalFireClass_GUI.cpp \
@@ -164,6 +165,7 @@ ADN_Units_Data.cpp \
 ADN_Units_GUI.cpp \
 ADN_Units_LogThreshold_GUI.cpp \
 ADN_Units_Postures_GUI.cpp \
+ADN_UrbanAttritionInfos.cpp \
 ADN_Urban_AttritionTable.cpp \
 ADN_Urban_Data.cpp \
 ADN_Urban_GUI.cpp \

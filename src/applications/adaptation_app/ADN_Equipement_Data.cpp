@@ -166,66 +166,6 @@ void ADN_Equipement_Data::CategoryInfo::WriteContent( xml::xostream& output )
            << xml::attribute( "codeNNO", strCodeNNO_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AttritionInfos::AttritionInfos
-// Created: SLG 2010-04-13
-// -----------------------------------------------------------------------------
-ADN_Equipement_Data::UrbanAttritionInfos::UrbanAttritionInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr )
-    : ptrMaterial_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr )
-    , rCoeff_     ( 0. )
-    , strName_    ( ptrMaterial_.GetData()->strName_ )
-{
-    BindExistenceTo( &ptrMaterial_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanAttritionInfos::GetNodeName
-// Created: SLG 2010-04-13
-// -----------------------------------------------------------------------------
-std::string ADN_Equipement_Data::UrbanAttritionInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanAttritionInfos::GetItemName
-// Created: SLG 2010-04-13
-// -----------------------------------------------------------------------------
-std::string ADN_Equipement_Data::UrbanAttritionInfos::GetItemName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanAttritionInfos::CopyFrom
-// Created: SLG 2010-04-13
-// -----------------------------------------------------------------------------
-void ADN_Equipement_Data::UrbanAttritionInfos::CopyFrom( ADN_Equipement_Data::UrbanAttritionInfos& attritions )
-{
-    rCoeff_ = attritions.rCoeff_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanAttritionInfos::ReadArchive
-// Created: SLG 2010-04-13
-// -----------------------------------------------------------------------------
-void ADN_Equipement_Data::UrbanAttritionInfos::ReadArchive( xml::xistream& input )
-{
-    input >> xml::attribute( "value", rCoeff_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanAttritionInfos::WriteArchive
-// Created: APE 2004-11-15
-// -----------------------------------------------------------------------------
-void ADN_Equipement_Data::UrbanAttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag /*= "urbanModifier"*/ )
-{
-    output << xml::start( tag )
-        << xml::attribute( "material-type", ptrMaterial_.GetData()->strName_ )
-        << xml::attribute( "value", rCoeff_.GetData() )
-        << xml::end;
-}
-
 //-----------------------------------------------------------------------------
 // Name: ModificatorPostureInfos::ModificatorPostureInfos
 // Created: JDY 03-09-29
@@ -500,7 +440,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadUrbanModifer( xml::xistream& inp
 {
     bUrbanAttrition_ = true;
     std::string material = input.attribute< std::string >( "material-type" );
-    IT_UrbanAttritionInfos_Vector it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), UrbanAttritionInfos::Cmp( material ) );
+    helpers::IT_UrbanAttritionInfos_Vector it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
     if( it == modifUrbanBlocks_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid urban Material type '%1'" ).arg( material.c_str() ).ascii() );
     (*it)->ReadArchive( input );
@@ -599,7 +539,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
     if( bUrbanAttrition_.GetData() == true )
     {
         output << xml::start( "urban-modifiers" );
-        for( IT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
+        for( helpers::IT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
             (*itUrbanAttrition)->WriteArchive( output );
         output << xml::end;
     }
