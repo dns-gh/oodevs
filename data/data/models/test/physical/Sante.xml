@@ -16,3 +16,4 @@
     <resource-availability-alert availability-threshold="15" resource="doctor"/>
   </resource-availability-alerts>
 </health>
+<!-- signature="2993946340" -->

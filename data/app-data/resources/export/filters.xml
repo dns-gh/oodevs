@@ -9,3 +9,4 @@
         <description xml:lang="fr" name="Export d'OdB simplifié"><![CDATA[Extrait les camps, automates, unités, populations et objets de l'OdB.<br>Le résultat est un fichier XML.]]></description>
     </filter>
 </filters>
+<!-- signature="2654474084" -->

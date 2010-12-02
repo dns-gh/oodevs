@@ -132,3 +132,4 @@
   <resource category="ration" codeEMAT6="bouffe" codeEMAT8="bouffe" codeLFRIL="bouffe" codeNNO="bouffe" id="18" id-nature="2" name="bouffe" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
   <resource category="ration" codeEMAT6="flotte" codeEMAT8="flotte" codeLFRIL="flotte" codeNNO="flotte" id="19" id-nature="2" name="flotte" nature="Solide" package-mass="65" package-size="5" package-volume="5"/>
 </resources>
+<!-- signature="2043845833" -->

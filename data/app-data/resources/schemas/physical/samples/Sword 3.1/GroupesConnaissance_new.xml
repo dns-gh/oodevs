@@ -5,4 +5,4 @@
 		<unit-knowledge max-lifetime="1800s" max-unit-to-knowledge-distance="60000" interpolation-time="60s"/> //$$$ dernier non obligatoire
 		<population-knowledge max-lifetime="1800s"/>
 	</knowledge-group>
-</knowledge-groups>
+</knowledge-groups><!-- signature="2009716150" -->

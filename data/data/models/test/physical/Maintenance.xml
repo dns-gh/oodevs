@@ -12,3 +12,4 @@
     <resource-availability-alert availability-threshold="75" resource="AlerteDisponibiliteRemorqueurs"/>
   </resource-availability-alerts>
 </maintenance>
+<!-- signature="2953793312" -->
