@@ -11,12 +11,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentServer.h"
-#include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "protocol/protocol.h"
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Logger.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include <fstream>
 #include <boost/filesystem/path.hpp>
 #include <sys/timeb.h>

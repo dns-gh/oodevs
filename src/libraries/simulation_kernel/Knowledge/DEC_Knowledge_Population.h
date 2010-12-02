@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_ABC.h"
-#include "tools/MIL_IDManager.h"
+#include "Tools/MIL_IDManager.h"
 
 class MIL_Agent_ABC;
 class MIL_AgentPion;

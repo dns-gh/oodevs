@@ -19,7 +19,7 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "UrbanType.h"
 #include "MT_Tools/MT_Ellipse.h"
-#include "tools/MIL_Geometry.h"
+#include "Tools/MIL_Geometry.h"
 #include "protocol/ClientSenders.h"
 #include <geometry/Types.h>
 #include <urban/Architecture.h>

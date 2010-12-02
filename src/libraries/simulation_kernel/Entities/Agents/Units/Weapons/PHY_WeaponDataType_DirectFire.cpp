@@ -49,7 +49,7 @@
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

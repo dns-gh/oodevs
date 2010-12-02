@@ -19,7 +19,7 @@
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 
 #include "AlgorithmsFactories.h"
 #include "DetectionComputerFactory_ABC.h"

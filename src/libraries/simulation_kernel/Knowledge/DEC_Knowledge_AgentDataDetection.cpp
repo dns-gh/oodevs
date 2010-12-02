@@ -19,7 +19,7 @@
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Network/NET_ASN_Tools.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentDataDetection )

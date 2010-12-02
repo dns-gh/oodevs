@@ -1,15 +1,12 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2003-07-25 $
-// $Archive: /MVW_v10/Build/SDK/MT_Tools/Src/MT_Polyline.cpp $
-// $Author: Jvt $
-// $Modtime: 16/05/05 13:26 $
-// $Revision: 6 $
-// $Workfile: MT_Polyline.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_Polyline.h"
 #include "MT_Line.h"
 #include "MT_Droite.h"

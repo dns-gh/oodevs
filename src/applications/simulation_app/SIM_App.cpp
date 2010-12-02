@@ -13,9 +13,11 @@
 #include "SIM_App.h"
 #include "SIM_NetworkLogger.h"
 #include "SIM_Dispatcher.h"
+#include "WinArguments.h"
+#include "simulation_kernel/CheckPoints/MIL_CheckPointManager.h"
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "simulation_kernel/MIL_Random.h"
-#include "simulation_kernel/CheckPoints/MIL_CheckPointManager.h"
+#include "simulation_kernel/Tools/MIL_Config.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -44,7 +46,8 @@ static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1 };
 // Created: RDS 2008-07-08
 // -----------------------------------------------------------------------------
 SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */, int maxConnections )
-    : winArguments_  ( lpCmdLine )
+    : startupConfig_ ( new MIL_Config() )
+    , winArguments_  ( new WinArguments( lpCmdLine ) )
     , pNetworkLogger_( 0 )
     , logger_        ( 0 )
     , maxConnections_( maxConnections )
@@ -54,24 +57,24 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
     , nIconIndex_    ( 0 )
     , dispatcherOk_  ( true )
 {
-    startupConfig_.Parse( winArguments_.Argc(), const_cast< char** >( winArguments_.Argv() ) );
-    logger_ = new MT_FileLogger( startupConfig_.BuildSessionChildFile( "Sim.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true );
+    startupConfig_->Parse( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ) );
+    logger_.reset( new MT_FileLogger( startupConfig_->BuildSessionChildFile( "Sim.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true ) );
     MT_LOG_REGISTER_LOGGER( *logger_ );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "Sword(tm) Simulation - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ );
     MT_LOG_STARTUP_MESSAGE( ( "Starting simulation - " + boost::posix_time::to_simple_string( boost::posix_time::second_clock::local_time() ) ).c_str() );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    if( startupConfig_.UseNetworkLogger() )
+    if( startupConfig_->UseNetworkLogger() )
     {
         try
         {
-            pNetworkLogger_ = new SIM_NetworkLogger( startupConfig_.GetNetworkLoggerPort(),MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All);
+            pNetworkLogger_.reset( new SIM_NetworkLogger( startupConfig_->GetNetworkLoggerPort(),MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All ) );
             MT_LOG_REGISTER_LOGGER( *pNetworkLogger_ );
         }
         catch( MT_ScipioException& exception )
         {
             MT_LOG_WARNING_MSG( MT_FormatString( "Network logger (telnet) not registered - Reason : '%s'", exception.GetMsg().c_str() ) );
-            pNetworkLogger_ = 0;
+            pNetworkLogger_.reset();
         }
     }
 }
@@ -83,13 +86,9 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
 SIM_App::~SIM_App()
 {
     MT_LOG_UNREGISTER_LOGGER( *logger_ );
-    delete logger_;
     delete pDispatcher_;
-    if( pNetworkLogger_ )
-    {
+    if( pNetworkLogger_.get() )
         MT_LOG_UNREGISTER_LOGGER( *pNetworkLogger_ );
-        delete pNetworkLogger_;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -100,14 +99,14 @@ void SIM_App::Initialize()
 {
     MT_LOG_INFO_MSG( "Starting simulation GUI" );
     guiThread_.reset( new boost::thread( boost::bind( &SIM_App::RunGUI, this ) ) );
-    if( startupConfig_.IsDispatcherEmbedded() )
+    if( startupConfig_->IsDispatcherEmbedded() )
     {
         MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
         dispatcherThread_.reset( new boost::thread( boost::bind( &SIM_App::RunDispatcher, this ) ) );
     }
     MT_Profiler::Initialize();
-    MIL_Random::Initialize( startupConfig_.GetRandomSeed(), startupConfig_.GetRandomGaussian(), startupConfig_.GetRandomDeviation(), startupConfig_.GetRandomMean() );
-    MIL_AgentServer::CreateWorkspace( startupConfig_ );
+    MIL_Random::Initialize( startupConfig_->GetRandomSeed(), startupConfig_->GetRandomGaussian(), startupConfig_->GetRandomDeviation(), startupConfig_->GetRandomMean() );
+    MIL_AgentServer::CreateWorkspace( *startupConfig_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -159,7 +158,7 @@ void SIM_App::RunDispatcher()
 {
     try
     {
-        pDispatcher_ = new SIM_Dispatcher( winArguments_.Argc(), const_cast< char** >( winArguments_.Argv() ), maxConnections_ );
+        pDispatcher_ = new SIM_Dispatcher( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ), maxConnections_ );
         pDispatcher_->Run();
     }
     catch( std::exception& e )
@@ -315,7 +314,7 @@ bool SIM_App::Tick()
 //-----------------------------------------------------------------------------
 int SIM_App::Execute()
 {
-    if( startupConfig_.IsTestMode() )
+    if( startupConfig_->IsTestMode() )
         return Test();
     Initialize();
     Run();
@@ -391,14 +390,14 @@ int SIM_App::Test()
 // -----------------------------------------------------------------------------
 void SIM_App::CheckpointTest()
 {
-    if( startupConfig_.IsSaveCheckpointTestMode() == true && startupConfig_.IsTestMode() == true )
+    if( startupConfig_->IsSaveCheckpointTestMode() == true && startupConfig_->IsTestMode() == true )
     {
-        MIL_AgentServer::GetWorkspace().GetCheckPointManager().SaveCheckPointDirectory( startupConfig_.GetCheckpointNameTestMode() );
+        MIL_AgentServer::GetWorkspace().GetCheckPointManager().SaveCheckPointDirectory( startupConfig_->GetCheckpointNameTestMode() );
     }
-    if( startupConfig_.IsDeleteCheckpointTestMode() == true && startupConfig_.IsTestMode() == true )
+    if( startupConfig_->IsDeleteCheckpointTestMode() == true && startupConfig_->IsTestMode() == true )
     {
         // Temporary checkpoint was loaded in Initialize, we can delete it now.
-        const boost::filesystem::path path( startupConfig_.GetCheckpointDirectory(), boost::filesystem::native );
+        const boost::filesystem::path path( startupConfig_->GetCheckpointDirectory(), boost::filesystem::native );
         boost::filesystem::remove_all( path );
     }
 }

@@ -70,7 +70,7 @@ MIL_StockSupplyManager::~MIL_StockSupplyManager()
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 template < typename Archive >
-void MIL_StockSupplyManager::serialize( Archive& file, const uint )
+void MIL_StockSupplyManager::serialize( Archive& file, const unsigned int )
 {
     file & pAutomate_
          & bStockSupplyNeeded_
@@ -150,7 +150,7 @@ void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory
     bStockSupplyNeeded_ = true;
 
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
-    const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( pAutomate_->GetTC2() && ( nCurrentTick > ( nTickRcStockSupplyQuerySent_ + 1 ) || nTickRcStockSupplyQuerySent_ == 0 ) )
         MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_StockSupplyRequest );
     nTickRcStockSupplyQuerySent_ = nCurrentTick;

@@ -15,7 +15,7 @@
 #include "UrbanLocationComputer_ABC.h"
 #include "UrbanLocationComputerFactory_ABC.h"
 #include "UrbanType.h"
-#include "tools/MIL_Geometry.h"
+#include "Tools/MIL_Geometry.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include <urban/TerrainObject_ABC.h>
 #include <urban/Architecture.h>

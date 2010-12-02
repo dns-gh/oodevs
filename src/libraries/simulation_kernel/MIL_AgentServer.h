@@ -11,7 +11,7 @@
 #define __MIL_AgentServer_h_
 
 #include "MIL.h"
-#include "tools/MIL_Config.h"
+#include "Tools/MIL_Config.h"
 #include "Network/NET_Simulation_ABC.h"
 #include "MT_Tools/MT_Timer_ABC.h"
 #include "MT_Tools/MT_TimerManager.h"
@@ -53,7 +53,6 @@ class ProcessMonitor;
 class MIL_AgentServer : private MT_Timer_ABC
                       , public NET_Simulation_ABC
                       , public MIL_Time_ABC
-                      , private boost::noncopyable
 {
 public:
     //! @name Type

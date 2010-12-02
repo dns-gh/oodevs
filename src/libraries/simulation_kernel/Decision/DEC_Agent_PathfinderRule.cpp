@@ -12,7 +12,7 @@
 #include "DEC_Agent_Path.h"
 #include "DEC_Agent_PathClass.h"
 #include "simulation_terrain/TER_World.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/PHY_MeteoDataManager.h"

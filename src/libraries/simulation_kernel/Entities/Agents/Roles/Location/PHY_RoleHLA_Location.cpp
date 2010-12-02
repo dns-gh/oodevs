@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Location.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "hla/HLA_Serialization.h"
 #include "Entities/Agents/MIL_AgentHLA.h"
 #include "Entities/Objects/MIL_Object_ABC.h"

@@ -16,7 +16,7 @@
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 
 using namespace firing;
 

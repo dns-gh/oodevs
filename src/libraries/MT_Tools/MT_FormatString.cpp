@@ -3,13 +3,13 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_FormatString.h"
 #include <vector>
+#pragma warning( disable: 4996 )
 #include <cstdio>
 
 //-----------------------------------------------------------------------------

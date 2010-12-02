@@ -12,14 +12,13 @@
 #ifndef __MT_Profiler_h_
 #define __MT_Profiler_h_
 
-#include "MT_Tools_Types.h"
+#include <boost/noncopyable.hpp>
 
 //=============================================================================
 // Created: NLD 2002-10-14
 //=============================================================================
-class MT_Profiler
+class MT_Profiler : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MT_Profiler );
 
 public:
              MT_Profiler();

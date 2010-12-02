@@ -94,6 +94,12 @@
 #include <qwizard.h>
 #pragma warning( pop )
 
+#define MT_COPYNOTALLOWED(cls)      \
+private:                            \
+    cls( const cls& );              \
+    cls& operator=( const cls& );    
+
+
 #include "MT_Tools/MT_Logger.h"
 
 #include <xeumeuleu/xml.hpp>

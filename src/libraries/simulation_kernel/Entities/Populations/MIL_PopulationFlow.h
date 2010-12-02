@@ -14,7 +14,7 @@
 #include "MIL_Population.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
-#include "tools/MIL_IDManager.h"
+#include "Tools/MIL_IDManager.h"
 #include <boost/shared_ptr.hpp>
 
 namespace urban

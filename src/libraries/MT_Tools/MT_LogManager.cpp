@@ -3,11 +3,10 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_LogManager.h"
 
 //=============================================================================
@@ -83,7 +82,7 @@ bool MT_LogManager::UnregisterLogger( MT_Logger_ABC& logger )
 */
 // Created:  NLD 00-06-05 
 //-----------------------------------------------------------------------------
-void MT_LogManager::Log( uint nLayer, const char* strLayerName, MT_Logger_ABC::E_LogLevel nLevel, const char* strMessage, const char* strContext, int nCode )
+void MT_LogManager::Log( unsigned int nLayer, const char* strLayerName, MT_Logger_ABC::E_LogLevel nLevel, const char* strMessage, const char* strContext, int nCode )
 {
     for( IT_LoggerSet itLogger = loggerSet_.begin(); itLogger != loggerSet_.end(); ++itLogger )
         (*itLogger)->Log( nLayer, strLayerName, nLevel, strMessage, strContext, nCode );

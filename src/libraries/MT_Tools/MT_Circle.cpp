@@ -1,15 +1,12 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-03-06 $
-// $Archive: /MVW_v10/Build/SDK/MT_Tools/Src/MT_Circle.cpp $
-// $Author: Nld $
-// $Modtime: 19/07/04 16:50 $
-// $Revision: 4 $
-// $Workfile: MT_Circle.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_Circle.h"
 
 //-----------------------------------------------------------------------------

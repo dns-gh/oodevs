@@ -32,12 +32,9 @@
 //=============================================================================
 class MT_ConsoleLogger : public MT_Logger_ABC
 {
-    MT_COPYNOTALLOWED( MT_ConsoleLogger );
 
 public:
-
-public:
-    explicit MT_ConsoleLogger( uint nLogLevels = eLogLevel_All, uint nLayers = eLogLayer_All );
+    explicit MT_ConsoleLogger( unsigned int nLogLevels = eLogLevel_All, unsigned int nLayers = eLogLayer_All );
     virtual ~MT_ConsoleLogger();
 
     void EnableTimeStamps( bool );
@@ -47,7 +44,7 @@ private:
     /** @name Main methods */
     //-------------------------------------------------------------------------
     //@{
-    const char* GetColorFromLogLevel( uint nLogLevel );
+    const char* GetColorFromLogLevel( unsigned int nLogLevel );
 
     virtual void LogString( const char* strLayerName, E_LogLevel level, const char* strMessage, const char* strContext, int nCode );
     //@}

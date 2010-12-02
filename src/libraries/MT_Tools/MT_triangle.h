@@ -8,14 +8,13 @@
 
 #include "MT_Vector2DTypes.h"
 #include "MT_Line.h"
+#include <boost/noncopyable.hpp>
 
 //=============================================================================
 // Created: FBD 02-07-01
 //=============================================================================
-class MT_Triangle
+class MT_Triangle : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MT_Triangle )
-
 public:
              MT_Triangle();
              MT_Triangle( const MT_Vector2D& vPos1, const MT_Vector2D& vPos2, const MT_Vector2D& vPos3 );

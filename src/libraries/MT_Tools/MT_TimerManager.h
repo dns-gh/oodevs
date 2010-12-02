@@ -11,6 +11,7 @@
 #define __MT_TimerManager_h_
 
 #include "MT_Timer_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <list>
 
 //=============================================================================
@@ -40,9 +41,8 @@
 */
 // Created:  MBN 00-05-03
 //=============================================================================
-class MT_TimerManager
+class MT_TimerManager : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MT_TimerManager );
 
 public:
     //-------------------------------------------------------------------------

@@ -23,7 +23,7 @@
 #include "Entities/Agents/Units/Humans/MIL_AutomateTypeInjuredHuman.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
 

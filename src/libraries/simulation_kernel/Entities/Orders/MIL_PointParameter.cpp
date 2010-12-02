@@ -11,7 +11,7 @@
 #include "MIL_PointParameter.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/protocol.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PointParameter constructor

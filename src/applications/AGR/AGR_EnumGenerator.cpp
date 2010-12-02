@@ -210,7 +210,7 @@ std::string AGR_EnumGenerator::CreatePrettyValueName( const std::string strEnumN
 {
     std::string strPrettyName = "e" + GetCoreEnumName( strEnumName ) + "_";
     bool bNextCharInUpperCase = true;
-    for( uint n = 0; n < strValueName.length(); ++n )
+    for( unsigned int n = 0; n < strValueName.length(); ++n )
     {
         char c = strValueName[n];
         if( c == '_' )
@@ -221,7 +221,7 @@ std::string AGR_EnumGenerator::CreatePrettyValueName( const std::string strEnumN
         if( bNextCharInUpperCase && c >= 'a' && c <= 'z')
         {
             bool bAllTheSameChars = true;
-            for( uint i = n; i < strValueName.length(); ++i )
+            for( unsigned int i = n; i < strValueName.length(); ++i )
             {
                 if( strValueName[i] != c )
                 {
@@ -250,7 +250,7 @@ std::string AGR_EnumGenerator::CreatePrettyValueName( const std::string strEnumN
 std::string AGR_EnumGenerator::CreateScriptName( const std::string strValue ) const
 {
     std::string strScriptName;
-    for( uint n = 0; n < strValue.length(); ++n )
+    for( unsigned int n = 0; n < strValue.length(); ++n )
     {
         if( strValue[n] == '_' )
             strScriptName += ' ';

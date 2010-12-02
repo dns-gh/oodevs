@@ -16,7 +16,7 @@
 #include "Composantes/PHY_ComposantePion.h"
 #include "Humans/PHY_HumanRank.h"
 #include "Dotations/PHY_DotationLogisticType.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 #include <xeumeuleu/xml.hpp>

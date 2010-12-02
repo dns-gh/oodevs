@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2003-07-21 $
-// $Archive: /MVW_v10/Build/SDK/MT_Tools/Src/MT_Assert.h $
-// $Author: Nld $
-// $Modtime: 13/01/04 11:19 $
-// $Revision: 4 $
-// $Workfile: MT_Assert.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __MT_Assert_h_
 #define __MT_Assert_h_

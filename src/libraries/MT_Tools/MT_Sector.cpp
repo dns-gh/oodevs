@@ -1,15 +1,12 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MT_Tools/Src/MT_Sector.cpp $
-// $Author: Jvt $
-// $Modtime: 12/04/05 10:00 $
-// $Revision: 2 $
-// $Workfile: MT_Sector.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_Sector.h"
 
 // -----------------------------------------------------------------------------

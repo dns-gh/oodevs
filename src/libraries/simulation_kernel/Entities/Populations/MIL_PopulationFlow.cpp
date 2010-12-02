@@ -28,8 +28,8 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include "simulation_terrain/TER_World.h"
-#include "tools/MIL_IDManager.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_IDManager.h"
+#include "Tools/MIL_Tools.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationFlow )
 

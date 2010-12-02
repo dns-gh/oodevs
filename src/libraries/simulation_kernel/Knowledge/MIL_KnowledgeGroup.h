@@ -12,7 +12,7 @@
 
 #include "MIL.h"
 #include "MIL_KnowledgeGroupType.h"
-#include "tools/MIL_IDManager.h"
+#include "Tools/MIL_IDManager.h"
 #include "tools/Resolver.h"
 #include <boost/serialization/export.hpp>
 

@@ -3,11 +3,10 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_FileLogger.h"
 #include <cstdio>
 
@@ -20,8 +19,8 @@
 // Created:  NLD 00-06-05 
 //-----------------------------------------------------------------------------
 MT_FileLogger::MT_FileLogger( const char* strFileName
-                            , uint nLogLevels
-                            , uint nLogLayers
+                            , unsigned int nLogLevels
+                            , unsigned int nLogLayers
                             , bool bClearPreviousLog )
     : MT_Logger_ABC( nLogLevels, nLogLayers )
 {

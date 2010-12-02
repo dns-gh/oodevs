@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_MedicalTreatmentType.h"
 #include "MT_Tools/MT_Logger.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include "MIL_Time_ABC.h"
 #include <boost/bind.hpp>
@@ -23,7 +23,7 @@ MIL_MedicalTreatmentType::T_MedicalTreatmentTypeMap MIL_MedicalTreatmentType::ty
 // Created: RFT 19/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-void MIL_MedicalTreatmentType::ReadMedicalTreatment( xml::xistream& xis, const MIL_Time_ABC& time, std::set< uint >& ids )
+void MIL_MedicalTreatmentType::ReadMedicalTreatment( xml::xistream& xis, const MIL_Time_ABC& time, std::set< unsigned int >& ids )
 {    
     const std::string name = xml::attribute< std::string >( xis, "name" );
     

@@ -10,7 +10,6 @@
 #ifndef __PopulationFactory_h_
 #define __PopulationFactory_h_
 
-#include "tools/MIL_Config.h"
 #include "PopulationFactory_ABC.h"
 
 class DEC_DataBase;
@@ -26,7 +25,7 @@ class PopulationFactory : public PopulationFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    PopulationFactory( DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
+             PopulationFactory( DEC_DataBase& database, unsigned int gcPause, unsigned int gcMult );
     virtual ~PopulationFactory();
     //@}
 

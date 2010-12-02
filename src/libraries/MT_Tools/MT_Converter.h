@@ -1,27 +1,24 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MT_Tools/Src/MT_Converter.h $
-// $Author: Nld $
-// $Modtime: 11/08/04 16:10 $
-// $Revision: 6 $
-// $Workfile: MT_Converter.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #ifndef __MT_Converter_h_
 #define __MT_Converter_h_
 
-#include "MT_Tools_Types.h"
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 // @class  MT_Converter
 // Created: JVT 2004-08-03
 // =============================================================================
 template< typename KEY, typename VALUE, typename CMP = sCaseInsensitiveLess >
-class MT_Converter
+class MT_Converter : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MT_Converter )
 
 public:
     explicit MT_Converter( const VALUE& nullValue );

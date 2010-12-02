@@ -22,7 +22,7 @@
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
 

@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_NbcAgentType.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Logger.h"

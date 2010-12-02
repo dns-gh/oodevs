@@ -11,6 +11,7 @@
 #define __MT_LogManager_h_
 
 #include "MT_Logger_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <set>
 
 //=============================================================================
@@ -24,9 +25,8 @@
 */
 // Created:  NLD 00-06-05 
 //=============================================================================
-class MT_LogManager
+class MT_LogManager : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MT_LogManager );
 
 public:
      MT_LogManager();
@@ -39,7 +39,7 @@ public:
     bool RegisterLogger  ( MT_Logger_ABC& logger );
     bool UnregisterLogger( MT_Logger_ABC& logger );
 
-    void Log( uint nLayer, const char* strLayerName, MT_Logger_ABC::E_LogLevel nLevel, const char* strMessage, const char* strContext = 0, int nCode = -1 );
+    void Log( unsigned int nLayer, const char* strLayerName, MT_Logger_ABC::E_LogLevel nLevel, const char* strMessage, const char* strContext = 0, int nCode = -1 );
     //@}
 
     //-------------------------------------------------------------------------

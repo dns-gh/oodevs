@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: NLD 2006-03-17 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 

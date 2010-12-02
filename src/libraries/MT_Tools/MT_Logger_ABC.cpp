@@ -3,19 +3,19 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_Logger_ABC.h"
+#pragma warning( disable: 4996 )
 #include <ctime>
 
 //-----------------------------------------------------------------------------
 // Name: MT_Logger_ABC constructor
 // Created:  NLD 00-06-05 
 //-----------------------------------------------------------------------------
-MT_Logger_ABC::MT_Logger_ABC( uint nLogLevels, uint nLogLayers )
+MT_Logger_ABC::MT_Logger_ABC( unsigned int nLogLevels, unsigned int nLogLayers )
     : bPaused_     ( false )
 //, strTimestamp_ ( "%a, %d %b %Y %H:%M:%S" ) // Sample : "Mon, 05 Jun 2000 11:38:52"
     , strTimestamp_( "%H:%M:%S" ) // Sample : "11:38:52"
@@ -47,7 +47,7 @@ MT_Logger_ABC::~MT_Logger_ABC()
 */
 // Created:  NLD 00-06-05 
 //-----------------------------------------------------------------------------
-void MT_Logger_ABC::Log( uint nLayer, const char* strLayerName, E_LogLevel nLevel, const char* strMessage, const char* strContext, int nCode )
+void MT_Logger_ABC::Log( unsigned int nLayer, const char* strLayerName, E_LogLevel nLevel, const char* strMessage, const char* strContext, int nCode )
 {
     if( bPaused_ == true )
         return;
@@ -79,7 +79,7 @@ const char* MT_Logger_ABC::GetTimestampAsString()
 
     time_t nTime = time( NULL );
     
-    strftime(buffer, 256, strTimestamp_.c_str(), localtime( &nTime ) );
+    strftime( buffer, 256, strTimestamp_.c_str(), localtime( &nTime ) );
     return buffer;
 }
 

@@ -1,15 +1,12 @@
 // *****************************************************************************
 //
-// $Created: NLD 2006-03-17 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_CrashHandler.h"
 #include <tools/win32/StackWalkerProxy.h>
 #include "MT_Tools/MT_Logger.h"

@@ -70,13 +70,13 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, MIL_DotationSupplyManager::T_SupplyDotationStateMap& map, const uint nVersion )
+        void serialize( Archive& file, MIL_DotationSupplyManager::T_SupplyDotationStateMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
         }
 
         template< typename Archive >
-        void save( Archive& file, const MIL_DotationSupplyManager::T_SupplyDotationStateMap& map, const uint )
+        void save( Archive& file, const MIL_DotationSupplyManager::T_SupplyDotationStateMap& map, const unsigned int )
         {
             unsigned size = map.size();
             file << size;
@@ -88,9 +88,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, MIL_DotationSupplyManager::T_SupplyDotationStateMap& map, const uint )
+        void load( Archive& file, MIL_DotationSupplyManager::T_SupplyDotationStateMap& map, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             
             file >> nNbr;
             while ( nNbr-- )
@@ -109,7 +109,7 @@ namespace boost
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
 template < typename Archive >
-void MIL_DotationSupplyManager::serialize( Archive& file, const uint )
+void MIL_DotationSupplyManager::serialize( Archive& file, const unsigned int )
 {
     file & pAutomate_
          & bDotationSupplyNeeded_
@@ -163,7 +163,7 @@ void MIL_DotationSupplyManager::NotifyDotationSupplyNeeded( const PHY_DotationCa
     bDotationSupplyNeeded_ = true;
 
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
-    const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( pAutomate_->GetTC2() && ( nCurrentTick > ( nTickRcDotationSupplyQuerySent_ + 1 ) || nTickRcDotationSupplyQuerySent_ == 0 ) )
         MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_DotationSupplyRequest );
     nTickRcDotationSupplyQuerySent_ = nCurrentTick;

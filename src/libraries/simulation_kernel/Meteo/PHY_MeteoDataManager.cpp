@@ -13,7 +13,7 @@
 #include "meteo/PHY_LocalMeteo.h"
 #include "meteo/PHY_Lighting.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>

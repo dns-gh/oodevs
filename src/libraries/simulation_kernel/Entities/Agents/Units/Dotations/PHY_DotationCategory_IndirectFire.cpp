@@ -32,7 +32,7 @@
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_AgentManager.h"
-#include "tools/MIL_Geometry.h"
+#include "Tools/MIL_Geometry.h"
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
 #include <xeumeuleu/xml.hpp>

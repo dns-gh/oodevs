@@ -20,7 +20,7 @@
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include "tools/MIL_IDManager.h"
+#include "Tools/MIL_IDManager.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/map.hpp>
 #include <boost/bind.hpp>

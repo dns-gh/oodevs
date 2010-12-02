@@ -18,7 +18,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "Knowledge/QueryValidity.h"
 
 // -----------------------------------------------------------------------------

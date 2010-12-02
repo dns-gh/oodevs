@@ -84,7 +84,7 @@ bool MT_Logger_ABC::IsLogLevelSet( E_LogLevel nLevel ) const
 // Created:  NLD 2001-08-20 
 //-----------------------------------------------------------------------------
 inline
-void MT_Logger_ABC::SetLogLayers( uint nLayers )
+void MT_Logger_ABC::SetLogLayers( unsigned int nLayers )
 {
     nLogLayers_ = nLayers;
 }
@@ -94,7 +94,7 @@ void MT_Logger_ABC::SetLogLayers( uint nLayers )
 // Created:  NLD 2001-08-20 
 //-----------------------------------------------------------------------------
 inline
-void MT_Logger_ABC::AddLogLayer( uint nLayer )
+void MT_Logger_ABC::AddLogLayer( unsigned int nLayer )
 {
     // $$$$ CBX 2003-02-13: &= --> |= for boolean addition
 //    nLogLayers_ &= nLayer;
@@ -106,7 +106,7 @@ void MT_Logger_ABC::AddLogLayer( uint nLayer )
 // Created:  NLD 2001-08-20 
 //-----------------------------------------------------------------------------
 inline
-void MT_Logger_ABC::RemoveLogLayer( uint nLayer )
+void MT_Logger_ABC::RemoveLogLayer( unsigned int nLayer )
 {
     nLogLayers_ &= ~nLayer;
 }
@@ -116,7 +116,7 @@ void MT_Logger_ABC::RemoveLogLayer( uint nLayer )
 // Created:  NLD 2001-08-20 
 //-----------------------------------------------------------------------------
 inline
-bool MT_Logger_ABC::IsLogLayerSet( uint nLayer ) const
+bool MT_Logger_ABC::IsLogLayerSet( unsigned int nLayer ) const
 {
     return( nLayer == 0 || nLogLayers_ & nLayer );
 }

@@ -8,14 +8,13 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "simulation_kernel/Decision/DEC_DataBase.h"
-#include "simulation_kernel/PopulationFactory.h"
-#include "simulation_kernel/Entities/Populations/MIL_Population.h"
-#include "simulation_kernel/Entities/Populations/MIL_PopulationType.h"
-#include "simulation_kernel/FormationFactory_ABC.h"
-#include <xeumeuleu/xml.hpp>
-#include <boost/serialization/vector.hpp>
+#include "PopulationFactory.h"
+#include "FormationFactory_ABC.h"
+#include "Decision/DEC_DataBase.h"
+#include "Entities/Populations/MIL_PopulationType.h"
 #include <boost/serialization/map.hpp>
+#include <boost/serialization/vector.hpp>
+#include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFactory )
 
@@ -28,7 +27,6 @@ PopulationFactory::PopulationFactory( DEC_DataBase& database, unsigned int gcPau
     , gcPause_ ( gcPause )
     , gcMult_  ( gcMult )
 {
-
     // NOTHING
 }
 
@@ -38,7 +36,6 @@ PopulationFactory::PopulationFactory( DEC_DataBase& database, unsigned int gcPau
 // -----------------------------------------------------------------------------
 PopulationFactory::~PopulationFactory()
 {
-
     // NOTHING
 }
 
@@ -77,7 +74,7 @@ MIL_Population& PopulationFactory::Create( const std::string& type, const MT_Vec
 // -----------------------------------------------------------------------------
 void PopulationFactory::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object < PopulationFactory_ABC >( *this );
+    file >> boost::serialization::base_object< PopulationFactory_ABC >( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,5 +83,5 @@ void PopulationFactory::load( MIL_CheckPointInArchive& file, const unsigned int 
 // -----------------------------------------------------------------------------
 void PopulationFactory::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object < PopulationFactory_ABC >( *this );
+    file << boost::serialization::base_object< PopulationFactory_ABC >( *this );
 }

@@ -33,7 +33,7 @@
 #include "Meteo/PHY_Precipitation.h"
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "tools/Resolver.h"
 #include <geometry/Types.h>
 #include <urban/Architecture.h>

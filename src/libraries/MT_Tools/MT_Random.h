@@ -12,7 +12,8 @@
 #ifndef __MT_Random_h_
 #define __MT_Random_h_
 
-#include "MT_Tools_Types.h"
+#include "MT_Assert.h"
+#include <boost/noncopyable.hpp>
 #include <vector>
 
 namespace MT_RandomConsts
@@ -25,9 +26,8 @@ namespace MT_RandomConsts
 // Created: JVT 02-12-18
 // Last modified: JVT 03-10-15
 //*****************************************************************************
-class MT_Random
+class MT_Random : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MT_Random )
 
 public:
     static MT_Random& GetInstance();

@@ -1,15 +1,12 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 04-03-04 $
-// $Archive: /MVW_v10/Build/SDK/MT_Tools/Src/MT_GaussianRandom.cpp $
-// $Author: Nld $
-// $Modtime: 1/09/04 16:43 $
-// $Revision: 2 $
-// $Workfile: MT_GaussianRandom.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_GaussianRandom.h"
 #include <cmath>
 

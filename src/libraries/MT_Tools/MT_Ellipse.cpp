@@ -1,15 +1,12 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 04-02-26 $
-// $Archive: /MVW_v10/Build/SDK/MT_Tools/Src/MT_Ellipse.cpp $
-// $Author: Age $
-// $Modtime: 2/03/05 17:46 $
-// $Revision: 10 $
-// $Workfile: MT_Ellipse.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_Ellipse.h"
 
 //-----------------------------------------------------------------------------

@@ -10,7 +10,7 @@
 #ifndef __MT_Logger_ABC_h_
 #define __MT_Logger_ABC_h_
 
-#include "MT_Tools_Types.h"
+#include <boost/noncopyable.hpp>
 #include <string>
 
 //=============================================================================
@@ -24,9 +24,8 @@
 */
 // Created:  NLD 00-06-05 
 //=============================================================================
-class MT_Logger_ABC
+class MT_Logger_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MT_Logger_ABC );
 
 public:
     //-------------------------------------------------------------------------
@@ -48,19 +47,19 @@ public:
 
     enum E_LogLayer
     {
-        eLogLayer_All = (uint)-1
+        eLogLayer_All = (unsigned int)-1
     };
     //@}
     
 public:
-    explicit MT_Logger_ABC( uint nLogLevels = eLogLevel_All, uint nLogLayers = eLogLayer_All );
+    explicit MT_Logger_ABC( unsigned int nLogLevels = eLogLevel_All, unsigned int nLogLayers = eLogLayer_All );
     virtual ~MT_Logger_ABC();
 
     //-------------------------------------------------------------------------
     /** @name Main */
     //-------------------------------------------------------------------------
     //@{
-    void Log   ( uint nLayer, const char* strLayerName, E_LogLevel nLevel, const char* strMessage, const char* strContext = 0, int nCode = -1 );
+    void Log   ( unsigned int nLayer, const char* strLayerName, E_LogLevel nLevel, const char* strMessage, const char* strContext = 0, int nCode = -1 );
     void Pause (); //!< Pause the logger : the message aren't logged anymore.
     void Resume(); //!< Resume the logger.
     //@}
@@ -87,10 +86,10 @@ public:
     /** @name Log sub levels */
     //-------------------------------------------------------------------------
     //@{
-    void SetLogLayers  ( uint nLayers );  
-    void AddLogLayer   ( uint nLayer  );
-    void RemoveLogLayer( uint nLayer  );
-    bool IsLogLayerSet ( uint nLayer  ) const;
+    void SetLogLayers  ( unsigned int nLayers );  
+    void AddLogLayer   ( unsigned int nLayer  );
+    void RemoveLogLayer( unsigned int nLayer  );
+    bool IsLogLayerSet ( unsigned int nLayer  ) const;
     //@}
 
 protected:
@@ -112,8 +111,8 @@ protected:
 private:
     bool        bPaused_;
     std::string strTimestamp_;
-    uint        nLogLevels_;
-    uint        nLogLayers_;
+    unsigned int        nLogLevels_;
+    unsigned int        nLogLayers_;
 };
 
 #include "MT_Logger_ABC.inl"

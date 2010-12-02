@@ -12,16 +12,18 @@
 #ifndef __SIM_App_h_
 #define __SIM_App_h_
 
-#include "WinArguments.h"
-#include "simulation_kernel/tools/MIL_Config.h"
+#include <winsock2.h>
+#include <windows.h>
 #pragma warning( push )
 #pragma warning( disable : 4512 4244 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
 
-class SIM_NetworkLogger;
-class SIM_Dispatcher;
+class MIL_Config;
 class MT_FileLogger;
+class SIM_Dispatcher;
+class SIM_NetworkLogger;
+class WinArguments;
 
 //=============================================================================
 // Created: NLD 2002-08-07
@@ -65,10 +67,10 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_Config startupConfig_;
-    WinArguments winArguments_;
-    SIM_NetworkLogger* pNetworkLogger_;
-    MT_FileLogger* logger_;
+    std::auto_ptr< MIL_Config > startupConfig_;
+    std::auto_ptr< WinArguments > winArguments_;
+    std::auto_ptr< SIM_NetworkLogger > pNetworkLogger_;
+    std::auto_ptr< MT_FileLogger > logger_;
 
     static bool     bCrashWithCoreDump_;
     static bool     bUserInterrupt_;

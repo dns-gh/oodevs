@@ -22,7 +22,7 @@
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_ASN_Tools.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "protocol/ClientSenders.h"
 #include <boost/serialization/split_free.hpp>
 

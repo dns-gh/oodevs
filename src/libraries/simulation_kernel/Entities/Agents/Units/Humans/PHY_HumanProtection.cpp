@@ -14,7 +14,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>

@@ -18,7 +18,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Logger.h"

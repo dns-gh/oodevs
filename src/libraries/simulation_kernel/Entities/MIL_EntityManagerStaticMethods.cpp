@@ -78,9 +78,9 @@
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory.h"
 #include "simulation_kernel/UrbanType.h"
 #include "simulation_kernel/PHY_ResourceNetworkType.h"
-#include "tools/MIL_IDManager.h"
-#include "tools/MIL_ProfilerMgr.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_IDManager.h"
+#include "Tools/MIL_ProfilerMgr.h"
+#include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

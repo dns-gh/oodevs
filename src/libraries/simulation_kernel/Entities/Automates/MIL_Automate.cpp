@@ -42,7 +42,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>

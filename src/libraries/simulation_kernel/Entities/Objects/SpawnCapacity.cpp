@@ -20,7 +20,7 @@
 #include "MIL_Singletons.h"
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
 

@@ -1,9 +1,12 @@
-//*****************************************************************************
-// Name   : MT_Vector2D.cpp
-// Created: FBD 02-03-01
-//*****************************************************************************
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_Vector2D.h"
 #include "MT_Vector2DTypes.h"
 #include "MT_Droite.h"

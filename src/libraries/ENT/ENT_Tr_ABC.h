@@ -58,7 +58,7 @@ public:
     //-----------------------------------------------------------------------------
     template < typename T > static const T& FindInConverter( const converter<T> conv[], const std::string& str )
     {
-        for( uint i = 0; ; ++i )
+        for( unsigned int i = 0; ; ++i )
         {
             const std::string& sCurrentName = conv[i].simname_;
             if( sCurrentName.empty() || !::_stricmp( sCurrentName.c_str(), str.c_str() ) )
@@ -75,7 +75,7 @@ public:
     {
         static std::string strBadName_ = "";
 
-        for( uint i = 0; !conv[i].simname_.empty(); ++i )
+        for( unsigned int i = 0; !conv[i].simname_.empty(); ++i )
         {
             if( conv[i].type_ == val )
             {
@@ -101,7 +101,7 @@ public:
     //-----------------------------------------------------------------------------
     template < typename T > static void InitTr( converter<T> conv[], const char* szContext = "ENT" )
     {
-        for ( uint i = 0; !conv[i].simname_.empty(); ++i )
+        for ( unsigned int i = 0; !conv[i].simname_.empty(); ++i )
             conv[i].trname_ = qApp->translate( szContext, conv[i].appname_.c_str() ).ascii();
     }
 };

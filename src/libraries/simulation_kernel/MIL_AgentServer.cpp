@@ -20,8 +20,8 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "resource_network/ResourceNetworkModel.h"
 #include "simulation_terrain/TER_World.h"
-#include "tools/MIL_ProfilerMgr.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_ProfilerMgr.h"
+#include "Tools/MIL_Tools.h"
 #include <boost/filesystem/path.hpp>
 #include <tools/thread/Thread.h>
 #include <tools/win32/ProcessMonitor.h>

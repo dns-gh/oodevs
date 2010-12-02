@@ -1,10 +1,21 @@
-//*****************************************************************************
-// Name   : MT_Line.cpp
-// Created: FBD 02-02-27
-//*****************************************************************************
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_Line.h"
+
+namespace
+{
+    inline bool MT_IsSameSigns( double a, double b )
+    {
+        return a * b >= 0;
+    }
+}
 
 //-----------------------------------------------------------------------------
 // Name: MT_Line constructor

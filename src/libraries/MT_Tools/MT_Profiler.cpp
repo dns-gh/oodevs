@@ -1,16 +1,14 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-10-14 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Tools/MT_Profiler.cpp $
-// $Author: Jvt $
-// $Modtime: 12/04/05 14:54 $
-// $Revision: 2 $
-// $Workfile: MT_Profiler.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_Profiler.h"
+#include "MT_Assert.h"
 #include <windows.h>
 
 long long int MT_Profiler::nFrequency_ = 0;

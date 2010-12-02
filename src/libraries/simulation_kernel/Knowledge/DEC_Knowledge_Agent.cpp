@@ -30,7 +30,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "protocol/ClientSenders.h"
-#include "tools/MIL_IDManager.h"
+#include "Tools/MIL_IDManager.h"
 #include "UrbanType.h"
 #include <urban/StaticModel.h>
 #include <urban/Architecture.h>

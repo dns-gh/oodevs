@@ -13,7 +13,7 @@
 #include "NET_AgentServer.h"
 #include "NET_AS_MOSServerMsgMgr.h"
 #include "MIL_AgentServer.h"
-#include "tools/MIL_Config.h"
+#include "Tools/MIL_Config.h"
 #include "MT_Tools/MT_Logger.h"
 
 using namespace tools;

@@ -24,8 +24,8 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "tools/MIL_IDManager.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_IDManager.h"
+#include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
 

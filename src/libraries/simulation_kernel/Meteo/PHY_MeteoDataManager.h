@@ -14,7 +14,7 @@
 #include "meteo/PHY_Precipitation.h"
 #include "meteo/PHY_Meteo.h"
 #include "PHY_Ephemeride.h"
-#include "tools/MIL_IDManager.h"
+#include "Tools/MIL_IDManager.h"
 
 namespace MsgsClientToSim
 {

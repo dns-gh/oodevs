@@ -3,11 +3,10 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_ConsoleLogger.h"
 #include <cstdio>
 
@@ -15,7 +14,7 @@
 // Name: MT_ConsoleLogger constructor
 // Created:  NLD 00-06-05 
 //-----------------------------------------------------------------------------
-MT_ConsoleLogger::MT_ConsoleLogger( uint nLogLevels, uint nLayers )
+MT_ConsoleLogger::MT_ConsoleLogger( unsigned int nLogLevels, unsigned int nLayers )
     : MT_Logger_ABC( nLogLevels, nLayers )
     , bDumpTimeStamps_( true  )
 {
@@ -38,7 +37,7 @@ MT_ConsoleLogger::~MT_ConsoleLogger()
 */
 // Created:  NLD 00-10-23 
 //-----------------------------------------------------------------------------
-const char* MT_ConsoleLogger::GetColorFromLogLevel( uint nLogLevel )
+const char* MT_ConsoleLogger::GetColorFromLogLevel( unsigned int nLogLevel )
 {
     switch( nLogLevel )
     {

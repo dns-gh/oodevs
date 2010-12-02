@@ -12,7 +12,6 @@
 #ifndef __MT_Tools_Types_h_
 #define __MT_Tools_Types_h_
 
-#include "MT_Assert.h"
 #include <cmath>
 
 #define MT_PI 3.14159265358979323
@@ -21,16 +20,5 @@ inline bool MT_IsZero( double r )
 {
     return fabs( r ) < 1e-8;
 }
-inline bool MT_IsSameSigns( double a, double b )
-{
-    return a * b >= 0;
-}
-
-typedef unsigned uint;
-
-#define MT_COPYNOTALLOWED(cls)      \
-private:                            \
-    cls( const cls& );              \
-    cls& operator=( const cls& );    
 
 #endif // __MT_Tools_Types_h_

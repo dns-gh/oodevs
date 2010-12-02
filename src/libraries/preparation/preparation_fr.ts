@@ -78,6 +78,29 @@
     </message>
 </context>
 <context>
+    <name>Crowd</name>
+    <message>
+        <source>Info/Identifier</source>
+        <translation type="unfinished">Info/Identifiant</translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation type="unfinished">Info/Nom</translation>
+    </message>
+    <message>
+        <source>Info/Type</source>
+        <translation type="unfinished">Info/Type</translation>
+    </message>
+    <message>
+        <source>Info/Humans</source>
+        <translation type="unfinished">Info/Personnes</translation>
+    </message>
+    <message>
+        <source>Info/Mood</source>
+        <translation type="unfinished">Info/Moral</translation>
+    </message>
+</context>
+<context>
     <name>DelayAttribute</name>
     <message>
         <source>Info/Delay parameters/Delay</source>
@@ -454,29 +477,6 @@
     <message>
         <source>Info/Occupant attributes/Max Entities</source>
         <translation>Info/Attributs animateurs/Animateurs max</translation>
-    </message>
-</context>
-<context>
-    <name>Population</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
-        <source>Info/Type</source>
-        <translation>Info/Type</translation>
-    </message>
-    <message>
-        <source>Info/Humans</source>
-        <translation>Info/Personnes</translation>
-    </message>
-    <message>
-        <source>Info/Mood</source>
-        <translation>Info/Moral</translation>
     </message>
 </context>
 <context>

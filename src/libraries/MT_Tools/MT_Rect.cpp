@@ -1,15 +1,12 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: FBD 02-11-07 $
-// $Archive: /MVW_v10/Build/SDK/MT_Tools/Src/MT_Rect.cpp $
-// $Author: Nld $
-// $Modtime: 1/09/04 16:44 $
-// $Revision: 18 $
-// $Workfile: MT_Rect.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_Rect.h"
 #include "MT_Line.h"
 

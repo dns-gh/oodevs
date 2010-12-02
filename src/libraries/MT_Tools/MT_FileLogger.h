@@ -35,12 +35,11 @@
 //=============================================================================
 class MT_FileLogger : public MT_Logger_ABC
 {
-    MT_COPYNOTALLOWED( MT_FileLogger );
 
 public:
     explicit MT_FileLogger( const char* strFileName
-                          , uint nLogLevels = eLogLevel_All
-                          , uint nLogLayers = eLogLayer_All
+                          , unsigned int nLogLevels = eLogLevel_All
+                          , unsigned int nLogLayers = eLogLayer_All
                           , bool bClearPreviousLog = false );
 
     virtual ~MT_FileLogger();

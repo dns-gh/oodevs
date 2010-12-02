@@ -1,19 +1,22 @@
 // *****************************************************************************
 //
-// $Created: NLD 2003-08-20 $
-// $Archive: /MVW_v10/Build/SDK/MT_Tools/Src/MT_Droite.cpp $
-// $Author: Jvt $
-// $Modtime: 14/02/05 11:24 $
-// $Revision: 5 $
-// $Workfile: MT_Droite.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "MT_Tools_pch.h"
-
 #include "MT_Droite.h"
-
 #include "MT_Line.h"
+
+namespace
+{
+    inline bool MT_IsSameSigns( double a, double b )
+    {
+        return a * b >= 0;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: MT_Droite constructor

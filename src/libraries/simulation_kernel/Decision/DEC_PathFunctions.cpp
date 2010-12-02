@@ -23,7 +23,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPointBM

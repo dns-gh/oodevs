@@ -1,7 +1,7 @@
 
 #include "simulation_app_pch.h"
 #include "SIM_App.h"
-#include "SIM_NetWorkLogger.h"
+#include "SIM_NetworkLogger.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_CrashHandler.h"
@@ -13,7 +13,6 @@
 #include <masalloc/masalloc.h>
 #include <google/protobuf/message.h>
 #include <xeumeuleu/xml.hpp>
-#include <commctrl.h>
 #include <new.h>
 #include <dbghelp.h>
 #include <direct.h>

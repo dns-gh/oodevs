@@ -10,9 +10,7 @@
 #ifndef __MT_Timer_ABC_h_
 #define __MT_Timer_ABC_h_
 
-#include "MT_Tools_Types.h"
-
-#define MT_TIMER_INFINITE (uint)-1
+#include <boost/noncopyable.hpp>
 
 //=============================================================================
 /** @class  MT_Timer_ABC
@@ -20,9 +18,8 @@
 */
 // Created:  MBN 00-05-03 
 //=============================================================================
-class MT_Timer_ABC
+class MT_Timer_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MT_Timer_ABC );
 
 public:
     //-----------------------------------------------------------------------------

@@ -1,15 +1,12 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: AGN 03-06-12 $
-// $Archive: /MVW_v10/Build/SDK/MT_Tools/Src/MT_triangle.cpp $
-// $Author: Nld $
-// $Modtime: 17/10/03 14:17 $
-// $Revision: 5 $
-// $Workfile: MT_triangle.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#include "MT_Tools_pch.h"
 #include "MT_Triangle.h"
 
 #ifdef  _DEBUG

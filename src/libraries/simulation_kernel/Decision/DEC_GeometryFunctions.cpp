@@ -28,7 +28,7 @@
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Meteo/PHY_MeteoDataManager.h"
-#include "tools/MIL_Tools.h"
+#include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"

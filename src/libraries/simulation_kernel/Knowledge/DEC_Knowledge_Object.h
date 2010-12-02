@@ -19,7 +19,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "tools/Extendable.h"
-#include "tools/MIL_IDManager.h"
+#include "Tools/MIL_IDManager.h"
 
 namespace MsgsSimToClient
 {
