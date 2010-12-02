@@ -81,7 +81,7 @@
 						<xs:element name="usage" minOccurs="0" maxOccurs="unbounded">
 							<xs:complexType>
 								<xs:attribute name="type" type="xs:string" use="required"/>
-								<xs:attribute name="proportion" type="T_ZeroTo100Integer" use="required"/>
+								<xs:attribute name="proportion" type="T_ZeroToOneDouble" use="required"/>
 							</xs:complexType>
 						</xs:element>
 					</xs:sequence>
