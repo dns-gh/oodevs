@@ -11,7 +11,6 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "Fixture.h"
 #include "MockMIL_MissionType_ABC.h"
-#include "StubDEC_Database.h"
 #include "StubMIL_AgentPion.h"
 #include "StubMIL_AgentTypePion.h"
 #include "StubMIL_Automate.h"
@@ -30,8 +29,7 @@ BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
 {
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
-    StubDEC_Database database;
-    DEC_RolePion_Decision decision ( *fixture.pPion_, database, 100, 100 );
+    DEC_RolePion_Decision decision ( *fixture.pPion_, 100, 100 );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,8 +39,7 @@ BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
 BOOST_AUTO_TEST_CASE( InstantiateDEC_AutomateDecision )
 {
     FixtureAutomate fixture;
-    StubDEC_Database database;
-    DEC_AutomateDecision decision( *fixture.pAutomat_, database, 100, 100 );
+    DEC_AutomateDecision decision( *fixture.pAutomat_, 100, 100 );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,8 +54,7 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_PopulationDecision )
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type );
-    StubDEC_Database database;
-    DEC_PopulationDecision decision( population, database, 100, 100 );
+    DEC_PopulationDecision decision( population, 100, 100 );
 }
 
 namespace mock
@@ -82,8 +78,8 @@ namespace
 class DEC_TestPopulationDecision : public DEC_Decision< MIL_Population >
 {
 public:
-    DEC_TestPopulationDecision( MIL_Population& population, DEC_TestPopulationDecision* pOther, DEC_DataBase& database )
-        : DEC_Decision( population, database, 100, 100 )
+    DEC_TestPopulationDecision( MIL_Population& population, DEC_TestPopulationDecision* pOther )
+        : DEC_Decision( population, 100, 100 )
         , pOther_( pOther )
     {
         const DEC_Model_ABC& model = population.GetType().GetModel();
@@ -144,7 +140,7 @@ namespace
             , model     ( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), "prefix", missionTypes )
             , type      ( model )
             , population( type )
-            , decision  ( population, 0, database )
+            , decision  ( population, 0 )
         {
             // NOTHING
         }
@@ -153,7 +149,6 @@ namespace
         DEC_Model model;
         StubMIL_PopulationType type;
         StubMIL_Population population;
-        StubDEC_Database database;
         DEC_TestPopulationDecision decision;
         MockMIL_MissionType_ABC missionType;
     };
@@ -217,7 +212,7 @@ namespace
             , model     ( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), "prefix", missionTypes )
             , type      ( model )
             , population( type )
-            , decision  ( population, 0, database )
+            , decision  ( population, 0 )
         {
             // NOTHING
         }
@@ -226,7 +221,6 @@ namespace
         DEC_Model model;
         StubMIL_PopulationType type;
         StubMIL_Population population;
-        StubDEC_Database database;
         DEC_TestPopulationDecision decision;
         MockMIL_MissionType_ABC missionType;
     };
@@ -277,8 +271,8 @@ BOOST_FIXTURE_TEST_CASE( DEC_GetMissionPassesParametersToLuaMission, Mission )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( DEC_GetMissionPassesOtherMissionsParametersToLua, Mission )
 {
-    DEC_TestPopulationDecision otherDecision( population, 0, database );
-    DEC_TestPopulationDecision populationDecision( population, &otherDecision, database );
+    DEC_TestPopulationDecision otherDecision( population, 0 );
+    DEC_TestPopulationDecision populationDecision( population, &otherDecision );
     MOCK_EXPECT( missionType, GetDIABehavior ).exactly( 2 ).returns( "testDEC_GetOtherMission" );
     StubDEC_KnowledgeResolver_ABC resolver;
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver ) );

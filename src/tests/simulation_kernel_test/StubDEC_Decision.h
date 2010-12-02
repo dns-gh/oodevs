@@ -8,8 +8,8 @@ template< class T >
 class StubDEC_Decision : public DEC_Decision< T >
 {
 public:
-    StubDEC_Decision( T& entity, DEC_DataBase& database )
-        : DEC_Decision< T >( entity, database, 100, 100 )
+    StubDEC_Decision( T& entity )
+        : DEC_Decision< T >( entity, 100, 100 )
     {
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
         xis.start( "main" );

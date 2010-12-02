@@ -8,7 +8,6 @@
 #include "MockNET_Publisher_ABC.h"
 #include "MockRoleDotations.h"
 #include "MockRoleLocation.h"
-#include "StubDEC_Database.h"
 #include "StubDEC_Decision.h"
 #include "TestIndirectFireModifier.h"
 
@@ -68,8 +67,7 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
 
         MockAgent pion;
         MOCK_EXPECT( pion, GetID ).once().returns( 1u );
-        StubDEC_Database database;
-        StubDEC_Decision< MockAgent >* decision = new StubDEC_Decision< MockAgent >( pion, database );
+        StubDEC_Decision< MockAgent >* decision = new StubDEC_Decision< MockAgent >( pion );
         pion.RegisterRole( *decision );
         firing::PHY_RoleAction_IndirectFiring* roleIndirectFiring = new firing::PHY_RoleAction_IndirectFiring( pion );
         pion.RegisterRole( *roleIndirectFiring );
