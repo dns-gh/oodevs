@@ -207,5 +207,7 @@ std::string OrderParameter::CompatibleType( const std::string& type ) const
         return "heading";
     if( type == "intelligencelist" )
         return "intelligence";
+    if( type == "location" && type_ == "polygon" )
+        return "polygon";
     return "";
 }
