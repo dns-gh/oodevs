@@ -240,7 +240,6 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain.Register( "DEC_Agent_EstEnVol", &DEC_Decision_ABC::IsFlying );
     brain.Register( "DEC_Agent_EstEnMouvement", &DEC_Decision_ABC::IsMoving );
 
-    brain.Register( "DEC_Agent_EtatOpsMajeur", &DEC_Decision_ABC::GetMajorOperationalState );
     brain[ "DEC_Agent_PeutActiverObjet" ] = &DEC_AgentFunctions::CanActivateObject;
 
     brain.Register( "DEC_Agent_EstNeutralise", &DEC_Decision_ABC::IsNeutralized );

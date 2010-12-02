@@ -60,6 +60,14 @@ ScriptRefs::ScriptRefs( directia::brain::Brain& brain  )
 
 namespace DEC_DecisionImpl
 {
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterUnitFunctions
+// Created: LMT 2010-12-02
+// -----------------------------------------------------------------------------
+void RegisterUnitFunctions( directia::brain::Brain& brain)
+{    
+    brain.Register( "DEC_Agent_EtatOpsMajeur", &DEC_Decision_ABC::GetMajorOperationalState );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterGeometryFunctions
@@ -343,6 +351,7 @@ void RegisterItineraryFunctions( directia::brain::Brain& brain )
 // -----------------------------------------------------------------------------
 void RegisterCommonUserFunctions( directia::brain::Brain& brain, bool isMasalife )
 {
+    RegisterUnitFunctions( brain );
     RegisterGeometryFunctions( brain );
     RegisterUrbanBlockFunctions( brain );
     RegisterAreaFunctions( brain );
