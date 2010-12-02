@@ -82,6 +82,8 @@ void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
     msg().set_name( strName_ );
     localisation_.Send( *msg().mutable_location() );
     msg().mutable_attributes();
+    std::for_each( attributes_.begin(), attributes_.end(),
+        boost::bind( &UrbanObjectAttribute_ABC::Send, _1, boost::ref( *msg().mutable_attributes() ) ) );
     msg.Send( publisher );
 }
 

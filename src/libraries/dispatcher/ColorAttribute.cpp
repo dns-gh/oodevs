@@ -40,9 +40,15 @@ ColorAttribute::~ColorAttribute()
 // Name: ColorAttribute::Update
 // Created: RPD 2010-01-06
 // -----------------------------------------------------------------------------
-void ColorAttribute::Update( const MsgsSimToClient::UrbanAttributes& /*message*/ )
+void ColorAttribute::Update( const MsgsSimToClient::UrbanAttributes& message )
 {
-   // NOTHING
+   if( message.has_color() )
+   {
+       color_.reset( new ColorRGBA( static_cast< unsigned short >( message.color().red() ),
+                                    static_cast< unsigned short >( message.color().green() ),
+                                    static_cast< unsigned short >( message.color().blue() ),
+                                    message.color().alpha() ) );
+   }
 }
 
 // -----------------------------------------------------------------------------
