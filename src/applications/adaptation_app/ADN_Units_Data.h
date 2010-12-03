@@ -13,7 +13,6 @@
 #define __ADN_Units_Data_h_
 
 #include "ADN_Data_ABC.h"
-
 #include "ADN_Types.h"
 #include "ADN_Tools.h"
 #include "ADN_Enums.h"
@@ -25,16 +24,12 @@
 //*****************************************************************************
 class ADN_Units_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Units_Data )
 
 public:
     //*****************************************************************************
-    class ComposanteInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ComposanteInfos : public ADN_Ref_ABC
+                          , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ComposanteInfos )
-
     public:
         ComposanteInfos();
 
@@ -78,14 +73,12 @@ public:
 
     //*****************************************************************************
 
-    class StockLogThresholdInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class StockLogThresholdInfos : public ADN_Ref_ABC
+                                 , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( StockLogThresholdInfos )
 
     public:
-        StockLogThresholdInfos( E_StockCategory eCategory = ( E_StockCategory )-1 );
+        explicit StockLogThresholdInfos( E_StockCategory eCategory = ( E_StockCategory )-1 );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -104,12 +97,9 @@ public:
     typedef T_StockLogThresholdInfos_Vector::iterator     IT_StockLogThresholdInfos_Vector;
 
     //*****************************************************************************
-    class StockInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class StockInfos : public ADN_Ref_ABC
+                     , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( StockInfos )
-
     public:
         StockInfos();
 
@@ -127,13 +117,10 @@ public:
     };
 
     //*****************************************************************************
-    class PostureInfos
-        : public ADN_DataTreeNode_ABC
+    class PostureInfos : public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( PostureInfos )
-
     public:
-        PostureInfos(const E_UnitPosture& posture);
+        explicit PostureInfos( const E_UnitPosture& posture );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -166,13 +153,9 @@ public:
     typedef ADN_Type_Vector_ABC<PostureInfos>    T_PostureInfos_Vector;
     typedef T_PostureInfos_Vector::iterator      IT_PostureInfos_Vector;
 
-
     //*****************************************************************************
-    class PointInfos
-        : public ADN_DataTreeNode_ABC
+    class PointInfos : public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( PointInfos )
-
     public:
         PointInfos();
 
@@ -194,14 +177,11 @@ public:
 
 
     //*****************************************************************************
-    class UnitInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class UnitInfos : public ADN_Ref_ABC
+                    , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( UnitInfos )
-
     public:
-        UnitInfos();
+                 UnitInfos();
         virtual ~UnitInfos();
 
         virtual std::string GetNodeName();
@@ -266,11 +246,11 @@ public:
 
     //*****************************************************************************
 public:
-    explicit ADN_Units_Data();
+             ADN_Units_Data();
     virtual ~ADN_Units_Data();
 
-    void            FilesNeeded(T_StringList& l) const;
-    void            Reset();
+    void FilesNeeded( T_StringList& l ) const;
+    void Reset();
 
     T_UnitInfos_Vector& GetUnitsInfos();
     UnitInfos*          FindUnit( const std::string strName );
@@ -287,10 +267,8 @@ private:
 
 private:
     int nNextId_;
-
     T_UnitInfos_Vector  vUnits_;
 };
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_Data::T_UnitInfos_Vector
@@ -301,7 +279,6 @@ ADN_Units_Data::T_UnitInfos_Vector& ADN_Units_Data::GetUnitsInfos()
 {
     return vUnits_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::FindUnit

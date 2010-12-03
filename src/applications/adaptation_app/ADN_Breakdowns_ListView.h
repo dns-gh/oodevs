@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Breakdowns_ListView.h $
-// $Author: Ape $
-// $Modtime: 18/03/05 17:25 $
-// $Revision: 1 $
-// $Workfile: ADN_Breakdowns_ListView.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Breakdowns_ListView_h_
 #define __ADN_Breakdowns_ListView_h_
@@ -28,15 +19,14 @@
 */
 // Created: APE 2005-03-18
 // =============================================================================
-class ADN_Breakdowns_ListView
-: public ADN_ListView
+class ADN_Breakdowns_ListView : public ADN_ListView
+                              , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_Breakdowns_ListView )
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Breakdowns_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    explicit ADN_Breakdowns_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
     virtual ~ADN_Breakdowns_ListView();
     //@}
 

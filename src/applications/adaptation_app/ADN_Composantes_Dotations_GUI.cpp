@@ -8,12 +8,11 @@
 // $Workfile: ADN_Composantes_Dotations_GUI.cpp $
 //
 //*****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Composantes_Dotations_GUI.h"
 #include "moc_ADN_Composantes_Dotations_GUI.cpp"
-
 #include <qpopmenu.h>
-
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
@@ -27,14 +26,12 @@ typedef ADN_Composantes_Data::CategoryInfos CategoryInfos;
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with munitions
 //-----------------------------------------------------------------------------
-class ADN_CT_Composantes_Dotations
-: public ADN_Connector_Table_ABC
+class ADN_CT_Composantes_Dotations : public ADN_Connector_Table_ABC
 {
-    MT_COPYNOTALLOWED( ADN_CT_Composantes_Dotations )
 
 public:
-    ADN_CT_Composantes_Dotations( ADN_Composantes_Dotations_GUI& tab)
-    : ADN_Connector_Table_ABC( tab, false )
+    explicit ADN_CT_Composantes_Dotations( ADN_Composantes_Dotations_GUI& tab)
+        : ADN_Connector_Table_ABC( tab, false )
     {}
 
     void AddSubItems( int n, void* pObj )
@@ -72,7 +69,7 @@ public:
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNormalizedConsumption, QWidget* pParent, bool bIncludeThreshold )
-: ADN_Table2( pParent, "ADN_Composantes_Dotations_GUI" )
+    : ADN_Table2( pParent, "ADN_Composantes_Dotations_GUI" )
 {
     // Selection and sorting.
     setSorting( true );

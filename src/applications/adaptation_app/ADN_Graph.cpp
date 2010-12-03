@@ -6,37 +6,25 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-14 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Graph.cpp $
-// $Author: Ape $
-// $Modtime: 12/01/05 15:03 $
-// $Revision: 2 $
-// $Workfile: ADN_Graph.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Graph.h"
 #include "moc_ADN_Graph.cpp"
-
 #include "ADN_GraphData.h"
 #include "ADN_GraphValue.h"
 #include "ADN_ListView.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Graph constructor
 // Created: APE 2004-12-15
 // -----------------------------------------------------------------------------
 ADN_Graph::ADN_Graph( QWidget* pParent )
-: GQ_Plot           ( pParent )
-, bSlotsLocked_     ( false )
-, pConnector_       ( 0 )
+    : GQ_Plot      ( pParent )
+    , bSlotsLocked_( false )
+    , pConnector_  ( 0 )
 {
     connect( this, SIGNAL( SelectionChanged( const T_DataItemVector& ) ), this, SLOT( OnSelectionChanged( const T_DataItemVector& ) ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Graph destructor
@@ -46,7 +34,6 @@ ADN_Graph::~ADN_Graph()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Graph::SetSelectedItem

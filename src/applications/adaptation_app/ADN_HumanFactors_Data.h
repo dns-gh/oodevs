@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-14 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_HumanFactors_Data.h $
-// $Author: Ape $
-// $Modtime: 18/03/05 18:08 $
-// $Revision: 2 $
-// $Workfile: ADN_HumanFactors_Data.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_HumanFactors_Data_h_
 #define __ADN_HumanFactors_Data_h_
@@ -22,8 +13,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 
-class xml::xistream;
-
+namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_HumanFactors_Data
@@ -31,18 +21,15 @@ class xml::xistream;
 */
 // Created: APE 2005-03-14
 // =============================================================================
-class ADN_HumanFactors_Data
-: public ADN_Data_ABC
+class ADN_HumanFactors_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_HumanFactors_Data )
 
 public:
 // *****************************************************************************
     class ModifiersInfo
     {
-        MT_COPYNOTALLOWED( ModifiersInfo )
     public:
-        ModifiersInfo( const std::string& strName );
+        explicit ModifiersInfo( const std::string& strName );
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );

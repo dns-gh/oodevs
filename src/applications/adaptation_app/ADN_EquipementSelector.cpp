@@ -6,44 +6,29 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-01-05 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_EquipementSelector.cpp $
-// $Author: Ape $
-// $Modtime: 25/04/05 18:10 $
-// $Revision: 6 $
-// $Workfile: ADN_EquipementSelector.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_EquipementSelector.h"
 #include "moc_ADN_EquipementSelector.cpp"
-
 #include <qpopupmenu.h>
 #include <qcursor.h>
-
 #include "ADN_Workspace.h"
 #include "ADN_Equipement_Data.h"
-
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_EquipementSelector::ADN_EquipementSelector
 // Created: APE 2005-01-05
 // -----------------------------------------------------------------------------
 ADN_EquipementSelector::ADN_EquipementSelector( QWidget* pParent, const char* szName )
-: QPushButton( pParent, szName )
-, ADN_Gfx_ABC()
-, pConnected_( 0 )
-, pData_     ( 0 )
+    : QPushButton( pParent, szName )
+    , ADN_Gfx_ABC()
+    , pConnected_( 0 )
+    , pData_     ( 0 )
 {
-    this->setText( tr( "Click here to select" ) );
-
+    setText( tr( "Click here to select" ) );
     pConnector_ = new ADN_EquipementSelector_Connector( *this );
     connect( this, SIGNAL( clicked() ), this, SLOT( OnButtonPressed() ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_EquipementSelector destructor
@@ -53,7 +38,6 @@ ADN_EquipementSelector::~ADN_EquipementSelector()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_EquipementSelector::OnButtonPressed
@@ -97,7 +81,6 @@ void ADN_EquipementSelector::OnButtonPressed()
     delete pPopup;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_EquipementSelector::ItemRemoved
 // Created: APE 2005-04-25
@@ -111,7 +94,6 @@ void ADN_EquipementSelector::ItemRemoved( void* pItem )
     pConnected_ = 0;
     static_cast<ADN_EquipementSelector_Connector*>(pConnector_)->NotifySelected( (void*)0 );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_EquipementSelector::SetItem
@@ -137,17 +119,16 @@ void ADN_EquipementSelector::SetItem( void* pItem )
     setText( ((ADN_Equipement_Data::CategoryInfo*)pItem)->strName_.GetData().c_str() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_EquipementSelector_Connector::ADN_EquipementSelector_Connector
 // Created: APE 2005-01-05
 // -----------------------------------------------------------------------------
 ADN_EquipementSelector::ADN_EquipementSelector_Connector::ADN_EquipementSelector_Connector( ADN_EquipementSelector& gui )
-: ADN_Connector_Vector_ABC()
-, gui_                    ( gui )
+    : ADN_Connector_Vector_ABC()
+    , gui_( gui )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_EquipementSelector_Connector::~ADN_EquipementSelector_Connector
@@ -155,8 +136,8 @@ ADN_EquipementSelector::ADN_EquipementSelector_Connector::ADN_EquipementSelector
 // -----------------------------------------------------------------------------
 ADN_EquipementSelector::ADN_EquipementSelector_Connector::~ADN_EquipementSelector_Connector()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_EquipementSelector_Connector::NotifySelected
@@ -166,7 +147,6 @@ void ADN_EquipementSelector::ADN_EquipementSelector_Connector::NotifySelected( v
 {
     emit DataChanged( pData );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_EquipementSelector_Connector::SetDataPrivate

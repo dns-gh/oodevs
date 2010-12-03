@@ -16,8 +16,8 @@
 typedef ADN_Population_Data::FireEffectProtectionInfos FireEffectProtectionInfos;
 
 class ADN_Protections : public ADN_Connector_ListView_ABC
+                      , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_Protections )
 
 public:
     ADN_Protections( ADN_Population_FireEffect_Protection_ListView& list )

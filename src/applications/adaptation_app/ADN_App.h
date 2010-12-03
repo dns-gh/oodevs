@@ -11,6 +11,7 @@
 #define __ADN_App_h_
 
 #include "clients_kernel/Application_ABC.h"
+#include <boost/noncopyable.hpp>
 
 class ADN_MainWindow;
 class ADN_Config;
@@ -20,13 +21,12 @@ class ADN_Config;
 */
 // Created: APE 2004-12-02
 // =============================================================================
-class ADN_App
-: public Application_ABC
+class ADN_App : public Application_ABC
+              , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_App );
 
 public:
-    ADN_App( int argc, char** argv );
+             ADN_App( int argc, char** argv );
     virtual ~ADN_App();
 
     bool Initialize( const std::string& inputFile, const std::string& outputFile );

@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-11-15 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_AttritionInfos.h $
-// $Author: Nld $
-// $Modtime: 20/07/05 14:11 $
-// $Revision: 13 $
-// $Workfile: ADN_AttritionInfos.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_ResourceNatureInfos_h_
 #define __ADN_ResourceNatureInfos_h_
@@ -25,10 +16,8 @@
 namespace helpers
 {
 
-class ResourceNatureInfos
-    : public ADN_Type_String
+class ResourceNatureInfos : public ADN_Type_String
 {
-    MT_COPYNOTALLOWED( ResourceNatureInfos )
 
 public:
     ResourceNatureInfos();

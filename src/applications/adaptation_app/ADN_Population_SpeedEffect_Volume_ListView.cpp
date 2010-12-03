@@ -16,11 +16,11 @@
 typedef ADN_Population_Data::SpeedEffectVolumeInfos SpeedEffectVolumeInfos;
 
 class ADN_Sizes : public ADN_Connector_ListView_ABC
+                , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_Sizes )
 
 public:
-    ADN_Sizes( ADN_Population_SpeedEffect_Volume_ListView& list )
+    explicit ADN_Sizes( ADN_Population_SpeedEffect_Volume_ListView& list )
         : ADN_Connector_ListView_ABC( list, "ADN_Sizes" )
     {
         // NOTHING

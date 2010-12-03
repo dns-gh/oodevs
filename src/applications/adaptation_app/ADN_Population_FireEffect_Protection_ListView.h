@@ -11,18 +11,19 @@
 #define __ADN_Population_FireEffect_Protection_ListView_h_
 
 #include "ADN_ListView.h"
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 // Created: SBO 2005-10-25
 // =============================================================================
 class ADN_Population_FireEffect_Protection_ListView : public ADN_ListView
+                                                    , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_Population_FireEffect_Protection_ListView )
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Population_FireEffect_Protection_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    explicit ADN_Population_FireEffect_Protection_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
     virtual ~ADN_Population_FireEffect_Protection_ListView();
     //@}
 

@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-14 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Communications_Data.h $
-// $Author: Ape $
-// $Modtime: 18/03/05 18:08 $
-// $Revision: 2 $
-// $Workfile: ADN_Communications_Data.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Communications_Data_h_
 #define __ADN_Communications_Data_h_
@@ -22,8 +13,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 
-class xml::xistream;
-
+namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_Communications_Data
@@ -33,7 +23,6 @@ class xml::xistream;
 // =============================================================================
 class ADN_Communications_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Communications_Data )
 
 public:
     //! @name Constructors/Destructor

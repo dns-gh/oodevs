@@ -11,6 +11,7 @@
 #define __ADN_ActiveProtectionsListView_h_
 
 #include "ADN_ListView.h"
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 //  @class  ADN_ActiveProtectionsListView
@@ -18,8 +19,8 @@
 // Created: FDS 10-02-25
 // =============================================================================
 class ADN_ActiveProtectionsListView : public ADN_ListView
+                                    , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_ActiveProtectionsListView )
 
 public:
     //! @name Constructors/Destructor

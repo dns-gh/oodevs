@@ -14,18 +14,19 @@
 
 #include "ADN_Gfx_ABC.h"
 #include "ADN_TableItem_ComboBox.h"
+#include <boost/noncopyable.hpp>
 
 class ADN_TableItem_ComboBox;
 
 //*****************************************************************************
 // Created: JDY 03-09-10
 //*****************************************************************************
-class ADN_TableItem_ComboBoxItem
-:   public ADN_Gfx_ABC
+class ADN_TableItem_ComboBoxItem : public ADN_Gfx_ABC
+                                 , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED(ADN_TableItem_ComboBoxItem)
+
 public:
-    explicit ADN_TableItem_ComboBoxItem(ADN_TableItem_ComboBox& combo,void *data);
+             ADN_TableItem_ComboBoxItem( ADN_TableItem_ComboBox& combo, void *data );
     virtual ~ADN_TableItem_ComboBoxItem();
 
     void*           GetData();

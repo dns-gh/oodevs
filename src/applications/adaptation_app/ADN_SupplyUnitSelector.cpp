@@ -6,43 +6,28 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-01-05 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_SupplyUnitSelector.cpp $
-// $Author: Ape $
-// $Modtime: 25/04/05 18:12 $
-// $Revision: 1 $
-// $Workfile: ADN_SupplyUnitSelector.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_SupplyUnitSelector.h"
 #include "moc_ADN_SupplyUnitSelector.cpp"
-
 #include <qpopupmenu.h>
 #include <qcursor.h>
-
 #include "ADN_Workspace.h"
 #include "ADN_Units_Data.h"
-
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SupplyUnitSelector::ADN_SupplyUnitSelector
 // Created: APE 2005-01-05
 // -----------------------------------------------------------------------------
 ADN_SupplyUnitSelector::ADN_SupplyUnitSelector( QWidget* pParent, const char* szName )
-: QPushButton( pParent, szName )
-, ADN_Gfx_ABC()
-, pData_     ( 0 )
+    : QPushButton( pParent, szName )
+    , ADN_Gfx_ABC()
+    , pData_     ( 0 )
 {
-    this->setText( tr( "Click here to select" ) );
-
+    setText( tr( "Click here to select" ) );
     pConnector_ = new ADN_SupplyUnitSelector_Connector( *this );
     connect( this, SIGNAL( clicked() ), this, SLOT( OnButtonPressed() ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SupplyUnitSelector destructor
@@ -52,7 +37,6 @@ ADN_SupplyUnitSelector::~ADN_SupplyUnitSelector()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SupplyUnitSelector::OnButtonPressed
@@ -90,7 +74,6 @@ void ADN_SupplyUnitSelector::OnButtonPressed()
     delete pPopup;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_SupplyUnitSelector::ItemRemoved
 // Created: APE 2005-04-25
@@ -107,7 +90,6 @@ void ADN_SupplyUnitSelector::ItemRemoved( void* pItem )
     disconnect( &units, 0, this, SLOT( ItemRemoved( void* ) ) );
     static_cast<ADN_SupplyUnitSelector_Connector*>(pConnector_)->NotifySelected( (void*)0 );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SupplyUnitSelector::SetItem
@@ -134,17 +116,16 @@ void ADN_SupplyUnitSelector::SetItem( void* pItem )
     setText( ((ADN_Units_Data::UnitInfos*)pItem)->strName_.GetData().c_str() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_SupplyUnitSelector_Connector::ADN_SupplyUnitSelector_Connector
 // Created: APE 2005-01-05
 // -----------------------------------------------------------------------------
 ADN_SupplyUnitSelector::ADN_SupplyUnitSelector_Connector::ADN_SupplyUnitSelector_Connector( ADN_SupplyUnitSelector& gui )
 : ADN_Connector_Vector_ABC()
-, gui_                    ( gui )
+, gui_( gui )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SupplyUnitSelector_Connector::~ADN_SupplyUnitSelector_Connector
@@ -152,8 +133,8 @@ ADN_SupplyUnitSelector::ADN_SupplyUnitSelector_Connector::ADN_SupplyUnitSelector
 // -----------------------------------------------------------------------------
 ADN_SupplyUnitSelector::ADN_SupplyUnitSelector_Connector::~ADN_SupplyUnitSelector_Connector()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SupplyUnitSelector_Connector::NotifySelected
@@ -163,7 +144,6 @@ void ADN_SupplyUnitSelector::ADN_SupplyUnitSelector_Connector::NotifySelected( v
 {
     emit DataChanged( pData );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SupplyUnitSelector_Connector::SetDataPrivate

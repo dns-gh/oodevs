@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-18 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_ComboBox.h $
-// $Author: Ape $
-// $Modtime: 28/02/05 11:13 $
-// $Revision: 4 $
-// $Workfile: ADN_ComboBox.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_ComboBox_h_
 #define __ADN_ComboBox_h_
@@ -31,9 +29,8 @@ typedef T_PtrComboBoxItem_Vector::const_iterator  CIT_PtrComboBoxItem_Vector;
 //*****************************************************************************
 // Created: JDY 03-07-18
 //*****************************************************************************
-class ADN_ComboBox
-:   public QComboBox
-,   public ADN_Gfx_ABC
+class ADN_ComboBox : public QComboBox
+                   , public ADN_Gfx_ABC
 {
     Q_OBJECT
 
@@ -41,7 +38,7 @@ public:
     typedef ADN_ComboBoxItem T_ItemType;
 
 public:
-    explicit ADN_ComboBox(QWidget * parent = 0, const char * name = 0);
+    explicit ADN_ComboBox( QWidget * parent = 0, const char * name = 0 );
     virtual ~ADN_ComboBox();
 
     void                        SetItemConnectors(const T_ConnectorVector& v);

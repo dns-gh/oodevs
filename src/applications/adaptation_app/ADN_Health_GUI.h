@@ -12,8 +12,8 @@
 
 #include "ADN_GUI_ABC.h"
 #include "ADN_Enums.h"
-class ADN_Health_Data;
 
+class ADN_Health_Data;
 
 // =============================================================================
 /** @class  ADN_Health_GUI
@@ -23,12 +23,11 @@ class ADN_Health_Data;
 // =============================================================================
 class ADN_Health_GUI : public ADN_GUI_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Health_GUI )
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Health_GUI( ADN_Health_Data& data );
+    explicit ADN_Health_GUI( ADN_Health_Data& data );
     virtual ~ADN_Health_GUI();
     //@}
 

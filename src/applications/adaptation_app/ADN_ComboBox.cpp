@@ -1,18 +1,15 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-18 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_ComboBox.cpp $
-// $Author: Nld $
-// $Modtime: 1/06/05 11:15 $
-// $Revision: 7 $
-// $Workfile: ADN_ComboBox.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_ComboBox.h"
-
 #include "moc_ADN_ComboBox.cpp"
-
 #include "ADN_Workspace.h"
 #include "ADN_Enums.h"
 #include "ADN_App.h"
@@ -56,7 +53,6 @@ void ADN_ComboBox::ConnectItem()
 	// NOTHING
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox::DisconnectItem
 // Created: JDY 03-07-18
@@ -65,7 +61,6 @@ void ADN_ComboBox::DisconnectItem()
 {
 	// NOTHING
 }
-
 
 inline void SetAutoClear(T_ConnectorVector& v,bool b)
 {
@@ -92,7 +87,6 @@ void ADN_ComboBox::SetCurrentData( void* data )
         SetAutoClear( vItemConnectors_, false );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox::setCurrentItem
 // Created: JDY 03-08-21
@@ -116,7 +110,6 @@ void ADN_ComboBox::setCurrentItem( int index )
     }
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox::ItemSelected
 // Created: JDY 03-07-18
@@ -131,7 +124,6 @@ void ADN_ComboBox::ItemSelected( int ndx )
     emit Activated( ndx );
     ConnectItem();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox::insertItem
@@ -170,7 +162,6 @@ void ADN_ComboBox::insertItem( ADN_ComboBoxItem* item, int index )
     vItems_.insert(vItems_.begin() + nRealIndex, item );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox::removeItem
 // Created: JDY 03-09-10
@@ -184,7 +175,6 @@ void ADN_ComboBox::removeItem ( int index )
     delete item;
     QComboBox::removeItem(index);
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox::clear
@@ -211,7 +201,6 @@ int ADN_ComboBox::FindNdx( const ADN_ComboBoxItem* item ) const
             return ndx;
     return -1;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox::FindNdx

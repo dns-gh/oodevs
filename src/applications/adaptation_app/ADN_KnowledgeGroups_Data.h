@@ -13,7 +13,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 
-class xml::xistream;
+namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_KnowledgeGroups_Data
@@ -24,14 +24,11 @@ class xml::xistream;
 class ADN_KnowledgeGroups_Data
     : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_KnowledgeGroups_Data )
 
 public:
 // *****************************************************************************
-    class AgentGroupInfo
-        : public ADN_Ref_ABC
+    class AgentGroupInfo : public ADN_Ref_ABC
     {
-        MT_COPYNOTALLOWED( AgentGroupInfo )
 
     public:
         AgentGroupInfo();
@@ -47,10 +44,8 @@ public:
     };
 
 // *****************************************************************************
-    class PopulationGroupInfo
-        : public ADN_Ref_ABC
+    class PopulationGroupInfo : public ADN_Ref_ABC
     {
-        MT_COPYNOTALLOWED( PopulationGroupInfo )
 
     public:
         PopulationGroupInfo();
@@ -64,11 +59,9 @@ public:
 
 
 // *****************************************************************************
-    class GroupInfo
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class GroupInfo : public ADN_Ref_ABC
+                    , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( GroupInfo )
 
     public:
         GroupInfo();

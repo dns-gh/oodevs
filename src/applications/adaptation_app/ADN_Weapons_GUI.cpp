@@ -46,26 +46,23 @@
 #include "ADN_Equipement_GUI.h"
 #include "ADN_TableItem_TimeField.h"
 #include "ADN_TimeField.h"
-
 #include "ADN_Graph.h"
 #include "ADN_GraphData.h"
 #include "ADN_GraphValue.h"
 #include "ADN_Connector_Graph_ABC.h"
 #include "GQ_PlotAxis.h"
 #include "GQ_PlotCaption.h"
-
 #include "ENT/ENT_Tr.h"
 
 //-----------------------------------------------------------------------------
 // Internal Canvas connector
 //-----------------------------------------------------------------------------
-class ADN_GC_Ph
-    : public ADN_Connector_Vector_ABC
+class ADN_GC_Ph : public ADN_Connector_Vector_ABC
+                , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_GC_Ph )
 
 public:
-    ADN_GC_Ph( ADN_GraphData& graphData )
+    explicit ADN_GC_Ph( ADN_GraphData& graphData )
         : ADN_Connector_Vector_ABC()
         , graphData_ ( graphData )
     {}
@@ -111,13 +108,11 @@ private:
 };
 
 
-class ADN_GC_PhSize
-    : public ADN_Connector_Graph_ABC
+class ADN_GC_PhSize : public ADN_Connector_Graph_ABC
 {
-    MT_COPYNOTALLOWED( ADN_GC_PhSize )
 
 public:
-    ADN_GC_PhSize( ADN_Graph& graph )
+    explicit ADN_GC_PhSize( ADN_Graph& graph )
         : ADN_Connector_Graph_ABC( graph )
     {}
 

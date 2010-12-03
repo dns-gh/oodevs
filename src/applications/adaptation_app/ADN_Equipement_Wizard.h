@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-01-19 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_Wizard.h $
-// $Author: Ape $
-// $Modtime: 28/01/05 15:29 $
-// $Revision: 1 $
-// $Workfile: ADN_Equipement_Wizard.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Equipement_Wizard_h_
 #define __ADN_Equipement_Wizard_h_
@@ -23,6 +14,7 @@
 #include "ADN_Equipement_Data.h"
 
 typedef ADN_Wizard_ABC<ADN_Equipement_Data::CategoryInfo>  ADN_Wizard_ABC_ADN_Equipement_Data_CategoryInfo_;
+
 // =============================================================================
 /** @class  ADN_Equipement_Wizard
     @brief  ADN_Equipement_Wizard
@@ -33,15 +25,13 @@ typedef ADN_Wizard_ABC<ADN_Equipement_Data::CategoryInfo>  ADN_Wizard_ABC_ADN_Eq
 */
 // Created: APE 2005-01-19
 // =============================================================================
-class ADN_Equipement_Wizard
-: public ADN_Wizard_ABC_ADN_Equipement_Data_CategoryInfo_
+class ADN_Equipement_Wizard : public ADN_Wizard_ABC_ADN_Equipement_Data_CategoryInfo_
 {
-    MT_COPYNOTALLOWED( ADN_Equipement_Wizard )
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Equipement_Wizard( ADN_Equipement_Data::ResourceInfos& parentDotation, QWidget* pParent = 0, const char* szName = 0 );
+    explicit ADN_Equipement_Wizard( ADN_Equipement_Data::ResourceInfos& parentDotation, QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_Equipement_Wizard();
     //@}
 };

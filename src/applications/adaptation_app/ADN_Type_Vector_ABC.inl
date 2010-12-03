@@ -1,18 +1,15 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-06-26 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Type_Vector_ABC.inl $
-// $Author: Ape $
-// $Modtime: 7/04/05 17:17 $
-// $Revision: 7 $
-// $Workfile: ADN_Type_Vector_ABC.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "ADN_AddElementCommand.h"
 #include "ADN_RemoveElementCommand.h"
 #include "ADN_Workspace.h"
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC constructor
@@ -20,13 +17,13 @@
 //-----------------------------------------------------------------------------
 template< class T >
 ADN_Type_Vector_ABC<T>::ADN_Type_Vector_ABC( bool bAutoRef, const char* szName )
-: ADN_Connector_Vector_ABC( szName )
-, std::vector<T*>         ()
-, ADN_DataTreeNode_ABC    ()
-, bAutoRef_               ( bAutoRef )
+    : ADN_Connector_Vector_ABC( szName )
+    , std::vector<T*>         ()
+    , ADN_DataTreeNode_ABC    ()
+    , bAutoRef_               ( bAutoRef )
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC constructor
@@ -34,12 +31,12 @@ ADN_Type_Vector_ABC<T>::ADN_Type_Vector_ABC( bool bAutoRef, const char* szName )
 //-----------------------------------------------------------------------------
 template <class T>
 ADN_Type_Vector_ABC<T>::ADN_Type_Vector_ABC( const ADN_Type_Vector_ABC& o )
-: ADN_Connector_Vector_ABC()
-, ADN_DataTreeNode_ABC    ()
-, std::vector<T*>         ( o )
+    : ADN_Connector_Vector_ABC()
+    , ADN_DataTreeNode_ABC    ()
+    , std::vector<T*>         ( o )
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC destructor
@@ -48,8 +45,8 @@ ADN_Type_Vector_ABC<T>::ADN_Type_Vector_ABC( const ADN_Type_Vector_ABC& o )
 template <class T>
 ADN_Type_Vector_ABC<T>::~ADN_Type_Vector_ABC()
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC operator =
@@ -61,7 +58,6 @@ ADN_Type_Vector_ABC<T>& ADN_Type_Vector_ABC<T>::operator =( const ADN_Type_Vecto
     std::vector<T*>::operator =(o);
     return *this;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC<T>::AddItemPrivate
@@ -86,7 +82,6 @@ bool ADN_Type_Vector_ABC<T>::AddItemPrivate( void* pItem, bool bCreateCommand )
     push_back( pCastItem );
     return true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC::RemItemPrivate
@@ -127,7 +122,6 @@ void ADN_Type_Vector_ABC<T>::EndVector()
     AddItem( 0 );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC<T>::SwapItemPrivate
 // Created: JDY 03-08-27
@@ -152,7 +146,6 @@ void ADN_Type_Vector_ABC<T>::SwapItemPrivate(int i,int j)
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC::SortPrivate
 // Created: APE 2005-01-14
@@ -165,7 +158,6 @@ void ADN_Type_Vector_ABC<T>::SortPrivate( ADN_BinaryPredicateWrapper& lessComp )
     std::sort( begin(), end(), lessComp );
     emit Sorted( lessComp );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC<T>::InvalidatePrivate
@@ -197,7 +189,6 @@ void ADN_Type_Vector_ABC<T>::InvalidatePrivate(void *item,bool bDel)
     }
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC<T>::ClearPrivate
 // Created: JDY 03-07-04
@@ -211,7 +202,6 @@ void ADN_Type_Vector_ABC<T>::ClearPrivate(bool bInConnection)
         emit Cleared(bInConnection);
     }
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC<T>::Reset
@@ -257,7 +247,6 @@ void ADN_Type_Vector_ABC<T>::SetDataPrivate( void* /*data*/ )
 //    assert( 0 );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC::Initialize
 // Created: AGN 2004-03-22
@@ -274,7 +263,6 @@ void ADN_Type_Vector_ABC<T>::Initialize( ADN_Connector_Vector_ABC& dest ) const
     dest.AddItemNoEmit( 0 );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC::GetNodeName
 // Created: AGN 2004-05-13
@@ -284,7 +272,6 @@ std::string ADN_Type_Vector_ABC< T >::GetNodeName()
 {
     return strNodeName_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC::SetNodeName
@@ -296,7 +283,6 @@ void ADN_Type_Vector_ABC< T >::SetNodeName( const std::string& strNodeName )
     strNodeName_ = strNodeName;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC::GetItemTypeName
 // Created: AGN 2004-05-14
@@ -307,7 +293,6 @@ const std::string& ADN_Type_Vector_ABC< T >::GetItemTypeName() const
     return strItemTypeName_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC::SetItemTypeName
 // Created: AGN 2004-05-14
@@ -317,7 +302,6 @@ void ADN_Type_Vector_ABC< T >::SetItemTypeName( const std::string& strItemTypeNa
 {
     strItemTypeName_ = strItemTypeName;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC::push_back

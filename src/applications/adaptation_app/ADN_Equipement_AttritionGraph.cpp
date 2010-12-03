@@ -15,17 +15,17 @@
 #include "ADN_Equipement_GUI.h"
 #include "ADN_Tr.h"
 #include "moc_ADN_Equipement_AttritionGraph.cpp"
+#include <boost/noncopyable.hpp>
 
 //-----------------------------------------------------------------------------
 // Internal Canvas connector
 //-----------------------------------------------------------------------------
-class ADN_Connector_AttritionGraph
-    : public ADN_Connector_Vector_ABC
+class ADN_Connector_AttritionGraph : public ADN_Connector_Vector_ABC
+                                   , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_Connector_AttritionGraph )
 
 public:
-    ADN_Connector_AttritionGraph( ADN_Equipement_AttritionGraph* graph )
+    explicit ADN_Connector_AttritionGraph( ADN_Equipement_AttritionGraph* graph )
         : ADN_Connector_Vector_ABC()
         , graph_( graph )
     {}

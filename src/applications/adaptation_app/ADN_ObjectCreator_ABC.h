@@ -6,21 +6,11 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-21 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_ObjectCreator_ABC.h $
-// $Author: Ape $
-// $Modtime: 21/03/05 16:41 $
-// $Revision: 1 $
-// $Workfile: ADN_ObjectCreator_ABC.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_ObjectCreator_ABC_h_
 #define __ADN_ObjectCreator_ABC_h_
 
 class ADN_Ref_ABC;
-
 
 // =============================================================================
 /** @class  ADN_ObjectCreator_ABC
@@ -32,7 +22,7 @@ class ADN_ObjectCreator_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_ObjectCreator_ABC()  {}
+             ADN_ObjectCreator_ABC()  {}
     virtual ~ADN_ObjectCreator_ABC()  {}
     //@}
 
@@ -50,13 +40,12 @@ public:
 // Created: AGN 2003-11-18
 // =============================================================================
 template< typename T >
-class ADN_DefaultObjectCreator
-: public ADN_ObjectCreator_ABC
+class ADN_DefaultObjectCreator : public ADN_ObjectCreator_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_DefaultObjectCreator() : ADN_ObjectCreator_ABC() {}
+             ADN_DefaultObjectCreator() {}
     virtual ~ADN_DefaultObjectCreator() {}
     //@}
 

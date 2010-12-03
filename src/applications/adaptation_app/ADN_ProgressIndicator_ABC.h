@@ -6,19 +6,11 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_ProgressIndicator_ABC.h $
-// $Author: Ape $
-// $Modtime: 18/03/05 11:41 $
-// $Revision: 1 $
-// $Workfile: ADN_ProgressIndicator_ABC.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_ProgressIndicator_ABC_h_
 #define __ADN_ProgressIndicator_ABC_h_
 
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  ADN_ProgressIndicator_ABC
@@ -26,14 +18,13 @@
 */
 // Created: APE 2005-03-18
 // =============================================================================
-class ADN_ProgressIndicator_ABC
+class ADN_ProgressIndicator_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_ProgressIndicator_ABC )
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_ProgressIndicator_ABC();
+             ADN_ProgressIndicator_ABC();
     virtual ~ADN_ProgressIndicator_ABC();
     //@}
 

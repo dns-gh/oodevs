@@ -6,20 +6,12 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-04-04 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_TableDialog.h $
-// $Author: Ape $
-// $Modtime: 20/04/05 15:56 $
-// $Revision: 2 $
-// $Workfile: ADN_TableDialog.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_TableDialog_h_
 #define __ADN_TableDialog_h_
 
 #include <qdialog.h>
+#include <boost/noncopyable.hpp>
 
 class ADN_Table;
 
@@ -30,14 +22,14 @@ class ADN_Table;
 // Created: APE 2005-04-04
 // =============================================================================
 class ADN_TableDialog : public QDialog
+                      , private boost::noncopyable
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( ADN_TableDialog )
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_TableDialog( QWidget* pParent, const QString& strCaption, ADN_Table* pTable );
+             ADN_TableDialog( QWidget* pParent, const QString& strCaption, ADN_Table* pTable );
     virtual ~ADN_TableDialog();
     //@}
 

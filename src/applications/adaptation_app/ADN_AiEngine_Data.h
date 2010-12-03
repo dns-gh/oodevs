@@ -17,7 +17,7 @@
 #include "ADN_TypePtr_InVector_ABC.h"
 #include "ADN_Enums.h"
 
-class xml::xistream;
+namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_AiEngine_Data
@@ -27,7 +27,6 @@ class xml::xistream;
 // =============================================================================
 class ADN_AiEngine_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_AiEngine_Data )
 
 public:
     //! @name Constructors/Destructor

@@ -1,13 +1,12 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-09-04 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Validator.cpp $
-// $Author: Ape $
-// $Modtime: 19/04/05 14:39 $
-// $Revision: 6 $
-// $Workfile: ADN_Validator.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Validator.h"
 #include "ADN_EditLine.h"

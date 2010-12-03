@@ -22,7 +22,6 @@
 // =============================================================================
 class ADN_NBC_Datas : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_NBC_Datas );
 
 public:
 //*****************************************************************************
@@ -30,10 +29,9 @@ public:
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( NbcIntoxInfos )
 
     public:
-                 NbcIntoxInfos( const std::string& nodeName );
+        explicit NbcIntoxInfos( const std::string& nodeName );
         virtual ~NbcIntoxInfos() {}
 
         virtual std::string GetNodeName();
@@ -62,10 +60,9 @@ public:
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( NbcGazInfos )
 
     public:
-        NbcGazInfos();
+                 NbcGazInfos();
         virtual ~NbcGazInfos() {}
 
         virtual std::string GetNodeName();
@@ -82,14 +79,12 @@ public:
         ADN_Type_Double rSpreadAngle_;
     };
 
-    class NbcAgentInfos
-       : public ADN_Ref_ABC
-       , public ADN_DataTreeNode_ABC
+    class NbcAgentInfos : public ADN_Ref_ABC
+                        , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( NbcAgentInfos )
 
     public:
-        NbcAgentInfos();
+                 NbcAgentInfos();
         virtual ~NbcAgentInfos() {}
 
         virtual std::string GetNodeName();

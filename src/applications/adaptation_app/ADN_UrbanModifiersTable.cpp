@@ -19,13 +19,11 @@ using namespace helpers;
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with
 //-----------------------------------------------------------------------------
-class ADN_UrbanModifiersTable_Connector
-    : public ADN_Connector_Table_ABC
+class ADN_UrbanModifiersTable_Connector : public ADN_Connector_Table_ABC
 {
-    MT_COPYNOTALLOWED( ADN_UrbanModifiersTable_Connector )
 
 public:
-    ADN_UrbanModifiersTable_Connector( ADN_UrbanModifiersTable& tab )
+    explicit ADN_UrbanModifiersTable_Connector( ADN_UrbanModifiersTable& tab )
         : ADN_Connector_Table_ABC( tab, false )
     {}
 

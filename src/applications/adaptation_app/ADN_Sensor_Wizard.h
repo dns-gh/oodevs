@@ -23,6 +23,7 @@
 #include "ADN_Wizard_ABC.h"
 
 typedef ADN_Wizard_ABC<ADN_Sensors_Data::SensorInfos> ADN_Wizard_ABC_ADN_Sensors_Data_SensorInfos_;
+
 // =============================================================================
 /** @class  ADN_Sensor_Wizard
     @brief  ADN_Sensor_Wizard
@@ -33,15 +34,12 @@ typedef ADN_Wizard_ABC<ADN_Sensors_Data::SensorInfos> ADN_Wizard_ABC_ADN_Sensors
 */
 // Created: AGN 2003-11-03
 // =============================================================================
-class ADN_Sensor_Wizard
-: public ADN_Wizard_ABC_ADN_Sensors_Data_SensorInfos_
+class ADN_Sensor_Wizard : public ADN_Wizard_ABC_ADN_Sensors_Data_SensorInfos_
 {
-    MT_COPYNOTALLOWED( ADN_Sensor_Wizard )
-
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Sensor_Wizard( QWidget* pParent = 0, const char* szName = 0 );
+    explicit ADN_Sensor_Wizard( QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_Sensor_Wizard();
     //@}
 };

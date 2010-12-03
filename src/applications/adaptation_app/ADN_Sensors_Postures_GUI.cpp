@@ -1,13 +1,12 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-09-29 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Sensors_Postures_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 20/04/05 17:04 $
-// $Revision: 9 $
-// $Workfile: ADN_Sensors_Postures_GUI.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Postures_GUI.h"
 #include "moc_ADN_Sensors_Postures_GUI.cpp"
@@ -24,17 +23,15 @@ typedef ADN_Sensors_Data::ModificatorPostureInfos    ModificatorPostureInfos;
 //-----------------------------------------------------------------------------
 // Internal Table connector for ADN_Sensors_Postures_GUI
 //-----------------------------------------------------------------------------
-class ADN_CT_Sensors_Postures
-: public ADN_Connector_Table_ABC
+class ADN_CT_Sensors_Postures : public ADN_Connector_Table_ABC
 {
-    MT_COPYNOTALLOWED( ADN_CT_Sensors_Postures )
 
 public:
-    ADN_CT_Sensors_Postures( ADN_Sensors_Postures_GUI& tab )
-    : ADN_Connector_Table_ABC( tab, false )
+    explicit ADN_CT_Sensors_Postures( ADN_Sensors_Postures_GUI& tab )
+        : ADN_Connector_Table_ABC( tab, false )
     {}
 
-    void  AddSubItems( int i, void* pObj )
+    void AddSubItems( int i, void* pObj )
     {
         assert( pObj != 0 );
         ADN_TableItem_String* pItemString = new ADN_TableItem_String( &tab_, pObj );
@@ -54,13 +51,12 @@ public:
     }
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Sensors_Postures_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_Sensors_Postures_GUI::ADN_Sensors_Postures_GUI( const QString& strColCaption, QWidget* pParent )
-: ADN_Table2( pParent, "ADN_Sensors_Postures_GUI" )
+    : ADN_Table2( pParent, "ADN_Sensors_Postures_GUI" )
 {
     // Setup the table properties.
     setSelectionMode( QTable::SingleRow );

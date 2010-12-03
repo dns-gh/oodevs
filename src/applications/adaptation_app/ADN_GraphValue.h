@@ -6,24 +6,15 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-14 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_GraphValue.h $
-// $Author: Ape $
-// $Modtime: 12/01/05 16:11 $
-// $Revision: 2 $
-// $Workfile: ADN_GraphValue.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_GraphValue_h_
 #define __ADN_GraphValue_h_
 
-#include <qobject.h>
 #include "ADN_Types.h"
+#include <qobject.h>
+#include <boost/noncopyable.hpp>
 
 class ADN_GraphData;
-
 
 // =============================================================================
 /** @class  ADN_GraphValue
@@ -35,11 +26,10 @@ class ADN_GraphData;
 */
 // Created: APE 2004-12-14
 // =============================================================================
-class ADN_GraphValue
-: public QObject
+class ADN_GraphValue : public QObject
+                     , private boost::noncopyable
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( ADN_GraphValue )
 
 public:
     typedef std::pair< double, double > T_Point;
@@ -99,7 +89,6 @@ private:
     ADN_Type_Int    nY_;
     //@}
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphValue::GetRelatedObject

@@ -19,9 +19,10 @@
 #ifndef __ADN_WorkspaceElement_ABC_h_
 #define __ADN_WorkspaceElement_ABC_h_
 
-#include "ADN_Data_ABC.h"
-#include "ADN_GUI_ABC.h"
+#include <boost/noncopyable.hpp>
 
+class ADN_Data_ABC;
+class ADN_GUI_ABC;
 
 // =============================================================================
 /** @class  ADN_WorkspaceElement_ABC
@@ -29,14 +30,13 @@
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_WorkspaceElement_ABC
+class ADN_WorkspaceElement_ABC : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_WorkspaceElement_ABC )
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_WorkspaceElement_ABC( const char* szName ) : strName_( szName ) {};
+             ADN_WorkspaceElement_ABC( const char* szName ) : strName_( szName ) {};
     virtual ~ADN_WorkspaceElement_ABC() {};
     //@}
 

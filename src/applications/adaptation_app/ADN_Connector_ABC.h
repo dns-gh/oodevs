@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-01 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Connector_ABC.h $
-// $Author: Ape $
-// $Modtime: 3/03/05 14:24 $
-// $Revision: 5 $
-// $Workfile: ADN_Connector_ABC.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_Connector_ABC_h_
 #define __ADN_Connector_ABC_h_
@@ -17,14 +15,12 @@
 
 class ADN_Connector_Vector_ABC;
 
-
 // =============================================================================
 /** @class  ADN_Connector_ABC
 */
 // Created: APE 2004-12-02
 // =============================================================================
-class ADN_Connector_ABC
-: public ADN_Ref_ABC
+class ADN_Connector_ABC : public ADN_Ref_ABC
 {
     Q_OBJECT
 
@@ -74,11 +70,9 @@ private:
     bool bAutoClear_;
 };
 
-
 typedef std::vector<ADN_Connector_ABC*>          T_ConnectorVector;
 typedef T_ConnectorVector::iterator             IT_ConnectorVector;
 typedef T_ConnectorVector::const_iterator      CIT_ConnectorVector;
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_ABC::SetAutoClear
@@ -90,7 +84,6 @@ void  ADN_Connector_ABC::SetAutoClear( bool b )
     bAutoClear_ = b;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_ABC::IsAutoClear
 // Created: JDY 03-09-03
@@ -100,6 +93,5 @@ bool  ADN_Connector_ABC::IsAutoClear()
 {
     return bAutoClear_;
 }
-
 
 #endif // __ADN_Connector_ABC_h_

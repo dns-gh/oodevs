@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-01-10 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Weapon_Wizard.h $
-// $Author: Ape $
-// $Modtime: 28/01/05 15:29 $
-// $Revision: 2 $
-// $Workfile: ADN_Weapon_Wizard.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Weapon_Wizard_h_
 #define __ADN_Weapon_Wizard_h_
@@ -23,6 +14,7 @@
 #include "ADN_Weapons_Data.h"
 
 typedef ADN_Wizard_ABC<ADN_Weapons_Data::WeaponInfos> ADN_Wizard_ABC_ADN_Weapons_Data_WeaponInfos_;
+
 // =============================================================================
 /** @class  ADN_Weapon_Wizard
     @brief  ADN_Weapon_Wizard
@@ -33,15 +25,13 @@ typedef ADN_Wizard_ABC<ADN_Weapons_Data::WeaponInfos> ADN_Wizard_ABC_ADN_Weapons
 */
 // Created: APE 2005-01-10
 // =============================================================================
-class ADN_Weapon_Wizard
-: public ADN_Wizard_ABC_ADN_Weapons_Data_WeaponInfos_
+class ADN_Weapon_Wizard : public ADN_Wizard_ABC_ADN_Weapons_Data_WeaponInfos_
 {
-    MT_COPYNOTALLOWED( ADN_Weapon_Wizard )
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Weapon_Wizard( QWidget* pParent = 0, const char* szName = 0 );
+    explicit ADN_Weapon_Wizard( QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_Weapon_Wizard();
     //@}
 };

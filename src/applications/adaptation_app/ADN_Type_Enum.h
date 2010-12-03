@@ -1,30 +1,25 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-22 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Type_Enum.h $
-// $Author: Ape $
-// $Modtime: 17/02/05 15:46 $
-// $Revision: 4 $
-// $Workfile: ADN_Type_Enum.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_Type_Enum_h_
 #define __ADN_Type_Enum_h_
 
 #include "ADN_Connector_Vector_ABC.h"
 #include "ADN_DataTreeNode_ABC.h"
-
 #include "ENT/ENT_Tr_ABC.h"
-
 
 //*****************************************************************************
 // Created: JDY 03-07-22
 //*****************************************************************************
 template <class T,int nb>
-class ADN_Type_Enum
-:   public ADN_Connector_Vector_ABC
-,   public ADN_DataTreeNode_ABC
+class ADN_Type_Enum : public ADN_Connector_Vector_ABC
+                    , public ADN_DataTreeNode_ABC
 {
 public:
     typedef typename const std::string& (*T_Converter)( T, ENT_Tr_ABC::E_Conversion );

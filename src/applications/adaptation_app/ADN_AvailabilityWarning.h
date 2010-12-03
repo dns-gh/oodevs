@@ -18,7 +18,7 @@ class ADN_AvailabilityWarning;
 typedef ADN_Type_Vector_ABC< ADN_AvailabilityWarning >  T_AvailabilityWarning_Vector;
 typedef T_AvailabilityWarning_Vector::iterator         IT_AvailabilityWarning_Vector;
 
-class xml::xistream;
+namespace xml { class xistream; }
 class xml::xostream;
 
 // =============================================================================

@@ -6,24 +6,14 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-01-05 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_EquipementSelector.h $
-// $Author: Ape $
-// $Modtime: 25/04/05 17:44 $
-// $Revision: 3 $
-// $Workfile: ADN_EquipementSelector.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_EquipementSelector_h_
 #define __ADN_EquipementSelector_h_
 
-#include <qpushbutton.h>
-
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Connector_Vector_ABC.h"
-
+#include <boost/noncopyable.hpp>
+#include <qpushbutton.h>
 
 // =============================================================================
 /** @class  ADN_EquipementSelector
@@ -35,17 +25,16 @@
 */
 // Created: APE 2005-01-05
 // =============================================================================
-class ADN_EquipementSelector
-: public QPushButton
-, public ADN_Gfx_ABC
+class ADN_EquipementSelector : public QPushButton
+                             , public ADN_Gfx_ABC
+                             , private boost::noncopyable
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( ADN_EquipementSelector )
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_EquipementSelector( QWidget* pParent, const char* szName = 0 );
+    explicit ADN_EquipementSelector( QWidget* pParent, const char* szName = 0 );
     virtual ~ADN_EquipementSelector();
     //@}
 
@@ -65,10 +54,9 @@ private:
 private:
     //! @name Internal class
     //@{
-    class ADN_EquipementSelector_Connector
-    : public ADN_Connector_Vector_ABC
+    class ADN_EquipementSelector_Connector : public ADN_Connector_Vector_ABC
+                                           , private boost::noncopyable
     {
-        MT_COPYNOTALLOWED( ADN_EquipementSelector_Connector )
     public:
         ADN_EquipementSelector_Connector( ADN_EquipementSelector& gui );
         virtual ~ADN_EquipementSelector_Connector();

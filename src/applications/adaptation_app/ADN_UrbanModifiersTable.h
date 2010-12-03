@@ -11,20 +11,20 @@
 #define __ADN_UrbanModifiersTable_h_
 
 #include "ADN_Table.h"
+#include <boost/noncopyable.hpp>
 
 namespace helpers
 {
 
 // =============================================================================
 /** @class  ADN_UrbanModifiersTable
-@brief  ADN_UrbanModifiersTable
+    @brief  ADN_UrbanModifiersTable
 */
 // Created: SLG 2010-04-13
 // =============================================================================
-class ADN_UrbanModifiersTable
-    : public ADN_Table2
+class ADN_UrbanModifiersTable : public ADN_Table2
+                              , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_UrbanModifiersTable )
 
 public:
     //! @name Constructors/Destructor

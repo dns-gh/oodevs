@@ -6,37 +6,26 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-29 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_AttritionTable.cpp $
-// $Author: Ape $
-// $Modtime: 20/04/05 17:04 $
-// $Revision: 7 $
-// $Workfile: ADN_Equipement_AttritionTable.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Equipement_AttritionTable.h"
-
 #include "ADN_Equipement_Data.h"
 #include "ADN_Equipement_GUI.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_TableItem_Edit.h"
 #include "ADN_AttritionInfos.h"
+#include <boost/noncopyable.hpp>
 
 typedef helpers::AttritionInfos AttritionInfos;
 
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with
 //-----------------------------------------------------------------------------
-class ADN_Equipement_AttritionTable_Connector
-: public ADN_Connector_Table_ABC
+class ADN_Equipement_AttritionTable_Connector : public ADN_Connector_Table_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Equipement_AttritionTable_Connector )
 
 public:
-    ADN_Equipement_AttritionTable_Connector( ADN_Equipement_AttritionTable& tab )
+    explicit ADN_Equipement_AttritionTable_Connector( ADN_Equipement_AttritionTable& tab )
         : ADN_Connector_Table_ABC( tab, false )
     {}
 

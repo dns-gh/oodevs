@@ -15,18 +15,17 @@
 #include "ADN_Table.h"
 #include "ADN_Connector_Vector_ABC.h"
 #include "ADN_Connector_Table_ABC.h"
-
+#include <boost/noncopyable.hpp>
 
 //*****************************************************************************
 // Created: JDY 03-07-09
 //*****************************************************************************
-class ADN_Connector_Table_ABC
-: public ADN_Connector_Vector_ABC
+class ADN_Connector_Table_ABC : public ADN_Connector_Vector_ABC
+                              , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_Connector_Table_ABC )
 
 public:
-    ADN_Connector_Table_ABC( ADN_Table& tab, bool bWithSort, const char* szName = 0 );
+             ADN_Connector_Table_ABC( ADN_Table& tab, bool bWithSort, const char* szName = 0 );
     virtual ~ADN_Connector_Table_ABC();
 
     virtual bool LessComparison( void* pL, void* pR ) const;

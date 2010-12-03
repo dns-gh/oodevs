@@ -13,13 +13,12 @@
 #define __ADN_Launchers_Data_h_
 
 #include "ADN_Data_ABC.h"
-
 #include "ADN_Types.h"
 #include "ADN_Type_Tab_ABC.h"
 #include "ADN_Enums.h"
 #include "ADN_Tools.h"
 
-class xml::xistream;
+namespace xml { class xistream; }
 
 
 //*****************************************************************************
@@ -27,10 +26,8 @@ class xml::xistream;
 //*****************************************************************************
 class ADN_Launchers_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Launchers_Data )
 
 public:
-//*****************************************************************************
     typedef ADN_Type_Double ModifPhsInfos;
 
 
@@ -39,11 +36,10 @@ public:
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( LauncherInfos )
 
     public:
-        LauncherInfos();
-        ~LauncherInfos();
+                 LauncherInfos();
+        virtual ~LauncherInfos();
 
         virtual std::string GetNodeName();
         std::string GetItemName();

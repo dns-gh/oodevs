@@ -18,21 +18,20 @@
 #include "ADN_Tools.h"
 #include "ADN_Missions_Data.h"
 
-class xml::xistream;
+namespace xml { class xistream; }
 
 //*****************************************************************************
 // Created: JDY 03-07-24
 //*****************************************************************************
 class ADN_Models_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Models_Data )
+
 public:
 //*****************************************************************************
     class OrderInfos
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( OrderInfos )
 
     public:
         OrderInfos();
@@ -58,7 +57,6 @@ public:
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( MissionInfos )
 
     public:
         explicit MissionInfos( ADN_Missions_Data::T_Mission_Vector& missions );
@@ -88,7 +86,6 @@ public:
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ModelInfos )
 
     public:
         enum E_ModelEntityType

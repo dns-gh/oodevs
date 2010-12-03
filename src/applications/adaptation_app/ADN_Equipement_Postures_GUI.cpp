@@ -8,11 +8,10 @@
 // $Workfile: ADN_Equipement_Postures_GUI.cpp $
 //
 //*****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Equipement_Postures_GUI.h"
-
 #include <qpopmenu.h>
-
 #include "ADN_App.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Connector_Table_ABC.h"
@@ -20,23 +19,20 @@
 #include "ADN_Workspace.h"
 #include "ENT/ENT_Tr.h"
 
-typedef ADN_Equipement_Data::ModificatorPostureInfos    ModificatorPostureInfos;
-
+typedef ADN_Equipement_Data::ModificatorPostureInfos ModificatorPostureInfos;
 
 //-----------------------------------------------------------------------------
 // Internal Table connector for ADN_Equipement_Postures_GUI
 //-----------------------------------------------------------------------------
-class ADN_CT_Equipement_Postures
-: public ADN_Connector_Table_ABC
+class ADN_CT_Equipement_Postures : public ADN_Connector_Table_ABC
 {
-    MT_COPYNOTALLOWED( ADN_CT_Equipement_Postures )
 
 public:
-    ADN_CT_Equipement_Postures( ADN_Equipement_Postures_GUI& tab )
-    : ADN_Connector_Table_ABC( tab, false )
+    explicit ADN_CT_Equipement_Postures( ADN_Equipement_Postures_GUI& tab )
+        : ADN_Connector_Table_ABC( tab, false )
     {}
 
-    void  AddSubItems( int i, void* pObj )
+    void AddSubItems( int i, void* pObj )
     {
         assert( pObj != 0 );
         ADN_TableItem_String* pItemString = new ADN_TableItem_String( &tab_, pObj );
@@ -62,7 +58,7 @@ public:
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_Equipement_Postures_GUI::ADN_Equipement_Postures_GUI( const QString& strColCaption, QWidget* pParent )
-: ADN_Table2( pParent, "ADN_Equipement_Postures_GUI" )
+    : ADN_Table2( pParent, "ADN_Equipement_Postures_GUI" )
 {
     // Setup the table properties.
     setSelectionMode( QTable::NoSelection );

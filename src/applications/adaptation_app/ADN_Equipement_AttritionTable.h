@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-29 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_AttritionTable.h $
-// $Author: Ape $
-// $Modtime: 20/04/05 16:50 $
-// $Revision: 3 $
-// $Workfile: ADN_Equipement_AttritionTable.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Equipement_AttritionTable_h_
 #define __ADN_Equipement_AttritionTable_h_
@@ -32,15 +23,14 @@
 */
 // Created: APE 2004-12-29
 // =============================================================================
-class ADN_Equipement_AttritionTable
-: public ADN_Table2
+class ADN_Equipement_AttritionTable : public ADN_Table2
+                                    , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_Equipement_AttritionTable )
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Equipement_AttritionTable( QWidget* pParent = 0 );
+    explicit ADN_Equipement_AttritionTable( QWidget* pParent = 0 );
     virtual ~ADN_Equipement_AttritionTable();
     //@}
 

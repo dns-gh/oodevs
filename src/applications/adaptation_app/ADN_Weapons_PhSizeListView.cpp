@@ -22,20 +22,17 @@
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_Weapons_GUI.h"
-
 #include "GQ_PlotData.h"
 #include "GQ_Plot.h"
 
 typedef ADN_Weapons_Data::PhSizeInfos PhSizeInfos;
 
-
 //-----------------------------------------------------------------------------
 // Internal List View Objects connector to be connected with ADN_ListView_Munitions_PhSizes
 //-----------------------------------------------------------------------------
-class ADN_CLV_PhSizes
-    : public ADN_Connector_ListView_ABC
+class ADN_CLV_PhSizes : public ADN_Connector_ListView_ABC
+                      , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_CLV_PhSizes )
 
 public:
     ADN_CLV_PhSizes( ADN_Weapons_PhSizeListView& list, GQ_Plot& plot )

@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-17 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Breakdowns_GUI.h $
-// $Author: Nld $
-// $Modtime: 27/04/05 10:05 $
-// $Revision: 3 $
-// $Workfile: ADN_Breakdowns_GUI.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Breakdowns_GUI_h_
 #define __ADN_Breakdowns_GUI_h_
@@ -23,17 +14,14 @@
 
 class ADN_Breakdowns_Data;
 
-
 // =============================================================================
 /** @class  ADN_Breakdowns_GUI
     @brief  ADN_Breakdowns_GUI
 */
 // Created: APE 2005-03-17
 // =============================================================================
-class ADN_Breakdowns_GUI
-: public ADN_GUI_ABC
+class ADN_Breakdowns_GUI : public ADN_GUI_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Breakdowns_GUI )
 
 public:
     enum E_BreakdownGuiElements
@@ -50,7 +38,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Breakdowns_GUI( ADN_Breakdowns_Data& data );
+    explicit ADN_Breakdowns_GUI( ADN_Breakdowns_Data& data );
     virtual ~ADN_Breakdowns_GUI();
     //@}
 

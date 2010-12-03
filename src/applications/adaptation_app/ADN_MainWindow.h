@@ -11,6 +11,7 @@
 #define __ADN_MainWindow_h_
 
 #include "ADN_Callback.h"
+#include <boost/noncopyable.hpp>
 #include <qmainwindow.h>
 #include <map>
 
@@ -30,7 +31,6 @@ class QPopupMenu;
 class QAction;
 class QToolButton;
 
-
 // =============================================================================
 /** @class  ADN_MainWindow
     @brief  ADN_MainWindow
@@ -38,9 +38,9 @@ class QToolButton;
 // Created: APE 2005-03-18
 // =============================================================================
 class ADN_MainWindow : public QMainWindow
+                     , private boost::noncopyable
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( ADN_MainWindow )
 
 public:
     explicit ADN_MainWindow( ADN_Config& config );

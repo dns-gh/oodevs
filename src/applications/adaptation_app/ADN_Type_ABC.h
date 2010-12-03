@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-06-23 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Type_ABC.h $
-// $Author: Ape $
-// $Modtime: 22/04/05 15:36 $
-// $Revision: 6 $
-// $Workfile: ADN_Type_ABC.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_Type_ABC_h_
 #define __ADN_Type_ABC_h_
@@ -20,11 +18,9 @@
 // Created: JDY 03-07-02
 //*****************************************************************************
 template <class T >
-class ADN_Type_ABC
-: public ADN_Connector_ABC
-, public ADN_DataTreeNode_ABC
+class ADN_Type_ABC : public ADN_Connector_ABC
+                   , public ADN_DataTreeNode_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Type_ABC )
 
 public:
     typedef typename T BaseType;
@@ -33,8 +29,8 @@ public:
     /** @name Constructor-Destructor*/
     //-------------------------------------------------------------------------
     //@{
-    ADN_Type_ABC();
-    ADN_Type_ABC(const T& val);
+             ADN_Type_ABC();
+             ADN_Type_ABC( const T& val );
     virtual ~ADN_Type_ABC();
     //@}
 

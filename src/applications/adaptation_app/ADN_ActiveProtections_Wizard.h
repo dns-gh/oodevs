@@ -23,7 +23,6 @@ typedef ADN_Wizard_ABC< ADN_ActiveProtections_Data::ActiveProtectionsInfos > ADN
 // =============================================================================
 class ADN_ActiveProtections_Wizard : public ADN_Wizard_ABC_ADN_ActiveProtections_Data_ActiveProtectionsInfos
 {
-    MT_COPYNOTALLOWED( ADN_ActiveProtections_Wizard )
 
 public:
     //! @name Constructors/Destructor

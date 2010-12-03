@@ -11,7 +11,6 @@
 #define __ADN_ResourceNetworks_Data_h_
 
 #include "ADN_Data_ABC.h"
-
 #include "ADN_Types.h"
 #include "ADN_Equipement_Data.h"
 
@@ -23,20 +22,16 @@
 // =============================================================================
 class ADN_ResourceNetworks_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_ResourceNetworks_Data )
 
 public:
-    class ResourceNetworkInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ResourceNetworkInfos : public ADN_Ref_ABC
+                               , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ResourceNetworkInfos )
-
     public:
         //! @name Constructors/Destructor
         //@{
-        ResourceNetworkInfos();
-        ~ResourceNetworkInfos();
+                 ResourceNetworkInfos();
+        virtual ~ResourceNetworkInfos();
         //@}
 
         //! @name Operations
@@ -74,7 +69,7 @@ public:
 
     //! @name Operations
     //@{
-    void FilesNeeded(T_StringList& l) const;
+    void FilesNeeded( T_StringList& l ) const;
     void Reset();
     T_ResourceNetworkInfosVector& GetResourceNetworksInfos();
     //@}

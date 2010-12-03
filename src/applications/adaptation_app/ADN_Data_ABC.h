@@ -10,13 +10,19 @@
 #ifndef __ADN_Data_ABC_h_
 #define __ADN_Data_ABC_h_
 
+#include <boost/noncopyable.hpp>
 #include <qobject.h>
 #include <list>
+
+namespace xml
+{
+    class xistream;
+    class xostream;
+}
 
 typedef std::list<std::string>                  T_StringList;
 typedef T_StringList::iterator                  IT_StringList;
 typedef T_StringList::const_iterator            CIT_StringList;
-
 
 // =============================================================================
 /** @class  ADN_Data_ABC
@@ -24,11 +30,10 @@ typedef T_StringList::const_iterator            CIT_StringList;
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Data_ABC
-: public QObject
+class ADN_Data_ABC : public QObject
+                   , private boost::noncopyable
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( ADN_Data_ABC )
 
 public:
     //! @name Constructors/Destructor

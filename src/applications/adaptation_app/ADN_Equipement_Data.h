@@ -6,21 +6,11 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-11-15 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_Data.h $
-// $Author: Nld $
-// $Modtime: 20/07/05 14:11 $
-// $Revision: 13 $
-// $Workfile: ADN_Equipement_Data.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Equipement_Data_h_
 #define __ADN_Equipement_Data_h_
 
 #include "ADN_Data_ABC.h"
-
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
@@ -28,8 +18,9 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_ResourceNatureInfos.h"
 #include "ADN_UrbanAttritionInfos.h"
+#include <boost/noncopyable.hpp>
 
-class xml::xistream;
+namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_Equipement_Data
@@ -39,21 +30,18 @@ class xml::xistream;
 class ADN_Equipement_Data : public ADN_Data_ABC
 {
     friend class ADN_Equipement;
-    MT_COPYNOTALLOWED( ADN_Equipement_Data );
 
 public:
     class ResourceInfos;
 
 // *****************************************************************************
-    class CategoryInfo
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class CategoryInfo : public ADN_Ref_ABC
+                       , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( CategoryInfo );
 
     public:
-        CategoryInfo(); // For template usage.
-        CategoryInfo( ResourceInfos& parentDotation );
+                 CategoryInfo(); // For template usage.
+        explicit CategoryInfo( ResourceInfos& parentDotation );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -83,14 +71,11 @@ public:
     typedef T_CategoryInfos_Vector::iterator  IT_CategoryInfos_Vector;
 
 //*****************************************************************************
-    class ModificatorPostureInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ModificatorPostureInfos : public ADN_Ref_ABC
+                                  , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ModificatorPostureInfos )
-
     public:
-        ModificatorPostureInfos(const E_UnitPosture& e );
+        explicit ModificatorPostureInfos(const E_UnitPosture& e );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -123,10 +108,8 @@ public:
 
 
 // *****************************************************************************
-    class IndirectAmmoInfos
+    class IndirectAmmoInfos : private boost::noncopyable
     {
-        MT_COPYNOTALLOWED( IndirectAmmoInfos );
-
     public:
         IndirectAmmoInfos();
 
@@ -160,13 +143,11 @@ public:
     };
 
 // *****************************************************************************
-    class AmmoCategoryInfo
-        : public CategoryInfo
+    class AmmoCategoryInfo : public CategoryInfo
     {
-        MT_COPYNOTALLOWED( AmmoCategoryInfo );
 
     public:
-        AmmoCategoryInfo( ResourceInfos& parentDotation );
+        explicit AmmoCategoryInfo( ResourceInfos& parentDotation );
 
         CategoryInfo* CreateCopy();
 
@@ -201,15 +182,13 @@ public:
     typedef ADN_Type_Vector_ABC<AmmoCategoryInfo> T_AmmoCategoryInfo_Vector;
 
 // *****************************************************************************
-    class ResourceInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ResourceInfos : public ADN_Ref_ABC
+                        , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ResourceInfos );
 
     public:
-         ResourceInfos( E_DotationFamily nType );
-        ~ResourceInfos();
+        explicit ResourceInfos( E_DotationFamily nType );
+        virtual ~ResourceInfos();
 
         void Reset();
 
@@ -234,7 +213,7 @@ public:
 
 // *****************************************************************************
 public:
-    ADN_Equipement_Data();
+             ADN_Equipement_Data();
     virtual ~ADN_Equipement_Data();
 
 public:
@@ -259,7 +238,6 @@ private:
     T_ResourceInfos_Vector resources_;
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_Data::GetDotations
 // Created: APE 2004-12-01
@@ -269,6 +247,5 @@ ADN_Equipement_Data::T_ResourceInfos_Vector& ADN_Equipement_Data::GetDotations()
 {
     return resources_;
 }
-
 
 #endif // __ADN_Equipement_Data_h_

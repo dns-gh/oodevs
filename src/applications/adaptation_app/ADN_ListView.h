@@ -21,7 +21,6 @@ class ADN_Connector_ListView_ABC;
 class QPopupMenu;
 class ADN_ObjectCreator_ABC;
 
-
 // =============================================================================
 /** @class  ADN_ListView
     @brief  ADN_ListView

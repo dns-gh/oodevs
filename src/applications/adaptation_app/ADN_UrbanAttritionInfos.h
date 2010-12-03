@@ -24,7 +24,6 @@ namespace helpers
 class ADN_UrbanAttritionInfos : public ADN_Ref_ABC
                               , public ADN_DataTreeNode_ABC
 {
-    MT_COPYNOTALLOWED( ADN_UrbanAttritionInfos );
 
 public:
     //! @name Constructors/Destructor

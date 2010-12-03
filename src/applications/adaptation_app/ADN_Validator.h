@@ -1,18 +1,17 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-09-04 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Validator.h $
-// $Author: Ape $
-// $Modtime: 15/04/05 18:09 $
-// $Revision: 6 $
-// $Workfile: ADN_Validator.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_Validator_h_
 #define __ADN_Validator_h_
 
 #include <qvalidator.h>
+#include "ADN_Types.h"
 
 // =============================================================================
 /** @class  ADN_IntValidator
@@ -20,8 +19,7 @@
 */
 // Created: APE 2005-01-03
 // =============================================================================
-class ADN_IntValidator
-    : public QIntValidator
+class ADN_IntValidator : public QIntValidator
 {
 public:
     explicit ADN_IntValidator( QObject* pParent, const char* szName = 0 );
@@ -38,8 +36,7 @@ public:
 */
 // Created: APE 2005-01-03
 // =============================================================================
-class ADN_DoubleValidator
-    : public QDoubleValidator
+class ADN_DoubleValidator : public QDoubleValidator
 {
 public:
     explicit ADN_DoubleValidator( QObject* pParent, const char* szName = 0 );
@@ -50,16 +47,13 @@ public:
     void fixup( QString& strInput ) const;
 };
 
-#include "ADN_Types.h"
-
 // =============================================================================
 /** @class  ADN_PercentageValidator
     @brief
 */
 // Created: APE 2005-01-03
 // =============================================================================
-class ADN_PercentageValidator
-    : public ADN_DoubleValidator
+class ADN_PercentageValidator : public ADN_DoubleValidator
 {
 public:
     explicit ADN_PercentageValidator( QObject* pParent, const char* szName = 0 );

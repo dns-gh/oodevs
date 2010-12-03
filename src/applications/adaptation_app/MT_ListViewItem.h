@@ -14,6 +14,7 @@
 #include <qfont.h>
 #include <qcolor.h>
 #include <qvaluevector.h> 
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  MT_ListViewItem
@@ -26,8 +27,8 @@
 // Created: APE 2004-03-16
 // =============================================================================
 class MT_ListViewItem : public QListViewItem
+                      , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( MT_ListViewItem );
 
 public:
     //! @name Constructors/Destructor

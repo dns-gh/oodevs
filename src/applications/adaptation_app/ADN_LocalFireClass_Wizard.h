@@ -19,14 +19,13 @@
 */
 // Created: JSR 2010-09-14
 // =============================================================================
-class ADN_LocalFireClass_Wizard
-    : public ADN_Wizard_ABC< ADN_LocalFireClass_Data::LocalFireClassInfos >
+class ADN_LocalFireClass_Wizard : public ADN_Wizard_ABC< ADN_LocalFireClass_Data::LocalFireClassInfos >
 {
-    MT_COPYNOTALLOWED( ADN_LocalFireClass_Wizard )
+
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_LocalFireClass_Wizard( QWidget* pParent = 0, const char* szName = 0 );
+    explicit ADN_LocalFireClass_Wizard( QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_LocalFireClass_Wizard();
     //@}
 };

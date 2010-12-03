@@ -6,21 +6,11 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-11-19 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Weapons_Data.h $
-// $Author: Nld $
-// $Modtime: 3/05/05 9:47 $
-// $Revision: 11 $
-// $Workfile: ADN_Weapons_Data.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Weapons_Data_h_
 #define __ADN_Weapons_Data_h_
 
 #include "ADN_Data_ABC.h"
-
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
@@ -28,8 +18,7 @@
 #include "ADN_Launchers_Data.h"
 #include "ADN_Equipement_Data.h"
 
-class xml::xistream;
-
+namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_Weapons_Data
@@ -38,15 +27,11 @@ class xml::xistream;
 // =============================================================================
 class ADN_Weapons_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Weapons_Data );
 
 public:
 // *****************************************************************************
-    class PhInfos
-        : public ADN_DataTreeNode_ABC
+    class PhInfos : public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( PhInfos )
-
     public:
         PhInfos();
 
@@ -75,15 +60,12 @@ public:
 
 
 // *****************************************************************************
-    class PhSizeInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class PhSizeInfos : public ADN_Ref_ABC
+                      , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED(PhSizeInfos)
-
     public:
-        PhSizeInfos(ADN_Categories_Data::SizeInfos *ptr);
-        ~PhSizeInfos();
+        explicit PhSizeInfos( ADN_Categories_Data::SizeInfos *ptr );
+        virtual ~PhSizeInfos();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -133,12 +115,9 @@ public:
 
 
 // *****************************************************************************
-    class WeaponInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class WeaponInfos : public ADN_Ref_ABC
+                      , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( WeaponInfos )
-
     public:
         WeaponInfos();
 
@@ -204,11 +183,11 @@ public:
 
 // *****************************************************************************
 public:
-    ADN_Weapons_Data();
+             ADN_Weapons_Data();
     virtual ~ADN_Weapons_Data();
 
-    void                        FilesNeeded(T_StringList& l) const;
-    void                        Reset();
+    void FilesNeeded( T_StringList& l ) const;
+    void Reset();
 
     T_WeaponInfosVector& GetWeaponInfos();
     WeaponInfos*         FindWeapon( const std::string& strLauncher, const std::string& strAmmunition );
@@ -223,9 +202,8 @@ private:
     void WriteArchive( xml::xostream& output );
 
 public:
-    T_WeaponInfosVector     weapons_;
+    T_WeaponInfosVector weapons_;
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data::GetWeaponInfos
@@ -236,7 +214,6 @@ ADN_Weapons_Data::T_WeaponInfosVector& ADN_Weapons_Data::GetWeaponInfos()
 {
     return weapons_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data::FindWeapon
@@ -250,7 +227,6 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapons_Data::FindWeapon( const std::string& 
         return 0;
     return *it;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data::GetIndex

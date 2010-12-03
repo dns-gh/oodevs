@@ -6,20 +6,12 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-01-07 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Weapons_PhSizeListView.h $
-// $Author: Ape $
-// $Modtime: 1/03/05 14:59 $
-// $Revision: 2 $
-// $Workfile: ADN_Weapons_PhSizeListView.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Weapons_PhSizeListView_h_
 #define __ADN_Weapons_PhSizeListView_h_
 
 #include "ADN_ListView.h"
+#include <boost/noncopyable.hpp>
 
 class GQ_Plot;
 
@@ -29,15 +21,14 @@ class GQ_Plot;
 */
 // Created: APE 2005-01-07
 // =============================================================================
-class ADN_Weapons_PhSizeListView
-: public ADN_ListView
+class ADN_Weapons_PhSizeListView : public ADN_ListView
+                                 , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_Weapons_PhSizeListView )
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Weapons_PhSizeListView( GQ_Plot& plot, QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    explicit ADN_Weapons_PhSizeListView( GQ_Plot& plot, QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
     virtual ~ADN_Weapons_PhSizeListView();
     //@}
 

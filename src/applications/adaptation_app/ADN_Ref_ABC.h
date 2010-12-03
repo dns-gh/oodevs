@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-08-25 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Ref_ABC.h $
-// $Author: Ape $
-// $Modtime: 3/03/05 14:23 $
-// $Revision: 5 $
-// $Workfile: ADN_Ref_ABC.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_Ref_ABC_h_
 #define __ADN_Ref_ABC_h_
@@ -17,14 +15,12 @@
 class ADN_Connector_ABC;
 class ADN_Connector_Vector_ABC;
 
-
 // =============================================================================
 /** @class  ADN_Ref_ABC
 */
 // Created: APE 2004-12-02
 // =============================================================================
-class ADN_Ref_ABC
-: public QObject
+class ADN_Ref_ABC : public QObject
 {
     Q_OBJECT
     friend class ADN_Connector_ABC;
@@ -92,7 +88,6 @@ private:
     int  nRef_;
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Ref_ABC::AddRef
 // Created: APE 2005-02-25
@@ -102,7 +97,6 @@ void ADN_Ref_ABC::AddRef()
 {
     ++nRef_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Ref_ABC::RemoveRef
@@ -115,7 +109,6 @@ void ADN_Ref_ABC::RemoveRef()
     --nRef_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Ref_ABC::IsMultiRef
 // Created: JDY 03-08-26
@@ -126,7 +119,6 @@ bool ADN_Ref_ABC::IsMultiRef()
     return nRef_ > 0;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Ref_ABC::SlotsBlocked
 // Created: APE 2004-12-15
@@ -136,7 +128,6 @@ bool ADN_Ref_ABC::SlotsBlocked() const
 {
     return bSlotsBlocked_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Ref_ABC::BlockSlots

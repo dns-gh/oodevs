@@ -6,26 +6,16 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-01-25 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Composantes_ConsumptionsTable.h $
-// $Author: Ape $
-// $Modtime: 21/04/05 11:36 $
-// $Revision: 3 $
-// $Workfile: ADN_Composantes_ConsumptionsTable.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Composantes_ConsumptionsTable_h_
 #define __ADN_Composantes_ConsumptionsTable_h_
 
 #include "ADN_Table.h"
 #include "ADN_Equipement_Data.h"
-
 #include <qapplication.h>
+#include <boost/noncopyable.hpp>
 
 class ADN_ListView_Composantes;
-
 
 // =============================================================================
 /** @class  ADN_Composantes_ConsumptionsTable
@@ -38,14 +28,14 @@ class ADN_ListView_Composantes;
 // Created: APE 2005-01-25
 // =============================================================================
 class ADN_Composantes_ConsumptionsTable : public ADN_Table2
+                                        , private boost::noncopyable
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( ADN_Composantes_ConsumptionsTable )
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Composantes_ConsumptionsTable( ADN_ListView_Composantes& composanteListView, QWidget* pParent = 0 );
+    explicit ADN_Composantes_ConsumptionsTable( ADN_ListView_Composantes& composanteListView, QWidget* pParent = 0 );
     virtual ~ADN_Composantes_ConsumptionsTable();
     //@}
 

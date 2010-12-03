@@ -23,12 +23,11 @@ typedef ADN_Wizard_ABC<ADN_NBC_Datas::NbcAgentInfos> ADN_Wizard_ABC_ADN_NBC_Data
 // =============================================================================
 class ADN_NBC_Wizard : public ADN_Wizard_ABC_ADN_NBC_Datas_NbcAgentInfos_
 {
-    MT_COPYNOTALLOWED( ADN_NBC_Wizard )
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_NBC_Wizard( QWidget* pParent = 0, const char* szName = 0 );
+    explicit ADN_NBC_Wizard( QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_NBC_Wizard();
     //@}
 };

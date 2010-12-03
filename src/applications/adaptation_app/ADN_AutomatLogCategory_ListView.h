@@ -20,10 +20,10 @@
 #define __ADN_AutomatLogCategory_ListView_h_
 
 #include "ADN_ListView.h"
-
 #include "ADN_Data_ABC.h"
 #include "ADN_Equipement_Data.h"
 #include "ADN_Units_Data.h"
+#include <boost/noncopyable.hpp>
 
 class ADN_Automata_Data;
 class ADN_Rich_ListViewItem;
@@ -32,13 +32,13 @@ class ADN_Rich_ListViewItem;
 // Created: APE 2005-04-04
 // =============================================================================
 class ADN_AutomatLogCategory_ListView : public ADN_ListView
+                                      , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_AutomatLogCategory_ListView )
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_AutomatLogCategory_ListView( ADN_Automata_Data& data, QWidget* pParent = 0 );
+    explicit ADN_AutomatLogCategory_ListView( ADN_Automata_Data& data, QWidget* pParent = 0 );
     virtual ~ADN_AutomatLogCategory_ListView();
     //@}
 

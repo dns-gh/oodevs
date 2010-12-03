@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-07 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Table.h $
-// $Author: Nld $
-// $Modtime: 10/05/05 10:58 $
-// $Revision: 8 $
-// $Workfile: ADN_Table.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_Table_h_
 #define __ADN_Table_h_

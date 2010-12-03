@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-06-19 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Pch.h $
-// $Author: Ape $
-// $Modtime: 15/04/05 15:47 $
-// $Revision: 3 $
-// $Workfile: ADN_Pch.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_APPLICATION_PCH_H_
 #define __ADN_APPLICATION_PCH_H_
@@ -94,16 +92,10 @@
 #include <qwizard.h>
 #pragma warning( pop )
 
-#define MT_COPYNOTALLOWED(cls)      \
-private:                            \
-    cls( const cls& );              \
-    cls& operator=( const cls& );    
-
-
+#include "MT_Tools/MT_Assert.h"
 #include "MT_Tools/MT_Logger.h"
-
-#include <xeumeuleu/xml.hpp>
 #include "ADN_Type_ABC.h"
+#include <xeumeuleu/xml.hpp>
 
 namespace xml
 {

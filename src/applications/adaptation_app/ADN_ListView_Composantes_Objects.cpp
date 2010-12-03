@@ -8,12 +8,11 @@
 // $Workfile: ADN_ListView_Composantes_Objects.cpp $
 //
 //*****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Composantes_Objects.h"
 #include "moc_ADN_ListView_Composantes_Objects.cpp"
-
 #include <qpopmenu.h>
-
 #include "ADN_Connector_ListView.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_Composantes_GUI.h"
@@ -24,13 +23,12 @@ typedef ADN_Composantes_Data::ObjectInfos ObjectInfos;
 // Internal connector
 class ADN_Connector_Objects : public ADN_Connector_ListView_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Connector_Objects )
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Connector_Objects( ADN_ListView& list ) : ADN_Connector_ListView_ABC( list ) {};
-    ~ADN_Connector_Objects() {};
+    explicit ADN_Connector_Objects( ADN_ListView& list ) : ADN_Connector_ListView_ABC( list ) {};
+    virtual ~ADN_Connector_Objects() {};
     //@}
 
     //! @name Operations
@@ -53,7 +51,7 @@ public:
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_ListView_Composantes_Objects::ADN_ListView_Composantes_Objects( QWidget* pParent, const char* szName, WFlags f )
-: ADN_ListView( pParent, szName, f )
+    : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
     addColumn( tr( "Objects" ) );
@@ -76,7 +74,6 @@ ADN_ListView_Composantes_Objects::~ADN_ListView_Composantes_Objects()
 {
     delete pConnector_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Composantes_Objects::ConnectItem
@@ -175,4 +172,3 @@ bool ADN_ListView_Composantes_Objects::Contains( const ADN_Objects_Data::ObjectI
     }
     return false;
 }
-

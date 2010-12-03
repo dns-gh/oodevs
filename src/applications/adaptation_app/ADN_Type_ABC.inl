@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-06-23 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Type_ABC.inl $
-// $Author: Ape $
-// $Modtime: 21/04/05 18:45 $
-// $Revision: 5 $
-// $Workfile: ADN_Type_ABC.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "ADN_ChangeValueCommand_Helper.h"
 #include "ADN_Workspace.h"
@@ -18,24 +16,24 @@
 //-----------------------------------------------------------------------------
 template <class T>
 ADN_Type_ABC<T>::ADN_Type_ABC()
-:   ADN_Connector_ABC()
-,   bUndoAvailable_( true )
+    : ADN_Connector_ABC()
+    , bUndoAvailable_( true )
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_ABC constructor
 // Created: JDY 03-07-02
 //-----------------------------------------------------------------------------
 template <class T>
-ADN_Type_ABC<T>::ADN_Type_ABC(const T& val)
-:   ADN_Connector_ABC()
-,   val_( val )
-,   bUndoAvailable_( true )
+ADN_Type_ABC<T>::ADN_Type_ABC( const T& val )
+    : ADN_Connector_ABC()
+    , val_( val )
+    , bUndoAvailable_( true )
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_ABC destructor
@@ -44,8 +42,8 @@ ADN_Type_ABC<T>::ADN_Type_ABC(const T& val)
 template <class T>
 ADN_Type_ABC<T>::~ADN_Type_ABC()
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_ABC<T>::operator 
@@ -58,7 +56,6 @@ ADN_Type_ABC<T>& ADN_Type_ABC<T>::operator =(const T& val)
     return *this;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_ABC<T>::operator 
 // Created: JDY 03-07-22
@@ -68,7 +65,6 @@ bool ADN_Type_ABC<T>::operator ==(const T& val) const
 {
     return val_==val;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_ABC<T>::operator 
@@ -80,7 +76,6 @@ bool ADN_Type_ABC<T>::operator !=(const T& val) const
     return val_!=val;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_ABC::Initialize
 // Created: APE 2005-01-12
@@ -90,7 +85,6 @@ void ADN_Type_ABC<T>::Initialize( ADN_Connector_ABC& dest ) const
 {
     dest.SetData( (void*)&val_ );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_ABC<T>::SetData
@@ -123,7 +117,6 @@ T ADN_Type_ABC<T>::GetData()
     return val_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_ABC<T>::SetDataPrivate
 // Created: JDY 03-07-01
@@ -133,7 +126,6 @@ void  ADN_Type_ABC<T>::SetDataPrivate(void *data)
 {    
     SetData(*static_cast< T* >( data ),true);
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_ABC::GetName
@@ -147,7 +139,6 @@ std::string ADN_Type_ABC< T >::GetNodeName()
     return strDataName_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_ABC::SetDataName
 /** @param  strName 
@@ -160,7 +151,6 @@ void ADN_Type_ABC< T >::SetDataName( const std::string& strName )
     strDataName_ = strName;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_ABC::SetUndoAvailable
 // Created: AGN 2004-06-15
@@ -170,4 +160,3 @@ void ADN_Type_ABC< T >::SetUndoAvailable( bool b )
 {
     bUndoAvailable_ = b;
 }
-

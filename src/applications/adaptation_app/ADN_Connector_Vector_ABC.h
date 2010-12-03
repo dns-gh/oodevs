@@ -1,19 +1,16 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-02 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Connector_Vector_ABC.h $
-// $Author: Ape $
-// $Modtime: 3/03/05 14:35 $
-// $Revision: 7 $
-// $Workfile: ADN_Connector_Vector_ABC.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_Connector_Vector_ABC_h_
 #define __ADN_Connector_Vector_ABC_h_
 
 #include "ADN_Connector_ABC.h"
-
 
 class ADN_BinaryPredicate
 {
@@ -22,11 +19,10 @@ public:
     virtual bool operator()( void* pL, void* pR ) const = 0;
 };
 
-
 class ADN_BinaryPredicateWrapper
 {
 public:
-    ADN_BinaryPredicateWrapper( ADN_BinaryPredicate& predicate ) : predicate_( predicate ) {};
+    explicit ADN_BinaryPredicateWrapper( ADN_BinaryPredicate& predicate ) : predicate_( predicate ) {};
     virtual bool operator()( void* pL, void* pR ) { return predicate_( pL, pR ); }
 
     const ADN_BinaryPredicateWrapper& operator=( const ADN_BinaryPredicateWrapper& );
@@ -34,13 +30,10 @@ public:
     ADN_BinaryPredicate& predicate_;
 };
 
-
-
 //*****************************************************************************
 // Created: JDY 03-07-02
 //*****************************************************************************
-class ADN_Connector_Vector_ABC
-:   public ADN_Connector_ABC
+class ADN_Connector_Vector_ABC : public ADN_Connector_ABC
 {
     Q_OBJECT
 
@@ -99,6 +92,5 @@ public:
 protected:
     bool bConnecting_;
 };
-
 
 #endif // __ADN_Connector_Vector_ABC_h_

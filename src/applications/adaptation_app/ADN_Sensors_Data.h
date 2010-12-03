@@ -13,7 +13,6 @@
 #define __ADN_Sensors_Data_h_
 
 #include "ADN_Data_ABC.h"
-
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
@@ -23,13 +22,11 @@
 #include "ADN_DataTreeNode_ABC.h"
 #include "ADN_Radars_Data.h"
 
-
 //*****************************************************************************
 // Created: JDY 03-06-25
 //*****************************************************************************
 class ADN_Sensors_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Sensors_Data )
 
 public:
 // LTO begin
@@ -37,7 +34,6 @@ public:
     class LimitedToSensorsInfos : public ADN_Ref_ABC
                                 , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( LimitedToSensorsInfos )
     public:
                  LimitedToSensorsInfos();
         virtual ~LimitedToSensorsInfos();
@@ -59,14 +55,11 @@ public:
 // LTO end
 
 //*****************************************************************************
-    class ModificatorSizeInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ModificatorSizeInfos : public ADN_Ref_ABC
+                               , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ModificatorSizeInfos )
-
     public:
-        ModificatorSizeInfos(ADN_Categories_Data::SizeInfos* ptr);
+        explicit ModificatorSizeInfos( ADN_Categories_Data::SizeInfos* ptr );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -113,14 +106,11 @@ public:
 
 
 //*****************************************************************************
-    class ModificatorIlluminationInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ModificatorIlluminationInfos : public ADN_Ref_ABC
+                                       , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ModificatorIlluminationInfos )
-
     public:
-        ModificatorIlluminationInfos(const E_TimeCategory& e);
+        explicit ModificatorIlluminationInfos( const E_TimeCategory& e );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -152,14 +142,11 @@ public:
 
 
 //*****************************************************************************
-    class ModificatorMeteoInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ModificatorMeteoInfos : public ADN_Ref_ABC
+                                , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ModificatorMeteoInfos )
-
     public:
-        ModificatorMeteoInfos(const E_SensorWeatherModifiers& e);
+        explicit ModificatorMeteoInfos( const E_SensorWeatherModifiers& e );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -191,14 +178,11 @@ public:
 
 
 //*****************************************************************************
-    class ModificatorEnvironmentInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ModificatorEnvironmentInfos : public ADN_Ref_ABC
+                                      , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ModificatorEnvironmentInfos )
-
     public:
-        ModificatorEnvironmentInfos(const E_VisionObject& e);
+        explicit ModificatorEnvironmentInfos( const E_VisionObject& e );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -229,14 +213,11 @@ public:
     typedef T_ModificatorEnvironmentInfos_Vector::iterator    IT_ModificatorEnvironmentInfos_Vector;
 
     //*****************************************************************************
-    class ModificatorUrbanBlockInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ModificatorUrbanBlockInfos : public ADN_Ref_ABC
+                                     , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ModificatorUrbanBlockInfos )
-
     public:
-        ModificatorUrbanBlockInfos(ADN_Urban_Data::UrbanMaterialInfos* ptr);
+        explicit ModificatorUrbanBlockInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -281,14 +262,11 @@ public:
     typedef T_ModificatorUrbanBlockInfos_Vector::iterator    IT_ModificatorUrbanBlockInfos_Vector;
 
 //*****************************************************************************
-    class ModificatorPostureInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ModificatorPostureInfos : public ADN_Ref_ABC
+                                  , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ModificatorPostureInfos )
-
     public:
-        ModificatorPostureInfos(const E_UnitPosture& e );
+        explicit ModificatorPostureInfos( const E_UnitPosture& e );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -320,14 +298,11 @@ public:
 
 
 //*****************************************************************************
-    class PopulationInfos
-        : public ADN_Ref_ABC
+    class PopulationInfos : public ADN_Ref_ABC
     {
-        MT_COPYNOTALLOWED( PopulationInfos )
-
     public:
-        PopulationInfos();
-        ~PopulationInfos();
+                 PopulationInfos();
+        virtual ~PopulationInfos();
 
         std::string GetItemName();
         void        CopyFrom( PopulationInfos& populationInfo );
@@ -342,15 +317,12 @@ public:
     };
 
 //*****************************************************************************
-    class TargetInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class TargetInfos : public ADN_Ref_ABC
+                      , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( TargetInfos )
-
     public:
-        TargetInfos();
-        ~TargetInfos();
+                 TargetInfos();
+        virtual ~TargetInfos();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -374,15 +346,12 @@ public:
     typedef T_TargetsInfos_Vector::iterator  IT_TargetsInfos_Vector;
 
 //*****************************************************************************
-    class SensorInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class SensorInfos : public ADN_Ref_ABC
+                      , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( SensorInfos )
-
     public:
-        SensorInfos();
-        ~SensorInfos();
+                 SensorInfos();
+        virtual ~SensorInfos();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -437,13 +406,11 @@ public:
 
 
 //*****************************************************************************
-    class ALATInfos
+    class ALATInfos : private boost::noncopyable
     {
-        MT_COPYNOTALLOWED( ALATInfos )
-
     public:
-        ALATInfos();
-        ~ALATInfos();
+                 ALATInfos();
+        virtual ~ALATInfos();
 
         void ReadArchive( xml::xistream& input );
         void ReadTime( xml::xistream& input );
@@ -454,13 +421,11 @@ public:
     };
 
 //*****************************************************************************
-    class CobraInfos
+    class CobraInfos : private boost::noncopyable
     {
-        MT_COPYNOTALLOWED( CobraInfos )
-
     public:
-        CobraInfos();
-        ~CobraInfos();
+                 CobraInfos();
+        virtual ~CobraInfos();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -473,12 +438,11 @@ public:
 
 //*****************************************************************************
 public:
-    ADN_Sensors_Data();
+             ADN_Sensors_Data();
     virtual ~ADN_Sensors_Data();
 
-    void            FilesNeeded(T_StringList& l) const;
-    void            Reset();
-
+    void FilesNeeded( T_StringList& l ) const;
+    void Reset();
 
     T_SensorsInfos_Vector& GetSensorsInfos();
     SensorInfos*           FindSensor( const std::string& strName );
@@ -493,15 +457,10 @@ private:
 
 public:
     T_SensorsInfos_Vector  vSensors_;
-
     ALATInfos              alatInfos_;
     CobraInfos             cobraInfos_;
-
     ADN_Radars_Data&       radarData_;
 };
-
-
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::GetSensorsInfos
@@ -512,7 +471,6 @@ ADN_Sensors_Data::T_SensorsInfos_Vector&    ADN_Sensors_Data::GetSensorsInfos()
 {
     return vSensors_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::FindSensor
@@ -526,7 +484,6 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::FindSensor( const std::string& 
         return 0;
     return *it;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::GetAlatInfos
@@ -547,6 +504,5 @@ ADN_Sensors_Data::CobraInfos& ADN_Sensors_Data::GetCobraInfos()
 {
     return cobraInfos_;
 }
-
 
 #endif // __ADN_Sensors_Data_h_

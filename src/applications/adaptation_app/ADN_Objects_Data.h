@@ -26,7 +26,7 @@
 #include <boost/tuple/tuple.hpp>
 #include <boost/shared_ptr.hpp>
 
-class xml::xistream;
+namespace xml { class xistream; }
 
 
 //*****************************************************************************
@@ -34,15 +34,12 @@ class xml::xistream;
 //*****************************************************************************
 class ADN_Objects_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Objects_Data )
 
 public:
 //*****************************************************************************
-    class ScoreLocationInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ScoreLocationInfos : public ADN_Ref_ABC
+                             , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ScoreLocationInfos )
 
     public:
         ScoreLocationInfos();
@@ -554,8 +551,7 @@ public:
     };
 
     class ObjectInfos;
-    class ADN_CapacityInfos_Spawn
-        : public ADN_CapacityInfos_Default< eSpawnCapacity >
+    class ADN_CapacityInfos_Spawn : public ADN_CapacityInfos_Default< eSpawnCapacity >
     {
     public:
         static const std::string TAG;
@@ -579,8 +575,7 @@ public:
         ADN_Type_Double rActionRange_;
     };
 
-    class ADN_CapacityInfos_Structural
-        : public ADN_CapacityInfos_Default< eStructuralCapacity >
+    class ADN_CapacityInfos_Structural : public ADN_CapacityInfos_Default< eStructuralCapacity >
     {
     public:
         static const std::string TAG;
@@ -603,8 +598,7 @@ public:
         ADN_Type_Int rStructuralState_;
     };
 
-    class ADN_CapacityInfos_AttitudeModifier
-        : public ADN_CapacityInfos_Default< eAttitudeModifierCapacity >
+    class ADN_CapacityInfos_AttitudeModifier : public ADN_CapacityInfos_Default< eAttitudeModifierCapacity >
     {
     public:
         static const std::string TAG;
@@ -627,8 +621,7 @@ public:
         ADN_Type_Enum< E_PopulationAttitude, eNbrPopulationAttitude > attitude_;
     };
 
-    class ADN_CapacityInfos_Perception
-        : public ADN_CapacityInfos_Default< ePerceptionCapacity >
+    class ADN_CapacityInfos_Perception : public ADN_CapacityInfos_Default< ePerceptionCapacity >
     {
     public:
         static const std::string TAG;
@@ -675,8 +668,7 @@ public:
         ADN_Type_Int humanByTimeStep_;
     };
 
-    class ADN_CapacityInfos_SealOff
-        : public ADN_CapacityInfos_Default< eSealOffCapacity >
+    class ADN_CapacityInfos_SealOff : public ADN_CapacityInfos_Default< eSealOffCapacity >
     {
     public:
         ADN_CapacityInfos_SealOff();
@@ -688,16 +680,14 @@ public:
     };
 
 //*****************************************************************************
-    class ObjectInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ObjectInfos : public ADN_Ref_ABC
+                      , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ObjectInfos )
 
     public:
                  ObjectInfos();
         explicit ObjectInfos( const std::string& name );
-        ~ObjectInfos();
+        virtual ~ObjectInfos();
 
         virtual std::string GetNodeName();
         std::string GetItemName();

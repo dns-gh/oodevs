@@ -14,12 +14,10 @@
 
 #include "ADN_CommonGfx.h"
 
-
 //*****************************************************************************
 // Created: JDY 03-09-29
 //*****************************************************************************
-class ADN_Equipement_Postures_GUI
-: public ADN_Table2
+class ADN_Equipement_Postures_GUI : public ADN_Table2
 {
 public:
     explicit ADN_Equipement_Postures_GUI( const QString& strColCaption, QWidget* pParent = 0 );

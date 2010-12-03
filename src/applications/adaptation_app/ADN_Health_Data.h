@@ -15,8 +15,7 @@
 #include "ADN_Enums.h"
 #include "ADN_AvailabilityWarning.h"
 
-class xml::xistream;
-
+namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_Health_Data
@@ -24,16 +23,13 @@ class xml::xistream;
 */
 // Created: APE 2005-03-14
 // =============================================================================
-class ADN_Health_Data
-    : public ADN_Data_ABC
+class ADN_Health_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Health_Data )
 
 public:
 // *****************************************************************************
     class WoundInfo
     {
-        MT_COPYNOTALLOWED( WoundInfo )
     public:
         WoundInfo();
 
@@ -53,7 +49,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Health_Data();
+             ADN_Health_Data();
     virtual ~ADN_Health_Data();
     //@}
 

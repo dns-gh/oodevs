@@ -21,7 +21,6 @@
 // =============================================================================
 class ADN_Missions_GUI : public ADN_GUI_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Missions_GUI )
 
 public:
     enum E_GuiElements

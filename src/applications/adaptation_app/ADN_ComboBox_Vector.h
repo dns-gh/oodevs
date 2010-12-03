@@ -6,22 +6,13 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-01-05 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_ComboBox_Vector.h $
-// $Author: Ape $
-// $Modtime: 10/02/05 17:45 $
-// $Revision: 3 $
-// $Workfile: ADN_ComboBox_Vector.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_ComboBox_Vector_h_
 #define __ADN_ComboBox_Vector_h_
 
 #include "ADN_ComboBox.h"
 #include "ADN_ComboBoxItem.h"
-
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  ADN_ComboBox_Vector
@@ -34,28 +25,23 @@
 // Created: APE 2005-01-05
 // =============================================================================
 template< typename VectorType >
-class ADN_ComboBox_Vector
-: public ADN_ComboBox
+class ADN_ComboBox_Vector : public ADN_ComboBox
+                          , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_ComboBox_Vector )
-
-//public:
-//typedef ADN_ComboBoxItem T_ItemType;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ComboBox_Vector( QWidget* pParent = 0, const char* szName = 0 );
+    explicit ADN_ComboBox_Vector( QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_ComboBox_Vector();
     //@}
 };
 
 template< typename AType >
-class ADN_CBV_Connector
-    : public ADN_Connector_ComboBox
+class ADN_CBV_Connector : public ADN_Connector_ComboBox
 {
 public:
-    ADN_CBV_Connector( ADN_ComboBox_Vector<AType>& combo )
+    explicit ADN_CBV_Connector( ADN_ComboBox_Vector<AType>& combo )
         : ADN_Connector_ComboBox( &combo )
     {}
 

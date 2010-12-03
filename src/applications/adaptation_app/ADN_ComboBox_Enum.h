@@ -1,17 +1,14 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-08-29 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_ComboBox_Enum.h $
-// $Author: Ape $
-// $Modtime: 18/02/05 11:54 $
-// $Revision: 2 $
-// $Workfile: ADN_ComboBox_Enum.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_ComboBox_Enum_h_
 #define __ADN_ComboBox_Enum_h_
-
 
 #include "ADN_Tools.h"
 #include "ADN_ComboBox.h"
@@ -21,8 +18,7 @@
 // Created: JDY 03-08-29
 //*****************************************************************************
 template <class EnumType>
-class ADN_ComboBox_Enum
-:   public ADN_ComboBox
+class ADN_ComboBox_Enum : public ADN_ComboBox
 {
 public:
 

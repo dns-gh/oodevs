@@ -22,7 +22,7 @@
 #include <qlabel.h>
 #include <qtable.h>
 #include <qlineedit.h>
-
+#include <boost/noncopyable.hpp>
 #include "ADN_EditLine.h"
 #include "ADN_ComboBox_Enum.h"
 #include "ADN_CheckBox.h"
@@ -51,14 +51,13 @@ enum E_Validator
 */
 // Created: APE 2005-03-11
 // =============================================================================
-class ADN_GuiBuilder
+class ADN_GuiBuilder : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_GuiBuilder )
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_GuiBuilder();
+             ADN_GuiBuilder();
     virtual ~ADN_GuiBuilder();
     //@}
 

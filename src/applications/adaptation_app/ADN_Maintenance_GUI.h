@@ -22,12 +22,11 @@ class ADN_Maintenance_Data;
 // =============================================================================
 class ADN_Maintenance_GUI : public ADN_GUI_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Maintenance_GUI )
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Maintenance_GUI( ADN_Maintenance_Data& data );
+    explicit ADN_Maintenance_GUI( ADN_Maintenance_Data& data );
     virtual ~ADN_Maintenance_GUI();
     //@}
 

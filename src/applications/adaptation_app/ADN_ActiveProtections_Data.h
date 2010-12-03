@@ -26,7 +26,6 @@
 // =============================================================================
 class ADN_ActiveProtections_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_ActiveProtections_Data );
 
 public:
 
@@ -34,7 +33,6 @@ public:
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ActiveProtectionsInfosWeapons );
 
     public:
                  ActiveProtectionsInfosWeapons();
@@ -60,7 +58,6 @@ public:
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ActiveProtectionsInfos );
 
     public:
                  ActiveProtectionsInfos();

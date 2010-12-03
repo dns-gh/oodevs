@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-06 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_GUI.h $
-// $Author: Nld $
-// $Modtime: 20/07/05 14:10 $
-// $Revision: 11 $
-// $Workfile: ADN_Equipement_GUI.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Equipement_GUI_h_
 #define __ADN_Equipement_GUI_h_
@@ -49,10 +40,8 @@ namespace helpers
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Equipement_GUI
-: public ADN_GUI_ABC
+class ADN_Equipement_GUI : public ADN_GUI_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Equipement_GUI )
     Q_OBJECT
 
 public:
@@ -112,7 +101,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Equipement_GUI( ADN_Equipement_Data& data );
+    explicit ADN_Equipement_GUI( ADN_Equipement_Data& data );
     virtual ~ADN_Equipement_GUI();
     //@}
 

@@ -6,20 +6,12 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-21 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_GraphData.h $
-// $Author: Ape $
-// $Modtime: 13/01/05 10:55 $
-// $Revision: 2 $
-// $Workfile: ADN_GraphData.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_GraphData_h_
 #define __ADN_GraphData_h_
 
 #include "GQ_PlotData.h"
+#include <boost/noncopyable.hpp>
 
 class ADN_GraphValue;
 class ADN_Connector_ABC;
@@ -35,8 +27,8 @@ class ADN_Connector_ABC;
 // Created: APE 2004-12-21
 // =============================================================================
 class ADN_GraphData : public GQ_PlotData
+                    , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_GraphData )
 
 public:
     typedef std::vector< ADN_GraphValue* >         T_GraphValue_Vector;
@@ -77,7 +69,6 @@ private:
     //@}
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphData::SetConnector
 // Created: APE 2005-01-13
@@ -87,7 +78,6 @@ void ADN_GraphData::SetConnector( ADN_Connector_ABC& connector )
 {
     pConnector_ = &connector;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphData::GetGraphValue

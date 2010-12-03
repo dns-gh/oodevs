@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-18 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_TypePtr_InVector_ABC.h $
-// $Author: Ape $
-// $Modtime: 3/03/05 14:40 $
-// $Revision: 6 $
-// $Workfile: ADN_TypePtr_InVector_ABC.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_TypePtr_InVector_ABC_h_
 #define __ADN_TypePtr_InVector_ABC_h_
@@ -20,11 +18,9 @@
 // Created: JDY 03-07-18
 //*****************************************************************************
 template <class T>
-class ADN_TypePtr_InVector_ABC
-:   public ADN_Connector_Vector_ABC
-,   public ADN_DataTreeNode_ABC
+class ADN_TypePtr_InVector_ABC : public ADN_Connector_Vector_ABC
+                               , public ADN_DataTreeNode_ABC
 {
-    MT_COPYNOTALLOWED( ADN_TypePtr_InVector_ABC )
 
 public:
     typedef typename T*                      T_TypePtr;
@@ -78,7 +74,6 @@ private:
     T_TypePtr       pData_;
     T_TypeVector*   pVector_;
 };
-
 
 #include "ADN_TypePtr_InVector_ABC.inl"
 

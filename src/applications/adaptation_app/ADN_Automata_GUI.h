@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-06 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Automata_GUI.h $
-// $Author: Ape $
-// $Modtime: 4/04/05 11:32 $
-// $Revision: 7 $
-// $Workfile: ADN_Automata_GUI.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Automata_GUI_h_
 #define __ADN_Automata_GUI_h_
@@ -25,7 +16,6 @@ class ADN_Automata_Data;
 class ADN_Table;
 class ADN_ListView;
 
-
 // =============================================================================
 /** @class  ADN_Automata_GUI
     @brief  ADN_Automata_GUI
@@ -34,7 +24,6 @@ class ADN_ListView;
 // =============================================================================
 class ADN_Automata_GUI : public ADN_GUI_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Automata_GUI )
 
 public:
     enum E_GuiElements
@@ -52,7 +41,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Automata_GUI( ADN_Automata_Data& data );
+    explicit ADN_Automata_GUI( ADN_Automata_Data& data );
     virtual ~ADN_Automata_GUI();
     //@}
 

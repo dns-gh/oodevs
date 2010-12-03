@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-07 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Weapons_GUI.h $
-// $Author: Nld $
-// $Modtime: 3/05/05 9:51 $
-// $Revision: 9 $
-// $Workfile: ADN_Weapons_GUI.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Weapons_GUI_h_
 #define __ADN_Weapons_GUI_h_
@@ -31,12 +22,9 @@ class ADN_Weapons_ListView;
 */
 // Created: APE 2004-12-07
 // =============================================================================
-class ADN_Weapons_GUI
-: public ADN_GUI_ABC
+class ADN_Weapons_GUI : public ADN_GUI_ABC
 {
     Q_OBJECT
-
-    MT_COPYNOTALLOWED( ADN_Weapons_GUI )
 
 public:
     enum E_GuiElements
@@ -72,7 +60,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Weapons_GUI( ADN_Weapons_Data& data );
+    explicit ADN_Weapons_GUI( ADN_Weapons_Data& data );
     virtual ~ADN_Weapons_GUI();
     //@}
 

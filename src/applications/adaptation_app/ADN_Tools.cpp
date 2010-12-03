@@ -102,15 +102,12 @@ std::string ADN_Tools::ComputePostureScriptName( E_UnitPosture nPosture )
 // -----------------------------------------------------------------------------
 void ADN_Tools::CheckConnectorVector( const T_ConnectorVector& vConnectors, uint nExpectedSize )
 {
-#ifndef _DEBUG
-    return;
-#endif
-
+#ifdef _DEBUG
     assert( vConnectors.size() == nExpectedSize );
     for( uint n = 0; n < nExpectedSize; ++n )
-    {
         assert( vConnectors[n] != 0 );
-    }
+#endif
+    return;
 }
 
 

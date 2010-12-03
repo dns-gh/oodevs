@@ -23,12 +23,11 @@ typedef ADN_Wizard_ABC< ADN_KnowledgeGroups_Data::GroupInfo > ADN_Wizard_ABC_ADN
 // =============================================================================
 class ADN_KnowledgeGroups_Wizard : public ADN_Wizard_ABC_ADN_KnowledgeGroups_Data_GroupInfo
 {
-    MT_COPYNOTALLOWED( ADN_KnowledgeGroups_Wizard )
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_KnowledgeGroups_Wizard( QWidget* pParent = 0, const char* szName = 0 );
+    explicit ADN_KnowledgeGroups_Wizard( QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_KnowledgeGroups_Wizard();
     //@}
 };

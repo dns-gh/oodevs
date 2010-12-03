@@ -6,26 +6,16 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-02 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Automata_Data.h $
-// $Author: Ape $
-// $Modtime: 7/06/05 10:08 $
-// $Revision: 9 $
-// $Workfile: ADN_Automata_Data.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Automata_Data_h_
 #define __ADN_Automata_Data_h_
 
 #include "ADN_Data_ABC.h"
-
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Units_Data.h"
 
-class xml::xistream;
+namespace xml { class xistream; }
 
 
 // =============================================================================
@@ -35,7 +25,6 @@ class xml::xistream;
 // =============================================================================
 class ADN_Automata_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Automata_Data )
 
 public:
 // *****************************************************************************
@@ -43,7 +32,6 @@ public:
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( UnitInfos )
 
     public:
         UnitInfos();
@@ -71,7 +59,6 @@ public:
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( AutomatonInfos )
 
     public:
         AutomatonInfos();

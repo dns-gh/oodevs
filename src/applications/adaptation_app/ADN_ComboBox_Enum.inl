@@ -1,14 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-08-29 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_ComboBox_Enum.inl $
-// $Author: Ape $
-// $Modtime: 10/02/05 15:46 $
-// $Revision: 2 $
-// $Workfile: ADN_ComboBox_Enum.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
-
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox_Enum constructor
@@ -16,13 +13,12 @@
 //-----------------------------------------------------------------------------
 template <class EnumType>
 ADN_ComboBox_Enum<EnumType>::ADN_ComboBox_Enum(T_Converter cv,QWidget * parent, const char * name) 
-: ADN_ComboBox(parent,name)
-, converter_(cv)
+    : ADN_ComboBox(parent,name)
+    , converter_(cv)
 {   
     pConnector_=new ADN_CCB(*this); 
     assert(pConnector_); 
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox_Enum destructor

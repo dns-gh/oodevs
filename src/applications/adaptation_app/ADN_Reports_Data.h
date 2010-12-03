@@ -14,7 +14,7 @@
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 
-class xml::xistream;
+namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_Reports_Data
@@ -31,7 +31,6 @@ public:
     class ReportParameterValue : public ADN_Ref_ABC
                                , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ReportParameterValue )
     public:
                  ReportParameterValue();
         virtual ~ReportParameterValue();
@@ -53,7 +52,6 @@ public:
     class ReportParameter : public ADN_Ref_ABC
                           , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ReportParameter )
     public:
                  ReportParameter();
         virtual ~ReportParameter();
@@ -82,7 +80,6 @@ public:
     class ReportInfo : public ADN_Ref_ABC
                      , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ReportInfo )
     public:
                  ReportInfo();
         virtual ~ReportInfo();

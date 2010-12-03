@@ -14,21 +14,19 @@
 
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
+#include <boost/noncopyable.hpp>
 
-class xml::xistream;
-
+namespace xml { class xistream; }
 
 //*****************************************************************************
 // Created: JDY 03-06-20
 //*****************************************************************************
 class ADN_Project_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Project_Data )
 
 public:
-    class DataInfos
+    class DataInfos : private boost::noncopyable
     {
-        MT_COPYNOTALLOWED( DataInfos )
 
     public:
         DataInfos();
@@ -75,13 +73,11 @@ public:
     };
 
 //*****************************************************************************
-    class FileInfos
+    class FileInfos : private boost::noncopyable
     {
-        MT_COPYNOTALLOWED( FileInfos )
-
     public:
-        FileInfos();
-        FileInfos(const std::string& filename);
+                 FileInfos();
+        explicit FileInfos( const std::string& filename );
 
         // return filename in working directory or tmp directory ref
         ADN_Type_String&       GetFileName();
@@ -98,10 +94,8 @@ public:
 
 
 //*****************************************************************************
-    class WorkDirInfos
+    class WorkDirInfos : private boost::noncopyable
     {
-        MT_COPYNOTALLOWED( WorkDirInfos )
-
     public:
         enum E_WorkDir
         {
@@ -155,7 +149,6 @@ public:
     static WorkDirInfos  workDir_;
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Project_Data::WorkDirInfos
 // Created: JDY 03-09-09
@@ -166,7 +159,6 @@ ADN_Type_String& ADN_Project_Data::WorkDirInfos::GetWorkingDirectory()
     return szWorkingDir_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Project_Data::WorkDirInfos
 // Created: JDY 03-09-09
@@ -176,7 +168,6 @@ ADN_Type_String& ADN_Project_Data::WorkDirInfos::GetTempDirectory()
 {
     return szTempDir_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: std::string
@@ -198,7 +189,6 @@ ADN_Type_String& ADN_Project_Data::FileInfos::GetFileName()
     return szFileName_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Project_Data::GetFileNameFull
 // Created: JDY 03-09-09
@@ -208,7 +198,6 @@ const std::string ADN_Project_Data::FileInfos::GetFileNameFull()
 {
     return workDir_.GetFullPath( szFileName_.GetData(), ADN_Project_Data::WorkDirInfos::eWorking );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Project_Data::GetDataInfos
@@ -240,7 +229,6 @@ ADN_Project_Data::FileInfos& ADN_Project_Data::GetFileInfos()
     return szFile_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Project_Data::WorkDirInfos
 // Created: JDY 03-09-09
@@ -250,6 +238,5 @@ ADN_Project_Data::WorkDirInfos& ADN_Project_Data::GetWorkDirInfos()
 {
     return workDir_;
 }
-
 
 #endif // __ADN_Project_Data_h_

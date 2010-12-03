@@ -6,20 +6,10 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-15 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_GraphValue.cpp $
-// $Author: Ape $
-// $Modtime: 12/01/05 16:11 $
-// $Revision: 2 $
-// $Workfile: ADN_GraphValue.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_GraphValue.h"
 #include "moc_ADN_GraphValue.cpp"
-
 #include "ADN_Types.h"
 #include "ADN_GraphData.h"
 
@@ -28,14 +18,13 @@
 // Created: APE 2005-01-12
 // -----------------------------------------------------------------------------
 ADN_GraphValue::ADN_GraphValue( ADN_GraphData& graphData, void* pObject, ADN_Type_Int& x, ADN_Type_Int& y )
-: QObject           ()
-, graphData_        ( graphData )
-, pRelatedObject_   ( pObject )
-, nTypes_           ( (E_XYTypes)(eXInt | eYInt) )
+    : graphData_        ( graphData )
+    , pRelatedObject_   ( pObject )
+    , nTypes_           ( (E_XYTypes)(eXInt | eYInt) )
 {
     nX_.Connect( &x );
     nY_.Connect( &y );
-    this->ConstructorHelper();
+    ConstructorHelper();
 }
 
 // -----------------------------------------------------------------------------
@@ -43,78 +32,68 @@ ADN_GraphValue::ADN_GraphValue( ADN_GraphData& graphData, void* pObject, ADN_Typ
 // Created: APE 2005-01-12
 // -----------------------------------------------------------------------------
 ADN_GraphValue::ADN_GraphValue( ADN_GraphData& graphData, void* pObject, ADN_Type_Double& x, ADN_Type_Int& y )
-: QObject           ()
-, graphData_        ( graphData )
-, pRelatedObject_   ( pObject )
-, nTypes_           ( (E_XYTypes)(eXDouble | eYInt) )
+    : graphData_        ( graphData )
+    , pRelatedObject_   ( pObject )
+    , nTypes_           ( (E_XYTypes)(eXDouble | eYInt) )
 {
     rX_.Connect( &x );
     nY_.Connect( &y );
-    this->ConstructorHelper();
+    ConstructorHelper();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphValue constructor
 // Created: APE 2005-01-12
 // -----------------------------------------------------------------------------
 ADN_GraphValue::ADN_GraphValue( ADN_GraphData& graphData, void* pObject, ADN_Type_Double& x, ADN_Type_Double& y )
-: QObject           ()
-, graphData_        ( graphData )
-, pRelatedObject_   ( pObject )
-, nTypes_           ( (E_XYTypes)(eXDouble | eYDouble) )
+    : graphData_        ( graphData )
+    , pRelatedObject_   ( pObject )
+    , nTypes_           ( (E_XYTypes)(eXDouble | eYDouble) )
 {
     rX_.Connect( &x );
     rY_.Connect( &y );
-    this->ConstructorHelper();
+    ConstructorHelper();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphValue constructor
 // Created: APE 2005-01-12
 // -----------------------------------------------------------------------------
 ADN_GraphValue::ADN_GraphValue( ADN_GraphData& graphData, void* pObject, ADN_Type_Int& x, ADN_Type_Double& y )
-: QObject           ()
-, graphData_        ( graphData )
-, pRelatedObject_   ( pObject )
-, nTypes_           ( (E_XYTypes)(eXInt | eYDouble) )
+    : graphData_        ( graphData )
+    , pRelatedObject_   ( pObject )
+    , nTypes_           ( (E_XYTypes)(eXInt | eYDouble) )
 {
     nX_.Connect( &x );
     rY_.Connect( &y );
-    this->ConstructorHelper();
+    ConstructorHelper();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphValue constructor
 // Created: APE 2005-01-12
 // -----------------------------------------------------------------------------
 ADN_GraphValue::ADN_GraphValue( ADN_GraphData& graphData, void* pObject, ADN_Type_Int& y )
-: QObject           ()
-, graphData_        ( graphData )
-, pRelatedObject_   ( pObject )
-, nTypes_           ( (E_XYTypes)(eNoX | eYInt) )
+    : graphData_        ( graphData )
+    , pRelatedObject_   ( pObject )
+    , nTypes_           ( (E_XYTypes)(eNoX | eYInt) )
 {
     nY_.Connect( &y );
-    this->ConstructorHelper();
+    ConstructorHelper();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphValue constructor
 // Created: APE 2005-01-12
 // -----------------------------------------------------------------------------
 ADN_GraphValue::ADN_GraphValue( ADN_GraphData& graphData, void* pObject, ADN_Type_Double& y )
-: QObject           ()
-, graphData_        ( graphData )
-, pRelatedObject_   ( pObject )
-, nTypes_           ( (E_XYTypes)(eNoX | eYDouble) )
+    : graphData_        ( graphData )
+    , pRelatedObject_   ( pObject )
+    , nTypes_           ( (E_XYTypes)(eNoX | eYDouble) )
 {
     rY_.Connect( &y );
-    this->ConstructorHelper();
+    ConstructorHelper();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphValue destructor
@@ -122,8 +101,8 @@ ADN_GraphValue::ADN_GraphValue( ADN_GraphData& graphData, void* pObject, ADN_Typ
 // -----------------------------------------------------------------------------
 ADN_GraphValue::~ADN_GraphValue()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphValue::ConstructorHelper
@@ -138,7 +117,6 @@ void ADN_GraphValue::ConstructorHelper()
     connect( &rY_, SIGNAL( DataChanged( void*) ), this, SLOT( OnDataChanged() ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphValue::OnDataChanged
 // Created: APE 2005-01-12
@@ -147,7 +125,6 @@ void ADN_GraphValue::OnDataChanged()
 {
     graphData_.OnDataChanged( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphValue::GetPoint

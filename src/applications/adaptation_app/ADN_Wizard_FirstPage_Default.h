@@ -26,9 +26,7 @@
 #include <qlistview.h>
 #include <qwizard.h>
 #include <qmessagebox.h>
-
 #include "ADN_Wizard_FirstPage_ABC.h"
-
 
 // =============================================================================
 /** @class  ADN_Wizard_FirstPage_Default
@@ -37,13 +35,11 @@
 // Created: APE 2005-02-14
 // =============================================================================
 template< typename T >
-class ADN_Wizard_FirstPage_Default
-: public ADN_Wizard_FirstPage_ABC< T >
+class ADN_Wizard_FirstPage_Default : public ADN_Wizard_FirstPage_ABC< T >
 {
-    MT_COPYNOTALLOWED( ADN_Wizard_FirstPage_Default )
 
 public:
-    typedef std::vector< T* >            T_ItemVector;
+    typedef std::vector< T* >                     T_ItemVector;
     typedef typename T_ItemVector::iterator       IT_ItemVector;
     typedef typename T_ItemVector::const_iterator CIT_ItemVector;
 
@@ -57,7 +53,6 @@ public:
     //! @name Operations
     //@{
     virtual T* CreateObject();
-
     void SetCaptions( const char* szPageName, const char* szColumnHeader );
     //@}
 

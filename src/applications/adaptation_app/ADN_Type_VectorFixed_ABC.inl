@@ -1,14 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-09-01 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Type_VectorFixed_ABC.inl $
-// $Author: Ape $
-// $Modtime: 14/01/05 10:08 $
-// $Revision: 3 $
-// $Workfile: ADN_Type_VectorFixed_ABC.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
-
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_VectorFixed_ABC constructor
@@ -16,8 +13,9 @@
 //-----------------------------------------------------------------------------
 template <class T,class Cmp>
 ADN_Type_VectorFixed_ABC<T,Cmp>::ADN_Type_VectorFixed_ABC( const char* szName )
-:   ADN_Type_Vector_ABC<T>( true, szName )
+    : ADN_Type_Vector_ABC<T>( true, szName )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -29,7 +27,6 @@ ADN_Type_VectorFixed_ABC<T,Cmp>::~ADN_Type_VectorFixed_ABC()
 {
     clear_owned_ptrs( *this );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_VectorFixed_ABC<T>::AutoCreatePrivate

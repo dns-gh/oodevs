@@ -6,19 +6,9 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-29 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Urban_AttritionTable.cpp $
-// $Author: Ape $
-// $Modtime: 20/04/05 17:04 $
-// $Revision: 7 $
-// $Workfile: ADN_Urban_AttritionTable.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Urban_AttritionTable.h"
-
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"
 #include "ADN_Connector_Table_ABC.h"
@@ -27,13 +17,11 @@
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with
 //-----------------------------------------------------------------------------
-class ADN_Urban_AttritionTable_Connector
-: public ADN_Connector_Table_ABC
+class ADN_Urban_AttritionTable_Connector : public ADN_Connector_Table_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Urban_AttritionTable_Connector )
 
 public:
-    ADN_Urban_AttritionTable_Connector( ADN_Urban_AttritionTable& tab )
+    explicit ADN_Urban_AttritionTable_Connector( ADN_Urban_AttritionTable& tab )
         : ADN_Connector_Table_ABC( tab, false )
     {}
 

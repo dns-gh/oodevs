@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-06-19 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Resources.h $
-// $Author: Ape $
-// $Modtime: 21/10/04 17:47 $
-// $Revision: 1 $
-// $Workfile: ADN_Resources.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_Resources_h_
 #define __ADN_Resources_h_

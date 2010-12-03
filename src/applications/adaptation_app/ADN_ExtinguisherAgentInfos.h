@@ -21,14 +21,12 @@
 // =============================================================================
 class ADN_ExtinguisherAgentInfos : public ADN_Ref_ABC
                                  , public ADN_DataTreeNode_ABC
-
 {
-    MT_COPYNOTALLOWED( ADN_ExtinguisherAgentInfos );
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ExtinguisherAgentInfos( ADN_Equipement_Data::CategoryInfo* agent );
+    explicit ADN_ExtinguisherAgentInfos( ADN_Equipement_Data::CategoryInfo* agent );
     virtual ~ADN_ExtinguisherAgentInfos();
     //@}
 

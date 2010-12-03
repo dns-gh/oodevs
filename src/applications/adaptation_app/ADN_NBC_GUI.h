@@ -17,7 +17,6 @@ class ADN_NBC_Datas;
 class ADN_ListView;
 class ADN_Connector_ABC;
 
-
 // =============================================================================
 /** @class  ADN_NBC_GUI
     @brief  ADN_NBC_GUI
@@ -27,7 +26,6 @@ class ADN_Connector_ABC;
 class ADN_NBC_GUI : public ADN_GUI_ABC
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( ADN_NBC_GUI )
 
 public:
     enum E_GuiElements
@@ -45,7 +43,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_NBC_GUI( ADN_NBC_Datas& data );
+    explicit ADN_NBC_GUI( ADN_NBC_Datas& data );
     virtual ~ADN_NBC_GUI();
     //@}
 

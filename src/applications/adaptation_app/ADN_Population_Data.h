@@ -6,29 +6,18 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-02 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Population_Data.h $
-// $Author: Ape $
-// $Modtime: 7/06/05 10:08 $
-// $Revision: 9 $
-// $Workfile: ADN_Population_Data.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Population_Data_h_
 #define __ADN_Population_Data_h_
 
 #include "ADN_Data_ABC.h"
-
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Models_Data.h"
 #include "ADN_Categories_Data.h"
 
-class xml::xistream;
-
+namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_Population_Data
@@ -37,19 +26,15 @@ class xml::xistream;
 // =============================================================================
 class ADN_Population_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Population_Data )
 
 public:
 // *****************************************************************************
-    class FireEffectProtectionInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class FireEffectProtectionInfos : public ADN_Ref_ABC
+                                    , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( FireEffectProtectionInfos )
-
     public:
-         FireEffectProtectionInfos( helpers::ArmorInfos* ptr );
-        ~FireEffectProtectionInfos();
+        explicit FireEffectProtectionInfos( helpers::ArmorInfos* ptr );
+        virtual ~FireEffectProtectionInfos();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -85,15 +70,12 @@ public:
     typedef T_FireEffectProtectionInfosVector::iterator          IT_FireEffectProtectionInfosVector;
 
 // *****************************************************************************
-    class FireEffectInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class FireEffectInfos : public ADN_Ref_ABC
+                          , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( FireEffectInfos )
-
     public:
-         FireEffectInfos( E_PopulationAttitude nAttitude );
-        ~FireEffectInfos();
+        explicit FireEffectInfos( E_PopulationAttitude nAttitude );
+        virtual ~FireEffectInfos();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -128,15 +110,12 @@ public:
     typedef T_FireEffectInfosVector::iterator     IT_FireEffectInfosVector;
 
 // *****************************************************************************
-    class FireEffectRoeInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class FireEffectRoeInfos : public ADN_Ref_ABC
+                             , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( FireEffectRoeInfos )
-
     public:
-         FireEffectRoeInfos( E_PopulationRoe nRoe );
-        ~FireEffectRoeInfos();
+        explicit FireEffectRoeInfos( E_PopulationRoe nRoe );
+        virtual ~FireEffectRoeInfos();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -155,15 +134,12 @@ public:
     typedef T_FireEffectRoeInfosVector::iterator     IT_FireEffectRoeInfosVector;
 
 // *****************************************************************************
-    class SpeedEffectVolumeInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class SpeedEffectVolumeInfos : public ADN_Ref_ABC
+                                 , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( SpeedEffectVolumeInfos )
-
     public:
-         SpeedEffectVolumeInfos( ADN_Categories_Data::SizeInfos* ptr );
-        ~SpeedEffectVolumeInfos();
+        explicit SpeedEffectVolumeInfos( ADN_Categories_Data::SizeInfos* ptr );
+        virtual ~SpeedEffectVolumeInfos();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -198,15 +174,12 @@ public:
     typedef T_SpeedEffectVolumeInfosVector::iterator          IT_SpeedEffectVolumeInfosVector;
 
 // *****************************************************************************
-    class SpeedEffectInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class SpeedEffectInfos : public ADN_Ref_ABC
+                           , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( SpeedEffectInfos )
-
     public:
         explicit SpeedEffectInfos( E_PopulationAttitude nAttitude );
-        ~SpeedEffectInfos();
+        virtual ~SpeedEffectInfos();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -225,15 +198,12 @@ public:
     typedef T_SpeedEffectInfosVector::iterator     IT_SpeedEffectInfosVector;
 
 // *****************************************************************************
-    class PopulationInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class PopulationInfos : public ADN_Ref_ABC
+                          , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( PopulationInfos )
-
     public:
-        PopulationInfos();
-        ~PopulationInfos();
+                 PopulationInfos();
+        virtual ~PopulationInfos();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -262,14 +232,11 @@ public:
     typedef T_PopulationInfosVector::iterator      IT_PopulationInfosVector;
 
 // *****************************************************************************
-    class ReloadingSpeedEffectInfos
-        : public ADN_Ref_ABC
+    class ReloadingSpeedEffectInfos : public ADN_Ref_ABC
     {
-        MT_COPYNOTALLOWED( ReloadingSpeedEffectInfos )
-
     public:
-        ReloadingSpeedEffectInfos();
-        ~ReloadingSpeedEffectInfos();
+                 ReloadingSpeedEffectInfos();
+        virtual ~ReloadingSpeedEffectInfos();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -281,14 +248,14 @@ public:
 
 // *****************************************************************************
 public:
-    ADN_Population_Data();
+             ADN_Population_Data();
     virtual ~ADN_Population_Data();
 
-    void                        FilesNeeded(T_StringList& l) const;
-    void                        Reset();
+    void FilesNeeded( T_StringList& l ) const;
+    void Reset();
 
-    T_PopulationInfosVector&  GetPopulation();
-    PopulationInfos*          FindPopulation( const std::string& strName );
+    T_PopulationInfosVector& GetPopulation();
+    PopulationInfos* FindPopulation( const std::string& strName );
     std::string GetPopulationsThatUse( ADN_Models_Data::ModelInfos& model );
 
 private:
@@ -301,7 +268,6 @@ public:
     ReloadingSpeedEffectInfos reloadingSpeedEffectInfos_;
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Data::GetPopulation
 // Created: APE 2004-12-02
@@ -311,7 +277,6 @@ ADN_Population_Data::T_PopulationInfosVector& ADN_Population_Data::GetPopulation
 {
     return vPopulation_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Data::FindPopulation
@@ -325,6 +290,5 @@ ADN_Population_Data::PopulationInfos* ADN_Population_Data::FindPopulation( const
         return 0;
     return *it;
 }
-
 
 #endif // __ADN_Population_Data_h_

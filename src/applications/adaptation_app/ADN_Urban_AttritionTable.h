@@ -6,21 +6,13 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-29 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Urban_AttritionTable.h $
-// $Author: Ape $
-// $Modtime: 20/04/05 16:50 $
-// $Revision: 3 $
-// $Workfile: ADN_Urban_AttritionTable.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Urban_AttritionTable_h_
 #define __ADN_Urban_AttritionTable_h_
 
 #include "ADN_Table.h"
 #include <qapplication.h>
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  ADN_Urban_AttritionTable
@@ -32,15 +24,14 @@
 */
 // Created: APE 2004-12-29
 // =============================================================================
-class ADN_Urban_AttritionTable 
-: public ADN_Table2
+class ADN_Urban_AttritionTable : public ADN_Table2
+                               , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_Urban_AttritionTable )
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Urban_AttritionTable( QWidget* pParent = 0 );
+    explicit ADN_Urban_AttritionTable( QWidget* pParent = 0 );
     virtual ~ADN_Urban_AttritionTable();
     //@}
 

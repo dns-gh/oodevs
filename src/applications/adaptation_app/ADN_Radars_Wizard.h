@@ -23,12 +23,11 @@ typedef ADN_Wizard_ABC< ADN_Radars_Data::RadarInfos > ADN_Wizard_ABC_ADN_Radars_
 // =============================================================================
 class ADN_Radars_Wizard : public ADN_Wizard_ABC_ADN_Radars_Data_RadarInfos
 {
-    MT_COPYNOTALLOWED( ADN_Radars_Wizard )
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Radars_Wizard( QWidget* pParent = 0, const char* szName = 0 );
+    explicit ADN_Radars_Wizard( QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_Radars_Wizard();
     //@}
 };

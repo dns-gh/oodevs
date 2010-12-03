@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-06-25 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Types.h $
-// $Author: Ape $
-// $Modtime: 21/10/04 17:47 $
-// $Revision: 1 $
-// $Workfile: ADN_Types.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_Types_h_
 #define __ADN_Types_h_

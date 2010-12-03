@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-06-19 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Resources.cpp $
-// $Author: Ape $
-// $Modtime: 21/10/04 17:47 $
-// $Revision: 1 $
-// $Workfile: ADN_Resources.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Resources.h"

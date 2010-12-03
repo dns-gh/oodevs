@@ -1,24 +1,24 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-09-29 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Sensors_Postures_GUI.h $
-// $Author: Ape $
-// $Modtime: 20/04/05 16:53 $
-// $Revision: 4 $
-// $Workfile: ADN_Sensors_Postures_GUI.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_Sensors_Postures_GUI_h_
 #define __ADN_Sensors_Postures_GUI_h_
 
 #include "ADN_CommonGfx.h"
 #include "ENT/ENT_Enums_Gen.h"
+#include <boost/noncopyable.hpp>
 
 //*****************************************************************************
 // Created: JDY 03-09-29
 //*****************************************************************************
 class ADN_Sensors_Postures_GUI : public ADN_Table2
+                               , private boost::noncopyable
 {
     Q_OBJECT;
 

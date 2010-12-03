@@ -6,18 +6,11 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-04-18 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_HtmlBuilder.h $
-// $Author: Ape $
-// $Modtime: 21/04/05 10:11 $
-// $Revision: 1 $
-// $Workfile: ADN_HtmlBuilder.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_HtmlBuilder_h_
 #define __ADN_HtmlBuilder_h_
+
+#include <boost/noncopyable.hpp>
 
 class QTable;
 class QListView;
@@ -28,14 +21,13 @@ class QListView;
 */
 // Created: APE 2005-04-18
 // =============================================================================
-class ADN_HtmlBuilder
+class ADN_HtmlBuilder : private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_HtmlBuilder )
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_HtmlBuilder();
+             ADN_HtmlBuilder();
     virtual ~ADN_HtmlBuilder();
     //@}
 

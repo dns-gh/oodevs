@@ -13,7 +13,6 @@
 #define __ADN_Composantes_Data_h_
 
 #include "ADN_Data_ABC.h"
-
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 #include "ADN_Categories_Data.h"
@@ -27,24 +26,19 @@
 #include "ADN_Breakdowns_Data.h"
 #include "ADN_Tr.h"
 
-
 // =============================================================================
 /** @class  ADN_Composantes_Data
-@brief  ADN_Composantes_Data
+    @brief  ADN_Composantes_Data
 */
 // Created: APE 2004-12-07
 // =============================================================================
 class ADN_Composantes_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Composantes_Data )
-
 
 public:
     //*****************************************************************************
-    class AmbulanceInfos
-        : public ADN_DataTreeNode_ABC
+    class AmbulanceInfos : public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( AmbulanceInfos )
 
     public:
         AmbulanceInfos();
@@ -68,10 +62,8 @@ public:
 
 
     //*****************************************************************************
-    class LogHealthInfos
-        : public ADN_DataTreeNode_ABC
+    class LogHealthInfos : public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( LogHealthInfos )
 
     public:
         LogHealthInfos();
@@ -101,10 +93,8 @@ public:
 
 
     //*****************************************************************************
-    class NTIInfos
-        : public ADN_DataTreeNode_ABC
+    class NTIInfos : public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( NTIInfos )
 
     public:
         NTIInfos( const std::string& strName );
@@ -128,10 +118,8 @@ public:
 
 
     //*****************************************************************************
-    class LogMaintenanceInfos
-        : public ADN_DataTreeNode_ABC
+    class LogMaintenanceInfos : public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( LogMaintenanceInfos )
 
     public:
         LogMaintenanceInfos();
@@ -158,11 +146,9 @@ public:
 
 
     //*****************************************************************************
-    class LogSupplyInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class LogSupplyInfos : public ADN_Ref_ABC
+                         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( LogSupplyInfos )
 
     public:
         LogSupplyInfos();
@@ -183,10 +169,8 @@ public:
     };
 
     //*****************************************************************************
-    class LogInfos
-        : public ADN_DataTreeNode_ABC
+    class LogInfos : public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( LogInfos )
 
     public:
         LogInfos();
@@ -211,11 +195,9 @@ public:
 
 
     //*****************************************************************************
-    class BreakdownInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class BreakdownInfos : public ADN_Ref_ABC
+                         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( BreakdownInfos )
 
     public:
         BreakdownInfos();
@@ -237,10 +219,8 @@ public:
     typedef T_BreakdownInfos_Vector::iterator       IT_BreakdownInfos_Vector;
 
     //*****************************************************************************
-    class BreakdownGroupInfos
-        : public ADN_DataTreeNode_ABC
+    class BreakdownGroupInfos : public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( BreakdownGroupInfos )
 
     public:
         BreakdownGroupInfos( const std::string& strName );
@@ -261,10 +241,8 @@ public:
 
 
     //*****************************************************************************
-    class SpeedInfos
-        : public ADN_DataTreeNode_ABC
+    class SpeedInfos : public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( SpeedInfos )
 
     public:
         SpeedInfos( E_Location nTypeTerrain );
@@ -299,11 +277,9 @@ public:
 
 
     //*****************************************************************************
-    class SensorInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class SensorInfos : public ADN_Ref_ABC
+                      , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( SensorInfos )
 
     public:
         SensorInfos();
@@ -341,11 +317,9 @@ public:
 
 
     //*****************************************************************************
-    class RadarInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class RadarInfos : public ADN_Ref_ABC
+                     , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( RadarInfos )
 
     public:
         RadarInfos();
@@ -368,11 +342,9 @@ public:
 
 
     //*****************************************************************************
-    class WeaponInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class WeaponInfos : public ADN_Ref_ABC
+                      , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( WeaponInfos )
 
     public:
         WeaponInfos();
@@ -411,11 +383,9 @@ public:
     typedef T_WeaponInfos_Vector::iterator      IT_WeaponInfos_Vector;
 
     //*****************************************************************************
-    class ActiveProtectionsInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ActiveProtectionsInfos : public ADN_Ref_ABC
+                                 , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ActiveProtectionsInfos )
 
     public:
         ActiveProtectionsInfos();
@@ -439,11 +409,9 @@ public:
     typedef T_ActiveProtectionsInfos_Vector::iterator      IT_ActiveProtectionsInfos_Vector;
 
     //*****************************************************************************
-    class HumanProtectionInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class HumanProtectionInfos : public ADN_Ref_ABC
+                               , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( HumanProtectionInfos )
 
     public:
         HumanProtectionInfos();
@@ -459,11 +427,9 @@ public:
     };
 
     //*****************************************************************************
-    class ActiveProtectionInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ActiveProtectionInfos : public ADN_Ref_ABC
+                                , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ActiveProtectionInfos )
 
     public:
         ActiveProtectionInfos();
@@ -480,11 +446,9 @@ public:
     };
 
     //*****************************************************************************
-    class CategoryInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class CategoryInfos : public ADN_Ref_ABC
+                        , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( CategoryInfos )
 
     public:
         CategoryInfos( ADN_Equipement_Data::ResourceInfos& parentDotation );
@@ -510,11 +474,9 @@ public:
 
 
     //*****************************************************************************
-    class ResourceInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ResourceInfos : public ADN_Ref_ABC
+                        , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ResourceInfos )
 
     public:
         ResourceInfos();
@@ -536,11 +498,9 @@ public:
 
 
     //*****************************************************************************
-    class ObjectInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ObjectInfos : public ADN_Ref_ABC
+                      , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ObjectInfos )
 
     public:
         ObjectInfos();
@@ -597,11 +557,9 @@ public:
 
 
     //*****************************************************************************
-    class ConsumptionItem
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ConsumptionItem : public ADN_Ref_ABC
+                          , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ConsumptionItem )
 
     public:
         ConsumptionItem( E_ConsumptionType nConsumptionType, ADN_Equipement_Data::CategoryInfo& category );
@@ -625,11 +583,9 @@ public:
 
 
     //*****************************************************************************
-    class ConsumptionsInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ConsumptionsInfos : public ADN_Ref_ABC
+                            , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ConsumptionsInfos )
 
     public:
         ConsumptionsInfos();
@@ -650,11 +606,9 @@ public:
 
 
     //*****************************************************************************
-    class ComposanteInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ComposanteInfos : public ADN_Ref_ABC
+                          , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ComposanteInfos )
 
     public:
         ComposanteInfos();

@@ -13,6 +13,7 @@
 #define __ADN_Workspace_h_
 
 #include "ADN_WorkspaceElement.h"
+#include <boost/noncopyable.hpp>
 
 class ADN_MainWindow;
 class ADN_ProgressIndicator_ABC;
@@ -76,9 +77,9 @@ enum E_OpenMode;
 // Created: APE 2005-03-18
 // =============================================================================
 class ADN_Workspace : public QObject
+                    , private boost::noncopyable
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( ADN_Workspace )
 
 public:
     static ADN_Workspace& GetWorkspace();

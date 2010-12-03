@@ -15,10 +15,7 @@
 #include "ADN_Enums.h"
 #include "IdentifierFactory.h"
 
-namespace xml
-{
-    class xistream;
-}
+namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_Missions_Data
@@ -26,10 +23,8 @@ namespace xml
 */
 // Created: APE 2005-03-14
 // =============================================================================
-class ADN_Missions_Data
-: public ADN_Data_ABC
+class ADN_Missions_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Missions_Data )
 
 // =============================================================================
 // Mission parameters
@@ -38,7 +33,6 @@ public:
     class MissionParameterValue : public ADN_Ref_ABC
                                 , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( MissionParameterValue )
     public:
                  MissionParameterValue();
         virtual ~MissionParameterValue();
@@ -55,7 +49,6 @@ public:
     class MissionType : public ADN_Ref_ABC
                       , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( MissionType )
     public:
                  MissionType();
         explicit MissionType( const std::string& name );
@@ -80,7 +73,6 @@ public:
     class MissionParameter : public ADN_Ref_ABC
                            , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( MissionParameter )
     public:
                  MissionParameter();
         virtual ~MissionParameter();
@@ -118,7 +110,6 @@ public:
     class Mission : public ADN_Ref_ABC
                   , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( Mission )
     public:
         explicit Mission( bool isAutomat = false );
         explicit Mission( unsigned int id, bool isAutomat = false );
@@ -156,7 +147,6 @@ public:
     class FragOrder : public ADN_Ref_ABC
                     , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( FragOrder )
     public:
                  FragOrder();
         explicit FragOrder( unsigned int id );

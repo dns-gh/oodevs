@@ -19,7 +19,6 @@
 class QWidget;
 class ADN_Table;
 class ADN_Composantes_Data;
-
 class ADN_ListView_Composantes;
 class ADN_Composantes_Speeds_GUI;
 class ADN_Composantes_Sensors_GUI;
@@ -28,7 +27,6 @@ class ADN_Composantes_Dotations_GUI;
 class ADN_Composantes_ConsumptionsTable;
 class ADN_Composantes_WeaponsListView;
 class ADN_Composantes_ActiveProtectionsListView;
-
 
 // =============================================================================
 /** @class  ADN_Composantes_GUI
@@ -39,7 +37,6 @@ class ADN_Composantes_ActiveProtectionsListView;
 class ADN_Composantes_GUI : public ADN_GUI_ABC
 {
     Q_OBJECT
-        MT_COPYNOTALLOWED( ADN_Composantes_GUI )
 
 public:
     enum E_NTIGuiElements

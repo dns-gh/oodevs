@@ -19,14 +19,12 @@
 */
 // Created: JSR 2010-09-14
 // =============================================================================
-class ADN_ResourceNetworks_Wizard
-    : public ADN_Wizard_ABC< ADN_ResourceNetworks_Data::ResourceNetworkInfos >
+class ADN_ResourceNetworks_Wizard : public ADN_Wizard_ABC< ADN_ResourceNetworks_Data::ResourceNetworkInfos >
 {
-    MT_COPYNOTALLOWED( ADN_ResourceNetworks_Wizard )
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ResourceNetworks_Wizard( QWidget* pParent = 0, const char* szName = 0 );
+    explicit ADN_ResourceNetworks_Wizard( QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_ResourceNetworks_Wizard();
     //@}
 };

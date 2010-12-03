@@ -6,21 +6,13 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-06 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_WorkspaceElement.h $
-// $Author: Ape $
-// $Modtime: 17/03/05 17:57 $
-// $Revision: 2 $
-// $Workfile: ADN_WorkspaceElement.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_WorkspaceElement_h_
 #define __ADN_WorkspaceElement_h_
 
+#include "ADN_Data_ABC.h"
+#include "ADN_GUI_ABC.h"
 #include "ADN_WorkspaceElement_ABC.h"
-
 
 // =============================================================================
 /** @class  ADN_WorkspaceElement
@@ -29,16 +21,22 @@
 // Created: APE 2004-12-06
 // =============================================================================
 template< class DATA, class GUI >
-class ADN_WorkspaceElement
-: public ADN_WorkspaceElement_ABC
+class ADN_WorkspaceElement : public ADN_WorkspaceElement_ABC
 {
-    MT_COPYNOTALLOWED( ADN_WorkspaceElement )
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_WorkspaceElement( const char* szName ) : ADN_WorkspaceElement_ABC( szName ),  data_( *new DATA() ), gui_( *new GUI( data_ ) ) {}
-    virtual ~ADN_WorkspaceElement() { delete &(ADN_Data_ABC&)data_; delete &(ADN_GUI_ABC&)gui_; }
+    explicit ADN_WorkspaceElement( const char* szName )
+                 : ADN_WorkspaceElement_ABC( szName )
+                 , data_( *new DATA() )
+                 , gui_( *new GUI( data_ ) )
+    {}
+    virtual ~ADN_WorkspaceElement()
+    {
+        delete &(ADN_Data_ABC&)data_;
+        delete &(ADN_GUI_ABC&)gui_;
+    }
     //@}
 
     //! @name Accessors

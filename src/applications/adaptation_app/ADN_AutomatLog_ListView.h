@@ -6,23 +6,14 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-04-04 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_AutomatLog_ListView.h $
-// $Author: Ape $
-// $Modtime: 20/04/05 15:56 $
-// $Revision: 2 $
-// $Workfile: ADN_AutomatLog_ListView.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_AutomatLog_ListView_h_
 #define __ADN_AutomatLog_ListView_h_
 
 #include "ADN_ListView.h"
-
 #include "ADN_Data_ABC.h"
 #include "ADN_Equipement_Data.h"
+#include <boost/noncopyable.hpp>
 
 class ADN_Automata_Data;
 class QListViewItem;
@@ -31,13 +22,13 @@ class QListViewItem;
 // Created: APE 2005-04-04
 // =============================================================================
 class ADN_AutomatLog_ListView : public ADN_ListView
+                              , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_AutomatLog_ListView )
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_AutomatLog_ListView( ADN_Automata_Data& data, QWidget* pParent = 0 );
+    explicit ADN_AutomatLog_ListView( ADN_Automata_Data& data, QWidget* pParent = 0 );
     virtual ~ADN_AutomatLog_ListView();
     //@}
 

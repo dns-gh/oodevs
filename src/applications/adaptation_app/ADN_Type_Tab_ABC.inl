@@ -1,14 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-08-28 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Type_Tab_ABC.inl $
-// $Author: Ape $
-// $Modtime: 21/10/04 17:47 $
-// $Revision: 1 $
-// $Workfile: ADN_Type_Tab_ABC.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
-
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Line_ABC constructor
@@ -22,7 +19,6 @@ ADN_Type_Line_ABC<T>::ADN_Type_Line_ABC(int w)
         AddItem(new T());
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Line_ABC destructor
 // Created: JDY 03-09-01
@@ -35,8 +31,6 @@ ADN_Type_Line_ABC<T>::~ADN_Type_Line_ABC()
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Tab_ABC::GetItemName
-/** @return 
-*/
 // Created: AGN 2004-05-18
 // -----------------------------------------------------------------------------
 template <class T>
@@ -44,10 +38,6 @@ std::string ADN_Type_Line_ABC<T>::GetItemName()
 {
     return std::string();
 }
-
-// =============================================================================
-// 
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Tab_ABC constructor
@@ -61,7 +51,6 @@ ADN_Type_Tab_ABC<T>::ADN_Type_Tab_ABC(int w,int h)
         AddItem(new ADN_Type_Line_ABC<T>(w));
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Tab_ABC destructor
 // Created: JDY 03-09-01
@@ -71,7 +60,6 @@ ADN_Type_Tab_ABC<T>::~ADN_Type_Tab_ABC()
 {
     clear_owned_ptrs( *this );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Tab_ABC<T>::Get

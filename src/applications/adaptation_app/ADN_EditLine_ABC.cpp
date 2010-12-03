@@ -1,18 +1,15 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-08 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_EditLine_ABC.cpp $
-// $Author: Ape $
-// $Modtime: 13/04/05 10:26 $
-// $Revision: 4 $
-// $Workfile: ADN_EditLine_ABC.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_EditLine_ABC.h"
 #include "moc_ADN_EditLine_ABC.cpp"
-
 #include "ADN_Workspace.h"
 #include "ADN_Enums.h"
 #include "ADN_App.h"
@@ -23,8 +20,8 @@
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
 ADN_EditLine_ABC::ADN_EditLine_ABC(QWidget* parent, const char * name)
-: QLineEdit(parent,name)
-, ADN_Gfx_ABC()
+    : QLineEdit(parent,name)
+    , ADN_Gfx_ABC()
 {
     // connect edit line & connector
     connect( this                   , SIGNAL( textChanged( const QString & ) ),
@@ -32,15 +29,14 @@ ADN_EditLine_ABC::ADN_EditLine_ABC(QWidget* parent, const char * name)
     connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_EditLine_ABC destructor
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
 ADN_EditLine_ABC::~ADN_EditLine_ABC()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_EditLine_ABC::setEnabled
@@ -53,7 +49,6 @@ void ADN_EditLine_ABC::setEnabled( bool b )
     else
         QLineEdit::setEnabled( b );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_EditLine_ABC::focusOutEvent

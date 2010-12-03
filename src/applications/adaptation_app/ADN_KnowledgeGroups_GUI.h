@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-21 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_KnowledgeGroups_GUI.h $
-// $Author: Ape $
-// $Modtime: 21/03/05 16:34 $
-// $Revision: 1 $
-// $Workfile: ADN_KnowledgeGroups_GUI.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_KnowledgeGroups_GUI_h_
 #define __ADN_KnowledgeGroups_GUI_h_
@@ -22,7 +13,6 @@
 #include "ADN_GUI_ABC.h"
 
 class ADN_KnowledgeGroups_Data;
-
 
 // =============================================================================
 /** @class  ADN_KnowledgeGroups_GUI
@@ -32,7 +22,6 @@ class ADN_KnowledgeGroups_Data;
 // =============================================================================
 class ADN_KnowledgeGroups_GUI : public ADN_GUI_ABC
 {
-    MT_COPYNOTALLOWED( ADN_KnowledgeGroups_GUI )
 
 public:
     enum E_GuiElements
@@ -50,7 +39,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_KnowledgeGroups_GUI( ADN_KnowledgeGroups_Data& data );
+    explicit ADN_KnowledgeGroups_GUI( ADN_KnowledgeGroups_Data& data );
     virtual ~ADN_KnowledgeGroups_GUI();
     //@}
 

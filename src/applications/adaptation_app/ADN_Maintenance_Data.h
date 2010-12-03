@@ -15,8 +15,7 @@
 #include "ADN_Enums.h"
 #include "ADN_AvailabilityWarning.h"
 
-class xml::xistream;
-
+namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_Maintenance_Data
@@ -24,20 +23,15 @@ class xml::xistream;
 */
 // Created: APE 2005-03-14
 // =============================================================================
-class ADN_Maintenance_Data
-: public ADN_Data_ABC
+class ADN_Maintenance_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Maintenance_Data )
 
 public:
-// *****************************************************************************
-    class WorkingSchemeInfo
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class WorkingSchemeInfo : public ADN_Ref_ABC
+                            , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( WorkingSchemeInfo )
     public:
-        WorkingSchemeInfo( unsigned int nIdx );
+        explicit WorkingSchemeInfo( unsigned int nIdx );
         virtual ~WorkingSchemeInfo() {}
 
         virtual std::string GetNodeName();
@@ -59,7 +53,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Maintenance_Data();
+             ADN_Maintenance_Data();
     virtual ~ADN_Maintenance_Data();
     //@}
 

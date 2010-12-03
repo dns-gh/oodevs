@@ -6,19 +6,9 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-21 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_GraphData.cpp $
-// $Author: Ape $
-// $Modtime: 13/01/05 10:53 $
-// $Revision: 2 $
-// $Workfile: ADN_GraphData.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_GraphData.h"
-
 #include "ADN_GraphValue.h"
 
 // -----------------------------------------------------------------------------
@@ -28,11 +18,11 @@
 // Created: APE 2004-12-21
 // -----------------------------------------------------------------------------
 ADN_GraphData::ADN_GraphData( uint nUserID, GQ_Plot& plot )
-: GQ_PlotData( nUserID, plot )
-, pConnector_( 0 )
+    : GQ_PlotData( nUserID, plot )
+    , pConnector_( 0 )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphData destructor
@@ -44,7 +34,6 @@ ADN_GraphData::~ADN_GraphData()
     delete pConnector_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphData::AddData
 // Created: APE 2004-12-21
@@ -55,7 +44,6 @@ void ADN_GraphData::AddData( ADN_GraphValue& value )
     this->AddPoint( value.GetPoint() );
     TouchData();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphData::DeleteData
@@ -98,7 +86,6 @@ void ADN_GraphData::OnDataChanged( ADN_GraphValue& value )
     this->ChangePoint( std::distance( graphValueList_.begin(), it ), newPoint );
     TouchData();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GraphData::SelectRelatedData

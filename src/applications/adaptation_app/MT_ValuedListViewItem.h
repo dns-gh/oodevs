@@ -25,7 +25,6 @@
 template< class T, int N = 0 >
 class MT_ValuedListViewItem : public MT_ListViewItem
 {
-    MT_COPYNOTALLOWED( MT_ValuedListViewItem );
 
 public:
     //! @name Constructors/Destructor

@@ -21,9 +21,9 @@
 
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_ListViewItem.h"
+#include <boost/noncopyable.hpp>
 
 class ADN_ListView;
-
 
 // =============================================================================
 /** @class  ADN_Connector_ListView
@@ -37,13 +37,13 @@ class ADN_ListView;
 // =============================================================================
 template< typename T >
 class ADN_Connector_ListView : public ADN_Connector_ListView_ABC
+                             , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_Connector_ListView )
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Connector_ListView( ADN_ListView& list );
+    explicit ADN_Connector_ListView( ADN_ListView& list );
     virtual ~ADN_Connector_ListView();
     //@}
 

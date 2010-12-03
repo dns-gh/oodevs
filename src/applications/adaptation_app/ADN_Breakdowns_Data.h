@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-16 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Breakdowns_Data.h $
-// $Author: Nld $
-// $Modtime: 27/04/05 10:57 $
-// $Revision: 4 $
-// $Workfile: ADN_Breakdowns_Data.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Breakdowns_Data_h_
 #define __ADN_Breakdowns_Data_h_
@@ -24,8 +15,7 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_Tr.h"
 
-class xml::xistream;
-
+namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_Breakdowns_Data
@@ -33,20 +23,16 @@ class xml::xistream;
 */
 // Created: APE 2005-03-16
 // =============================================================================
-class ADN_Breakdowns_Data
-: public ADN_Data_ABC
+class ADN_Breakdowns_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Breakdowns_Data )
 
 public:
 // *****************************************************************************
-    class RepairPartInfo
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class RepairPartInfo : public ADN_Ref_ABC
+                         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( RepairPartInfo )
     public:
-        RepairPartInfo();
+                 RepairPartInfo();
         virtual ~RepairPartInfo() {}
 
         virtual std::string GetNodeName();
@@ -68,13 +54,11 @@ public:
 
 // *****************************************************************************
 
-    class BreakdownInfo
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class BreakdownInfo : public ADN_Ref_ABC
+                        , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( BreakdownInfo )
     public:
-         BreakdownInfo();
+                 BreakdownInfo();
         virtual ~BreakdownInfo();
 
         virtual std::string GetNodeName();
@@ -106,7 +90,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Breakdowns_Data();
+             ADN_Breakdowns_Data();
     virtual ~ADN_Breakdowns_Data();
     //@}
 

@@ -6,20 +6,12 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-04-04 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_ListViewDialog.h $
-// $Author: Ape $
-// $Modtime: 20/04/05 15:56 $
-// $Revision: 2 $
-// $Workfile: ADN_ListViewDialog.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_ListViewDialog_h_
 #define __ADN_ListViewDialog_h_
 
 #include <qdialog.h>
+#include <boost/noncopyable.hpp>
 
 class ADN_ListView;
 
@@ -30,9 +22,9 @@ class ADN_ListView;
 // Created: APE 2005-04-04
 // =============================================================================
 class ADN_ListViewDialog : public QDialog
+                         , private boost::noncopyable
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( ADN_ListViewDialog )
 
 public:
     //! @name Constructors/Destructor

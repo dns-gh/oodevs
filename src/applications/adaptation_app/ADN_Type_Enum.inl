@@ -1,21 +1,15 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-22 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Type_Enum.inl $
-// $Author: Ape $
-// $Modtime: 17/02/05 15:46 $
-// $Revision: 4 $
-// $Workfile: ADN_Type_Enum.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "ADN_ChangeValueCommand_Enum.h"
 #include "ADN_Workspace.h"
 #include "MT_Tools/MT_FormatString.h"
-
-// =============================================================================
-// 
-// =============================================================================
 
 template <class T,int nb>
 typename ADN_Type_Enum< T, nb >::T_Converter ADN_Type_Enum< T, nb >::converter_ = 0;
@@ -49,22 +43,17 @@ void ADN_Type_Enum< T, nb >::SetConverter( typename ADN_Type_Enum< T, nb >::T_Co
     converter_ = enumConverter;
 }
 
-// =============================================================================
-// 
-// =============================================================================
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Enum constructor
 // Created: JDY 03-07-22
 //-----------------------------------------------------------------------------
 template <class T,int nb>
 ADN_Type_Enum<T,nb>::ADN_Type_Enum()
-: ADN_Connector_Vector_ABC()
-, data_((T)0)
+    : ADN_Connector_Vector_ABC()
+    , data_((T)0)
 {
+    // NOTHING
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Enum constructor
@@ -72,12 +61,11 @@ ADN_Type_Enum<T,nb>::ADN_Type_Enum()
 //-----------------------------------------------------------------------------
 template <class T,int nb>
 ADN_Type_Enum<T,nb>::ADN_Type_Enum( const T& value )
-: ADN_Connector_Vector_ABC()
-, data_( value )
+    : ADN_Connector_Vector_ABC()
+    , data_( value )
 {
+    // NOTHING
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Enum destructor
@@ -86,8 +74,8 @@ ADN_Type_Enum<T,nb>::ADN_Type_Enum( const T& value )
 template <class T,int nb>
 ADN_Type_Enum<T,nb>::~ADN_Type_Enum()
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Enum<T,nb>::T_TypePtr 
@@ -161,7 +149,6 @@ bool ADN_Type_Enum<T,nb>::operator !=(const T& val) const
     return data_!=val;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Enum<T,nb>::SetDataPrivate
 // Created: JDY 03-07-21
@@ -171,7 +158,6 @@ void ADN_Type_Enum<T,nb>::SetDataPrivate(void *data)
 {
     SetDataPrivate(*(T*)data,true);
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Enum<T,nb>::SetDataPrivate
@@ -191,7 +177,6 @@ void ADN_Type_Enum<T,nb>::SetDataPrivate(const T& value, bool bCanBeUndone )
         emit DataChanged(&data_);
     }  
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Enum::Initialize

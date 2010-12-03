@@ -21,15 +21,13 @@
 #include "ADN_ResourceNatureInfos.h"
 #include "IdentifierFactory.h"
 
-class xml::xistream;
-
+namespace xml { class xistream; }
 
 //*****************************************************************************
 // Created: JDY 03-08-27
 //*****************************************************************************
 class ADN_Categories_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED(ADN_Categories_Data)
 
 public:
     typedef ADN_Type_String SizeInfos;

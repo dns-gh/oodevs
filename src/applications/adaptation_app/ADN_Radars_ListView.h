@@ -11,6 +11,7 @@
 #define __ADN_Radars_ListView_h_
 
 #include "ADN_ListView.h"
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  ADN_Radars_ListView
@@ -19,13 +20,13 @@
 // Created: APE 2005-05-03
 // =============================================================================
 class ADN_Radars_ListView : public ADN_ListView
+                          , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_Radars_ListView )
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Radars_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    explicit ADN_Radars_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
     virtual ~ADN_Radars_ListView();
     //@}
 

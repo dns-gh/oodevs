@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-11-15 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_AttritionInfos.h $
-// $Author: Nld $
-// $Modtime: 20/07/05 14:11 $
-// $Revision: 13 $
-// $Workfile: ADN_AttritionInfos.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_AttritionEffectOnHuman_h_
 #define __ADN_AttritionEffectOnHuman_h_
@@ -30,7 +21,6 @@ class AttritionEffectOnHuman
     : public ADN_Ref_ABC
     , public ADN_DataTreeNode_ABC
 {
-    MT_COPYNOTALLOWED( AttritionEffectOnHuman )
 
 public:
     AttritionEffectOnHuman();

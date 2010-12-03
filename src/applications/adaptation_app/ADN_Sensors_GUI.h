@@ -20,19 +20,15 @@ class QWidget;
 class QTabWidget;
 class ADN_Table;
 
-
 // =============================================================================
 /** @class  ADN_Sensors_GUI
     @brief  ADN_Sensors_GUI
 */
 // Created: APE 2004-12-07
 // =============================================================================
-class ADN_Sensors_GUI
-: public ADN_GUI_ABC
+class ADN_Sensors_GUI : public ADN_GUI_ABC
 {
     Q_OBJECT
-
-    MT_COPYNOTALLOWED( ADN_Sensors_GUI )
 
 public:
     enum E_GuiElemements
@@ -82,7 +78,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Sensors_GUI( ADN_Sensors_Data& data );
+    explicit ADN_Sensors_GUI( ADN_Sensors_Data& data );
     virtual ~ADN_Sensors_GUI();
     //@}
 

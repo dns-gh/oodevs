@@ -6,19 +6,11 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGN 2004-05-12 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_DataTreeNode_ABC.h $
-// $Author: Ape $
-// $Modtime: 11/01/05 10:13 $
-// $Revision: 2 $
-// $Workfile: ADN_DataTreeNode_ABC.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_DataTreeNode_ABC_h_
 #define __ADN_DataTreeNode_ABC_h_
 
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  ADN_DataTreeNode_ABC
@@ -30,7 +22,7 @@
 */
 // Created: AGN 2004-05-12
 // =============================================================================
-class ADN_DataTreeNode_ABC
+class ADN_DataTreeNode_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -48,14 +40,6 @@ public:
     //! @name Accessors
     //@{
     ADN_DataTreeNode_ABC* GetParentNode() const;
-    //@}
-
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_DataTreeNode_ABC( const ADN_DataTreeNode_ABC& );            //!< Copy constructor
-    ADN_DataTreeNode_ABC& operator=( const ADN_DataTreeNode_ABC& ); //!< Assignment operator
     //@}
 
 private:

@@ -23,7 +23,6 @@ class ADN_Table;
 // =============================================================================
 class ADN_Population_GUI : public ADN_GUI_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Population_GUI )
 
 public:
     enum E_GuiElements
@@ -53,7 +52,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Population_GUI( ADN_Population_Data& data );
+    explicit ADN_Population_GUI( ADN_Population_Data& data );
     virtual ~ADN_Population_GUI();
     //@}
 

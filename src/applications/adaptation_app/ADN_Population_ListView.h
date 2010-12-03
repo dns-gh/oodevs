@@ -11,6 +11,7 @@
 #define __ADN_Population_ListView_h_
 
 #include "ADN_ListView.h"
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  ADN_Population_ListView
@@ -19,13 +20,13 @@
 // Created: APE 2005-01-06
 // =============================================================================
 class ADN_Population_ListView : public ADN_ListView
+                              , private boost::noncopyable
 {
-    MT_COPYNOTALLOWED( ADN_Population_ListView )
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Population_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    explicit ADN_Population_ListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
     virtual ~ADN_Population_ListView();
     //@}
 

@@ -25,14 +25,11 @@
 // =============================================================================
 class ADN_LocalFireClass_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_LocalFireClass_Data )
 
 public:
-    class LocalFireClassInjuryInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class LocalFireClassInjuryInfos : public ADN_Ref_ABC
+                                    , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( LocalFireClassInjuryInfos )
 
     public:
         explicit LocalFireClassInjuryInfos( const std::string& nodeName );
@@ -56,12 +53,9 @@ public:
         ADN_Type_Int nNbDeadHumans_;
     };
 
-    class LocalFireClassInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class LocalFireClassInfos : public ADN_Ref_ABC
+                              , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ADN_LocalFireClass_Data::LocalFireClassInfos )
-
     public:
         //! @name Constructors/Destructor
         //@{

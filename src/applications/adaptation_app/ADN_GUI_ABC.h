@@ -19,12 +19,12 @@
 #ifndef __ADN_GUI_ABC_h_
 #define __ADN_GUI_ABC_h_
 
+#include <boost/noncopyable.hpp>
 #include <qobject.h>
 
 class QWidget;
 class ADN_MainWindow;
 class ADN_HtmlBuilder;
-
 
 // =============================================================================
 /** @class  ADN_GUI_ABC
@@ -33,8 +33,8 @@ class ADN_HtmlBuilder;
 // Created: APE 2004-12-06
 // =============================================================================
 class ADN_GUI_ABC : public QObject
+                  , private boost::noncopyable        
 {
-    MT_COPYNOTALLOWED( ADN_GUI_ABC )
 
 public:
     //! @name Constructors/Destructor

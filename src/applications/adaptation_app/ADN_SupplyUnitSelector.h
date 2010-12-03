@@ -6,24 +6,14 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-01-05 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_SupplyUnitSelector.h $
-// $Author: Ape $
-// $Modtime: 25/04/05 18:10 $
-// $Revision: 1 $
-// $Workfile: ADN_SupplyUnitSelector.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_SupplyUnitSelector_h_
 #define __ADN_SupplyUnitSelector_h_
 
 #include <qpushbutton.h>
-
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Connector_Vector_ABC.h"
-
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  ADN_SupplyUnitSelector
@@ -35,17 +25,16 @@
 */
 // Created: APE 2005-01-05
 // =============================================================================
-class ADN_SupplyUnitSelector
-: public QPushButton
-, public ADN_Gfx_ABC
+class ADN_SupplyUnitSelector : public QPushButton
+                             , public ADN_Gfx_ABC
+                             , private boost::noncopyable
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( ADN_SupplyUnitSelector )
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_SupplyUnitSelector( QWidget* pParent, const char* szName = 0 );
+    explicit ADN_SupplyUnitSelector( QWidget* pParent, const char* szName = 0 );
     virtual ~ADN_SupplyUnitSelector();
     //@}
 
@@ -64,10 +53,9 @@ private:
 private:
     //! @name Internal class
     //@{
-    class ADN_SupplyUnitSelector_Connector
-    : public ADN_Connector_Vector_ABC
+    class ADN_SupplyUnitSelector_Connector : public ADN_Connector_Vector_ABC
+                                           , private boost::noncopyable
     {
-        MT_COPYNOTALLOWED( ADN_SupplyUnitSelector_Connector )
     public:
         ADN_SupplyUnitSelector_Connector( ADN_SupplyUnitSelector& gui );
         virtual ~ADN_SupplyUnitSelector_Connector();

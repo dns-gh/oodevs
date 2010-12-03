@@ -15,8 +15,7 @@
 #include "ADN_Units_Data.h"
 #include "ADN_AvailabilityWarning.h"
 
-class xml::xistream;
-
+namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_Supply_Data
@@ -24,21 +23,17 @@ class xml::xistream;
 */
 // Created: APE 2005-03-14
 // =============================================================================
-class ADN_Supply_Data
-    : public ADN_Data_ABC
+class ADN_Supply_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Supply_Data )
 
 public:
 // *****************************************************************************
     template< typename T >
-    class ConvoyInfo
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ConvoyInfo : public ADN_Ref_ABC
+                     , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( ConvoyInfo )
     public:
-        ConvoyInfo( typename T::BaseType value );
+        explicit ConvoyInfo( typename T::BaseType value );
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -57,13 +52,12 @@ public:
     typedef ADN_Type_Vector_ABC< ConvoyInfo< ADN_Type_Double > > T_ConvoyDoubleInfoVector;
     typedef T_ConvoyDoubleInfoVector::iterator                   IT_ConvoyDoubleInfoVector;
 
-    class SupplyDataInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class SupplyDataInfos : public ADN_Ref_ABC
+                          , public ADN_DataTreeNode_ABC
     {
     public:
-        SupplyDataInfos();
-        ~SupplyDataInfos();
+                 SupplyDataInfos();
+        virtual ~SupplyDataInfos();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );

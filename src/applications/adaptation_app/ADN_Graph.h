@@ -6,23 +6,13 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-14 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Graph.h $
-// $Author: Ape $
-// $Modtime: 12/01/05 15:41 $
-// $Revision: 2 $
-// $Workfile: ADN_Graph.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Graph_h_
 #define __ADN_Graph_h_
 
 #include "ADN_Type_Vector_ABC.h"
-
 #include "GQ_Plot.h"
-
+#include <boost/noncopyable.hpp>
 
 class ADN_ListView;
 
@@ -37,14 +27,14 @@ class ADN_ListView;
 // Created: APE 2004-12-14
 // =============================================================================
 class ADN_Graph : public GQ_Plot
+                , private boost::noncopyable
 {
     Q_OBJECT
-    MT_COPYNOTALLOWED( ADN_Graph )
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Graph( QWidget* pParent = 0 );
+    explicit ADN_Graph( QWidget* pParent = 0 );
     virtual ~ADN_Graph();
     //@}
 
@@ -71,7 +61,6 @@ private:
     //@}
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Graph::SetConnector
 // Created: APE 2005-01-12
@@ -81,6 +70,5 @@ void ADN_Graph::SetConnector( ADN_Connector_Vector_ABC& connector )
 {
     pConnector_ = &connector;
 }
-
 
 #endif // __ADN_Graph_h_

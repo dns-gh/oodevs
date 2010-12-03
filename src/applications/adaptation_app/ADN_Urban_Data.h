@@ -21,27 +21,23 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_AttritionInfos.h"
 
-
-class xml::xistream;
+namespace xml { class xistream; }
 
 //*****************************************************************************
 // Created: JDY 03-08-27
 //*****************************************************************************
 class ADN_Urban_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED(ADN_Urban_Data)
-
         
 //*****************************************************************************
 public:
     class UrbanMaterialInfos : public ADN_Ref_ABC
                              , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( UrbanMaterialInfos )
     public:
-                  UrbanMaterialInfos( xml::xistream& input );
-                  UrbanMaterialInfos();
-         virtual ~UrbanMaterialInfos();
+                 UrbanMaterialInfos();
+        explicit UrbanMaterialInfos( xml::xistream& input );
+        virtual ~UrbanMaterialInfos();
 
         virtual std::string GetNodeName();
         virtual std::string GetItemName();
@@ -49,18 +45,18 @@ public:
         void WriteMaterial( xml::xostream& output );
 
     private:
-    //! @name Helpers 
-    //@{
-    void ReadAttrition( xml::xistream& input );
-    void CreateDefaultAttritionInfos();
-    //@}
+        //! @name Helpers 
+        //@{
+        void ReadAttrition( xml::xistream& input );
+        void CreateDefaultAttritionInfos();
+        //@}
 
     public:
-    //! @name Member Data
-    //@{
+        //! @name Member Data
+        //@{
         ADN_Type_String strName_; 
         helpers::T_AttritionInfos_Vector vAttritionInfos_;
-    //@}
+        //@}
     };
 
     typedef ADN_Type_Vector_ABC< UrbanMaterialInfos >     T_UrbanMaterialInfos_Vector;
@@ -69,11 +65,8 @@ public:
 
 
 //*****************************************************************************
-
 public:
-    
     typedef ADN_Type_String UrbanInfos;
-
     typedef ADN_Type_Vector_ABC< UrbanInfos > T_UrbanInfos_Vector;
     typedef T_UrbanInfos_Vector::iterator    IT_UrbanInfos_Vector;
    
@@ -81,40 +74,40 @@ public:
              ADN_Urban_Data();
     virtual ~ADN_Urban_Data();
 
-    virtual void FilesNeeded(T_StringList& l) const;
+    virtual void FilesNeeded( T_StringList& l ) const;
     virtual void Reset();
     virtual void ReadArchive( xml::xistream& input );
     virtual void WriteArchive( xml::xostream& output );
 
-    T_UrbanMaterialInfos_Vector&  GetMaterialsInfos();  
-    UrbanMaterialInfos*           FindMaterial( const std::string& strName );
-    T_UrbanInfos_Vector&          GetFacadesInfos();  
-    UrbanInfos*                   FindFacade( const std::string& strName );
-    T_UrbanInfos_Vector&          GetRoofShapesInfos();  
-    UrbanInfos*                   FindRoofShape( const std::string& strName );
+    T_UrbanMaterialInfos_Vector& GetMaterialsInfos();  
+    UrbanMaterialInfos*          FindMaterial( const std::string& strName );
+    T_UrbanInfos_Vector&         GetFacadesInfos();  
+    UrbanInfos*                  FindFacade( const std::string& strName );
+    T_UrbanInfos_Vector&         GetRoofShapesInfos();  
+    UrbanInfos*                  FindRoofShape( const std::string& strName );
 
 private:
     //! @name Helpers
     //@{
-    void ReadMaterial   ( xml::xistream& input  );
-    void ReadMaterials  ( xml::xistream& input  );
+    void ReadMaterial   ( xml::xistream& input );
+    void ReadMaterials  ( xml::xistream& input );
     void WriteMaterials ( xml::xostream& output ) const;
 
-    void ReadFacade     ( xml::xistream& input  );
-    void ReadFacades    ( xml::xistream& input  );
+    void ReadFacade     ( xml::xistream& input );
+    void ReadFacades    ( xml::xistream& input );
     void WriteFacades   ( xml::xostream& output ) const;
 
-    void ReadRoofShape  ( xml::xistream& input  );
+    void ReadRoofShape  ( xml::xistream& input );
     void ReadRoofShapes ( xml::xistream& input );
-    void WriteRoofShapes( xml::xostream& output )  const;
+    void WriteRoofShapes( xml::xostream& output ) const;
     //@}
 
 private:
     //! @name Member Data
     //@{
-    T_UrbanMaterialInfos_Vector      vMaterials_;
-    T_UrbanInfos_Vector              vRoofShapes_;
-    T_UrbanInfos_Vector              vFacades_;
+    T_UrbanMaterialInfos_Vector vMaterials_;
+    T_UrbanInfos_Vector vRoofShapes_;
+    T_UrbanInfos_Vector vFacades_;
     //@}
 };
 

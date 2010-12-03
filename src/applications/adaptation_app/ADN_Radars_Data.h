@@ -16,6 +16,7 @@
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_DataTreeNode_ABC.h"
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  ADN_Radars_Data
@@ -25,14 +26,11 @@
 // =============================================================================
 class ADN_Radars_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_Radars_Data )
 
 public:
 //*****************************************************************************
-    class DetectTimes
+    class DetectTimes : private boost::noncopyable
     {
-        MT_COPYNOTALLOWED( DetectTimes )
-
     public:
          DetectTimes();
         ~DetectTimes();
@@ -52,14 +50,12 @@ public:
 
 
 //*****************************************************************************
-    class RadarInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class RadarInfos : public ADN_Ref_ABC
+                     , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( RadarInfos )
     public:
-         RadarInfos();
-        ~RadarInfos();
+                 RadarInfos();
+        virtual ~RadarInfos();
 
         virtual std::string GetNodeName();
         std::string GetItemName();
