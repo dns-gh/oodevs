@@ -65,6 +65,7 @@ void ADN_People_GUI::Build()
 
     QGroupBox* pPropertiesGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Details" ), pGroup );
 
+    builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Name" ), vInfosConnectors[eName] );
     builder.AddField< ADN_ComboBox_Vector<ADN_Population_Data::PopulationInfos> >( pPropertiesGroup, tr( "Associated Crowd" ), vInfosConnectors[eModel] );
     builder.AddField<ADN_EditLine_Int>( pPropertiesGroup, tr( "Male" ), vInfosConnectors[eMale], tr( "%" ), ePercentage );
     builder.AddField<ADN_EditLine_Int>( pPropertiesGroup, tr( "Female" ), vInfosConnectors[eFemale], tr( "%" ), ePercentage );

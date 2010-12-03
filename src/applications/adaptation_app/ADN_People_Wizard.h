@@ -22,7 +22,6 @@ typedef ADN_Wizard_ABC<ADN_People_Data::PeopleInfos> ADN_Wizard_ABC_ADN_People_D
 // =============================================================================
 class ADN_People_Wizard : public ADN_Wizard_ABC_ADN_People_Data_PeopleInfos
 {
-    MT_COPYNOTALLOWED( ADN_People_Wizard )
 
 public:
     //! @name Constructors/Destructor

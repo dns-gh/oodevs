@@ -27,7 +27,6 @@ class xml::xistream;
 // =============================================================================
 class ADN_People_Data : public ADN_Data_ABC
 {
-    MT_COPYNOTALLOWED( ADN_People_Data )
 
 public:
 // *****************************************************************************
@@ -35,7 +34,6 @@ public:
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-        MT_COPYNOTALLOWED( PeopleInfos )
 
     public:
         PeopleInfos();

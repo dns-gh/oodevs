@@ -23,11 +23,11 @@ class ADN_Table;
 // =============================================================================
 class ADN_People_GUI : public ADN_GUI_ABC
 {
-    MT_COPYNOTALLOWED( ADN_People_GUI )
 
 public:
     enum E_GuiElements
     {
+        eName,
         eModel,
         eMale,
         eFemale,

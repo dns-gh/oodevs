@@ -52,6 +52,7 @@ void ADN_People_ListView::ConnectItem( bool bConnect )
         return;
     PeopleInfos* pInfos = (PeopleInfos*)pCurData_;
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_People_GUI::eNbrGuiElements );
+    vItemConnectors_[ADN_People_GUI::eName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_People_GUI::eModel]->Connect( &pInfos->ptrModel_, bConnect );
     vItemConnectors_[ADN_People_GUI::eMale]->Connect( &pInfos->male_, bConnect );
     vItemConnectors_[ADN_People_GUI::eFemale]->Connect( &pInfos->female_, bConnect );

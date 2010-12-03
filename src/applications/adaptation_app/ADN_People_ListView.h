@@ -20,7 +20,6 @@
 // =============================================================================
 class ADN_People_ListView : public ADN_ListView
 {
-    MT_COPYNOTALLOWED( ADN_People_ListView )
 
 public:
     //! @name Constructors/Destructor
