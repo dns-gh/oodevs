@@ -19,7 +19,7 @@ namespace xml
 
 namespace kernel
 {
-class EntryLabelType;
+    class EntryLabelType;
 
 // =============================================================================
 /** @class  DictionaryEntryType
@@ -38,8 +38,8 @@ public:
 
     //! @name Operations
     //@{
-    const std::string& GetLabel( const std::string& kind, const std::string& language ) const;
-    unsigned int GetId() const;
+    std::string GetKey() const;
+    std::string GetLabel( const std::string& kind, const std::string& language ) const;
     //@}
 
 private:
@@ -64,8 +64,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string name_;
-    unsigned int id_;
+    const std::string key_;
     OptionalValue< std::string > alias_;
     T_Labels labels_;
     //@}

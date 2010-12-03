@@ -146,10 +146,9 @@ void UserProfileWidget::Display( UserProfile& profile )
     supervisor_->setChecked( profile.IsSupervisor() );
     if( userRoleDico_ )
     {
-        userRoleGroup_->setChecked( profile_->HasUserRole() );
-        int userRole = profile_->UserRole();
-        if( userRole != -1 )            
-            userRole_->setCurrentText( userRoleDico_->GetString( userRole, dicoKind_, dicoLanguage_ ).c_str() );
+        const std::string role = profile_->GetUserRole();
+        userRoleGroup_->setChecked( ! role.empty() );
+        userRole_->setCurrentText( userRoleDico_->GetLabel( role, dicoKind_, dicoLanguage_ ).c_str() );
     }
     unitRights_->Display( profile );
     populationRights_->Display( profile );
@@ -202,9 +201,10 @@ void UserProfileWidget::OnUserRoleActivation( bool enable )
 {
     if( userRoleDico_ && profile_ )
     {
-        profile_->SetUserRoleEnabled( enable );
-        if( enable && profile_->UserRole() == -1 )
-            profile_->SetUserRole( userRoleDico_->GetId( userRole_->currentText().ascii(), dicoKind_, dicoLanguage_ ) );
+        if( enable && profile_->GetUserRole().empty() )
+            profile_->SetUserRole( userRoleDico_->GetKey( userRole_->currentText().ascii(), dicoKind_, dicoLanguage_ ) );
+        else if( !enable )
+            profile_->SetUserRole( "" );
         controllers_.controller_.Update( profile_ );
     }
 }
@@ -216,7 +216,7 @@ void UserProfileWidget::OnUserRoleActivation( bool enable )
 void UserProfileWidget::OnUserRole( const QString& role )
 {
     if( userRoleDico_ && profile_ )
-        profile_->SetUserRole( userRoleDico_->GetId( role.ascii(), dicoKind_, dicoLanguage_ ) );
+        profile_->SetUserRole( userRoleDico_->GetKey( role.ascii(), dicoKind_, dicoLanguage_ ) );
     controllers_.controller_.Update( profile_ );
 }
 

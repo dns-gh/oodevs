@@ -19,11 +19,9 @@ using namespace kernel;
 // Created: JSR 2010-10-01
 // -----------------------------------------------------------------------------
 DictionaryEntryType::DictionaryEntryType( xml::xistream& xis )
-    : name_( xis.attribute< std::string >( "name" ) )
-    , id_  ( xis.attribute< unsigned int >( "id" ) )
+    : key_( xis.attribute< std::string >( "name" ) )
+    , alias_( xis.attribute< std::string >( "alias", std::string() ) )
 {
-    if( xis.has_attribute( "alias" ) )
-        alias_ = xis.attribute< std::string >( "alias" );
     xis >> xml::optional >> xml::start( "labels" )
             >> xml::list( "label", *this, &DictionaryEntryType::ReadLabel )
         >> xml::end;
@@ -43,23 +41,23 @@ DictionaryEntryType::~DictionaryEntryType()
 // Name: DictionaryEntryType::GetLabel
 // Created: JSR 2010-10-05
 // -----------------------------------------------------------------------------
-const std::string& DictionaryEntryType::GetLabel( const std::string& kind, const std::string& language ) const
+std::string DictionaryEntryType::GetLabel( const std::string& kind, const std::string& language ) const
 {
     if( kind.empty() )
-        return name_;
+        return key_;
     for( CIT_Labels it = labels_.begin(); it != labels_.end(); ++it )
         if( ( *it )->Matches( language, kind ) )
             return ( *it )->GetText();
-    return name_;
+    return key_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DictionaryEntryType::GetId
+// Name: DictionaryEntryType::GetKey
 // Created: JSR 2010-10-06
 // -----------------------------------------------------------------------------
-unsigned int DictionaryEntryType::GetId() const
+std::string DictionaryEntryType::GetKey() const
 {
-    return id_;
+    return key_;
 }
 
 // -----------------------------------------------------------------------------

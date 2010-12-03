@@ -28,7 +28,7 @@ class DictionaryEntryType;
 */
 // Created: JSR 2010-10-01
 // =============================================================================
-class DictionaryType : public tools::Resolver< DictionaryEntryType >
+class DictionaryType : public tools::Resolver< DictionaryEntryType, std::string >
 {
 public:
     //! @name Constructors/Destructor
@@ -40,8 +40,8 @@ public:
     //! @name Operations
     //@{
     void GetStringList( QStringList& list, const std::string& kind, const std::string& language ) const;
-    const std::string& GetString( unsigned int id, const std::string& kind, const std::string& language ) const;
-    int GetId( const std::string& string, const std::string& kind, const std::string& language ) const;
+    std::string GetLabel( const std::string& key, const std::string& kind, const std::string& language ) const;
+    std::string GetKey( const std::string& label, const std::string& kind, const std::string& language ) const;
     //@}
 
 private:

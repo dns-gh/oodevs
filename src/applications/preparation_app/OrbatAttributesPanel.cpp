@@ -192,7 +192,7 @@ namespace
         }
     }
 
-    const std::string& GetDicoString( unsigned int index, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver )
+    std::string GetDictionaryString( const std::string& key, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver )
     {
         static const std::string defaultString;
         std::string dictionary;
@@ -201,11 +201,11 @@ namespace
         attribute.GetDictionaryValues( dictionary, kind, language );
         DictionaryType* dico = resolver.Find( dictionary );
         if( dico )
-            return dico->GetString( index, kind, language );
+            return dico->GetLabel( key, kind, language );
         return defaultString;
     }
 
-    int GetDicoId( const QString& string, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver )
+    std::string GetDictionaryKey( const QString& label, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver )
     {
         std::string dictionary;
         std::string kind;
@@ -213,8 +213,8 @@ namespace
         attribute.GetDictionaryValues( dictionary, kind, language );
         DictionaryType* dico = resolver.Find( dictionary );
         if( dico )
-            return dico->GetId( string.ascii(), kind, language );
-        return -1;
+            return dico->GetKey( label.ascii(), kind, language );
+        return "";
     }
 }
 
@@ -279,7 +279,7 @@ void OrbatAttributesPanel::AddWidget( const kernel::AttributeType& attribute )
             FillCombo( *combo, attribute, extensions_ );
             try
             {
-                const std::string& selected = GetDicoString( boost::lexical_cast< unsigned int >( value ), attribute, extensions_ );
+                const std::string& selected = GetDictionaryString( value, attribute, extensions_ );
                 if( !selected.empty() )
                     combo->setCurrentText( selected.c_str() );
             }
@@ -378,9 +378,9 @@ void OrbatAttributesPanel::Commit()
             case AttributeType::ETypeDictionary:
                 {
                     QComboBox* combo = static_cast< QComboBox* >( *it );
-                    int id = GetDicoId( combo->currentText(), *attribute, extensions_ );
-                    if( id != -1 )
-                        ext->SetValue( ( *it )->name(), boost::lexical_cast< std::string >( id ) );
+                    const std::string key = GetDictionaryKey( combo->currentText(), *attribute, extensions_ );
+                    if( !key.empty() )
+                        ext->SetValue( ( *it )->name(), key );
                 }
                 break;
             case AttributeType::ETypeLoosyDictionary:

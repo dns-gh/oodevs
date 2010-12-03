@@ -19,9 +19,8 @@ using namespace kernel;
 // Created: JSR 2010-10-01
 // -----------------------------------------------------------------------------
 DictionaryType::DictionaryType( xml::xistream& xis )
+    : alias_( xis.attribute< std::string >( "alias", std::string() ) )
 {
-    if( xis.has_attribute( "alias" ) )
-        alias_ = xis.attribute< std::string >( "alias" );
     xis >> xml::list( "entry", *this, &DictionaryType::ReadEntry );
 }
     
@@ -46,36 +45,35 @@ void DictionaryType::GetStringList( QStringList& list, const std::string& kind, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: DictionaryType::GetString
+// Name: DictionaryType::GetLabel
 // Created: JSR 2010-10-06
 // -----------------------------------------------------------------------------
-const std::string& DictionaryType::GetString( unsigned int id, const std::string& kind, const std::string& language ) const
+std::string DictionaryType::GetLabel( const std::string& key, const std::string& kind, const std::string& language ) const
 {
-    static const std::string defaultString;
     tools::Iterator< const DictionaryEntryType& > it = CreateIterator();
     while( it.HasMoreElements() )
     {
         const DictionaryEntryType& entry = it.NextElement();
-        if( entry.GetId() == id )
+        if( entry.GetKey() == key )
             return entry.GetLabel( kind, language );
     }
-    return defaultString;
+    return "";
 }
 
 // -----------------------------------------------------------------------------
-// Name: DictionaryType::GetId
+// Name: DictionaryType::GetKey
 // Created: JSR 2010-10-06
 // -----------------------------------------------------------------------------
-int DictionaryType::GetId( const std::string& string, const std::string& kind, const std::string& language ) const
+std::string DictionaryType::GetKey( const std::string& label, const std::string& kind, const std::string& language ) const
 {
     tools::Iterator< const DictionaryEntryType& > it = CreateIterator();
     while( it.HasMoreElements() )
     {
         const DictionaryEntryType& entry = it.NextElement();
-        if( entry.GetLabel( kind, language ) == string )
-            return entry.GetId();
+        if( entry.GetLabel( kind, language ) == label )
+            return entry.GetKey();
     }
-    return -1;
+    return "";
 }
 
 // -----------------------------------------------------------------------------
@@ -84,5 +82,5 @@ int DictionaryType::GetId( const std::string& string, const std::string& kind, c
 // -----------------------------------------------------------------------------
 void DictionaryType::ReadEntry( xml::xistream& xis )
 {
-    Register( xis.attribute< unsigned int >( "id" ), *new DictionaryEntryType( xis ) );
+    Register( xis.attribute< std::string >( "name" ), *new DictionaryEntryType( xis ) );
 }
