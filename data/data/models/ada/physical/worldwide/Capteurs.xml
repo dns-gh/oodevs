@@ -138,12 +138,12 @@
             <distance-modifier type="Urbain" value="0.1"/>
           </terrain-modifiers>
           <urbanBlock-material-modifiers>
-            <distance-modifier type="Wood" value="0"/>
-            <distance-modifier type="Concrete" value="1"/>
-            <distance-modifier type="Brick" value="0.1"/>
+            <distance-modifier type="Bois" value="0"/>
+            <distance-modifier type="Beton" value="1"/>
+            <distance-modifier type="Brique" value="0.1"/>
             <distance-modifier type="Metal" value="0.1"/>
-            <distance-modifier type="Cob" value="0.1"/>
-            <distance-modifier type="Prefab" value="0.1"/>
+            <distance-modifier type="Torchis" value="0.1"/>
+            <distance-modifier type="Prefabrique" value="0.1"/>
             <distance-modifier type="Vegetation" value="0.1"/>
           </urbanBlock-material-modifiers>
         </distance-modifiers>
@@ -489,12 +489,12 @@
             <distance-modifier type="Urbain" value="0.1"/>
           </terrain-modifiers>
           <urbanBlock-material-modifiers>
-            <distance-modifier type="Wood" value="0"/>
-            <distance-modifier type="Concrete" value="1"/>
-            <distance-modifier type="Brick" value="0.1"/>
+            <distance-modifier type="Bois" value="0"/>
+            <distance-modifier type="Beton" value="1"/>
+            <distance-modifier type="Brique" value="0.1"/>
             <distance-modifier type="Metal" value="0.1"/>
-            <distance-modifier type="Cob" value="0.1"/>
-            <distance-modifier type="Prefab" value="0.1"/>
+            <distance-modifier type="Torchis" value="0.1"/>
+            <distance-modifier type="Prefabrique" value="0.1"/>
             <distance-modifier type="Vegetation" value="0.1"/>
           </urbanBlock-material-modifiers>
         </distance-modifiers>
@@ -792,12 +792,12 @@
             <distance-modifier type="Urbain" value="1"/>
           </terrain-modifiers>
           <urbanBlock-material-modifiers>
-            <distance-modifier type="Wood" value="0"/>
-            <distance-modifier type="Concrete" value="1"/>
-            <distance-modifier type="Brick" value="0.1"/>
+            <distance-modifier type="Bois" value="0"/>
+            <distance-modifier type="Beton" value="1"/>
+            <distance-modifier type="Brique" value="0.1"/>
             <distance-modifier type="Metal" value="0.1"/>
-            <distance-modifier type="Cob" value="0.1"/>
-            <distance-modifier type="Prefab" value="0.1"/>
+            <distance-modifier type="Torchis" value="0.1"/>
+            <distance-modifier type="Prefabrique" value="0.1"/>
             <distance-modifier type="Vegetation" value="0.1"/>
           </urbanBlock-material-modifiers>
         </distance-modifiers>
@@ -866,12 +866,12 @@
             <distance-modifier type="Urbain" value="0.12"/>
           </terrain-modifiers>
           <urbanBlock-material-modifiers>
-            <distance-modifier type="Wood" value="0"/>
-            <distance-modifier type="Concrete" value="1"/>
-            <distance-modifier type="Brick" value="0.1"/>
+            <distance-modifier type="Bois" value="0"/>
+            <distance-modifier type="Beton" value="1"/>
+            <distance-modifier type="Brique" value="0.1"/>
             <distance-modifier type="Metal" value="0.1"/>
-            <distance-modifier type="Cob" value="0.1"/>
-            <distance-modifier type="Prefab" value="0.1"/>
+            <distance-modifier type="Torchis" value="0.1"/>
+            <distance-modifier type="Prefabrique" value="0.1"/>
             <distance-modifier type="Vegetation" value="0.1"/>
           </urbanBlock-material-modifiers>
         </distance-modifiers>
@@ -940,12 +940,12 @@
             <distance-modifier type="Urbain" value="0.1"/>
           </terrain-modifiers>
           <urbanBlock-material-modifiers>
-            <distance-modifier type="Wood" value="0"/>
-            <distance-modifier type="Concrete" value="1"/>
-            <distance-modifier type="Brick" value="0.1"/>
+            <distance-modifier type="Bois" value="0"/>
+            <distance-modifier type="Beton" value="1"/>
+            <distance-modifier type="Brique" value="0.1"/>
             <distance-modifier type="Metal" value="0.1"/>
-            <distance-modifier type="Cob" value="0.1"/>
-            <distance-modifier type="Prefab" value="0.1"/>
+            <distance-modifier type="Torchis" value="0.1"/>
+            <distance-modifier type="Prefabrique" value="0.1"/>
             <distance-modifier type="Vegetation" value="0.1"/>
           </urbanBlock-material-modifiers>
         </distance-modifiers>
@@ -1291,12 +1291,12 @@
             <distance-modifier type="Urbain" value="0.1"/>
           </terrain-modifiers>
           <urbanBlock-material-modifiers>
-            <distance-modifier type="Wood" value="0"/>
-            <distance-modifier type="Concrete" value="1"/>
-            <distance-modifier type="Brick" value="0.1"/>
+            <distance-modifier type="Bois" value="0"/>
+            <distance-modifier type="Beton" value="1"/>
+            <distance-modifier type="Brique" value="0.1"/>
             <distance-modifier type="Metal" value="0.1"/>
-            <distance-modifier type="Cob" value="0.1"/>
-            <distance-modifier type="Prefab" value="0.1"/>
+            <distance-modifier type="Torchis" value="0.1"/>
+            <distance-modifier type="Prefabrique" value="0.1"/>
             <distance-modifier type="Vegetation" value="0.1"/>
           </urbanBlock-material-modifiers>
         </distance-modifiers>
@@ -1364,12 +1364,12 @@
             <distance-modifier type="Urbain" value="0.1"/>
           </terrain-modifiers>
           <urbanBlock-material-modifiers>
-            <distance-modifier type="Wood" value="0"/>
-            <distance-modifier type="Concrete" value="1"/>
-            <distance-modifier type="Brick" value="0.1"/>
+            <distance-modifier type="Bois" value="0"/>
+            <distance-modifier type="Beton" value="1"/>
+            <distance-modifier type="Brique" value="0.1"/>
             <distance-modifier type="Metal" value="0.1"/>
-            <distance-modifier type="Cob" value="0.1"/>
-            <distance-modifier type="Prefab" value="0.1"/>
+            <distance-modifier type="Torchis" value="0.1"/>
+            <distance-modifier type="Prefabrique" value="0.1"/>
             <distance-modifier type="Vegetation" value="0.1"/>
           </urbanBlock-material-modifiers>
         </distance-modifiers>
@@ -1739,12 +1739,12 @@
             <distance-modifier type="Urbain" value="0.1"/>
           </terrain-modifiers>
           <urbanBlock-material-modifiers>
-            <distance-modifier type="Wood" value="0"/>
-            <distance-modifier type="Concrete" value="1"/>
-            <distance-modifier type="Brick" value="0.1"/>
+            <distance-modifier type="Bois" value="0"/>
+            <distance-modifier type="Beton" value="1"/>
+            <distance-modifier type="Brique" value="0.1"/>
             <distance-modifier type="Metal" value="0.1"/>
-            <distance-modifier type="Cob" value="0.1"/>
-            <distance-modifier type="Prefab" value="0.1"/>
+            <distance-modifier type="Torchis" value="0.1"/>
+            <distance-modifier type="Prefabrique" value="0.1"/>
             <distance-modifier type="Vegetation" value="0.1"/>
           </urbanBlock-material-modifiers>
         </distance-modifiers>
@@ -2130,12 +2130,12 @@
             <distance-modifier type="Urbain" value="0.3"/>
           </terrain-modifiers>
           <urbanBlock-material-modifiers>
-            <distance-modifier type="Wood" value="0"/>
-            <distance-modifier type="Concrete" value="1"/>
-            <distance-modifier type="Brick" value="0.1"/>
+            <distance-modifier type="Bois" value="0"/>
+            <distance-modifier type="Beton" value="1"/>
+            <distance-modifier type="Brique" value="0.1"/>
             <distance-modifier type="Metal" value="0.1"/>
-            <distance-modifier type="Cob" value="0.1"/>
-            <distance-modifier type="Prefab" value="0.1"/>
+            <distance-modifier type="Torchis" value="0.1"/>
+            <distance-modifier type="Prefabrique" value="0.1"/>
             <distance-modifier type="Vegetation" value="0.1"/>
           </urbanBlock-material-modifiers>
         </distance-modifiers>
@@ -2445,12 +2445,12 @@
             <distance-modifier type="Urbain" value="1"/>
           </terrain-modifiers>
           <urbanBlock-material-modifiers>
-            <distance-modifier type="Wood" value="0"/>
-            <distance-modifier type="Concrete" value="1"/>
-            <distance-modifier type="Brick" value="0.1"/>
+            <distance-modifier type="Bois" value="0"/>
+            <distance-modifier type="Beton" value="1"/>
+            <distance-modifier type="Brique" value="0.1"/>
             <distance-modifier type="Metal" value="0.1"/>
-            <distance-modifier type="Cob" value="0.1"/>
-            <distance-modifier type="Prefab" value="0.1"/>
+            <distance-modifier type="Torchis" value="0.1"/>
+            <distance-modifier type="Prefabrique" value="0.1"/>
             <distance-modifier type="Vegetation" value="0.1"/>
           </urbanBlock-material-modifiers>
         </distance-modifiers>
@@ -2784,12 +2784,12 @@
             <distance-modifier type="Urbain" value="0.1"/>
           </terrain-modifiers>
           <urbanBlock-material-modifiers>
-            <distance-modifier type="Wood" value="0"/>
-            <distance-modifier type="Concrete" value="1"/>
-            <distance-modifier type="Brick" value="0.1"/>
+            <distance-modifier type="Bois" value="0"/>
+            <distance-modifier type="Beton" value="1"/>
+            <distance-modifier type="Brique" value="0.1"/>
             <distance-modifier type="Metal" value="0.1"/>
-            <distance-modifier type="Cob" value="0.1"/>
-            <distance-modifier type="Prefab" value="0.1"/>
+            <distance-modifier type="Torchis" value="0.1"/>
+            <distance-modifier type="Prefabrique" value="0.1"/>
             <distance-modifier type="Vegetation" value="0.1"/>
           </urbanBlock-material-modifiers>
         </distance-modifiers>
@@ -3159,12 +3159,12 @@
             <distance-modifier type="Urbain" value="0.1"/>
           </terrain-modifiers>
           <urbanBlock-material-modifiers>
-            <distance-modifier type="Wood" value="0"/>
-            <distance-modifier type="Concrete" value="1"/>
-            <distance-modifier type="Brick" value="0.1"/>
+            <distance-modifier type="Bois" value="0"/>
+            <distance-modifier type="Beton" value="1"/>
+            <distance-modifier type="Brique" value="0.1"/>
             <distance-modifier type="Metal" value="0.1"/>
-            <distance-modifier type="Cob" value="0.1"/>
-            <distance-modifier type="Prefab" value="0.1"/>
+            <distance-modifier type="Torchis" value="0.1"/>
+            <distance-modifier type="Prefabrique" value="0.1"/>
             <distance-modifier type="Vegetation" value="0.1"/>
           </urbanBlock-material-modifiers>
         </distance-modifiers>
@@ -3454,12 +3454,12 @@
             <distance-modifier type="Urbain" value="0.3"/>
           </terrain-modifiers>
           <urbanBlock-material-modifiers>
-            <distance-modifier type="Wood" value="0"/>
-            <distance-modifier type="Concrete" value="1"/>
-            <distance-modifier type="Brick" value="0.1"/>
+            <distance-modifier type="Bois" value="0"/>
+            <distance-modifier type="Beton" value="1"/>
+            <distance-modifier type="Brique" value="0.1"/>
             <distance-modifier type="Metal" value="0.1"/>
-            <distance-modifier type="Cob" value="0.1"/>
-            <distance-modifier type="Prefab" value="0.1"/>
+            <distance-modifier type="Torchis" value="0.1"/>
+            <distance-modifier type="Prefabrique" value="0.1"/>
             <distance-modifier type="Vegetation" value="0.1"/>
           </urbanBlock-material-modifiers>
         </distance-modifiers>
