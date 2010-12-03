@@ -11,6 +11,7 @@
 #include "MockAgentFactory.h"
 #include "MockAutomateFactory.h"
 #include "MockFormationFactory.h"
+#include "MockInhabitantFactory.h"
 #include "MockKnowledgeGroupFactory.h" // LTO
 #include "MockObjectManager.h"
 #include "MockPopulationFactory.h"

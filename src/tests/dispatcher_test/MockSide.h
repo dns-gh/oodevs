@@ -40,6 +40,8 @@ MOCK_BASE_CLASS( MockSide, dispatcher::Team_ABC )
     MOCK_METHOD_EXT( Remove, 1, void ( dispatcher::Object_ABC& ), RemoveObject );
     MOCK_METHOD_EXT( Register, 1, void ( dispatcher::KnowledgeGroup_ABC& ), RegisterKnowledgeGroup );
     MOCK_METHOD_EXT( Remove, 1, void ( dispatcher::KnowledgeGroup_ABC& ), RemoveKnowledgeGroup );
+    MOCK_METHOD_EXT( Register, 1, void ( dispatcher::Inhabitant_ABC& ), RegisterInhabitant );
+    MOCK_METHOD_EXT( Remove, 1, void ( dispatcher::Inhabitant_ABC& ), RemoveInhabitant );
 
     // Sendable
     MOCK_METHOD( SendCreation, 1 );

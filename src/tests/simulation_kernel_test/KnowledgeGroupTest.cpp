@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
         "</knowledge-groups>";
     xml::xistringstream xis( initialisation );
     double timeFactor = 0.5f;
-    MIL_KnowledgeGroupType::Initialize(xis, timeFactor);
+    MIL_KnowledgeGroupType::InitializeWithTime(xis, timeFactor);
 
     const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("TOTO");
 
@@ -221,7 +221,7 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
         "    </knowledge-group>"
         "</knowledge-groups>" );
     double timeFactor = 0.5f;
-    MIL_KnowledgeGroupType::Initialize(xis, timeFactor);
+    MIL_KnowledgeGroupType::InitializeWithTime(xis, timeFactor);
 
     // register army sub knowledge group
     const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType( "Standard" );

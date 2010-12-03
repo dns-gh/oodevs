@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE( TestKnowledgeGroupType )
             "</knowledge-group>"
         "</knowledge-groups>";
     xml::xistringstream xis( initialisation );
-    MIL_KnowledgeGroupType::Initialize( xis, timeFactor );
+    MIL_KnowledgeGroupType::InitializeWithTime( xis, timeFactor );
     const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("GTIA");
     BOOST_CHECK_EQUAL( 60 * timeFactor, kgType.GetKnowledgeCommunicationDelay() );
     BOOST_CHECK_EQUAL( 3 * 60 * 60 * timeFactor, kgType.GetKnowledgeAgentMaxLifeTime() );

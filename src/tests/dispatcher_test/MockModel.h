@@ -33,6 +33,7 @@ MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )
     MOCK_METHOD( Agents, 0 );
     MOCK_METHOD( Objects, 0 );
     MOCK_METHOD( UrbanBlocks, 0 );
+    MOCK_METHOD( Inhabitants, 0 );
     MOCK_METHOD( Populations, 0 );
     MOCK_METHOD( AgentKnowledges, 0 );
     MOCK_METHOD( ObjectKnowledges, 0 );
