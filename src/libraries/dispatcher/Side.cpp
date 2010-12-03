@@ -10,10 +10,12 @@
 #include "dispatcher_pch.h"
 #include "Side.h"
 #include "Formation_ABC.h"
+#include "Inhabitant_ABC.h"
 #include "KnowledgeGroup_ABC.h"
 #include "Model.h"
 #include "Object_ABC.h"
 #include "Population_ABC.h"
+#include "Inhabitant_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -127,6 +129,7 @@ void Side::Accept( kernel::ModelVisitor_ABC& visitor ) const
     formations_.Apply( boost::bind( &dispatcher::Formation_ABC::Accept, _1, boost::ref( visitor ) ) );
     objects_.Apply( boost::bind( &dispatcher::Object_ABC::Accept, _1, boost::ref( visitor ) ) );
     populations_.Apply( boost::bind( &dispatcher::Population_ABC::Accept, _1, boost::ref( visitor ) ) );
+    inhabitants_.Apply( boost::bind( &dispatcher::Inhabitant_ABC::Accept, _1, boost::ref( visitor ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,6 +175,24 @@ void Side::Register( dispatcher::Population_ABC& population )
 void Side::Remove( dispatcher::Population_ABC& population )
 {
     populations_.Remove( population.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Side::Register
+// Created: SLG 2010-11-30
+// -----------------------------------------------------------------------------
+void Side::Register( dispatcher::Inhabitant_ABC& inhabitant )
+{
+    inhabitants_.Register( inhabitant.GetId(), inhabitant );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Side::Remove
+// Created: SLG 2010-11-30
+// -----------------------------------------------------------------------------
+void Side::Remove( dispatcher::Inhabitant_ABC& inhabitant )
+{
+    inhabitants_.Remove( inhabitant.GetId() );
 }
 
 // -----------------------------------------------------------------------------

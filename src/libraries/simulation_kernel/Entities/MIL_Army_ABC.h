@@ -22,6 +22,7 @@ class DEC_Knowledge_Object;
 class DEC_KnowledgeBlackBoard_Army;
 class MIL_KnowledgeGroup;
 class MIL_Formation;
+class MIL_Inhabitant;
 class MIL_Population;
 class KnowledgeVisitor_ABC;
 
@@ -76,6 +77,9 @@ public:
     
     virtual void RegisterPopulation( MIL_Population& population ) = 0;
     virtual void UnregisterPopulation( MIL_Population& population ) = 0;
+
+    virtual void RegisterInhabitant( MIL_Inhabitant& inhabitant ) = 0;
+    virtual void UnregisterInhabitant( MIL_Inhabitant& inhabitant ) = 0;
     //@}
 
     virtual void UpdateKnowledges(int currentTimeStep) = 0;

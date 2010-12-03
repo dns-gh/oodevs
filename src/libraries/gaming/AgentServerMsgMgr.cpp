@@ -51,6 +51,7 @@
 #include "clients_kernel/Logger_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "protocol/AarSenders.h"
 #include "protocol/MsgsSimToClientListener.h"
@@ -1262,6 +1263,25 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacy( const Common::MsgChangeDipl
     GetModel().teams_.GetTeam( message.party1().id() ).Update( message );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnMsgPopulationCreation
+// Created: SLG 2010-12-01
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnMsgPopulationCreation( const MsgsSimToClient::MsgPopulationCreation&                 message )
+{
+    GetModel().agents_.CreateInhabitant( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnMsgPopulationUpdate
+// Created: SLG 2010-12-01
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnMsgPopulationUpdate( const MsgsSimToClient::MsgPopulationUpdate&                   message )
+{
+    GetModel().agents_.GetInhabitant( message.id().id() ).Update( message );
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnMsgCrowdCreation
 // Created: HME 2005-09-28
@@ -1887,6 +1907,10 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& from, const 
         OnReceiveMsgLogMedicalHandlingUpdate     ( wrapper.message().log_medical_handling_update() );
     else if( wrapper.message().has_log_medical_state() )
         OnReceiveMsgLogMedicalState              ( wrapper.message().log_medical_state() );
+    else if( wrapper.message().has_population_creation() )
+        OnMsgPopulationCreation                ( wrapper.message().population_creation() );
+    else if( wrapper.message().has_population_update() )
+        OnMsgPopulationUpdate                  ( wrapper.message().population_update() );
     else if( wrapper.message().has_crowd_creation() )
         OnMsgCrowdCreation                ( wrapper.message().crowd_creation() );
     else if( wrapper.message().has_crowd_update() )

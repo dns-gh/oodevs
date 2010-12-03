@@ -23,6 +23,7 @@
 #include "MissionFactory.h"
 #include "MissionType.h"
 #include "PopulationType.h"
+#include "InhabitantType.h"
 #include "SensorType.h"
 #include "SymbolFactory.h"
 #include <boost/bind.hpp>
@@ -75,6 +76,7 @@ void AgentTypes::Load( const tools::ExerciseConfig& config, std::string& invalid
         .Load( "units", boost::bind( &AgentTypes::ReadAgents, this, _1 ) )
         .Load( "automats", boost::bind( &AgentTypes::ReadAutomats, this, _1 ) )
         .Load( "populations", boost::bind( &AgentTypes::ReadPopulations, this, _1 ) )
+        .Load( "people", boost::bind( &AgentTypes::ReadInhabitants, this, _1 ) )
         .Load( "knowledge-groups", boost::bind( &AgentTypes::ReadKnowledgeGroups, this, _1 ) );
 
     CreateMagicActionTypes();
@@ -98,6 +100,8 @@ void AgentTypes::Purge()
     tools::Resolver< KnowledgeGroupType, std::string >::DeleteAll();
     tools::Resolver< PopulationType >::DeleteAll();
     tools::Resolver< PopulationType, std::string >::Clear();
+    tools::Resolver< InhabitantType >::DeleteAll();
+    tools::Resolver< InhabitantType, std::string >::Clear();
     tools::Resolver< AgentType >::DeleteAll();
     tools::Resolver< AgentType, std::string >::Clear();
     tools::Resolver< AutomatType >::DeleteAll();
@@ -314,6 +318,26 @@ void AgentTypes::ReadPopulationType( xml::xistream& xis )
     tools::Resolver< PopulationType, std::string >::Register( type->GetName(), *type );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentTypes::ReadInhabitants
+// Created: AGE 2006-02-20
+// -----------------------------------------------------------------------------
+void AgentTypes::ReadInhabitants( xml::xistream& xis )
+{
+    xis >> xml::start( "populations" )
+        >> xml::list( "population", *this, &AgentTypes::ReadInhabitantType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentTypes::ReadInhabitantType
+// Created: AGE 2006-02-20
+// -----------------------------------------------------------------------------
+void AgentTypes::ReadInhabitantType( xml::xistream& xis )
+{
+    InhabitantType* type = new InhabitantType( xis, *this );
+    tools::Resolver< InhabitantType >::Register( type->GetId(), *type );
+    tools::Resolver< InhabitantType, std::string >::Register( type->GetName(), *type );
+}
 // -----------------------------------------------------------------------------
 // Name: AgentTypes::ReadKnowledgeGroups
 // Created: SBO 2006-11-17

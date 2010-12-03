@@ -6,7 +6,7 @@
   <active-protections file="ActiveProtections.xml"/>
   <human-protections file="HumanProtections.xml"/>
   <resource-natures file="DotationNatures.xml"/>
-  <objects file="Objects.xml"/>
+  <objects file="Objets.xml"/>
   <resources file="Dotations.xml"/>
   <launchers file="Lanceurs.xml"/>
   <weapon-systems file="Armements.xml"/>
@@ -27,6 +27,7 @@
   <communications file="Communications.xml"/>
   <pathfinder file="Pathfind.xml"/>
   <populations file="Populations.xml"/>
+  <people file="Inhabitants.xml"/>
   <reports file="Reports.xml"/>
   <models file="Modeles.xml"/>
   <missions file="Missions.xml"/>
@@ -34,4 +35,4 @@
   <urban file="Urban.xml"/>
   <resource-networks file="ResourceNetworks.xml"/>
 </physical>
-<!-- signature="0362107642" -->
+<!-- signature="1211462159" -->

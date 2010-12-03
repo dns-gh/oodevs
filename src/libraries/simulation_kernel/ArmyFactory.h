@@ -18,6 +18,7 @@ class AgentFactory_ABC;
 class FormationFactory_ABC;
 class MIL_ObjectManager;
 class PopulationFactory_ABC;
+class InhabitantFactory_ABC;
 class KnowledgeGroupFactory_ABC;
 
 // =============================================================================
@@ -33,7 +34,7 @@ public:
     //@{
     explicit ArmyFactory( AutomateFactory_ABC& automateFactory, AgentFactory_ABC& agentFactory,
                           FormationFactory_ABC& formationFactory, MIL_ObjectManager& objectFactory,
-                          PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
+                          PopulationFactory_ABC& populationFactory, InhabitantFactory_ABC& inhabitantFactory, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
     virtual ~ArmyFactory();
     //@}
 
@@ -69,6 +70,7 @@ private:
     FormationFactory_ABC& formationFactory_;
     MIL_ObjectManager& objectFactory_;
     PopulationFactory_ABC& populationFactory_;
+    InhabitantFactory_ABC& inhabitantFactory_;
     KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
     std::auto_ptr< MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy > > diplomacyConverter_;
     //@}

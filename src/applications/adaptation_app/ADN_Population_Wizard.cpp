@@ -39,7 +39,7 @@ ADN_Population_Wizard::ADN_Population_Wizard( QWidget* pParent, const char* szNa
 
     ADN_Population_Data::T_PopulationInfosVector& automata = ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation();
     ADN_Wizard_FirstPage_Default<PopulationInfos>* pFirstPage = new ADN_Wizard_FirstPage_Default<PopulationInfos>( automata, this );
-    pFirstPage->SetCaptions( qApp->translate( "ADN_Population_Wizard", "New population creation" ), qApp->translate( "ADN_Population_Wizard", "Crowd" ) );
+    pFirstPage->SetCaptions( qApp->translate( "ADN_Population_Wizard", "New crowd creation" ), qApp->translate( "ADN_Population_Wizard", "Crowd" ) );
     pFirstPage_ = pFirstPage;
 
     new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Population_Wizard",  "Creation finished" ),

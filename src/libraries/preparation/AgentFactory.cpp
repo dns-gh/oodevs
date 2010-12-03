@@ -25,6 +25,10 @@
 #include "KnowledgeGroupsModel.h"
 #include "LogisticBaseStates.h"
 #include "Model.h"
+#include "Inhabitant.h"
+#include "InhabitantHierarchies.h"
+#include "InhabitantPositions.h"
+#include "Inhabitants.h"
 #include "Population.h"
 #include "PopulationHierarchies.h"
 #include "PopulationPositions.h"
@@ -135,6 +139,26 @@ kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentFactory::Create
+// Created: SBO 2010-11-23
+// -----------------------------------------------------------------------------
+kernel::Inhabitant_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const kernel::InhabitantType& type, int number, const QString& name, const kernel::Location_ABC& location )
+{
+    Entity_ABC* top = 0;
+    if( const kernel::TacticalHierarchies* hierarchies = parent.Retrieve< kernel::TacticalHierarchies >() )
+        top = const_cast< kernel::Entity_ABC* >( &hierarchies->GetTop() );
+    else
+        top = const_cast< kernel::Entity_ABC* >( &parent.Get< kernel::CommunicationHierarchies >().GetTop() );
+    Inhabitant* result = new Inhabitant( type, number, name, controllers_.controller_, idManager_ );
+    result->Attach< Positions >( *new InhabitantPositions( static_.coordinateConverter_, location, model_.urban_ ) );
+    result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, top ) );
+    if( Inhabitants* inhabs = top->Retrieve< Inhabitants >() )
+        inhabs->AddInhabitant( *result );
+    result->Polish();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentFactory::FindKnowledgeGroup
 // Created: AGE 2006-10-10
 // -----------------------------------------------------------------------------
@@ -213,7 +237,7 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
 // Name: AgentFactory::Create
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_ABC& parent )
+kernel::Population_ABC* AgentFactory::CreatePop( xml::xistream& xis, kernel::Team_ABC& parent )
 {
     Population* result = new Population( xis, controllers_.controller_, idManager_, static_.types_ );
     result->Attach< Positions >( *new PopulationPositions( xis, *result, static_.coordinateConverter_ ) );
@@ -228,4 +252,27 @@ kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_A
         popus->AddPopulation( *result );
     result->Polish();
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentFactory::Create
+// Created: SLG 2010-11-23
+// -----------------------------------------------------------------------------
+kernel::Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, kernel::Team_ABC& parent )
+{
+    Inhabitant* result = new Inhabitant( xis, controllers_.controller_, idManager_, static_.types_ );
+    result->Attach< Positions >( *new InhabitantPositions( xis, static_.coordinateConverter_, model_.urban_ ) );
+    result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );
+    if( xis.has_child( "extensions" ) )
+    {
+        xis.start( "extensions" );
+        result->Attach( *new DictionaryExtensions( xis ) );
+        xis.end();
+    }
+    if( Inhabitants* popus = parent.Retrieve< Inhabitants >() )
+        popus->AddInhabitant( *result );
+    result->Polish();
+    return result;
+   
+    return 0;
 }

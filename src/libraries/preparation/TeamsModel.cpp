@@ -185,6 +185,9 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model, std::string& loadin
     xis >> xml::start( "populations" )
             >> xml::list( "population", model.agents_, &AgentsModel::CreatePopulation, *team )
         >> xml::end;
+    xis >> xml::optional >> xml::start( "inhabitants" )
+        >> xml::list( "inhabitant", model.agents_, &AgentsModel::CreateInhabitant, *team )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

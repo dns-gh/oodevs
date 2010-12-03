@@ -39,6 +39,8 @@
 #include "ADN_Models_Data.h"
 #include "ADN_Automata_GUI.h"
 #include "ADN_Automata_Data.h"
+#include "ADN_People_GUI.h"
+#include "ADN_People_Data.h"
 #include "ADN_Population_GUI.h"
 #include "ADN_Population_Data.h"
 #include "ADN_AiEngine_GUI.h"
@@ -141,6 +143,7 @@ ADN_Workspace::ADN_Workspace()
     elements_[eHealth]            = new ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI>( tr( "Health" ) );
     elements_[eSupply]            = new ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>( tr( "Supply" ) );
     elements_[ePopulation]        = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >( tr( "Crowds" ) );
+    elements_[ePeople]            = new ADN_WorkspaceElement< ADN_People_Data, ADN_People_GUI >( tr( "Populations" ) );
     elements_[eReports]           = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >( tr( "Reports" ) );
     elements_[eLocalFireClasses]         = new ADN_WorkspaceElement< ADN_LocalFireClass_Data, ADN_LocalFireClass_GUI >( tr( "Local fire" ) );
 }
@@ -188,6 +191,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     mainWindow.AddPage( elements_[eUnits]->GetName(), * elements_[eUnits]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eAutomata]->GetName(), * elements_[eAutomata]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[ePopulation]->GetName(), * elements_[ePopulation]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[ePeople]->GetName(), * elements_[ePeople]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eModels]->GetName(), * elements_[eModels]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eObjects]->GetName(), * elements_[eObjects]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eNBC]->GetName(), * elements_[eNBC]->GetGuiABC().GetMainWidget() );

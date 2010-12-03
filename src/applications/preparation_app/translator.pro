@@ -14,6 +14,7 @@ LogisticSuperiorEditor.inl \
 MainWindow.cpp \
 Menu.cpp \
 ModelBuilder.cpp \
+InhabitantCreationPanel.cpp \
 ObjectCreationPanel.cpp \
 OrbatAttributesPanel.cpp \
 PopulationListView.cpp \

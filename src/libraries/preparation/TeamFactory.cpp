@@ -37,6 +37,7 @@
 #include "SupplyRouteAttribute.h"
 
 #include "ObjectAttributesContainer.h"
+#include "Inhabitants.h"
 #include "Populations.h"
 #include "EntityIntelligences.h"
 #include "clients_kernel/Controllers.h"
@@ -190,6 +191,7 @@ Team_ABC* TeamFactory::CreateTeam()
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, 0 ) );
     result->Attach( *new Populations() );
+    result->Attach( *new Inhabitants() );
     result->Polish();
     return result;
 }
@@ -207,6 +209,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, 0 ) );
     result->Attach( *new Populations() );
+    result->Attach( *new Inhabitants() );
     result->Polish();
     return result;
 }

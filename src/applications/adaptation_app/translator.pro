@@ -123,6 +123,10 @@ ADN_Objects_Wizard.cpp \
 ADN_OpenFile_Exception.cpp \
 ADN_OpenMode_Dialog.cpp \
 ADN_Point_GUI.cpp \
+ADN_People_Data.cpp \
+ADN_People_GUI.cpp \
+ADN_People_ListView.cpp \
+ADN_People_Wizard.cpp \
 ADN_Population_Data.cpp \
 ADN_Population_FireEffectRoe_GUI.cpp \
 ADN_Population_FireEffect_Attitude_ListView.cpp \

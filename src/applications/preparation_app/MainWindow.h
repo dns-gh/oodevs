@@ -48,6 +48,7 @@ class AgentsLayer;
 class Model;
 class ModelBuilder;
 class StaticModel;
+class InhabitantCreationPanel;
 class ObjectCreationPanel;
 class MapLayer_ABC;
 class Menu;
@@ -103,7 +104,7 @@ private:
     //! @name Helpers
     //@{
     void LoadExercise();
-    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile );
+    void CreateLayers( ObjectCreationPanel& objects, InhabitantCreationPanel& inhabitants, gui::ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile );
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();

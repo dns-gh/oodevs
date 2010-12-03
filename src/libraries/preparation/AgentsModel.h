@@ -20,12 +20,15 @@ namespace kernel
     class Entity_ABC;
     class Agent_ABC;
     class Automat_ABC;
+    class Inhabitant_ABC;
     class Population_ABC;
     class AgentType;
     class AutomatType;
+    class InhabitantType;
     class PopulationType;
     class Team_ABC;
     class Controllers;
+    class Location_ABC;
 }
 
 namespace xml
@@ -46,10 +49,12 @@ class ModelChecker_ABC;
 class AgentsModel : public tools::Resolver< kernel::Agent_ABC >
                   , public tools::Resolver< kernel::Automat_ABC >
                   , public tools::Resolver< kernel::Population_ABC >
+                  , public tools::Resolver< kernel::Inhabitant_ABC >
                   , public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< kernel::Agent_ABC >
                   , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                   , public tools::ElementObserver_ABC< kernel::Population_ABC >
+                  , public tools::ElementObserver_ABC< kernel::Inhabitant_ABC >
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
 public:
@@ -80,6 +85,11 @@ public:
     kernel::Population_ABC& GetPopulation( unsigned long id );
     kernel::Population_ABC* FindPopulation( unsigned long id );
 
+    void CreateInhabitant( kernel::Entity_ABC& parent, const kernel::InhabitantType& type, int number, const QString& name, const kernel::Location_ABC& location );
+    void CreateInhabitant( xml::xistream& xis, kernel::Team_ABC& parent );
+    kernel::Inhabitant_ABC& GetInhabitant( unsigned long id );
+    kernel::Inhabitant_ABC* FindInhabitant( unsigned long id );
+
     void Purge();
     bool CheckValidity( ModelChecker_ABC& checker ) const;
     //@}
@@ -103,6 +113,7 @@ private:
     virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
     virtual void NotifyDeleted( const kernel::Automat_ABC& agent );
     virtual void NotifyDeleted( const kernel::Population_ABC& agent );
+    virtual void NotifyDeleted( const kernel::Inhabitant_ABC& agent );
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
 
     void ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& automat );

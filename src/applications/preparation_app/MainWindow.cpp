@@ -25,10 +25,12 @@
 #include "Menu.h"
 #include "ModelBuilder.h"
 #include "ObjectCreationPanel.h"
+#include "InhabitantCreationPanel.h"
 #include "ObjectListView.h"
 #include "ObjectsLayer.h"
 #include "OrbatAttributesPanel.h"
 #include "PopulationListView.h"
+#include "InhabitantListView.h"
 #include "PopulationsLayer.h"
 #include "PreparationProfile.h"
 #include "ProfileDialog.h"
@@ -65,6 +67,7 @@
 #include "clients_gui/IntelligenceList.h"
 #include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationEditorToolbar.h"
+#include "clients_gui/InhabitantLayer.h"
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/MissionLayer.h"
@@ -188,6 +191,12 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new EntitySearchBox< Population_ABC >( listsTabBox, controllers );
     new ::PopulationListView( listsTabBox, controllers, *factory, *modelBuilder_ );
     pListsTabWidget->addTab( listsTabBox, tr( "Crowds" ) );
+
+    listsTabBox = new QVBox( pListsTabWidget );
+    new EntitySearchBox< Inhabitant_ABC >( listsTabBox, controllers );
+    new ::InhabitantListView( listsTabBox, controllers, *factory, *modelBuilder_ );
+    pListsTabWidget->addTab( listsTabBox, tr( "Populations" ) );
+
     pListsTabWidget->addTab( new IntelligenceList( controllers, *factory, *icons, PreparationProfile::GetProfile() ), tr( "Intelligences" ) );
     pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
@@ -242,6 +251,9 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.teams_, *paramLayer, *glProxy_, config_ );
     pCreationPanel->AddPanel( objectCreationPanel );
 
+    InhabitantCreationPanel* inhabitantCreationPanel = new InhabitantCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, /*( tools::Resolver< InhabitantType >&)(*/ staticModel.types_ /*)*/, model.agents_, *paramLayer, *glProxy_ );
+    pCreationPanel->AddPanel( inhabitantCreationPanel );
+
     ::WeatherLayer* weatherLayer = new ::WeatherLayer( *glProxy_, *eventStrategy_ );
     WeatherPanel* weatherPanel = new WeatherPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_.coordinateConverter_, *weatherLayer );
     pCreationPanel->AddPanel( weatherPanel );
@@ -270,7 +282,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
     gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
 
-    CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer, *profilerLayer, *prefDialog, PreparationProfile::GetProfile() );
+    CreateLayers( *objectCreationPanel, *inhabitantCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer, *profilerLayer, *prefDialog, PreparationProfile::GetProfile() );
 
     StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
@@ -300,11 +312,12 @@ MainWindow::~MainWindow()
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile )
+void MainWindow::CreateLayers( ObjectCreationPanel& objects, InhabitantCreationPanel& inhabitants,  ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile )
 {
     TooltipsLayer_ABC& tooltipLayer = *new TooltipsLayer( *glProxy_ );
     Layer_ABC& automats             = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, agents );
     Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
+    Layer_ABC& inhabitantCreationLayer  = *new MiscLayer< InhabitantCreationPanel >( inhabitants );
     Elevation2dLayer& elevation2d   = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer_ABC& raster               = *new RasterLayer( controllers_.controller_ );
     Layer_ABC& watershed            = *new WatershedLayer( controllers_, staticModel_.detection_ );
@@ -318,6 +331,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
     Layer_ABC& drawerLayer          = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
+    Layer_ABC& inhabitantLayer      = *new InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
@@ -331,11 +345,13 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     glProxy_->Register( weather );                                                                                  weather             .SetPasses( "main" );
     glProxy_->Register( limits );                                                                                   limits              .SetPasses( "main" );
     glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );    intelligences       .SetPasses( "main" );
+    glProxy_->Register( inhabitantLayer );                                                                          inhabitantLayer     .SetPasses( "main" ); 
     glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main" );
     glProxy_->Register( populations );              preferences.AddLayer( tr( "Crowd" ), populations );             populations         .SetPasses( "main" );
     glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );                  agents              .SetPasses( "main" );
     glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );             automats            .SetPasses( "main" );
     glProxy_->Register( objectCreationLayer );                                                                      objectCreationLayer .SetPasses( "main" );
+    glProxy_->Register( inhabitantCreationLayer );                                                                  inhabitantCreationLayer .SetPasses( "main" );
     glProxy_->Register( parameters );                                                                               parameters          .SetPasses( "main" );
     glProxy_->Register( metrics );                                                                                  metrics             .SetPasses( "main" );
     glProxy_->Register( locations );                                                                                locations           .SetPasses( "main" );
@@ -352,6 +368,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     forward_->Register( objectsLayer );
     forward_->Register( intelligences );
     forward_->Register( weather );
+    forward_->Register( inhabitantLayer );
     forward_->Register( limits );
     forward_->Register( urbanLayer );
     forward_->Register( drawerLayer );

@@ -42,6 +42,7 @@ static const char* physicalXml =
 "  <communications file=\"Communications.xml\"/>\n"
 "  <pathfinder file=\"Pathfind.xml\"/>\n"
 "  <populations file=\"Populations.xml\"/>\n"
+"  <people file=\"Inhabitants.xml\"/>\n"
 "  <reports file=\"Reports.xml\"/>\n"
 "  <models file=\"Modeles.xml\"/>\n"
 "  <missions file=\"Orders.xml\"/>\n"

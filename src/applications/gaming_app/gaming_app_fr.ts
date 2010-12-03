@@ -1453,6 +1453,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Crowds</source>
         <translation>Foules</translation>
     </message>
+    <message>
+        <source>Populations</source>
+        <translation>Populations</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceConsignsWidget</name>

@@ -26,6 +26,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Team_ABC.h"
@@ -188,6 +189,14 @@ void ColorStrategy::SelectColor( const Population_ABC& population )
     Process( population );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::SelectColor
+// Created: AGE 2006-03-23
+// -----------------------------------------------------------------------------
+void ColorStrategy::SelectColor( const Inhabitant_ABC& inhabitant )
+{
+    Process( inhabitant );
+}
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-05-17

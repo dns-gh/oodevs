@@ -483,7 +483,7 @@ std::string ADN_Population_Data::PopulationInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Population_Data::PopulationInfos::GetItemName()
 {
-    return std::string();
+    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------

@@ -58,6 +58,7 @@
 #include "MIL_Army.h"
 #include "MIL_Formation.h"
 #include "MIL_Singletons.h"
+#include "Inhabitants/MIL_InhabitantType.h"
 #include "Objects/MIL_FireClass.h"
 #include "Objects/MIL_MedicalTreatmentType.h"
 #include "Objects/MIL_NbcAgentType.h"
@@ -74,6 +75,7 @@
 #include "simulation_kernel/ArmyFactory.h"
 #include "simulation_kernel/AutomateFactory.h"
 #include "simulation_kernel/FormationFactory.h"
+#include "simulation_kernel/InhabitantFactory.h"
 #include "simulation_kernel/PopulationFactory.h"
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory.h"
 #include "simulation_kernel/UrbanType.h"
@@ -160,6 +162,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< PHY_MedicalResourcesAlarms     >( xis, config, "health"             );
     InitializeType< PHY_RolePion_Communications    >( xis, config, "communications"     );
     InitializeType< MIL_PopulationType             >( xis, config, "populations"        );
+    InitializeType< MIL_InhabitantType             >( xis, config, "people"             );
     InitializeMedical( xis, config );
 
     xis >> xml::end; // physical

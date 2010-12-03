@@ -104,6 +104,8 @@ namespace MsgsSimToClient
     class MsgStopFireEffect;
     class MsgStartCrowdFire;
     class MsgStopCrowdFire;
+    class MsgPopulationCreation;
+    class MsgPopulationUpdate;
     class MsgCrowdCreation;
     class MsgCrowdUpdate;
     class MsgCrowdConcentrationCreation;
@@ -444,7 +446,12 @@ private:
     void OnReceiveMsgStartCrowdFire   ( const MsgsSimToClient::MsgStartCrowdFire& message );
     void OnReceiveMsgStopCrowdFire    ( const MsgsSimToClient::MsgStopCrowdFire&  message );
 
-    // Population
+
+    //Population
+    void OnMsgPopulationCreation           ( const MsgsSimToClient::MsgPopulationCreation&                 message );
+    void OnMsgPopulationUpdate             ( const MsgsSimToClient::MsgPopulationUpdate&                   message );
+
+    // Crowd
     void OnMsgCrowdCreation                ( const MsgsSimToClient::MsgCrowdCreation&                 message );
     void OnMsgCrowdDestruction             ( const MsgsSimToClient::MsgCrowdDestruction&              message );
     void OnMsgCrowdUpdate                  ( const MsgsSimToClient::MsgCrowdUpdate&                   message );

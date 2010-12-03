@@ -15,6 +15,7 @@
 #include "simulation_kernel/Entities/Objects/MIL_ObjectManager.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/PopulationFactory_ABC.h"
+#include "simulation_kernel/InhabitantFactory_ABC.h"
 #include "simulation_kernel/knowledge/KnowledgeGroupFactory_ABC.h" // LTO
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
@@ -34,12 +35,14 @@ void save_construct_data( Archive& archive, const ArmyFactory* factory, const un
     const FormationFactory_ABC* const formationFactory = &factory->formationFactory_;
     const MIL_ObjectManager* const objectFactory = &factory->objectFactory_;
     const PopulationFactory_ABC* const populationFactory = &factory->populationFactory_;
+    const InhabitantFactory_ABC* const inhabitantFactory = &factory->inhabitantFactory_;
     const KnowledgeGroupFactory_ABC* const knowledgeGroupFactory = &factory->knowledgeGroupFactory_; // LTO
     archive << automateFactory;
     archive << agentFactory;
     archive << formationFactory;
     archive << objectFactory;
     archive << populationFactory;
+    archive << inhabitantFactory;
     archive << knowledgeGroupFactory; // LTO
 }
 // -----------------------------------------------------------------------------
@@ -54,26 +57,29 @@ void load_construct_data( Archive& archive, ArmyFactory* factory, const unsigned
     FormationFactory_ABC* formationFactory;
     MIL_ObjectManager* objectFactory;
     PopulationFactory_ABC* populationFactory;
+    InhabitantFactory_ABC* inhabitantFactory;
     KnowledgeGroupFactory_ABC* knowledgeGroupFactory; // LTO
     archive >> automateFactory;
     archive >> agentFactory;
     archive >> formationFactory;
     archive >> objectFactory;
     archive >> populationFactory;
+    archive >> inhabitantFactory;
     archive >> knowledgeGroupFactory; // LTO
-    ::new( factory )ArmyFactory( *automateFactory, *agentFactory, *formationFactory, *objectFactory, *populationFactory, *knowledgeGroupFactory ); // LTO
+    ::new( factory )ArmyFactory( *automateFactory, *agentFactory, *formationFactory, *objectFactory, *populationFactory, *inhabitantFactory, *knowledgeGroupFactory ); // LTO
 }
 
 // -----------------------------------------------------------------------------
 // Name: ArmyFactory constructor
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
-ArmyFactory::ArmyFactory( AutomateFactory_ABC& automateFactory, AgentFactory_ABC& agentFactory, FormationFactory_ABC& formationFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+ArmyFactory::ArmyFactory( AutomateFactory_ABC& automateFactory, AgentFactory_ABC& agentFactory, FormationFactory_ABC& formationFactory, MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory, InhabitantFactory_ABC& inhabitantFactory, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
     : automateFactory_      ( automateFactory )
     , agentFactory_         ( agentFactory )
     , formationFactory_     ( formationFactory )
     , objectFactory_        ( objectFactory )
     , populationFactory_    ( populationFactory )
+    , inhabitantFactory_    ( inhabitantFactory )
     , knowledgeGroupFactory_( knowledgeGroupFactory ) // LTO
     , diplomacyConverter_   ( new MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy >( MIL_Army_ABC::eUnknown ) ) // LTO
 {
@@ -95,7 +101,7 @@ ArmyFactory::~ArmyFactory()
 // -----------------------------------------------------------------------------
 MIL_Army_ABC* ArmyFactory::Create( xml::xistream& xis )
 {
-    MIL_Army_ABC* army = new MIL_Army( xis, *this, formationFactory_, automateFactory_, objectFactory_, populationFactory_, knowledgeGroupFactory_, *diplomacyConverter_ );
+    MIL_Army_ABC* army = new MIL_Army( xis, *this, formationFactory_, automateFactory_, objectFactory_, populationFactory_, inhabitantFactory_, knowledgeGroupFactory_, *diplomacyConverter_ );
     Register( army->GetID(), *army );
     return army;
 }

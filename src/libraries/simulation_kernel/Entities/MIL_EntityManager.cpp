@@ -19,6 +19,7 @@
 #include "MIL_Formation.h"
 #include "MIL_Singletons.h"
 #include "PopulationFactory.h"
+#include "InhabitantFactory.h"
 #include "PHY_ResourceNetworkType.h"
 #include "UrbanType.h"
 #include "Agents/MIL_AgentTypePion.h"
@@ -72,6 +73,8 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "hla/HLA_Federate.h"
+#include "Inhabitants/MIL_InhabitantType.h"
+#include "Inhabitants/MIL_Inhabitant.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/KnowledgeGroupFactory.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
@@ -181,11 +184,12 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , idManager_                    ( new MIL_IDManager() )
     , pObjectManager_               ( new MIL_ObjectManager() )
     , populationFactory_            ( new PopulationFactory( gcPause, gcMult ) )
+    , inhabitantFactory_            ( new InhabitantFactory() )
     , agentFactory_                 ( new AgentFactory( *idManager_, gcPause, gcMult ) )
     , automateFactory_              ( new AutomateFactory( *idManager_, gcPause, gcMult ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
-    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *agentFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *knowledgeGroupFactory_ ) )
+    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *agentFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
     , gcPause_                      ( gcPause )
     , gcMult_                       ( gcMult )
     , infiniteDotations_            ( false )
@@ -233,6 +237,7 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_Convoy_ABC                ::Terminate();
     PHY_RadarType                 ::Terminate();
     MIL_PopulationType            ::Terminate();
+    MIL_InhabitantType            ::Terminate();
     PHY_DotationLogisticType      ::Terminate();
     PHY_SupplyResourcesAlarms     ::Terminate();
     PHY_MaintenanceResourcesAlarms::Terminate();
@@ -262,6 +267,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabtiants", inhabitantFactory_->Count() ) );
 
     // Check automate composition
     if( config.CheckAutomateComposition() )
@@ -1527,6 +1533,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     AutomateFactory_ABC * automateFactory;
     AgentFactory_ABC * agentFactory;
     PopulationFactory_ABC * populationFactory;
+    InhabitantFactory_ABC * inhabitantFactory;
     KnowledgeGroupFactory_ABC * knowledgeGroupFactory; // LTO
     MIL_ObjectManager* objectManager;
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
@@ -1537,6 +1544,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
          >> agentFactory
          >> automateFactory
          >> populationFactory
+         >> inhabitantFactory
          >> objectManager
          >> rKnowledgesTime_
          >> rAutomatesDecisionTime_
@@ -1552,11 +1560,13 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     agentFactory_.reset( agentFactory );
     automateFactory_.reset( automateFactory );
     populationFactory_.reset( populationFactory );
+    inhabitantFactory_.reset( inhabitantFactory );
     pObjectManager_.reset( objectManager );
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants", inhabitantFactory_->Count() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1570,6 +1580,7 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
     const AgentFactory_ABC * const tempAgentFactory = agentFactory_.get();
     const AutomateFactory_ABC * const tempAutomateFactory = automateFactory_.get();
     const PopulationFactory_ABC * const populationFactory = populationFactory_.get();
+    const InhabitantFactory_ABC * const inhabitantFactory = inhabitantFactory_.get();
     const KnowledgeGroupFactory_ABC* const knowledgeGroupFactory = knowledgeGroupFactory_.get();
     const MIL_ObjectManager* const objectManager = pObjectManager_.get();
 
@@ -1580,6 +1591,7 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
          << tempAgentFactory
          << tempAutomateFactory
          << populationFactory
+         << inhabitantFactory
          << objectManager
          << rKnowledgesTime_
          << rAutomatesDecisionTime_
@@ -1629,6 +1641,15 @@ MIL_Automate* MIL_EntityManager::FindAutomate( unsigned int nID ) const
 MIL_Population* MIL_EntityManager::FindPopulation( unsigned int nID ) const
 {
     return populationFactory_->Find( nID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindInhabitant
+// Created: SLG 2010-11-29
+// -----------------------------------------------------------------------------
+MIL_Inhabitant* MIL_EntityManager::FindInhabitant( unsigned int nID ) const
+{
+    return inhabitantFactory_->Find( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -1763,5 +1784,7 @@ void MIL_EntityManager::SetToTasker( Common::Tasker& tasker, unsigned int id ) c
         tasker.mutable_crowd()->set_id( id );
     else if( FindAgentPion( id ) )
         tasker.mutable_unit()->set_id( id );
+    /*else if( FindInhabitant( id ) )
+        tasker.mutable_population()->set_id( id );*/
     else throw( std::exception( "Misformed tasker in protocol message" ) );
 }

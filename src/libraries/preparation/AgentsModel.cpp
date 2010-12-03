@@ -18,6 +18,7 @@
 #include "AgentsModelChecker.h"
 #include "DiamondFormation.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
@@ -210,7 +211,7 @@ void AgentsModel::CreatePopulation( Entity_ABC& parent, const PopulationType& ty
 // -----------------------------------------------------------------------------
 void AgentsModel::CreatePopulation( xml::xistream& xis, kernel::Team_ABC& parent )
 {
-    Population_ABC* popu = agentFactory_.Create( xis, parent );
+    Population_ABC* popu = agentFactory_.CreatePop( xis, parent );
     tools::Resolver< Population_ABC >::Register( popu->GetId(), *popu );
 }
 
@@ -230,6 +231,44 @@ Population_ABC& AgentsModel::GetPopulation( unsigned long id )
 Population_ABC* AgentsModel::FindPopulation( unsigned long id )
 {
     return tools::Resolver< Population_ABC>::Find( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::CreateInhabitant
+// Created: SLG 2010-11-23
+// -----------------------------------------------------------------------------
+void AgentsModel::CreateInhabitant( Entity_ABC& parent, const InhabitantType& type, int number, const QString& name, const kernel::Location_ABC& location )
+{
+    Inhabitant_ABC* inhab = agentFactory_.Create( parent, type, number, name, location );
+    tools::Resolver< Inhabitant_ABC >::Register( inhab->GetId(), *inhab );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::CreateInhabitant
+// Created: SLG 2010-11-23
+// -----------------------------------------------------------------------------
+void AgentsModel::CreateInhabitant( xml::xistream& xis, kernel::Team_ABC& parent )
+{
+    Inhabitant_ABC* inhab = agentFactory_.CreateInhab( xis, parent );
+    tools::Resolver< Inhabitant_ABC >::Register( inhab->GetId(), *inhab );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::GetInhabitant
+// Created: SLG 2010-11-23
+// -----------------------------------------------------------------------------
+Inhabitant_ABC& AgentsModel::GetInhabitant( unsigned long id )
+{
+    return tools::Resolver< Inhabitant_ABC >::Get( id );
+}
+//
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::FindInhabitant
+// Created: SLG 2010-11-23
+// -----------------------------------------------------------------------------
+Inhabitant_ABC* AgentsModel::FindInhabitant( unsigned long id )
+{
+    return tools::Resolver< Inhabitant_ABC>::Find( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,6 +296,15 @@ void AgentsModel::NotifyDeleted( const kernel::Automat_ABC& agent )
 void AgentsModel::NotifyDeleted( const kernel::Population_ABC& agent )
 {
     tools::Resolver< Population_ABC >::Remove( agent.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::NotifyDeleted
+// Created: SLG 2010-11-23
+// -----------------------------------------------------------------------------
+void AgentsModel::NotifyDeleted( const kernel::Inhabitant_ABC& agent )
+{
+    tools::Resolver< Inhabitant_ABC >::Remove( agent.GetId() );
 }
 
 // -----------------------------------------------------------------------------

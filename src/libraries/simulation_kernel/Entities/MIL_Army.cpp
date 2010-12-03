@@ -17,6 +17,7 @@
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/KnowledgeVisitor_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Entities/Inhabitants/MIL_Inhabitant.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManager.h"
@@ -29,6 +30,7 @@
 #include "simulation_kernel/ArmyFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
+#include "simulation_kernel/InhabitantFactory_ABC.h"
 #include "simulation_kernel/PopulationFactory_ABC.h"
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h" // LTO
 #include "MT_Tools/MT_ScipioException.h"
@@ -70,7 +72,7 @@ void load_construct_data( Archive& archive, MIL_Army* army, const unsigned int /
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory
-                  , PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter )
+                  , PopulationFactory_ABC& populationFactory, InhabitantFactory_ABC& inhabitantFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter )
     : nID_                 ( xis.attribute< unsigned int >( "id" ) )
     , strName_             ( xis.attribute< std::string >( "name") )
     , nType_               ( eUnknown )
@@ -98,6 +100,9 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
         >> xml::end
         >> xml::start( "populations" )
             >> xml::list( "population", *this, &MIL_Army::ReadPopulation, populationFactory )
+        >> xml::end
+    >> xml::optional >> xml::start( "inhabitants" )
+        >> xml::list( "inhabitant", *this, &MIL_Army::ReadInhabitant, inhabitantFactory )
         >> xml::end;
 }
 
@@ -190,6 +195,16 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
         {
             unsigned long index;
             file >> index;
+            file >> tools::Resolver< MIL_Inhabitant >::elements_[ index ];
+        }
+    }
+    {
+        unsigned int nNbr;
+        file >> nNbr;
+        while ( nNbr-- )
+        {
+            unsigned long index;
+            file >> index;
             file >> tools::Resolver< MIL_Population >::elements_[ index ];
         }
     }
@@ -246,6 +261,15 @@ void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
         }
     }
     {
+        unsigned int size = tools::Resolver< MIL_Inhabitant >::elements_.size();
+        file << size;
+        for ( std::map< unsigned long, MIL_Inhabitant* >::const_iterator it = tools::Resolver< MIL_Inhabitant >::elements_.begin(); it != tools::Resolver< MIL_Inhabitant >::elements_.end(); ++it )
+        {
+            file << it->first
+                << it->second;
+        }
+    }
+    {
         unsigned int size = tools::Resolver< MIL_Formation >::elements_.size();
         file << size;
         for ( std::map< unsigned long, MIL_Formation* >::const_iterator it = tools::Resolver< MIL_Formation >::elements_.begin(); it != tools::Resolver< MIL_Formation >::elements_.end(); ++it )
@@ -297,6 +321,10 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
 
     xos     << xml::start( "populations" );
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::WriteODB, _1, boost::ref(xos) ) );
+    xos     << xml::end;
+
+    xos     << xml::start( "inhabitants" );
+    tools::Resolver< MIL_Inhabitant >::Apply( boost::bind( &MIL_Inhabitant::WriteODB, _1, boost::ref(xos) ) );
     xos     << xml::end;
 
     xos << xml::end;
@@ -361,6 +389,15 @@ void MIL_Army::ReadObject( xml::xistream& xis, MIL_ObjectManager& objectFactory 
 void MIL_Army::ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& populationFactory )
 {
     populationFactory.Create( xis, *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::ReadPopulation
+// Created: SLG 2010-11-29
+// -----------------------------------------------------------------------------
+void MIL_Army::ReadInhabitant( xml::xistream& xis, InhabitantFactory_ABC& inhabitantFactory )
+{
+    inhabitantFactory.Create( xis, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -606,6 +643,7 @@ void MIL_Army::SendCreation() const
         it->second->SendCreation();
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1 ) );
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendCreation, _1 ) );
+    tools::Resolver< MIL_Inhabitant >::Apply( boost::bind( &MIL_Inhabitant::SendCreation, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -626,6 +664,7 @@ void MIL_Army::SendFullState() const
         it->second->SendFullState();
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1 ) );
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendFullState, _1 ) );
+    tools::Resolver< MIL_Inhabitant >::Apply( boost::bind( &MIL_Inhabitant::SendFullState, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -722,6 +761,24 @@ void MIL_Army::RegisterPopulation( MIL_Population& population )
 void MIL_Army::UnregisterPopulation( MIL_Population& population )
 {
     tools::Resolver< MIL_Population >::Remove( population.GetID() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::RegisterInhabitant
+// Created: SLG 2010-11-29
+// -----------------------------------------------------------------------------
+void MIL_Army::RegisterInhabitant( MIL_Inhabitant& inhabitant )
+{
+    tools::Resolver< MIL_Inhabitant >::Register( inhabitant.GetID(), inhabitant );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::UnregisterInhabitant
+// Created: SLG 2010-11-29
+// -----------------------------------------------------------------------------
+void MIL_Army::UnregisterInhabitant( MIL_Inhabitant& inhabitant )
+{
+    tools::Resolver< MIL_Inhabitant >::Remove( inhabitant.GetID() );
 }
 
 // -----------------------------------------------------------------------------

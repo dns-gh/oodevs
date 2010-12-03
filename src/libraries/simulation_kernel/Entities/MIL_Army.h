@@ -37,10 +37,12 @@ class FormationFactory_ABC;
 class KnowledgeGroupFactory_ABC;
 class MIL_KnowledgeGroup;
 class MIL_Formation;
+class MIL_Inhabitant;
 class MIL_Population;
 class MIL_Object_ABC;
 class MIL_ObjectManager;
 class PopulationFactory_ABC;
+class InhabitantFactory_ABC;
 class MIL_Automate;
 class MIL_AutomateLOG;
 
@@ -51,6 +53,7 @@ class MIL_AutomateLOG;
 class MIL_Army : public MIL_Army_ABC
                , public tools::Resolver< MIL_Formation >
                , public tools::Resolver< MIL_Population >
+               , public tools::Resolver< MIL_Inhabitant >
                , public tools::Resolver< MIL_Object_ABC >
                , private boost::noncopyable
 {
@@ -69,7 +72,7 @@ public:
     //! @name Constructor/Destructor
     //@{
              MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory
-                     , PopulationFactory_ABC& populationFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter );
+                     , PopulationFactory_ABC& populationFactory, InhabitantFactory_ABC& inhabitantFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter );
     virtual ~MIL_Army();
      //@}
 
@@ -105,6 +108,9 @@ public:
 
     void RegisterPopulation( MIL_Population& population );
     void UnregisterPopulation( MIL_Population& population );
+
+    void RegisterInhabitant( MIL_Inhabitant& inhabitant );
+    void UnregisterInhabitant( MIL_Inhabitant& inhabitant );
 
     MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const;
     void RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
@@ -144,6 +150,7 @@ private:
     void ReadFormation( xml::xistream& xis, FormationFactory_ABC& formationFactory );
     void ReadObject( xml::xistream& xis, MIL_ObjectManager& objectFactory );
     void ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& populationFactory );
+    void ReadInhabitant( xml::xistream& xis, InhabitantFactory_ABC& inhabitantFactory );
     void ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory ); // LTO
     void ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory, bool isTC2 );
     void ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory,

@@ -84,8 +84,10 @@ class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 class MIL_ObjectBuilder_ABC;
 class MIL_Population;
+class MIL_Inhabitant;
 class MIL_ProfilerMgr;
 class MIL_Time_ABC;
+class InhabitantFactory_ABC;
 class PopulationFactory_ABC;
 class TER_Localisation;
 class HLA_Federate;
@@ -122,6 +124,7 @@ public:
     //@{
     virtual       MIL_Automate*       FindAutomate  ( unsigned int nID ) const;
     virtual       MIL_Population*     FindPopulation( unsigned int nID ) const;
+    virtual       MIL_Inhabitant*     FindInhabitant( unsigned int nID ) const;
     virtual       MIL_Formation*      FindFormation ( unsigned int nID ) const;
     virtual       MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const; // LTO
     virtual       MIL_AgentPion*      FindAgentPion ( unsigned int nID ) const;
@@ -274,6 +277,7 @@ private:
 
     // Factories
     std::auto_ptr< PopulationFactory_ABC >      populationFactory_;
+    std::auto_ptr< InhabitantFactory_ABC >      inhabitantFactory_;
     std::auto_ptr< AgentFactory_ABC >           agentFactory_;
     std::auto_ptr< AutomateFactory_ABC >        automateFactory_;
     std::auto_ptr< FormationFactory_ABC >       formationFactory_;

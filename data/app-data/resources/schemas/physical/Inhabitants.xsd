@@ -15,6 +15,7 @@
             </xs:all>
             <xs:attribute name="associated-crowd" type="xs:string" use="required"/>
             <xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+            <xs:attribute name="name" type="xs:string" use="required"/>
           </xs:complexType>
         </xs:element>
       </xs:sequence>

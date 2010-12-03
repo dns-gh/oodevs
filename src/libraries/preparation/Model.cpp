@@ -171,18 +171,7 @@ void Model::Load( const tools::ExerciseConfig& config, std::string& loadingError
         xml::xifstream xis( exerciseFile );
         exercise_.Load( xis );
     }
-    {
-        const std::string orbatFile = config.GetOrbatFile() ;
-        if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
-        {
-            tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( orbatFile );
-            if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
-                invalidSignedFiles.append( "\n" + bfs::path( orbatFile, bfs::native ).leaf() );
-            UpdateName( orbatFile );
-            xml::xifstream xis( orbatFile );
-            teams_.Load( xis, *this, loadingErrors );
-        }
-    }
+    
     {
         std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();
         try
@@ -207,6 +196,19 @@ void Model::Load( const tools::ExerciseConfig& config, std::string& loadingError
         {
         }
     }
+    {
+        const std::string orbatFile = config.GetOrbatFile() ;
+        if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
+        {
+            tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( orbatFile );
+            if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+                invalidSignedFiles.append( "\n" + bfs::path( orbatFile, bfs::native ).leaf() );
+            UpdateName( orbatFile );
+            xml::xifstream xis( orbatFile );
+            teams_.Load( xis, *this, loadingErrors );
+        }
+    }
+
     if( ! LoadOptional( config.GetWeatherFile(), weather_, invalidSignedFiles ) )
         controllers_.controller_.Update( weather_);
     LoadOptional( config.GetProfilesFile(), profiles_, invalidSignedFiles );

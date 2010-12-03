@@ -16,6 +16,7 @@
 
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Intelligence_ABC.h"
 
 namespace kernel

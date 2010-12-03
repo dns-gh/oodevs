@@ -50,6 +50,7 @@ public:
     virtual void SelectColor( const kernel::Formation_ABC& formation );
     virtual void SelectColor( const kernel::Object_ABC& object );
     virtual void SelectColor( const kernel::Population_ABC& population );
+    virtual void SelectColor( const kernel::Inhabitant_ABC& inhabitant );
     virtual void SelectColor( const kernel::Knowledge_ABC& knowledge );
     virtual void SelectColor( const kernel::TacticalLine_ABC& line );
     virtual void SelectColor( const kernel::Team_ABC& team );

@@ -25,6 +25,7 @@
 #include "Agent.h"
 #include "Automat.h"
 #include "Population.h"
+#include "Inhabitant.h"
 #include "Attributes.h"
 #include "Contaminations.h"
 #include "DebugPoints.h"
@@ -62,6 +63,7 @@
 #include "AutomatDecisions.h"
 #include "Fires.h"
 #include "AgentPositions.h"
+#include "InhabitantPositions.h"
 #include "PopulationPositions.h"
 #include "Lives.h"
 #include "PopulationDecisions.h"
@@ -72,6 +74,7 @@
 #include "AggregatedPositions.h"
 #include "AutomatHierarchies.h"
 #include "AutomatTacticalHierarchies.h"
+#include "InhabitantHierarchies.h"
 #include "PopulationHierarchies.h"
 #include "PcAttributes.h"
 #include "ConvexHulls.h"
@@ -207,6 +210,21 @@ kernel::Population_ABC* AgentFactory::Create( const MsgsSimToClient::MsgCrowdCre
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new PopulationDecisions( controllers_.controller_, *result ) );
     result->Attach( *new DecisionalStates() );
+    AttachExtensions( *result );
+    result->Polish();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentFactory::Create
+// Created: SLG 2010-11-29
+// -----------------------------------------------------------------------------
+kernel::Inhabitant_ABC* AgentFactory::Create( const MsgsSimToClient::MsgPopulationCreation& message )
+{
+    Inhabitant* result = new Inhabitant( message, controllers_, static_.coordinateConverter_, static_.types_, model_.urbanObjects_ );
+
+    result->Attach< kernel::Positions >( *new InhabitantPositions( *result ) );
+    result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     AttachExtensions( *result );
     result->Polish();
     return result;

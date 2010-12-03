@@ -27,9 +27,10 @@ BOOST_AUTO_TEST_CASE( FactoriesTest_ArmyFactory )
      MockAgentFactory agentFactory;
      MockFormationFactory formationFactory;
      MockPopulationFactory populationFactory;
+     MockInhabitantFactory inhabitantFactory;
      MockObjectManager objetFactory;
      MockKnowledgeGroupFactory knowledgeGroupFactory; // LTO
-     ArmyFactory armyFactory( automateFactory, agentFactory, formationFactory, objetFactory, populationFactory, knowledgeGroupFactory /*LTO*/ );
+     ArmyFactory armyFactory( automateFactory, agentFactory, formationFactory, objetFactory, populationFactory, inhabitantFactory, knowledgeGroupFactory /*LTO*/ );
      xml::xistringstream xis(
          "<party id='1' name='Local militia' type='enemy'>"
          "    <objects/>"

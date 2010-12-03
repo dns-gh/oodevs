@@ -54,6 +54,8 @@ class ADN_Breakdowns_Data;
 class ADN_Breakdowns_GUI;
 class ADN_Population_Data;
 class ADN_Population_GUI;
+class ADN_People_Data;
+class ADN_People_GUI;
 class ADN_Reports_Data;
 class ADN_Reports_GUI;
 class ADN_HumanFactors_Data;
@@ -111,6 +113,7 @@ public:
     ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI>& GetAiEngine();
     ADN_WorkspaceElement< ADN_Breakdowns_Data, ADN_Breakdowns_GUI>& GetBreakdowns();
     ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >& GetPopulation();
+    ADN_WorkspaceElement< ADN_People_Data, ADN_People_GUI >& GetPeople();
     ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >& GetReports();
     ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI >& GetHumanFactors();
     ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI >& GetHealth();
@@ -160,6 +163,7 @@ private:
         eSupply,
         eHealth,
         ePopulation,
+        ePeople,
         eReports,
         eLocalFireClasses,
         eNbrWorkspaceElements
@@ -368,6 +372,16 @@ inline
 ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >& ADN_Workspace::GetPopulation()
 {
     return ( ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >& )( *elements_[ ePopulation ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetPeople
+// Created: SLG 2010-11-23
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_People_Data, ADN_People_GUI >& ADN_Workspace::GetPeople()
+{
+    return ( ADN_WorkspaceElement< ADN_People_Data, ADN_People_GUI >& )( *elements_[ ePeople ] );
 }
 
 // -----------------------------------------------------------------------------

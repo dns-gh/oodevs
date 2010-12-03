@@ -90,6 +90,8 @@
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/Settings.h"
 #include "clients_gui/PopulationList.h"
+#include "clients_gui/InhabitantList.h"
+#include "clients_gui/InhabitantLayer.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/MiniViews.h"
@@ -228,6 +230,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     pListsTabWidget->addTab( new AgentList       ( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Communication" ) );
     pListsTabWidget->addTab( new gui::ObjectList      ( controllers, *factory, profile ),                    tr( "Objects" ) );
     pListsTabWidget->addTab( new gui::PopulationList  ( controllers, *factory, profile ),                    tr( "Crowds" ) );
+    pListsTabWidget->addTab( new gui::InhabitantList  ( controllers, *factory, profile ),                    tr( "Populations" ) );
     pListsTabWidget->addTab( new gui::IntelligenceList( controllers, *factory, *icons, profile ),            tr( "Intelligences" ) );
     pListDockWnd_->setWidget( box );
     pListDockWnd_->setResizeEnabled( true );
@@ -409,6 +412,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     gui::Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile );
     gui::Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation );
     gui::Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer_ABC& inhabitants          = *new gui::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     gui::Layer_ABC& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     gui::Layer_ABC& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     gui::Layer_ABC& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
@@ -441,6 +445,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( teamLayer );                                                                                teamLayer           .SetPasses( "main,miniviews" );
     glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main,miniviews" );
     glProxy_->Register( populations );              preferences.AddLayer( tr( "Crowds" ),  populations );           populations         .SetPasses( "main,miniviews" );
+    glProxy_->Register( inhabitants );                                                                              inhabitants         .SetPasses( "main,miniviews" );
     glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );                  agents              .SetPasses( "main,miniviews" );
     glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );             automats            .SetPasses( "main,miniviews" );
     glProxy_->Register( missionsLayer );                                                                            missionsLayer       .SetPasses( "main,miniviews" );
@@ -463,6 +468,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     forward_->Register( formationLayer ); 
     forward_->Register( teamLayer ); 
     forward_->Register( populations );
+    forward_->Register( inhabitants );
     forward_->Register( objectsLayer );
     forward_->Register( intelligences );
     forward_->Register( agentKnowledges );

@@ -125,6 +125,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper )
         wrapper.message().has_log_supply_state() ||
         wrapper.message().has_log_supply_quotas() ||
         wrapper.message().has_crowd_creation() ||
+        wrapper.message().has_population_creation() ||
         wrapper.message().has_crowd_concentration_creation() ||
         wrapper.message().has_crowd_concentration_destruction() ||
         wrapper.message().has_crowd_flow_creation() ||

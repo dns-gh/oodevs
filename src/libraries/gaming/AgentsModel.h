@@ -32,6 +32,7 @@ namespace kernel
     class Automat_ABC;
     class Entity_ABC;
     class Population_ABC;
+    class Inhabitant_ABC;
 }
 
 class AgentFactory_ABC;
@@ -45,6 +46,7 @@ class AgentFactory_ABC;
 class AgentsModel : public tools::Resolver< kernel::Agent_ABC >
                   , public tools::Resolver< kernel::Automat_ABC >
                   , public tools::Resolver< kernel::Population_ABC >
+                  , public tools::Resolver< kernel::Inhabitant_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -71,6 +73,10 @@ public:
     kernel::Population_ABC& GetPopulation( unsigned long id );
     kernel::Population_ABC* FindPopulation( unsigned long id );
     void DestroyCrowd( const MsgsSimToClient::MsgCrowdDestruction& message );
+
+    void CreateInhabitant( const MsgsSimToClient::MsgPopulationCreation& message );
+    kernel::Inhabitant_ABC& GetInhabitant( unsigned long id );
+    kernel::Inhabitant_ABC* FindInhabitant( unsigned long id );
 
     void Purge();
     //@}

@@ -64,6 +64,8 @@ public:
     virtual void Remove( dispatcher::Formation_ABC& formation );
     virtual void Register( dispatcher::Population_ABC& population );
     virtual void Remove( dispatcher::Population_ABC& population );
+    virtual void Register( dispatcher::Inhabitant_ABC& inhabitant );
+    virtual void Remove( dispatcher::Inhabitant_ABC& inhabitant );
     virtual void Register( dispatcher::Object_ABC& object );
     virtual void Remove( dispatcher::Object_ABC& object );
     virtual void Register( dispatcher::KnowledgeGroup_ABC& knGroup );
@@ -93,6 +95,7 @@ private:
     tools::Resolver< dispatcher::Formation_ABC >      formations_;
     tools::Resolver< dispatcher::Object_ABC >         objects_;
     tools::Resolver< dispatcher::Population_ABC >     populations_;
+    tools::Resolver< dispatcher::Inhabitant_ABC >     inhabitants_;
     //@}
 };
 

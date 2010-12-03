@@ -26,6 +26,7 @@ namespace kernel
     class SensorType;
     class AutomatType;
     class PopulationType;
+    class InhabitantType;
     class Mission;
     class MissionType;
     class MissionFactory;
@@ -45,6 +46,8 @@ class AgentTypes : public tools::Resolver< AgentType >
                  , public tools::Resolver< AgentType, std::string >
                  , public tools::Resolver< PopulationType >
                  , public tools::Resolver< PopulationType, std::string >
+                 , public tools::Resolver< InhabitantType >
+                 , public tools::Resolver< InhabitantType, std::string >
                  , public tools::Resolver< AutomatType >
                  , public tools::Resolver< AutomatType, std::string >
                  , public tools::Resolver< ComponentType >
@@ -94,11 +97,13 @@ private:
     void ReadMagicOrderTypes( xml::xistream& xis );
     void ReadModels( xml::xistream& xis );
     void ReadPopulations( xml::xistream& xis );
+    void ReadInhabitants( xml::xistream& xis );
     void ReadKnowledgeGroups( xml::xistream& xis );
 
     void ReadAgentType( xml::xistream& xis );
     void ReadAutomatType( xml::xistream& xis );
     void ReadPopulationType( xml::xistream& xis );
+    void ReadInhabitantType( xml::xistream& xis );
     void ReadKnowledgeGroupType( xml::xistream& xis );
     void ReadComponent( xml::xistream& xis );
     void ReallyReadSensor( xml::xistream& xis, const std::string& sensor );

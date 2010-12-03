@@ -58,6 +58,7 @@ public:
         ADN_Type_String szSupply_;
         ADN_Type_String szCom_;
         ADN_Type_String szPopulation_;
+        ADN_Type_String szPeople_;
         ADN_Type_String szReports_;
         ADN_Type_String szModels_;
         ADN_Type_String szMissions_;

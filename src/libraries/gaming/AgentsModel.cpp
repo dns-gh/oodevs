@@ -12,6 +12,7 @@
 #include "AgentFactory_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 
 using namespace kernel;
@@ -150,7 +151,10 @@ Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
     agent = tools::Resolver< Agent_ABC >::Find( id );
     if( agent )
         return agent;
-    return tools::Resolver< Population_ABC >::Find( id );
+    agent = tools::Resolver< Population_ABC >::Find( id );
+    if( agent )
+        return agent;
+    return tools::Resolver< Inhabitant_ABC >::Find( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,3 +188,33 @@ Population_ABC* AgentsModel::FindPopulation( unsigned long id )
     return tools::Resolver< Population_ABC>::Find( id );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::CreateInhabitant
+// Created: SLG 2010-11-29
+// -----------------------------------------------------------------------------
+void AgentsModel::CreateInhabitant( const MsgsSimToClient::MsgPopulationCreation& message )
+{
+    if( !Resolver< Inhabitant_ABC >::Find( message.id().id() ) )
+    {
+        Inhabitant_ABC* inhab = agentFactory_.Create( message );
+        tools::Resolver< Inhabitant_ABC >::Register( message.id().id(), *inhab );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::GetInhabitant
+// Created: SLG 2010-11-29
+// -----------------------------------------------------------------------------
+Inhabitant_ABC& AgentsModel::GetInhabitant( unsigned long id )
+{
+    return tools::Resolver< Inhabitant_ABC >::Get( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::FindInhabitant
+// Created: SLG 2010-11-29
+// -----------------------------------------------------------------------------
+Inhabitant_ABC* AgentsModel::FindInhabitant( unsigned long id )
+{
+    return tools::Resolver< Inhabitant_ABC>::Find( id );
+}

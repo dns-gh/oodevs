@@ -43,6 +43,7 @@ namespace dispatcher
     class UrbanObject_ABC;
     class ObjectKnowledge_ABC;
     class UrbanKnowledge_ABC;
+    class Inhabitant_ABC;
     class Population_ABC;
     class PopulationFire;
     class PopulationKnowledge;
@@ -89,6 +90,7 @@ public:
     virtual const tools::Resolver_ABC< Object_ABC >&            Objects() const = 0;
     virtual const tools::Resolver_ABC< UrbanObject_ABC >&       UrbanBlocks() const = 0;
     virtual const tools::Resolver_ABC< Population_ABC >&        Populations() const = 0;
+    virtual const tools::Resolver_ABC< Inhabitant_ABC >&        Inhabitants() const = 0;
     virtual const tools::Resolver_ABC< AgentKnowledge_ABC >&    AgentKnowledges() const = 0;
     virtual const tools::Resolver_ABC< ObjectKnowledge_ABC >&   ObjectKnowledges() const = 0;
     virtual const tools::Resolver_ABC< UrbanKnowledge_ABC >&    UrbanKnowledges() const = 0;

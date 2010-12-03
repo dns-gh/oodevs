@@ -21,6 +21,7 @@ namespace kernel
 namespace dispatcher
 {
     class Formation_ABC;
+    class Inhabitant_ABC;
     class KnowledgeGroup_ABC;
     class Object_ABC;
     class Population_ABC;
@@ -54,6 +55,8 @@ public:
     virtual void Remove( dispatcher::Formation_ABC& formation ) = 0;
     virtual void Register( dispatcher::Population_ABC& population ) = 0;
     virtual void Remove( dispatcher::Population_ABC& population ) = 0;
+    virtual void Register( dispatcher::Inhabitant_ABC& inhabitant ) = 0;
+    virtual void Remove( dispatcher::Inhabitant_ABC& inhabitant ) = 0;
     virtual void Register( dispatcher::Object_ABC& object ) = 0;
     virtual void Remove( dispatcher::Object_ABC& object ) = 0;
     virtual void Register( dispatcher::KnowledgeGroup_ABC& knGroup ) = 0;

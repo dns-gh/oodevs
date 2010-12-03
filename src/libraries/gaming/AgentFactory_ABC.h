@@ -15,6 +15,7 @@ namespace MsgsSimToClient
     class MsgAutomatCreation;
     class MsgUnitCreation;
     class MsgCrowdCreation;
+    class MsgPopulationCreation;
 }
 
 namespace kernel
@@ -22,6 +23,7 @@ namespace kernel
     class Automat_ABC;
     class Agent_ABC;
     class Population_ABC;
+    class Inhabitant_ABC;
 }
 
 // =============================================================================
@@ -44,6 +46,7 @@ public:
     virtual kernel::Automat_ABC*    Create( const MsgsSimToClient::MsgAutomatCreation& message ) = 0;
     virtual kernel::Agent_ABC*      Create( const MsgsSimToClient::MsgUnitCreation& message ) = 0;
     virtual kernel::Population_ABC* Create( const MsgsSimToClient::MsgCrowdCreation& message ) = 0;
+    virtual kernel::Inhabitant_ABC* Create( const MsgsSimToClient::MsgPopulationCreation& message ) = 0;
     //@}
 
 private:

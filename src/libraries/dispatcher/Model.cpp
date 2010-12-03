@@ -23,6 +23,7 @@
 #include "MeteoModel.h"
 #include "Object.h"
 #include "ObjectKnowledge.h"
+#include "Inhabitant.h"
 #include "Population.h"
 #include "PopulationFlow.h"
 #include "PopulationConcentration.h"
@@ -88,6 +89,7 @@ void Model::Reset()
     logConsignsSupply_     .DeleteAll();
     logConsignsMedical_    .DeleteAll();
     objects_               .DeleteAll();
+    inhabitants_           .DeleteAll();
     populations_           .DeleteAll();
     agents_                .DeleteAll();
     automats_              .DeleteAll();
@@ -302,6 +304,12 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_log_medical_state() )
         agents_.Get( wrapper.message().log_medical_state().unit().id() ).Update( wrapper.message().log_medical_state() ); 
 
+
+    if( wrapper.message().has_population_creation() )
+        CreateUpdate< Inhabitant >( inhabitants_, wrapper.message().population_creation().id().id(), wrapper.message().population_creation() );
+    if( wrapper.message().has_population_update() )
+        inhabitants_.Get( wrapper.message().population_update().id().id() ).Update( wrapper.message().population_update() ); 
+
     if( wrapper.message().has_crowd_creation() )
         CreateUpdate< Population >( populations_, wrapper.message().crowd_creation().crowd().id(), wrapper.message().crowd_creation() );
     if( wrapper.message().has_crowd_destruction() )
@@ -433,6 +441,8 @@ void Model::UpdateAnyAgent( unsigned id, const T& message )
         automat->Update( message );
     else if( kernel::Population_ABC* popu = populations_.Find( id ) )
         popu->Update( message );
+    else if( kernel::Inhabitant_ABC* inhab = inhabitants_.Find( id ) )
+        inhab->Update( message );
     else throw std::runtime_error( __FUNCTION__ " : Unknown entity" );
 }
 
@@ -495,6 +505,7 @@ void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks,
 // -----------------------------------------------------------------------------
 void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
+    urbanBlocks_           .Apply( boost::bind( &dispatcher::UrbanObject_ABC::Accept, _1, boost::ref( visitor ) ) );
     sides_                 .Apply( boost::bind( &dispatcher::Team_ABC::Accept, _1, boost::ref( visitor ) ) );
     knowledgeGroups_       .Apply( boost::bind( &dispatcher::KnowledgeGroup_ABC::Accept, _1, boost::ref( visitor ) ) );
     agentKnowledges_       .Apply( boost::bind( &dispatcher::AgentKnowledge_ABC::Accept, _1, boost::ref( visitor ) ) );
@@ -507,7 +518,6 @@ void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
     populationFires_       .Apply( boost::bind( &PopulationFire::Accept, _1, boost::ref( visitor ) ) );
     fireEffects_           .Apply( boost::bind( &FireEffect::Accept, _1, boost::ref( visitor ) ) );
     reports_               .Apply( boost::bind( &Report::Accept, _1, boost::ref( visitor ) ) );
-    urbanBlocks_           .Apply( boost::bind( &dispatcher::UrbanObject_ABC::Accept, _1, boost::ref( visitor ) ) );
     urbanKnowledges_       .Apply( boost::bind( &dispatcher::UrbanKnowledge_ABC::Accept, _1, boost::ref( visitor ) ) );
     meteoModel_->Accept( visitor );
 }

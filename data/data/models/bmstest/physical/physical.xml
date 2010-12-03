@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<physical model-version="4.2.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Physical.xsd">
+<physical xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Physical.xsd">
   <decisional file="Decisionnel.xml"/>
   <volumes file="Volumes.xml"/>
   <protections file="Protections.xml"/>
@@ -16,6 +16,7 @@
   <automats file="Automates.xml"/>
   <nbc file="NBC.xml"/>
   <fire file="Fire.xml"/>
+  <local-fire-classes file="LocalFireClasses.xml"/>
   <medical-treatment file="MedicalTreatment.xml"/>
   <health file="Sante.xml"/>
   <human-factors file="FacteursHumains.xml"/>
@@ -26,10 +27,12 @@
   <communications file="Communications.xml"/>
   <pathfinder file="Pathfind.xml"/>
   <populations file="Populations.xml"/>
+  <people file="Inhabitants.xml"/>
   <reports file="Reports.xml"/>
   <models file="Modeles.xml"/>
   <missions file="Missions.xml"/>
   <object-names file="ObjectNames.xml"/>
   <urban file="Urban.xml"/>
+  <resource-networks file="ResourceNetworks.xml"/>
 </physical>
-<!-- signature="0818545869" -->
+<!-- signature="1211462159" -->
