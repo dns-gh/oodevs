@@ -351,6 +351,7 @@ void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, unsigned int
             >> xml::optional >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
             >> xml::optional >> xml::start( "usage" ) >> usageDesc >> xml::end
         >> xml::end
+        >> xml::optional >> xml::attribute( "package", strPackage_ )
         >> xml::list( "parameter", boost::bind( &ADN_Missions_Data::Mission::ReadParameter, this , _1,  boost::ref( index ), contextLength ) );
     doctrineDescription_ = doctrineDesc;
     usageDescription_ = usageDesc;
@@ -398,6 +399,9 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
     output << xml::attribute( "name", strName_ )
            << xml::attribute( "dia-type", diaType_ )
            << xml::attribute( "id", id_ );
+
+    if ( ! strPackage_.GetData().empty() )
+        output << xml::attribute( "package", strPackage_);
 
     if( !isAutomat_.GetData() )
     {
