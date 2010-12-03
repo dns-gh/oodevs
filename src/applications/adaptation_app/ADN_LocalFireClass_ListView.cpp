@@ -59,6 +59,8 @@ void ADN_LocalFireClass_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_LocalFireClass_GUI::eNbrHurtUE ]->Connect( &pInfos->injuryInfos_.nNbHurtHumansE_, bConnect );
     vItemConnectors_[ ADN_LocalFireClass_GUI::eNbrDead ]->Connect( &pInfos->injuryInfos_.nNbDeadHumans_, bConnect );
     vItemConnectors_[ ADN_LocalFireClass_GUI::eUrbanAttrition ]->Connect( &pInfos->modifUrbanBlocks_, bConnect );
+    vItemConnectors_[ ADN_LocalFireClass_GUI::eExtinguisherAgentInfos ]->Connect( &pInfos->agents_, bConnect );
+    vItemConnectors_[ ADN_LocalFireClass_GUI::eWeatherFireEffects ]->Connect( &pInfos->weatherEffects_, bConnect );
 }
 
 // -----------------------------------------------------------------------------

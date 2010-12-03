@@ -10,6 +10,8 @@
 #include "adaptation_app_pch.h"
 #include "ADN_LocalFireClass_GUI.h"
 #include "moc_ADN_LocalFireClass_GUI.cpp"
+#include "ADN_WeatherFireEffects_Table.h"
+#include "ADN_ExtinguisherAgentInfos_Table.h"
 #include "ADN_LocalFireClass_ListView.h"
 #include "ADN_LocalFireClass_Data.h"
 #include "ADN_GuiBuilder.h"
@@ -72,6 +74,14 @@ void ADN_LocalFireClass_GUI::Build()
 
     QGroupBox* pUrbanModifiersGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Urban attrition" ), pLocalFireClassDataGroup );
     new helpers::ADN_UrbanModifiersTable( pUrbanModifiersGroup, vInfosConnectors[ eUrbanAttrition ] );
+
+    QGroupBox* pExtinguisherAgentsGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Extinguisher agents" ), pLocalFireClassDataGroup );
+    ADN_ExtinguisherAgentInfos_Table* pExtinguisherAgentInfosTable = new ADN_ExtinguisherAgentInfos_Table( pExtinguisherAgentsGroup );
+    vInfosConnectors[eExtinguisherAgentInfos] = &pExtinguisherAgentInfosTable->GetConnector();
+
+    QGroupBox* pWeatherFireEffectsGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Weather fire effects" ), pLocalFireClassDataGroup );
+    ADN_WeatherFireEffects_Table* pWeatherFireEffectsTable = new ADN_WeatherFireEffects_Table( pWeatherFireEffectsGroup );
+    vInfosConnectors[eWeatherFireEffects] = &pWeatherFireEffectsTable->GetConnector();
 
     pLocalFireClassListView->SetItemConnectors( vInfosConnectors );
 

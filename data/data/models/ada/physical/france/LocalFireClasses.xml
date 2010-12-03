@@ -1,3 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<local-fire-classes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/LocalFireClasses.xsd"/>
-<!-- signature="0577163787" -->
+<local-fire-classes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/LocalFireClasses.xsd">
+  <local-fire-class decrease-rate="1" increase-rate="2" initial-heat="1" max-heat="30" name="class A">
+    <extinguisher-agents>
+      <extinguisher-agent agent="pompier" heat-decrease-rate="100"/>
+      <extinguisher-agent agent="lance incendie" heat-decrease-rate="0"/>
+    </extinguisher-agents>
+    <weather-effects>
+      <weather-effect heat-decrease-rate="17" weather="PasDePrecipitation"/>
+      <weather-effect heat-decrease-rate="27" weather="TempeteDeSable"/>
+      <weather-effect heat-decrease-rate="37" weather="Brouillard"/>
+      <weather-effect heat-decrease-rate="47" weather="Crachin"/>
+      <weather-effect heat-decrease-rate="5" weather="Pluie"/>
+      <weather-effect heat-decrease-rate="6" weather="Neige"/>
+      <weather-effect heat-decrease-rate="7" weather="Fumigene"/>
+    </weather-effects>
+    <injuries>
+      <injury percentage="0" type="u1"/>
+      <injury percentage="0" type="u2"/>
+      <injury percentage="0" type="u3"/>
+      <injury percentage="0" type="ue"/>
+      <injury percentage="0" type="dead"/>
+    </injuries>
+    <urban-modifiers>
+      <urban-modifier material-type="Bois" value="0"/>
+      <urban-modifier material-type="Beton" value="0"/>
+      <urban-modifier material-type="Brique" value="0"/>
+      <urban-modifier material-type="Metal" value="0"/>
+      <urban-modifier material-type="Torchis" value="0"/>
+      <urban-modifier material-type="Prefabrique" value="0"/>
+      <urban-modifier material-type="Vegetation" value="0"/>
+    </urban-modifiers>
+  </local-fire-class>
+  <local-fire-class decrease-rate="0" increase-rate="0" initial-heat="0" max-heat="0" name="class B">
+    <extinguisher-agents>
+      <extinguisher-agent agent="pompier" heat-decrease-rate="106"/>
+      <extinguisher-agent agent="lance incendie" heat-decrease-rate="0"/>
+    </extinguisher-agents>
+    <weather-effects>
+      <weather-effect heat-decrease-rate="10" weather="PasDePrecipitation"/>
+      <weather-effect heat-decrease-rate="11" weather="TempeteDeSable"/>
+      <weather-effect heat-decrease-rate="12" weather="Brouillard"/>
+      <weather-effect heat-decrease-rate="13" weather="Crachin"/>
+      <weather-effect heat-decrease-rate="14" weather="Pluie"/>
+      <weather-effect heat-decrease-rate="15" weather="Neige"/>
+      <weather-effect heat-decrease-rate="16" weather="Fumigene"/>
+    </weather-effects>
+    <injuries>
+      <injury percentage="0" type="u1"/>
+      <injury percentage="0" type="u2"/>
+      <injury percentage="0" type="u3"/>
+      <injury percentage="0" type="ue"/>
+      <injury percentage="0" type="dead"/>
+    </injuries>
+    <urban-modifiers>
+      <urban-modifier material-type="Bois" value="0"/>
+      <urban-modifier material-type="Beton" value="0"/>
+      <urban-modifier material-type="Brique" value="0"/>
+      <urban-modifier material-type="Metal" value="0"/>
+      <urban-modifier material-type="Torchis" value="0"/>
+      <urban-modifier material-type="Prefabrique" value="0"/>
+      <urban-modifier material-type="Vegetation" value="0"/>
+    </urban-modifiers>
+  </local-fire-class>
+</local-fire-classes>
+<!-- signature="2827288287" -->

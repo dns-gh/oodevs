@@ -72,7 +72,7 @@ public:
         std::string name_;
     };
 
-private:
+public:
     //! @name Member data
     //@{
     ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > ptrAgent_;

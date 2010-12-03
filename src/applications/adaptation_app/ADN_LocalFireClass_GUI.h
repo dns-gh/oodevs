@@ -36,6 +36,8 @@ public:
         eNbrHurtUE,
         eNbrDead,
         eUrbanAttrition,
+        eExtinguisherAgentInfos,
+        eWeatherFireEffects,
         eNbrGuiElements
     };
 

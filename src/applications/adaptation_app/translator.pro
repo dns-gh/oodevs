@@ -93,6 +93,9 @@ ADN_LocalFireClass_Data.cpp \
 ADN_LocalFireClass_ListView.cpp \
 ADN_LocalFireClass_Wizard.cpp \
 ADN_LocalFireClass_GUI.cpp \
+ADN_WeatherFireEffects.cpp \
+ADN_WeatherFireEffects_Table.cpp \
+ADN_ExtinguisherAgentInfos_Table.cpp \
 ADN_ListView_Sensors.cpp \
 ADN_ListView_Units.cpp \
 ADN_ListView_UrbanMaterial_Type.cpp \

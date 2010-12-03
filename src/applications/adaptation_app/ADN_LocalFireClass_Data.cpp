@@ -151,11 +151,19 @@ ADN_LocalFireClass_Data::LocalFireClassInfos::LocalFireClassInfos()
     , injuryInfos_     ( "injuries" )
     , modifUrbanBlocks_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
 {
+    agents_.SetParentNode( *this );
     initialHeat_.SetParentNode( *this );
     maxHeat_.SetParentNode( *this );
     increaseRate_.SetParentNode( *this );
     decreaseRate_.SetParentNode( *this );
     injuryInfos_.SetParentNode( *this );
+    weatherEffects_.SetParentNode( *this );
+    for( int i= 0 ; i< eNbrSensorWeatherModifiers ; ++i)
+    {
+        ADN_WeatherFireEffects* pEffect = new ADN_WeatherFireEffects((E_SensorWeatherModifiers)i);
+        weatherEffects_.AddItem( pEffect );
+    }
+
 }
 
 // -----------------------------------------------------------------------------
@@ -201,6 +209,10 @@ ADN_LocalFireClass_Data::LocalFireClassInfos* ADN_LocalFireClass_Data::LocalFire
     pCopy->decreaseRate_ = decreaseRate_.GetData();
     for( uint n = 0; n < agents_.size(); ++n )
         pCopy->agents_[ n ]->CopyFrom( *agents_[ n ] );
+    
+    for( uint i=0; i<weatherEffects_.size(); ++i )
+        pCopy->weatherEffects_[i]->CopyFrom( *weatherEffects_[i] );
+
     return pCopy;
 }
     
@@ -246,9 +258,11 @@ void ADN_LocalFireClass_Data::LocalFireClassInfos::ReadAgent( xml::xistream& inp
 // Name: ADN_LocalFireClass_Data::LocalFireClassInfos::ReadWeatherEffect
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-void ADN_LocalFireClass_Data::LocalFireClassInfos::ReadWeatherEffect( xml::xistream& /*input*/ )
+void ADN_LocalFireClass_Data::LocalFireClassInfos::ReadWeatherEffect( xml::xistream& input )
 {
-    int todo = 0;
+    std::string weatherStr = input.attribute< std::string >( "weather" );
+    E_SensorWeatherModifiers weather = ADN_Tr::ConvertToSensorWeatherModifiers( weatherStr );
+    weatherEffects_.at( weather )->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -281,8 +295,8 @@ void ADN_LocalFireClass_Data::LocalFireClassInfos::WriteArchive( xml::xostream& 
         ( *itAgent )->WriteArchive( output );
     output     << xml::end
                << xml::start( "weather-effects" );
-    /*for( IT_ExtinguisherAgentInfos_Vector itAgent = agents_.begin(); itAgent != agents_.end(); ++itAgent )
-        ( *itAgent )->WriteArchive( output );*/
+    for( IT_WeatherFireEffects_Vector itWeather = weatherEffects_.begin(); itWeather != weatherEffects_.end(); ++itWeather )
+        ( *itWeather )->WriteArchive( output );
     output     << xml::end;
     injuryInfos_.WriteArchive( output );
     output     << xml::start( "urban-modifiers" );

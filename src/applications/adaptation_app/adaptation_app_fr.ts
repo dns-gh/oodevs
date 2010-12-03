@@ -1527,6 +1527,17 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
+    <name>ADN_ExtinguisherAgentInfos_Table</name>
+    <message>
+        <source>Agent</source>
+        <translation>Agent</translation>
+    </message>
+    <message>
+        <source>Heat decrease rate</source>
+        <translation>Coefficient de diminution</translation>
+    </message>
+</context>
+<context>
     <name>ADN_FragOrder_Wizard</name>
     <message>
         <source>New fragmentary order creation</source>
@@ -2115,6 +2126,14 @@ du tireur</translation>
     <message>
         <source>Urban attrition</source>
         <translation>Attrition urbaine</translation>
+    </message>
+    <message>
+        <source>Extinguisher agents</source>
+        <translation>Agents extincteurs</translation>
+    </message>
+    <message>
+        <source>Weather fire effects</source>
+        <translation>Effets de la météo</translation>
     </message>
 </context>
 <context>
@@ -5018,6 +5037,17 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Delete Ph</source>
         <translation>Supprimer PH</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_WeatherFireEffects_Table</name>
+    <message>
+        <source>Weather</source>
+        <translation>Météo</translation>
+    </message>
+    <message>
+        <source>Heat decrease rate</source>
+        <translation>Coefficient de diminution</translation>
     </message>
 </context>
 <context>

@@ -15,6 +15,7 @@
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_ExtinguisherAgentInfos.h"
 #include "ADN_UrbanAttritionInfos.h"
+#include "ADN_WeatherFireEffects.h"
 
 // =============================================================================
 /** @class  ADN_LocalFireClass_Data
@@ -91,6 +92,7 @@ public:
         T_ExtinguisherAgentInfos_Vector agents_;
         LocalFireClassInjuryInfos injuryInfos_;
         helpers::T_UrbanAttritionInfos_Vector modifUrbanBlocks_;
+        T_WeatherFireEffects_Vector weatherEffects_;
         //@}
     };
 
