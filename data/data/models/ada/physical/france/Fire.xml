@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<fire-classes>
+<fire-classes  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Fire.xsd">
     <!-- fire-surface will define the surface of the fire in the simulation, the length will be used by the wind when we compute the propagation due to the speed factor-->
     <fire-surface length="5" width="5"/>
     <!-- id and name are identifiers of the class of fire
@@ -56,4 +56,4 @@
     </extinguisher-agents>
   </class>
 </fire-classes>
-<!-- signature="1276393115" -->
+<!-- signature="2793052130" -->

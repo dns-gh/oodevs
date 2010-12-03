@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<objects>
+<objects xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/ObjectNames.xsd">
     <object id="0" type="mines"/>
     <object id="1" type="mined area (linear)"/>
     <object id="2" type="mined area (scattered)"/>
@@ -43,4 +43,4 @@
     <object id="40" type="sensors"/>
     <object id="41" type="sensorsDetectionZone"/>
 </objects>
-<!-- signature="2184556874" -->
+<!-- signature="3097997202" -->

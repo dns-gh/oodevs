@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pathfind xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<pathfind xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Pathfind.xsd">
   <configuration distance-threshold="15000" max-calculation-time="15s"/>
   <unit-rules>
     <rule type="base" flying="false" autonomous="false">
@@ -300,4 +300,4 @@
     <rule type="base" cost-out-of-channeling="50" channeling-range="1000"/>
   </population-rules>
 </pathfind>
-<!-- signature="1933332496" -->
+<!-- signature="2136630527" -->
