@@ -28,18 +28,18 @@ class ADN_LocalFireClass_Data : public ADN_Data_ABC
 {
 
 public:
-    class LocalFireClassInjuryInfos : public ADN_Ref_ABC
-                                    , public ADN_DataTreeNode_ABC
+    class FireInjuryInfos : public ADN_Ref_ABC
+                          , public ADN_DataTreeNode_ABC
     {
 
     public:
-        explicit LocalFireClassInjuryInfos( const std::string& nodeName );
-        virtual ~LocalFireClassInjuryInfos() {}
+        explicit FireInjuryInfos( const std::string& nodeName );
+        virtual ~FireInjuryInfos() {}
 
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void CopyFrom( LocalFireClassInjuryInfos& infos );
+        void CopyFrom( FireInjuryInfos& infos );
 
         void ReadInjury( xml::xistream& input );
         void ReadArchive( xml::xistream& input );
@@ -53,6 +53,43 @@ public:
         ADN_Type_Int nNbHurtHumansE_;
         ADN_Type_Int nNbDeadHumans_;
     };
+
+    class FireSurfaceInfos : public ADN_Ref_ABC
+                           , public ADN_DataTreeNode_ABC
+    {
+    public:
+        explicit FireSurfaceInfos( E_Location location );
+        virtual ~FireSurfaceInfos() {}
+        std::string GetItemName();
+
+        void CopyFrom( FireSurfaceInfos& infos );
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+    public:
+        ADN_Type_String strName_;
+        ADN_Type_Int ignitionThreshold_;
+        ADN_Type_Int maxCombustionEnergy_;
+
+    public:
+        class Cmp : public std::unary_function< FireSurfaceInfos*, bool >
+        {
+        public:
+             Cmp( const std::string& strName ) : strName_( strName ) {}
+            ~Cmp() {}
+
+            bool operator()( FireSurfaceInfos* infos ) const
+            { 
+                return infos->strName_ == strName_;
+            }
+        private:
+            std::string strName_;
+        };
+    };
+
+    typedef ADN_Type_Vector_ABC< FireSurfaceInfos > T_FireSurfaceInfos_Vector;
+    typedef T_FireSurfaceInfos_Vector::iterator    IT_FireSurfaceInfos_Vector;
 
     class LocalFireClassInfos : public ADN_Ref_ABC
                               , public ADN_DataTreeNode_ABC
@@ -79,6 +116,7 @@ public:
         void ReadAgent( xml::xistream& input );
         void ReadWeatherEffect( xml::xistream& input );
         void ReadUrbanModifer( xml::xistream& input );
+        void ReadSurface( xml::xistream& input );
         //@}
 
     public:
@@ -90,9 +128,11 @@ public:
         ADN_Type_Int increaseRate_;
         ADN_Type_Int decreaseRate_;
         T_ExtinguisherAgentInfos_Vector agents_;
-        LocalFireClassInjuryInfos injuryInfos_;
+        FireInjuryInfos injuryInfos_;
         helpers::T_UrbanAttritionInfos_Vector modifUrbanBlocks_;
         T_WeatherFireEffects_Vector weatherEffects_;
+        ADN_Type_Bool isSurface_;
+        T_FireSurfaceInfos_Vector surfaceInfos_;
         //@}
     };
 
@@ -112,6 +152,7 @@ public:
     //@{
     void FilesNeeded( T_StringList& l ) const;
     void Reset();
+    ADN_Type_Int& GetCellSize();
     T_LocalFireClassInfosVector& GetLocalFireClassesInfos();
     //@}
 
@@ -126,6 +167,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ADN_Type_Int cellSize_;
     T_LocalFireClassInfosVector localFireClasses_;
     //@}
 };

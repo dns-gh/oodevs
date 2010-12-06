@@ -163,6 +163,7 @@ ADN_Supply_Data.cpp \
 ADN_Supply_GUI.cpp \
 ADN_Supply_TrucksDoubleTable.cpp \
 ADN_Supply_TrucksTimeTable.cpp \
+ADN_SurfaceFireInfos_Table.cpp \
 ADN_TableDialog.cpp \
 ADN_Table_Objects_LocationScore.cpp \
 ADN_Tr.cpp \

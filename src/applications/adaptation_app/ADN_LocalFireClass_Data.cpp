@@ -14,10 +14,10 @@
 #include "ADN_Tr.h"
 
 // -----------------------------------------------------------------------------
-// Name: ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::LocalFireClassInjuryInfos
+// Name: ADN_LocalFireClass_Data::FireInjuryInfos::FireInjuryInfos
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::LocalFireClassInjuryInfos( const std::string& nodeName )
+ADN_LocalFireClass_Data::FireInjuryInfos::FireInjuryInfos( const std::string& nodeName )
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
     , nodeName_      ( nodeName )
@@ -40,28 +40,28 @@ ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::LocalFireClassInjuryInfos( c
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::GetNodeName
+// Name: ADN_LocalFireClass_Data::FireInjuryInfos::GetNodeName
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-std::string ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::GetNodeName()
+std::string ADN_LocalFireClass_Data::FireInjuryInfos::GetNodeName()
 {
     return nodeName_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::GetItemName
+// Name: ADN_LocalFireClass_Data::FireInjuryInfos::GetItemName
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-std::string ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::GetItemName()
+std::string ADN_LocalFireClass_Data::FireInjuryInfos::GetItemName()
 {
     return nodeName_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_LocalFireClass_Data::CopyFrom
+// Name: ADN_LocalFireClass_Data::FireInjuryInfos::CopyFrom
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-void ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::CopyFrom( LocalFireClassInjuryInfos& infos )
+void ADN_LocalFireClass_Data::FireInjuryInfos::CopyFrom( FireInjuryInfos& infos )
 {
     nNbHurtHumans1_ = infos.nNbHurtHumans1_.GetData();
     nNbHurtHumans2_ = infos.nNbHurtHumans2_.GetData();
@@ -71,10 +71,10 @@ void ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::CopyFrom( LocalFireClas
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_LocalFireClass_Data::ReadEffect
+// Name: ADN_LocalFireClass_Data::FireInjuryInfos::FireInjuryInfos::ReadEffect
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-void ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::ReadInjury( xml::xistream& input )
+void ADN_LocalFireClass_Data::FireInjuryInfos::ReadInjury( xml::xistream& input )
 {
     std::string wound = input.attribute< std::string >( "type" );
     std::transform( wound.begin(), wound.end(), wound.begin(), std::tolower );
@@ -89,32 +89,32 @@ void ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::ReadInjury( xml::xistre
     {
         *pWound = static_cast< int >( input.attribute< double >( "percentage" ) * 100. );
         if( pWound->GetData() < 0 || pWound->GetData() > 100 )
-            throw ADN_DataException( tools::translate( "ADN_LocalFireClass_Data", "Invalid data" ).ascii(), tools::translate( "ADN_LocalFireClass_Data", "Local fire - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).ascii() );
+            throw ADN_DataException( tools::translate( "ADN_LocalFireClass_Data", "Invalid data" ).ascii(), tools::translate( "ADN_LocalFireClass_Data", "Fire - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).ascii() );
     }
     else
-        throw ADN_DataException( tools::translate( "ADN_LocalFireClass_Data", "Invalid data" ).ascii(),tools::translate( "ADN_LocalFireClass_Data", "Local fire - Invalid wound type '%1'" ).arg( wound.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "ADN_LocalFireClass_Data", "Invalid data" ).ascii(),tools::translate( "ADN_LocalFireClass_Data", "Fire - Invalid wound type '%1'" ).arg( wound.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_LocalFireClass_Data::ReadArchive
+// Name: ADN_LocalFireClass_Data::FireInjuryInfos::ReadArchive
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-void ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::ReadArchive( xml::xistream& input )
+void ADN_LocalFireClass_Data::FireInjuryInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::list( "injury", *this, &ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::ReadInjury );
+    input >> xml::list( "injury", *this, &ADN_LocalFireClass_Data::FireInjuryInfos::ReadInjury );
     if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw ADN_DataException( tools::translate( "ADN_LocalFireClass_Data", "Invalid data" ).ascii(), tools::translate( "ADN_LocalFireClass_Data", "Local fire - Fire '%1' - Injuries data sum > 100" ).arg( GetParentNode()->GetNodeName().c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "ADN_LocalFireClass_Data", "Invalid data" ).ascii(), tools::translate( "ADN_LocalFireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( GetParentNode()->GetNodeName().c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_LocalFireClass_Data::WriteArchive
+// Name: ADN_LocalFireClass_Data::FireInjuryInfos::WriteArchive
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-void ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::WriteArchive( xml::xostream& output )
+void ADN_LocalFireClass_Data::FireInjuryInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "injuries" );
     if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw ADN_DataException( tools::translate( "ADN_LocalFireClass_Data", "Invalid data" ).ascii(), tools::translate( "ADN_LocalFireClass_Data", "Local fire - Fire '%1' - Injuries data sum > 100" ).arg( GetParentNode()->GetNodeName().c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "ADN_LocalFireClass_Data", "Invalid data" ).ascii(), tools::translate( "ADN_LocalFireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( GetParentNode()->GetNodeName().c_str() ).ascii() );
     output  << xml::start( "injury" )
                 << xml::attribute( "type", "u1" )
                 << xml::attribute( "percentage", nNbHurtHumans1_.GetData() / 100. )
@@ -139,6 +139,66 @@ void ADN_LocalFireClass_Data::LocalFireClassInjuryInfos::WriteArchive( xml::xost
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_LocalFireClass_Data::FireSurfaceInfos::FireSurfaceInfos
+// Created: JSR 2010-12-03
+// -----------------------------------------------------------------------------
+ADN_LocalFireClass_Data::FireSurfaceInfos::FireSurfaceInfos( E_Location location )
+    : ADN_Ref_ABC()
+    , ADN_DataTreeNode_ABC()
+    , strName_            ( ADN_Tr::ConvertFromLocation( location ) )
+    , ignitionThreshold_  ( 0 )
+    , maxCombustionEnergy_( 0 )
+{
+    ignitionThreshold_.SetDataName( "le seuil d'ignition dans" );
+    ignitionThreshold_.SetParentNode( *this );
+    maxCombustionEnergy_.SetDataName( "l'énergie de combustion maximale dans" );
+    maxCombustionEnergy_.SetParentNode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_LocalFireClass_Data::FireSurfaceInfos::GetItemName
+// Created: JSR 2010-12-03
+// -----------------------------------------------------------------------------
+std::string ADN_LocalFireClass_Data::FireSurfaceInfos::GetItemName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_LocalFireClass_Data::FireSurfaceInfos::CopyFrom
+// Created: JSR 2010-12-03
+// -----------------------------------------------------------------------------
+void ADN_LocalFireClass_Data::FireSurfaceInfos::CopyFrom( FireSurfaceInfos& infos )
+{
+    strName_ = infos.strName_.GetData();
+    ignitionThreshold_ = infos.ignitionThreshold_.GetData();
+    maxCombustionEnergy_ = infos.maxCombustionEnergy_.GetData();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_LocalFireClass_Data::FireSurfaceInfos::ReadArchive
+// Created: JSR 2010-12-03
+// -----------------------------------------------------------------------------
+void ADN_LocalFireClass_Data::FireSurfaceInfos::ReadArchive( xml::xistream& input )
+{
+    input >> xml::attribute( "ignition-threshold", ignitionThreshold_ )
+          >> xml::attribute( "max-combustion-energy", maxCombustionEnergy_ );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ADN_LocalFireClass_Data::FireSurfaceInfos::WriteArchive
+// Created: JSR 2010-12-03
+// -----------------------------------------------------------------------------
+void ADN_LocalFireClass_Data::FireSurfaceInfos::WriteArchive( xml::xostream& output )
+{
+    output  << xml::start( "surface" )
+        << xml::attribute( "type", strName_ )
+                << xml::attribute( "ignition-threshold", ignitionThreshold_ )
+                << xml::attribute( "max-combustion-energy", maxCombustionEnergy_ )
+            << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_LocalFireClass_Data::LocalFireClassInfos::LocalFireClassInfos
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
@@ -150,6 +210,8 @@ ADN_LocalFireClass_Data::LocalFireClassInfos::LocalFireClassInfos()
     , decreaseRate_    ( 0 )
     , injuryInfos_     ( "injuries" )
     , modifUrbanBlocks_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
+    , isSurface_       ( false )
+    , surfaceInfos_    ( "surfaces" )
 {
     agents_.SetParentNode( *this );
     initialHeat_.SetParentNode( *this );
@@ -164,6 +226,17 @@ ADN_LocalFireClass_Data::LocalFireClassInfos::LocalFireClassInfos()
         weatherEffects_.AddItem( pEffect );
     }
 
+    isSurface_.SetParentNode( *this );
+    surfaceInfos_.SetParentNode( *this );    
+    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Unknown ) );
+    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Forest ) );
+    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Plantation ) );
+    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Swamp ) );
+    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Dune ) );
+    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Urban ) );
+    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Water ) );
+    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Ice ) );
+    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Mountain ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -207,12 +280,15 @@ ADN_LocalFireClass_Data::LocalFireClassInfos* ADN_LocalFireClass_Data::LocalFire
     pCopy->maxHeat_ = maxHeat_.GetData();
     pCopy->increaseRate_ = increaseRate_.GetData();
     pCopy->decreaseRate_ = decreaseRate_.GetData();
+    pCopy->isSurface_ = isSurface_.GetData();
     for( uint n = 0; n < agents_.size(); ++n )
         pCopy->agents_[ n ]->CopyFrom( *agents_[ n ] );
     
     for( uint i=0; i<weatherEffects_.size(); ++i )
         pCopy->weatherEffects_[i]->CopyFrom( *weatherEffects_[i] );
 
+    for( uint n = 0; n < surfaceInfos_.size(); ++n )
+        pCopy->surfaceInfos_[ n ]->CopyFrom( *surfaceInfos_[ n ] );
     return pCopy;
 }
     
@@ -239,6 +315,13 @@ void ADN_LocalFireClass_Data::LocalFireClassInfos::ReadArchive( xml::xistream& i
           >> xml::start( "urban-modifiers" )
             >> xml::list( "urban-modifier", *this, &ADN_LocalFireClass_Data::LocalFireClassInfos::ReadUrbanModifer )
           >> xml::end;
+    isSurface_ = input.has_child( "surfaces" );
+    if( isSurface_.GetData() )
+    {
+        input >> xml::start( "surfaces" )
+                  >> xml::list( "surface", *this, &ADN_LocalFireClass_Data::LocalFireClassInfos::ReadSurface )
+              >> xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -275,7 +358,23 @@ void ADN_LocalFireClass_Data::LocalFireClassInfos::ReadUrbanModifer( xml::xistre
     helpers::IT_UrbanAttritionInfos_Vector it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
     if( it == modifUrbanBlocks_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Fire class - Invalid urban Material type '%1'" ).arg( material.c_str() ).ascii() );
-    (*it)->ReadArchive( input );
+    ( *it )->ReadArchive( input );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_LocalFireClass_Data::LocalFireClassInfos::ReadSurface
+// Created: JSR 2010-12-03
+// -----------------------------------------------------------------------------
+void ADN_LocalFireClass_Data::LocalFireClassInfos::ReadSurface( xml::xistream& input )
+{
+    std::string type = input.attribute< std::string >( "type" );
+    /*E_Location location = ADN_Tr::ConvertToLocation( type );
+    if( location == static_cast< E_Location >( -1 ) )
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Fire - Invalid location type '%1'" ).arg( type.c_str() ).ascii() );*/
+    IT_FireSurfaceInfos_Vector it = std::find_if( surfaceInfos_.begin(), surfaceInfos_.end(), FireSurfaceInfos::Cmp( type ) );
+    if( it == surfaceInfos_.end() )
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Fire - Location type not found '%1'" ).arg( type.c_str() ).ascii() );
+    ( *it )->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -284,7 +383,7 @@ void ADN_LocalFireClass_Data::LocalFireClassInfos::ReadUrbanModifer( xml::xistre
 // -----------------------------------------------------------------------------
 void ADN_LocalFireClass_Data::LocalFireClassInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "local-fire-class" )
+    output << xml::start( "fire" )
                << xml::attribute( "name", strName_ )
                << xml::attribute( "initial-heat", initialHeat_ )
                << xml::attribute( "max-heat", maxHeat_ )
@@ -303,6 +402,13 @@ void ADN_LocalFireClass_Data::LocalFireClassInfos::WriteArchive( xml::xostream& 
     for( helpers::IT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
         ( *itUrbanAttrition )->WriteArchive( output );
     output     << xml::end;
+    if( isSurface_.GetData() )
+    {
+        output << xml::start( "surfaces" );
+        for( IT_FireSurfaceInfos_Vector itSurface = surfaceInfos_.begin(); itSurface != surfaceInfos_.end(); ++itSurface )
+            ( *itSurface )->WriteArchive( output );
+        output << xml::end;
+    }
     output << xml::end;
 }
 
@@ -311,6 +417,7 @@ void ADN_LocalFireClass_Data::LocalFireClassInfos::WriteArchive( xml::xostream& 
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
 ADN_LocalFireClass_Data::ADN_LocalFireClass_Data()
+    : cellSize_( 10 )
 {
     // NOTHING
 }
@@ -348,8 +455,11 @@ void ADN_LocalFireClass_Data::Reset()
 // -----------------------------------------------------------------------------
 void ADN_LocalFireClass_Data::ReadArchive( xml::xistream& input )
 {
-    input >> xml::start( "local-fire-classes" )
-            >> xml::list( "local-fire-class", *this, &ADN_LocalFireClass_Data::ReadLocalFireClass )
+    input >> xml::start( "fires" )
+            >> xml::start( "cell-size" )
+                >> xml::attribute( "value", cellSize_ )
+            >> xml::end
+            >> xml::list( "fire", *this, &ADN_LocalFireClass_Data::ReadLocalFireClass )
           >> xml::end;
 }
 
@@ -370,11 +480,23 @@ void ADN_LocalFireClass_Data::ReadLocalFireClass( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_LocalFireClass_Data::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "local-fire-classes" );
-    ADN_Tools::AddSchema( output, "LocalFireClasses" );
+    output << xml::start( "fires" );
+    ADN_Tools::AddSchema( output, "Fires" );
+    output << xml::start( "cell-size" )
+                << xml::attribute( "value", cellSize_ )
+            << xml::end;
     for( IT_LocalFireClassInfosVector it = localFireClasses_.begin(); it != localFireClasses_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_LocalFireClass_Data::GetCellSize
+// Created: JSR 2010-12-03
+// -----------------------------------------------------------------------------
+ADN_Type_Int& ADN_LocalFireClass_Data::GetCellSize()
+{
+    return cellSize_;
 }
 
 // -----------------------------------------------------------------------------

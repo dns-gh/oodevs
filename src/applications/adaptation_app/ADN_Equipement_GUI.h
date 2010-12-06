@@ -10,12 +10,8 @@
 #ifndef __ADN_Equipement_GUI_h_
 #define __ADN_Equipement_GUI_h_
 
-#include <qobject.h>
-
 #include "ADN_GUI_ABC.h"
 #include "ADN_Enums.h"
-#include "ADN_EditLine.h"
-#include "ADN_ComboBox_Vector.h"
 #include "ADN_Equipement_Data.h"
 
 class ADN_Table;
@@ -24,10 +20,6 @@ class ADN_Equipement_AttritionGraph;
 class ADN_Equipement_AmmoListView;
 class ADN_ComboBox;
 template < class T > class ADN_ComboBox_Vector;
-class QLabel;
-class QWidget;
-class QTabWidget;
-class QGroupBox;
 
 namespace helpers
 {
@@ -109,11 +101,8 @@ public:
     //@{
     void Build();
     void RegisterTable( ADN_MainWindow& mainWindow );
-
     ADN_Table* CreatePKTable();
-
     void ExportPKs( ADN_HtmlBuilder& builder, ADN_Equipement_Data::AmmoCategoryInfo& infos );
-
     void UpdateGraph();
     void InitializeSimulationCombos();
     helpers::ArmorInfos* GetSelectedArmor() const;
@@ -128,28 +117,27 @@ private:
     //@}
 
 private slots:
+    //! @name Slots
+    //@{
     void IndirectTypeComboActivated( int nIndex );
-    void SimulationCombosActivated( int nIndex );
+    void SimulationCombosActivated();
+    //@}
 
 private:
     //! @name Member data
     //@{
     ADN_Equipement_Data& data_;
-
-    ADN_Equipement_AmmoListView*        pAmmoListView_;
-    ADN_Equipement_AttritionTable*      pAttritionTable_;
-
+    ADN_Equipement_AmmoListView* pAmmoListView_;
+    ADN_Equipement_AttritionTable* pAttritionTable_;
     ADN_ComboBox* pIndirectTypeCombo_;
     ADN_Equipement_AttritionGraph* pAttritionGraph_;
     ADN_ComboBox_Vector< helpers::ArmorInfos >* pArmorCombo_;
     ADN_ComboBox_Vector< helpers::ADN_UrbanAttritionInfos >* pMaterialCombo_;
-
     QGroupBox* pExplosiveParametersGroup_;
     QGroupBox* pFlareParametersGroup_;
     QGroupBox* pEffectParametersGroup_;
     QGroupBox* pMineParametersGroup_;
     //@}
 };
-
 
 #endif // __ADN_Equipement_GUI_h_

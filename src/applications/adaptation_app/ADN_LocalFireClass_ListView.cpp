@@ -19,13 +19,13 @@
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
 ADN_LocalFireClass_ListView::ADN_LocalFireClass_ListView( QWidget* pParent /*= 0*/, const char* szName /*= 0*/, WFlags f /*= 0*/ )
-: ADN_ListView( pParent, szName, f )
+    : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Local fire classes" ) );
+    addColumn( tr( "Fires" ) );
     setResizeMode( QListView::AllColumns );
     // Connector creation
-    pConnector_ = new ADN_Connector_ListView< ADN_LocalFireClass_Data::LocalFireClassInfos >(*this);
+    pConnector_ = new ADN_Connector_ListView< ADN_LocalFireClass_Data::LocalFireClassInfos >( *this );
     this->SetDeletionEnabled( true );
 }
 
@@ -59,8 +59,10 @@ void ADN_LocalFireClass_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_LocalFireClass_GUI::eNbrHurtUE ]->Connect( &pInfos->injuryInfos_.nNbHurtHumansE_, bConnect );
     vItemConnectors_[ ADN_LocalFireClass_GUI::eNbrDead ]->Connect( &pInfos->injuryInfos_.nNbDeadHumans_, bConnect );
     vItemConnectors_[ ADN_LocalFireClass_GUI::eUrbanAttrition ]->Connect( &pInfos->modifUrbanBlocks_, bConnect );
-    vItemConnectors_[ ADN_LocalFireClass_GUI::eExtinguisherAgentInfos ]->Connect( &pInfos->agents_, bConnect );
+    vItemConnectors_[ ADN_LocalFireClass_GUI::eExtinguisherAgents ]->Connect( &pInfos->agents_, bConnect );
     vItemConnectors_[ ADN_LocalFireClass_GUI::eWeatherFireEffects ]->Connect( &pInfos->weatherEffects_, bConnect );
+    vItemConnectors_[ ADN_LocalFireClass_GUI::eSurfaceEffects ]->Connect( &pInfos->surfaceInfos_, bConnect );
+    vItemConnectors_[ ADN_LocalFireClass_GUI::eSurface ]->Connect( &pInfos->isSurface_, bConnect );
 }
 
 // -----------------------------------------------------------------------------

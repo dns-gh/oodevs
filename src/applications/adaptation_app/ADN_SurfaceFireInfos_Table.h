@@ -7,26 +7,26 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_ExtinguisherAgentInfos_Table_h_
-#define __ADN_ExtinguisherAgentInfos_Table_h_
+#ifndef __ADN_SurfaceFireInfos_Table_h_
+#define __ADN_SurfaceFireInfos_Table_h_
 
 #include "ADN_Table.h"
 
 // =============================================================================
-/** @class  ADN_Equipement_AttritionTable
-@brief  ADN_ExtinguisherAgentInfos_Table
+/** @class  ADN_SurfaceFireInfos_Table
+@brief  ADN_SurfaceFireInfos_Table
 */
-// Created: BCI 2010-12-02
+// Created: JSR 2010-12-03
 // =============================================================================
-class ADN_ExtinguisherAgentInfos_Table
+class ADN_SurfaceFireInfos_Table
     : public ADN_Table2
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_ExtinguisherAgentInfos_Table( QWidget* pParent = 0 );
-    virtual ~ADN_ExtinguisherAgentInfos_Table();
+    explicit ADN_SurfaceFireInfos_Table( QWidget* pParent = 0 );
+    virtual ~ADN_SurfaceFireInfos_Table();
     //@}
 };
 
-#endif // __ADN_ExtinguisherAgentInfos_Table_h_
+#endif // __ADN_SurfaceFireInfos_Table_h_

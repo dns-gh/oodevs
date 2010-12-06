@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.2.6">
 	<xs:include schemaLocation="tools.xsd"/>
-	<xs:element name="local-fire-classes">
+	<xs:element name="fires">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="local-fire-class" minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="cell-size">
+					<xs:complexType>
+						<xs:attribute name="value" type="xs:positiveInteger" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="fire" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="extinguisher-agents">
@@ -51,6 +55,19 @@
 											<xs:complexType>
 												<xs:attribute name="material-type" type="xs:string" use="required"/>
 												<xs:attribute name="value" type="xs:double" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="surfaces" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="surface" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="type" type="xs:string" use="required"/>
+												<xs:attribute name="ignition-threshold" type="xs:nonNegativeInteger" use="required"/>
+												<xs:attribute name="max-combustion-energy" type="xs:nonNegativeInteger" use="required"/>
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>

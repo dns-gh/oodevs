@@ -19,16 +19,16 @@
 ADN_LocalFireClass_Wizard::ADN_LocalFireClass_Wizard( QWidget* pParent , const char* szName )
     : ADN_Wizard_ABC< ADN_LocalFireClass_Data::LocalFireClassInfos >( pParent, szName )
 {
-    setCaption( qApp->translate( "ADN_LocalFireClass_Wizard", "New local fire class creation" ) );
+    setCaption( qApp->translate( "ADN_LocalFireClass_Wizard", "New fire creation" ) );
 
     ADN_LocalFireClass_Data::T_LocalFireClassInfosVector& classes = ADN_Workspace::GetWorkspace().GetLocalFireClasses().GetData().GetLocalFireClassesInfos();
     ADN_Wizard_FirstPage_Default< ADN_LocalFireClass_Data::LocalFireClassInfos >* pFirstPage = new ADN_Wizard_FirstPage_Default< ADN_LocalFireClass_Data::LocalFireClassInfos >( classes, this );
-    pFirstPage->SetCaptions( qApp->translate( "ADN_LocalFireClass_Wizard", "New local fire class creation" ),
-        qApp->translate( "ADN_LocalFireClass_Wizard", "Local fire class" ) );
+    pFirstPage->SetCaptions( qApp->translate( "ADN_LocalFireClass_Wizard", "New fire creation" ),
+        qApp->translate( "ADN_LocalFireClass_Wizard", "Fire" ) );
     pFirstPage_ = pFirstPage;
 
     new ADN_Wizard_LastPage( this, qApp->translate( "ADN_LocalFireClass_Wizard", "Creation finished" ),
-        qApp->translate( "ADN_LocalFireClass_Wizard", "Click \"Done\" to create the new local fire class." ) );
+        qApp->translate( "ADN_LocalFireClass_Wizard", "Click \"Done\" to create the new fire." ) );
 }
 
 // -----------------------------------------------------------------------------

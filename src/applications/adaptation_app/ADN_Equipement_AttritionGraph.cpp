@@ -184,10 +184,8 @@ void ADN_Equipement_AttritionGraph::Update()
     if( info == 0 )
         return;
 
-    double urbanProtection = 0.;
     helpers::ADN_UrbanAttritionInfos* material = ADN_Workspace::GetWorkspace().GetEquipements().GetGui().GetSelectedMaterial();
-    if( material )
-        urbanProtection = material->rCoeff_.GetData();
+    const double urbanProtection = material ? material->rCoeff_.GetData() : 0.;
 
     ADN_Health_Data::WoundInfo* wounds = ADN_Workspace::GetWorkspace().GetHealth().GetData().wounds;
 

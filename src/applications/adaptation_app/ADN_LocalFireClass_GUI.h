@@ -36,26 +36,24 @@ public:
         eNbrHurtUE,
         eNbrDead,
         eUrbanAttrition,
-        eExtinguisherAgentInfos,
+        eExtinguisherAgents,
         eWeatherFireEffects,
+        eSurface,
+        eSurfaceEffects,
+        eCellSize,
         eNbrGuiElements
     };
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_LocalFireClass_GUI( ADN_LocalFireClass_Data& );
+    explicit ADN_LocalFireClass_GUI( ADN_LocalFireClass_Data& );
     virtual ~ADN_LocalFireClass_GUI();
     //@}
 
     //! @name Operations
     //@{
     virtual void Build();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
     //@}
 
 private:

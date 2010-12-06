@@ -22,7 +22,7 @@
 				<xs:element name="resource-natures" type="FileReference"/>
 				<xs:element name="resources" type="FileReference"/>
 				<xs:element name="fire" type="FileReference"/>
-				<xs:element name="local-fire-classes" type="FileReference"/>
+				<xs:element name="fires" type="FileReference"/>
 				<xs:element name="health" type="FileReference"/>
 				<xs:element name="human-factors" type="FileReference"/>
 				<xs:element name="human-protections" type="FileReference"/>

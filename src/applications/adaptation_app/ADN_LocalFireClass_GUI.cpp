@@ -14,7 +14,9 @@
 #include "ADN_ExtinguisherAgentInfos_Table.h"
 #include "ADN_LocalFireClass_ListView.h"
 #include "ADN_LocalFireClass_Data.h"
+#include "ADN_GroupBox.h"
 #include "ADN_GuiBuilder.h"
+#include "ADN_SurfaceFireInfos_Table.h"
 #include "ADN_UrbanModifiersTable.h"
 
 // -----------------------------------------------------------------------------
@@ -54,9 +56,14 @@ void ADN_LocalFireClass_GUI::Build()
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Local fire class data
-    QGroupBox* pLocalFireClassDataGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Local fire class" ), pMainWidget_ );
+    QGroupBox* pLocalFireClassDataGroup = new QGroupBox( 2, Qt::Horizontal, tr( "Fire" ), pMainWidget_ );
 
     ADN_GuiBuilder builder;
+    builder.AddField< ADN_EditLine_Int >( builder.AddFieldHolder( pLocalFireClassDataGroup ), tr( "Cell size (global)" ), vInfosConnectors[ eCellSize ], tr( "m" ), eGreaterZero );
+    vInfosConnectors[ eCellSize ]->Connect( &data_.GetCellSize() );
+
+    new QWidget( pLocalFireClassDataGroup );
+
     QWidget* pHolder = builder.AddFieldHolder( pLocalFireClassDataGroup );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ), vInfosConnectors[ eName ] );
     builder.AddField< ADN_EditLine_Int >( pHolder, tr( "Initial heat" ), vInfosConnectors[ eInitialHeat ] );
@@ -77,11 +84,16 @@ void ADN_LocalFireClass_GUI::Build()
 
     QGroupBox* pExtinguisherAgentsGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Extinguisher agents" ), pLocalFireClassDataGroup );
     ADN_ExtinguisherAgentInfos_Table* pExtinguisherAgentInfosTable = new ADN_ExtinguisherAgentInfos_Table( pExtinguisherAgentsGroup );
-    vInfosConnectors[eExtinguisherAgentInfos] = &pExtinguisherAgentInfosTable->GetConnector();
+    vInfosConnectors[ eExtinguisherAgents ] = &pExtinguisherAgentInfosTable->GetConnector();
 
     QGroupBox* pWeatherFireEffectsGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Weather fire effects" ), pLocalFireClassDataGroup );
     ADN_WeatherFireEffects_Table* pWeatherFireEffectsTable = new ADN_WeatherFireEffects_Table( pWeatherFireEffectsGroup );
-    vInfosConnectors[eWeatherFireEffects] = &pWeatherFireEffectsTable->GetConnector();
+    vInfosConnectors[ eWeatherFireEffects ] = &pWeatherFireEffectsTable->GetConnector();
+
+    ADN_GroupBox* surfaceGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Surface" ), pLocalFireClassDataGroup );
+    vInfosConnectors[ eSurface ] = &surfaceGroup->GetConnector();
+    ADN_SurfaceFireInfos_Table *pSurfaceInfosTable = new ADN_SurfaceFireInfos_Table( surfaceGroup );
+    vInfosConnectors[ eSurfaceEffects ] = &pSurfaceInfosTable->GetConnector();
 
     pLocalFireClassListView->SetItemConnectors( vInfosConnectors );
 
