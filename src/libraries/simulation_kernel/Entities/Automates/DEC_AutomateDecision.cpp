@@ -27,6 +27,7 @@
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_IntelligenceFunctions.h"
 #include "Decision/DEC_CommunicationFunctions.h"
+#include "Decision/DEC_FireFunctions.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/bind.hpp>
@@ -164,6 +165,7 @@ void DEC_AutomateDecision::RegisterUserArchetypeFunctions ( directia::brain::Bra
     brain.Register( "DEC_Automate_PionEstNeutralise", &DEC_AutomateDecision::IsPionNeutralized );
     brain[ "DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion" ] = &DEC_AutomateFunctions::ComputePionNearestLocalisationPointInFuseau;
     brain[ "DEC_Automate_GetEfficacite" ] = &DEC_AutomateFunctions::GetPionEfficiency;
+    brain[ "DEC_Tir_PorteeMaxPourTirer" ] = &DEC_FireFunctions::GetMaxRangeToFireDecision; 
 
     // Objects
     brain[ "DEC_DetruireObjetSansDelais" ] = &DEC_ObjectFunctions::MagicDestroyObject;

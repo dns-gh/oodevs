@@ -349,7 +349,7 @@ double PHY_WeaponType::GetMaxRangeToFire( const MIL_Agent_ABC& pion, double rWan
     localFirer.Execute( *dotationComputer );
 
     if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )
-        return std::numeric_limits< double >::max();
+        return 0.;
     return pDirectFireData_->GetMaxRangeToFire( rWantedPH );
 }
 

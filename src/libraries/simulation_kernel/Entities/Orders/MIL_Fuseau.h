@@ -78,6 +78,7 @@ public:
 
     bool             IsNull            () const;
     const MT_Line&   GetGlobalDirection() const;
+    double           GetWidth          () const;
     //@}
 
     //! @name Tools

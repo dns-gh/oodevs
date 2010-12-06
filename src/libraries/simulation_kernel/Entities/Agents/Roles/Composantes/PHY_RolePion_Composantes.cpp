@@ -1356,11 +1356,11 @@ double PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_DotationCa
 // -----------------------------------------------------------------------------
 double PHY_RolePion_Composantes::GetMaxRangeToFire( const MIL_Agent_ABC&  pion, double rWantedPH ) const
 {
-    double rRange = std::numeric_limits< double >::max();
+    double rRange = 0.;
 
     for(  PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         if( (*it)->IsMajor() )
-            rRange = std::min( rRange, (**it).GetMaxRangeToFire( pion, rWantedPH ) );
+            rRange = std::max( rRange, (**it).GetMaxRangeToFire( pion, rWantedPH ) );
 
     return rRange;
 }

@@ -152,8 +152,13 @@ public:
     // Terrain keypoint
     static void GetCrossroads( directia::brain::Brain& brain, MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table ); 
     static std::vector< boost::shared_ptr< MT_Vector2D > > FindSafetyPositionsWithinCircle( MIL_AgentPion& pion, float radius, float safetyDistance );
+   
     // BMArea
     static boost::shared_ptr< MT_Vector2D > ComputeBarycenter( const TER_Localisation* localisation );
+
+    // Fuseau
+    static double GetWidth( const MIL_Fuseau* pFuseau );
+
     //@}
 
 private:

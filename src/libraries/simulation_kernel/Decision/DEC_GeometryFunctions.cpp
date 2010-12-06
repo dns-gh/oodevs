@@ -1650,3 +1650,13 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeBarycenter( const
     result.reset( new MT_Vector2D( localisation->ComputeBarycenter() ) );
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetWidth
+// Created: DDA 2010-12-03
+// -----------------------------------------------------------------------------
+
+double DEC_GeometryFunctions::GetWidth( const MIL_Fuseau* pFuseau )
+{
+     return pFuseau->GetWidth();
+}

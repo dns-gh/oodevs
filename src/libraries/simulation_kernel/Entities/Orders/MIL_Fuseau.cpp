@@ -1163,6 +1163,17 @@ const MT_Line& MIL_Fuseau::GetGlobalDirection() const
     return globalDirectionLine_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::GetWidth
+// Created: DDA 2010-12-03
+// -----------------------------------------------------------------------------
+double MIL_Fuseau::GetWidth() const
+{
+     const T_PointVector& leftLimitTmp  = pLeftLimit_ ->GetPoints();
+     const T_PointVector& rightLimitTmp = pRightLimit_->GetPoints();
+     return MT_Line( leftLimitTmp[0], rightLimitTmp[0] ).Magnitude(); 
+}
+
 //-----------------------------------------------------------------------------
 // Name: MIL_Fuseau::IsNull
 // Created: NLD 2003-04-23

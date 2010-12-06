@@ -58,6 +58,15 @@ float DEC_FireFunctions::GetMaxRangeToFire( const MIL_Agent_ABC& callerAgent, fl
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_FireFunctions::GetMaxRangeToFireDecision
+// Created: DDA 2010-12-02
+// -----------------------------------------------------------------------------
+float DEC_FireFunctions::GetMaxRangeToFireDecision( const DEC_Decision_ABC& callerAgent, float rWantedPH )
+{
+    return DEC_FireFunctions::GetMaxRangeToFire( callerAgent.GetPion(), rWantedPH );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_FireFunctions::GetMaxRangeToFireOnEnemyActualPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------

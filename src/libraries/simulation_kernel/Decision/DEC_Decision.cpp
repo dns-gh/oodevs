@@ -136,6 +136,15 @@ void RegisterAreaFunctions( directia::brain::Brain& brain )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterUrbanBlockFunctions
+// Created: DDA 2010-12-03
+// -----------------------------------------------------------------------------
+void RegisterFuseauFunctions( directia::brain::Brain& brain )
+{
+    brain[ "DEC_Fuseau_Width" ] = &DEC_GeometryFunctions::GetWidth;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterTimeManagementFunctions
 // Created: SLI 2010-07-09
 // -----------------------------------------------------------------------------
@@ -355,6 +364,7 @@ void RegisterCommonUserFunctions( directia::brain::Brain& brain, bool isMasalife
     RegisterGeometryFunctions( brain );
     RegisterUrbanBlockFunctions( brain );
     RegisterAreaFunctions( brain );
+    RegisterFuseauFunctions( brain );
     RegisterTimeManagementFunctions( brain );
     RegisterParametersCopyFunctions( brain );
     RegisterListsManipulationFunctions( brain );
