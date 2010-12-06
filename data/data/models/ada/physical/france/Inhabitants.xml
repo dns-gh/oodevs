@@ -1,3 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<populations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Inhabitants.xsd"/>
-<!-- signature="2309875566" -->
+<populations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Inhabitants.xsd">
+  <population associated-crowd="Population standard" id="0" name="PopType1">
+    <repartition children="10" female="40" male="50"/>
+    <schedule transfer-time=""/>
+    <needs/>
+  </population>
+  <population associated-crowd="Population standard" id="1" name="PopType2">
+    <repartition children="10" female="50" male="40"/>
+    <schedule transfer-time=""/>
+    <needs/>
+  </population>
+</populations>
+<!-- signature="0859661560" -->
