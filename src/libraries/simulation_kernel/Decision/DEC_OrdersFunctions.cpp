@@ -97,13 +97,13 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CDT_CreatePionMission(
 // Created: MGD 2010-01-14
 // Like CDT_CreatePionMission but no need of active MRT
 //-----------------------------------------------------------------------------
-boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreatePionMissionBM( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
+boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreatePionMissionBM( DEC_Decision_ABC* pPion, const std::string& mission )
 {
     assert( pPion );
     // Instanciate and check the new mission
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
     assert( pMissionType );
-    boost::shared_ptr< MIL_Mission_ABC > pPionMission = callerAutomate.GetOrderManager().CreatePionMissionBM( pPion->GetPion(), *pMissionType );
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission = pPion->GetPion().GetAutomate().GetOrderManager().CreatePionMissionBM( pPion->GetPion(), *pMissionType );
     return pPionMission;
 }
 
@@ -112,13 +112,13 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreatePionMissionBM( M
 // Created: GGE 2010-06-11
 // Like CDT_CreatePionMission but no need of active MRT
 //-----------------------------------------------------------------------------
-boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreatePionMissionVersPionBM( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
+boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreatePionMissionVersPionBM( DEC_Decision_ABC* pPion, const std::string& mission )
 {
     assert( pPion );
     // Instanciate and check the new mission
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
     assert( pMissionType );
-    boost::shared_ptr< MIL_Mission_ABC > pPionMission = callerAutomate.GetOrderManager().CreatePionMissionVersPionBM( pPion->GetPion(), *pMissionType );
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission = pPion->GetPion().GetAutomate().GetOrderManager().CreatePionMissionVersPionBM( pPion->GetPion(), *pMissionType );
     return pPionMission;
 }
 
@@ -138,6 +138,24 @@ void DEC_OrdersFunctions::CDT_GivePionMission( MIL_Automate& callerAutomate, boo
 void DEC_OrdersFunctions::CDT_GivePionMissionVersPion( MIL_Automate& callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     callerAutomate.GetOrderManager().CDT_GivePionMissionVersPion( pMission );
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::CDT_GiveMission
+// Created: LDC 2010-12-06
+//-----------------------------------------------------------------------------
+void DEC_OrdersFunctions::CDT_GiveMission( MIL_AgentPion& callerPion, boost::shared_ptr< MIL_Mission_ABC > pMission )
+{
+    DEC_OrdersFunctions::CDT_GivePionMission( callerPion.GetAutomate(), pMission );
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::CDT_GiveMission
+// Created: GGE 2010-12-06
+//-----------------------------------------------------------------------------
+void DEC_OrdersFunctions::CDT_GiveMissionVersPion( MIL_AgentPion& callerPion, boost::shared_ptr< MIL_Mission_ABC > pMission )
+{
+    DEC_OrdersFunctions::CDT_GivePionMissionVersPion( callerPion.GetAutomate(), pMission );
 }
 
 // -----------------------------------------------------------------------------

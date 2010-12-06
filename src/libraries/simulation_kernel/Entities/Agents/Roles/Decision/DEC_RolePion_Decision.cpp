@@ -313,13 +313,13 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
 
     // Missions
     brain[ "DEC_CreerMissionPion" ] =
-        boost::function< boost::shared_ptr< MIL_Mission_ABC >( const std::string& ) >( boost::bind( &DEC_OrdersFunctions::CreatePionMissionBM, boost::ref( GetPion().GetAutomate() ), this, _1 ) );
+        boost::function< boost::shared_ptr< MIL_Mission_ABC >( const std::string& ) >( boost::bind( &DEC_OrdersFunctions::CreatePionMissionBM, this, _1 ) );
     brain[ "DEC_CreerMissionPionVersPion" ]=
-        boost::function< boost::shared_ptr< MIL_Mission_ABC >( const std::string& ) >( boost::bind( &DEC_OrdersFunctions::CreatePionMissionVersPionBM, boost::ref( GetPion().GetAutomate() ), this, _1 ) );
+        boost::function< boost::shared_ptr< MIL_Mission_ABC >( const std::string& ) >( boost::bind( &DEC_OrdersFunctions::CreatePionMissionVersPionBM, this, _1 ) );
     brain[ "DEC_DonnerMissionPion" ] =
-        boost::function< void( boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::CDT_GivePionMission, boost::ref( GetPion().GetAutomate() ), _1 ) );
+        boost::function< void( boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::CDT_GiveMission, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_DonnerMissionPionVersPion" ] =
-        boost::function< void( boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::CDT_GivePionMissionVersPion, boost::ref( GetPion().GetAutomate() ), _1 ) );
+        boost::function< void( boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::CDT_GiveMissionVersPion, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_IsMissionPionAvailable" ] = &DEC_OrdersFunctions::IsMissionAvailable;
 
     // Actions

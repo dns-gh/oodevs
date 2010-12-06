@@ -47,10 +47,12 @@ public:
     static void             MRT_Validate           ( MIL_Automate& callerAutomate );
     static void             MRT_AffectFuseaux      ( MIL_Automate& callerAutomate, std::vector< DEC_Decision_ABC* > pions );
     static boost::shared_ptr< MIL_Mission_ABC > CDT_CreatePionMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
-    static boost::shared_ptr< MIL_Mission_ABC > CreatePionMissionBM    ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
-    static boost::shared_ptr< MIL_Mission_ABC > CreatePionMissionVersPionBM    ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
+    static boost::shared_ptr< MIL_Mission_ABC > CreatePionMissionBM    ( DEC_Decision_ABC* pPion, const std::string& mission );
+    static boost::shared_ptr< MIL_Mission_ABC > CreatePionMissionVersPionBM    ( DEC_Decision_ABC* pPion, const std::string& mission );
     static void             CDT_GivePionMission    ( MIL_Automate& callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission );
     static void             CDT_GivePionMissionVersPion    ( MIL_Automate& callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission );
+    static void             CDT_GiveMission    ( MIL_AgentPion& callerPion, boost::shared_ptr< MIL_Mission_ABC > pMission );
+    static void             CDT_GiveMissionVersPion    ( MIL_AgentPion& callerPion, boost::shared_ptr< MIL_Mission_ABC > pMission );
     static boost::shared_ptr< MIL_Mission_ABC > CreateAutomateMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pAutomate, const std::string& mission  );
     static void AssignFuseauToPionMission       ( MIL_Fuseau* pFuseau, boost::shared_ptr< MIL_Mission_ABC > pMission );
     static void AssignFuseauToAutomateMission   ( MIL_Fuseau* pFuseau, boost::shared_ptr< MIL_Mission_ABC > pMission );
