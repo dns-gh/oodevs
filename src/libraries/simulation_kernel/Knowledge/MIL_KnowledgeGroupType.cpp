@@ -27,10 +27,10 @@ struct MIL_KnowledgeGroupType::LoadingWrapper
 };
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroupType::Initialize
+// Name: MIL_KnowledgeGroupType::InitializeWithTime
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroupType::Initialize( xml::xistream& xis, double timeFactor )
+void MIL_KnowledgeGroupType::InitializeWithTime( xml::xistream& xis, double timeFactor )
 {
     MT_LOG_INFO_MSG( "Initializing knowledge groups types" );
     LoadingWrapper loader;
@@ -45,7 +45,7 @@ void MIL_KnowledgeGroupType::Initialize( xml::xistream& xis, double timeFactor )
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroupType::Initialize( xml::xistream& xis )
 {
-    Initialize( xis, MIL_Tools::ConvertSecondsToSim( 1 ) );
+    InitializeWithTime( xis, MIL_Tools::ConvertSecondsToSim( 1 ) );
 }
 
 // -----------------------------------------------------------------------------

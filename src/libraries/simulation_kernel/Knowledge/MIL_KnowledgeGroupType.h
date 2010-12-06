@@ -35,7 +35,7 @@ public:
 
     //! @name Manager
     //@{
-    static void Initialize( xml::xistream& xis, double timeFactor );
+    static void InitializeWithTime( xml::xistream& xis, double timeFactor );
     static void Initialize( xml::xistream& xis );
     static void Terminate ();
     static const MIL_KnowledgeGroupType* FindType( const std::string& strName );
