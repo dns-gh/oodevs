@@ -38,8 +38,6 @@ public:
     std::string GetName() const;
     unsigned long GetId() const;
 
-    float GetDensity() const;
-
     const PopulationType& GetCrowdType() const;
     //@}
 

@@ -225,12 +225,15 @@ void InhabitantCreationPanel::NotifyDeleted( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void InhabitantCreationPanel::OnTypeChanged()
 {
-    const InhabitantType* type = inhabitantTypes_->GetValue();
-    if( !type )
-        return;
-    locationCreator_->Allow( false, false, true, false, false );
-    if( location_ && !location_->IsValid() )
-        ResetLocation();
+    if( inhabitantTypes_->Count() != 0 )
+    {
+        const InhabitantType* type = inhabitantTypes_->GetValue();
+        if( !type )
+            return;
+        locationCreator_->Allow( false, false, true, false, false );
+        if( location_ && !location_->IsValid() )
+            ResetLocation();
+    }
 }
 
 // -----------------------------------------------------------------------------

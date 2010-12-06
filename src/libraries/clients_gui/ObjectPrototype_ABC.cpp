@@ -213,13 +213,16 @@ void ObjectPrototype_ABC::NotifyDeleted( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::OnTypeChanged()
 {
-    const ObjectType* type = objectTypes_->GetValue();
-    if( !type )
-        return;
-    locationCreator_->Allow( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
-    if( location_ && !location_->IsValid() )
-        ResetLocation();
-    attributes_->Select( *type );
+    if( objectTypes_->Count() != 0 )
+    {
+        const ObjectType* type = objectTypes_->GetValue();
+        if( !type )
+            return;
+        locationCreator_->Allow( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
+        if( location_ && !location_->IsValid() )
+            ResetLocation();
+        attributes_->Select( *type );
+    }
 }
 
 // -----------------------------------------------------------------------------
