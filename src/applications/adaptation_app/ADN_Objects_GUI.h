@@ -101,6 +101,8 @@ public:
         eStructuralStateCapacityPresent,
         eStructuralStateCapacity_Value,
         eSealOffCapacityPresent,
+        eFirePropagationModifierPresent,
+        eFirePropagationModifier_Modifiers,
         eNbrGuiElements
     };
 

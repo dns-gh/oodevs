@@ -18,6 +18,7 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_DataTreeNode_ABC.h"
 #include "ADN_Type_Choice.h"
+#include "ADN_FireClass_Data.h"
 #include <string>
 #include <map>
 #include <memory>
@@ -158,6 +159,7 @@ public:
         eScatteringCapacity,
         eDelayCapacity,
         eSealOffCapacity,
+        eFirePropagationModifierCapacity
     };
 
     template< E_Capacities T, typename DefaultFieldsHolderType = NullType >
@@ -677,6 +679,66 @@ public:
         void WriteArchive( xml::xostream& xos );
     public:
 
+    };
+
+    class ADN_CapacityInfos_FirePropagationModifier : public ADN_CapacityInfos_Default< eFirePropagationModifierCapacity >
+    {
+    public:
+        ADN_CapacityInfos_FirePropagationModifier();
+        void ReadArchive( xml::xistream& xis );
+        void WriteArchive( xml::xostream& xos );
+    public:
+
+        class ModifierByFireClass : public ADN_Ref_ABC
+                                  , public ADN_DataTreeNode_ABC
+        {
+        public:
+            explicit ModifierByFireClass( ADN_FireClass_Data::FireClassInfos* );
+            ADN_TypePtr_InVector_ABC< ADN_FireClass_Data::FireClassInfos > ptrFireClass_;
+            ADN_Type_Int ignitionThreshold_;
+            ADN_Type_Int maxCombustionEnergy_;
+
+            std::string GetItemName();
+
+        public:
+            void ReadArchive( xml::xistream& xis );
+            void WriteArchive( xml::xostream& xos );
+
+            typedef ADN_FireClass_Data::FireClassInfos T_Item;
+
+            class CmpRef : public std::unary_function< ADN_FireClass_Data::FireClassInfos* , bool >
+            {
+            public:
+                void ReadArchive( xml::xistream& xis );
+                void WriteArchive( xml::xostream& xos );
+
+                CmpRef( ADN_FireClass_Data::FireClassInfos* val ) : val_( val ){}
+                bool operator()( ModifierByFireClass* other ) const 
+                { return other->ptrFireClass_.GetData() == val_; }
+
+            private:
+                ADN_FireClass_Data::FireClassInfos* val_;
+            };
+
+            class Cmp : public std::unary_function< ADN_FireClass_Data::FireClassInfos* , bool >
+            {
+            public:
+                Cmp( const std::string& name ) : name_( name ) {}
+                bool operator()( ModifierByFireClass* other ) const 
+                { return other->ptrFireClass_.GetData()->strName_ == name_; }
+
+            private:
+                std::string name_;
+            };
+        };
+
+        typedef ADN_Type_VectorFixed_ABC< ModifierByFireClass > T_ModifierByFireClass_Vector;
+        typedef T_ModifierByFireClass_Vector::iterator         IT_ModifierByFireClass_Vector;
+
+        T_ModifierByFireClass_Vector modifiers_;
+
+        private:
+            void ReadModifier( xml::xistream& xis );
     };
 
 //*****************************************************************************

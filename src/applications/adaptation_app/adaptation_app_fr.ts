@@ -1538,6 +1538,149 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
+    <name>ADN_FireClass_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
+        <translation>Feu - La blessure &apos;%1&apos; ne peut être &lt;0 ou &gt;1</translation>
+    </message>
+    <message>
+        <source>Fire - Invalid wound type &apos;%1&apos;</source>
+        <translation>Feu - Type de blessure invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
+        <translation>Feu &apos;%1&apos; - La somme des blessures est &gt; 100</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_FireClass_Data::FireClassInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Fire class - Invalid extinguisher agent &apos;%1&apos;</source>
+        <translation>Incendie - Agent extincteur invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Fire class - Invalid urban Material type &apos;%1&apos;</source>
+        <translation>Incendie - Type de matériau urbain invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Fire - Location type not found &apos;%1&apos;</source>
+        <translation>Incendie - Type de location introuvable &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_FireClass_GUI</name>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Initial heat</source>
+        <translation>Température de départ</translation>
+    </message>
+    <message>
+        <source>Max heat</source>
+        <translation>Température maximale</translation>
+    </message>
+    <message>
+        <source>Increase rate</source>
+        <translation>Coefficient d’augmentation</translation>
+    </message>
+    <message>
+        <source>Decrease rate</source>
+        <translation>Coefficient de diminution</translation>
+    </message>
+    <message>
+        <source>Injuries</source>
+        <translation>Blessures</translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 1</source>
+        <translation>Blessure gravité niveau 1</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 2</source>
+        <translation>Blessure gravité niveau 2</translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 3</source>
+        <translation>Blessure gravité niveau 3</translation>
+    </message>
+    <message>
+        <source>Wounded extreme seriousness</source>
+        <translation>Blessure extrêmement grave</translation>
+    </message>
+    <message>
+        <source>Killed</source>
+        <translation>Tués</translation>
+    </message>
+    <message>
+        <source>Urban attrition</source>
+        <translation>Attrition urbaine</translation>
+    </message>
+    <message>
+        <source>Extinguisher agents</source>
+        <translation>Agents extincteurs</translation>
+    </message>
+    <message>
+        <source>Weather fire effects</source>
+        <translation>Effets de la météo</translation>
+    </message>
+    <message>
+        <source>Cell size (global)</source>
+        <translation>Taille d&apos;une cellule (global)</translation>
+    </message>
+    <message>
+        <source>m</source>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>Surface</source>
+        <translation>Surfacique</translation>
+    </message>
+    <message>
+        <source>Fire</source>
+        <translation>Feu</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_FireClass_ListView</name>
+    <message>
+        <source>Fires</source>
+        <translation>Feux</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_FireClass_Wizard</name>
+    <message>
+        <source>Creation finished</source>
+        <translation>Création terminée</translation>
+    </message>
+    <message>
+        <source>New fire creation</source>
+        <translation>Création d&apos;un nouveau feu</translation>
+    </message>
+    <message>
+        <source>Fire</source>
+        <translation>Feu</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new fire.</source>
+        <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouveau feu.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_FragOrder_Wizard</name>
     <message>
         <source>New fragmentary order creation</source>
@@ -2036,149 +2179,6 @@ du tireur</translation>
     </message>
 </context>
 <context>
-    <name>ADN_LocalFireClass_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
-        <translation>Feu - La blessure &apos;%1&apos; ne peut être &lt;0 ou &gt;1</translation>
-    </message>
-    <message>
-        <source>Fire - Invalid wound type &apos;%1&apos;</source>
-        <translation>Feu - Type de blessure invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
-        <translation>Feu &apos;%1&apos; - La somme des blessures est &gt; 100</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_LocalFireClass_Data::LocalFireClassInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Fire class - Invalid extinguisher agent &apos;%1&apos;</source>
-        <translation>Incendie - Agent extincteur invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Fire class - Invalid urban Material type &apos;%1&apos;</source>
-        <translation>Incendie - Type de matériau urbain invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Fire - Location type not found &apos;%1&apos;</source>
-        <translation>Incendie - Type de location introuvable &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_LocalFireClass_GUI</name>
-    <message>
-        <source>Name</source>
-        <translation>Nom</translation>
-    </message>
-    <message>
-        <source>Initial heat</source>
-        <translation>Température de départ</translation>
-    </message>
-    <message>
-        <source>Max heat</source>
-        <translation>Température maximale</translation>
-    </message>
-    <message>
-        <source>Increase rate</source>
-        <translation>Coefficient d’augmentation</translation>
-    </message>
-    <message>
-        <source>Decrease rate</source>
-        <translation>Coefficient de diminution</translation>
-    </message>
-    <message>
-        <source>Injuries</source>
-        <translation>Blessures</translation>
-    </message>
-    <message>
-        <source>Wounded seriousness level 1</source>
-        <translation>Blessure gravité niveau 1</translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
-        <source>Wounded seriousness level 2</source>
-        <translation>Blessure gravité niveau 2</translation>
-    </message>
-    <message>
-        <source>Wounded seriousness level 3</source>
-        <translation>Blessure gravité niveau 3</translation>
-    </message>
-    <message>
-        <source>Wounded extreme seriousness</source>
-        <translation>Blessure extrêmement grave</translation>
-    </message>
-    <message>
-        <source>Killed</source>
-        <translation>Tués</translation>
-    </message>
-    <message>
-        <source>Urban attrition</source>
-        <translation>Attrition urbaine</translation>
-    </message>
-    <message>
-        <source>Extinguisher agents</source>
-        <translation>Agents extincteurs</translation>
-    </message>
-    <message>
-        <source>Weather fire effects</source>
-        <translation>Effets de la météo</translation>
-    </message>
-    <message>
-        <source>Cell size (global)</source>
-        <translation>Taille d&apos;une cellule (global)</translation>
-    </message>
-    <message>
-        <source>m</source>
-        <translation>m</translation>
-    </message>
-    <message>
-        <source>Surface</source>
-        <translation>Surfacique</translation>
-    </message>
-    <message>
-        <source>Fire</source>
-        <translation>Feu</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_LocalFireClass_ListView</name>
-    <message>
-        <source>Fires</source>
-        <translation>Feux</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_LocalFireClass_Wizard</name>
-    <message>
-        <source>Creation finished</source>
-        <translation>Création terminée</translation>
-    </message>
-    <message>
-        <source>New fire creation</source>
-        <translation>Création d&apos;un nouveau feu</translation>
-    </message>
-    <message>
-        <source>Fire</source>
-        <translation>Feu</translation>
-    </message>
-    <message>
-        <source>Click &quot;Done&quot; to create the new fire.</source>
-        <translation>Cliquez sur &quot;Terminer&quot; pour créer le nouveau feu.</translation>
-    </message>
-</context>
-<context>
     <name>ADN_MainWindow</name>
     <message>
         <source>&amp;New</source>
@@ -2666,6 +2666,17 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Fire propagation modifier - Invalid fire class &apos;%1&apos;</source>
+        <translation>Modification propagation feu - classe de feu non valide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Objects_GUI</name>
     <message>
         <source>Object</source>
@@ -2942,6 +2953,10 @@ du tireur</translation>
     <message>
         <source>Emergency bed rate</source>
         <translation>Fréquence de rotation des lits en phase d&apos;alerte</translation>
+    </message>
+    <message>
+        <source>Fire propagation modifier</source>
+        <translation type="unfinished">Modification propagation feu</translation>
     </message>
 </context>
 <context>

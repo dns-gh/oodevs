@@ -71,8 +71,8 @@
 #include "ADN_MainWindow.h"
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_ActiveProtections_GUI.h"
-#include "ADN_LocalFireClass_Data.h"
-#include "ADN_LocalFireClass_GUI.h"
+#include "ADN_FireClass_Data.h"
+#include "ADN_FireClass_GUI.h"
 #include "qtundo.h"
 #include <io.h>
 #include <qtimer.h>
@@ -145,7 +145,7 @@ ADN_Workspace::ADN_Workspace()
     elements_[ePopulation]        = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >( tr( "Crowds" ) );
     elements_[ePeople]            = new ADN_WorkspaceElement< ADN_People_Data, ADN_People_GUI >( tr( "Populations" ) );
     elements_[eReports]           = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >( tr( "Reports" ) );
-    elements_[eLocalFireClasses]  = new ADN_WorkspaceElement< ADN_LocalFireClass_Data, ADN_LocalFireClass_GUI >( tr( "Fires" ) );
+    elements_[eFireClasses]  = new ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >( tr( "Fires" ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -195,7 +195,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     mainWindow.AddPage( elements_[eModels]->GetName(), * elements_[eModels]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eObjects]->GetName(), * elements_[eObjects]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eNBC]->GetName(), * elements_[eNBC]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eLocalFireClasses]->GetName(), * elements_[eLocalFireClasses]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eFireClasses]->GetName(), * elements_[eFireClasses]->GetGuiABC().GetMainWidget() );
 
     QWidget* pLogPage = new QWidget();
     QVBoxLayout* pLayout = new QVBoxLayout( pLogPage );

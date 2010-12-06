@@ -1074,6 +1074,94 @@ void ADN_Objects_Data::ADN_CapacityInfos_SealOff::WriteArchive( xml::xostream& /
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ADN_CapacityInfos_FirePropagationModifier
+// Created: BCI 2010-12-03
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ADN_CapacityInfos_FirePropagationModifier()
+: modifiers_( ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos() )
+{
+    modifiers_.SetParentNode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadArchive
+// Created: BCI 2010-12-03
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadArchive( xml::xistream& xis )
+{
+    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    xis >> xml::list( "modifier", *this, &ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadModifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::WriteArchive
+// Created: BCI 2010-12-03
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::WriteArchive( xml::xostream& xos )
+{
+    for( IT_ModifierByFireClass_Vector it = modifiers_.begin(); it != modifiers_.end(); ++it )
+        (*it)->WriteArchive( xos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadModifier
+// Created: BCI 2010-12-03
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadModifier( xml::xistream& xis )
+{
+
+    std::string fireClass = xis.attribute< std::string >( "fire-class" );
+    IT_ModifierByFireClass_Vector itModifier = std::find_if( modifiers_.begin(), modifiers_.end(), ModifierByFireClass::Cmp( fireClass ));
+    if( itModifier == modifiers_.end() )
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Fire propagation modifier - Invalid fire class '%1'" ).arg( fireClass.c_str() ).ascii() );
+    ( *itModifier )->ReadArchive( xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ModifierByFireClass
+// Created: BCI 2010-12-06
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::ModifierByFireClass( ADN_FireClass_Data::FireClassInfos* p )
+: ptrFireClass_( p )
+, ignitionThreshold_( 0 )
+, maxCombustionEnergy_( 0 )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ReadArchive
+// Created: BCI 2010-12-03
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::ReadArchive( xml::xistream& xis )
+{
+    xis >> xml::attribute( "ignition-threshold", ignitionThreshold_ )
+        >> xml::attribute( "max-combustion-energy", maxCombustionEnergy_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::WriteArchive
+// Created: BCI 2010-12-03
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::WriteArchive( xml::xostream& xos )
+{
+
+    xos << xml::start( "modifier" )
+        << xml::attribute( "fire-class", ptrFireClass_.GetData()->strName_ )
+        << xml::attribute( "ignition-threshold", ignitionThreshold_ )
+        << xml::attribute( "max-combustion-energy", maxCombustionEnergy_ )
+        << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::GetItemName
+// Created: BCI 2010-12-03
+// -----------------------------------------------------------------------------
+std::string ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::GetItemName()
+{
+    return std::string();
+}
 
 // =============================================================================
 // ObjectInfos
@@ -1122,6 +1210,7 @@ INIT_DATA( ADN_CapacityInfos_AttitudeModifier, "AttitudeModifier",  "attitude-mo
 INIT_DATA( ADN_CapacityInfos_Perception      , "Perception"      ,  "perception" );
 INIT_DATA( ADN_CapacityInfos_Scattering      , "Scattering"      ,  "scattering" );
 INIT_DATA( ADN_CapacityInfos_SealOff         , "SealOff"         ,  "sealoff" );
+INIT_DATA( ADN_CapacityInfos_FirePropagationModifier, "FirePropagationModifier", "fire-propagation-modifier" );
 
 #pragma warning( pop )
 
@@ -1199,6 +1288,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_Perception::TAG ].reset( new ADN_CapacityInfos_Perception() );
     capacities_[ ADN_CapacityInfos_Scattering::TAG ].reset( new ADN_CapacityInfos_Scattering() );
     capacities_[ ADN_CapacityInfos_SealOff::TAG ].reset( new ADN_CapacityInfos_SealOff() );
+    capacities_[ ADN_CapacityInfos_FirePropagationModifier::TAG ].reset( new ADN_CapacityInfos_FirePropagationModifier() );
 }
 
 // -----------------------------------------------------------------------------

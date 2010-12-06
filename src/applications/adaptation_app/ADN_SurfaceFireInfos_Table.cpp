@@ -9,7 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_SurfaceFireInfos_Table.h"
-#include "ADN_LocalFireClass_Data.h"
+#include "ADN_FireClass_Data.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_TableItem_Edit.h"
 
@@ -37,9 +37,9 @@ public:
         // disable first column
         pItemString->setEnabled( false );
         // connect items & datas
-        pItemString->GetConnector().Connect( &static_cast< ADN_LocalFireClass_Data::FireSurfaceInfos* >( obj )->strName_ );
-        pItemIgnition->GetConnector().Connect( &static_cast< ADN_LocalFireClass_Data::FireSurfaceInfos* >( obj )->ignitionThreshold_ );
-        pItemCombustion->GetConnector().Connect( &static_cast< ADN_LocalFireClass_Data::FireSurfaceInfos* >( obj )->maxCombustionEnergy_ );
+        pItemString->GetConnector().Connect( &static_cast< ADN_FireClass_Data::FireSurfaceInfos* >( obj )->strName_ );
+        pItemIgnition->GetConnector().Connect( &static_cast< ADN_FireClass_Data::FireSurfaceInfos* >( obj )->ignitionThreshold_ );
+        pItemCombustion->GetConnector().Connect( &static_cast< ADN_FireClass_Data::FireSurfaceInfos* >( obj )->maxCombustionEnergy_ );
     }
 };
 

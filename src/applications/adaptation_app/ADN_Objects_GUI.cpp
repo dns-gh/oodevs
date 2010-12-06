@@ -19,6 +19,7 @@
 #include "ADN_Objects_Data.h"
 #include "ADN_ListView_Objects.h"
 #include "ADN_Table_Objects_LocationScore.h"
+#include "ADN_Table_Objects_FirePropagationModifier.h"
 #include "ADN_Equipement_AttritionTable.h"
 #include "ADN_GroupBox.h"
 #include "ADN_RadioButton.h"
@@ -352,6 +353,13 @@ void ADN_Objects_GUI::Build()
     ADN_GroupBox* sealOff = new ADN_GroupBox( 3, Qt::Horizontal, tr( "SealOff" ), hBox );
     {
         vInfosConnectors[ eSealOffCapacityPresent ] = & sealOff->GetConnector();
+    }
+
+    ADN_GroupBox* firePropagationModifier = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Fire propagation modifier" ), hBox );
+    {
+        vInfosConnectors[ eFirePropagationModifierPresent ] = & firePropagationModifier->GetConnector();
+        ADN_Table_Objects_FirePropagationModifier* pFirePropagationModifierTable = new ADN_Table_Objects_FirePropagationModifier( firePropagationModifier );
+        vInfosConnectors[eFirePropagationModifier_Modifiers] = &pFirePropagationModifierTable->GetConnector();
     }
 
     // Connect the list to the interface.

@@ -339,6 +339,19 @@
           </xs:complexType>
         </xs:element>
         <xs:element name="sealoff" minOccurs="0"/>
+        <xs:element name="fire-propagation-modifier" minOccurs="0">
+            <xs:complexType>
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="modifier">
+                        <xs:complexType>
+                            <xs:attribute name="fire-class" type="xs:string"/>
+                            <xs:attribute name="ignition-threshold" type="xs:nonNegativeInteger"/>
+                            <xs:attribute name="max-combustion-energy" type="xs:nonNegativeInteger"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
         <xs:element name="resources" minOccurs="0">
           <xs:complexType>
             <xs:sequence>

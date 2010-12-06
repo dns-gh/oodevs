@@ -68,8 +68,8 @@ class ADN_KnowledgeGroups_Data;
 class ADN_KnowledgeGroups_GUI;
 class ADN_ResourceNetworks_Data;
 class ADN_ResourceNetworks_GUI;
-class ADN_LocalFireClass_Data;
-class ADN_LocalFireClass_GUI;
+class ADN_FireClass_Data;
+class ADN_FireClass_GUI;
 enum E_OpenMode;
 
 // =============================================================================
@@ -120,7 +120,7 @@ public:
     ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>& GetSupply();
     ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& GetKnowledgeGroups();
     ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >& GetResourceNetworks();
-    ADN_WorkspaceElement< ADN_LocalFireClass_Data, ADN_LocalFireClass_GUI >& GetLocalFireClasses();
+    ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& GetFireClasses();
 
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
     void ResetProgressIndicator();
@@ -144,6 +144,7 @@ private:
         eNBC,
         eLaunchers,
         eEquipement,
+        eFireClasses,
         eObjects,
         eWeapons,
         eActiveProtections,
@@ -165,7 +166,6 @@ private:
         ePopulation,
         ePeople,
         eReports,
-        eLocalFireClasses,
         eNbrWorkspaceElements
     };
 
@@ -445,13 +445,13 @@ ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >& ADN
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_WorkspaceElement< ADN_LocalFireClass_Data, ADN_LocalFireClass_GUI >& ADN_Workspace::GetLocalFireClasses
+// Name: ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& ADN_Workspace::GetFireClasses
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
 inline
-ADN_WorkspaceElement< ADN_LocalFireClass_Data, ADN_LocalFireClass_GUI >& ADN_Workspace::GetLocalFireClasses()
+ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& ADN_Workspace::GetFireClasses()
 {
-    return static_cast< ADN_WorkspaceElement< ADN_LocalFireClass_Data, ADN_LocalFireClass_GUI >& >( *elements_[ eLocalFireClasses ] );
+    return static_cast< ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& >( *elements_[ eFireClasses ] );
 }
 
 // -----------------------------------------------------------------------------

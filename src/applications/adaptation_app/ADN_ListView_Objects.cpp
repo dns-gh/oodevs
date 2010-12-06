@@ -213,6 +213,10 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_SealOff >( ADN_Objects_GUI::eSealOffCapacityPresent );
 
+    ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier& firePropagationModifier = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier >( ADN_Objects_GUI::eFirePropagationModifierPresent );
+    vItemConnectors_[ADN_Objects_GUI::eFirePropagationModifierPresent]->Connect( &firePropagationModifier.bPresent_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eFirePropagationModifier_Modifiers]->Connect( &firePropagationModifier.modifiers_, bConnect );
+
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Objects_GUI::eNbrGuiElements );
 }
 

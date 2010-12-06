@@ -89,10 +89,10 @@ ADN_ListView_Models.cpp \
 ADN_ListView_Objects.cpp \
 ADN_ListView_Orders.cpp \
 ADN_ListView_ResourceNetworks.cpp \
-ADN_LocalFireClass_Data.cpp \
-ADN_LocalFireClass_ListView.cpp \
-ADN_LocalFireClass_Wizard.cpp \
-ADN_LocalFireClass_GUI.cpp \
+ADN_FireClass_Data.cpp \
+ADN_FireClass_ListView.cpp \
+ADN_FireClass_Wizard.cpp \
+ADN_FireClass_GUI.cpp \
 ADN_WeatherFireEffects.cpp \
 ADN_WeatherFireEffects_Table.cpp \
 ADN_ExtinguisherAgentInfos_Table.cpp \
@@ -166,6 +166,7 @@ ADN_Supply_TrucksTimeTable.cpp \
 ADN_SurfaceFireInfos_Table.cpp \
 ADN_TableDialog.cpp \
 ADN_Table_Objects_LocationScore.cpp \
+ADN_Table_Objects_FirePropagationModifier \
 ADN_Tr.cpp \
 ADN_Unit_Wizard.cpp \
 ADN_Units_Composantes_GUI.cpp \
