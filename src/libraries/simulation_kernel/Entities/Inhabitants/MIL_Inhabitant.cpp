@@ -206,6 +206,7 @@ void MIL_Inhabitant::SendCreation() const
     asnMsg().mutable_id()->set_id( nID_ );
     asnMsg().mutable_type()->set_id( pType_->GetID() );
     asnMsg().mutable_party()->set_id( pArmy_->GetID() );
+    asnMsg().set_text( "" );
     asnMsg().set_name( GetName() );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
     {

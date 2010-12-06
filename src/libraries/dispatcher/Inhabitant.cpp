@@ -77,6 +77,7 @@ void Inhabitant::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_id()->set_id( GetId() );
     asn().mutable_party()->set_id( side_.GetId() );
     asn().mutable_type()->set_id( nType_ );
+    asn().set_text( "" );
     asn().set_name( strName_ );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
     {
