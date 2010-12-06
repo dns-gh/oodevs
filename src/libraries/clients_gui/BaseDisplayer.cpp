@@ -18,6 +18,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -28,6 +29,7 @@
 #include "clients_kernel/BreakdownType.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AutomatType.h"
+#include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Mission.h"
@@ -164,6 +166,15 @@ void BaseDisplayer::Call( const Population_ABC& value )
 
 // -----------------------------------------------------------------------------
 // Name: BaseDisplayer::Call
+// Created: SLG 2010-12-06
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const Inhabitant_ABC& value )
+{
+    AddToDisplay( InternalLinks::CreateLink( value, value.GetName() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const PopulationConcentration_ABC& value )
@@ -248,6 +259,15 @@ void BaseDisplayer::Call( const kernel::AutomatType& value )
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const kernel::PopulationType& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: SLG 2010-12-06
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::InhabitantType& value )
 {
     AddToDisplay( value.GetName() );
 }

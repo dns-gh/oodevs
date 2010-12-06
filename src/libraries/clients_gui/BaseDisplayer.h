@@ -20,6 +20,7 @@ namespace kernel
     class Team_ABC;
     class DotationType;
     class EquipmentType;
+    class Inhabitant_ABC;
     class Population_ABC;
     class NBCAgent;
     class FireClass;
@@ -35,6 +36,7 @@ namespace kernel
     class AgentType;
     class AutomatType;
     class PopulationType;
+    class InhabitantType;
     class ObjectType;
     class KnowledgeGroupType;
     class HierarchyLevel_ABC;
@@ -59,6 +61,7 @@ class BaseDisplayer : public kernel::Displayer_ABC
                     , public tools::Caller< bool >
                     , public tools::Caller< QTime >
                     , public tools::Caller< kernel::Population_ABC>
+                    , public tools::Caller< kernel::Inhabitant_ABC>
                     , public tools::Caller< kernel::PopulationConcentration_ABC >
                     , public tools::Caller< kernel::Agent_ABC >
                     , public tools::Caller< kernel::Automat_ABC >
@@ -78,6 +81,7 @@ class BaseDisplayer : public kernel::Displayer_ABC
                     , public tools::Caller< kernel::AgentType >
                     , public tools::Caller< kernel::AutomatType >
                     , public tools::Caller< kernel::PopulationType >
+                    , public tools::Caller< kernel::InhabitantType >
                     , public tools::Caller< kernel::ObjectType >
                     , public tools::Caller< kernel::KnowledgeGroupType >
                     , public tools::Caller< kernel::HierarchyLevel_ABC >
@@ -114,6 +118,7 @@ private:
     virtual void Call( const kernel::Agent_ABC& value );
     virtual void Call( const kernel::Automat_ABC& value );
     virtual void Call( const kernel::Population_ABC& value );
+    virtual void Call( const kernel::Inhabitant_ABC& value );
     virtual void Call( const kernel::PopulationConcentration_ABC& value );
     virtual void Call( const kernel::Object_ABC& value );
     virtual void Call( const kernel::Intelligence_ABC& value );
@@ -130,6 +135,7 @@ private:
     virtual void Call( const kernel::Mission& value );
     virtual void Call( const kernel::AgentType& value );
     virtual void Call( const kernel::AutomatType& value );
+    virtual void Call( const kernel::InhabitantType& value );
     virtual void Call( const kernel::PopulationType& value );
     virtual void Call( const kernel::ObjectType& value );
     virtual void Call( const kernel::KnowledgeGroupType& value );
