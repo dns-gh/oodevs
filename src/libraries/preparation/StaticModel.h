@@ -41,8 +41,11 @@ namespace indicators
 class IntelligenceKarmas;
 class SuccessFactorActionTypes;
 class TeamKarmas;
-class FormationLogisticLevel;
 
+namespace prepa
+{
+    class LogisticLevel;
+}
 
 // =============================================================================
 /** @class  StaticModel
@@ -68,7 +71,7 @@ public:
 public:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
+    kernel::Controllers&             controllers_;
     kernel::CoordinateSystems&       coordinateSystems_;
     kernel::CoordinateConverter_ABC& coordinateConverter_;
     kernel::DetectionMap&            detection_;
@@ -82,7 +85,7 @@ public:
     indicators::Primitives&          indicators_;
     indicators::GaugeTypes&          gaugeTypes_;
     SuccessFactorActionTypes&        successFactorActionTypes_;
-    FormationLogisticLevel&          logisticLevels_;
+    prepa::LogisticLevel&            logisticLevels_;
     //@}
 
 private:

@@ -47,6 +47,7 @@ Automat::Automat( const AutomatType& type, Controller& controller, IdManager& id
 Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
     : EntityImplementation< Automat_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
     , type_( agentTypes.Resolver< AutomatType, std::string >::Get( xis.attribute< std::string >( "type" ) ) )
+    , logisticLevel_( &kernel::LogisticLevel::none_ )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -54,7 +55,7 @@ Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManag
 
     std::string logLevelName("none");
     xis >> xml::optional >> xml::attribute( "logistic-level", logLevelName );
-    logisticLevel_ = &kernel::LogisticLevel::Resolve(logLevelName) ;
+    logisticLevel_ = const_cast< kernel::LogisticLevel* >( &kernel::LogisticLevel::Resolve( logLevelName ) );
 }
 
 // -----------------------------------------------------------------------------

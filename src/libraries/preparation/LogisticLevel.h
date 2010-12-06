@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __FormationLogisticLevel_h_
-#define __FormationLogisticLevel_h_
+#ifndef __LogisticLevel_h_
+#define __LogisticLevel_h_
 
 #include "tools/Resolver.h"
 
@@ -17,20 +17,22 @@ namespace kernel
     class LogisticLevel;
 }
 
+namespace prepa {
+
 // =============================================================================
-/** @class  FormationLogisticLevel
-    @brief  FormationLogisticLevel
+/** @class  LogisticLevel
+    @brief  LogisticLevel
 */
 // Created: HBD 2010-11-15
 // =============================================================================
-class FormationLogisticLevel : public tools::Resolver< kernel::LogisticLevel, QString >
+class LogisticLevel : public tools::Resolver< kernel::LogisticLevel, QString >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             FormationLogisticLevel();
-    virtual ~FormationLogisticLevel();
+             LogisticLevel();
+    virtual ~LogisticLevel();
     //@}
 
     //! @name Operations
@@ -40,8 +42,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    FormationLogisticLevel( const FormationLogisticLevel& );            //!< Copy constructor
-    FormationLogisticLevel& operator=( const FormationLogisticLevel& ); //!< Assignment operator
+    LogisticLevel( const LogisticLevel& );            //!< Copy constructor
+    LogisticLevel& operator=( const LogisticLevel& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -53,5 +55,5 @@ private:
     //@{
     //@}
 };
-
-#endif // __FormationLogisticLevel_h_
+}
+#endif // __LogisticLevel_h_

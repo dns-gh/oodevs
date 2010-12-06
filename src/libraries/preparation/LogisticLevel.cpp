@@ -8,24 +8,24 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "FormationLogisticLevel.h"
+#include "LogisticLevel.h"
 #include "clients_kernel/LogisticLevel.h"
 
 // -----------------------------------------------------------------------------
-// Name: FormationLogisticLevel constructor
+// Name: LogisticLevel constructor
 // Created: HBD 2010-11-15
 // -----------------------------------------------------------------------------
-FormationLogisticLevel::FormationLogisticLevel()
+prepa::LogisticLevel::LogisticLevel()
 {
     Register( "none" , kernel::LogisticLevel::none_ );
     Register( "logistic-base", kernel::LogisticLevel::logistic_base_ );
     Register( "tc2"  ,  kernel::LogisticLevel::tc2_ );}
 
 // -----------------------------------------------------------------------------
-// Name: FormationLogisticLevel destructor
+// Name: LogisticLevel destructor
 // Created: HBD 2010-11-15
 // -----------------------------------------------------------------------------
-FormationLogisticLevel::~FormationLogisticLevel()
+prepa::LogisticLevel::~LogisticLevel()
 {
     // NOTHING
 }
