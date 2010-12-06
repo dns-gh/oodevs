@@ -71,7 +71,7 @@ void Inhabitant::CreateDictionary( kernel::Controller& controller )
     const Inhabitant& constSelf = *this;
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Inhabitant", "Info/Identifier" ), constSelf.id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Inhabitant", "Info/Name" ), name_ );
-    //dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Inhabitant", "Info/Type" ), constSelf.type_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Inhabitant", "Info/Type" ), constSelf.type_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Inhabitant", "Human/Alive" ), (int&)healthy_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Inhabitant", "Human/Dead" ), (int&)dead_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Inhabitant", "Human/Wounded" ), (int&)wounded_ );
