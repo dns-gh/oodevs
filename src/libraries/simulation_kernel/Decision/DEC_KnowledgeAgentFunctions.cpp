@@ -304,6 +304,16 @@ bool DEC_KnowledgeAgentFunctions::CanBeIlluminate( const MIL_AgentPion& callerAg
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::CanIlluminate
+// Created: MGD 2010-12-03
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeAgentFunctions::CanIlluminate( const MIL_AgentPion& callerAgent )
+{
+    const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >();
+    return roleDotations.GetIlluminationDotations( 0, true ) || roleDotations.GetIlluminationDotations( 0, false );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel
 // Created: DDA 2010-04-27
 // -----------------------------------------------------------------------------
