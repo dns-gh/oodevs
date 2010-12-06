@@ -39,18 +39,22 @@ namespace
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_Inhabitant* population, const unsigned int /*version*/ )
 {
+    // $$$$ _RC_ JSR 2010-12-06: commenté temporairement pour réparer le build
+    /*
     unsigned int nTypeID = population->GetType().GetID();
-    archive << nTypeID;
+    archive << nTypeID;*/
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, MIL_Inhabitant* population, const unsigned int /*version*/ )
 {
-    unsigned int nTypeID;
+    // $$$$ _RC_ JSR 2010-12-06: commenté temporairement pour réparer le build
+    /*unsigned int nTypeID;
     archive >> nTypeID;
     const MIL_InhabitantType* pType = MIL_InhabitantType::Find( nTypeID );
-    assert( pType );
-    ::new( population )MIL_Inhabitant( *pType);
+    //assert( pType );
+    if( pType )
+        ::new( population )MIL_Inhabitant( *pType);*/
 }
 
 // -----------------------------------------------------------------------------
@@ -122,10 +126,11 @@ MIL_Inhabitant::~MIL_Inhabitant()
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
+     // $$$$ _RC_ JSR 2010-12-06: commenté temporairement pour réparer le build
+    /*file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> const_cast< unsigned int& >( nID_ )
          >> const_cast< MIL_Army_ABC*& >( pArmy_ );
-    idManager_.Lock( nID_ );
+    idManager_.Lock( nID_ );*/
 }
 
 // -----------------------------------------------------------------------------
@@ -134,9 +139,10 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
+    // $$$$ _RC_ JSR 2010-12-06: commenté temporairement pour réparer le build
+    /*file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file << nID_
-         << pArmy_;      
+         << pArmy_;      */
 }
 
 // -----------------------------------------------------------------------------

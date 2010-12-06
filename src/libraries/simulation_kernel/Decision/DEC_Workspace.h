@@ -14,7 +14,6 @@ namespace xml
 }
 
 class DEC_Model_ABC;
-class DEC_DataBase;
 class MIL_MissionType_ABC;
 class MIL_Config;
 
@@ -84,8 +83,6 @@ private:
     T_MissionTypeNameMap                unitMissionsNames_ ;
     T_MissionTypeNameMap                automatMissionsNames_ ;
     T_MissionTypeNameMap                populationMissionsNames_ ;
-
-    std::auto_ptr< DEC_DataBase > dataBase_;
 };
 
 #include "DEC_Workspace.inl"

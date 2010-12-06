@@ -100,6 +100,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pions_                             ()
     , recycledPions_                     ()
     , automates_                         ()
+    , bAutomateModeChanged_              ( true )
     , nTickRcDotationSupplyQuerySent_    ( 0 )
     , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
     , pArmySurrenderedTo_                ( 0 )
