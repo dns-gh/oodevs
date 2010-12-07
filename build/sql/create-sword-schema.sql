@@ -245,6 +245,7 @@ CREATE TABLE sword.orders
 (
   id          SERIAL PRIMARY KEY,
   name        VARCHAR(255),
+  type_id     INTEGER NOT NULL,
   unit_id     INTEGER NOT NULL,
   "date"      TIMESTAMP WITHOUT TIME ZONE,
   checked     INTEGER,                         --TODO: set as boolean
