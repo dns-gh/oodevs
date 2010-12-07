@@ -1029,7 +1029,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_SealOff::WriteArchive( xml::xostream& /
 // Created: BCI 2010-12-03
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ADN_CapacityInfos_FirePropagationModifier()
-: modifiers_( ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos() )
+    : modifiers_( ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos() )
 {
     modifiers_.SetParentNode( *this );
 }
@@ -1051,7 +1051,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadArchive( x
 void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::WriteArchive( xml::xostream& xos )
 {
     for( IT_ModifierByFireClass_Vector it = modifiers_.begin(); it != modifiers_.end(); ++it )
-        (*it)->WriteArchive( xos );
+        ( *it )->WriteArchive( xos );
 }
 
 // -----------------------------------------------------------------------------
@@ -1060,7 +1060,6 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::WriteArchive( 
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadModifier( xml::xistream& xis )
 {
-
     std::string fireClass = xis.attribute< std::string >( "fire-class" );
     IT_ModifierByFireClass_Vector itModifier = std::find_if( modifiers_.begin(), modifiers_.end(), ModifierByFireClass::Cmp( fireClass ));
     if( itModifier == modifiers_.end() )
@@ -1073,11 +1072,11 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadModifier( 
 // Created: BCI 2010-12-06
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::ModifierByFireClass( ADN_FireClass_Data::FireClassInfos* p )
-: ptrFireClass_( p )
-, ignitionThreshold_( 0 )
-, maxCombustionEnergy_( 0 )
+    : ptrFireClass_( ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos(), p )
+    , ignitionThreshold_( 0 )
+    , maxCombustionEnergy_( 0 )
 {
-    //NOTHING
+    BindExistenceTo( &ptrFireClass_ );
 }
 
 // -----------------------------------------------------------------------------

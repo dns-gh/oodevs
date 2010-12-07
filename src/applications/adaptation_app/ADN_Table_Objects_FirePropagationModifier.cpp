@@ -39,6 +39,8 @@ public:
             tab_.setItem( i, 0, pNameItem );
             tab_.setItem( i, 1, pIgnitionThresholdItem );
             tab_.setItem( i, 2, pMaxCombustionEnergyItem );
+            tab_.setColumnWidth( 1, 140 );
+            tab_.setColumnWidth( 2, 140 );
             // disable first column
             pNameItem->setEnabled( false );
             // connect items & datas
@@ -62,6 +64,7 @@ ADN_Table_Objects_FirePropagationModifier::ADN_Table_Objects_FirePropagationModi
     setSorting( true );
     setSelectionMode( QTable::NoSelection );
     setShowGrid( false );
+    setMinimumHeight( 80 );
     setLeftMargin( 0 );
     // hide vertical header
     verticalHeader()->hide();
