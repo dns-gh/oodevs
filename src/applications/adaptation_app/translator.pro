@@ -166,7 +166,7 @@ ADN_Supply_TrucksTimeTable.cpp \
 ADN_SurfaceFireInfos_Table.cpp \
 ADN_TableDialog.cpp \
 ADN_Table_Objects_LocationScore.cpp \
-ADN_Table_Objects_FirePropagationModifier \
+ADN_Table_Objects_FirePropagationModifier.cpp \
 ADN_Tr.cpp \
 ADN_Unit_Wizard.cpp \
 ADN_Units_Composantes_GUI.cpp \

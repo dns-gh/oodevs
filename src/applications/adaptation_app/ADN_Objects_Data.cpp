@@ -1096,12 +1096,12 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFire
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::WriteArchive( xml::xostream& xos )
 {
-
-    xos << xml::start( "modifier" )
-        << xml::attribute( "fire-class", ptrFireClass_.GetData()->strName_ )
-        << xml::attribute( "ignition-threshold", ignitionThreshold_ )
-        << xml::attribute( "max-combustion-energy", maxCombustionEnergy_ )
-        << xml::end;
+    if( ptrFireClass_.GetData()->isSurface_.GetData() )
+        xos << xml::start( "modifier" )
+            << xml::attribute( "fire-class", ptrFireClass_.GetData()->strName_ )
+            << xml::attribute( "ignition-threshold", ignitionThreshold_ )
+            << xml::attribute( "max-combustion-energy", maxCombustionEnergy_ )
+            << xml::end;
 }
 
 // -----------------------------------------------------------------------------

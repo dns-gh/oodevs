@@ -1591,7 +1591,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Increase rate</source>
-        <translation>Coefficient d’augmentation</translation>
+        <translation>Coefficient d&apos;augmentation</translation>
     </message>
     <message>
         <source>Decrease rate</source>
@@ -2960,7 +2960,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Burn</source>
-        <translation></translation>
+        <translation>Brûle</translation>
     </message>
 </context>
 <context>
@@ -3911,6 +3911,21 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Close</source>
         <translation>Fermer</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Table_Objects_FirePropagationModifier</name>
+    <message>
+        <source>Ignition threshold</source>
+        <translation>Seuil d&apos;ignition</translation>
+    </message>
+    <message>
+        <source>Max combustion energy</source>
+        <translation>Energie de combustion max</translation>
+    </message>
+    <message>
+        <source>Fire model</source>
+        <translation>Modèle de feu</translation>
     </message>
 </context>
 <context>
