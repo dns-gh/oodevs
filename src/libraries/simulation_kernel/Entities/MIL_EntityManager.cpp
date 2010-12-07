@@ -1072,21 +1072,24 @@ void MIL_EntityManager::OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrd
     {
         if( MIL_Automate* pAutomate = FindAutomate( taskerId ) )
         {
-            pAutomate->OnReceiveMsgFragOrder( message );
             ack().mutable_tasker()->mutable_automat()->set_id( taskerId );
+            pAutomate->OnReceiveMsgFragOrder( message );
         }
         else if( MIL_Population* pPopulation = populationFactory_->Find( taskerId ) )
         {
-            pPopulation->OnReceiveMsgFragOrder( message );
             ack().mutable_tasker()->mutable_crowd()->set_id( taskerId );
+            pPopulation->OnReceiveMsgFragOrder( message );
         }
         else if( MIL_AgentPion* pPion = FindAgentPion ( taskerId ) )
         {
-            pPion->OnReceiveMsgFragOrder( message );
             ack().mutable_tasker()->mutable_unit()->set_id( taskerId );
+            pPion->OnReceiveMsgFragOrder( message );
         }
         else
-            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck::error_invalid_unit );
+        {
+            ack().mutable_tasker()->mutable_unit()->set_id( 0 );
+            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_unit );
+    }
     }
     catch( NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >& e )
     {
