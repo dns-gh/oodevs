@@ -3504,6 +3504,22 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <source>Crowd Value</source>
         <translation>Densité de foule</translation>
     </message>
+    <message>
+        <source>Identified</source>
+        <translation>Identifié</translation>
+    </message>
+    <message>
+        <source>Recognized</source>
+        <translation>Reconnu</translation>
+    </message>
+    <message>
+        <source>Detected</source>
+        <translation>Détecté</translation>
+    </message>
+    <message>
+        <source>Unseen</source>
+        <translation>Non perçu</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Environments_GUI</name>

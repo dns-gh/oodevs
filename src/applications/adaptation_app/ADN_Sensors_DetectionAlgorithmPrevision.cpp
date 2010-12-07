@@ -25,14 +25,16 @@ namespace
     public:
         virtual void Convert( double input, QString& output ) const
         {
-            if( input == 3. )
-                output = "Identified";
-            else if( input == 2. )
-                output = "Recognized";
-            else if( input == 1. )
-                output = "Detected";
-            else if( input == 0. )
-                output = "Unseen";
+            if( !qApp )
+                return;
+            if( input >= 3. )
+                output = qApp->translate( "ADN_Sensors_DetectionAlgorithmPrevision", "Identified" );
+            else if( input >= 2. )
+                output = qApp->translate( "ADN_Sensors_DetectionAlgorithmPrevision", "Recognized" );
+            else if( input >= 1. )
+                output = qApp->translate( "ADN_Sensors_DetectionAlgorithmPrevision", "Detected" );
+            else if( input >= 0. )
+                output = qApp->translate( "ADN_Sensors_DetectionAlgorithmPrevision", "Unseen" );
         }
         // -----------------------------------------------------------------------------
         // Name: GetConversion
@@ -40,14 +42,9 @@ namespace
         // -----------------------------------------------------------------------------
         QString GetConversion( double input ) const
         {
-            if( input >= 3. )
-                return "Identified";
-            else if( input >= 2. )
-                return "Recognized";
-            else if( input >= 1. )
-                return "Detected";
-            else if( input >= 0. )
-                return "Unseen";
+            QString output;
+            Convert( input, output );
+            return output;
         }
     };
 
