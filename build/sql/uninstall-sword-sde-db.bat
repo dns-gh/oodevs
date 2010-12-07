@@ -6,7 +6,7 @@ REM set /p x=Entrez la valeur de x:
 SET DB=sword_crossbow_db
 IF NOT "%1"=="" SET DB=%1
 
-SET PORT=5151
+SET PORT=6789
 IF NOT "%2"=="" SET PORT=%2
 
 SET SPACE=sword

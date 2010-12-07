@@ -35,3 +35,5 @@ call set_sword_var.bat
 echo.%SERVICE_NAME%  %SERVICE_PORT%/%SERVICE_PROTOCOL%  #ArcSDE Service for Sword Database:%DB% >> %WINDOWS_SERVC_FILE%
 echo.%SERVICE_NAME%  %SERVICE_PORT%/%SERVICE_PROTOCOL%  #ArcSDE Service for Sword Database:%DB% >> %ARC_SDE_SERVC_FILE%
 %COMMAND_SRV_START% %SERVICE_NAME%
+
+@echo You should now call register_sword_db.bat to have tables registered by the SDE service

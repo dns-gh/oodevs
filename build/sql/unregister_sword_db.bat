@@ -6,7 +6,7 @@ REM set /p x=Entrez la valeur de x:
 SET DB=sword_crossbow_db
 IF NOT "%1"=="" SET DB=%1
 
-SET PORT=5151
+SET PORT=6789
 IF NOT "%2"=="" SET PORT=%2
 
 SET SPACE=sword
@@ -22,10 +22,9 @@ call set_sword_var.bat
 %COMMAND_SDE_LAYER% -o delete -l %DB%.%SPACE%.emergencies,shape  -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB% -N
 %COMMAND_SDE_LAYER% -o delete -l %DB%.%SPACE%.knowledgeunits,shape  -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB% -N
 
-%COMMAND_SDE_LAYER% -o delete -l %DB%.%SPACE%.objectknowledges_area,shape  -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB% -N
-%COMMAND_SDE_LAYER% -o delete -l %DB%.%SPACE%.objectknowledges_line,shape  -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB% -N
-%COMMAND_SDE_LAYER% -o delete -l %DB%.%SPACE%.objectknowledges_point,shape  -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB% -N
-
+%COMMAND_SDE_LAYER% -o delete -l %DB%.%SPACE%.knowledgeobjects_area,shape  -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB% -N
+%COMMAND_SDE_LAYER% -o delete -l %DB%.%SPACE%.knowledgeobjects_line,shape  -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB% -N
+%COMMAND_SDE_LAYER% -o delete -l %DB%.%SPACE%.knowledgeobjects_point,shape  -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB% -N
 
 %COMMAND_SDE_LAYER% -o delete -l %DB%.%SPACE%.orderparameters_area,shape  -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB% -N
 %COMMAND_SDE_LAYER% -o delete -l %DB%.%SPACE%.orderparameters_line,shape  -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB% -N

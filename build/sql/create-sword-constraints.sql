@@ -2,6 +2,8 @@ ALTER TABLE sword.users                        ADD CONSTRAINT users_client_id_ct
 ALTER TABLE sword.extents                      ADD CONSTRAINT extents_exercise_id_ctrt FOREIGN KEY(exercise_id) REFERENCES sword.exercises(id) ON DELETE CASCADE;
 ALTER TABLE sword.user_sessions                ADD CONSTRAINT usersessions_user_id_ctrt FOREIGN KEY(user_id) REFERENCES sword.users(id) ON DELETE CASCADE;
 ALTER TABLE sword.user_sessions                ADD CONSTRAINT usersessions_session_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
+ALTER TABLE sword.user_exercises               ADD CONSTRAINT userexercises_user_id_ctrt FOREIGN KEY(user_id) REFERENCES sword.users(id) ON DELETE CASCADE;
+ALTER TABLE sword.user_exercises               ADD CONSTRAINT userexercises_exercise_id_ctrt FOREIGN KEY(exercise_id) REFERENCES sword.exercises(id) ON DELETE CASCADE;
 
 ALTER TABLE sword.sessions                     ADD CONSTRAINT sessions_exercise_id_ctrt FOREIGN KEY(exercise_id) REFERENCES sword.exercises(id) ON DELETE CASCADE;
 
@@ -16,16 +18,18 @@ ALTER TABLE sword.profiles  					         ADD CONSTRAINT profiles_session_id_ctr
 ALTER TABLE sword.terrain_grid  				       ADD CONSTRAINT terrain_session_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
 
 ----------------------
+ALTER TABLE sword.teams                        ADD CONSTRAINT teams_session_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
 ALTER TABLE sword.formations                   ADD CONSTRAINT formations_session_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
 ALTER TABLE sword.unitforces                   ADD CONSTRAINT unitforces_session_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
 ALTER TABLE sword.unitforces                   ADD CONSTRAINT unitforces_op_state_ctrt CHECK (op_state >= 0 AND op_state <= 100);
 ALTER TABLE sword.knowledgeunits               ADD CONSTRAINT knowledgeunits_exercise_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
 
 ALTER TABLE sword.orders                       ADD CONSTRAINT orders_session_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
-ALTER TABLE sword.orderparameters              ADD CONSTRAINT orderparameters_order_id_ctrt FOREIGN KEY(order_id) REFERENCES sword.orders(id) ON DELETE CASCADE;
+-- ALTER TABLE sword.orderparameters              ADD CONSTRAINT orderparameters_order_id_ctrt FOREIGN KEY(order_id) REFERENCES sword.orders(id) ON DELETE CASCADE;
 ALTER TABLE sword.orderparameters_area         ADD CONSTRAINT orderparameters_area_order_id_ctrt FOREIGN KEY(parameter_id) REFERENCES sword.orderparameters(id) ON DELETE CASCADE;
 ALTER TABLE sword.orderparameters_line         ADD CONSTRAINT orderparameters_line_order_id_ctrt FOREIGN KEY(parameter_id) REFERENCES sword.orderparameters(id) ON DELETE CASCADE;
 ALTER TABLE sword.orderparameters_point        ADD CONSTRAINT orderparameters_point_order_id_ctrt FOREIGN KEY(parameter_id) REFERENCES sword.orderparameters(id) ON DELETE CASCADE;
+ALTER TABLE sword.phase_lines                  ADD CONSTRAINT phase_lines_order_id_ctrt FOREIGN KEY(parameter_id) REFERENCES sword.orderparameters(id) ON DELETE CASCADE;
 
 ALTER TABLE sword.reports                      ADD CONSTRAINT reports_session_id_ctrt FOREIGN KEY(session_id) REFERENCES sword.sessions(id) ON DELETE CASCADE;
 

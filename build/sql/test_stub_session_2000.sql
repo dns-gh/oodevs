@@ -10,6 +10,18 @@ INSERT INTO sword.exercises (id, name, description) VALUES (0, 'test_case_exerci
 INSERT INTO sword.sessions (id, name, exercise_id) VALUES (sessionid, 'test_case_session', 0);
 INSERT INTO sword.user_sessions (user_id, session_id) VALUES (5, sessionid); -- user 5 has 'demo' crypto
 
+-- Teams
+INSERT INTO sword.teams (id,public_oid,name,type,session_id) VALUES (nextval('sword_crossbow_db.sword.Teams_id_seq'),3,'bleu',1,session_id);
+
+-- Formation
+INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (5, 0, -1, 0, 'Formation [5]', '-F---------H---', sessionid);
+INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (6, 0, -1, 0, 'Formation [6]', '-F---------H---', sessionid);
+INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (7, 5, 138, 0, 'Light armored squadron [7]', '-F---------A---', sessionid);
+INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (15, 5, 130, 0, 'Maintenance logistic area (corps) [15]', '-F---------A---', sessionid);
+INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (21, 5, 127, 0, 'Logistic combat train [21]', '-F---------A---', sessionid);
+INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (23, 5, 134, 0, 'Medical logistic area (corps) [23]', '-F---------A---', sessionid);
+INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (33, 5, 132, 0, 'Supply logistic area  (corps) [33]', '-F---------A---', sessionid);
+INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (13, 6, 136, 0, 'Refugees [13]', '-F---------A---', sessionid);
 
 -- Unit forces - ID is a serial, autoincremented
 INSERT INTO sword.unitforces (public_oid, parent_oid, type, name, symbol_id, valid, op_state, shape, direction, speed, session_id) VALUES (30, 23, 50, 'Chirurgicale section (modular)', 'SFGPUSM----D---', NULL, 100, '280000000100000001000400000000000C0000000100000080D7E1AFC417A0D2C2FC9E1A00000000', 360, 0, sessionid);
@@ -47,20 +59,11 @@ INSERT INTO sword.unitforces (public_oid, parent_oid, type, name, symbol_id, val
 INSERT INTO sword.unitforces (public_oid, parent_oid, type, name, symbol_id, valid, op_state, shape, direction, speed, session_id) VALUES (46, 33, 64, 'Supply group180m3', 'SFGPUST----C---', NULL, 100, '280000000100000001000400000000000C00000001000000A0CE9CC0C417A0AEC4A99F1A00000000', 360, 0, sessionid);
 INSERT INTO sword.unitforces (public_oid, parent_oid, type, name, symbol_id, valid, op_state, shape, direction, speed, session_id) VALUES (14, 13, 18, 'Refugee', 'SFGPU-----A----', NULL, 100, '280000000100000001000400000000000C00000001000000808A98C2C41780A395B39F1A00000000', 360, 0, sessionid);
 
--- Formation
-INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (5, 0, -1, 0, 'Formation [5]', '-F---------H---', sessionid);
-INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (6, 0, -1, 0, 'Formation [6]', '-F---------H---', sessionid);
-INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (7, 5, 138, 0, 'Light armored squadron [7]', '-F---------A---', sessionid);
-INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (15, 5, 130, 0, 'Maintenance logistic area (corps) [15]', '-F---------A---', sessionid);
-INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (21, 5, 127, 0, 'Logistic combat train [21]', '-F---------A---', sessionid);
-INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (23, 5, 134, 0, 'Medical logistic area (corps) [23]', '-F---------A---', sessionid);
-INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (33, 5, 132, 0, 'Supply logistic area  (corps) [33]', '-F---------A---', sessionid);
-INSERT INTO sword.formations (public_oid, parent_oid, type, engaged, name, symbol_id, session_id) VALUES (13, 6, 136, 0, 'Refugees [13]', '-F---------A---', sessionid);
-
 -- Objects
-INSERT INTO sword.tacticalobject_area (id, symbol_id, public_oid, shape, session_id, name, type, state) VALUES (nextval('sword.tacticalobject_area_id_seq'::regclass), 'GFSPAH--------X', 47, sde.st_polygon('POLYGON ((4.36507 50.8529, 4.36979 50.8472, 4.38109 50.8517, 4.37545 50.855, 4.36507 50.8529))'), sessionid, 'ttttttttttttt', 'refugees camp', 0);
-INSERT INTO sword.tacticalobject_area (id, symbol_id, public_oid, shape, session_id, name, type, state) VALUES (nextval('sword.tacticalobject_area_id_seq'::regclass), 'GFSPAH--------X', 47, sde.st_polygon('POLYGON ((4.36507 50.7529, 4.36979 50.7472, 4.38109 50.7517, 4.37545 50.755, 4.36507 50.7529))'), sessionid, 'ttttttttttttt', 'refugees camp', 0);
-INSERT INTO sword.tacticalobject_area (id, symbol_id, public_oid, shape, session_id, name, type, state) VALUES (nextval('sword.tacticalobject_area_id_seq'::regclass), 'GFSPAH--------X', 47, sde.st_polygon('POLYGON ((4.36507 50.6529, 4.36979 50.6472, 4.38109 50.6517, 4.37545 50.655, 4.36507 50.6529))'), sessionid, 'ttttttttttttt', 'refugees camp', 0);
+INSERT INTO sword.tacticalobject_area (id, symbol_id, public_oid, shape, session_id, name, type, state) VALUES (nextval('sword.tacticalobject_area_id_seq'::regclass), 'GFSPAH--------X', 47, sde.st_polygon('POLYGON ((4.36507 50.8529, 4.36979 50.8472, 4.38109 50.8517, 4.37545 50.855, 4.36507 50.8529))',0), sessionid, 'ttttttttttttt', 'refugees camp', 0);
+INSERT INTO sword.tacticalobject_area (id, symbol_id, public_oid, shape, session_id, name, type, state) VALUES (nextval('sword.tacticalobject_area_id_seq'::regclass), 'GFSPAH--------X', 48, sde.st_polygon('POLYGON ((4.36507 50.7529, 4.36979 50.7472, 4.38109 50.7517, 4.37545 50.755, 4.36507 50.7529))',0), sessionid, 'ttttttttttttt', 'refugees camp', 0);
+INSERT INTO sword.tacticalobject_area (id, symbol_id, public_oid, shape, session_id, name, type, state) VALUES (nextval('sword.tacticalobject_area_id_seq'::regclass), 'GFSPAH--------X', 49, sde.st_polygon('POLYGON ((4.36507 50.6529, 4.36979 50.6472, 4.38109 50.6517, 4.37545 50.655, 4.36507 50.6529))',0), sessionid, 'ttttttttttttt', 'refugees camp', 0);
+
 
 -- Tactical lines
 INSERT INTO sword.tacticallines (public_oid, symbol_id, shape, session_id, name) VALUES (1500, 'TCTCL------', sde.st_linestring('LINESTRING (4.3 50.8, 4.31 50.84, 4.29 50.85)'), sessionid, NULL);

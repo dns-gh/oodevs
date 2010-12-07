@@ -4,14 +4,15 @@ SET SERVICE_NAME=esri_sde_%DB%
 SET SERVICE_PORT=%PORT%
 SET SERVICE_PROTOCOL=tcp
 
-SET PGSERVICE=postgresql-8.3
+SET PGSERVICE=pgsql-8.3
 SET PGHOME=C:\Program Files\PostgreSQL\8.3\bin
+SET PGSYSCONFDIR=C:\Program Files\PostgreSQL\8.3\etc
 SET COMMAND_PSQL="%PGHOME%\psql.exe"
 SET COMMAND_CREATE_DB="%PGHOME%\createdb.exe"
 SET COMMAND_CREATE_LANGAGE="%PGHOME%\createlang.exe"
 SET COMMAND_DROP_DB="%PGHOME%\dropdb.exe"
 
-SET SDEHOME=C:\ArcGIS\ArcSDE\pgexe
+SET SDEHOME=C:\Program Files\ArcGIS\ArcSDE\pgexe
 SET COMMAND_SDE_LAYER="%SDEHOME%\bin\sdelayer.exe"
 SET COMMAND_SDE_TABLE="%SDEHOME%\bin\sdetable.exe"
 SET COMMAND_SDE_SETUP="%SDEHOME%\bin\sdesetup.exe"
