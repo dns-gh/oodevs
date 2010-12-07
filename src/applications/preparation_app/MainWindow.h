@@ -110,6 +110,7 @@ private:
     void ReadSettings();
     void WriteOptions();
     void ReadOptions();
+    void DoLoad( QString filename );
 
     virtual void NotifyCreated();
     virtual void NotifyUpdated();
@@ -142,6 +143,7 @@ private:
     bool loading_;
     bool needsSaving_;
     std::string invalidSignedFiles_;
+    std::string missingSignedFiles_;
     //@}
 };
 

@@ -16,13 +16,23 @@ using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: PhysicalFileLoader constructor
+// Created: LDC 2010-11-30
+// -----------------------------------------------------------------------------
+PhysicalFileLoader::PhysicalFileLoader( const tools::ExerciseConfig& config )
+    : FileLoader( config )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PhysicalFileLoader constructor
 // Created: LDC 2010-11-29
 // -----------------------------------------------------------------------------
-PhysicalFileLoader::PhysicalFileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles )
+PhysicalFileLoader::PhysicalFileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles )
     : FileLoader( config )
 {
     std::string filename = config.GetPhysicalFile();
-    CheckSignatures( filename, invalidSignatureFiles );
+    CheckSignatures( filename, invalidSignatureFiles, missingSignatureFiles );
 }
 
 // -----------------------------------------------------------------------------

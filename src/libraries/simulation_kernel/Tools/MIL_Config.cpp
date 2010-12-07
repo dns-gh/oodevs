@@ -96,6 +96,22 @@ void MIL_Config::ReadSessionFile( const std::string& file )
     setstepmul_ = 200;
     MIL_Tools::CheckXmlCrc32Signature( file );
     xml::xifstream xis( file );
+    const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
+    if( schema.empty() )
+        ReadSessionXml( xis );
+    else
+    {
+        xml::xifstream verifiedXis( file, xml::external_grammar( BuildResourceChildFile( schema ) ) );
+        ReadSessionXml( verifiedXis );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::ReadSessionXml
+// Created: LDC 2010-12-02
+// -----------------------------------------------------------------------------
+void MIL_Config::ReadSessionXml( xml::xistream& xis )
+{
     xis >> xml::start( "session" )
             >> xml::start( "config" )
                 >> xml::start( "simulation" )

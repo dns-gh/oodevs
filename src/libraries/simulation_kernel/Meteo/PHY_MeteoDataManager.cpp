@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MeteoDataManager.h"
+#include "clients_kernel/ExerciseFileLoader.h"
 #include "meteo/PHY_GlobalMeteo.h"
 #include "meteo/PHY_LocalMeteo.h"
 #include "meteo/PHY_Lighting.h"
@@ -31,16 +32,26 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
 {
     weather::PHY_Precipitation::Initialize();
     weather::PHY_Lighting::Initialize();
-    const std::string fileName = config.GetWeatherFile();
-    MIL_Tools::CheckXmlCrc32Signature( fileName );
-    xml::xifstream xisWeather( fileName );
-    config.AddFileToCRC( fileName );
-    xisWeather >> xml::start( "weather" );
-    pEphemeride_ = new PHY_Ephemeride( xisWeather );
-    InitializeGlobalMeteo( xisWeather );
+
+    std::string invalidSignatureFiles;
+    std::string missingSignatureFiles;
+    kernel::ExerciseFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
+    loader.Load( "weather", boost::bind( &PHY_MeteoDataManager::Initialize, this, _1, boost::ref( config ) ) );
+    loader.AddToCRC();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MeteoDataManager::Initialize
+// Created: LDC 2010-12-02
+// -----------------------------------------------------------------------------
+void PHY_MeteoDataManager::Initialize( xml::xistream& xis, MIL_Config& config )
+{
+    xis >> xml::start( "weather" );
+    pEphemeride_ = new PHY_Ephemeride( xis );
+    InitializeGlobalMeteo( xis );
     pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config );
-    InitializeLocalMeteos( xisWeather );
-    xisWeather >> xml::end;
+    InitializeLocalMeteos( xis );
+    xis >> xml::end;
 }
 
 //-----------------------------------------------------------------------------

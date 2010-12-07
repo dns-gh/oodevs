@@ -25,6 +25,10 @@ class DEC_Path_ABC;
 class TER_PathFinderThread;
 class TER_PathFindRequest_ABC;
 class MIL_Config;
+namespace xml
+{
+    class xistream;
+}
 
 // =============================================================================
 // Created: NLD 2003-08-14
@@ -71,6 +75,7 @@ private:
     boost::shared_ptr< TER_PathFindRequest_ABC > GetMessage( unsigned int nThread );
     void AddPendingJob( boost::shared_ptr< DEC_Path_ABC > pPath );
     T_Requests& GetRequests();
+    void ReadPathfind( xml::xistream& xis );
     //@}
 
 private:

@@ -80,6 +80,7 @@ private:
     //! @name Helpers
     //@{
     void Load( const dispatcher::Config& config );
+    void ReadShapes( xml::xistream& xis );
     void ReadShape( xml::xistream& xis );
     virtual void RegisterIn( directia::brain::Brain& brain );
     void ReadNamedShape( xml::xistream& xis, std::auto_ptr< Drawing >& result, const std::string& name );

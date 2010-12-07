@@ -79,6 +79,7 @@ private:
     //@{
     void ReadPatchLocal( xml::xistream& xis );
     void ReadPatchGlobal( xml::xistream& xis );
+    void Initialize( xml::xistream& xis, MIL_Config& config );
     //@}
 
 private:

@@ -27,6 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ExerciseFileLoader( const tools::ExerciseConfig& config );
+             ExerciseFileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles );
     virtual ~ExerciseFileLoader();
     //@}
 
@@ -40,15 +41,6 @@ private:
     //@{
     ExerciseFileLoader( const ExerciseFileLoader& );            //!< Copy constructor
     ExerciseFileLoader& operator=( const ExerciseFileLoader& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 }

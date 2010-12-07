@@ -14,6 +14,7 @@
 #include "DEC_Path_ABC.h"
 #include "DEC_PathType.h"
 #include "DEC_PathFactory.h"
+#include "clients_kernel/PhysicalFileLoader.h"
 #include "simulation_terrain/TER_PathfinderThread.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
@@ -34,19 +35,31 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     , rDistanceThreshold_     ( 0. )
     , treatedRequests_        ( 0 )
 {
-    xml::xifstream xis( config.GetPhysicalFile() );
-    xis >> xml::start( "physical" );
+    std::string invalidSignatureFiles;
+    std::string missingSignatureFiles;
+    kernel::PhysicalFileLoader fileLoader( config, invalidSignatureFiles, missingSignatureFiles );
+    if( !invalidSignatureFiles.empty() )
+        MT_LOG_WARNING_MSG( "Invalid signature for the file(s) " << invalidSignatureFiles )
+    if( !missingSignatureFiles.empty() )
+        MT_LOG_WARNING_MSG( "Unsigned file(s) " << missingSignatureFiles )
+    fileLoader.AddToCRC();
+    fileLoader.Load( "pathfinder", boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1 ) );
 
-    std::string strPathFindFile;
-    xis >> xml::start( "pathfinder" )
-            >> xml::attribute( "file", strPathFindFile )
-        >> xml::end;
-    strPathFindFile = config.BuildPhysicalChildFile( strPathFindFile );
+    bUseInSameThread_ = config.GetPathFinderThreads() == 0;
+    MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
+    if( bUseInSameThread_ ) // juste one "thread" that will never start
+        pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, true ) );
+    else
+        for( unsigned int i = 0; i < config.GetPathFinderThreads(); ++i )
+            pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this ) );
+}
 
-    MIL_Tools::CheckXmlCrc32Signature( strPathFindFile );
-    xml::xifstream xisPathfind( strPathFindFile );
-    config.AddFileToCRC( strPathFindFile );
-
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFind_Manager::ReadPathfind
+// Created: LDC 2010-11-30
+// -----------------------------------------------------------------------------
+void DEC_PathFind_Manager::ReadPathfind( xml::xistream& xisPathfind )
+{
     xisPathfind >> xml::start( "pathfind" )
                     >> xml::start( "configuration" )
                         >> xml::attribute( "distance-threshold", rDistanceThreshold_ );
@@ -59,14 +72,6 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     DEC_PathFactory::Initialize( xisPathfind );
 
     xisPathfind >> xml::end;
-
-    bUseInSameThread_ = config.GetPathFinderThreads() == 0;
-    MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
-    if( bUseInSameThread_ ) // juste one "thread" that will never start
-        pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, true ) );
-    else
-        for( unsigned int i = 0; i < config.GetPathFinderThreads(); ++i )
-            pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this ) );
 }
 
 // -----------------------------------------------------------------------------

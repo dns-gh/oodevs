@@ -52,6 +52,7 @@
 #include "Agents/MIL_AgentPion.h"
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
+#include "clients_kernel/PhysicalFileLoader.h"
 #include "Effects/MIL_EffectManager.h"
 #include "hla/HLA_Federate.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
@@ -133,37 +134,37 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     xml::xifstream xis( config.GetPhysicalFile() );
     xis >> xml::start( "physical" );
 
-    InitializeType< UrbanType                      >( xis, config, "urban"              );
-    InitializeType< MIL_Report                     >( xis, config, "reports"            );
-    InitializeType< PHY_MaintenanceWorkRate        >( xis, config, "maintenance"        );
-    InitializeType< PHY_MaintenanceResourcesAlarms >( xis, config, "maintenance"        );
-    InitializeType< PHY_Experience                 >( xis, config, "human-factors"      );
-    InitializeType< PHY_Tiredness                  >( xis, config, "human-factors"      );
-    InitializeType< PHY_Volume                     >( xis, config, "volumes"            );
-    InitializeType< PHY_Protection                 >( xis, config, "protections"        );
-    InitializeType< PHY_DotationNature             >( xis, config, "resource-natures"   );
-    InitializeType< PHY_DotationType               >( xis, config, "resources"          );
-    InitializeType< PHY_ResourceNetworkType        >( xis, config, "resource-networks"  );
-    InitializeType< MIL_ObjectFactory              >( xis, config, "objects"            );
-    InitializeType< PHY_BreakdownType              >( xis, config, "breakdowns"         );
-    InitializeType< PHY_LauncherType               >( xis, config, "launchers"          );
-    InitializeType< PHY_ActiveProtection           >( xis, config, "active-protections" );
-    InitializeWeapons    ( xis, config, time );
-    InitializeSensors    ( xis, config, time );
-    InitializeComposantes( xis, config, time );
-    InitializeType< MIL_AgentTypePion              >( xis, config, "units"              );
-    InitializeType< MIL_AutomateType               >( xis, config, "automats"           );
-    InitializeType< MIL_KnowledgeGroupType         >( xis, config, "knowledge-groups"   );
-    InitializeType< MIL_NbcAgentType               >( xis, config, "nbc"                );
-    InitializeType< MIL_FireClass                  >( xis, config, "fire"               );
-    InitializeMedicalTreatment( xis, config, time );
-    InitializeType< PHY_SupplyResourcesAlarms      >( xis, config, "supply"             );
-    InitializeType< PHY_Convoy_ABC                 >( xis, config, "supply"             );
-    InitializeType< PHY_MedicalResourcesAlarms     >( xis, config, "health"             );
-    InitializeType< PHY_RolePion_Communications    >( xis, config, "communications"     );
-    InitializeType< MIL_PopulationType             >( xis, config, "populations"        );
-    InitializeType< MIL_InhabitantType             >( xis, config, "people"             );
-    InitializeMedical( xis, config );
+    InitializeType< UrbanType                      >( config, "urban"              );
+    InitializeType< MIL_Report                     >( config, "reports"            );
+    InitializeType< PHY_MaintenanceWorkRate        >( config, "maintenance"        );
+    InitializeType< PHY_MaintenanceResourcesAlarms >( config, "maintenance"        );
+    InitializeType< PHY_Experience                 >( config, "human-factors"      );
+    InitializeType< PHY_Tiredness                  >( config, "human-factors"      );
+    InitializeType< PHY_Volume                     >( config, "volumes"            );
+    InitializeType< PHY_Protection                 >( config, "protections"        );
+    InitializeType< PHY_DotationNature             >( config, "resource-natures"   );
+    InitializeType< PHY_DotationType               >( config, "resources"          );
+    InitializeType< PHY_ResourceNetworkType        >( config, "resource-networks"  );
+    InitializeType< MIL_ObjectFactory              >( config, "objects"            );
+    InitializeType< PHY_BreakdownType              >( config, "breakdowns"         );
+    InitializeType< PHY_LauncherType               >( config, "launchers"          );
+    InitializeType< PHY_ActiveProtection           >( config, "active-protections" );
+    InitializeWeapons    ( config, time );
+    InitializeSensors    ( config, time );
+    InitializeComposantes( config, time );
+    InitializeType< MIL_AgentTypePion              >( config, "units"              );
+    InitializeType< MIL_AutomateType               >( config, "automats"           );
+    InitializeType< MIL_KnowledgeGroupType         >( config, "knowledge-groups"   );
+    InitializeType< MIL_NbcAgentType               >( config, "nbc"                );
+    InitializeType< MIL_FireClass                  >( config, "fire"               );
+    InitializeMedicalTreatment( config, time );
+    InitializeType< PHY_SupplyResourcesAlarms      >( config, "supply"             );
+    InitializeType< PHY_Convoy_ABC                 >( config, "supply"             );
+    InitializeType< PHY_MedicalResourcesAlarms     >( config, "health"             );
+    InitializeType< PHY_RolePion_Communications    >( config, "communications"     );
+    InitializeType< MIL_PopulationType             >( config, "populations"        );
+    InitializeType< MIL_InhabitantType             >( config, "people"             );
+    InitializeMedical( config );
 
     xis >> xml::end; // physical
 }
@@ -172,92 +173,93 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
 // Name: MIL_EntityManagerStaticMethods::InitializeSensors
 // Created: RPD 2010-02-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::InitializeSensors( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time )
+void MIL_EntityManagerStaticMethods::InitializeSensors( MIL_Config& config, const MIL_Time_ABC& time )
 {
     MT_LOG_INFO_MSG( "Initializing sensor types" );
-    std::string strFile;
-    xis >> xml::start( "sensors" )
-            >> xml::attribute( "file", strFile )
-        >> xml::end;
-    strFile = config.BuildPhysicalChildFile( strFile );
-    MIL_Tools::CheckXmlCrc32Signature( strFile );
-    xml::xifstream xisSensors( strFile );
-    config.AddFileToCRC( strFile );
-    xisSensors >> xml::start( "sensors" );
-    PHY_PerceptionRecoSurveillance::Initialize( xisSensors );
-    PHY_PerceptionFlyingShell     ::Initialize( xisSensors );
-    PHY_SensorType                ::Initialize( xisSensors );
-    PHY_RadarType                 ::Initialize( xisSensors, time );
-    xisSensors >> xml::end;
+    std::string invalidSignatureFiles;
+    std::string missingSignatureFiles;
+    kernel::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
+    loader.Load( "sensors", boost::bind( &MIL_EntityManagerStaticMethods::LoadSensors, _1, boost::cref( time ) ) );
+    loader.AddToCRC();
+    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManagerStaticMethods::LoadSensors
+// Created: LDC 2010-12-02
+// -----------------------------------------------------------------------------
+void MIL_EntityManagerStaticMethods::LoadSensors( xml::xistream& xis, const MIL_Time_ABC& time )
+{
+    xis >> xml::start( "sensors" );
+    PHY_PerceptionRecoSurveillance::Initialize( xis );
+    PHY_PerceptionFlyingShell     ::Initialize( xis );
+    PHY_SensorType                ::Initialize( xis );
+    PHY_RadarType                 ::Initialize( xis, time );
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManagerStaticMethods::InitializeMedical
 // Created: RPD 2010-02-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::InitializeMedical( xml::xistream& xis, MIL_Config& config )
+void MIL_EntityManagerStaticMethods::InitializeMedical( MIL_Config& config )
 {
     MT_LOG_INFO_MSG( "Initializing medical data" );
-    std::string strFile;
-    xis >> xml::start( "health" )
-            >> xml::attribute( "file", strFile )
-        >> xml::end;
-    strFile = config.BuildPhysicalChildFile( strFile );
-    MIL_Tools::CheckXmlCrc32Signature( strFile );
-    xml::xifstream xisHealth( strFile );
-    xisHealth >> xml::start( "health" );
-    config.AddFileToCRC( strFile );
-    PHY_HumanWound::InitializeMedicalData( xisHealth );
-    xisHealth >> xml::end;
+    std::string invalidSignatureFiles;
+    std::string missingSignatureFiles;
+    kernel::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
+    loader.Load( "health", &MIL_EntityManagerStaticMethods::LoadMedical );
+    loader.AddToCRC();
+    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManagerStaticMethods::LoadMedical
+// Created: LDC 2010-12-02
+// -----------------------------------------------------------------------------
+void MIL_EntityManagerStaticMethods::LoadMedical( xml::xistream& xis )
+{
+    xis >> xml::start( "health" );
+    PHY_HumanWound::InitializeMedicalData( xis );
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManagerStaticMethods::InitializeComposantes
 // Created: RPD 2010-02-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::InitializeComposantes( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time )
+void MIL_EntityManagerStaticMethods::InitializeComposantes( MIL_Config& config, const MIL_Time_ABC& time )
 {
-    std::string strFile;
-    xis >> xml::start( "components" )
-            >> xml::attribute( "file", strFile )
-        >> xml::end;
-    strFile = config.BuildPhysicalChildFile( strFile );
-    MIL_Tools::CheckXmlCrc32Signature( strFile );
-    xml::xifstream xisComponents( strFile );
-    config.AddFileToCRC( strFile );
-    PHY_ComposanteTypePion::Initialize( time, xisComponents );
+    std::string invalidSignatureFiles;
+    std::string missingSignatureFiles;
+    kernel::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
+    loader.Load( "components", boost::bind( &PHY_ComposanteTypePion::Initialize, boost::cref( time ), _1 ) );
+    loader.AddToCRC();
+    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManagerStaticMethods::InitializeWeapons
 // Created: RPD 2010-02-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::InitializeWeapons( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time )
+void MIL_EntityManagerStaticMethods::InitializeWeapons( MIL_Config& config, const MIL_Time_ABC& time )
 {
-    std::string strFile;
-    xis >> xml::start( "weapon-systems" )
-            >> xml::attribute( "file", strFile )
-        >> xml::end;
-    strFile = config.BuildPhysicalChildFile( strFile );
-    MIL_Tools::CheckXmlCrc32Signature( strFile );
-    xml::xifstream xisWeapons( strFile );
-    config.AddFileToCRC( strFile );
-    PHY_WeaponType::Initialize( time, xisWeapons );
+    std::string invalidSignatureFiles;
+    std::string missingSignatureFiles;
+    kernel::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
+    loader.Load( "weapon-systems", boost::bind( &PHY_WeaponType::Initialize, boost::cref( time ), _1 ) );
+    loader.AddToCRC();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManagerStaticMethods::InitializeMedicalTreatment
 // Created: JCR 2010-10-26
 // -----------------------------------------------------------------------------
-void MIL_EntityManagerStaticMethods::InitializeMedicalTreatment( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time )
+void MIL_EntityManagerStaticMethods::InitializeMedicalTreatment( MIL_Config& config, const MIL_Time_ABC& time )
 {
-    std::string strFile;
-    xis >> xml::start( "medical-treatment" )
-            >> xml::attribute( "file", strFile )
-        >> xml::end;
-    strFile = config.BuildPhysicalChildFile( strFile );
-    MIL_Tools::CheckXmlCrc32Signature( strFile );
-    xml::xifstream xisType( strFile );
-    config.AddFileToCRC( strFile );
-    MIL_MedicalTreatmentType::Initialize( xisType, time );//verfifier tous les initialize
+    std::string invalidSignatureFiles;
+    std::string missingSignatureFiles;
+    kernel::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
+    loader.Load( "medical-treatment", boost::bind( &MIL_MedicalTreatmentType::Initialize, _1, boost::cref( time ) ) );//verfifier tous les initialize
+    loader.AddToCRC();
 }

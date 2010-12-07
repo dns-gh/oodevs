@@ -157,16 +157,26 @@ namespace
     }
 }
 
+namespace
+{
+    void CheckFileSignature( const std::string& file, std::string& invalidSignedFiles, std::string& missingSignedFiles )
+    {
+        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( file );
+        if( error == tools::eXmlCrc32SignatureError_Invalid )
+            invalidSignedFiles.append( "\n" + bfs::path( file, bfs::native ).leaf() );
+        else if( error == tools::eXmlCrc32SignatureError_NotSigned )
+            missingSignedFiles.append( "\n" + bfs::path( file, bfs::native ).leaf() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Model::Load
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors, std::string& invalidSignedFiles )
+void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors, std::string& invalidSignedFiles, std::string& missingSignedFiles )
 {
     const std::string exerciseFile = config.GetExerciseFile();
-    tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( exerciseFile );
-    if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
-        invalidSignedFiles.append( "\n" + bfs::path( exerciseFile, bfs::native ).leaf() );
+    CheckFileSignature( exerciseFile, invalidSignedFiles, missingSignedFiles );
     {
         xml::xifstream xis( exerciseFile );
         exercise_.Load( xis );
@@ -178,16 +188,12 @@ void Model::Load( const tools::ExerciseConfig& config, std::string& loadingError
         {
             urban::WorldParameters world( directoryPath );
             const bfs::path urbanFile = bfs::path( directoryPath, bfs::native ) / "urban" / "urban.xml";
-            tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( urbanFile.string() );
-            if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
-                invalidSignedFiles.append( "\nurban.xml" );
+            CheckFileSignature( urbanFile.string(), invalidSignedFiles, missingSignedFiles );
             urban_.Load( directoryPath, world, loadingErrors );
             const std::string urbanStateFile = config.GetUrbanStateFile() ;
             if( bfs::exists( bfs::path( urbanStateFile, bfs::native ) ) )
             {
-                tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( urbanStateFile );
-                if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
-                    invalidSignedFiles.append( "\n" + bfs::path( urbanStateFile, bfs::native ).leaf() );
+                CheckFileSignature( urbanStateFile, invalidSignedFiles, missingSignedFiles );
                 xml::xifstream xis( urbanStateFile );
                 urban_.LoadUrbanState( xis );
             }
@@ -200,9 +206,7 @@ void Model::Load( const tools::ExerciseConfig& config, std::string& loadingError
         const std::string orbatFile = config.GetOrbatFile() ;
         if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
         {
-            tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( orbatFile );
-            if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
-                invalidSignedFiles.append( "\n" + bfs::path( orbatFile, bfs::native ).leaf() );
+            CheckFileSignature( orbatFile, invalidSignedFiles, missingSignedFiles );
             UpdateName( orbatFile );
             xml::xifstream xis( orbatFile );
             teams_.Load( xis, *this, loadingErrors );
@@ -256,7 +260,9 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
         SerializeAndSign( config.GetExerciseFile(), exercise_ );
         {
             xml::xofstream xos( config.GetOrbatFile() );
-            xos << xml::start( "orbat" );
+            xos << xml::start( "orbat" )
+                << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
+                << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/orbat.xsd" );
             teams_.Serialize( xos );
             xos << xml::end;
         }

@@ -25,6 +25,8 @@ namespace bfs = boost::filesystem;
 FileLoader::FileLoader( const tools::ExerciseConfig& config )
     : config_               ( config )
     , invalidSignatureFiles_( 0 )
+    , missingSignatureFiles_( 0 )
+    , addToCRC_             ( false )
 {
     // NOTHING
 }
@@ -33,12 +35,14 @@ FileLoader::FileLoader( const tools::ExerciseConfig& config )
 // Name: FileLoader constructor
 // Created: SBO 2009-08-20
 // -----------------------------------------------------------------------------
-FileLoader::FileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles )
+FileLoader::FileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles )
     : config_               ( config )
     , invalidSignatureFiles_( &invalidSignatureFiles )
+    , missingSignatureFiles_( &missingSignatureFiles )
+    , addToCRC_             ( false )
 {
     std::string filename = config.GetPhysicalFile();
-    CheckSignatures( filename, invalidSignatureFiles );
+    CheckSignatures( filename, invalidSignatureFiles, missingSignatureFiles );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,14 +55,25 @@ FileLoader::~FileLoader()
 }
 
 // -----------------------------------------------------------------------------
+// Name: FileLoader::AddToCRC
+// Created: LDC 2010-11-30
+// -----------------------------------------------------------------------------
+void FileLoader::AddToCRC()
+{
+    addToCRC_ = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: FileLoader::CheckSignatures
 // Created: LDC 2010-11-29
 // -----------------------------------------------------------------------------
-void FileLoader::CheckSignatures( const std::string& file, std::string& invalidSignatureFiles ) const
+void FileLoader::CheckSignatures( const std::string& file, std::string& invalidSignatureFiles, std::string& missingSignatureFiles ) const
 {
     tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( file );
-    if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+    if( error == tools::eXmlCrc32SignatureError_Invalid )
         invalidSignatureFiles.append( "\n" + bfs::path( file, bfs::native ).leaf() );
+    else if( error == tools::eXmlCrc32SignatureError_NotSigned )
+        missingSignatureFiles.append( "\n" + bfs::path( file, bfs::native ).leaf() );
 }
 
 namespace
@@ -67,16 +82,18 @@ namespace
     {
         typedef boost::function< void ( xml::xisubstream ) > T_Loader;
 
-        CheckedLoader( const std::string& path, const tools::ExerciseConfig& config, T_Loader loader, const std::string& xslTransform, std::string* invalidSignatureFiles )
+        CheckedLoader( const std::string& path, const tools::ExerciseConfig& config, T_Loader loader, const std::string& xslTransform, std::string* invalidSignatureFiles, std::string* missingSignatureFiles )
             : path_( path )
             , config_( config )
             , loader_( loader )
         {
-            if( invalidSignatureFiles )
+            if( invalidSignatureFiles && missingSignatureFiles )
             {
                 tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( path_ );
-                if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+                if( error == tools::eXmlCrc32SignatureError_Invalid )
                     invalidSignatureFiles->append( "\n" + bfs::path( path_, bfs::native ).leaf() );
+                else if( error == tools::eXmlCrc32SignatureError_NotSigned )
+                    missingSignatureFiles->append( "\n" + bfs::path( path_, bfs::native ).leaf() );
             }
             xml::xifstream xis( path_ );
             LoadFile( xis, xslTransform );
@@ -174,8 +191,9 @@ void FileLoader::GetFile( const std::string& rootTag, xml::xistream& xis, std::s
 // Name: FileLoader::Check
 // Created: LDC 2010-11-29
 // -----------------------------------------------------------------------------
-void FileLoader::Check( const std::string& file, T_Loader loader, const std::string& xslTransform ) const
+void FileLoader::Check( const std::string& file, T_Loader loader, const std::string& xslTransform )
 {
-    CheckedLoader( file, config_, loader, xslTransform, invalidSignatureFiles_ );
+    CheckedLoader( file, config_, loader, xslTransform, invalidSignatureFiles_, missingSignatureFiles_ );
+    if( addToCRC_ )
+        (const_cast< tools::ExerciseConfig& >( config_ ) ).AddFileToCRC( file ); // $$$$ LDC FIXME
 }
-

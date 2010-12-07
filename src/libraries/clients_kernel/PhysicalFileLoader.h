@@ -26,7 +26,8 @@ class PhysicalFileLoader : public FileLoader
 public:
     //! @name Constructors/Destructor
     //@{
-             PhysicalFileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles );
+    explicit PhysicalFileLoader( const tools::ExerciseConfig& config );
+             PhysicalFileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles );
     virtual ~PhysicalFileLoader();
     //@}
 
@@ -40,15 +41,6 @@ private:
     //@{
     PhysicalFileLoader( const PhysicalFileLoader& );            //!< Copy constructor
     PhysicalFileLoader& operator=( const PhysicalFileLoader& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 }

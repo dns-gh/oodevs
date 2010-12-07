@@ -69,7 +69,9 @@ void ProfilesModel::Load( const std::string& file )
 void ProfilesModel::Serialize( const std::string& file ) const
 {
     xml::xofstream xos( file );
-    xos << xml::start( "profiles" );
+    xos << xml::start( "profiles" )
+            << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
+            << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/profiles.xsd" );
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->Serialize( xos );
     xos << xml::end;

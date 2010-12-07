@@ -42,16 +42,23 @@ private:
     MIL_EntityManagerStaticMethods& operator=( const MIL_EntityManagerStaticMethods& ); //!< Assignment operator
     //@}
 
+private:
+    //! @name Helpers
+    //@{
+    static void LoadSensors( xml::xistream& xis, const MIL_Time_ABC& time );
+    static void LoadMedical( xml::xistream& xis );
+    //@}
+
 protected:
     //! @name static Type Initializations
     //@{
     template < typename T >
-    static void InitializeType       ( xml::xistream& xis, MIL_Config& config, const std::string& strSection );
-    static void InitializeMedical    ( xml::xistream& xis, MIL_Config& config );
-    static void InitializeMedicalTreatment( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
-    static void InitializeComposantes( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
-    static void InitializeWeapons    ( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
-    static void InitializeSensors    ( xml::xistream& xis, MIL_Config& config, const MIL_Time_ABC& time );
+    static void InitializeType       ( MIL_Config& config, const std::string& strSection );
+    static void InitializeMedical    ( MIL_Config& config );
+    static void InitializeMedicalTreatment( MIL_Config& config, const MIL_Time_ABC& time );
+    static void InitializeComposantes( MIL_Config& config, const MIL_Time_ABC& time );
+    static void InitializeWeapons    ( MIL_Config& config, const MIL_Time_ABC& time );
+    static void InitializeSensors    ( MIL_Config& config, const MIL_Time_ABC& time );
     //@}
 };
 
@@ -60,19 +67,13 @@ protected:
 // Created: RPD 2010-02-07
 // -----------------------------------------------------------------------------
 template < typename T >
-void MIL_EntityManagerStaticMethods::InitializeType( xml::xistream& xis, MIL_Config& config, const std::string& strSection )
+void MIL_EntityManagerStaticMethods::InitializeType( MIL_Config& config, const std::string& strSection )
 {
-    std::string strFile;
-    xis >> xml::start( strSection )
-            >> xml::attribute( "file", strFile )
-        >> xml::end;
-
-    strFile = config.BuildPhysicalChildFile( strFile );
-    MIL_Tools::CheckXmlCrc32Signature( strFile );
-    xml::xifstream xisType( strFile );
-    config.AddFileToCRC( strFile );
-
-    T::Initialize( xisType );//verfifier tous les initialize
+    std::string invalidSignatureFiles;
+    std::string missingSignatureFiles;
+    kernel::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
+    loader.Load( strSection, &T::Initialize );//verifier tous les initialize
+    loader.AddToCRC();
 }
 
 #endif // __MIL_EntityManagerStaticMethods_h_

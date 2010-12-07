@@ -74,7 +74,9 @@ void SuccessFactorsModel::Serialize( const std::string& file ) const
 // -----------------------------------------------------------------------------
 void SuccessFactorsModel::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::start( "factors" );
+    xos << xml::start( "factors" )
+            << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
+            << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/success-factors.xsd" );
     BOOST_FOREACH( const T_Elements::value_type factor, elements_ )
         factor.second->Serialize( xos );
     xos << xml::end;

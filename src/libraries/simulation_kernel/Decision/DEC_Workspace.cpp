@@ -30,6 +30,8 @@
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
+
+#include "clients_kernel/PhysicalFileLoader.h"
 #include "tools/InputBinaryStream.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
@@ -83,22 +85,20 @@ DEC_Workspace::~DEC_Workspace()
 void DEC_Workspace::InitializeConfig( MIL_Config& config )
 {
     // $$$$ NLD 2007-01-11: A DEPLACER
-    MIL_Tools::CheckXmlCrc32Signature( config.GetPhysicalFile() );
-    xml::xifstream xis( config.GetPhysicalFile() );
+    std::string invalidSignatureFiles;
+    std::string missingSignatureFiles;
+    kernel::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
+    loader.Load( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1 ) );
+    loader.AddToCRC();
+    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+}
 
-    std::string strDecFile;
-    xis >> xml::start( "physical" )
-            >> xml::start( "decisional" )
-                >> xml::attribute( "file", strDecFile )
-            >> xml::end
-        >> xml::end;
-
-    strDecFile = config.BuildPhysicalChildFile( strDecFile );
-    MIL_Tools::CheckXmlCrc32Signature( strDecFile );
-
-    xml::xifstream xisDecisional( strDecFile );
-    config.AddFileToCRC( strDecFile );
-
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::LoadDecisional
+// Created: LDC 2010-12-01
+// -----------------------------------------------------------------------------
+void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional )
+{
     unsigned int nTmp;
 
     xisDecisional >> xml::start( "decisional" )
@@ -191,21 +191,20 @@ void DEC_Workspace::RegisterSourcePath( xml::xistream& xis, MIL_Config& config, 
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeMissions( MIL_Config& config )
 {
-    xml::xifstream xis( config.GetPhysicalFile() );
+    std::string invalidSignatureFiles;
+    std::string missingSignatureFiles;
+    kernel::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
+    loader.Load( "missions", boost::bind( &DEC_Workspace::LoadMissions, this, _1 ) );
+    loader.AddToCRC();
+    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+}
 
-    std::string strMissionsFile;
-    xis >> xml::start( "physical" )
-            >> xml::start( "missions" )
-               >> xml::attribute( "file", strMissionsFile )
-            >> xml::end;
-
-    strMissionsFile = config.BuildPhysicalChildFile( strMissionsFile );
-
-    MIL_Tools::CheckXmlCrc32Signature( strMissionsFile );
-    xml::xifstream xisMission( strMissionsFile );
-
-    config.AddFileToCRC( strMissionsFile );
-
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::LoadMissions
+// Created: LDC 2010-12-02
+// -----------------------------------------------------------------------------
+void DEC_Workspace::LoadMissions( xml::xistream& xisMission )
+{
     MIL_PionMissionType      ::Initialize( xisMission );
     MIL_AutomateMissionType  ::Initialize( xisMission );
     MIL_PopulationMissionType::Initialize( xisMission );
@@ -218,22 +217,20 @@ void DEC_Workspace::InitializeMissions( MIL_Config& config )
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::string, std::string >& strSourcePaths )
 {
-    xml::xifstream xis( config.GetPhysicalFile() );
+    std::string invalidSignatureFiles;
+    std::string missingSignatureFiles;
+    kernel::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
+    loader.Load( "models", boost::bind( &DEC_Workspace::LoadModels, this, _1, boost::cref( strSourcePaths ) ) );
+    loader.AddToCRC();
+    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+}
 
-    std::string strModelsFile;
-    xis >> xml::start( "physical" )
-            >> xml::start( "models" )
-                >> xml::attribute( "file", strModelsFile )
-            >> xml::end
-        >> xml::end;
-
-    strModelsFile = config.BuildPhysicalChildFile( strModelsFile );
-
-    MIL_Tools::CheckXmlCrc32Signature( strModelsFile );
-    xml::xifstream xisModels( strModelsFile );
-
-    config.AddFileToCRC( strModelsFile );
-
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::LoadModels
+// Created: LDC 2010-12-02
+// -----------------------------------------------------------------------------
+void DEC_Workspace::LoadModels( xml::xistream& xisModels, const std::map< std::string, std::string >& strSourcePaths )
+{
     xisModels >> xml::start( "models" );
 
     // Pions
@@ -305,17 +302,10 @@ float DEC_Workspace::GetTime() const
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeObjectNames( MIL_Config& config )
 {
-    xml::xifstream xis( config.GetPhysicalFile() );
-    std::string strFile;
-    xis >> xml::start( "physical" )
-            >> xml::start( "object-names" )
-                >> xml::attribute( "file", strFile )
-            >> xml::end
-        >> xml::end;
 
-    strFile = config.BuildPhysicalChildFile( strFile );
-
-    MIL_Tools::CheckXmlCrc32Signature( strFile );
-    xml::xifstream xisObjectNames( strFile );
-    DEC_ObjectFunctions::RegisterObjectNames( xisObjectNames );
+    std::string invalidSignatureFiles;
+    std::string missingSignatureFiles;
+    kernel::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
+    loader.Load( "object-names", &DEC_ObjectFunctions::RegisterObjectNames );
+    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
 }

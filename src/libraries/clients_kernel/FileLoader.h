@@ -43,22 +43,23 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit FileLoader( const tools::ExerciseConfig& config );
-             FileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles );
+             FileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles );
     virtual ~FileLoader();
     //@}
 
     //! @name Operations
     //@{
     FileLoader& Load( const std::string& rootTag, T_Loader loader );
+    void AddToCRC();
     virtual FileLoader& LoadAndUpdate( const std::string& rootTag, T_Loader loader, const std::string& xslTransform ) = 0;
     //@}
 
 protected:
     //! @name Helpers
     //@{
-    void CheckSignatures( const std::string& file, std::string& invalidSignatureFiles ) const;
+    void CheckSignatures( const std::string& file, std::string& invalidSignatureFiles, std::string& missingSignatureFiles ) const;
     void GetFile( const std::string& rootTag, xml::xistream& xis, std::string& file ) const;
-    void Check( const std::string& file, T_Loader loader, const std::string& xslTransform ) const;
+    void Check( const std::string& file, T_Loader loader, const std::string& xslTransform );
     //@}
 
 private:
@@ -73,6 +74,8 @@ protected:
     //@{
     const tools::ExerciseConfig& config_;
     std::string* invalidSignatureFiles_;
+    std::string* missingSignatureFiles_;
+    bool addToCRC_;
     //@}
 };
 

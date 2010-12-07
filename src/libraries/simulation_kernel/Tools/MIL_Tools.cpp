@@ -87,6 +87,18 @@ void MIL_Tools::CheckXmlCrc32Signature( const std::string& filename )
         MT_LOG_WARNING_MSG( "The file " << bfs::path( filename, bfs::native ).leaf() << " is not signed." )
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Tools::LogXmlCrc32Signature
+// Created: LDC 2010-12-01
+// -----------------------------------------------------------------------------
+void MIL_Tools::LogXmlCrc32Signature( const std::string& invalidSignatureFiles, const std::string& missingSignatureFiles )
+{
+    if( !invalidSignatureFiles.empty() )
+        MT_LOG_WARNING_MSG( "The signature for the file " << invalidSignatureFiles << " is invalid." )
+    if( !missingSignatureFiles.empty() )
+        MT_LOG_WARNING_MSG( "The file " << missingSignatureFiles << " is not signed." )
+}
+
 //-----------------------------------------------------------------------------
 // Name: MIL_Tools::ConvertCoordMosToSim
 // Created: NLD 2002-08-06

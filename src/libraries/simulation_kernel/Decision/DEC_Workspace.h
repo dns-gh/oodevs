@@ -56,6 +56,9 @@ private:
     void InitializeMissions    ( MIL_Config& config );
     void InitializeDIA         ( MIL_Config& config );
     void InitializeModels      ( MIL_Config& config, const std::map< std::string, std::string >& strSourcePaths );
+    void LoadDecisional( xml::xistream& xis );
+    void LoadMissions( xml::xistream& xis );
+    void LoadModels( xml::xistream& xis, const std::map< std::string, std::string >& strSourcePaths );
     //@}
 
 private:
@@ -71,7 +74,6 @@ private:
     //@{
     void RegisterSourcePath( xml::xistream& xis, MIL_Config& config, std::map< std::string, std::string >& paths );
     void ReadModel( xml::xistream& xis, const std::map< std::string, std::string >& strSourcePaths, const std::string& strEntityType, const T_MissionTypeNameMap& missionTypes );
-    void ReadModel( xml::xistream& xis, const std::map< std::string, std::string >& strSourcePaths, const std::string& strEntityType );
     //@}
 
 private:

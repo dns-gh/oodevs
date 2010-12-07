@@ -61,6 +61,8 @@ public:
 
     virtual void Parse( int argc, char** argv );
     void LoadExercise( const std::string& file );
+
+    virtual void AddFileToCRC( const std::string& fileName );
     //@}
 
 private:

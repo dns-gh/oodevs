@@ -73,6 +73,7 @@ private:
     void ReadSide     ( xml::xistream& xis );
     void ReadFormation( xml::xistream& xis );
     void ReadAutomat  ( xml::xistream& xis );
+    void ReadMessenger( xml::xistream& xis );
     //@}
 
 private:

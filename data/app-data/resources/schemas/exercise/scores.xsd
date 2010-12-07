@@ -322,9 +322,16 @@
 																</xs:annotation>
 																<xs:simpleType>
 																	<xs:restriction base="xs:string">
+																		<xs:enumeration value=""/>
+																		<xs:enumeration value="unit"/>
 																		<xs:enumeration value="unsigned long"/>
+																		<xs:enumeration value="unsigned int"/>
+																		<xs:enumeration value="unsigned"/>
 																		<xs:enumeration value="int"/>
 																		<xs:enumeration value="float"/>
+																		<xs:enumeration value="position"/>
+																		<xs:enumeration value="zone"/>
+																		<xs:enumeration value="bool"/>
 																	</xs:restriction>
 																</xs:simpleType>
 															</xs:attribute>

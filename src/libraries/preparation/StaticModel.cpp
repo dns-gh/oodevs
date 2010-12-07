@@ -82,11 +82,13 @@ StaticModel::~StaticModel()
 
 namespace
 {
-    const std::string& XmlSignatureHelper( const std::string& path, std::string& invalidSignatureFiles )
+    const std::string& XmlSignatureHelper( const std::string& path, std::string& invalidSignatureFiles, std::string& missingSignatureFiles )
     {
         tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( path );
-        if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
+        if( error == tools::eXmlCrc32SignatureError_Invalid )
             invalidSignatureFiles.append( "\n" + bfs::path( path, bfs::native ).leaf() );
+        if( error == tools::eXmlCrc32SignatureError_NotSigned )
+            missingSignatureFiles.append( "\n" + bfs::path( path, bfs::native ).leaf() );
         return path;
     }
 }
@@ -95,18 +97,18 @@ namespace
 // Name: StaticModel::Load
 // Created: AGE 2006-08-01
 // -----------------------------------------------------------------------------
-void StaticModel::Load( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles )
+void StaticModel::Load( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles )
 {
     Purge();
-    types_.Load( config, invalidSignatureFiles );
-    objectTypes_.Load( config, invalidSignatureFiles );
+    types_.Load( config, invalidSignatureFiles, missingSignatureFiles );
+    objectTypes_.Load( config, invalidSignatureFiles, missingSignatureFiles );
     static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( config );
     detection_.Load( config );
-    drawings_.Load( XmlSignatureHelper( config.BuildPhysicalChildFile( "DrawingTemplates.xml" ), invalidSignatureFiles ) );
-    indicators_.Load( XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ), invalidSignatureFiles ) );
-    gaugeTypes_.Load( XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ), invalidSignatureFiles ) );
-    successFactorActionTypes_.Load( XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactorActions.xml" ), invalidSignatureFiles ) );
-    extensions_.Load( XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "Extensions.xml" ), invalidSignatureFiles ) );
+    drawings_.Load( XmlSignatureHelper( config.BuildPhysicalChildFile( "DrawingTemplates.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
+    indicators_.Load( XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
+    gaugeTypes_.Load( XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
+    successFactorActionTypes_.Load( XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactorActions.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
+    extensions_.Load( XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "Extensions.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
     controllers_.controller_.Update( ModelLoaded( config ) );
 }
 

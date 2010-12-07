@@ -91,7 +91,9 @@ void ScoresModel::Serialize( const std::string& file ) const
 // -----------------------------------------------------------------------------
 void ScoresModel::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::start( "scores" );
+    xos << xml::start( "scores" )
+            << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
+            << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/scores.xsd" );
     BOOST_FOREACH( const T_Elements::value_type factor, elements_ )
         factor.second->Serialize( xos );
     xos << xml::end;

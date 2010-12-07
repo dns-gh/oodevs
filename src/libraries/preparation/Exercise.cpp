@@ -115,6 +115,8 @@ void Exercise::Serialize( const std::string& file ) const
 {
     xml::xofstream xos( file, xml::encoding( "UTF-8" ) );
     xos << xml::start( "exercise" )
+        << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
+        << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/exercise.xsd" )
         << xml::attribute( "model-version", generatorVersion_.ascii() )
             << xml::start( "meta" );
     if( ! name_.isEmpty() )

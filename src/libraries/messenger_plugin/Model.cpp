@@ -142,13 +142,11 @@ void Model::Load()
         else if( error == tools::eXmlCrc32SignatureError_NotSigned )
             MT_LOG_WARNING_MSG( "The file " << bfs::path( filename, bfs::native ).leaf() << " is not signed." )
         xml::xifstream xis( filename );
-        xis >> xml::start( "messenger" )
-                >> xml::optional >> xml::start( "client-objects" )
-                    >> xml::list( "client-object", clientObjects_, &ClientObjectsModel::ReadClientObject )
-                >> xml::end
-                >> xml::list( "automat"  , *this, &Model::ReadAutomat )
-                >> xml::list( "formation", *this, &Model::ReadFormation )
-            >> xml::end;
+        const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
+        if( schema.empty() )
+            ReadMessenger( xis );
+        else
+            ReadMessenger( xml::xifstream( filename, xml::external_grammar( config_.BuildResourceChildFile( schema ) ) ) );
     }
     else
     {
@@ -159,6 +157,21 @@ void Model::Load()
                 >> xml::end
             >> xml::end;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::ReadMessenger
+// Created: LDC 2010-12-02
+// -----------------------------------------------------------------------------
+void Model::ReadMessenger( xml::xistream& xis )
+{
+    xis >> xml::start( "messenger" )
+            >> xml::optional >> xml::start( "client-objects" )
+                >> xml::list( "client-object", clientObjects_, &ClientObjectsModel::ReadClientObject )
+            >> xml::end
+            >> xml::list( "automat"  , *this, &Model::ReadAutomat )
+            >> xml::list( "formation", *this, &Model::ReadFormation )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

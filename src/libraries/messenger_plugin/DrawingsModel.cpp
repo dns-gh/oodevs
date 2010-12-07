@@ -80,9 +80,11 @@ void DrawingsModel::Load( const dispatcher::Config& config )
         {
             {
                 xml::xifstream xis( filename );
-                xis >> xml::start( "shapes" )
-                        >> xml::list( "shape", *this, &DrawingsModel::ReadShape )
-                    >> xml::end();
+                const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
+                if( schema.empty() )
+                    ReadShapes( xis );
+                else
+                    ReadShapes( xml::xifstream( filename, xml::external_grammar( config.BuildResourceChildFile( schema ) ) ) );
             }
             tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename );
             if( error == tools::eXmlCrc32SignatureError_Invalid )
@@ -95,6 +97,17 @@ void DrawingsModel::Load( const dispatcher::Config& config )
     {
         // $$$$ SBO 2008-06-10: log error
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingsModel::ReadShapes
+// Created: LDC 2010-12-02
+// -----------------------------------------------------------------------------
+void DrawingsModel::ReadShapes( xml::xistream& xis )
+{
+    xis >> xml::start( "shapes" )
+            >> xml::list( "shape", *this, &DrawingsModel::ReadShape )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------

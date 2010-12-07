@@ -88,6 +88,8 @@ void WeatherModel::Serialize( const std::string& filename ) const
 {
     xml::xofstream xos( filename );
     xos << xml::start( "weather" )
+            << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
+            << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/weather.xsd" )
             << xml::start( "exercise-date" )
                 << xml::attribute( "value", time_.toString( "yyyyMMddThhmmss" ).ascii() )
             << xml::end

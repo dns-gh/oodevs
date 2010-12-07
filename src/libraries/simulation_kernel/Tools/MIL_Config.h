@@ -97,7 +97,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    void AddFileToCRC( const std::string& fileName );
+    virtual void AddFileToCRC( const std::string& fileName );
     boost::crc_32_type::value_type serialize( const std::string& strFileName ) const;
     //@}
 
@@ -111,6 +111,7 @@ private:
     //! @name Helpers
     //@{
     void ReadSessionFile            ( const std::string& file );
+    void ReadSessionXml             ( xml::xistream& xis );
     void ReadCheckPointConfiguration( xml::xistream& xis );
     void ReadDebugConfiguration     ( xml::xistream& xis );
     void ConfigureRandom            ( xml::xistream& xis );

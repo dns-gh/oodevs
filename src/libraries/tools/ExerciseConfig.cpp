@@ -307,3 +307,12 @@ std::string ExerciseConfig::GetPopulationFile() const
         return population_;
     return BuildPopulationChildFile( ( bfs::path( population_, bfs::native ) / "model" / "population.xml" ).native_file_string() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::AddFileToCRC
+// Created: LDC 2010-11-30
+// -----------------------------------------------------------------------------
+void ExerciseConfig::AddFileToCRC( const std::string& fileName )
+{
+    // NOTHING
+}

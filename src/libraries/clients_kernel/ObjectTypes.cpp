@@ -54,18 +54,19 @@ ObjectTypes::ObjectTypes( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void ObjectTypes::Load( const tools::ExerciseConfig& config )
 {
-    std::string unusedString;
-    Load( config, unusedString );
+    std::string invalidSignatureFiles;
+    std::string missingSignatureFiles;
+    Load( config, invalidSignatureFiles, missingSignatureFiles );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectTypes::Load
-// Created: AGE 2006-04-28
+// Created: LDC 2010-12-01
 // -----------------------------------------------------------------------------
-void ObjectTypes::Load( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles )
+void ObjectTypes::Load( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles )
 {
     Purge();
-    PhysicalFileLoader( config, invalidSignatureFiles )
+    PhysicalFileLoader( config, invalidSignatureFiles, missingSignatureFiles )
         .Load( "objects", boost::bind( &ObjectTypes::ReadObjectTypes, this, _1 ) )
         .Load( "resources", boost::bind( &ObjectTypes::ReadDotations, this, _1 ) )
         .Load( "volumes", boost::bind( &ObjectTypes::ReadVolumes, this, _1 ) )
