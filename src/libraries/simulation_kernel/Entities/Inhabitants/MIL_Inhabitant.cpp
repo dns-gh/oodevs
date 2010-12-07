@@ -80,6 +80,7 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
         >> xml::list( "urban-block", *this, &MIL_Inhabitant::ReadUrbanBlock )
         >> xml::end;
 
+    xis >> xml::content( "information", text_ );
     xis >> xml::optional >> xml::start( "extensions" )
         >> xml::list( "entry", *this, &MIL_Inhabitant::ReadExtension )
         >> xml::end;
@@ -95,6 +96,9 @@ MIL_Inhabitant::MIL_Inhabitant(const MIL_InhabitantType& type )
     , pType_                  ( &type )
     , nID_                    ( 0 )
     , pArmy_                  ( 0 )
+    , healthy_                ( 0 )
+    , wounded_                ( 0 )
+    , dead_                   ( 0 )
 {
 }
 
@@ -107,6 +111,9 @@ MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type, MIL_Army_ABC& ar
     , pType_                  ( &type )
     , nID_                    ( idManager_.GetFreeId() )
     , pArmy_                  ( &army )
+    , healthy_                ( 0 )
+    , wounded_                ( 0 )
+    , dead_                   ( 0 )
 {
 }
 
@@ -162,6 +169,7 @@ void MIL_Inhabitant::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "wounded", wounded_ )
             << xml::attribute( "dead", dead_ )
         << xml::end
+        << xml::content( "information", text_ )
         << xml::start( "living-area" );
         for( CIT_livingUrbanBlockVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         {
@@ -206,7 +214,7 @@ void MIL_Inhabitant::SendCreation() const
     asnMsg().mutable_id()->set_id( nID_ );
     asnMsg().mutable_type()->set_id( pType_->GetID() );
     asnMsg().mutable_party()->set_id( pArmy_->GetID() );
-    asnMsg().set_text( "" );
+    asnMsg().set_text( text_ );
     asnMsg().set_name( GetName() );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
     {

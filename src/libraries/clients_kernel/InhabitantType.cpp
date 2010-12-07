@@ -18,12 +18,20 @@ using namespace kernel;
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
 InhabitantType::InhabitantType( xml::xistream& xis, const tools::Resolver_ABC< PopulationType, std::string >& modelResolver )
+    : male_    ( 0 )
+    , female_  ( 0 )
+    , children_( 0 )
 {
     std::string model;
     xis >> xml::attribute( "name", name_ )
         >> xml::attribute( "id", id_ )
         >> xml::attribute( "associated-crowd", model );
     type_ = &modelResolver.Get( model );
+    xis >> xml::start( "repartition" )
+        >> xml::attribute( "male", male_ )
+        >> xml::attribute( "female", female_ )
+        >> xml::attribute( "children", children_ )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -60,4 +68,31 @@ unsigned long InhabitantType::GetId() const
 const PopulationType& InhabitantType::GetCrowdType() const
 {
     return *type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantType::GetMalePercentage
+// Created: SLG 2010-12-07
+// -----------------------------------------------------------------------------
+const float InhabitantType::GetMalePercentage() const
+{
+    return male_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantType::GetFemalePercentage
+// Created: SLG 2010-12-07
+// -----------------------------------------------------------------------------
+const float InhabitantType::GetFemalePercentage() const
+{
+    return female_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantType::GetChildrenPercentage
+// Created: SLG 2010-12-07
+// -----------------------------------------------------------------------------
+const float InhabitantType::GetChildrenPercentage() const
+{   
+    return children_;
 }

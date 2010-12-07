@@ -84,9 +84,8 @@ private:
     //! @name Helpers
     //@{
     void DoUpdate( const MsgsSimToClient::MsgPopulationUpdate&                   message );
-
+    void CreateDictionary( kernel::Controller& controller );
     void ComputeCenter();
-
     virtual void NotifyUpdated( const Simulation::sEndTick& tick );
     //@}
 
@@ -96,6 +95,10 @@ private:
     typedef std::vector< const gui::TerrainObjectProxy* >   T_UrbanObjectVector;
     typedef T_UrbanObjectVector::iterator              IT_UrbanObjectVector;
     typedef T_UrbanObjectVector::const_iterator       CIT_UrbanObjectVector;
+
+    typedef std::map< std::string, std::string >  T_Extensions;
+    typedef T_Extensions::iterator               IT_Extensions;
+    typedef T_Extensions::const_iterator        CIT_Extensions;
     //@}
 
 private:
@@ -110,6 +113,7 @@ private:
     static unsigned long nMaxId_;
     std::set< kernel::Displayer_ABC* > displayers_;
     T_UrbanObjectVector livingUrbanObject_;
+    T_Extensions extensions_;
 
     unsigned long nNbrHealthyHumans_;
     unsigned long nNbrDeadHumans_;

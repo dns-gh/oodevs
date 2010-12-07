@@ -103,6 +103,7 @@ private:
     unsigned long                 healthy_;
     unsigned long                 wounded_;
     unsigned long                 dead_;
+    std::string                   text_;
     T_livingUrbanBlockVector      livingUrbanObject_;
 
 

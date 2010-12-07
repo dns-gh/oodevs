@@ -40,6 +40,15 @@ class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
                  , public kernel::Extension_ABC
                  , public kernel::Serializable_ABC
 {
+
+public:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, QString >     T_Extensions;
+    typedef T_Extensions::iterator              IT_Extensions;
+    typedef T_Extensions::const_iterator       CIT_Extensions;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -64,6 +73,7 @@ private:
     //@{
     void CreateDictionary( kernel::Controller& controller );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    void ReadExtension( xml::xistream& xis );
     //@}
 
 private:
@@ -73,6 +83,8 @@ private:
     unsigned long                 healthy_;
     unsigned long                 wounded_;
     unsigned long                 dead_;
+    QString                       text_;
+    T_Extensions extensions_;
     //@}
 };
 

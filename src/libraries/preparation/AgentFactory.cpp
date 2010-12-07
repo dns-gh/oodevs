@@ -263,12 +263,6 @@ kernel::Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, kernel::T
     Inhabitant* result = new Inhabitant( xis, controllers_.controller_, idManager_, static_.types_ );
     result->Attach< Positions >( *new InhabitantPositions( xis, static_.coordinateConverter_, model_.urban_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );
-    if( xis.has_child( "extensions" ) )
-    {
-        xis.start( "extensions" );
-        result->Attach( *new DictionaryExtensions( xis ) );
-        xis.end();
-    }
     if( Inhabitants* popus = parent.Retrieve< Inhabitants >() )
         popus->AddInhabitant( *result );
     result->Polish();

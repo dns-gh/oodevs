@@ -73,6 +73,7 @@ private:
     Model_ABC& model_;
     const unsigned long nType_;
     const std::string strName_;
+    const std::string text_;
     dispatcher::Team_ABC& side_;
     std::vector< int > urbanObjectId_;
     std::map< std::string, std::string > extensions_;

@@ -37,6 +37,10 @@ public:
     //@{
     std::string GetName() const;
     unsigned long GetId() const;
+    const float GetMalePercentage() const;
+    const float GetFemalePercentage() const;
+    const float GetChildrenPercentage() const;
+
 
     const PopulationType& GetCrowdType() const;
     //@}
@@ -54,6 +58,9 @@ private:
     std::string name_;
     unsigned long id_;
     const PopulationType* type_;
+    float male_;
+    float female_;
+    float children_;
     //@}
 };
 
