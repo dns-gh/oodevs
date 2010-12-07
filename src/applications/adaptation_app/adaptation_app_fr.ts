@@ -2956,7 +2956,11 @@ du tireur</translation>
     </message>
     <message>
         <source>Fire propagation modifier</source>
-        <translation type="unfinished">Modification propagation feu</translation>
+        <translation>Modification propagation feu</translation>
+    </message>
+    <message>
+        <source>Burn</source>
+        <translation></translation>
     </message>
 </context>
 <context>

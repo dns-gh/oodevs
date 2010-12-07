@@ -362,6 +362,11 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[eFirePropagationModifier_Modifiers] = &pFirePropagationModifierTable->GetConnector();
     }
 
+    ADN_GroupBox* burn = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Burn" ), hBox );
+    {
+        vInfosConnectors[ eBurnCapacityPresent ] = & burn->GetConnector();
+    }
+
     // Connect the list to the interface.
     pList->SetItemConnectors( vInfosConnectors );
 

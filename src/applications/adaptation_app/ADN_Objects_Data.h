@@ -159,7 +159,8 @@ public:
         eScatteringCapacity,
         eDelayCapacity,
         eSealOffCapacity,
-        eFirePropagationModifierCapacity
+        eFirePropagationModifierCapacity,
+        eBurnCapacity
     };
 
     template< E_Capacities T, typename DefaultFieldsHolderType = NullType >
@@ -191,6 +192,7 @@ public:
     typedef ADN_CapacityInfos_Default< eLogisticCapacity >          ADN_CapacityInfos_Logistic;
     typedef ADN_CapacityInfos_Default< eSupplyCapacity >            ADN_CapacityInfos_Supply;
     typedef ADN_CapacityInfos_Default< eTimeLimitedCapacity >       ADN_CapacityInfos_TimeLimited;
+    typedef ADN_CapacityInfos_Default< eBurnCapacity >              ADN_CapacityInfos_Burn;
 
     class ADN_CapacityInfos_Attrition
         : public ADN_CapacityInfos_Default< eAttritionCapacity >

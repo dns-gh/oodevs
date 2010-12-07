@@ -83,55 +83,6 @@ void ADN_Objects_Data::ScoreLocationInfos::WriteArchive( xml::xostream& output )
            << xml::end;
 }
 
-// =============================================================================
-// PopulationAttritionInfos
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::PopulationAttritionInfos::PopulationAttritionInfos
-// Created: SBO 2006-04-25
-// -----------------------------------------------------------------------------
-/*ADN_Objects_Data::PopulationAttritionInfos::PopulationAttritionInfos()
-    : rSurface_( 0. )
-    , rPh_ ( 0. )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::PopulationAttritionInfos::~PopulationAttritionInfos
-// Created: SBO 2006-04-25
-// -----------------------------------------------------------------------------
-ADN_Objects_Data::PopulationAttritionInfos::~PopulationAttritionInfos()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::PopulationAttritionInfos::ReadArchive
-// Created: SBO 2006-04-25
-// -----------------------------------------------------------------------------
-void ADN_Objects_Data::PopulationAttritionInfos::ReadArchive( xml::xistream& input )
-{
-    input >> xml::optional >> xml::start( "population-attrition" )
-                >> xml::attribute( "surface", rSurface_ )
-                >> xml::attribute( "ph", rPh_ )
-            >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::PopulationAttritionInfos::WriteArchive
-// Created: SBO 2006-04-25
-// -----------------------------------------------------------------------------
-void ADN_Objects_Data::PopulationAttritionInfos::WriteArchive( xml::xostream& output )
-{
-    output << xml::start( "population-attrition" )
-                << xml::attribute( "surface", rSurface_ )
-                << xml::attribute( "ph", rPh_ )
-            << xml::end;
-}
-*/
-
 namespace
 {
     std::vector< std::string > VectorBuilder( const char* choice[], uint size )
@@ -142,7 +93,6 @@ namespace
         return stack;
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Buildable
@@ -1211,6 +1161,7 @@ INIT_DATA( ADN_CapacityInfos_Perception      , "Perception"      ,  "perception"
 INIT_DATA( ADN_CapacityInfos_Scattering      , "Scattering"      ,  "scattering" );
 INIT_DATA( ADN_CapacityInfos_SealOff         , "SealOff"         ,  "sealoff" );
 INIT_DATA( ADN_CapacityInfos_FirePropagationModifier, "FirePropagationModifier", "fire-propagation-modifier" );
+INIT_DATA( ADN_CapacityInfos_Burn            , "Burn"            ,  "burn" );
 
 #pragma warning( pop )
 
@@ -1289,6 +1240,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_Scattering::TAG ].reset( new ADN_CapacityInfos_Scattering() );
     capacities_[ ADN_CapacityInfos_SealOff::TAG ].reset( new ADN_CapacityInfos_SealOff() );
     capacities_[ ADN_CapacityInfos_FirePropagationModifier::TAG ].reset( new ADN_CapacityInfos_FirePropagationModifier() );
+    capacities_[ ADN_CapacityInfos_Burn::TAG ].reset( new ADN_CapacityInfos_Burn() );
 }
 
 // -----------------------------------------------------------------------------

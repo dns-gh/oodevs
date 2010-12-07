@@ -103,6 +103,7 @@ public:
         eSealOffCapacityPresent,
         eFirePropagationModifierPresent,
         eFirePropagationModifier_Modifiers,
+        eBurnCapacityPresent,
         eNbrGuiElements
     };
 
