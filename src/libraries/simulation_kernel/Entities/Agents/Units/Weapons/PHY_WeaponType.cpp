@@ -342,13 +342,7 @@ double PHY_WeaponType::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PH
 // -----------------------------------------------------------------------------
 double PHY_WeaponType::GetMaxRangeToFire( const MIL_Agent_ABC& pion, double rWantedPH ) const
 {
-    assert( pDotationCategory_ );
-
-    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
-    MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( pion );
-    localFirer.Execute( *dotationComputer );
-
-    if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )
+    if( !pDirectFireData_ )
         return 0.;
     return pDirectFireData_->GetMaxRangeToFire( rWantedPH );
 }

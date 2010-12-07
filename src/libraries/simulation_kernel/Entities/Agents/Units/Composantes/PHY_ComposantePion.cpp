@@ -514,7 +514,7 @@ double PHY_ComposantePion::GetMinRangeToIndirectFire( const PHY_DotationCategory
 double PHY_ComposantePion::GetMaxRangeToFire(const MIL_Agent_ABC& pion, double rWantedPH ) const
 {
     assert( pType_ );
-    return CanFire() ? pType_->GetMaxRangeToFire( pion, rWantedPH ) : std::numeric_limits< double >::max();
+    return pType_->GetMaxRangeToFire( pion, rWantedPH );
 }
 
 // -----------------------------------------------------------------------------
