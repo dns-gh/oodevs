@@ -44,25 +44,25 @@ geometry::Point2f InhabitantPositions::GetPosition( bool aggregated ) const
 // Name: InhabitantPositions::IsAt
 // Created: SLG 2010-11-30
 // -----------------------------------------------------------------------------
-bool InhabitantPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float adaptiveFactor ) const
+bool InhabitantPositions::IsAt( const geometry::Point2f& /*pos*/, float /*precision*/ /*= 100.f*/, float /*adaptiveFactor*/ ) const
 {
-    return false; //TODO
+   throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantPositions::IsIn
 // Created: SLG 2010-11-30
 // -----------------------------------------------------------------------------
-bool InhabitantPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
+bool InhabitantPositions::IsIn( const geometry::Rectangle2f& /*rectangle*/ ) const
 {
-    return false; //TODO
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantPositions::GetHeight
 // Created: SLG 2010-11-30
 // -----------------------------------------------------------------------------
-float InhabitantPositions::GetHeight( bool aggregated ) const
+float InhabitantPositions::GetHeight( bool /*aggregated*/ ) const
 {
     return 0;
 }
@@ -73,16 +73,16 @@ float InhabitantPositions::GetHeight( bool aggregated ) const
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f InhabitantPositions::GetBoundingBox() const
 {
-    return geometry::Rectangle2f(); //TODO
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantPositions::Accept
 // Created: SLG 2010-11-30
 // -----------------------------------------------------------------------------
-void InhabitantPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+void InhabitantPositions::Accept( kernel::LocationVisitor_ABC& /*visitor*/ ) const
 {
-    //TODO
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------
