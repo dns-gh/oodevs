@@ -204,12 +204,12 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Stations Horizon"/>
     <unit max-occurs="1" min-occurs="1" type="Cougar Horizon"/>
   </automat>
-  <automat decisional-model="Escadron char moyen" id="490" name="Escadron Blinde AMX 10 RC" type="Automate ABC">
+  <automat decisional-model="Escadron AMX-ERC" id="490" name="Escadron Blinde AMX 10 RC" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC ABC"/>
     <unit max-occurs="3" min-occurs="3" type="Peloton AMX 10 RC CDP OFF"/>
     <unit max-occurs="1" min-occurs="1" type="Peloton AMX 10 RC CDP SOFF"/>
   </automat>
-  <automat decisional-model="Escadron char moyen" id="491" name="Escadron Blinde ERC 90" type="Automate ABC">
+  <automat decisional-model="Escadron AMX-ERC" id="491" name="Escadron Blinde ERC 90" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC ABC"/>
     <unit max-occurs="3" min-occurs="3" type="Peloton ERC 90 CDP OFF"/>
     <unit max-occurs="1" min-occurs="1" type="Peloton ERC 90 CDP SOFF"/>
@@ -224,13 +224,13 @@
     <unit max-occurs="1" min-occurs="1" type="Peloton Transport Blindes CL100"/>
     <unit max-occurs="1" min-occurs="1" type="Peloton Transport Blindes CL50"/>
   </automat>
-  <automat decisional-model="Escadron char lourd" id="494" name="Escadron de Chars AMX30B2 BRENNUS" type="Automate ABC">
+  <automat decisional-model="Escadron XL" id="494" name="Escadron de Chars AMX30B2 BRENNUS" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton CDT ESC AMX30B2 BRENNUS"/>
     <unit max-occurs="1" min-occurs="1" type="Peloton d appui direct"/>
     <unit max-occurs="2" min-occurs="2" type="Peloton AMX30B2 BRENNUS CDP OFF"/>
     <unit max-occurs="1" min-occurs="1" type="Peloton AMX30B2 BRENNUS CDP SOFF"/>
   </automat>
-  <automat decisional-model="Escadron char lourd" id="495" name="Escadron de Chars LECLERC" type="Automate ABC">
+  <automat decisional-model="Escadron XL" id="495" name="Escadron de Chars LECLERC" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton LECLERC CDT ESC"/>
     <unit max-occurs="2" min-occurs="2" type="Peloton LECLERC CDP OFF"/>
     <unit max-occurs="1" min-occurs="1" type="Peloton LECLERC CDP SOFF"/>
@@ -640,31 +640,31 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC TRANS"/>
     <unit type="Node Transit Integration"/>
   </automat>
-  <automat decisional-model="Escadron char moyen" id="602" name="Ssgpt Blinde Eclairage" type="Automate ABC">
+  <automat decisional-model="Escadron AMX-ERC" id="602" name="Ssgpt Blinde Eclairage" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC ABC Eclairage"/>
     <unit max-occurs="3" min-occurs="3" type="Patrouille Eclairage Regimentaire CP SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="Patrouille SRR ACMP"/>
     <unit max-occurs="3" min-occurs="3" type="Peloton AMX 10 RC CDP OFF"/>
   </automat>
-  <automat decisional-model="Escadron char moyen" id="603" name="Ssgpt Blinde Infanterie" type="Automate ABC">
+  <automat decisional-model="Escadron AMX-ERC" id="603" name="Ssgpt Blinde Infanterie" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC ABC"/>
     <unit max-occurs="3" min-occurs="3" type="Peloton AMX 10 RC CDP OFF"/>
     <unit max-occurs="1" min-occurs="1" type="Section CBT INF VAB CDS OFF"/>
   </automat>
-  <automat decisional-model="Escadron char lourd" id="604" name="Ssgpt Char Eclairage" type="Automate ABC">
+  <automat decisional-model="Escadron XL" id="604" name="Ssgpt Char Eclairage" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton LECLERC CDT ESC"/>
     <unit max-occurs="3" min-occurs="3" type="Patrouille Eclairage Regimentaire CP SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="Patrouille SRR ACMP"/>
     <unit max-occurs="2" min-occurs="2" type="Peloton LECLERC CDP OFF"/>
     <unit max-occurs="1" min-occurs="1" type="Peloton d appui direct"/>
   </automat>
-  <automat decisional-model="Escadron char lourd" id="605" name="Ssgpt Char Infanterie" type="Automate ABC">
+  <automat decisional-model="Escadron XL" id="605" name="Ssgpt Char Infanterie" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton LECLERC CDT ESC"/>
     <unit max-occurs="2" min-occurs="2" type="Peloton LECLERC CDP OFF"/>
     <unit max-occurs="1" min-occurs="1" type="Section CBT INF VAB CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="Peloton d appui direct"/>
   </automat>
-  <automat decisional-model="Escadron char moyen" id="606" name="Ssgpt Eclairage Blinde" type="Automate ABC">
+  <automat decisional-model="Escadron AMX-ERC" id="606" name="Ssgpt Eclairage Blinde" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC ABC Eclairage"/>
     <unit max-occurs="3" min-occurs="3" type="Patrouille Eclairage Regimentaire CP SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="Peloton AMX 10 RC CDP OFF Eclairage"/>
@@ -1068,4 +1068,4 @@
     <unit max-occurs="3" type="PIA Dominante Reco"/>
   </automat>
 </automats>
-<!-- signature="3257217754" -->
+<!-- signature="1291886654" -->
