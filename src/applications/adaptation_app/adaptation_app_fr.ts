@@ -4290,7 +4290,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Commander, Combined Arms</source>
-        <translation>Commandant, Interarmes</translation>
+        <translation type="unfinished">Commandant, SGTIA</translation>
     </message>
     <message>
         <source>Commander, Infantry</source>
