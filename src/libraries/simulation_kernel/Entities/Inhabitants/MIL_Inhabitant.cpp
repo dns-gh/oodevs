@@ -240,7 +240,7 @@ void MIL_Inhabitant::SendFullState() const
     asnMsg().mutable_id()->set_id( nID_ );
     asnMsg().set_healthy( healthy_ );
     asnMsg().set_dead( dead_ );
-    asnMsg().set_wounded( dead_ );
+    asnMsg().set_wounded( wounded_ );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 

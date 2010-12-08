@@ -105,8 +105,8 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     client::PopulationUpdate asn;
     asn().mutable_id()->set_id( GetId() );
     asn().set_healthy( nNbrHealthyHumans_ );
-    asn().set_wounded( nNbrDeadHumans_ );
-    asn().set_dead( nNbrWoundedHumans_ );
+    asn().set_wounded( nNbrWoundedHumans_ );
+    asn().set_dead( nNbrDeadHumans_ );
     asn.Send( publisher );
 }
 
