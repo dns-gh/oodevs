@@ -312,7 +312,7 @@ std::string ExerciseConfig::GetPopulationFile() const
 // Name: ExerciseConfig::AddFileToCRC
 // Created: LDC 2010-11-30
 // -----------------------------------------------------------------------------
-void ExerciseConfig::AddFileToCRC( const std::string& fileName )
+void ExerciseConfig::AddFileToCRC( const std::string& /*fileName*/ )
 {
     // NOTHING
 }

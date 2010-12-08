@@ -144,9 +144,8 @@ void Model::Load()
         xml::xifstream xis( filename );
         const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
         if( schema.empty() )
-            ReadMessenger( xis );
-        else
-            ReadMessenger( xml::xifstream( filename, xml::external_grammar( config_.BuildResourceChildFile( schema ) ) ) );
+            xml::xifstream xis( filename, xml::external_grammar( config_.BuildResourceChildFile( schema ) ) );
+        ReadMessenger( xis );
     }
     else
     {

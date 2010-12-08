@@ -6,14 +6,11 @@
 // Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-
 #include "clients_gui_pch.h"
 #include "InhabitantLayer.h"
+#include "ColorStrategy_ABC.h"
 #include "View_ABC.h"
-#include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "preparation/InhabitantPositions.h"
-#include <boost/noncopyable.hpp>
 
 using namespace gui;
 
@@ -21,10 +18,11 @@ using namespace gui;
 // Name: EntityLayerBase::InhabitantLayer
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-InhabitantLayer::InhabitantLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
-    : tools_( tools )
-    , strategy_( strategy )
-    , view_( view )
+InhabitantLayer::InhabitantLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, 
+                                  ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& /*profile*/ )
+    : tools_        ( tools )
+    , strategy_     ( strategy )
+    , view_         ( view )
     , selectedInhab_( 0 )
 {
     controllers.Register( *this );
@@ -43,7 +41,7 @@ InhabitantLayer::~InhabitantLayer()
 // Name: InhabitantLayer::Paint
 // Created: SLG 2006-03-23
 // -----------------------------------------------------------------------------
-void InhabitantLayer::Paint( kernel::Viewport_ABC& viewport )
+void InhabitantLayer::Paint( kernel::Viewport_ABC& /*viewport*/ )
 {
     if( selectedInhab_ )
     {
@@ -66,9 +64,9 @@ void InhabitantLayer::Reset2d()
 // Name: EntityLayer::NotifySelected
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-void InhabitantLayer::NotifySelected( const kernel::Inhabitant_ABC* inhab )
+void InhabitantLayer::NotifySelected( const kernel::Inhabitant_ABC* /*inhab*/ )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +109,7 @@ void InhabitantLayer::NotifyActivated( const kernel::Inhabitant_ABC& element )
 // Name: InhabitantLayer::NotifyDeleted
 // Created: SLG 2010-12-02
 // -----------------------------------------------------------------------------
-void InhabitantLayer::NotifyDeleted( const kernel::Inhabitant_ABC& element )
+void InhabitantLayer::NotifyDeleted( const kernel::Inhabitant_ABC& /*element*/ )
 {
     selectedInhab_ = 0;
 }

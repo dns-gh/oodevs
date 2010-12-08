@@ -11,23 +11,24 @@
 #define __InhabitantLayer_h_
 
 #include "Layer_ABC.h"
-#include "EntityLayer.h"
 #include "tools/Observer_ABC.h"
-#include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
+#include "clients_kernel/Controllers.h"
 
 namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
     class Viewport_ABC;
+    class Profile_ABC;
 }
 
 namespace gui
 {
     class View_ABC;
+    class ColorStrategy_ABC;
 
 // =============================================================================
 /** @class  InhabitantLayer
@@ -43,7 +44,8 @@ class InhabitantLayer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
+             InhabitantLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools,
+                              ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~InhabitantLayer();
     //@}
 
@@ -77,7 +79,7 @@ private:
     const kernel::GlTools_ABC& tools_;
     ColorStrategy_ABC& strategy_;
     View_ABC& view_;
-    const kernel::Inhabitant_ABC*   selectedInhab_;
+    const kernel::Inhabitant_ABC* selectedInhab_;
     //@}
 };
 
