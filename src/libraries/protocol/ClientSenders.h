@@ -81,7 +81,6 @@ GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, LogSupplyHandlingDestruct
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, LogSupplyState                                , log_supply_state                                  )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, LogSupplyQuotas                               , log_supply_quotas                                 )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, PopulationCreation                            , population_creation                               )
-//GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, PopulationDestruction                         , population_destruction                            )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, PopulationUpdate                              , population_update                            )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, CrowdCreation                                 , crowd_creation                               )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, CrowdDestruction                              , crowd_destruction                            )
