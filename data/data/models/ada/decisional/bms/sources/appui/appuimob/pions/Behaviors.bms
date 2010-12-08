@@ -76,7 +76,7 @@ include "Appui/AppuiMob/Pions/Missions/Missions.bms"
         { "BEH_Ambiance", { "done_BEH_Ambiance" } },
         { "BEH_Nbc", { "done_BEH_Nbc" } },
         { "BEH_ROE", { "done_BEH_ROE" } },
-        { "BEH_Rens_PasserEnSilenceRadio", { "done_BEH_Rens_PasserEnSilenceRadio" } },
+        { "BEH_Rens_PasserEnSilenceRadioPartiel", { "done_BEH_Rens_PasserEnSilenceRadioPartiel" } },
     },
 
     create = function( self )
@@ -85,7 +85,6 @@ include "Appui/AppuiMob/Pions/Missions/Missions.bms"
     end,
 
     activate = function( self )
-        local Activate = Activate
         if( DEC_GetMission( myself ) == nil ) then
             do
                 F_Pion_SeteEtatPhaseMission( myself, eEtatPhaseMission_None )
@@ -108,7 +107,7 @@ include "Appui/AppuiMob/Pions/Missions/Missions.bms"
 ]]
         Activate( self.activations.BEH_Nbc, 1, {} )
         Activate( self.activations.BEH_ROE, 1, {} )
-        Activate( self.activations.BEH_Rens_PasserEnSilenceRadio, 1, {} )
+        Activate( self.activations.BEH_Rens_PasserEnSilenceRadioPartiel, 1, {} )
     end,
 
 }
@@ -121,7 +120,6 @@ node "BEH_Mot_AffecterVariablesDEtat"
     end,
 
     activate = function( self )
-        local Activate = Activate
         --[[//////////////// BMS OPTIM  ///////////////////
 ]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
             do return end
@@ -204,7 +202,6 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
-        local Activate = Activate
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -222,7 +219,6 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
-        local Activate = Activate
                 self:SendFeedback( eActionEffectuee )
         do return end
 
@@ -237,5 +233,5 @@ connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Mot_Pion_Embarquer", 
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Ambiance", nodes.BEH_Ambiance }
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Nbc", nodes.BEH_Nbc }
 connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_ROE", nodes.BEH_ROE }
-connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Rens_PasserEnSilenceRadio", nodes.BEH_Rens_PasserEnSilenceRadio }
+connections[ #connections + 1 ] = { nodes.BEH_Defaut, "BEH_Rens_PasserEnSilenceRadioPartiel", nodes.BEH_Rens_PasserEnSilenceRadioPartiel }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Virtuel_ProgressionVers, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
