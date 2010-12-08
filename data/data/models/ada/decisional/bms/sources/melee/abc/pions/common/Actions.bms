@@ -66,7 +66,6 @@ include "bit.lua"
             self.actionTir = DEC_StopAction( self.actionTir )
         end
 
-        DEC_Trace( "Fin ouverture du feu" )
     end,
 
 }
