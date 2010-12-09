@@ -61,7 +61,9 @@ Inhabitant::Inhabitant( xml::xistream& xis, kernel::Controller& controller, IdMa
     }
 
     std::string text;
-    xis >> xml::content( "information", text );
+    xis >> xml::start( "information" ) >> xml::optional >> text
+        >> xml::end;
+    
     text_ = text.c_str();
     RegisterSelf( *this );
     idManager.Lock( id_ );
@@ -127,8 +129,7 @@ void Inhabitant::SerializeAttributes( xml::xostream& xos ) const
         }
          xos << xml::end;
     }
-    std::string text = text_.ascii();
-    xos << xml::content( "information", text_ ); 
+    xos << xml::content( "information", text_.ascii() ); 
 }
 
 // -----------------------------------------------------------------------------

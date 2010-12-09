@@ -69,6 +69,7 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     , healthy_                ( 0 )
     , wounded_                ( 0 )
     , dead_                   ( 0 )
+    , text_                   ( "" )
 {
     idManager_.Lock( nID_ );
     xis >> xml::start( "composition" )
@@ -80,7 +81,8 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
         >> xml::list( "urban-block", *this, &MIL_Inhabitant::ReadUrbanBlock )
         >> xml::end;
 
-    xis >> xml::content( "information", text_ );
+    xis >> xml::start( "information" ) >> xml::optional >> text_
+        >> xml::end;
     xis >> xml::optional >> xml::start( "extensions" )
         >> xml::list( "entry", *this, &MIL_Inhabitant::ReadExtension )
         >> xml::end;
@@ -99,6 +101,7 @@ MIL_Inhabitant::MIL_Inhabitant(const MIL_InhabitantType& type )
     , healthy_                ( 0 )
     , wounded_                ( 0 )
     , dead_                   ( 0 )
+    , text_                   ( "" )
 {
 }
 
@@ -114,6 +117,7 @@ MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type, MIL_Army_ABC& ar
     , healthy_                ( 0 )
     , wounded_                ( 0 )
     , dead_                   ( 0 )
+    , text_                   ( "" )
 {
 }
 
