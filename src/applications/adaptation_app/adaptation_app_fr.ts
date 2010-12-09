@@ -2995,7 +2995,7 @@ Make sure the file exists.</source>
 Assurez vous que le fichier existe.</translation>
     </message>
 </context>
-<context>
+<context>e
     <name>ADN_OpenMode_Dialog</name>
     <message>
         <source>Open mode configuration</source>
@@ -3026,42 +3026,42 @@ Assurez vous que le fichier existe.</translation>
     <name>ADN_People_GUI</name>
     <message>
         <source>Population</source>
-        <translation type="unfinished"></translation>
+        <translation>Population</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation type="unfinished">Détails</translation>
+        <translation>Détails</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Associated Crowd</source>
-        <translation type="unfinished"></translation>
+        <translation>Foule associée</translation>
     </message>
     <message>
         <source>Male</source>
-        <translation type="unfinished"></translation>
+        <translation>Homme</translation>
     </message>
     <message>
         <source>%</source>
-        <translation type="unfinished">%</translation>
+        <translation>%</translation>
     </message>
     <message>
         <source>Female</source>
-        <translation type="unfinished"></translation>
+        <translation>Femme</translation>
     </message>
     <message>
         <source>Children</source>
-        <translation type="unfinished"></translation>
+        <translation>Enfant</translation>
     </message>
 </context>
 <context>
     <name>ADN_People_ListView</name>
     <message>
         <source>Population</source>
-        <translation type="unfinished"></translation>
+        <translation>Population</translation>
     </message>
 </context>
 <context>
@@ -3072,7 +3072,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Population</source>
-        <translation type="unfinished"></translation>
+        <translation>Population</translation>
     </message>
     <message>
         <source>Creation finished</source>
@@ -3080,7 +3080,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new population.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cliquer &quot;Ok&quot; pour créer une population.</translation>
     </message>
 </context>
 <context>
