@@ -178,7 +178,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                 if cases_switch_1[2] or switch_1 == eDeployer then
                     if( DEC_ConnaissanceObjet_EstValide( self.repObjImplantation ) ) then
                         do
-                            if( not DEC_ConnaissanceObjet_PeutEtreAnime( self.repObjImplantation ) ) then
+                            if( not DEC_ConnaissanceObjet_PeutEtreOccupe( self.repObjImplantation ) ) then
                                 do
                                     Activate( self.activations.ACT_RC, 1, { eRC_ZoneImplantationOccupee, } )
                                     Activate( self.activations.ACT_Info_Trace, 1, { "Zone d'implantation occupee : en attente.", } )

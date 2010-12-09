@@ -85,7 +85,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
     MIL_MissionParameter_ABC* ptr = 0;
     MIL_EntityManager_ABC& entityManager = MIL_AgentServer::GetWorkspace().GetEntityManager();
     if( message.has_booleanvalue() )
-        ptr = new MIL_BoolParameter( message.has_booleanvalue() ? true : false );
+        ptr = new MIL_BoolParameter( message.booleanvalue() );
     else if( message.has_areal() )
         ptr = new MIL_RealParameter( message.areal() );
     else if( message.has_enumeration() )
