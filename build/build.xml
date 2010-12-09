@@ -912,6 +912,13 @@
         </zip>
     </target>
 
+    <target name="package.wise-driver" description="package the wise driver installer" depends="application.wise_driver_dll">
+        <nsis name="sword-wise_driver" script="sword-wise_driver.nsi">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+        </nsis>
+    </target>
+    
     <!-- Package Application -->
     <target name="package.app" description="package des applications runtime">
         <nsis name="sword" script="sword.nsi" nsh="config.nsh">
