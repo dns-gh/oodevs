@@ -93,11 +93,12 @@ private:
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& simulation_;
 
-    const kernel::AgentKnowledge_ABC* potentialTarget_;
-    const kernel::AgentKnowledge_ABC* selectedTarget_;
+    unsigned long potentialTarget_;
+    unsigned long selectedTarget_;
     const kernel::Agent_ABC* potentialReporter_;
     const kernel::Agent_ABC* selectedReporter_;
 
+    QString potentialTargetName_;
     QLabel* targetLabel_;
     QLabel* reporterLabel_;
     gui::ValuedComboBox< int >* ammunitionsBox_;

@@ -111,7 +111,7 @@ void FireCreationPanel::Commit()
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order" );
         UnitMagicAction* action = new UnitMagicAction( *selectedReporter_, actionType, controllers_.controller_, tr( "Fire order" ), true );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-        action->AddParameter( *new parameters::Identifier( it.NextElement(), selectedTarget_->GetId() ) );
+        action->AddParameter( *new parameters::Identifier( it.NextElement(), selectedTarget_ ) );
         action->AddParameter( *new parameters::DotationType( it.NextElement(), ammunitionsBox_->GetValue(), staticModel_.objectTypes_ ) );
         action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
@@ -163,7 +163,8 @@ void FireCreationPanel::NotifyContextMenu( const kernel::AgentKnowledge_ABC& kn,
     if( isVisible() )
     {
         menu.InsertItem( "Parameter", "FireOrder : Target", this, SLOT( MenuItemTargetValidated() ) );
-        potentialTarget_ = &kn;
+        potentialTarget_ = kn.GetId();
+        potentialTargetName_ = kn.GetName();
     }
 }
 
@@ -174,7 +175,7 @@ void FireCreationPanel::NotifyContextMenu( const kernel::AgentKnowledge_ABC& kn,
 void FireCreationPanel::MenuItemTargetValidated()
 {
     selectedTarget_ = potentialTarget_;
-    targetLabel_->setText( selectedTarget_->GetName() );
+    targetLabel_->setText( potentialTargetName_ );
     UpdateCommitButton();
 }
 
