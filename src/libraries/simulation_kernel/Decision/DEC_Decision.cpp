@@ -285,6 +285,8 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_AssignMissionUrbanBlockParameter" ] = &MIL_MissionParameterFactory::SetUrbanBlockParameter;
     brain[ "DEC_AssignMissionUrbanBlockListParameter" ] = &MIL_MissionParameterFactory::SetUrbanBlockListParameter;
     brain[ "DEC_AssignMissionDirectionParameter" ] = &MIL_MissionParameterFactory::SetDirectionParameter;
+    brain[ "DEC_AssignMissionDotationTypeParameter" ] = &MIL_MissionParameterFactory::SetDotationTypeParameter;
+    brain[ "DEC_AssignMissionNumericTypeParameter" ] = &MIL_MissionParameterFactory::SetNumericTypeParameter;
     brain[ "DEC_IsMissionAvailable" ] = &DEC_OrdersFunctions::IsMissionAvailable;
 
     directia::tools::binders::ScriptRef initParameterFunction = brain[ "InitTaskParameter" ];
