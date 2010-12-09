@@ -11,6 +11,7 @@
 #include "ADN_App.h"
 #include "ADN_Exception_ABC.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
+#include <tools/win32/FlexLm.h>
 #include <windows.h>
 #include <commctrl.h>
 #include <qtranslator.h>
@@ -80,6 +81,9 @@ void SetConsolePos( const int nPosX, const int nPosY )
 
 int main( uint nArgc, char** ppArgv )
 {
+#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
+    std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword-authoring", 1.0f ) );
+#endif
     // Console
     SetConsoleTitle( szADN_Version );
     SetConsolePos( 0, 0 );

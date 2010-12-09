@@ -22,7 +22,7 @@ int Run( int argc, char** argv )
 {
     int maxConnections = 10;
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-    std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
+    std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword-runtime", 1.0f ) );
     try
     {
         std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword-dispatcher", 1.0f ) );

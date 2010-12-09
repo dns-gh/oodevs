@@ -403,7 +403,7 @@
     </target>
 
     <target name="application.adaptation_app" description="build Sword Adaptation executable" depends="library.ENT,library.clients_gui">
-        <build-app name="adaptation_app" depends="qt,xerces,xalan,boost" excludes="**/XmlResources.cpp"
+        <build-app name="adaptation_app" depends="qt,xerces,xalan,boost,flexlm" excludes="**/XmlResources.cpp"
                    libs="lib${ant.project.name}_ENT-${platform}-mt
                          lib${ant.project.name}_clients_gui-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt

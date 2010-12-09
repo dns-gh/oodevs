@@ -24,7 +24,7 @@ int main( int argc, char** argv )
 {
     QString expiration;
 #if !defined( NO_LICENSE_CHECK )
-    std::auto_ptr< FlexLmLicense > license = FlexLmLicense::CheckLicense( "sword", 1.0f );
+    std::auto_ptr< FlexLmLicense > license = FlexLmLicense::CheckLicense( "sword-preparation", 1.0f );
     expiration = license->GetExpirationDate().c_str();
 #endif
 

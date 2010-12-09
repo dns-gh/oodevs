@@ -15,6 +15,7 @@ MainWindow.cpp \
 Menu.cpp \
 ModelBuilder.cpp \
 InhabitantCreationPanel.cpp \
+InhabitantListView.cpp \
 ObjectCreationPanel.cpp \
 OrbatAttributesPanel.cpp \
 PopulationListView.cpp \
