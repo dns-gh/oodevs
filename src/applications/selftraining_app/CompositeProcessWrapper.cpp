@@ -35,7 +35,7 @@ CompositeProcessWrapper::CompositeProcessWrapper( frontend::ProcessObserver_ABC&
 // -----------------------------------------------------------------------------
 CompositeProcessWrapper::~CompositeProcessWrapper()
 {
-    observer_.ProcessStopped();
+    observer_.NotifyStopped();
 }
 
 // -----------------------------------------------------------------------------
@@ -59,14 +59,23 @@ void CompositeProcessWrapper::Run()
 {
     if( first_.get() && second_.get() )
     {
-        current_ = first_;
-        first_->Start();
-        current_ = second_;
-        second_->Start();
-        while( first_->Wait() && second_->Wait() ) {}
-        current_.reset();
-        first_.reset();
-        second_.reset();
+        try
+        {
+            current_ = first_;
+            first_->Start();
+            current_ = second_;
+            second_->Start();
+            while( first_->Wait() && second_->Wait() ) {}
+            current_.reset();
+            first_.reset();
+            second_.reset();
+        }
+        catch( std::exception& e )
+        {
+            current_.reset();
+            Stop();
+            observer_.NotifyError( e.what() );
+        }
     }
 }
 
@@ -79,14 +88,12 @@ void CompositeProcessWrapper::Stop()
     if( first_.get() )
     {
         first_->Stop();
-        if( thread_.get() )
-            thread_->join();
+        while( first_->Wait() ) {}
     }
     if( second_.get() )
     {
         second_->Stop();
-        if( thread_.get() )
-            thread_->join();
+        while( second_->Wait() ) {}
     }
 }
 

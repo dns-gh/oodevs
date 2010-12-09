@@ -327,7 +327,7 @@
     </message>
     <message>
         <source>otpak corrupted: unable to load content properly</source>
-        <translation type="unfinished"></translation>
+        <translation>otpak corrompy: impossible de lire le contenu</translation>
     </message>
 </context>
 <context>
@@ -446,6 +446,13 @@
     <message>
         <source>Running training session detected. Close ?</source>
         <translation>Des sessions d&apos;entraînement sont en cours. Voulez-vous les arrêter ?</translation>
+    </message>
+</context>
+<context>
+    <name>ProgressPage</name>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
     </message>
 </context>
 <context>

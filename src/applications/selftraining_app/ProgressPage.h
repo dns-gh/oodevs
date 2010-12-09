@@ -43,7 +43,8 @@ public:
     //! @name Operations
     //@{
     void Attach( boost::shared_ptr< frontend::Process_ABC > process );
-    virtual void ProcessStopped();
+    virtual void NotifyStopped();
+    virtual void NotifyError( const std::string& error );
     //@}
 
 private slots:

@@ -137,10 +137,10 @@ bool ProcessService::IsRunning( const std::string& exercise ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProcessService::ProcessStopped
+// Name: ProcessService::NotifyStopped
 // Created: SBO 2010-11-04
 // -----------------------------------------------------------------------------
-void ProcessService::ProcessStopped()
+void ProcessService::NotifyStopped()
 {
     boost::recursive_mutex::scoped_lock locker( mutex_ );
     for( std::map< std::string, boost::weak_ptr< frontend::ProcessWrapper > >::iterator it = processes_.begin(); it != processes_.end(); )
@@ -148,6 +148,16 @@ void ProcessService::ProcessStopped()
             it = processes_.erase( it );
         else
             ++it;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessService::NotifyError
+// Created: SBO 2010-12-09
+// -----------------------------------------------------------------------------
+void ProcessService::NotifyError( const std::string& error )
+{
+    // $$$$ SBO 2010-12-09: Log error message
+    NotifyStopped();
 }
 
 namespace

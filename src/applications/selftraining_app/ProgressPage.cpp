@@ -12,6 +12,7 @@
 #include "moc_ProgressPage.cpp"
 #include "frontend/Process_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
 #include <qprogressbar.h>
 #include <qtimer.h>
 
@@ -85,14 +86,24 @@ void ProgressPage::UpdateProgress()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProgressPage::ProcessStopped
+// Name: ProgressPage::NotifyStopped
 // Created: SBO 2010-11-10
 // -----------------------------------------------------------------------------
-void ProgressPage::ProcessStopped()
+void ProgressPage::NotifyStopped()
 {
     timer_->stop();
     process_.reset();
     qApp->mainWidget()->show();
     qApp->mainWidget()->setActiveWindow();
     Previous();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProgressPage::NotifyError
+// Created: SBO 2010-12-09
+// -----------------------------------------------------------------------------
+void ProgressPage::NotifyError( const std::string& error )
+{
+    NotifyStopped();
+    QMessageBox::critical( 0, tools::translate( "ProgressPage", "Error" ), error.c_str() );
 }

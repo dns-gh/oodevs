@@ -36,7 +36,7 @@ ProcessWrapper::ProcessWrapper( ProcessObserver_ABC& observer, boost::shared_ptr
 // -----------------------------------------------------------------------------
 ProcessWrapper::~ProcessWrapper()
 {
-    observer_.ProcessStopped();
+    observer_.NotifyStopped();
 }
 
 // -----------------------------------------------------------------------------
@@ -57,9 +57,18 @@ void ProcessWrapper::Run()
 {
     if( process_.get() )
     {
-        process_->Start();
-        while( process_->Wait() ) {}
-        process_.reset();
+        try
+        {
+            process_->Start();
+            while( process_->Wait() ) {}
+            process_.reset();
+        }
+        catch( std::exception& e )
+        {
+            Stop();
+            observer_.NotifyError( e.what() );
+            return;
+        }
     }
 }
 
@@ -72,8 +81,7 @@ void ProcessWrapper::Stop()
     if( process_.get() )
     {
         process_->Stop();
-        if( thread_.get() )
-            thread_->join();
+        while( process_->Wait() ) {}
     }
 }
 

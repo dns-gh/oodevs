@@ -96,7 +96,6 @@ void AuthoringPage::OnTerrainWorkshop()
 {
     if( !dialogs::KillRunningProcesses( this ) )
         return;
-
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::StartTerrainWorkshop( config_, true ) );
     boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
     progressPage_->Attach( process );

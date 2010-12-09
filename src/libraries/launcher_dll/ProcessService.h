@@ -58,7 +58,8 @@ public:
     MsgsLauncherToAdmin::MsgControlStopAck::ErrorCode StopExercise( const MsgsAdminToLauncher::MsgControlStop& message );
     void SendProfileList( MsgsAuthenticationToClient::MsgProfileDescriptionList& message );
     bool IsRunning( const std::string& exercise ) const;
-    virtual void ProcessStopped();
+    virtual void NotifyStopped();
+    virtual void NotifyError( const std::string& error );
     //@}
 
 private:

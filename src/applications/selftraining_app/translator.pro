@@ -19,6 +19,7 @@ OptionsPage.cpp \
 Page_ABC.cpp \
 ProcessDialogs.cpp \
 ProfileList.cpp \
+ProgressPage.cpp \
 QuitPage.cpp \
 RemoteControlPage.cpp \
 ReplayPage.cpp \

@@ -31,7 +31,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void ProcessStopped() = 0;
+    virtual void NotifyStopped() = 0;
+    virtual void NotifyError( const std::string& error ) = 0;
     //@}
 };
 
