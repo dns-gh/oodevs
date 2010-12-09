@@ -53,7 +53,13 @@ Formation::Formation( xml::xistream& xis, Controller& controller, const Formatio
         >> xml::optional >> xml::attribute( "logistic-level", logLevelName );
     level_ = levels.Resolve( level.c_str() );
     name_  = name.empty() ? tools::translate( "Formation", "Formation [%1]" ).arg( id_ ) : name.c_str();
+
+    xis >> xml::optional >> xml::attribute( "nature", nature_ );
+
     logisticLevel_ = const_cast< kernel::LogisticLevel* >( &kernel::LogisticLevel::Resolve( logLevelName ) );
+
+    xis >> xml::optional >> xml::attribute( "color", color_ );
+    
     idManager.Lock( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -106,8 +112,12 @@ void Formation::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::attribute( "id", long( id_ ) )
         << xml::attribute( "name", name_.ascii() )
         << xml::attribute( "level", level_->GetName().ascii() );
+    if (nature_.length() > 0)
+        xos << xml::attribute( "nature", nature_ );
     if( *logisticLevel_ != kernel::LogisticLevel::none_ )
     	xos << xml::attribute( "logistic-level", logisticLevel_->GetName());
+    if (color_.length() > 0)
+        xos << xml::attribute( "color", color_ );
 }
 
 // -----------------------------------------------------------------------------

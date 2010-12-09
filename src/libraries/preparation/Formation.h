@@ -71,6 +71,8 @@ private:
     //@{
     const kernel::HierarchyLevel_ABC* level_;
     kernel::LogisticLevel*  logisticLevel_;
+    std::string color_;
+    std::string nature_;
     //@}
 };
 

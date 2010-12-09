@@ -53,9 +53,14 @@ Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManag
     CreateDictionary( controller );
     idManager.Lock( id_ );
 
+    xis >> xml::optional >> xml::attribute( "nature", nature_ );
+
     std::string logLevelName("none");
     xis >> xml::optional >> xml::attribute( "logistic-level", logLevelName );
     logisticLevel_ = const_cast< kernel::LogisticLevel* >( &kernel::LogisticLevel::Resolve( logLevelName ) );
+
+    xis >> xml::optional >> xml::attribute( "color", color_ );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -140,8 +145,12 @@ void Automat::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::attribute( "id", id_ )
         << xml::attribute( "name", name_.ascii() )
         << xml::attribute( "type", type_.GetName() );
+    if (nature_.length() > 0)
+        xos << xml::attribute( "nature", nature_ );
     if( *logisticLevel_ != kernel::LogisticLevel::none_ )
         xos << xml::attribute( "logistic-level", logisticLevel_->GetName() );
+    if (color_.length() > 0)
+        xos << xml::attribute( "color", color_ );
 }
 
 // -----------------------------------------------------------------------------
