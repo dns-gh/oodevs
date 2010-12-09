@@ -1584,6 +1584,18 @@ double DEC_GeometryFunctions::ComputeAdvanceAlongFuseau( MIL_Automate& callerAut
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau
+// Created: LDC 2010-12-08
+// -----------------------------------------------------------------------------
+double DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau( MIL_AgentPion& pion, MT_Vector2D* point )
+{
+    if( !point)
+        return 0.;
+    MIL_Automate& callerAutomate = pion.GetAutomate();
+    return callerAutomate.GetOrderManager().GetFuseau().ComputeAdvance( *point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeDelayFromSchedule
 // Created: LDC 2009-07-06
 // -----------------------------------------------------------------------------
