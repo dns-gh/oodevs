@@ -25,6 +25,7 @@
 !define INSTDIR_REG_ROOT "HKLM"
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANY_NAME}\${PRODUCT_NAME}"
 
+!define UNINSTALL_LOG "SWORD_Driver_Uninstall"
 !include "AdvUninstLog.nsh"
 
 !ifndef PLATFORM
@@ -41,9 +42,8 @@
 !endif
 
 Name "${PRODUCT_NAME}"
-OutFile "${DISTDIR}\${PRODUCT_NAME}_${APP_VERSION_MINOR}.exe"
+OutFile "${DISTDIR}\${PRODUCT_NAME}_${APP_VERSION_MAJOR}.exe"
 
-;InstallDir "$PROGRAMFILES\${APP_NAME}"
 InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 !insertmacro UNATTENDED_UNINSTALL
@@ -71,9 +71,13 @@ SectionEnd
 
 ;--------------------------------
 Section "Uninstall"
+   
     !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
     !insertmacro UNINSTALL.LOG_UNINSTALL_ALL
     !insertmacro UNINSTALL.LOG_END_UNINSTALL
+
+    Delete "${UNINST_DAT}"
+    Delete "${UNINST_EXE}"
     
     DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
 SectionEnd
@@ -98,6 +102,14 @@ Function .onInit
 FunctionEnd
 
 Function .onInstSuccess
+    ; Add uninstall information
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${PRODUCT_NAME}"
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayVersion" "${APP_VERSION_MINOR}"
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString" "${UNINST_EXE}"
+    WriteRegDWORD ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "NoModify" 1
+    WriteRegDWORD ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "NoRepair" 1
+
     ;create/update log always within .onInstSuccess function
     !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
 FunctionEnd
