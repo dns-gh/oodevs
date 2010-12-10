@@ -78,7 +78,7 @@ namespace
         }
         void GetAgentPerceptionLevelTest( directia::tools::binders::ScriptRef unit, double expected )
         {
-            directia::tools::binders::ScriptRef getAgentPerceptionLevel = brain[ "integration.getAgentPerception" ];
+            directia::tools::binders::ScriptRef getAgentPerceptionLevel = brain[ "integration.getAgentPerceptionLevel" ];
             BOOST_CHECK_EQUAL( getAgentPerceptionLevel.Call< double >( unit ), expected );
         }
         void GetObjectPerceptionLevelTest( directia::tools::binders::ScriptRef unit, double expected )
@@ -130,8 +130,8 @@ BOOST_FIXTURE_TEST_CASE( ComputeRelationObject, BrainFixture )
 BOOST_FIXTURE_TEST_CASE( GetAgentPerceptionLevel, BrainFixture )
 {
     GetAgentPerceptionLevelTest( CreateAgent( "enemyNotSeen"    ), 0. );
-    GetAgentPerceptionLevelTest( CreateAgent( "enemyDetected"   ), 30. );
-    GetAgentPerceptionLevelTest( CreateAgent( "enemyRecognized" ), 60. );
+    GetAgentPerceptionLevelTest( CreateAgent( "enemyDetected"   ), 100. );
+    GetAgentPerceptionLevelTest( CreateAgent( "enemyRecognized" ), 100. );
     GetAgentPerceptionLevelTest( CreateAgent( "enemyIdentified" ), 100. );
 }
 
