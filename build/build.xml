@@ -580,6 +580,12 @@
     -->
     <target name="generate-license" description="generate license file in run directory">
         <flexlm feature="sword" vendor="bkmasa"/>
+        <flexlm feature="sword-gaming" vendor="bkmasa"/>
+        <flexlm feature="sword-authoring" vendor="bkmasa"/>
+        <flexlm feature="sword-workshop" vendor="bkmasa"/>
+        <flexlm feature="sword-terrain-generation" vendor="bkmasa"/>
+        <flexlm feature="sword-runtime" vendor="bkmasa"/>
+        <flexlm feature="sword-replayer" vendor="bkmasa"/>
     </target>
 
     <!--
