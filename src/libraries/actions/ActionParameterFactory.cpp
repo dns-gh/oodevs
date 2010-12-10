@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "ActionParameterFactory.h"
 #include "Limit.h"
+#include "Lima.h"
 #include "LimaList.h"
 #include "EngineerConstruction.h"
 #include "Objective.h"
@@ -269,8 +270,8 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new actions::parameters::Location( parameter, converter_, xis ) );
     else if( type == "heading" )
         param.reset( new actions::parameters::Direction( parameter, xis ) );
-    else if( type == "phaseline" && parameter.IsList() )
-        param.reset( new actions::parameters::LimaList( parameter, converter_, xis ) );
+    else if( type == "phaseline" )
+        param.reset( new actions::parameters::Lima( converter_, xis ) );
     else if( type == "limit" )
         param.reset( new actions::parameters::Limit( parameter, converter_, xis ) );
     else if( type == "enumeration" )

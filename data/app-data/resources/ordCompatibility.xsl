@@ -15,6 +15,7 @@
    
     <xsl:template match="@type">
         <xsl:choose>
+            <xsl:when test=".='lima'"><xsl:attribute name="type">phaseline</xsl:attribute></xsl:when>
             <xsl:when test=".='Direction'"><xsl:attribute name="type">Heading</xsl:attribute></xsl:when>
             <xsl:when test=".='PhaseLineList'"><xsl:attribute name="type">PhaseLine</xsl:attribute></xsl:when>
             <xsl:when test=".='IntelligenceList'"><xsl:attribute name="type">Intelligence</xsl:attribute></xsl:when>
