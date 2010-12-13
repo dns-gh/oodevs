@@ -311,7 +311,13 @@ bool TacticalListView::Drop( const Agent_ABC& item, const Entity_ABC& target )
 {
     const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &target );
     if( automat )
-        return ChangeSuperior( item, target );
+    {
+        bool superiorChange = ChangeSuperior( item, target );
+        kernel::CommunicationHierarchies* com = const_cast< Agent_ABC& >( item ).Retrieve< kernel::CommunicationHierarchies >();
+        if( com )
+            static_cast< ::EntityCommunications* >( com )->ChangeSuperior( const_cast< Entity_ABC& >( target ) );
+        return superiorChange;
+    }
     return false;
 }
 
