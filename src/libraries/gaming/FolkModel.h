@@ -22,11 +22,11 @@ namespace kernel
     class Controller;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgFolkCreation;
-    class MsgFolkGraphUpdate;
-    class MsgFolkGraphEdgeUpdate;
+    class FolkCreation;
+    class FolkGraphUpdate;
+    class FolkGraphEdgeUpdate;
 }
 
 // =============================================================================
@@ -52,8 +52,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgFolkCreation& creation );
-    void Update( const MsgsSimToClient::MsgFolkGraphUpdate& update );
+    void Update( const sword::FolkCreation& creation );
+    void Update( const sword::FolkGraphUpdate& update );
 
     // $$$$ AGE 2007-09-05: ...
     const T_Names& Containers() const;
@@ -73,7 +73,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Update( const MsgsSimToClient::MsgFolkGraphEdgeUpdate& update );
+    void Update( const sword::FolkGraphEdgeUpdate& update );
     void ComputeRatios();
     //@}
 

@@ -113,7 +113,7 @@ VisionCones::~VisionCones()
 // Name: VisionCones::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void VisionCones::DoUpdate( const MsgsSimToClient::MsgUnitVisionCones& message )
+void VisionCones::DoUpdate( const sword::UnitVisionCones& message )
 {
     for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
@@ -130,7 +130,7 @@ void VisionCones::DoUpdate( const MsgsSimToClient::MsgUnitVisionCones& message )
 // Name: VisionCones::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void VisionCones::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void VisionCones::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_position()
      || message.has_experience()

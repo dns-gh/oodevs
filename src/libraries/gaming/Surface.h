@@ -15,7 +15,7 @@
 
 #include "tools/Resolver_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
     class MsgVisionCone;
 }
@@ -42,7 +42,7 @@ class Surface
 public:
     //! @name Constructor/Destructor
     //@{
-             Surface( const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgVisionCone& message, const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const tools::Resolver_ABC< kernel::SensorType, std::string >& resolver, float elongation, const UrbanBlockDetectionMap& urbanModelMap );
+             Surface( const kernel::Agent_ABC& agent, const sword::MsgVisionCone& message, const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const tools::Resolver_ABC< kernel::SensorType, std::string >& resolver, float elongation, const UrbanBlockDetectionMap& urbanModelMap );
     virtual ~Surface();
     //@}
 

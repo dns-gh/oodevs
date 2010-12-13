@@ -23,10 +23,10 @@ namespace kernel
     class BreakdownType;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogMaintenanceHandlingCreation;
-    class MsgLogMaintenanceHandlingUpdate;
+    class LogMaintenanceHandlingCreation;
+    class LogMaintenanceHandlingUpdate;
 }
 
 // =============================================================================
@@ -40,7 +40,7 @@ class LogMaintenanceConsign : public kernel::Drawable_ABC
 public:
     //! @name Constructor / Destructor
     //@{
-             LogMaintenanceConsign( kernel::Controller& controller, const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& message,
+             LogMaintenanceConsign( kernel::Controller& controller, const sword::LogMaintenanceHandlingCreation& message,
                                     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::ComponentType >& componentResolver,
                                     const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver );
     virtual ~LogMaintenanceConsign();
@@ -48,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgLogMaintenanceHandlingUpdate& message );
+    void Update( const sword::LogMaintenanceHandlingUpdate& message );
     void Display( kernel::Displayer_ABC& displayer, kernel::Displayer_ABC& itemDisplayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}

@@ -70,7 +70,7 @@ void BypassAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 // Name: BypassAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void BypassAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -79,7 +79,7 @@ void BypassAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate&
 // Name: BypassAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void BypassAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }

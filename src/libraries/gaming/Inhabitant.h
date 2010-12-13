@@ -43,7 +43,7 @@ class UrbanModel;
 // Created: HME 2005-09-29
 // =============================================================================
 class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationUpdate >
+                 , public kernel::Updatable_ABC< sword::PopulationUpdate >
                  , public kernel::Drawable_ABC
                  , public kernel::Positions
                  , public tools::Observer_ABC
@@ -52,7 +52,7 @@ class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
 public:
     //! @name Constructor/Destructor
     //@{
-             Inhabitant( const MsgsSimToClient::MsgPopulationCreation& message, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
+             Inhabitant( const sword::PopulationCreation& message, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
                          const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver, UrbanModel& model );
     virtual ~Inhabitant();
     //@}
@@ -83,7 +83,7 @@ private:
 
     //! @name Helpers
     //@{
-    void DoUpdate( const MsgsSimToClient::MsgPopulationUpdate&                   message );
+    void DoUpdate( const sword::PopulationUpdate&                   message );
     void CreateDictionary( kernel::Controller& controller );
     void ComputeCenter();
     virtual void NotifyUpdated( const Simulation::sEndTick& tick );

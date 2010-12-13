@@ -316,9 +316,9 @@ void UrbanObjectWrapper::Serialize( HLA_UpdateFunctor& /*functor*/ ) const
 // Name: UrbanObjectWrapper::OnUpdate
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& /*attributes*/ )
+sword::ObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& /*attributes*/ )
 {
-    return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
+    return sword::ObjectMagicActionAck_ErrorCode_no_error;
 }
 
 // -----------------------------------------------------------------------------
@@ -326,7 +326,7 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate(
 // Created: JSR 2010-09-17
 // -----------------------------------------------------------------------------
 template < typename T >
-void UrbanObjectWrapper::SendCapacity( MsgsSimToClient::UrbanAttributes& msg)
+void UrbanObjectWrapper::SendCapacity( sword::UrbanAttributes& msg )
 {
     T* capacity = Retrieve< T >();
     if( capacity )

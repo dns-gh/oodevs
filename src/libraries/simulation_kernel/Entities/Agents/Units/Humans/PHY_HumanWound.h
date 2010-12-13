@@ -15,7 +15,7 @@
 #include "MIL_Random.h"
 #include "MT_Tools/MT_Stl.h"
 
-namespace Common
+namespace sword
 {
     enum EnumHumanWound;
 }
@@ -55,7 +55,7 @@ public:
 
     static const T_HumanWoundMap& GetHumanWounds();
     static const PHY_HumanWound*  Find( const std::string& strName );
-    static const PHY_HumanWound*  Find( Common::EnumHumanWound nAsnID );
+    static const PHY_HumanWound*  Find( sword::EnumHumanWound nAsnID );
     static const PHY_HumanWound*  Find( unsigned int nID );
 
     static unsigned int                  GetDiagnosticTime           ();
@@ -72,7 +72,7 @@ public:
     //@{
     const std::string&   GetName          () const;
     unsigned int                 GetID            () const;
-    Common::EnumHumanWound GetAsnID         () const;
+    sword::EnumHumanWound GetAsnID         () const;
     double             GetWoundedFactor () const;
     unsigned int                 GetLifeExpectancy() const;
     unsigned int                 GetHealingTime   () const;
@@ -111,7 +111,7 @@ private:
     //@}
 
 private:
-     PHY_HumanWound( const std::string& strName, E_Wound nWound, const Common::EnumHumanWound& nAsnID );
+     PHY_HumanWound( const std::string& strName, E_Wound nWound, const sword::EnumHumanWound& nAsnID );
     ~PHY_HumanWound();
 
     //! @name Init
@@ -123,7 +123,7 @@ private:
 private:
     const std::string           strName_;
     const E_Wound               nWound_;
-    const Common::EnumHumanWound  nAsnID_;
+    const sword::EnumHumanWound  nAsnID_;
           double              rWoundedFactor_;
           unsigned int                  nLifeExpectancy_;
           unsigned int                  nHealingTime_;

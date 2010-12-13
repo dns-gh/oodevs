@@ -10,23 +10,21 @@
 #ifndef __SimulationModel_h_
 #define __SimulationModel_h_
 
-
-
-namespace Common
+namespace sword
 {
     enum EnumSimulationState;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgControlStopAck;
-    class MsgControlPauseAck;
-    class MsgControlResumeAck;
-    class MsgControlChangeTimeFactorAck;
+    class ControlStopAck;
+    class ControlPauseAck;
+    class ControlResumeAck;
+    class ControlChangeTimeFactorAck;
 
-    class MsgControlInformation;
-    class MsgControlBeginTick;
-    class MsgControlEndTick;
+    class ControlInformation;
+    class ControlBeginTick;
+    class ControlEndTick;
 }
 
 namespace dispatcher
@@ -50,16 +48,16 @@ public:
 
     //! @name Operations
     //@{
-    void Update       ( const MsgsSimToClient::MsgControlInformation&         msg );
-    void Update       ( const MsgsSimToClient::MsgControlBeginTick&           msg );
-    void Update       ( const MsgsSimToClient::MsgControlEndTick&             msg );
-    void Update_Stop  ( const MsgsSimToClient::MsgControlStopAck&             msg ); //$$$
-    void Update_Pause ( const MsgsSimToClient::MsgControlPauseAck&            msg ); //$$$
-    void Update_Resume( const MsgsSimToClient::MsgControlResumeAck&           msg ); //$$$
-    void Update       ( const MsgsSimToClient::MsgControlChangeTimeFactorAck& msg );
-//    void Update        ( const MsgControlCheckPointSetFrequencyAck& msg );
+    void Update       ( const sword::ControlInformation&         msg );
+    void Update       ( const sword::ControlBeginTick&           msg );
+    void Update       ( const sword::ControlEndTick&             msg );
+    void Update_Stop  ( const sword::ControlStopAck&             msg ); //$$$
+    void Update_Pause ( const sword::ControlPauseAck&            msg ); //$$$
+    void Update_Resume( const sword::ControlResumeAck&           msg ); //$$$
+    void Update       ( const sword::ControlChangeTimeFactorAck& msg );
+//    void Update        ( const ControlCheckPointSetFrequencyAck& msg );
     void Send          ( ClientPublisher_ABC& publisher ) const;
-    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, Common::EnumSimulationState status, unsigned factor ) const;
+    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned factor ) const;
     void Reset         ();
 
     void SendFirstTick( ClientPublisher_ABC& publisher ) const;
@@ -72,7 +70,7 @@ private:
    unsigned int      nTickDuration_;
    unsigned int      nTimeFactor_;
    unsigned int      nCheckpointFrequency_;
-   Common::EnumSimulationState nSimState_;
+   sword::EnumSimulationState nSimState_;
 
    //$$$ BULLSHIT
    bool         bSendVisionCones_;

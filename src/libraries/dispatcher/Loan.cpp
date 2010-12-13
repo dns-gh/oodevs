@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Name: Loan constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Loan::Loan( const Model_ABC& model, const MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& message )
+Loan::Loan( const Model_ABC& model, const sword::BorrowedEquipments_BorrowedEquipment& message )
     : agent_        ( model.Agents().Get( message.owner().id() ) )
     , equipmentType_( message.type().id() )
     , quantity_     ( message.nombre() )
@@ -31,7 +31,7 @@ Loan::Loan( const Model_ABC& model, const MsgsSimToClient::BorrowedEquipments_Bo
 // Name: Loan constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Loan::Loan( const Model_ABC& model, const MsgsSimToClient::LentEquipments_LentEquipment& message )
+Loan::Loan( const Model_ABC& model, const sword::LentEquipments_LentEquipment& message )
     : agent_        ( model.Agents().Get( message.borrower().id() ) )
     , equipmentType_( message.type().id() )
     , quantity_     ( message.nombre() )
@@ -52,7 +52,7 @@ Loan::~Loan()
 // Name: Loan::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Loan::Send( MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& message ) const
+void Loan::Send( sword::BorrowedEquipments_BorrowedEquipment& message ) const
 {
     message.mutable_type()->set_id( equipmentType_ );
     message.mutable_owner()->set_id( agent_.GetId() );
@@ -63,7 +63,7 @@ void Loan::Send( MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& message 
 // Name: Loan::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Loan::Send( MsgsSimToClient::LentEquipments_LentEquipment& message ) const
+void Loan::Send( sword::LentEquipments_LentEquipment& message ) const
 {
     message.mutable_type()->set_id( equipmentType_ );
     message.mutable_borrower()->set_id( agent_.GetId() );

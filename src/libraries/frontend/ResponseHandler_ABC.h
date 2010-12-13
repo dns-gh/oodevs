@@ -12,21 +12,16 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace MsgsLauncherToAdmin
+namespace sword
 {
-    class MsgControlStartAck;
-    class MsgControlStopAck;
-    class MsgExercicesListResponse;
-}
-
-namespace MsgsAuthenticationToClient
-{
-    class MsgProfileDescriptionList;
+    class ControlStartExerciseAck;
+    class ControlStopExerciseAck;
+    class ExercicesListResponse;
+    class ProfileDescriptionList;
 }
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  ResponseHandler_ABC
     @brief  ResponseHandler_ABC
@@ -35,7 +30,6 @@ namespace frontend
 // =============================================================================
 class ResponseHandler_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -45,10 +39,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Handle( const MsgsLauncherToAdmin::MsgExercicesListResponse& message ) = 0;
-    virtual void Handle( const MsgsLauncherToAdmin::MsgControlStartAck& message ) = 0;
-    virtual void Handle( const MsgsLauncherToAdmin::MsgControlStopAck& message ) = 0;
-    virtual void Handle( const MsgsAuthenticationToClient::MsgProfileDescriptionList& message ) = 0;
+    virtual void Handle( const sword::ExercicesListResponse& message ) = 0;
+    virtual void Handle( const sword::ControlStartExerciseAck& message ) = 0;
+    virtual void Handle( const sword::ControlStopExerciseAck& message ) = 0;
+    virtual void Handle( const sword::ProfileDescriptionList& message ) = 0;
     //@}
 };
 

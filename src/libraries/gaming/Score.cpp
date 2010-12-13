@@ -33,7 +33,7 @@ namespace
 // Name: Score constructor
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
-Score::Score( const MsgsAarToClient::MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher )
+Score::Score( const sword::Indicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher )
     : controller_( controller )
     , publisher_( publisher )
     , name_( ExtractRoot( QString( message.name().c_str() ) ) )
@@ -68,7 +68,7 @@ QString Score::GetName() const
 // Name: Score::Update
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
-void Score::Update( const MsgsAarToClient::MsgIndicator& message )
+void Score::Update( const sword::Indicator& message )
 {
     tendency_->AddValue( message.value() );
     value_ = message.value();
@@ -80,7 +80,7 @@ void Score::Update( const MsgsAarToClient::MsgIndicator& message )
 // Name: Score::UpdatePlots
 // Created: SBO 2009-06-12
 // -----------------------------------------------------------------------------
-void Score::UpdatePlots( const MsgsAarToClient::MsgIndicator& message )
+void Score::UpdatePlots( const sword::Indicator& message )
 {
     if( request_ )
         request_->Update( message );

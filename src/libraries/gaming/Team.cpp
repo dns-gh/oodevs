@@ -16,14 +16,14 @@ using namespace kernel;
 
 namespace
 {
-    kernel::Karma MakeKarma( const Common::EnumDiplomacy& diplomacy )
+    kernel::Karma MakeKarma( const sword::EnumDiplomacy& diplomacy )
     {
         switch( diplomacy )
         {
-            case Common::friend_diplo : return kernel::Karma::friend_;
-            case Common::enemy_diplo  : return kernel::Karma::enemy_;
-            case Common::neutral_diplo: return kernel::Karma::neutral_;
-            case Common::unknown_diplo:
+            case sword::friend_diplo : return kernel::Karma::friend_;
+            case sword::enemy_diplo  : return kernel::Karma::enemy_;
+            case sword::neutral_diplo: return kernel::Karma::neutral_;
+            case sword::unknown_diplo:
             default: return kernel::Karma::unknown_;
         }
     }
@@ -38,7 +38,7 @@ namespace
 // Name: Team constructor
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-Team::Team( const MsgsSimToClient::MsgPartyCreation& message, Controller& controller )
+Team::Team( const sword::PartyCreation& message, Controller& controller )
     : EntityImplementation< Team_ABC >( controller, message.party().id(), QString( message.name().c_str() ) )
     , karma_( MakeKarma( message.type() ) )
 {

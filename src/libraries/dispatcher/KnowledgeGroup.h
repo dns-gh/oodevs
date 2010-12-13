@@ -14,10 +14,10 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "tools/Resolver.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgKnowledgeGroupCreation;
-    class MsgKnowledgeGroupUpdate;
+    class KnowledgeGroupCreation;
+    class KnowledgeGroupUpdate;
 }
 
 namespace dispatcher
@@ -32,12 +32,12 @@ namespace dispatcher
 // =============================================================================
 class KnowledgeGroup : public dispatcher::KnowledgeGroup_ABC
                      , public kernel::Extension_ABC
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupUpdate >
+                     , public kernel::Updatable_ABC< sword::KnowledgeGroupUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( Model_ABC& model, const MsgsSimToClient::MsgKnowledgeGroupCreation& msg );
+             KnowledgeGroup( Model_ABC& model, const sword::KnowledgeGroupCreation& msg );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -48,7 +48,7 @@ public:
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
     virtual void Accept         ( kernel::ModelVisitor_ABC& visitor ) const;
 
-    virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message ); // LTO
+    virtual void DoUpdate( const sword::KnowledgeGroupUpdate& message ); // LTO
     virtual bool IsActivated() const { return true; };  // $$$$ _RC_ SLG 2009-12-21: TEMP  // LTO
     virtual void Register( dispatcher::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
     virtual void Remove( dispatcher::KnowledgeGroup_ABC& knowledgeGroup ); // LTO

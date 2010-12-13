@@ -505,10 +505,10 @@ void DEC_AutomateDecision::StopMissionConduiteBehavior( const boost::shared_ptr<
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::SendFullState( client::AutomatAttributes& msg ) const
 {
-    msg().set_rapport_de_force   ( MsgsSimToClient::ForceRatio_Value( eForceRatioStateNone ) );
-    msg().set_combat_de_rencontre( Common::EnumMeetingEngagementStatus( nCloseCombatState_ ) );
-    msg().set_etat_operationnel  ( Common::EnumOperationalStatus( nOperationalState_ ) );
-    msg().set_roe                ( MsgsSimToClient::RulesOfEngagement_Value( nRulesOfEngagementState_ ) );
+    msg().set_rapport_de_force   ( sword::ForceRatio_Value( eForceRatioStateNone ) );
+    msg().set_combat_de_rencontre( sword::EnumMeetingEngagementStatus( nCloseCombatState_ ) );
+    msg().set_etat_operationnel  ( sword::EnumOperationalStatus( nOperationalState_ ) );
+    msg().set_roe                ( sword::RulesOfEngagement_Value( nRulesOfEngagementState_ ) );
 }
 
 // -----------------------------------------------------------------------------

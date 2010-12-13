@@ -77,7 +77,7 @@ bool AgentKnowledgePositions::IsIn( const geometry::Rectangle2f& rectangle ) con
 // Name: AgentKnowledgePositions::DoUpdate
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-void AgentKnowledgePositions::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
+void AgentKnowledgePositions::DoUpdate( const sword::UnitKnowledgeUpdate& message )
 {
     if( message.has_position()  )
         position_ = converter_.ConvertToXY( message.position() );

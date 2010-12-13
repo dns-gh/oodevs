@@ -21,23 +21,25 @@
 #include "tools/Extendable.h"
 #include "Tools/MIL_IDManager.h"
 
-namespace MsgsSimToClient
-{
-    enum MsgMagicActionAck_ErrorCode;
-    enum MsgObjectMagicActionAck_ErrorCode;
-}
-
 namespace google
 {
-    namespace protobuf
-    {
-        template< typename T > class RepeatedPtrField;
-    }
+namespace protobuf
+{
+    template< typename T > class RepeatedPtrField;
+}
 }
 
-namespace Common
+namespace sword
 {
+    enum MagicActionAck_ErrorCode;
+    enum ObjectMagicActionAck_ErrorCode;
     class MsgMissionParameter_Value;
+}
+
+namespace hla
+{
+    class Deserializer;
+    class AttributeIdentifier;
 }
 
 class DEC_Knowledge_Object;
@@ -49,17 +51,8 @@ class MIL_ObjectManipulator_ABC;
 class MIL_ObjectType_ABC;
 class MIL_PopulationElement_ABC;
 class TER_Localisation;
-
-// HLA
-namespace hla
-{
-    class Deserializer;
-    class AttributeIdentifier;
-}
-
 class HLA_Object_ABC;
 class HLA_UpdateFunctor;
-
 
 //=============================================================================
 // Created: NLD 2002-12-12
@@ -171,8 +164,9 @@ public:
 
     //! @name Network
     //@{
-    virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& attributes ) = 0;
-    virtual MsgsSimToClient::MsgMagicActionAck_ErrorCode OnUpdateResourceLinks( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list );
+    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& attributes ) = 0;
+    virtual sword::MagicActionAck_ErrorCode OnUpdateResourceLinks( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& list );
+
     virtual void SendCreation() const = 0;
     virtual void SendDestruction() const = 0;
     virtual void SendFullState() const = 0;
@@ -212,19 +206,11 @@ protected:
     static MIL_IDManager idManager_;
 
 private:
-    //! @name Members
+    //! @name Member data
     //@{
     const MIL_ObjectType_ABC* pType_;
           MIL_Army_ABC*       pArmy_;
-    //@}
-
-    //! @name Interaction proxy
-    //@{
     MIL_ObjectInteraction interaction_;
-    //@}
-
-    //! @name destruction management
-    //@{
     bool bMarkedForDestruction_;
     bool bReadyForDeletion_;
     //@}
@@ -233,4 +219,3 @@ private:
 #include "MIL_Object_ABC.inl"
 
 #endif // __MIL_Object_ABC_h_
-

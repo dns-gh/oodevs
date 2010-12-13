@@ -15,7 +15,7 @@
 // Name: MIL_EquipmentTypeParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_EquipmentTypeParameter::MIL_EquipmentTypeParameter( const Common::EquipmentType & asn )
+MIL_EquipmentTypeParameter::MIL_EquipmentTypeParameter( const sword::EquipmentType & asn )
     : pType_( PHY_ComposanteTypePion::Find( asn ) )
 {
     // NOTHING
@@ -40,7 +40,6 @@ MIL_EquipmentTypeParameter::~MIL_EquipmentTypeParameter()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_EquipmentTypeParameter::IsOfType
 // Created: LDC 2009-05-22
@@ -64,11 +63,10 @@ bool MIL_EquipmentTypeParameter::ToEquipmentType( const PHY_ComposanteTypePion*&
 // Name: MIL_EquipmentTypeParameter::ToElement
 // Created: MGD 2010-11-19
 // -----------------------------------------------------------------------------
-bool MIL_EquipmentTypeParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+bool MIL_EquipmentTypeParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
 {
     if( !pType_ )
         return false;
     *elem.mutable_equipmenttype() = pType_->GetMosID();
     return true;
 }
-

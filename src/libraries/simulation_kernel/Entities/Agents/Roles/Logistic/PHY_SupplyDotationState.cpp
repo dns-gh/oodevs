@@ -207,7 +207,7 @@ void PHY_SupplyDotationState::SendMsgCreation() const
 
     for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
     {
-        MsgsSimToClient::MsgDotationQuery& asnDemande = *asn().mutable_dotations()->add_elem();
+        sword::MsgDotationQuery& asnDemande = *asn().mutable_dotations()->add_elem();
         it->second.Serialize( asnDemande );
     }
 

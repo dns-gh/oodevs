@@ -16,15 +16,15 @@
 #include "tools/Resolver.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
-namespace Common
+namespace sword
 {
     class ObjectAttributes;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgObjectCreation;
-    class MsgObjectUpdate;
+    class ObjectCreation;
+    class ObjectUpdate;
 }
 
 namespace dispatcher
@@ -40,18 +40,18 @@ namespace dispatcher
 // =============================================================================
 class Object : public dispatcher::Object_ABC
              , public kernel::Extension_ABC
-             , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
+             , public kernel::Updatable_ABC< sword::ObjectUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Object( Model_ABC& model, const MsgsSimToClient::MsgObjectCreation& msg, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types );
+             Object( Model_ABC& model, const sword::ObjectCreation& msg, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types );
     virtual ~Object();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& msg );
+    virtual void DoUpdate( const sword::ObjectUpdate& msg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -78,6 +78,7 @@ private:
     {
         unsigned localisationPresent : 1;
     };
+    //@}
 
 private:
     const kernel::ObjectType& type_;

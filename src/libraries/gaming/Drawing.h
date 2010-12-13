@@ -13,7 +13,7 @@
 #include "clients_gui/DrawerShape.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/messengersenders.h"
+#include "protocol/MessengerSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 
 namespace kernel
@@ -25,7 +25,8 @@ namespace gui
 {
     class DrawingTypes;
 }
-namespace Common
+
+namespace sword
 {
     class MsgCoordLatLongList;
 }
@@ -39,12 +40,12 @@ class Publisher_ABC;
 // Created: SBO 2008-06-04
 // =============================================================================
 class Drawing : public gui::DrawerShape
-              , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgShapeUpdate >
+              , public kernel::Updatable_ABC< sword::ShapeUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Drawing( kernel::Controller& controller, const MsgsMessengerToClient::MsgShapeCreation& asn, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
+             Drawing( kernel::Controller& controller, const sword::ShapeCreation& asn, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
              Drawing( kernel::Controller& controller, const gui::DrawingTemplate& style, const QColor& color, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
              Drawing( kernel::Controller& controller, xml::xistream& xis, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
     virtual ~Drawing();
@@ -52,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsMessengerToClient::MsgShapeUpdate& message );
+    virtual void DoUpdate( const sword::ShapeUpdate& message );
     //@}
 
 private:
@@ -70,8 +71,8 @@ private:
 
     //! @name Helpers
     //@{
-    void SetLocation( const Common::MsgCoordLatLongList& list );
-    void SerializeLocation( Common::MsgCoordLatLongList& list ) const;
+    void SetLocation( const sword::MsgCoordLatLongList& list );
+    void SerializeLocation( sword::MsgCoordLatLongList& list ) const;
     //@}
 
 private:

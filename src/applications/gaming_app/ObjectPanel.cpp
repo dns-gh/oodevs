@@ -23,7 +23,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/StaticModel.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace actions;
 using namespace kernel;
@@ -147,27 +147,27 @@ void ObjectPanel::OnApply()
         if( pCheckBox && pCheckBox->IsChecked() )
         {
             ParameterList& obstacleList = attributesList->AddList( "Obstacle" );
-            obstacleList.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_obstacle );
-            obstacleList.AddIdentifier( "TargetType", Common::ObstacleType_DemolitionTargetType_reserved );
+            obstacleList.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_obstacle );
+            obstacleList.AddIdentifier( "TargetType", sword::ObstacleType_DemolitionTargetType_reserved );
             obstacleList.AddBool( "Activation", true );
         }
 
         ParameterList& constructionList = attributesList->AddList( "Construction" );
-        constructionList.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_construction );
+        constructionList.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_construction );
         constructionList.AddIdentifier( "Type", 0 );
         constructionList.AddQuantity( "Number", 0 );
         constructionList.AddNumeric( "Density", 0 );
         constructionList.AddQuantity( "Percentage", construction_->GetValue() );
 
         ParameterList& mineList = attributesList->AddList( "Mine" );
-        mineList.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_mine );
+        mineList.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_mine );
         mineList.AddIdentifier( "Type", 0 );
         mineList.AddQuantity( "Number", 0 );
         mineList.AddNumeric( "Density", 0 );
         mineList.AddQuantity( "Percentage", valorisation_->GetValue() );
 
         ParameterList& bypassList = attributesList->AddList( "Bypass" );
-        bypassList.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_bypass );
+        bypassList.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_bypass );
         bypassList.AddQuantity( "Percentage", contournement_->GetValue() );
 
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );

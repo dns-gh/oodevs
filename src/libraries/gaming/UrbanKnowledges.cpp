@@ -45,7 +45,7 @@ UrbanKnowledges::~UrbanKnowledges()
 // Name: UrbanKnowledges::DoUpdate
 // Created: MGD 2009-12-09
 // -----------------------------------------------------------------------------
-void UrbanKnowledges::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
+void UrbanKnowledges::DoUpdate( const sword::UrbanKnowledgeCreation& message )
 {
     if( ! Find( message.knowledge().id() ) )
         Register( message.knowledge().id(), * factory_.Create( team_, message ) );
@@ -56,7 +56,7 @@ void UrbanKnowledges::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation
 // Name: UrbanKnowledges::DoUpdate
 // Created: MGD 2009-12-09
 // -----------------------------------------------------------------------------
-void UrbanKnowledges::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
+void UrbanKnowledges::DoUpdate( const sword::UrbanKnowledgeUpdate& message )
 {
     Get( message.knowledge().id() ).Update( message );
     controller_.Update( *this );
@@ -66,7 +66,7 @@ void UrbanKnowledges::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& 
 // Name: UrbanKnowledges::DoUpdate
 // Created: MGD 2009-12-09
 // -----------------------------------------------------------------------------
-void UrbanKnowledges::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeDestruction& message )
+void UrbanKnowledges::DoUpdate( const sword::UrbanKnowledgeDestruction& message )
 {
     delete Find( message.knowledge().id() );
     Remove( message.knowledge().id() );

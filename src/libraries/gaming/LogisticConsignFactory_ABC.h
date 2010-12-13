@@ -10,11 +10,11 @@
 #ifndef __LogisticConsignFactory_ABC_h_
 #define __LogisticConsignFactory_ABC_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogMaintenanceHandlingCreation;
-    class MsgLogSupplyHandlingCreation;
-    class MsgLogMedicalHandlingCreation;
+    class LogMaintenanceHandlingCreation;
+    class LogSupplyHandlingCreation;
+    class LogMedicalHandlingCreation;
 }
 
 class LogMaintenanceConsign;
@@ -38,9 +38,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual LogMaintenanceConsign* CreateMaintenanceConsign( const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& message ) = 0;
-    virtual LogSupplyConsign*      CreateSupplyConsign     ( const MsgsSimToClient::MsgLogSupplyHandlingCreation& message ) = 0;
-    virtual LogMedicalConsign*     CreateMedicalConsign    ( const MsgsSimToClient::MsgLogMedicalHandlingCreation& message ) = 0;
+    virtual LogMaintenanceConsign* CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message ) = 0;
+    virtual LogSupplyConsign*      CreateSupplyConsign     ( const sword::LogSupplyHandlingCreation& message ) = 0;
+    virtual LogMedicalConsign*     CreateMedicalConsign    ( const sword::LogMedicalHandlingCreation& message ) = 0;
     //@}
 };
 

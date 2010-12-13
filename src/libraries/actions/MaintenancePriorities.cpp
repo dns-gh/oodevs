@@ -35,7 +35,7 @@ MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter )
 // Name: MaintenancePriorities constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, const tools::Resolver_ABC< EquipmentType >& resolver, const Common::MsgLogMaintenancePriorities& message )
+MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, const tools::Resolver_ABC< EquipmentType >& resolver, const sword::LogMaintenancePriorities& message )
     : Parameter< std::string >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
@@ -82,12 +82,12 @@ void MaintenancePriorities::AddPriority( const EquipmentType& value )
 // Name: MaintenancePriorities::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MaintenancePriorities::CommitTo( Common::MsgMissionParameter& message ) const
+void MaintenancePriorities::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
     {
-        Common::MsgLogMaintenancePriorities* list =message.mutable_value()->Add()->mutable_logmaintenancepriorities();
+        sword::LogMaintenancePriorities* list =message.mutable_value()->Add()->mutable_logmaintenancepriorities();
         for( unsigned int i = 0; i < priorities_.size(); ++i )
             list->add_elem()->set_id( priorities_.at( i )->GetId() );
     }
@@ -96,11 +96,11 @@ void MaintenancePriorities::CommitTo( Common::MsgMissionParameter& message ) con
 // Name: MaintenancePriorities::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MaintenancePriorities::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void MaintenancePriorities::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
     {
-        Common::MsgLogMaintenancePriorities* list = message.mutable_logmaintenancepriorities();
+        sword::LogMaintenancePriorities* list = message.mutable_logmaintenancepriorities();
         for( unsigned int i = 0; i < priorities_.size(); ++i )
             list->add_elem()->set_id( priorities_.at( i )->GetId() );
     }

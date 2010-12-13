@@ -32,9 +32,9 @@ class AgentKnowledgeFactory_ABC;
 // Created: AGE 2006-02-15
 // =============================================================================
 class AgentKnowledges : public kernel::Extension_ABC
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeCreation >
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeUpdate >
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeDestruction >
+                      , public kernel::Updatable_ABC< sword::UnitKnowledgeCreation >
+                      , public kernel::Updatable_ABC< sword::UnitKnowledgeUpdate >
+                      , public kernel::Updatable_ABC< sword::UnitKnowledgeDestruction >
                       , public tools::Resolver< kernel::AgentKnowledge_ABC >
                       , public kernel::Creatable< AgentKnowledges >
 {
@@ -54,9 +54,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeCreation&    message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate&      message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeDestruction& message );
+    virtual void DoUpdate( const sword::UnitKnowledgeCreation&    message );
+    virtual void DoUpdate( const sword::UnitKnowledgeUpdate&      message );
+    virtual void DoUpdate( const sword::UnitKnowledgeDestruction& message );
     //@}
 
 private:

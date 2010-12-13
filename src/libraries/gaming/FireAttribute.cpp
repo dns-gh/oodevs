@@ -56,7 +56,7 @@ void FireAttribute::UpdateData( const T& message )
 // Name: FireAttribute::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void FireAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void FireAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -65,7 +65,7 @@ void FireAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& m
 // Name: FireAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void FireAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void FireAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }

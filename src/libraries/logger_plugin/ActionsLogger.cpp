@@ -37,11 +37,11 @@ namespace
 {
     struct NullPublisher : public Publisher_ABC
     {
-        virtual void Send( const MsgsClientToSim::MsgClientToSim& /*message*/ ) {}
-        virtual void Send( const MsgsClientToAuthentication::MsgClientToAuthentication& /*message*/ ) {}
-        virtual void Send( const MsgsClientToReplay::MsgClientToReplay& /*message*/ ) {}
-        virtual void Send( const MsgsClientToAar::MsgClientToAar& /*message*/ ) {}
-        virtual void Send( const MsgsClientToMessenger::MsgClientToMessenger& /*message*/ ) {}
+        virtual void Send( const sword::ClientToSim& /*message*/ ) {}
+        virtual void Send( const sword::ClientToAuthentication& /*message*/ ) {}
+        virtual void Send( const sword::ClientToReplay& /*message*/ ) {}
+        virtual void Send( const sword::ClientToAar& /*message*/ ) {}
+        virtual void Send( const sword::ClientToMessenger& /*message*/ ) {}
     };
 }
 
@@ -116,7 +116,7 @@ void ActionsLogger::LoadOrdersIfCheckpoint()
 // Name: ActionsLogger::Log
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-void ActionsLogger::Log( const Common::MsgUnitOrder& message )
+void ActionsLogger::Log( const sword::UnitOrder& message )
 {
     if( message.has_type() && message.type().id() != 0 )
         LogAction( message );
@@ -126,7 +126,7 @@ void ActionsLogger::Log( const Common::MsgUnitOrder& message )
 // Name: ActionsLogger::Log
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-void ActionsLogger::Log( const Common::MsgAutomatOrder& message )
+void ActionsLogger::Log( const sword::AutomatOrder& message )
 {
     if( message.has_type() && message.type().id() != 0 )
         LogAction( message );
@@ -136,7 +136,7 @@ void ActionsLogger::Log( const Common::MsgAutomatOrder& message )
 // Name: ActionsLogger::Log
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-void ActionsLogger::Log( const Common::MsgCrowdOrder& message )
+void ActionsLogger::Log( const sword::CrowdOrder& message )
 {
     if( message.has_type() && message.type().id() != 0 )
         LogAction( message );
@@ -146,7 +146,7 @@ void ActionsLogger::Log( const Common::MsgCrowdOrder& message )
 // Name: ActionsLogger::Log
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-void ActionsLogger::Log( const MsgsClientToSim::MsgFragOrder& message )
+void ActionsLogger::Log( const sword::FragOrder& message )
 {
     if( message.has_frag_order() && message.frag_order().id() != 0 )
         LogAction( message );

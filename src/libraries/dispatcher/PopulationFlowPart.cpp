@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: PopulationFlowPart constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-PopulationFlowPart::PopulationFlowPart( const MsgsSimToClient::MsgFlowPart& asn )
+PopulationFlowPart::PopulationFlowPart( const sword::MsgFlowPart& asn )
     : localisation_( asn.forme().location() )
     , nRelevance_  ( asn.pertinence() )
 {
@@ -37,7 +37,7 @@ PopulationFlowPart::~PopulationFlowPart()
 // Name: PopulationFlowPart::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void PopulationFlowPart::Send( MsgsSimToClient::MsgFlowPart& asn ) const
+void PopulationFlowPart::Send( sword::MsgFlowPart& asn ) const
 {
     asn.set_pertinence( nRelevance_ );
     localisation_.Send( *asn.mutable_forme()->mutable_location() );

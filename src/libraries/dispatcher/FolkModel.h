@@ -12,9 +12,9 @@
 
 #include "SimpleEntity.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgFolkCreation;
+    class FolkCreation;
 }
 
 namespace kernel
@@ -43,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgFolkCreation& message );
+    void Update( const sword::FolkCreation& message );
 
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;

@@ -17,6 +17,7 @@
 #include "PluginFactory.h"
 #include "Services.h"
 #include "StaticModel.h"
+#include "Shield.h"
 #include "clients_kernel/Tools.h"
 #include <google/protobuf/Message.h>
 #include <qsettings.h>
@@ -36,6 +37,7 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
     , services_           ( new Services() )
     , clientsNetworker_   ( new ClientsNetworker( config, *handler_, *services_ ) )
     , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, *handler_, config ) )
+    , shield_             ( new Shield( config ) )
     , factory_            ( new PluginFactory( config, *model_, *staticModel_, *simulationNetworker_, *clientsNetworker_, *handler_, *registrables_, *services_, maxConnections ) )
     , logger_             ( new Logger() )
 {
@@ -55,7 +57,7 @@ void Dispatcher::AddTranslations()
 {
     QSettings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    QString locale = settings.readEntry( "/Common/Language", QTextCodec::locale() );
+    QString locale = settings.readEntry( "/sword/Language", QTextCodec::locale() );
     qapp_->AddTranslator( locale, "messenger" );
 }
 
@@ -84,6 +86,7 @@ void Dispatcher::Update()
     simulationNetworker_->Update();
     handler_->Update();
     logger_->Update();
+    shield_->Update();
 }
 
 // -----------------------------------------------------------------------------

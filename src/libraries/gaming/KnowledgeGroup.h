@@ -21,9 +21,9 @@ namespace kernel
     class KnowledgeGroupType;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgKnowledgeGroupUpdate;
+    class KnowledgeGroupUpdate;
 }
 // LTO end
 
@@ -35,7 +35,7 @@ namespace MsgsSimToClient
 // =============================================================================
 class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >
                      , public kernel::Extension_ABC // LTO
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupUpdate > // LTO
+                     , public kernel::Updatable_ABC< sword::KnowledgeGroupUpdate > // LTO
 {
 public:
     //! @name Constructors/Destructor
@@ -47,7 +47,7 @@ public:
     //! @name Operation
     //@{
     // LTO begin
-    virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message );
+    virtual void DoUpdate( const sword::KnowledgeGroupUpdate& message );
     //@}
 
     //! @name Accessors

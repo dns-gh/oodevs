@@ -29,7 +29,7 @@ public:
     //! @name Constructor/Destructor
     //@{
              Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
-             Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const MsgsMessengerToClient::MsgLimitCreation& message );
+             Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const sword::LimitCreation& message );
     virtual ~Limit();
     //@}
 

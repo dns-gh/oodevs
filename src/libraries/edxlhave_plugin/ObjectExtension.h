@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace dispatcher
 {
@@ -34,8 +34,8 @@ namespace edxl
 // =============================================================================
  class ObjectExtension
      : public kernel::Extension_ABC
-     , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
-     , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
+     , public kernel::Updatable_ABC< sword::ObjectCreation >
+     , public kernel::Updatable_ABC< sword::ObjectUpdate >
 {
 
 public:
@@ -47,8 +47,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectCreation& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
+    virtual void DoUpdate( const sword::ObjectCreation& message );
+    virtual void DoUpdate( const sword::ObjectUpdate& message );
     //@}
 
 private:

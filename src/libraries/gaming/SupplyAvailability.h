@@ -13,8 +13,6 @@
 #include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
-using namespace Common;
-
 namespace kernel
 {
     class EquipmentType;
@@ -29,19 +27,18 @@ namespace kernel
 // =============================================================================
 class SupplyAvailability
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyAvailability();
-             template< typename Message >
-                 SupplyAvailability( const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const Message& message )
-                : type_     ( & resolver.Get( message.equipment().id() ) )
-                , total_    ( message.nbr_total() )
-                , available_( message.nbr_disponibles() ) 
-                , atWork_   ( message.nbr_au_travail() )
-                , atRest_   ( message.has_nbr_au_repos() ? message.nbr_au_repos() : 0 )
-             {};
+     SupplyAvailability();
+     template< typename Message >
+     SupplyAvailability( const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const Message& message )
+        : type_     ( & resolver.Get( message.equipment().id() ) )
+        , total_    ( message.nbr_total() )
+        , available_( message.nbr_disponibles() ) 
+        , atWork_   ( message.nbr_au_travail() )
+        , atRest_   ( message.has_nbr_au_repos() ? message.nbr_au_repos() : 0 )
+     {}
     virtual ~SupplyAvailability();
     //@}
 

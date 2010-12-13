@@ -15,9 +15,9 @@ namespace MsgsDispatcherToSim
     class MsgDispatcherToSim;
 }
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgClientToSim;
+    class ClientToSim;
 }
 
 namespace dispatcher
@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const MsgsClientToSim::MsgClientToSim& msg ) = 0;
+    virtual void Send( const sword::ClientToSim& msg ) = 0;
     virtual void Send( const MsgsDispatcherToSim::MsgDispatcherToSim& msg ) = 0;
     //@}
 };

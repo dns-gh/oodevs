@@ -50,7 +50,7 @@ bool PopulationDecisions::CanBeOrdered() const
 // Name: PopulationDecisions::DoUpdate
 // Created: SBO 2006-12-18
 // -----------------------------------------------------------------------------
-void PopulationDecisions::DoUpdate( const Common::MsgCrowdOrder& message )
+void PopulationDecisions::DoUpdate( const sword::CrowdOrder& message )
 {
     const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     current_ = resolver.Find( message.type().id() );

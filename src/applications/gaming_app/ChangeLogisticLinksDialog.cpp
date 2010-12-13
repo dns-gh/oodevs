@@ -24,7 +24,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 #include <qgrid.h>
 
 using namespace actions;

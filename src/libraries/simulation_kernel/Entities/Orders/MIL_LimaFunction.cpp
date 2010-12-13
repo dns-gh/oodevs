@@ -13,16 +13,16 @@
 
 MIL_LimaFunction::T_LimaFunctionMap MIL_LimaFunction::limaFunctions_;
 
-const MIL_LimaFunction MIL_LimaFunction::LD_  ( Common::MsgLimaOrder_Function_ligne_debouche              , eLimaFuncLD  , "LD"   );
-const MIL_LimaFunction MIL_LimaFunction::LCA_ ( Common::MsgLimaOrder_Function_ligne_changement_attitude   , eLimaFuncLCA , "LCA"  );
-const MIL_LimaFunction MIL_LimaFunction::LC_  ( Common::MsgLimaOrder_Function_ligne_coordination          , eLimaFuncLC  , "LC"   );
-const MIL_LimaFunction MIL_LimaFunction::LI_  ( Common::MsgLimaOrder_Function_ligne_interdire             , eLimaFuncLI  , "LI"   );
-const MIL_LimaFunction MIL_LimaFunction::LO_  ( Common::MsgLimaOrder_Function_ligne_objectif              , eLimaFuncLO  , "LO"   );
-const MIL_LimaFunction MIL_LimaFunction::LCAR_( Common::MsgLimaOrder_Function_ligne_coup_arret            , eLimaFuncLCAR, "LCAR" );
-const MIL_LimaFunction MIL_LimaFunction::LR_  ( Common::MsgLimaOrder_Function_ligne_recueil               , eLimaFuncLR  , "LR"   );
-const MIL_LimaFunction MIL_LimaFunction::LDM_ ( Common::MsgLimaOrder_Function_ligne_debut_mission         , eLimaFuncLDM , "LDM"  );
-const MIL_LimaFunction MIL_LimaFunction::LFM_ ( Common::MsgLimaOrder_Function_ligne_fin_mission           , eLimaFuncLFM , "LFM"  );
-const MIL_LimaFunction MIL_LimaFunction::LIA_ ( Common::MsgLimaOrder_Function_ligne_identification_accueil, eLimaFuncLIA , "LIA"  );
+const MIL_LimaFunction MIL_LimaFunction::LD_  ( sword::LimaOrder_Function_ligne_debouche              , eLimaFuncLD  , "LD"   );
+const MIL_LimaFunction MIL_LimaFunction::LCA_ ( sword::LimaOrder_Function_ligne_changement_attitude   , eLimaFuncLCA , "LCA"  );
+const MIL_LimaFunction MIL_LimaFunction::LC_  ( sword::LimaOrder_Function_ligne_coordination          , eLimaFuncLC  , "LC"   );
+const MIL_LimaFunction MIL_LimaFunction::LI_  ( sword::LimaOrder_Function_ligne_interdire             , eLimaFuncLI  , "LI"   );
+const MIL_LimaFunction MIL_LimaFunction::LO_  ( sword::LimaOrder_Function_ligne_objectif              , eLimaFuncLO  , "LO"   );
+const MIL_LimaFunction MIL_LimaFunction::LCAR_( sword::LimaOrder_Function_ligne_coup_arret            , eLimaFuncLCAR, "LCAR" );
+const MIL_LimaFunction MIL_LimaFunction::LR_  ( sword::LimaOrder_Function_ligne_recueil               , eLimaFuncLR  , "LR"   );
+const MIL_LimaFunction MIL_LimaFunction::LDM_ ( sword::LimaOrder_Function_ligne_debut_mission         , eLimaFuncLDM , "LDM"  );
+const MIL_LimaFunction MIL_LimaFunction::LFM_ ( sword::LimaOrder_Function_ligne_fin_mission           , eLimaFuncLFM , "LFM"  );
+const MIL_LimaFunction MIL_LimaFunction::LIA_ ( sword::LimaOrder_Function_ligne_identification_accueil, eLimaFuncLIA , "LIA"  );
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LimaFunction::Initialize
@@ -58,7 +58,7 @@ void MIL_LimaFunction::Terminate()
 // Name: MIL_LimaFunction constructor
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-MIL_LimaFunction::MIL_LimaFunction( const Common::MsgLimaOrder_Function& asn, unsigned int nID, const std::string& strName )
+MIL_LimaFunction::MIL_LimaFunction( const sword::LimaOrder_Function& asn, unsigned int nID, const std::string& strName )
     : nAsnID_ ( asn )
     , nID_    ( nID )
     , strName_( strName )
@@ -79,7 +79,7 @@ MIL_LimaFunction::~MIL_LimaFunction()
 // Name: MIL_LimaFunction::Find
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-const MIL_LimaFunction* MIL_LimaFunction::Find( const Common::MsgLimaOrder_Function& asn )
+const MIL_LimaFunction* MIL_LimaFunction::Find( const sword::LimaOrder_Function& asn )
 {
     CIT_LimaFunctionMap it = limaFunctions_.find( asn );
     if( it == limaFunctions_.end() )
@@ -112,7 +112,7 @@ unsigned int MIL_LimaFunction::GetID() const
 // Name: MIL_LimaFunction::GetAsnID
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-Common::MsgLimaOrder_Function MIL_LimaFunction::GetAsnID() const
+sword::LimaOrder_Function MIL_LimaFunction::GetAsnID() const
 {
     return nAsnID_;
 }

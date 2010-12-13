@@ -68,7 +68,7 @@ CrossbowPublisher::~CrossbowPublisher()
 // Name: CrossbowPublisher::IsRelevant
 // Created: SBO 2007-09-27
 // -----------------------------------------------------------------------------
-bool CrossbowPublisher::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper ) const
+bool CrossbowPublisher::IsRelevant( const sword::SimToClient& wrapper ) const
 {
     if( wrapper.message().has_control_begin_tick() ||
         wrapper.message().has_control_end_tick() ||
@@ -101,7 +101,7 @@ bool CrossbowPublisher::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapp
 
     if( wrapper.message().has_unit_attributes() )
     {
-        const MsgsSimToClient::MsgUnitAttributes& attributes = wrapper.message().unit_attributes();
+        const sword::UnitAttributes& attributes = wrapper.message().unit_attributes();
         if( attributes.has_position() || attributes.has_vitesse() || attributes.has_etat_operationnel() )
             return true;
     }
@@ -112,7 +112,7 @@ bool CrossbowPublisher::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapp
 // Name: CrossbowPublisher::IsRelevant
 // Created: RDS 2008-04-11
 // -----------------------------------------------------------------------------
-bool CrossbowPublisher::IsRelevant( const MsgsMessengerToClient::MsgMessengerToClient& wrapper ) const
+bool CrossbowPublisher::IsRelevant( const sword::MessengerToClient& wrapper ) const
 {
     if( wrapper.message().has_lima_destruction() ||
         wrapper.message().has_limit_destruction() )
@@ -130,7 +130,7 @@ bool CrossbowPublisher::IsRelevant( const MsgsMessengerToClient::MsgMessengerToC
 // Name: CrossbowPublisher::IsRelevantAcknowledge
 // Created: MPT 2009-12-22
 // -----------------------------------------------------------------------------
-bool CrossbowPublisher::IsRelevantAcknowledge( const MsgsSimToClient::MsgSimToClient& wrapper ) const
+bool CrossbowPublisher::IsRelevantAcknowledge( const sword::SimToClient& wrapper ) const
 {
     /* if( wrapper.message().has_unit_order_ack() ||
         wrapper.message().has_automat_order_ack() ||
@@ -142,25 +142,25 @@ bool CrossbowPublisher::IsRelevantAcknowledge( const MsgsSimToClient::MsgSimToCl
     if( wrapper.message().has_object_magic_action_ack() )
         return true;
 
-  /*case T_MsgsSimToClient_msg_msg_population_magic_action_ack
-    case T_MsgsSimToClient_msg_msg_change_diplomacy_ack
-    case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group_ack
-    case T_MsgsSimToClient_msg_msg_automat_change_logistic_links_ack
-    case T_MsgsSimToClient_msg_msg_automat_change_superior_ack
-    case T_MsgsSimToClient_msg_msg_unit_change_superior_ack
-    case T_MsgsSimToClient_msg_msg_log_supply_push_flow_ack
-    case T_MsgsSimToClient_msg_msg_log_supply_change_quotas_ack
-    case T_MsgsSimToClient_msg_msg_control_information
-    case T_MsgsSimToClient_msg_msg_control_profiling_information
-    case T_MsgsSimToClient_msg_msg_control_begin_tick
-    case T_MsgsSimToClient_msg_msg_control_end_tick
-    case T_MsgsSimToClient_msg_msg_control_stop_ack
-    case T_MsgsSimToClient_msg_msg_control_pause_ack
-    case T_MsgsSimToClient_msg_msg_control_resume_ack
-    case T_MsgsSimToClient_msg_msg_control_change_time_factor_ack
-    case T_MsgsSimToClient_msg_msg_control_date_time_change_ack
-    case T_MsgsSimToClient_msg_msg_control_global_meteo_ack
-    case T_MsgsSimToClient_msg_msg_control_local_meteo_ack*/
+  /*case T_sword_msg_msg_population_magic_action_ack
+    case T_sword_msg_msg_change_diplomacy_ack
+    case T_sword_msg_msg_automat_change_knowledge_group_ack
+    case T_sword_msg_msg_automat_change_logistic_links_ack
+    case T_sword_msg_msg_automat_change_superior_ack
+    case T_sword_msg_msg_unit_change_superior_ack
+    case T_sword_msg_msg_log_supply_push_flow_ack
+    case T_sword_msg_msg_log_supply_change_quotas_ack
+    case T_sword_msg_msg_control_information
+    case T_sword_msg_msg_control_profiling_information
+    case T_sword_msg_msg_control_begin_tick
+    case T_sword_msg_msg_control_end_tick
+    case T_sword_msg_msg_control_stop_ack
+    case T_sword_msg_msg_control_pause_ack
+    case T_sword_msg_msg_control_resume_ack
+    case T_sword_msg_msg_control_change_time_factor_ack
+    case T_sword_msg_msg_control_date_time_change_ack
+    case T_sword_msg_msg_control_global_meteo_ack
+    case T_sword_msg_msg_control_local_meteo_ack*/
     return false;
 }
 
@@ -168,7 +168,7 @@ bool CrossbowPublisher::IsRelevantAcknowledge( const MsgsSimToClient::MsgSimToCl
 // Name: CrossbowPublisher::Receive
 // Created: SBO 2007-09-27
 // -----------------------------------------------------------------------------
-void CrossbowPublisher::Receive( const MsgsSimToClient::MsgSimToClient& asn )
+void CrossbowPublisher::Receive( const sword::SimToClient& asn )
 {
     try
     {
@@ -192,7 +192,7 @@ void CrossbowPublisher::Receive( const MsgsSimToClient::MsgSimToClient& asn )
 // Name: CrossbowPublisher::Receive
 // Created: RDS 2008-04-11
 // -----------------------------------------------------------------------------
-void CrossbowPublisher::Receive( const MsgsMessengerToClient::MsgMessengerToClient& asn )
+void CrossbowPublisher::Receive( const sword::MessengerToClient& asn )
 {
     try
     {
@@ -211,7 +211,7 @@ void CrossbowPublisher::Receive( const MsgsMessengerToClient::MsgMessengerToClie
 // Name: CrossbowPublisher::UpdateOnTick
 // Created: JCR 2008-01-11
 // -----------------------------------------------------------------------------
-void CrossbowPublisher::UpdateOnTick( const MsgsSimToClient::MsgSimToClient& wrapper )
+void CrossbowPublisher::UpdateOnTick( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_control_send_current_state_begin() )
         modelLoaded_ = false;
@@ -238,7 +238,7 @@ void CrossbowPublisher::UpdateOnTick( const MsgsSimToClient::MsgSimToClient& wra
 // Name: CrossbowPublisher::UpdateDatabase
 // Created: JCR 2008-01-11
 // -----------------------------------------------------------------------------
-void CrossbowPublisher::UpdateDatabase( const MsgsSimToClient::MsgSimToClient& wrapper )
+void CrossbowPublisher::UpdateDatabase( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_formation_creation() )
         databaseUpdater_->Update( wrapper.message().formation_creation() );
@@ -293,7 +293,7 @@ void CrossbowPublisher::UpdateDatabase( const MsgsSimToClient::MsgSimToClient& w
 // Name: CrossbowPublisher::UpdateDatabase
 // Created: RDS 2008-04-11
 // -----------------------------------------------------------------------------
-void CrossbowPublisher::UpdateDatabase( const MsgsMessengerToClient::MsgMessengerToClient& wrapper )
+void CrossbowPublisher::UpdateDatabase( const sword::MessengerToClient& wrapper )
 {
     if( wrapper.message().has_lima_creation() )
         databaseUpdater_->Update( wrapper.message().lima_creation() );
@@ -313,7 +313,7 @@ void CrossbowPublisher::UpdateDatabase( const MsgsMessengerToClient::MsgMessenge
 // Name: CrossbowPublisher::UpdateFolkDatabase
 // Created: JCR 2008-01-11
 // -----------------------------------------------------------------------------
-void CrossbowPublisher::UpdateFolkDatabase( const MsgsSimToClient::MsgSimToClient& wrapper )
+void CrossbowPublisher::UpdateFolkDatabase( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_folk_creation() )
         folkUpdater_->Update( wrapper.message().folk_creation() );
@@ -325,7 +325,7 @@ void CrossbowPublisher::UpdateFolkDatabase( const MsgsSimToClient::MsgSimToClien
 // Name: CrossbowPublisher::HandleAcknowledge
 // Created: MPT 2009-12-22
 // -----------------------------------------------------------------------------
-void CrossbowPublisher::UpdateOnAcknowledge( const MsgsSimToClient::MsgSimToClient& wrapper )
+void CrossbowPublisher::UpdateOnAcknowledge( const sword::SimToClient& wrapper )
 {
     if ( wrapper.message().has_object_magic_action_ack() )
         databaseUpdater_->Log( wrapper.message().object_magic_action_ack() );

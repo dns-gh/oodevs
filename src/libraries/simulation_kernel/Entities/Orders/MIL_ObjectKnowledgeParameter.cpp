@@ -27,7 +27,7 @@ MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( boost::shared_ptr< D
 // Name: MIL_ObjectKnowledgeParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( const Common::ObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
+MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( const sword::ObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
     : pKnowledgeObject_( resolver.ResolveKnowledgeObject( asn ) )
 {
     if( !pKnowledgeObject_ )
@@ -67,9 +67,8 @@ bool MIL_ObjectKnowledgeParameter::ToObjectKnowledge( boost::shared_ptr< DEC_Kno
 // Name: MIL_ObjectKnowledgeParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_ObjectKnowledgeParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+bool MIL_ObjectKnowledgeParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
 {
     elem.mutable_objectknowledge()->set_id( pKnowledgeObject_->GetID() );
     return true;
 }
-

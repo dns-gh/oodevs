@@ -36,7 +36,7 @@ using namespace dispatcher;
 // Name: ObjectKnowledge constructor
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
+ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const sword::ObjectKnowledgeCreation& message )
     : dispatcher::ObjectKnowledge_ABC( message.knowledge().id() )
     , model_                         ( model )
     , owner_                         ( model.Sides().Get( message.party().id() ) )
@@ -71,7 +71,7 @@ ObjectKnowledge::~ObjectKnowledge()
 // Name: ObjectKnowledge::DoUpdate
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
+void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeCreation& message )
 {
     if( ( message.object().id() && ! pObject_ ) || ( pObject_ && pObject_->GetId() != ( unsigned int )message.object().id() ) )
         pObject_ = model_.Objects().Find( message.object().id() );
@@ -81,7 +81,7 @@ void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreatio
 // Name: ObjectKnowledge::DoUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     if( message.has_location()  )
     {
@@ -154,7 +154,7 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( optionals_.automat_perceptionPresent )
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
         {
-            Common::AutomatId& data = *message().mutable_perceiving_automats()->add_elem();
+            sword::AutomatId& data = *message().mutable_perceiving_automats()->add_elem();
             data.set_id( (*it)->GetId() );
         }
     attributes_.Send( *message().mutable_attributes() );

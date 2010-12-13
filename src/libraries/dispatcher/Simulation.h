@@ -13,18 +13,18 @@
 #include "SimulationPublisher_ABC.h"
 
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgSimToClient;
+    class SimToClient;
 }
 namespace MsgsDispatcherToSim
 {
     class MsgDispatcherToSim;
 }
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgClientToSim;
+    class ClientToSim;
 }
 
 
@@ -55,10 +55,10 @@ public:
 
     //! @name Messages
     //@{
-    void OnReceive( const MsgsSimToClient::MsgSimToClient& asnMsg );
+    void OnReceive( const sword::SimToClient& asnMsg );
 
     virtual void Send( const MsgsDispatcherToSim::MsgDispatcherToSim& asnMsg );
-    virtual void Send( const MsgsClientToSim::MsgClientToSim& asnMsg );
+    virtual void Send( const sword::ClientToSim& asnMsg );
     //@}
 
 private:

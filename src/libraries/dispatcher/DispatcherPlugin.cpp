@@ -54,7 +54,7 @@ void DispatcherPlugin::Register( dispatcher::Services& services )
 // Name: DispatcherPlugin::Receive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void DispatcherPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
+void DispatcherPlugin::Receive( const sword::SimToClient& message )
 {
     for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
         (*it)->Send( message );
@@ -83,7 +83,7 @@ void DispatcherPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
 // Name: DispatcherPlugin::OnReceive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void DispatcherPlugin::OnReceive( const std::string& link, const MsgsClientToSim::MsgClientToSim& asnMsg )
+void DispatcherPlugin::OnReceive( const std::string& link, const sword::ClientToSim& asnMsg )
 {
     if( links_.GetProfile( link ).CheckRights( asnMsg ) )
         simulation_.Send( asnMsg );

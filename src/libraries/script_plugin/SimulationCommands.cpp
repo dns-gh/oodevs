@@ -113,6 +113,6 @@ void SimulationCommands::Engage( unsigned automat, bool engage )
 {
     simulation::SetAutomatMode mode;
     mode().mutable_automate()->set_id( automat );
-    mode().set_mode( engage ? Common::embraye : Common::debraye );
+    mode().set_mode( engage ? sword::embraye : sword::debraye );
     mode.Send( publisher_,0 );
 }

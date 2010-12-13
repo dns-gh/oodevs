@@ -28,11 +28,11 @@ MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( boost::shared_ptr< DEC
 // Name: MIL_AgentKnowledgeParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( const Common::UnitKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
+MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( const sword::UnitKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
     : pKnowledgeAgent_( NET_ASN_Tools::ReadAgentKnowledge( asn, resolver ) )
 {
     if( !pKnowledgeAgent_ )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission_parameters );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ bool MIL_AgentKnowledgeParameter::ToAgentKnowledge( boost::shared_ptr< DEC_Knowl
 // Name: MIL_AgentKnowledgeParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_AgentKnowledgeParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+bool MIL_AgentKnowledgeParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
 {
     elem.mutable_agentknowledge()->set_id( pKnowledgeAgent_->GetID() );
     return true;

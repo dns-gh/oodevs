@@ -29,7 +29,7 @@ SimulationNetworker::SimulationNetworker( Model& model, ClientsNetworker& client
     , clients_( clients )
     , handler_( handler )
 {
-    RegisterMessage( *this, &SimulationNetworker::OnReceiveMsgSimToClient );
+    RegisterMessage( *this, &SimulationNetworker::OnReceiveSimToClient );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,10 +79,10 @@ void SimulationNetworker::ConnectionError( const std::string& address, const std
 }
 
 // -----------------------------------------------------------------------------
-// Name: SimulationNetworker::OnReceiveMsgSimToClient
+// Name: SimulationNetworker::OnReceiveSimToClient
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void SimulationNetworker::OnReceiveMsgSimToClient( const std::string& /*linkFrom*/, const MsgsSimToClient::MsgSimToClient& message )
+void SimulationNetworker::OnReceiveSimToClient( const std::string& /*linkFrom*/, const sword::SimToClient& message )
 {
     simulation_->OnReceive( message );
 }
@@ -91,7 +91,7 @@ void SimulationNetworker::OnReceiveMsgSimToClient( const std::string& /*linkFrom
 // Name: SimulationNetworker::Send
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void SimulationNetworker::Send( const MsgsClientToSim::MsgClientToSim& asnMsg )
+void SimulationNetworker::Send( const sword::ClientToSim& asnMsg )
 {
     try
     {

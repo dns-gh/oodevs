@@ -11,8 +11,8 @@
 #define __RemoteHost_h_
 
 #include "ExerciseIdentifierFactory_ABC.h"
-#include "Host_ABC.h"
 #include "ResponseHandler_ABC.h"
+#include "Host_ABC.h"
 #include <boost/shared_ptr.hpp>
 #include <map>
 
@@ -36,7 +36,6 @@ class RemoteHost : public Host_ABC
                  , private ExerciseIdentifierFactory_ABC
                  , public ResponseHandler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -54,10 +53,10 @@ public:
 
     //! @name Operation
     //@{
-    virtual void Handle( const MsgsLauncherToAdmin::MsgExercicesListResponse& message );
-    virtual void Handle( const MsgsLauncherToAdmin::MsgControlStartAck& message );
-    virtual void Handle( const MsgsLauncherToAdmin::MsgControlStopAck& message );
-    virtual void Handle( const MsgsAuthenticationToClient::MsgProfileDescriptionList& message );
+    virtual void Handle( const sword::ExercicesListResponse& message );
+    virtual void Handle( const sword::ControlStartExerciseAck& message );
+    virtual void Handle( const sword::ControlStopExerciseAck& message );
+    virtual void Handle( const sword::ProfileDescriptionList& message );
     //@}
 
 private:

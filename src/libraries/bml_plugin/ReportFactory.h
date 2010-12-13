@@ -47,8 +47,8 @@ public:
 
     //! @name Operations
     //@{
-    OrderReport* CreateOrderReport( const dispatcher::Agent_ABC& entity, const Common::MsgUnitOrder& asn ) const;
-    OrderReport* CreateOrderReport( const dispatcher::Automat_ABC& entity, const Common::MsgAutomatOrder& asn ) const;
+    OrderReport* CreateOrderReport( const dispatcher::Agent_ABC& entity, const sword::UnitOrder& asn ) const;
+    OrderReport* CreateOrderReport( const dispatcher::Automat_ABC& entity, const sword::AutomatOrder& asn ) const;
     //@}
 
 private:

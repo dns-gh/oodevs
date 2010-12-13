@@ -28,10 +28,10 @@ namespace
         }
         void createUrbanObject()
         {
-            MsgsSimToClient::MsgUrbanCreation& message = *expected.mutable_message()->mutable_urban_creation();
+            sword::UrbanCreation& message = *expected.mutable_message()->mutable_urban_creation();
             message.mutable_urban_object()->set_id( 1 );
             message.set_name( "test" );
-            message.mutable_location()->set_type( Common::MsgLocation::point );
+            message.mutable_location()->set_type( sword::MsgLocation::point );
             message.mutable_location()->mutable_coordinates()->add_elem();
             message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 42. );
             message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );
@@ -48,7 +48,7 @@ namespace
         tools::Resolver< dispatcher::Team_ABC > teams;
         std::auto_ptr< dispatcher::UrbanObject_ABC > result;
         MockModel model;
-        MsgsSimToClient::MsgSimToClient expected;
+        sword::SimToClient expected;
         MockClientPublisher publisher;
     };
 }
@@ -70,9 +70,9 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated, Fixture )
 {
     {
         createUrbanObject();
-        MsgsSimToClient::MsgUrbanUpdate& message = *expected.mutable_message()->mutable_urban_update();
+        sword::UrbanUpdate& message = *expected.mutable_message()->mutable_urban_update();
         message.mutable_urban_object()->set_id( 1 );
-        message.mutable_location()->set_type( Common::MsgLocation::line );
+        message.mutable_location()->set_type( sword::MsgLocation::line );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 1. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 42. );
@@ -85,10 +85,10 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated, Fixture )
     }
     {
         expected.mutable_message()->Clear();
-        MsgsSimToClient::MsgUrbanCreation& message = *expected.mutable_message()->mutable_urban_creation();
+        sword::UrbanCreation& message = *expected.mutable_message()->mutable_urban_creation();
         message.mutable_urban_object()->set_id( 1 );
         message.set_name( "test" );
-        message.mutable_location()->set_type( Common::MsgLocation::line );
+        message.mutable_location()->set_type( sword::MsgLocation::line );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 1. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 42. );
@@ -108,7 +108,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated_With_No_Optionals, Fixture )
 {
     {
         createUrbanObject();
-        MsgsSimToClient::MsgUrbanUpdate& message = *expected.mutable_message()->mutable_urban_update();
+        sword::UrbanUpdate& message = *expected.mutable_message()->mutable_urban_update();
         message.mutable_urban_object()->set_id( 1 );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
         result->Update( message );
@@ -118,10 +118,10 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated_With_No_Optionals, Fixture )
     }
     {
         expected.mutable_message()->Clear();
-        MsgsSimToClient::MsgUrbanCreation& message = *expected.mutable_message()->mutable_urban_creation();
+        sword::UrbanCreation& message = *expected.mutable_message()->mutable_urban_creation();
         message.mutable_urban_object()->set_id( 1 );
         message.set_name( "test" );
-        message.mutable_location()->set_type( Common::MsgLocation::point );
+        message.mutable_location()->set_type( sword::MsgLocation::point );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 42. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );

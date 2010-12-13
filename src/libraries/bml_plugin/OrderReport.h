@@ -43,8 +43,8 @@ class OrderReport
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderReport( const dispatcher::Agent_ABC& agent, const tools::Resolver_ABC< kernel::MissionType >& missions, const Common::MsgUnitOrder& asn );
-             OrderReport( const dispatcher::Automat_ABC& automat, const tools::Resolver_ABC< kernel::MissionType >& missions, const Common::MsgAutomatOrder& asn );
+             OrderReport( const dispatcher::Agent_ABC& agent, const tools::Resolver_ABC< kernel::MissionType >& missions, const sword::UnitOrder& asn );
+             OrderReport( const dispatcher::Automat_ABC& automat, const tools::Resolver_ABC< kernel::MissionType >& missions, const sword::AutomatOrder& asn );
     virtual ~OrderReport();
     //@}
 

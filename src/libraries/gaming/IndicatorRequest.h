@@ -11,7 +11,7 @@
 #define __IndicatorRequest_h_
 
 #include "protocol/Protocol.h"
-#include "protocol/Aarsenders.h"
+#include "protocol/AarSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 
 namespace kernel
@@ -49,8 +49,8 @@ public:
     void Commit() const;
 
     QString GetName() const;
-    void Update( const MsgsAarToClient::MsgPlotResult& message );
-    void Update( const MsgsAarToClient::MsgIndicator& message );
+    void Update( const sword::PlotResult& message );
+    void Update( const sword::Indicator& message );
     bool IsPending() const;
     bool IsDone() const;
     bool IsFailed() const;

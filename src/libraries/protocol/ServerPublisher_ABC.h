@@ -10,11 +10,14 @@
 #ifndef __protocol_Publisher_ABC_h_
 #define __protocol_Publisher_ABC_h_
 
-namespace MsgsClientToSim            { class MsgClientToSim; }
-namespace MsgsClientToAuthentication { class MsgClientToAuthentication; }
-namespace MsgsClientToReplay         { class MsgClientToReplay; }
-namespace MsgsClientToAar            { class MsgClientToAar; }
-namespace MsgsClientToMessenger      { class MsgClientToMessenger; }
+namespace sword
+{
+    class ClientToAar;
+    class ClientToMessenger;
+    class ClientToAuthentication;
+    class ClientToReplay;
+    class ClientToSim;
+}
 
 // =============================================================================
 /** @class  Publisher_ABC
@@ -33,11 +36,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const MsgsClientToSim::MsgClientToSim& message ) = 0;
-    virtual void Send( const MsgsClientToAuthentication::MsgClientToAuthentication& message ) = 0;
-    virtual void Send( const MsgsClientToReplay::MsgClientToReplay& message ) = 0;
-    virtual void Send( const MsgsClientToAar::MsgClientToAar& message ) = 0;
-    virtual void Send( const MsgsClientToMessenger::MsgClientToMessenger& message ) = 0;
+    virtual void Send( const sword::ClientToSim& message ) = 0;
+    virtual void Send( const sword::ClientToAuthentication& message ) = 0;
+    virtual void Send( const sword::ClientToReplay& message ) = 0;
+    virtual void Send( const sword::ClientToAar& message ) = 0;
+    virtual void Send( const sword::ClientToMessenger& message ) = 0;
     //@}
 };
 

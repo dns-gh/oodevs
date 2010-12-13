@@ -17,10 +17,10 @@ namespace dispatcher
     class ClientPublisher_ABC;
 }
 
-namespace MsgsClientToMessenger
+namespace sword
 {
-    class MsgClientObjectCreationRequest;
-    class MsgClientObjectUpdateRequest;
+    class ClientObjectCreationRequest;
+    class ClientObjectUpdateRequest;
 }
 
 namespace xml
@@ -46,7 +46,7 @@ class ClientObject : public tools::StringResolver< ClientObjectProperty_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ClientObject( unsigned int id, const MsgsClientToMessenger::MsgClientObjectCreationRequest& message );
+             ClientObject( unsigned int id, const sword::ClientObjectCreationRequest& message );
              ClientObject( unsigned int id, xml::xistream& xis );
     virtual ~ClientObject();
     //@}
@@ -54,7 +54,7 @@ public:
     //! @name Operations
     //@{
     unsigned int GetID() const;
-    void Update( const MsgsClientToMessenger::MsgClientObjectUpdateRequest& message );
+    void Update( const sword::ClientObjectUpdateRequest& message );
     void SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const;
     void SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const;
     void SendFullState( dispatcher::ClientPublisher_ABC& publisher ) const;

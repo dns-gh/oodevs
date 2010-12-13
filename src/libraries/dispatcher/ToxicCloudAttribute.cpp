@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: ToxicCloudAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ToxicCloudAttribute::ToxicCloudAttribute( const Common::ObjectAttributes& message )
+ToxicCloudAttribute::ToxicCloudAttribute( const sword::ObjectAttributes& message )
 {
     Update( message );
 }
@@ -35,7 +35,7 @@ ToxicCloudAttribute::~ToxicCloudAttribute()
 // Name: ToxicCloudAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::Update( const Common::ObjectAttributes& message )
+void ToxicCloudAttribute::Update( const sword::ObjectAttributes& message )
 {
     if( message.has_toxic_cloud() )
         quantities_ = message.toxic_cloud().quantities();
@@ -45,7 +45,7 @@ void ToxicCloudAttribute::Update( const Common::ObjectAttributes& message )
 // Name: ToxicCloudAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::Send( Common::ObjectAttributes& message ) const
+void ToxicCloudAttribute::Send( sword::ObjectAttributes& message ) const
 {
     message.mutable_toxic_cloud()->mutable_quantities()->CopyFrom( quantities_ );
 }

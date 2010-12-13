@@ -117,7 +117,7 @@ namespace
     struct CopyLocation
     {
         template< typename TLocationList >
-        void operator()( TLocationList& lhs, const Common::MsgLocation* rhs )
+        void operator()( TLocationList& lhs, const sword::MsgLocation* rhs )
         {
             lhs.mutable_location()->set_type( rhs->type() );
             for ( int i = 0; i < rhs->coordinates().elem_size(); i++ )
@@ -125,7 +125,7 @@ namespace
         }
 
         template<>
-        void operator()( Common::MsgLocation& lhs, const Common::MsgLocation* rhs )
+        void operator()( sword::MsgLocation& lhs, const sword::MsgLocation* rhs )
         {
             lhs.set_type( rhs->type() );
             for ( int i = 0; i < rhs->coordinates().elem_size(); i++ )
@@ -156,18 +156,18 @@ bool OrderParameterSerializer::IsValidParameter( const kernel::OrderParameter& p
 // Name: OrderParameterSerializer::Serialize
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value ) const
+void OrderParameterSerializer::Serialize( sword::MsgMissionParameter& message, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value ) const
 {
     std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
 
     if( type == "point" )
         SerializeLocation( *message.mutable_value()->Add()->mutable_point()->mutable_location(), parameterId, value );
     else if( type == "polygon" )
-        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->Add()->mutable_area()->mutable_location(), parameterId, value );
+        SerializeLocation< sword::MsgLocation >( *message.mutable_value()->Add()->mutable_area()->mutable_location(), parameterId, value );
     else if( type == "location" )
-        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->Add()->mutable_location(), parameterId, value );
+        SerializeLocation< sword::MsgLocation >( *message.mutable_value()->Add()->mutable_location(), parameterId, value );
     else if( type == "path" )
-        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->Add()->mutable_path()->mutable_location(), parameterId, value );
+        SerializeLocation< sword::MsgLocation >( *message.mutable_value()->Add()->mutable_path()->mutable_location(), parameterId, value );
     else if( type == "automate" )
         SerializeAutomat( *message.mutable_value()->Add()->mutable_automat(), value );
     else if( type == "bool" )
@@ -177,15 +177,15 @@ void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, 
     else if( type == "phaselinelist" )
         SerializePhaseLines( *message.mutable_value()->Add()->mutable_limasorder(), parameterId, value );
     else if( type == "limit" )
-        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->Add()->mutable_limit()->mutable_location(), parameterId, value );
+        SerializeLocation< sword::MsgLocation >( *message.mutable_value()->Add()->mutable_limit()->mutable_location(), parameterId, value );
     else if( type == "intelligencelist" )
         SerializeIntelligenceList( *message.mutable_value()->Add()->mutable_intelligencelist(), value );
     else if( type == "pointlist" )
-        SerializeLocationList< Common::MsgPointList, Common::MsgPoint >( *message.mutable_value()->Add()->mutable_pointlist(), parameterId, value );
+        SerializeLocationList< sword::MsgPointList, sword::MsgPoint >( *message.mutable_value()->Add()->mutable_pointlist(), parameterId, value );
     else if( type == "polygonlist" )
-        SerializeLocationList< Common::MsgPolygonList, Common::MsgPolygon >( *message.mutable_value()->Add()->mutable_polygonlist(), parameterId, value );
+        SerializeLocationList< sword::MsgPolygonList, sword::MsgPolygon >( *message.mutable_value()->Add()->mutable_polygonlist(), parameterId, value );
     else if( type == "locationlist" )
-        SerializeLocationList< Common::MsgLocationList, Common::MsgLocation >( *message.mutable_value()->Add()->mutable_locationlist(), parameterId, value );
+        SerializeLocationList< sword::MsgLocationList, sword::MsgLocation >( *message.mutable_value()->Add()->mutable_locationlist(), parameterId, value );
     else if( type == "numeric" )
         message.mutable_value()->Add()->set_areal( boost::lexical_cast< float >( value ) );
     else if( type == "enumeration" )
@@ -193,17 +193,17 @@ void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, 
     else if( type == "agent" )
         SerializeUnit( *message.mutable_value()->Add()->mutable_agent(), value );
     else if( type == "agentlist" )
-        SerializeValueList< Common::UnitId >( *message.mutable_value()->Add()->mutable_unitlist(), value, BIND_SERIALIZER( SerializeUnit ) );
+        SerializeValueList< sword::UnitId >( *message.mutable_value()->Add()->mutable_unitlist(), value, BIND_SERIALIZER( SerializeUnit ) );
     else if( type == "automatelist" )
-        SerializeValueList< Common::AutomatId >( *message.mutable_value()->Add()->mutable_automatlist(), value, BIND_SERIALIZER( SerializeAutomat ) );    
+        SerializeValueList< sword::AutomatId >( *message.mutable_value()->Add()->mutable_automatlist(), value, BIND_SERIALIZER( SerializeAutomat ) );    
     else if( type == "agentknowledge" )
         SerializeUnitKnowledge( *message.mutable_value()->Add()->mutable_agentknowledge(), value );
     else if( type == "agentknowledgelist" )
-        SerializeValueList< Common::UnitKnowledgeId >( *message.mutable_value()->Add()->mutable_unitknowledgelist(), value, BIND_SERIALIZER( SerializeUnitKnowledge ) );
+        SerializeValueList< sword::UnitKnowledgeId >( *message.mutable_value()->Add()->mutable_unitknowledgelist(), value, BIND_SERIALIZER( SerializeUnitKnowledge ) );
     else if( type == "objectknowledge" )
         SerializeObjectKnowledge( *message.mutable_value()->Add()->mutable_objectknowledge(), value );
     else if( type == "objectknowledgelist" )
-        SerializeValueList< Common::ObjectKnowledgeId >( *message.mutable_value()->Add()->mutable_objectknowledgelist(), value, BIND_SERIALIZER( SerializeObjectKnowledge ) );
+        SerializeValueList< sword::ObjectKnowledgeId >( *message.mutable_value()->Add()->mutable_objectknowledgelist(), value, BIND_SERIALIZER( SerializeObjectKnowledge ) );
     else if( type == "objective" )
         SerializeMissionObjective( *message.mutable_value()->Add()->mutable_missionobjective(), value );
     else if( type == "objectivelist" )
@@ -231,7 +231,7 @@ void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, 
 // Updated: JCR 2009-10-15
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeDirection( Common::MsgHeading& message, const std::string& value ) const
+void OrderParameterSerializer::SerializeDirection( sword::MsgHeading& message, const std::string& value ) const
 {
     std::stringstream ss( value );
     std::string heading;
@@ -244,7 +244,7 @@ void OrderParameterSerializer::SerializeDirection( Common::MsgHeading& message, 
 // Updated: JCR 2009-10-15
 // Created: SBO 2007-06-07
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeAutomat( Common::AutomatId& message, const std::string& value ) const
+void OrderParameterSerializer::SerializeAutomat( sword::AutomatId& message, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
     if( const dispatcher::Agent_ABC* agent = model_.Agents().Find( id ) )
@@ -258,7 +258,7 @@ void OrderParameterSerializer::SerializeAutomat( Common::AutomatId& message, con
 // Name: OrderParameterSerializer::SerializeUnit
 // Created: JCR 2009-10-15
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeUnit( Common::UnitId& message, const std::string& value ) const
+void OrderParameterSerializer::SerializeUnit( sword::UnitId& message, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
     if( ! model_.Agents().Find( id ) )
@@ -308,25 +308,25 @@ void OrderParameterSerializer::SerializeLocation( T& message, unsigned long para
 template< typename T, typename Base >
 void OrderParameterSerializer::SerializeLocationList( T& message, unsigned long parameterId, const std::string& tablename ) const
 {
-    typedef boost::function< void ( Base&, const Common::MsgLocation* ) > Functor;
-    std::vector< Common::MsgLocation* > locations;
+    typedef boost::function< void ( Base&, const sword::MsgLocation* ) > Functor;
+    std::vector< sword::MsgLocation* > locations;
     boost::shared_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( tablename ) );
     FillLocationlist( locations, table, parameterId );
-    SerializeList( message, locations, FunctorWrapperList< Common::MsgLocation, Functor, Base >( CopyLocation() ) );
-    std::for_each( locations.begin(), locations.end(), boost::checked_deleter< Common::MsgLocation >() );
+    SerializeList( message, locations, FunctorWrapperList< sword::MsgLocation, Functor, Base >( CopyLocation() ) );
+    std::for_each( locations.begin(), locations.end(), boost::checked_deleter< sword::MsgLocation >() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::FillLocationlist
 // Created: JCR 2009-10-15
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::FillLocationlist( std::vector< Common::MsgLocation* >& locations, boost::shared_ptr< Table_ABC > table, unsigned long oid ) const
+void OrderParameterSerializer::FillLocationlist( std::vector< sword::MsgLocation* >& locations, boost::shared_ptr< Table_ABC > table, unsigned long oid ) const
 {
     const std::string query( "parameter_id=" + boost::lexical_cast< std::string >( oid ) );
     const Row_ABC* row = table->Find( query );
     while( row != 0 )
     {
-        Common::MsgLocation elt;
+        sword::MsgLocation elt;
         SerializeLocation( elt, row );
         locations.push_back( &elt );
         row = table->GetNextRow();
@@ -337,10 +337,10 @@ void OrderParameterSerializer::FillLocationlist( std::vector< Common::MsgLocatio
 // Name: OrderParameterSerializer::SerializePhaseLines
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializePhaseLines( Common::MsgLimasOrder& /*message*/, unsigned long /*parameterId*/, const std::string& /*tablename*/ ) const
+void OrderParameterSerializer::SerializePhaseLines( sword::LimasOrder& /*message*/, unsigned long /*parameterId*/, const std::string& /*tablename*/ ) const
 {
     // $$$$ SBO 2008-03-10: Not Supported
-    //message = new Common::MsgLimasOrder();
+    //message = new sword::LimasOrder();
     //message->set_n( 0 );
 //    message->mutable_elem() = NULL;
 
@@ -372,13 +372,13 @@ void OrderParameterSerializer::SerializePhaseLines( Common::MsgLimasOrder& /*mes
 
 namespace
 {
-    Common::MsgLimaOrder_Function ConvertLimaTypeFromString( const std::string& type )
+    sword::LimaOrder_Function ConvertLimaTypeFromString( const std::string& type )
     {
         static const std::string functions[] = { "LD", "LCA", "LC", "LI", "LO", "LCAR", "LR", "LDM", "LFM", "LIA" };
         for( int i = 0; i < 10; ++i )
         if( functions[i] == type )
-            return (Common::MsgLimaOrder_Function)i;
-        return (Common::MsgLimaOrder_Function)-1;
+            return (sword::LimaOrder_Function)i;
+        return (sword::LimaOrder_Function)-1;
     }
 }
 
@@ -386,13 +386,13 @@ namespace
 // Name: OrderParameterSerializer::SerializePhaseLine
 // Created: SBO 2008-03-10
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializePhaseLine( Common::MsgLimaOrder& /*message*/, const std::string& /*value*/ ) const
+void OrderParameterSerializer::SerializePhaseLine( sword::LimaOrder& /*message*/, const std::string& /*value*/ ) const
 {
     // $$$$ SBO 2008-03-10: value=id,func1,func2
     /*
     mutable_asn.fonctions()->set_n( std::count( value.begin(), value.end(), ',' ) );;
     if( message.fonctions.elem_size() )
-        message.fonctions.elem = new MsgLimaOrder_Function[message.fonctions.n];
+        message.fonctions.elem = new LimaOrder_Function[message.fonctions.n];
 
     std::stringstream ss( value );
     std::string v;
@@ -429,18 +429,18 @@ namespace
 // Name: OrderParameterSerializer::SerializeIntelligenceList
 // Created: SBO 2008-03-10
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeIntelligenceList( Common::MsgIntelligenceList& message, const std::string& /*value*/ ) const
+void OrderParameterSerializer::SerializeIntelligenceList( sword::IntelligenceList& message, const std::string& /*value*/ ) const
 {
-    typedef boost::function< void ( Common::MsgIntelligence&, const Common::MsgIntelligence* ) > FunctorIntelligence;
-    std::vector< Common::MsgIntelligence* > list;
-    SerializeList( message, list, VoidFunctorWrapperList< Common::MsgIntelligence, FunctorIntelligence >() );
+    typedef boost::function< void ( sword::Intelligence&, const sword::Intelligence* ) > FunctorIntelligence;
+    std::vector< sword::Intelligence* > list;
+    SerializeList( message, list, VoidFunctorWrapperList< sword::Intelligence, FunctorIntelligence >() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::SerializeUnitKnowledge
 // Created: JCR 2009-10-14
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeUnitKnowledge( Common::UnitKnowledgeId& message, const std::string& value ) const
+void OrderParameterSerializer::SerializeUnitKnowledge( sword::UnitKnowledgeId& message, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
     if( ! model_.AgentKnowledges().Find( id ) )
@@ -452,7 +452,7 @@ void OrderParameterSerializer::SerializeUnitKnowledge( Common::UnitKnowledgeId& 
 // Name: OrderParameterSerializer::SerializeObjectKnowledge
 // Created: JCR 2009-10-14
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeObjectKnowledge( Common::ObjectKnowledgeId& message, const std::string& value ) const
+void OrderParameterSerializer::SerializeObjectKnowledge( sword::ObjectKnowledgeId& message, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
     if( ! model_.ObjectKnowledges().Find( id ) )
@@ -464,7 +464,7 @@ void OrderParameterSerializer::SerializeObjectKnowledge( Common::ObjectKnowledge
 // Name: OrderParameterSerializer::SerializeMissionObjective
 // Created: JCR 2009-10-15
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeMissionObjective( Common::MsgMissionObjective& /*message*/, const std::string& /*value*/ ) const
+void OrderParameterSerializer::SerializeMissionObjective( sword::MsgMissionObjective& /*message*/, const std::string& /*value*/ ) const
 {
    // NOTHING
 }
@@ -473,9 +473,9 @@ void OrderParameterSerializer::SerializeMissionObjective( Common::MsgMissionObje
 // Name: OrderParameterSerializer::SerializeMissionObjectiveList
 // Created: JCR 2009-10-15
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeMissionObjectiveList( Common::MsgMissionObjectiveList& message, const std::string& /*value*/ ) const
+void OrderParameterSerializer::SerializeMissionObjectiveList( sword::MsgMissionObjectiveList& message, const std::string& /*value*/ ) const
 {
-    typedef boost::function< void ( Common::MsgMissionObjective&, const Common::MsgMissionObjective* ) > Functor;
-    std::vector< Common::MsgMissionObjective* > list;
-    SerializeList( message, list, VoidFunctorWrapperList< Common::MsgMissionObjective, Functor >() );
+    typedef boost::function< void ( sword::MsgMissionObjective&, const sword::MsgMissionObjective* ) > Functor;
+    std::vector< sword::MsgMissionObjective* > list;
+    SerializeList( message, list, VoidFunctorWrapperList< sword::MsgMissionObjective, Functor >() );
 }

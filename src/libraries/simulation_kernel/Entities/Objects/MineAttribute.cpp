@@ -53,7 +53,7 @@ MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, unsigned int
 // Name: MineAttribute constructor
 // Created: RPD 2009-10-19
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( const Common::MsgMissionParameter_Value& attributes  )
+MineAttribute::MineAttribute( const sword::MsgMissionParameter_Value& attributes  )
     : dotation_           ( 0 )
     , nFullNbrDotation_   ( 0 )
     , nCurrentNbrDotation_( 0 )
@@ -169,7 +169,7 @@ void MineAttribute::Register( MIL_Object_ABC& object ) const
 // Name: MineAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void MineAttribute::SendFullState( Common::ObjectAttributes& asn ) const
+void MineAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     if( dotation_ )
     {
@@ -183,7 +183,7 @@ void MineAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // Name: MineAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void MineAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
+void MineAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
@@ -196,7 +196,7 @@ void MineAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 // Name: MineAttribute::OnUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void MineAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribute )
+void MineAttribute::OnUpdate( const sword::MsgMissionParameter_Value& attribute )
 {
     if( attribute.list_size() > 4 )
     {

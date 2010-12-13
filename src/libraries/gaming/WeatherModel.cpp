@@ -50,7 +50,7 @@ void WeatherModel::Purge()
 // Name: WeatherModel::CreateAmmoEffect
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void WeatherModel::CreateAmmoEffect( const MsgsSimToClient::MsgStartFireEffect& message )
+void WeatherModel::CreateAmmoEffect( const sword::StartFireEffect& message )
 {
     Register( message.fire_effect().id(), *new AmmoEffect( message, controllers_.controller_, model_.static_.coordinateConverter_ ) );
 }
@@ -59,7 +59,7 @@ void WeatherModel::CreateAmmoEffect( const MsgsSimToClient::MsgStartFireEffect& 
 // Name: WeatherModel::DeleteAmmoEffect
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void WeatherModel::DeleteAmmoEffect( const MsgsSimToClient::MsgStopFireEffect& message )
+void WeatherModel::DeleteAmmoEffect( const sword::StopFireEffect& message )
 {
     AmmoEffect* effect = Find( message.fire_effect().id() );
     Remove( message.fire_effect().id() );

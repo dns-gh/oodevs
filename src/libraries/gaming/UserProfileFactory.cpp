@@ -40,7 +40,7 @@ UserProfileFactory::~UserProfileFactory()
 // Name: UserProfileFactory::Create
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfile* UserProfileFactory::Create( const MsgsAuthenticationToClient::MsgProfileCreation& message ) const
+UserProfile* UserProfileFactory::Create( const sword::ProfileCreation& message ) const
 {
     return new UserProfile( message, controllers_.controller_, publisher_ );
 }

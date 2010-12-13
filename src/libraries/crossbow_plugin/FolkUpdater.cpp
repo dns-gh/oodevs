@@ -16,11 +16,11 @@
 #include "QueryBuilder.h"
 #include "WorkingSession_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgFolkGraphUpdate;
-    class MsgFolkGraphEdgeUpdate;
-    class MsgFolkCreation;
+    class FolkGraphUpdate;
+    class FolkGraphEdgeUpdate;
+    class FolkCreation;
 }
 
 using namespace plugins;
@@ -71,7 +71,7 @@ namespace
 // Name: FolkUpdater::Update
 // Created: SBO 2007-09-19
 // -----------------------------------------------------------------------------
-void FolkUpdater::Update( const MsgsSimToClient::MsgFolkCreation& msg )
+void FolkUpdater::Update( const sword::FolkCreation& msg )
 {
     ::Update( activities_, msg.activities() );
     ::Update( profiles_, msg.profiles() );
@@ -83,7 +83,7 @@ void FolkUpdater::Update( const MsgsSimToClient::MsgFolkCreation& msg )
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-09-27
 // -----------------------------------------------------------------------------
-void FolkUpdater::Update( const MsgsSimToClient::MsgFolkGraphUpdate& msg )
+void FolkUpdater::Update( const sword::FolkGraphUpdate& msg )
 {
     if( edges_.size() == 0 )
         throw std::runtime_error( "Trying to update population graph before its creation." );
@@ -104,7 +104,7 @@ void FolkUpdater::Flush()
 // Name: FolkUpdater::Update
 // Created: SBO 2007-09-19
 // -----------------------------------------------------------------------------
-void FolkUpdater::Update( const MsgsSimToClient::MsgFolkGraphEdgeUpdate& msg )
+void FolkUpdater::Update( const sword::FolkGraphEdgeUpdate& msg )
 {
     Edge& edge = edges_[msg.shape_id()];
     Update( edge, msg );
@@ -155,7 +155,7 @@ void FolkUpdater::CommitEdge( Row_ABC& row, const Edge& edge )
 */
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-void FolkUpdater::Update( Edge& edge, const MsgsSimToClient::MsgFolkGraphEdgeUpdate& msg ) const
+void FolkUpdater::Update( Edge& edge, const sword::FolkGraphEdgeUpdate& msg ) const
 {
     const unsigned size = activities_.size() * profiles_.size();
     int c = -1;

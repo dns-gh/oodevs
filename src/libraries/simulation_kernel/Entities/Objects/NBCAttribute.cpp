@@ -57,11 +57,11 @@ NBCAttribute::NBCAttribute()
 // Name: NBCAttribute constructor
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
-NBCAttribute::NBCAttribute( const Common::MsgMissionParameter_Value& attributes )
+NBCAttribute::NBCAttribute( const sword::MsgMissionParameter_Value& attributes )
     : nForm_ ( eGas )
     , danger_( attributes.list( 1 ).quantity() )
 {
-    const Common::MsgMissionParameter_Value& agentsList = attributes.list( 2 );
+    const sword::MsgMissionParameter_Value& agentsList = attributes.list( 2 );
     for( int i = 0; i < agentsList.list_size(); ++i )
     {
         const MIL_NbcAgentType* pType = MIL_NbcAgentType::Find( agentsList.list( i ).identifier() );
@@ -166,13 +166,13 @@ void NBCAttribute::Register( MIL_Object_ABC& object ) const
 // Name: NBCAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void NBCAttribute::SendFullState( Common::ObjectAttributes& asn ) const
+void NBCAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_nbc()->set_danger_level( danger_ );
     asn.mutable_nbc()->mutable_nbc_agents();
     for( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
     {
-        Common::NBCAgentType& data = *asn.mutable_nbc()->add_nbc_agents();
+        sword::NBCAgentType& data = *asn.mutable_nbc()->add_nbc_agents();
         data.set_id( (*it)->GetID() ) ;
     }
 }
@@ -181,7 +181,7 @@ void NBCAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // Name: NBCAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void NBCAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
+void NBCAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {

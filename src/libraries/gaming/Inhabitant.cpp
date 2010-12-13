@@ -31,7 +31,7 @@ unsigned long Inhabitant::nMaxId_ = 200;
 // Name: Inhabitant constructor
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( const MsgsSimToClient::MsgPopulationCreation& message, Controllers& controllers, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver, UrbanModel& model )
+Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& controllers, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver, UrbanModel& model )
     : EntityImplementation< Inhabitant_ABC >( controllers.controller_, message.id().id(), QString( message.name().c_str() ) )
     , controllers_  ( controllers )
     , converter_    ( converter )
@@ -93,7 +93,7 @@ void Inhabitant::CreateDictionary( kernel::Controller& controller )
 // Name: Inhabitant::DoUpdate
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-void Inhabitant::DoUpdate( const MsgsSimToClient::MsgPopulationUpdate& msg )
+void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
 {
     if( msg.has_healthy()  )
         nNbrHealthyHumans_ = msg.healthy();

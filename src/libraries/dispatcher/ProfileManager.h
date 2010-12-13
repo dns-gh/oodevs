@@ -13,24 +13,24 @@
 #include "MessageHandler_ABC.h"
 #include "Registrable_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgSimToClient;
+    class SimToClient;
 }
 
-namespace MsgsAuthenticationToClient
+namespace sword
 {
-    enum  MsgProfileCreationRequestAck_ErrorCode;
-    enum  MsgProfileUpdateRequestAck_ErrorCode;
-    enum  MsgProfileDestructionRequestAck_ErrorCode;
-    class MsgAuthenticationResponse;
+    enum  ProfileCreationRequestAck_ErrorCode;
+    enum  ProfileUpdateRequestAck_ErrorCode;
+    enum  ProfileDestructionRequestAck_ErrorCode;
+    class AuthenticationResponse;
 }
 
-namespace MsgsClientToAuthentication
+namespace sword
 {
-    class MsgProfileCreationRequest;
-    class MsgProfileDestructionRequest;
-    class MsgProfileUpdateRequest;
+    class ProfileCreationRequest;
+    class ProfileDestructionRequest;
+    class ProfileUpdateRequest;
 }
 
 namespace xml
@@ -67,12 +67,12 @@ public:
     Profile* Authenticate( const std::string& strName, const std::string& strPassword ) const;
 
     void Send( ClientPublisher_ABC& publisher ) const;
-    void Send( MsgsAuthenticationToClient::MsgAuthenticationResponse& message ) const;
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+    void Send( sword::AuthenticationResponse& message ) const;
+    virtual void Receive( const sword::SimToClient& message );
 
-    MsgsAuthenticationToClient::MsgProfileCreationRequestAck_ErrorCode    Create ( const MsgsClientToAuthentication::MsgProfileCreationRequest&    message );
-    MsgsAuthenticationToClient::MsgProfileUpdateRequestAck_ErrorCode      Update ( const MsgsClientToAuthentication::MsgProfileUpdateRequest&      message );
-    MsgsAuthenticationToClient::MsgProfileDestructionRequestAck_ErrorCode Destroy( const MsgsClientToAuthentication::MsgProfileDestructionRequest& message );
+    sword::ProfileCreationRequestAck_ErrorCode    Create ( const sword::ProfileCreationRequest&    message );
+    sword::ProfileUpdateRequestAck_ErrorCode      Update ( const sword::ProfileUpdateRequest&      message );
+    sword::ProfileDestructionRequestAck_ErrorCode Destroy( const sword::ProfileDestructionRequest& message );
 
     static void RegisterRoles();
     //@}

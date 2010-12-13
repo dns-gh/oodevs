@@ -58,7 +58,7 @@ void Bool::Serialize( xml::xostream& xos ) const
 // Name: Bool::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Bool::CommitTo( Common::MsgMissionParameter& message ) const
+void Bool::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
     if( IsSet() )
@@ -68,7 +68,7 @@ void Bool::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: Bool::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Bool::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void Bool::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
         message.set_booleanvalue( GetValue() );

@@ -44,7 +44,7 @@ ObjectKnowledges::~ObjectKnowledges()
 // Name: ObjectKnowledges::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
+void ObjectKnowledges::DoUpdate( const sword::ObjectKnowledgeCreation& message )
 {
     if( ! Find( message.knowledge().id() ) )
         Register( message.knowledge().id(), * factory_.Create( *owner_, message ) );
@@ -55,7 +55,7 @@ void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreati
 // Name: ObjectKnowledges::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void ObjectKnowledges::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {    
     ObjectKnowledge_ABC& knowledge = Get( message.knowledge().id() );
     factory_.RegisterAttributes( Get( message.knowledge().id() ), message.attributes() );
@@ -67,7 +67,7 @@ void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate
 // Name: ObjectKnowledges::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeDestruction& message )
+void ObjectKnowledges::DoUpdate( const sword::ObjectKnowledgeDestruction& message )
 {
     delete Find( message.knowledge().id() );
     Remove( message.knowledge().id() );

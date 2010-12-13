@@ -51,7 +51,7 @@ void TeamsModel::Purge()
 // Name: TeamsModel::CreateTeam
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void TeamsModel::CreateTeam( const MsgsSimToClient::MsgPartyCreation& message )
+void TeamsModel::CreateTeam( const sword::PartyCreation& message )
 {
     if( ! tools::Resolver< Team_ABC >::Find( message.party().id() ) )
     {
@@ -64,7 +64,7 @@ void TeamsModel::CreateTeam( const MsgsSimToClient::MsgPartyCreation& message )
 // Name: TeamsModel::CreateFormation
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-void TeamsModel::CreateFormation( const MsgsSimToClient::MsgFormationCreation& message )
+void TeamsModel::CreateFormation( const sword::FormationCreation& message )
 {
     if( ! tools::Resolver< Formation_ABC >::Find( message.formation().id() ) )
     {
@@ -77,7 +77,7 @@ void TeamsModel::CreateFormation( const MsgsSimToClient::MsgFormationCreation& m
 // Name: TeamsModel::DestroyFormation
 // Created: LDC 2010-11-02
 // -----------------------------------------------------------------------------
-void TeamsModel::DestroyFormation( const MsgsSimToClient::MsgFormationDestruction& message )
+void TeamsModel::DestroyFormation( const sword::FormationDestruction& message )
 {
     delete tools::Resolver< Formation_ABC >::Find( message.formation().id() );
     tools::Resolver< Formation_ABC >::Remove( message.formation().id() );

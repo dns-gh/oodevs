@@ -23,8 +23,8 @@ using namespace launcher;
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
 Launcher::Launcher( const Config& config )
-    : config_( config )
-    , server_( new LauncherService( config.GetLauncherPort() ) )
+    : config_   ( config )
+    , server_   ( new LauncherService( config.GetLauncherPort() ) )
     , processes_( new ProcessService( config ) )
 {
     server_->RegisterMessage( *this, &Launcher::HandleAdminToLauncher );
@@ -53,7 +53,7 @@ void Launcher::Update()
 // Name: Launcher::HandleAdminToLauncher
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-void Launcher::HandleAdminToLauncher( const std::string& endpoint, const MsgsAdminToLauncher::MsgAdminToLauncher& message )
+void Launcher::HandleAdminToLauncher( const std::string& endpoint, const sword::AdminToLauncher& message )
 {
     if( message.message().has_connection_request() )
         HandleRequest( endpoint, message.message().connection_request() );
@@ -71,12 +71,12 @@ void Launcher::HandleAdminToLauncher( const std::string& endpoint, const MsgsAdm
 // Name: Launcher::HandleRequest
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgConnectionRequest& message )
+void Launcher::HandleRequest( const std::string& endpoint, const sword::ConnectionRequest& message )
 {
     launcher::ConnectionAck response;
     const bool valid = ProtocolVersionChecker( message.client_version() ).CheckCompatibility();
-    response().set_error_code( valid ? MsgsLauncherToAdmin::MsgConnectionAck::success : MsgsLauncherToAdmin::MsgConnectionAck::incompatible_protocol_version );
-    response().mutable_server_version()->set_value( Version::ProtocolVersion().value() );
+    response().set_error_code( valid ? sword::ConnectionAck::success : sword::ConnectionAck::incompatible_protocol_version );
+    response().mutable_server_version()->set_value( sword::ProtocolVersion().value() );
 //    if( valid )
     {
         response().mutable_dispatcher_address()->set_ip( "127.0.0.1" ); // $$$$ SBO 2010-09-30: ???
@@ -89,10 +89,10 @@ void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLaun
 // Name: Launcher::HandleRequest
 // Created: SBO 2010-09-30
 // -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgExercicesListRequest& /*message*/ )
+void Launcher::HandleRequest( const std::string& endpoint, const sword::ExercicesListRequest& /*message*/ )
 {
     launcher::ExercicesListResponse response;
-    response().set_error_code( MsgsLauncherToAdmin::MsgExercicesListResponse::success );
+    response().set_error_code( sword::ExercicesListResponse::success );
     processes_->SendExerciseList( response() );
     response.Send( server_->ResolveClient( endpoint ) );
 }
@@ -101,13 +101,13 @@ void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLaun
 // Name: Launcher::HandleRequest
 // Created: SBO 2010-10-06
 // -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgControlStart& message )
+void Launcher::HandleRequest( const std::string& endpoint, const sword::ControlStartExercise& message )
 {
-    launcher::ControlStartAck response;
+    launcher::ControlStartExerciseAck response;
     response().mutable_exercise()->set_name( message.exercise().name() );
     response().mutable_exercise()->set_port( message.exercise().port() );
     response().set_error_code( processes_->StartExercise( message ) );
-    response().mutable_exercise()->set_running( response().error_code() == MsgsLauncherToAdmin::MsgControlStartAck::success );
+    response().mutable_exercise()->set_running( response().error_code() == sword::ControlStartExerciseAck::success );
     response.Send( server_->ResolveClient( endpoint ) );
 }
 
@@ -115,9 +115,9 @@ void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLaun
 // Name: Launcher::HandleRequest
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgControlStop& message )
+void Launcher::HandleRequest( const std::string& endpoint, const sword::ControlStopExercise& message )
 {
-    launcher::ControlStopAck response;
+    launcher::ControlStopExerciseAck response;
     response().mutable_exercise()->set_name( message.exercise().name() );
     response().mutable_exercise()->set_port( message.exercise().port() );
     response().set_error_code( processes_->StopExercise( message ) );
@@ -129,7 +129,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLaun
 // Name: Launcher::HandleRequest
 // Created: SBO 2010-11-19
 // -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgProfilesListRequest& /*message*/ )
+void Launcher::HandleRequest( const std::string& endpoint, const sword::ProfilesListRequest& /*message*/ )
 {
     launcher::ProfileDescriptionList response;
     processes_->SendProfileList( response() );

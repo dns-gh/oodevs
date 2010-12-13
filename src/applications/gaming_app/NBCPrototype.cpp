@@ -15,9 +15,9 @@
 #include "protocol/ClientSenders.h"
 #include "actions/ParameterList.h"
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgMagicActionCreateObject;
+    class MagicActionCreateObject;
 }
 
 using namespace kernel;
@@ -50,7 +50,7 @@ NBCPrototype::~NBCPrototype()
 void NBCPrototype::Commit()
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "NBC" );
-    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_nbc );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_nbc );
     list.AddQuantity( "DangerLevel", danger_->value() );
     actions::parameters::ParameterList& agents = list.AddList( "NBCAgents" );
     for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )

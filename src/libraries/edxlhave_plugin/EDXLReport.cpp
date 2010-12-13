@@ -44,7 +44,7 @@ EDXLReport::~EDXLReport()
 // Name: EDXLReport::CreateReport
 // Created: JCR 2010-06-10
 // -----------------------------------------------------------------------------
-void EDXLReport::CreateReport( int id, const std::string& name, const Common::ObjectAttributeMedicalTreatment& medical )
+void EDXLReport::CreateReport( int id, const std::string& name, const sword::ObjectAttributeMedicalTreatment& medical )
 {
     reports_[ id ].reset( new HospitalUpdateReport( name, medical, resolver_ ) );
 }

@@ -13,10 +13,10 @@
 #include "PHY_RoePopulation.h"
 #include "protocol/protocol.h"
 
-using namespace MsgsSimToClient;
+using namespace sword;
 
 PHY_RoePopulation::T_RoePopulationMap PHY_RoePopulation::roePopulations_;
-const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoePopulation::eNone, MsgUnitAttributes_CrowdRoe_none);
+const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoePopulation::eNone, UnitAttributes_CrowdRoe_none);
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoePopulation::Initialize
@@ -25,10 +25,10 @@ const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoeP
 void PHY_RoePopulation::Initialize()
 {
     roePopulations_[ none_.GetName()  ] = &none_;
-    roePopulations_[ "emploi force interdit"                       ] = new PHY_RoePopulation( "Emploi force interdit"                     , eEmploiForceInterdit                  , MsgUnitAttributes_CrowdRoe_emploi_force_interdit                     );
-    roePopulations_[ "maintien a distance par moyens non letaux"   ] = new PHY_RoePopulation( "Maintien à distance par moyens non létaux" , eMaintienADistanceParMoyensNonLetaux  , MsgUnitAttributes_CrowdRoe_maintien_a_distance_par_moyens_non_letaux );
-    roePopulations_[ "dispersion par moyens de defense actifs"     ] = new PHY_RoePopulation( "Dispersion par moyens de défense actifs"   , eDispersionParMoyensDeDefenseActifs   , MsgUnitAttributes_CrowdRoe_dispersion_par_moyens_de_defense_actifs   );
-    roePopulations_[ "armes letales autorisees"                    ] = new PHY_RoePopulation( "Armes létales autorisées"                  , eArmesLetalesAutorisees               , MsgUnitAttributes_CrowdRoe_armes_letales_autorisees                  );
+    roePopulations_[ "emploi force interdit"                       ] = new PHY_RoePopulation( "Emploi force interdit"                     , eEmploiForceInterdit                  , UnitAttributes_CrowdRoe_emploi_force_interdit                     );
+    roePopulations_[ "maintien a distance par moyens non letaux"   ] = new PHY_RoePopulation( "Maintien à distance par moyens non létaux" , eMaintienADistanceParMoyensNonLetaux  , UnitAttributes_CrowdRoe_maintien_a_distance_par_moyens_non_letaux );
+    roePopulations_[ "dispersion par moyens de defense actifs"     ] = new PHY_RoePopulation( "Dispersion par moyens de défense actifs"   , eDispersionParMoyensDeDefenseActifs   , UnitAttributes_CrowdRoe_dispersion_par_moyens_de_defense_actifs   );
+    roePopulations_[ "armes letales autorisees"                    ] = new PHY_RoePopulation( "Armes létales autorisées"                  , eArmesLetalesAutorisees               , UnitAttributes_CrowdRoe_armes_letales_autorisees                  );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +47,7 @@ void PHY_RoePopulation::Terminate()
 // Name: PHY_RoePopulation constructor
 // Created: JVT 2004-12-09
 // -----------------------------------------------------------------------------
-PHY_RoePopulation::PHY_RoePopulation( const std::string& strName, E_Type nType, MsgsSimToClient::MsgUnitAttributes_CrowdRoe nAsnID )
+PHY_RoePopulation::PHY_RoePopulation( const std::string& strName, E_Type nType, sword::UnitAttributes_CrowdRoe nAsnID )
     : strName_ ( strName )
     , nType_   ( nType   )
     , nAsnID_  ( nAsnID  )
@@ -119,7 +119,7 @@ unsigned int PHY_RoePopulation::GetID() const
 // Name: PHY_RoePopulation::GetAsnID
 // Created: NLD 2005-11-15
 // -----------------------------------------------------------------------------
-MsgUnitAttributes_CrowdRoe PHY_RoePopulation::GetAsnID() const
+UnitAttributes_CrowdRoe PHY_RoePopulation::GetAsnID() const
 {
     return nAsnID_;
 }

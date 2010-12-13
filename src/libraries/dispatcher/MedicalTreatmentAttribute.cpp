@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: MedicalTreatmentAttribute::Update
 // Created: JCR 2010-06-02
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::MedicalCapacity::Update( const Common::MedicalTreatmentBedCapacity& capacity )
+void MedicalTreatmentAttribute::MedicalCapacity::Update( const sword::MedicalTreatmentBedCapacity& capacity )
 {
     typeId_ = capacity.type_id();
     if( capacity.has_baseline_count() )
@@ -33,7 +33,7 @@ void MedicalTreatmentAttribute::MedicalCapacity::Update( const Common::MedicalTr
 // Name: MedicalTreatmentAttribute::Send
 // Created: JCR 2010-06-02
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::MedicalCapacity::Send( Common::MedicalTreatmentBedCapacity& capacity ) const
+void MedicalTreatmentAttribute::MedicalCapacity::Send( sword::MedicalTreatmentBedCapacity& capacity ) const
 {
     if ( typeId_ >= 0 )
     {
@@ -48,10 +48,10 @@ void MedicalTreatmentAttribute::MedicalCapacity::Send( Common::MedicalTreatmentB
 // Name: MedicalTreatmentAttribute constructor
 // Created: RFT 2006-09-26
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Common::ObjectAttributes& message )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( const sword::ObjectAttributes& message )
     : doctors_             ( 0 )
     , availableDoctors_    ( 0 )
-    , status_              ( Common::ObjectAttributeMedicalTreatment::normal )
+    , status_              ( sword::ObjectAttributeMedicalTreatment::normal )
 {
     if( message.has_medical_treatment() )
         Update( message.medical_treatment() );
@@ -70,7 +70,7 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 // Name: MedicalTreatmentAttribute::Update
 // Created: RFT 2006-09-26
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::Update( const Common::ObjectAttributes& message )
+void MedicalTreatmentAttribute::Update( const sword::ObjectAttributes& message )
 {
     if( message.has_medical_treatment() )
         Update( message.medical_treatment() );
@@ -80,7 +80,7 @@ void MedicalTreatmentAttribute::Update( const Common::ObjectAttributes& message 
 // Name: MedicalTreatmentAttribute::Update
 // Created: JCR 2010-10-07
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::Update( const Common::ObjectAttributeMedicalTreatment& message )
+void MedicalTreatmentAttribute::Update( const sword::ObjectAttributeMedicalTreatment& message )
 {
     if ( message.has_doctors() )
         doctors_ = message.doctors();
@@ -90,7 +90,6 @@ void MedicalTreatmentAttribute::Update( const Common::ObjectAttributeMedicalTrea
         referenceID_ = message.external_reference_id();
     if( message.has_facility_status() )
         status_ = message.facility_status();
-    
     const int size = static_cast<int>( capacities_.size() );
     if( message.bed_capacities_size() > size )
     {
@@ -98,12 +97,12 @@ void MedicalTreatmentAttribute::Update( const Common::ObjectAttributeMedicalTrea
         capacities_.swap( vector );
     }
     for( int i = 0 ; i < message.bed_capacities_size(); ++i )
-	{
-        const Common::MedicalTreatmentBedCapacity& bed_capacity = message.bed_capacities( i );
+    {
+        const sword::MedicalTreatmentBedCapacity& bed_capacity = message.bed_capacities( i );
         if( bed_capacity.has_type_id() )
         {
-		    if( capacities_.size() <= static_cast< unsigned int >( bed_capacity.type_id() ) )
-	            throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( bed_capacity.type_id() ) );
+            if( capacities_.size() <= static_cast< unsigned int >( bed_capacity.type_id() ) )
+                throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( bed_capacity.type_id() ) );
             capacities_[ bed_capacity.type_id() ].Update( bed_capacity );
         }
     }
@@ -113,13 +112,12 @@ void MedicalTreatmentAttribute::Update( const Common::ObjectAttributeMedicalTrea
 // Name: MedicalTreatmentAttribute::Send
 // Created: RFT 2006-09-27
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::Send( Common::ObjectAttributes& message ) const
+void MedicalTreatmentAttribute::Send( sword::ObjectAttributes& message ) const
 {
     message.mutable_medical_treatment()->set_doctors                ( doctors_ );
     message.mutable_medical_treatment()->set_available_doctors      ( availableDoctors_ );
     message.mutable_medical_treatment()->set_external_reference_id  ( referenceID_ );
     message.mutable_medical_treatment()->set_facility_status        ( status_ );
-    
     if( capacities_.size() > 0 )
     {
         for ( T_TreatmentCapacityVector::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )

@@ -13,7 +13,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
     class MsgPopulationConcentrationKnowledgeUpdate;
 }
@@ -42,7 +42,7 @@ namespace script
 // =============================================================================
 class PopulationKnowledgeNotifier : public kernel::Extension_ABC
 //                        , public kernel::Updatable_ABC< ASN1T_MsgPopulationKnowledgeUpdate >
-                            , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate >
+                            , public kernel::Updatable_ABC< sword::MsgPopulationConcentrationKnowledgeUpdate >
 {
 
 public:
@@ -55,7 +55,7 @@ public:
     //! @name Operations
     //@{
     //virtual void DoUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::MsgPopulationConcentrationKnowledgeUpdate& message );
     //@}
 
 private:

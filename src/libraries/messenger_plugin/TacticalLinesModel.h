@@ -55,19 +55,19 @@ public:
 
     //! @name Network
     //@{
-    void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimitCreationRequest&    message );
-    void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimitDestructionRequest& message );
-    void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimitUpdateRequest&      message );
-    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimaCreationRequest&     message );
-    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimaDestructionRequest&  message );
-    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimaUpdateRequest&       message );
+    void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitCreationRequest&    message );
+    void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitDestructionRequest& message );
+    void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitUpdateRequest&      message );
+    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::LimaCreationRequest&     message );
+    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::LimaDestructionRequest&  message );
+    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::LimaUpdateRequest&       message );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
     //@}
 
     //! @name xml read / write
     //@{
-    void ReadLima ( xml::xistream& xis, const Common::MsgTacticalLine_Diffusion& diffusion );
-    void ReadLimit( xml::xistream& xis, const Common::MsgTacticalLine_Diffusion& diffusion );
+    void ReadLima ( xml::xistream& xis, const sword::MsgTacticalLine_Diffusion& diffusion );
+    void ReadLimit( xml::xistream& xis, const sword::MsgTacticalLine_Diffusion& diffusion );
     void Write( xml::xostream& xos ) const;
     //@}
 

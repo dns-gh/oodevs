@@ -21,7 +21,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 
-using namespace Common;
+using namespace sword;
 namespace bpt = boost::posix_time;
 
 //-----------------------------------------------------------------------------
@@ -384,7 +384,7 @@ bool NET_ASN_Tools::WriteCoordinates( std::vector< boost::shared_ptr< MT_Vector2
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::WriteLine( const T_PointVector& points, MsgLine& asn )
 {
-    asn.mutable_location()->set_type( Common::MsgLocation_Geometry_line );
+    asn.mutable_location()->set_type( sword::MsgLocation_Geometry_line );
     if( points.size() < 2 )
         return false;
     return WriteCoordinates( points, *asn.mutable_location()->mutable_coordinates() );
@@ -543,7 +543,7 @@ void NET_ASN_Tools::WriteObjectKnowledge( const DEC_Knowledge_Object& knowledge,
 // Name: NET_ASN_Tools::WriteListKnowledgeObject
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, Common::ObjectKnowledgeIdList& listResult, const DEC_KnowledgeResolver_ABC& /*resolver*/ )
+void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, sword::ObjectKnowledgeIdList& listResult, const DEC_KnowledgeResolver_ABC& /*resolver*/ )
 {
     listResult.clear_elem();
     for( CIT_KnowledgeObjectDiaIDVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )

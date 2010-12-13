@@ -14,7 +14,7 @@
 
 #include "MT_Tools/MT_Stl.h"
 
-namespace Common
+namespace sword
 {
     enum EnumUnitExperience;
 }
@@ -51,7 +51,7 @@ public:
     static       void            Initialize( xml::xistream& xis );
     static       void            Terminate ();
     static const PHY_Experience* Find      ( const std::string& strName );
-    static const PHY_Experience* Find      ( Common::EnumUnitExperience nAsnID );
+    static const PHY_Experience* Find      ( sword::EnumUnitExperience nAsnID );
     static const PHY_Experience* Find      ( unsigned int nID );
     //@}
 
@@ -59,7 +59,7 @@ public:
     //@{
     const std::string&             GetName                         () const;
           unsigned int                     GetID                           () const;
-          Common::EnumUnitExperience GetAsnID                        () const;
+          sword::EnumUnitExperience GetAsnID                        () const;
           double                 GetWeight                       () const;
           double                 GetCoefMaxSpeedModificator      () const;
           double                 GetCoefReloadingTimeModificator () const;
@@ -86,7 +86,7 @@ private:
     //@}
 
 private:
-     PHY_Experience( const std::string& strName, E_ExperienceType nType, Common::EnumUnitExperience nAsnID, double rDIAWeight );
+     PHY_Experience( const std::string& strName, E_ExperienceType nType, sword::EnumUnitExperience nAsnID, double rDIAWeight );
     ~PHY_Experience();
 
     //! @name Init
@@ -97,7 +97,7 @@ private:
 private:
     const std::string              strName_;
     const E_ExperienceType         nType_;
-    const Common::EnumUnitExperience nAsnID_;
+    const sword::EnumUnitExperience nAsnID_;
     const double                 rDIAWeight_;
 
     double rCoefMaxSpeedModificator_;

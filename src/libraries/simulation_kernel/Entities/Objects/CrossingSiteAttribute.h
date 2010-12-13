@@ -15,7 +15,7 @@
 #include "Knowledge/DEC_Knowledge_ObjectAttributeProxyRecon.h"
 #include <boost/serialization/export.hpp>
 
-namespace Common
+namespace sword
 {
     class ObjectAttributes;
 }
@@ -43,7 +43,7 @@ public:
     //@{
              CrossingSiteAttribute();
     explicit CrossingSiteAttribute( xml::xistream& xis );
-    explicit CrossingSiteAttribute( const Common::MsgMissionParameter_Value& attributes );
+    explicit CrossingSiteAttribute( const sword::MsgMissionParameter_Value& attributes );
     virtual ~CrossingSiteAttribute();
     //@}
 
@@ -64,9 +64,9 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendFullState( Common::ObjectAttributes& asn ) const;
-    virtual void SendUpdate( Common::ObjectAttributes& asn ) const;
-    virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute );
+    virtual void SendFullState( sword::ObjectAttributes& asn ) const;
+    virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
+    virtual void OnUpdate( const sword::MsgMissionParameter_Value& attribute );
     //@}
 
     //! @name Knowledge

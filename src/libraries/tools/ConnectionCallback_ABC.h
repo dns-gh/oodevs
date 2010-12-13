@@ -10,9 +10,10 @@
 #ifndef __ConnectionCallback_ABC_h_
 #define __ConnectionCallback_ABC_h_
 
+#include <string>
+
 namespace tools
 {
-
 // =============================================================================
 /** @class  ConnectionCallback_ABC
     @brief  ConnectionCallback_ABC

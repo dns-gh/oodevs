@@ -21,10 +21,10 @@ namespace kernel
     class Displayer_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogMedicalHandlingCreation;
-    class MsgLogMedicalHandlingUpdate;
+    class LogMedicalHandlingCreation;
+    class LogMedicalHandlingUpdate;
 }
 
 // =============================================================================
@@ -38,13 +38,13 @@ class LogMedicalConsign : public kernel::Drawable_ABC
 public:
     //! @name Operations
     //@{
-             LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const MsgsSimToClient::MsgLogMedicalHandlingCreation& message );
+             LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const sword::LogMedicalHandlingCreation& message );
     virtual ~LogMedicalConsign();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgLogMedicalHandlingUpdate& message );
+    void Update( const sword::LogMedicalHandlingUpdate& message );
     void Display( kernel::Displayer_ABC& displayer, kernel::Displayer_ABC& itemDisplayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}

@@ -40,7 +40,7 @@ ObjectKnowledgeNotifier::~ObjectKnowledgeNotifier()
 // Name: ObjectKnowledgeNotifier::DoUpdate
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-void ObjectKnowledgeNotifier::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& /*message*/ )
+void ObjectKnowledgeNotifier::DoUpdate( const sword::ObjectKnowledgeUpdate& /*message*/ )
 {
     if( !created_ )
     {

@@ -14,7 +14,7 @@
 
 #include "MT_Tools/MT_Stl.h"
 
-namespace Common
+namespace sword
 {
     enum EnumUnitTiredness;
 }
@@ -51,7 +51,7 @@ public:
     static       void           Initialize( xml::xistream& xis );
     static       void           Terminate ();
     static const PHY_Tiredness* Find      ( const std::string& strName );
-    static const PHY_Tiredness* Find      ( Common::EnumUnitTiredness nAsnID );
+    static const PHY_Tiredness* Find      ( sword::EnumUnitTiredness nAsnID );
     static const PHY_Tiredness* Find      ( unsigned int nID );
     //@}
 
@@ -59,7 +59,7 @@ public:
     //@{
     const std::string&          GetName                         () const;
           unsigned int                  GetID                           () const;
-          Common::EnumUnitTiredness GetAsnID                        () const;
+          sword::EnumUnitTiredness GetAsnID                        () const;
           double              GetWeight                       () const;
           double              GetCoefMaxSpeedModificator      () const;
           double              GetCoefReloadingTimeModificator () const;
@@ -86,7 +86,7 @@ private:
     //@}
 
 private:
-     PHY_Tiredness( const std::string& strName, E_TirednessType nType, Common::EnumUnitTiredness nAsnID, double rWeight );
+     PHY_Tiredness( const std::string& strName, E_TirednessType nType, sword::EnumUnitTiredness nAsnID, double rWeight );
     ~PHY_Tiredness();
 
     //! @name Init
@@ -97,7 +97,7 @@ private:
 private:
     const std::string           strName_;
     const E_TirednessType       nType_;
-    const Common::EnumUnitTiredness nAsnID_;
+    const sword::EnumUnitTiredness nAsnID_;
     const double              rDIAWeight_;
 
     double rCoefMaxSpeedModificator_;

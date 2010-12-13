@@ -16,7 +16,7 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::messenger;
-using namespace MsgsMessengerToClient;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: ClientObjectsModel constructor
@@ -40,7 +40,7 @@ ClientObjectsModel::~ClientObjectsModel()
 
 namespace
 {
-    ClientObjectAck::ErrorCode CheckProperties( const ::google::protobuf::RepeatedPtrField< ::Common::ClientObjectProperty >& properties )
+    ClientObjectAck::ErrorCode CheckProperties( const ::google::protobuf::RepeatedPtrField< ::sword::ClientObjectProperty >& properties )
     {
         std::set< std::string > attributeNames;
         for( int i = 0; i < properties.size(); ++i )
@@ -58,7 +58,7 @@ namespace
 // Name: ClientObjectsModel::HandleRequest
 // Created: JSR 2010-10-15
 // -----------------------------------------------------------------------------
-void ClientObjectsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgClientObjectCreationRequest& message )
+void ClientObjectsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ClientObjectCreationRequest& message )
 {
     ClientObjectCreationRequestAck ack;
     ClientObjectAck::ErrorCode error = CheckProperties( message.properties() );
@@ -88,7 +88,7 @@ void ClientObjectsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
 // Name: ClientObjectsModel::HandleRequest
 // Created: JSR 2010-10-15
 // -----------------------------------------------------------------------------
-void ClientObjectsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgClientObjectDestructionRequest& message )
+void ClientObjectsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ClientObjectDestructionRequest& message )
 {
     ClientObjectDestructionRequestAck ack ;
     ClientObjectAck::ErrorCode error = ClientObjectAck::success;
@@ -110,7 +110,7 @@ void ClientObjectsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
 // Name: ClientObjectsModel::HandleRequest
 // Created: JSR 2010-10-15
 // -----------------------------------------------------------------------------
-void ClientObjectsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgClientObjectUpdateRequest& message )
+void ClientObjectsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ClientObjectUpdateRequest& message )
 {
     ClientObjectUpdateRequestAck ack ;
     ClientObjectAck::ErrorCode error = CheckProperties( message.properties() );

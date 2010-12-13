@@ -11,7 +11,7 @@
 
 #include "protocol/Simulation.h"
 
-using namespace MsgsSimToClient;
+using namespace sword;
 using namespace extractors;
 
 // -----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ Humans::Humans( xml::xistream& xis )
 // Name: Humans::Extract
 // Created: AGE 2007-10-29
 // -----------------------------------------------------------------------------
-int Humans::Extract( const MsgUnitAttributes& attributes )
+int Humans::Extract( const UnitAttributes& attributes )
 {
     int result = 0;
     unsigned size = attributes.dotation_eff_personnel().elem_size();

@@ -29,7 +29,7 @@ using namespace kernel;
 // Name: Automat constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-Automat::Automat( const MsgsSimToClient::MsgAutomatCreation& message, Controller& controller,
+Automat::Automat( const sword::AutomatCreation& message, Controller& controller,
                   const tools::Resolver_ABC< kernel::AutomatType >& resolver )
     : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.nom().c_str() ) )
     , type_( resolver.Get( message.type().id() ) )

@@ -13,12 +13,10 @@
 #include "SimulationPublisher_ABC.h"
 #include "tools/ClientNetworker.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgSimToClient;
+    class SimToClient;
 }
-
-struct MsgsInSim;
 
 namespace dispatcher
 {
@@ -46,7 +44,7 @@ public:
 
     //! @name Dispatching
     //@{
-    virtual void Send( const MsgsClientToSim::MsgClientToSim& asnMsg );
+    virtual void Send( const sword::ClientToSim& asnMsg );
     virtual void Send( const MsgsDispatcherToSim::MsgDispatcherToSim& asnMsg );
     //@}
 
@@ -66,7 +64,7 @@ private:
 
     //! @name Messages callbacks
     //@{
-    void OnReceiveMsgSimToClient( const std::string& linkFrom, const MsgsSimToClient::MsgSimToClient& message );
+    void OnReceiveSimToClient( const std::string& linkFrom, const sword::SimToClient& message );
     //@}
 
 private:

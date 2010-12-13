@@ -321,7 +321,7 @@ bool MIL_BaseParameter::ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& 
 // Name: MIL_BaseParameter::ToList
 // Created: LDC 2010-09-22
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToList( ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& ) const
+bool MIL_BaseParameter::ToList( ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >& ) const
 {
     return false;
 }

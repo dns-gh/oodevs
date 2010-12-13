@@ -31,18 +31,18 @@ namespace dispatcher
 // =============================================================================
 class AgentKnowledge : public dispatcher::AgentKnowledge_ABC
                      , public kernel::Extension_ABC
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeUpdate >
+                     , public kernel::Updatable_ABC< sword::UnitKnowledgeUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledge( Model& model, const MsgsSimToClient::MsgUnitKnowledgeCreation& asnMsg );
+             AgentKnowledge( Model& model, const sword::UnitKnowledgeCreation& asnMsg );
     virtual ~AgentKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg );
+    virtual void DoUpdate( const sword::UnitKnowledgeUpdate& asnMsg );
     virtual void SendCreation( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -55,14 +55,14 @@ public:
     virtual const kernel::Agent_ABC* GetEntity() const;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual MsgsSimToClient::EnumUnitIdentificationLevel GetMaxPerceptionLevel() const;
+    virtual sword::EnumUnitIdentificationLevel GetMaxPerceptionLevel() const;
     virtual geometry::Point2d GetPosition() const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< MsgsSimToClient::AutomatPerception > T_AutomatePerceptionVector;
+    typedef std::vector< sword::AutomatPerception > T_AutomatePerceptionVector;
     struct T_Optionals
     {
       unsigned pertinencePresent : 1;
@@ -88,10 +88,10 @@ private:
     const Model& model_;
     const kernel::KnowledgeGroup_ABC& knowledgeGroup_;
     const dispatcher::Agent_ABC& agent_;
-    const Common::UnitType type_;
+    const sword::UnitType type_;
     unsigned int nRelevance_;
-    MsgsSimToClient::EnumUnitIdentificationLevel nPerceptionLevel_;
-    MsgsSimToClient::EnumUnitIdentificationLevel nMaxPerceptionLevel_;
+    sword::EnumUnitIdentificationLevel nPerceptionLevel_;
+    sword::EnumUnitIdentificationLevel nMaxPerceptionLevel_;
     unsigned int nOperationalState_;
     bool bDead_;
     geometry::Point2d position_; // $$$$ _RC_ SBO 2010-05-27: x = latitude, y = longitude !

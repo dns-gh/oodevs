@@ -10,8 +10,7 @@
 #include "Equipments.h"
 
 using namespace extractors;
-
-using namespace Common;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: Equipments constructor
@@ -25,14 +24,14 @@ Equipments::Equipments()
 namespace
 {
     const unsigned nEquipmentStates = 5;
-    typedef int (MsgsSimToClient::EquipmentDotations_EquipmentDotation::* EquipmentDotationsMemberFn)() const;
+    typedef int (sword::EquipmentDotations_EquipmentDotation::* EquipmentDotationsMemberFn)() const;
     EquipmentDotationsMemberFn equipmentData[5] =
     {
-        &MsgsSimToClient::EquipmentDotations_EquipmentDotation::nb_disponibles,
-        &MsgsSimToClient::EquipmentDotations_EquipmentDotation::nb_indisponibles,
-        &MsgsSimToClient::EquipmentDotations_EquipmentDotation::nb_reparables,
-        &MsgsSimToClient::EquipmentDotations_EquipmentDotation::nb_dans_chaine_maintenance,
-        &MsgsSimToClient::EquipmentDotations_EquipmentDotation::nb_prisonniers
+        &sword::EquipmentDotations_EquipmentDotation::nb_disponibles,
+        &sword::EquipmentDotations_EquipmentDotation::nb_indisponibles,
+        &sword::EquipmentDotations_EquipmentDotation::nb_reparables,
+        &sword::EquipmentDotations_EquipmentDotation::nb_dans_chaine_maintenance,
+        &sword::EquipmentDotations_EquipmentDotation::nb_prisonniers
     };
     const char* equipmentStates[5] =
     {
@@ -70,13 +69,13 @@ Equipments::Equipments( xml::xistream& xis )
 // Name: Equipments::Extract
 // Created: AGE 2007-10-29
 // -----------------------------------------------------------------------------
-int Equipments::Extract( const MsgsSimToClient::MsgUnitAttributes& attributes )
+int Equipments::Extract( const sword::UnitAttributes& attributes )
 {
     unsigned size = attributes.dotation_eff_materiel().elem_size();
     while( size > 0 )
     {
         --size;
-        const MsgsSimToClient::EquipmentDotations_EquipmentDotation& equipment = attributes.dotation_eff_materiel().elem( size );
+        const sword::EquipmentDotations_EquipmentDotation& equipment = attributes.dotation_eff_materiel().elem( size );
         if( filter_.IsAllowed( equipment.type().id() ) )
         {
             int quantity = 0;

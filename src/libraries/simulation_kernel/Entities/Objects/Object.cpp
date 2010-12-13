@@ -41,8 +41,6 @@
 BOOST_CLASS_EXPORT_IMPLEMENT( Object )
 
 using namespace hla;
-using namespace Common;
-using namespace MsgsClientToSim;
 
 // -----------------------------------------------------------------------------
 // Name: Object constructor
@@ -62,7 +60,7 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
     builder.Build( *this );
     ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >();
     if( pObstacle )
-        pObstacle->SetType( reserved ? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary );
+        pObstacle->SetType( reserved ? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +83,7 @@ Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const 
     builder.Build( *this );
     ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >();
     if( pObstacle )
-        pObstacle->SetType( reserved? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary );
+        pObstacle->SetType( reserved? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary );
 }
 
 // -----------------------------------------------------------------------------
@@ -343,42 +341,42 @@ const MIL_ObjectManipulator_ABC& Object::operator()() const
 // Name: Object::OnUpdate
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode Object::OnUpdate( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& attributes )
+sword::ObjectMagicActionAck_ErrorCode Object::OnUpdate( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& attributes )
 {
     for( int i = 0; i < attributes.size(); ++i )
     {
-        const MsgMissionParameter_Value& attribute = attributes.Get( i );
+        const sword::MsgMissionParameter_Value& attribute = attributes.Get( i );
         if( attribute.list_size() == 0 ) // it should be a list of lists
-            return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
+            return sword::ObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
         const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
         switch( actionId )
         {
-        case MsgObjectMagicAction_Attribute_mine:
+        case sword::ObjectMagicAction_Attribute_mine:
             GetAttribute< MineAttribute >().OnUpdate( attribute );
             break;
-        case MsgObjectMagicAction_Attribute_bypass:
+        case sword::ObjectMagicAction_Attribute_bypass:
             GetAttribute< BypassAttribute >().OnUpdate( attribute );
             break;
-        case MsgObjectMagicAction_Attribute_construction:
+        case sword::ObjectMagicAction_Attribute_construction:
             GetAttribute< ConstructionAttribute >().OnUpdate( attribute );
             break;
-        case MsgObjectMagicAction_Attribute_obstacle:
+        case sword::ObjectMagicAction_Attribute_obstacle:
             GetAttribute< ObstacleAttribute >().OnUpdate( attribute );
             break;
-        case MsgObjectMagicAction_Attribute_crossing_site:
+        case sword::ObjectMagicAction_Attribute_crossing_site:
             GetAttribute< CrossingSiteAttribute >().OnUpdate( attribute );
             break;
-        case MsgObjectMagicAction_Attribute_supply_route:
+        case sword::ObjectMagicAction_Attribute_supply_route:
             GetAttribute< SupplyRouteAttribute >().OnUpdate( attribute );
             break;
-        case MsgObjectMagicAction_Attribute_medical_treatment:
+        case sword::ObjectMagicAction_Attribute_medical_treatment:
             GetAttribute< MedicalTreatmentAttribute >().OnUpdate( attribute );
             break;
         default:
             break;
         }
     }
-    return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
+    return sword::ObjectMagicActionAck_ErrorCode_no_error;
 }
 
 // -----------------------------------------------------------------------------
@@ -452,7 +450,7 @@ void Object::SendMsgUpdate() const
                    boost::bind( &ObjectAttribute_ABC::SendUpdate, _1, boost::ref( *asn().mutable_attributes() ) ) );
     if( xAttrToUpdate_ & eAttrUpdate_Localisation )
         NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
-    Common::ObjectAttributes& attr = *asn().mutable_attributes();
+    sword::ObjectAttributes& attr = *asn().mutable_attributes();
     if( asn().has_location() || attr.has_construction() || attr.has_obstacle()
         || attr.has_mine() || attr.has_activity_time() || attr.has_bypass()
         || attr.has_logistic() || attr.has_nbc() || attr.has_crossing_site()

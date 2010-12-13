@@ -58,7 +58,7 @@ TimeLimitedAttribute::TimeLimitedAttribute()
 // Name: TimeLimitedAttribute constructor
 // Created: RPD 2009-10-19
 // -----------------------------------------------------------------------------
-TimeLimitedAttribute::TimeLimitedAttribute( const Common::MsgMissionParameter_Value& attributes )
+TimeLimitedAttribute::TimeLimitedAttribute( const sword::MsgMissionParameter_Value& attributes )
     : nActivityTime_ ( attributes.list( 1 ).quantity() )
     , nDeathTimeStep_( 0 )
 {
@@ -148,7 +148,7 @@ bool TimeLimitedAttribute::IsTimeOver( unsigned int time ) const
 // Name: TimeLimitedAttribute::SendFullState
 // Created: JCR 2008-08-21
 // -----------------------------------------------------------------------------
-void TimeLimitedAttribute::SendFullState( Common::ObjectAttributes& asn ) const
+void TimeLimitedAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_activity_time()->set_value( nActivityTime_ );
 }
@@ -157,7 +157,7 @@ void TimeLimitedAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // Name: TimeLimitedAttribute::SendUpdate
 // Created: JCR 2008-08-21
 // -----------------------------------------------------------------------------
-void TimeLimitedAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
+void TimeLimitedAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {

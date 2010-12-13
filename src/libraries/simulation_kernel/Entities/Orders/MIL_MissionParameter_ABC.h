@@ -17,12 +17,13 @@
 
 namespace google
 {
-    namespace protobuf
-    {
-        template< typename T > class RepeatedPtrField;
-    }
+namespace protobuf
+{
+    template< typename T > class RepeatedPtrField;
 }
-namespace Common
+}
+
+namespace sword
 {
     class AutomatId;
     class AutomatIdList;
@@ -31,11 +32,11 @@ namespace Common
     class MsgAtlasNature;
     class MsgDateTime;
     class MsgHeading;
-    class MsgLimasOrder;
+    class LimasOrder;
     class MsgLocation;
     class MsgLocationList;
-    class MsgLogMaintenancePriorities;
-    class MsgLogMedicalPriorities;
+    class LogMaintenancePriorities;
+    class LogMedicalPriorities;
     class MsgMissionObjectiveList;
     class MsgMissionParameter_Value;
     class MsgPath;
@@ -111,8 +112,8 @@ public:
     virtual bool ToId( int& ) const = 0;
     virtual bool ToNumeric( float& ) const = 0;
     virtual bool ToString( std::string& asn ) const = 0;
-    virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& ) const = 0;
-    virtual bool ToElement( Common::MsgMissionParameter_Value& ) const = 0;
+    virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >& ) const = 0;
+    virtual bool ToElement( sword::MsgMissionParameter_Value& ) const = 0;
 
     // The lifecycle of pointers in all functions below must be handled by MIL_MissionParameter_ABC
     virtual bool ToDirection( boost::shared_ptr< MT_Vector2D >& ) const = 0;

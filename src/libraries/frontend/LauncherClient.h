@@ -12,9 +12,9 @@
 
 #include "tools/ClientNetworker.h"
 
-namespace MsgsLauncherToAdmin
+namespace sword
 {
-    class MsgLauncherToAdmin;
+    class LauncherToAdmin;
 }
 
 namespace kernel
@@ -36,13 +36,12 @@ namespace frontend
 
 // =============================================================================
 /** @class  LauncherClient
-    @brief  LauncherClient
+    @brief  Launcher client
 */
 // Created: SBO 2010-09-29
 // =============================================================================
 class LauncherClient : public tools::ClientNetworker
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -66,12 +65,16 @@ private:
     LauncherClient& operator=( const LauncherClient& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
+    //! @name Operations
     //@{
     virtual void ConnectionSucceeded( const std::string& endpoint );
     virtual void ConnectionError( const std::string& address, const std::string& error );
     virtual void ConnectionFailed( const std::string& address, const std::string& error );
-    void HandleLauncherToAdmin( const std::string& endpoint, const MsgsLauncherToAdmin::MsgLauncherToAdmin& message );
+    //@}
+
+    //! @name Helpers
+    //@{
+    void HandleLauncherToAdmin( const std::string& endpoint, const sword::LauncherToAdmin& message );
     void ResetConnection();
     //@}
 

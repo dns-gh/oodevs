@@ -29,7 +29,7 @@ public:
     //! @name Constructor/Destructor
     //@{
              Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
-             Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const MsgsMessengerToClient::MsgLimaCreation& message );
+             Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const sword::LimaCreation& message );
     virtual ~Lima();
     //@}
 

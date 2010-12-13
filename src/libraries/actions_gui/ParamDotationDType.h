@@ -13,7 +13,7 @@
 #include "ParamComboBox.h"
 #include "tools/Resolver.h"
 
-namespace Common
+namespace sword
 {
     class MsgDotationType;
 }
@@ -37,7 +37,7 @@ namespace actions
 */
 // Created: SBO 2006-08-09
 // =============================================================================
-        class ParamDotationDType : public ParamComboBox< int /*Common::MsgDotationType*/ >
+        class ParamDotationDType : public ParamComboBox< int /*sword::MsgDotationType*/ >
 {
 public:
     //! @name Constructors/Destructor

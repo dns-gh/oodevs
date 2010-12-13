@@ -94,12 +94,12 @@ void Simulation::ChangeSpeed( int timeFactor )
 // Name: Simulation::Update
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::Update( const MsgsSimToClient::MsgControlInformation& message )
+void Simulation::Update( const sword::ControlInformation& message )
 {
     tickCount_    = unsigned( -1 );
     currentTick_  = message.current_tick();
     tickDuration_ = message.tick_duration();
-    paused_       = message.status() == Common::paused;
+    paused_       = message.status() == sword::paused;
     timeFactor_   = message.time_factor();
     time_         = message.current_tick() * tickDuration_;
     initialDate_  = message.initial_date_time().data();
@@ -111,12 +111,12 @@ void Simulation::Update( const MsgsSimToClient::MsgControlInformation& message )
 // Name: Simulation::Update
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-void Simulation::Update( const MsgsReplayToClient::MsgControlReplayInformation& message )
+void Simulation::Update( const sword::ControlReplayInformation& message )
 {
     tickDuration_ = message.tick_duration();
     currentTick_  = message.current_tick();
     tickCount_    = message.tick_count();
-    paused_       = message.status() == Common::paused;
+    paused_       = message.status() == sword::paused;
     timeFactor_   = message.time_factor();
     time_         = message.current_tick() * tickDuration_;
     initialDate_  = message.initial_date_time().data();
@@ -128,7 +128,7 @@ void Simulation::Update( const MsgsReplayToClient::MsgControlReplayInformation& 
 // Name: Simulation::Update
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
-void Simulation::Update( const MsgsSimToClient::MsgControlProfilingInformation& message )
+void Simulation::Update( const sword::ControlProfilingInformation& message )
 {
     profiling_.Update( message );
 }
@@ -137,7 +137,7 @@ void Simulation::Update( const MsgsSimToClient::MsgControlProfilingInformation& 
 // Name: Simulation::Update
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::Update( const MsgsSimToClient::MsgControlBeginTick& message )
+void Simulation::Update( const sword::ControlBeginTick& message )
 {
     int tick = message.current_tick();
     date_ = message.date_time().data();
@@ -152,7 +152,7 @@ void Simulation::Update( const MsgsSimToClient::MsgControlBeginTick& message )
 // Name: Simulation::Update
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::Update( const MsgsSimToClient::MsgControlEndTick& message )
+void Simulation::Update( const sword::ControlEndTick& message )
 {
     profiling_.Update( message );
     controller_.Update( endTick_ );
@@ -163,7 +163,7 @@ void Simulation::Update( const MsgsSimToClient::MsgControlEndTick& message )
 // Name: Simulation::Update
 // Created: JSR 2010-05-12
 // -----------------------------------------------------------------------------
-void Simulation::Update( const MsgsSimToClient::MsgControlSendCurrentStateEnd& /*message*/ )
+void Simulation::Update( const sword::ControlSendCurrentStateEnd& /*message*/ )
 {
     initialized_ = true;
     controller_.Update( *this );
@@ -184,7 +184,7 @@ void Simulation::BeginCheckPoint()
 // Name: Simulation::EndCheckPoint
 // Created: SBO 2007-03-09
 // -----------------------------------------------------------------------------
-void Simulation::EndCheckPoint( const MsgsSimToClient::MsgControlCheckPointSaveEnd& message )
+void Simulation::EndCheckPoint( const sword::ControlCheckPointSaveEnd& message )
 {
     checkPoint_.start_ = false;
     if ( message.has_name() )

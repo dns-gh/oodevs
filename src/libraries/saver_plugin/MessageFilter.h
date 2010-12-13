@@ -10,19 +10,19 @@
 #ifndef __MessageFilter_h_
 #define __MessageFilter_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgSimToClient;
-    class MsgUnitAttributes;
-    class MsgUnitKnowledgeUpdate;
-    class MsgObjectUpdate;
-    class MsgObjectKnowledgeUpdate;
-    class MsgCrowdUpdate;
-    class MsgCrowdConcentrationUpdate;
-    class MsgCrowdFlowUpdate;
-    class MsgCrowdKnowledgeUpdate;
-    class MsgCrowdConcentrationKnowledgeUpdate;
-    class MsgCrowdFlowKnowledgeUpdate;
+    class SimToClient;
+    class UnitAttributes;
+    class UnitKnowledgeUpdate;
+    class ObjectUpdate;
+    class ObjectKnowledgeUpdate;
+    class CrowdUpdate;
+    class CrowdConcentrationUpdate;
+    class CrowdFlowUpdate;
+    class CrowdKnowledgeUpdate;
+    class CrowdConcentrationKnowledgeUpdate;
+    class CrowdFlowKnowledgeUpdate;
 }
 
 namespace plugins
@@ -46,22 +46,22 @@ public:
 
     //! @name Operations
     //@{
-    bool IsRelevant( const MsgsSimToClient::MsgSimToClient& message );
+    bool IsRelevant( const sword::SimToClient& message );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    bool IsRelevant( const MsgsSimToClient::MsgUnitAttributes& message );
-    bool IsRelevant( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message );
-    bool IsRelevant( const MsgsSimToClient::MsgObjectUpdate& message );
-    bool IsRelevant( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
-    bool IsRelevant( const MsgsSimToClient::MsgCrowdUpdate& message );
-    bool IsRelevant( const MsgsSimToClient::MsgCrowdConcentrationUpdate& message );
-    bool IsRelevant( const MsgsSimToClient::MsgCrowdFlowUpdate& message );
-    bool IsRelevant( const MsgsSimToClient::MsgCrowdKnowledgeUpdate& message );
-    bool IsRelevant( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& message );
-    bool IsRelevant( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& message );
+    bool IsRelevant( const sword::UnitAttributes& message );
+    bool IsRelevant( const sword::UnitKnowledgeUpdate& message );
+    bool IsRelevant( const sword::ObjectUpdate& message );
+    bool IsRelevant( const sword::ObjectKnowledgeUpdate& message );
+    bool IsRelevant( const sword::CrowdUpdate& message );
+    bool IsRelevant( const sword::CrowdConcentrationUpdate& message );
+    bool IsRelevant( const sword::CrowdFlowUpdate& message );
+    bool IsRelevant( const sword::CrowdKnowledgeUpdate& message );
+    bool IsRelevant( const sword::CrowdConcentrationKnowledgeUpdate& message );
+    bool IsRelevant( const sword::CrowdFlowKnowledgeUpdate& message );
     //@}
 
 private:

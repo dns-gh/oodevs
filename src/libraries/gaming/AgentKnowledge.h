@@ -35,14 +35,14 @@ namespace kernel
 // =============================================================================
 class AgentKnowledge : public kernel::EntityImplementation< kernel::AgentKnowledge_ABC >
                      , public kernel::Extension_ABC
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeUpdate >
+                     , public kernel::Updatable_ABC< sword::UnitKnowledgeUpdate >
                      , public kernel::Drawable_ABC
                      , public kernel::Displayable_ABC
 {
 public:
     //! @name Constructor / Destructor
     //@{
-             AgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgUnitKnowledgeCreation& message, kernel::Controller& controller,
+             AgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const sword::UnitKnowledgeCreation& message, kernel::Controller& controller,
                              const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~AgentKnowledge();
     //@}
@@ -68,7 +68,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::UnitKnowledgeUpdate& message );
     void UpdateSymbol();
     unsigned int ElementsToKeep( kernel::E_PerceptionResult perception ) const;
     const kernel::Karma& TeamKarma( kernel::E_PerceptionResult perception ) const;

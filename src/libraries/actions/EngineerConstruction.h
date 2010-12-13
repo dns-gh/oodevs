@@ -13,7 +13,7 @@
 #include "Parameter.h"
 #include "tools/Resolver_ABC.h"
 
-namespace Common
+namespace sword
 {
     class MsgPlannedWork;
 }
@@ -42,7 +42,7 @@ class EngineerConstruction : public Parameter< std::string >
     //! @name Constructors/Destructor
     //@{
              EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::ObjectType& type );
-             EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, const Common::MsgPlannedWork& message, kernel::Controller& controller );
+             EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, const sword::MsgPlannedWork& message, kernel::Controller& controller );
              EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller );
              EngineerConstruction( const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, xml::xistream& xis, kernel::Controller& controller );
     virtual ~EngineerConstruction();
@@ -52,16 +52,16 @@ class EngineerConstruction : public Parameter< std::string >
     //@{
 
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual bool IsSet() const;
     //@}
 
     //! @name Commiters
     //@{
-    void CommitTo( Common::MsgPlannedWork& message ) const;
-    void Clean( Common::MsgPlannedWork& message ) const;
+    void CommitTo( sword::MsgPlannedWork& message ) const;
+    void Clean( sword::MsgPlannedWork& message ) const;
     //@}
 
 private:
@@ -75,7 +75,7 @@ private:
     //@{
     void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, kernel::Controller& controller );
     virtual void Serialize( xml::xostream& xos ) const;
-    void SetParameters( const Common::MsgPlannedWork& message, const kernel::EntityResolver_ABC& entities, kernel::Controller& controller );
+    void SetParameters( const sword::MsgPlannedWork& message, const kernel::EntityResolver_ABC& entities, kernel::Controller& controller );
     //@}
 
 private:

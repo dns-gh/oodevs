@@ -38,9 +38,9 @@ public:
     //! @name Operations
     //@{
     virtual const weather::PHY_Lighting& GetLighting() const;
-    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalWeather& message );
-    virtual void OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalWeatherDestruction& message );
-    virtual void OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalWeatherCreation& message );
+    virtual void OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& message );
+    virtual void OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWeatherDestruction& message );
+    virtual void OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeatherCreation& message );
     const weather::PHY_Meteo* GetMeteo( const geometry::Point2f& point ) const;
     void Purge();
     //@}

@@ -11,7 +11,7 @@
 #define __IndicatorRequests_h_
 
 #include "tools/Iterator.h"
-#include "protocol/aarsenders.h"
+#include "protocol/AarSenders.h"
 
 namespace kernel
 {
@@ -41,7 +41,7 @@ public:
     //! @name Operations
     //@{
     void Purge();
-    void Update( const MsgsAarToClient::MsgPlotResult& message );
+    void Update( const sword::PlotResult& message );
 
     IndicatorRequest& CreateRequest( const IndicatorDefinition_ABC& definition );
     tools::Iterator< const IndicatorRequest& > CreateIterator();

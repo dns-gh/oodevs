@@ -13,7 +13,7 @@
 #include "protocol/Protocol.h"
 #include "actions/ParameterList.h"
 
-using namespace MsgsClientToSim;
+using namespace sword;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ SupplyRoutePrototype::~SupplyRoutePrototype()
 void SupplyRoutePrototype::Commit()
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "SupplyRoute" );
-    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_supply_route );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_supply_route );
     list.AddBool( "Equipped", equipped_->isOn() );
     list.AddQuantity( "MaxWeight", maxWeight_->value() );
     list.AddQuantity( "Width", width_->value() );

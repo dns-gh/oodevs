@@ -40,7 +40,7 @@ MagicOrders::~MagicOrders()
 // Name: MagicOrders::DoUpdate
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void MagicOrders::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void MagicOrders::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_transporteurs_disponibles()  )
         transportersReady_ = message.transporteurs_disponibles() != 0;

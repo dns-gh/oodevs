@@ -15,9 +15,9 @@
 #include "protocol/protocol.h"
 #include "MT_Tools/MT_Stl.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitAttributes;
+    class UnitAttributes;
 }
 
 // =============================================================================
@@ -53,7 +53,7 @@ public:
     //@{
     const std::string&                                      GetName () const;
           unsigned int                                      GetID   () const;
-          MsgsSimToClient::MsgUnitAttributes_CrowdRoe  GetAsnID() const;
+          sword::UnitAttributes_CrowdRoe  GetAsnID() const;
     //@}
 
     //! @name Operators
@@ -76,13 +76,13 @@ private:
     //@}
 
 private:
-    PHY_RoePopulation( const std::string& strName, E_Type nType, MsgsSimToClient::MsgUnitAttributes_CrowdRoe nAsnID );
+    PHY_RoePopulation( const std::string& strName, E_Type nType, sword::UnitAttributes_CrowdRoe nAsnID );
     virtual ~PHY_RoePopulation();
 
 private:
     const std::string             strName_;
     const E_Type                  nType_;
-    const MsgsSimToClient::MsgUnitAttributes_CrowdRoe nAsnID_;
+    const sword::UnitAttributes_CrowdRoe nAsnID_;
 
 private:
     static T_RoePopulationMap roePopulations_;

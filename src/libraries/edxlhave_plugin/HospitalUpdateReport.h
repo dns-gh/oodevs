@@ -23,7 +23,7 @@ namespace kernel
     class MedicalTreatmentType;
 }
 
-namespace Common 
+namespace sword
 {
     class ObjectAttributeMedicalTreatment;
     class MedicalTreatmentBedCapacity;
@@ -51,7 +51,7 @@ class HospitalUpdateReport
 public:
     //! @name Constructors/Destructor
     //@{
-            HospitalUpdateReport( const std::string& name, const Common::ObjectAttributeMedicalTreatment& medical, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver );
+            HospitalUpdateReport( const std::string& name, const sword::ObjectAttributeMedicalTreatment& medical, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver );
     virtual ~HospitalUpdateReport();
     //@}
 
@@ -69,17 +69,17 @@ private:
 
     //! @name
     //@{
-    void BuildReport( const std::string& name, const Common::ObjectAttributeMedicalTreatment& medical );
+    void BuildReport( const std::string& name, const sword::ObjectAttributeMedicalTreatment& medical );
     //@}
 
     //! @name Helpers
     //@{
-    void UpdateFacilityStatus   ( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatment& object );
-    void UpdateDecon            ( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatment& object );
-    void UpdateEvacuation       ( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatment& object );
-    void UpdateCapacityStatus   ( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatment& object );
-    void UpdateBedStatus        ( xml::xostream& xos, const Common::MedicalTreatmentBedCapacity& object );
-    void UpdateBedCapacity      ( xml::xostream& xos, const Common::MedicalTreatmentBedCapacity& object );
+    void UpdateFacilityStatus   ( xml::xostream& xos, const sword::ObjectAttributeMedicalTreatment& object );
+    void UpdateDecon            ( xml::xostream& xos, const sword::ObjectAttributeMedicalTreatment& object );
+    void UpdateEvacuation       ( xml::xostream& xos, const sword::ObjectAttributeMedicalTreatment& object );
+    void UpdateCapacityStatus   ( xml::xostream& xos, const sword::ObjectAttributeMedicalTreatment& object );
+    void UpdateBedStatus        ( xml::xostream& xos, const sword::MedicalTreatmentBedCapacity& object );
+    void UpdateBedCapacity      ( xml::xostream& xos, const sword::MedicalTreatmentBedCapacity& object );
     //@}
 
 private:

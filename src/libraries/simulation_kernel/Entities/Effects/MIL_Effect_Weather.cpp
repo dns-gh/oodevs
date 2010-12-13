@@ -55,13 +55,13 @@ bool MIL_Effect_Weather::Execute()
     if( !bIsDeployed_ && nDeploymentTimeStep_ <= nCurrentTimeStep )
     {
         MIL_AgentServer::GetWorkspace().GetMeteoDataManager().RegisterWeatherEffect( surface_, ammoCategory_ );
-        SendMsgStartEffect();
+        SendStartEffect();
         bIsDeployed_ = true;
     }
 
     if( bIsDeployed_ && nLifeLastTimeStep_ <= nCurrentTimeStep )
     {
-        SendMsgStopEffect();
+        SendStopEffect();
         MIL_AgentServer::GetWorkspace().GetMeteoDataManager().UnregisterWeatherEffect( surface_, ammoCategory_ );
         delete this;
         return false;
@@ -70,15 +70,15 @@ bool MIL_Effect_Weather::Execute()
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_Effect_Weather::SendMsgStartEffect
+// Name: MIL_Effect_Weather::SendStartEffect
 // Created: JVT 04-03-25
 //-----------------------------------------------------------------------------
-void MIL_Effect_Weather::SendMsgStartEffect() const
+void MIL_Effect_Weather::SendStartEffect() const
 {
     client::StartFireEffect asnMsg;
 
     asnMsg().mutable_fire_effect()->set_id( nID_ );
-    asnMsg().set_type( ammoCategory_ == PHY_IndirectFireDotationClass::fumigene_ ? Common::smoke : Common::light );
+    asnMsg().set_type( ammoCategory_ == PHY_IndirectFireDotationClass::fumigene_ ? sword::smoke : sword::light );
     NET_ASN_Tools::WriteEllipse( surface_, *asnMsg().mutable_location() );
 
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -86,10 +86,10 @@ void MIL_Effect_Weather::SendMsgStartEffect() const
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_Effect_Weather::SendMsgStopEffect
+// Name: MIL_Effect_Weather::SendStopEffect
 // Created: JVT 04-03-25
 //-----------------------------------------------------------------------------
-void MIL_Effect_Weather::SendMsgStopEffect() const
+void MIL_Effect_Weather::SendStopEffect() const
 {
     client::StopFireEffect asnMsg;
     asnMsg().mutable_fire_effect()->set_id( nID_ );

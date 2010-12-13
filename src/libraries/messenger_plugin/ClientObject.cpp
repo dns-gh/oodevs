@@ -28,7 +28,7 @@ using namespace plugins::messenger;
 // Name: ClientObject constructor
 // Created: JSR 2010-10-18
 // -----------------------------------------------------------------------------
-ClientObject::ClientObject( unsigned int id, const MsgsClientToMessenger::MsgClientObjectCreationRequest& message )
+ClientObject::ClientObject( unsigned int id, const sword::ClientObjectCreationRequest& message )
     : id_        ( id )
     , persistent_( false )
 {
@@ -38,7 +38,7 @@ ClientObject::ClientObject( unsigned int id, const MsgsClientToMessenger::MsgCli
         persistent_ = message.persistent();
     for( int i = 0; i < message.properties_size(); ++i )
     {
-        const Common::ClientObjectProperty& msg = message.properties( i );
+        const sword::ClientObjectProperty& msg = message.properties( i );
         REGISTER_PROPERTY( string, std::string )
         REGISTER_PROPERTY( integer, int )
         REGISTER_PROPERTY( unsigned_integer, unsigned int )
@@ -90,13 +90,13 @@ unsigned int ClientObject::GetID() const
 // Name: ClientObject::Update
 // Created: JSR 2010-10-18
 // -----------------------------------------------------------------------------
-void ClientObject::Update( const MsgsClientToMessenger::MsgClientObjectUpdateRequest& message )
+void ClientObject::Update( const sword::ClientObjectUpdateRequest& message )
 {
     if( message.has_name() )
         name_ = message.name();
     for( int i = 0; i < message.properties_size(); ++i )
     {
-        const Common::ClientObjectProperty& msg = message.properties( i );
+        const sword::ClientObjectProperty& msg = message.properties( i );
         ClientObjectProperty_ABC* prop = Find( msg.name() );
         if( prop )
         {

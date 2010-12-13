@@ -36,7 +36,7 @@ Score::~Score()
 // Name: Score::Update
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
-void Score::Update( const MsgsAarToClient::MsgIndicator& message )
+void Score::Update( const sword::Indicator& message )
 {
     values_.push_back( message.value() );
 }

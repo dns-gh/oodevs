@@ -13,23 +13,23 @@
 #define __MIL_ObjectManager_h_
 
 #include "MIL.h"
+#include <tools/Resolver.h>
 
-namespace Common
+namespace sword
 {
     enum ObstacleType_DemolitionTargetType;
     class MsgMissionParameters;
 }
-#include "tools/Resolver.h"
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgMagicAction;
-    class MsgObjectMagicAction;
+    class MagicAction;
+    class ObjectMagicAction;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    enum MsgObjectMagicActionAck_ErrorCode;
+    enum ObjectMagicActionAck_ErrorCode;
 }
 
 namespace urban
@@ -78,7 +78,7 @@ public:
     MIL_Object_ABC&     CreateObject( xml::xistream& xis, MIL_Army_ABC& army );
     MIL_Object_ABC*     CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
     MIL_Object_ABC*     CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& name );
-    MIL_Object_ABC*     CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType );
+    MIL_Object_ABC*     CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, sword::ObstacleType_DemolitionTargetType obstacleType );
     MIL_Object_ABC*     CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
     MIL_Object_ABC*     CreateUrbanObject( const urban::TerrainObject_ABC& object );
     void                UpdateCapacity( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object );
@@ -92,8 +92,8 @@ public:
     //@{
     void SendCreation();
     void SendFullState();
-    void OnReceiveMsgObjectMagicAction( const MsgsClientToSim::MsgObjectMagicAction& asnMsg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies );
-    void OnReceiveMsgChangeResourceLinks( const MsgsClientToSim::MsgMagicAction& message, unsigned int nCtx );
+    void OnReceiveObjectMagicAction( const sword::ObjectMagicAction& asnMsg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies );
+    void OnReceiveChangeResourceLinks( const sword::MagicAction& message, unsigned int nCtx );
     //@}
 
 private:
@@ -114,7 +114,7 @@ private:
 private:
     //! @name Tools
     //@{
-    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode CreateObject( const Common::MsgMissionParameters& asn, const tools::Resolver< MIL_Army_ABC >& armies );
+    sword::ObjectMagicActionAck_ErrorCode CreateObject( const sword::MsgMissionParameters& asn, const tools::Resolver< MIL_Army_ABC >& armies );
     //@}
 
 private:

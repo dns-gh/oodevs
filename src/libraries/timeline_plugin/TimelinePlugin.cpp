@@ -70,7 +70,7 @@ void TimelinePlugin::Load( const tools::ExerciseConfig& config, xml::xistream& x
 // Name: TimelinePlugin::Receive
 // Created: JCR 2010-05-31
 // -----------------------------------------------------------------------------
-void TimelinePlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
+void TimelinePlugin::Receive( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_control_end_tick() )
         scenario_->Update( *publisher_ );

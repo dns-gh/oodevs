@@ -60,9 +60,9 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
     MIL_KnowledgeGroup group2( xis3, army, &groupArmy, mockKnowledgeGroupFactory );
 //    army.verify();
 
-    MsgsClientToSim::MsgKnowledgeMagicAction msg;
+    sword::KnowledgeMagicAction msg;
     msg.mutable_knowledge_group()->set_id( group2.GetId() );
-    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction::update_party_parent );
+    msg.set_type( sword::KnowledgeMagicAction::update_party_parent );
     msg.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_party()->set_id( army.GetID() );
     msg.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_knowledgegroup()->set_id( group1.GetId() );
 
@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
     MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
 
     // moves group2 under group1
-    group2.OnReceiveMsgKnowledgeGroupUpdate( msg, armies );
+    group2.OnReceiveKnowledgeGroupUpdate( msg, armies );
 
     // verify
     BOOST_CHECK_EQUAL( &group1, group2.GetParent() );
@@ -116,9 +116,9 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
     MIL_KnowledgeGroup group2( xis3, army, &group1, mockKnowledgeGroupFactory );
 //    group1.verify();
 
-    MsgsClientToSim::MsgKnowledgeMagicAction msg;
+    sword::KnowledgeMagicAction msg;
     msg.mutable_knowledge_group()->set_id( group2.GetId() );
-    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction::update_party );
+    msg.set_type( sword::KnowledgeMagicAction::update_party );
     msg.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_party()->set_id( army.GetID() );
 
     tools::Resolver< MIL_Army_ABC > armies;
@@ -134,7 +134,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
     // moves group2 under army
 //    MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( group2 ) ).once(); // $$$$ _RC_ SBO 2010-04-28: TODO: check unregistration from parent KG
     MOCK_EXPECT( army, RegisterKnowledgeGroup ).with( mock::same( group2 ) ).once();
-    group2.OnReceiveMsgKnowledgeGroupUpdate( msg, armies );
+    group2.OnReceiveKnowledgeGroupUpdate( msg, armies );
     army.verify();
     mockPublisher.verify();
 
@@ -175,9 +175,9 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
     MIL_KnowledgeGroup group2( xis3, army, 0, mockKnowledgeGroupFactory );
     army.verify();
 
-    MsgsClientToSim::MsgKnowledgeMagicAction msg;
+    sword::KnowledgeMagicAction msg;
     msg.mutable_knowledge_group()->set_id( group2.GetId() );
-    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction::update_party_parent );
+    msg.set_type( sword::KnowledgeMagicAction::update_party_parent );
 
     msg.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_party()->set_id( army.GetID() );
     msg.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_knowledgegroup()->set_id( group1.GetId() );
@@ -194,7 +194,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
     // moves group2 under group1
     MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( group2 ) ).once();
 //    MOCK_EXPECT( group1, RegisterKnowledgeGroup ).with( mock::same( group2 ) ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration into parent KG
-    group2.OnReceiveMsgKnowledgeGroupUpdate( msg, armies );
+    group2.OnReceiveKnowledgeGroupUpdate( msg, armies );
     army.verify();
 
     // verify
@@ -229,9 +229,9 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
     MIL_KnowledgeGroup groupArmy( kgType, 30, army );
 
     // prepare message
-    MsgsClientToSim::MsgKnowledgeMagicAction msg;
+    sword::KnowledgeMagicAction msg;
     msg.mutable_knowledge_group()->set_id( groupArmy.GetId() );
-    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction::update_type );
+    msg.set_type( sword::KnowledgeMagicAction::update_type );
     const MIL_KnowledgeGroupType &kgType_new = *MIL_KnowledgeGroupType::FindType( "TOTO" );
     msg.mutable_parameters()->add_elem()->mutable_value()->Add()->set_acharstr( kgType_new.GetName().c_str() );
 
@@ -244,7 +244,7 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
     MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
 
     // change knowledge group type
-    groupArmy.OnReceiveMsgKnowledgeGroupUpdate( msg, armies );
+    groupArmy.OnReceiveKnowledgeGroupUpdate( msg, armies );
 
     // verify
     BOOST_CHECK_EQUAL( "TOTO", groupArmy.GetType().GetName().c_str() );

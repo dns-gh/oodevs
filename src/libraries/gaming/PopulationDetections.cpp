@@ -46,10 +46,10 @@ PopulationDetections::~PopulationDetections()
 // Name: PopulationDetections::DoUpdate
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationDetection& message )
+void PopulationDetections::DoUpdate( const sword::CrowdConcentrationDetection& message )
 {
     const PopulationPart_ABC* pConcentration = & resolver_.Get( message.detected_crowd().id() ).GetConcentration( message.detected_concentration().id() );
-    if( message.visibility() == Common::invisible )
+    if( message.visibility() == sword::invisible )
         perceived_.erase( pConcentration );
     else
         perceived_.insert( pConcentration );
@@ -59,7 +59,7 @@ void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgCrowdConcentratio
 // Name: PopulationDetections::DoUpdate
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgCrowdFlowDetection& message )
+void PopulationDetections::DoUpdate( const sword::CrowdFlowDetection& message )
 {
     const PopulationPart_ABC* pFlow = & resolver_.Get( message.detected_crowd().id() ).GetFlow( message.detected_flow().id() );
     if( message.visible_flow().location().coordinates().elem_size() )

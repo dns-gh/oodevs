@@ -47,7 +47,7 @@ void Loader::Start()
 {
     loader_->LoadKeyFrame( 0, handler_ );
     // simulates the end of the initialization
-    MsgsSimToClient::MsgSimToClient wrapper;
+    sword::SimToClient wrapper;
     wrapper.mutable_message()->mutable_control_send_current_state_end();
     handler_.Receive( wrapper );
 }

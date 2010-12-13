@@ -79,7 +79,7 @@ void ObjectMessageService::OnError( const std::string& endpoint, const std::stri
 // -----------------------------------------------------------------------------
 void ObjectMessageService::OnMessage( const std::string& endpoint, Message& message )
 {
-    ++ nbMessagesReceived_;
+    ++nbMessagesReceived_;
     unsigned long tag;
     message >> tag;
     CIT_Callbacks it = callbacks_.find( tag );

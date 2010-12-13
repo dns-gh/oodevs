@@ -54,15 +54,15 @@ public:
 
     //! @name Network
     //@{
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgIntelligenceCreationRequest&     asn );
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgIntelligenceUpdateRequest&       asn );
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgIntelligenceDestructionRequest&  asn );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::IntelligenceCreationRequest&     asn );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::IntelligenceUpdateRequest&       asn );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::IntelligenceDestructionRequest&  asn );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
     //@}
 
     //! @name xml read / write
     //@{
-    void ReadIntelligence( xml::xistream& xis, const Common::FormationId& formation );
+    void ReadIntelligence( xml::xistream& xis, const sword::FormationId& formation );
     void Write           ( xml::xostream& xos );
     //@}
 

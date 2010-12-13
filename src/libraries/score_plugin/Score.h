@@ -12,7 +12,10 @@
 
 #include <vector>
 
-namespace MsgsAarToClient { class MsgIndicator; }
+namespace sword
+{
+    class Indicator;
+}
 
 namespace xml
 {
@@ -46,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsAarToClient::MsgIndicator& message );
+    void Update( const sword::Indicator& message );
     void Send( dispatcher::ClientPublisher_ABC& publisher, int context ) const;
     //@}
 

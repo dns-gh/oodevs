@@ -61,7 +61,7 @@ TeamFactory::~TeamFactory()
 // Name: TeamFactory::CreateTeam
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-kernel::Team_ABC* TeamFactory::CreateTeam( const MsgsSimToClient::MsgPartyCreation& message )
+kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
 {
     Team* result = new Team( message, controllers_.controller_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
@@ -83,7 +83,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam( const MsgsSimToClient::MsgPartyCreati
 // Name: TeamFactory::CreateFormation
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-kernel::Formation_ABC* TeamFactory::CreateFormation( const MsgsSimToClient::MsgFormationCreation& message )
+kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreation& message )
 {
     kernel::Entity_ABC* superior = message.has_parent()  ?
         (kernel::Entity_ABC*) &model_.teams_.Resolver< kernel::Formation_ABC >::Get( message.parent().id() ) :

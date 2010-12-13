@@ -291,11 +291,11 @@ void MIL_Object_ABC::MarkForDestruction()
 // Name: MIL_Object_ABC::OnUpdateResourceLinks
 // Created: JSR 2010-08-26
 // -----------------------------------------------------------------------------
-MsgsSimToClient::MsgMagicActionAck_ErrorCode MIL_Object_ABC::OnUpdateResourceLinks( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list )
+sword::MagicActionAck_ErrorCode MIL_Object_ABC::OnUpdateResourceLinks( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& list )
 {
     ResourceNetworkCapacity* capacity = Retrieve< ResourceNetworkCapacity >();
     if( !capacity )
-        return MsgsSimToClient::MsgMagicActionAck::error_invalid_attribute;
+        return sword::MagicActionAck::error_invalid_attribute;
     capacity->Update( list );
-    return MsgsSimToClient::MsgMagicActionAck::no_error;
+    return sword::MagicActionAck::no_error;
 }

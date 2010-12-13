@@ -12,14 +12,13 @@
 
 #include "ObjectAttribute_ABC.h"
 
-namespace Common
+namespace sword
 {
     class ObjectAttributeNBC;
 }
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  NBCAttribute
     @brief  NBCAttribute
@@ -31,14 +30,14 @@ class NBCAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NBCAttribute( const Common::ObjectAttributes& asnMsg );
+    explicit NBCAttribute( const sword::ObjectAttributes& asnMsg );
     virtual ~NBCAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::ObjectAttributes& asnMsg );
-    virtual void Send( Common::ObjectAttributes& asnMsg ) const;
+    virtual void Update( const sword::ObjectAttributes& asnMsg );
+    virtual void Send( sword::ObjectAttributes& asnMsg ) const;
     //@}
 
 private:
@@ -46,7 +45,7 @@ private:
     //@{
     unsigned int danger_;
     std::vector< unsigned int > agents_;
-    //Common::ObjectAttributeNBC nbc_; // XML reference - no resolved by dispatcher
+    //sword::ObjectAttributeNBC nbc_; // XML reference - no resolved by dispatcher
     //@
 };
 

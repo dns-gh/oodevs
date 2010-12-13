@@ -11,8 +11,7 @@
 #define __MIL_Geometry_h_
 
 #include <geometry/Types.h>
-#pragma warning( push )
-#pragma warning( disable : 4127 4100 4244 )
+#pragma warning( push, 0 )
 #include <boost/geometry/geometry.hpp>
 #pragma warning( pop )
 
@@ -37,7 +36,7 @@ public:
     //@{
     template< typename T > static void Scale( geometry::Polygon2< T >& result, const geometry::Polygon2< T >& polygon, T distance );
     template< typename T > static void ComputeHull( geometry::Polygon2< T >& result, const geometry::Polygon2< T >& polygon );
-    template< typename T > static T IntersectionArea( const geometry::Polygon2< T > &polygon1, const geometry::Polygon2< T >& polygon2 );
+    template< typename T > static T IntersectionArea( const geometry::Polygon2< T >& polygon1, const geometry::Polygon2< T >& polygon2 );
     //@}
 
 private:

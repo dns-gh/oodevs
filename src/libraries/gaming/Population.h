@@ -40,13 +40,13 @@ class PopulationFlow;
 // Created: HME 2005-09-29
 // =============================================================================
 class Population : public kernel::EntityImplementation< kernel::Population_ABC >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowUpdate >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowDestruction >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdUpdate >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationCreation >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationUpdate >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationDestruction >
+                 , public kernel::Updatable_ABC< sword::CrowdFlowCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
+                 , public kernel::Updatable_ABC< sword::CrowdFlowUpdate >
+                 , public kernel::Updatable_ABC< sword::CrowdFlowDestruction >
+                 , public kernel::Updatable_ABC< sword::CrowdUpdate >
+                 , public kernel::Updatable_ABC< sword::CrowdConcentrationCreation >
+                 , public kernel::Updatable_ABC< sword::CrowdConcentrationUpdate >
+                 , public kernel::Updatable_ABC< sword::CrowdConcentrationDestruction >
                  , public kernel::Drawable_ABC
                  , public kernel::Positions
                  , public tools::Observer_ABC
@@ -55,7 +55,7 @@ class Population : public kernel::EntityImplementation< kernel::Population_ABC >
 public:
     //! @name Constructor/Destructor
     //@{
-             Population( const MsgsSimToClient::MsgCrowdCreation& message, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
+             Population( const sword::CrowdCreation& message, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
                          const tools::Resolver_ABC< kernel::PopulationType >& typeResolver );
     virtual ~Population();
     //@}
@@ -94,13 +94,13 @@ private:
     unsigned int ComputeLivingHumans() const;
     unsigned int ComputeDeadHumans() const;
 
-    void DoUpdate( const MsgsSimToClient::MsgCrowdFlowCreation&             message );
-    void DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate&               message );
-    void DoUpdate( const MsgsSimToClient::MsgCrowdFlowDestruction&          message );
-    void DoUpdate( const MsgsSimToClient::MsgCrowdUpdate&                   message );
-    void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationCreation&    message );
-    void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationUpdate&      message );
-    void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationDestruction& message );
+    void DoUpdate( const sword::CrowdFlowCreation&             message );
+    void DoUpdate( const sword::CrowdFlowUpdate&               message );
+    void DoUpdate( const sword::CrowdFlowDestruction&          message );
+    void DoUpdate( const sword::CrowdUpdate&                   message );
+    void DoUpdate( const sword::CrowdConcentrationCreation&    message );
+    void DoUpdate( const sword::CrowdConcentrationUpdate&      message );
+    void DoUpdate( const sword::CrowdConcentrationDestruction& message );
 
     void ComputeCenter();
 

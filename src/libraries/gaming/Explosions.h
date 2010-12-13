@@ -13,13 +13,13 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgExplosion;
-    class MsgStopUnitFire;
-    class MsgStopCrowdFire;
-    class MsgUnitFireDamages;
-    class MsgCrowdFireDamages;
+    class Explosion;
+    class StopUnitFire;
+    class StopCrowdFire;
+    class UnitFireDamages;
+    class CrowdFireDamages;
 }
 
 #include <deque>
@@ -41,9 +41,9 @@ class PopulationFireResult;
 // Created: AGE 2006-03-10
 // =============================================================================
 class Explosions : public kernel::Extension_ABC
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgExplosion >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopUnitFire >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopCrowdFire >
+                 , public kernel::Updatable_ABC< sword::Explosion >
+                 , public kernel::Updatable_ABC< sword::StopUnitFire >
+                 , public kernel::Updatable_ABC< sword::StopCrowdFire >
 {
 public:
     //! @name Constructors/Destructor
@@ -72,12 +72,12 @@ private:
     //@{
     template< typename T >
     void UpdateData( const T& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgExplosion& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgStopCrowdFire& message );
+    virtual void DoUpdate( const sword::Explosion& message );
+    virtual void DoUpdate( const sword::StopUnitFire& message );
+    virtual void DoUpdate( const sword::StopCrowdFire& message );
 
-    void Update( const MsgsSimToClient::MsgUnitFireDamages& message );
-    void Update( const MsgsSimToClient::MsgCrowdFireDamages& message );
+    void Update( const sword::UnitFireDamages& message );
+    void Update( const sword::CrowdFireDamages& message );
     //@}
 
 public:

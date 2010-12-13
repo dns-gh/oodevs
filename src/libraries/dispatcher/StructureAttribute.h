@@ -26,14 +26,14 @@ class StructureAttribute : public UrbanObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit StructureAttribute( const MsgsSimToClient::UrbanAttributes& message );
+    explicit StructureAttribute( const sword::UrbanAttributes& message );
     virtual ~StructureAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const MsgsSimToClient::UrbanAttributes& message );
-    virtual void Send  (       MsgsSimToClient::UrbanAttributes& message ) const;
+    virtual void Update( const sword::UrbanAttributes& message );
+    virtual void Send  (       sword::UrbanAttributes& message ) const;
     //@}
 
 private:

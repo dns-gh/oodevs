@@ -10,7 +10,7 @@
 #ifndef __ObjectAttribute_ABC_h_
 #define __ObjectAttribute_ABC_h_
 
-namespace Common
+namespace sword
 {
     class ObjectAttributes;
 }
@@ -35,8 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::ObjectAttributes& message ) = 0;
-    virtual void Send  ( Common::ObjectAttributes& message ) const = 0;
+    virtual void Update( const sword::ObjectAttributes& message ) = 0;
+    virtual void Send  ( sword::ObjectAttributes& message ) const = 0;
     //@}
 };
 

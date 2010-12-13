@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    std::string CreateMessage( const MsgsSimToClient::MsgReport& message ) const;
+    std::string CreateMessage( const sword::Report& message ) const;
     //@}
 
 private:
@@ -60,7 +60,7 @@ private:
     //@{
     void ReadReport( xml::xistream& xis );
     friend class ReportTemplate;
-    std::string RenderParameter( const Common::MsgMissionParameter& value ) const;
+    std::string RenderParameter( const sword::MsgMissionParameter& value ) const;
     //@}
 
     //! @name Types

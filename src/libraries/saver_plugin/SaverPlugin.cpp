@@ -35,7 +35,7 @@ SaverPlugin::~SaverPlugin()
 // Name: SaverPlugin::Receive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void SaverPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
+void SaverPlugin::Receive( const sword::SimToClient& message )
 {
     saver_->Receive( message );
 }

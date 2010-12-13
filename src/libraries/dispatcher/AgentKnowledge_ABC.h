@@ -13,7 +13,7 @@
 #include "Sendable.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
     enum EnumUnitIdentificationLevel;
 }
@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual MsgsSimToClient::EnumUnitIdentificationLevel GetMaxPerceptionLevel() const = 0;
+    virtual sword::EnumUnitIdentificationLevel GetMaxPerceptionLevel() const = 0;
     virtual geometry::Point2d GetPosition() const = 0;
     //@}
 };

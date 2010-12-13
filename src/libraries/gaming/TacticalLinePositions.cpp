@@ -32,7 +32,7 @@ TacticalLinePositions::TacticalLinePositions( const T_PointVector& pointList, co
 // Name: TacticalLinePositions constructor
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-TacticalLinePositions::TacticalLinePositions( const Common::MsgLocation& message, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
+TacticalLinePositions::TacticalLinePositions( const sword::MsgLocation& message, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
     : converter_( converter )
     , owner_    ( owner )
 {
@@ -145,7 +145,7 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewpo
 // Name: TacticalLinePositions::DoUpdate
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLinePositions::DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate& message )
+void TacticalLinePositions::DoUpdate( const sword::LimaUpdate& message )
 {
     Update( message.tactical_line() );
 }
@@ -154,7 +154,7 @@ void TacticalLinePositions::DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate
 // Name: TacticalLinePositions::DoUpdate
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLinePositions::DoUpdate( const MsgsMessengerToClient::MsgLimitUpdate& message )
+void TacticalLinePositions::DoUpdate( const sword::LimitUpdate& message )
 {
     Update( message.tactical_line() );
 }
@@ -163,7 +163,7 @@ void TacticalLinePositions::DoUpdate( const MsgsMessengerToClient::MsgLimitUpdat
 // Name: TacticalLinePositions::Update
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLinePositions::Update( const Common::MsgTacticalLine& message )
+void TacticalLinePositions::Update( const sword::MsgTacticalLine& message )
 {
     pointList_.clear();
     pointList_.reserve( message.geometry().coordinates().elem_size() );

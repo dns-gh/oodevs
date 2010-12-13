@@ -16,12 +16,13 @@
 #include <geometry/Types.h>
 #include <limits>
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgObjectUpdate;
-    class MsgObjectCreation;
+    class ObjectUpdate;
+    class ObjectCreation;
 }
-namespace Common
+
+namespace sword
 {
     class MsgLocatedQuantityList;
 }
@@ -63,11 +64,12 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );   
+    virtual void DoUpdate( const sword::ObjectUpdate& message );
+    virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& message );
+
     template< typename T >
     void UpdateData( const T& message );
-    void UpdateToxicCloud( const Common::MsgLocatedQuantityList& cloud );
+    void UpdateToxicCloud( const sword::MsgLocatedQuantityList& cloud );
     void CreateTexture();
     void UpdateTexture() const;
     //@}

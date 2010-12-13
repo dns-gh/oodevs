@@ -42,14 +42,14 @@ public:
 
     static const T_PrecipitationMap& GetPrecipitations();
     static const PHY_Precipitation* FindPrecipitation( const std::string& strName );
-    static const PHY_Precipitation* FindPrecipitation( Common::EnumPrecipitationType nAsnID );
+    static const PHY_Precipitation* FindPrecipitation( sword::EnumPrecipitationType nAsnID );
     //@}
 
     //! @name Accessors
     //@{
     const std::string&            GetName () const;
     E_WeatherType                 GetID   () const;
-    Common::EnumPrecipitationType GetAsnID() const;
+    sword::EnumPrecipitationType GetAsnID() const;
     //@}
 
 public:
@@ -64,7 +64,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-     PHY_Precipitation( const std::string& strName, E_WeatherType nType, Common::EnumPrecipitationType nAsnID );
+     PHY_Precipitation( const std::string& strName, E_WeatherType nType, sword::EnumPrecipitationType nAsnID );
     ~PHY_Precipitation();
     //@}
 
@@ -73,7 +73,7 @@ private:
     //@{
     const std::string strName_;
     const E_WeatherType nType_;
-    const Common::EnumPrecipitationType nAsnID_;
+    const sword::EnumPrecipitationType nAsnID_;
     //@}
 
     //! @name Static data

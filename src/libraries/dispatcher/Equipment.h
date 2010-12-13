@@ -10,7 +10,7 @@
 #ifndef __Equipment_h_
 #define __Equipment_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
     class EquipmentDotations_EquipmentDotation;
 }
@@ -29,14 +29,14 @@ class Equipment
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Equipment( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& asnMsg );
+    explicit Equipment( const sword::EquipmentDotations_EquipmentDotation& asnMsg );
     virtual ~Equipment();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& asnMsg );
-    void Send  ( MsgsSimToClient::EquipmentDotations_EquipmentDotation& asnMsg ) const;
+    void Update( const sword::EquipmentDotations_EquipmentDotation& asnMsg );
+    void Send  ( sword::EquipmentDotations_EquipmentDotation& asnMsg ) const;
     //@}
 
 private:

@@ -12,9 +12,9 @@
 
 #include "Parameter.h"
 
-namespace Common
+namespace sword
 {
-    class MsgLimaOrder;
+    class LimaOrder;
 }
 
 namespace kernel
@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Lima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             Lima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgLimaOrder& message );
+             Lima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::LimaOrder& message );
              Lima( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Lima();
     //@}
@@ -51,10 +51,10 @@ public:
     virtual void DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
 
-    void CommitTo( Common::MsgLimaOrder& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
-    void Clean( Common::MsgLimaOrder& message ) const;
+    void CommitTo( sword::LimaOrder& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
+    void Clean( sword::LimaOrder& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 

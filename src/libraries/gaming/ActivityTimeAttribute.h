@@ -50,8 +50,9 @@ private:
 
     //! @name Updatable_ABC
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::ObjectUpdate& message );
+    virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& message );
+
     template< typename T >
     void UpdateData( const T& message );
     //@}

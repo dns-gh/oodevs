@@ -17,10 +17,10 @@
 
 PHY_Morale::T_MoraleMap PHY_Morale::morales_;
 
-const PHY_Morale PHY_Morale::mauvais_  ( "Mauvais"  , eMauvais  , Common::mauvais  , 0.5  );
-const PHY_Morale PHY_Morale::moyen_    ( "Moyen"    , eMoyen    , Common::moyen    , 0.75 );
-const PHY_Morale PHY_Morale::bon_      ( "Bon"      , eBon      , Common::bon      , 1    );
-const PHY_Morale PHY_Morale::fanatique_( "Fanatique", eFanatique, Common::fanatique, 1.25 );
+const PHY_Morale PHY_Morale::mauvais_  ( "Mauvais"  , eMauvais  , sword::mauvais  , 0.5  );
+const PHY_Morale PHY_Morale::moyen_    ( "Moyen"    , eMoyen    , sword::moyen    , 0.75 );
+const PHY_Morale PHY_Morale::bon_      ( "Bon"      , eBon      , sword::bon      , 1    );
+const PHY_Morale PHY_Morale::fanatique_( "Fanatique", eFanatique, sword::fanatique, 1.25 );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Morale::Initialize
@@ -48,7 +48,7 @@ void PHY_Morale::Terminate()
 // Name: PHY_Morale constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Morale::PHY_Morale( const std::string& strName, E_MoraleType nType, Common::EnumUnitMorale nAsnID, double rDIAWeight )
+PHY_Morale::PHY_Morale( const std::string& strName, E_MoraleType nType, sword::EnumUnitMorale nAsnID, double rDIAWeight )
     : strName_   ( strName )
     , nType_     ( nType   )
     , nAsnID_    ( nAsnID  )
@@ -70,9 +70,9 @@ PHY_Morale::~PHY_Morale()
 // Name: PHY_Morale::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const PHY_Morale* PHY_Morale::Find( Common::EnumUnitMorale nAsnID )
+const PHY_Morale* PHY_Morale::Find( sword::EnumUnitMorale nAsnID )
 {
-    CIT_MoraleMap it = std::find_if( morales_.begin(), morales_.end(), std::compose1( std::bind2nd( std::equal_to< Common::EnumUnitMorale >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Morale::GetAsnID ), std::select2nd< T_MoraleMap::value_type >() ) ) );
+    CIT_MoraleMap it = std::find_if( morales_.begin(), morales_.end(), std::compose1( std::bind2nd( std::equal_to< sword::EnumUnitMorale >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Morale::GetAsnID ), std::select2nd< T_MoraleMap::value_type >() ) ) );
     return it == morales_.end() ? 0 : it->second;
 }
 
@@ -110,7 +110,7 @@ const std::string& PHY_Morale::GetName() const
 // Name: PHY_Morale::GetAsnID
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-Common::EnumUnitMorale PHY_Morale::GetAsnID() const
+sword::EnumUnitMorale PHY_Morale::GetAsnID() const
 {
     return nAsnID_;
 }

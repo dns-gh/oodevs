@@ -16,7 +16,7 @@
 // Name: MIL_LimaListParameter constructor
 // Created: MGD 2010-10-27
 // -----------------------------------------------------------------------------
-MIL_LimaListParameter::MIL_LimaListParameter( const Common::MsgLimasOrder& message )
+MIL_LimaListParameter::MIL_LimaListParameter( const sword::LimasOrder& message )
 {
     for( int i = 0; i < message.elem_size(); ++i )
         limas_.push_back( boost::shared_ptr< MIL_LimaOrder >( new MIL_LimaOrder( message.elem(i) ) ) );
@@ -44,7 +44,7 @@ bool MIL_LimaListParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 // Name: MIL_LimaListParameter::ToLima
 // Created: MGD 2010-10-27
 // -----------------------------------------------------------------------------
-bool MIL_LimaListParameter::ToLima( Common::MsgLimasOrder& message ) const
+bool MIL_LimaListParameter::ToLima( sword::LimasOrder& message ) const
 {
     if( limas_.size() == 1 )
     {
@@ -58,7 +58,7 @@ bool MIL_LimaListParameter::ToLima( Common::MsgLimasOrder& message ) const
 // Name: MIL_LimaListParameter::ToLimaList
 // Created: MGD 2010-10-27
 // -----------------------------------------------------------------------------
-bool MIL_LimaListParameter::ToLimaList( Common::MsgLimasOrder& message ) const
+bool MIL_LimaListParameter::ToLimaList( sword::LimasOrder& message ) const
 {
     for (unsigned int i = 0; i < limas_.size(); ++i )
         limas_[i]->Serialize( *message.add_elem() );
@@ -94,7 +94,7 @@ bool MIL_LimaListParameter::ToLimaList( std::vector< boost::shared_ptr< TER_Loca
 // Name: MIL_LimaListParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_LimaListParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+bool MIL_LimaListParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
 {
     return ToLimaList( *elem.mutable_limasorder() );
 }

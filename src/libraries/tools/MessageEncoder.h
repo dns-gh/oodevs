@@ -16,7 +16,6 @@
 #include <google/protobuf/Message.h>
 #include <google/protobuf/Descriptor.h>
 #pragma warning( pop )
-#include <sstream>
 
 namespace tools
 {
@@ -35,19 +34,11 @@ public:
     explicit MessageEncoder( const T& message )
     {
         if( !message.IsInitialized() )
-        {
-            std::stringstream ss;
-            ss  << "Message of type \"" << message.GetDescriptor()->full_name()
-                << "\" is missing required fields: " << message.InitializationErrorString();
-            throw std::runtime_error( ss.str() );
-        }
+            throw std::runtime_error( "Message of type \"" + message.GetDescriptor()->full_name()
+                + "\" is missing required fields: " + message.InitializationErrorString() );
         boost::shared_array< google::protobuf::uint8 > buffer( new google::protobuf::uint8[ message.ByteSize() ] );
         if( !message.SerializeWithCachedSizesToArray( buffer.get() ) )
-        {
-            std::stringstream ss;
-            ss << "Error serializing message of type \"" << message.GetDescriptor()->full_name() << "\"" << std::endl;
-            throw std::runtime_error( ss.str() );
-        }
+            throw std::runtime_error( "Error serializing message of type \"" + message.GetDescriptor()->full_name() + '"' );
         message_.Write( (const char*)buffer.get(), message.GetCachedSize() );
     }
     //@}

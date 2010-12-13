@@ -41,7 +41,7 @@ DecisionalStates::~DecisionalStates()
 // Name: DecisionalStates::DoUpdate
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void DecisionalStates::DoUpdate( const MsgsSimToClient::MsgDecisionalState& message )
+void DecisionalStates::DoUpdate( const sword::DecisionalState& message )
 {
     static const std::string contact   ( "Contact" );
     static const std::string sauvegarde( "eEtatDec_Sauvegarde" );

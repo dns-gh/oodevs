@@ -21,7 +21,7 @@ using namespace dispatcher;
 // Name: LogConsignMedical constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-LogConsignMedical::LogConsignMedical( const Model& model, const MsgsSimToClient::MsgLogMedicalHandlingCreation& msg )
+LogConsignMedical::LogConsignMedical( const Model& model, const sword::LogMedicalHandlingCreation& msg )
     : SimpleEntity< >   ( msg.request().id() )
     , model_            ( model )
     , agent_            ( model.Agents().Get( msg.unit().id() ) )
@@ -31,7 +31,7 @@ LogConsignMedical::LogConsignMedical( const Model& model, const MsgsSimToClient:
     , nWound_           ( msg.blessure() )
     , bMentalDiseased_  ( msg.blesse_mental() != 0 )
     , bContaminated_    ( msg.contamine_nbc() != 0 )
-    , nState_           ( Common::ambulance_ramassage_dechargement )
+    , nState_           ( sword::ambulance_ramassage_dechargement )
     , bDiagnosed_       ( false )
 {
     // NOTHING
@@ -50,7 +50,7 @@ LogConsignMedical::~LogConsignMedical()
 // Name: LogConsignMedical::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void LogConsignMedical::Update( const MsgsSimToClient::MsgLogMedicalHandlingUpdate& msg )
+void LogConsignMedical::Update( const sword::LogMedicalHandlingUpdate& msg )
 {
     if( msg.has_provider() )
         pTreatingAgent_ = ( msg.provider().id() == 0 ) ? 0 : &model_.Agents().Get( msg.provider().id() );

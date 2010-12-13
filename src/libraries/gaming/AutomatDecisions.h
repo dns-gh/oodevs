@@ -33,8 +33,8 @@ class Publisher_ABC;
 // Created: AGE 2006-03-14
 // =============================================================================
 class AutomatDecisions : public kernel::Extension_ABC
-                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatAttributes >
-                       , public kernel::Updatable_ABC< Common::MsgAutomatOrder >
+                       , public kernel::Updatable_ABC< sword::AutomatAttributes >
+                       , public kernel::Updatable_ABC< sword::AutomatOrder >
                        , public kernel::Displayable_ABC
                        , public Decisions_ABC
 {
@@ -70,8 +70,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgAutomatAttributes& message );
-    virtual void DoUpdate( const Common::MsgAutomatOrder& message );
+    virtual void DoUpdate( const sword::AutomatAttributes& message );
+    virtual void DoUpdate( const sword::AutomatOrder& message );
     bool HasEngagedSuperior() const;
     //@}
 

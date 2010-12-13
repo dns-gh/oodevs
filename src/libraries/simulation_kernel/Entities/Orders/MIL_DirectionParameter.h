@@ -23,7 +23,7 @@ class MIL_DirectionParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_DirectionParameter( const Common::MsgHeading& heading );
+    explicit MIL_DirectionParameter( const sword::MsgHeading& heading );
     explicit MIL_DirectionParameter( boost::shared_ptr< MT_Vector2D >& dir );
     virtual ~MIL_DirectionParameter();
     //@}
@@ -35,7 +35,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
     virtual bool ToDirection( boost::shared_ptr< MT_Vector2D >& ) const;
     //@}
 

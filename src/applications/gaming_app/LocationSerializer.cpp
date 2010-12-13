@@ -13,7 +13,7 @@
 #include "clients_kernel/Location_ABC.h"
 #include "protocol/Protocol.h"
 
-using namespace Common;
+using namespace sword;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------

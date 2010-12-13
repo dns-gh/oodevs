@@ -15,7 +15,7 @@
 
 using namespace plugins::script;
 using namespace events;
-using namespace MsgsSimToClient;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: PopulationNotifier constructor
@@ -41,7 +41,7 @@ PopulationNotifier::~PopulationNotifier()
 // Name: PopulationNotifier::DoUpdate
 // Created: SBO 2008-11-18
 // -----------------------------------------------------------------------------
-void PopulationNotifier::DoUpdate( const MsgCrowdFlowUpdate& message )
+void PopulationNotifier::DoUpdate( const CrowdFlowUpdate& message )
 {
     if( static_cast< unsigned int >( message.crowd().id() ) == population_.GetId() && message.has_parts() )
         controller_.Update( events::PopulationMoved( population_ ) );

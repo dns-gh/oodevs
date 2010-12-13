@@ -69,29 +69,29 @@ void PopulationKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
 // Name: PopulationKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
+void PopulationKnowledge::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
     if( IsSet() )
-        Entity< PopulationKnowledge_ABC >::CommitTo< Common::CrowdKnowledgeId >( *message.mutable_value()->Add()->mutable_crowdknowledge() );
+        Entity< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( *message.mutable_value()->Add()->mutable_crowdknowledge() );
 }
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void PopulationKnowledge::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
-        Entity< PopulationKnowledge_ABC >::CommitTo< Common::CrowdKnowledgeId >( *message.mutable_crowdknowledge() );
+        Entity< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( *message.mutable_crowdknowledge() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::CommitTo( Common::CrowdKnowledgeId& message ) const
+void PopulationKnowledge::CommitTo( sword::CrowdKnowledgeId& message ) const
 {
-    Entity< PopulationKnowledge_ABC >::CommitTo< Common::CrowdKnowledgeId >( message );
+    Entity< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( message );
 }
 
 // -----------------------------------------------------------------------------

@@ -15,9 +15,9 @@
 #include <memory>
 #include <string>
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgSimToClient;
+    class SimToClient;
 }
 
 namespace dispatcher
@@ -49,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive( const sword::SimToClient& message );
     //@}
 
 private:
@@ -61,8 +61,8 @@ private:
 
     //! @name Helpers
     //@{
-    void StartFrame( const MsgsSimToClient::MsgSimToClient& message );
-    void EndFrame( const MsgsSimToClient::MsgSimToClient& message );
+    void StartFrame( const sword::SimToClient& message );
+    void EndFrame( const sword::SimToClient& message );
     //@}
 
 private:

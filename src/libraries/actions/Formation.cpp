@@ -61,7 +61,7 @@ Formation::~Formation()
 // Name: Formation::CommitTo
 // Created: JSR 2010-04-20
 // -----------------------------------------------------------------------------
-void Formation::CommitTo( Common::MsgMissionParameter& message ) const
+void Formation::CommitTo( sword::MsgMissionParameter& message ) const
 {
    message.mutable_value()->Add()->mutable_formation();    // enforce initialisation of parameter to force his type
     if( IsSet() )
@@ -71,7 +71,7 @@ void Formation::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: Formation::CommitTo
 // Created: JSR 2010-04-20
 // -----------------------------------------------------------------------------
-void Formation::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void Formation::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     message.mutable_formation();    // enforce initialisation of parameter to force his type
     if( IsSet() )

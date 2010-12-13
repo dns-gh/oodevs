@@ -59,7 +59,7 @@ void Numeric::Serialize( xml::xostream& xos ) const
 // Name: Numeric::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Numeric::CommitTo( Common::MsgMissionParameter& message ) const
+void Numeric::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -69,7 +69,7 @@ void Numeric::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: Numeric::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Numeric::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void Numeric::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
         message.set_areal( GetValue() );

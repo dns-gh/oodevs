@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Name: AutomatOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-AutomatOrder::AutomatOrder( const Common::MsgAutomatOrder& message )
+AutomatOrder::AutomatOrder( const sword::AutomatOrder& message )
     : Order_ABC( message.type().id() )
     , message_( message.New() )
 {

@@ -35,7 +35,7 @@ namespace kernel
 */
 // Created: LDC 2010-10-11
 // =============================================================================
-class AutomatCreationListener : public MsgsSimToClient::Listener
+class AutomatCreationListener : public sword::Listener
 {
 
 public:
@@ -49,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool OnMessageReceived( const MsgsSimToClient::MsgSimToClient& message );
+    virtual bool OnMessageReceived( const sword::SimToClient& message );
     //@}
 
 private:

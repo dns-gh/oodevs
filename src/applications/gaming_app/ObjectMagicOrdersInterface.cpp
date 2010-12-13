@@ -20,10 +20,9 @@
 #include "clients_kernel/ObjectType.h"
 #include "gaming/Object.h"
 #include "gaming/StaticModel.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace actions;
-using namespace Common;
 using namespace kernel;
 using namespace parameters;
 
@@ -107,7 +106,7 @@ void ObjectMagicOrdersInterface::SendObjectUpdateMagic( ParameterList& attribute
 void ObjectMagicOrdersInterface::BuildObject()
 {
     ParameterList& list = *new ParameterList( OrderParameter( "Construction", "list", false ) );
-    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_construction );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_construction );
     list.AddIdentifier( "Type", 0 );
     list.AddQuantity( "Number", 0 );
     list.AddNumeric( "Density", 0 );
@@ -138,7 +137,7 @@ void ObjectMagicOrdersInterface::DestroyObject()
 void ObjectMagicOrdersInterface::MineObject()
 {
     ParameterList& list = *new ParameterList( OrderParameter( "Mine", "list", false ) );
-    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_mine );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_mine );
     list.AddIdentifier( "Type", 0 );
     list.AddQuantity( "Number", 0 );
     list.AddNumeric( "Density", 0 );
@@ -153,7 +152,7 @@ void ObjectMagicOrdersInterface::MineObject()
 void ObjectMagicOrdersInterface::SweepMineObject()
 {
     ParameterList& list = *new ParameterList( OrderParameter( "Mine", "list", false ) );
-    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_mine );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_mine );
     list.AddIdentifier( "Type", 0 );
     list.AddQuantity( "Number", 0 );
     list.AddNumeric( "Density", 0 );
@@ -168,8 +167,8 @@ void ObjectMagicOrdersInterface::SweepMineObject()
 void ObjectMagicOrdersInterface::ActivateReservedObstacle()
 {
     ParameterList& list = *new ParameterList( OrderParameter( "Obstacle", "list", false ) );
-    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_obstacle );
-    list.AddIdentifier( "TargetType", Common::ObstacleType_DemolitionTargetType_reserved );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_obstacle );
+    list.AddIdentifier( "TargetType", sword::ObstacleType_DemolitionTargetType_reserved );
     list.AddBool( "Activation", true );
     SendObjectUpdateMagic( list );
 }
@@ -181,8 +180,8 @@ void ObjectMagicOrdersInterface::ActivateReservedObstacle()
 void ObjectMagicOrdersInterface::DeactivateReservedObstacle()
 {
     ParameterList& list = *new ParameterList( OrderParameter( "Obstacle", "list", false ) );
-    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_obstacle );
-    list.AddIdentifier( "TargetType", Common::ObstacleType_DemolitionTargetType_reserved );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_obstacle );
+    list.AddIdentifier( "TargetType", sword::ObstacleType_DemolitionTargetType_reserved );
     list.AddBool( "Activation", false );
     SendObjectUpdateMagic( list );
 }

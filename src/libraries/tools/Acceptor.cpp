@@ -19,11 +19,11 @@ using namespace tools;
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
 Acceptor::Acceptor( SocketManager& manager, boost::asio::io_service& service, unsigned short port )
-    : manager_( manager )
-    , service_( service )
+    : manager_ ( manager )
+    , service_ ( service )
     , acceptor_( service )
-    , port_( port )
-    , accept_ ( false )
+    , port_    ( port )
+    , accept_  ( false )
 {
     // NOTHING
 }

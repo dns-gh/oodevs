@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "DrawingPositions.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "protocol/messengersenders.h"
+#include "protocol/MessengerSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: DrawingPositions constructor
@@ -25,7 +25,7 @@ DrawingPositions::DrawingPositions()
 // Name: DrawingPositions constructor
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-DrawingPositions::DrawingPositions( const kernel::CoordinateConverter_ABC& converter, const MsgsMessengerToClient::MsgShapeCreation& message )
+DrawingPositions::DrawingPositions( const kernel::CoordinateConverter_ABC& converter, const sword::ShapeCreation& message )
 {
     for( int i = 0; i < message.shape().points().elem_size(); ++i )
         AddPoint( converter.ConvertToXY( message.shape().points().elem(i) ) );

@@ -15,16 +15,16 @@
 #include "dispatcher/Services.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "protocol/aarsenders.h"
-#include <boost/algorithm/string.hpp>
+#include "protocol/AarSenders.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/algorithm/string.hpp>
 
 using namespace plugins::aar;
 
-namespace MsgsClientToAar
+namespace sword
 {
-    class MsgClientToAar;
-    class MsgPlotRequest;
+    class ClientToAar;
+    class PlotRequest;
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ AarPlugin::~AarPlugin()
 // Name: AarPlugin::Receive
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AarPlugin::Receive( const MsgsSimToClient::MsgSimToClient& )
+void AarPlugin::Receive( const sword::SimToClient& )
 {
     // NOTHING
 }
@@ -90,7 +90,7 @@ void AarPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& )
 // Name: AarPlugin::OnReceive
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AarPlugin::OnReceive( const std::string& client, const MsgsClientToAar::MsgClientToAar& wrapper )
+void AarPlugin::OnReceive( const std::string& client, const sword::ClientToAar& wrapper )
 {
     if( wrapper.message().has_plot_request() )
         OnReceiveIndicatorRequest( client, wrapper.message().plot_request() );
@@ -100,7 +100,7 @@ void AarPlugin::OnReceive( const std::string& client, const MsgsClientToAar::Msg
 // Name: AarPlugin::OnReceiveIndicatorRequest
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const MsgsClientToAar::MsgPlotRequest& request )
+void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const sword::PlotRequest& request )
 {
     try
     {

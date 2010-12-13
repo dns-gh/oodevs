@@ -41,11 +41,11 @@ ObjectDetections::~ObjectDetections()
 // Name: ObjectDetections::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void ObjectDetections::DoUpdate( const MsgsSimToClient::MsgObjectDetection& message )
+void ObjectDetections::DoUpdate( const sword::ObjectDetection& message )
 {
     if( Object_ABC* object = resolver_.Find( message.observer().id() ) )
     {
-        if( message.visibility() == Common::invisible )
+        if( message.visibility() == sword::invisible )
             perceivedObjects_.erase( object );
         else
             perceivedObjects_.insert( object );

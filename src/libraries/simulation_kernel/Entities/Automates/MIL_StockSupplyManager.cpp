@@ -24,8 +24,8 @@
 #include <boost/serialization/set.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_StockSupplyManager )
-using namespace MsgsSimToClient;
-using namespace MsgsClientToSim;
+using namespace sword;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager constructor
@@ -199,66 +199,65 @@ void MIL_StockSupplyManager::NotifyStockSupplyCanceled( const PHY_SupplyStockSta
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_StockSupplyManager::OnReceiveMsgLogSupplyPullFlow
+// Name: MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnReceiveMsgLogSupplyPullFlow( const Common::MsgMissionParameters& msg )
-{
-	unsigned int oid_donneur = msg.elem( 0 ).value().Get(0).has_automat() ?
-	    		msg.elem( 0 ).value().Get(0).automat().id() : msg.elem( 0 ).value().Get(0).formation().id();
-    MIL_Formation* candidateFormation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( oid_donneur );
-    MIL_Automate* candidateAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( oid_donneur );
-    if( !candidateAutomate && !candidateFormation)
-        throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow >( MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_provider_pullflow );
-
-    MIL_AutomateLOG* pSupplier = candidateAutomate!=0 ? candidateAutomate->GetBrainLogistic() :
-            candidateFormation->GetBrainLogistic();
-
-    if( !pSupplier )
-        throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow >( MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_provider_pullflow );
-
-    PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_, msg.elem( 1 ), false );
-	if(!supplyRequests.HasRequests())
-		throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow >( MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_provider_pullflow );
-
-	PHY_SupplyStockState* pSupplyState = 0;
-	supplyRequests.Execute( *pSupplier, pSupplyState );
-	if( pSupplyState )
-		manualSupplyStates_.insert( pSupplyState );
-	else
-		throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow >( MsgsSimToClient::MsgLogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_provider_pullflow );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: MIL_StockSupplyManager::OnReceiveMsgLogSupplyPushFlow
-// Created: NLD 2005-02-04
-// -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnReceiveMsgLogSupplyPushFlow( const Common::MsgMissionParameters& msg)
+void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::MsgMissionParameters& msg )
 {
     unsigned int oid_donneur = msg.elem( 0 ).value().Get(0).has_automat() ?
-    		msg.elem( 0 ).value().Get(0).automat().id() : msg.elem( 0 ).value().Get(0).formation().id();
+                msg.elem( 0 ).value().Get(0).automat().id() : msg.elem( 0 ).value().Get(0).formation().id();
     MIL_Formation* candidateFormation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( oid_donneur );
     MIL_Automate* candidateAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( oid_donneur );
     if( !candidateAutomate && !candidateFormation)
-        throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
+        throw NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >( sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_provider_pullflow );
 
     MIL_AutomateLOG* pSupplier = candidateAutomate!=0 ? candidateAutomate->GetBrainLogistic() :
             candidateFormation->GetBrainLogistic();
 
     if( !pSupplier )
-        throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
+        throw NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >( sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_provider_pullflow );
 
     PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_, msg.elem( 1 ), false );
     if(!supplyRequests.HasRequests())
-        throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_receveur_pushflow );
+        throw NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >( sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_provider_pullflow );
 
     PHY_SupplyStockState* pSupplyState = 0;
     supplyRequests.Execute( *pSupplier, pSupplyState );
     if( pSupplyState )
         manualSupplyStates_.insert( pSupplyState );
     else
-        throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
+        throw NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >( sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_provider_pullflow );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::OnReceiveLogSupplyPushFlow
+// Created: NLD 2005-02-04
+// -----------------------------------------------------------------------------
+void MIL_StockSupplyManager::OnReceiveLogSupplyPushFlow( const sword::MsgMissionParameters& msg)
+{
+    unsigned int oid_donneur = msg.elem( 0 ).value().Get(0).has_automat() ?
+            msg.elem( 0 ).value().Get(0).automat().id() : msg.elem( 0 ).value().Get(0).formation().id();
+    MIL_Formation* candidateFormation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( oid_donneur );
+    MIL_Automate* candidateAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( oid_donneur );
+    if( !candidateAutomate && !candidateFormation)
+        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
+
+    MIL_AutomateLOG* pSupplier = candidateAutomate!=0 ? candidateAutomate->GetBrainLogistic() :
+            candidateFormation->GetBrainLogistic();
+
+    if( !pSupplier )
+        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
+
+    PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_, msg.elem( 1 ), false );
+    if(!supplyRequests.HasRequests())
+        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_receveur_pushflow );
+
+    PHY_SupplyStockState* pSupplyState = 0;
+    supplyRequests.Execute( *pSupplier, pSupplyState );
+    if( pSupplyState )
+        manualSupplyStates_.insert( pSupplyState );
+    else
+        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
 }
 
 // -----------------------------------------------------------------------------

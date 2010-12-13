@@ -12,36 +12,31 @@
 #include "IdManager.h"
 #include "Drawing.h"
 #include "DrawingProxy.h"
-#include "protocol/ClientPublisher_ABC.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Position.h"
-#include "directia/brain/Brain.h"
+#include "protocol/MessengerSenders.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
+#include <tools/XmlCrc32Signature.h>
+#include <directia/brain/Brain.h>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>
-#include <tools/XmlCrc32Signature.h>
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
-#include "protocol/protocol.h"
-#include "protocol/messengersenders.h"
-
-using namespace Common;
-using namespace MsgsAuthenticationToClient;
-using namespace MsgsClientToMessenger;
-using namespace MsgsMessengerToClient;
-
-namespace bfs = boost::filesystem;
+using namespace sword;
+using namespace sword;
 using namespace plugins::messenger;
+namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: DrawingsModel constructor
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
 DrawingsModel::DrawingsModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager, const kernel::CoordinateConverter_ABC& converter )
-    : config_( config )
+    : config_   ( config )
     , converter_( converter )
-    , clients_( clients )
+    , clients_  ( clients )
     , idManager_( idManager )
 {
     Load( config );
@@ -107,7 +102,7 @@ void DrawingsModel::ReadShapes( xml::xistream& xis )
 {
     xis >> xml::start( "shapes" )
             >> xml::list( "shape", *this, &DrawingsModel::ReadShape )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +129,6 @@ void DrawingsModel::Save( const std::string& directory ) const
         xos << xml::start( "shapes" );
         std::for_each( elements_.begin(), elements_.end(), boost::bind( &Drawing::Serialize
                      , boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( xos ) ) );
-        xos << xml::end();
     }
     tools::WriteXmlCrc32Signature( filename );
 }
@@ -143,10 +137,10 @@ void DrawingsModel::Save( const std::string& directory ) const
 // Name: DrawingsModel::HandleRequest
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
-void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgShapeCreationRequest& message )
+void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ShapeCreationRequest& message )
 {
     plugins::messenger::ShapeCreationRequestAck ack ;
-    ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_no_error );
+    ack().set_error_code( sword::ShapeRequestAck_ErrorCode_no_error );
     try
     {
         std::auto_ptr< Drawing > drawing( new Drawing( idManager_.NextId(), message, converter_ ) );
@@ -156,7 +150,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
     }
     catch( ... )
     {
-        ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_error_invalid_oid ); // $$$$ SBO 2008-06-09:
+        ack().set_error_code( sword::ShapeRequestAck_ErrorCode_error_invalid_oid ); // $$$$ SBO 2008-06-09:
     }
     ack.Send( publisher );
 }
@@ -165,10 +159,10 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
 // Name: DrawingsModel::HandleRequest
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
-void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgShapeUpdateRequest& message )
+void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ShapeUpdateRequest& message )
 {
     plugins::messenger::ShapeUpdateRequestAck ack ;
-    ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_no_error );
+    ack().set_error_code( sword::ShapeRequestAck_ErrorCode_no_error );
 
     Drawing* drawing = Find( message.shape().id() );
     if( drawing )
@@ -177,7 +171,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
         drawing->SendUpdate( clients_ );
     }
     else
-        ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_error_invalid_oid );
+        ack().set_error_code( sword::ShapeRequestAck_ErrorCode_error_invalid_oid );
     ack.Send( publisher );
 }
 
@@ -185,10 +179,10 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
 // Name: DrawingsModel::HandleRequest
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
-void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgShapeDestructionRequest& message )
+void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ShapeDestructionRequest& message )
 {
     plugins::messenger::ShapeDestructionRequestAck ack ;
-    ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_no_error );
+    ack().set_error_code( sword::ShapeRequestAck_ErrorCode_no_error );
 
     Drawing* drawing = Find( message.id().id() );
     if( drawing )
@@ -198,7 +192,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
         Remove( message.id().id() );
     }
     else
-        ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_error_invalid_oid );
+        ack().set_error_code( sword::ShapeRequestAck_ErrorCode_error_invalid_oid );
     ack.Send( publisher );
 }
 
@@ -239,8 +233,7 @@ boost::shared_ptr< DrawingProxy > DrawingsModel::CreateDrawing( const std::strin
     xml::xifstream xis( config_.BuildExerciseChildFile( "scripts/resources/drawings.xml" ) ); // $$$$ AGE 2008-07-09:
     std::auto_ptr< Drawing > p;
     xis >> xml::start( "shapes" )
-            >> xml::list( "shape", *this, &DrawingsModel::ReadNamedShape, p, name )
-        >> xml::end();
+            >> xml::list( "shape", *this, &DrawingsModel::ReadNamedShape, p, name );
     if( !p.get() )
         throw std::runtime_error( "Could not find drawing '" + name + "'" );
     return boost::shared_ptr< DrawingProxy >( new DrawingProxy( *this, p ) );
@@ -258,13 +251,12 @@ void DrawingsModel::Publish( const Drawing& drawing )
     copy.release();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DrawingsModel::ReadNamedShape
 // Created: AGE 2008-07-09
 // -----------------------------------------------------------------------------
 void DrawingsModel::ReadNamedShape( xml::xistream& xis, std::auto_ptr< Drawing >& result, const std::string& name )
 {
-    if( xml::attribute( xis, "name", std::string() ) == name )
+    if( xis.attribute( "name", "" ) == name )
         result.reset( new Drawing( idManager_.NextId(), xis, converter_ ) );
 }

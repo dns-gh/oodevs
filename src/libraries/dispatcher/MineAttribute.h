@@ -26,14 +26,14 @@ class MineAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MineAttribute( const Common::ObjectAttributes& asnMsg );
+    explicit MineAttribute( const sword::ObjectAttributes& asnMsg );
     virtual ~MineAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::ObjectAttributes& asnMsg );
-    virtual void Send  ( Common::ObjectAttributes& asnMsg ) const;
+    virtual void Update( const sword::ObjectAttributes& asnMsg );
+    virtual void Send  ( sword::ObjectAttributes& asnMsg ) const;
     //@}
 
 private:

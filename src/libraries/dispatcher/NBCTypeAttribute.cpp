@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: NBCTypeAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-NBCTypeAttribute::NBCTypeAttribute( const Common::ObjectAttributes& asnMsg )
+NBCTypeAttribute::NBCTypeAttribute( const sword::ObjectAttributes& asnMsg )
     : agent_( 0 )
     , concentration_( 0 )
     , sourceLifeDuration_( 0 )
@@ -38,7 +38,7 @@ NBCTypeAttribute::~NBCTypeAttribute()
 // Name: NBCTypeAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void NBCTypeAttribute::Update( const Common::ObjectAttributes& asnMsg )
+void NBCTypeAttribute::Update( const sword::ObjectAttributes& asnMsg )
 {
     if( !asnMsg.has_nbc_agent()  )
         return;
@@ -51,7 +51,7 @@ void NBCTypeAttribute::Update( const Common::ObjectAttributes& asnMsg )
 // Name: NBCTypeAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void NBCTypeAttribute::Send( Common::ObjectAttributes& asnMsg ) const
+void NBCTypeAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
     asnMsg.mutable_nbc_agent()->mutable_agent()->set_id( agent_ );
     asnMsg.mutable_nbc_agent()->set_concentration( concentration_ );

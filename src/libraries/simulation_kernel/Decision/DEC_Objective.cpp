@@ -17,13 +17,13 @@
 // Name: DEC_Objective constructor
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-DEC_Objective::DEC_Objective( const Common::MsgMissionObjective& asn )
+DEC_Objective::DEC_Objective( const sword::MsgMissionObjective& asn )
     : localisation_()
     , bFlag_       ( false )
 {
     NET_ASN_Tools::ReadTick( asn.horaire(), nSchedule_);
     if( !NET_ASN_Tools::ReadLocation( asn.localisation(), localisation_ ) )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission_parameters );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ void DEC_Objective::operator=( const DEC_Objective& rhs )
 // Name: DEC_Objective::Serialize
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-void DEC_Objective::Serialize( Common::MsgMissionObjective& asn ) const
+void DEC_Objective::Serialize( sword::MsgMissionObjective& asn ) const
 {
     NET_ASN_Tools::WriteTick    ( nSchedule_, *asn.mutable_horaire() );
     NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_localisation() );

@@ -14,7 +14,7 @@
 #include <boost/bind.hpp>
 #include "protocol/protocol.h"
 
-using namespace Common;
+using namespace sword;
 
 namespace
 {

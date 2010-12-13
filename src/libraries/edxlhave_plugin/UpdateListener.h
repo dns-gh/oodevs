@@ -12,12 +12,12 @@
 
 #include "ResponseHandler_ABC.h"
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameter_Value;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
     class MagicActionUpdateObject;
 }
@@ -55,7 +55,7 @@ class UpdateListener : public ResponseHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-            UpdateListener( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& simulation );
+             UpdateListener( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& simulation );
     virtual ~UpdateListener();
     //@}
 
@@ -75,13 +75,13 @@ private:
     //@{
     void ReadHospitalStatus( xml::xistream& xis );
     void SendHospital( xml::xistream& xis );
-    void UpdateFacilityStatus( xml::xistream& xis, Common::MsgMissionParameter_Value& parameters );
-    void UpdateCapacityStatus( xml::xistream& xis, Common::MsgMissionParameter_Value& parameters );
+    void UpdateFacilityStatus( xml::xistream& xis, sword::MsgMissionParameter_Value& parameters );
+    void UpdateCapacityStatus( xml::xistream& xis, sword::MsgMissionParameter_Value& parameters );
     //@}
 
     //! @name
     //@{
-    void Send( MsgsSimToClient::MagicActionUpdateObject& asn );
+    void Send( sword::MagicActionUpdateObject& asn );
     //@}
 
 private:

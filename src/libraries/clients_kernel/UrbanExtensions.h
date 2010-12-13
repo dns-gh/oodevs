@@ -14,23 +14,23 @@
 #include "Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUrbanUpdate;
-    class MsgUrbanCreation;
+    class UrbanUpdate;
+    class UrbanCreation;
 }
 
-#define DECLARE_EXTENSION( extension )                                                      \
-class extension : public kernel::Extension_ABC                                              \
-                , public kernel::Displayable_ABC                                            \
-                , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanUpdate >           \
-                , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanCreation >         \
-{                                                                                           \
-public:                                                                                     \
-             extension() {};                                                                \
-    virtual ~extension() {};                                                                \
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanCreation& ) {}                    \
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& ) {}                      \
+#define DECLARE_EXTENSION( extension )                                           \
+class extension : public kernel::Extension_ABC                                   \
+                , public kernel::Displayable_ABC                                 \
+                , public kernel::Updatable_ABC< sword::UrbanUpdate >   \
+                , public kernel::Updatable_ABC< sword::UrbanCreation > \
+{                                                                                \
+public:                                                                          \
+             extension() {}                                                      \
+    virtual ~extension() {}                                                      \
+    virtual void DoUpdate( const sword::UrbanCreation& ) {}            \
+    virtual void DoUpdate( const sword::UrbanUpdate& ) {}              \
 };
 
 namespace kernel

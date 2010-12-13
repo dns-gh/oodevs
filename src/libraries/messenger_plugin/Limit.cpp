@@ -19,7 +19,7 @@ using namespace plugins::messenger;
 // Name: Limit constructor
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-Limit::Limit( unsigned int id, const MsgsClientToMessenger::MsgLimitCreationRequest& message )
+Limit::Limit( unsigned int id, const sword::LimitCreationRequest& message )
     : TacticalLine_ABC( id, message.tactical_line() )
 {
     // NOTHING
@@ -29,7 +29,7 @@ Limit::Limit( unsigned int id, const MsgsClientToMessenger::MsgLimitCreationRequ
 // Name: Limit constructor
 // Created: RDS 2008-04-03
 // -----------------------------------------------------------------------------
-Limit::Limit( unsigned int id, xml::xistream& xis, const Common::MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter )
+Limit::Limit( unsigned int id, xml::xistream& xis, const sword::MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter )
     : TacticalLine_ABC( id, xis, diffusion, converter )
 {
     // NOTHING
@@ -48,7 +48,7 @@ Limit::~Limit()
 // Name: Limit::Update
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void Limit::Update( const MsgsClientToMessenger::MsgLimitUpdateRequest& message )
+void Limit::Update( const sword::LimitUpdateRequest& message )
 {
     TacticalLine_ABC::Update( message.tactical_line() );
 }
@@ -59,7 +59,7 @@ void Limit::Update( const MsgsClientToMessenger::MsgLimitUpdateRequest& message 
 // -----------------------------------------------------------------------------
 void Limit::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 {
-    MsgsMessengerToClient::MsgLimitCreation creation ;
+    sword::LimitCreation creation ;
     creation.mutable_id()->set_id( GetID() );
     TacticalLine_ABC::Send( *creation.mutable_tactical_line() );
     plugins::messenger::LimitCreation message( creation );
@@ -72,7 +72,7 @@ void Limit::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 // -----------------------------------------------------------------------------
 void Limit::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 {
-    MsgsMessengerToClient::MsgLimitUpdate update;
+    sword::LimitUpdate update;
     update.mutable_id()->set_id( GetID() );
     TacticalLine_ABC::Send( *update.mutable_tactical_line() );
     plugins::messenger::LimitUpdate message( update );
@@ -86,7 +86,7 @@ void Limit::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 // -----------------------------------------------------------------------------
 void Limit::SendDestruction( dispatcher::ClientPublisher_ABC& client ) const
 {
-    MsgsMessengerToClient::MsgLimitDestruction destruction;
+    sword::LimitDestruction destruction;
     destruction.mutable_id()->set_id( GetID() );
     plugins::messenger::LimitDestruction message( destruction );
     message.Send( client );

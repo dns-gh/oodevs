@@ -17,7 +17,7 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/Simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentHierarchiesCommunication
@@ -49,7 +49,7 @@ AgentHierarchiesCommunication::~AgentHierarchiesCommunication()
 // Name: DoUpdate
 // Created: FDS 2010-03-29
 // -----------------------------------------------------------------------------
-void AgentHierarchiesCommunication::DoUpdate( const MsgsSimToClient::MsgUnitCreation& message )
+void AgentHierarchiesCommunication::DoUpdate( const sword::UnitCreation& message )
 {
     AgentHierarchies< kernel::CommunicationHierarchies >::DoUpdate( message );
     superior_ = &GetAutomatResolver().Get( message.automat().id() );
@@ -59,7 +59,7 @@ void AgentHierarchiesCommunication::DoUpdate( const MsgsSimToClient::MsgUnitCrea
 // Name: DoUpdate
 // Created: FDS 2010-03-29
 // -----------------------------------------------------------------------------
-void AgentHierarchiesCommunication::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void AgentHierarchiesCommunication::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_communications() && message.communications().has_jammed() )
     {
@@ -77,7 +77,7 @@ void AgentHierarchiesCommunication::DoUpdate( const MsgsSimToClient::MsgUnitAttr
 // Name: DoUpdate
 // Created: FDS 2010-03-29
 // -----------------------------------------------------------------------------
-void AgentHierarchiesCommunication::DoUpdate( const Common::MsgUnitChangeSuperior& message )
+void AgentHierarchiesCommunication::DoUpdate( const sword::UnitChangeSuperior& message )
 {
     if( jammed_ || radioEmitterDisabled_ )
         superior_ = & GetAutomatResolver().Get( message.parent().id() );

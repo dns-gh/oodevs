@@ -21,7 +21,7 @@
 #include "clients_kernel/Controllers.h"
 #include "protocol/Protocol.h"
 
-using namespace Common;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLineFactory constructor
@@ -49,7 +49,7 @@ TacticalLineFactory::~TacticalLineFactory()
 // Name: TacticalLineFactory::Create
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
-::TacticalLine_ABC* TacticalLineFactory::Create( const MsgsMessengerToClient::MsgLimaCreation& message )
+::TacticalLine_ABC* TacticalLineFactory::Create( const sword::LimaCreation& message )
 {
     ::TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, converter_, message );
     line->Attach< kernel::Positions >( *new TacticalLinePositions( message.tactical_line().geometry(), converter_, *line ) );
@@ -61,7 +61,7 @@ TacticalLineFactory::~TacticalLineFactory()
 // Name: TacticalLineFactory::Create
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
-::TacticalLine_ABC* TacticalLineFactory::Create( const MsgsMessengerToClient::MsgLimitCreation& message )
+::TacticalLine_ABC* TacticalLineFactory::Create( const sword::LimitCreation& message )
 {
     ::TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, converter_, message );
     line->Attach< kernel::Positions >( *new TacticalLinePositions( message.tactical_line().geometry(), converter_, *line ) );

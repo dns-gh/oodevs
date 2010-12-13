@@ -39,7 +39,7 @@ Section "!${PRODUCT_NAME}"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${RUNDIR}\*.qm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
- 
+
     ; resources: documentation
     SetOutPath "$INSTDIR\applications\resources\help\en"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
@@ -110,9 +110,9 @@ Section "!${PRODUCT_NAME}"
 
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File "resources\*.ico"
-    
-    ; terrain dependencies	
-    File "${RUNDIR}\comerr32.dll" 
+
+    ; terrain dependencies
+    File "${RUNDIR}\comerr32.dll"
     File "${RUNDIR}\gssapi32.dll"
     File "${RUNDIR}\gdal*.dll"
     File "${RUNDIR}\gdal_SDE.dll"
@@ -126,12 +126,12 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\libpq.dll"
     File "${RUNDIR}\libxslt.dll"
     File "${RUNDIR}\msvcr71.dll"
-    File "${RUNDIR}\ogr_SDE.dll"  
-    
+    File "${RUNDIR}\ogr_SDE.dll"
+
     ; evaluation licence
     !ifdef EVALUATION
         File "${RUNDIR}\evaluation.lic"
-    !endif  
+    !endif
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ;projection settings (used in crossbow)
@@ -159,9 +159,9 @@ Section "!${PRODUCT_NAME}"
 SectionEnd
 
 SectionGroup "Additional components"
-    
+
     !insertmacro OT.AddOptionalComponent "Terrain"
-    
+
 SectionGroupEnd
 
 ;--------------------------------
@@ -289,7 +289,7 @@ SectionGroup "Terrains" s_ter
         !insertmacro OT.AddTerrain "Porto" "s_ter6"
         !insertmacro OT.AddTerrain "Drosoville" "s_ter7"
         !insertmacro OT.AddTerrain "Mailly" "s_ter8"
-        !insertmacro OT.AddTerrain "PoseidonVALite" "s_ter9"        
+        !insertmacro OT.AddTerrain "PoseidonVALite" "s_ter9"
     !else if "${APP_MODEL}" == "france"
         !insertmacro OT.AddTerrain "Nord egypt" "s_ter1"
         !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
@@ -297,7 +297,7 @@ SectionGroup "Terrains" s_ter
         !insertmacro OT.AddTerrain "Cabourg" "s_ter4"
         !insertmacro OT.AddTerrain "Drosoville" "s_ter7"
         !insertmacro OT.AddTerrain "Angers_x9" "s_ter8"
-        !insertmacro OT.AddTerrain "PoseidonVALite" "s_ter9"        
+        !insertmacro OT.AddTerrain "PoseidonVALite" "s_ter9"
     !endif
 
 SectionGroupEnd
@@ -316,7 +316,7 @@ SectionGroup "Shortcuts" s_sc
         SetOutPath "$INSTDIR\applications"
         CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
-    
+
     ;--------------------------------
     Section "Quick Launch" s_quick
         SetOutPath "$INSTDIR\applications"
@@ -352,7 +352,7 @@ Function .onInit
     SectionSetText ${s_sc} $(OT_SECTION_SHORTCUTS)
     SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)
     SectionSetText ${s_quick} $(OT_SECTION_QUICKLAUNCH_SHORTCUT)
-    
+
     !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
 FunctionEnd
@@ -436,5 +436,5 @@ Function .onSelChange
         !insertmacro OT.CheckDependency "s_exo33" "s_ter2"
         !insertmacro OT.CheckDependency "s_exo34" "s_ter9"
     !endif
-     
+
 FunctionEnd

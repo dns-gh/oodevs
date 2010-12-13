@@ -48,14 +48,14 @@ public:
     //@{
     virtual const geometry::Point2d& GetPosition() const = 0;
     virtual const dispatcher::Automat_ABC& GetSuperior() const = 0;
-    virtual Common::EnumOperationalStatus GetOperationalState() const = 0;
+    virtual sword::EnumOperationalStatus GetOperationalState() const = 0;
     virtual unsigned short GetOperationalStateValue() const = 0;
     virtual const tools::Resolver< dispatcher::Equipment >& Equipments() const = 0;
     virtual const tools::Resolver< dispatcher::Humans >& Troops() const = 0;
     virtual unsigned short GetAltitude() const = 0;
     virtual unsigned short GetSpeed() const = 0;
     virtual unsigned short GetDirection() const = 0;
-    virtual MsgsSimToClient::ForceRatio_Value GetForceRatio() const = 0;
+    virtual sword::ForceRatio_Value GetForceRatio() const = 0;
     virtual const Order_ABC* GetOrder() const = 0;
     virtual bool IsMounted() const = 0;
     //@}

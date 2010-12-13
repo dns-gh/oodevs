@@ -16,20 +16,16 @@
 
 namespace google
 {
-    namespace protobuf
-    {
-        template< typename T > class RepeatedPtrField;
-    }
+namespace protobuf
+{
+    template< typename T > class RepeatedPtrField;
+}
 }
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameter_Value;
     class ObjectAttributes;
-}
-
-namespace MsgsSimToClient
-{
     class UrbanAttributes;
 }
 
@@ -75,12 +71,14 @@ public:
     //! @name Operations
     //@{
     void Update( xml::xistream& xis, const MIL_Object_ABC& object );
-    void Update( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list );
+    void Update( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& list );
+
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
+
     void RegisterNode( unsigned int id, bool urban );
-    void SendState( MsgsSimToClient::UrbanAttributes& message );
-    void SendState( Common::ObjectAttributes& asn ) const;
+    void SendState( sword::UrbanAttributes& message );
+    void SendState( sword::ObjectAttributes& asn ) const;
     void SetModifier( unsigned int modifier ) const;
     //@}
 

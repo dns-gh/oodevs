@@ -34,7 +34,7 @@ public:
              TimeLimitedAttribute();
     explicit TimeLimitedAttribute( xml::xistream& xis );
     explicit TimeLimitedAttribute( unsigned int nActivityTime );
-    explicit TimeLimitedAttribute( const Common::MsgMissionParameter_Value& attributes );
+    explicit TimeLimitedAttribute( const sword::MsgMissionParameter_Value& attributes );
     virtual ~TimeLimitedAttribute();
     //@}
 
@@ -55,8 +55,8 @@ public:
 
     //! @name Network updates
     //@{
-    virtual void SendFullState( Common::ObjectAttributes& asn ) const;
-    virtual void SendUpdate( Common::ObjectAttributes& asn ) const;
+    virtual void SendFullState( sword::ObjectAttributes& asn ) const;
+    virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
     //@}
 
     //! @name Accessors

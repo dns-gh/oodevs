@@ -40,7 +40,7 @@ UrbanPerceptions::~UrbanPerceptions()
 // Name: UrbanPerceptions::DoUpdate
 // Created: MGD 2009-12-09
 // -----------------------------------------------------------------------------
-void UrbanPerceptions::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
+void UrbanPerceptions::DoUpdate( const sword::UrbanKnowledgeUpdate& message )
 {
     if( message.automat_perceptions().elem_size() )
     {

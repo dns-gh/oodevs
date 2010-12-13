@@ -51,7 +51,7 @@ void AgentsModel::Purge()
 // Name: AgentsModel::CreateAutomat
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAutomat( const MsgsSimToClient::MsgAutomatCreation& message )
+void AgentsModel::CreateAutomat( const sword::AutomatCreation& message )
 {
     if( !Resolver< Automat_ABC >::Find( message.automat().id() ) )
     {
@@ -82,7 +82,7 @@ kernel::Automat_ABC* AgentsModel::FindAutomat( unsigned long id )
 // Name: AgentsModel::CreateAgent
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( const MsgsSimToClient::MsgUnitCreation& message )
+void AgentsModel::CreateAgent( const sword::UnitCreation& message )
 {
     if( !Resolver< Agent_ABC >::Find( message.unit().id() ) )
     {
@@ -113,7 +113,7 @@ Agent_ABC* AgentsModel::FindAgent( unsigned long id ) const
 // Name: AgentsModel::DestroyAgent
 // Created: AGE 2007-04-24
 // -----------------------------------------------------------------------------
-void AgentsModel::DestroyAgent( const MsgsSimToClient::MsgUnitDestruction& msg )
+void AgentsModel::DestroyAgent( const sword::UnitDestruction& msg )
 {
     delete tools::Resolver< Agent_ABC >::Find( msg.unit().id() );
     tools::Resolver< Agent_ABC >::Remove( msg.unit().id() );
@@ -123,7 +123,7 @@ void AgentsModel::DestroyAgent( const MsgsSimToClient::MsgUnitDestruction& msg )
 // Name: AgentsModel::DestroyAutomat
 // Created: LDC 2010-11-02
 // -----------------------------------------------------------------------------
-void AgentsModel::DestroyAutomat( const MsgsSimToClient::MsgAutomatDestruction& message )
+void AgentsModel::DestroyAutomat( const sword::AutomatDestruction& message )
 {
     delete tools::Resolver< Automat_ABC >::Find( message.automat().id() );
     tools::Resolver< Automat_ABC >::Remove( message.automat().id() );
@@ -133,7 +133,7 @@ void AgentsModel::DestroyAutomat( const MsgsSimToClient::MsgAutomatDestruction& 
 // Name: AgentsModel::DestroyCrowd
 // Created: LDC 2010-11-02
 // -----------------------------------------------------------------------------
-void AgentsModel::DestroyCrowd( const MsgsSimToClient::MsgCrowdDestruction& message )
+void AgentsModel::DestroyCrowd( const sword::CrowdDestruction& message )
 {
     delete tools::Resolver< Population_ABC >::Find( message.crowd().id() );
     tools::Resolver< Population_ABC >::Remove( message.crowd().id() );
@@ -161,7 +161,7 @@ Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 // Name: AgentsModel::CreatePopulation
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void AgentsModel::CreatePopulation( const MsgsSimToClient::MsgCrowdCreation& message )
+void AgentsModel::CreatePopulation( const sword::CrowdCreation& message )
 {
     if( !Resolver< Population_ABC >::Find( message.crowd().id() ) )
     {
@@ -192,7 +192,7 @@ Population_ABC* AgentsModel::FindPopulation( unsigned long id )
 // Name: AgentsModel::CreateInhabitant
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateInhabitant( const MsgsSimToClient::MsgPopulationCreation& message )
+void AgentsModel::CreateInhabitant( const sword::PopulationCreation& message )
 {
     if( !Resolver< Inhabitant_ABC >::Find( message.id().id() ) )
     {

@@ -20,7 +20,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "gaming/StaticModel.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace actions;
 using namespace kernel;
@@ -49,15 +49,15 @@ ChangeDiplomacyDialog::~ChangeDiplomacyDialog()
 
 namespace
 {
-    Common::EnumDiplomacy ResolveDiplomacy( const kernel::Karma& karma )
+    sword::EnumDiplomacy ResolveDiplomacy( const kernel::Karma& karma )
     {
         if( karma == kernel::Karma::friend_ )
-            return Common::friend_diplo;
+            return sword::friend_diplo;
         if( karma == kernel::Karma::enemy_ )
-            return Common::enemy_diplo;
+            return sword::enemy_diplo;
         if( karma == kernel::Karma::neutral_ )
-            return Common::neutral_diplo;
-        return Common::unknown_diplo;
+            return sword::neutral_diplo;
+        return sword::unknown_diplo;
     }
 }
 

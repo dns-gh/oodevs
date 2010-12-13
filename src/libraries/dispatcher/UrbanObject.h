@@ -14,10 +14,10 @@
 #include "UrbanObject_ABC.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUrbanCreation;
-    class MsgUrbanUpdate;
+    class UrbanCreation;
+    class UrbanUpdate;
     class UrbanAttributes;
 }
 
@@ -40,12 +40,12 @@ namespace dispatcher
 // =============================================================================
     class UrbanObject : public UrbanObject_ABC
                       , public kernel::Extension_ABC
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanUpdate >
+                      , public kernel::Updatable_ABC< sword::UrbanUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanObject( Model_ABC& model, const MsgsSimToClient::MsgUrbanCreation& msg );
+             UrbanObject( Model_ABC& model, const sword::UrbanCreation& msg );
     virtual ~UrbanObject();
     //@}
 
@@ -55,7 +55,7 @@ public:
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& msg );
+    virtual void DoUpdate( const sword::UrbanUpdate& msg );
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
@@ -68,7 +68,7 @@ private:
 
     //! @name Attributes
     //@{
-    void Initialize( const MsgsSimToClient::UrbanAttributes& attributes );
+    void Initialize( const sword::UrbanAttributes& attributes );
     void AddAttribute( UrbanObjectAttribute_ABC* attribute );
     //@}
 

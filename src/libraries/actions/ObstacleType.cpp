@@ -21,7 +21,7 @@ using namespace parameters;
 // -----------------------------------------------------------------------------
 ObstacleType::ObstacleType( const kernel::OrderParameter& parameter, unsigned int value )
     : Parameter< QString >( parameter )
-    , value_( Common::ObstacleType_DemolitionTargetType( value ) )
+    , value_( sword::ObstacleType_DemolitionTargetType( value ) )
 {
     SetValue( tools::ToString( E_DemolitionTargetType( value_ ) ) );
 }
@@ -32,7 +32,7 @@ ObstacleType::ObstacleType( const kernel::OrderParameter& parameter, unsigned in
 // -----------------------------------------------------------------------------
 ObstacleType::ObstacleType( xml::xistream& xis )
     : Parameter< QString >( kernel::OrderParameter( xis.attribute< std::string >( "name" ).c_str(), xis.attribute< std::string >( "type" ), false ) )
-    , value_( Common::ObstacleType_DemolitionTargetType( xis.attribute< unsigned int >( "value" ) ) )
+    , value_( sword::ObstacleType_DemolitionTargetType( xis.attribute< unsigned int >( "value" ) ) )
 {
     SetValue( tools::ToString( E_DemolitionTargetType( value_ ) ) );
 }
@@ -62,5 +62,5 @@ void ObstacleType::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ObstacleType::CommitTo( T_Setter setter ) const
 {
-    setter( Common::ObstacleType_DemolitionTargetType( value_ ) );
+    setter( sword::ObstacleType_DemolitionTargetType( value_ ) );
 }

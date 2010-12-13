@@ -12,7 +12,7 @@
 
 
 #include "clients_gui/DrawingFactory_ABC.h"
-#include "protocol/messengersenders.h"
+#include "protocol/MessengerSenders.h"
 
 namespace kernel
 {
@@ -50,7 +50,7 @@ public:
 
     //! @name Operations
     //@{
-    gui::Drawing_ABC* CreateShape( const MsgsMessengerToClient::MsgShapeCreation& asn ) const;
+    gui::Drawing_ABC* CreateShape( const sword::ShapeCreation& asn ) const;
     //@}
 
 private:

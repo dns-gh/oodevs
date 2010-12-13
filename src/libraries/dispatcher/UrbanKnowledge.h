@@ -34,21 +34,21 @@ namespace dispatcher
 // =============================================================================
 class UrbanKnowledge : public UrbanKnowledge_ABC
                      , public kernel::Extension_ABC
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeCreation >
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeUpdate >
+                     , public kernel::Updatable_ABC< sword::UrbanKnowledgeCreation >
+                     , public kernel::Updatable_ABC< sword::UrbanKnowledgeUpdate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message );
+             UrbanKnowledge( const Model_ABC& model, const sword::UrbanKnowledgeCreation& message );
     virtual ~UrbanKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::UrbanKnowledgeCreation& message );
+    virtual void DoUpdate( const sword::UrbanKnowledgeUpdate& message );
     virtual void SendCreation( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;

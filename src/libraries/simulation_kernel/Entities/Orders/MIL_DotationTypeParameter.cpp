@@ -17,7 +17,7 @@
 // Name: MIL_DotationTypeParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_DotationTypeParameter::MIL_DotationTypeParameter( const Common::ResourceType & asn )
+MIL_DotationTypeParameter::MIL_DotationTypeParameter( const sword::ResourceType & asn )
     : pCategory_( PHY_DotationType::FindDotationCategory( asn.id() ) )
 {
     // NOTHING
@@ -61,12 +61,11 @@ bool MIL_DotationTypeParameter::ToDotationType( const PHY_DotationCategory*& val
     return true;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationTypeParameter::ToElement
 // Created: MGD 2010-11-19
 // -----------------------------------------------------------------------------
-bool MIL_DotationTypeParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+bool MIL_DotationTypeParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
 {
     if( !pCategory_ )
         return false;

@@ -17,11 +17,11 @@ namespace dispatcher
     class ClientPublisher_ABC;
 }
 
-namespace MsgsClientToMessenger
+namespace sword
 {
-    class MsgClientObjectCreationRequest;
-    class MsgClientObjectDestructionRequest;
-    class MsgClientObjectUpdateRequest;
+    class ClientObjectCreationRequest;
+    class ClientObjectDestructionRequest;
+    class ClientObjectUpdateRequest;
 }
 
 namespace xml
@@ -54,9 +54,9 @@ public:
 
     //! @name Operations
     //@{
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgClientObjectCreationRequest& message );
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgClientObjectDestructionRequest& message );
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgClientObjectUpdateRequest& message );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ClientObjectCreationRequest& message );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ClientObjectDestructionRequest& message );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ClientObjectUpdateRequest& message );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
     void Write( xml::xostream& xos ) const;
     void ReadClientObject( xml::xistream& xis );

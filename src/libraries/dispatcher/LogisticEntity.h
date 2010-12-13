@@ -15,9 +15,9 @@
 #include "tools/Resolver_ABC.h"
 #include "tools/Resolver.h"
 
-namespace Common
+namespace sword
 {
-    class MsgChangeLogisticLinks;
+    class ChangeLogisticLinks;
 }
 
 namespace client
@@ -26,9 +26,9 @@ namespace client
     class LogSupplyQuotas;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogSupplyQuotas;
+    class LogSupplyQuotas;
 }
 
 namespace kernel
@@ -49,8 +49,8 @@ namespace dispatcher
 // Created: AHC 2010-10
 // =============================================================================
 class LogisticEntity : public kernel::Extension_ABC
-                     , public kernel::Updatable_ABC< Common::MsgChangeLogisticLinks >
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyQuotas >
+                     , public kernel::Updatable_ABC< sword::ChangeLogisticLinks >
+                     , public kernel::Updatable_ABC< sword::LogSupplyQuotas >
 {
 public:
     //! @name Constructor/destructor
@@ -66,8 +66,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const Common::MsgChangeLogisticLinks& msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas& msg );
+    virtual void DoUpdate( const sword::ChangeLogisticLinks& msg );
+    virtual void DoUpdate( const sword::LogSupplyQuotas& msg );
     void Fill( client::ChangeLogisticLinks& msg ) const;
     void Fill( client::LogSupplyQuotas& msg ) const;
     //@}

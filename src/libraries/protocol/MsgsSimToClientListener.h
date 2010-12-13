@@ -10,9 +10,9 @@
 #ifndef __MsgsSimToClientListener_h_
 #define __MsgsSimToClientListener_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgSimToClient;
+    class SimToClient;
 
 // =============================================================================
 /** @class  MsgsSimToClientListener
@@ -33,7 +33,7 @@ public:
     //! @name Operations
     //@{
     //@return true if listener can be removed from list after processing message
-    virtual bool OnMessageReceived( const MsgSimToClient& message ) = 0;
+    virtual bool OnMessageReceived( const SimToClient& message ) = 0;
     //@}
 };
 

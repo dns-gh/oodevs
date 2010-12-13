@@ -104,6 +104,18 @@
                   <xs:documentation xml:lang="en">Activates session recorder for later use of data in after action review.</xs:documentation>
                 </xs:annotation>
               </xs:element>
+              <xs:element name="shield" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">Activates a Shield dispatcher proxy.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="server" type="T_NetworkPort" use="required">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">Defines network port on which dispatcher proxy is to accept client connections.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
               <!-- $$$TODO: Add more plugins -->
             </xs:all>
           </xs:complexType>

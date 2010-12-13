@@ -12,7 +12,7 @@
 
 #include "PointCollection.h"
 
-namespace Common
+namespace sword
 {
     class MsgCoordLatLongList;
     class MsgLocation;
@@ -36,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Line();
-    explicit Line( const Common::MsgCoordLatLongList& message );
+    explicit Line( const sword::MsgCoordLatLongList& message );
     explicit Line( const OGRLineString& line );
     virtual ~Line();
     //@}
@@ -45,7 +45,7 @@ public:
     //@{
     void Serialize( std::ostream& geometry ) const;
     void SerializeWkt( std::ostream& geometry ) const;
-    void Serialize( Common::MsgLocation& message ) const;
+    void Serialize( sword::MsgLocation& message ) const;
     //@}
 
     //! @name

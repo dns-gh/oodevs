@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "MT_CrashHandler.h"
-#include <tools/win32/StackWalkerProxy.h>
 #include "MT_Tools/MT_Logger.h"
+#include <tools/win32/StackWalkerProxy.h>
 
 // -----------------------------------------------------------------------------
 // Name: MT_CrashHandler::ContinueSearch
@@ -19,9 +19,9 @@ int MT_CrashHandler::ContinueSearch( const void* exceptionInfos )
 {
     std::stringstream stream;
     stream << "Crash - stack trace :" << std::endl;
-    int nResult = StackWalkerProxy::ContinueSearch( exceptionInfos, stream );
+    int result = StackWalkerProxy::ContinueSearch( exceptionInfos, stream );
     MT_LOG_ERROR_MSG( stream.str() );
-    return nResult;
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -32,9 +32,9 @@ int MT_CrashHandler::ExecuteHandler( const void* exceptionInfos )
 {
     std::stringstream stream;
     stream << "Crash - stack trace :" << std::endl;
-    int nResult = StackWalkerProxy::ExecuteHandler( exceptionInfos, stream );
+    int result = StackWalkerProxy::ExecuteHandler( exceptionInfos, stream );
     MT_LOG_ERROR_MSG( stream.str() );
-    return nResult;
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ int MT_CrashHandler::ContinueExecution( const void* exceptionInfos )
 {
     std::stringstream stream;
     stream << "Crash - stack trace :" << std::endl;
-    int nResult = StackWalkerProxy::ContinueExecution( exceptionInfos, stream );
+    int result = StackWalkerProxy::ContinueExecution( exceptionInfos, stream );
     MT_LOG_ERROR_MSG( stream.str() );
-    return nResult;
+    return result;
 }

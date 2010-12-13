@@ -16,14 +16,15 @@
 #include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgChangeDiplomacyAck;
-    class MsgChangeDiplomacy;
+    class ChangeDiplomacyAck;
+    class ChangeDiplomacy;
 }
-namespace MsgsSimToClient
+
+namespace sword
 {
-    class MsgPartyCreation;
+    class PartyCreation;
 }
 
 namespace kernel
@@ -40,9 +41,9 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class Diplomacies : public kernel::Diplomacies_ABC
-                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgPartyCreation >
-                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgChangeDiplomacyAck >
-                  , public kernel::Updatable_ABC< Common::MsgChangeDiplomacy >
+                  , public kernel::Updatable_ABC< sword::PartyCreation >
+                  , public kernel::Updatable_ABC< sword::ChangeDiplomacyAck >
+                  , public kernel::Updatable_ABC< sword::ChangeDiplomacy >
 {
 public:
     //! @name Constructors/Destructor
@@ -72,9 +73,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgPartyCreation& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& message );
-    virtual void DoUpdate( const Common::MsgChangeDiplomacy& message );
+    virtual void DoUpdate( const sword::PartyCreation& message );
+    virtual void DoUpdate( const sword::ChangeDiplomacyAck& message );
+    virtual void DoUpdate( const sword::ChangeDiplomacy& message );
     template< typename T >
     void UpdateData( const T& message );
     //@}

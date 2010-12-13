@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Name: AgentOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-AgentOrder::AgentOrder( const Common::MsgUnitOrder& message )
+AgentOrder::AgentOrder( const sword::UnitOrder& message )
     : Order_ABC( message.type().id() )
     , message_( message.New() )
 {

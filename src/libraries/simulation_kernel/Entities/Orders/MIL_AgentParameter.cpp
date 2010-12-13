@@ -29,14 +29,14 @@ MIL_AgentParameter::MIL_AgentParameter( DEC_RolePion_Decision* pAgent )
 // Name: MIL_AgentParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AgentParameter::MIL_AgentParameter( const Common::UnitId& asn, MIL_EntityManager_ABC& entityManager )
+MIL_AgentParameter::MIL_AgentParameter( const sword::UnitId& asn, MIL_EntityManager_ABC& entityManager )
     : pDecision_( 0 )
 {
     MIL_AgentPion* pPion = entityManager.FindAgentPion( asn.id() );
     if( pPion )
         pDecision_ = dynamic_cast< DEC_RolePion_Decision* >( &pPion->GetDecision() );
     if( !pDecision_ )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission_parameters );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ bool MIL_AgentParameter::ToAgent( DEC_Decision_ABC*& value ) const
 // Name: MIL_AgentParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_AgentParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+bool MIL_AgentParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
 {
     if( !pDecision_ )
         return false;

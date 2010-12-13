@@ -12,8 +12,8 @@
 
 #include "clients_kernel/Displayable_ABC.h"
 #include "protocol/MessengerSenders.h"
-#include <list>
 #include <qlistview.h>
+#include <list>
 
 namespace kernel
 {
@@ -31,7 +31,7 @@ class Note : public kernel::Displayable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Note( kernel::Controller& controller, const MsgsMessengerToClient::MsgMarkerCreation&  );
+             Note( kernel::Controller& controller, const sword::MarkerCreation& message );
     virtual ~Note();
     //@}
 
@@ -48,8 +48,9 @@ public:
     //! @name Operations
     //@{
     virtual void Display( QListViewItem* item ) const;
-            void Update( const MsgsMessengerToClient::MsgMarkerUpdate& message );
-            void Delete();
+
+    void Update( const sword::MarkerUpdate& message );
+    void Delete();
     //@}
 
 private:

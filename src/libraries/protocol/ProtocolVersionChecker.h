@@ -12,7 +12,7 @@
 
 #include <string>
 
-namespace Version
+namespace sword
 {
     class ProtocolVersion;
 }
@@ -28,13 +28,17 @@ class ProtocolVersionChecker
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ProtocolVersionChecker( const Version::ProtocolVersion& version );
+    explicit ProtocolVersionChecker( const sword::ProtocolVersion& version );
     virtual ~ProtocolVersionChecker();
     //@}
 
     //! @name Operations
     //@{
-    bool CheckCompatibility();
+    bool CheckCompatibility() const;
+    //@}
+
+    //! @name Accessors
+    //@{
     static std::string GetCurrentProtocolVersion();
     //@}
 

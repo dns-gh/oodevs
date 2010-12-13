@@ -21,7 +21,7 @@
 // Name: UserProfile constructor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( const MsgsAuthenticationToClient::MsgProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher )
+UserProfile::UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher )
     : controller_ ( controller )
     , publisher_  ( publisher )
     , registered_ ( true )
@@ -123,7 +123,7 @@ void UserProfile::RequestUpdate( const QString& newLogin )
 {
     authentication::ProfileUpdateRequest message;
     message().set_login( login_.ascii() );
-    MsgsAuthenticationToClient::MsgProfile& profile = *message().mutable_profile();
+    sword::Profile& profile = *message().mutable_profile();
     profile.set_login( newLogin.ascii() );
     profile.set_password( password_.ascii() );
     profile.set_supervisor( supervision_ );
@@ -144,7 +144,7 @@ void UserProfile::RequestUpdate( const QString& newLogin )
 // Name: UserProfile::DoUpdate
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-void UserProfile::DoUpdate( const MsgsAuthenticationToClient::MsgProfileUpdate& message )
+void UserProfile::DoUpdate( const sword::ProfileUpdate& message )
 {
     SetProfile( message.profile() );
 }
@@ -167,7 +167,7 @@ namespace
 // Name: UserProfile::SetProfile
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-void UserProfile::SetProfile( const MsgsAuthenticationToClient::MsgProfile& profile )
+void UserProfile::SetProfile( const sword::Profile& profile )
 {
     login_ = profile.login().c_str();
     if( profile.has_password()  )

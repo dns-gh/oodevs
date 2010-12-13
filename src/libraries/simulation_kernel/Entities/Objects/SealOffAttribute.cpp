@@ -69,7 +69,7 @@ SealOffAttribute& SealOffAttribute::operator=( const SealOffAttribute& rhs )
 // Name: SealOffAttribute::SendFullState
 // Created: MGD 2010-08-24
 // -----------------------------------------------------------------------------
-void SealOffAttribute::SendFullState( Common::ObjectAttributes& asn ) const
+void SealOffAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_seal_off()->set_level( unsigned int( rSealOffLevel_ * 100 ) );
 }
@@ -78,7 +78,7 @@ void SealOffAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // Name: SealOffAttribute::Send
 // Created: MGD 2010-08-24
 // -----------------------------------------------------------------------------
-void SealOffAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
+void SealOffAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {

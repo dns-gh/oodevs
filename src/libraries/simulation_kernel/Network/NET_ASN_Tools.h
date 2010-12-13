@@ -15,7 +15,7 @@
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
 
-namespace Common
+namespace sword
 {
     class MsgAtlasNature;
     class AutomatId;
@@ -27,8 +27,8 @@ namespace Common
     class MsgLine;
     class MsgLocation;
     class MsgLocationList;
-    class MsgLogMaintenancePriorities;
-    class MsgLogMedicalPriorities;
+    class LogMaintenancePriorities;
+    class LogMedicalPriorities;
     class MsgMissionObjective;
     class MsgMissionObjectiveList;
     class ObjectKnowledgeId;
@@ -66,60 +66,60 @@ class NET_ASN_Tools
 {
 public:
 
-    static bool CopyNatureAtlas ( int value, Common::MsgAtlasNature& asn );
-    static bool CopyNatureAtlas ( const Common::MsgAtlasNature& asn, int& value );
+    static bool CopyNatureAtlas ( int value, sword::MsgAtlasNature& asn );
+    static bool CopyNatureAtlas ( const sword::MsgAtlasNature& asn, int& value );
     //@}
 
     // @name Misc tools
     //@{
-    static void Delete( Common::MsgMissionObjective& asn );
-    static void Delete( Common::MsgMissionObjectiveList& asn );
-    static void Delete( Common::MsgPlannedWork& asn );
-    static void Delete( Common::MsgPlannedWorkList& asn );
-    static void Delete( Common::UnitIdList& asn );
-    static void Delete( Common::AutomatIdList& asn );
-    static void Delete( Common::MsgPolygon& asn );
-    static void Delete( Common::MsgPolygonList& asn );
-    static void Delete( Common::MsgPointList& asn );
-    static void Delete( Common::MsgPathList& asn );
-    static void Delete( Common::MsgLocationList& asn );
-    static void Delete( Common::UnitKnowledgeIdList& asn );
-    static void Delete( Common::ObjectKnowledgeIdList& asn );
-    static void Delete( Common::MsgLogMedicalPriorities& asn );
-    static void Delete( Common::MsgLogMaintenancePriorities& asn );
-    static void Delete( Common::MsgCoordLatLongList& asn );
+    static void Delete( sword::MsgMissionObjective& asn );
+    static void Delete( sword::MsgMissionObjectiveList& asn );
+    static void Delete( sword::MsgPlannedWork& asn );
+    static void Delete( sword::MsgPlannedWorkList& asn );
+    static void Delete( sword::UnitIdList& asn );
+    static void Delete( sword::AutomatIdList& asn );
+    static void Delete( sword::MsgPolygon& asn );
+    static void Delete( sword::MsgPolygonList& asn );
+    static void Delete( sword::MsgPointList& asn );
+    static void Delete( sword::MsgPathList& asn );
+    static void Delete( sword::MsgLocationList& asn );
+    static void Delete( sword::UnitKnowledgeIdList& asn );
+    static void Delete( sword::ObjectKnowledgeIdList& asn );
+    static void Delete( sword::LogMedicalPriorities& asn );
+    static void Delete( sword::LogMaintenancePriorities& asn );
+    static void Delete( sword::MsgCoordLatLongList& asn );
     //@}
 
     //! @name Decoding tools
     //@{
-    static bool ReadLine( const Common::MsgLine& asn, TER_Localisation& localisation );
-    static bool ReadLine( const Common::MsgLine& asn, T_PointVector& pointVector );
-    static bool ReadPoint( const Common::MsgPoint& asn, MT_Vector2D& vPoint );
-    static void ReadPoint( const Common::MsgCoordLatLong& asn, MT_Vector2D& vPoint );
-    static bool ReadPointList( const Common::MsgPointList& asn, T_PointVector& pointVector );
-    static bool ReadLocation( const Common::MsgLocation& asn, TER_Localisation& localisation );
-    static void ReadDirection( const Common::MsgHeading& asn, MT_Vector2D& vDir );
-    static void ReadGDH( const Common::MsgDateTime& asn, unsigned int& realTimeSec );
-    static void ReadTick( const Common::MsgDateTime& asn, unsigned int& simTick );
+    static bool ReadLine( const sword::MsgLine& asn, TER_Localisation& localisation );
+    static bool ReadLine( const sword::MsgLine& asn, T_PointVector& pointVector );
+    static bool ReadPoint( const sword::MsgPoint& asn, MT_Vector2D& vPoint );
+    static void ReadPoint( const sword::MsgCoordLatLong& asn, MT_Vector2D& vPoint );
+    static bool ReadPointList( const sword::MsgPointList& asn, T_PointVector& pointVector );
+    static bool ReadLocation( const sword::MsgLocation& asn, TER_Localisation& localisation );
+    static void ReadDirection( const sword::MsgHeading& asn, MT_Vector2D& vDir );
+    static void ReadGDH( const sword::MsgDateTime& asn, unsigned int& realTimeSec );
+    static void ReadTick( const sword::MsgDateTime& asn, unsigned int& simTick );
     //@}
 
     //! @name Encoding tools
     //@{
-    static bool WriteCoordinates( const T_PointVector& points, Common::MsgCoordLatLongList& asn );
-    static bool WriteCoordinates( std::vector< boost::shared_ptr< MT_Vector2D > > points, Common::MsgCoordLatLongList& asn );
-    static bool WriteLine( const T_PointVector& points, Common::MsgLine& asn );
-    static void WriteLine( const TER_Localisation& localisation, Common::MsgLine& asn );
-    static void WriteDirection( const MT_Vector2D& vDir, Common::MsgHeading& asn );
-    static void WriteLocation( const TER_Localisation& localisation, Common::MsgLocation& asn );
-    static void WritePoint( const MT_Vector2D& vPoint, Common::MsgPoint& asn );
-    static void WritePoint( const MT_Vector2D& vPoint, Common::MsgCoordLatLong& asn );
-    static void WritePointList( const T_PointList& points, Common::MsgPointList& asn );
-    static void WriteEllipse( const MT_Ellipse& ellipse, Common::MsgLocation& asn );
-    static void WritePath( const T_PointList& points, Common::MsgPath& asn );
-    static void WritePath( const T_PointVector& points, Common::MsgPath& asn );
-    static void WriteGenObject( const DEC_Gen_Object& object, Common::MsgPlannedWork& asn );
-    static void WriteGDH( unsigned int nRealTimeSec, Common::MsgDateTime& asnGDH );
-    static void WriteTick( unsigned int simTick, Common::MsgDateTime& asnGDH );
+    static bool WriteCoordinates( const T_PointVector& points, sword::MsgCoordLatLongList& asn );
+    static bool WriteCoordinates( std::vector< boost::shared_ptr< MT_Vector2D > > points, sword::MsgCoordLatLongList& asn );
+    static bool WriteLine( const T_PointVector& points, sword::MsgLine& asn );
+    static void WriteLine( const TER_Localisation& localisation, sword::MsgLine& asn );
+    static void WriteDirection( const MT_Vector2D& vDir, sword::MsgHeading& asn );
+    static void WriteLocation( const TER_Localisation& localisation, sword::MsgLocation& asn );
+    static void WritePoint( const MT_Vector2D& vPoint, sword::MsgPoint& asn );
+    static void WritePoint( const MT_Vector2D& vPoint, sword::MsgCoordLatLong& asn );
+    static void WritePointList( const T_PointList& points, sword::MsgPointList& asn );
+    static void WriteEllipse( const MT_Ellipse& ellipse, sword::MsgLocation& asn );
+    static void WritePath( const T_PointList& points, sword::MsgPath& asn );
+    static void WritePath( const T_PointVector& points, sword::MsgPath& asn );
+    static void WriteGenObject( const DEC_Gen_Object& object, sword::MsgPlannedWork& asn );
+    static void WriteGDH( unsigned int nRealTimeSec, sword::MsgDateTime& asnGDH );
+    static void WriteTick( unsigned int simTick, sword::MsgDateTime& asnGDH );
     //@}
 
 private:
@@ -136,35 +136,35 @@ private:
 public:
     // @name Decoding tools
     //@{
-    static bool ReadPath( const Common::MsgPath& asn, T_PointVector& pointVector );
-    static bool ReadPolygon( const Common::MsgPolygon& asn, TER_Localisation& localisation );
+    static bool ReadPath( const sword::MsgPath& asn, T_PointVector& pointVector );
+    static bool ReadPolygon( const sword::MsgPolygon& asn, TER_Localisation& localisation );
 
-    static bool ReadLocationList( const Common::MsgLocationList& asn, T_LocalisationPtrVector& localisationVector, unsigned int nNbrEltMin = 0 );
-    static bool ReadPolygonList( const Common::MsgPolygonList& asn, T_LocalisationPtrVector& localisationVector, unsigned int nNbrEltMin = 0 );
-    static bool ReadPathList( const Common::MsgPathList& asn, T_ItinerairePtrVector& itineraireVector );
+    static bool ReadLocationList( const sword::MsgLocationList& asn, T_LocalisationPtrVector& localisationVector, unsigned int nNbrEltMin = 0 );
+    static bool ReadPolygonList( const sword::MsgPolygonList& asn, T_LocalisationPtrVector& localisationVector, unsigned int nNbrEltMin = 0 );
+    static bool ReadPathList( const sword::MsgPathList& asn, T_ItinerairePtrVector& itineraireVector );
 
-    static DEC_Decision_ABC*            ReadAgent              ( const Common::UnitId&               asn );
-    static DEC_Decision_ABC*            ReadAutomate           ( const Common::UnitId&               asn );
-    static boost::shared_ptr< DEC_Knowledge_Agent > ReadAgentKnowledge     ( const Common::UnitKnowledgeId&      asn, const DEC_KnowledgeResolver_ABC& resolver );
-    static DEC_Knowledge_Population*    ReadPopulationKnowledge( const Common::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static DEC_Decision_ABC*            ReadAgent              ( const sword::UnitId&               asn );
+    static DEC_Decision_ABC*            ReadAutomate           ( const sword::UnitId&               asn );
+    static boost::shared_ptr< DEC_Knowledge_Agent > ReadAgentKnowledge     ( const sword::UnitKnowledgeId&      asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static DEC_Knowledge_Population*    ReadPopulationKnowledge( const sword::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
 
-    static boost::shared_ptr< DEC_Knowledge_Object > ReadObjectKnowledge    ( const Common::ObjectKnowledgeId&     asn, const DEC_KnowledgeResolver_ABC& resolver );
-    static bool                         ReadObjectKnowledgeList( const Common::ObjectKnowledgeIdList& asn, T_KnowledgeObjectDiaIDVector& knowledgeList, const DEC_KnowledgeResolver_ABC& resolver );
+    static boost::shared_ptr< DEC_Knowledge_Object > ReadObjectKnowledge    ( const sword::ObjectKnowledgeId&     asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static bool                         ReadObjectKnowledgeList( const sword::ObjectKnowledgeIdList& asn, T_KnowledgeObjectDiaIDVector& knowledgeList, const DEC_KnowledgeResolver_ABC& resolver );
     //@}
 
     // @name Encoding tools
     //@{
-    static void WritePolygon( const TER_Localisation& localisation, Common::MsgPolygon& asn );
-    static void WriteLocationList( const T_LocalisationPtrVector& localisationVector, Common::MsgLocationList& asn );
-    static void WritePolygonList( const T_LocalisationPtrVector& localisationVector, Common::MsgPolygonList& asn );
-    static void WritePathList( const T_ItinerairePtrVector& itineraireVector, Common::MsgPathList& asn );
-    static void WritePointList( const T_PointVector& pointVector, Common::MsgPointList& asn );
+    static void WritePolygon( const TER_Localisation& localisation, sword::MsgPolygon& asn );
+    static void WriteLocationList( const T_LocalisationPtrVector& localisationVector, sword::MsgLocationList& asn );
+    static void WritePolygonList( const T_LocalisationPtrVector& localisationVector, sword::MsgPolygonList& asn );
+    static void WritePathList( const T_ItinerairePtrVector& itineraireVector, sword::MsgPathList& asn );
+    static void WritePointList( const T_PointVector& pointVector, sword::MsgPointList& asn );
 
-    static void WriteAgent              ( const DEC_Decision_ABC&             pion      , Common::UnitId&     asn );
-    static void WriteAutomate           ( const DEC_Decision_ABC&             automate  , Common::AutomatId&  asn );
-    static void WriteAgentKnowledge     ( const DEC_Knowledge_Agent&          knowledge , Common::UnitKnowledgeId&      asnKnowledge );
-    static void WriteObjectKnowledge    ( const DEC_Knowledge_Object&         knowledge , Common::ObjectKnowledgeId&     asnKnowledge );
-    static void WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, Common::ObjectKnowledgeIdList& listResult, const DEC_KnowledgeResolver_ABC& resolver );
+    static void WriteAgent              ( const DEC_Decision_ABC&             pion      , sword::UnitId&     asn );
+    static void WriteAutomate           ( const DEC_Decision_ABC&             automate  , sword::AutomatId&  asn );
+    static void WriteAgentKnowledge     ( const DEC_Knowledge_Agent&          knowledge , sword::UnitKnowledgeId&      asnKnowledge );
+    static void WriteObjectKnowledge    ( const DEC_Knowledge_Object&         knowledge , sword::ObjectKnowledgeId&     asnKnowledge );
+    static void WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, sword::ObjectKnowledgeIdList& listResult, const DEC_KnowledgeResolver_ABC& resolver );
     //@}
 };
 

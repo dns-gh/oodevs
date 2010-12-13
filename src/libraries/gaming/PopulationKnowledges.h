@@ -32,15 +32,15 @@ class PopulationKnowledgeFactory_ABC;
 // Created: AGE 2006-02-15
 // =============================================================================
 class PopulationKnowledges : public kernel::Extension_ABC
-                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdKnowledgeCreation >
-                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdKnowledgeUpdate >
-                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdKnowledgeDestruction >
-                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation >
-                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate >
-                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction >
-                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowKnowledgeCreation >
-                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate >
-                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction >
+                           , public kernel::Updatable_ABC< sword::CrowdKnowledgeCreation >
+                           , public kernel::Updatable_ABC< sword::CrowdKnowledgeUpdate >
+                           , public kernel::Updatable_ABC< sword::CrowdKnowledgeDestruction >
+                           , public kernel::Updatable_ABC< sword::CrowdConcentrationKnowledgeCreation >
+                           , public kernel::Updatable_ABC< sword::CrowdConcentrationKnowledgeUpdate >
+                           , public kernel::Updatable_ABC< sword::CrowdConcentrationKnowledgeDestruction >
+                           , public kernel::Updatable_ABC< sword::CrowdFlowKnowledgeCreation >
+                           , public kernel::Updatable_ABC< sword::CrowdFlowKnowledgeUpdate >
+                           , public kernel::Updatable_ABC< sword::CrowdFlowKnowledgeDestruction >
                            , public tools::Resolver< kernel::PopulationKnowledge_ABC >
                            , public kernel::Creatable< PopulationKnowledges >
 {
@@ -60,16 +60,16 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdKnowledgeCreation&                 message );
+    virtual void DoUpdate( const sword::CrowdKnowledgeCreation&                 message );
 
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdKnowledgeUpdate&                   message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdKnowledgeDestruction&              message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation&    message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate&      message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation&             message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate&               message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction&          message );
+    virtual void DoUpdate( const sword::CrowdKnowledgeUpdate&                   message );
+    virtual void DoUpdate( const sword::CrowdKnowledgeDestruction&              message );
+    virtual void DoUpdate( const sword::CrowdConcentrationKnowledgeCreation&    message );
+    virtual void DoUpdate( const sword::CrowdConcentrationKnowledgeUpdate&      message );
+    virtual void DoUpdate( const sword::CrowdConcentrationKnowledgeDestruction& message );
+    virtual void DoUpdate( const sword::CrowdFlowKnowledgeCreation&             message );
+    virtual void DoUpdate( const sword::CrowdFlowKnowledgeUpdate&               message );
+    virtual void DoUpdate( const sword::CrowdFlowKnowledgeDestruction&          message );
 
     template< typename T >
     void UpdatePopulation( const T& message );

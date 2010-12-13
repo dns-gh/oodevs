@@ -47,7 +47,7 @@ public:
     }
     //@}
 
-    //! @name Statistics
+    //! @name Accessors
     //@{
     virtual unsigned long GetNbMessagesReceived() const = 0;
     //@}

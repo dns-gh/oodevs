@@ -25,7 +25,7 @@ namespace
     {
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Components/Terrain/RootDirectory", "" );
+        return settings.readEntry( "/sword/Components/Terrain/RootDirectory", "" );
     }
 
     std::string GetExecutable()

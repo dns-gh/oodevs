@@ -10,9 +10,9 @@
 #ifndef __PositionReport_h_
 #define __PositionReport_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitAttributes;
+    class UnitAttributes;
 }
 
 namespace xml
@@ -43,7 +43,7 @@ class PositionReport
 public:
     //! @name Constructors/Destructor
     //@{
-             PositionReport( const dispatcher::Agent_ABC& entity, const MsgsSimToClient::MsgUnitAttributes& attributes );
+             PositionReport( const dispatcher::Agent_ABC& entity, const sword::UnitAttributes& attributes );
     virtual ~PositionReport();
     //@}
 
@@ -69,7 +69,7 @@ private:
     //! @name Member data
     //@{
     const dispatcher::Agent_ABC& entity_;
-    const MsgsSimToClient::MsgUnitAttributes& attributes_;
+    const sword::UnitAttributes& attributes_;
     //@}
 };
 

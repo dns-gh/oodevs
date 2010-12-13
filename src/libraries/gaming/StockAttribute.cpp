@@ -41,7 +41,7 @@ StockAttribute::~StockAttribute()
 // Name: StockAttribute::Update
 // Created: JCR 2009-06-05
 // -----------------------------------------------------------------------------
-void StockAttribute::Update( const DotationType& type, const Common::StockResource& resource )
+void StockAttribute::Update( const DotationType& type, const sword::StockResource& resource )
 {
     typedef T_StockDotation::iterator IT_StockDotation;
     typedef std::pair< T_DotationState, T_DotationState > T_StockResourceValue;
@@ -63,7 +63,7 @@ void StockAttribute::UpdateData( const T& message )
     if( message.has_stock() )
         for( int i = 0; i < message.stock().resources_size(); ++i )
         {
-            const Common::StockResource& resource = message.stock().resources( i );
+            const sword::StockResource& resource = message.stock().resources( i );
             const DotationType* type = resolver_.Find( resource.resource().id() );
             if( type )
                 Update( *type, resource );
@@ -75,7 +75,7 @@ void StockAttribute::UpdateData( const T& message )
 // Name: StockAttribute::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void StockAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void StockAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -84,7 +84,7 @@ void StockAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& 
 // Name: StockAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void StockAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void StockAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }

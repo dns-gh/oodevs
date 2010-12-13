@@ -61,7 +61,7 @@ void ResponseHandlerProxy::Register( boost::shared_ptr< ResponseHandler_ABC > ha
 // Name: ResponseHandlerProxy::Handle
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void ResponseHandlerProxy::Handle( const MsgsLauncherToAdmin::MsgExercicesListResponse& message )
+void ResponseHandlerProxy::Handle( const sword::ExercicesListResponse& message )
 {
     UpdateHandlers( message );
 }
@@ -70,7 +70,7 @@ void ResponseHandlerProxy::Handle( const MsgsLauncherToAdmin::MsgExercicesListRe
 // Name: ResponseHandlerProxy::Handle
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void ResponseHandlerProxy::Handle( const MsgsLauncherToAdmin::MsgControlStartAck& message )
+void ResponseHandlerProxy::Handle( const sword::ControlStartExerciseAck& message )
 {
     UpdateHandlers( message );
 }
@@ -79,7 +79,7 @@ void ResponseHandlerProxy::Handle( const MsgsLauncherToAdmin::MsgControlStartAck
 // Name: ResponseHandlerProxy::Handle
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void ResponseHandlerProxy::Handle( const MsgsLauncherToAdmin::MsgControlStopAck& message )
+void ResponseHandlerProxy::Handle( const sword::ControlStopExerciseAck& message )
 {
     UpdateHandlers( message );
 }
@@ -88,7 +88,7 @@ void ResponseHandlerProxy::Handle( const MsgsLauncherToAdmin::MsgControlStopAck&
 // Name: ResponseHandlerProxy::Handle
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void ResponseHandlerProxy::Handle( const MsgsAuthenticationToClient::MsgProfileDescriptionList& message )
+void ResponseHandlerProxy::Handle( const sword::ProfileDescriptionList& message )
 {
     UpdateHandlers( message );
 }

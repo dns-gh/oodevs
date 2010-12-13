@@ -67,7 +67,7 @@ struct ConstantValue : public ContinuousValue< T >
     {
         Set( value );
     }
-    void Receive( const MsgsSimToClient::MsgSimToClient& )
+    void Receive( const sword::SimToClient& )
     {
         // NOTHING
     }
@@ -133,7 +133,7 @@ struct PulsedValue : public Value< T >
 // =============================================================================
 template< typename Value >
 inline
-void EvaluateValue( Value& value, const MsgsSimToClient::MsgSimToClient& message, ValueHandler_ABC< typename Value::Type >& handler )
+void EvaluateValue( Value& value, const sword::SimToClient& message, ValueHandler_ABC< typename Value::Type >& handler )
 {
     value.Prepare();
     value.Receive( message );

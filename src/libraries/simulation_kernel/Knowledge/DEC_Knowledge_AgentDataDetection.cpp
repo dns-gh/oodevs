@@ -243,7 +243,7 @@ void DEC_Knowledge_AgentDataDetection::Extrapolate( const MIL_Agent_ABC& agentKn
 // Name: DEC_Knowledge_AgentDataDetection::SendFullState
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataDetection::SendFullState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_AgentDataDetection::SendFullState( sword::UnitKnowledgeUpdate& asnMsg ) const
 {
     NET_ASN_Tools::WritePoint( vPosition_, *asnMsg.mutable_position() );
     NET_ASN_Tools::WriteDirection( vDirection_, *asnMsg.mutable_direction() );
@@ -258,7 +258,7 @@ void DEC_Knowledge_AgentDataDetection::SendFullState( MsgsSimToClient::MsgUnitKn
 // Name: DEC_Knowledge_AgentDataDetection::SendChangedState
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataDetection::SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_AgentDataDetection::SendChangedState( sword::UnitKnowledgeUpdate& asnMsg ) const
 {
     if( bPositionUpdated_ )
         NET_ASN_Tools::WritePoint( vPosition_, *asnMsg.mutable_position() );

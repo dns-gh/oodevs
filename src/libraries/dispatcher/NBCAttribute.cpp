@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: NBCAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-NBCAttribute::NBCAttribute( const Common::ObjectAttributes& asnMsg )
+NBCAttribute::NBCAttribute( const sword::ObjectAttributes& asnMsg )
     : danger_( 0 )
 {
     Update( asnMsg );
@@ -36,11 +36,11 @@ NBCAttribute::~NBCAttribute()
 // Name: NBCAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void NBCAttribute::Update( const Common::ObjectAttributes& asn )
+void NBCAttribute::Update( const sword::ObjectAttributes& asn )
 {
     if( asn.has_nbc() )
     {
-        const Common::ObjectAttributeNBC& nbc = asn.nbc();
+        const sword::ObjectAttributeNBC& nbc = asn.nbc();
         danger_ = nbc.danger_level();
         agents_.clear();
         for( int i = 0; i < nbc.nbc_agents_size(); ++i )
@@ -53,14 +53,14 @@ void NBCAttribute::Update( const Common::ObjectAttributes& asn )
 // Name: NBCAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void NBCAttribute::Send( Common::ObjectAttributes& asn ) const
+void NBCAttribute::Send( sword::ObjectAttributes& asn ) const
 {
-    Common::ObjectAttributeNBC& nbc = *asn.mutable_nbc();
+    sword::ObjectAttributeNBC& nbc = *asn.mutable_nbc();
     nbc.set_danger_level( danger_ );
     nbc.mutable_nbc_agents();
     for( std::vector< unsigned int >::const_iterator it = agents_.begin(); it != agents_.end(); ++it )
     {
-        Common::NBCAgentType& data = *nbc.add_nbc_agents();
+        sword::NBCAgentType& data = *nbc.add_nbc_agents();
         data.set_id( *it );
     }
     //asn.mutable_nbc()->CopyFrom( nbc_ );

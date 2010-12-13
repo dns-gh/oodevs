@@ -61,7 +61,7 @@ void ReportFactory::ReadReport( xml::xistream& xis )
 // Name: ReportFactory::CreateMessage
 // Created: SBO 2007-08-27
 // -----------------------------------------------------------------------------
-std::string ReportFactory::CreateMessage( const MsgsSimToClient::MsgReport& message ) const
+std::string ReportFactory::CreateMessage( const sword::Report& message ) const
 {
     CIT_Templates it = templates_.find( message.report().id() );
     if( it == templates_.end() )
@@ -76,11 +76,11 @@ std::string ReportFactory::CreateMessage( const MsgsSimToClient::MsgReport& mess
 // Name: ReportFactory::RenderParameter
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-std::string ReportFactory::RenderParameter( const Common::MsgMissionParameter& value ) const
+std::string ReportFactory::RenderParameter( const sword::MsgMissionParameter& value ) const
 {
     std::stringstream ss;
 
-    const Common::MsgMissionParameter_Value& param = value.value().Get(0);
+    const sword::MsgMissionParameter_Value& param = value.value().Get(0);
     if( param.has_areal() )
         ss << param.areal();
     else if( param.has_agent() )

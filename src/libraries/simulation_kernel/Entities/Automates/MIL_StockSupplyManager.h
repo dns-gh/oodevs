@@ -20,7 +20,11 @@ class PHY_DotationCategory;
 class PHY_SupplyStockState;
 class MIL_Automate;
 template < typename T > class PHY_ActionLogistic;
-namespace Common { class MsgMissionParameters; }
+
+namespace sword
+{
+    class MsgMissionParameters;
+}
 
 // =============================================================================
 // @class  MIL_StockSupplyManager
@@ -28,11 +32,13 @@ namespace Common { class MsgMissionParameters; }
 // =============================================================================
 class MIL_StockSupplyManager : private boost::noncopyable
 {
-
 public:
+    //! @name Constructors/Destructor
+    //@{
              MIL_StockSupplyManager( MIL_Automate& automate );
              MIL_StockSupplyManager();
     virtual ~MIL_StockSupplyManager();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -47,8 +53,8 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgLogSupplyPushFlow( const Common::MsgMissionParameters& msg );
-    void OnReceiveMsgLogSupplyPullFlow( const Common::MsgMissionParameters& msg );
+    void OnReceiveLogSupplyPushFlow( const sword::MsgMissionParameters& msg );
+    void OnReceiveLogSupplyPullFlow( const sword::MsgMissionParameters& msg );
 
     void SendChangedState() const;
     void SendFullState   () const;
@@ -69,19 +75,21 @@ private:
     //@}
 
 private:
-    //! @name Tools
+    //! @name Helpers
     //@{
     bool IsSupplyInProgress    ( const PHY_DotationCategory& dotationCategory ) const;
     void RemoveSupplyStockState( const PHY_SupplyStockState& supplyState );
     //@}
 
 private:
-    MIL_Automate* pAutomate_;
-
+    //! @name Member data
+    //@{
+    MIL_Automate*         pAutomate_;
     bool                  bStockSupplyNeeded_;
     PHY_SupplyStockState* pExplicitStockSupplyState_;
     T_SupplyStockStateSet manualSupplyStates_;
-    unsigned int                  nTickRcStockSupplyQuerySent_;
+    unsigned int          nTickRcStockSupplyQuerySent_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY2( MIL_StockSupplyManager, "MIL_StockSupplyManager" )

@@ -16,7 +16,7 @@
 // Name: MIL_DirectionParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_DirectionParameter::MIL_DirectionParameter( const Common::MsgHeading& heading )
+MIL_DirectionParameter::MIL_DirectionParameter( const sword::MsgHeading& heading )
     : heading_( heading.heading() )
 {
     // NOTHING
@@ -68,7 +68,7 @@ bool MIL_DirectionParameter::ToDirection( boost::shared_ptr< MT_Vector2D >& dir 
 // Name: MIL_DirectionParameter::ToElement
 // Created: MGD 2010-11-19
 // -----------------------------------------------------------------------------
-bool MIL_DirectionParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+bool MIL_DirectionParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
 {
     elem.mutable_heading()->set_heading( heading_ );
     return true;

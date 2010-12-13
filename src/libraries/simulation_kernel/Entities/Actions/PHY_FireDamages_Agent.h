@@ -12,9 +12,9 @@
 #ifndef __PHY_FireDamages_Agent_h_
 #define __PHY_FireDamages_Agent_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitFireDamages;
+    class UnitFireDamages;
 }
 
 class Human_ABC;
@@ -44,7 +44,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( const MIL_Agent_ABC& target, MsgsSimToClient::MsgUnitFireDamages& asn ) const;
+    void Serialize( const MIL_Agent_ABC& target, sword::UnitFireDamages& asn ) const;
     //@}
 
 private:

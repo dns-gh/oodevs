@@ -20,9 +20,9 @@ namespace kernel
     class Team_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgKnowledgeGroupUpdate;
+    class KnowledgeGroupUpdate;
 }
 
 // =============================================================================
@@ -32,7 +32,7 @@ namespace MsgsSimToClient
 // Created: AGE 2006-09-20
 // =============================================================================
 class TeamHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupUpdate >
+                      , public kernel::Updatable_ABC< sword::KnowledgeGroupUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -47,7 +47,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message );
+    virtual void DoUpdate( const sword::KnowledgeGroupUpdate& message );
     //@}
 
 private:

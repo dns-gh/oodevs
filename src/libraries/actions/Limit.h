@@ -12,7 +12,7 @@
 
 #include "Location.h"
 
-namespace Common
+namespace sword
 {
     class MsgLine;
 }
@@ -31,7 +31,7 @@ class Limit : public Location
 public:
     //! @name Constructors/Destructor
     //@{
-             Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgLine& line );
+             Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::MsgLine& line );
              Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Limit();
@@ -39,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    void CommitTo( Common::MsgMissionParameter_Value& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    void CommitTo( sword::MsgMissionParameter_Value& message ) const;
     //@}
 
 protected:

@@ -12,9 +12,9 @@
 
 #include "MT_Tools/MT_Vector2DTypes.h"
 
-namespace Common
+namespace sword
 {
-    class MsgLimaOrder;
+    class LimaOrder;
 }
 
 class MT_Line;
@@ -40,7 +40,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_LimaOrder( const Common::MsgLimaOrder& asn );
+    explicit MIL_LimaOrder( const sword::LimaOrder& asn );
     virtual ~MIL_LimaOrder();
     //@}
 
@@ -70,7 +70,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( Common::MsgLimaOrder& asn ) const;
+    void Serialize( sword::LimaOrder& asn ) const;
     //@}
 
 private:

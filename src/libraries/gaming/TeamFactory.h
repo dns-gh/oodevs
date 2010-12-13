@@ -37,8 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Team_ABC* CreateTeam( const MsgsSimToClient::MsgPartyCreation& message );
-    virtual kernel::Formation_ABC* CreateFormation( const MsgsSimToClient::MsgFormationCreation& message );
+    virtual kernel::Team_ABC* CreateTeam( const sword::PartyCreation& message );
+    virtual kernel::Formation_ABC* CreateFormation( const sword::FormationCreation& message );
 
     //@}
 

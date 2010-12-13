@@ -36,16 +36,17 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, kernel::Workers& workers, const RcEntityResolver_ABC& rcResolver );
+             AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+                           Publisher_ABC& publisher, kernel::Workers& workers, const RcEntityResolver_ABC& rcResolver );
     virtual ~AgentFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::Automat_ABC*    Create( const MsgsSimToClient::MsgAutomatCreation& message    );
-    virtual kernel::Agent_ABC*      Create( const MsgsSimToClient::MsgUnitCreation& message       );
-    virtual kernel::Population_ABC* Create( const MsgsSimToClient::MsgCrowdCreation& message      );
-    virtual kernel::Inhabitant_ABC* Create( const MsgsSimToClient::MsgPopulationCreation& message );
+    virtual kernel::Automat_ABC* Create( const sword::AutomatCreation& message );
+    virtual kernel::Agent_ABC* Create( const sword::UnitCreation& message );
+    virtual kernel::Population_ABC* Create( const sword::CrowdCreation& message );
+    virtual kernel::Inhabitant_ABC* Create( const sword::PopulationCreation& message );
     //@}
 
 private:

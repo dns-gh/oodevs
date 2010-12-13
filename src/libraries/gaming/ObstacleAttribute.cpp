@@ -71,7 +71,7 @@ void ObstacleAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) con
 // Name: ObstacleAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void ObstacleAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -80,7 +80,7 @@ void ObstacleAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdat
 // Name: ObstacleAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void ObstacleAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }

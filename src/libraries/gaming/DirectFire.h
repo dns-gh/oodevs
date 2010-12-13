@@ -33,7 +33,7 @@ class DirectFire : public Fire_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DirectFire( const MsgsSimToClient::MsgStartUnitFire& message,
+             DirectFire( const sword::StartUnitFire& message,
                  const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver,
                  const tools::Resolver_ABC< kernel::Population_ABC >& populationResolver );
     virtual ~DirectFire();

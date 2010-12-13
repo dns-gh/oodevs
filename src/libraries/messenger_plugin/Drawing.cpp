@@ -10,10 +10,10 @@
 #include "messenger_plugin_pch.h"
 #include "Drawing.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include "protocol/MessengerSenders.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
-#include <protocol/messengersenders.h>
 
 using namespace plugins::messenger;
 
@@ -21,7 +21,7 @@ using namespace plugins::messenger;
 // Name: Drawing constructor
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
-Drawing::Drawing( unsigned int id, const MsgsClientToMessenger::MsgShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter )
+Drawing::Drawing( unsigned int id, const sword::ShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter )
     : converter_( converter )
     , id_       ( id )
     , category_ ( asn.shape().category() )
@@ -76,7 +76,7 @@ Drawing::~Drawing()
 // -----------------------------------------------------------------------------
 void Drawing::ReadPoint( xml::xistream& xis )
 {
-    Common::MsgCoordLatLong asn;
+    sword::MsgCoordLatLong asn;
     geometry::Point2f point( xis.attribute< float >( "x" ), xis.attribute< float >( "y" ) );
     converter_.ConvertToGeo( point, asn );
     points_.push_back( asn );
@@ -95,7 +95,7 @@ unsigned long Drawing::GetId() const
 // Name: Drawing::Update
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
-void Drawing::Update( const MsgsClientToMessenger::MsgShapeUpdateRequest& asn )
+void Drawing::Update( const sword::ShapeUpdateRequest& asn )
 {
     if( asn.has_category() )
         category_ = asn.category();
@@ -122,7 +122,7 @@ void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     message().mutable_shape()->set_category( category_ );
     message().mutable_shape()->set_color( color_ );
     message().mutable_shape()->set_pattern( pattern_ );
-    ::Common::MsgCoordLatLongList* points = message().mutable_shape()->mutable_points(); // required even if empty
+    ::sword::MsgCoordLatLongList* points = message().mutable_shape()->mutable_points(); // required even if empty
     for (T_Points::const_iterator iter(points_.begin()); iter != points_.end(); ++iter)
         *points->add_elem() = *iter;        //const_cast< MsgCoordLatLong* >( &points_.front() );
     message.Send( publisher );
@@ -161,7 +161,7 @@ void Drawing::SendFullState( dispatcher::ClientPublisher_ABC& publisher ) const
 void Drawing::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     plugins::messenger::ShapeDestruction message;
-    //MsgShapeDestruction message;
+    //ShapeDestruction message;
     message().mutable_id()->set_id( id_ );
     message.Send( publisher );
 }
@@ -184,7 +184,7 @@ void Drawing::Serialize( xml::xostream& xos ) const
 // Name: Drawing::SerializePoint
 // Created: SBO 2008-06-10
 // -----------------------------------------------------------------------------
-void Drawing::SerializePoint( const Common::MsgCoordLatLong& asn, xml::xostream& xos ) const
+void Drawing::SerializePoint( const sword::MsgCoordLatLong& asn, xml::xostream& xos ) const
 {
     // $$$$ AGE 2008-07-09: serializer en mgrs ?
     const geometry::Point2f point( converter_.ConvertToXY( asn ) );

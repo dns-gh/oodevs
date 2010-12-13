@@ -51,7 +51,7 @@ TicExtension::~TicExtension()
 // Name: TicExtension::DoUpdate
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void TicExtension::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_dotation_eff_materiel() )
         UpdatePlatforms( message );
@@ -75,7 +75,7 @@ void TicExtension::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 // Name: TicExtension::DoUpdate
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void TicExtension::DoUpdate( const MsgsSimToClient::MsgUnitPathFind& message )
+void TicExtension::DoUpdate( const sword::UnitPathFind& message )
 {
     path_.resize( 0 );
     for( int i = 0; i < message.itineraire().location().coordinates().elem_size(); ++i )
@@ -86,7 +86,7 @@ void TicExtension::DoUpdate( const MsgsSimToClient::MsgUnitPathFind& message )
 // Name: TicExtension::DoUpdate
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::DoUpdate( const MsgsSimToClient::MsgUnitEnvironmentType& message )
+void TicExtension::DoUpdate( const sword::UnitEnvironmentType& message )
 {
     const unsigned int mask = TerrainData::motorway_  | TerrainData::largeroad_  | TerrainData::mediumroad_
                             | TerrainData::smallroad_ | TerrainData::bridge_;
@@ -122,7 +122,7 @@ void TicExtension::CreatePlatforms( float timeStep )
 // Name: TicExtension::UpdatePlatforms
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::UpdatePlatforms( const MsgsSimToClient::MsgUnitAttributes& message )
+void TicExtension::UpdatePlatforms( const sword::UnitAttributes& message )
 {
     for( int i = 0; i < message.dotation_eff_materiel().elem_size(); ++i )
         UpdatePlatforms( message.dotation_eff_materiel().elem(i) );
@@ -132,9 +132,9 @@ void TicExtension::UpdatePlatforms( const MsgsSimToClient::MsgUnitAttributes& me
 // Name: TicExtension::UpdatePlatforms
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::UpdatePlatforms( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& message )
+void TicExtension::UpdatePlatforms( const sword::EquipmentDotations_EquipmentDotation& message )
 {
-    MsgsSimToClient::EquipmentDotations_EquipmentDotation copy( message );
+    sword::EquipmentDotations_EquipmentDotation copy( message );
     std::for_each( platforms_.begin(), platforms_.end(), boost::bind( &Platform::Spread, _1, boost::ref( copy ) ) );
 }
 

@@ -24,9 +24,9 @@ namespace kernel
     class Automat_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitAttributes;
+    class UnitAttributes;
 }
 // =============================================================================
 /** @class  Troops
@@ -36,7 +36,7 @@ namespace MsgsSimToClient
 // =============================================================================
 class Troops : public kernel::Extension_ABC
              , public HierarchicExtension_ABC
-             , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+             , public kernel::Updatable_ABC< sword::UnitAttributes >
 {
 public:
     //! @name Constructors/Destructor
@@ -59,16 +59,16 @@ private:
 
     //! @name Types
     //@{
-    typedef std::pair< kernel::E_TroopHealthState, Common::EnumHumanRank > T_HumanState;
+    typedef std::pair< kernel::E_TroopHealthState, sword::EnumHumanRank > T_HumanState;
     typedef std::map< T_HumanState, int > T_Differences;
     //@}
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
+    virtual void DoUpdate( const sword::UnitAttributes& message );
     virtual void SetSuperior( const kernel::Entity_ABC& superior );
     void Update( const T_Differences& differences );
-    void AddDifference( T_Differences& differences, kernel::E_TroopHealthState state, Common::EnumHumanRank rank, int value );
+    void AddDifference( T_Differences& differences, kernel::E_TroopHealthState state, sword::EnumHumanRank rank, int value );
     //@}
 
 public: // $$$$ AGE 2006-04-28:

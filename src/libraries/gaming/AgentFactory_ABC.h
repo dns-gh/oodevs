@@ -10,12 +10,12 @@
 #ifndef __AgentFactory_ABC_h_
 #define __AgentFactory_ABC_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgAutomatCreation;
-    class MsgUnitCreation;
-    class MsgCrowdCreation;
-    class MsgPopulationCreation;
+    class AutomatCreation;
+    class UnitCreation;
+    class CrowdCreation;
+    class PopulationCreation;
 }
 
 namespace kernel
@@ -37,16 +37,16 @@ class AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory_ABC() {};
-    virtual ~AgentFactory_ABC() {};
+             AgentFactory_ABC() {}
+    virtual ~AgentFactory_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::Automat_ABC*    Create( const MsgsSimToClient::MsgAutomatCreation& message ) = 0;
-    virtual kernel::Agent_ABC*      Create( const MsgsSimToClient::MsgUnitCreation& message ) = 0;
-    virtual kernel::Population_ABC* Create( const MsgsSimToClient::MsgCrowdCreation& message ) = 0;
-    virtual kernel::Inhabitant_ABC* Create( const MsgsSimToClient::MsgPopulationCreation& message ) = 0;
+    virtual kernel::Automat_ABC* Create( const sword::AutomatCreation& message ) = 0;
+    virtual kernel::Agent_ABC* Create( const sword::UnitCreation& message ) = 0;
+    virtual kernel::Population_ABC* Create( const sword::CrowdCreation& message ) = 0;
+    virtual kernel::Inhabitant_ABC* Create( const sword::PopulationCreation& message ) = 0;
     //@}
 
 private:

@@ -14,7 +14,7 @@
 #include "protocol/MessengerSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 
-using namespace Common;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: CommandPublisher constructor

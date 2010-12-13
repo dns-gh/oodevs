@@ -17,7 +17,7 @@
 // Name: Note constructor
 // Created: HBD 2010-01-14
 // -----------------------------------------------------------------------------
-Note::Note( kernel::Controller& controller, const MsgsMessengerToClient::MsgMarkerCreation& message )
+Note::Note( kernel::Controller& controller, const sword::MarkerCreation& message )
     : controller_( controller )
     , parent_( message.definition().parent().id() )
     , name_( message.definition().name() )
@@ -43,7 +43,7 @@ Note::~Note()
 // Name: Note::Update
 // Created: HBD 2010-01-14
 // -----------------------------------------------------------------------------
-void Note::Update(const MsgsMessengerToClient::MsgMarkerUpdate& message)
+void Note::Update( const sword::MarkerUpdate& message )
 {
     if( message.has_name() )
         name_ = message.name();

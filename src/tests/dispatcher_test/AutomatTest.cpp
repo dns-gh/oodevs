@@ -54,16 +54,16 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAFormation )
     MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
     MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
     {
-        MsgsSimToClient::MsgSimToClient expected;
+        sword::SimToClient expected;
         expected.set_context( 0 );
-        MsgsSimToClient::MsgAutomatCreation& message = *expected.mutable_message()->mutable_automat_creation();
+        sword::AutomatCreation& message = *expected.mutable_message()->mutable_automat_creation();
         message.mutable_automat()->set_id( 1 );
         message.mutable_type()->set_id( 42 );
         message.set_nom( "test" );
         message.mutable_parent()->mutable_formation()->set_id( formation.GetId() );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
-        message.set_logistic_level( Common::none );
+        message.set_logistic_level( sword::none );
         message.set_app6symbol( "sfgpu----------" );
         CheckInitialized( message );
         
@@ -120,16 +120,16 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAnAutomat )
     MOCK_EXPECT( model, Formations ).returns( boost::ref( formations ) );
     MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
     {
-        MsgsSimToClient::MsgSimToClient expected;
+        sword::SimToClient expected;
         expected.set_context( 0 );
-        MsgsSimToClient::MsgAutomatCreation& message = *expected.mutable_message()->mutable_automat_creation();
+        sword::AutomatCreation& message = *expected.mutable_message()->mutable_automat_creation();
         message.mutable_automat()->set_id( 1 );
         message.mutable_type()->set_id( 42 );
         message.set_nom( "test" );
         message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
-        message.set_logistic_level( Common::none );
+        message.set_logistic_level( sword::none );
         message.set_app6symbol( "sfgpu----------" );
         CheckInitialized( message );
 
@@ -189,14 +189,14 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
         std::auto_ptr< dispatcher::Automat > result;
         {
             // creation
-            MsgsSimToClient::MsgAutomatCreation message;
+            sword::AutomatCreation message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
-            message.set_logistic_level( Common::none );
+            message.set_logistic_level( sword::none );
             message.set_app6symbol( "sfgpu----------" );
             CheckInitialized( message );
 
@@ -207,7 +207,7 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
         }
         {
             // change superior
-            Common::MsgAutomatChangeSuperior message;
+            sword::AutomatChangeSuperior message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_superior()->mutable_formation()->set_id( 52 );
             CheckInitialized( message );
@@ -267,14 +267,14 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
         std::auto_ptr< dispatcher::Automat > result;
         {
             // creation
-            MsgsSimToClient::MsgAutomatCreation message;
+            sword::AutomatCreation message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup1.GetId() );
-            message.set_logistic_level( Common::none );
+            message.set_logistic_level( sword::none );
             message.set_app6symbol( "sfgpu----------" );
             CheckInitialized( message );
 
@@ -285,7 +285,7 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
         }
         {
             // change knowledge group
-            Common::MsgAutomatChangeKnowledgeGroup message;
+            sword::AutomatChangeKnowledgeGroup message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup2.GetId() );
@@ -343,14 +343,14 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
         std::auto_ptr< dispatcher::Automat > result;
         {
             // creation
-            MsgsSimToClient::MsgAutomatCreation message;
+            sword::AutomatCreation message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
-            message.set_logistic_level( Common::none );
+            message.set_logistic_level( sword::none );
             message.set_app6symbol( "sfgpu----------" );
             CheckInitialized( message );
 
@@ -361,9 +361,9 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
         }
         {
             // change decisional state
-            MsgsSimToClient::MsgSimToClient expected;
+            sword::SimToClient expected;
             expected.set_context( 0 );
-            MsgsSimToClient::MsgDecisionalState& message = *expected.mutable_message()->mutable_decisional_state();
+            sword::DecisionalState& message = *expected.mutable_message()->mutable_decisional_state();
             message.mutable_source()->mutable_automat()->set_id( 1 );
             message.set_key( "my variable" );
             message.set_value( "my value" );
@@ -423,14 +423,14 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
         std::auto_ptr< dispatcher::Automat > result;
         {
             // creation
-            MsgsSimToClient::MsgAutomatCreation message;
+            sword::AutomatCreation message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
-            message.set_logistic_level( Common::none );
+            message.set_logistic_level( sword::none );
             message.set_app6symbol( "sfgpu----------" );
             CheckInitialized( message );
 
@@ -441,15 +441,15 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
         }
         {
             // change attributes
-            MsgsSimToClient::MsgSimToClient expected;
+            sword::SimToClient expected;
             expected.set_context( 0 );
-            MsgsSimToClient::MsgAutomatAttributes& message = *expected.mutable_message()->mutable_automat_attributes();
+            sword::AutomatAttributes& message = *expected.mutable_message()->mutable_automat_attributes();
             message.mutable_automat()->set_id( 1 );
-            message.set_etat_automate( Common::debraye );
-            message.set_rapport_de_force( MsgsSimToClient::ForceRatio::favorable );
-            message.set_combat_de_rencontre( Common::etat_esquive );
-            message.set_etat_operationnel( Common::detruit_tactiquement );
-            message.set_roe( MsgsSimToClient::RulesOfEngagement::tir_sur_riposte );
+            message.set_etat_automate( sword::debraye );
+            message.set_rapport_de_force( sword::ForceRatio::favorable );
+            message.set_combat_de_rencontre( sword::etat_esquive );
+            message.set_etat_operationnel( sword::detruit_tactiquement );
+            message.set_roe( sword::RulesOfEngagement::tir_sur_riposte );
             CheckInitialized( message );
             automats.Get( 1 ).Update( message );
 
@@ -507,14 +507,14 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
         std::auto_ptr< dispatcher::Automat > result;
         {
             // creation
-            MsgsSimToClient::MsgAutomatCreation message;
+            sword::AutomatCreation message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
-            message.set_logistic_level( Common::tc2 );
+            message.set_logistic_level( sword::tc2 );
             message.set_app6symbol( "sfgpu----------" );
             CheckInitialized( message );
 
@@ -525,9 +525,9 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
         }
         {
             // change log supply quotas
-            MsgsSimToClient::MsgSimToClient expected;
+            sword::SimToClient expected;
             expected.set_context( 0 );
-            MsgsSimToClient::MsgLogSupplyQuotas& message = *expected.mutable_message()->mutable_log_supply_quotas();
+            sword::LogSupplyQuotas& message = *expected.mutable_message()->mutable_log_supply_quotas();
             message.mutable_supplied()->mutable_automat()->set_id( 1 );
             message.mutable_quotas()->add_elem();
             message.mutable_quotas()->mutable_elem( 0 )->mutable_ressource_id()->set_id( 42 );
@@ -591,14 +591,14 @@ BOOST_AUTO_TEST_CASE( Automat_LogisticLinksCanBeChanged )
         std::auto_ptr< dispatcher::Automat > result;
         {
             // creation
-            MsgsSimToClient::MsgAutomatCreation message;
+            sword::AutomatCreation message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
-            message.set_logistic_level( Common::none );
+            message.set_logistic_level( sword::none );
             message.set_app6symbol( "sfgpu----------" );
             CheckInitialized( message );
 
@@ -609,9 +609,9 @@ BOOST_AUTO_TEST_CASE( Automat_LogisticLinksCanBeChanged )
         }
         {
             // change logistic links
-            MsgsSimToClient::MsgSimToClient expected;
+            sword::SimToClient expected;
             expected.set_context( 0 );
-            Common::MsgChangeLogisticLinks& message = *expected.mutable_message()->mutable_automat_change_logistic_links();
+            sword::ChangeLogisticLinks& message = *expected.mutable_message()->mutable_automat_change_logistic_links();
             message.mutable_requester()->mutable_automat()->set_id( 1 );
             message.mutable_tc2()->set_id( 1 );
             message.mutable_logistic_base()->mutable_automat()->set_id( 1 );

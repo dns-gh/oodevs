@@ -31,7 +31,7 @@ AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const kernel:
 // Name: AtlasNature constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const Common::MsgAtlasNature& message, const kernel::AtlasNatures& natures )
+AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const sword::MsgAtlasNature& message, const kernel::AtlasNatures& natures )
     : Parameter< kernel::AtlasNature >( parameter, natures.MakeNature( static_cast< unsigned short >( message.nature() ) ) )
 {
     // NOTHING
@@ -70,7 +70,7 @@ void AtlasNature::Serialize( xml::xostream& xos ) const
 // Name: AtlasNature::CommitTo
 // Created: SBO 2008-06-16
 // -----------------------------------------------------------------------------
-void AtlasNature::CommitTo( Common::MsgMissionParameter& message ) const
+void AtlasNature::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -80,7 +80,7 @@ void AtlasNature::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: AtlasNature::CommitTo
 // Created: SBO 2008-06-16
 // -----------------------------------------------------------------------------
-void AtlasNature::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void AtlasNature::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
         message.mutable_atlasnature()->set_nature( GetValue().GetValue() );

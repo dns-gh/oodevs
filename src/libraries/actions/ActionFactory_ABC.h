@@ -10,16 +10,16 @@
 #ifndef __actions_ActionFactory_ABC_h_
 #define __actions_ActionFactory_ABC_h_
 
-namespace Common
+namespace sword
 {
-    class MsgUnitOrder;
-    class MsgAutomatOrder;
-    class MsgCrowdOrder;
+    class UnitOrder;
+    class AutomatOrder;
+    class CrowdOrder;
 }
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgFragOrder;
+    class FragOrder;
 }
 
 namespace kernel
@@ -67,10 +67,10 @@ public:
     virtual actions::Action_ABC* CreateAction( xml::xistream& xis, bool readonly = false ) const = 0;
     virtual actions::Action_ABC* CreateStubAction( xml::xistream& xis ) const = 0;
 
-    virtual actions::Action_ABC* CreateAction( const Common::MsgUnitOrder& message ) const = 0;
-    virtual actions::Action_ABC* CreateAction( const Common::MsgAutomatOrder& message ) const = 0;
-    virtual actions::Action_ABC* CreateAction( const Common::MsgCrowdOrder& message ) const = 0;
-    virtual actions::Action_ABC* CreateAction( const MsgsClientToSim::MsgFragOrder& message ) const = 0;
+    virtual actions::Action_ABC* CreateAction( const sword::UnitOrder& message ) const = 0;
+    virtual actions::Action_ABC* CreateAction( const sword::AutomatOrder& message ) const = 0;
+    virtual actions::Action_ABC* CreateAction( const sword::CrowdOrder& message ) const = 0;
+    virtual actions::Action_ABC* CreateAction( const sword::FragOrder& message ) const = 0;
     
     virtual actions::Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const = 0;
     virtual actions::Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter ) const = 0;

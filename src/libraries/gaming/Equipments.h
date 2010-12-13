@@ -25,9 +25,9 @@ namespace kernel
     class Automat_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitAttributes;
+    class UnitAttributes;
 }
 
 class Equipment;
@@ -40,7 +40,7 @@ class Equipment;
 // =============================================================================
 class Equipments : public kernel::Extension_ABC
                  , public HierarchicExtension_ABC
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+                 , public kernel::Updatable_ABC< sword::UnitAttributes >
                  , public tools::Resolver< Equipment >
 {
 public:
@@ -60,7 +60,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
+    virtual void DoUpdate( const sword::UnitAttributes& message );
     virtual void SetSuperior( const kernel::Entity_ABC& superior );
     void Update( const std::vector< Equipment >& differences );
     void AddToDictionary( const Equipment& equipment );

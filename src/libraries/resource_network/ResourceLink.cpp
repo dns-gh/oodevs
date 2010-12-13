@@ -158,10 +158,10 @@ bool ResourceLink::NeedUpdate() const
 // Name: ResourceLink::Serialize
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void ResourceLink::Serialize( Common::ResourceNetwork_Link& msg ) const
+void ResourceLink::Serialize( sword::ResourceNetwork_Link& msg ) const
 {
     msg.set_kind( kind_ == eTargetKindUrban ? 
-        Common::ResourceNetwork_Link_TargetKind_urban : Common::ResourceNetwork_Link_TargetKind_object );
+        sword::ResourceNetwork_Link_TargetKind_urban : sword::ResourceNetwork_Link_TargetKind_object );
     msg.set_target_id( target_ );
     msg.set_capacity( capacity_ );
     msg.set_flow( flow_ );

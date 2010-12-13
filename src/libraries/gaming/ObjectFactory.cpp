@@ -52,7 +52,7 @@ ObjectFactory::~ObjectFactory()
 // Name: ObjectFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-kernel::Object_ABC* ObjectFactory::Create( const MsgsSimToClient::MsgObjectCreation& message )
+kernel::Object_ABC* ObjectFactory::Create( const sword::ObjectCreation& message )
 {
     Object* result = new Object( message, controllers_.controller_, static_.coordinateConverter_, static_.objectTypes_ );
     result->Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
@@ -68,7 +68,7 @@ kernel::Object_ABC* ObjectFactory::Create( const MsgsSimToClient::MsgObjectCreat
 // Name: ObjectFactory::RegisterAttributes
 // Created: NLD 2010-11-02
 // -----------------------------------------------------------------------------
-void ObjectFactory::RegisterAttributes( kernel::Object_ABC& result, const Common::ObjectAttributes& attributes ) const
+void ObjectFactory::RegisterAttributes( kernel::Object_ABC& result, const sword::ObjectAttributes& attributes ) const
 {
     attributesFactory_.Register( result, attributes );
 }

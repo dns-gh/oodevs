@@ -51,7 +51,7 @@ void Transports::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // Name: Transports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Transports::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void Transports::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_transported_units()  )
     {

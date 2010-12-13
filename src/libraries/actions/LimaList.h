@@ -12,9 +12,9 @@
 
 #include "Parameter.h"
 
-namespace Common
+namespace sword
 {
-    class MsgLimasOrder;
+    class LimasOrder;
 }
 
 namespace kernel
@@ -37,15 +37,15 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit LimaList( const kernel::OrderParameter& parameter );
-             LimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgLimasOrder& limas );
+             LimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::LimasOrder& limas );
              LimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~LimaList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& asn ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& asn ) const;
     virtual bool IsSet() const;
     //@}
 

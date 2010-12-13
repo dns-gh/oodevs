@@ -21,32 +21,32 @@ using namespace parameters;
 
 namespace
 {
-    const kernel::Karma& ConvertToKarma( const Common::EnumDiplomacy& diplomacy )
+    const kernel::Karma& ConvertToKarma( const sword::EnumDiplomacy& diplomacy )
     {
         switch( diplomacy )
         {
-        case Common::friend_diplo:
+        case sword::friend_diplo:
             return kernel::Karma::friend_;
-        case Common::enemy_diplo:
+        case sword::enemy_diplo:
             return kernel::Karma::enemy_;
-        case Common::neutral_diplo:
+        case sword::neutral_diplo:
             return kernel::Karma::neutral_;
         default:
             return kernel::Karma::unknown_;
         }
     }
 
-    Common::EnumDiplomacy ConvertToDiplomacy( const kernel::Karma& karma )
+    sword::EnumDiplomacy ConvertToDiplomacy( const kernel::Karma& karma )
     {
 
         if (karma == kernel::Karma::friend_)
-            return Common::friend_diplo;
+            return sword::friend_diplo;
         else if (karma == kernel::Karma::enemy_)
-            return Common::enemy_diplo;
+            return sword::enemy_diplo;
         else if (karma == kernel::Karma::neutral_)
-            return Common::neutral_diplo;
+            return sword::neutral_diplo;
         else
-            return Common::unknown_diplo;
+            return sword::unknown_diplo;
     }
 
     // Reverts diplomacy effect applied on karma => "diplomacy" karma
@@ -72,7 +72,7 @@ Karma::Karma( const kernel::OrderParameter& parameter, const kernel::Karma& karm
 // Name: Karma constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-Karma::Karma( const kernel::OrderParameter& parameter, const Common::EnumDiplomacy& message )
+Karma::Karma( const kernel::OrderParameter& parameter, const sword::EnumDiplomacy& message )
     : Parameter< QString >( parameter )
     , karma_( ConvertToKarma( message ) )
 {

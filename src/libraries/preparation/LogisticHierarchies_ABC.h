@@ -49,9 +49,9 @@ public:
 protected:
     //! @name Operations
     //@{
-    virtual void Load( xml::xistream& ) {};
+    virtual void Load( xml::xistream& ) {}
     virtual void SerializeLogistics( xml::xostream& ) const {}
-    virtual void SerializeQuotas( xml::xostream& ) const {};
+    virtual void SerializeQuotas( xml::xostream& ) const {}
     //@}
 
 private:

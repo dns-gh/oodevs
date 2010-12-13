@@ -55,25 +55,25 @@ NotesModel::~NotesModel()
 // Name: NotesModel::HandleRequest
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgMarkerCreationRequest& message )
+void NotesModel::HandleRequest( const sword::MarkerCreationRequest& message )
 {
-   std::auto_ptr< Note > note( new Note( idManager_.NextId(), message, currentTime_ ) );
-   Register( note->GetId(), *note );
-   if ( note->GetParent() != 0)
-   {
-     Note *parent = Find( note->GetParent() );
-     parent->AddChild( note->GetId() );
-   }
-   note->SendCreation( clients_ );
-   note.release();
-   SaveNotes();
+    std::auto_ptr< Note > note( new Note( idManager_.NextId(), message, currentTime_ ) );
+    Register( note->GetId(), *note );
+    if( note->GetParent() )
+    {
+        Note* parent = Find( note->GetParent() );
+        parent->AddChild( note->GetId() );
+    }
+    note->SendCreation( clients_ );
+    note.release();
+    SaveNotes();
 }
 
 // -----------------------------------------------------------------------------
 // Name: NotesModel::HandleRequest
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgMarkerDestructionRequest& message )
+void NotesModel::HandleRequest( const sword::MarkerDestructionRequest& message )
 {
     Note* note = Find( message.marker().id() );
     if( note )
@@ -90,7 +90,7 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgMarkerDestructio
 // Name: NotesModel::HandleRequest
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgMarkerUpdateRequest& message )
+void NotesModel::HandleRequest( const sword::MarkerUpdateRequest& message )
 {
     Note* note = Find( message.marker().id() );
     if( note )

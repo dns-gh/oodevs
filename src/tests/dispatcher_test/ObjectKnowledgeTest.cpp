@@ -44,7 +44,7 @@ namespace
         }
         void createObjectKnowledge()
         {
-            MsgsSimToClient::MsgObjectKnowledgeCreation& message = *expected.mutable_message()->mutable_object_knowledge_creation();
+            sword::ObjectKnowledgeCreation& message = *expected.mutable_message()->mutable_object_knowledge_creation();
             message.mutable_knowledge()->set_id( 1 );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_object()->set_id( object.GetId() );
@@ -70,7 +70,7 @@ namespace
         tools::Resolver< dispatcher::Object_ABC > objects;
         tools::Resolver< dispatcher::Automat_ABC > automats;
         std::auto_ptr< dispatcher::ObjectKnowledge_ABC > result;
-        MsgsSimToClient::MsgSimToClient expected;
+        sword::SimToClient expected;
         MockClientPublisher publisher;
     };
 }
@@ -91,7 +91,7 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeCreatedWithoutAttributes, Fixture 
 BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeDestroyedWithoutAttributes, Fixture )
 {
     createObjectKnowledge();
-    MsgsSimToClient::MsgObjectKnowledgeDestruction& message = *expected.mutable_message()->mutable_object_knowledge_destruction();
+    sword::ObjectKnowledgeDestruction& message = *expected.mutable_message()->mutable_object_knowledge_destruction();
     message.mutable_knowledge()->set_id( 1 );
     message.mutable_party()->set_id( side.GetId() );
     BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
@@ -110,12 +110,12 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeUpdatedWithoutAttributes, Fixture 
 {
     createObjectKnowledge();
     {
-        MsgsSimToClient::MsgObjectKnowledgeUpdate& message = *expected.mutable_message()->mutable_object_knowledge_update();
+        sword::ObjectKnowledgeUpdate& message = *expected.mutable_message()->mutable_object_knowledge_update();
         message.mutable_knowledge()->set_id( 1 );
         message.mutable_object()->set_id( 0 );
         message.mutable_attributes();
         message.set_relevance( 99 );
-        message.mutable_location()->set_type( Common::MsgLocation::point );
+        message.mutable_location()->set_type( sword::MsgLocation::point );
         message.mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 42. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );
         message.set_perceived( true );
@@ -132,7 +132,7 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeUpdatedWithoutAttributes, Fixture 
     }
     {
         expected.mutable_message()->Clear();
-        MsgsSimToClient::MsgObjectKnowledgeCreation& message = *expected.mutable_message()->mutable_object_knowledge_creation();
+        sword::ObjectKnowledgeCreation& message = *expected.mutable_message()->mutable_object_knowledge_creation();
         message.mutable_knowledge()->set_id( 1 );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_object()->set_id( 0 );

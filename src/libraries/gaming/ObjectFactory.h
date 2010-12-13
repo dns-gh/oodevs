@@ -13,14 +13,14 @@
 #include "ObjectFactory_ABC.h"
 #include "ObjectAttributesFactory.h"
 
-namespace Common
+namespace sword
 {
     class ObjectAttributes;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgObjectKnowledgeCreation;
+    class ObjectKnowledgeCreation;
 }
 
 namespace kernel
@@ -48,8 +48,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Object_ABC* Create            ( const MsgsSimToClient::MsgObjectCreation& message );
-    virtual void                RegisterAttributes( kernel::Object_ABC& result, const Common::ObjectAttributes& attributes ) const;
+    virtual kernel::Object_ABC* Create( const sword::ObjectCreation& message );
+
+    virtual void RegisterAttributes( kernel::Object_ABC& result, const sword::ObjectAttributes& attributes ) const;
     //@}
 
 private:

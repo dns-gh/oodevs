@@ -12,15 +12,11 @@
 
 #include "Inhabitant_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgCrowdOrder;
-}
-
-namespace MsgsSimToClient
-{
-    class MsgPopulationCreation;
-    class MsgPopulationUpdate;
+    class CrowdOrder;
+    class PopulationCreation;
+    class PopulationUpdate;
 }
 
 namespace dispatcher
@@ -36,18 +32,18 @@ namespace dispatcher
 // =============================================================================
 class Inhabitant : public dispatcher::Inhabitant_ABC
                  , public kernel::Extension_ABC
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationUpdate >
+                 , public kernel::Updatable_ABC< sword::PopulationUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Inhabitant( Model_ABC& model, const MsgsSimToClient::MsgPopulationCreation& msg );
+             Inhabitant( Model_ABC& model, const sword::PopulationCreation& msg );
     virtual ~Inhabitant();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationUpdate&                 msg );
+    virtual void DoUpdate( const sword::PopulationUpdate&                 msg );
 
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;

@@ -33,10 +33,10 @@ class FireFactory;
 // Created: AGE 2006-03-10
 // =============================================================================
 class Fires : public kernel::Extension_ABC
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgStartUnitFire >
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopUnitFire >
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgStartCrowdFire >
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopCrowdFire >
+            , public kernel::Updatable_ABC< sword::StartUnitFire >
+            , public kernel::Updatable_ABC< sword::StopUnitFire >
+            , public kernel::Updatable_ABC< sword::StartCrowdFire >
+            , public kernel::Updatable_ABC< sword::StopCrowdFire >
             , public tools::Resolver< Fire_ABC >
             , public kernel::Drawable_ABC
 {
@@ -65,10 +65,10 @@ private:
     void CreateFire( const T& message );
     template< typename T >
     void DestroyFire( const T& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgStartUnitFire& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgStartCrowdFire& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgStopCrowdFire& message );
+    virtual void DoUpdate( const sword::StartUnitFire& message );
+    virtual void DoUpdate( const sword::StopUnitFire& message );
+    virtual void DoUpdate( const sword::StartCrowdFire& message );
+    virtual void DoUpdate( const sword::StopCrowdFire& message );
     //@}
 
 private:

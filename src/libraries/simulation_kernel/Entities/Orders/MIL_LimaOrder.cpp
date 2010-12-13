@@ -22,7 +22,7 @@ unsigned int MIL_LimaOrder::nNextID_ = 0;
 // Name: MIL_LimaOrder constructor
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-MIL_LimaOrder::MIL_LimaOrder( const Common::MsgLimaOrder& asn )
+MIL_LimaOrder::MIL_LimaOrder( const sword::LimaOrder& asn )
     : nID_          ( ++nNextID_ )
     , functions_    ()
     , bFlag_        ( false )
@@ -33,13 +33,13 @@ MIL_LimaOrder::MIL_LimaOrder( const Common::MsgLimaOrder& asn )
     T_PointVector points;
     localisation_ = boost::shared_ptr< TER_Localisation >( new TER_Localisation( TER_Localisation::eLine, points ) );
     if( !NET_ASN_Tools::ReadLine( asn.lima(), *localisation_ ) )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_lima );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_lima );
 
     for( int i = 0; i < asn.fonctions_size(); ++i )
     {
         const MIL_LimaFunction* pFunction = MIL_LimaFunction::Find( asn.fonctions(i) );
         if( !pFunction )
-            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_lima_function );
+            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_lima_function );
         functions_.insert( pFunction );
     }
 }
@@ -99,7 +99,7 @@ bool MIL_LimaOrder::Intersect2D( const T_PointVector& polyline, T_PointSet& inte
 // Name: MIL_LimaOrder::Serialize
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-void MIL_LimaOrder::Serialize( Common::MsgLimaOrder& asn ) const
+void MIL_LimaOrder::Serialize( sword::LimaOrder& asn ) const
 {
     NET_ASN_Tools::WriteLine( *localisation_, *asn.mutable_lima() );
     NET_ASN_Tools::WriteTick( nSchedule_, *asn.mutable_horaire() );

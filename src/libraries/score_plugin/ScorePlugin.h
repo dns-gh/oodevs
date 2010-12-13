@@ -12,9 +12,16 @@
 
 #include "dispatcher/Plugin_ABC.h"
 
-namespace MsgsSimToClient { class MsgSimToClient; }
-namespace MsgsAarToClient { class MsgAarToClient; }
-namespace MsgsClientToAar { class MsgClientToAar; }
+namespace sword
+{
+    class SimToClient;
+}
+
+namespace sword
+{
+    class AarToClient;
+    class ClientToAar;
+}
 
 namespace xml
 {
@@ -56,8 +63,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive                  ( const MsgsSimToClient::MsgSimToClient& message );
-    virtual void Receive                  ( const MsgsAarToClient::MsgAarToClient& message );
+    virtual void Receive                  ( const sword::SimToClient& message );
+    virtual void Receive                  ( const sword::AarToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     virtual void Register                 ( dispatcher::Services& );
@@ -75,7 +82,7 @@ private:
     void LoadScores( const std::string& scores );
     void LoadIndicators( xml::xistream& xis );
     void LoadIndicator ( xml::xistream& xis );
-    void OnReceive( const std::string&, const MsgsClientToAar::MsgClientToAar& message );
+    void OnReceive( const std::string&, const sword::ClientToAar& message );
     //@}
 
 private:

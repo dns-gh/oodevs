@@ -13,15 +13,15 @@
 #include "Localisation.h"
 #include "PopulationFlow_ABC.h"
 
-namespace Common
+namespace sword
 {
     enum EnumCrowdAttitude;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgCrowdFlowCreation;
-    class MsgCrowdFlowUpdate;
+    class CrowdFlowCreation;
+    class CrowdFlowUpdate;
 }
 
 namespace dispatcher
@@ -36,18 +36,18 @@ namespace dispatcher
 // =============================================================================
 class PopulationFlow : public dispatcher::PopulationFlow_ABC
                      , public kernel::Extension_ABC
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowUpdate >
+                     , public kernel::Updatable_ABC< sword::CrowdFlowUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFlow( const Population& population, const MsgsSimToClient::MsgCrowdFlowCreation& msg );
+             PopulationFlow( const Population& population, const sword::CrowdFlowCreation& msg );
     virtual ~PopulationFlow();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate& msg );
+    virtual void DoUpdate( const sword::CrowdFlowUpdate& msg );
 
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
@@ -81,7 +81,7 @@ private:
     unsigned int                 nSpeed_;
     unsigned long                nNbrAliveHumans_;
     unsigned long                nNbrDeadHumans_;
-    Common::EnumCrowdAttitude    nAttitude_;
+    sword::EnumCrowdAttitude    nAttitude_;
     //@}
 };
 

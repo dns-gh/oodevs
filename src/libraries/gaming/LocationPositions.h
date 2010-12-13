@@ -58,7 +58,7 @@ private:
     //! @name Helpers
     //@{
     void Draw( const kernel::GlTools_ABC& tools ) const;
-    void AddLocation( const Common::MsgLocation& message );
+    void AddLocation( const sword::MsgLocation& message );
     void AddPoint( const geometry::Point2f& point );
     //@}
 
@@ -66,8 +66,8 @@ protected:
     //! @name Helpers
     //@{
     const kernel::Location_ABC* GetLocation() const;
-    void Update( const Common::MsgLocation& message );
-    void Update( const Common::MsgLocation& message, const geometry::Point2f& startPoint );
+    void Update( const sword::MsgLocation& message );
+    void Update( const sword::MsgLocation& message, const geometry::Point2f& startPoint );
     //@}
 
 private:

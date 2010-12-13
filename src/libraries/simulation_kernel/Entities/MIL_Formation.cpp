@@ -290,12 +290,12 @@ void MIL_Formation::SendCreation() const
     message().set_level( pLevel_->GetAsnID() );
     message().set_app6symbol( "combat" );
     message().set_logistic_level( pBrainLogistic_.get() ?
-        (Common::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : Common::none );
+        (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     if( pParent_ )
         message().mutable_parent()->set_id( pParent_->GetID() );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
     {
-        MsgsSimToClient::Extension_Entry* entry = message().mutable_extension()->add_entries();
+        sword::Extension_Entry* entry = message().mutable_extension()->add_entries();
         entry->set_name( it->first );
         entry->set_value( it->second );
     }

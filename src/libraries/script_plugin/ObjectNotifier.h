@@ -13,9 +13,9 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgObjectDestruction;
+    class ObjectDestruction;
 }
 
 namespace kernel
@@ -39,7 +39,7 @@ namespace script
 // Created: SBO 2010-07-13
 // =============================================================================
 class ObjectNotifier : public kernel::Extension_ABC
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectDestruction >
+                     , public kernel::Updatable_ABC< sword::ObjectDestruction >
 {
 public:
     //! @name Constructors/Destructor
@@ -57,7 +57,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectDestruction& message );
+    virtual void DoUpdate( const sword::ObjectDestruction& message );
     //@}
 
 private:

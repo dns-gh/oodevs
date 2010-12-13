@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    Surface* CreateSurface( const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgVisionCone& input, float elongation );
+    Surface* CreateSurface( const kernel::Agent_ABC& agent, const sword::MsgVisionCone& input, float elongation );
     VisionMap* CreateVisionMap();
     //@}
 

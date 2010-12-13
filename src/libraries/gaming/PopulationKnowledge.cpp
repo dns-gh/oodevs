@@ -29,7 +29,7 @@ using namespace kernel;
 // Name: PopulationKnowledge::PopulationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Population_ABC >& resolver, const MsgsSimToClient::MsgCrowdKnowledgeCreation& message )
+PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Population_ABC >& resolver, const sword::CrowdKnowledgeCreation& message )
     : EntityImplementation< PopulationKnowledge_ABC >( controller, message.knowledge().id(), "" )
     , group_     ( group )
     , controller_( controller )
@@ -72,7 +72,7 @@ QString PopulationKnowledge::GetName() const
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdKnowledgeUpdate& message )
+void PopulationKnowledge::DoUpdate( const sword::CrowdKnowledgeUpdate& message )
 {
     if( message.has_etat_domination()  )
     {
@@ -85,7 +85,7 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdKnowledgeUpda
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation& message )
+void PopulationKnowledge::DoUpdate( const sword::CrowdConcentrationKnowledgeCreation& message )
 {
     if( ! tools::Resolver< PopulationConcentrationKnowledge >::Find( message.knowledge().id() ) )
     {
@@ -99,7 +99,7 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdConcentration
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& message )
+void PopulationKnowledge::DoUpdate( const sword::CrowdConcentrationKnowledgeUpdate& message )
 {
     tools::Resolver< PopulationConcentrationKnowledge >::Get( message.knowledge().id() )
         .DoUpdate( message );
@@ -109,7 +109,7 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdConcentration
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction& message )
+void PopulationKnowledge::DoUpdate( const sword::CrowdConcentrationKnowledgeDestruction& message )
 {
     delete tools::Resolver< PopulationConcentrationKnowledge >::Find( message.knowledge().id() );
     tools::Resolver< PopulationConcentrationKnowledge >::Remove( message.knowledge().id() );
@@ -120,7 +120,7 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdConcentration
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& message )
+void PopulationKnowledge::DoUpdate( const sword::CrowdFlowKnowledgeCreation& message )
 {
     if( ! tools::Resolver< PopulationFlowKnowledge >::Find( message.knowledge().id() ) )
     {
@@ -134,7 +134,7 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledge
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& message )
+void PopulationKnowledge::DoUpdate( const sword::CrowdFlowKnowledgeUpdate& message )
 {
     tools::Resolver< PopulationFlowKnowledge >::Get( message.knowledge().id() )
         .DoUpdate( message );
@@ -144,7 +144,7 @@ void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledge
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction& message )
+void PopulationKnowledge::DoUpdate( const sword::CrowdFlowKnowledgeDestruction& message )
 {
     delete tools::Resolver< PopulationFlowKnowledge >::Find( message.knowledge().id() );
     tools::Resolver< PopulationFlowKnowledge >::Remove( message.knowledge().id() );

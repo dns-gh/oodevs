@@ -46,7 +46,7 @@ ObjectKnowledgeFactory::~ObjectKnowledgeFactory()
 // Name: ObjectKnowledgeFactory::Create
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-kernel::ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const kernel::Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
+kernel::ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const kernel::Entity_ABC& owner, const sword::ObjectKnowledgeCreation& message )
 {
     ObjectKnowledge* knowledge = new ObjectKnowledge( owner, message, controllers_.controller_, static_.coordinateConverter_, model_.objects_, static_.objectTypes_ );
     knowledge->Attach< kernel::Positions >( *new ObjectKnowledgePositions( static_.coordinateConverter_, *knowledge ) );
@@ -59,7 +59,7 @@ kernel::ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const kernel::Entit
 // Name: ObjectKnowledgeFactory::RegisterAttributes
 // Created: NLD 2010-11-02
 // -----------------------------------------------------------------------------
-void ObjectKnowledgeFactory::RegisterAttributes( kernel::ObjectKnowledge_ABC& result, const Common::ObjectAttributes& attributes ) const
+void ObjectKnowledgeFactory::RegisterAttributes( kernel::ObjectKnowledge_ABC& result, const sword::ObjectAttributes& attributes ) const
 {
     attributesFactory_.Register( result, attributes );
 }

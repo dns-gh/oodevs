@@ -15,7 +15,7 @@
 // Name: MIL_TirIndirectParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_TirIndirectParameter::MIL_TirIndirectParameter( const Common::FireId& asn )
+MIL_TirIndirectParameter::MIL_TirIndirectParameter( const sword::FireId& asn )
     : data_( asn.id() )
 {
     // NOTHING
@@ -53,7 +53,7 @@ bool MIL_TirIndirectParameter::ToId( int& id ) const
 // Name: MIL_TirIndirectParameter::ToIndirectFire
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-bool MIL_TirIndirectParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+bool MIL_TirIndirectParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
 {
     elem.mutable_tirindirect()->set_id( data_ );
     return true;

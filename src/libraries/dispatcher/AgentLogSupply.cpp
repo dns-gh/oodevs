@@ -20,7 +20,7 @@ using namespace dispatcher;
 // Name: AgentLogSupply constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogSupply::AgentLogSupply( const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogSupplyState& asnMsg )
+AgentLogSupply::AgentLogSupply( const kernel::Agent_ABC& agent, const sword::LogSupplyState& asnMsg )
     : agent_                ( agent )
     , bSystemEnabled_       ( false )
 {
@@ -40,7 +40,7 @@ AgentLogSupply::~AgentLogSupply()
 // Name: AgentLogSupply::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void AgentLogSupply::Update( const MsgsSimToClient::MsgLogSupplyState& asnMsg )
+void AgentLogSupply::Update( const sword::LogSupplyState& asnMsg )
 {
     if( asnMsg.has_chaine_activee()  )
         bSystemEnabled_ = asnMsg.chaine_activee() != 0;

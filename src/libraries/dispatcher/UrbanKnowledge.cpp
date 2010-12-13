@@ -24,7 +24,7 @@ using namespace dispatcher;
 // Name: UrbanKnowledge constructor
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
-UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
+UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const sword::UrbanKnowledgeCreation& message )
     : dispatcher::UrbanKnowledge_ABC( message.knowledge().id() )
     , model_                        ( model )
     , team_                         ( model.Sides().Get( message.party().id() ) )
@@ -52,7 +52,7 @@ UrbanKnowledge::~UrbanKnowledge()
 // Name: UrbanKnowledge::Update
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
-void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
+void UrbanKnowledge::DoUpdate( const sword::UrbanKnowledgeCreation& message )
 {
     if( ( message.urban_block().id() && ! pUrban_ ) || ( pUrban_ && pUrban_->GetId() != unsigned int( message.urban_block().id() ) ) )
         pUrban_ = model_.UrbanBlocks().Find( message.urban_block().id() );
@@ -62,7 +62,7 @@ void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation&
 // Name: UrbanKnowledge::Update
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
-void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
+void UrbanKnowledge::DoUpdate( const sword::UrbanKnowledgeUpdate& message )
 {
     if( message.has_urban_block() )
         pUrban_ = model_.UrbanBlocks().Find( message.urban_block().id() );
@@ -122,7 +122,7 @@ void UrbanKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( optionals_.automat_perceptionPresent )
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
         {
-            Common::AutomatId &data = *message().mutable_automat_perceptions()->add_elem();
+            sword::AutomatId &data = *message().mutable_automat_perceptions()->add_elem();
             data.set_id( (*it)->GetId() );
         }
     message.Send( publisher );

@@ -15,7 +15,7 @@
 #include "protocol/AarSenders.h"
 #include "protocol/Protocol.h"
 
-using namespace MsgsClientToAar;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorRequest constructor
@@ -65,7 +65,7 @@ void IndicatorRequest::Commit() const
 // Name: IndicatorRequest::Update
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void IndicatorRequest::Update( const MsgsAarToClient::MsgPlotResult& message )
+void IndicatorRequest::Update( const sword::PlotResult& message )
 {
     if( message.identifier() == reinterpret_cast< unsigned int >( this ) )
     {
@@ -82,7 +82,7 @@ void IndicatorRequest::Update( const MsgsAarToClient::MsgPlotResult& message )
 // Name: IndicatorRequest::Update
 // Created: SBO 2009-06-11
 // -----------------------------------------------------------------------------
-void IndicatorRequest::Update( const MsgsAarToClient::MsgIndicator& message )
+void IndicatorRequest::Update( const sword::Indicator& message )
 {
     if( !IsFailed() )
         newValues_.push_back( message.value() );

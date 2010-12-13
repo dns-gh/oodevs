@@ -163,15 +163,15 @@ MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_AB
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const Common::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies )
+sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const sword::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies )
 {  //@TODO MGD Try to externalize ASN when protobuff will be merged
    //@HBD : Verify later that conversion from MIL_Army to MIL_Army_ABC was right
     if( message.elem_size() != 5 ) // type, location, name, team, attributes
-        return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
+        return sword::ObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
     MIL_Army_ABC* pArmy = armies.Find( message.elem( 3 ).value().Get( 0 ).party().id() );
     if( !pArmy )
-        return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_camp;
-    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode value = MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
+        return sword::ObjectMagicActionAck_ErrorCode_error_invalid_camp;
+    sword::ObjectMagicActionAck_ErrorCode value = sword::ObjectMagicActionAck_ErrorCode_no_error;
     RegisterObject( builder_->BuildObject( message, *pArmy, value ) );
     return value;
 }
@@ -182,7 +182,7 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObje
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
 {
-    MIL_Object_ABC* pObject = builder_->BuildObject( "", type, army, localisation, Common::ObstacleType_DemolitionTargetType_preliminary );
+    MIL_Object_ABC* pObject = builder_->BuildObject( "", type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary );
     RegisterObject( pObject );
     return pObject;
 }
@@ -193,7 +193,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& name )
 {
-    MIL_Object_ABC* pObject = builder_->BuildObject( name, type, army, localisation, Common::ObstacleType_DemolitionTargetType_preliminary );
+    MIL_Object_ABC* pObject = builder_->BuildObject( name, type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary );
     RegisterDistantObject( pObject );
     return pObject;
 }
@@ -202,7 +202,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateDistantObject( const std::string& type,
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType )
+MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, sword::ObstacleType_DemolitionTargetType obstacleType )
 {
     if( pLocalisation )
     {
@@ -299,31 +299,31 @@ void MIL_ObjectManager::SendFullState()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::OnReceiveMsgObjectMagicAction
+// Name: MIL_ObjectManager::OnReceiveObjectMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::MsgObjectMagicAction& msg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies )
+void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicAction& msg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies )
 {
-    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode nErrorCode = MsgsSimToClient::MsgObjectMagicActionAck::no_error;
+    sword::ObjectMagicActionAck_ErrorCode nErrorCode = sword::ObjectMagicActionAck::no_error;
 
-    if( msg.type() == MsgsClientToSim::MsgObjectMagicAction::create )
+    if( msg.type() == sword::ObjectMagicAction::create )
         nErrorCode = CreateObject( msg.parameters(), armies );
-    else if( msg.type() == MsgsClientToSim::MsgObjectMagicAction::destroy )
+    else if( msg.type() == sword::ObjectMagicAction::destroy )
     {
         MIL_Object_ABC* pObject = Find( msg.object().id() );
         if( !pObject )
-            nErrorCode = MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_object;
+            nErrorCode = sword::ObjectMagicActionAck::error_invalid_object;
         else
             (*pObject)().Destroy();
     }
-    else if( msg.type() == MsgsClientToSim::MsgObjectMagicAction::update )
+    else if( msg.type() == sword::ObjectMagicAction::update )
     {
         MIL_Object_ABC* pObject = Find( msg.object().id() );
         if( !pObject )
-            nErrorCode = MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_object;
+            nErrorCode = sword::ObjectMagicActionAck::error_invalid_object;
         else
         {
-            const Common::MsgMissionParameters& params = msg.parameters();
+            const sword::MsgMissionParameters& params = msg.parameters();
             if( params.elem_size() && params.elem( 0 ).value_size() && params.elem( 0 ).value().Get( 0 ).list_size() )
                 nErrorCode = pObject->OnUpdate( params.elem( 0 ).value() );
         }
@@ -334,13 +334,13 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::OnReceiveMsgChangeResourceLinks
+// Name: MIL_ObjectManager::OnReceiveChangeResourceLinks
 // Created: JSR 2010-08-25
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::OnReceiveMsgChangeResourceLinks( const MsgsClientToSim::MsgMagicAction& message, unsigned int nCtx )
+void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& message, unsigned int nCtx )
 {
-    MsgsSimToClient::MsgMagicActionAck_ErrorCode nErrorCode = MsgsSimToClient::MsgMagicActionAck::no_error;
-    const Common::MsgMissionParameters& params = message.parameters();
+    sword::MagicActionAck_ErrorCode nErrorCode = sword::MagicActionAck::no_error;
+    const sword::MsgMissionParameters& params = message.parameters();
     unsigned int id = params.elem( 0 ).value().Get( 0 ).identifier();
     bool urban = params.elem( 1 ).value().Get( 0 ).booleanvalue();
     MIL_Object_ABC* object = 0;
@@ -349,7 +349,7 @@ void MIL_ObjectManager::OnReceiveMsgChangeResourceLinks( const MsgsClientToSim::
     else 
         object = Find( id );
     if( object == 0 )
-        nErrorCode = MsgsSimToClient::MsgMagicActionAck::error_invalid_attribute;
+        nErrorCode = sword::MagicActionAck::error_invalid_attribute;
     else if( params.elem( 2 ).value_size() > 0 )
         nErrorCode = object->OnUpdateResourceLinks( params.elem( 2 ).value() );
     client::MagicActionAck asnReplyMsg;

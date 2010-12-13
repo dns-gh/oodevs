@@ -12,9 +12,9 @@
 
 #include "Order_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgCrowdOrder;
+    class CrowdOrder;
 }
 
 namespace kernel
@@ -36,7 +36,7 @@ class PopulationOrder : public Order_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationOrder( const Common::MsgCrowdOrder& asn );
+    explicit PopulationOrder( const sword::CrowdOrder& asn );
     virtual ~PopulationOrder();
     //@}
 
@@ -56,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Common::MsgCrowdOrder > message_;
+    std::auto_ptr< sword::CrowdOrder > message_;
     //@}
 };
 

@@ -12,10 +12,10 @@
 
 #include "tools/Resolver.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgStartFireEffect;
-    class MsgStopFireEffect;
+    class StartFireEffect;
+    class StopFireEffect;
 }
 
 namespace kernel
@@ -45,8 +45,8 @@ public:
     //@{
     void Purge();
 
-    void CreateAmmoEffect( const MsgsSimToClient::MsgStartFireEffect& message );
-    void DeleteAmmoEffect( const MsgsSimToClient::MsgStopFireEffect& message );
+    void CreateAmmoEffect( const sword::StartFireEffect& message );
+    void DeleteAmmoEffect( const sword::StopFireEffect& message );
     //@}
 
 private:

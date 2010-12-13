@@ -43,7 +43,7 @@ AgentKnowledges::~AgentKnowledges()
 // Name: AgentKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void AgentKnowledges::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeCreation& message )
+void AgentKnowledges::DoUpdate( const sword::UnitKnowledgeCreation& message )
 {
     if( ! Find( message.knowledge().id() ) )
     {
@@ -57,7 +57,7 @@ void AgentKnowledges::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeCreation&
 // Name: AgentKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void AgentKnowledges::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
+void AgentKnowledges::DoUpdate( const sword::UnitKnowledgeUpdate& message )
 {
     Get( message.knowledge().id() ).Update( message );
     controller_.Update( *this );
@@ -67,7 +67,7 @@ void AgentKnowledges::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& m
 // Name: AgentKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void AgentKnowledges::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeDestruction& message )
+void AgentKnowledges::DoUpdate( const sword::UnitKnowledgeDestruction& message )
 {
     delete Find( message.knowledge().id() );
     Remove( message.knowledge().id() );

@@ -21,10 +21,10 @@
 
 #include <queue>
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgControlCheckPointSaveNow;
-    class MsgControlCheckPointSetFrequency;
+    class ControlCheckPointSaveNow;
+    class ControlCheckPointSetFrequency;
 }
 
 namespace xml
@@ -58,8 +58,8 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgCheckPointSaveNow     ( const MsgsClientToSim::MsgControlCheckPointSaveNow&      asnMsg );
-    void OnReceiveMsgCheckPointSetFrequency( const MsgsClientToSim::MsgControlCheckPointSetFrequency& /*int&*/ asnMsg );
+    void OnReceiveMsgCheckPointSaveNow     ( const sword::ControlCheckPointSaveNow&      asnMsg );
+    void OnReceiveMsgCheckPointSetFrequency( const sword::ControlCheckPointSetFrequency& /*int&*/ asnMsg );
     //@}
 
     //! @name CheckPoints

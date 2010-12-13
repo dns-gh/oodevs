@@ -24,14 +24,14 @@ using namespace dispatcher;
 // Name: PopulationConcentrationKnowledge constructor
 // Created: NLD 2006-10-03
 // -----------------------------------------------------------------------------
-PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation& msg )
+PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const sword::CrowdConcentrationKnowledgeCreation& msg )
     : SimpleEntity< >     ( msg.knowledge().id() )
     , populationKnowledge_( populationKnowledge )
     , concentrationId_    ( msg.concentration().id() )
     , position_           ( msg.position() )
     , nNbrAliveHumans_    ( 0 )
     , nNbrDeadHumans_     ( 0 )
-    , nAttitude_          ( Common::agressive )
+    , nAttitude_          ( sword::agressive )
     , nRelevance_         ( 0 )
     , bPerceived_         ( false )
 {
@@ -56,7 +56,7 @@ PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 // Name: PopulationConcentrationKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::Update( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& msg )
+void PopulationConcentrationKnowledge::Update( const sword::CrowdConcentrationKnowledgeUpdate& msg )
 {
     if( msg.has_concentration() )
         concentrationId_ = msg.concentration().id();

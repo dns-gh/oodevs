@@ -53,7 +53,7 @@ Intelligence::Intelligence( const CoordinateConverter_ABC& converter, xml::xistr
 
 namespace
 {
-    kernel::Point MakePoint( const CoordinateConverter_ABC& converter, const Common::MsgCoordLatLong& message )
+    kernel::Point MakePoint( const CoordinateConverter_ABC& converter, const sword::MsgCoordLatLong& message )
     {
         kernel::Point point;
         point.AddPoint( converter.ConvertToXY( message ) );
@@ -66,7 +66,7 @@ namespace
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
 
-Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& formations, const FormationLevels& levels, const Common::MsgIntelligence& message, kernel::Controller& controller )
+Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& formations, const FormationLevels& levels, const sword::Intelligence& message, kernel::Controller& controller )
     : Entity< Intelligence_ABC >( parameter, 0, controller )
     , converter_( converter )
 {
@@ -115,7 +115,7 @@ void Intelligence::ReadParameter( xml::xistream& xis, const kernel::EntityResolv
 // Name: Lima::CommitTo
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-void Intelligence::CommitTo( Common::MsgMissionParameter& message ) const
+void Intelligence::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -127,7 +127,7 @@ void Intelligence::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: Lima::CommitTo
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-void Intelligence::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void Intelligence::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
     {
@@ -139,7 +139,7 @@ void Intelligence::CommitTo( Common::MsgMissionParameter_Value& message ) const
 // Name: Intelligence::CommitTo
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Intelligence::CommitTo( Common::MsgIntelligence& message ) const
+void Intelligence::CommitTo( sword::Intelligence& message ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
@@ -149,11 +149,11 @@ void Intelligence::CommitTo( Common::MsgIntelligence& message ) const
         else if( type == "nature" )
             static_cast< const String* >( it->second )->CommitTo( *message.mutable_nature() );
         else if( type == "level" )
-            static_cast< const Level* >( it->second )->CommitTo( boost::bind( &Common::MsgIntelligence::set_level, message, _1 ) );
+            static_cast< const Level* >( it->second )->CommitTo( boost::bind( &sword::Intelligence::set_level, message, _1 ) );
         else if( type == "karma" )
-            static_cast< const Karma* >( it->second )->CommitTo( boost::bind( &Common::MsgIntelligence::set_diplomacy, message, _1 ) );
+            static_cast< const Karma* >( it->second )->CommitTo( boost::bind( &sword::Intelligence::set_diplomacy, message, _1 ) );
         else if( type == "bool" )
-            static_cast< const Bool* >( it->second )->CommitTo( boost::bind( &Common::MsgIntelligence::set_embarked, message, _1 ) );
+            static_cast< const Bool* >( it->second )->CommitTo( boost::bind( &sword::Intelligence::set_embarked, message, _1 ) );
         else if( type == "formation" )
             static_cast< const Formation* >( it->second )->CommitTo( *message.mutable_formation() );
         else if( type == "point" )
@@ -165,7 +165,7 @@ void Intelligence::CommitTo( Common::MsgIntelligence& message ) const
 // Name: Intelligence::Clean
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Intelligence::Clean( Common::MsgIntelligence& message ) const
+void Intelligence::Clean( sword::Intelligence& message ) const
 {
     message.Clear();
 }

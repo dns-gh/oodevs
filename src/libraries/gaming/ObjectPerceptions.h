@@ -28,7 +28,7 @@ namespace kernel
 // Created: AGE 2006-10-16
 // =============================================================================
 class ObjectPerceptions : public kernel::Extension_ABC
-                        , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
+                        , public kernel::Updatable_ABC< sword::ObjectKnowledgeUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& message );
     //@}
 
 private:

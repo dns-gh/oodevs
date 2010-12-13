@@ -105,7 +105,7 @@ namespace boost
             file << size;
             for ( CIT_MaintenancePriorityVector it = vector.begin(); it != vector.end(); ++it )
             {
-                Common::EquipmentType id = (*it)->GetMosID();
+                sword::EquipmentType id = (*it)->GetMosID();
                 int equipment_type = id.id();
                 file << equipment_type;
             }
@@ -119,7 +119,7 @@ namespace boost
             vector.reserve( nNbr );
             while ( nNbr-- )
             {
-                Common::EquipmentType nID;
+                sword::EquipmentType nID;
                 int equipment_type;
                 file >> equipment_type;
                 nID.set_id( equipment_type );
@@ -172,7 +172,7 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uns
          >> bSystemEnabled_
          >> priorities_
          >> tacticalPriorities_;
-    Common::EnumLogMaintenanceRegimeTravail nID;
+    sword::EnumLogMaintenanceRegimeTravail nID;
     file >> nID;
     pWorkRate_ = PHY_MaintenanceWorkRate::Find( nID );
     file >> nWorkRateWarningRCTick_;
@@ -194,7 +194,7 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uns
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    Common::EnumLogMaintenanceRegimeTravail workRate = pWorkRate_->GetAsnID();
+    sword::EnumLogMaintenanceRegimeTravail workRate = pWorkRate_->GetAsnID();
     file << boost::serialization::base_object< PHY_RoleInterface_Maintenance >( *this )
          << bSystemEnabled_
          << priorities_
@@ -647,14 +647,14 @@ void PHY_RolePionLOG_Maintenance::Clean()
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
 static
-void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, MsgsSimToClient::SeqOfLogMaintenanceEquipmentAvailability& asn, const PHY_MaintenanceWorkRate* pWorkRate )
+void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, sword::SeqOfLogMaintenanceEquipmentAvailability& asn, const PHY_MaintenanceWorkRate* pWorkRate )
 {
     if( data.empty() )
         return;
 
     for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
-        MsgsSimToClient::MsgLogMaintenanceEquipmentAvailability& data = *asn.add_elem();
+        sword::LogMaintenanceEquipmentAvailability& data = *asn.add_elem();
         data.mutable_equipment_type()->set_id( itData->first->GetMosID().id() );
         assert( itData->second.nNbrTotal_ );
         data.set_nbr_total( itData->second.nNbrTotal_ );

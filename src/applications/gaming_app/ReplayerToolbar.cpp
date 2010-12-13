@@ -13,10 +13,10 @@
 #include "gaming/Simulation.h"
 #include "clients_kernel/Controllers.h"
 #include "icons.h"
-#include "protocol/replaysenders.h"
+#include "protocol/ReplaySenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 
-using namespace Common;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: ReplayerToolbar constructor

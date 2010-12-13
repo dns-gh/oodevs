@@ -11,14 +11,8 @@
 #define __protocol_Authentication_h__
 
 #pragma warning( push, 0 )
-#pragma warning( disable : 4244 )
-
-#include "Definitions.h"
-#include "generated/Common.pb.h"
-#include "generated/Version.pb.h"
-#include "generated/AdminToLauncher.pb.h"
-#include "generated/LauncherToAdmin.pb.h"
-
+#include "protocol/proto/admin_launcher.pb.h"
+#include "protocol/proto/launcher_admin.pb.h"
 #pragma warning( pop )
 
 #endif // __protocol_Authentication_h__

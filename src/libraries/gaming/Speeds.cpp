@@ -40,7 +40,7 @@ Speeds::~Speeds()
 // Name: Speeds::DoUpdate
 // Created: AGE 2007-12-17
 // -----------------------------------------------------------------------------
-void Speeds::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void Speeds::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_vitesse()  )
         speed_ = float( message.vitesse() );
@@ -55,7 +55,7 @@ void Speeds::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 // Name: Speeds::DoUpdate
 // Created: AGE 2007-12-17
 // -----------------------------------------------------------------------------
-void Speeds::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
+void Speeds::DoUpdate( const sword::UnitKnowledgeUpdate& message )
 {
     // $$$$ AGE 2007-12-17: *soupir*
     if( message.has_speed()  )

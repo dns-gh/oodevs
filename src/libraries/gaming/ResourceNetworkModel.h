@@ -10,13 +10,12 @@
 #ifndef __ResourceNetworkModel_h_
 #define __ResourceNetworkModel_h_
 
-#include "tools/Resolver.h"
-
-#include "clients_kernel/ObjectTypes.h"
 #include "Model.h"
 #include "ObjectsModel.h"
 #include "StaticModel.h"
 #include "UrbanModel.h"
+#include "clients_kernel/ObjectTypes.h"
+#include <tools/Resolver.h>
 
 namespace kernel
 {
@@ -28,9 +27,9 @@ namespace gui
     class TerrainObjectProxy;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUrbanUpdate;
+    class UrbanUpdate;
 }
 
 // =============================================================================
@@ -39,7 +38,7 @@ namespace MsgsSimToClient
 */
 // Created: JSR 2010-08-18
 // =============================================================================
-class ResourceNetworkModel : public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanUpdate >
+class ResourceNetworkModel : public kernel::Updatable_ABC< sword::UrbanUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -50,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& message );
+    virtual void DoUpdate( const sword::UrbanUpdate& message );
     template< typename T >
     void Create( kernel::Entity_ABC& entity, const T& msg );
     //@}

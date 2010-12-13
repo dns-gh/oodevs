@@ -13,14 +13,14 @@
 #include "Decision/DEC_PathWalker.h"
 #include <boost/shared_ptr.hpp>
 
-namespace Common
+namespace sword
 {
     class MsgPath;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitEnvironmentType;
+    class UnitEnvironmentType;
 }
 
 namespace urban
@@ -100,8 +100,8 @@ public:
 protected:
     //! @name Network
     //@{
-    void SerializeEnvironmentType( MsgsSimToClient::MsgUnitEnvironmentType& msg ) const;
-    bool SerializeCurrentPath( Common::MsgPath& asn ) const;
+    void SerializeEnvironmentType( sword::UnitEnvironmentType& msg ) const;
+    bool SerializeCurrentPath( sword::MsgPath& asn ) const;
     //@}
 
     //! @name Tools

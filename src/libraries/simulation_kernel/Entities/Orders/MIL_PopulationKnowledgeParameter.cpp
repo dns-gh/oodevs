@@ -27,7 +27,7 @@ MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( DEC_Knowledg
 // Name: MIL_PopulationKnowledgeParameter constructor
 // Created: LDC 2009-06-04
 // -----------------------------------------------------------------------------
-MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( const Common::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
+MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( const sword::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
 : pKnowledgePopulation_( resolver.ResolveKnowledgePopulation( asn ) )
 {
     // NOTHING
@@ -66,7 +66,7 @@ bool MIL_PopulationKnowledgeParameter::ToPopulationKnowledge( DEC_Knowledge_Popu
 // Name: MIL_PopulationKnowledgeParameter::ToElement
 // Created: MGD 2010-11-19
 // -----------------------------------------------------------------------------
-bool MIL_PopulationKnowledgeParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+bool MIL_PopulationKnowledgeParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
 {
     elem.mutable_crowdknowledge()->set_id( pKnowledgePopulation_->GetID() );
     return true;

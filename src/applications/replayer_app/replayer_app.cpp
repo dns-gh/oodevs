@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "App.h"
-#include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/win32/FlexLm.h"

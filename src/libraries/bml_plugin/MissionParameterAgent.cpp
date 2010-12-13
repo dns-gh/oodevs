@@ -37,7 +37,7 @@ MissionParameterAgent::~MissionParameterAgent()
 // Name: MissionParameterAgent::Serialize
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-void MissionParameterAgent::Serialize( Common::MsgMissionParameter& parameter ) const
+void MissionParameterAgent::Serialize( sword::MsgMissionParameter& parameter ) const
 {
     parameter.set_null_value( false );
     parameter.mutable_value()->Add()->mutable_agent()->set_id( agent_.GetId() );

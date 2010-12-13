@@ -88,7 +88,7 @@ ActionParameterFactory::~ActionParameterFactory()
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const Common::MsgMissionParameter& message, const kernel::Entity_ABC& entity ) const
+actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const sword::MsgMissionParameter& message, const kernel::Entity_ABC& entity ) const
 {
     // $$$$ SBO 2007-10-11: we should create a parameter of the real type in order to be able (later) to edit parameters
     if( message.null_value() || message.value_size() == 0 )
@@ -103,7 +103,7 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
 // Name: ActionParameterFactory::CreateParameter
 // Created: MGD 2010-11-09
 // -----------------------------------------------------------------------------
-actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const Common::MsgMissionParameter_Value& message, const kernel::Entity_ABC& entity ) const
+actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const sword::MsgMissionParameter_Value& message, const kernel::Entity_ABC& entity ) const
 {
     if( message.has_booleanvalue() )
         return new actions::parameters::Bool( parameter, message.booleanvalue() != 0 );

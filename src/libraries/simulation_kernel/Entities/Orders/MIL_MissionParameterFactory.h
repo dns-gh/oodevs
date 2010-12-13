@@ -12,7 +12,7 @@
 
 #include <boost/shared_ptr.hpp>
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameter;
     class MsgMissionParameter_Value;
@@ -55,8 +55,8 @@ public:
     //! @name Operations
     //@{
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const MIL_OrderTypeParameter& type );
-    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const MIL_OrderTypeParameter& type, const Common::MsgMissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver );
-    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const Common::MsgMissionParameter_Value& message, const DEC_KnowledgeResolver_ABC& resolver );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const MIL_OrderTypeParameter& type, const sword::MsgMissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const sword::MsgMissionParameter_Value& message, const DEC_KnowledgeResolver_ABC& resolver );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const PHY_DotationCategory* dotationType );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const PHY_ComposanteTypePion* equipmentType );
@@ -105,7 +105,7 @@ public:
     static void SetDotationTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const PHY_DotationCategory* type );
     static void SetNumericTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, float value );
 
-    static void Copy( const MIL_OrderType_ABC& orderType, const Common::MsgMissionParameters& asn, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
+    static void Copy( const MIL_OrderType_ABC& orderType, const sword::MsgMissionParameters& asn, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
 
     //@}
 };

@@ -25,7 +25,7 @@ using namespace kernel;
 // Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object::Object( const MsgsSimToClient::MsgObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
+Object::Object( const sword::ObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
     : EntityImplementation< Object_ABC >( controller, message.object().id(), QString( message.name().c_str() ) )
     , converter_        ( converter )
     , type_             ( typeResolver.Get( message.type().id() ) )
@@ -38,7 +38,7 @@ Object::Object( const MsgsSimToClient::MsgObjectCreation& message, Controller& c
     RegisterSelf( *this );
     if( message.attributes().has_obstacle()  )
     {
-        if( message.attributes().obstacle().type() == Common::ObstacleType_DemolitionTargetType_reserved )
+        if( message.attributes().obstacle().type() == sword::ObstacleType_DemolitionTargetType_reserved )
         {
             obstacleType_ = eDemolitionTargetType_Reserved;
             reservedObstacleActivated_ = message.attributes().obstacle().activated() ? true : false;
@@ -70,7 +70,7 @@ const kernel::ObjectType& Object::GetType() const
 // Name: Object::DoUpdate
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void Object::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& /*message*/ )
+void Object::DoUpdate( const sword::ObjectUpdate& /*message*/ )
 {
     Touch();
 }

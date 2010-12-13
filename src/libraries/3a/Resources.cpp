@@ -34,7 +34,7 @@ Resources::Resources( xml::xistream& xis )
 // Name: Resources::Extract
 // Created: AGE 2007-10-23
 // -----------------------------------------------------------------------------
-int Resources::Extract( const MsgsSimToClient::MsgUnitAttributes& attributes )
+int Resources::Extract( const sword::UnitAttributes& attributes )
 {
     unsigned size = attributes.dotation_eff_ressource().elem_size();
     while( size > 0 )

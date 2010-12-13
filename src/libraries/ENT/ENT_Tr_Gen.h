@@ -68,8 +68,8 @@ public:
     static const std::string& ConvertFromLogMaintenanceRegimeTravail( E_LogMaintenanceRegimeTravail, E_Conversion = eToSim );
     static const std::string& ConvertFromLogMaintenanceHandlingStatus( E_LogMaintenanceHandlingStatus, E_Conversion = eToSim );
     static const std::string& ConvertFromLogSupplyHandlingStatus( E_LogSupplyHandlingStatus, E_Conversion = eToSim );
-    static const std::string& ConvertFromMsgLogSupplyChangeQuotasAck( E_MsgLogSupplyChangeQuotasAck, E_Conversion = eToSim );
-    static const std::string& ConvertFromMsgLogSupplyPushFlowAck( E_MsgLogSupplyPushFlowAck, E_Conversion = eToSim );
+    static const std::string& ConvertFromLogSupplyChangeQuotasAck( E_LogSupplyChangeQuotasAck, E_Conversion = eToSim );
+    static const std::string& ConvertFromLogSupplyPushFlowAck( E_LogSupplyPushFlowAck, E_Conversion = eToSim );
     static const std::string& ConvertFromLogMedicalHandlingStatus( E_LogMedicalHandlingStatus, E_Conversion = eToSim );
     static const std::string& ConvertFromDemolitionTargetType( E_DemolitionTargetType, E_Conversion = eToSim );
     static const std::string& ConvertFromObjectErrorCode( E_ObjectErrorCode, E_Conversion = eToSim );
@@ -112,8 +112,8 @@ public:
     static E_LogMaintenanceRegimeTravail ConvertToLogMaintenanceRegimeTravail( const std::string& );
     static E_LogMaintenanceHandlingStatus ConvertToLogMaintenanceHandlingStatus( const std::string& );
     static E_LogSupplyHandlingStatus ConvertToLogSupplyHandlingStatus( const std::string& );
-    static E_MsgLogSupplyChangeQuotasAck ConvertToMsgLogSupplyChangeQuotasAck( const std::string& );
-    static E_MsgLogSupplyPushFlowAck ConvertToMsgLogSupplyPushFlowAck( const std::string& );
+    static E_LogSupplyChangeQuotasAck ConvertToLogSupplyChangeQuotasAck( const std::string& );
+    static E_LogSupplyPushFlowAck ConvertToLogSupplyPushFlowAck( const std::string& );
     static E_LogMedicalHandlingStatus ConvertToLogMedicalHandlingStatus( const std::string& );
     static E_ObjectErrorCode ConvertToObjectErrorCode( const std::string& );
     static E_DemolitionTargetType ConvertToDemolitionTargetType( const std::string& );
@@ -158,8 +158,8 @@ private:
     typedef ENT_Tr::converter<E_LogMaintenanceRegimeTravail> T_ConverterLogMaintenanceRegimeTravail;
     typedef ENT_Tr::converter<E_LogMaintenanceHandlingStatus> T_ConverterLogMaintenanceHandlingStatus;
     typedef ENT_Tr::converter<E_LogSupplyHandlingStatus> T_ConverterLogSupplyHandlingStatus;
-    typedef ENT_Tr::converter<E_MsgLogSupplyChangeQuotasAck> T_ConverterMsgLogSupplyChangeQuotasAck;
-    typedef ENT_Tr::converter<E_MsgLogSupplyPushFlowAck> T_ConverterMsgLogSupplyPushFlowAck;
+    typedef ENT_Tr::converter<E_LogSupplyChangeQuotasAck> T_ConverterLogSupplyChangeQuotasAck;
+    typedef ENT_Tr::converter<E_LogSupplyPushFlowAck> T_ConverterLogSupplyPushFlowAck;
     typedef ENT_Tr::converter<E_LogMedicalHandlingStatus> T_ConverterLogMedicalHandlingStatus;
     typedef ENT_Tr::converter<E_DemolitionTargetType> T_ConverterDemolitionTargetType;
     typedef ENT_Tr::converter<E_ObjectErrorCode> T_ConverterObjectErrorCode;
@@ -203,8 +203,8 @@ private:
     static T_ConverterLogMaintenanceRegimeTravail LogMaintenanceRegimeTravailConverter_ [];
     static T_ConverterLogMaintenanceHandlingStatus LogMaintenanceHandlingStatusConverter_ [];
     static T_ConverterLogSupplyHandlingStatus LogSupplyHandlingStatusConverter_ [];
-    static T_ConverterMsgLogSupplyChangeQuotasAck MsgLogSupplyChangeQuotasAckConverter_ [];
-    static T_ConverterMsgLogSupplyPushFlowAck MsgLogSupplyPushFlowAckConverter_ [];
+    static T_ConverterLogSupplyChangeQuotasAck LogSupplyChangeQuotasAckConverter_ [];
+    static T_ConverterLogSupplyPushFlowAck LogSupplyPushFlowAckConverter_ [];
     static T_ConverterLogMedicalHandlingStatus LogMedicalHandlingStatusConverter_ [];
     static T_ConverterDemolitionTargetType DemolitionTargetTypeConverter_ [];
     static T_ConverterObjectErrorCode ObjectErrorCodeConverter_ [];

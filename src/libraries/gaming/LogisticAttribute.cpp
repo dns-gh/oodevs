@@ -54,7 +54,7 @@ void LogisticAttribute::UpdateData( const T& message )
 // Name: LogisticAttribute::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void LogisticAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void LogisticAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -63,7 +63,7 @@ void LogisticAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdat
 // Name: LogisticAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void LogisticAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void LogisticAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }

@@ -10,19 +10,18 @@
 #ifndef __PopulationFlowKnowledge_h_
 #define __PopulationFlowKnowledge_h_
 
-
 #include "SimpleEntity.h"
 #include "PopulationFlowPart.h"
 
-namespace Common
+namespace sword
 {
     enum EnumCrowdAttitude;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgCrowdFlowKnowledgeCreation;
-    class MsgCrowdFlowKnowledgeUpdate;
+    class CrowdFlowKnowledgeCreation;
+    class CrowdFlowKnowledgeUpdate;
 }
 
 namespace kernel
@@ -47,13 +46,13 @@ class PopulationFlowKnowledge : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& msg );
+             PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const sword::CrowdFlowKnowledgeCreation& msg );
     virtual ~PopulationFlowKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& msg );
+    void Update( const sword::CrowdFlowKnowledgeUpdate& msg );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -92,7 +91,7 @@ private:
     unsigned int                           nSpeed_;
     unsigned long                          nNbrAliveHumans_;
     unsigned long                          nNbrDeadHumans_;
-    Common::EnumCrowdAttitude              nAttitude_;
+    sword::EnumCrowdAttitude              nAttitude_;
     bool                                   bPerceived_;
     T_Optionals                            optionals_;
     //@}

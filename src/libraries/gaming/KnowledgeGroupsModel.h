@@ -17,9 +17,9 @@ namespace kernel
     class KnowledgeGroup_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgKnowledgeGroupCreation;
+    class KnowledgeGroupCreation;
 }
 
 class KnowledgeGroupFactory_ABC;
@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    void Create( const MsgsSimToClient::MsgKnowledgeGroupCreation& message );
+    void Create( const sword::KnowledgeGroupCreation& message );
     void Delete( unsigned int id );
     void Purge();
     //@}

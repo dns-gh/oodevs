@@ -13,19 +13,6 @@
 
 using namespace dispatcher;
 
-namespace MsgsClientToSim
-{
-    class MsgClientToSim;
-}
-namespace MsgsClientToReplay
-{
-    class MsgClientToReplay;
-}
-namespace MsgsClientToAuthentication
-{
-    class MsgClientToAuthentication;
-}
-
 // -----------------------------------------------------------------------------
 // Name: DefaultProfile constructor
 // Created: AGE 2007-08-24
@@ -48,7 +35,7 @@ DefaultProfile::~DefaultProfile()
 // Name: DefaultProfile::CheckRights
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-bool DefaultProfile::CheckRights( const MsgsClientToSim::MsgClientToSim& ) const
+bool DefaultProfile::CheckRights( const sword::ClientToSim& ) const
 {
     return false;
 }
@@ -57,7 +44,7 @@ bool DefaultProfile::CheckRights( const MsgsClientToSim::MsgClientToSim& ) const
 // Name: DefaultProfile::CheckRights
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-bool DefaultProfile::CheckRights( const MsgsClientToAuthentication::MsgClientToAuthentication& wrapper ) const
+bool DefaultProfile::CheckRights( const sword::ClientToAuthentication& wrapper ) const
 {
     return wrapper.message().has_authentication_request();
 }
@@ -66,7 +53,7 @@ bool DefaultProfile::CheckRights( const MsgsClientToAuthentication::MsgClientToA
 // Name: DefaultProfile::CheckRights
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-bool DefaultProfile::CheckRights( const MsgsClientToReplay::MsgClientToReplay& ) const
+bool DefaultProfile::CheckRights( const sword::ClientToReplay& ) const
 {
     return false;
 }
@@ -75,7 +62,7 @@ bool DefaultProfile::CheckRights( const MsgsClientToReplay::MsgClientToReplay& )
 // Name: DefaultProfile::CheckRights
 // Created: AGE 2008-06-10
 // -----------------------------------------------------------------------------
-bool DefaultProfile::CheckRights( const Common::MsgChatTarget& , const Common::MsgChatTarget& ) const
+bool DefaultProfile::CheckRights( const sword::MsgChatTarget& , const sword::MsgChatTarget& ) const
 {
     return false;
 }

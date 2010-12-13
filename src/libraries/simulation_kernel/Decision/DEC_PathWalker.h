@@ -16,14 +16,14 @@
 #include <boost/shared_ptr.hpp>
 #include <pathfind/TerrainData.h>
 
-namespace Common
+namespace sword
 {
     class MsgPath;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitEnvironmentType;
+    class UnitEnvironmentType;
 }
 
 class MIL_Object_ABC;
@@ -74,8 +74,8 @@ public:
 
     //! @name Network
     //@{
-    void SerializeEnvironmentType( MsgsSimToClient::MsgUnitEnvironmentType& msg ) const;
-    bool SerializeCurrentPath( Common::MsgPath& asn ) const;
+    void SerializeEnvironmentType( sword::UnitEnvironmentType& msg ) const;
+    bool SerializeCurrentPath( sword::MsgPath& asn ) const;
     //@}
 
 private:

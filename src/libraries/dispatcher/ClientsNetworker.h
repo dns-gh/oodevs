@@ -42,12 +42,12 @@ public:
 
     //! @name Main
     //@{
-    virtual void Send( const MsgsSimToClient::MsgSimToClient& msg );
-    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& msg );
-    virtual void Send( const MsgsReplayToClient::MsgReplayToClient& );
-    virtual void Send( const MsgsAarToClient::MsgAarToClient& msg );
-    virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& msg );
-    virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& msg );
+    virtual void Send( const sword::SimToClient& msg );
+    virtual void Send( const sword::AuthenticationToClient& msg );
+    virtual void Send( const sword::ReplayToClient& );
+    virtual void Send( const sword::AarToClient& msg );
+    virtual void Send( const sword::MessengerToClient& msg );
+    virtual void Send( const sword::DispatcherToClient& msg );
 
     virtual Profile_ABC&         GetProfile  ( const std::string& link );
     virtual ClientPublisher_ABC& GetPublisher( const std::string& link );
@@ -58,7 +58,7 @@ public:
 protected:
     //! @name Operations
     //@{
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive( const sword::SimToClient& message );
     //@}
 
 private:

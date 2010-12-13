@@ -35,7 +35,7 @@ namespace script
 // Created: AGE 2008-07-16
 // =============================================================================
 class KnowledgeNotifier : public kernel::Extension_ABC
-                        , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeUpdate >
+                        , public kernel::Updatable_ABC< sword::UnitKnowledgeUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::UnitKnowledgeUpdate& message );
     //@}
 
 private:

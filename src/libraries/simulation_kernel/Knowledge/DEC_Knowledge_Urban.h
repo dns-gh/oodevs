@@ -26,9 +26,9 @@ namespace urban
     class TerrainObject_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUrbanKnowledgeUpdate;
+    class UrbanKnowledgeUpdate;
 }
 
 // =============================================================================
@@ -104,7 +104,7 @@ private:
 
     //! @name Network operations
     //@{
-    void WriteMsgPerceptionSources( MsgsSimToClient::MsgUrbanKnowledgeUpdate& asnMsg ) const;
+    void WriteMsgPerceptionSources( sword::UrbanKnowledgeUpdate& asnMsg ) const;
     void SendMsgCreation() const;
     void SendMsgDestruction() const;
     void SendChangedState();

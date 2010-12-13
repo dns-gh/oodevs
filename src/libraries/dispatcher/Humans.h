@@ -10,12 +10,12 @@
 #ifndef __Humans_h_
 #define __Humans_h_
 
-namespace Common
+namespace sword
 {
     enum EnumHumanRank;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
     class HumanDotations_HumanDotation;
 }
@@ -34,18 +34,18 @@ class Humans
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Humans( const MsgsSimToClient::HumanDotations_HumanDotation& asnMsg );
+    explicit Humans( const sword::HumanDotations_HumanDotation& asnMsg );
     virtual ~Humans();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::HumanDotations_HumanDotation& asnMsg );
-    void Send  ( MsgsSimToClient::HumanDotations_HumanDotation& asnMsg ) const ;
+    void Update( const sword::HumanDotations_HumanDotation& asnMsg );
+    void Send  ( sword::HumanDotations_HumanDotation& asnMsg ) const ;
     //@}
 
 public:
-    Common::EnumHumanRank nRank_;
+    sword::EnumHumanRank nRank_;
     unsigned int        nNbrTotal_;
     unsigned int        nNbrOperational_;
     unsigned int        nNbrDead_;

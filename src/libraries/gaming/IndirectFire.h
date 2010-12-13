@@ -31,7 +31,7 @@ class IndirectFire : public Fire_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IndirectFire( const MsgsSimToClient::MsgStartUnitFire& message, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::CoordinateConverter_ABC& converter );
+             IndirectFire( const sword::StartUnitFire& message, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::CoordinateConverter_ABC& converter );
     virtual ~IndirectFire();
     //@}
 

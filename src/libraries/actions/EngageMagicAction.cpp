@@ -84,10 +84,7 @@ void EngageMagicAction::Publish( Publisher_ABC& publisher, int ) const
 {
     simulation::SetAutomatMode message;
     message().mutable_automate()->set_id( entity_.GetId() );
-    if ( engaged_ )
-        message().set_mode(Common::embraye);
-    else
-        message().set_mode(Common::debraye);
+    message().set_mode( engaged_ ? sword::embraye : sword::debraye );
     message.Send( publisher );
     message().Clear();
 }

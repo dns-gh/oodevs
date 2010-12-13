@@ -40,9 +40,9 @@ namespace tic
 // Created: AGE 2008-03-31
 // =============================================================================
 class TicExtension : public TicExtension_ABC
-                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
-                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitEnvironmentType >
-                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitPathFind >
+                   , public kernel::Updatable_ABC< sword::UnitAttributes >
+                   , public kernel::Updatable_ABC< sword::UnitEnvironmentType >
+                   , public kernel::Updatable_ABC< sword::UnitPathFind >
 {
 public:
     //! @name Constructors/Destructor
@@ -53,9 +53,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitPathFind& updateMessage );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& updateMessage );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitEnvironmentType& updateMessage );
+    virtual void DoUpdate( const sword::UnitPathFind& updateMessage );
+    virtual void DoUpdate( const sword::UnitAttributes& updateMessage );
+    virtual void DoUpdate( const sword::UnitEnvironmentType& updateMessage );
 
     virtual void Accept( PlatformVisitor_ABC& visitor ) const;
     //@}
@@ -70,8 +70,8 @@ private:
     //! @name Helpers
     //@{
     void CreatePlatforms( float timeStep );
-    void UpdatePlatforms( const MsgsSimToClient::MsgUnitAttributes& updateMessage );
-    void UpdatePlatforms( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& updateMessage );
+    void UpdatePlatforms( const sword::UnitAttributes& updateMessage );
+    void UpdatePlatforms( const sword::EquipmentDotations_EquipmentDotation& updateMessage );
     void SortPlatforms();
     void UpdateFormation();
     //@}

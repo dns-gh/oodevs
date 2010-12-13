@@ -62,7 +62,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( MsgsSimToClient::MsgDotationQuery& asn ) const;
+    void Serialize( sword::MsgDotationQuery& asn ) const;
     //@}
 
 protected:

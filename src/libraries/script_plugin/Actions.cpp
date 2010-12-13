@@ -48,14 +48,14 @@ struct Actions::Publisher : public Publisher_ABC
 {
     explicit Publisher( dispatcher::SimulationPublisher_ABC& sim ) : sim_( &sim ) {}
 
-    virtual void Send( const MsgsClientToSim::MsgClientToSim& message )
+    virtual void Send( const sword::ClientToSim& message )
     {
         sim_->Send( message );
     }
-    virtual void Send( const MsgsClientToAuthentication::MsgClientToAuthentication&  ) {}
-    virtual void Send( const MsgsClientToReplay::MsgClientToReplay& ){}
-    virtual void Send( const MsgsClientToAar::MsgClientToAar& ) {}
-    virtual void Send( const MsgsClientToMessenger::MsgClientToMessenger& ) {}
+    virtual void Send( const sword::ClientToAuthentication&  ) {}
+    virtual void Send( const sword::ClientToReplay& ){}
+    virtual void Send( const sword::ClientToAar& ) {}
+    virtual void Send( const sword::ClientToMessenger& ) {}
     dispatcher::SimulationPublisher_ABC* sim_;
 };
 

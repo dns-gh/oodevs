@@ -80,7 +80,7 @@ bool TeamLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& poi
 // Name: TeamLayer::HandleMousePress
 // Created: LDC 2010-10-26
 // -----------------------------------------------------------------------------
-bool TeamLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& )
+bool TeamLayer::HandleMousePress( QMouseEvent* , const geometry::Point2f& )
 {
     return false;
 }
@@ -89,7 +89,7 @@ bool TeamLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& )
 // Name: TeamLayer::HandleMouseMove
 // Created: LDC 2010-10-26
 // -----------------------------------------------------------------------------
-bool TeamLayer::HandleMouseMove( QMouseEvent* , const geometry::Point2f& point )
+bool TeamLayer::HandleMouseMove( QMouseEvent* , const geometry::Point2f& )
 {
     return false;
 }
@@ -116,7 +116,7 @@ void TeamLayer::NotifyActivated( const kernel::Team_ABC& )
 // Name: TeamLayer::Paint
 // Created: LDC 2010-10-26
 // -----------------------------------------------------------------------------
-void TeamLayer::Paint( const ViewFrustum& frustum )
+void TeamLayer::Paint( const ViewFrustum& )
 {
     // NOTHING
 }
@@ -125,7 +125,7 @@ void TeamLayer::Paint( const ViewFrustum& frustum )
 // Name: TeamLayer::Paint
 // Created: LDC 2010-10-26
 // -----------------------------------------------------------------------------
-void TeamLayer::Paint( const geometry::Rectangle2f& viewport )
+void TeamLayer::Paint( const geometry::Rectangle2f& )
 {
     // NOTHING
 }
@@ -134,7 +134,7 @@ void TeamLayer::Paint( const geometry::Rectangle2f& viewport )
 // Name: TeamLayer::Paint
 // Created: LDC 2010-10-26
 // -----------------------------------------------------------------------------
-void TeamLayer::Paint( kernel::Viewport_ABC& viewport )
+void TeamLayer::Paint( kernel::Viewport_ABC& )
 {
     // NOTHING
 }

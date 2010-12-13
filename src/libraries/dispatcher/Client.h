@@ -36,12 +36,12 @@ public:
 
     //! @name Messages
     //@{
-    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& msg );
-    virtual void Send( const MsgsSimToClient::MsgSimToClient& msg );
-    virtual void Send( const MsgsReplayToClient::MsgReplayToClient& msg );
-    virtual void Send( const MsgsAarToClient::MsgAarToClient& msg );
-    virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& msg );
-    virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& msg );
+    virtual void Send( const sword::AuthenticationToClient& msg );
+    virtual void Send( const sword::SimToClient& msg );
+    virtual void Send( const sword::ReplayToClient& msg );
+    virtual void Send( const sword::AarToClient& msg );
+    virtual void Send( const sword::MessengerToClient& msg );
+    virtual void Send( const sword::DispatcherToClient& msg );
     //@}
 
     //! @name Accessors

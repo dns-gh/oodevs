@@ -84,7 +84,7 @@ MissionParameterHeading::~MissionParameterHeading()
 // Name: MissionParameterHeading::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterHeading::Serialize( Common::MsgMissionParameter& parameter ) const
+void MissionParameterHeading::Serialize( sword::MsgMissionParameter& parameter ) const
 {
     parameter.set_null_value( false );
     parameter.mutable_value()->Add()->mutable_heading()->set_heading( angle_ );

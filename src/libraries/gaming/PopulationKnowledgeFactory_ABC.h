@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::PopulationKnowledge_ABC* CreatePopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgCrowdKnowledgeCreation& message ) = 0;
+    virtual kernel::PopulationKnowledge_ABC* CreatePopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, const sword::CrowdKnowledgeCreation& message ) = 0;
     //@}
 };
 

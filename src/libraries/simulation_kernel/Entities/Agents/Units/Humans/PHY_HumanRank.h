@@ -13,7 +13,7 @@
 #include "MT_Tools/MT_Stl.h"
 #include <map>
 
-namespace Common
+namespace sword
 {
     enum EnumHumanRank;
 }
@@ -45,14 +45,14 @@ public:
     static const T_HumanRankMap& GetHumanRanks();
     static const PHY_HumanRank*  Find( const std::string& strName );
     static const PHY_HumanRank*  Find( unsigned int nID );
-    static const PHY_HumanRank*  Find( Common::EnumHumanRank nAsnID );
+    static const PHY_HumanRank*  Find( sword::EnumHumanRank nAsnID );
     //@}
 
     //! @name Accessors
     //@{
     const std::string&  GetName    () const;
     unsigned int        GetID      () const;
-    Common::EnumHumanRank GetAsnID () const;
+    sword::EnumHumanRank GetAsnID () const;
     bool                IsCommander() const;
     //@}
 
@@ -76,7 +76,7 @@ private:
 private:
     //! @name Constructors/Destructor
     //@{
-     PHY_HumanRank( const std::string& strName, E_Rank nRank, Common::EnumHumanRank nAsnID, bool bIsCommander );
+     PHY_HumanRank( const std::string& strName, E_Rank nRank, sword::EnumHumanRank nAsnID, bool bIsCommander );
     ~PHY_HumanRank();
     //@}
 
@@ -85,7 +85,7 @@ private:
     //@{
     const std::string strName_;
     const E_Rank nRank_;
-    const Common::EnumHumanRank nAsnID_;
+    const sword::EnumHumanRank nAsnID_;
     const bool bIsCommander_;
     //@}
 

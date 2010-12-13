@@ -34,7 +34,7 @@ class AgentFireResult : public tools::Resolver< Equipment >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFireResult( const MsgsSimToClient::MsgUnitFireDamages& message,
+             AgentFireResult( const sword::UnitFireDamages& message,
                               const tools::Resolver_ABC< kernel::Agent_ABC >& resolver,
                               const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver,
                               const QDateTime& time );

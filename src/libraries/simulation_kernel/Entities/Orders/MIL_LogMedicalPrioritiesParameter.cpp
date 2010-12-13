@@ -16,12 +16,12 @@
 // Name: MIL_LogMedicalPrioritiesParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_LogMedicalPrioritiesParameter::MIL_LogMedicalPrioritiesParameter( const Common::MsgLogMedicalPriorities & asn )
+MIL_LogMedicalPrioritiesParameter::MIL_LogMedicalPrioritiesParameter( const sword::LogMedicalPriorities & asn )
 {
     priorities_.reserve( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
     {
-        Common::EnumHumanWound nWoundID = asn.elem(i);
+        sword::EnumHumanWound nWoundID = asn.elem(i);
         const PHY_HumanWound* pWound = PHY_HumanWound::Find( nWoundID );
         if( !pWound )
         {
@@ -40,7 +40,6 @@ MIL_LogMedicalPrioritiesParameter::~MIL_LogMedicalPrioritiesParameter()
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LogMedicalPrioritiesParameter::IsOfType
@@ -65,7 +64,7 @@ bool MIL_LogMedicalPrioritiesParameter::ToMedicalPriorities( T_MedicalPriorityVe
 // Name: MIL_LogMedicalPrioritiesParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_LogMedicalPrioritiesParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+bool MIL_LogMedicalPrioritiesParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
 {
     unsigned int size = priorities_.size();
     if( size )
@@ -73,4 +72,3 @@ bool MIL_LogMedicalPrioritiesParameter::ToElement( Common::MsgMissionParameter_V
             elem.mutable_logmedicalpriorities()->add_elem( priorities_[ i ]->GetAsnID() );
     return true;
 }
-

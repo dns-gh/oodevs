@@ -14,7 +14,7 @@
 
 #include "MT_Tools/MT_Stl.h"
 
-namespace Common
+namespace sword
 {
     enum EnumLogMaintenanceRegimeTravail;
 }
@@ -44,13 +44,13 @@ public:
     //@{
     static       void                     Initialize( xml::xistream& xis );
     static       void                     Terminate ();
-    static const PHY_MaintenanceWorkRate* Find      ( Common::EnumLogMaintenanceRegimeTravail nID );
+    static const PHY_MaintenanceWorkRate* Find      ( sword::EnumLogMaintenanceRegimeTravail nID );
     //@}
 
     //! @name Accessors
     //@{
     const std::string& GetName() const;
-    Common::EnumLogMaintenanceRegimeTravail GetAsnID() const;
+    sword::EnumLogMaintenanceRegimeTravail GetAsnID() const;
     unsigned int GetNbrWorkerAllowedToWork( unsigned int nNbrAvailable ) const;
     unsigned int GetDelayBeforeWarningRC() const;
     //@}
@@ -63,7 +63,7 @@ private:
     //@}
 
 private:
-     PHY_MaintenanceWorkRate( const std::string& strName, Common::EnumLogMaintenanceRegimeTravail asn );
+     PHY_MaintenanceWorkRate( const std::string& strName, sword::EnumLogMaintenanceRegimeTravail asn );
     ~PHY_MaintenanceWorkRate();
 
     //! @name Init
@@ -74,7 +74,7 @@ private:
 
 private:
     const std::string                           strName_;
-    const Common::EnumLogMaintenanceRegimeTravail asn_;
+    const sword::EnumLogMaintenanceRegimeTravail asn_;
           double                              rWorkerRatio_;
           double                              rWorkTime_;
           unsigned int                          nDelayBeforeWarningRC_;

@@ -24,7 +24,7 @@
 // Name: MIL_PionMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const Common::MsgUnitOrder& asn )
+MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const sword::UnitOrder& asn )
     : MIL_Mission_ABC       ( type, pion.GetKnowledge(), asn.parameters(), pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )

@@ -47,7 +47,7 @@ FolkModel::~FolkModel()
 // Name: FolkModel::Update
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-void FolkModel::Update( const MsgsSimToClient::MsgFolkCreation& creation )
+void FolkModel::Update( const sword::FolkCreation& creation )
 {
     activities_.reserve( creation.activities().elem_size() );
     for( int i = 0; i < creation.activities().elem_size(); ++i )
@@ -69,7 +69,7 @@ void FolkModel::Update( const MsgsSimToClient::MsgFolkCreation& creation )
 // Name: FolkModel::Update
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-void FolkModel::Update( const MsgsSimToClient::MsgFolkGraphUpdate& update )
+void FolkModel::Update( const sword::FolkGraphUpdate& update )
 {
     for( int i = 0; i < update.elem_size(); ++i )
         Update( update.elem( i ) );
@@ -79,7 +79,7 @@ void FolkModel::Update( const MsgsSimToClient::MsgFolkGraphUpdate& update )
 // Name: FolkModel::Update
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-void FolkModel::Update( const MsgsSimToClient::MsgFolkGraphEdgeUpdate& update )
+void FolkModel::Update( const sword::FolkGraphEdgeUpdate& update )
 {
     T_Values& values = *values_;
     for( int i = 0; i < update.crowd_occupation_size(); ++i )

@@ -86,7 +86,7 @@ std::string EntityIntelligences::GetLevel() const
 // Name: EntityIntelligences::DoUpdate
 // Created: SBO 2007-10-19
 // -----------------------------------------------------------------------------
-void EntityIntelligences::DoUpdate( const MsgsMessengerToClient::MsgIntelligenceCreation& message )
+void EntityIntelligences::DoUpdate( const sword::IntelligenceCreation& message )
 {
     SetSuperior( &resolver_.Get( message.intelligence().formation().id() ) );
 }

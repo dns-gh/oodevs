@@ -40,7 +40,7 @@ AutomatHierarchies::~AutomatHierarchies()
 // Name: AutomatHierarchies::DoUpdate
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatHierarchies::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& message )
+void AutomatHierarchies::DoUpdate( const sword::AutomatCreation& message )
 {
     SetSuperior( &groupResolver_.Get( message.knowledge_group().id() ) );
 }
@@ -49,7 +49,7 @@ void AutomatHierarchies::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& me
 // Name: AutomatHierarchies::DoUpdate
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatHierarchies::DoUpdate( const Common::MsgAutomatChangeKnowledgeGroup& message )
+void AutomatHierarchies::DoUpdate( const sword::AutomatChangeKnowledgeGroup& message )
 {
     ChangeSuperior( & groupResolver_.Get( message.knowledge_group().id() ) );
 }

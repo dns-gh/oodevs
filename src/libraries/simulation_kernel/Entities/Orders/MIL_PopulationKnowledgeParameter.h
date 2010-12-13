@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_PopulationKnowledgeParameter( DEC_Knowledge_Population* pKnowledge );
-             MIL_PopulationKnowledgeParameter( const Common::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
+             MIL_PopulationKnowledgeParameter( const sword::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
     virtual ~MIL_PopulationKnowledgeParameter();
     //@}
 
@@ -39,7 +39,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToPopulationKnowledge( DEC_Knowledge_Population*& ) const;
-    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

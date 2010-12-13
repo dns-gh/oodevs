@@ -37,6 +37,14 @@
         <source>Unhandled error</source>
         <translation>Error inesperado</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Launcher service cannot be started: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AuthoringPage</name>
@@ -84,16 +92,16 @@
         <translation>Host:</translation>
     </message>
     <message>
-        <source>localhost</source>
-        <translation>localhost</translation>
-    </message>
-    <message>
         <source>Port:</source>
         <translation>Puerto:</translation>
     </message>
     <message>
         <source>Update</source>
         <translation>Actualizar</translation>
+    </message>
+    <message>
+        <source>127.0.0.1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -112,6 +120,10 @@
     <message>
         <source>Join</source>
         <translation>Unirse</translation>
+    </message>
+    <message>
+        <source>Remote</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -174,12 +186,27 @@
         <translation>Ejercicio:</translation>
     </message>
     <message>
-        <source>No briefing available</source>
-        <translation>No hay instructivo</translation>
-    </message>
-    <message>
         <source>Profile:</source>
         <translation>Perfil:</translation>
+    </message>
+</context>
+<context>
+    <name>ExerciseProperties</name>
+    <message>
+        <source>Exercise parameters:</source>
+        <translation type="unfinished">Parámetros de ejercicio:</translation>
+    </message>
+    <message>
+        <source>Terrain:</source>
+        <translation type="unfinished">Terreno:</translation>
+    </message>
+    <message>
+        <source>Model:</source>
+        <translation type="unfinished">Modelo:</translation>
+    </message>
+    <message>
+        <source>No briefing available</source>
+        <translation type="unfinished">No hay instructivo</translation>
     </message>
 </context>
 <context>
@@ -298,6 +325,21 @@
         <source>Input Scenario: </source>
         <translation>Escenario a importar: </translation>
     </message>
+    <message>
+        <source>otpak corrupted: unable to load content properly</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LauncherClientPage</name>
+    <message>
+        <source>Failed to connect to host: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -409,13 +451,11 @@
         <source>Running training session detected. Close ?</source>
         <translation>Sesiones de entrenamiento en ejecución. ¿Detenerlas?</translation>
     </message>
+</context>
+<context>
+    <name>ProgressPage</name>
     <message>
-        <source>Failed to start launcher service</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1.
-You will not be able to start a multiplayer session. Do you want to start anyway?</source>
+        <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -432,6 +472,56 @@ You will not be able to start a multiplayer session. Do you want to start anyway
     <message>
         <source>Please confirm</source>
         <translation>Confirmar</translation>
+    </message>
+</context>
+<context>
+    <name>ReadProfile</name>
+    <message>
+        <source>anonymous</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RemoteControlPage</name>
+    <message>
+        <source>Remote control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Host:</source>
+        <translation type="unfinished">Host:</translation>
+    </message>
+    <message>
+        <source>127.0.0.1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation type="unfinished">Puerto:</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished">Actualizar</translation>
+    </message>
+    <message>
+        <source>Start game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start replay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Iniciar</translation>
+    </message>
+    <message>
+        <source>Stop running session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -458,18 +548,6 @@ You will not be able to start a multiplayer session. Do you want to start anyway
     <message>
         <source>Editing exercise</source>
         <translation>Editando ejercicio</translation>
-    </message>
-    <message>
-        <source>Terrain:</source>
-        <translation>Terreno:</translation>
-    </message>
-    <message>
-        <source>Model:</source>
-        <translation>Modelo:</translation>
-    </message>
-    <message>
-        <source>Exercise parameters:</source>
-        <translation>Parámetros de ejercicio:</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -552,6 +630,10 @@ You will not be able to start a multiplayer session. Do you want to start anyway
     <message>
         <source>Start multiplayer training session</source>
         <translation>Iniciar una sesión multijugador</translation>
+    </message>
+    <message>
+        <source>Control remote training sessions</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

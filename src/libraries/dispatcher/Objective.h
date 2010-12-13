@@ -10,11 +10,9 @@
 #ifndef __Objective_h_
 #define __Objective_h_
 
-
 #include "Localisation.h"
 
-
-namespace Common
+namespace sword
 {
     class MsgMissionObjective;
 }
@@ -34,13 +32,13 @@ public:
     //! @name Constructors/Destructor
     //@{
              Objective();
-    explicit Objective( const Common::MsgMissionObjective& asn );
+    explicit Objective( const sword::MsgMissionObjective& asn );
     virtual ~Objective();
     //@}
 
     //! @name Operations
     //@{
-    void Send( Common::MsgMissionObjective& asn ) const;
+    void Send( sword::MsgMissionObjective& asn ) const;
     //@}
 
 private:

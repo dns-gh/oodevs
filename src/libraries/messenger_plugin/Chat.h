@@ -48,7 +48,7 @@ public:
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
 
-    void OnReceive( const Common::MsgTextMessage& );
+    void OnReceive( const sword::TextMessage& );
     //@}
 
 private:

@@ -29,7 +29,7 @@ PointCollection::PointCollection()
 // Name: PointCollection constructor
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-PointCollection::PointCollection( const Common::MsgCoordLatLongList& message )
+PointCollection::PointCollection( const sword::MsgCoordLatLongList& message )
 {
     for( int i = 0; i < message.elem_size(); ++i )
         points_.push_back( crossbow::Point( message.elem(i) ) );
@@ -106,7 +106,7 @@ void PointCollection::Serialize( std::ostream& geometry ) const
 // Name: PointCollection::Serialize
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-void PointCollection::Serialize( Common::MsgLocation& message ) const
+void PointCollection::Serialize( sword::MsgLocation& message ) const
 {
     for( CIT_Points it = points_.begin(); it != points_.end(); ++it )
         it->Serialize( *message.mutable_coordinates()->add_elem() );

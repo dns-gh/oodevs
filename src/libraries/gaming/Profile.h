@@ -27,11 +27,11 @@ namespace kernel
     class Team_ABC;
 }
 
-namespace MsgsAuthenticationToClient
+namespace sword
 {
-    class MsgAuthenticationResponse;
-    class MsgProfile;
-    class MsgProfileUpdate;
+    class AuthenticationResponse;
+    class Profile;
+    class ProfileUpdate;
 }
 
 class Model;
@@ -65,8 +65,8 @@ public:
     //@{
     void Login() const;
     void Login( const std::string& login, const std::string& password ) const;
-    void Update( const MsgsAuthenticationToClient::MsgAuthenticationResponse& message );
-    void Update( const Model& model, const MsgsAuthenticationToClient::MsgProfileUpdate& message );
+    void Update( const sword::AuthenticationResponse& message );
+    void Update( const Model& model, const sword::ProfileUpdate& message );
     //@}
 
     //! @name Accessors
@@ -102,7 +102,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Update( const MsgsAuthenticationToClient::MsgProfile& profile );
+    void Update( const sword::Profile& profile );
     void Clean();
     void ResolveEntities( const Model& model );
     template< typename Entity >

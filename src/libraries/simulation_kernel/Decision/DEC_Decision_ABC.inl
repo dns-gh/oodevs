@@ -48,7 +48,7 @@ void DEC_Decision_ABC::SetScriptVariable( const T& source, T& dest )
 template< typename T >
 T DEC_Decision_ABC::GetVariable( const std::string& name )
 {
-    T value;
+    T value = T();
     directia::tools::binders::ScriptRef scriptRef = GetBrain()[ name ];
     if( !scriptRef )
         GetBrain()[ name ] = value;

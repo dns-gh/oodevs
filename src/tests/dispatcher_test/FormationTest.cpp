@@ -37,20 +37,20 @@ BOOST_AUTO_TEST_CASE( Formation_CanBeCreated )
     MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
     MOCK_EXPECT( model, Formations ).returns( boost::ref( formations ) );
     {
-        MsgsSimToClient::MsgSimToClient expected;
+        sword::SimToClient expected;
         expected.set_context( 0 );
-        MsgsSimToClient::MsgFormationCreation& message = *expected.mutable_message()->mutable_formation_creation();
+        sword::FormationCreation& message = *expected.mutable_message()->mutable_formation_creation();
         message.mutable_formation()->set_id( 1 );
         message.mutable_party()->set_id( side.GetId() );
-        message.set_level( Common::oo );
+        message.set_level( sword::oo );
         message.set_name( "test" );
         message.set_app6symbol( "sfgpu----------" );
-        message.set_logistic_level( Common::none );
+        message.set_logistic_level( sword::none );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         // creation
         MOCK_EXPECT( side, RegisterFormation ).once();
-        std::auto_ptr< dispatcher::Formation_ABC > result( new dispatcher::Formation( model, message, levels ) );
+        std::auto_ptr< dispatcher::Formation_ABC > result( new dispatcher::Formation( model, message, levels ) ); // $$$$ MCO : why is it an auto_ptr ?
 
         // network serialization
         MockClientPublisher publisher;

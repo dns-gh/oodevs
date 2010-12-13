@@ -39,7 +39,7 @@ namespace
         }
         void createUrbanKnowledge()
         {
-            MsgsSimToClient::MsgUrbanKnowledgeCreation& message = *expected.mutable_message()->mutable_urban_knowledge_creation();
+            sword::UrbanKnowledgeCreation& message = *expected.mutable_message()->mutable_urban_knowledge_creation();
             message.mutable_knowledge()->set_id( 1 );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_urban_block()->set_id( urban.GetId() );
@@ -59,7 +59,7 @@ namespace
         tools::Resolver< dispatcher::UrbanObject_ABC > urbans;
         tools::Resolver< dispatcher::Automat_ABC > automats;
         std::auto_ptr< dispatcher::UrbanKnowledge_ABC > result;
-        MsgsSimToClient::MsgSimToClient expected;
+        sword::SimToClient expected;
         MockClientPublisher publisher;
     };
 }
@@ -80,7 +80,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeCreatedWithoutAttributes, Fixture )
 BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeDestroyedWithoutAttributes, Fixture )
 {
     createUrbanKnowledge();
-    MsgsSimToClient::MsgUrbanKnowledgeDestruction& message = *expected.mutable_message()->mutable_urban_knowledge_destruction();
+    sword::UrbanKnowledgeDestruction& message = *expected.mutable_message()->mutable_urban_knowledge_destruction();
     message.mutable_knowledge()->set_id( 1 );
     message.mutable_party()->set_id( side.GetId() );
     BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
@@ -98,7 +98,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
 {
     createUrbanKnowledge();
     {
-        MsgsSimToClient::MsgUrbanKnowledgeUpdate& message = *expected.mutable_message()->mutable_urban_knowledge_update();
+        sword::UrbanKnowledgeUpdate& message = *expected.mutable_message()->mutable_urban_knowledge_update();
         message.mutable_knowledge()->set_id( 1 );
         message.mutable_urban_block()->set_id( 0 );
         message.mutable_party()->set_id( side.GetId() );
@@ -114,7 +114,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
     }
     {
         expected.mutable_message()->Clear();
-        MsgsSimToClient::MsgUrbanKnowledgeCreation& message = *expected.mutable_message()->mutable_urban_knowledge_creation();
+        sword::UrbanKnowledgeCreation& message = *expected.mutable_message()->mutable_urban_knowledge_creation();
         message.mutable_knowledge()->set_id( 1 );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_urban_block()->set_id( 0 );

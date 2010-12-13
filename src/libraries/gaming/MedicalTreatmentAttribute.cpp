@@ -78,7 +78,7 @@ int MedicalTreatmentAttribute::GetAvailableDoctors() const
 
 namespace 
 {
-    void UpdateCapacity( const kernel::MedicalTreatmentType& type, const Common::MedicalTreatmentBedCapacity& message, MedicalTreatmentCapacity& capacity )
+    void UpdateCapacity( const kernel::MedicalTreatmentType& type, const sword::MedicalTreatmentBedCapacity& message, MedicalTreatmentCapacity& capacity )
     {
         capacity.type_ = &type;
         capacity.name_ = type.GetName();
@@ -98,7 +98,7 @@ namespace
 // Name: MedicalTreatmentAttribute::MedicalTreatmentAttribute::UpdateData
 // Created: JCR 2010-10-07
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::UpdateData( const Common::ObjectAttributeMedicalTreatment& message )
+void MedicalTreatmentAttribute::UpdateData( const sword::ObjectAttributeMedicalTreatment& message )
 {
     if ( message.has_doctors() )
         doctors_ = message.doctors();
@@ -108,16 +108,16 @@ void MedicalTreatmentAttribute::UpdateData( const Common::ObjectAttributeMedical
         referenceID_ = message.external_reference_id();
     if( message.has_facility_status() )
         status_ = message.facility_status();
-    if( message.bed_capacities_size() > capacities_.size() )
-        capacities_.swap( T_TreatmentCapacities( message.bed_capacities_size() ) );
+    if( static_cast< std::size_t >( message.bed_capacities_size() ) > capacities_.size() )
+        T_TreatmentCapacities( message.bed_capacities_size() ).swap( capacities_ );
     for( int i = 0 ; i < message.bed_capacities_size(); i++ )
-	{
-        const Common::MedicalTreatmentBedCapacity& capacity = message.bed_capacities( i );
+    {
+        const sword::MedicalTreatmentBedCapacity& capacity = message.bed_capacities( i );
         if( capacity.has_type_id() )
         {
             const kernel::MedicalTreatmentType* type = resolver_.Find( capacity.type_id() );
             if ( !type )
-	            throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( capacity.type_id() ) );
+                throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( capacity.type_id() ) );
             ::UpdateCapacity( *type, capacity, capacities_[ capacity.type_id() ] );
         }
     }
@@ -128,7 +128,7 @@ void MedicalTreatmentAttribute::UpdateData( const Common::ObjectAttributeMedical
 // Name: MedicalTreatmentAttribute::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void MedicalTreatmentAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     if( message.attributes().has_medical_treatment() )
         UpdateData( message.attributes().medical_treatment() );
@@ -138,7 +138,7 @@ void MedicalTreatmentAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowle
 // Name: MedicalTreatmentAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void MedicalTreatmentAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     if( message.attributes().has_medical_treatment() )
         UpdateData( message.attributes().medical_treatment() );

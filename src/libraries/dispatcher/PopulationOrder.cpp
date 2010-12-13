@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Name: PopulationOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-PopulationOrder::PopulationOrder( const Common::MsgCrowdOrder& message )
+PopulationOrder::PopulationOrder( const sword::CrowdOrder& message )
     : Order_ABC( message.type().id() )
     , message_( message.New() )
 {

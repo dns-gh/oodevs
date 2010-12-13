@@ -28,7 +28,7 @@ using namespace dispatcher;
 // Name: Automat constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& msg )
+Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
     : Automat_ABC       ( msg.automat().id(), QString( msg.nom().c_str() ) )
     , model_            ( model )
     , decisionalInfos_  ( model )
@@ -39,11 +39,11 @@ Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& m
     , knowledgeGroup_   ( &model.KnowledgeGroups().Get( msg.knowledge_group().id() ) )
     , pTC2_             ( 0 )
     , logisticEntity_   ( model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve(  msg.logistic_level() ) )
-    , nAutomatState_    ( Common::debraye )
-    , nForceRatioState_ ( MsgsSimToClient::ForceRatio_Value_neutre )
-    , nCloseCombatState_( Common::etat_fixe )
-    , nOperationalState_( Common::detruit_totalement )
-    , nRoe_             ( MsgsSimToClient::RulesOfEngagement_Value_tir_interdit )
+    , nAutomatState_    ( sword::debraye )
+    , nForceRatioState_ ( sword::ForceRatio_Value_neutre )
+    , nCloseCombatState_( sword::etat_fixe )
+    , nOperationalState_( sword::detruit_totalement )
+    , nRoe_             ( sword::RulesOfEngagement_Value_tir_interdit )
     , order_            ( 0 )
     , symbol_           ( msg.app6symbol() )
 {
@@ -116,7 +116,7 @@ void Automat::MoveAgents( dispatcher::Automat_ABC& superior )
 // Name: Automat::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Automat::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& msg )
+void Automat::DoUpdate( const sword::AutomatCreation& msg )
 {
     ChangeKnowledgeGroup( msg.knowledge_group().id() );
     if( parentFormation_ && 
@@ -132,7 +132,7 @@ void Automat::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& msg )
 // Name: Automat::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Automat::DoUpdate( const Common::MsgChangeLogisticLinks& msg )
+void Automat::DoUpdate( const sword::ChangeLogisticLinks& msg )
 {
     if( msg.has_tc2()  )
         pTC2_ = msg.tc2().id() == 0 ? 0 : &model_.Automats().Get( msg.tc2().id() );
@@ -142,7 +142,7 @@ void Automat::DoUpdate( const Common::MsgChangeLogisticLinks& msg )
 // Name: Automat::DoUpdate
 // Created: SBO 2008-02-13
 // -----------------------------------------------------------------------------
-void Automat::DoUpdate( const Common::MsgAutomatChangeSuperior& msg )
+void Automat::DoUpdate( const sword::AutomatChangeSuperior& msg )
 {
     ChangeSuperior( msg.superior() );
 }
@@ -151,7 +151,7 @@ void Automat::DoUpdate( const Common::MsgAutomatChangeSuperior& msg )
 // Name: Automat::Update
 // Created: SBO 2008-02-13
 // -----------------------------------------------------------------------------
-void Automat::DoUpdate( const Common::MsgAutomatChangeKnowledgeGroup& msg )
+void Automat::DoUpdate( const sword::AutomatChangeKnowledgeGroup& msg )
 {
     ChangeKnowledgeGroup( msg.knowledge_group().id() );
 }
@@ -227,7 +227,7 @@ void Automat::ResetSuperior()
 // Name: Automat::DoUpdate
 // Created: NLD 2006-10-05
 // -----------------------------------------------------------------------------
-void Automat::DoUpdate( const MsgsSimToClient::MsgAutomatAttributes& msg )
+void Automat::DoUpdate( const sword::AutomatAttributes& msg )
 {
     if( msg.has_etat_automate()  )
         nAutomatState_ = msg.etat_automate();
@@ -245,7 +245,7 @@ void Automat::DoUpdate( const MsgsSimToClient::MsgAutomatAttributes& msg )
 // Name: Automat::DoUpdate
 // Created: ZEBRE 2007-06-21
 // -----------------------------------------------------------------------------
-void Automat::DoUpdate( const MsgsSimToClient::MsgDecisionalState& asnMsg )
+void Automat::DoUpdate( const sword::DecisionalState& asnMsg )
 {
     decisionalInfos_.Update( asnMsg );
 }
@@ -255,7 +255,7 @@ void Automat::DoUpdate( const MsgsSimToClient::MsgDecisionalState& asnMsg )
 // Name: Automat::DoUpdate
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void Automat::DoUpdate( const Common::MsgAutomatOrder& message )
+void Automat::DoUpdate( const sword::AutomatOrder& message )
 {
     order_.reset();
     if( message.type().id() != 0 )
@@ -280,10 +280,10 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
             asn().mutable_parent()->mutable_formation()->set_id( parentFormation_->GetId() );
         if( parentAutomat_ )
             asn().mutable_parent()->mutable_automat()->set_id( parentAutomat_->GetId() );
-        asn().set_logistic_level( Common::EnumLogisticLevel( logisticEntity_.GetLogisticLevel().GetId() ) );
+        asn().set_logistic_level( sword::EnumLogisticLevel( logisticEntity_.GetLogisticLevel().GetId() ) );
         for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
         {
-            MsgsSimToClient::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+            sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
             entry->set_name( it->first );
             entry->set_value( it->second );
         }
@@ -393,7 +393,7 @@ const kernel::AutomatType& Automat::GetType() const
 // -----------------------------------------------------------------------------
 bool Automat::IsEngaged() const
 {
-    return nAutomatState_ == Common::embraye;
+    return nAutomatState_ == sword::embraye;
 }
 
 // -----------------------------------------------------------------------------

@@ -11,26 +11,21 @@
 #define __protocol_Protocol_h_
 
 #pragma warning( push, 0 )
-#pragma warning( disable : 4244 )
-
-#include "Definitions.h"
-#include "generated/Version.pb.h"
-#include "generated/AarToClient.pb.h"
-#include "generated/AdminToLauncher.pb.h"
-#include "generated/AuthenticationToClient.pb.h"
-#include "generated/ClientToAar.pb.h"
-#include "generated/ClientToAuthentication.pb.h"
-#include "generated/ClientToMessenger.pb.h"
-#include "generated/ClientToReplay.pb.h"
-#include "generated/ClientToSim.pb.h"
-#include "generated/Common.pb.h"
-#include "generated/DispatcherToClient.pb.h"
-#include "generated/DispatcherToSim.pb.h"
-#include "generated/LauncherToAdmin.pb.h"
-#include "generated/MessengerToClient.pb.h"
-#include "generated/ReplayToClient.pb.h"
-#include "generated/SimToClient.pb.h"
-
+#include "protocol/proto/version.pb.h"
+#include "protocol/proto/aar_client.pb.h"
+#include "protocol/proto/authentication_client.pb.h"
+#include "protocol/proto/client_aar.pb.h"
+#include "protocol/proto/client_authentication.pb.h"
+#include "protocol/proto/client_messenger.pb.h"
+#include "protocol/proto/client_replay.pb.h"
+#include "protocol/proto/client_simulation.pb.h"
+#include "protocol/proto/dispatcher_client.pb.h"
+#include "protocol/proto/dispatcher_simulation.pb.h"
+#include "protocol/proto/messenger_client.pb.h"
+#include "protocol/proto/replay_client.pb.h"
+#include "protocol/proto/simulation_client.pb.h"
+#include "protocol/proto/launcher_admin.pb.h"
+#include "protocol/proto/admin_launcher.pb.h"
 #pragma warning( pop )
 
 #endif // __protocol_Protocol_h_

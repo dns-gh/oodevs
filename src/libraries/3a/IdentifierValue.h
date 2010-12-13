@@ -30,7 +30,7 @@ struct IdentifierValue : public InstantValue< NumericValue >
 
     //! @name Operations
     //@{
-    void Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
+    void Receive( const sword::SimToClient& wrapper )
     {
             SET_OID( unit_order_ack, tasker().id );
             SET_OID( unit_creation, unit().id );

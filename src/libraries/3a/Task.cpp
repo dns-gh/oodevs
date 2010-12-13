@@ -142,7 +142,7 @@ void Task::SetResult( boost::shared_ptr< Result_ABC > output )
 // Name: Task::Receive
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-void Task::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
+void Task::Receive( const sword::SimToClient& wrapper )
 {
     // $$$$ AGE 2007-10-10: bDummies :
     // $$$$ AGE 2007-10-10: le LoadKeyFrame génère un BeginTick mais pas de EndTick()...

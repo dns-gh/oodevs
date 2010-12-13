@@ -15,10 +15,10 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Stl.h"
 
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , Common::obus        );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", Common::missile_air );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", Common::missile_sol );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , Common::mitraille   );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , sword::obus        );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", sword::missile_air );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", sword::missile_sol );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , sword::mitraille   );
 
 PHY_AmmoDotationClass::T_TypeMap PHY_AmmoDotationClass::types_;
 
@@ -48,7 +48,7 @@ void PHY_AmmoDotationClass::Terminate()
 // Name: PHY_AmmoDotationClass constructor
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-PHY_AmmoDotationClass::PHY_AmmoDotationClass( const std::string& strName, Common::EnumAmmunitionFamily nAsnID )
+PHY_AmmoDotationClass::PHY_AmmoDotationClass( const std::string& strName, sword::EnumAmmunitionFamily nAsnID )
     : strName_( strName )
     , nAsnID_ ( nAsnID  )
 {
@@ -94,7 +94,7 @@ const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( const std::string& str
 // Name: PHY_AmmoDotationClass::Find
 // Created: NLD 2005-07-29
 // -----------------------------------------------------------------------------
-const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( Common::EnumAmmunitionFamily nAsnID )
+const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( sword::EnumAmmunitionFamily nAsnID )
 {
     for( CIT_TypeMap it = types_.begin(); it != types_.end(); ++it )
     {
@@ -117,7 +117,7 @@ int PHY_AmmoDotationClass::GetID() const
 // Name: PHY_AmmoDotationClass::GetAsnID
 // Created: NLD 2005-07-29
 // -----------------------------------------------------------------------------
-Common::EnumAmmunitionFamily PHY_AmmoDotationClass::GetAsnID() const
+sword::EnumAmmunitionFamily PHY_AmmoDotationClass::GetAsnID() const
 {
     return nAsnID_;
 }

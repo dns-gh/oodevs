@@ -46,7 +46,7 @@ ResourceNetworkModel::~ResourceNetworkModel()
 // Name: ResourceNetworkModel DoUpdate
 // Created: MGD 2010-11-25
 // -----------------------------------------------------------------------------
-void ResourceNetworkModel::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& message )
+void ResourceNetworkModel::DoUpdate( const sword::UrbanUpdate& message )
 {
     if( message.has_attributes() )
     {

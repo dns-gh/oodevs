@@ -14,10 +14,10 @@
 #include <memory>
 #include <string>
 
-namespace MsgsClientToAar
+namespace sword
 {
-    class MsgClientToAar;
-    class MsgPlotRequest;
+    class ClientToAar;
+    class PlotRequest;
 }
 
 namespace tools
@@ -55,7 +55,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive( const sword::SimToClient& message );
 
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
@@ -72,8 +72,8 @@ private:
 
     //! @name Helpers
     //@{
-    void OnReceive( const std::string&, const MsgsClientToAar::MsgClientToAar& message );
-    void OnReceiveIndicatorRequest( const std::string& client, const MsgsClientToAar::MsgPlotRequest& request );
+    void OnReceive( const std::string&, const sword::ClientToAar& message );
+    void OnReceiveIndicatorRequest( const std::string& client, const sword::PlotRequest& request );
     //@}
 
 private:

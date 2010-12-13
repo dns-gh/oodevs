@@ -34,7 +34,7 @@ MessageFilter::~MessageFilter()
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper )
+bool MessageFilter::IsRelevant( const sword::SimToClient& wrapper )
 {
  if( wrapper.message().has_unit_magic_action_ack()
     || wrapper.message().has_object_magic_action_ack()
@@ -165,7 +165,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper )
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgUnitAttributes& message )
+bool MessageFilter::IsRelevant( const sword::UnitAttributes& message )
 {
     return message.has_altitude()
         || message.has_combat_de_rencontre()
@@ -217,7 +217,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgUnitAttributes& messag
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
+bool MessageFilter::IsRelevant( const sword::UnitKnowledgeUpdate& message )
 {
     return    message.has_party()
            || message.has_direction()
@@ -242,7 +242,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgUnitKnowledgeUpdate& m
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgObjectUpdate& )
+bool MessageFilter::IsRelevant( const sword::ObjectUpdate& )
 {
     return true;
 }
@@ -251,7 +251,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgObjectUpdate& )
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+bool MessageFilter::IsRelevant( const sword::ObjectKnowledgeUpdate& message )
 {
     return  message.has_attributes()
          || message.has_perceiving_automats()
@@ -268,7 +268,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgObjectKnowledgeUpdate&
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdUpdate& )
+bool MessageFilter::IsRelevant( const sword::CrowdUpdate& )
 {
     return true;
 }
@@ -277,7 +277,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdUpdate& )
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdConcentrationUpdate& )
+bool MessageFilter::IsRelevant( const sword::CrowdConcentrationUpdate& )
 {
     return true;
 }
@@ -286,7 +286,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdConcentrationUpda
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdFlowUpdate& )
+bool MessageFilter::IsRelevant( const sword::CrowdFlowUpdate& )
 {
     return true;
 }
@@ -295,7 +295,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdFlowUpdate& )
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdKnowledgeUpdate& )
+bool MessageFilter::IsRelevant( const sword::CrowdKnowledgeUpdate& )
 {
     return true;
 }
@@ -304,7 +304,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdKnowledgeUpdate& 
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& message )
+bool MessageFilter::IsRelevant( const sword::CrowdConcentrationKnowledgeUpdate& message )
 {
     return  message.has_attitude()
          || message.has_est_percu()
@@ -322,7 +322,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdConcentrationKnow
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& )
+bool MessageFilter::IsRelevant( const sword::CrowdFlowKnowledgeUpdate& )
 {
     return true;
 }

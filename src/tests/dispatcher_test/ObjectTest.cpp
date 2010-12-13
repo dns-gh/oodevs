@@ -42,12 +42,12 @@ namespace
         }
         void createObject()
         {
-            MsgsSimToClient::MsgObjectCreation& message = *expected.mutable_message()->mutable_object_creation();
+            sword::ObjectCreation& message = *expected.mutable_message()->mutable_object_creation();
             message.mutable_object()->set_id( 1 );
             message.mutable_type()->set_id( "my_type" );
             message.set_name( "test" );
             message.mutable_party()->set_id( team.GetId() );
-            message.mutable_location()->set_type( Common::MsgLocation::point );
+            message.mutable_location()->set_type( sword::MsgLocation::point );
             message.mutable_location()->mutable_coordinates()->add_elem();
             message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 42. );
             message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );
@@ -68,7 +68,7 @@ namespace
         MockSide team;
         std::auto_ptr< dispatcher::Object_ABC > result;
         MockModel model;
-        MsgsSimToClient::MsgSimToClient expected;
+        sword::SimToClient expected;
         MockClientPublisher publisher;
     };
 }
@@ -89,7 +89,7 @@ BOOST_FIXTURE_TEST_CASE( Object_IsCreatedUnderATeam, Fixture )
 BOOST_FIXTURE_TEST_CASE( Object_IsDestroyed, Fixture )
 {
     createObject();
-    MsgsSimToClient::MsgObjectDestruction& message = *expected.mutable_message()->mutable_object_destruction();
+    sword::ObjectDestruction& message = *expected.mutable_message()->mutable_object_destruction();
     message.mutable_object()->set_id( 1 );
     BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
@@ -106,9 +106,9 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated, Fixture )
 {
     {
         createObject();
-        MsgsSimToClient::MsgObjectUpdate& message = *expected.mutable_message()->mutable_object_update();
+        sword::ObjectUpdate& message = *expected.mutable_message()->mutable_object_update();
         message.mutable_object()->set_id( 1 );
-        message.mutable_location()->set_type( Common::MsgLocation::line );
+        message.mutable_location()->set_type( sword::MsgLocation::line );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 1. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 42. );
@@ -122,12 +122,12 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated, Fixture )
     }
     {
         expected.mutable_message()->Clear();
-        MsgsSimToClient::MsgObjectCreation& message = *expected.mutable_message()->mutable_object_creation();
+        sword::ObjectCreation& message = *expected.mutable_message()->mutable_object_creation();
         message.mutable_object()->set_id( 1 );
         message.mutable_type()->set_id( "my_type" );
         message.set_name( "test" );
         message.mutable_party()->set_id( team.GetId() );
-        message.mutable_location()->set_type( Common::MsgLocation::line );
+        message.mutable_location()->set_type( sword::MsgLocation::line );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 1. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 42. );
@@ -148,7 +148,7 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated_With_No_Optional, Fixture )
 {
     {
         createObject();
-        MsgsSimToClient::MsgObjectUpdate& message = *expected.mutable_message()->mutable_object_update();
+        sword::ObjectUpdate& message = *expected.mutable_message()->mutable_object_update();
         message.mutable_object()->set_id( 1 );
         message.mutable_attributes();
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
@@ -160,12 +160,12 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated_With_No_Optional, Fixture )
     }
     {
         expected.mutable_message()->Clear();
-        MsgsSimToClient::MsgObjectCreation& message = *expected.mutable_message()->mutable_object_creation();
+        sword::ObjectCreation& message = *expected.mutable_message()->mutable_object_creation();
         message.mutable_object()->set_id( 1 );
         message.mutable_type()->set_id( "my_type" );
         message.set_name( "test" );
         message.mutable_party()->set_id( team.GetId() );
-        message.mutable_location()->set_type( Common::MsgLocation::point );
+        message.mutable_location()->set_type( sword::MsgLocation::point );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 42. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );

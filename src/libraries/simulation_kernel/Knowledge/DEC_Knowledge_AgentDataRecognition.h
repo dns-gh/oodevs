@@ -15,9 +15,9 @@
 #include "DEC_Knowledge_Def.h"
 #include "MIL.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitKnowledgeUpdate;
+    class UnitKnowledgeUpdate;
 }
 
 class DEC_Knowledge_AgentPerceptionDataRecognition;
@@ -58,8 +58,8 @@ public:
     //! @name Network
     //@{
     bool HasChanged() const;
-    void SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
-    void SendFullState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
+    void SendChangedState( sword::UnitKnowledgeUpdate& asnMsg ) const;
+    void SendFullState( sword::UnitKnowledgeUpdate& asnMsg ) const;
     //@}
 
     //! @name Accessors

@@ -13,9 +13,9 @@
 #define __PHY_FireDamages_Population_h_
 
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgCrowdFireDamages;
+    class CrowdFireDamages;
 }
 
 class MIL_Population;
@@ -43,7 +43,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( const MIL_Population& target, MsgsSimToClient::MsgCrowdFireDamages& asn ) const;
+    void Serialize( const MIL_Population& target, sword::CrowdFireDamages& asn ) const;
     //@}
 
 private:

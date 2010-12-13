@@ -26,9 +26,9 @@ namespace kernel
     class PropertiesDictionary;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogSupplyState;
+    class LogSupplyState;
 }
 class SupplyAvailability;
 // =============================================================================
@@ -38,7 +38,7 @@ class SupplyAvailability;
 // Created: AGE 2006-02-14
 // =============================================================================
 class SupplyStates : public kernel::Extension_ABC
-                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyState >
+                   , public kernel::Updatable_ABC< sword::LogSupplyState >
                    , public tools::Resolver< Dotation >
 {
 public:
@@ -51,7 +51,7 @@ public:
     //! @name Operations
     //@{
     void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void DoUpdate( const MsgsSimToClient::MsgLogSupplyState& message );
+    virtual void DoUpdate( const sword::LogSupplyState& message );
     //@}
 
 private:

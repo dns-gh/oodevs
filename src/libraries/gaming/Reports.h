@@ -35,9 +35,9 @@ class ReportFactory;
 // =============================================================================
 class Reports : public kernel::Extension_ABC
               , public tools::Resolver< Report >
-              , public kernel::Updatable_ABC< MsgsSimToClient::MsgReport >
-              , public kernel::Updatable_ABC< MsgsSimToClient::MsgInvalidateReport >
-              , public kernel::Updatable_ABC< MsgsSimToClient::MsgTrace >
+              , public kernel::Updatable_ABC< sword::Report >
+              , public kernel::Updatable_ABC< sword::InvalidateReport >
+              , public kernel::Updatable_ABC< sword::Trace >
               , public kernel::Displayable_ABC
 {
 public:
@@ -72,9 +72,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgReport& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgInvalidateReport& msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgTrace& msg );
+    virtual void DoUpdate( const sword::Report& message );
+    virtual void DoUpdate( const sword::InvalidateReport& msg );
+    virtual void DoUpdate( const sword::Trace& msg );
     //@}
 
 private:

@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: PopulationFire constructor
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
-PopulationFire::PopulationFire( Model& , const MsgsSimToClient::MsgStartCrowdFire& msg )
+PopulationFire::PopulationFire( Model& , const sword::StartCrowdFire& msg )
     : SimpleEntity < >( msg.fire().id() )
     , msg_( msg )
 {

@@ -40,7 +40,7 @@ AgentNotifier::~AgentNotifier()
 // Name: AgentNotifier::DoUpdate
 // Created: SBO 2009-08-19
 // -----------------------------------------------------------------------------
-void AgentNotifier::DoUpdate( const MsgsSimToClient::MsgUnitCreation& /*message*/ )
+void AgentNotifier::DoUpdate( const sword::UnitCreation& /*message*/ )
 {
     controller_.Update( AgentCreated( agent_ ) );
 }
@@ -49,7 +49,7 @@ void AgentNotifier::DoUpdate( const MsgsSimToClient::MsgUnitCreation& /*message*
 // Name: AgentNotifier::DoUpdate
 // Created: AGE 2008-06-13
 // -----------------------------------------------------------------------------
-void AgentNotifier::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void AgentNotifier::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_position()  )
         controller_.Update( AgentMoved( agent_ ) );
@@ -65,7 +65,7 @@ void AgentNotifier::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message 
 // Name: AgentNotifier::DoUpdate
 // Created: AGE 2008-06-17
 // -----------------------------------------------------------------------------
-void AgentNotifier::DoUpdate( const Common::MsgUnitOrder& )
+void AgentNotifier::DoUpdate( const sword::UnitOrder& )
 {
     controller_.Update( MissionStarted( agent_ ) );
 }

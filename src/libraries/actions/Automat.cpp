@@ -80,20 +80,20 @@ Automat::~Automat()
 // Name: Automat::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Automat::CommitTo( Common::MsgMissionParameter& message ) const
+void Automat::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        Entity< Automat_ABC >::CommitTo< Common::AutomatId >( *message.mutable_value()->Add()->mutable_automat() );
+        Entity< Automat_ABC >::CommitTo< sword::AutomatId >( *message.mutable_value()->Add()->mutable_automat() );
 }
 // -----------------------------------------------------------------------------
 // Name: Automat::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Automat::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void Automat::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
-        Entity< Automat_ABC >::CommitTo< Common::AutomatId >( *message.mutable_automat() );
+        Entity< Automat_ABC >::CommitTo< sword::AutomatId >( *message.mutable_automat() );
 }
 
 // -----------------------------------------------------------------------------

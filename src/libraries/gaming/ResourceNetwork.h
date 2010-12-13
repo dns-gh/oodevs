@@ -14,7 +14,7 @@
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "tools/Resolver.h"
 
-namespace Common
+namespace sword
 {
     class ObjectAttributeResourceNetwork;
     class ResourceNetwork;
@@ -32,10 +32,10 @@ namespace kernel
     class Object_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgObjectUpdate;
-    class MsgUrbanUpdate;
+    class ObjectUpdate;
+    class UrbanUpdate;
     class UrbanAttributes_Infrastructures;
 }
 
@@ -46,14 +46,14 @@ namespace MsgsSimToClient
 // Created: JSR 2010-08-19
 // =============================================================================
 class ResourceNetwork : public kernel::ResourceNetwork_ABC
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanUpdate >
+                      , public kernel::Updatable_ABC< sword::ObjectUpdate >
+                      , public kernel::Updatable_ABC< sword::UrbanUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const MsgsSimToClient::UrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary& dico );
-             ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const Common::ObjectAttributeResourceNetwork& msg, kernel::PropertiesDictionary& dico );
+             ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary& dico );
+             ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, kernel::PropertiesDictionary& dico );
     virtual ~ResourceNetwork();
     //@}
 
@@ -72,9 +72,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& message );
-    void UpdateNetwork( kernel::Entity_ABC* entity, const Common::ResourceNetwork& msg );
+    virtual void DoUpdate( const sword::ObjectUpdate& message );
+    virtual void DoUpdate( const sword::UrbanUpdate& message );
+    void UpdateNetwork( kernel::Entity_ABC* entity, const sword::ResourceNetwork& msg );
     void SetColor( const std::string& resource ) const;
     void UpdateStipple( int value ) const;
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;

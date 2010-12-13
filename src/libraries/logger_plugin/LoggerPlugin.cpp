@@ -124,7 +124,7 @@ bool LoggerPlugin::Initialize()
 // Name: LoggerPlugin::Receive
 // Created: LDC 2010-03-17
 // -----------------------------------------------------------------------------
-void LoggerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
+void LoggerPlugin::Receive( const sword::SimToClient& message )
 {
     if( !Initialize() )
         return;
@@ -245,11 +245,11 @@ void LoggerPlugin::FormatMission( const char* name, int id, int mission )
 // Name: LoggerPlugin::LogUnitsFireDamages
 // Created: JSR 2010-08-04
 // -----------------------------------------------------------------------------
-void LoggerPlugin::LogUnitsFireDamages( const MsgsSimToClient::MsgUnitsFireDamages& unitsDamages )
+void LoggerPlugin::LogUnitsFireDamages( const sword::UnitsFireDamages& unitsDamages )
 {
     for( int i = 0; i < unitsDamages.elem_size(); ++i )
     {
-        const MsgsSimToClient::MsgUnitFireDamages& damages = unitsDamages.elem( i );
+        const sword::UnitFireDamages& damages = unitsDamages.elem( i );
         if( damages.has_target() )
         {
             kernel::Entity_ABC* target = model_.Agents().Find( damages.target().id() );
@@ -263,11 +263,11 @@ void LoggerPlugin::LogUnitsFireDamages( const MsgsSimToClient::MsgUnitsFireDamag
 // Name: LoggerPlugin::LogPopulationsFireDamages
 // Created: JSR 2010-08-04
 // -----------------------------------------------------------------------------
-void LoggerPlugin::LogPopulationsFireDamages( const MsgsSimToClient::MsgCrowdsFireDamages& populationsDamages )
+void LoggerPlugin::LogPopulationsFireDamages( const sword::CrowdsFireDamages& populationsDamages )
 {
     for( int i = 0; i < populationsDamages.elem_size(); ++i )
     {
-        const MsgsSimToClient::MsgCrowdFireDamages& damages = populationsDamages.elem( i );
+        const sword::CrowdFireDamages& damages = populationsDamages.elem( i );
         if( damages.has_target() && damages.has_dead_nbr() && damages.dead_nbr() > 0 )
         {
             kernel::Entity_ABC* target = model_.Populations().Find( damages.target().id() );
@@ -281,7 +281,7 @@ void LoggerPlugin::LogPopulationsFireDamages( const MsgsSimToClient::MsgCrowdsFi
 // Name: LoggerPlugin::LogDamagesOnTarget
 // Created: JSR 2010-08-04
 // -----------------------------------------------------------------------------
-void LoggerPlugin::LogDamagesOnTarget( const MsgsSimToClient::MsgUnitFireDamages& unitDamages, const kernel::Entity_ABC& target )
+void LoggerPlugin::LogDamagesOnTarget( const sword::UnitFireDamages& unitDamages, const kernel::Entity_ABC& target )
 {
     if( unitDamages.has_humans() )
     {
@@ -289,7 +289,7 @@ void LoggerPlugin::LogDamagesOnTarget( const MsgsSimToClient::MsgUnitFireDamages
         int wounded = 0;
         for( int i = 0; i < unitDamages.humans().elem_size(); ++i )
         {
-            const MsgsSimToClient::UnitHumanFireDamage& humanDamage = unitDamages.humans().elem( i );
+            const sword::UnitHumanFireDamage& humanDamage = unitDamages.humans().elem( i );
             if( humanDamage.has_dead_nbr() )
                 dead += humanDamage.dead_nbr();
             if( humanDamage.has_wounded_u1_nbr() )
@@ -322,7 +322,7 @@ void LoggerPlugin::LogDamagesOnTarget( const MsgsSimToClient::MsgUnitFireDamages
         int unavailable = 0;
         for( int i = 0; i < unitDamages.equipments().elem_size(); ++i )
         {
-            const MsgsSimToClient::MsgUnitEquipmentFireDamage& equipmentDamage = unitDamages.equipments().elem( i );
+            const sword::UnitEquipmentFireDamage& equipmentDamage = unitDamages.equipments().elem( i );
             if( equipmentDamage.has_unavailable_nbr() )
                 unavailable += equipmentDamage.unavailable_nbr();
             if( equipmentDamage.has_repairable_nbr() )

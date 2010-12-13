@@ -29,7 +29,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( Common::ClientObjectProperty* msg ) const = 0;
+    virtual void Serialize( sword::ClientObjectProperty* msg ) const = 0;
     virtual void Write( xml::xostream& xos ) const = 0;
     //@}
 };
@@ -53,7 +53,7 @@ public:
     //! @name Operations
     //@{
     void Update( const T& value );
-    virtual void Serialize( Common::ClientObjectProperty* msg ) const;
+    virtual void Serialize( sword::ClientObjectProperty* msg ) const;
     virtual void Write( xml::xostream& xos ) const;
     //@}
 
@@ -115,7 +115,7 @@ void ClientObjectProperty< T >::Update( const T& value )
 // Name: ClientObjectProperty::Serialize
 // Created: JSR 2010-10-18
 // -----------------------------------------------------------------------------
-void ClientObjectProperty< std::string >::Serialize( Common::ClientObjectProperty* msg ) const
+void ClientObjectProperty< std::string >::Serialize( sword::ClientObjectProperty* msg ) const
 {
     msg->set_name( name_ );
     msg->mutable_value()->set_string_value( value_ );
@@ -125,7 +125,7 @@ void ClientObjectProperty< std::string >::Serialize( Common::ClientObjectPropert
 // Name: ClientObjectProperty::Serialize
 // Created: JSR 2010-10-18
 // -----------------------------------------------------------------------------
-void ClientObjectProperty< int >::Serialize( Common::ClientObjectProperty* msg ) const
+void ClientObjectProperty< int >::Serialize( sword::ClientObjectProperty* msg ) const
 {
     msg->set_name( name_ );
     msg->mutable_value()->set_integer_value( value_ );
@@ -135,7 +135,7 @@ void ClientObjectProperty< int >::Serialize( Common::ClientObjectProperty* msg )
 // Name: ClientObjectProperty::Serialize
 // Created: JSR 2010-10-18
 // -----------------------------------------------------------------------------
-void ClientObjectProperty< unsigned int >::Serialize( Common::ClientObjectProperty* msg ) const
+void ClientObjectProperty< unsigned int >::Serialize( sword::ClientObjectProperty* msg ) const
 {
     msg->set_name( name_ );
     msg->mutable_value()->set_unsigned_integer_value( value_ );
@@ -145,7 +145,7 @@ void ClientObjectProperty< unsigned int >::Serialize( Common::ClientObjectProper
 // Name: ClientObjectProperty::Serialize
 // Created: JSR 2010-10-18
 // -----------------------------------------------------------------------------
-void ClientObjectProperty< float >::Serialize( Common::ClientObjectProperty* msg ) const
+void ClientObjectProperty< float >::Serialize( sword::ClientObjectProperty* msg ) const
 {
     msg->set_name( name_ );
     msg->mutable_value()->set_float_value( value_ );
@@ -155,7 +155,7 @@ void ClientObjectProperty< float >::Serialize( Common::ClientObjectProperty* msg
 // Name: ClientObjectProperty::Serialize
 // Created: JSR 2010-10-18
 // -----------------------------------------------------------------------------
-void ClientObjectProperty< bool >::Serialize( Common::ClientObjectProperty* msg ) const
+void ClientObjectProperty< bool >::Serialize( sword::ClientObjectProperty* msg ) const
 {
     msg->set_name( name_ );
     msg->mutable_value()->set_bool_value( value_ );

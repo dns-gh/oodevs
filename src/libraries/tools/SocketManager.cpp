@@ -94,4 +94,3 @@ void SocketManager::Send( const std::string& endpoint, unsigned long tag, const 
     it->second->Send( tag, message );
     ++nbMessagesSent_;
 }
-

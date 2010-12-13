@@ -23,9 +23,9 @@ namespace kernel
     class LogisticLevel;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgAutomatCreation;
+    class AutomatCreation;
 }
 
 // =============================================================================
@@ -41,7 +41,7 @@ class Automat : public kernel::EntityImplementation< kernel::Automat_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( const MsgsSimToClient::MsgAutomatCreation& message, kernel::Controller& controller,
+             Automat( const sword::AutomatCreation& message, kernel::Controller& controller,
                       const tools::Resolver_ABC< kernel::AutomatType >& resolver );
     virtual ~Automat();
     //@}

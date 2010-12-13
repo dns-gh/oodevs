@@ -12,7 +12,7 @@
 
 #include "Extension_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
     class UrbanAttributes_Infrastructures;
 }

@@ -12,7 +12,7 @@
 
 #include "Localisation.h"
 
-namespace Common
+namespace sword
 {
     enum ObstacleType_DemolitionTargetType;
     class MsgPlannedWork;
@@ -33,13 +33,13 @@ public:
     //! @name Constructors/Destructor
     //@{
              GenObject();
-    explicit GenObject( const Common::MsgPlannedWork& asn );
+    explicit GenObject( const sword::MsgPlannedWork& asn );
     virtual ~GenObject();
     //@}
 
     //! @name Operations
     //@{
-    void Send( Common::MsgPlannedWork& asn ) const;
+    void Send( sword::MsgPlannedWork& asn ) const;
     //@}
 
 private:
@@ -47,7 +47,7 @@ private:
     //@{
     std::string type_;
     Localisation location_;
-    Common::ObstacleType_DemolitionTargetType typeObstacle_;
+    sword::ObstacleType_DemolitionTargetType typeObstacle_;
     float density_;
     unsigned int tc2_;
     unsigned int delaiActiviteMines_;

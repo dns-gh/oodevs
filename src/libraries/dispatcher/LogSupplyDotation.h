@@ -12,7 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace MsgsSimToClient
+namespace sword
 {
     class MsgDotationQuery;
 }
@@ -32,14 +32,14 @@ class LogSupplyDotation : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             LogSupplyDotation( const Model& model, const MsgsSimToClient::MsgDotationQuery& asnMsg );
+             LogSupplyDotation( const Model& model, const sword::MsgDotationQuery& asnMsg );
     virtual ~LogSupplyDotation();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgDotationQuery& asnMsg );
-    void Send  ( MsgsSimToClient::MsgDotationQuery& asnMsg ) const ;
+    void Update( const sword::MsgDotationQuery& asnMsg );
+    void Send  ( sword::MsgDotationQuery& asnMsg ) const ;
     //@}
 
 private:

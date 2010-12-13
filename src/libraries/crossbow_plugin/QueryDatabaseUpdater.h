@@ -11,32 +11,31 @@
 #define __crossbow_QueryDatabaseUpdater_h_
 
 #include "DatabaseUpdater_ABC.h"
-namespace Common
+
+namespace sword
 {
     class MsgLocation;
+    class LimaCreation;
+    class LimitCreation;
 }
-namespace MsgsMessengerToClient
+
+namespace sword
 {
-    class MsgLimaCreation;
-    class MsgLimitCreation;
-}
-namespace MsgsSimToClient
-{
-    class MsgFormationCreation;
-    class MsgUnitCreation;
-    class MsgUnitKnowledgeCreation;
-    class MsgObjectCreation;
-    class MsgReport;
-    class MsgAutomatCreation;
-    class MsgObjectKnowledgeCreation;
-    class MsgUnitAttributes;
-    class MsgUnitKnowledgeUpdate;
-    class MsgObjectKnowledgeUpdate;
-    class MsgAutomatAttributes;
-    class MsgUnitDestruction;
-    class MsgUnitKnowledgeDestruction;
-    class MsgObjectDestruction;
-    class MsgObjectKnowledgeDestruction;
+    class FormationCreation;
+    class UnitCreation;
+    class UnitKnowledgeCreation;
+    class ObjectCreation;
+    class Report;
+    class AutomatCreation;
+    class ObjectKnowledgeCreation;
+    class UnitAttributes;
+    class UnitKnowledgeUpdate;
+    class ObjectKnowledgeUpdate;
+    class AutomatAttributes;
+    class UnitDestruction;
+    class UnitKnowledgeDestruction;
+    class ObjectDestruction;
+    class ObjectKnowledgeDestruction;
 }
 
 namespace dispatcher
@@ -76,25 +75,25 @@ public:
 
     //! @name Operators
     //@{
-    void Update( const MsgsSimToClient::MsgUnitCreation& msg );
-    void Update( const MsgsSimToClient::MsgUnitKnowledgeCreation& msg );
-    void Update( const MsgsMessengerToClient::MsgLimitCreation& msg );
-    void Update( const MsgsMessengerToClient::MsgLimaCreation& msg );
-    void Update( const MsgsSimToClient::MsgObjectCreation& msg );
-    void Update( const MsgsSimToClient::MsgReport& msg );
-    void Update( const MsgsSimToClient::MsgFormationCreation& message );
-    void Update( const MsgsSimToClient::MsgAutomatCreation& message );
-    void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& msg );
+    void Update( const sword::UnitCreation& msg );
+    void Update( const sword::UnitKnowledgeCreation& msg );
+    void Update( const sword::LimitCreation& msg );
+    void Update( const sword::LimaCreation& msg );
+    void Update( const sword::ObjectCreation& msg );
+    void Update( const sword::Report& msg );
+    void Update( const sword::FormationCreation& message );
+    void Update( const sword::AutomatCreation& message );
+    void Update( const sword::ObjectKnowledgeCreation& msg );
 
-    void Update( const MsgsSimToClient::MsgUnitAttributes& msg );
-    void Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& msg );
-    void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg );
-    void Update( const MsgsSimToClient::MsgAutomatAttributes& msg );
+    void Update( const sword::UnitAttributes& msg );
+    void Update( const sword::UnitKnowledgeUpdate& msg );
+    void Update( const sword::ObjectKnowledgeUpdate& msg );
+    void Update( const sword::AutomatAttributes& msg );
 
-    void DestroyUnit( const MsgsSimToClient::MsgUnitDestruction& msg );
-    void DestroyUnitKnowledge( const MsgsSimToClient::MsgUnitKnowledgeDestruction& msg );
-    void DestroyObject( const MsgsSimToClient::MsgObjectDestruction& msg ); // $$$$ SBO 2007-09-27: typedef bullshit
-    void DestroyObjectKnowledge( const MsgsSimToClient::MsgObjectKnowledgeDestruction& msg );
+    void DestroyUnit( const sword::UnitDestruction& msg );
+    void DestroyUnitKnowledge( const sword::UnitKnowledgeDestruction& msg );
+    void DestroyObject( const sword::ObjectDestruction& msg ); // $$$$ SBO 2007-09-27: typedef bullshit
+    void DestroyObjectKnowledge( const sword::ObjectKnowledgeDestruction& msg );
     //@}
 
 private:
@@ -106,8 +105,8 @@ private:
 
     //! @name Helper
     //@{
-    void UpdateGeometry( QueryBuilder_ABC& builder, const Common::MsgLocation& location );
-    void UpdateObjectKnowledgeGeometry( const std::string& table, const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg );
+    void UpdateGeometry( QueryBuilder_ABC& builder, const sword::MsgLocation& location );
+    void UpdateObjectKnowledgeGeometry( const std::string& table, const sword::ObjectKnowledgeUpdate& msg );
     //@}
 
 private:

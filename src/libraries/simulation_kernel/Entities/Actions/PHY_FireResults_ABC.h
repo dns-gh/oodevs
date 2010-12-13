@@ -16,10 +16,10 @@
 #include "PHY_FireDamages_Population.h"
 #include "Tools/MIL_IDManager.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgCrowdsFireDamages;
-    class MsgUnitsFireDamages;
+    class CrowdsFireDamages;
+    class UnitsFireDamages;
 }
 
 class MIL_Agent_ABC;
@@ -70,8 +70,8 @@ protected:
 
     //! @name Network tools
     //@{
-    void Serialize( MsgsSimToClient::MsgUnitsFireDamages& asn ) const;
-    void Serialize( MsgsSimToClient::MsgCrowdsFireDamages& asn ) const;
+    void Serialize( sword::UnitsFireDamages& asn ) const;
+    void Serialize( sword::CrowdsFireDamages& asn ) const;
 
     static MIL_IDManager idManager_;
     //@}

@@ -10,7 +10,6 @@
 #ifndef __ObjectMessageService_h_
 #define __ObjectMessageService_h_
 
-#include "MessageIdentifierFactory.h"
 #include "MessageDispatcher_ABC.h"
 #include "MessageCallback_ABC.h"
 #include <boost/function.hpp>
@@ -45,13 +44,19 @@ public:
     //! @name Operations
     //@{
     using MessageDispatcher_ABC::RegisterMessage;
-    
-    virtual unsigned long GetNbMessagesReceived() const { return nbMessagesReceived_; };
 
     void RegisterErrorCallback( const T_Callback& error );
 
     virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id );
     virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback );
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual unsigned long GetNbMessagesReceived() const
+    {
+        return nbMessagesReceived_;
+    }
     //@}
 
 private:

@@ -79,7 +79,7 @@ void ConstructionAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer )
 // Name: ConstructionAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void ConstructionAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -88,7 +88,7 @@ void ConstructionAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeU
 // Name: ConstructionAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void ConstructionAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }

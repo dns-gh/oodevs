@@ -10,15 +10,15 @@
 #ifndef __OrderParameterSerializer_h_
 #define __OrderParameterSerializer_h_
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameter;
     class ObjectKnowledgeId;
     class UnitKnowledgeId;
-    class MsgIntelligenceList;
+    class IntelligenceList;
     class MsgHeading;
-    class MsgLimasOrder;
-    class MsgLimaOrder;
+    class LimasOrder;
+    class LimaOrder;
     class MsgMissionObjective;
     class MsgMissionObjectiveList;
     class UnitId;
@@ -70,7 +70,7 @@ public:
 
     //! @name Operations
     //@{
-    void Serialize( Common::MsgMissionParameter& message, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value ) const;
+    void Serialize( sword::MsgMissionParameter& message, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value ) const;
     bool IsValidParameter( const kernel::OrderParameter& parameter ) const;
     //@}
 
@@ -83,18 +83,18 @@ private:
 
     //! @name Helpers
     //@{
-    void SerializePhaseLines( Common::MsgLimasOrder& message, unsigned long parameterId, const std::string& tablename ) const;
-    void SerializePhaseLine( Common::MsgLimaOrder& message, const std::string& value ) const;
-    void SerializeDirection( Common::MsgHeading& message, const std::string& value ) const;
-    void SerializeIntelligenceList( Common::MsgIntelligenceList& message, const std::string& value ) const;
+    void SerializePhaseLines( sword::LimasOrder& message, unsigned long parameterId, const std::string& tablename ) const;
+    void SerializePhaseLine( sword::LimaOrder& message, const std::string& value ) const;
+    void SerializeDirection( sword::MsgHeading& message, const std::string& value ) const;
+    void SerializeIntelligenceList( sword::IntelligenceList& message, const std::string& value ) const;
 
-    void SerializeUnit( Common::UnitId& message, const std::string& value ) const;
-    void SerializeAutomat( Common::AutomatId& message, const std::string& value ) const;
-    void SerializeUnitKnowledge( Common::UnitKnowledgeId& message, const std::string& value ) const;
-    void SerializeObjectKnowledge( Common::ObjectKnowledgeId& message, const std::string& value ) const;
+    void SerializeUnit( sword::UnitId& message, const std::string& value ) const;
+    void SerializeAutomat( sword::AutomatId& message, const std::string& value ) const;
+    void SerializeUnitKnowledge( sword::UnitKnowledgeId& message, const std::string& value ) const;
+    void SerializeObjectKnowledge( sword::ObjectKnowledgeId& message, const std::string& value ) const;
     void SerializeBool( bool& message, const std::string& value ) const;
-    void SerializeMissionObjective( Common::MsgMissionObjective& message, const std::string& value ) const;
-    void SerializeMissionObjectiveList( Common::MsgMissionObjectiveList& message, const std::string& value ) const;
+    void SerializeMissionObjective( sword::MsgMissionObjective& message, const std::string& value ) const;
+    void SerializeMissionObjectiveList( sword::MsgMissionObjectiveList& message, const std::string& value ) const;
     template< typename T >
     void SerializeLocation( T& message, unsigned long parameterId, const std::string& value ) const;
     template< typename T, typename Base >
@@ -103,12 +103,12 @@ private:
     template< typename T >
     void SerializeLocation( T& message, const Row_ABC* row ) const;
 
-    void CleanLocation( Common::MsgLocation*& message ) const;
+    void CleanLocation( sword::MsgLocation*& message ) const;
     //@}
 
     //! @name Helper
     //@{
-    void FillLocationlist( std::vector< Common::MsgLocation* >& locations, boost::shared_ptr< Table_ABC > table, unsigned long oid ) const;
+    void FillLocationlist( std::vector< sword::MsgLocation* >& locations, boost::shared_ptr< Table_ABC > table, unsigned long oid ) const;
     //@}
 
 private:

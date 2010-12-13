@@ -15,15 +15,11 @@
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
 
-namespace Common
+namespace sword
 {
-    class MsgCrowdOrder;
-}
-
-namespace MsgsClientToSim
-{
-    class MsgFragOrder;
-    class MsgUnitMagicAction;
+    class CrowdOrder;
+    class FragOrder;
+    class UnitMagicAction;
 }
 
 namespace xml
@@ -139,13 +135,13 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgOrder( const Common::MsgCrowdOrder& msg );
-    void OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder& msg );
+    void OnReceiveOrder( const sword::CrowdOrder& msg );
+    void OnReceiveFragOrder( const sword::FragOrder& msg );
     void SendCreation() const;
     void SendFullState() const;
     void UpdateNetwork();
-    void OnReceiveMsgCrowdMagicAction( const MsgsClientToSim::MsgUnitMagicAction& asnMsg );
-    void OnReceiveMsgCrowdMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn );
+    void OnReceiveCrowdMagicAction( const sword::UnitMagicAction& asnMsg );
+    void OnReceiveCrowdMagicActionMoveTo( const sword::UnitMagicAction& asn );
     //@}
 
     //! @name CheckPoints
@@ -187,9 +183,9 @@ private:
     //! @name Magic actions
     //@{
     void OnReceiveMsgDestroyAll();
-    void OnReceiveMsgChangeAttitude( const MsgsClientToSim::MsgUnitMagicAction& asn );
-    void OnReceiveMsgKill( const MsgsClientToSim::MsgUnitMagicAction& asn );
-    void OnReceiveMsgResurrect( const MsgsClientToSim::MsgUnitMagicAction& asn );
+    void OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& asn );
+    void OnReceiveMsgKill( const sword::UnitMagicAction& asn );
+    void OnReceiveMsgResurrect( const sword::UnitMagicAction& asn );
     //@}
 
     //! @name Network

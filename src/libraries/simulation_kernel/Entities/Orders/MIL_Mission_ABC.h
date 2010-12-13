@@ -73,6 +73,7 @@ public:
     //@}
 
     //! @name Parameters Management
+    //@{
     virtual void Visit( MIL_MissionParameterVisitor_ABC& parameterVisitor ) const;
     //@}
 
@@ -80,28 +81,27 @@ protected:
     //! @name Constructors/Destructor
     //@{
     MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver );
-    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const Common::MsgMissionParameters& parameters );
-    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const Common::MsgMissionParameters& parameters, const MT_Vector2D& refPosition );
+    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::MsgMissionParameters& parameters );
+    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::MsgMissionParameters& parameters, const MT_Vector2D& refPosition );
     MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const boost::shared_ptr< MIL_Mission_ABC > parent );
     MIL_Mission_ABC( const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_Mission_ABC& rhs );
     //@}
 
-    //! @name Network
+    //! @name Helpers
     //@{
-    void FillParameters( int firstIndex, const Common::MsgMissionParameters& parameters );
-    //@}
-
-    //! @name Network
-    //@{
-    void Serialize( Common::MsgMissionParameters& asn ) const;
+    void FillParameters( int firstIndex, const sword::MsgMissionParameters& parameters );
+    void Serialize( sword::MsgMissionParameters& asn ) const;
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const DEC_KnowledgeResolver_ABC& knowledgeResolver_;
     const MIL_MissionType_ABC&       type_;
           MIL_OrderContext           context_;
 
           std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters_;
+    //@}
 };
 
 #endif // __MIL_Mission_ABC_h_

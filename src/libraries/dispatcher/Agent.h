@@ -15,20 +15,20 @@
 #include "tools/Resolver.h"
 #include "protocol/SimulationSenders.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitCreation;
-    class MsgUnitAttributes;
-    class MsgDecisionalState;
-    class MsgLogMedicalState;
-    class MsgLogMaintenanceState;
-    class MsgLogSupplyState;
+    class UnitCreation;
+    class UnitAttributes;
+    class DecisionalState;
+    class LogMedicalState;
+    class LogMaintenanceState;
+    class LogSupplyState;
 }
 
-namespace Common
+namespace sword
 {
-    class MsgUnitChangeSuperior;
-    class MsgUnitOrder;
+    class UnitChangeSuperior;
+    class UnitOrder;
     class MsgCoordLatLong;
 }
 
@@ -60,32 +60,32 @@ namespace dispatcher
 // =============================================================================
 class Agent : public dispatcher::Agent_ABC
             , public kernel::Extension_ABC
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitCreation >
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgDecisionalState >
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogMedicalState >
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogMaintenanceState >
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyState >
-            , public kernel::Updatable_ABC< Common::MsgUnitChangeSuperior >
-            , public kernel::Updatable_ABC< Common::MsgUnitOrder >
+            , public kernel::Updatable_ABC< sword::UnitCreation >
+            , public kernel::Updatable_ABC< sword::UnitAttributes >
+            , public kernel::Updatable_ABC< sword::DecisionalState >
+            , public kernel::Updatable_ABC< sword::LogMedicalState >
+            , public kernel::Updatable_ABC< sword::LogMaintenanceState >
+            , public kernel::Updatable_ABC< sword::LogSupplyState >
+            , public kernel::Updatable_ABC< sword::UnitChangeSuperior >
+            , public kernel::Updatable_ABC< sword::UnitOrder >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( Model_ABC& model, const MsgsSimToClient::MsgUnitCreation& msg, const tools::Resolver_ABC< kernel::AgentType >& types );
+             Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Resolver_ABC< kernel::AgentType >& types );
     virtual ~Agent();
     //@}
 
     //! @name Main
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitCreation&        asnMsg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes&      asnMsg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgDecisionalState&     asnMsg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgLogMedicalState&     asnMsg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgLogMaintenanceState& asnMsg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgLogSupplyState&      asnMsg );
-    virtual void DoUpdate( const Common::MsgUnitChangeSuperior&           asnMsg );
-    virtual void DoUpdate( const Common::MsgUnitOrder&                    asnMsg );
+    virtual void DoUpdate( const sword::UnitCreation&        asnMsg );
+    virtual void DoUpdate( const sword::UnitAttributes&      asnMsg );
+    virtual void DoUpdate( const sword::DecisionalState&     asnMsg );
+    virtual void DoUpdate( const sword::LogMedicalState&     asnMsg );
+    virtual void DoUpdate( const sword::LogMaintenanceState& asnMsg );
+    virtual void DoUpdate( const sword::LogSupplyState&      asnMsg );
+    virtual void DoUpdate( const sword::UnitChangeSuperior&           asnMsg );
+    virtual void DoUpdate( const sword::UnitOrder&                    asnMsg );
 
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
@@ -100,14 +100,14 @@ public:
     virtual const geometry::Point2d& GetPosition() const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     virtual const dispatcher::Automat_ABC& GetSuperior() const;
-    virtual Common::EnumOperationalStatus GetOperationalState() const;
+    virtual sword::EnumOperationalStatus GetOperationalState() const;
     virtual unsigned short GetOperationalStateValue() const;
     virtual const tools::Resolver< dispatcher::Equipment >& Equipments() const;
     virtual const tools::Resolver< dispatcher::Humans >& Troops() const;
     virtual unsigned short GetAltitude() const;
     virtual unsigned short GetSpeed() const;
     virtual unsigned short GetDirection() const;
-    virtual MsgsSimToClient::ForceRatio_Value GetForceRatio() const;
+    virtual sword::ForceRatio_Value GetForceRatio() const;
     virtual const Order_ABC* GetOrder() const;
     virtual bool IsMounted() const;
     //@}
@@ -139,8 +139,8 @@ private:
     bool                                                    bStealthModeEnabled_;
     bool                                                    isMounted_;
     bool                                                    bHumanTransportersAvailable_;
-    MsgsSimToClient::MsgUnitAttributes_Posture              nLastPosture_;
-    MsgsSimToClient::MsgUnitAttributes_Posture              nCurrentPosture_;
+    sword::UnitAttributes_Posture              nLastPosture_;
+    sword::UnitAttributes_Posture              nCurrentPosture_;
     unsigned int                                            nPostureCompletion_;
     unsigned int                                            nInstallationState_;
     bool                                                    bNbcProtectionSuitEnabled_;
@@ -156,15 +156,15 @@ private:
     bool                                                    bRadarEnabled_;
     tools::Resolver< const kernel::Agent_ABC >              transportedAgents_;
     kernel::Agent_ABC*                                      pTransporter_;
-    MsgsSimToClient::ForceRatio_Value                       nForceRatioState_;
-    Common::EnumMeetingEngagementStatus                     nCloseCombatState_;
-    Common::EnumOperationalStatus                           nOperationalState_;
-    MsgsSimToClient::MsgUnitAttributes_FireAvailability     nIndirectFireAvailability_;
-    MsgsSimToClient::RulesOfEngagement_Value                nRoe_;
-    MsgsSimToClient::MsgUnitAttributes_CrowdRoe             nPopulationRoe_;
-    Common::EnumUnitTiredness                               nTiredness_;
-    Common::EnumUnitMorale                                  nMorale_;
-    Common::EnumUnitExperience                              nExperience_;
+    sword::ForceRatio_Value                       nForceRatioState_;
+    sword::EnumMeetingEngagementStatus                     nCloseCombatState_;
+    sword::EnumOperationalStatus                           nOperationalState_;
+    sword::UnitAttributes_FireAvailability     nIndirectFireAvailability_;
+    sword::RulesOfEngagement_Value                nRoe_;
+    sword::UnitAttributes_CrowdRoe             nPopulationRoe_;
+    sword::EnumUnitTiredness                               nTiredness_;
+    sword::EnumUnitMorale                                  nMorale_;
+    sword::EnumUnitExperience                              nExperience_;
     const kernel::Team_ABC*                                 pSideSurrenderedTo_;
     bool                                                    bPrisonner_;
     bool                                                    bRefugeeManaged_;

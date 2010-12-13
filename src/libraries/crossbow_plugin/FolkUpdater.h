@@ -45,8 +45,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgFolkCreation& msg );
-    void Update( const MsgsSimToClient::MsgFolkGraphUpdate& msg );
+    void Update( const sword::FolkCreation& msg );
+    void Update( const sword::FolkGraphUpdate& msg );
     void Flush();
     //@}
 
@@ -74,8 +74,8 @@ private:
     //@{
     void Commit( Table_ABC& table );
     void CommitEdge( Row_ABC& row, const Edge& edge );
-    void Update( const MsgsSimToClient::MsgFolkGraphEdgeUpdate& msg );
-    void Update( Edge& edge, const MsgsSimToClient::MsgFolkGraphEdgeUpdate& msg ) const;
+    void Update( const sword::FolkGraphEdgeUpdate& msg );
+    void Update( Edge& edge, const sword::FolkGraphEdgeUpdate& msg ) const;
     //@}
 
 private:

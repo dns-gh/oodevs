@@ -45,7 +45,7 @@ LogisticAttribute::LogisticAttribute( xml::xistream& xis )
 // Name: LogisticAttribute constructor
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
-LogisticAttribute::LogisticAttribute( const Common::MsgMissionParameter_Value& attributes )
+LogisticAttribute::LogisticAttribute( const sword::MsgMissionParameter_Value& attributes )
 {
     MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( attributes.list( 1 ).identifier() );
     if( !pTC2Tmp )
@@ -118,7 +118,7 @@ void LogisticAttribute::Register( MIL_Object_ABC& object ) const
 // Name: LogisticAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void LogisticAttribute::SendFullState( Common::ObjectAttributes& asn ) const
+void LogisticAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_logistic()->mutable_tc2()->set_id( pTC2_->GetID() );
 }
@@ -127,7 +127,7 @@ void LogisticAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // Name: LogisticAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void LogisticAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
+void LogisticAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {

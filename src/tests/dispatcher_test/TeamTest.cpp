@@ -27,12 +27,12 @@ BOOST_AUTO_TEST_CASE( Team_CanBeCreated )
     MockModel model;
     MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
     {
-        MsgsSimToClient::MsgSimToClient expected;
+        sword::SimToClient expected;
         expected.set_context( 0 );
-        MsgsSimToClient::MsgPartyCreation& message = *expected.mutable_message()->mutable_party_creation();
+        sword::PartyCreation& message = *expected.mutable_message()->mutable_party_creation();
         message.mutable_party()->set_id( 1 );
         message.set_name( "test" );
-        message.set_type( Common::friend_diplo );
+        message.set_type( sword::friend_diplo );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
         
         // creation
@@ -63,12 +63,12 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
     {
         std::auto_ptr< dispatcher::Team_ABC > result;
         {
-            MsgsSimToClient::MsgSimToClient expected;
+            sword::SimToClient expected;
             expected.set_context( 0 );
-            MsgsSimToClient::MsgPartyCreation& message = *expected.mutable_message()->mutable_party_creation();
+            sword::PartyCreation& message = *expected.mutable_message()->mutable_party_creation();
             message.mutable_party()->set_id( 1 );
             message.set_name( "test" );
-            message.set_type( Common::friend_diplo );
+            message.set_type( sword::friend_diplo );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             // creation
@@ -77,12 +77,12 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
         }
         {
             // Change diplomacies
-            MsgsSimToClient::MsgSimToClient expected;
+            sword::SimToClient expected;
             expected.set_context( 0 );
-            Common::MsgChangeDiplomacy& message = *expected.mutable_message()->mutable_change_diplomacy();
+            sword::ChangeDiplomacy& message = *expected.mutable_message()->mutable_change_diplomacy();
             message.mutable_party1()->set_id( result->GetId() );
             message.mutable_party2()->set_id( side.GetId() );
-            message.set_diplomatie( Common::enemy_diplo );
+            message.set_diplomatie( sword::enemy_diplo );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
             sides.Get( 1 ).Update( message );
 
@@ -95,22 +95,22 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
         {
             // Change diplomacies
             {
-                MsgsSimToClient::MsgSimToClient expected;
+                sword::SimToClient expected;
                 expected.set_context( 0 );
-                MsgsSimToClient::MsgChangeDiplomacyAck& message = *expected.mutable_message()->mutable_change_diplomacy_ack();
+                sword::ChangeDiplomacyAck& message = *expected.mutable_message()->mutable_change_diplomacy_ack();
                 message.mutable_party1()->set_id( result->GetId() );
                 message.mutable_party2()->set_id( side.GetId() );
-                message.set_diplomatie( Common::neutral_diplo );
-                message.set_error_code( MsgsSimToClient::MsgChangeDiplomacyAck::no_error_diplomacy );
+                message.set_diplomatie( sword::neutral_diplo );
+                message.set_error_code( sword::ChangeDiplomacyAck::no_error_diplomacy );
                 BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
                 sides.Get( 1 ).Update( message );
             }
-            MsgsSimToClient::MsgSimToClient expected;
+            sword::SimToClient expected;
             expected.set_context( 0 );
-            Common::MsgChangeDiplomacy& message = *expected.mutable_message()->mutable_change_diplomacy();
+            sword::ChangeDiplomacy& message = *expected.mutable_message()->mutable_change_diplomacy();
             message.mutable_party1()->set_id( result->GetId() );
             message.mutable_party2()->set_id( side.GetId() );
-            message.set_diplomatie( Common::neutral_diplo );
+            message.set_diplomatie( sword::neutral_diplo );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             // network serialization

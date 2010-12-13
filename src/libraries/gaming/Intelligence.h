@@ -18,10 +18,10 @@
 #include "tools/Resolver_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
 
-namespace MsgsMessengerToClient
+namespace sword
 {
-    class MsgIntelligenceCreation;
-    class MsgIntelligenceUpdate;
+    class IntelligenceCreation;
+    class IntelligenceUpdate;
 }
 
 namespace kernel
@@ -42,12 +42,12 @@ class Intelligence : public kernel::EntityImplementation< kernel::Intelligence_A
                    , public kernel::Extension_ABC
                    , public kernel::Drawable_ABC
                    , public kernel::Displayable_ABC
-                   , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgIntelligenceUpdate >
+                   , public kernel::Updatable_ABC< sword::IntelligenceUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Intelligence( const MsgsMessengerToClient::MsgIntelligenceCreation& message, kernel::Controller& controller
+             Intelligence( const sword::IntelligenceCreation& message, kernel::Controller& controller
                          , const tools::Resolver_ABC< kernel::Formation_ABC >& formations
                          , const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels
                          , Publisher_ABC& publisher);
@@ -77,7 +77,7 @@ private:
     virtual bool IsMounted() const;
     virtual void Delete();
     virtual void Rename( const QString& name );
-    virtual void DoUpdate( const MsgsMessengerToClient::MsgIntelligenceUpdate& message );
+    virtual void DoUpdate( const sword::IntelligenceUpdate& message );
     //@}
 
 private:

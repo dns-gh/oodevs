@@ -16,7 +16,6 @@
 #include "actions/Point.h"
 #include "actions/Quantity.h"
 #include "actions/UnitMagicAction.h"
-
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -26,13 +25,10 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Point.h"
-
 #include "gaming/StaticModel.h"
 #include "gaming/tools.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
-
-using namespace Common;
 using namespace kernel;
 using namespace gui;
 using namespace actions;

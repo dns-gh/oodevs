@@ -48,7 +48,7 @@ Equipments::~Equipments()
 // Name: Equipments::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Equipments::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void Equipments::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_dotation_eff_materiel()  != 1 )
         return;
@@ -57,7 +57,7 @@ void Equipments::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
     uint nSize = message.dotation_eff_materiel().elem_size();
     while ( nSize > 0 )
     {
-        const MsgsSimToClient::EquipmentDotations_EquipmentDotation& value = message.dotation_eff_materiel().elem( --nSize );
+        const sword::EquipmentDotations_EquipmentDotation& value = message.dotation_eff_materiel().elem( --nSize );
         Equipment previous( resolver_.Get( value.type().id() ) );
         if( Equipment* equipment = Find( value.type().id() ) )
             previous = *equipment;

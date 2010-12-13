@@ -1,0 +1,28 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+import "common.proto";
+
+package sword;
+
+message ControlSkipToTick {
+   required int32 tick = 1;
+}
+
+message ClientToReplay {
+    message Content {
+       optional ControlSkipToTick       control_skip_to_tick       = 1;
+       optional ControlChangeTimeFactor control_change_time_factor = 2;
+       optional ControlStop             control_stop               = 3;
+       optional ControlPause            control_pause              = 4;
+       optional ControlResume           control_resume             = 5;
+    }
+    optional int32   context = 1;
+    required Content message = 2;
+}

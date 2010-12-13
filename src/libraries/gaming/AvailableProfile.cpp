@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AvailableProfile.h"
-#include "protocol/authenticationsenders.h"
+#include "protocol/AuthenticationSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: AvailableProfile constructor
@@ -24,7 +24,7 @@ AvailableProfile::AvailableProfile()
 // Name: AvailableProfile constructor
 // Created: SBO 2009-12-18
 // -----------------------------------------------------------------------------
-AvailableProfile::AvailableProfile( const MsgsAuthenticationToClient::MsgProfileDescription& profile )
+AvailableProfile::AvailableProfile( const sword::ProfileDescription& profile )
     : login_( profile.login().c_str() )
     , password_( profile.password() ? true : false )
     , supervisor_( profile.supervisor() ? true : false )

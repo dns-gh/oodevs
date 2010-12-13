@@ -1,0 +1,41 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+import "common.proto";
+import "simulation_client.proto";
+
+package sword;
+
+message ControlReplayInformation {
+   required int32               current_tick      = 1;
+   required MsgDateTime         initial_date_time = 2;
+   required MsgDateTime         date_time         = 3;
+   required int32               tick_duration     = 4;
+   required int32               time_factor       = 5;
+   required EnumSimulationState status            = 6;
+   required int32               tick_count        = 7;
+}
+
+message ControlSkipToTickAck {
+   required int32                tick       = 1;
+   required ControlAck.ErrorCode error_code = 2;
+}
+
+message ReplayToClient {
+    message Content {
+        optional ControlReplayInformation   control_replay_information      = 1;
+        optional ControlSkipToTickAck       control_skip_to_tick_ack        = 2;
+        optional ControlStopAck             control_stop_ack                = 3;
+        optional ControlPauseAck            control_pause_ack               = 4;
+        optional ControlResumeAck           control_resume_ack              = 5;
+        optional ControlChangeTimeFactorAck control_change_time_factor_ack  = 6;
+    }
+    optional int32   context = 1;
+    required Content message = 2;
+}

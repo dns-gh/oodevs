@@ -58,7 +58,7 @@ TicPlugin::~TicPlugin()
 // Name: TicPlugin::Receive
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void TicPlugin::Receive( const MsgsSimToClient::MsgSimToClient& )
+void TicPlugin::Receive( const sword::SimToClient& )
 {
     // NOTHING
 }

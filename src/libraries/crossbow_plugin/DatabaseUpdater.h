@@ -12,14 +12,14 @@
 
 #include "DatabaseUpdater_ABC.h"
 
-namespace Common
+namespace sword
 {
     class ObjectAttributes;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    enum MsgObjectMagicActionAck_ErrorCode;
+    enum ObjectMagicActionAck_ErrorCode;
 }
 
 namespace dispatcher
@@ -56,40 +56,40 @@ public:
     void Clean();
     //@}
 
-    //! @name MsgsMessengerToClient
+    //! @name sword
     //@{
-    void Update( const MsgsMessengerToClient::MsgLimitCreation& msg );
-    void Update( const MsgsMessengerToClient::MsgLimaCreation& msg );
+    void Update( const sword::LimitCreation& msg );
+    void Update( const sword::LimaCreation& msg );
     //@}
     
 
-    //! @name MsgsSimToClient
+    //! @name sword
     //@{
-    void Update( const MsgsSimToClient::MsgUnitCreation& msg );
-    void Update( const MsgsSimToClient::MsgUnitAttributes& msg );
-    void Update( const MsgsSimToClient::MsgUnitDestruction& msg );
+    void Update( const sword::UnitCreation& msg );
+    void Update( const sword::UnitAttributes& msg );
+    void Update( const sword::UnitDestruction& msg );
 
-    void Update( const MsgsSimToClient::MsgAutomatCreation& message );
-    void Update( const MsgsSimToClient::MsgAutomatAttributes& msg );
+    void Update( const sword::AutomatCreation& message );
+    void Update( const sword::AutomatAttributes& msg );
 
-    void Update( const MsgsSimToClient::MsgUnitKnowledgeCreation& msg );
-    void Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& msg );
-    void Update( const MsgsSimToClient::MsgUnitKnowledgeDestruction& msg );
+    void Update( const sword::UnitKnowledgeCreation& msg );
+    void Update( const sword::UnitKnowledgeUpdate& msg );
+    void Update( const sword::UnitKnowledgeDestruction& msg );
 
-    void Update( const MsgsSimToClient::MsgObjectCreation& msg );
-    void Update( const MsgsSimToClient::MsgObjectUpdate& msg );
-    void Update( const MsgsSimToClient::MsgObjectDestruction& msg );
+    void Update( const sword::ObjectCreation& msg );
+    void Update( const sword::ObjectUpdate& msg );
+    void Update( const sword::ObjectDestruction& msg );
 
-    void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& msg );
-    void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg );
-    void Update( const MsgsSimToClient::MsgObjectKnowledgeDestruction& msg );
+    void Update( const sword::ObjectKnowledgeCreation& msg );
+    void Update( const sword::ObjectKnowledgeUpdate& msg );
+    void Update( const sword::ObjectKnowledgeDestruction& msg );
 
-    void Update( const MsgsSimToClient::MsgFormationCreation& message );
+    void Update( const sword::FormationCreation& message );
 
-    void Update( const MsgsSimToClient::MsgControlBeginTick& msg );
-    void Update( const MsgsSimToClient::MsgPartyCreation& msg );
+    void Update( const sword::ControlBeginTick& msg );
+    void Update( const sword::PartyCreation& msg );
 
-    void Log( const MsgsSimToClient::MsgObjectMagicActionAck& msg );
+    void Log( const sword::ObjectMagicActionAck& msg );
     //@}
 
 private:
@@ -101,16 +101,16 @@ private:
 
     //! @name Objects
     //@{
-    void UpdateObjectKnowledgeGeometry( const std::string& tablename, const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg );
-    void UpdateObjectAttributes( unsigned long oid, const Common::ObjectAttributes& msg );
+    void UpdateObjectKnowledgeGeometry( const std::string& tablename, const sword::ObjectKnowledgeUpdate& msg );
+    void UpdateObjectAttributes( unsigned long oid, const sword::ObjectAttributes& msg );
     
-    // void Update( const MsgsSimToClient::MsgObjectAttributes& msg );
+    // void Update( const sword::ObjectAttributes& msg );
 
     //@}
 
     //! @name Error
     //@{
-    std::string Error( const MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode& error ) const;
+    std::string Error( const sword::ObjectMagicActionAck_ErrorCode& error ) const;
     //@}
 
 

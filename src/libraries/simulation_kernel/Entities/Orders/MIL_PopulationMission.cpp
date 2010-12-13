@@ -24,7 +24,7 @@
 // Name: MIL_PopulationMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const Common::MsgCrowdOrder& asn )
+MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const sword::CrowdOrder& asn )
     : MIL_Mission_ABC       ( type, population.GetKnowledge(), asn.parameters() )
     , population_           ( population )
     , bDIABehaviorActivated_( false )

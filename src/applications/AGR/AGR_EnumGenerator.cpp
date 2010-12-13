@@ -185,7 +185,7 @@ void AGR_EnumGenerator::GenerateTranslatorImplementation( const AGR_Workspace& w
     EnumMissionInfNatureObjectif    -> E_MissionInfNatureObjectif
     EnumAutomatOrderFormation      -> E_AutomatOrderFormation
     EnumControlErrorCode               -> E_CtrlErrorCode
-    MsgCtrlClientAnnouncement       -> E_MsgCtrlClientAnnouncement
+    CtrlClientAnnouncement       -> E_CtrlClientAnnouncement
 */
 // Created: APE 2005-02-10
 // -----------------------------------------------------------------------------
@@ -266,7 +266,7 @@ std::string AGR_EnumGenerator::CreateScriptName( const std::string strValue ) co
     EnumMissionInfNatureObjectif   -> MissionInfNatureObjectif
     EnumAutomatOrderFormation      -> AutomatOrderFormation
     EnumControlErrorCode           -> CtrlErrorCode
-    MsgCtrlClientAnnouncement      -> MsgCtrlClientAnnouncement
+    CtrlClientAnnouncement      -> CtrlClientAnnouncement
 */
 // Created: APE 2005-02-10
 // -----------------------------------------------------------------------------

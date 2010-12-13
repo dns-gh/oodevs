@@ -16,7 +16,7 @@
 #include "MT_Tools/MT_Converter.h"
 #include "tools/Resolver.h"
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameters;
 }
@@ -140,7 +140,7 @@ public:
     virtual void SendCreation() const;
     virtual void SendFullState() const;
     virtual void SendKnowledge() const;
-    virtual void OnReceiveMsgChangeDiplomacy( const Common::MsgMissionParameters& msg );
+    virtual void OnReceiveChangeDiplomacy( const sword::MsgMissionParameters& msg );
     //@}
 
 private:

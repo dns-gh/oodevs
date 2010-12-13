@@ -14,14 +14,14 @@
 
 #include "NET_Publisher_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgSimToClient;
+    class SimToClient;
 }
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgClientToSim;
+    class ClientToSim;
 }
 
 namespace MsgsDispatcherToSim
@@ -40,7 +40,6 @@ class NET_AS_MOSServerMsgMgr : public NET_Publisher_ABC
                              , private boost::noncopyable
 {
 public:
-
     //! @name Constructors/Destructor
     //@{
              NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer, NET_Simulation_ABC& simulation );
@@ -49,16 +48,16 @@ public:
 
     //! @name Message sending
     //@{
-    virtual void Send( MsgsSimToClient::MsgSimToClient& asnMsg );
+    virtual void Send( sword::SimToClient& asnMsg );
     void RemoveClient( const std::string& client );
     //@}
 
 private:
     //! @name Msg callbacks
     //@{
-    void OnReceiveClient( const std::string& from, const MsgsClientToSim::MsgClientToSim& message );
+    void OnReceiveClient( const std::string& from, const sword::ClientToSim& message );
     void OnReceiveMiddle( const std::string& from, const MsgsDispatcherToSim::MsgDispatcherToSim& message );
-    void OnReceiveMsgCtrlClientAnnouncement( const std::string& from );
+    void OnReceiveCtrlClientAnnouncement( const std::string& from );
     //@}
 
     //! @name Types

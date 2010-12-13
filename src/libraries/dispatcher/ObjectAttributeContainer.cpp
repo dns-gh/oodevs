@@ -58,7 +58,7 @@ ObjectAttributeContainer::~ObjectAttributeContainer()
 // Created: SBO 2010-06-09
 // -----------------------------------------------------------------------------
 template< typename T >
-void ObjectAttributeContainer::CreateOrUpdate( const Common::ObjectAttributes& message )
+void ObjectAttributeContainer::CreateOrUpdate( const sword::ObjectAttributes& message )
 {
     for( T_ObjectAttributes::iterator it = attributes_.begin(); it != attributes_.end(); ++it )
         if( dynamic_cast< T* >( &*it ) )
@@ -74,7 +74,7 @@ void ObjectAttributeContainer::CreateOrUpdate( const Common::ObjectAttributes& m
 // Created: SBO 2010-06-09
 // -----------------------------------------------------------------------------
 template< typename T >
-void ObjectAttributeContainer::CreateOrUpdate( const Common::ObjectAttributes& message, const Model_ABC& model )
+void ObjectAttributeContainer::CreateOrUpdate( const sword::ObjectAttributes& message, const Model_ABC& model )
 {
     for( T_ObjectAttributes::iterator it = attributes_.begin(); it != attributes_.end(); ++it )
         if( dynamic_cast< T* >( &*it ) )
@@ -89,7 +89,7 @@ void ObjectAttributeContainer::CreateOrUpdate( const Common::ObjectAttributes& m
 // Name: ObjectAttributeContainer destructor
 // Created: NLD 2010-10-27
 // -----------------------------------------------------------------------------
-void ObjectAttributeContainer::Update( const Common::ObjectAttributes& message )
+void ObjectAttributeContainer::Update( const sword::ObjectAttributes& message )
 {
     if( message.has_construction() )
         CreateOrUpdate< ConstructionAttribute >( message );
@@ -135,7 +135,7 @@ void ObjectAttributeContainer::Update( const Common::ObjectAttributes& message )
 // Name: ObjectAttributeContainer destructor
 // Created: NLD 2010-10-27
 // -----------------------------------------------------------------------------
-void ObjectAttributeContainer::Send( Common::ObjectAttributes& message ) const
+void ObjectAttributeContainer::Send( sword::ObjectAttributes& message ) const
 {
     std::for_each( attributes_.begin(), attributes_.end(),
         boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( message ) ) );

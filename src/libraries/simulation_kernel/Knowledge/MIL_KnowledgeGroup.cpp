@@ -627,24 +627,24 @@ void MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupUpdate
+// Name: MIL_KnowledgeGroup::OnReceiveKnowledgeGroupUpdate
 // Created: FDS 2010-01-13
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim::MsgKnowledgeMagicAction& message, const tools::Resolver< MIL_Army_ABC >& armies  )
+void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupUpdate( const sword::KnowledgeMagicAction& message, const tools::Resolver< MIL_Army_ABC >& armies  )
 {
     switch( message.type() )
     {
-    case MsgsClientToSim::MsgKnowledgeMagicAction::enable:
-        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupEnable( message.parameters() ) || hasBeenUpdated_;
+    case sword::KnowledgeMagicAction::enable:
+        hasBeenUpdated_ = OnReceiveKnowledgeGroupEnable( message.parameters() ) || hasBeenUpdated_;
         break;
-    case MsgsClientToSim::MsgKnowledgeMagicAction::update_party:
-        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupChangeSuperior( message.parameters(), armies, false ) || hasBeenUpdated_;
+    case sword::KnowledgeMagicAction::update_party:
+        hasBeenUpdated_ = OnReceiveKnowledgeGroupChangeSuperior( message.parameters(), armies, false ) || hasBeenUpdated_;
         break;
-    case MsgsClientToSim::MsgKnowledgeMagicAction::update_party_parent:
-        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupChangeSuperior( message.parameters(), armies, true ) || hasBeenUpdated_;
+    case sword::KnowledgeMagicAction::update_party_parent:
+        hasBeenUpdated_ = OnReceiveKnowledgeGroupChangeSuperior( message.parameters(), armies, true ) || hasBeenUpdated_;
         break;
-    case MsgsClientToSim::MsgKnowledgeMagicAction::update_type:
-        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupSetType( message.parameters() ) || hasBeenUpdated_;
+    case sword::KnowledgeMagicAction::update_type:
+        hasBeenUpdated_ = OnReceiveKnowledgeGroupSetType( message.parameters() ) || hasBeenUpdated_;
         break;
     default:
         break;
@@ -653,30 +653,30 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable
+// Name: MIL_KnowledgeGroup::OnReceiveKnowledgeGroupEnable
 // Created: SLG 2009-12-17
 // -----------------------------------------------------------------------------
-bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const Common::MsgMissionParameters& message )
+bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupEnable( const sword::MsgMissionParameters& message )
 {
     isActivated_ = message.elem( 0 ).value().Get( 0 ).booleanvalue();
     return true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior
+// Name: MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior
 // Created: FHD 2009-12-17:
 // -----------------------------------------------------------------------------
-bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const Common::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent )
+bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior( const sword::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent )
 {
     MIL_Army_ABC* pTargetArmy = armies.Find( message.elem( 0 ).value().Get( 0 ).party().id() );
     if( !pTargetArmy || *pTargetArmy != GetArmy() )
-        throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck::ErrorCode >( MsgsSimToClient::KnowledgeGroupAck::error_invalid_camp );
+        throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_camp );
     MIL_KnowledgeGroup* pNewParent = 0;
     if( hasParent )
     {
         pNewParent = pTargetArmy->FindKnowledgeGroup( message.elem( 1 ).value().Get( 0 ).knowledgegroup().id() );
         if( !pNewParent || pNewParent->IsJammed() )
-            throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck::ErrorCode >( MsgsSimToClient::KnowledgeGroupAck::error_invalid_superior );
+            throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_superior );
     }
     if( pNewParent )
     {
@@ -714,10 +714,10 @@ bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const Common:
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupSetType
+// Name: MIL_KnowledgeGroup::OnReceiveKnowledgeGroupSetType
 // Created: FHD 2009-12-17:
 // -----------------------------------------------------------------------------
-bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupSetType( const Common::MsgMissionParameters& message )
+bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupSetType( const sword::MsgMissionParameters& message )
 {
     const MIL_KnowledgeGroupType* pFoundType = MIL_KnowledgeGroupType::FindType( message.elem( 0 ).value().Get( 0 ).acharstr() );
     if( pFoundType && pFoundType->GetID() != GetType().GetID() )
@@ -729,10 +729,10 @@ bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupSetType( const Common::MsgMis
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupCreation
+// Name: MIL_KnowledgeGroup::OnReceiveKnowledgeGroupCreation
 // Created: FHD 2009-12-17:
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupCreation( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& /*message*/ )
+void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupCreation( const sword::KnowledgeGroupCreationRequest& /*message*/ )
 {
     // TODO
 }

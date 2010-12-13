@@ -11,13 +11,8 @@
 #define __protocol_Aar_h__
 
 #pragma warning( push, 0 )
-#pragma warning( disable : 4244 )
-
-#include "Definitions.h"
-#include "generated/Common.pb.h"
-#include "generated/ClientToAar.pb.h"
-#include "generated/AarToClient.pb.h"
-
+#include "protocol/proto/client_aar.pb.h"
+#include "protocol/proto/aar_client.pb.h"
 #pragma warning( pop )
 
 #endif // __protocol_Aar_h__

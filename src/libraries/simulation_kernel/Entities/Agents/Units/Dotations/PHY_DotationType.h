@@ -14,7 +14,7 @@
 
 #include "MT_Tools/MT_Stl.h"
 
-namespace Common
+namespace sword
 {
     enum EnumDotationFamily;
 }
@@ -52,7 +52,7 @@ public:
     static void Terminate ();
 
     static const PHY_DotationType*     FindDotationType    ( const std::string& strName );
-    static const PHY_DotationType*     FindDotationType    ( Common::EnumDotationFamily nAsnID );
+    static const PHY_DotationType*     FindDotationType    ( sword::EnumDotationFamily nAsnID );
     static const PHY_DotationType*     FindDotationType    ( unsigned int nID );
     static const PHY_DotationCategory* FindDotationCategory( unsigned int nID );
     static const PHY_DotationCategory* FindDotationCategory( const std::string& strName );
@@ -61,7 +61,7 @@ public:
     //! @name Accessors
     //@{
     const std::string&              GetName               () const;
-          Common::EnumDotationFamily GetAsnID              () const;
+          sword::EnumDotationFamily GetAsnID              () const;
           unsigned int                      GetID                 () const;
     const PHY_DotationLogisticType& GetDefaultLogisticType() const;
     //@}
@@ -96,7 +96,7 @@ private:
     //@}
 
 private:
-     PHY_DotationType( const std::string& strName, E_DotationType nType, Common::EnumDotationFamily nAsnID, const PHY_DotationLogisticType& defaultLogisticType );
+     PHY_DotationType( const std::string& strName, E_DotationType nType, sword::EnumDotationFamily nAsnID, const PHY_DotationLogisticType& defaultLogisticType );
     ~PHY_DotationType();
 
     //! @name Initialisation
@@ -115,7 +115,7 @@ private:
 private:
     const std::string               strName_;
     const E_DotationType            nType_;
-    const Common::EnumDotationFamily nAsnID_;
+    const sword::EnumDotationFamily nAsnID_;
     const PHY_DotationLogisticType& defaultLogisticType_;
           T_DotationCategoryMap     dotationCategories_;
 

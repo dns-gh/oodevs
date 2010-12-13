@@ -80,7 +80,7 @@ Army::~Army()
 // Name: Army::CommitTo
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
-void Army::CommitTo( Common::MsgMissionParameter& message ) const
+void Army::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -91,7 +91,7 @@ void Army::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: Army::CommitTo
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
-void Army::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void Army::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
         Entity< Team_ABC >::CommitTo( *message.mutable_party() );

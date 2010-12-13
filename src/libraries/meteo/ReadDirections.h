@@ -12,14 +12,14 @@
 
 #include "MT_Tools/MT_Vector2D.h"
 
-namespace Common
+namespace sword
 {
     class MsgHeading;
 }
 
 namespace weather
 {
-    MT_Vector2D ReadDirection( const Common::MsgHeading& message );
+    MT_Vector2D ReadDirection( const sword::MsgHeading& message );
 }
 
 #endif // __weather_ReadDirections_h_

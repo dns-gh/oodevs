@@ -40,8 +40,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
     void CommitTo( T_Setter message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}

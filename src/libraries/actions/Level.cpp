@@ -32,7 +32,7 @@ Level::Level( const kernel::OrderParameter& parameter, const kernel::HierarchyLe
 // Name: Level constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-Level::Level( const kernel::OrderParameter& parameter, const Common::EnumNatureLevel& message, const kernel::FormationLevels& levels )
+Level::Level( const kernel::OrderParameter& parameter, const sword::EnumNatureLevel& message, const kernel::FormationLevels& levels )
     : Parameter< QString >( parameter )
     , level_( *levels.Resolve( message ) )
 {
@@ -65,7 +65,7 @@ Level::~Level()
 // -----------------------------------------------------------------------------
 void Level::CommitTo( T_Setter setter ) const
 {
-    setter( Common::EnumNatureLevel( level_.GetId() ) );
+    setter( sword::EnumNatureLevel( level_.GetId() ) );
 }
 
 // -----------------------------------------------------------------------------

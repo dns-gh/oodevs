@@ -14,16 +14,16 @@
 #include "clients_kernel/Karma.h"
 #include "tools/Resolver.h"
 
-namespace Common
+namespace sword
 {
-    class MsgChangeDiplomacy;
+    class ChangeDiplomacy;
     enum EnumDiplomacy;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgPartyCreation;
-    class MsgChangeDiplomacyAck;
+    class PartyCreation;
+    class ChangeDiplomacyAck;
 }
 
 namespace dispatcher
@@ -38,20 +38,20 @@ namespace dispatcher
 // =============================================================================
 class Side : public dispatcher::Team_ABC
            , public kernel::Extension_ABC
-           , public kernel::Updatable_ABC< Common::MsgChangeDiplomacy >
-           , public kernel::Updatable_ABC< MsgsSimToClient::MsgChangeDiplomacyAck >
+           , public kernel::Updatable_ABC< sword::ChangeDiplomacy >
+           , public kernel::Updatable_ABC< sword::ChangeDiplomacyAck >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Side( const Model_ABC& model, const MsgsSimToClient::MsgPartyCreation& msg );
+             Side( const Model_ABC& model, const sword::PartyCreation& msg );
     virtual ~Side();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const Common::MsgChangeDiplomacy& asnMsg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& asnMsg );
+    virtual void DoUpdate( const sword::ChangeDiplomacy& asnMsg );
+    virtual void DoUpdate( const sword::ChangeDiplomacyAck& asnMsg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -81,14 +81,14 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const kernel::Team_ABC*, Common::EnumDiplomacy > T_Diplomacies;
+    typedef std::map< const kernel::Team_ABC*, sword::EnumDiplomacy > T_Diplomacies;
     //@}
 
 private:
     //! @name Member data
     //@{
     const Model_ABC& model_;
-    Common::EnumDiplomacy nType_;
+    sword::EnumDiplomacy nType_;
     kernel::Karma karma_;
     T_Diplomacies diplomacies_;
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups_;

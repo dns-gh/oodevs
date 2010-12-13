@@ -12,14 +12,13 @@
 
 #include "ObjectAttribute_ABC.h"
 
-namespace Common
+namespace sword
 {
     enum ObstacleType_DemolitionTargetType;
 }
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  ObstacleAttribute
     @brief  ObstacleAttribute
@@ -31,20 +30,20 @@ class ObstacleAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObstacleAttribute( const Common::ObjectAttributes& message );
+    explicit ObstacleAttribute( const sword::ObjectAttributes& message );
     virtual ~ObstacleAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::ObjectAttributes& message );
-    virtual void Send  ( Common::ObjectAttributes& message ) const;
+    virtual void Update( const sword::ObjectAttributes& message );
+    virtual void Send  ( sword::ObjectAttributes& message ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    Common::ObstacleType_DemolitionTargetType obstacle_;
+    sword::ObstacleType_DemolitionTargetType obstacle_;
     bool isActivated_;
     int activationTime_;
     //@}

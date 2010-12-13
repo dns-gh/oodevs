@@ -438,7 +438,7 @@ void PHY_DotationGroupContainer::SendChangedState( client::UnitAttributes& asn )
     for( CIT_DotationSet itDotation = dotationsChanged_.begin(); itDotation != dotationsChanged_.end(); ++itDotation )
     {
         const PHY_Dotation& dotation = **itDotation;
-        MsgsSimToClient::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_dotation_eff_ressource()->add_elem();
+        sword::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_dotation_eff_ressource()->add_elem();
         asnRessource.mutable_type()->set_id( dotation.GetCategory().GetMosID() );
         asnRessource.set_quantite_disponible( (unsigned int)dotation.GetValue() );
     }
@@ -464,7 +464,7 @@ void PHY_DotationGroupContainer::SendFullState( client::UnitAttributes& asn ) co
         for( PHY_DotationGroup::CIT_DotationMap itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
         {
             const PHY_Dotation& dotation = *itDotation->second;
-            MsgsSimToClient::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_dotation_eff_ressource()->add_elem();
+            sword::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_dotation_eff_ressource()->add_elem();
             asnRessource.mutable_type()->set_id( dotation.GetCategory().GetMosID() );
             asnRessource.set_quantite_disponible( (unsigned int)dotation.GetValue() );
         }

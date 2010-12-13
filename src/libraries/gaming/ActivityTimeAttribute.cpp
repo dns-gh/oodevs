@@ -82,7 +82,7 @@ void ActivityTimeAttribute::UpdateData( const T& message )
 // Name: ActivityTimeAttribute::DoUpdate
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void ActivityTimeAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -91,8 +91,7 @@ void ActivityTimeAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& me
 // Name: ActivityTimeAttribute::DoUpdate
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void ActivityTimeAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
-

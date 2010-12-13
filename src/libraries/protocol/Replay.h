@@ -11,13 +11,8 @@
 #define __protocol_Replay_h__
 
 #pragma warning( push, 0 )
-#pragma warning( disable : 4244 )
-
-#include "Definitions.h"
-#include "generated/Common.pb.h"
-#include "generated/ClientToReplay.pb.h"
-#include "generated/ReplayToClient.pb.h"
-
+#include "protocol/proto/client_replay.pb.h"
+#include "protocol/proto/replay_client.pb.h"
 #pragma warning( pop )
 
 #endif // __protocol_Replay_h__

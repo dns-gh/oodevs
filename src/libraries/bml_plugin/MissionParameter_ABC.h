@@ -44,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( Common::MsgMissionParameter& parameter ) const = 0;
+    virtual void Serialize( sword::MsgMissionParameter& parameter ) const = 0;
     //@}
 
 private:

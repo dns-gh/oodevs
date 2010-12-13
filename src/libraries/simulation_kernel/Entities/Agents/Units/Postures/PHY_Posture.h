@@ -14,9 +14,9 @@
 
 #include "MT_Tools/MT_Vector2DTypes.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    enum MsgUnitAttributes_Posture;
+    enum UnitAttributes_Posture;
 }
 
 class PHY_ConsumptionType;
@@ -61,7 +61,7 @@ public:
     //@{
     const std::string&                                  GetName           () const;
           unsigned int                                  GetID             () const;
-          MsgsSimToClient::MsgUnitAttributes_Posture    GetAsnID          () const;
+          sword::UnitAttributes_Posture    GetAsnID          () const;
     const PHY_Posture*                                  GetNextAutoPosture() const;
     const PHY_ConsumptionType&                          GetConsumptionMode() const;
 
@@ -93,13 +93,13 @@ private:
     //@}
 
 private:
-     PHY_Posture( const std::string& strName, E_PostureType nType, MsgsSimToClient::MsgUnitAttributes_Posture nAsnID, const PHY_ConsumptionType& consumptionMode, unsigned int nFlags, const PHY_Posture* pNextAutoPosture = 0 );
+     PHY_Posture( const std::string& strName, E_PostureType nType, sword::UnitAttributes_Posture nAsnID, const PHY_ConsumptionType& consumptionMode, unsigned int nFlags, const PHY_Posture* pNextAutoPosture = 0 );
     ~PHY_Posture();
 
 private:
     const std::string                                   strName_;
     const E_PostureType                                 nType_;
-    const MsgsSimToClient::MsgUnitAttributes_Posture    nAsnID_;
+    const sword::UnitAttributes_Posture    nAsnID_;
     const unsigned int                                  nFlags_;
     const PHY_ConsumptionType&                          consumptionMode_;
     const PHY_Posture*                                  pNextAutoPosture_;

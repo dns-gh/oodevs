@@ -91,7 +91,7 @@ void ReportFactory::ReadReport( xml::xistream& xis )
 // Created: LDC 2010-03-18
 // $$$$ AGE 2007-10-19: caca et ^c^v
 // -----------------------------------------------------------------------------
-QDateTime ReportFactory::GetTime( const Common::MsgDateTime& d ) const
+QDateTime ReportFactory::GetTime( const sword::MsgDateTime& d ) const
 {
     const std::string date( (const char*)d.data().c_str() );
     QString extended( date.c_str() );
@@ -104,17 +104,17 @@ QDateTime ReportFactory::GetTime( const Common::MsgDateTime& d ) const
 // Name: ReportFactory::CreateReport
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const MsgsSimToClient::MsgReport& message ) const
+Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const sword::Report& message ) const
 {
     ReportTemplate* report = Find( message.type().id() );
     if( !report )
         return 0;
     Report::E_Type type = Report::eRC;
-    if( message.category().id() == MsgsSimToClient::information )
+    if( message.category().id() == sword::information )
         type = Report::eMessage;
-    else if( message.category().id() == MsgsSimToClient::exceptional_event )
+    else if( message.category().id() == sword::exceptional_event )
         type = Report::eEvent;
-    else if( message.category().id() == MsgsSimToClient::warning )
+    else if( message.category().id() == sword::warning )
         type = Report::eWarning;
     return new Report( agent, type, report->RenderMessage( message ), GetTime( message.time() ) );
 }
@@ -123,7 +123,7 @@ Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const Msgs
 // Name: ReportFactory::FormatReport
 // Created: LDC 2010-03-17
 // -----------------------------------------------------------------------------
-std::string ReportFactory::FormatReport( const MsgsSimToClient::MsgReport& message ) const
+std::string ReportFactory::FormatReport( const sword::Report& message ) const
 {
     ReportTemplate* report = Find( message.type().id() );
     if( report )
@@ -135,7 +135,7 @@ std::string ReportFactory::FormatReport( const MsgsSimToClient::MsgReport& messa
 // Name: ReportFactory::CreateTrace
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const MsgsSimToClient::MsgTrace& message ) const
+Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const sword::Trace& message ) const
 {
     if( !time_ )
         throw std::runtime_error( "No time, can't generate trace" );
@@ -146,7 +146,7 @@ Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const MsgsS
 // Name: ReportFactory::RenderParameter
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-QString ReportFactory::RenderParameter( const Common::MsgMissionParameter_Value& value ) const
+QString ReportFactory::RenderParameter( const sword::MsgMissionParameter_Value& value ) const
 {
     if( value.has_areal() )
         return QString::number( value.areal() );

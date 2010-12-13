@@ -25,7 +25,7 @@ namespace xml
     class xostream;
 }
 
-namespace Common
+namespace sword
 {
     class ObjectAttributeMedicalTreatment;
 }
@@ -56,7 +56,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CreateReport( int id, const std::string& name, const Common::ObjectAttributeMedicalTreatment& medical );
+    virtual void CreateReport( int id, const std::string& name, const sword::ObjectAttributeMedicalTreatment& medical );
     virtual void Publish( Publisher_ABC& publisher );
     //@}
 

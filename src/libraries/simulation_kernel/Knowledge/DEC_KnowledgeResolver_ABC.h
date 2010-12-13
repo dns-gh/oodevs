@@ -12,7 +12,7 @@
 
 #include <boost/shared_ptr.hpp>
 
-namespace Common
+namespace sword
 {
     class ObjectKnowledgeId;
     class CrowdKnowledgeId;
@@ -42,14 +42,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const Common::UnitKnowledgeId&  asn ) const = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const sword::UnitKnowledgeId&  asn ) const = 0;
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( unsigned int nID ) const = 0;
 
-    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const Common::ObjectKnowledgeId& asn ) const = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const sword::ObjectKnowledgeId& asn ) const = 0;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const = 0;
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const  Common::UrbanObjectKnowledgeId& asn ) const = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const  sword::UrbanObjectKnowledgeId& asn ) const = 0;
     virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( unsigned int nID ) const = 0;
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::CrowdKnowledgeId& asn ) const = 0;
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const = 0;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int nID ) const = 0;
     //@}
 

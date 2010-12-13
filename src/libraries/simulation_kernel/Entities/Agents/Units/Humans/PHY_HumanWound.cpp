@@ -27,12 +27,12 @@ unsigned int     PHY_HumanWound::nMentalDiseaseHealingTime_ = 0;
 unsigned int     PHY_HumanWound::nMentalDiseaseRestingTime_ = 0;
 double PHY_HumanWound::rMentalDiseaseFactor_      = 0;
 
-const PHY_HumanWound PHY_HumanWound::notWounded_( "healthy", eNotWounded, Common::non_blesse             );
-const PHY_HumanWound PHY_HumanWound::woundedU3_ ( "u3"       , eWoundedU3 , Common::blesse_urgence_3       );
-const PHY_HumanWound PHY_HumanWound::woundedU2_ ( "u2"       , eWoundedU2 , Common::blesse_urgence_2       );
-const PHY_HumanWound PHY_HumanWound::woundedU1_ ( "u1"       , eWoundedU1 , Common::blesse_urgence_1       );
-const PHY_HumanWound PHY_HumanWound::woundedUE_ ( "ue"       , eWoundedUE , Common::blesse_urgence_extreme );
-const PHY_HumanWound PHY_HumanWound::killed_    ( "dead"     , eKilled    , Common::mort                   );
+const PHY_HumanWound PHY_HumanWound::notWounded_( "healthy", eNotWounded, sword::non_blesse             );
+const PHY_HumanWound PHY_HumanWound::woundedU3_ ( "u3"     , eWoundedU3 , sword::blesse_urgence_3       );
+const PHY_HumanWound PHY_HumanWound::woundedU2_ ( "u2"     , eWoundedU2 , sword::blesse_urgence_2       );
+const PHY_HumanWound PHY_HumanWound::woundedU1_ ( "u1"     , eWoundedU1 , sword::blesse_urgence_1       );
+const PHY_HumanWound PHY_HumanWound::woundedUE_ ( "ue"     , eWoundedUE , sword::blesse_urgence_extreme );
+const PHY_HumanWound PHY_HumanWound::killed_    ( "dead"   , eKilled    , sword::mort                   );
 
 struct PHY_HumanWound::LoadingWrapper
 {
@@ -182,7 +182,7 @@ void PHY_HumanWound::Terminate()
 // Name: PHY_HumanWound constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_HumanWound::PHY_HumanWound( const std::string& strName, E_Wound nWound, const Common::EnumHumanWound& nAsnID )
+PHY_HumanWound::PHY_HumanWound( const std::string& strName, E_Wound nWound, const sword::EnumHumanWound& nAsnID )
     : strName_        ( strName )
     , nWound_         ( nWound  )
     , nAsnID_         ( nAsnID  )
@@ -300,9 +300,9 @@ const PHY_HumanWound* PHY_HumanWound::Find( const std::string& strName )
 // Name: PHY_HumanWound::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const PHY_HumanWound* PHY_HumanWound::Find( Common::EnumHumanWound nAsnID )
+const PHY_HumanWound* PHY_HumanWound::Find( sword::EnumHumanWound nAsnID )
 {
-    CIT_HumanWoundMap it = std::find_if( humanWounds_.begin(), humanWounds_.end(), std::compose1( std::bind2nd( std::equal_to< Common::EnumHumanWound >(), nAsnID ), std::compose1( std::mem_fun( &PHY_HumanWound::GetAsnID ), std::select2nd< T_HumanWoundMap::value_type >() ) ) );
+    CIT_HumanWoundMap it = std::find_if( humanWounds_.begin(), humanWounds_.end(), std::compose1( std::bind2nd( std::equal_to< sword::EnumHumanWound >(), nAsnID ), std::compose1( std::mem_fun( &PHY_HumanWound::GetAsnID ), std::select2nd< T_HumanWoundMap::value_type >() ) ) );
 
     return it == humanWounds_.end() ? 0 : it->second;
 }
@@ -340,7 +340,7 @@ unsigned int PHY_HumanWound::GetID() const
 // Name: PHY_HumanWound::GetAsnID
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-Common::EnumHumanWound PHY_HumanWound::GetAsnID() const
+sword::EnumHumanWound PHY_HumanWound::GetAsnID() const
 {
     return nAsnID_;
 }

@@ -96,7 +96,7 @@ void ObjectKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
 // Name: ObjectKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
+void ObjectKnowledge::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -106,7 +106,7 @@ void ObjectKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: ObjectKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void ObjectKnowledge::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
         CommitTo( *message.mutable_objectknowledge() );
@@ -116,9 +116,9 @@ void ObjectKnowledge::CommitTo( Common::MsgMissionParameter_Value& message ) con
 // Name: ObjectKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::CommitTo( Common::ObjectKnowledgeId& message ) const
+void ObjectKnowledge::CommitTo( sword::ObjectKnowledgeId& message ) const
 {
-    Entity< ObjectKnowledge_ABC >::CommitTo< Common::ObjectKnowledgeId >( message );
+    Entity< ObjectKnowledge_ABC >::CommitTo< sword::ObjectKnowledgeId >( message );
 }
 
 // -----------------------------------------------------------------------------

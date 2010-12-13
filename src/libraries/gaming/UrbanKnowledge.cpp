@@ -30,7 +30,7 @@ using namespace kernel;
 // Name: UrbanKnowledge constructor
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
-UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message, Controller& controller,
+UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const sword::UrbanKnowledgeCreation& message, Controller& controller,
                                 const tools::Resolver< gui::TerrainObjectProxy >& terrainObjectResolver )
     : EntityImplementation< UrbanKnowledge_ABC >( controller, message.knowledge().id(), "" )
     , owner_                ( owner )
@@ -54,7 +54,7 @@ UrbanKnowledge::~UrbanKnowledge()
 // Name: UrbanKnowledge::DoUpdate
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
-void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
+void UrbanKnowledge::DoUpdate( const sword::UrbanKnowledgeUpdate& message )
 {
     if( message.urban_block().id() )
         pRealUrban_ = terrainObjectResolver_.Find( message.urban_block().id() );
@@ -109,15 +109,7 @@ void UrbanKnowledge::DisplayInSummary( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 QString UrbanKnowledge::GetName() const
 {
-    if( pRealUrban_ )
-    {
-        std::string name = pRealUrban_->GetName();
-        if ( name.empty() )
-            return QString( tools::translate( "Urban", "Urban block[%1]" ).arg( pRealUrban_->GetId() ) );
-        return QString( pRealUrban_->GetName().ascii() );
-    }
-    return tools::translate( "Urban", "Unknown urban object" );
-
+    return pRealUrban_ ? QString( pRealUrban_->GetName().ascii() ) : tools::translate( "Urban", "Unknown urban object" );
 }
 
 // -----------------------------------------------------------------------------

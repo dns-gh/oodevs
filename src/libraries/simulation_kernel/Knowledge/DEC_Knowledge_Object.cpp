@@ -444,13 +444,13 @@ void DEC_Knowledge_Object::UpdateRelevance()
 // Name: DEC_Knowledge_Object::BuildMsgPerceptionSources
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgPerceptionSources( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
+void DEC_Knowledge_Object::BuildMsgPerceptionSources( sword::ObjectKnowledgeUpdate& asn ) const
 {
     if( !IsAttributeUpdated( eAttr_PerceptionSources ) )
         return;
     for( CIT_PerceptionSourceSet it = perceptionPerAutomateSet_.begin(); it != perceptionPerAutomateSet_.end(); ++it )
     {
-        Common::AutomatId& data = *asn.mutable_perceiving_automats()->add_elem();
+        sword::AutomatId& data = *asn.mutable_perceiving_automats()->add_elem();
         data.set_id( (*it)->GetID() );
     }
 }
@@ -459,7 +459,7 @@ void DEC_Knowledge_Object::BuildMsgPerceptionSources( MsgsSimToClient::MsgObject
 // Name: DEC_Knowledge_Object::BuildMsgRelevance
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgRelevance( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
+void DEC_Knowledge_Object::BuildMsgRelevance( sword::ObjectKnowledgeUpdate& asn ) const
 {
     if( IsAttributeUpdated( eAttr_Relevance ) )
         asn.set_relevance( (unsigned int)( rRelevance_ * 100. ) );
@@ -469,11 +469,11 @@ void DEC_Knowledge_Object::BuildMsgRelevance( MsgsSimToClient::MsgObjectKnowledg
 // Name: DEC_Knowledge_Object::BuildMsgLocalisations
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgLocalisations( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
+void DEC_Knowledge_Object::BuildMsgLocalisations( sword::ObjectKnowledgeUpdate& asn ) const
 {
     if( IsAttributeUpdated( eAttr_Localisation ) )
         // $$$$ FDS 2010-04-16: Dans le cas où le type de localiation est none, la Localisation n'est pas renseigné ( Dans Gaming cela entrainerait sinon un Throw )
-        if( localisation_.GetType() !=  Common::MsgLocation_Geometry_none )
+        if( localisation_.GetType() !=  sword::MsgLocation_Geometry_none )
             NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_location() );
 }
 
@@ -481,7 +481,7 @@ void DEC_Knowledge_Object::BuildMsgLocalisations( MsgsSimToClient::MsgObjectKnow
 // Name: DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
+void DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel( sword::ObjectKnowledgeUpdate& asn ) const
 {
     if( IsAttributeUpdated( eAttr_CurrentPerceptionLevel ) )
         asn.set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
@@ -491,7 +491,7 @@ void DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel( MsgsSimToClient::MsgO
 // Name: DEC_Knowledge_Object::BuildMsgStates
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgAttributes( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
+void DEC_Knowledge_Object::BuildMsgAttributes( sword::ObjectKnowledgeUpdate& asn ) const
 {
     // $$$$ NLD 2010-10-26: Bullshit, mais faut ce qu'il faut pour réparer le mer(d)ge des objets
     if( nAttributesUpdated_ == eAttr_AllAttributes )
@@ -510,7 +510,7 @@ void DEC_Knowledge_Object::BuildMsgAttributes( MsgsSimToClient::MsgObjectKnowled
 // Name: DEC_Knowledge_Object::BuildMsgRealObject
 // Created: NLD 2004-03-26
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgRealObject( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
+void DEC_Knowledge_Object::BuildMsgRealObject( sword::ObjectKnowledgeUpdate& asn ) const
 {
     if( IsAttributeUpdated( eAttr_RealObject ) )
         asn.mutable_object()->set_id( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );

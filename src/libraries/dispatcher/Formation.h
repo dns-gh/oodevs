@@ -13,15 +13,15 @@
 #include "Formation_ABC.h"
 #include "LogisticEntity.h"
 
-namespace Common
+namespace sword
 {
     enum EnumNatureLevel;
-    class MsgChangeLogisticLinks;
+    class ChangeLogisticLinks;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgFormationCreation;
+    class FormationCreation;
 }
 
 namespace dispatcher
@@ -36,12 +36,12 @@ namespace dispatcher
 // Created: NLD 2006-09-19
 // =============================================================================
 class Formation : public dispatcher::Formation_ABC
-                , public kernel::Updatable_ABC< Common::MsgChangeLogisticLinks >
+                , public kernel::Updatable_ABC< sword::ChangeLogisticLinks >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( const Model_ABC& model, const MsgsSimToClient::MsgFormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels );
+             Formation( const Model_ABC& model, const sword::FormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels );
     virtual ~Formation();
     //@}
 
@@ -61,7 +61,7 @@ public:
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
-    virtual void DoUpdate( const Common::MsgChangeLogisticLinks&  msg );
+    virtual void DoUpdate( const sword::ChangeLogisticLinks&  msg );
 
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 

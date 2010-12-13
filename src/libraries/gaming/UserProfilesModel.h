@@ -10,10 +10,10 @@
 #ifndef __UserProfilesModel_h_
 #define __UserProfilesModel_h_
 
-namespace MsgsAuthenticationToClient
+namespace sword
 {
-    class MsgProfileCreation;
-    class MsgProfileDestruction;
+    class ProfileCreation;
+    class ProfileDestruction;
 }
 
 class UserProfile;
@@ -36,8 +36,8 @@ public:
 
     //! @name Operations
     //@{
-    void CreateProfile( const MsgsAuthenticationToClient::MsgProfileCreation& message );
-    void DeleteProfile( const MsgsAuthenticationToClient::MsgProfileDestruction& message );
+    void CreateProfile( const sword::ProfileCreation& message );
+    void DeleteProfile( const sword::ProfileDestruction& message );
     UserProfile& Get( const QString& login );
     const UserProfile* Find( const QString& login ) const;
     void Purge();

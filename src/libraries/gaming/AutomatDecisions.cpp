@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AutomatDecisions.h"
+#include "Tools.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/DecisionalModel.h"
 #include "clients_kernel/Controller.h"
@@ -16,13 +17,11 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "Tools.h"
 #include "protocol/Protocol.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 
 using namespace kernel;
-using namespace Common;
 
 // -----------------------------------------------------------------------------
 // Name: AutomatDecisions constructor
@@ -52,10 +51,10 @@ AutomatDecisions::~AutomatDecisions()
 // Name: AutomatDecisions::DoUpdate
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void AutomatDecisions::DoUpdate( const MsgsSimToClient::MsgAutomatAttributes& message )
+void AutomatDecisions::DoUpdate( const sword::AutomatAttributes& message )
 {
     if( message.has_etat_automate()  )
-        bEmbraye_ = ( message.etat_automate() == embraye );
+        bEmbraye_ = ( message.etat_automate() == sword::embraye );
     controller_.Update( *this );
 }
 
@@ -63,7 +62,7 @@ void AutomatDecisions::DoUpdate( const MsgsSimToClient::MsgAutomatAttributes& me
 // Name: AutomatDecisions::DoUpdate
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-void AutomatDecisions::DoUpdate( const Common::MsgAutomatOrder& message )
+void AutomatDecisions::DoUpdate( const sword::AutomatOrder& message )
 {
     const tools::Resolver_ABC< Mission >& resolver = model_;
     current_ = resolver.Find( message.type().id() );
@@ -145,7 +144,7 @@ void AutomatDecisions::Engage() const
 {
     simulation::SetAutomatMode message;
     message().mutable_automate()->set_id( agent_.GetId() );
-    message().set_mode( embraye );
+    message().set_mode( sword::embraye );
     message.Send( publisher_, 0 );
 }
 
@@ -157,7 +156,7 @@ void AutomatDecisions::Disengage() const
 {
     simulation::SetAutomatMode message;
     message().mutable_automate()->set_id( agent_.GetId() );
-    message().set_mode( debraye );
+    message().set_mode( sword::debraye );
     message.Send( publisher_, 0 );
 }
 
@@ -169,4 +168,3 @@ void AutomatDecisions::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Decisions", "Automat mission:" ), current_ );
 }
-

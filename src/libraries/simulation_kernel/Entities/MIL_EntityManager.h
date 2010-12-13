@@ -18,35 +18,34 @@
 #include "MIL_EntityManagerStaticMethods.h"
 #include "tools/Resolver.h"
 
-namespace Common
+namespace sword
 {
     enum ObstacleType_DemolitionTargetType;
-
-    class MsgCrowdOrder;
-    class MsgUnitOrder;
-    class MsgAutomatOrder;
-    class MsgAutomatChangeKnowledgeGroup;
-    class MsgAutomatChangeLogisticLinks;
-    class MsgAutomatChangeSuperior;
-    class MsgUnitChangeSuperior;
+    class CrowdOrder;
+    class UnitOrder;
+    class AutomatOrder;
+    class AutomatChangeKnowledgeGroup;
+    class AutomatChangeLogisticLinks;
+    class AutomatChangeSuperior;
+    class UnitChangeSuperior;
     class Tasker;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgKnowledgeGroupCreation;
-    class MsgKnowledgeGroupUpdate;
+    class KnowledgeGroupCreation;
+    class KnowledgeGroupUpdate;
 }
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgFragOrder;
-    class MsgObjectMagicAction;
-    class MsgSetAutomatMode;
-    class MsgUnitCreationRequest;
-    class MsgUnitMagicAction;
-    class MsgKnowledgeMagicAction;
-    class MsgMagicAction;
+    class FragOrder;
+    class ObjectMagicAction;
+    class SetAutomatMode;
+    class UnitCreationRequest;
+    class UnitMagicAction;
+    class KnowledgeMagicAction;
+    class MagicAction;
 }
 
 namespace urban
@@ -113,7 +112,7 @@ public:
     MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
     void CreateObject( xml::xistream& xis, MIL_Army_ABC& army );
     void CreateUrbanObject( const urban::TerrainObject_ABC& object );
-    MIL_Object_ABC* CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType );
+    MIL_Object_ABC* CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, sword::ObstacleType_DemolitionTargetType obstacleType );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
@@ -158,24 +157,24 @@ public:
 
     //! @external helper
     //@{
-    void SetToTasker( Common::Tasker& tasker, unsigned int id ) const;
+    void SetToTasker( sword::Tasker& tasker, unsigned int id ) const;
     //@}
 
     //! @name Network
     //@{
-    void OnReceiveMsgUnitMagicAction             ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
-    void OnReceiveMsgObjectMagicAction           ( const MsgsClientToSim::MsgObjectMagicAction&             message, unsigned int nCtx );
-    void OnReceiveMsgUnitOrder                   ( const Common::MsgUnitOrder&                              message, unsigned int nCtx );
-    void OnReceiveMsgAutomatOrder                ( const Common::MsgAutomatOrder&                           message, unsigned int nCtx );
-    void OnReceiveMsgCrowdOrder                  ( const Common::MsgCrowdOrder&                             message, unsigned int nCtx );
-    void OnReceiveMsgFragOrder                   ( const MsgsClientToSim::MsgFragOrder&                     message, unsigned int nCtx );
-    void OnReceiveMsgSetAutomateMode             ( const MsgsClientToSim::MsgSetAutomatMode&                message, unsigned int nCtx );
-    void OnReceiveMsgUnitCreationRequest         ( const MsgsClientToSim::MsgUnitCreationRequest&           message, unsigned int nCtx );
-    void OnReceiveMsgKnowledgeMagicAction        ( const MsgsClientToSim::MsgKnowledgeMagicAction&          message, unsigned int nCtx );
-    void OnReceiveMsgChangeDiplomacy             ( const MsgsClientToSim::MsgMagicAction&                   message, unsigned int nCtx );
-    void OnReceiveMsgChangeResourceLinks         ( const MsgsClientToSim::MsgMagicAction&                   message, unsigned int nCtx );
+    void OnReceiveUnitMagicAction             ( const sword::UnitMagicAction&               message, unsigned int nCtx );
+    void OnReceiveObjectMagicAction           ( const sword::ObjectMagicAction&             message, unsigned int nCtx );
+    void OnReceiveUnitOrder                   ( const sword::UnitOrder&                              message, unsigned int nCtx );
+    void OnReceiveAutomatOrder                ( const sword::AutomatOrder&                           message, unsigned int nCtx );
+    void OnReceiveCrowdOrder                  ( const sword::CrowdOrder&                             message, unsigned int nCtx );
+    void OnReceiveFragOrder                   ( const sword::FragOrder&                     message, unsigned int nCtx );
+    void OnReceiveSetAutomateMode             ( const sword::SetAutomatMode&                message, unsigned int nCtx );
+    void OnReceiveUnitCreationRequest         ( const sword::UnitCreationRequest&           message, unsigned int nCtx );
+    void OnReceiveKnowledgeMagicAction        ( const sword::KnowledgeMagicAction&          message, unsigned int nCtx );
+    void OnReceiveChangeDiplomacy             ( const sword::MagicAction&                   message, unsigned int nCtx );
+    void OnReceiveChangeResourceLinks         ( const sword::MagicAction&                   message, unsigned int nCtx );
     // LTO begin
-    void OnReceiveMsgKnowledgeGroupCreation      ( const MsgsClientToSim::MsgMagicAction&                   message, unsigned int nCtx );
+    void OnReceiveKnowledgeGroupCreation      ( const sword::MagicAction&                   message, unsigned int nCtx );
     // LTO end
     //@}
 
@@ -199,21 +198,21 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ProcessMsgAutomateChangeKnowledgeGroup( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
-    void ProcessMsgAutomateChangeLogisticLinks ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
-    void ProcessMsgAutomateChangeSuperior      ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
-    void ProcessMsgUnitChangeSuperior          ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
-    void ProcessMsgLogSupplyChangeQuotas       ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
-    void ProcessMsgLogSupplyPushFlow           ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
-    void ProcessMsgLogSupplyPullFlow           ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
-    void ProcessMsgMagicActionMoveTo           ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
+    void ProcessAutomateChangeKnowledgeGroup( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessAutomateChangeLogisticLinks ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessAutomateChangeSuperior      ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessUnitChangeSuperior          ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessLogSupplyChangeQuotas       ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessLogSupplyPushFlow           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessLogSupplyPullFlow           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessMagicActionMoveTo           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     // LTO begin
-    void ProcessMsgKnowledgeGroupUpdate        ( const MsgsClientToSim::MsgKnowledgeMagicAction& message, unsigned int nCtx );
-    void ProcessMsgMagicActionCreateFireOrder  ( const MsgsClientToSim::MsgUnitMagicAction&      message, unsigned int nCtx );
+    void ProcessKnowledgeGroupUpdate        ( const sword::KnowledgeMagicAction& message, unsigned int nCtx );
+    void ProcessMagicActionCreateFireOrder  ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     // LTO end
-    void ProcessMsgAutomatCreationRequest      ( const MsgsClientToSim::MsgUnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx );
-    void ProcessMsgFormationCreationRequest    ( const MsgsClientToSim::MsgUnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation );
-    void ProcessMsgCrowdCreationRequest        ( const MsgsClientToSim::MsgUnitMagicAction&      message, MIL_Army_ABC& army );
+    void ProcessAutomatCreationRequest      ( const sword::UnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx );
+    void ProcessFormationCreationRequest    ( const sword::UnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation );
+    void ProcessCrowdCreationRequest        ( const sword::UnitMagicAction&      message, MIL_Army_ABC& army );
     //@}
 
     //! @name types

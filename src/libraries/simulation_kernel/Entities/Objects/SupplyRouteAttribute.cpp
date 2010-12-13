@@ -68,7 +68,7 @@ SupplyRouteAttribute::SupplyRouteAttribute()
 // Name: SupplyRouteAttribute constructor
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-SupplyRouteAttribute::SupplyRouteAttribute( const Common::MsgMissionParameter_Value& attributes )
+SupplyRouteAttribute::SupplyRouteAttribute( const sword::MsgMissionParameter_Value& attributes )
     : bEquipped_       ( attributes.list( 1 ).booleanvalue() )
     , rWeightSupported_( attributes.list( 2 ).quantity() )
     , rWidth_          ( attributes.list( 3 ).quantity() )
@@ -153,7 +153,7 @@ void SupplyRouteAttribute::Register( MIL_Object_ABC& object ) const
 // Name: SupplyRouteAttribute::SendFullState
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::SendFullState( Common::ObjectAttributes& asn ) const
+void SupplyRouteAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_supply_route()->set_max_weight( (int)rWeightSupported_ );
     asn.mutable_supply_route()->set_width( (int)rWidth_ );
@@ -166,7 +166,7 @@ void SupplyRouteAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // Name: SupplyRouteAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
+void SupplyRouteAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {

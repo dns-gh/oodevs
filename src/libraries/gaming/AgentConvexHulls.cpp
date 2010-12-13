@@ -36,7 +36,7 @@ AgentConvexHulls::~AgentConvexHulls()
 // Name: AgentConvexHulls::DoUpdate
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-void AgentConvexHulls::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& attributes )
+void AgentConvexHulls::DoUpdate( const sword::UnitAttributes& attributes )
 {
     if( attributes.has_position()  )
         SetPosition( converter_.ConvertToXY( attributes.position() ) );

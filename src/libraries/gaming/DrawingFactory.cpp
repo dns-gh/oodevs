@@ -38,7 +38,7 @@ DrawingFactory::~DrawingFactory()
 // Name: DrawingFactory::CreateShape
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-gui::Drawing_ABC* DrawingFactory::CreateShape( const MsgsMessengerToClient::MsgShapeCreation& message ) const
+gui::Drawing_ABC* DrawingFactory::CreateShape( const sword::ShapeCreation& message ) const
 {
     DrawingPositions* location = new DrawingPositions( converter_, message );
     gui::Drawing_ABC* drawing = new Drawing( controller_, message, types_, *location, publisher_, converter_ );

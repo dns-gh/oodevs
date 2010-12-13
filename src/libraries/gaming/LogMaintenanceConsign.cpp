@@ -26,7 +26,7 @@ using namespace kernel;
 // Name: LogMaintenanceConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< ComponentType >& componentResolver, const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver )
+LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const sword::LogMaintenanceHandlingCreation& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< ComponentType >& componentResolver, const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver )
     : controller_      ( controller )
     , resolver_        ( resolver )
     , nID_             ( message.request().id() )
@@ -56,7 +56,7 @@ LogMaintenanceConsign::~LogMaintenanceConsign()
 // Name: LogMaintenanceConsign::Update
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogMaintenanceConsign::Update( const MsgsSimToClient::MsgLogMaintenanceHandlingUpdate& message )
+void LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& message )
 {
     if( message.has_etat()  )
         nState_ = E_LogMaintenanceHandlingStatus( message.etat() );

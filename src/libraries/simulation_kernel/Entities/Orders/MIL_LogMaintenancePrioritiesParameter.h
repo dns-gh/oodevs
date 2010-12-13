@@ -23,7 +23,7 @@ class MIL_LogMaintenancePrioritiesParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_LogMaintenancePrioritiesParameter( const Common::MsgLogMaintenancePriorities & asn );
+    explicit MIL_LogMaintenancePrioritiesParameter( const sword::LogMaintenancePriorities & asn );
     virtual ~MIL_LogMaintenancePrioritiesParameter();
     //@}
 
@@ -35,7 +35,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToMaintenancePriorities( T_MaintenancePriorityVector& ) const;
-    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

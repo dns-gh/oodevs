@@ -222,13 +222,13 @@ void MIL_Inhabitant::SendCreation() const
     asnMsg().set_name( GetName() );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
     {
-        MsgsSimToClient::Extension_Entry* entry = asnMsg().mutable_extension()->add_entries();
+        sword::Extension_Entry* entry = asnMsg().mutable_extension()->add_entries();
         entry->set_name( it->first );
         entry->set_value( it->second );
     }
     for( CIT_livingUrbanBlockVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
-        Common::UrbanObjectId* blockId = asnMsg().add_blocks();
+        sword::UrbanObjectId* blockId = asnMsg().add_blocks();
         blockId->set_id( ( *it )->GetId() );
     }
     asnMsg.Send( NET_Publisher_ABC::Publisher() );

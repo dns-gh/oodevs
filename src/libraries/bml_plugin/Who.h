@@ -10,9 +10,9 @@
 #ifndef __Who_h_
 #define __Who_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitAttributes;
+    class UnitAttributes;
 }
 
 namespace xml
@@ -44,7 +44,7 @@ public:
     //@{
     explicit Who( const dispatcher::Agent_ABC& entity );
     explicit Who( const dispatcher::Automat_ABC& entity );
-             Who( const dispatcher::Agent_ABC& entity, const MsgsSimToClient::MsgUnitAttributes& attributes );
+             Who( const dispatcher::Agent_ABC& entity, const sword::UnitAttributes& attributes );
              Who( const dispatcher::Agent_ABC& entity, int detectionLevel );
     virtual ~Who();
     //@}
@@ -75,7 +75,7 @@ private:
     //@{
     const dispatcher::Agent_ABC* agent_;
     const dispatcher::Automat_ABC* automat_;
-    const MsgsSimToClient::MsgUnitAttributes* attributes_;
+    const sword::UnitAttributes* attributes_;
     int level_;
     //@}
 };

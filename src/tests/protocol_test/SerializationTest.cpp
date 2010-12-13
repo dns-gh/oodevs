@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "protocol_test_pch.h"
-#include "protocol_includes.h"
+#include "Protocol.h"
 #include "MessageHelpers.h"
 #include "MockClient.h"
 #include "MockServer.h"
@@ -117,9 +117,6 @@ namespace
     };
 }
 
-
-//BOOST_FIXTURE_TEST_SUITE( MessageTestSuite, MessageSendingFixture )
-
 // -----------------------------------------------------------------------------
 // Name: SerializationTest_SendOneMessageFromClientToServer
 // Created: FHD 2009-08-24
@@ -174,5 +171,3 @@ BOOST_AUTO_TEST_CASE( SerializationTest_SendEmptyMessage )
     //EmptyMessage message;
     //VerifyClientReception( message );
 }
-
-//BOOST_AUTO_TEST_SUITE_END()

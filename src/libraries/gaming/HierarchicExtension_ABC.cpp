@@ -42,7 +42,7 @@ HierarchicExtension_ABC::~HierarchicExtension_ABC()
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgUnitCreation& message )
+void HierarchicExtension_ABC::DoUpdate( const sword::UnitCreation& message )
 {
     superior_ = &automatResolver_.Get( message.automat().id() );
 }
@@ -51,7 +51,7 @@ void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgUnitCreation& 
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& message )
+void HierarchicExtension_ABC::DoUpdate( const sword::AutomatCreation& message )
 {
     if( message.has_parent() && message.parent().has_automat() )
         superior_ = &automatResolver_.Get( message.parent().automat().id() );
@@ -63,7 +63,7 @@ void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgAutomatCreatio
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgFormationCreation& message )
+void HierarchicExtension_ABC::DoUpdate( const sword::FormationCreation& message )
 {
     if( message.has_parent()  )
         superior_ = &formationResolver_.Get( message.parent().id() );
@@ -75,7 +75,7 @@ void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgFormationCreat
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const Common::MsgUnitChangeSuperior& message )
+void HierarchicExtension_ABC::DoUpdate( const sword::UnitChangeSuperior& message )
 {
     UpdateSuperior( automatResolver_.Get( message.parent().id() ) );
 }
@@ -84,7 +84,7 @@ void HierarchicExtension_ABC::DoUpdate( const Common::MsgUnitChangeSuperior& mes
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: NLD 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const Common::MsgAutomatChangeSuperior& message )
+void HierarchicExtension_ABC::DoUpdate( const sword::AutomatChangeSuperior& message )
 {
     if( message.has_superior() && message.superior().has_automat() )
         UpdateSuperior( automatResolver_.Get( message.superior().automat().id() ) );

@@ -39,7 +39,7 @@ public:
         keyHandler_.BeginTick();
         base_->BeginTick();
     }
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message )
+    virtual void Receive( const sword::SimToClient& message )
     {
         base_->Receive( message );
     }

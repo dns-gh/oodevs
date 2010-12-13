@@ -59,14 +59,14 @@ public:
     void Update();
 
     void Disconnect( const std::string& endpoint );
-    void DenyConnections ();
+    void DenyConnections();
     void AllowConnections();
 
     using MessageSender_ABC::Send;
     using MessageDispatcher_ABC::RegisterMessage;
     //@}
 
-    //! @name Statistics
+    //! @name Accessors
     //@{
     virtual unsigned long GetNbMessagesSent() const;
     virtual unsigned long GetNbMessagesReceived() const;
@@ -81,19 +81,23 @@ protected:
     //@}
 
 private:
-    //! @name Helpers
+    //! @name Copy/Assignment
     //@{
-    void Run();
-    void Stop();
+    ServerNetworker( const ServerNetworker& );            //!< Copy constructor
+    ServerNetworker& operator=( const ServerNetworker& ); //!< Assignment operator
+    //@}
+
+    //! @name Operations
+    //@{
     virtual void Send( const std::string& endpoint, unsigned long tag, const Message& message );
     virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback );
     virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id );
     //@}
 
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    ServerNetworker( const ServerNetworker& );            //!< Copy constructor
-    ServerNetworker& operator=( const ServerNetworker& ); //!< Assignment operator
+    void Run();
+    void Stop();
     //@}
 
 private:
@@ -105,7 +109,7 @@ private:
     std::auto_ptr< SocketManager >              sockets_;
     std::auto_ptr< ObjectMessageService >       messageService_;
     std::auto_ptr< Acceptor >                   acceptor_;
-    volatile bool                               stopped_;
+    bool                                        stopped_;
     boost::thread                               thread_;
     //@}
 };

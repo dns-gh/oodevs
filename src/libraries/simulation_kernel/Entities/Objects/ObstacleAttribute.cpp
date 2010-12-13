@@ -26,7 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< Obs
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute()
-    : obstacle_      ( Common::ObstacleType_DemolitionTargetType_preliminary )
+    : obstacle_      ( sword::ObstacleType_DemolitionTargetType_preliminary )
     , bActivated_    ( true )
     , activationTime_( 0 )
 {
@@ -38,7 +38,7 @@ ObstacleAttribute::ObstacleAttribute()
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( bool reserved )
-    : obstacle_      ( reserved ? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary )
+    : obstacle_      ( reserved ? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary )
     , bActivated_    ( !reserved )
     , activationTime_( 0 )
 {
@@ -47,18 +47,18 @@ ObstacleAttribute::ObstacleAttribute( bool reserved )
 
 namespace
 {
-    Common::ObstacleType_DemolitionTargetType ExtractObstacle( const std::string& obstacle )
+    sword::ObstacleType_DemolitionTargetType ExtractObstacle( const std::string& obstacle )
     {
         if( obstacle == "reserved" )
-            return Common::ObstacleType_DemolitionTargetType_reserved;
-        return Common::ObstacleType_DemolitionTargetType_preliminary;
+            return sword::ObstacleType_DemolitionTargetType_reserved;
+        return sword::ObstacleType_DemolitionTargetType_preliminary;
     }
 
-    std::string ExtractObstacle( Common::ObstacleType_DemolitionTargetType obstacle )
+    std::string ExtractObstacle( sword::ObstacleType_DemolitionTargetType obstacle )
     {
         switch ( obstacle )
         {
-        case Common::ObstacleType_DemolitionTargetType_reserved:
+        case sword::ObstacleType_DemolitionTargetType_reserved:
             return "reserved";
         default:
             return "preliminary";
@@ -85,8 +85,8 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
 // Name: ObstacleAttribute::ObstacleAttribute
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( const Common::MsgMissionParameter_Value& attributes )
-    : obstacle_      ( ( Common::ObstacleType_DemolitionTargetType ) attributes.list( 1 ).identifier() )
+ObstacleAttribute::ObstacleAttribute( const sword::MsgMissionParameter_Value& attributes )
+    : obstacle_      ( ( sword::ObstacleType_DemolitionTargetType ) attributes.list( 1 ).identifier() )
     , bActivated_    ( attributes.list( 2 ).booleanvalue() )
     , activationTime_( attributes.list( 3 ).quantity() )
 {
@@ -118,10 +118,10 @@ template < typename Archive > void ObstacleAttribute::serialize( Archive& file, 
 // Name: ObstacleAttribute::SetType
 // Created: LDC 2009-03-23
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::SetType( Common::ObstacleType_DemolitionTargetType obstacleType )
+void ObstacleAttribute::SetType( sword::ObstacleType_DemolitionTargetType obstacleType )
 {
     obstacle_ = obstacleType;
-    if( Common::ObstacleType_DemolitionTargetType_preliminary == obstacleType )
+    if( sword::ObstacleType_DemolitionTargetType_preliminary == obstacleType )
         bActivated_ = true;
 }
 
@@ -140,7 +140,7 @@ int ObstacleAttribute::GetActivationTime() const
 // -----------------------------------------------------------------------------
 bool ObstacleAttribute::IsActivable() const
 {
-    return obstacle_ == Common::ObstacleType_DemolitionTargetType_reserved;
+    return obstacle_ == sword::ObstacleType_DemolitionTargetType_reserved;
 }
 
 // -----------------------------------------------------------------------------
@@ -188,7 +188,7 @@ void ObstacleAttribute::Register( MIL_Object_ABC& object ) const
 // Name: ObstacleAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::SendFullState( Common::ObjectAttributes& asn ) const
+void ObstacleAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_obstacle()->set_type( obstacle_ );
     asn.mutable_obstacle()->set_activated( bActivated_ );
@@ -199,12 +199,12 @@ void ObstacleAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // Name: ObstacleAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
+void ObstacleAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
         asn.mutable_obstacle()->set_activated( bActivated_ );
-        asn.mutable_obstacle()->set_type( Common::ObstacleType_DemolitionTargetType_reserved );
+        asn.mutable_obstacle()->set_type( sword::ObstacleType_DemolitionTargetType_reserved );
         asn.mutable_obstacle()->set_activation_time( activationTime_ );
         Reset( eOnUpdate );
     }
@@ -237,7 +237,7 @@ ObstacleAttribute& ObstacleAttribute::operator=( const ObstacleAttribute& rhs )
 // Name: ObstacleAttribute::OnUpdate
 // Created: LDC 2009-03-16
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribute )
+void ObstacleAttribute::OnUpdate( const sword::MsgMissionParameter_Value& attribute )
 {
     if( attribute.list_size() > 2 && bActivated_ != attribute.list( 2 ).booleanvalue() )
     {

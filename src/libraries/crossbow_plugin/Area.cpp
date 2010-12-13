@@ -27,7 +27,7 @@ crossbow::Area::Area()
 // Name: Area constructor
 // Created: JCR 2008-04-25
 // -----------------------------------------------------------------------------
-crossbow::Area::Area( const Common::MsgCoordLatLongList& message )
+crossbow::Area::Area( const sword::MsgCoordLatLongList& message )
     : PointCollection( message )
 {
     // NOTHING
@@ -114,8 +114,8 @@ void crossbow::Area::Serialize( std::ostream& geometry ) const
 // Name: Area::Serialize
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Area::Serialize( Common::MsgLocation& message ) const
+void crossbow::Area::Serialize( sword::MsgLocation& message ) const
 {
-    message.set_type( Common::MsgLocation_Geometry_polygon );
+    message.set_type( sword::MsgLocation_Geometry_polygon );
     PointCollection::Serialize( message );
 }

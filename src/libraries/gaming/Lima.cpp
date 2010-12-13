@@ -16,7 +16,7 @@
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 
-using namespace Common;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: Lima constructor
@@ -33,7 +33,7 @@ Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kern
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const MsgsMessengerToClient::MsgLimaCreation& message )
+Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const sword::LimaCreation& message )
     : TacticalLine_ABC( QString( message.tactical_line().name().c_str() ) , message.id().id(), publisher, converter )
     , controller_     ( controller )
 {

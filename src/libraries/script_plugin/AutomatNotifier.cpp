@@ -39,7 +39,7 @@ AutomatNotifier::~AutomatNotifier()
 // Name: AutomatNotifier::DoUpdate
 // Created: SBO 2008-08-13
 // -----------------------------------------------------------------------------
-void AutomatNotifier::DoUpdate( const Common::MsgAutomatOrder& )
+void AutomatNotifier::DoUpdate( const sword::AutomatOrder& )
 {
     controller_.Update( events::AutomatMissionStarted( automat_ ) );
 }

@@ -12,7 +12,7 @@
 
 #include "Localisation.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
     class MsgFlowPart;
 }
@@ -31,13 +31,13 @@ class PopulationFlowPart
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationFlowPart( const MsgsSimToClient::MsgFlowPart& asnMsg );
+    explicit PopulationFlowPart( const sword::MsgFlowPart& asnMsg );
     virtual ~PopulationFlowPart();
     //@}
 
     //! @name Operations
     //@{
-    void Send( MsgsSimToClient::MsgFlowPart& asnMsg ) const ;
+    void Send( sword::MsgFlowPart& asnMsg ) const ;
     //@}
 
 private:

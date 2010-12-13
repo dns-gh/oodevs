@@ -15,7 +15,6 @@
 #include "Table_ABC.h"
 #include "Row_ABC.h"
 #include "WorkingSession_ABC.h"
-
 #include <boost/noncopyable.hpp>
 
 using namespace plugins;
@@ -47,7 +46,7 @@ ObjectAttributeUpdater::~ObjectAttributeUpdater()
         Update( msg.##ATTR##() )
 
 
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributes& msg )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributes& msg )
 {
     CHECK_ATTRIBUTE_UPDATE( activity_time   );
     CHECK_ATTRIBUTE_UPDATE( bypass          );
@@ -120,7 +119,7 @@ namespace
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeConstruction& construction )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeConstruction& construction )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Construction" ) );
 
@@ -140,20 +139,20 @@ void ObjectAttributeUpdater::Update( const Common::ObjectAttributeConstruction& 
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeObstacle& obstacle )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeObstacle& obstacle )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Obstacle" ) );
 
     RowManipulator row( *table, session_, objectId_ );
     row.SetField( "activated", FieldVariant( obstacle.activated() ) ); // bool
-    row.SetField( "type", FieldVariant( std::string( obstacle.type() == Common::ObstacleType_DemolitionTargetType_preliminary ? "preliminary" : "reserved" ) ) );
+    row.SetField( "type", FieldVariant( std::string( obstacle.type() == sword::ObstacleType_DemolitionTargetType_preliminary ? "preliminary" : "reserved" ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeMine& mine )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeMine& mine )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Mine" ) );
 
@@ -172,7 +171,7 @@ void ObjectAttributeUpdater::Update( const Common::ObjectAttributeMine& mine )
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeActivityTime& activity_time )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeActivityTime& activity_time )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Activity_Time" ) );
 
@@ -184,7 +183,7 @@ void ObjectAttributeUpdater::Update( const Common::ObjectAttributeActivityTime& 
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeBypass& bypass )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeBypass& bypass )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Bypass" ) );
 
@@ -197,7 +196,7 @@ void ObjectAttributeUpdater::Update( const Common::ObjectAttributeBypass& bypass
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeLogistic& logistic )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeLogistic& logistic )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Logistic" ) );
 
@@ -209,7 +208,7 @@ void ObjectAttributeUpdater::Update( const Common::ObjectAttributeLogistic& logi
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeNBC& nbc )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeNBC& nbc )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_NBC" ) );
 
@@ -222,7 +221,7 @@ void ObjectAttributeUpdater::Update( const Common::ObjectAttributeNBC& nbc )
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeCrossingSite& crossing_site )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeCrossingSite& crossing_site )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Crossing_Site" ) );
     
@@ -238,7 +237,7 @@ void ObjectAttributeUpdater::Update( const Common::ObjectAttributeCrossingSite& 
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeSupplyRoute& supply_route )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeSupplyRoute& supply_route )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_SupplyRoute" ) );
 
@@ -254,7 +253,7 @@ void ObjectAttributeUpdater::Update( const Common::ObjectAttributeSupplyRoute& s
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeToxicCloud& /*toxic_cloud*/ )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeToxicCloud& /*toxic_cloud*/ )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Toxic_Cloud" ) );
     
@@ -266,7 +265,7 @@ void ObjectAttributeUpdater::Update( const Common::ObjectAttributeToxicCloud& /*
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeFire& fire )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeFire& fire )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Fire" ) );
     RowManipulator row( *table, session_, objectId_ );
@@ -279,7 +278,7 @@ namespace
 {
         
     // TODO all bed Capacities
-    void UpdateBedCapacities( RowManipulator& row,  const Common::ObjectAttributeMedicalTreatment& medical_treatment )
+    void UpdateBedCapacities( RowManipulator& row,  const sword::ObjectAttributeMedicalTreatment& medical_treatment )
     {
         int available = 0;
         bool availableUpdated = false;
@@ -288,8 +287,7 @@ namespace
         
         for ( int i = 0; i < medical_treatment.bed_capacities_size(); ++i ) 
         {
-            const Common::MedicalTreatmentBedCapacity& capacity = medical_treatment.bed_capacities( i );
-            
+            const sword::MedicalTreatmentBedCapacity& capacity = medical_treatment.bed_capacities( i );
             // $$$$ JCR - HACK : Do not take into account NegativeFlowIsolation which is a subset of MedicalSurgical and the last registered element!! 
             // $$$$ TODO: ADD this information in the MedicalTreatment definition and the ASN message.
             if ( capacity.type_id() == 7 ) // SKIP
@@ -316,7 +314,7 @@ namespace
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeMedicalTreatment& medical_treatment )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeMedicalTreatment& medical_treatment )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Medical_Treatment" ) );
 
@@ -333,7 +331,7 @@ void ObjectAttributeUpdater::Update( const Common::ObjectAttributeMedicalTreatme
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeInteractionHeight& interaction_height )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeInteractionHeight& interaction_height )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Interaction_Height" ) );
 
@@ -345,7 +343,7 @@ void ObjectAttributeUpdater::Update( const Common::ObjectAttributeInteractionHei
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeNBCType& nbc_agent )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeNBCType& nbc_agent )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_NBC_Type" ) );
     
@@ -359,7 +357,7 @@ void ObjectAttributeUpdater::Update( const Common::ObjectAttributeNBCType& nbc_a
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const Common::ObjectAttributeStock& /*stock*/ )
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeStock& /*stock*/ )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Stock" ) );
     

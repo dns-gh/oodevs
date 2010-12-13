@@ -11,7 +11,7 @@
 #define __protocol_MessengerMessages_h_
 
 #include "Messenger.h"
-#include "senders.h"
+#include "Senders.h"
 
 namespace plugins
 {
@@ -19,69 +19,69 @@ namespace messenger
 {
     struct Service {};
 
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, Common               , TextMessage                        , text_message                          )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, TextMessage                        , text_message                          )
 
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, LimitCreationRequest               , limit_creation_request                )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, LimitDestructionRequest            , limit_destruction_request             )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, LimitUpdateRequest                 , limit_update_request                  )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, LimaCreationRequest                , lima_creation_request                 )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, LimaDestructionRequest             , lima_destruction_request              )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, LimaUpdateRequest                  , lima_update_request                   )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, IntelligenceCreationRequest        , intelligence_creation_request         )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, IntelligenceUpdateRequest          , intelligence_update_request           )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, IntelligenceDestructionRequest     , intelligence_destruction_request      )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, ShapeCreationRequest               , shape_creation_request                )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, ShapeUpdateRequest                 , shape_update_request                  )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, ShapeDestructionRequest            , shape_destruction_request             )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, LimitCreationRequest               , limit_creation_request                )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, LimitDestructionRequest            , limit_destruction_request             )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, LimitUpdateRequest                 , limit_update_request                  )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, LimaCreationRequest                , lima_creation_request                 )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, LimaDestructionRequest             , lima_destruction_request              )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, LimaUpdateRequest                  , lima_update_request                   )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, IntelligenceCreationRequest        , intelligence_creation_request         )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, IntelligenceUpdateRequest          , intelligence_update_request           )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, IntelligenceDestructionRequest     , intelligence_destruction_request      )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, ShapeCreationRequest               , shape_creation_request                )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, ShapeUpdateRequest                 , shape_update_request                  )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, ShapeDestructionRequest            , shape_destruction_request             )
 
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimitCreationRequestAck            , limit_creation_request_ack            )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimitDestructionRequestAck         , limit_destruction_request_ack         )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimitUpdateRequestAck              , limit_update_request_ack              )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimitCreation                      , limit_creation                        )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimitUpdate                        , limit_update                          )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimitDestruction                   , limit_destruction                     )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimaCreationRequestAck             , lima_creation_request_ack             )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimaDestructionRequestAck          , lima_destruction_request_ack          )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimaUpdateRequestAck               , lima_update_request_ack               )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimaCreation                       , lima_creation                         )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimaUpdate                         , lima_update                           )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, LimaDestruction                    , lima_destruction                      )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, LimitCreationRequestAck            , limit_creation_request_ack            )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, LimitDestructionRequestAck         , limit_destruction_request_ack         )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, LimitUpdateRequestAck              , limit_update_request_ack              )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, LimitCreation                      , limit_creation                        )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, LimitUpdate                        , limit_update                          )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, LimitDestruction                   , limit_destruction                     )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, LimaCreationRequestAck             , lima_creation_request_ack             )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, LimaDestructionRequestAck          , lima_destruction_request_ack          )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, LimaUpdateRequestAck               , lima_update_request_ack               )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, LimaCreation                       , lima_creation                         )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, LimaUpdate                         , lima_update                           )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, LimaDestruction                    , lima_destruction                      )
 
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, IntelligenceCreationRequestAck     , intelligence_creation_request_ack     )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, IntelligenceDestructionRequestAck  , intelligence_destruction_request_ack  )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, IntelligenceUpdateRequestAck       , intelligence_update_request_ack       )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, IntelligenceCreationRequestAck     , intelligence_creation_request_ack     )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, IntelligenceDestructionRequestAck  , intelligence_destruction_request_ack  )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, IntelligenceUpdateRequestAck       , intelligence_update_request_ack       )
 
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, IntelligenceCreation               , intelligence_creation                 )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, IntelligenceUpdate                 , intelligence_update                   )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, IntelligenceDestruction            , intelligence_destruction              )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, IntelligenceCreation               , intelligence_creation                 )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, IntelligenceUpdate                 , intelligence_update                   )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, IntelligenceDestruction            , intelligence_destruction              )
 
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeCreationRequestAck            , shape_creation_request_ack            )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeDestructionRequestAck         , shape_destruction_request_ack         )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeUpdateRequestAck              , shape_update_request_ack              )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, ShapeCreationRequestAck            , shape_creation_request_ack            )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, ShapeDestructionRequestAck         , shape_destruction_request_ack         )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, ShapeUpdateRequestAck              , shape_update_request_ack              )
 
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeCreation                      , shape_creation                        )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeUpdate                        , shape_update                          )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ShapeDestruction                   , shape_destruction                     )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, ShapeCreation                      , shape_creation                        )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, ShapeUpdate                        , shape_update                          )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, ShapeDestruction                   , shape_destruction                     )
 
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, MarkerCreationRequest                , marker_creation_request                 )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, MarkerUpdateRequest                  , marker_update_request                   )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, MarkerDestructionRequest             , marker_destruction_request              )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, MarkerCreationRequest                , marker_creation_request                 )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, MarkerUpdateRequest                  , marker_update_request                   )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, MarkerDestructionRequest             , marker_destruction_request              )
 
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, MarkerCreation                       , marker_creation                         )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, MarkerUpdate                         , marker_update                           )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, MarkerDestruction                    , marker_destruction                      )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, MarkerCreation                       , marker_creation                         )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, MarkerUpdate                         , marker_update                           )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, MarkerDestruction                    , marker_destruction                      )
 
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, ClientObjectCreationRequest        , client_object_creation_request        )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, ClientObjectUpdateRequest          , client_object_update_request          )
-GENERATE_NOCTX_ASN_MSG_SENDER( ClientToMessenger, MsgsClientToMessenger, ClientObjectDestructionRequest     , client_object_destruction_request     )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, ClientObjectCreationRequest        , client_object_creation_request        )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, ClientObjectUpdateRequest          , client_object_update_request          )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::ClientToMessenger, sword, ClientObjectDestructionRequest     , client_object_destruction_request     )
 
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ClientObjectCreationRequestAck     , client_object_creation_ack            )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ClientObjectUpdateRequestAck       , client_object_update_ack              )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ClientObjectDestructionRequestAck  , client_object_destruction_ack         )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, ClientObjectCreationRequestAck     , client_object_creation_ack            )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, ClientObjectUpdateRequestAck       , client_object_update_ack              )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, ClientObjectDestructionRequestAck  , client_object_destruction_ack         )
 
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ClientObjectCreation               , client_object_creation                )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ClientObjectUpdate                 , client_object_update                  )
-GENERATE_NOCTX_ASN_MSG_SENDER( MessengerToClient, MsgsMessengerToClient, ClientObjectDestruction            , client_object_destruction             )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, ClientObjectCreation               , client_object_creation                )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, ClientObjectUpdate                 , client_object_update                  )
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::MessengerToClient, sword, ClientObjectDestruction            , client_object_destruction             )
 }
 }
 

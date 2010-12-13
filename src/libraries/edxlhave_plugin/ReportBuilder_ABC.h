@@ -10,14 +10,15 @@
 #ifndef __disptacher_plugins_edxl_ReportBuilder_ABC_h_
 #define __disptacher_plugins_edxl_ReportBuilder_ABC_h_
 
-namespace Common
+namespace sword
 {
     class ObjectAttributeMedicalTreatment;
 }
 
-namespace plugins {
-namespace edxl {
-
+namespace plugins
+{
+namespace edxl
+{
     class Publisher_ABC;
 
 // =============================================================================
@@ -28,17 +29,16 @@ namespace edxl {
 // =============================================================================
 class ReportBuilder_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-            ReportBuilder_ABC() {}
+             ReportBuilder_ABC() {}
     virtual ~ReportBuilder_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void CreateReport( int id, const std::string& name, const Common::ObjectAttributeMedicalTreatment& medical ) = 0;
+    virtual void CreateReport( int id, const std::string& name, const sword::ObjectAttributeMedicalTreatment& medical ) = 0;
     virtual void Publish( Publisher_ABC& publisher ) = 0;
     //@}
 };

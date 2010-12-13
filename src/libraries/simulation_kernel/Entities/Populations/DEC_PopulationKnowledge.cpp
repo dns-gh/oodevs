@@ -161,7 +161,7 @@ std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsSecuring() const
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( const Common::UnitKnowledgeId& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( const sword::UnitKnowledgeId& /*asn*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
@@ -179,7 +179,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowled
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeObject
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( const Common::ObjectKnowledgeId& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( const sword::ObjectKnowledgeId& /*asn*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }
@@ -197,7 +197,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
 // Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const Common::CrowdKnowledgeId& /*asn*/ ) const
+DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& /*asn*/ ) const
 {
     return 0;
 }
@@ -215,7 +215,7 @@ DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( u
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeUrban
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_PopulationKnowledge::ResolveKnowledgeUrban( const Common::UrbanObjectKnowledgeId& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_PopulationKnowledge::ResolveKnowledgeUrban( const sword::UrbanObjectKnowledgeId& /*asn*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Urban >();
 }

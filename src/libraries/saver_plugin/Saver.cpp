@@ -51,7 +51,7 @@ Saver::~Saver()
 // Name: Saver::ControlInformation
 // Created: JSR 2010-11-03
 // -----------------------------------------------------------------------------
-void Saver::ControlInformation( const MsgsSimToClient::MsgControlInformation& controlInformation )
+void Saver::ControlInformation( const sword::ControlInformation& controlInformation )
 {
     frameCount_ = controlInformation.current_tick() - 1;
     fragmentFirstFrame_ = frameCount_;

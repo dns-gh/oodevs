@@ -23,15 +23,15 @@ using namespace dispatcher;
 // Name: AgentKnowledge constructor
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( Model& model, const MsgsSimToClient::MsgUnitKnowledgeCreation& message )
+AgentKnowledge::AgentKnowledge( Model& model, const sword::UnitKnowledgeCreation& message )
     : dispatcher::AgentKnowledge_ABC( message.knowledge().id() )
     , model_                        ( model )
     , knowledgeGroup_               ( model.KnowledgeGroups().Get( message.knowledge_group().id() ) )
     , agent_                        ( model.Agents().Get( message.unit().id() ) )
     , type_                         ( message.type() )
     , nRelevance_                   ( 0 )
-    , nPerceptionLevel_             ( MsgsSimToClient::signale )
-    , nMaxPerceptionLevel_          ( MsgsSimToClient::signale )
+    , nPerceptionLevel_             ( sword::signale )
+    , nMaxPerceptionLevel_          ( sword::signale )
     , nOperationalState_            ( 0 )
     , bDead_                        ( false )
     , nDirection_                   ( 0 )
@@ -99,7 +99,7 @@ AgentKnowledge::~AgentKnowledge()
 // Name: AgentKnowledge::DoUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
+void AgentKnowledge::DoUpdate( const sword::UnitKnowledgeUpdate& message )
 {
     UPDATE_ASN_ATTRIBUTE( message, pertinence              , nRelevance_          );
     UPDATE_ASN_ATTRIBUTE( message, identification_level    , nPerceptionLevel_    );
@@ -250,7 +250,7 @@ void AgentKnowledge::Display( kernel::Displayer_ABC& ) const
 // Name: AgentKnowledge::GetMaxPerceptionLevel
 // Created: SBO 2010-06-08
 // -----------------------------------------------------------------------------
-MsgsSimToClient::EnumUnitIdentificationLevel AgentKnowledge::GetMaxPerceptionLevel() const
+sword::EnumUnitIdentificationLevel AgentKnowledge::GetMaxPerceptionLevel() const
 {
     return nMaxPerceptionLevel_;
 }

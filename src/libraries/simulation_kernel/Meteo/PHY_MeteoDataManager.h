@@ -16,9 +16,9 @@
 #include "PHY_Ephemeride.h"
 #include "Tools/MIL_IDManager.h"
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgMagicAction;
+    class MagicAction;
 }
 
 namespace xml
@@ -65,7 +65,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void OnReceiveMsgMeteo( const MsgsClientToSim::MsgMagicAction& msg );
+    virtual void OnReceiveMsgMeteo( const sword::MagicAction& msg );
     //@}
 
 private:

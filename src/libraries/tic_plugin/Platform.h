@@ -45,8 +45,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgUnitAttributes& updateMessage );
-    void Spread( MsgsSimToClient::EquipmentDotations_EquipmentDotation& updateMessage );
+    void Update( const sword::UnitAttributes& updateMessage );
+    void Spread( sword::EquipmentDotations_EquipmentDotation& updateMessage );
     virtual void Move( const geometry::Point2f& to );
     virtual void Stop();
     //@}
@@ -71,7 +71,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Apply( MsgsSimToClient::EquipmentDotations_EquipmentDotation& updateMessage );
+    void Apply( sword::EquipmentDotations_EquipmentDotation& updateMessage );
     bool SetStatus( int& number, E_State state );
     void ComputeHeading( const geometry::Point2f& to );
     //@}

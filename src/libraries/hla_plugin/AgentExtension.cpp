@@ -26,8 +26,8 @@
 
 using namespace plugins::hla;
 using namespace hla;
-using namespace Common;
-using namespace MsgsSimToClient;
+using namespace sword;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: AgentExtension constructor
@@ -78,7 +78,7 @@ void AgentExtension::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) co
 // Name: AgentExtension::DoUpdate
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
-void AgentExtension::DoUpdate( const MsgUnitAttributes& attributes )
+void AgentExtension::DoUpdate( const UnitAttributes& attributes )
 {
     spatialChanged_ = spatialChanged_ || attributes.has_position()
                                       || attributes.has_hauteur()
@@ -91,7 +91,7 @@ void AgentExtension::DoUpdate( const MsgUnitAttributes& attributes )
 // Name: AgentExtension::DoUpdate
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::DoUpdate( const MsgUnitEnvironmentType& attributes )
+void AgentExtension::DoUpdate( const UnitEnvironmentType& attributes )
 {
     formation_.Update( attributes );
 }

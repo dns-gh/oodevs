@@ -13,7 +13,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 
-namespace Common
+namespace sword
 {
     class ObjectAttributes;
 }
@@ -40,15 +40,21 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const Common::ObjectAttributes& message );
-    void Send  ( Common::ObjectAttributes& message ) const;
+    void Update( const sword::ObjectAttributes& message );
+    void Send  ( sword::ObjectAttributes& message ) const;
     //@}
 
 private:
-    //! @name Tools
+    //! @name Copy/Assignment
     //@{
-    template< typename T > void CreateOrUpdate( const Common::ObjectAttributes& message );
-    template< typename T > void CreateOrUpdate( const Common::ObjectAttributes& message, const Model_ABC& model );
+    ObjectAttributeContainer( const ObjectAttributeContainer& );            //!< Copy constructor
+    ObjectAttributeContainer& operator=( const ObjectAttributeContainer& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    template< typename T > void CreateOrUpdate( const sword::ObjectAttributes& message );
+    template< typename T > void CreateOrUpdate( const sword::ObjectAttributes& message, const Model_ABC& model );
     //@}
 
 private:

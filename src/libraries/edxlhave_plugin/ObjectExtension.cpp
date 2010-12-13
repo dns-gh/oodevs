@@ -11,9 +11,9 @@
 #include "ObjectExtension.h"
 #include "Publisher_ABC.h"
 #include "HospitalUpdateReport.h"
+#include "ReportBuilder_ABC.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Object_ABC.h"
-#include "ReportBuilder_ABC.h"
 
 using namespace plugins::edxl;
 
@@ -22,8 +22,8 @@ using namespace plugins::edxl;
 // Created: JCR 2010-05-31
 // -----------------------------------------------------------------------------
 ObjectExtension::ObjectExtension( ReportBuilder_ABC& builder, const dispatcher::Model_ABC& model )
-    : builder_ ( builder )
-    , model_ ( model )
+    : builder_( builder )
+    , model_  ( model )
 {
     // NOTHING
 }
@@ -41,7 +41,7 @@ ObjectExtension::~ObjectExtension()
 // Name: ObjectExtension::DoUpdate
 // Created: JCR 2010-05-31
 // -----------------------------------------------------------------------------
-void ObjectExtension::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
+void ObjectExtension::DoUpdate( const sword::ObjectCreation& message )
 {
     if( message.attributes().has_medical_treatment() )
     {
@@ -55,7 +55,7 @@ void ObjectExtension::DoUpdate( const MsgsSimToClient::MsgObjectCreation& messag
 // Name: ObjectExtension::DoUpdate
 // Created: JCR 2010-05-31
 // -----------------------------------------------------------------------------
-void ObjectExtension::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void ObjectExtension::DoUpdate( const sword::ObjectUpdate& message )
 {
     if( message.attributes().has_medical_treatment() )
     {

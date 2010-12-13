@@ -20,9 +20,9 @@
 #include "Tools/MIL_IDManager.h"
 #include "Tristate.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitKnowledgeUpdate;
+    class UnitKnowledgeUpdate;
 }
 
 namespace urban
@@ -164,7 +164,7 @@ private:
 
     //! @name Internal network senders
     //@{
-    void WriteMsgPerceptionSources( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
+    void WriteMsgPerceptionSources( sword::UnitKnowledgeUpdate& asnMsg ) const;
     void SendMsgCreation() const;
     void SendMsgDestruction() const;
     void SendChangedState();

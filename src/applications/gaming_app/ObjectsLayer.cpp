@@ -15,10 +15,9 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Object_ABC.h"
 #include "gaming/StaticModel.h"
-#include "protocol/simulationsenders.h"
-#include "protocol/clientsenders.h"
+#include "protocol/SimulationSenders.h"
+#include "protocol/ClientSenders.h"
 
-using namespace Common;
 using namespace kernel;
 using namespace actions;
 
@@ -58,7 +57,6 @@ bool ObjectsLayer::HandleKeyPress( QKeyEvent* key )
         ObjectMagicAction* action = new ObjectMagicAction( selected_, actionType, controllers_.controller_, true );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->RegisterAndPublish( actionsModel_ );
-
         return true;
     }
     return false;

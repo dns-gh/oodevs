@@ -154,7 +154,7 @@ void NET_RolePion_Dotations::SendChangedState() const
 // -----------------------------------------------------------------------------
 void NET_RolePion_Dotations::SendFullState() const
 {
-    // MsgUnitAttributes
+    // UnitAttributes
 
     client::UnitAttributes msg;
     msg().mutable_unit()->set_id( pion_.GetID() );

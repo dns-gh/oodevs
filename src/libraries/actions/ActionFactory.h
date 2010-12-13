@@ -13,7 +13,7 @@
 #include "ActionFactory_ABC.h"
 #include "tools/Resolver_ABC.h"
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameters;
 }
@@ -56,10 +56,10 @@ public:
     virtual actions::Action_ABC* CreateAction( xml::xistream& xis, bool readonly = false ) const;
     virtual actions::Action_ABC* CreateStubAction( xml::xistream& xis ) const;
 
-    virtual actions::Action_ABC* CreateAction( const Common::MsgUnitOrder& message ) const;
-    virtual actions::Action_ABC* CreateAction( const Common::MsgAutomatOrder& message ) const;
-    virtual actions::Action_ABC* CreateAction( const Common::MsgCrowdOrder& message ) const;
-    virtual actions::Action_ABC* CreateAction( const MsgsClientToSim::MsgFragOrder& message ) const;
+    virtual actions::Action_ABC* CreateAction( const sword::UnitOrder& message ) const;
+    virtual actions::Action_ABC* CreateAction( const sword::AutomatOrder& message ) const;
+    virtual actions::Action_ABC* CreateAction( const sword::CrowdOrder& message ) const;
+    virtual actions::Action_ABC* CreateAction( const sword::FragOrder& message ) const;
     
     virtual actions::Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const;
     virtual actions::Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter ) const;
@@ -90,7 +90,7 @@ private:
     actions::Action_ABC* CreateMission( xml::xistream& xis, bool readonly, bool stub ) const;
     actions::Action_ABC* CreateFragOrder( xml::xistream& xis, bool readonly, bool stub ) const;
 
-    void AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const Common::MsgMissionParameters& message ) const;
+    void AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const sword::MsgMissionParameters& message ) const;
     void ReadParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;
     void ReadParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it ) const;
     void ReadStubParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;

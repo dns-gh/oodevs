@@ -17,7 +17,7 @@ using namespace actions::parameters;
 // Name: Limit constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgLine& line )
+Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::MsgLine& line )
     : Location( parameter, converter, line.location() )
 {
     // NOTHING
@@ -56,7 +56,7 @@ Limit::~Limit()
 // Name: Limit::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Limit::CommitTo( Common::MsgMissionParameter& message ) const
+void Limit::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -66,7 +66,7 @@ void Limit::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: Limit::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Limit::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void Limit::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
         Location::CommitTo( *message.mutable_limit()->mutable_location() );

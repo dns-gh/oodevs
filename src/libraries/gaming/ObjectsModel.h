@@ -13,10 +13,10 @@
 #include "protocol/Protocol.h"
 #include "tools/Resolver.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgObjectCreation;
-    class MsgObjectUpdate;
+    class ObjectCreation;
+    class ObjectUpdate;
 }
 
 class ObjectFactory_ABC;
@@ -45,8 +45,8 @@ public:
     //@{
     void Purge();
 
-    void CreateObject( const MsgsSimToClient::MsgObjectCreation& message );
-    void UpdateObject( const MsgsSimToClient::MsgObjectUpdate& message );
+    void CreateObject( const sword::ObjectCreation& message );
+    void UpdateObject( const sword::ObjectUpdate& message );
     kernel::Object_ABC& GetObject( unsigned long id );
     kernel::Object_ABC* FindObject( unsigned long id );
     void DeleteObject( unsigned long id );

@@ -10,7 +10,7 @@
 #ifndef __Localisation_h_
 #define __Localisation_h_
 
-namespace Common
+namespace sword
 {
     class MsgLocation;
     class MsgCoordLatLong;
@@ -34,24 +34,24 @@ public:
     //! @name Constructors/Destructor
     //@{
              Localisation();
-    explicit Localisation( const Common::MsgLocation& msg );
+    explicit Localisation( const sword::MsgLocation& msg );
     virtual ~Localisation();
     //@}
 
     //! @name Main
     //@{
-    void Update( const Common::MsgLocation& msg );
-    void Send( Common::MsgLocation& msg ) const;
+    void Update( const sword::MsgLocation& msg );
+    void Send( sword::MsgLocation& msg ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< Common::MsgCoordLatLong > T_PositionVector;
+    typedef std::vector< sword::MsgCoordLatLong > T_PositionVector;
     //@}
 
 private:
-    Common::MsgLocation_Geometry nType_;
+    sword::MsgLocation_Geometry nType_;
     T_PositionVector points_;
 };
 

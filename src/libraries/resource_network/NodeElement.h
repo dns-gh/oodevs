@@ -11,12 +11,12 @@
 #define __NodeElement_h_
 
 #include "ResourceLink.h"
-#include <map>
-#include <vector>
 #include <urban/ResourceNetworkAttribute.h>
 #include <boost/serialization/split_member.hpp>
+#include <vector>
+#include <map>
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameter_Value;
     class ResourceNetwork;
@@ -64,8 +64,8 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( Common::ResourceNetwork& msg ) const;
-    void Update( const Common::MsgMissionParameter_Value& msg );
+    void Serialize( sword::ResourceNetwork& msg ) const;
+    void Update( const sword::MsgMissionParameter_Value& msg );
     //@}
 
     //! @name CheckPoints

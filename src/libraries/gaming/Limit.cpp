@@ -16,7 +16,7 @@
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 
-using namespace Common;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
@@ -33,7 +33,7 @@ Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const ke
 // Name: Limit constructor
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const MsgsMessengerToClient::MsgLimitCreation& message )
+Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const sword::LimitCreation& message )
     : TacticalLine_ABC( QString( message.tactical_line().name().c_str() ), message.id().id(), publisher, converter )
     , controller_( controller )
 {

@@ -15,9 +15,9 @@
 #pragma warning( pop )
 #include <vector>
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgReport;
+    class Report;
 }
 
 namespace xml
@@ -45,7 +45,7 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    QString RenderMessage( const MsgsSimToClient::MsgReport& asn ) const;
+    QString RenderMessage( const sword::Report& asn ) const;
     //@}
 
 private:

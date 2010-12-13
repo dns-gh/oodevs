@@ -12,11 +12,11 @@
 
 #include "MeteoManager_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgControlGlobalWeather;
-    class MsgControlLocalWeatherCreation;
-    class MsgControlLocalWeatherDestruction;
+    class ControlGlobalWeather;
+    class ControlLocalWeatherCreation;
+    class ControlLocalWeatherDestruction;
 }
 
 namespace weather
@@ -39,9 +39,9 @@ public:
     //! @name Operations
     //@{
     virtual const PHY_Lighting& GetLighting() const = 0;
-    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalWeather& message ) = 0;
-    virtual void OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalWeatherCreation& message ) = 0;
-    virtual void OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalWeatherDestruction& message ) = 0;
+    virtual void OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& message ) = 0;
+    virtual void OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeatherCreation& message ) = 0;
+    virtual void OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWeatherDestruction& message ) = 0;
     //@}
 
 protected:

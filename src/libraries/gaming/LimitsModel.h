@@ -33,8 +33,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Create( const MsgsMessengerToClient::MsgLimitCreation& message );
-    virtual void Create( const MsgsMessengerToClient::MsgLimaCreation& message );
+    virtual void Create( const sword::LimitCreation& message );
+    virtual void Create( const sword::LimaCreation& message );
 
     void DeleteLimit( unsigned long id );
     void DeleteLima( unsigned long id );

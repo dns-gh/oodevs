@@ -30,7 +30,7 @@ using namespace kernel;
 // Name: Surface constructor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-Surface::Surface( const Agent_ABC& agent, const MsgsSimToClient::MsgVisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const tools::Resolver_ABC< SensorType, std::string >& resolver, float elongation, const UrbanBlockDetectionMap& urbanModelMap )
+Surface::Surface( const Agent_ABC& agent, const sword::MsgVisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const tools::Resolver_ABC< SensorType, std::string >& resolver, float elongation, const UrbanBlockDetectionMap& urbanModelMap )
     : map_( map )
     , origin_( converter.ConvertToXY( message.origin() ) )
     , height_( message.height() + agent.Get< Positions >().GetHeight() )

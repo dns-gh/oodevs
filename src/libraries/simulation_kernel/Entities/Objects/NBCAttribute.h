@@ -61,7 +61,7 @@ public:
     //@{
              NBCAttribute();
     explicit NBCAttribute( xml::xistream& xis );
-    explicit NBCAttribute( const Common::MsgMissionParameter_Value& attributes );
+    explicit NBCAttribute( const sword::MsgMissionParameter_Value& attributes );
     virtual ~NBCAttribute();
     //@}
 
@@ -77,8 +77,8 @@ public:
 
     //! @name Network update
     //@{
-    virtual void SendFullState( Common::ObjectAttributes& asn ) const;
-    virtual void SendUpdate( Common::ObjectAttributes& asn ) const;
+    virtual void SendFullState( sword::ObjectAttributes& asn ) const;
+    virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
     //@}
 
     //! @name ODB

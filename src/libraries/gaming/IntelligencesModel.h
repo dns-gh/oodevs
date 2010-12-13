@@ -16,12 +16,11 @@
 
 class IntelligenceFactory;
 
-namespace MsgsMessengerToClient
+namespace sword
 {
-    class MsgIntelligenceCreation;
-    class MsgIntelligenceDestruction;
+    class IntelligenceCreation;
+    class IntelligenceDestruction;
 }
-
 
 // =============================================================================
 /** @class  IntelligencesModel
@@ -41,8 +40,8 @@ public:
     //! @name Operations
     //@{
     void Purge();
-    void Create( const MsgsMessengerToClient::MsgIntelligenceCreation& message );
-    void Delete( const MsgsMessengerToClient::MsgIntelligenceDestruction& message );
+    void Create( const sword::IntelligenceCreation& message );
+    void Delete( const sword::IntelligenceDestruction& message );
     //@}
 
 private:

@@ -62,13 +62,13 @@ private:
 
     //! @name 
     //@{
-    void UpdateData( const Common::ObjectAttributeMedicalTreatment& message );
+    void UpdateData( const sword::ObjectAttributeMedicalTreatment& message );
     //@}
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
+    virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::ObjectUpdate& message );
     //@}
 
 private:

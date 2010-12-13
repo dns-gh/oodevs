@@ -42,7 +42,7 @@ AutomatExtension::~AutomatExtension()
 // Name: AutomatExtension::DoUpdate
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void AutomatExtension::DoUpdate( const Common::MsgAutomatOrder& message )
+void AutomatExtension::DoUpdate( const sword::AutomatOrder& message )
 {
     try
     {

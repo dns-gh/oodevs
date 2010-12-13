@@ -82,7 +82,7 @@ void MineAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // Name: MineAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void MineAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void MineAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -91,7 +91,7 @@ void MineAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& m
 // Name: MineAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void MineAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void MineAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }

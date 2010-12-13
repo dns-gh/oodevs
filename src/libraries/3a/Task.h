@@ -61,7 +61,7 @@ public:
     void AddConnector( const std::string& name, boost::shared_ptr< Connector_ABC > connector );
     void Connect( xml::xistream& xis );
 
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive( const sword::SimToClient& message );
 
     void Commit();
     void Process( dispatcher::MessageLoader_ABC& loader );

@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: IndirectFire constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-IndirectFire::IndirectFire( const MsgsSimToClient::MsgStartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const CoordinateConverter_ABC& converter )
+IndirectFire::IndirectFire( const sword::StartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const CoordinateConverter_ABC& converter )
     : Fire_ABC( resolver.Get( message.firing_unit().id() ) )
     , id_( message.fire().id() )
     , target_( converter.ConvertToXY( message.target().position() ) )

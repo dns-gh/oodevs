@@ -24,7 +24,7 @@ class MIL_LocationParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_LocationParameter( const Common::MsgLocation& );
+    explicit MIL_LocationParameter( const sword::MsgLocation& );
     explicit MIL_LocationParameter( boost::shared_ptr< TER_Localisation > pLocalisation );
     virtual ~MIL_LocationParameter();
     //@}
@@ -39,7 +39,7 @@ public:
     virtual bool ToLocation( boost::shared_ptr< TER_Localisation >& ) const;
     virtual bool ToPolygon( boost::shared_ptr< TER_Localisation >& ) const;
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const;
-    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

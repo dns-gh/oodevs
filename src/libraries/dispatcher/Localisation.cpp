@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-29
 // -----------------------------------------------------------------------------
 Localisation::Localisation()
-    : nType_ ( Common::MsgLocation::ellipse )
+    : nType_ ( sword::MsgLocation::ellipse )
 {
     // NOTHING
 }
@@ -27,7 +27,7 @@ Localisation::Localisation()
 // Name: Localisation constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Localisation::Localisation( const Common::MsgLocation& msg )
+Localisation::Localisation( const sword::MsgLocation& msg )
     : nType_ ( msg.type() )
 {
     points_.reserve( msg.coordinates().elem_size() );
@@ -47,7 +47,7 @@ Localisation::~Localisation()
 // Name: Localisation::Update
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Localisation::Update( const Common::MsgLocation& msg )
+void Localisation::Update( const sword::MsgLocation& msg )
 {
     nType_ = msg.type();
     points_.resize( 0 );
@@ -59,7 +59,7 @@ void Localisation::Update( const Common::MsgLocation& msg )
 // Name: Localisation::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Localisation::Send( Common::MsgLocation& msg ) const
+void Localisation::Send( sword::MsgLocation& msg ) const
 {
     msg.set_type( nType_ );
     for( T_PositionVector::const_iterator it = points_.begin(); it != points_.end(); ++it )

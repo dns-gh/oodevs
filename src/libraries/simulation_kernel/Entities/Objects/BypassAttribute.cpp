@@ -34,7 +34,7 @@ BypassAttribute::BypassAttribute()
 // Name: BypassAttribute constructor
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( const Common::MsgMissionParameter_Value& attributes )
+BypassAttribute::BypassAttribute( const sword::MsgMissionParameter_Value& attributes )
     : bypassPercentage_( attributes.list( 1 ).quantity() / 100., 0.05, 0., 1.)
 {
     // NOTHING
@@ -95,7 +95,7 @@ void BypassAttribute::Register( MIL_Object_ABC& object ) const
 // Name: BypassAttribute::SendFullState
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void BypassAttribute::SendFullState( Common::ObjectAttributes& asn ) const
+void BypassAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_bypass()->set_percentage( unsigned int( bypassPercentage_.Send() * 100. ) );
 }
@@ -104,7 +104,7 @@ void BypassAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // Name: BypassAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void BypassAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
+void BypassAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
@@ -117,7 +117,7 @@ void BypassAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 // Name: BypassAttribute::OnMagicActionUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribute )
+void BypassAttribute::OnUpdate( const sword::MsgMissionParameter_Value& attribute )
 {
     if( attribute.list_size() > 1 )
     {

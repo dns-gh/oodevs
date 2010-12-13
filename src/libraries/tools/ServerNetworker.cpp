@@ -171,10 +171,6 @@ void ServerNetworker::ConnectionError( const std::string& endpoint, const std::s
     sockets_->Disconnect( endpoint );
 }
 
-// =============================================================================
-// STATISTICS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: ServerNetworker::GetNbMessagesReceived
 // Created: NLD 2010-10-20

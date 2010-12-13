@@ -27,7 +27,7 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class DebugPoints : public kernel::Extension_ABC
-                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgDebugPoints >
+                  , public kernel::Updatable_ABC< sword::DebugPoints >
                   , public kernel::Drawable_ABC
 {
 public:
@@ -51,7 +51,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgDebugPoints& message );
+    virtual void DoUpdate( const sword::DebugPoints& message );
     //@}
 
 private:

@@ -21,14 +21,14 @@ namespace dispatcher
     class SimulationPublisher_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgSimToClient;
+    class SimToClient;
 }
 
-namespace MsgsMessengerToClient
+namespace sword
 {
-    class MsgMessengerToClient;
+    class MessengerToClient;
 }
 
 namespace plugins
@@ -62,8 +62,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& asn );
-    virtual void Receive( const MsgsMessengerToClient::MsgMessengerToClient& asn );
+    virtual void Receive( const sword::SimToClient& asn );
+    virtual void Receive( const sword::MessengerToClient& asn );
     //@}
 
 private:
@@ -75,14 +75,14 @@ private:
 
     //! @name Helpers
     //@{
-    bool IsRelevant( const MsgsSimToClient::MsgSimToClient& asn ) const;
-    bool IsRelevant( const MsgsMessengerToClient::MsgMessengerToClient& asn ) const;
-    bool IsRelevantAcknowledge( const MsgsSimToClient::MsgSimToClient& asn ) const;
-    void UpdateOnTick( const MsgsSimToClient::MsgSimToClient& asn );
-    void UpdateOnAcknowledge( const MsgsSimToClient::MsgSimToClient& asn );
-    void UpdateDatabase( const MsgsSimToClient::MsgSimToClient& asn );
-    void UpdateDatabase( const MsgsMessengerToClient::MsgMessengerToClient& asn );
-    void UpdateFolkDatabase( const MsgsSimToClient::MsgSimToClient& asn );
+    bool IsRelevant( const sword::SimToClient& asn ) const;
+    bool IsRelevant( const sword::MessengerToClient& asn ) const;
+    bool IsRelevantAcknowledge( const sword::SimToClient& asn ) const;
+    void UpdateOnTick( const sword::SimToClient& asn );
+    void UpdateOnAcknowledge( const sword::SimToClient& asn );
+    void UpdateDatabase( const sword::SimToClient& asn );
+    void UpdateDatabase( const sword::MessengerToClient& asn );
+    void UpdateFolkDatabase( const sword::SimToClient& asn );
     void UpdateListeners();
     //@}
 

@@ -25,7 +25,7 @@ class MIL_EquipmentTypeParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_EquipmentTypeParameter( const Common::EquipmentType & asn );
+    explicit MIL_EquipmentTypeParameter( const sword::EquipmentType & asn );
     explicit MIL_EquipmentTypeParameter( const PHY_ComposanteTypePion* pEquipmentType );
     virtual ~MIL_EquipmentTypeParameter();
     //@}
@@ -38,7 +38,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToEquipmentType( const PHY_ComposanteTypePion*& ) const;
-    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

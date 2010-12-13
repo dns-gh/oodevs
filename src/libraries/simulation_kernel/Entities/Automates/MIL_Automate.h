@@ -14,22 +14,18 @@
 
 #include "MIL.h"
 #include "Entities/MIL_Entity_ABC.h"
+#include "Entities/MIL_VisitableEntity_ABC.h"
+#include "Entities/MIL_VisitableEntity_ABC.h"
 #include <tools/Resolver.h>
-#include "Entities/MIL_VisitableEntity_ABC.h"
-#include "Entities/MIL_VisitableEntity_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgAutomatOrder;
+    class AutomatOrder;
     class MsgMissionParameters;
-}
-
-namespace MsgsClientToSim
-{
-    class MsgFragOrder;
-    class MsgSetAutomatMode;
-    class MsgUnitCreationRequest;
-    class MsgUnitMagicAction;
+    class FragOrder;
+    class SetAutomatMode;
+    class UnitCreationRequest;
+    class UnitMagicAction;
 }
 
 namespace xml
@@ -65,7 +61,7 @@ template < typename T > class PHY_ActionLogistic;
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_Automate : public MIL_Entity_ABC
-                    , public MIL_VisitableEntity_ABC< MIL_AgentPion >
+                   , public MIL_VisitableEntity_ABC< MIL_AgentPion >
 {
 public:
     //! @name Types
@@ -185,19 +181,19 @@ public:
             void SendKnowledge                     () const;
     virtual void SendLogisticLinks                 () const;
 
-            void OnReceiveMsgOrder                 ( const Common::MsgAutomatOrder&                 msg );
-            void OnReceiveMsgFragOrder             ( const MsgsClientToSim::MsgFragOrder&           msg );
-            void OnReceiveMsgSetAutomateMode       ( const MsgsClientToSim::MsgSetAutomatMode&      msg );
-            void OnReceiveMsgUnitCreationRequest   ( const MsgsClientToSim::MsgUnitCreationRequest& msg );
-            void OnReceiveMsgUnitCreationRequest   ( const MsgsClientToSim::MsgUnitMagicAction&     msg );
-            void OnReceiveMsgUnitMagicAction       ( const MsgsClientToSim::MsgUnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
-            void OnReceiveMsgMagicActionMoveTo     ( const MsgsClientToSim::MsgUnitMagicAction&     msg );
-            void OnReceiveMsgChangeKnowledgeGroup  ( const MsgsClientToSim::MsgUnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
-            void OnReceiveMsgChangeSuperior        ( const MsgsClientToSim::MsgUnitMagicAction&     msg, const tools::Resolver< MIL_Formation >& formations );
-    virtual void OnReceiveMsgChangeLogisticLinks   ( const MsgsClientToSim::MsgUnitMagicAction&     msg );
-    virtual void OnReceiveMsgLogSupplyChangeQuotas ( const Common::MsgMissionParameters&            msg );
-    virtual void OnReceiveMsgLogSupplyPushFlow     ( const Common::MsgMissionParameters&            msg );
-    virtual void OnReceiveMsgLogSupplyPullFlow     ( const Common::MsgMissionParameters&            msg );
+            void OnReceiveOrder                ( const sword::AutomatOrder&                 msg );
+            void OnReceiveFragOrder            ( const sword::FragOrder&           msg );
+            void OnReceiveSetAutomateMode      ( const sword::SetAutomatMode&      msg );
+            void OnReceiveUnitCreationRequest  ( const sword::UnitCreationRequest& msg );
+            void OnReceiveUnitCreationRequest  ( const sword::UnitMagicAction&     msg );
+            void OnReceiveUnitMagicAction      ( const sword::UnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
+            void OnReceiveMagicActionMoveTo    ( const sword::UnitMagicAction&     msg );
+            void OnReceiveChangeKnowledgeGroup ( const sword::UnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
+            void OnReceiveChangeSuperior       ( const sword::UnitMagicAction&     msg, const tools::Resolver< MIL_Formation >& formations );
+    virtual void OnReceiveChangeLogisticLinks  ( const sword::UnitMagicAction&     msg );
+    virtual void OnReceiveLogSupplyChangeQuotas( const sword::MsgMissionParameters&            msg );
+    virtual void OnReceiveLogSupplyPushFlow    ( const sword::MsgMissionParameters&            msg );
+    virtual void OnReceiveLogSupplyPullFlow    ( const sword::MsgMissionParameters&            msg );
     //@}
 
     //! @name Misc

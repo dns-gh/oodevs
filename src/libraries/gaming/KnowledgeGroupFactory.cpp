@@ -48,7 +48,7 @@ KnowledgeGroupFactory::~KnowledgeGroupFactory()
 // Name: KnowledgeGroupFactory::CreateKnowledgeGroup
 // Created: HBD 2010-06-23
 // -----------------------------------------------------------------------------
-kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message )
+kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::CreateKnowledgeGroup( const sword::KnowledgeGroupCreation& message )
 {
     // LTO begin
     Entity_ABC* superior = message.has_parent() ?

@@ -54,7 +54,7 @@ namespace
 // Name: HospitalUpdateReport constructor
 // Created: JCR 2010-05-31
 // -----------------------------------------------------------------------------
-HospitalUpdateReport::HospitalUpdateReport( const std::string& name, const Common::ObjectAttributeMedicalTreatment& medical, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver )
+HospitalUpdateReport::HospitalUpdateReport( const std::string& name, const sword::ObjectAttributeMedicalTreatment& medical, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver )
     : xos_ ( new xml::xostringstream() )
     , resolver_ ( resolver )
 {
@@ -65,7 +65,7 @@ HospitalUpdateReport::HospitalUpdateReport( const std::string& name, const Commo
 // Name: HospitalUpdateReport::BuildReport
 // Created: JCR 2010-06-09
 // -----------------------------------------------------------------------------
-void HospitalUpdateReport::BuildReport( const std::string& name, const Common::ObjectAttributeMedicalTreatment& medical )
+void HospitalUpdateReport::BuildReport( const std::string& name, const sword::ObjectAttributeMedicalTreatment& medical )
 {
     *xos_ << xml::start( "Hospital" )
             << xml::start( "OrganizationInformation" )
@@ -96,7 +96,7 @@ HospitalUpdateReport::~HospitalUpdateReport()
 // Name: HospitalUpdateReport::UpdateCapacityStatus
 // Created: JCR 2010-06-02
 // -----------------------------------------------------------------------------
-void HospitalUpdateReport::UpdateCapacityStatus( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatment& medical )
+void HospitalUpdateReport::UpdateCapacityStatus( xml::xostream& xos, const sword::ObjectAttributeMedicalTreatment& medical )
 {
     // for each bed type
     for ( int i = 0; i < medical.bed_capacities_size(); ++i )
@@ -107,7 +107,7 @@ void HospitalUpdateReport::UpdateCapacityStatus( xml::xostream& xos, const Commo
 // Name: HospitalUpdateReport::UpdateBedStatus
 // Created: JCR 2010-06-02
 // -----------------------------------------------------------------------------
-void HospitalUpdateReport::UpdateBedStatus( xml::xostream& xos, const Common::MedicalTreatmentBedCapacity& bed )
+void HospitalUpdateReport::UpdateBedStatus( xml::xostream& xos, const sword::MedicalTreatmentBedCapacity& bed )
 {
     xos << xml::start( "BedCapacity" )
             << xml::start( "BedType" ) << resolver_.Get( bed.type_id() ).GetName() << xml::end
@@ -121,7 +121,7 @@ void HospitalUpdateReport::UpdateBedStatus( xml::xostream& xos, const Common::Me
 // Name: HospitalUpdateReport::UpdateBedCapacity
 // Created: JCR 2010-06-02
 // -----------------------------------------------------------------------------
-void HospitalUpdateReport::UpdateBedCapacity( xml::xostream& xos, const Common::MedicalTreatmentBedCapacity& bed )
+void HospitalUpdateReport::UpdateBedCapacity( xml::xostream& xos, const sword::MedicalTreatmentBedCapacity& bed )
 {
     xos << xml::content( "CapacityStatus", ( bed.available_count() > 0 ) ? std::string( "Vacant/Available" ) : std::string( "NotAvailable" ) )
         << xml::content( "AvailableCount", bed.available_count() )
@@ -138,7 +138,7 @@ void HospitalUpdateReport::UpdateBedCapacity( xml::xostream& xos, const Common::
 // Name: HospitalUpdateReport::UpdateFacilityStatus
 // Created: JCR 2010-06-02
 // -----------------------------------------------------------------------------
-void HospitalUpdateReport::UpdateFacilityStatus( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatment& object )
+void HospitalUpdateReport::UpdateFacilityStatus( xml::xostream& xos, const sword::ObjectAttributeMedicalTreatment& object )
 {
     xos << xml::start( "EmergencyDepartmentStatus" ) << "Normal" << xml::end; // "Advisory|Closed|On Divert|N/A"
     if( false )
@@ -161,7 +161,7 @@ void HospitalUpdateReport::UpdateFacilityStatus( xml::xostream& xos, const Commo
 // Name: HospitalUpdateReport::UpdateDecon
 // Created: JCR 2010-06-02
 // -----------------------------------------------------------------------------
-void HospitalUpdateReport::UpdateDecon( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatment& /*object*/ )
+void HospitalUpdateReport::UpdateDecon( xml::xostream& xos, const sword::ObjectAttributeMedicalTreatment& /*object*/ )
 {
     xos << xml::start( "DeconCapacity" )
             << "Inactive" // "Open|Full|Exceeded|N/A"
@@ -172,7 +172,7 @@ void HospitalUpdateReport::UpdateDecon( xml::xostream& xos, const Common::Object
 // Name: HospitalUpdateReport::UpdateEvacuation
 // Created: JCR 2010-06-02
 // -----------------------------------------------------------------------------
-void HospitalUpdateReport::UpdateEvacuation( xml::xostream& xos, const Common::ObjectAttributeMedicalTreatment& /*object*/ )
+void HospitalUpdateReport::UpdateEvacuation( xml::xostream& xos, const sword::ObjectAttributeMedicalTreatment& /*object*/ )
 {
     xos << xml::start( "OperationalStatus" ) << "FullyOperational" << xml::end // "FullyOperational|LimitedOperation|Closed|N/A"
          << xml::start( "EvacuationStatus" ) << "NoPlannedEvacuation" << xml::end // "Shelter|NoPlannedEvacuation|EvacuationPartial|EvacuationTotal|N/A"

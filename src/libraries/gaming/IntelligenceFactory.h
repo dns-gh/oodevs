@@ -13,13 +13,9 @@
 #include "clients_kernel/IntelligenceFactory_ABC.h"
 #include "tools/Resolver_ABC.h"
 
-namespace MsgsMessengerToClient
+namespace sword
 {
-    class MsgIntelligenceCreation;
-}
-
-namespace Common
-{
+    class IntelligenceCreation;
     class MsgCoordLatLong;
 }
 
@@ -50,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    kernel::Intelligence_ABC* Create( const MsgsMessengerToClient::MsgIntelligenceCreation& message ) const;
+    kernel::Intelligence_ABC* Create( const sword::IntelligenceCreation& message ) const;
     virtual kernel::Intelligence_ABC* Create( kernel::Entity_ABC& superior, const std::string& symbol, const kernel::HierarchyLevel_ABC& level, bool mounted, const kernel::Karma& karma, const geometry::Point2f& position );
     //@}
 

@@ -32,7 +32,6 @@ namespace frontend
 
 namespace launcher
 {
-
 // =============================================================================
 /** @class  ProcessService
     @brief  ProcessService
@@ -43,7 +42,6 @@ class ProcessService : private boost::enable_shared_from_this< ProcessService >
                      , private boost::noncopyable
                      , public frontend::ProcessObserver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -53,10 +51,10 @@ public:
 
     //! @name Operations
     //@{
-    void SendExerciseList( MsgsLauncherToAdmin::MsgExercicesListResponse& message );
-    MsgsLauncherToAdmin::MsgControlStartAck::ErrorCode StartExercise( const MsgsAdminToLauncher::MsgControlStart& message );
-    MsgsLauncherToAdmin::MsgControlStopAck::ErrorCode StopExercise( const MsgsAdminToLauncher::MsgControlStop& message );
-    void SendProfileList( MsgsAuthenticationToClient::MsgProfileDescriptionList& message );
+    void SendExerciseList( sword::ExercicesListResponse& message );
+    sword::ControlStartExerciseAck::ErrorCode StartExercise( const sword::ControlStartExercise& message );
+    sword::ControlStopExerciseAck::ErrorCode StopExercise( const sword::ControlStopExercise& message );
+    void SendProfileList( sword::ProfileDescriptionList& message );
     bool IsRunning( const std::string& exercise ) const;
     virtual void NotifyStopped();
     virtual void NotifyError( const std::string& error );

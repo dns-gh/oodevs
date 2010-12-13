@@ -22,7 +22,7 @@ using namespace dispatcher;
 // Name: AgentLogMedical constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogMedical::AgentLogMedical( const Model_ABC& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMedicalState& asnMsg )
+AgentLogMedical::AgentLogMedical( const Model_ABC& model, const kernel::Agent_ABC& agent, const sword::LogMedicalState& asnMsg )
     : model_         ( model )
     , agent_         ( agent )
     , bSystemEnabled_( false )
@@ -43,7 +43,7 @@ AgentLogMedical::~AgentLogMedical()
 // Name: AgentLogMedical::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void AgentLogMedical::Update( const MsgsSimToClient::MsgLogMedicalState& asnMsg )
+void AgentLogMedical::Update( const sword::LogMedicalState& asnMsg )
 {
     if( asnMsg.has_chaine_activee()  )
         bSystemEnabled_ = asnMsg.chaine_activee() != 0;
@@ -111,7 +111,7 @@ void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
             asn().mutable_tactical_priorities()->add_elem()->set_id( (*it)->GetId() );
     }
     {
-        for( std::vector< Common::EnumHumanWound >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
+        for( std::vector< sword::EnumHumanWound >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
             asn().mutable_priorites()->add_elem( *it );
     }
 

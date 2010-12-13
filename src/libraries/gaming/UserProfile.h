@@ -13,7 +13,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
-#include "protocol/authenticationsenders.h"
+#include "protocol/AuthenticationSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 
 namespace kernel
@@ -22,10 +22,10 @@ namespace kernel
     class Entity_ABC;
 }
 
-namespace MsgsAuthenticationToClient
+namespace sword
 {
-    class MsgProfileCreation;
-    class MsgProfileUpdate;
+    class ProfileCreation;
+    class ProfileUpdate;
 }
 
 class Publisher_ABC;
@@ -37,12 +37,12 @@ class Publisher_ABC;
 // Created: SBO 2007-01-19
 // =============================================================================
 class UserProfile : public kernel::Extension_ABC
-                  , public kernel::Updatable_ABC< MsgsAuthenticationToClient::MsgProfileUpdate >
+                  , public kernel::Updatable_ABC< sword::ProfileUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfile( const MsgsAuthenticationToClient::MsgProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher );
+             UserProfile( const sword::ProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher );
              UserProfile( const QString& login, kernel::Controller& controller, Publisher_ABC& publisher );
              UserProfile( const UserProfile& );
     virtual ~UserProfile();
@@ -53,7 +53,7 @@ public:
     void RequestCreation();
     void RequestDeletion();
     void RequestUpdate( const QString& newLogin );
-    virtual void DoUpdate( const MsgsAuthenticationToClient::MsgProfileUpdate& message );
+    virtual void DoUpdate( const sword::ProfileUpdate& message );
     //@}
 
     //! @name Accessors
@@ -83,7 +83,7 @@ private:
 
     //! @name Helpers
     //@{
-    void SetProfile( const MsgsAuthenticationToClient::MsgProfile& profile );
+    void SetProfile( const sword::Profile& profile );
     //@}
 
 private:

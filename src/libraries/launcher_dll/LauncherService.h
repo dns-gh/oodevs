@@ -15,9 +15,9 @@
 #include <map>
 #include <string>
 
-namespace MsgsAdminToLauncher
+namespace sword
 {
-    class MsgConnectionRequest;
+    class ConnectionRequest;
 }
 
 namespace launcher
@@ -32,7 +32,6 @@ namespace launcher
 // =============================================================================
 class LauncherService : public tools::ServerNetworker
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

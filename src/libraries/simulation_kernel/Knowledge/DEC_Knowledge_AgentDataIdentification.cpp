@@ -113,7 +113,7 @@ void DEC_Knowledge_AgentDataIdentification::Update( const DEC_Knowledge_AgentDat
 // Name: DEC_Knowledge_AgentDataIdentification::SendChangedState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataIdentification::SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& /*asnMsg*/ ) const
+void DEC_Knowledge_AgentDataIdentification::SendChangedState( sword::UnitKnowledgeUpdate& /*asnMsg*/ ) const
 {
     // NOTHING
 }
@@ -122,7 +122,7 @@ void DEC_Knowledge_AgentDataIdentification::SendChangedState( MsgsSimToClient::M
 // Name: DEC_Knowledge_AgentDataIdentification::SendFullState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataIdentification::SendFullState( MsgsSimToClient::MsgUnitKnowledgeUpdate& /*asnMsg*/ ) const
+void DEC_Knowledge_AgentDataIdentification::SendFullState( sword::UnitKnowledgeUpdate& /*asnMsg*/ ) const
 {
     // NOTHING
 }

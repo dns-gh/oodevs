@@ -56,7 +56,7 @@ ObjectAttributesFactory::~ObjectAttributesFactory()
 // Name: ObjectAttributesFactory::Register
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const Common::ObjectAttributes& attributes ) const
+void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword::ObjectAttributes& attributes ) const
 {
     if( attributes.has_logistic() && entity.Retrieve< kernel::LogisticAttribute_ABC >() == 0 )
         entity.Attach< kernel::LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_ ) );

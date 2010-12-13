@@ -13,22 +13,22 @@
 #include "Population_ABC.h"
 #include "DecisionalState.h"
 
-namespace Common
+namespace sword
 {
-    class MsgCrowdOrder;
+    class CrowdOrder;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgDecisionalState;
-    class MsgCrowdFlowCreation;
-    class MsgCrowdFlowUpdate;
-    class MsgCrowdFlowDestruction;
-    class MsgCrowdCreation;
-    class MsgCrowdUpdate;
-    class MsgCrowdConcentrationCreation;
-    class MsgCrowdConcentrationUpdate;
-    class MsgCrowdConcentrationDestruction;
+    class DecisionalState;
+    class CrowdFlowCreation;
+    class CrowdFlowUpdate;
+    class CrowdFlowDestruction;
+    class CrowdCreation;
+    class CrowdUpdate;
+    class CrowdConcentrationCreation;
+    class CrowdConcentrationUpdate;
+    class CrowdConcentrationDestruction;
 }
 
 namespace dispatcher
@@ -48,36 +48,36 @@ namespace dispatcher
 // =============================================================================
 class Population : public dispatcher::Population_ABC
                  , public kernel::Extension_ABC
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdCreation >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdUpdate >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationCreation >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationUpdate >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationDestruction >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowCreation >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowUpdate >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowDestruction >
-                 , public kernel::Updatable_ABC< Common::MsgCrowdOrder >
-                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgDecisionalState >
+                 , public kernel::Updatable_ABC< sword::CrowdCreation >
+                 , public kernel::Updatable_ABC< sword::CrowdUpdate >
+                 , public kernel::Updatable_ABC< sword::CrowdConcentrationCreation >
+                 , public kernel::Updatable_ABC< sword::CrowdConcentrationUpdate >
+                 , public kernel::Updatable_ABC< sword::CrowdConcentrationDestruction >
+                 , public kernel::Updatable_ABC< sword::CrowdFlowCreation >
+                 , public kernel::Updatable_ABC< sword::CrowdFlowUpdate >
+                 , public kernel::Updatable_ABC< sword::CrowdFlowDestruction >
+                 , public kernel::Updatable_ABC< sword::CrowdOrder >
+                 , public kernel::Updatable_ABC< sword::DecisionalState >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Population( Model_ABC& model, const MsgsSimToClient::MsgCrowdCreation& msg );
+             Population( Model_ABC& model, const sword::CrowdCreation& msg );
     virtual ~Population();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdCreation&                 msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdUpdate&                   msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationCreation&    msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationUpdate&      msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationDestruction& msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowCreation&             msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate&               msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowDestruction&          msg );
-    virtual void DoUpdate( const Common::MsgCrowdOrder&                             msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgDecisionalState&               msg );
+    virtual void DoUpdate( const sword::CrowdCreation&                 msg );
+    virtual void DoUpdate( const sword::CrowdUpdate&                   msg );
+    virtual void DoUpdate( const sword::CrowdConcentrationCreation&    msg );
+    virtual void DoUpdate( const sword::CrowdConcentrationUpdate&      msg );
+    virtual void DoUpdate( const sword::CrowdConcentrationDestruction& msg );
+    virtual void DoUpdate( const sword::CrowdFlowCreation&             msg );
+    virtual void DoUpdate( const sword::CrowdFlowUpdate&               msg );
+    virtual void DoUpdate( const sword::CrowdFlowDestruction&          msg );
+    virtual void DoUpdate( const sword::CrowdOrder&                             msg );
+    virtual void DoUpdate( const sword::DecisionalState&               msg );
 
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;

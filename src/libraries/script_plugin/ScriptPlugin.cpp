@@ -42,8 +42,6 @@ namespace bfs = boost::filesystem;
 using namespace plugins::script;
 using namespace dispatcher;
 
-using namespace MsgsClientToMessenger;
-
 // -----------------------------------------------------------------------------
 // Name: ScriptPlugin constructor
 // Created: AGE 2008-06-12
@@ -93,7 +91,7 @@ ScriptPlugin::~ScriptPlugin()
 // Name: ScriptPlugin::Receive
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-void ScriptPlugin::Receive( const MsgSimToClient& wrapper )
+void ScriptPlugin::Receive( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_control_information() )
         if( wrapper.message().control_information().has_tick_duration() )
@@ -111,7 +109,7 @@ void ScriptPlugin::Receive( const MsgSimToClient& wrapper )
 // Name: ScriptPlugin::Receive
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
-void ScriptPlugin::Receive( const MsgAarToClient& wrapper )
+void ScriptPlugin::Receive( const sword::AarToClient& wrapper )
 {
     if( wrapper.message().has_indicator() )
         controller_->Update( events::IndicatorChanged( wrapper.message().indicator().name(), wrapper.message().indicator().value() ) );
@@ -139,7 +137,7 @@ void ScriptPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
 // Name: ScriptPlugin::OnReceiveClientToMessenger
 // Created: SBO 2008-06-27
 // -----------------------------------------------------------------------------
-void ScriptPlugin::OnReceiveClientToMessenger( const std::string&, const MsgClientToMessenger& wrapper )
+void ScriptPlugin::OnReceiveClientToMessenger( const std::string&, const sword::ClientToMessenger& wrapper )
 {
     if( wrapper.message().has_text_message() )
     {

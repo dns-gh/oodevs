@@ -12,7 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace Common
+namespace sword
 {
     class MsgDotationQuota;
 }
@@ -32,14 +32,14 @@ class DotationQuota : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationQuota(  const Common::MsgDotationQuota& message );
+             DotationQuota(  const sword::MsgDotationQuota& message );
     virtual ~DotationQuota();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const Common::MsgDotationQuota& message );
-    void Send( Common::MsgDotationQuota& message ) const;
+    void Update( const sword::MsgDotationQuota& message );
+    void Send( sword::MsgDotationQuota& message ) const;
     //@}
 
 private:

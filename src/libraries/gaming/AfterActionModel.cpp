@@ -41,7 +41,7 @@ AfterActionModel::~AfterActionModel()
 // Name: AfterActionModel::Update
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AfterActionModel::Update( const MsgsAarToClient::MsgAarInformation& /*message*/ )
+void AfterActionModel::Update( const sword::AarInformation& /*message*/ )
 {
     // $$$$ AGE 2007-10-10:
     controller_.Update( *this );
@@ -51,7 +51,7 @@ void AfterActionModel::Update( const MsgsAarToClient::MsgAarInformation& /*messa
 // Name: AfterActionModel::Update
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AfterActionModel::Update( const MsgsAarToClient::MsgPlotResult& message )
+void AfterActionModel::Update( const sword::PlotResult& message )
 {
     requests_->Update( message );
 }

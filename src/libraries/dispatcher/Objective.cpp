@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: Objective constructor
 // Created: NLD 2007-04-23
 // -----------------------------------------------------------------------------
-Objective::Objective( const Common::MsgMissionObjective& asn )
+Objective::Objective( const sword::MsgMissionObjective& asn )
     : location_( asn.localisation() )
     , schedule_( asn.horaire().data() )
 {
@@ -47,7 +47,7 @@ Objective::~Objective()
 // Name: Objective::Send
 // Created: NLD 2007-04-23
 // -----------------------------------------------------------------------------
-void Objective::Send( Common::MsgMissionObjective& asn ) const
+void Objective::Send( sword::MsgMissionObjective& asn ) const
 {
     asn.mutable_horaire()->set_data( schedule_ );
     location_.Send( *asn.mutable_localisation() );

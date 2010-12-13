@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Name: Report constructor
 // Created: AGE 2007-10-19
 // -----------------------------------------------------------------------------
-Report::Report( Model_ABC& /*model*/, const MsgsSimToClient::MsgReport& report )
+Report::Report( Model_ABC& /*model*/, const sword::Report& report )
     : SimpleEntity< >( report.report().id() )
     , message_( report.New() )
 {

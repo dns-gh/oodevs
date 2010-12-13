@@ -38,7 +38,7 @@ ObjectNotifier::~ObjectNotifier()
 // Name: ObjectNotifier::DoUpdate
 // Created: SBO 2010-07-13
 // -----------------------------------------------------------------------------
-void ObjectNotifier::DoUpdate( const MsgsSimToClient::MsgObjectDestruction& /*message*/ )
+void ObjectNotifier::DoUpdate( const sword::ObjectDestruction& /*message*/ )
 {
     controller_.Update( events::ObjectDestroyed( entity_ ) );
 }

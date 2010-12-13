@@ -102,7 +102,7 @@ float PlatformAdapter::GetHeading() const
 // -----------------------------------------------------------------------------
 Platform_ABC::E_State PlatformAdapter::GetState() const
 {
-    if( agent_.GetOperationalState() == Common::detruit_totalement )
+    if( agent_.GetOperationalState() == sword::detruit_totalement )
         return destroyed;
     if( agent_.GetOperationalStateValue() < 100 )
         return broken;

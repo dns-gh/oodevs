@@ -40,7 +40,7 @@ KnowledgeGroupHierarchies::~KnowledgeGroupHierarchies()
 // Created: FHD 2009-12-21
 // LTO
 // -----------------------------------------------------------------------------
-void KnowledgeGroupHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
+void KnowledgeGroupHierarchies::DoUpdate( const sword::KnowledgeGroupUpdate& message )
 {
     if( message.has_parent() )
     {

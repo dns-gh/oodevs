@@ -10,7 +10,7 @@
 #ifndef __ObjectAttributesFactory_h_
 #define __ObjectAttributesFactory_h_
 
-namespace Common
+namespace sword
 {
     class ObjectAttributes;
 }
@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    void Register( kernel::Entity_ABC& entity, const Common::ObjectAttributes& attributes ) const;
+    void Register( kernel::Entity_ABC& entity, const sword::ObjectAttributes& attributes ) const;
     //@}
 
 private:

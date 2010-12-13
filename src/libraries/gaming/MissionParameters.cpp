@@ -64,7 +64,7 @@ void MissionParameters::UpdateMessage( const T& message )
 // Name: MsgMissionParameters::DoUpdate
 // Created: SBO 2006-11-13
 // -----------------------------------------------------------------------------
-void MissionParameters::DoUpdate( const Common::MsgUnitOrder& message )
+void MissionParameters::DoUpdate( const sword::UnitOrder& message )
 {
     UpdateMessage( message );
 }
@@ -73,7 +73,7 @@ void MissionParameters::DoUpdate( const Common::MsgUnitOrder& message )
 // Name: MsgMissionParameters::DoUpdate
 // Created: SBO 2006-11-20
 // -----------------------------------------------------------------------------
-void MissionParameters::DoUpdate( const Common::MsgAutomatOrder& message )
+void MissionParameters::DoUpdate( const sword::AutomatOrder& message )
 {
     UpdateMessage( message );
 }
@@ -82,7 +82,7 @@ void MissionParameters::DoUpdate( const Common::MsgAutomatOrder& message )
 // Name: MsgMissionParameters::DoUpdate
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void MissionParameters::DoUpdate( const Common::MsgCrowdOrder& message )
+void MissionParameters::DoUpdate( const sword::CrowdOrder& message )
 {
     UpdateMessage( message );
 }

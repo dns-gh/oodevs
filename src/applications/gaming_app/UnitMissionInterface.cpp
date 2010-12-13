@@ -17,8 +17,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "gaming/AutomatDecisions.h"
 
-using namespace Common;
-
+using namespace sword;
 using namespace kernel;
 using namespace actions;
 

@@ -42,7 +42,7 @@ namespace dis
 // Created: AGE 2008-03-10
 // =============================================================================
 class DisExtension : public kernel::Extension_ABC
-                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+                   , public kernel::Updatable_ABC< sword::UnitAttributes >
                    , private tic::PlatformVisitor_ABC
 {
 public:
@@ -54,7 +54,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& attributes );
+    virtual void DoUpdate( const sword::UnitAttributes& attributes );
     //@}
 
 private:

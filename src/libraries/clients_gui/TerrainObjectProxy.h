@@ -22,9 +22,9 @@ namespace kernel
     class Viewport_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUrbanUpdate;
+    class UrbanUpdate;
 }
 
 namespace urban
@@ -43,7 +43,7 @@ namespace gui
 // =============================================================================
 class TerrainObjectProxy : public kernel::Extension_ABC
                          , public kernel::EntityImplementation< kernel::Entity_ABC >
-                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanUpdate >
+                         , public kernel::Updatable_ABC< sword::UrbanUpdate >
                          , public kernel::Creatable< TerrainObjectProxy >
 {
 public:
@@ -56,7 +56,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& msg );
+    virtual void DoUpdate( const sword::UrbanUpdate& msg );
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
     virtual void Select( kernel::ActionController& /*controller*/ ) const;

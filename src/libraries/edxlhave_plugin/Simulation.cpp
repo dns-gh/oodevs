@@ -58,16 +58,16 @@ bool Simulation::IsInitDone() const
 // Name: Simulation::Update
 // Created: JCR 2010-06-10
 // -----------------------------------------------------------------------------
-void Simulation::Receive( const MsgsSimToClient::MsgObjectMagicActionAck& ack )
+void Simulation::Receive( const sword::ObjectMagicActionAck& ack )
 {
-    modelLoaded_ |= ( MsgsSimToClient::MsgObjectMagicActionAck::no_error == ack.error_code() );
+    modelLoaded_ |= ( sword::ObjectMagicActionAck::no_error == ack.error_code() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Simulation::Receive
 // Created: JCR 2010-07-09
 // -----------------------------------------------------------------------------
-void Simulation::Receive( const MsgsSimToClient::MsgControlInformation& message )
+void Simulation::Receive( const sword::ControlInformation& message )
 {
     tick_duration_ = message.tick_duration();
 }
@@ -76,7 +76,7 @@ void Simulation::Receive( const MsgsSimToClient::MsgControlInformation& message 
 // Name: Simulation::Receive
 // Created: JCR 2010-05-31
 // -----------------------------------------------------------------------------
-void Simulation::Receive( const MsgsSimToClient::MsgControlEndTick& message )
+void Simulation::Receive( const sword::ControlEndTick& message )
 {
     current_ = ( message.current_tick() - lastUpdate_ ) * tick_duration_;
 }
@@ -94,7 +94,7 @@ bool Simulation::NeedUpdate() const
 // Name: Simulation::NeedUpdate
 // Created: JCR 2010-05-31
 // -----------------------------------------------------------------------------
-void Simulation::Update( const MsgsSimToClient::MsgControlEndTick& message )
+void Simulation::Update( const sword::ControlEndTick& message )
 {
     current_ = 0;
     lastUpdate_ = message.current_tick();

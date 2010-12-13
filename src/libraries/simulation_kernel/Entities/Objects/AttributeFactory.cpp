@@ -33,7 +33,7 @@
 #include "protocol/protocol.h"
 #include <boost/bind.hpp>
 
-using namespace MsgsClientToSim;
+using namespace sword;
 
 namespace
 {
@@ -158,58 +158,57 @@ void AttributeFactory::Initialize( Object& object ) const
 // Name: AttributeFactory::Create
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void AttributeFactory::Create( Object& object, const Common::MsgMissionParameter& parameter ) const
+void AttributeFactory::Create( Object& object, const sword::MsgMissionParameter& parameter ) const
 {
     Initialize( object );
     if( parameter.value_size() )
     {
-        const Common::MsgMissionParameter_Value& attributes = parameter.value().Get( 0 );
+        const sword::MsgMissionParameter_Value& attributes = parameter.value().Get( 0 );
         for( int i = 0; i < attributes.list_size(); ++i )
         {
-            const Common::MsgMissionParameter_Value& attribute = attributes.list( i );
+            const sword::MsgMissionParameter_Value& attribute = attributes.list( i );
             if( attribute.list_size() == 0 ) // it should be a list of lists
                 return;
-
             unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
             switch( actionId )
             {
-            case MsgObjectMagicAction_Attribute_obstacle:
+            case ObjectMagicAction_Attribute_obstacle:
                 object.GetAttribute< ObstacleAttribute >() = ObstacleAttribute( attribute );
                 break;
-            case MsgObjectMagicAction_Attribute_mine:
+            case ObjectMagicAction_Attribute_mine:
                 object.GetAttribute< MineAttribute >() = MineAttribute( attribute );
                 break;
-            case MsgObjectMagicAction_Attribute_activity_time:
+            case ObjectMagicAction_Attribute_activity_time:
                 object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attribute );
                 break;
-            case MsgObjectMagicAction_Attribute_bypass:
+            case ObjectMagicAction_Attribute_bypass:
                 object.GetAttribute< BypassAttribute >() = BypassAttribute( attribute );
                 break;
-            case MsgObjectMagicAction_Attribute_effect_delay:
+            case ObjectMagicAction_Attribute_effect_delay:
                 object.GetAttribute< DelayAttribute >() = DelayAttribute( attribute );
                 break;
-            case MsgObjectMagicAction_Attribute_logistic:
+            case ObjectMagicAction_Attribute_logistic:
                 object.GetAttribute< LogisticAttribute >() = LogisticAttribute( attribute );
                 break;
-            case MsgObjectMagicAction_Attribute_nbc:
+            case ObjectMagicAction_Attribute_nbc:
                 object.GetAttribute< NBCAttribute >() = NBCAttribute( attribute );
                 break;
-            case MsgObjectMagicAction_Attribute_crossing_site:
+            case ObjectMagicAction_Attribute_crossing_site:
                 object.GetAttribute< CrossingSiteAttribute >() = CrossingSiteAttribute( attribute );
                 break;
-            case MsgObjectMagicAction_Attribute_supply_route:
+            case ObjectMagicAction_Attribute_supply_route:
                 object.GetAttribute< SupplyRouteAttribute >() = SupplyRouteAttribute( attribute );
                 break;
-            /*case MsgObjectMagicAction_Attribute_toxic_cloud:
+            /*case ObjectMagicAction_Attribute_toxic_cloud:
                 object.GetAttribute< ??? >() = ???( attribute );
                 break;*/
-            case MsgObjectMagicAction_Attribute_fire:
+            case ObjectMagicAction_Attribute_fire:
                 object.GetAttribute< FireAttribute >() = FireAttribute( attribute );
                 break;
-            case MsgObjectMagicAction_Attribute_medical_treatment:
+            case ObjectMagicAction_Attribute_medical_treatment:
                 object.GetAttribute< MedicalTreatmentAttribute >() = MedicalTreatmentAttribute( attribute );
                 break;
-            case MsgObjectMagicAction_Attribute_interaction_height:
+            case ObjectMagicAction_Attribute_interaction_height:
                 object.GetAttribute< InteractionHeightAttribute >() = InteractionHeightAttribute( attribute );
                 break;
             default:

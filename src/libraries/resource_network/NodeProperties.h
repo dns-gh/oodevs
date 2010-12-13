@@ -16,19 +16,15 @@
 
 namespace google
 {
-    namespace protobuf
-    {
-        template< typename T > class RepeatedPtrField;
-    }
+namespace protobuf
+{
+    template< typename T > class RepeatedPtrField;
+}
 }
 
-namespace Common
+namespace sword
 {
     class ObjectAttributeResourceNetwork;
-}
-
-namespace MsgsSimToClient
-{
     class UrbanAttributes_Infrastructures;
 }
 
@@ -79,9 +75,9 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( MsgsSimToClient::UrbanAttributes_Infrastructures& msg ) const;
-    void Serialize( Common::ObjectAttributeResourceNetwork& msg ) const;
-    void Update( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list  );
+    void Serialize( sword::UrbanAttributes_Infrastructures& msg ) const;
+    void Serialize( sword::ObjectAttributeResourceNetwork& msg ) const;
+    void Update( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& list );
     //@}
 
     //! @name CheckPoints

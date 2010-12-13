@@ -15,11 +15,11 @@ namespace xml
     class xistream;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgControlInformation;
-    class MsgControlEndTick;
-    class MsgObjectMagicActionAck;
+    class ControlInformation;
+    class ControlEndTick;
+    class ObjectMagicActionAck;
 }
 
 namespace plugins
@@ -45,15 +45,15 @@ public:
 
     //! @name
     //@{
-    void Receive( const MsgsSimToClient::MsgControlInformation& message );
-    void Receive( const MsgsSimToClient::MsgControlEndTick& message );
+    void Receive( const sword::ControlInformation& message );
+    void Receive( const sword::ControlEndTick& message );
     bool NeedUpdate() const;
-    void Update( const MsgsSimToClient::MsgControlEndTick& message );
+    void Update( const sword::ControlEndTick& message );
     //@}
 
     //! @name check init validation
     //@{
-    void Receive( const MsgsSimToClient::MsgObjectMagicActionAck& ack );
+    void Receive( const sword::ObjectMagicActionAck& ack );
     bool IsInitDone() const;
     //@}
 

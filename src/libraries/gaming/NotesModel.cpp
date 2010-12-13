@@ -37,7 +37,7 @@ NotesModel::~NotesModel()
 // Name: NotesModel::Create
 // Created: HBD 2010-02-04
 // -----------------------------------------------------------------------------
-void NotesModel::Create( const MsgsMessengerToClient::MsgMarkerCreation& message )
+void NotesModel::Create( const sword::MarkerCreation& message )
 {
     Note* note = new Note( controller_, message );
     Register( message.marker().id(), *note );
@@ -47,7 +47,7 @@ void NotesModel::Create( const MsgsMessengerToClient::MsgMarkerCreation& message
 // Name: NotesModel::Update
 // Created: HBD 2010-02-04
 // -----------------------------------------------------------------------------
-void NotesModel::Update( const MsgsMessengerToClient::MsgMarkerUpdate& message )
+void NotesModel::Update( const sword::MarkerUpdate& message )
 {
     Note* note = Find( message.marker().id() );
     if( note )
@@ -58,7 +58,7 @@ void NotesModel::Update( const MsgsMessengerToClient::MsgMarkerUpdate& message )
 // Name: NotesModel::Delete
 // Created: HBD 2010-02-04
 // -----------------------------------------------------------------------------
-void NotesModel::Delete( const MsgsMessengerToClient::MsgMarkerDestruction& message )
+void NotesModel::Delete( const sword::MarkerDestruction& message )
 {
     Note* note = Find( message.marker().id() );
     if( note )

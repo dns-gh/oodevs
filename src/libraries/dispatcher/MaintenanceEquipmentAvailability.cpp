@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: MaintenanceEquipmentAvailability constructor
 // Created: LGY 2010-07-07
 // -----------------------------------------------------------------------------
-MaintenanceEquipmentAvailability::MaintenanceEquipmentAvailability( const MsgsSimToClient::MsgLogMaintenanceEquipmentAvailability& asn )
+MaintenanceEquipmentAvailability::MaintenanceEquipmentAvailability( const sword::LogMaintenanceEquipmentAvailability& asn )
 : nEquipmentType_( asn.equipment_type().id() )
 , nNbrTotal_     ( asn.nbr_total() )
 , nNbrAvailable_ ( asn.nbr_disponibles() )
@@ -42,7 +42,7 @@ MaintenanceEquipmentAvailability::~MaintenanceEquipmentAvailability()
 // Name: MaintenanceEquipmentAvailability::Send
 // Created: LGY 2010-07-07
 // -----------------------------------------------------------------------------
-void MaintenanceEquipmentAvailability::Send( MsgsSimToClient::MsgLogMaintenanceEquipmentAvailability& asn ) const
+void MaintenanceEquipmentAvailability::Send( sword::LogMaintenanceEquipmentAvailability& asn ) const
 {
     asn.mutable_equipment_type()->set_id( nEquipmentType_ );
     asn.set_nbr_total( nNbrTotal_ );

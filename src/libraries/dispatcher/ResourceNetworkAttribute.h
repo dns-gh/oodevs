@@ -13,14 +13,13 @@
 #include "UrbanObjectAttribute_ABC.h"
 #include "ObjectAttribute_ABC.h"
 
-namespace Common
+namespace sword
 {
     class ResourceNetwork;
 }
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  ResourceNetworkAttribute
     @brief  ResourceNetworkAttribute
@@ -52,24 +51,24 @@ class ResourceNetworkAttribute : public UrbanObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ResourceNetworkAttribute( const MsgsSimToClient::UrbanAttributes& message );
-    explicit ResourceNetworkAttribute( const Common::ObjectAttributes& message );
+    explicit ResourceNetworkAttribute( const sword::UrbanAttributes& message );
+    explicit ResourceNetworkAttribute( const sword::ObjectAttributes& message );
     virtual ~ResourceNetworkAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const MsgsSimToClient::UrbanAttributes& message );
-    virtual void Send  (       MsgsSimToClient::UrbanAttributes& message ) const;
-    virtual void Update( const Common::ObjectAttributes& message );
-    virtual void Send  (       Common::ObjectAttributes& message ) const;
+    virtual void Update( const sword::UrbanAttributes& message );
+    virtual void Send  (       sword::UrbanAttributes& message ) const;
+    virtual void Update( const sword::ObjectAttributes& message );
+    virtual void Send  (       sword::ObjectAttributes& message ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void Update( const Common::ResourceNetwork& message );
-    void Send( Common::ResourceNetwork& message, const ResourceNetwork& network ) const;
+    void Update( const sword::ResourceNetwork& message );
+    void Send( sword::ResourceNetwork& message, const ResourceNetwork& network ) const;
     //@}
 
 private:

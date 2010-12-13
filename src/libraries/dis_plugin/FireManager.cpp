@@ -42,7 +42,7 @@ FireManager::~FireManager()
 // Name: FireManager::Update
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
+void FireManager::Update( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_start_unit_fire() )
         ReceiveFire( wrapper.message().start_unit_fire() );
@@ -58,7 +58,7 @@ void FireManager::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
 // Name: FireManager::ReceiveFire
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::ReceiveFire( const MsgsSimToClient::MsgStartUnitFire& message )
+void FireManager::ReceiveFire( const sword::StartUnitFire& message )
 {
     if( message.target().has_position() )
     {
@@ -71,10 +71,10 @@ void FireManager::ReceiveFire( const MsgsSimToClient::MsgStartUnitFire& message 
 // Name: FireManager::UpdateFireEffect
 // Created: AGE 2008-05-05
 // -----------------------------------------------------------------------------
-void FireManager::UpdateFireEffect( const MsgsSimToClient::MsgStartFireEffect& message )
+void FireManager::UpdateFireEffect( const sword::StartFireEffect& message )
 {
     DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
-    pdu.SetBurst( 1, 1, message.type() == Common::smoke ? BurstDescriptor::smoke : BurstDescriptor::illumination );
+    pdu.SetBurst( 1, 1, message.type() == sword::smoke ? BurstDescriptor::smoke : BurstDescriptor::illumination );
     pdu.SetPosition( message.location().coordinates().elem(0).latitude(), message.location().coordinates().elem(0).longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude
     network_.Send( pdu );
 }
@@ -83,7 +83,7 @@ void FireManager::UpdateFireEffect( const MsgsSimToClient::MsgStartFireEffect& m
 // Name: FireManager::ReceiveFire
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::ReceiveFire( const MsgsSimToClient::MsgStopUnitFire& message )
+void FireManager::ReceiveFire( const sword::StopUnitFire& message )
 {
     DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
     pdu.SetPosition( activeFires_[ message.fire().id() ].latitude(), activeFires_[ message.fire().id() ].longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude
@@ -105,7 +105,7 @@ void FireManager::UpdateDetonations()
 // Name: FireManager::CreateFire
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::CreateFire( const Common::MsgCoordLatLong& /*position*/ )
+void FireManager::CreateFire( const sword::MsgCoordLatLong& /*position*/ )
 {
     // $$$$ AGE 2008-05-05:  ?
 }

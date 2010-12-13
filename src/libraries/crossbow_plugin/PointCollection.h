@@ -12,7 +12,7 @@
 
 #include "Shape_ABC.h"
 
-namespace Common
+namespace sword
 {
     class MsgLocation;
     class MsgCoordLatLongList;
@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( Common::MsgLocation& message ) const;
+    virtual void Serialize( sword::MsgLocation& message ) const;
     //@}
 
     //! @name
@@ -53,7 +53,7 @@ protected:
     //! @name Constructors/Destructor
     //@{
              PointCollection();
-    explicit PointCollection( const Common::MsgCoordLatLongList& message );
+    explicit PointCollection( const sword::MsgCoordLatLongList& message );
     explicit PointCollection( const OGRLineString& geometry );
     //@}
 

@@ -10,14 +10,14 @@
 #ifndef __MessageHandler_ABC_h_
 #define __MessageHandler_ABC_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgSimToClient;
+    class SimToClient;
 }
 
-namespace MsgsAarToClient
+namespace sword
 {
-    class MsgAarToClient;
+    class AarToClient;
 }
 
 namespace dispatcher
@@ -40,8 +40,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message ) = 0;
-    virtual void Receive( const MsgsAarToClient::MsgAarToClient& /*message*/ ) {}
+    virtual void Receive( const sword::SimToClient& message ) = 0;
+    virtual void Receive( const sword::AarToClient& /*message*/ ) {}
     //@}
 };
 

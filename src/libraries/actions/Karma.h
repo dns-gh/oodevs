@@ -13,7 +13,7 @@
 #include "Parameter.h"
 #include <boost/function.hpp>
 
-namespace Common
+namespace sword
 {
     enum EnumDiplomacy;
 }
@@ -38,14 +38,14 @@ class Karma : public Parameter< QString >
 public:
     //! @name Functors
     //@{
-    typedef boost::function< void ( const Common::EnumDiplomacy& ) > T_Setter;
+    typedef boost::function< void ( const sword::EnumDiplomacy& ) > T_Setter;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
              Karma( const kernel::OrderParameter& parameter, const kernel::Karma& karma, const kernel::Entity_ABC& parent );
-             Karma( const kernel::OrderParameter& parameter, const Common::EnumDiplomacy& message );
+             Karma( const kernel::OrderParameter& parameter, const sword::EnumDiplomacy& message );
              Karma( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~Karma();
     //@}

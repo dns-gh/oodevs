@@ -20,7 +20,7 @@
 // =============================================================================
 namespace
 {
-    bool operator==( const MsgsSimToClient::MsgSimToClient& lhs, const MsgsSimToClient::MsgSimToClient& rhs )
+    bool operator==( const sword::SimToClient& lhs, const sword::SimToClient& rhs )
     {
         BOOST_CHECK_EQUAL( lhs.DebugString(), rhs.DebugString() );
         return true;

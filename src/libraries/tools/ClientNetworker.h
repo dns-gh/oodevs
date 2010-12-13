@@ -57,17 +57,17 @@ public:
     //@{
     void Update();
 
-    void Connect( const std::string& host, bool retry );
+    void Connect( const std::string& host, bool retry = false );
     void Disconnect();
 
     using MessageSender_ABC::Send;
     using MessageDispatcher_ABC::RegisterMessage;
     //@}
 
-    //! @name Statistics
+    //! @name Accessors
     //@{
-    virtual unsigned long GetNbMessagesReceived() const;
-    virtual unsigned long GetNbMessagesSent    () const;
+    virtual unsigned long GetNbMessagesReceived() const; // $$$$ MCO : make a proxy on MessageDispatcher_ABC instead
+    virtual unsigned long GetNbMessagesSent() const; // $$$$ MCO : make a proxy on MessageSender_ABC instead
     //@}
 
 protected:
@@ -79,20 +79,23 @@ protected:
     //@}
 
 private:
-    //! @name Helpers
+    //! @name Copy/Assignment
     //@{
-    void Run();
-    void Stop();
+    ClientNetworker( const ClientNetworker& );            //!< Copy constructor
+    ClientNetworker& operator=( const ClientNetworker& ); //!< Assignment operator
+    //@}
+
+    //! @name Operations
+    //@{
     virtual void Send( const std::string& endpoint, unsigned long tag, const Message& message );
     virtual void Register( unsigned long id, std::auto_ptr< ObjectMessageCallback_ABC > callback );
     virtual ObjectMessageCallback_ABC* Retrieve( unsigned long id );
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    ClientNetworker( const ClientNetworker& );            //!< Copy constructor
-    ClientNetworker& operator=( const ClientNetworker& ); //!< Assignment operator
+    void Run();
+    void Stop();
     //@}
 
 private:
@@ -105,13 +108,9 @@ private:
     std::auto_ptr< ObjectMessageService >       messageService_;
     std::auto_ptr< Connector >                  connector_;
     std::string                                 host_;
-    volatile bool                               stopped_;
-    boost::thread                               thread_;
-    //@}
-protected:
-    //! @name Member data
-    //@{
     bool                                        retry_;
+    bool                                        stopped_;
+    boost::thread                               thread_;
    //@}
 };
 

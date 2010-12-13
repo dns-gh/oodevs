@@ -19,9 +19,9 @@ PHY_LogisticLevel::T_LogisticLevelMap PHY_LogisticLevel::logisticLevels_;
 // MANAGER
 // =============================================================================
 
-PHY_LogisticLevel PHY_LogisticLevel::none_( "aucun", Common::none );
-PHY_LogisticLevel PHY_LogisticLevel::tc2_ ( "tc2", Common::tc2   );
-PHY_LogisticLevel PHY_LogisticLevel::logistic_base_  ( "logistic-base", Common::logistic_base  );
+PHY_LogisticLevel PHY_LogisticLevel::none_( "aucun", sword::none );
+PHY_LogisticLevel PHY_LogisticLevel::tc2_ ( "tc2", sword::tc2   );
+PHY_LogisticLevel PHY_LogisticLevel::logistic_base_  ( "logistic-base", sword::logistic_base  );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_LogisticLevel::Initialize

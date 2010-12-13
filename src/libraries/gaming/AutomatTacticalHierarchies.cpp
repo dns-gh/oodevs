@@ -45,7 +45,7 @@ AutomatTacticalHierarchies::~AutomatTacticalHierarchies()
 // Name: AutomatTacticalHierarchies::DoUpdate
 // Created: NLD 2007-04-12
 // -----------------------------------------------------------------------------
-void AutomatTacticalHierarchies::DoUpdate( const Common::MsgAutomatChangeSuperior& message )
+void AutomatTacticalHierarchies::DoUpdate( const sword::AutomatChangeSuperior& message )
 {
     if( message.superior().has_automat() )
         ChangeSuperior( &automatResolver_.Get( message.superior().automat().id() ) );

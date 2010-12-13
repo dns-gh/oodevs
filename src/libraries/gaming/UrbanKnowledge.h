@@ -33,10 +33,10 @@ namespace urban
     class TerrainObject_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUrbanKnowledgeUpdate;
-    class MsgUrbanKnowledgeCreation;
+    class UrbanKnowledgeUpdate;
+    class UrbanKnowledgeCreation;
 }
 
 namespace gui
@@ -52,13 +52,13 @@ namespace gui
 // =============================================================================
 class UrbanKnowledge : public kernel::EntityImplementation< kernel::UrbanKnowledge_ABC >
                      , public kernel::Extension_ABC
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeUpdate >
+                     , public kernel::Updatable_ABC< sword::UrbanKnowledgeUpdate >
                      , public kernel::Displayable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanKnowledge( const kernel::Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message,
+             UrbanKnowledge( const kernel::Team_ABC& owner, const sword::UrbanKnowledgeCreation& message,
                              kernel::Controller& controller,
                              const tools::Resolver< gui::TerrainObjectProxy >& terrainObjectResolver );
     virtual ~UrbanKnowledge();
@@ -85,7 +85,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::UrbanKnowledgeUpdate& message );
     //@}
 
 private:

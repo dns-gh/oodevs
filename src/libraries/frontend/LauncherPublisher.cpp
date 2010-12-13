@@ -55,7 +55,7 @@ void LauncherPublisher::SetHost( const std::string& endpoint )
 // Name: LauncherPublisher::Send
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-void LauncherPublisher::Send( const MsgsAdminToLauncher::MsgAdminToLauncher& message )
+void LauncherPublisher::Send( const sword::AdminToLauncher& message )
 {
     sender_.Send( endpoint_, message );
 }
@@ -64,7 +64,7 @@ void LauncherPublisher::Send( const MsgsAdminToLauncher::MsgAdminToLauncher& mes
 // Name: LauncherPublisher::Send
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-void LauncherPublisher::Send( const MsgsLauncherToAdmin::MsgLauncherToAdmin& message )
+void LauncherPublisher::Send( const sword::LauncherToAdmin& message )
 {
     sender_.Send( endpoint_, message );
 }

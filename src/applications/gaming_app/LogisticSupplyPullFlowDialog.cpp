@@ -30,7 +30,7 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace kernel;
 using namespace gui;
@@ -42,8 +42,8 @@ using namespace parameters;
 // Created : AHC 2010-10-14
 // -----------------------------------------------------------------------------
 LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel,
-		const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const tools::Resolver_ABC< Automat_ABC >& automats,
-		const tools::Resolver_ABC< kernel::Formation_ABC >& formations, const Profile_ABC& profile )
+        const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const tools::Resolver_ABC< Automat_ABC >& automats,
+        const tools::Resolver_ABC< kernel::Formation_ABC >& formations, const Profile_ABC& profile )
     : QDialog( parent, tr( "Pull supply flow" ) )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
@@ -128,25 +128,25 @@ void LogisticSupplyPullFlowDialog::Show()
     targetCombo_->Clear();
     const kernel::Entity_ABC& team = selected_->Get< kernel::TacticalHierarchies >().GetTop();
     {
-		tools::Iterator< const Automat_ABC& > it = automats_.CreateIterator();
-		while( it.HasMoreElements() )
-		{
-			const Automat_ABC& automat = it.NextElement();
-			if( &automat != selected_ )
-			{
-				if( automat.GetLogisticLevel()!=kernel::LogisticLevel::none_ && &automat.Get< kernel::TacticalHierarchies >().GetTop() == &team )
-					targetCombo_->AddItem( automat.GetName(), &automat );
-			}
-		}
+        tools::Iterator< const Automat_ABC& > it = automats_.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Automat_ABC& automat = it.NextElement();
+            if( &automat != selected_ )
+            {
+                if( automat.GetLogisticLevel()!=kernel::LogisticLevel::none_ && &automat.Get< kernel::TacticalHierarchies >().GetTop() == &team )
+                    targetCombo_->AddItem( automat.GetName(), &automat );
+            }
+        }
     }
     {
-		tools::Iterator< const Formation_ABC& > it = formations_.CreateIterator();
-		while( it.HasMoreElements() )
-		{
-			const Formation_ABC& formation = it.NextElement();
-			if( formation.GetLogisticLevel()!=kernel::LogisticLevel::none_ && &formation.Get< kernel::TacticalHierarchies >().GetTop() == &team )
-				targetCombo_->AddItem( formation.GetName(), &formation );
-		}
+        tools::Iterator< const Formation_ABC& > it = formations_.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Formation_ABC& formation = it.NextElement();
+            if( formation.GetLogisticLevel()!=kernel::LogisticLevel::none_ && &formation.Get< kernel::TacticalHierarchies >().GetTop() == &team )
+                targetCombo_->AddItem( formation.GetName(), &formation );
+        }
     }
     OnSelectionChanged();
     show();
@@ -227,20 +227,20 @@ void LogisticSupplyPullFlowDialog::Reject()
 namespace
 {
 
-	struct SupplyStatesVisitor : kernel::ExtensionVisitor_ABC<SupplyStates>
-	{
-		SupplyStatesVisitor( LogisticSupplyPullFlowDialog& dlg, void (LogisticSupplyPullFlowDialog::*pFunc)(const SupplyStates&) )
-				: dlg_(dlg), pFunc_ ( pFunc ) {}
+    struct SupplyStatesVisitor : kernel::ExtensionVisitor_ABC<SupplyStates>
+    {
+        SupplyStatesVisitor( LogisticSupplyPullFlowDialog& dlg, void (LogisticSupplyPullFlowDialog::*pFunc)(const SupplyStates&) )
+                : dlg_(dlg), pFunc_ ( pFunc ) {}
 
-		void Visit( const SupplyStates& extension )
-		{
-			(dlg_.*pFunc_)(extension);
-		}
-	private:
-		LogisticSupplyPullFlowDialog& dlg_;
-		void (LogisticSupplyPullFlowDialog::*pFunc_)(const SupplyStates&);
+        void Visit( const SupplyStates& extension )
+        {
+            (dlg_.*pFunc_)(extension);
+        }
+    private:
+        LogisticSupplyPullFlowDialog& dlg_;
+        void (LogisticSupplyPullFlowDialog::*pFunc_)(const SupplyStates&);
 
-	};
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -253,15 +253,15 @@ void LogisticSupplyPullFlowDialog::OnSelectionChanged()
     dotationTypes_.clear();
     dotationTypes_.append( "" );
     const Entity_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
-	if( agent )
-	{
-		const TacticalHierarchies& hierarchies = agent->Get< TacticalHierarchies >();
-		SupplyStatesVisitor visitor( *this, &LogisticSupplyPullFlowDialog::AddDotation );
-		hierarchies.Accept<SupplyStates>(visitor);
-	}
+    if( agent )
+    {
+        const TacticalHierarchies& hierarchies = agent->Get< TacticalHierarchies >();
+        SupplyStatesVisitor visitor( *this, &LogisticSupplyPullFlowDialog::AddDotation );
+        hierarchies.Accept<SupplyStates>(visitor);
+    }
     table_->setNumRows( 0 );
     if( ! dotationTypes_.empty() )
-    	AddItem();
+        AddItem();
 }
 
 // -----------------------------------------------------------------------------
@@ -270,19 +270,19 @@ void LogisticSupplyPullFlowDialog::OnSelectionChanged()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPullFlowDialog::AddDotation( const SupplyStates& states )
 {
-	tools::Iterator< const Dotation& > it = states.CreateIterator();
-	while( it.HasMoreElements() )
-	{
-		const Dotation& dotation = it.NextElement();
-		const QString type = dotation.type_->GetName().c_str();
-		Dotation& supply = supplies_[ type ];
-		if( ! supply.type_ )
-		{
-			dotationTypes_.append( type );
-			supply.type_ = dotation.type_;
-		}
-		supply.quantity_ += dotation.quantity_;
-	}
+    tools::Iterator< const Dotation& > it = states.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Dotation& dotation = it.NextElement();
+        const QString type = dotation.type_->GetName().c_str();
+        Dotation& supply = supplies_[ type ];
+        if( ! supply.type_ )
+        {
+            dotationTypes_.append( type );
+            supply.type_ = dotation.type_;
+        }
+        supply.quantity_ += dotation.quantity_;
+    }
 }
 
 // -----------------------------------------------------------------------------

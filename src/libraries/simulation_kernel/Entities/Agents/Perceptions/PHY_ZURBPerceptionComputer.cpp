@@ -29,8 +29,7 @@
 #include <urban/Architecture.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
-#pragma warning( push )
-#pragma warning( disable : 4127 4100 )
+#pragma warning( push, 0 )
 #include <boost/geometry/geometry.hpp>
 #pragma warning( pop )
 

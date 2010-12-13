@@ -517,7 +517,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsAttacking( T_KnowledgePopu
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( const Common::UnitKnowledgeId& asn ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent( const sword::UnitKnowledgeId& asn ) const
 {
     return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( asn.id() );
 }
@@ -535,7 +535,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::Reso
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const Common::ObjectKnowledgeId& asn ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const sword::ObjectKnowledgeId& asn ) const
 {
     return pPion_->GetKnowledgeGroup().GetKnowledge().ResolveKnowledgeObject( asn.id() );
 }
@@ -553,7 +553,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::Res
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( const Common::CrowdKnowledgeId& asn ) const
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const
 {
     return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( asn.id() );
 }
@@ -571,7 +571,7 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePop
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban( const Common::UrbanObjectKnowledgeId& asn ) const
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban( const sword::UrbanObjectKnowledgeId& asn ) const
 {
     return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeUrbanFromID( asn.id() );
 }

@@ -32,9 +32,9 @@ class ObjectKnowledgeFactory;
 // Created: AGE 2006-02-14
 // =============================================================================
 class ObjectKnowledges : public kernel::Extension_ABC
-                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeCreation >
-                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
-                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeDestruction >
+                       , public kernel::Updatable_ABC< sword::ObjectKnowledgeCreation >
+                       , public kernel::Updatable_ABC< sword::ObjectKnowledgeUpdate >
+                       , public kernel::Updatable_ABC< sword::ObjectKnowledgeDestruction >
                        , public tools::Resolver< kernel::ObjectKnowledge_ABC >
                        , public kernel::Creatable< ObjectKnowledges >
 {
@@ -54,9 +54,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreation&    message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate&      message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeDestruction& message );
+    virtual void DoUpdate( const sword::ObjectKnowledgeCreation&    message );
+    virtual void DoUpdate( const sword::ObjectKnowledgeUpdate&      message );
+    virtual void DoUpdate( const sword::ObjectKnowledgeDestruction& message );
     //@}
 
 private:

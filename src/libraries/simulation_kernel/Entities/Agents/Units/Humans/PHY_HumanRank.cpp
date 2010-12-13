@@ -13,9 +13,9 @@
 #include "MT_Tools/MT_Logger.h"
 
 PHY_HumanRank::T_HumanRankMap PHY_HumanRank::humanRanks_;
-const PHY_HumanRank           PHY_HumanRank::officier_       ( "Officier"       , eOfficier       , Common::officier    , true  );
-const PHY_HumanRank           PHY_HumanRank::sousOfficier_   ( "SousOfficier"   , eSousOfficier   , Common::sous_officer, true  );
-const PHY_HumanRank           PHY_HumanRank::militaireDuRang_( "MilitaireDuRang", eMilitaireDuRang, Common::mdr         , false );
+const PHY_HumanRank           PHY_HumanRank::officier_       ( "Officier"       , eOfficier       , sword::officier    , true  );
+const PHY_HumanRank           PHY_HumanRank::sousOfficier_   ( "SousOfficier"   , eSousOfficier   , sword::sous_officer, true  );
+const PHY_HumanRank           PHY_HumanRank::militaireDuRang_( "MilitaireDuRang", eMilitaireDuRang, sword::mdr         , false );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_HumanRank::Initialize
@@ -42,7 +42,7 @@ void PHY_HumanRank::Terminate()
 // Name: PHY_HumanRank constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_HumanRank::PHY_HumanRank( const std::string& strName, E_Rank nRank, const Common::EnumHumanRank nAsnID, bool bIsCommander )
+PHY_HumanRank::PHY_HumanRank( const std::string& strName, E_Rank nRank, const sword::EnumHumanRank nAsnID, bool bIsCommander )
     : strName_     ( strName )
     , nRank_       ( nRank )
     , nAsnID_      ( nAsnID )
@@ -93,7 +93,7 @@ const PHY_HumanRank* PHY_HumanRank::Find( unsigned int nID )
 // Name: PHY_HumanRank::Find
 // Created: NLD 2005-08-16
 // -----------------------------------------------------------------------------
-const PHY_HumanRank* PHY_HumanRank::Find( Common::EnumHumanRank nAsnID )
+const PHY_HumanRank* PHY_HumanRank::Find( sword::EnumHumanRank nAsnID )
 {
     CIT_HumanRankMap it = std::find_if( humanRanks_.begin(), humanRanks_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nAsnID ), std::compose1( std::mem_fun( &PHY_HumanRank::GetAsnID ), std::select2nd< T_HumanRankMap::value_type >() ) ) );
     return it == humanRanks_.end() ? 0 : it->second;
@@ -112,7 +112,7 @@ const std::string& PHY_HumanRank::GetName() const
 // Name: PHY_HumanRank::GetAsnID
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-Common::EnumHumanRank PHY_HumanRank::GetAsnID() const
+sword::EnumHumanRank PHY_HumanRank::GetAsnID() const
 {
     return nAsnID_;
 }

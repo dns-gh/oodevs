@@ -13,7 +13,7 @@
 #include "Parameter.h"
 #include <boost/function.hpp>
 
-namespace Common
+namespace sword
 {
     enum ObstacleType_DemolitionTargetType;
 }
@@ -33,7 +33,7 @@ public:
     //! @name Functors
     //@{
 
-    typedef boost::function< void ( const Common::ObstacleType_DemolitionTargetType& ) > T_Setter;
+    typedef boost::function< void ( const sword::ObstacleType_DemolitionTargetType& ) > T_Setter;
     //@}
 
 public:
@@ -64,7 +64,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Common::ObstacleType_DemolitionTargetType value_;
+    sword::ObstacleType_DemolitionTargetType value_;
     //@}
 };
 

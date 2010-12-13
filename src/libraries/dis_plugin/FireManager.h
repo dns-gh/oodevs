@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgSimToClient& message );
+    void Update( const sword::SimToClient& message );
     //@}
 
 private:
@@ -49,16 +49,16 @@ private:
 
     //! @name Helpers
     //@{
-    void ReceiveFire( const MsgsSimToClient::MsgStartUnitFire& message );
-    void ReceiveFire( const MsgsSimToClient::MsgStopUnitFire& message );
-    void UpdateFireEffect( const MsgsSimToClient::MsgStartFireEffect& message );
+    void ReceiveFire( const sword::StartUnitFire& message );
+    void ReceiveFire( const sword::StopUnitFire& message );
+    void UpdateFireEffect( const sword::StartFireEffect& message );
     void UpdateDetonations();
-    void CreateFire( const Common::MsgCoordLatLong& position );
+    void CreateFire( const sword::MsgCoordLatLong& position );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< unsigned int, Common::MsgCoordLatLong > T_Fires;
+    typedef std::map< unsigned int, sword::MsgCoordLatLong > T_Fires;
     typedef T_Fires::const_iterator                         CIT_Fires;
     //@}
 

@@ -10,7 +10,7 @@
 #ifndef __UrbanObjectAttribute_ABC_h_
 #define __UrbanObjectAttribute_ABC_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
     class UrbanAttributes;
 }
@@ -35,8 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update( const MsgsSimToClient::UrbanAttributes& message ) = 0;
-    virtual void Send  (       MsgsSimToClient::UrbanAttributes& message ) const = 0;
+    virtual void Update( const sword::UrbanAttributes& message ) = 0;
+    virtual void Send  (       sword::UrbanAttributes& message ) const = 0;
     //@}
 };
 

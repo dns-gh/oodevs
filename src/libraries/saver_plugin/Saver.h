@@ -18,9 +18,9 @@ namespace dispatcher
     class Config;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgControlInformation;
+    class ControlInformation;
 }
 
 namespace plugins
@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    void ControlInformation( const MsgsSimToClient::MsgControlInformation& controlInformation );
+    void ControlInformation( const sword::ControlInformation& controlInformation );
     void CreateNewFragment ( bool first = false );
     void StartFrame        ( const Savable_ABC& message );
     void SaveUpdateMessage ( const Savable_ABC& message );

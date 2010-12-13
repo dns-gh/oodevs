@@ -35,7 +35,7 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolve
                                   , const tools::Resolver_ABC< Agent_ABC >& agentResolver
                                   , const tools::Resolver_ABC< Formation_ABC >&   formationResolver
                                   , const tools::Resolver_ABC< DotationType >& dotationResolver
-                                  , const MsgsSimToClient::MsgLogSupplyHandlingCreation& message )
+                                  , const sword::LogSupplyHandlingCreation& message )
     : controller_           ( controller )
     , resolver_             ( resolver )
     , agentResolver_        ( agentResolver )
@@ -75,7 +75,7 @@ LogSupplyConsign::~LogSupplyConsign()
 // Name: LogSupplyConsign::OnReceiveMsgUpdate
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogSupplyConsign::Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate& message )
+void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message )
 {
     if( message.has_supplier() && ( !pLogHandlingEntity_ || FindLogEntityID( message.supplier() ) != int( pLogHandlingEntity_ ->GetId() ) ) )
     {
@@ -163,7 +163,7 @@ void LogSupplyConsign::Draw( const Point2f& , const kernel::Viewport_ABC& viewpo
 // Name: LogSupplyConsign::FindLogEntity
 // Created: AHC 2010-10-13
 // -----------------------------------------------------------------------------
-kernel::Entity_ABC* LogSupplyConsign::FindLogEntity(const Common::ParentEntity& msg)
+kernel::Entity_ABC* LogSupplyConsign::FindLogEntity(const sword::ParentEntity& msg)
 {
 	kernel::Entity_ABC* retval = 0;
 	if( msg.has_automat() )
@@ -177,7 +177,7 @@ kernel::Entity_ABC* LogSupplyConsign::FindLogEntity(const Common::ParentEntity& 
 // Name: LogSupplyConsign::FindLogEntityID
 // Created: AHC 2010-10-13
 // -----------------------------------------------------------------------------
-unsigned int LogSupplyConsign::FindLogEntityID(const Common::ParentEntity& msg)
+unsigned int LogSupplyConsign::FindLogEntityID(const sword::ParentEntity& msg)
 {
 	unsigned int retval = 0;
 	if( msg.has_automat() )

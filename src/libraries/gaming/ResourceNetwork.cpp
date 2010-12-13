@@ -30,7 +30,7 @@ using namespace gui;
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const MsgsSimToClient::UrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary& dico )
+ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary& dico )
     : controllers_( controllers )
     , id_                     ( id )
     , isUrban_                ( true )
@@ -47,7 +47,7 @@ ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const Common::ObjectAttributeResourceNetwork& msg, kernel::PropertiesDictionary& dico )
+ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, kernel::PropertiesDictionary& dico )
     : controllers_( controllers )
     , id_                     ( id )
     , isUrban_                ( false )
@@ -144,7 +144,7 @@ QString ResourceNetwork::GetLinkName( const std::string& resource, unsigned int 
 // Name: ResourceNetwork::DoUpdate
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
-void ResourceNetwork::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void ResourceNetwork::DoUpdate( const sword::ObjectUpdate& message )
 {
     if( message.attributes().has_resource_networks() )
     {
@@ -158,7 +158,7 @@ void ResourceNetwork::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message 
 // Name: ResourceNetwork::DoUpdate
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
-void ResourceNetwork::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& message )
+void ResourceNetwork::DoUpdate( const sword::UrbanUpdate& message )
 {
     if( message.attributes().has_infrastructures() )
     {
@@ -172,7 +172,7 @@ void ResourceNetwork::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& message )
 // Name: ResourceNetwork::UpdateNetwork
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void ResourceNetwork::UpdateNetwork( kernel::Entity_ABC* entity, const Common::ResourceNetwork& msg )
+void ResourceNetwork::UpdateNetwork( kernel::Entity_ABC* entity, const sword::ResourceNetwork& msg )
 {
     std::string resource( msg.resource().name() );
     ResourceNode& node = resourceNodes_[ resource ];
@@ -194,7 +194,7 @@ void ResourceNetwork::UpdateNetwork( kernel::Entity_ABC* entity, const Common::R
     for( int j = 0; j < msg.link_size(); ++j )
     {
         ResourceLink link;
-        link.urban_ = msg.link( j ).kind() == Common::ResourceNetwork_Link::urban;
+        link.urban_ = msg.link( j ).kind() == sword::ResourceNetwork_Link::urban;
         link.id_ = msg.link( j ).target_id();
         link.capacity_ = msg.link( j ).capacity();
         link.flow_ = msg.link( j ).flow();

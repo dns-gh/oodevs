@@ -25,7 +25,7 @@ class MIL_DotationTypeParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_DotationTypeParameter( const Common::ResourceType & asn );
+    explicit MIL_DotationTypeParameter( const sword::ResourceType & asn );
     explicit MIL_DotationTypeParameter( const PHY_DotationCategory* pCategory );
     virtual ~MIL_DotationTypeParameter();
     //@}
@@ -38,7 +38,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToDotationType( const PHY_DotationCategory*& ) const;
-    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

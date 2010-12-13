@@ -20,7 +20,7 @@ using namespace dispatcher;
 // Name: PopulationFlow constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-PopulationFlow::PopulationFlow( const Population& population, const MsgsSimToClient::MsgCrowdFlowCreation& msg )
+PopulationFlow::PopulationFlow( const Population& population, const sword::CrowdFlowCreation& msg )
     : dispatcher::PopulationFlow_ABC( msg.flow().id() )
     , population_     ( population )
     , nID_            ( msg.flow().id() )
@@ -30,7 +30,7 @@ PopulationFlow::PopulationFlow( const Population& population, const MsgsSimToCli
     , nSpeed_         ()
     , nNbrAliveHumans_( 0 )
     , nNbrDeadHumans_ ( 0 )
-    , nAttitude_      ( Common::agressive )
+    , nAttitude_      ( sword::agressive )
 {
     RegisterSelf( *this );
 }
@@ -48,7 +48,7 @@ PopulationFlow::~PopulationFlow()
 // Name: PopulationFlow::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate& msg )
+void PopulationFlow::DoUpdate( const sword::CrowdFlowUpdate& msg )
 {
     if( msg.has_itineraire()  )
         path_.Update( msg.itineraire().location() );

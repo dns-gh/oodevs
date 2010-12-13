@@ -13,7 +13,10 @@
 #include <boost/noncopyable.hpp>
 #include <string>
 
-namespace MsgsLauncherToAdmin { class MsgLauncherToAdmin; }
+namespace sword
+{
+    class LauncherToAdmin;
+}
 
 namespace tools
 {
@@ -22,16 +25,14 @@ namespace tools
 
 namespace launcher
 {
-
 // =============================================================================
 /** @class  LauncherPublisher
-    @brief  LauncherPublisher
+    @brief  Launcher publisher
 */
 // Created: SBO 2010-09-29
 // =============================================================================
 class LauncherPublisher : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -41,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    void Send( const MsgsLauncherToAdmin::MsgLauncherToAdmin& message );
+    void Send( const sword::LauncherToAdmin& message );
     //@}
 
 private:

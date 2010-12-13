@@ -31,10 +31,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool CheckRights( const MsgsClientToSim::MsgClientToSim& msg ) const;
-    virtual bool CheckRights( const MsgsClientToAuthentication::MsgClientToAuthentication& msg ) const;
-    virtual bool CheckRights( const MsgsClientToReplay::MsgClientToReplay& msg ) const;
-    virtual bool CheckRights( const Common::MsgChatTarget& source, const Common::MsgChatTarget& target ) const;
+    virtual bool CheckRights( const sword::ClientToSim& msg ) const;
+    virtual bool CheckRights( const sword::ClientToAuthentication& msg ) const;
+    virtual bool CheckRights( const sword::ClientToReplay& msg ) const;
+    virtual bool CheckRights( const sword::MsgChatTarget& source, const sword::MsgChatTarget& target ) const;
     //@}
 
     //! @name Accessors

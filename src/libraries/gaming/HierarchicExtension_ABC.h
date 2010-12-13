@@ -15,10 +15,10 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgUnitChangeSuperior;
-    class MsgAutomatChangeSuperior;
+    class UnitChangeSuperior;
+    class AutomatChangeSuperior;
 }
 
 namespace kernel
@@ -29,11 +29,11 @@ namespace kernel
     class Team_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgAutomatCreation;
-    class MsgFormationCreation;
-    class MsgUnitCreation;
+    class AutomatCreation;
+    class FormationCreation;
+    class UnitCreation;
 }
 
 // =============================================================================
@@ -42,11 +42,11 @@ namespace MsgsSimToClient
 */
 // Created: SBO 2007-04-12
 // =============================================================================
-class HierarchicExtension_ABC : public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitCreation >
-                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatCreation >
-                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgFormationCreation >
-                              , public kernel::Updatable_ABC< Common::MsgUnitChangeSuperior >
-                              , public kernel::Updatable_ABC< Common::MsgAutomatChangeSuperior >
+class HierarchicExtension_ABC : public kernel::Updatable_ABC< sword::UnitCreation >
+                              , public kernel::Updatable_ABC< sword::AutomatCreation >
+                              , public kernel::Updatable_ABC< sword::FormationCreation >
+                              , public kernel::Updatable_ABC< sword::UnitChangeSuperior >
+                              , public kernel::Updatable_ABC< sword::AutomatChangeSuperior >
 {
 public:
     //! @name Constructors/Destructor
@@ -72,11 +72,11 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitCreation& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgAutomatCreation& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgFormationCreation& message );
-    virtual void DoUpdate( const Common::MsgUnitChangeSuperior& message );
-    virtual void DoUpdate( const Common::MsgAutomatChangeSuperior& message );
+    virtual void DoUpdate( const sword::UnitCreation& message );
+    virtual void DoUpdate( const sword::AutomatCreation& message );
+    virtual void DoUpdate( const sword::FormationCreation& message );
+    virtual void DoUpdate( const sword::UnitChangeSuperior& message );
+    virtual void DoUpdate( const sword::AutomatChangeSuperior& message );
 
     void UpdateSuperior( const kernel::Entity_ABC& superior );
     //@}

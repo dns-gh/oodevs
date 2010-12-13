@@ -100,38 +100,38 @@ void ReplaySynchronisations::DoUpdate()
         DoUpdate();\
     }
 
-DO_UPDATE( MsgsSimToClient::MsgUnitCreation );
-DO_UPDATE( MsgsSimToClient::MsgAutomatCreation );
-DO_UPDATE( MsgsSimToClient::MsgFormationCreation );
-DO_UPDATE( MsgsSimToClient::MsgKnowledgeGroupCreation );
-DO_UPDATE( MsgsSimToClient::MsgReport );
-DO_UPDATE( MsgsSimToClient::MsgPartyCreation );
-DO_UPDATE( MsgsSimToClient::MsgObjectCreation );
-DO_UPDATE( MsgsMessengerToClient::MsgLimaCreation );
-DO_UPDATE( MsgsMessengerToClient::MsgLimitCreation );
-DO_UPDATE( MsgsSimToClient::MsgCrowdCreation );
-DO_UPDATE( MsgsSimToClient::MsgCrowdConcentrationCreation );
-DO_UPDATE( MsgsSimToClient::MsgCrowdFlowCreation );
-DO_UPDATE( Common::MsgIntelligenceCreation );
-DO_UPDATE( MsgsSimToClient::MsgUnitKnowledgeCreation );
-DO_UPDATE( MsgsSimToClient::MsgObjectKnowledgeCreation );
-DO_UPDATE( MsgsSimToClient::MsgCrowdKnowledgeCreation );
-DO_UPDATE( MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation );
-DO_UPDATE( MsgsSimToClient::MsgCrowdFlowKnowledgeCreation );
-DO_UPDATE( MsgsSimToClient::MsgLogMaintenanceHandlingCreation );
-DO_UPDATE( MsgsSimToClient::MsgLogMedicalHandlingCreation );
-DO_UPDATE( MsgsSimToClient::MsgLogSupplyHandlingCreation );
-DO_UPDATE( MsgsSimToClient::MsgStartUnitFire );
-DO_UPDATE( MsgsSimToClient::MsgStartFireEffect );
-DO_UPDATE( MsgsSimToClient::MsgStartCrowdFire );
-DO_UPDATE( MsgsSimToClient::MsgUrbanCreation );
-DO_UPDATE( MsgsSimToClient::MsgUrbanKnowledgeCreation );
+DO_UPDATE( sword::UnitCreation );
+DO_UPDATE( sword::AutomatCreation );
+DO_UPDATE( sword::FormationCreation );
+DO_UPDATE( sword::KnowledgeGroupCreation );
+DO_UPDATE( sword::Report );
+DO_UPDATE( sword::PartyCreation );
+DO_UPDATE( sword::ObjectCreation );
+DO_UPDATE( sword::LimaCreation );
+DO_UPDATE( sword::LimitCreation );
+DO_UPDATE( sword::CrowdCreation );
+DO_UPDATE( sword::CrowdConcentrationCreation );
+DO_UPDATE( sword::CrowdFlowCreation );
+DO_UPDATE( sword::IntelligenceCreation );
+DO_UPDATE( sword::UnitKnowledgeCreation );
+DO_UPDATE( sword::ObjectKnowledgeCreation );
+DO_UPDATE( sword::CrowdKnowledgeCreation );
+DO_UPDATE( sword::CrowdConcentrationKnowledgeCreation );
+DO_UPDATE( sword::CrowdFlowKnowledgeCreation );
+DO_UPDATE( sword::LogMaintenanceHandlingCreation );
+DO_UPDATE( sword::LogMedicalHandlingCreation );
+DO_UPDATE( sword::LogSupplyHandlingCreation );
+DO_UPDATE( sword::StartUnitFire );
+DO_UPDATE( sword::StartFireEffect );
+DO_UPDATE( sword::StartCrowdFire );
+DO_UPDATE( sword::UrbanCreation );
+DO_UPDATE( sword::UrbanKnowledgeCreation );
 
 // -----------------------------------------------------------------------------
 // Name: ReplaySynchronisations::DoUpdate
 // Created: SBO 2008-02-14
 // -----------------------------------------------------------------------------
-void ReplaySynchronisations::DoUpdate( const Common::MsgChangeDiplomacy& )
+void ReplaySynchronisations::DoUpdate( const sword::ChangeDiplomacy& )
 {
     FlagUpdate();
 }
@@ -140,7 +140,7 @@ void ReplaySynchronisations::DoUpdate( const Common::MsgChangeDiplomacy& )
 // Name: ReplaySynchronisations::DoUpdate
 // Created: SBO 2008-02-14
 // -----------------------------------------------------------------------------
-void ReplaySynchronisations::DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& )
+void ReplaySynchronisations::DoUpdate( const sword::ChangeDiplomacyAck& )
 {
     FlagUpdate();
 }

@@ -21,7 +21,7 @@
 // Name: Drawing constructor
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-Drawing::Drawing( kernel::Controller& controller, const MsgsMessengerToClient::MsgShapeCreation& message, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
+Drawing::Drawing( kernel::Controller& controller, const sword::ShapeCreation& message, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
     : gui::DrawerShape( controller, message.id().id(), types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().pattern() ), QColor( QString( message.shape().color().c_str() ) ), proxy )
     , publisher_( publisher )
     , converter_( converter )
@@ -70,7 +70,7 @@ Drawing::~Drawing()
 // Name: Drawing::SetLocation
 // Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-void Drawing::SetLocation( const Common::MsgCoordLatLongList& list )
+void Drawing::SetLocation( const sword::MsgCoordLatLongList& list )
 {
     std::auto_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
     location_.SetLocation( location );
@@ -119,7 +119,7 @@ void Drawing::Update()
 // Name: Drawing::DoUpdate
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-void Drawing::DoUpdate( const MsgsMessengerToClient::MsgShapeUpdate& message )
+void Drawing::DoUpdate( const sword::ShapeUpdate& message )
 {
     publishUpdate_ = false;
      // $$$$ SBO 2008-06-09: can only change color and shape
@@ -139,7 +139,7 @@ namespace
         {
             for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
             {
-                Common::MsgCoordLatLong latlong;
+                sword::MsgCoordLatLong latlong;
                 converter_->ConvertToGeo( *it, latlong );
                 points_.push_back( latlong );
             }
@@ -165,7 +165,7 @@ namespace
         {
             VisitLines( points );
         }
-        std::vector< Common::MsgCoordLatLong > points_;
+        std::vector< sword::MsgCoordLatLong > points_;
         const kernel::CoordinateConverter_ABC* converter_;
     };
 }
@@ -174,7 +174,7 @@ namespace
 // Name: Drawing::SerializeLocation
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-void Drawing::SerializeLocation( Common::MsgCoordLatLongList& list ) const
+void Drawing::SerializeLocation( sword::MsgCoordLatLongList& list ) const
 {
     Serializer serializer( converter_ );
     location_.Accept( serializer );

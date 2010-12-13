@@ -15,7 +15,7 @@
 #include "UpdatableAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
-namespace Common
+namespace sword
 {
     class ObjectAttributes;
     class ObjectAttributeStock;
@@ -65,9 +65,9 @@ public:
 
     //! @name Network Update
     //@{
-    void SendFullState( Common::ObjectAttributes& asn ) const;
-    void SendUpdate( Common::ObjectAttributes& asn ) const;
-    void OnUpdate( const Common::ObjectAttributes& asn );
+    void SendFullState( sword::ObjectAttributes& asn ) const;
+    void SendUpdate( sword::ObjectAttributes& asn ) const;
+    void OnUpdate( const sword::ObjectAttributes& asn );
     //@}
 
     //! @name ODB
@@ -88,10 +88,9 @@ public:
     StockAttribute& operator=( const StockAttribute& ); //!< Assignment operator
     //@}
 
-
     //@{
     void LoadDotation( xml::xistream& xis );
-    void Send( Common::ObjectAttributeStock& attribute ) const;
+    void Send( sword::ObjectAttributeStock& attribute ) const;
     //@}
 
 private:

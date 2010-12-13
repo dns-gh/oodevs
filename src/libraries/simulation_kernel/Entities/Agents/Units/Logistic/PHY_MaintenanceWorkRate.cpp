@@ -19,10 +19,10 @@
 
 PHY_MaintenanceWorkRate::T_WorkRateMap PHY_MaintenanceWorkRate::workRates_;
 
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r1_( "Regime1", Common::regime_1 );
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r2_( "Regime2", Common::regime_2 );
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r3_( "Regime3", Common::regime_3 );
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r4_( "Regime4", Common::regime_4 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r1_( "Regime1", sword::regime_1 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r2_( "Regime2", sword::regime_2 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r3_( "Regime3", sword::regime_3 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r4_( "Regime4", sword::regime_4 );
 
 struct PHY_MaintenanceWorkRate::LoadingWrapper
 {
@@ -64,7 +64,7 @@ void PHY_MaintenanceWorkRate::Terminate()
 // Name: PHY_MaintenanceWorkRate constructor
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-PHY_MaintenanceWorkRate::PHY_MaintenanceWorkRate( const std::string& strName, Common::EnumLogMaintenanceRegimeTravail asn )
+PHY_MaintenanceWorkRate::PHY_MaintenanceWorkRate( const std::string& strName, sword::EnumLogMaintenanceRegimeTravail asn )
     : strName_              ( strName )
     , asn_                  ( asn )
     , rWorkerRatio_         ( 1. )
@@ -112,7 +112,7 @@ void PHY_MaintenanceWorkRate::ReadWorkRate( xml::xistream& xis )
 // Name: PHY_MaintenanceWorkRate::Find
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-const PHY_MaintenanceWorkRate* PHY_MaintenanceWorkRate::Find( Common::EnumLogMaintenanceRegimeTravail nID )
+const PHY_MaintenanceWorkRate* PHY_MaintenanceWorkRate::Find( sword::EnumLogMaintenanceRegimeTravail nID )
 {
     for( CIT_WorkRateMap it = workRates_.begin(); it != workRates_.end(); ++it )
         if( it->second->GetAsnID() == nID )
@@ -124,7 +124,7 @@ const PHY_MaintenanceWorkRate* PHY_MaintenanceWorkRate::Find( Common::EnumLogMai
 // Name: PHY_MaintenanceWorkRate::GetAsnID
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-Common::EnumLogMaintenanceRegimeTravail PHY_MaintenanceWorkRate::GetAsnID() const
+sword::EnumLogMaintenanceRegimeTravail PHY_MaintenanceWorkRate::GetAsnID() const
 {
     return asn_;
 }

@@ -12,7 +12,7 @@
 
 #include "ObjectComponentRegistry_ABC.h"
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameter;
 }
@@ -37,7 +37,8 @@ public:
     //! @name Operations
     //@{
     void Create( Object& object, const std::string& attribute, xml::xistream& xis ) const;
-    void Create( Object& object, const Common::MsgMissionParameter& parameter ) const;
+    void Create( Object& object, const sword::MsgMissionParameter& parameter ) const;
+
     void Initialize( Object& object ) const;
     //@}
 

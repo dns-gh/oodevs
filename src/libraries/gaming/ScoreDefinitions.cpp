@@ -46,7 +46,7 @@ void ScoreDefinitions::Purge()
 // Name: ScoreDefinitions::Update
 // Created: SBO 2009-12-18
 // -----------------------------------------------------------------------------
-void ScoreDefinitions::Update( const MsgsAarToClient::MsgAarInformation& asnMsg )
+void ScoreDefinitions::Update( const sword::AarInformation& asnMsg )
 {
     try
     {

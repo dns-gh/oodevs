@@ -14,9 +14,9 @@
 #include "clients_kernel/EntityImplementation.h"
 #include "tools/Resolver_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgFormationCreation;
+    class FormationCreation;
     class LogisticLevel;
 }
 
@@ -31,7 +31,7 @@ class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( const MsgsSimToClient::MsgFormationCreation& message, kernel::Controller& controller, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& resolver );
+             Formation( const sword::FormationCreation& message, kernel::Controller& controller, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& resolver );
     virtual ~Formation();
     //@}
 

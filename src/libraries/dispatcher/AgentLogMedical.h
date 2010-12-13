@@ -12,15 +12,15 @@
 
 #include "EquipmentAvailability.h"
 
-namespace Common
+namespace sword
 {
     enum EnumHumanWound;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogMedicalState;
-    class MsgLogMedicalEquipmentAvailability;
+    class LogMedicalState;
+    class LogMedicalEquipmentAvailability;
 }
 
 namespace kernel
@@ -46,13 +46,13 @@ class AgentLogMedical
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentLogMedical( const Model_ABC& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMedicalState& asnMsg );
+             AgentLogMedical( const Model_ABC& model, const kernel::Agent_ABC& agent, const sword::LogMedicalState& asnMsg );
     virtual ~AgentLogMedical();
     //@}
 
     //! @name Main
     //@{
-    void Update(  const MsgsSimToClient::MsgLogMedicalState& asnMsg );
+    void Update(  const sword::LogMedicalState& asnMsg );
     void Send  ( ClientPublisher_ABC& publisher ) const;
     //@}
 
@@ -70,7 +70,7 @@ private:
     const kernel::Agent_ABC& agent_;
     bool                     bSystemEnabled_;
 
-    std::vector< Common::EnumHumanWound >       priorities_;
+    std::vector< sword::EnumHumanWound >       priorities_;
     std::vector< const kernel::Automat_ABC* > tacticalPriorities_;
 
     std::vector< MedicalEquipmentAvailability > evacuationAmbulancesAvailability_;

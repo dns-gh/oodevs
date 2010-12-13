@@ -20,12 +20,12 @@
 // =============================================================================
 MOCK_BASE_CLASS( MockClientPublisher, dispatcher::ClientPublisher_ABC )
 {
-    MOCK_METHOD_EXT( Send, 1, void( const MsgsSimToClient::MsgSimToClient& ), Send1 )
-    MOCK_METHOD_EXT( Send, 1, void( const MsgsAuthenticationToClient::MsgAuthenticationToClient& ), Send2 )
-    MOCK_METHOD_EXT( Send, 1, void( const MsgsReplayToClient::MsgReplayToClient& ), Send3 )
-    MOCK_METHOD_EXT( Send, 1, void( const MsgsAarToClient::MsgAarToClient& ), Send4 )
-    MOCK_METHOD_EXT( Send, 1, void( const MsgsMessengerToClient::MsgMessengerToClient& ), Send5 )
-    MOCK_METHOD_EXT( Send, 1, void( const MsgsDispatcherToClient::MsgDispatcherToClient& ), Send6 )
+    MOCK_METHOD_EXT( Send, 1, void( const sword::SimToClient& ), Send1 )
+    MOCK_METHOD_EXT( Send, 1, void( const sword::AuthenticationToClient& ), Send2 )
+    MOCK_METHOD_EXT( Send, 1, void( const sword::ReplayToClient& ), Send3 )
+    MOCK_METHOD_EXT( Send, 1, void( const sword::AarToClient& ), Send4 )
+    MOCK_METHOD_EXT( Send, 1, void( const sword::MessengerToClient& ), Send5 )
+    MOCK_METHOD_EXT( Send, 1, void( const sword::DispatcherToClient& ), Send6 )
     MOCK_METHOD( GetEndpoint, 0 );
 };
 

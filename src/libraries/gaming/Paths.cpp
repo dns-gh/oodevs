@@ -41,7 +41,7 @@ Paths::~Paths()
 // Name: Paths::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Paths::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void Paths::DoUpdate( const sword::UnitAttributes& message )
 {
     static const float threshold      = 30.f * 30.f;
     static const float magicThreshold = 1000.f * 1000.f;
@@ -67,7 +67,7 @@ void Paths::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 // Name: Paths::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Paths::DoUpdate( const MsgsSimToClient::MsgUnitPathFind& message )
+void Paths::DoUpdate( const sword::UnitPathFind& message )
 {
     plannedPath_.clear(); plannedPath_.reserve( message.itineraire().location().coordinates().elem_size() );
     plannedBox_ = Rectangle2f();
@@ -83,7 +83,7 @@ void Paths::DoUpdate( const MsgsSimToClient::MsgUnitPathFind& message )
 // Name: Paths::DoUpdate
 // Created: AGE 2006-11-20
 // -----------------------------------------------------------------------------
-void Paths::DoUpdate( const MsgsClientToSim::MsgUnitMagicAction& /*message*/ )
+void Paths::DoUpdate( const sword::UnitMagicAction& /*message*/ )
 {
     pendingMagicMove_ = true;
 }

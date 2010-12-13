@@ -13,7 +13,7 @@
 #include "protocol/Protocol.h"
 #include "actions/ParameterList.h"
 
-using namespace Common;
+using namespace sword;
 using namespace kernel;
 using namespace gui;
 
@@ -47,6 +47,6 @@ void DelayPrototype::Commit()
                60 * delayTime_->time().minute() +
                delayTime_->time().second();
     actions::parameters::ParameterList& list = attributesList_->AddList( "Delay" );
-    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_effect_delay );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_effect_delay );
     list.AddQuantity( "Time", time );
 }

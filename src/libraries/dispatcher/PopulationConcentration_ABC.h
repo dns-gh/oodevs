@@ -13,7 +13,7 @@
 #include "Sendable.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
 
-namespace Common
+namespace sword
 {
     class MsgCoordLatLong;
 }
@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual const Common::MsgCoordLatLong& GetPosition() const = 0;
+    virtual const sword::MsgCoordLatLong& GetPosition() const = 0;
     //@}
 };
 

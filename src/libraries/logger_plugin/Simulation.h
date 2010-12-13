@@ -12,11 +12,11 @@
 
 #include "clients_kernel/Time_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgControlInformation;
-    class MsgControlBeginTick;
-    class MsgControlEndTick;
+    class ControlInformation;
+    class ControlBeginTick;
+    class ControlEndTick;
 }
 
 namespace plugins
@@ -41,8 +41,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgControlInformation& message );
-    void Update( const MsgsSimToClient::MsgControlBeginTick& message );
+    void Update( const sword::ControlInformation& message );
+    void Update( const sword::ControlBeginTick& message );
 
     virtual QDateTime GetDateTime() const;
     virtual QDateTime GetInitialDateTime() const;

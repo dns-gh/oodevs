@@ -13,7 +13,7 @@
 #include "dispatcher/AgentKnowledge.h"
 #include "clients_kernel/Controller.h"
 
-using namespace MsgsSimToClient;
+using namespace sword;
 
 using namespace plugins::script;
 
@@ -42,7 +42,7 @@ KnowledgeNotifier::~KnowledgeNotifier()
 // Name: KnowledgeNotifier::DoUpdate
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-void KnowledgeNotifier::DoUpdate( const MsgUnitKnowledgeUpdate& message )
+void KnowledgeNotifier::DoUpdate( const UnitKnowledgeUpdate& message )
 {
     if( !created_ )
     {

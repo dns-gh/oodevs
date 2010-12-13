@@ -16,9 +16,9 @@ namespace kernel
     class Logger_ABC;
 }
 
-namespace MsgsDispatcherToClient
+namespace sword
 {
-    class MsgServicesDescription;
+    class ServicesDescription;
 }
 
 // =============================================================================
@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsDispatcherToClient::MsgServicesDescription& message );
+    void Update( const sword::ServicesDescription& message );
 
     template< typename T >
     bool HasService() const

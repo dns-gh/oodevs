@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
     void Serialize( xml::xostream& xos ) const;
-    void Serialize( Common::MsgCoordLatLongList& asn ) const;
+    void Serialize( sword::MsgCoordLatLongList& asn ) const;
     //@}
 
 private:

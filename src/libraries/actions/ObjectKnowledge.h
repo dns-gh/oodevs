@@ -14,7 +14,7 @@
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "tools/Resolver_ABC.h"
 
-namespace Common
+namespace sword
 {
     class ObjectKnowledgeId;
 }
@@ -51,9 +51,9 @@ public:
     //! @name Operations
     //@{
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
-    void CommitTo( Common::ObjectKnowledgeId& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
+    void CommitTo( sword::ObjectKnowledgeId& message ) const;
     //@}
 
 private:

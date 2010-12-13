@@ -65,7 +65,7 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const Common::MsgMissionParameters& msg, MIL_Army_ABC& army, MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode& value )
+MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const sword::MsgMissionParameters& msg, MIL_Army_ABC& army, sword::ObjectMagicActionAck_ErrorCode& value )
 {
     MIL_Object_ABC* pObject = MIL_ObjectLoader::GetLoader().CreateObject( msg, army, value );
     if( pObject )
@@ -80,9 +80,9 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const Common::MsgMissionParamete
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& name, const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, Common::ObstacleType_DemolitionTargetType obstacleType )
+MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& name, const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, sword::ObstacleType_DemolitionTargetType obstacleType )
 {
-    return MIL_ObjectLoader::GetLoader().CreateObject( name, type, army, localisation, obstacleType == Common::ObstacleType_DemolitionTargetType_reserved );
+    return MIL_ObjectLoader::GetLoader().CreateObject( name, type, army, localisation, obstacleType == sword::ObstacleType_DemolitionTargetType_reserved );
 }
 
 // -----------------------------------------------------------------------------

@@ -15,9 +15,9 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Types.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitAttributes;
+    class UnitAttributes;
 }
 
 namespace kernel
@@ -34,7 +34,7 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class HumanFactors : public kernel::HumanFactors_ABC
-                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+                   , public kernel::Updatable_ABC< sword::UnitAttributes >
 {
 public:
     //! @name Constructors/Destructor
@@ -65,7 +65,7 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dictionary ) const;
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
+    virtual void DoUpdate( const sword::UnitAttributes& message );
     //@}
 
 private:

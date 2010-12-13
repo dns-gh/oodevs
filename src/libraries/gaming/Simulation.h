@@ -10,8 +10,8 @@
 #ifndef __Simulation_h_
 #define __Simulation_h_
 
-#include "protocol/simulationsenders.h"
-#include "protocol/replaysenders.h"
+#include "protocol/SimulationSenders.h"
+#include "protocol/ReplaySenders.h"
 #include "clients_kernel/Time_ABC.h"
 #include "Profiling.h"
 
@@ -42,12 +42,12 @@ public:
 
     //! @name Updates
     //@{
-    void Update( const MsgsSimToClient::MsgControlInformation& message );
-    void Update( const MsgsReplayToClient::MsgControlReplayInformation& message );
-    void Update( const MsgsSimToClient::MsgControlProfilingInformation& message );
-    void Update( const MsgsSimToClient::MsgControlBeginTick& message );
-    void Update( const MsgsSimToClient::MsgControlEndTick& message );
-    void Update( const MsgsSimToClient::MsgControlSendCurrentStateEnd& message );
+    void Update( const sword::ControlInformation& message );
+    void Update( const sword::ControlReplayInformation& message );
+    void Update( const sword::ControlProfilingInformation& message );
+    void Update( const sword::ControlBeginTick& message );
+    void Update( const sword::ControlEndTick& message );
+    void Update( const sword::ControlSendCurrentStateEnd& message );
 
     //@}
 
@@ -59,7 +59,7 @@ public:
     void ChangeSpeed( int timeFactor );
 
     void BeginCheckPoint();
-    void EndCheckPoint( const MsgsSimToClient::MsgControlCheckPointSaveEnd& message );
+    void EndCheckPoint( const sword::ControlCheckPointSaveEnd& message );
     //@}
 
     //! @name Accessors

@@ -73,7 +73,7 @@ float AgentPositions::GetHeight( bool aggregated ) const
 // Name: AgentPositions::DoUpdate
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void AgentPositions::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void AgentPositions::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_position()  )
         position_ = converter_.ConvertToXY( message.position() );

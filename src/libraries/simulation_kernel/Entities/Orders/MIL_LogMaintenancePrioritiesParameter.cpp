@@ -16,12 +16,12 @@
 // Name: MIL_LogMaintenancePrioritiesParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_LogMaintenancePrioritiesParameter::MIL_LogMaintenancePrioritiesParameter( const Common::MsgLogMaintenancePriorities & asn )
+MIL_LogMaintenancePrioritiesParameter::MIL_LogMaintenancePrioritiesParameter( const sword::LogMaintenancePriorities & asn )
 {
     priorities_.reserve( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
     {
-        Common::EquipmentType nCompTypeMosID = asn.elem(i);
+        sword::EquipmentType nCompTypeMosID = asn.elem(i);
         const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( nCompTypeMosID );
         if( !pType )
         {
@@ -64,7 +64,7 @@ bool MIL_LogMaintenancePrioritiesParameter::ToMaintenancePriorities( T_Maintenan
 // Name: MIL_LogMaintenancePrioritiesParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_LogMaintenancePrioritiesParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+bool MIL_LogMaintenancePrioritiesParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
 {
     unsigned int size = priorities_.size();
     if( size )

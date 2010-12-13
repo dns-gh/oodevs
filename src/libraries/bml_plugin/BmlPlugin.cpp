@@ -49,7 +49,7 @@ BmlPlugin::~BmlPlugin()
 // Name: BmlPlugin::Receive
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-void BmlPlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
+void BmlPlugin::Receive( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_control_end_tick() )
     {

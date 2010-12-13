@@ -10,12 +10,12 @@
 #ifndef __Profiling_h_
 #define __Profiling_h_
 
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgControlProfilingInformation;
-    class MsgControlEndTick;
+    class ControlProfilingInformation;
+    class ControlEndTick;
 }
 
 #include <ctime>
@@ -40,8 +40,8 @@ public:
     void Tick();
     void Clear();
 
-    void Update( const MsgsSimToClient::MsgControlProfilingInformation& message );
-    void Update( const MsgsSimToClient::MsgControlEndTick& message );
+    void Update( const sword::ControlProfilingInformation& message );
+    void Update( const sword::ControlEndTick& message );
     float EffectiveSpeed() const;
     float ActualTickDuration() const;
     unsigned long GetMemory() const;

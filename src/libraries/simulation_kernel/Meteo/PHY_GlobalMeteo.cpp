@@ -29,7 +29,7 @@ PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const wea
 // Name: PHY_GlobalMeteo constructor
 // Created: HBD 2010-03-25
 // -----------------------------------------------------------------------------
-PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, const Common::MsgWeatherAttributes& msg, weather::MeteoManager_ABC* list )
+PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, const sword::MsgWeatherAttributes& msg, weather::MeteoManager_ABC* list )
     : PHY_Meteo( id, msg, list )
 {
     // NOTHING
@@ -52,7 +52,7 @@ void PHY_GlobalMeteo::SendCreation() const
 {
     client::ControlGlobalWeather msg;
     msg().mutable_weather()->set_id( id_ );
-    Common::MsgWeatherAttributes* att = msg().mutable_attributes();
+    sword::MsgWeatherAttributes* att = msg().mutable_attributes();
     att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
     NET_ASN_Tools::WriteDirection( wind_.vWindDirection_, *( att->mutable_wind_direction() ) );
     att->set_cloud_floor( nPlancherCouvertureNuageuse_ );

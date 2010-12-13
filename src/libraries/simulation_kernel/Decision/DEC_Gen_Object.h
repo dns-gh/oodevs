@@ -16,7 +16,7 @@
 #include "Entities/Objects/ObstacleAttribute.h"
 #include "simulation_terrain/TER_Localisation.h"
 
-namespace Common
+namespace sword
 {
     class MsgPlannedWork;
     enum ObstacleType_DemolitionTargetType;
@@ -39,13 +39,13 @@ public:
     //! @name Type
     //@{
 // $$$$ _RC_ FDS 2010-01-22: Test de suppression à voir si possible ou non
-    typedef Common::ObstacleType_DemolitionTargetType E_DemolitionTargetType;
+    typedef sword::ObstacleType_DemolitionTargetType E_DemolitionTargetType;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Gen_Object( const Common::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
+             DEC_Gen_Object( const sword::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
              DEC_Gen_Object( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary );
              DEC_Gen_Object( const DEC_Gen_Object& rhs );
     virtual ~DEC_Gen_Object();
@@ -64,7 +64,7 @@ public:
     //! @name Operations
     //@{
     DEC_Gen_Object& operator=( const DEC_Gen_Object& rhs );
-    void Serialize( Common::MsgPlannedWork& asn ) const;
+    void Serialize( sword::MsgPlannedWork& asn ) const;
     //@}
 
 private:

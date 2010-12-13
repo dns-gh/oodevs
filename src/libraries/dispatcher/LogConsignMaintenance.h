@@ -12,15 +12,15 @@
 
 #include "SimpleEntity.h"
 
-namespace Common
+namespace sword
 {
     enum EnumLogMaintenanceHandlingStatus;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogMaintenanceHandlingCreation;
-    class MsgLogMaintenanceHandlingUpdate;
+    class LogMaintenanceHandlingCreation;
+    class LogMaintenanceHandlingUpdate;
 }
 
 namespace kernel
@@ -45,14 +45,14 @@ class LogConsignMaintenance : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             LogConsignMaintenance( const Model& model, const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& msg );
+             LogConsignMaintenance( const Model& model, const sword::LogMaintenanceHandlingCreation& msg );
     virtual ~LogConsignMaintenance();
     //@}
 
     //! @name Operations
     //@{
     using kernel::Entity_ABC::Update;
-    void Update( const MsgsSimToClient::MsgLogMaintenanceHandlingUpdate& msg );
+    void Update( const sword::LogMaintenanceHandlingUpdate& msg );
 
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
@@ -76,7 +76,7 @@ private:
     const unsigned int  nBreakdownType_; // XML reference - not resolved by dispatcher
 
     const kernel::Agent_ABC*               pTreatingAgent_;
-    Common::EnumLogMaintenanceHandlingStatus nState_;
+    sword::EnumLogMaintenanceHandlingStatus nState_;
     bool                                   bDiagnosed_;
 };
 

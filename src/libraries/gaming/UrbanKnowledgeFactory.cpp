@@ -47,7 +47,7 @@ UrbanKnowledgeFactory::~UrbanKnowledgeFactory()
 // Name: UrbanKnowledgeFactory::Create
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
-UrbanKnowledge_ABC* UrbanKnowledgeFactory::Create( const Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
+UrbanKnowledge_ABC* UrbanKnowledgeFactory::Create( const Team_ABC& owner, const sword::UrbanKnowledgeCreation& message )
 {
     // $$$ FDS 2009-01-11: remove public blocks, use knowledgeConverter if possible
     UrbanKnowledge* knowledge = new UrbanKnowledge( owner, message, controllers_.controller_, model_.urbanObjects_ );

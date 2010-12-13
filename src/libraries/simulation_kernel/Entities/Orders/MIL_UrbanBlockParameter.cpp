@@ -17,7 +17,7 @@
 // Name: MIL_UrbanBlockParameter constructor
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
-MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const Common::UrbanObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
+MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const sword::UrbanObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
     : pKnowledgeUrbanBlock_( resolver.ResolveKnowledgeUrban( asn.id() ) )
 {
     // NOTHING
@@ -41,7 +41,6 @@ MIL_UrbanBlockParameter::~MIL_UrbanBlockParameter()
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanBlockParameter::IsOfType
@@ -67,9 +66,8 @@ bool MIL_UrbanBlockParameter::ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urb
 // Name: MIL_UrbanBlockParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_UrbanBlockParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+bool MIL_UrbanBlockParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
 {
     elem.mutable_urbanknowledge()->set_id( pKnowledgeUrbanBlock_->GetId() );
     return true;
 }
-

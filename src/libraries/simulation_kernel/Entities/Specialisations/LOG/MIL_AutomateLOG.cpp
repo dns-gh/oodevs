@@ -39,8 +39,8 @@
 
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateLOG )
-using namespace MsgsSimToClient;
-using namespace MsgsClientToSim;
+using namespace sword;
+using namespace sword;
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AutomateLOG* automat, const unsigned int /*version*/ )
@@ -569,7 +569,7 @@ void MIL_AutomateLOG::SendQuotas() const
         unsigned int i = 0;
         for( CIT_DotationQuotaMap it = stockQuotasSuperior_.begin(); it != stockQuotasSuperior_.end(); ++it, ++i )
         {
-            Common::MsgDotationQuota& dotQuota = *asn().mutable_quotas()->add_elem();
+            sword::MsgDotationQuota& dotQuota = *asn().mutable_quotas()->add_elem();
             dotQuota.mutable_ressource_id()->set_id( it->first->GetMosID() );
             dotQuota.set_quota_disponible( (unsigned int)it->second.rQuota_ );
         }
@@ -593,16 +593,16 @@ void MIL_AutomateLOG::SendFullState() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks
+// Name: MIL_AutomateLOG::OnReceiveChangeLogisticLinks
 // Created: NLD 2005-01-17
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::MsgUnitMagicAction& msg )
+void MIL_AutomateLOG::OnReceiveChangeLogisticLinks( const sword::UnitMagicAction& msg )
 {
     unsigned int automatId = msg.parameters().elem( 1 ).value().Get(0).identifier();
     unsigned int formationId = msg.parameters().elem( 2 ).value().Get(0).identifier();
     if( ( automatId == ( unsigned int ) -1 ) && (formationId == ( unsigned int ) -1) )
     {
-        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_party_hierarchy );
+        throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck_ErrorCode_error_invalid_party_hierarchy );
     }
     pCurrentSuperior_ = automatId!=0 ? GetLogisticAutomate(automatId) : GetLogisticAutomate(formationId);
     if( !pCurrentSuperior_ )
@@ -612,10 +612,10 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::Ms
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas
+// Name: MIL_AutomateLOG::OnReceiveLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionParameters& msg )
+void MIL_AutomateLOG::OnReceiveLogSupplyChangeQuotas( const sword::MsgMissionParameters& msg )
 {
     unsigned int oid_donneur = msg.elem( 0 ).value().Get(0).has_automat() ?
         msg.elem( 0 ).value().Get(0).automat().id() : msg.elem( 0 ).value().Get(0).formation().id();
@@ -624,7 +624,7 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissio
            GetLogisticAutomate( oid_donneur ) != pNominalSuperior_)
          )
     {
-        throw NET_AsnException< MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_donneur_quotas );
+        throw NET_AsnException< LogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( LogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_donneur_quotas );
     }
 
     if ( GetLogisticAutomate( oid_donneur ) == pCurrentSuperior_ )
@@ -851,7 +851,7 @@ const PHY_LogisticLevel& MIL_AutomateLOG::GetLogisticLevel() const
 // Name: MIL_AutomateLOG::FillParentEntity
 // Created: AHC 2010-10-13
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::FillParentEntity(Common::ParentEntity& msg)
+void MIL_AutomateLOG::FillParentEntity(sword::ParentEntity& msg)
 {
 	if( pAssociatedAutomate_ )
 		msg.mutable_automat()->set_id(pAssociatedAutomate_->GetID());

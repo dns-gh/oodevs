@@ -16,7 +16,6 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Controller.h"
-
 #include "dispatcher/Model.h"
 #include "dispatcher/Object_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
@@ -25,10 +24,9 @@
 #include "protocol/protocol.h"
 #include "actions/ParameterList.h"
 #include "actions/ObjectMagicAction.h"
-
 #include <xeumeuleu/xml.hpp>
-#include <boost/bind.hpp>
 #include <boost/function.hpp>
+#include <boost/bind.hpp>
 
 using namespace plugins::edxl;
 
@@ -118,11 +116,11 @@ namespace
         explicit ReferenceValidator( const std::string& id, const dispatcher::Object_ABC& checked ) 
             : id_ ( id ), checked_( checked ), match_ ( false ) {}
 
-        virtual void Send( const MsgsSimToClient::MsgSimToClient& asn ) 
+        virtual void Send( const sword::SimToClient& asn ) 
         {
             if ( asn.has_message() && asn.message().has_object_update() )
             {
-                const Common::ObjectAttributes& attributes = asn.message().object_update().attributes();
+                const sword::ObjectAttributes& attributes = asn.message().object_update().attributes();
                 match_ = attributes.has_medical_treatment() && attributes.medical_treatment().external_reference_id() == id_;
             }
         }
@@ -168,6 +166,7 @@ namespace
         throw std::runtime_error( "unknown parameter : " + name );
     }
 }
+#include "protocol/proto/client_simulation.pb.h"
 
 // -----------------------------------------------------------------------------
 // Name: UpdateListener::SendHospital
@@ -176,23 +175,19 @@ namespace
 void UpdateListener::SendHospital( xml::xistream& xis )
 {
     std::string id;
-
     xis >> xml::start( "OrganizationInformation" )
-            >> xml::start( "OrganizationID" ) >> id >> xml::end
+            >> xml::content( "OrganizationID", id )
         >> xml::end;
-
     const dispatcher::Object_ABC* hospital = FindHospital( model_.Objects(), id );
     if( hospital != 0 )
     {
         kernel::Controller controller;
         const kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "update_object" );
-        
         simulation::ObjectMagicAction magic;
-        
         magic().mutable_object()->set_id( hospital->GetId() );
-        magic().set_type( MsgsClientToSim::MsgObjectMagicAction_Type_update );
-        magic().mutable_parameters()->add_elem()->mutable_value()->Add()->set_identifier( MsgsClientToSim::MsgObjectMagicAction_Attribute_medical_treatment );
-        Common::MsgMissionParameter_Value* parameters = magic().mutable_parameters()->add_elem()->mutable_value()->Add()->add_list();
+        magic().set_type( sword::ObjectMagicAction::update );
+        magic().mutable_parameters()->add_elem()->mutable_value()->Add()->set_identifier( sword::ObjectMagicAction::medical_treatment );
+        sword::MsgMissionParameter_Value* parameters = magic().mutable_parameters()->add_elem()->mutable_value()->Add()->add_list();
         xis >> xml::optional >> xml::start( "HospitalBedCapacityStatus" )
                 >> xml_bind( boost::bind( &UpdateListener::UpdateCapacityStatus, this, _1, boost::ref( *parameters ) ) )
             >> xml::end
@@ -203,20 +198,18 @@ void UpdateListener::SendHospital( xml::xistream& xis )
     }
 }
 
-
-
 namespace
 {
-    Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus TranslateStatus( const std::string& status )
+    sword::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus TranslateStatus( const std::string& status )
     {
         if( status == "Normal" )
-            return Common::ObjectAttributeMedicalTreatment::normal;
+            return sword::ObjectAttributeMedicalTreatment::normal;
         if( status == "Advisory" )
-            return Common::ObjectAttributeMedicalTreatment::normal;
+            return sword::ObjectAttributeMedicalTreatment::normal;
         if( status == "On Divert" )
-            return Common::ObjectAttributeMedicalTreatment::on_divert;
+            return sword::ObjectAttributeMedicalTreatment::on_divert;
         if( status == "Closed" )
-            return Common::ObjectAttributeMedicalTreatment::closed;
+            return sword::ObjectAttributeMedicalTreatment::closed;
         throw std::runtime_error( "Unknown hospital status " + status );
     }
 }
@@ -225,7 +218,7 @@ namespace
 // Name: UpdateListener::UpdateFacilityStatus
 // Created: JCR 2010-06-06
 // -----------------------------------------------------------------------------
-void UpdateListener::UpdateFacilityStatus( xml::xistream& xis, Common::MsgMissionParameter_Value& parameters )
+void UpdateListener::UpdateFacilityStatus( xml::xistream& xis, sword::MsgMissionParameter_Value& parameters )
 {
     std::string content( xis.content< std::string >( "EmergencyDepartmentStatus" ) );
 
@@ -305,15 +298,15 @@ namespace
         }
     };
 
-    void FillParameters( const std::vector< Capacity >& container, Common::MsgMissionParameter_Value& parameters )
+    void FillParameters( const std::vector< Capacity >& container, sword::MsgMissionParameter_Value& parameters )
     {
         typedef std::vector< Capacity >::const_iterator const_iterator;
 
         int i = 0;
         for ( const_iterator it = container.begin(); it < container.end(); ++it, ++i )
         {
-            Common::MsgMissionParameter_Value& bed = *parameters.add_list(); // "BedCapacity"
-            Common::MsgMissionParameter_Value* param;
+            sword::MsgMissionParameter_Value& bed = *parameters.add_list(); // "BedCapacity"
+            sword::MsgMissionParameter_Value* param;
 
             bed.add_list()->set_identifier( it->typeId_ );
             param = bed.add_list();
@@ -337,7 +330,7 @@ namespace
 // Name: UpdateListener::UpdateCapacityStatus
 // Created: JCR 2010-06-06
 // -----------------------------------------------------------------------------
-void UpdateListener::UpdateCapacityStatus( xml::xistream& xis, Common::MsgMissionParameter_Value& parameters )
+void UpdateListener::UpdateCapacityStatus( xml::xistream& xis, sword::MsgMissionParameter_Value& parameters )
 {
     // MedicalTreatmentCapacity
     std::vector< Capacity > container;

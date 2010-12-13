@@ -9,19 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AgentFactory.h"
-
 #include "Model.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/AutomatType.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/CommandPostAttributes.h"
-#include "clients_kernel/Formation_ABC.h"
-
 #include "Agent.h"
 #include "Automat.h"
 #include "Population.h"
@@ -85,18 +73,29 @@
 #include "Quotas.h"
 #include "UrbanPerceptions.h"
 #include "AgentHierarchiesCommunication.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/CommandPostAttributes.h"
+#include "clients_kernel/Formation_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, kernel::Workers& workers, const RcEntityResolver_ABC& rcResolver )
+AgentFactory::AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+                            Publisher_ABC& publisher, kernel::Workers& workers, const RcEntityResolver_ABC& rcResolver )
     : controllers_( controllers )
-    , model_( model )
-    , static_( staticModel )
-    , publisher_( publisher )
-    , workers_( workers )
-    , rcResolver_( rcResolver )
+    , model_      ( model )
+    , static_     ( staticModel )
+    , publisher_  ( publisher )
+    , workers_    ( workers )
+    , rcResolver_ ( rcResolver )
 {
     // NOTHING
 }
@@ -114,12 +113,12 @@ AgentFactory::~AgentFactory()
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC* AgentFactory::Create( const MsgsSimToClient::MsgAutomatCreation& message )
+kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message )
 {
     Automat* result = new Automat( message, controllers_.controller_, static_.types_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
 
-    result->Attach< kernel::CommunicationHierarchies >( *new AutomatHierarchies        ( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
     kernel::Entity_ABC* superior = 0;
 
     if( message.parent().has_formation() )
@@ -155,7 +154,7 @@ kernel::Automat_ABC* AgentFactory::Create( const MsgsSimToClient::MsgAutomatCrea
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-kernel::Agent_ABC* AgentFactory::Create( const MsgsSimToClient::MsgUnitCreation& message )
+kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
 {
     Agent* result = new Agent( message, controllers_.controller_, static_.types_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
@@ -202,10 +201,9 @@ kernel::Agent_ABC* AgentFactory::Create( const MsgsSimToClient::MsgUnitCreation&
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-kernel::Population_ABC* AgentFactory::Create( const MsgsSimToClient::MsgCrowdCreation& message )
+kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& message )
 {
     Population* result = new Population( message, controllers_, static_.coordinateConverter_, static_.types_ );
-
     result->Attach< kernel::Positions >( *new PopulationPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new PopulationDecisions( controllers_.controller_, *result ) );
@@ -219,10 +217,9 @@ kernel::Population_ABC* AgentFactory::Create( const MsgsSimToClient::MsgCrowdCre
 // Name: AgentFactory::Create
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
-kernel::Inhabitant_ABC* AgentFactory::Create( const MsgsSimToClient::MsgPopulationCreation& message )
+kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& message )
 {
     Inhabitant* result = new Inhabitant( message, controllers_, static_.coordinateConverter_, static_.types_, model_.urbanObjects_ );
-
     result->Attach< kernel::Positions >( *new InhabitantPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     AttachExtensions( *result );
@@ -246,4 +243,3 @@ void AgentFactory::AttachExtensions( kernel::Entity_ABC& agent )
     agent.Attach( *new Fires( controllers_.controller_, model_.fireFactory_ ) );
     agent.Attach( *new UrbanPerceptions( controllers_.controller_, model_.agents_ ) );
 }
-

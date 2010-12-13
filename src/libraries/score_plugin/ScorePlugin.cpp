@@ -64,7 +64,7 @@ void ScorePlugin::Register( dispatcher::Services& services )
 // Name: ScorePlugin::Receive
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-void ScorePlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
+void ScorePlugin::Receive( const sword::SimToClient& wrapper )
 {
     scores_->Update( wrapper );
 }
@@ -73,7 +73,7 @@ void ScorePlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 // Name: ScorePlugin::Receive
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
-void ScorePlugin::Receive( const MsgsAarToClient::MsgAarToClient& wrapper )
+void ScorePlugin::Receive( const sword::AarToClient& wrapper )
 {
     if( wrapper.message().has_indicator() )
         scores_->Update( wrapper.message().indicator() );
@@ -83,11 +83,11 @@ void ScorePlugin::Receive( const MsgsAarToClient::MsgAarToClient& wrapper )
 // Name: ScorePlugin::OnReceive
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
-void ScorePlugin::OnReceive( const std::string& client, const MsgsClientToAar::MsgClientToAar& wrapper )
+void ScorePlugin::OnReceive( const std::string& client, const sword::ClientToAar& wrapper )
 {
     if( wrapper.message().has_plot_request() )
     {
-        const MsgsClientToAar::MsgPlotRequest& request = wrapper.message().plot_request();
+        const sword::PlotRequest& request = wrapper.message().plot_request();
         if( boost::starts_with( request.request(), "indicator://" ) )
             scores_->RequestPlot( resolver_.GetPublisher( client ), request );
     }

@@ -10,9 +10,9 @@
 #ifndef __MIL_FragOrder_h_
 #define __MIL_FragOrder_h_
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgFragOrder;
+    class FragOrder;
 }
 
 class DEC_Decision_ABC;
@@ -48,7 +48,7 @@ class MIL_FragOrder : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MsgsClientToSim::MsgFragOrder& asn );
+             MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::FragOrder& asn );
              MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs );
     virtual ~MIL_FragOrder();
     //@}

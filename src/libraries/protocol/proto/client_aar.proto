@@ -1,0 +1,23 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+package sword;
+
+message PlotRequest {
+   required uint32 identifier = 1;
+   required string request    = 2;
+}
+
+message ClientToAar {
+    message Content {
+        optional PlotRequest plot_request = 1;
+    }
+    optional int32   context = 1;
+    required Content message = 2;
+}

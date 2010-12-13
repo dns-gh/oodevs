@@ -36,7 +36,7 @@ ObjectKnowledgePositions::~ObjectKnowledgePositions()
 // Name: ObjectKnowledgePositions::DoUpdate
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePositions::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void ObjectKnowledgePositions::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     if( message.has_location()  )
         Update( message.location() );

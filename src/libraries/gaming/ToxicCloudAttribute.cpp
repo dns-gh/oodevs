@@ -80,14 +80,14 @@ void ToxicCloudAttribute::UpdateTexture() const
 // Name: ToxicCloudAttribute::UpdateToxicCloud
 // Created: JCR 2008-06-12
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::UpdateToxicCloud( const Common::MsgLocatedQuantityList& cloud )
+void ToxicCloudAttribute::UpdateToxicCloud( const sword::MsgLocatedQuantityList& cloud )
 {
     cloud_.resize( cloud.elem_size() );
     boundaries_ = QuantityBoundaries();
     boundingBox_ = geometry::Rectangle2f();
     for( int i = 0; i < cloud.elem_size(); ++i )
     {
-        const Common::MsgLocatedQuantity& quantity = cloud.elem( i );
+        const sword::MsgLocatedQuantity& quantity = cloud.elem( i );
         const geometry::Point2f position( float( quantity.coordinate().longitude() ), float( quantity.coordinate().latitude() ) );
         boundingBox_.Incorporate( position );
         boundaries_.Incorporate( quantity.quantity() );
@@ -113,7 +113,7 @@ void ToxicCloudAttribute::UpdateData( const T& message )
 // Name: ToxicCloudAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void ToxicCloudAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -122,7 +122,7 @@ void ToxicCloudAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& mess
 // Name: ToxicCloudAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void ToxicCloudAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }

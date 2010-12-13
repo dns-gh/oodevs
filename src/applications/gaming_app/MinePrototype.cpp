@@ -12,7 +12,7 @@
 #include "protocol/Protocol.h"
 #include "actions/ParameterList.h"
 
-using namespace Common;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: MinePrototype constructor

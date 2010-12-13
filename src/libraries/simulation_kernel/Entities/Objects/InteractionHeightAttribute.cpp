@@ -33,7 +33,7 @@ InteractionHeightAttribute::InteractionHeightAttribute()
 // Name: InteractionHeightAttribute constructor
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-InteractionHeightAttribute::InteractionHeightAttribute( const Common::MsgMissionParameter_Value& attributes )
+InteractionHeightAttribute::InteractionHeightAttribute( const sword::MsgMissionParameter_Value& attributes )
     : height_( attributes.list( 1 ).quantity() )
 {
     // NOTHING
@@ -91,7 +91,7 @@ void InteractionHeightAttribute::Register( MIL_Object_ABC& object ) const
 // Name: InteractionHeightAttribute::SendFullState
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-void InteractionHeightAttribute::SendFullState( Common::ObjectAttributes& asn ) const
+void InteractionHeightAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_interaction_height()->set_height( float( height_ ) );
 }

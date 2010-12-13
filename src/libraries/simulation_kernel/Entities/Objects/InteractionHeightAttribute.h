@@ -34,7 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              InteractionHeightAttribute();
-    explicit InteractionHeightAttribute( const Common::MsgMissionParameter_Value& attributes );
+    explicit InteractionHeightAttribute( const sword::MsgMissionParameter_Value& attributes );
     explicit InteractionHeightAttribute( xml::xistream& xis );
     virtual ~InteractionHeightAttribute();
     //@}
@@ -56,7 +56,7 @@ public:
 
     //! @name ASN Network update
     //@{
-    virtual void SendFullState( Common::ObjectAttributes& asn ) const; //<! Send update to asn client
+    virtual void SendFullState( sword::ObjectAttributes& asn ) const; //<! Send update to asn client
     //@}
 
     //! @name ODB

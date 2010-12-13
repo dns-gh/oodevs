@@ -43,8 +43,8 @@ public:
     //! @name Operations
     //@{
     using Entity< kernel::Automat_ABC >::CommitTo;
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 

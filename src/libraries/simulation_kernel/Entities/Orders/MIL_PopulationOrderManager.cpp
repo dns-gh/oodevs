@@ -43,11 +43,11 @@ MIL_PopulationOrderManager::~MIL_PopulationOrderManager()
 // Name: MIL_PopulationOrderManager::OnReceiveMission
 // Created: NLD 2003-01-10
 //-----------------------------------------------------------------------------
-void MIL_PopulationOrderManager::OnReceiveMission( const Common::MsgCrowdOrder& asnMsg )
+void MIL_PopulationOrderManager::OnReceiveMission( const sword::CrowdOrder& asnMsg )
 {
     const MIL_MissionType_ABC* pMissionType = MIL_PopulationMissionType::Find( asnMsg.type().id() );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission );
     boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_PopulationMission( *pMissionType, population_, asnMsg ) );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
 }
@@ -56,13 +56,13 @@ void MIL_PopulationOrderManager::OnReceiveMission( const Common::MsgCrowdOrder& 
 // Name: MIL_PopulationOrderManager::OnReceiveFragOrder
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_PopulationOrderManager::OnReceiveFragOrder( const MsgsClientToSim::MsgFragOrder& asn )
+void MIL_PopulationOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
 {
     const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.frag_order().id() );
     if( !pType )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_order_conduite );
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_order_conduite );
     DEC_Representations& representation = population_.GetRole<DEC_Representations>();
     boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, population_.GetKnowledge(), asn ) );
     representation.AddToOrdersCategory( pFragOrder );

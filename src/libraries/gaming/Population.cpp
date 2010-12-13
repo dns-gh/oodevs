@@ -31,7 +31,7 @@ unsigned long Population::nMaxId_ = 200;
 // Name: Population constructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-Population::Population( const MsgsSimToClient::MsgCrowdCreation& message, Controllers& controllers, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::PopulationType >& typeResolver )
+Population::Population( const sword::CrowdCreation& message, Controllers& controllers, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::PopulationType >& typeResolver )
     : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.nom().c_str() ) )
     , controllers_  ( controllers )
     , converter_    ( converter )
@@ -108,7 +108,7 @@ unsigned int Population::GetLivingHumans() const
 // Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate& message )
+void Population::DoUpdate( const sword::CrowdFlowUpdate& message )
 {
     static_cast< PopulationFlow& >( tools::Resolver< PopulationFlow_ABC >::Get( message.flow().id() ) ).Update( message );
     ComputeCenter();
@@ -119,7 +119,7 @@ void Population::DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate& message )
 // Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationUpdate& message )
+void Population::DoUpdate( const sword::CrowdConcentrationUpdate& message )
 {
     static_cast< PopulationConcentration& >( tools::Resolver< PopulationConcentration_ABC >::Get( message.concentration().id() ) ).Update( message );
     ComputeCenter();
@@ -130,7 +130,7 @@ void Population::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationUpdate& m
 // Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgCrowdFlowCreation& message )
+void Population::DoUpdate( const sword::CrowdFlowCreation& message )
 {
     if( ! tools::Resolver< PopulationFlow_ABC >::Find( message.flow().id() ) )
     {
@@ -146,7 +146,7 @@ void Population::DoUpdate( const MsgsSimToClient::MsgCrowdFlowCreation& message 
 // Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationCreation& message )
+void Population::DoUpdate( const sword::CrowdConcentrationCreation& message )
 {
     if( ! tools::Resolver< PopulationConcentration_ABC >::Find( message.concentration().id() ) )
     {
@@ -162,7 +162,7 @@ void Population::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationCreation&
 // Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgCrowdFlowDestruction& message )
+void Population::DoUpdate( const sword::CrowdFlowDestruction& message )
 {
     delete tools::Resolver< PopulationFlow_ABC >::Find( message.flow().id() );
     tools::Resolver< PopulationFlow_ABC >::Remove( message.flow().id() );
@@ -174,7 +174,7 @@ void Population::DoUpdate( const MsgsSimToClient::MsgCrowdFlowDestruction& messa
 // Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationDestruction& message )
+void Population::DoUpdate( const sword::CrowdConcentrationDestruction& message )
 {
     delete tools::Resolver< PopulationConcentration_ABC >::Find( message.concentration().id() );
     tools::Resolver< PopulationConcentration_ABC >::Remove( message.concentration().id() );
@@ -186,7 +186,7 @@ void Population::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationDestructi
 // Name: Population::DoUpdate
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-void Population::DoUpdate( const MsgsSimToClient::MsgCrowdUpdate& message )
+void Population::DoUpdate( const sword::CrowdUpdate& message )
 {
     if( message.has_etat_domination()  )
         nDomination_ = message.etat_domination();

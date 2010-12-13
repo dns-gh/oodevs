@@ -11,7 +11,7 @@
 #include "Simulation.h"
 
 using namespace plugins::bml;
-using namespace MsgsSimToClient;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: Simulation constructor
@@ -37,7 +37,7 @@ Simulation::~Simulation()
 // Name: Simulation::Update
 // Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-void Simulation::Update( const MsgControlEndTick& message )
+void Simulation::Update( const ControlEndTick& message )
 {
     currentTick_  = message.current_tick();
     tickDuration_ = message.tick_duration();

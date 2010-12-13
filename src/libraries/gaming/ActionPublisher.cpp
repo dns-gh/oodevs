@@ -37,7 +37,7 @@ ActionPublisher::~ActionPublisher()
 // Name: ActionPublisher::Send
 // Created: SBO 2010-03-17
 // -----------------------------------------------------------------------------
-void ActionPublisher::Send( const MsgsClientToSim::MsgClientToSim& message )
+void ActionPublisher::Send( const sword::ClientToSim& message )
 {
     if( !design_ )
         publisher_.Send( message );
@@ -47,7 +47,7 @@ void ActionPublisher::Send( const MsgsClientToSim::MsgClientToSim& message )
 // Name: ActionPublisher::Send
 // Created: SBO 2010-03-17
 // -----------------------------------------------------------------------------
-void ActionPublisher::Send( const MsgsClientToAuthentication::MsgClientToAuthentication& /*message*/ )
+void ActionPublisher::Send( const sword::ClientToAuthentication& /*message*/ )
 {
     throw std::runtime_error( __FUNCTION__ ": not to be called." );
 }
@@ -56,7 +56,7 @@ void ActionPublisher::Send( const MsgsClientToAuthentication::MsgClientToAuthent
 // Name: ActionPublisher::Send
 // Created: SBO 2010-03-17
 // -----------------------------------------------------------------------------
-void ActionPublisher::Send( const MsgsClientToReplay::MsgClientToReplay& /*message*/ )
+void ActionPublisher::Send( const sword::ClientToReplay& /*message*/ )
 {
     throw std::runtime_error( __FUNCTION__ ": not to be called." );
 }
@@ -65,7 +65,7 @@ void ActionPublisher::Send( const MsgsClientToReplay::MsgClientToReplay& /*messa
 // Name: ActionPublisher::Send
 // Created: SBO 2010-03-17
 // -----------------------------------------------------------------------------
-void ActionPublisher::Send( const MsgsClientToAar::MsgClientToAar& /*message*/ )
+void ActionPublisher::Send( const sword::ClientToAar& /*message*/ )
 {
     throw std::runtime_error( __FUNCTION__ ": not to be called." );
 }
@@ -74,7 +74,7 @@ void ActionPublisher::Send( const MsgsClientToAar::MsgClientToAar& /*message*/ )
 // Name: ActionPublisher::Send
 // Created: SBO 2010-03-17
 // -----------------------------------------------------------------------------
-void ActionPublisher::Send( const MsgsClientToMessenger::MsgClientToMessenger& /*message*/ )
+void ActionPublisher::Send( const sword::ClientToMessenger& /*message*/ )
 {
     throw std::runtime_error( __FUNCTION__ ": not to be called." );
 }

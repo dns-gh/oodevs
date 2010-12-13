@@ -53,7 +53,7 @@ public:
         for( IT_Functions it = dispatched_.begin(); it != dispatched_.end(); ++it )
             it->second->BeginTick();
     }
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message )
+    virtual void Receive( const sword::SimToClient& message )
     {
         Handler handler( *this, message );
         EvaluateValue( keyValue_, message, handler );
@@ -71,7 +71,7 @@ private:
     //@{
     struct Handler : public ValueHandler_ABC< K >
     {
-        Handler( Dispatcher& that, const MsgsSimToClient::MsgSimToClient& message )
+        Handler( Dispatcher& that, const sword::SimToClient& message )
             : that_( &that ), message_( &message ) {}
         virtual void BeginTick() {}
         virtual void Handle( const K& value )
@@ -88,7 +88,7 @@ private:
         }
         virtual void EndTick() {}
         Dispatcher* that_;
-        const MsgsSimToClient::MsgSimToClient* message_;
+        const sword::SimToClient* message_;
     };
     //@}
 

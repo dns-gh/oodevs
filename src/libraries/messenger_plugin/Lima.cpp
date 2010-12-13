@@ -19,7 +19,7 @@ using namespace plugins::messenger;
 // Name: Lima constructor
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-Lima::Lima( unsigned int id, const MsgsClientToMessenger::MsgLimaCreationRequest& message )
+Lima::Lima( unsigned int id, const sword::LimaCreationRequest& message )
     : TacticalLine_ABC( id, message.tactical_line() )
 {
     // NOTHING
@@ -29,7 +29,7 @@ Lima::Lima( unsigned int id, const MsgsClientToMessenger::MsgLimaCreationRequest
 // Name: Lima constructor
 // Created: RDS 2008-04-03
 // -----------------------------------------------------------------------------
-Lima::Lima( unsigned int id, xml::xistream& xis, const Common::MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter )
+Lima::Lima( unsigned int id, xml::xistream& xis, const sword::MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter )
     : TacticalLine_ABC( id, xis, diffusion, converter)
 {
     // NOTHING
@@ -48,7 +48,7 @@ Lima::~Lima()
 // Name: Lima::Update
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-void Lima::Update( const MsgsClientToMessenger::MsgLimaUpdateRequest& message )
+void Lima::Update( const sword::LimaUpdateRequest& message )
 {
     TacticalLine_ABC::Update( message.tactical_line() );
 }
@@ -59,7 +59,7 @@ void Lima::Update( const MsgsClientToMessenger::MsgLimaUpdateRequest& message )
 // -----------------------------------------------------------------------------
 void Lima::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 {
-    MsgsMessengerToClient::MsgLimaCreation creation ;
+    sword::LimaCreation creation ;
     creation.mutable_id()->set_id( GetID() );
     TacticalLine_ABC::Send( *creation.mutable_tactical_line() );
     plugins::messenger::LimaCreation message;
@@ -73,7 +73,7 @@ void Lima::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 // -----------------------------------------------------------------------------
 void Lima::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 {
-    MsgsMessengerToClient::MsgLimaUpdate update;
+    sword::LimaUpdate update;
     update.mutable_id()->set_id( GetID() );
     TacticalLine_ABC::Send( *update.mutable_tactical_line() );
     plugins::messenger::LimaUpdate message( update );
@@ -86,7 +86,7 @@ void Lima::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 // -----------------------------------------------------------------------------
 void Lima::SendDestruction( dispatcher::ClientPublisher_ABC& client ) const
 {
-    MsgsMessengerToClient::MsgLimaDestruction destruction;
+    sword::LimaDestruction destruction;
     destruction.mutable_id()->set_id( GetID() );
     plugins::messenger::LimaDestruction message( destruction );
     message.Send( client );

@@ -17,9 +17,9 @@
 
 PHY_Experience::T_ExperienceMap PHY_Experience::experiences_;
 
-const PHY_Experience PHY_Experience::conscrit_   ( "Conscrit"   , eConscrit   , Common::conscrit   , 1.);
-const PHY_Experience PHY_Experience::experimente_( "Experimente", eExperimente, Common::experimente, 1.);
-const PHY_Experience PHY_Experience::veteran_    ( "Veteran"    , eVeteran    , Common::veteran    , 1. );
+const PHY_Experience PHY_Experience::conscrit_   ( "Conscrit"   , eConscrit   , sword::conscrit   , 1.);
+const PHY_Experience PHY_Experience::experimente_( "Experimente", eExperimente, sword::experimente, 1.);
+const PHY_Experience PHY_Experience::veteran_    ( "Veteran"    , eVeteran    , sword::veteran    , 1. );
 
 struct PHY_Experience::LoadingWrapper
 {
@@ -75,7 +75,7 @@ void PHY_Experience::Terminate()
 // Name: PHY_Experience constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Experience::PHY_Experience( const std::string& strName, E_ExperienceType nType, Common::EnumUnitExperience nAsnID, double rDIAWeight )
+PHY_Experience::PHY_Experience( const std::string& strName, E_ExperienceType nType, sword::EnumUnitExperience nAsnID, double rDIAWeight )
     : strName_                       ( strName )
     , nType_                         ( nType   )
     , nAsnID_                        ( nAsnID  )
@@ -126,9 +126,9 @@ void PHY_Experience::Read( xml::xistream& xis )
 // Name: PHY_Experience::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const PHY_Experience* PHY_Experience::Find( Common::EnumUnitExperience nAsnID )
+const PHY_Experience* PHY_Experience::Find( sword::EnumUnitExperience nAsnID )
 {
-    CIT_ExperienceMap it = std::find_if( experiences_.begin(), experiences_.end(), std::compose1( std::bind2nd( std::equal_to< Common::EnumUnitExperience >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Experience::GetAsnID ), std::select2nd< T_ExperienceMap::value_type >() ) ) );
+    CIT_ExperienceMap it = std::find_if( experiences_.begin(), experiences_.end(), std::compose1( std::bind2nd( std::equal_to< sword::EnumUnitExperience >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Experience::GetAsnID ), std::select2nd< T_ExperienceMap::value_type >() ) ) );
 
     return it == experiences_.end() ? 0 : it->second;
 }
@@ -169,7 +169,7 @@ const std::string& PHY_Experience::GetName() const
 // Name: PHY_Experience::GetAsnID
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-Common::EnumUnitExperience PHY_Experience::GetAsnID() const
+sword::EnumUnitExperience PHY_Experience::GetAsnID() const
 {
     return nAsnID_;
 }

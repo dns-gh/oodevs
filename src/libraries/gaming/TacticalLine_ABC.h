@@ -29,8 +29,8 @@ class Publisher_ABC;
 // =============================================================================
 class TacticalLine_ABC : public kernel::TacticalLine_ABC
                        , public kernel::Extension_ABC
-                       , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimaUpdate >
-                       , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimitUpdate >
+                       , public kernel::Updatable_ABC< sword::LimaUpdate >
+                       , public kernel::Updatable_ABC< sword::LimitUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -65,8 +65,8 @@ protected:
 
     //! @name Helpers
     //@{
-    void WriteGeometry( Common::MsgLocation& loc ) const;
-    void WriteDiffusion( Common::MsgTacticalLine::Diffusion& diffusion ) const;
+    void WriteGeometry( sword::MsgLocation& loc ) const;
+    void WriteDiffusion( sword::MsgTacticalLine::Diffusion& diffusion ) const;
     virtual void UpdateToSim( E_State state ) = 0;
     template< typename Message >
     void Send( Message& message )
@@ -74,8 +74,8 @@ protected:
         message.Send( publisher_);
     }
 
-    virtual void DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate& message );
-    virtual void DoUpdate( const MsgsMessengerToClient::MsgLimitUpdate&  message );
+    virtual void DoUpdate( const sword::LimaUpdate& message );
+    virtual void DoUpdate( const sword::LimitUpdate&  message );
     //@}
 
 private:

@@ -14,15 +14,17 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitCreation;
-    class MsgUnitAttributes;
+    class UnitCreation;
+    class UnitAttributes;
 }
-namespace Common
+
+namespace sword
 {
-    class MsgUnitChangeSuperior;
+    class UnitChangeSuperior;
 }
+
 namespace kernel
 {
     class CommunicationHierarchies;
@@ -38,7 +40,7 @@ namespace kernel
 // Created: FDS 2010-03-29
 // =============================================================================
 class AgentHierarchiesCommunication : public AgentHierarchies< kernel::CommunicationHierarchies >
-                                    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+                                    , public kernel::Updatable_ABC< sword::UnitAttributes >
 {
 public:
     //! @name Constructors/Destructor
@@ -51,9 +53,9 @@ public:
 
     virtual bool CanCommunicate() const;
     virtual bool IsJammed() const;
-    void DoUpdate( const MsgsSimToClient::MsgUnitCreation& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
-    void DoUpdate( const Common::MsgUnitChangeSuperior& message );
+    void DoUpdate( const sword::UnitCreation& message );
+    virtual void DoUpdate( const sword::UnitAttributes& message );
+    void DoUpdate( const sword::UnitChangeSuperior& message );
 
 private:
     bool        jammed_;

@@ -18,12 +18,11 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "tools/Iterator.h"
 #include "protocol/protocol.h"
-#include "protocol/messengersenders.h"
+#include "protocol/MessengerSenders.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::messenger;
-using namespace Common;
-using namespace MsgsClientToMessenger;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLinesModel constructor
@@ -93,10 +92,10 @@ void TacticalLinesModel::Write( xml::xostream& xos ) const
 // Name: TacticalLinesModel::HandleLimitRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimitCreationRequest& asn )
+void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitCreationRequest& asn )
 {
     plugins::messenger::LimitCreationRequestAck ack ;
-    ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
+    ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
     std::auto_ptr< Limit > limit( new Limit( idManager_.NextId(), asn ) );
     limits_.Register( limit->GetID(), *limit );
     limit->SendCreation( clients_ );
@@ -108,10 +107,10 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 // Name: TacticalLinesModel::HandleLimitRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgLimitUpdateRequest& asn )
+void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitUpdateRequest& asn )
 {
     plugins::messenger::LimitUpdateRequestAck ack;
-    ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
+    ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
     Limit* limit = limits_.Find( asn.id().id() );
     if( limit )
     {
@@ -119,7 +118,7 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
         limit->SendUpdate( clients_ );
     }
     else
-        ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_error_invalid_id );
+        ack().set_error_code( sword::TacticalLineAck_ErrorCode_error_invalid_id );
     ack.Send( publisher );
 }
 
@@ -127,10 +126,10 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 // Name: TacticalLinesModel::HandleLimitRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgLimitDestructionRequest& asn )
+void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitDestructionRequest& asn )
 {
     plugins::messenger::LimitDestructionRequestAck ack;
-    ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
+    ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
     Limit* limit = limits_.Find( asn.id().id() );
     if( limit )
     {
@@ -139,7 +138,7 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
         limits_.Remove( asn.id().id() );
     }
     else
-        ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_error_invalid_id );
+        ack().set_error_code( sword::TacticalLineAck_ErrorCode_error_invalid_id );
     ack.Send( publisher );
 }
 
@@ -147,10 +146,10 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 // Name: TacticalLinesModel::HandleLimaRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimaCreationRequest& asn )
+void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimaCreationRequest& asn )
 {
     plugins::messenger::LimaCreationRequestAck ack ;
-    ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
+    ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
     std::auto_ptr< Lima > lima( new Lima( idManager_.NextId(), asn ) );
     limas_.Register( lima->GetID(), *lima );
     lima->SendCreation( clients_ );
@@ -162,10 +161,10 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 // Name: TacticalLinesModel::HandleLimaRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgLimaUpdateRequest& asn )
+void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimaUpdateRequest& asn )
 {
     plugins::messenger::LimaUpdateRequestAck ack ;
-    ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
+    ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
     Lima* lima = limas_.Find( asn.id().id() );
     if( lima )
     {
@@ -173,7 +172,7 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
         lima->SendUpdate( clients_ );
     }
     else
-        ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_error_invalid_id );
+        ack().set_error_code( sword::TacticalLineAck_ErrorCode_error_invalid_id );
     ack.Send( publisher );
 }
 
@@ -181,10 +180,10 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 // Name: TacticalLinesModel::HandleLimaRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgLimaDestructionRequest& asn)
+void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimaDestructionRequest& asn)
 {
     plugins::messenger::LimaDestructionRequestAck ack ;
-    ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
+    ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
     Lima* lima = limas_.Find( asn.id().id() );
     if( lima )
     {
@@ -193,7 +192,7 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
         limas_.Remove( asn.id().id() );
     }
     else
-        ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_error_invalid_id );
+        ack().set_error_code( sword::TacticalLineAck_ErrorCode_error_invalid_id );
     ack.Send( publisher );
 }
 

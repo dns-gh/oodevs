@@ -14,14 +14,13 @@
 #include <geometry/Types.h>
 #include <vector>
 
-namespace Common
+namespace sword
 {
     class MsgCoordLatLong;
 }
 
 namespace dispatcher
 {
-
     typedef std::vector< float >    Position;
     typedef std::vector< Position > Zone;
 
@@ -32,7 +31,7 @@ namespace dispatcher
     Position ToPosition( const geometry::Point2f& point );
     Zone ToZone( const std::vector< geometry::Point2f >& points );
 
-    Zone ToZone( const std::vector< Common::MsgCoordLatLong >& coordinates, const kernel::CoordinateConverter_ABC& converter );
+    Zone ToZone( const std::vector< sword::MsgCoordLatLong >& coordinates, const kernel::CoordinateConverter_ABC& converter );
 }
 
 #endif // __Position_h_

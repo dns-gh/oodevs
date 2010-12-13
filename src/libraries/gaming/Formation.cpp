@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: Formation constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-Formation::Formation( const MsgsSimToClient::MsgFormationCreation& message, Controller& controller, const tools::Resolver_ABC< HierarchyLevel_ABC >& resolver  )
+Formation::Formation( const sword::FormationCreation& message, Controller& controller, const tools::Resolver_ABC< HierarchyLevel_ABC >& resolver  )
     : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ) )
     , level_( resolver.Get( message.level() ) )
     , logisticLevel_ ( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )

@@ -11,13 +11,8 @@
 #define __protocol_Messenger_h__
 
 #pragma warning( push, 0 )
-#pragma warning( disable : 4244 )
-
-#include "Definitions.h"
-#include "generated/Common.pb.h"
-#include "generated/ClientToMessenger.pb.h"
-#include "generated/MessengerToClient.pb.h"
-
+#include "protocol/proto/client_messenger.pb.h"
+#include "protocol/proto/messenger_client.pb.h"
 #pragma warning( pop )
 
 #endif // __protocol_Messenger_h__

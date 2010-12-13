@@ -12,7 +12,7 @@
 
 #include "Parameter.h"
 
-namespace Common
+namespace sword
 {
     class MsgDateTime;
 }
@@ -32,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DateTime( const kernel::OrderParameter& parameter, xml::xistream& xis );
-             DateTime( const kernel::OrderParameter& parameter, const Common::MsgDateTime& date );
+             DateTime( const kernel::OrderParameter& parameter, const sword::MsgDateTime& date );
              DateTime( const kernel::OrderParameter& parameter, const QDateTime& date );
     virtual ~DateTime();
     //@}
@@ -40,9 +40,9 @@ public:
     //! @name Operations
     //@{
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
-    void CommitTo( Common::MsgDateTime& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
+    void CommitTo( sword::MsgDateTime& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
     //@}
 
 private:

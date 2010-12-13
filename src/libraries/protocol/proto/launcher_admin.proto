@@ -1,0 +1,104 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+import "common.proto";
+import "simulation_client.proto";
+import "authentication_client.proto";
+import "version.proto";
+
+package sword;
+
+message ConnectionAck {
+    enum ErrorCode {
+        success                       = 0;
+        invalid_connection            = 1;
+        incompatible_protocol_version = 2;
+        exercise_already_running      = 3;
+    }
+    required ErrorCode         error_code         = 1;
+    optional int32             context            = 2;
+    required ProtocolVersion   server_version     = 3;
+    required MsgNetworkAddress dispatcher_address = 4;
+}
+
+message ExercicesListResponse {
+    enum ErrorCode {
+        success = 0;
+        failure = 1;
+    }
+    required ErrorCode   error_code = 1;
+    repeated MsgExercise exercise   = 2;
+}
+
+message MsgConnectedProfileList {
+    enum ErrorCode {
+        success = 0;
+        failure = 1;
+    }
+    enum Context {
+        spontaneous  = 0;
+        upon_request = 1;
+    }
+    required ErrorCode error_code = 1;
+    required Context   context    = 2;
+    repeated Profile   exercise   = 3;
+}
+
+message ControlStartExerciseAck  {
+    enum ErrorCode {
+        success                  = 0;
+        bad_exercise_name        = 1;
+        exercise_already_running = 2;
+        invalid_checkpoint       = 3;
+    }
+    required ErrorCode   error_code = 1;
+    required MsgExercise exercise   = 2;
+}
+
+message ControlStopExerciseAck {
+    enum ErrorCode {
+        success              = 0;
+        bad_exercise_name    = 1;
+        exercise_not_running = 2;
+    }
+    required ErrorCode           error_code       = 1;
+    required MsgExercise         exercise         = 2;
+    optional EnumSimulationState simulation_state = 3;
+}
+
+message MsgSimulationComponentState {
+    required EnumSimulationState simulation_state = 1;
+    optional EnumDispatcherState dispatcher_state = 2;
+}
+
+message LauncherToAdmin {
+    message Content {
+        optional ConnectionAck                    connection_ack                       = 1;
+        optional ExercicesListResponse            exercise_list_response               = 2;
+        optional ControlStartExerciseAck          control_start_ack                    = 3;
+        optional ControlStopExerciseAck           control_stop_ack                     = 4;
+        optional ControlCheckPointSetFrequencyAck control_checkpoint_set_frequency_ack = 5;
+        optional UnitChangeSuperior               unit_change_superior                 = 6;
+        optional AutomatChangeSuperior            automat_change_superior              = 7;
+        optional UnitCreation                     unit_creation                        = 8;
+        optional AutomatCreation                  automat_creation                     = 9;
+        optional MsgConnectedProfileList          connected_profile_list               = 10;
+        optional ProfileDescriptionList           profiles_description                 = 11;
+        optional ProfileCreation                  profile_creation                     = 12;
+        optional ProfileUpdate                    profile_update                       = 13;
+        optional ProfileDestruction               profile_destruction                  = 14;
+        optional MsgSimulationComponentState      simulation_component_state           = 15;
+        optional ControlCheckPointSaveNowAck      control_checkpoint_save_now_ack      = 16;
+        optional ControlCheckPointListAck         control_checkpoint_list_ack          = 17;
+        optional ControlCheckPointList            control_checkpoint_list              = 18;
+        optional ControlCheckPointDeleteAck       control_checkpoint_delete_ack        = 19;
+    }
+    optional int32   context = 1;
+    required Content message = 2;
+}

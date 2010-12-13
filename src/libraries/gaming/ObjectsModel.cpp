@@ -46,7 +46,7 @@ void ObjectsModel::Purge()
 // Name: ObjectsModel::CreateObject
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void ObjectsModel::CreateObject( const MsgsSimToClient::MsgObjectCreation& message )
+void ObjectsModel::CreateObject( const sword::ObjectCreation& message )
 {
     if( ! tools::Resolver< Object_ABC >::Find( message.object().id() ) )
     {
@@ -59,7 +59,7 @@ void ObjectsModel::CreateObject( const MsgsSimToClient::MsgObjectCreation& messa
 // Name: ObjectsModel::UpdateObject
 // Created: NLD 2010-11-02
 // -----------------------------------------------------------------------------
-void ObjectsModel::UpdateObject( const MsgsSimToClient::MsgObjectUpdate& message )
+void ObjectsModel::UpdateObject( const sword::ObjectUpdate& message )
 {    
     Object_ABC& object = GetObject( message.object().id() );
     objectFactory_.RegisterAttributes( object, message.attributes() );

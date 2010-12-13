@@ -198,7 +198,7 @@ void Action_ABC::Serialize( xml::xostream& xos ) const
 // Name: Action_ABC::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Action_ABC::CommitTo( Common::MsgMissionParameters& message ) const
+void Action_ABC::CommitTo( sword::MsgMissionParameters& message ) const
 {
     if( valid_ )
     {
@@ -212,7 +212,7 @@ void Action_ABC::CommitTo( Common::MsgMissionParameters& message ) const
 // Name: Action_ABC::Clean
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Action_ABC::Clean( Common::MsgMissionParameters& message ) const
+void Action_ABC::Clean( sword::MsgMissionParameters& message ) const
 {
     message.Clear();
 }

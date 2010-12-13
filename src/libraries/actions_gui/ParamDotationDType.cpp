@@ -22,7 +22,7 @@ using namespace actions::gui;
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
 ParamDotationDType::ParamDotationDType( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver, const kernel::Entity_ABC& agent )
-: ParamComboBox< int /*Common::MsgDotationType*/ >( parameter )
+: ParamComboBox< int /*sword::MsgDotationType*/ >( parameter )
     , resolver_( resolver )
     , parameter_( parameter )
     , agent_( agent )
@@ -54,13 +54,13 @@ QWidget* ParamDotationDType::BuildInterface( QWidget* parent )
             const kernel::DotationType& type = it.NextElement();
             if( type.IsAmmunition() && dotations->Accept( type ) )
             {
-                Common::ResourceType dot;
+                sword::ResourceType dot;
                 dot.set_id( type.GetId() );
                 AddItem( type.GetName().c_str(), dot.id() );
             }
         }
     }
-    return ParamComboBox< int /*Common::MsgDotationType*/ >::BuildInterface( parent );
+    return ParamComboBox< int /*sword::MsgDotationType*/ >::BuildInterface( parent );
 }
 
 // -----------------------------------------------------------------------------

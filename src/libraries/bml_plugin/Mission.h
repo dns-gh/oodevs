@@ -77,9 +77,9 @@ private:
     void SendAutomatMission( dispatcher::SimulationPublisher_ABC& publisher ) const;
     void SendAgentMission( dispatcher::SimulationPublisher_ABC& publisher ) const;
 
-    void Serialize( Common::MsgMissionParameters& asn ) const;
-    void SerializeDummyParameters( Common::MsgMissionParameters& asn ) const;
-    void FillEmptyParameters( Common::MsgMissionParameters& asn ) const;
+    void Serialize( sword::MsgMissionParameters& asn ) const;
+    void SerializeDummyParameters( sword::MsgMissionParameters& asn ) const;
+    void FillEmptyParameters( sword::MsgMissionParameters& asn ) const;
 
     const kernel::MissionType& ResolveMission( xml::xistream& xis );
     void AddParameter( MissionParameter_ABC& parameter );

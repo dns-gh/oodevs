@@ -14,7 +14,7 @@
 #include "clients_kernel/UrbanKnowledge_ABC.h"
 #include "tools/Resolver_ABC.h"
 
-namespace Common
+namespace sword
 {
     class UrbanObjectKnowledgeId;
 }
@@ -40,19 +40,20 @@ class UrbanBlock : public Knowledge_ABC< kernel::UrbanKnowledge_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    UrbanBlock( const kernel::OrderParameter& parameter, kernel::Controller& controller );
-    UrbanBlock( const kernel::OrderParameter& parameter, unsigned long id, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-    UrbanBlock( xml::xistream& xis, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-    UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             UrbanBlock( const kernel::OrderParameter& parameter, kernel::Controller& controller );
+             UrbanBlock( const kernel::OrderParameter& parameter, unsigned long id, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             UrbanBlock( xml::xistream& xis, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~UrbanBlock();
     //@}
 
     //! @name Operations
     //@{
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
-    void CommitTo( Common::UrbanObjectKnowledgeId& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
+
+    void CommitTo( sword::UrbanObjectKnowledgeId& message ) const;
     //@}
 
 private:

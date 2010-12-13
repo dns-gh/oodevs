@@ -30,6 +30,7 @@ namespace dispatcher
     class PluginFactory;
     class Services;
     class Logger;
+    class Shield;
 
 // =============================================================================
 /** @class  Dispatcher
@@ -66,16 +67,17 @@ private:
     //@}
 
 private:
-    boost::shared_ptr< kernel::StaticModel >  staticModel_;
-    boost::shared_ptr< Model >                model_;
-    std::auto_ptr< CompositeRegistrable >     registrables_;
-    std::auto_ptr< CompositePlugin >          handler_;
-    std::auto_ptr< Services >                 services_;
-    boost::shared_ptr< ClientsNetworker >     clientsNetworker_;
-    boost::shared_ptr< SimulationNetworker >  simulationNetworker_;
-    std::auto_ptr< PluginFactory >            factory_;
-    std::auto_ptr< Logger >                   logger_;
-    std::auto_ptr< Application_ABC >          qapp_;
+    std::auto_ptr< kernel::StaticModel >  staticModel_;
+    boost::shared_ptr< Model >            model_;
+    std::auto_ptr< CompositeRegistrable > registrables_;
+    std::auto_ptr< CompositePlugin >      handler_;
+    std::auto_ptr< Services >             services_;
+    boost::shared_ptr< ClientsNetworker > clientsNetworker_;
+    std::auto_ptr< SimulationNetworker >  simulationNetworker_;
+    std::auto_ptr< Shield >               shield_;
+    std::auto_ptr< PluginFactory >        factory_;
+    std::auto_ptr< Logger >               logger_;
+    std::auto_ptr< Application_ABC >      qapp_;
 };
 
 }

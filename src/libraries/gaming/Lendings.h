@@ -15,9 +15,9 @@
 #include "tools/Resolver_ABC.h"
 #include "Loan.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitAttributes;
+    class UnitAttributes;
 }
 
 namespace kernel
@@ -34,7 +34,7 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class Lendings : public kernel::Extension_ABC
-    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+    , public kernel::Updatable_ABC< sword::UnitAttributes >
 {
 public:
     //! @name Constructors/Destructor
@@ -55,7 +55,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
+    virtual void DoUpdate( const sword::UnitAttributes& message );
     //@}
 
 public:

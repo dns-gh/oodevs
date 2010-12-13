@@ -30,7 +30,7 @@ public:
     {
         typedef impl Type;
         void Prepare();
-        void Receive( const MsgsSimToClient& message );
+        void Receive( const sword& message );
         void Push( ValueHandler_ABC< Type >& handler );
     };
     */
@@ -52,7 +52,7 @@ public:
         handler_.BeginTick();
         value_.Prepare();
     }
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message )
+    virtual void Receive( const sword::SimToClient& message )
     {
         value_.Receive( message );
     }

@@ -10,33 +10,33 @@
 #ifndef __crossbow_DatabaseUpdater_ABC_h_
 #define __crossbow_DatabaseUpdater_ABC_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgFormationCreation;
-    class MsgAutomatCreation;
-    class MsgAutomatAttributes;
-    class MsgUnitCreation;
-    class MsgUnitAttributes;
-    class MsgUnitDestruction;
-    class MsgUnitKnowledgeCreation;
-    class MsgUnitKnowledgeUpdate;
-    class MsgUnitKnowledgeDestruction;
-    class MsgObjectCreation;
-    class MsgObjectDestruction;
-    class MsgObjectUpdate;
-    class MsgObjectKnowledgeCreation;
-    class MsgObjectKnowledgeUpdate;
-    class MsgObjectKnowledgeDestruction;
-    class MsgReport;
-    class MsgPartyCreation;
-    class MsgControlBeginTick;
-    class MsgObjectMagicActionAck;
+    class FormationCreation;
+    class AutomatCreation;
+    class AutomatAttributes;
+    class UnitCreation;
+    class UnitAttributes;
+    class UnitDestruction;
+    class UnitKnowledgeCreation;
+    class UnitKnowledgeUpdate;
+    class UnitKnowledgeDestruction;
+    class ObjectCreation;
+    class ObjectDestruction;
+    class ObjectUpdate;
+    class ObjectKnowledgeCreation;
+    class ObjectKnowledgeUpdate;
+    class ObjectKnowledgeDestruction;
+    class Report;
+    class PartyCreation;
+    class ControlBeginTick;
+    class ObjectMagicActionAck;
 }
 
-namespace MsgsMessengerToClient
+namespace sword
 {
-    class MsgLimitCreation;
-    class MsgLimaCreation;
+    class LimitCreation;
+    class LimaCreation;
 }
 
 namespace plugins
@@ -64,38 +64,38 @@ public:
     virtual void Clean() = 0;
     //@}
 
-    //! @name MsgsMessengerToClient
+    //! @name sword
     //@{
-    virtual void Update( const MsgsMessengerToClient::MsgLimitCreation& msg ) = 0;
-    virtual void Update( const MsgsMessengerToClient::MsgLimaCreation& msg ) = 0;
+    virtual void Update( const sword::LimitCreation& msg ) = 0;
+    virtual void Update( const sword::LimaCreation& msg ) = 0;
     //@}
     
 
-    //! @name MsgsSimToClient
+    //! @name sword
     //@{
-    virtual void Update( const MsgsSimToClient::MsgUnitCreation& msg ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgUnitAttributes& msg ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgUnitDestruction& msg ) = 0;
+    virtual void Update( const sword::UnitCreation& msg ) = 0;
+    virtual void Update( const sword::UnitAttributes& msg ) = 0;
+    virtual void Update( const sword::UnitDestruction& msg ) = 0;
 
-    virtual void Update( const MsgsSimToClient::MsgAutomatCreation& message ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgAutomatAttributes& msg ) = 0;
+    virtual void Update( const sword::AutomatCreation& message ) = 0;
+    virtual void Update( const sword::AutomatAttributes& msg ) = 0;
 
-    virtual void Update( const MsgsSimToClient::MsgUnitKnowledgeCreation& msg ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& msg ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgUnitKnowledgeDestruction& msg ) = 0;
+    virtual void Update( const sword::UnitKnowledgeCreation& msg ) = 0;
+    virtual void Update( const sword::UnitKnowledgeUpdate& msg ) = 0;
+    virtual void Update( const sword::UnitKnowledgeDestruction& msg ) = 0;
 
-    virtual void Update( const MsgsSimToClient::MsgObjectCreation& msg ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgObjectUpdate& msg ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgObjectDestruction& msg ) = 0;
+    virtual void Update( const sword::ObjectCreation& msg ) = 0;
+    virtual void Update( const sword::ObjectUpdate& msg ) = 0;
+    virtual void Update( const sword::ObjectDestruction& msg ) = 0;
 
-    virtual void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& msg ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgObjectKnowledgeDestruction& msg ) = 0;
+    virtual void Update( const sword::ObjectKnowledgeCreation& msg ) = 0;
+    virtual void Update( const sword::ObjectKnowledgeUpdate& msg ) = 0;
+    virtual void Update( const sword::ObjectKnowledgeDestruction& msg ) = 0;
 
-    virtual void Update( const MsgsSimToClient::MsgFormationCreation& message ) = 0;
+    virtual void Update( const sword::FormationCreation& message ) = 0;
 
-    virtual void Update( const MsgsSimToClient::MsgControlBeginTick& msg ) = 0;
-    virtual void Update( const MsgsSimToClient::MsgPartyCreation& msg ) = 0;
+    virtual void Update( const sword::ControlBeginTick& msg ) = 0;
+    virtual void Update( const sword::PartyCreation& msg ) = 0;
     //@}
 };
 

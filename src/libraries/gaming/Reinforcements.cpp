@@ -51,7 +51,7 @@ void Reinforcements::CreateDictionary( kernel::PropertiesDictionary& dico ) cons
 // Name: Reinforcements::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Reinforcements::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void Reinforcements::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_reinforcements()  )
     {

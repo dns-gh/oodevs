@@ -27,16 +27,16 @@ public:
     //! @name Constructors/Destructor
     //@{
              Polygon( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             Polygon( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgLocation& message );
+             Polygon( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::MsgLocation& message );
              Polygon( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Polygon();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
-    void CommitTo( Common::MsgLocation& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
+    void CommitTo( sword::MsgLocation& message ) const;
     //@}
 
 private:

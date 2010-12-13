@@ -14,9 +14,9 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Karma.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgPartyCreation;
+    class PartyCreation;
 }
 
 // =============================================================================
@@ -30,7 +30,7 @@ class Team : public kernel::EntityImplementation< kernel::Team_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( const MsgsSimToClient::MsgPartyCreation& message, kernel::Controller& controller );
+             Team( const sword::PartyCreation& message, kernel::Controller& controller );
     virtual ~Team();
     //@}
 

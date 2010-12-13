@@ -9,7 +9,7 @@
 #include "MT_Tools/MT_Sector.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
     class MsgVisionCone;
 }
@@ -78,7 +78,7 @@ public:
 
     //! @name Network
     //@{
-    void SendFullState( MsgsSimToClient::MsgVisionCone& msg ) const;
+    void SendFullState( sword::MsgVisionCone& msg ) const;
     //@}
 
 private:

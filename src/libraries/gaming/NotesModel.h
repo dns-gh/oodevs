@@ -23,11 +23,11 @@ namespace kernel
     class Controller;
 }
 
-namespace MsgsMessengerToClient
+namespace sword
 {
-    class MsgNoteCreation;
-    class MsgNoteUpdate;
-    class MsgNoteDestruction;
+    class NoteCreation;
+    class NoteUpdate;
+    class NoteDestruction;
 }
 
 // =============================================================================
@@ -48,9 +48,9 @@ public:
 
     //! @name Operations
     //@{
-    void Create( const MsgsMessengerToClient::MsgMarkerCreation&    message );
-    void Update( const MsgsMessengerToClient::MsgMarkerUpdate&      message );
-    void Delete( const MsgsMessengerToClient::MsgMarkerDestruction& message );
+    void Create( const sword::MarkerCreation&    message );
+    void Update( const sword::MarkerUpdate&      message );
+    void Delete( const sword::MarkerDestruction& message );
     //@}
 
 private:

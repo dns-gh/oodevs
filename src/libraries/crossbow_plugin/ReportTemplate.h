@@ -10,13 +10,12 @@
 #ifndef __ReportTemplate_h_
 #define __ReportTemplate_h_
 
-
 namespace xml
 {
     class xistream;
 }
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameters;
 }
@@ -46,7 +45,8 @@ public:
     //@{
     unsigned long GetId() const;
     const std::string& GetMessage() const;
-    std::string        RenderMessage( const Common::MsgMissionParameters& message ) const;
+
+    std::string RenderMessage( const sword::MsgMissionParameters& message ) const;
     //@}
 
 private:

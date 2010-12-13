@@ -29,7 +29,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class ObjectDetections : public kernel::Extension_ABC
-                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectDetection >
+                       , public kernel::Updatable_ABC< sword::ObjectDetection >
                        , public kernel::Drawable_ABC
 {
 public:
@@ -53,7 +53,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectDetection& message );
+    virtual void DoUpdate( const sword::ObjectDetection& message );
     //@}
 
     //! @name Types

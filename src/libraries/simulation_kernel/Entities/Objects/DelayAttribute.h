@@ -34,7 +34,7 @@ public:
              DelayAttribute();
     explicit DelayAttribute( xml::xistream& xis );
     explicit DelayAttribute( unsigned int nDelay );
-    explicit DelayAttribute( const Common::MsgMissionParameter_Value& attributes );
+    explicit DelayAttribute( const sword::MsgMissionParameter_Value& attributes );
     virtual ~DelayAttribute();
     //@}
 
@@ -55,8 +55,8 @@ public:
 
     //! @name Network updates
     //@{
-    virtual void SendFullState( Common::ObjectAttributes& asn ) const;
-    virtual void SendUpdate( Common::ObjectAttributes& asn ) const;
+    virtual void SendFullState( sword::ObjectAttributes& asn ) const;
+    virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
     //@}
 
     //! @name Operation

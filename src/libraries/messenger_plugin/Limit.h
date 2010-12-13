@@ -12,10 +12,10 @@
 
 #include "TacticalLine_ABC.h"
 
-namespace MsgsClientToMessenger
+namespace sword
 {
-    class MsgLimitCreationRequest;
-    class MsgLimitUpdateRequest;
+    class LimitCreationRequest;
+    class LimitUpdateRequest;
 }
 
 namespace dispatcher
@@ -45,14 +45,14 @@ class Limit : public TacticalLine_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-              Limit( unsigned int id, const MsgsClientToMessenger::MsgLimitCreationRequest& message );
-              Limit( unsigned int id, xml::xistream&, const Common::MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter);
+              Limit( unsigned int id, const sword::LimitCreationRequest& message );
+              Limit( unsigned int id, xml::xistream&, const sword::MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter);
      virtual ~Limit();
     //@}
 
     //! @name Network
     //@{
-    void Update         ( const MsgsClientToMessenger::MsgLimitUpdateRequest& message );
+    void Update         ( const sword::LimitUpdateRequest& message );
     void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
     void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher ) const;
     void SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const;

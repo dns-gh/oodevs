@@ -58,7 +58,7 @@ void Dotations::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // Name: Dotations::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Dotations::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void Dotations::DoUpdate( const sword::UnitAttributes& message )
 {
     if( ! message.has_dotation_eff_ressource()   )
         return;
@@ -67,7 +67,7 @@ void Dotations::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
     std::vector< Dotation > differences; differences.reserve( nSize );
     while ( nSize > 0 )
     {
-        const MsgsSimToClient::ResourceDotations_ResourceDotation& value = message.dotation_eff_ressource().elem( --nSize );
+        const sword::ResourceDotations_ResourceDotation& value = message.dotation_eff_ressource().elem( --nSize );
         Dotation previous( resolver_.Get( value.type().id() ) );
         if( Dotation* dotation = Find( value.type().id() ) )
             previous = *dotation;

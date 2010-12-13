@@ -13,35 +13,9 @@
 #include "dispatcher/DefaultProfile.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "tools/ClientNetworker.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "protocol/Publisher_ABC.h"
-#include "protocol/authenticationsenders.h"
-
-namespace MsgsClientToSim
-{
-    class MsgClientToSim;
-}
-
-namespace MsgsClientToAuthentication
-{
-    class MsgClientToAuthentication;
-}
-
-namespace MsgsClientToReplay
-{
-    class MsgClientToReplay;
-}
-
-namespace MsgsClientToAar
-{
-    class MsgClientToAar;
-}
-
-namespace MsgsClientToMessenger
-{
-    class MsgClientToMessenger;
-}
-
+#include "protocol/AuthenticationSenders.h"
 
 using namespace plugins;
 using namespace plugins::crossbow;
@@ -57,14 +31,14 @@ namespace
         {}
         virtual ~DummyClientNetworker() {}
 
-        virtual void Send( const MsgsClientToSim::MsgClientToSim& /*message*/ ) {}
-        virtual void Send( const MsgsClientToAuthentication::MsgClientToAuthentication& message )
+        virtual void Send( const sword::ClientToSim& /*message*/ ) {}
+        virtual void Send( const sword::ClientToAuthentication& message )
         {
             MessageSender_ABC::Send( endpoint_, message );
         }
-        virtual void Send( const MsgsClientToReplay::MsgClientToReplay& /*message*/ ) {}
-        virtual void Send( const MsgsClientToAar::MsgClientToAar& /*message*/ ) {}
-        virtual void Send( const MsgsClientToMessenger::MsgClientToMessenger& /*message*/ ) {}
+        virtual void Send( const sword::ClientToReplay& /*message*/ ) {}
+        virtual void Send( const sword::ClientToAar& /*message*/ ) {}
+        virtual void Send( const sword::ClientToMessenger& /*message*/ ) {}
 
     protected:
         virtual void ConnectionSucceeded( const std::string& endpoint )
@@ -133,7 +107,17 @@ void CrossbowPlugin::Update()
 // Name: CrossbowPlugin::Receive
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-void CrossbowPlugin::Receive( const MsgsSimToClient::MsgSimToClient& asnMsg )
+void CrossbowPlugin::Receive( const sword::SimToClient& asnMsg )
+{
+    if( crossbowPublisher_.get() )
+        crossbowPublisher_->Receive( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CrossbowPlugin::Send
+// Created: RDS 2008-04-11
+// -----------------------------------------------------------------------------
+void CrossbowPlugin::Send( const sword::MessengerToClient& asnMsg )
 {
     if( crossbowPublisher_.get() )
         crossbowPublisher_->Receive( asnMsg );
@@ -141,19 +125,9 @@ void CrossbowPlugin::Receive( const MsgsSimToClient::MsgSimToClient& asnMsg )
 
 // -----------------------------------------------------------------------------
 // Name: CrossbowPlugin::OnReceiveMessengerToClient
-// Created: RDS 2008-04-11
-// -----------------------------------------------------------------------------
-void CrossbowPlugin::Send( const MsgsMessengerToClient::MsgMessengerToClient& asnMsg )
-{
-    if( crossbowPublisher_.get() )
-        crossbowPublisher_->Receive( asnMsg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: CrossbowPlugin::OnReceiveClientToMessenger
 // Created: JCR 2009-06-27
 // -----------------------------------------------------------------------------
-void CrossbowPlugin::OnReceiveMessengerToClient( const std::string& /*link*/, const MsgsMessengerToClient::MsgMessengerToClient& message )
+void CrossbowPlugin::OnReceiveMessengerToClient( const std::string& /*link*/, const sword::MessengerToClient& message )
 {
     if( crossbowPublisher_.get() )
         crossbowPublisher_->Receive( message );

@@ -54,7 +54,7 @@
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
 #include "simulation_terrain/TER_World.h"
 
-using namespace Common;
+using namespace sword;
 
 /*
 // -----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter_ToASN )
     xisParam >> xml::start( "parameter" );
     MIL_ParameterType_ABC::Initialize();
     MIL_OrderTypeParameter orderType( xisParam );
-    xisParam >> xml::end();
+    xisParam >> xml::end;
     boost::shared_ptr<MIL_MissionParameter_ABC> param = MIL_MissionParameterFactory::Create( orderType, asnIn, resolver ); 
     
     MsgMissionParameter asnOut;
@@ -293,14 +293,14 @@ namespace
 {
     void FillRlyehLocation( MsgLocation& asnIn )
     {
-        asnIn.set_type( Common::MsgLocation_Geometry_point );
+        asnIn.set_type( sword::MsgLocation_Geometry_point );
         asnIn.mutable_coordinates()->add_elem()->set_latitude( 48.52f );
         asnIn.mutable_coordinates()->mutable_elem(0)->set_longitude( 2.17f );
     }
 
     void CompareLocationToRlyeh( const MsgLocation& asnOut )
     {
-        BOOST_CHECK_EQUAL( Common::MsgLocation_Geometry_point, asnOut.type() );
+        BOOST_CHECK_EQUAL( sword::MsgLocation_Geometry_point, asnOut.type() );
         BOOST_CHECK_EQUAL( 1, asnOut.coordinates().elem_size() );
         BOOST_CHECK_CLOSE( 48.52, asnOut.coordinates().elem(0).latitude(), 1. );
         BOOST_CHECK_CLOSE( 2.17, asnOut.coordinates().elem(0).longitude(), 1. );
@@ -308,7 +308,7 @@ namespace
 
     void FillPolygonLocation( MsgLocation& asnIn, float offset )
     {
-        asnIn.set_type( Common::MsgLocation_Geometry_polygon );
+        asnIn.set_type( sword::MsgLocation_Geometry_polygon );
         asnIn.mutable_coordinates()->add_elem()->set_latitude( 50.f + offset );
         asnIn.mutable_coordinates()->mutable_elem(0)->set_longitude( 2.17f + offset );
         asnIn.mutable_coordinates()->add_elem()->set_latitude( 49.52f + offset );
@@ -319,7 +319,7 @@ namespace
 
     void CompareLocationToPolygon( const MsgLocation& asnOut, float offset )
     {
-        BOOST_CHECK_EQUAL( Common::MsgLocation_Geometry_polygon, asnOut.type() );
+        BOOST_CHECK_EQUAL( sword::MsgLocation_Geometry_polygon, asnOut.type() );
         BOOST_CHECK_EQUAL( 4, asnOut.coordinates().elem_size() );
         BOOST_CHECK_CLOSE( 50. + offset, asnOut.coordinates().elem(0).latitude(), 1. );
         BOOST_CHECK_CLOSE( 2.17 + offset, asnOut.coordinates().elem(0).longitude(), 1. );
@@ -371,15 +371,15 @@ BOOST_AUTO_TEST_CASE( TestMIL_LocationParameter_ToASN )
 BOOST_AUTO_TEST_CASE( TestMIL_LogMaintenancePrioritiesParameter_ToASN )
 {
     PHY_HumanWound::Initialize();
-    MsgLogMedicalPriorities asnIn;
-    asnIn.add_elem( Common::blesse_urgence_2 );
+    LogMedicalPriorities asnIn;
+    asnIn.add_elem( sword::blesse_urgence_2 );
     MIL_LogMedicalPrioritiesParameter param( asnIn );
     asnIn.clear_elem();
     MsgMissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_logmedicalpriorities() );
     BOOST_CHECK_EQUAL( 1, asnOut.logmedicalpriorities().elem_size() );
-    BOOST_CHECK_EQUAL( Common::blesse_urgence_2, asnOut.logmedicalpriorities().elem(0) );
+    BOOST_CHECK_EQUAL( sword::blesse_urgence_2, asnOut.logmedicalpriorities().elem(0) );
 }
 
 // -----------------------------------------------------------------------------
@@ -454,7 +454,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_ToASN )
 {
     TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
     MsgPath asnIn;
-    asnIn.mutable_location()->set_type( Common::MsgLocation_Geometry_line );
+    asnIn.mutable_location()->set_type( sword::MsgLocation_Geometry_line );
     asnIn.mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 48.52f );
     asnIn.mutable_location()->mutable_coordinates()->mutable_elem(0)->set_longitude( 2.17f );
     asnIn.mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 49.52f );
@@ -464,7 +464,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_ToASN )
     MsgMissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_path() );
-    BOOST_CHECK_EQUAL( Common::MsgLocation_Geometry_line , asnOut.path().location().type() );
+    BOOST_CHECK_EQUAL( sword::MsgLocation_Geometry_line , asnOut.path().location().type() );
     BOOST_CHECK_EQUAL( 2, asnOut.path().location().coordinates().elem_size() );
     BOOST_CHECK_CLOSE( 48.52, asnOut.path().location().coordinates().elem(0).latitude(), 1. );
     BOOST_CHECK_CLOSE( 2.17, asnOut.path().location().coordinates().elem(0).longitude(), 1. );
@@ -610,12 +610,12 @@ BOOST_AUTO_TEST_CASE( TestMIL_TirIndirectParameter_ToASN )
 
 namespace
 {
-    void AddNullParameter( Common::MsgUnitOrder& order )
+    void AddNullParameter( sword::UnitOrder& order )
     {
         order.mutable_parameters()->add_elem()->set_null_value( true );
     }
 
-    void AddPoint( Common::MsgLocation& location, const std::string& /*utm*/ ) // $$$$ _RC_ LGY 2010-08-10: ???
+    void AddPoint( sword::MsgLocation& location, const std::string& /*utm*/ ) // $$$$ _RC_ LGY 2010-08-10: ???
     {
         location.mutable_coordinates()->add_elem()->set_latitude( 0 );
         location.mutable_coordinates()->add_elem()->set_longitude( 0 );
@@ -628,12 +628,12 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_MissionWithNullParameters )
 {
-    Common::MsgUnitOrder order;
+    sword::UnitOrder order;
     order.mutable_type()->set_id( 173 );
     order.mutable_tasker()->set_id( 159 );
     {
         // danger direction
-        Common::MsgMissionParameter& parameter = *order.mutable_parameters()->add_elem();
+        sword::MsgMissionParameter& parameter = *order.mutable_parameters()->add_elem();
         parameter.set_null_value( false );
         parameter.mutable_value()->Add()->mutable_heading()->set_heading( 128 );
     }
@@ -643,10 +643,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_MissionWithNullParameters )
     AddNullParameter( order ); // intelligences
     {
         // polygon area
-        Common::MsgMissionParameter& parameter = *order.mutable_parameters()->add_elem();
+        sword::MsgMissionParameter& parameter = *order.mutable_parameters()->add_elem();
         parameter.set_null_value( false );
-        Common::MsgLocation& location = *parameter.mutable_value()->Add()->mutable_area()->mutable_location();
-        location.set_type( Common::MsgLocation::polygon );
+        sword::MsgLocation& location = *parameter.mutable_value()->Add()->mutable_area()->mutable_location();
+        location.set_type( sword::MsgLocation::polygon );
         AddPoint( location, "35RPQ8696412999" );
         AddPoint( location, "35RPQ8729112778" );
         AddPoint( location, "35RPQ8755612970" );

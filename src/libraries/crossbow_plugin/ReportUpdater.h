@@ -16,9 +16,9 @@ namespace dispatcher
     class Model_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgReport;
+    class Report;
 }
 
 namespace plugins
@@ -52,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgReport& msg );
+    void Update( const sword::Report& msg );
     //@}
 
 private:

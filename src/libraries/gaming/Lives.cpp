@@ -51,7 +51,7 @@ void Lives::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 // Name: Lives::DoUpdate
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Lives::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void Lives::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_etat_operationnel_brut()  )
         life_ = message.etat_operationnel_brut() * 0.01f;
@@ -62,7 +62,7 @@ void Lives::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 // Name: Lives::DoUpdate
 // Created: SBO 2009-11-23
 // -----------------------------------------------------------------------------
-void Lives::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
+void Lives::DoUpdate( const sword::UnitKnowledgeUpdate& message )
 {
     if( message.has_etat_op() )
         life_ = message.etat_op() * 0.01f;

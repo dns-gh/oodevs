@@ -34,7 +34,7 @@ using namespace dispatcher;
 // Name: Agent constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Agent::Agent( Model_ABC& model, const MsgsSimToClient::MsgUnitCreation& msg, const tools::Resolver_ABC< kernel::AgentType >& types )
+Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Resolver_ABC< kernel::AgentType >& types )
     : dispatcher::Agent_ABC         ( msg.unit().id(), QString( msg.nom().c_str() ) )
     , model_                        ( model )
     , type_                         ( types.Get( msg.type().id() ) )
@@ -52,8 +52,8 @@ Agent::Agent( Model_ABC& model, const MsgsSimToClient::MsgUnitCreation& msg, con
     , bStealthModeEnabled_          ( false )
     , isMounted_                    ( false )
     , bHumanTransportersAvailable_  ( false )
-    , nLastPosture_                 ( MsgsSimToClient::MsgUnitAttributes_Posture_arret )
-    , nCurrentPosture_              ( MsgsSimToClient::MsgUnitAttributes_Posture_arret )
+    , nLastPosture_                 ( sword::UnitAttributes_Posture_arret )
+    , nCurrentPosture_              ( sword::UnitAttributes_Posture_arret )
     , nPostureCompletion_           ( 100 )
     , nInstallationState_           ( 0 )
     , bNbcProtectionSuitEnabled_    ( false )
@@ -66,15 +66,15 @@ Agent::Agent( Model_ABC& model, const MsgsSimToClient::MsgUnitCreation& msg, con
     , bRadioEmitterEnabled_         ( true )
     , bRadarEnabled_                ( false )
     , pTransporter_                 ( 0 )
-    , nForceRatioState_             ( MsgsSimToClient::ForceRatio_Value_neutre )
-    , nCloseCombatState_            ( Common         ::etat_esquive )
-    , nOperationalState_            ( Common         ::operationnel )
-    , nIndirectFireAvailability_    ( MsgsSimToClient::MsgUnitAttributes_FireAvailability_indisponible       )
-    , nRoe_                         ( MsgsSimToClient::RulesOfEngagement_Value_tir_libre                     )
-    , nPopulationRoe_               ( MsgsSimToClient::MsgUnitAttributes_CrowdRoe_emploi_force_interdit )
-    , nTiredness_                   ( Common         ::normal      )
-    , nMorale_                      ( Common         ::bon         )
-    , nExperience_                  ( Common         ::experimente )
+    , nForceRatioState_             ( sword::ForceRatio_Value_neutre )
+    , nCloseCombatState_            ( sword         ::etat_esquive )
+    , nOperationalState_            ( sword         ::operationnel )
+    , nIndirectFireAvailability_    ( sword::UnitAttributes_FireAvailability_indisponible       )
+    , nRoe_                         ( sword::RulesOfEngagement_Value_tir_libre                     )
+    , nPopulationRoe_               ( sword::UnitAttributes_CrowdRoe_emploi_force_interdit )
+    , nTiredness_                   ( sword         ::normal      )
+    , nMorale_                      ( sword         ::bon         )
+    , nExperience_                  ( sword         ::experimente )
     , pSideSurrenderedTo_           ( 0 )
     , bPrisonner_                   ( false )
     , bRefugeeManaged_              ( false )
@@ -123,7 +123,7 @@ void Agent::SetSuperior( dispatcher::Automat_ABC& superior )
 // Name: Agent::DoUpdate
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const MsgsSimToClient::MsgUnitCreation& msg )
+void Agent::DoUpdate( const sword::UnitCreation& msg )
 {
     if( automat_->GetId() != msg.automat().id() )
         SetSuperior( model_.Automats().Get( msg.automat().id() ) );
@@ -138,7 +138,7 @@ void Agent::DoUpdate( const MsgsSimToClient::MsgUnitCreation& msg )
 // Name: Agent::DoUpdate
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
+void Agent::DoUpdate( const sword::UnitAttributes& asnMsg )
 {
     if( asnMsg.has_position() )
         position_.Set( asnMsg.position().latitude(), asnMsg.position().longitude() );
@@ -232,7 +232,7 @@ void Agent::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
     {
         for( int i = 0; i < asnMsg.dotation_eff_materiel().elem_size(); ++i )
         {
-            const MsgsSimToClient::EquipmentDotations_EquipmentDotation& asn = asnMsg.dotation_eff_materiel().elem( i );
+            const sword::EquipmentDotations_EquipmentDotation& asn = asnMsg.dotation_eff_materiel().elem( i );
             Equipment* pEquipment = equipments_.Find( asn.type().id() );
             if( pEquipment )
                 pEquipment->Update( asn );
@@ -248,7 +248,7 @@ void Agent::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
     {
         for( int i = 0; i < asnMsg.dotation_eff_personnel().elem_size(); ++i )
         {
-            const MsgsSimToClient::HumanDotations_HumanDotation& asn = asnMsg.dotation_eff_personnel().elem( i );
+            const sword::HumanDotations_HumanDotation& asn = asnMsg.dotation_eff_personnel().elem( i );
             Humans* pHumans = troops_.Find( asn.rang() );
             if( pHumans )
                 pHumans->Update( asn );
@@ -264,7 +264,7 @@ void Agent::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
     {
         for( int i = 0; i < asnMsg.dotation_eff_ressource().elem_size(); ++i )
         {
-            const MsgsSimToClient::ResourceDotations_ResourceDotation& asn = asnMsg.dotation_eff_ressource().elem().Get(i);
+            const sword::ResourceDotations_ResourceDotation& asn = asnMsg.dotation_eff_ressource().elem().Get(i);
             Dotation* pDotation = dotations_.Find( asn.type().id() );
             if( pDotation )
                 pDotation->Update( asn );
@@ -304,7 +304,7 @@ void Agent::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
 // Name: Agent::DoUpdate
 // Created: AGE 2007-06-18
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const MsgsSimToClient::MsgDecisionalState& asnMsg )
+void Agent::DoUpdate( const sword::DecisionalState& asnMsg )
 {
     decisionalInfos_.Update( asnMsg );
 }
@@ -313,7 +313,7 @@ void Agent::DoUpdate( const MsgsSimToClient::MsgDecisionalState& asnMsg )
 // Name: Agent::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const MsgsSimToClient::MsgLogMedicalState& asnMsg )
+void Agent::DoUpdate( const sword::LogMedicalState& asnMsg )
 {
     if( !pLogMedical_ )
         pLogMedical_ = new AgentLogMedical( model_, *this, asnMsg );
@@ -325,7 +325,7 @@ void Agent::DoUpdate( const MsgsSimToClient::MsgLogMedicalState& asnMsg )
 // Name: Agent::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const MsgsSimToClient::MsgLogMaintenanceState& asnMsg )
+void Agent::DoUpdate( const sword::LogMaintenanceState& asnMsg )
 {
     if( !pLogMaintenance_ )
         pLogMaintenance_ = new AgentLogMaintenance( model_, *this, asnMsg );
@@ -337,7 +337,7 @@ void Agent::DoUpdate( const MsgsSimToClient::MsgLogMaintenanceState& asnMsg )
 // Name: Agent::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const MsgsSimToClient::MsgLogSupplyState& asnMsg )
+void Agent::DoUpdate( const sword::LogSupplyState& asnMsg )
 {
     if( !pLogSupply_ )
         pLogSupply_ = new AgentLogSupply( *this, asnMsg );
@@ -349,7 +349,7 @@ void Agent::DoUpdate( const MsgsSimToClient::MsgLogSupplyState& asnMsg )
 // Name: Agent::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const Common::MsgUnitChangeSuperior& asnMsg )
+void Agent::DoUpdate( const sword::UnitChangeSuperior& asnMsg )
 {
     SetSuperior( model_.Automats().Get( asnMsg.parent().id() ) );
 }
@@ -358,7 +358,7 @@ void Agent::DoUpdate( const Common::MsgUnitChangeSuperior& asnMsg )
 // Name: Agent::DoUpdate
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const Common::MsgUnitOrder& message )
+void Agent::DoUpdate( const sword::UnitOrder& message )
 {
     order_.reset();
     if( message.type().id() != 0 )
@@ -417,7 +417,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         {
             for( std::vector< unsigned int >::const_iterator it = nbcAgentTypesContaminating_.begin(); it != nbcAgentTypesContaminating_.end(); ++it )
             {
-                Common::NBCAgentType& data = *asn().mutable_contamine_par_agents_nbc()->add_elem();
+                sword::NBCAgentType& data = *asn().mutable_contamine_par_agents_nbc()->add_elem();
                 data.set_id( *it );
             }
         }
@@ -474,7 +474,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         }
         for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
         {
-            MsgsSimToClient::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+            sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
             entry->set_name( it->first );
             entry->set_value( it->second );
         }
@@ -567,7 +567,7 @@ const dispatcher::Automat_ABC& Agent::GetSuperior() const
 // Name: Agent::GetOperationalState
 // Created: SBO 2010-06-07
 // -----------------------------------------------------------------------------
-Common::EnumOperationalStatus Agent::GetOperationalState() const
+sword::EnumOperationalStatus Agent::GetOperationalState() const
 {
     return nOperationalState_;
 }
@@ -630,7 +630,7 @@ unsigned short Agent::GetDirection() const
 // Name: Agent::GetForceRatio
 // Created: SBO 2010-06-08
 // -----------------------------------------------------------------------------
-MsgsSimToClient::ForceRatio_Value Agent::GetForceRatio() const
+sword::ForceRatio_Value Agent::GetForceRatio() const
 {
     return nForceRatioState_;
 }

@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: Equipment constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Equipment::Equipment( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& message )
+Equipment::Equipment( const sword::EquipmentDotations_EquipmentDotation& message )
    : nEquipmentType_   ( message.type().id() )
    , nNbrAvailable_    ( message.nb_disponibles() )
    , nNbrUnavailable_  ( message.nb_indisponibles() )
@@ -41,7 +41,7 @@ Equipment::~Equipment()
 // Name: Equipment::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Equipment::Update( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& message )
+void Equipment::Update( const sword::EquipmentDotations_EquipmentDotation& message )
 {
    nNbrAvailable_     = message.nb_disponibles();
    nNbrUnavailable_   = message.nb_indisponibles();
@@ -54,7 +54,7 @@ void Equipment::Update( const MsgsSimToClient::EquipmentDotations_EquipmentDotat
 // Name: Equipment::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Equipment::Send( MsgsSimToClient::EquipmentDotations_EquipmentDotation& message ) const
+void Equipment::Send( sword::EquipmentDotations_EquipmentDotation& message ) const
 {
     message.mutable_type()->set_id         ( nEquipmentType_ );
     message.set_nb_disponibles             ( nNbrAvailable_ );

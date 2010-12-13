@@ -28,7 +28,7 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace kernel;
 using namespace gui;
@@ -140,9 +140,9 @@ void ChangeHumanFactorsDialog::Validate()
 {
     if( ! selected_ )
         return;
-    const Common::EnumUnitTiredness tiredness = (Common::EnumUnitTiredness)pTirednessCombo_->GetValue();
-    const Common::EnumUnitMorale moral = (Common::EnumUnitMorale)pMoralCombo_->GetValue();
-    const Common::EnumUnitExperience experience = (Common::EnumUnitExperience)pExperienceCombo_->GetValue();
+    const sword::EnumUnitTiredness tiredness = (sword::EnumUnitTiredness)pTirednessCombo_->GetValue();
+    const sword::EnumUnitMorale moral = (sword::EnumUnitMorale)pMoralCombo_->GetValue();
+    const sword::EnumUnitExperience experience = (sword::EnumUnitExperience)pExperienceCombo_->GetValue();
     tools::Iterator< const Entity_ABC& > it = selected_->Get< TacticalHierarchies >().CreateSubordinateIterator();
     SendMessage( *selected_, tiredness, moral, experience );
     hide();
@@ -152,7 +152,7 @@ void ChangeHumanFactorsDialog::Validate()
 // Name: ChangeHumanFactorsDialog::SendMessage
 // Created: AGE 2006-12-01
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, Common::EnumUnitTiredness tiredness, Common::EnumUnitMorale moral, Common::EnumUnitExperience experience )
+void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, sword::EnumUnitTiredness tiredness, sword::EnumUnitMorale moral, sword::EnumUnitExperience experience )
 {
     if( entity.Retrieve< HumanFactors_ABC >() )
         SendAction( entity, tiredness, moral, experience );
@@ -171,7 +171,7 @@ void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, Co
 // Name: ChangeHumanFactorsDialog::SendMessage
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, Common::EnumUnitTiredness tiredness, Common::EnumUnitMorale moral, Common::EnumUnitExperience experience )
+void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, sword::EnumUnitTiredness tiredness, sword::EnumUnitMorale moral, sword::EnumUnitExperience experience )
 {
     // $$$$ _RC_ SBO 2010-05-17: user ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_human_factors" );

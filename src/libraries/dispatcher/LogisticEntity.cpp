@@ -47,7 +47,7 @@ LogisticEntity::~LogisticEntity()
 // Name: LogisticEntity::DoUpdate
 // Created: AHC 2010-10-11
 // -----------------------------------------------------------------------------
-void LogisticEntity::DoUpdate( const Common::MsgChangeLogisticLinks& msg )
+void LogisticEntity::DoUpdate( const sword::ChangeLogisticLinks& msg )
 {
     // TODO Handle error
     if( msg.logistic_base().has_automat() )
@@ -81,7 +81,7 @@ const kernel::LogisticLevel& LogisticEntity::GetLogisticLevel() const
 // Name: LogisticEntity::DoUpdate
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-void LogisticEntity::DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas& msg )
+void LogisticEntity::DoUpdate( const sword::LogSupplyQuotas& msg )
 {
     quotas_.DeleteAll();
     for( int i = 0; i < msg.quotas().elem_size(); ++i )
@@ -93,7 +93,7 @@ void LogisticEntity::DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas& msg )
 
 namespace
 {
-    void SerializeQuota( ::Common::SeqOfDotationQuota& message, const DotationQuota& quota )
+    void SerializeQuota( ::sword::SeqOfDotationQuota& message, const DotationQuota& quota )
     {
         quota.Send( *message.add_elem() );
     }

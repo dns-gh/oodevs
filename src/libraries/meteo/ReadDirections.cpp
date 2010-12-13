@@ -14,7 +14,7 @@
 // Name: ReadDirections::ReadDirection
 // Created: SBO 2010-04-07
 // -----------------------------------------------------------------------------
-MT_Vector2D weather::ReadDirection( const Common::MsgHeading& message )
+MT_Vector2D weather::ReadDirection( const sword::MsgHeading& message )
 {
     MT_Vector2D result( 0, 1 ); // North vector
     double radAngle = message.heading() * MT_PI / 180.;

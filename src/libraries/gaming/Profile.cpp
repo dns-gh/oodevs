@@ -106,13 +106,13 @@ void Profile::ReadList( const T& idList, T_Ids& ids )
 // Name: Profile::Update
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void Profile::Update( const MsgsAuthenticationToClient::MsgAuthenticationResponse& message )
+void Profile::Update( const sword::AuthenticationResponse& message )
 {
-    if( message.error_code() == MsgsAuthenticationToClient::MsgAuthenticationResponse::too_many_connections )
+    if( message.error_code() == sword::AuthenticationResponse::too_many_connections )
         throw std::exception( tools::translate( "Profile", "Too many connections" ).ascii() );
     else
     {
-        loggedIn_ = ( message.error_code() == MsgsAuthenticationToClient::MsgAuthenticationResponse::success );
+        loggedIn_ = ( message.error_code() == sword::AuthenticationResponse::success );
         if( message.has_profile() )
         {
             Update( message.profile() );
@@ -129,7 +129,7 @@ void Profile::Update( const MsgsAuthenticationToClient::MsgAuthenticationRespons
 // Name: Profile::Update
 // Created: SBO 2007-01-23
 // -----------------------------------------------------------------------------
-void Profile::Update( const Model& model, const MsgsAuthenticationToClient::MsgProfileUpdate& message )
+void Profile::Update( const Model& model, const sword::ProfileUpdate& message )
 {
     if( message.login() == login_ )
     {
@@ -144,7 +144,7 @@ void Profile::Update( const Model& model, const MsgsAuthenticationToClient::MsgP
 // Name: Profile::Update
 // Created: SBO 2007-01-23
 // -----------------------------------------------------------------------------
-void Profile::Update( const MsgsAuthenticationToClient::MsgProfile& profile )
+void Profile::Update( const sword::Profile& profile )
 {
     login_ = profile.login();
     if( profile.has_password()  )

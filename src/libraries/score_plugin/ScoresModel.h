@@ -15,9 +15,12 @@
 #include <map>
 #include <vector>
 
-namespace MsgsSimToClient { class MsgSimToClient; }
-namespace MsgsAarToClient { class MsgIndicator; }
-namespace MsgsClientToAar { class MsgPlotRequest; }
+namespace sword { class SimToClient; }
+namespace sword
+{
+    class PlotRequest;
+    class Indicator;
+}
 
 namespace dispatcher
 {
@@ -70,9 +73,9 @@ public:
     //! @name Operations
     //@{
     void Load( const std::string& file );
-    void Update( const MsgsAarToClient::MsgIndicator& message );
-    void Update( const MsgsSimToClient::MsgSimToClient& message );
-    void RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToAar::MsgPlotRequest& request );
+    void Update( const sword::Indicator& message );
+    void Update( const sword::SimToClient& message );
+    void RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const sword::PlotRequest& request );
     //@}
 
 private:

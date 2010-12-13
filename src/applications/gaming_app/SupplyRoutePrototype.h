@@ -11,7 +11,7 @@
 #define __SupplyRoutePrototype_h_
 
 #include "clients_gui/SupplyRoutePrototype_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 namespace actions
 {

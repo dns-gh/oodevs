@@ -16,9 +16,9 @@
 #include "clients_kernel/Displayable_ABC.h"
 #include "Decisions_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgUnitOrder;
+    class UnitOrder;
 }
 
 namespace kernel
@@ -36,7 +36,7 @@ namespace kernel
 // Created: AGE 2006-03-14
 // =============================================================================
 class Decisions : public kernel::Extension_ABC
-                , public kernel::Updatable_ABC< Common::MsgUnitOrder >
+                , public kernel::Updatable_ABC< sword::UnitOrder >
                 , public kernel::Displayable_ABC
                 , public kernel::Drawable_ABC
                 , public Decisions_ABC
@@ -68,7 +68,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void DoUpdate( const Common::MsgUnitOrder& message );
+    virtual void DoUpdate( const sword::UnitOrder& message );
 
     const kernel::DecisionalModel& GetDecisionalModel() const;
     //@}

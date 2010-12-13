@@ -43,7 +43,7 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& 
 // Name: PHY_SupplyStockRequestContainer constructor
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const Common::MsgMissionParameter& asnStocks, bool pushedFlow )
+PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const sword::MsgMissionParameter& asnStocks, bool pushedFlow )
     : suppliedAutomate_                  ( suppliedAutomate )
     , requests_                          ()
     , bAtLeastOneExplicitSupplySatisfied_( false )

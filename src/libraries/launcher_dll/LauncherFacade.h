@@ -17,6 +17,11 @@
 #pragma warning( push )
 #pragma warning( disable : 4251 )
 
+namespace shield
+{
+    class Server;
+}
+
 namespace launcher
 {
     class Config;
@@ -41,7 +46,12 @@ public:
     //! @name Operations
     //@{
     bool Update();
+    //@}
+
+    //! @name Accessors
+    //@{
     bool IsInitialized() const;
+
     std::string GetLastError() const;
     //@}
 
@@ -50,6 +60,7 @@ private:
     //@{
     std::auto_ptr< launcher::Config > config_;
     std::auto_ptr< launcher::Launcher > launcher_;
+    std::auto_ptr< shield::Server > proxy_;
     std::string lastError_;
     //@}
 };

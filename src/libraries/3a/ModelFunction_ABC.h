@@ -30,7 +30,7 @@ public:
     //! @name Operations
     //@{
     virtual void BeginTick() = 0;
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message ) = 0;
+    virtual void Receive( const sword::SimToClient& message ) = 0;
     virtual void EndTick() = 0;
     //@}
 };

@@ -46,7 +46,7 @@ Reports::~Reports()
 // Name: Reports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Reports::DoUpdate( const MsgsSimToClient::MsgReport& message )
+void Reports::DoUpdate( const sword::Report& message )
 {
     // $$$$ AGE 2007-04-20: limiter le nombre de reports ?
     if( !Find( message.report().id() ) )
@@ -61,7 +61,7 @@ void Reports::DoUpdate( const MsgsSimToClient::MsgReport& message )
 // Name: Reports::DoUpdate
 // Created: AGE 2007-10-22
 // -----------------------------------------------------------------------------
-void Reports::DoUpdate( const MsgsSimToClient::MsgInvalidateReport& message )
+void Reports::DoUpdate( const sword::InvalidateReport& message )
 {
     delete Find( message.report().id() );
     Remove( message.report().id() );
@@ -72,7 +72,7 @@ void Reports::DoUpdate( const MsgsSimToClient::MsgInvalidateReport& message )
 // Name: Reports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Reports::DoUpdate( const MsgsSimToClient::MsgTrace& message )
+void Reports::DoUpdate( const sword::Trace& message )
 {
     // $$$$ AGE 2007-04-20: limiter le nombre de traces ?
     Report* trace = reportFactory_.CreateTrace( agent_, message );

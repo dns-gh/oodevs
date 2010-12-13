@@ -24,9 +24,9 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgSimToClient;
+    class SimToClient;
 }
 
 namespace xml
@@ -60,7 +60,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive                  ( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive                  ( const sword::SimToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     virtual unsigned long GetTime() const;

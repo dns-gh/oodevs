@@ -35,7 +35,7 @@ namespace kernel
     class Time_ABC;
 }
 
-namespace Common
+namespace sword
 {
     class MsgDateTime;
     class MsgMissionParameter;
@@ -68,10 +68,10 @@ public:
     void Load( const tools::ExerciseConfig& config );
     void Purge();
 
-    Report* CreateReport( const kernel::Entity_ABC& agent, const MsgsSimToClient::MsgReport&  asnMsg ) const;
-    Report* CreateTrace ( const kernel::Entity_ABC& agent, const MsgsSimToClient::MsgTrace& asnMsg ) const;
-    std::string FormatReport( const MsgsSimToClient::MsgReport& asn ) const;
-    QDateTime GetTime( const Common::MsgDateTime& d ) const;
+    Report* CreateReport( const kernel::Entity_ABC& agent, const sword::Report& asnMsg ) const;
+    Report* CreateTrace ( const kernel::Entity_ABC& agent, const sword::Trace& asnMsg ) const;
+    std::string FormatReport( const sword::Report& asn ) const;
+    QDateTime GetTime( const sword::MsgDateTime& d ) const;
     //@}
 
 private:
@@ -85,7 +85,7 @@ private:
     //@{
     void ReadReport( xml::xistream& xis );
     friend class ReportTemplate;
-    QString RenderParameter( const Common::MsgMissionParameter_Value& value ) const;
+    QString RenderParameter( const sword::MsgMissionParameter_Value& value ) const;
     //@}
 
 private:

@@ -11,7 +11,7 @@
 #include "Point.h"
 #include "protocol/Protocol.h"
 
-using namespace Common;
+using namespace sword;
 
 using namespace kernel;
 using namespace actions;
@@ -31,7 +31,7 @@ Point::Point( const OrderParameter& parameter, const CoordinateConverter_ABC& co
 // Name: Point constructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-Point::Point( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgPoint& message )
+Point::Point( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::MsgPoint& message )
     : Location( parameter, converter, message.location() )
 {
     // NOTHING
@@ -60,7 +60,7 @@ Point::~Point()
 // Name: Point::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Point::CommitTo( Common::MsgMissionParameter& message ) const
+void Point::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -70,7 +70,7 @@ void Point::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: Point::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Point::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void Point::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
         Location::CommitTo( *message.mutable_point()->mutable_location() );
@@ -80,9 +80,9 @@ void Point::CommitTo( Common::MsgMissionParameter_Value& message ) const
 // Name: Point::CommitTo
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Point::CommitTo( Common::MsgCoordLatLong& message ) const
+void Point::CommitTo( sword::MsgCoordLatLong& message ) const
 {
-    Common::MsgLocation loc;
+    sword::MsgLocation loc;
     Location::CommitTo( loc );
     message = loc.coordinates().elem( 0 );
     Location::Clean( loc );

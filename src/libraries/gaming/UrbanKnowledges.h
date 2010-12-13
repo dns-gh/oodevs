@@ -23,11 +23,11 @@ namespace kernel
     class UrbanKnowledge_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUrbanKnowledgeCreation;
-    class MsgUrbanKnowledgeUpdate;
-    class MsgUrbanKnowledgeDestruction;
+    class UrbanKnowledgeCreation;
+    class UrbanKnowledgeUpdate;
+    class UrbanKnowledgeDestruction;
 }
 
 class UrbanKnowledgeFactory;
@@ -39,9 +39,9 @@ class UrbanKnowledgeFactory;
 // Created: MGD 2009-12-09
 // =============================================================================
 class UrbanKnowledges : public kernel::Extension_ABC
-    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeCreation >
-    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeUpdate >
-    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeDestruction >
+    , public kernel::Updatable_ABC< sword::UrbanKnowledgeCreation >
+    , public kernel::Updatable_ABC< sword::UrbanKnowledgeUpdate >
+    , public kernel::Updatable_ABC< sword::UrbanKnowledgeDestruction >
     , public tools::Resolver< kernel::UrbanKnowledge_ABC >
     , public kernel::Creatable< UrbanKnowledges >
 {
@@ -61,9 +61,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation&    message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate&      message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeDestruction& message );
+    virtual void DoUpdate( const sword::UrbanKnowledgeCreation&    message );
+    virtual void DoUpdate( const sword::UrbanKnowledgeUpdate&      message );
+    virtual void DoUpdate( const sword::UrbanKnowledgeDestruction& message );
     //@}
 
 private:

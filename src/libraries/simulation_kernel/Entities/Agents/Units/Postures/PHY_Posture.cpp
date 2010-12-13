@@ -17,13 +17,13 @@
 
 PHY_Posture::T_PostureMap PHY_Posture::postures_;
 
-const PHY_Posture PHY_Posture::mouvement_        ( "Mouvement"        , ePostureMouvement        , MsgsSimToClient::MsgUnitAttributes_Posture_mouvement          , PHY_ConsumptionType::moving_       , ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous );
-const PHY_Posture PHY_Posture::mouvementDiscret_ ( "MouvementDiscret" , ePostureMouvementDiscret , MsgsSimToClient::MsgUnitAttributes_Posture_mouvement_discret  , PHY_ConsumptionType::moving_       , ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous );
-const PHY_Posture PHY_Posture::arret_            ( "Arret"            , ePostureArret            , MsgsSimToClient::MsgUnitAttributes_Posture_arret              , PHY_ConsumptionType::engineStarted_, ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous, &posteReflexe_ );
-const PHY_Posture PHY_Posture::posteReflexe_     ( "PosteReflexe"     , ePosturePosteReflexe     , MsgsSimToClient::MsgUnitAttributes_Posture_poste_reflexe      , PHY_ConsumptionType::engineStarted_, ePostureCanModifyDetection | ePostureCanModifyPH, &poste_ );
-const PHY_Posture PHY_Posture::poste_            ( "Poste"            , ePosturePoste            , MsgsSimToClient::MsgUnitAttributes_Posture_poste              , PHY_ConsumptionType::engineStopped_, ePostureCanModifyDetection | ePostureCanModifyPH, &posteAmenage_ );
-const PHY_Posture PHY_Posture::posteAmenage_     ( "PosteAmenage"     , ePosturePosteAmenage     , MsgsSimToClient::MsgUnitAttributes_Posture_poste_amenage      , PHY_ConsumptionType::engineStopped_, ePostureCanModifyDetection | ePostureCanModifyPH );
-const PHY_Posture PHY_Posture::postePrepareGenie_( "PostePrepareGenie", ePosturePostePrepareGenie, MsgsSimToClient::MsgUnitAttributes_Posture_poste_prepare_genie, PHY_ConsumptionType::engineStopped_, ePostureCanModifyDetection | ePostureCanModifyPH );
+const PHY_Posture PHY_Posture::mouvement_        ( "Mouvement"        , ePostureMouvement        , sword::UnitAttributes_Posture_mouvement          , PHY_ConsumptionType::moving_       , ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous );
+const PHY_Posture PHY_Posture::mouvementDiscret_ ( "MouvementDiscret" , ePostureMouvementDiscret , sword::UnitAttributes_Posture_mouvement_discret  , PHY_ConsumptionType::moving_       , ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous );
+const PHY_Posture PHY_Posture::arret_            ( "Arret"            , ePostureArret            , sword::UnitAttributes_Posture_arret              , PHY_ConsumptionType::engineStarted_, ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous, &posteReflexe_ );
+const PHY_Posture PHY_Posture::posteReflexe_     ( "PosteReflexe"     , ePosturePosteReflexe     , sword::UnitAttributes_Posture_poste_reflexe      , PHY_ConsumptionType::engineStarted_, ePostureCanModifyDetection | ePostureCanModifyPH, &poste_ );
+const PHY_Posture PHY_Posture::poste_            ( "Poste"            , ePosturePoste            , sword::UnitAttributes_Posture_poste              , PHY_ConsumptionType::engineStopped_, ePostureCanModifyDetection | ePostureCanModifyPH, &posteAmenage_ );
+const PHY_Posture PHY_Posture::posteAmenage_     ( "PosteAmenage"     , ePosturePosteAmenage     , sword::UnitAttributes_Posture_poste_amenage      , PHY_ConsumptionType::engineStopped_, ePostureCanModifyDetection | ePostureCanModifyPH );
+const PHY_Posture PHY_Posture::postePrepareGenie_( "PostePrepareGenie", ePosturePostePrepareGenie, sword::UnitAttributes_Posture_poste_prepare_genie, PHY_ConsumptionType::engineStopped_, ePostureCanModifyDetection | ePostureCanModifyPH );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Posture::Initialize
@@ -54,7 +54,7 @@ void PHY_Posture::Terminate()
 // Name: PHY_Posture constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Posture::PHY_Posture( const std::string& strName, E_PostureType nType, MsgsSimToClient::MsgUnitAttributes_Posture nAsnID, const PHY_ConsumptionType& consumptionMode, unsigned int nFlags, const PHY_Posture* pNextAutoPosture )
+PHY_Posture::PHY_Posture( const std::string& strName, E_PostureType nType, sword::UnitAttributes_Posture nAsnID, const PHY_ConsumptionType& consumptionMode, unsigned int nFlags, const PHY_Posture* pNextAutoPosture )
     : strName_         ( strName )
     , nType_           ( nType   )
     , nAsnID_          ( nAsnID  )
@@ -152,7 +152,7 @@ unsigned int PHY_Posture::GetID() const
 // Name: PHY_Posture::GetAsnID
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-MsgsSimToClient::MsgUnitAttributes_Posture PHY_Posture::GetAsnID() const
+sword::UnitAttributes_Posture PHY_Posture::GetAsnID() const
 {
     return nAsnID_;
 }

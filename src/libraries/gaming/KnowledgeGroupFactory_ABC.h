@@ -16,10 +16,10 @@ namespace kernel
     class Team_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgKnowledgeGroupCreation;
-    class MsgKnowledgeGroupDestruction;
+    class KnowledgeGroupCreation;
+    class KnowledgeGroupDestruction;
 }
 
 
@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message ) = 0; // LTO
+    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const sword::KnowledgeGroupCreation& message ) = 0; // LTO
     //@}
 };
 

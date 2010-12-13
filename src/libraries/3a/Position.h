@@ -30,7 +30,7 @@ public:
     //@{
              Position();
     explicit Position( const std::string& coord );
-    explicit Position( const Common::MsgCoordLatLong& coord );
+    explicit Position( const sword::MsgCoordLatLong& coord );
     virtual ~Position();
     //@}
 
@@ -77,7 +77,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Common::MsgCoordLatLong coord_;
+    sword::MsgCoordLatLong coord_;
     mutable bool init_;
     mutable geometry::Point2f point_;
     //@}

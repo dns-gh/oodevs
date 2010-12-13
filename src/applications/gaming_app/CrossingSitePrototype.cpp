@@ -43,7 +43,7 @@ CrossingSitePrototype::~CrossingSitePrototype()
 void CrossingSitePrototype::Commit()
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "CrossingSite" );
-    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_crossing_site );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_crossing_site );
     list.AddQuantity( "Width", width_->value() );
     list.AddQuantity( "Depth", depth_->value() );
     list.AddQuantity( "FlowRate", speed_->value() );

@@ -71,7 +71,7 @@ tools::Iterator< const IndicatorRequest& > IndicatorRequests::CreateIterator()
 // Name: IndicatorRequests::Update
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void IndicatorRequests::Update( const MsgsAarToClient::MsgPlotResult& message )
+void IndicatorRequests::Update( const sword::PlotResult& message )
 {
     BOOST_FOREACH( T_Requests::value_type& request, requests_ )
         request->Update( message );

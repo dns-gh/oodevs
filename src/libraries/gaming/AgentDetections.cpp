@@ -43,7 +43,7 @@ AgentDetections::~AgentDetections()
 // Name: AgentDetections::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void AgentDetections::DoUpdate( const MsgsSimToClient::MsgUnitDetection& message )
+void AgentDetections::DoUpdate( const sword::UnitDetection& message )
 {
     detections_[ & resolver_.Get( message.detected_unit().id() ) ] = message.current_visibility();
     controller_.Update( *this );
@@ -62,13 +62,13 @@ void AgentDetections::Draw( const geometry::Point2f& where, const kernel::Viewpo
     for( CIT_AgentDetections it = detections_.begin(); it != detections_.end(); ++it )
     {
         const Agent_ABC& agent = *it->first;
-        if( ! IsSameTeam( agent ) && it->second != Common::invisible )
+        if( ! IsSameTeam( agent ) && it->second != sword::invisible )
         {
-            if( it->second == Common::recognized )
+            if( it->second == sword::recognized )
                 glColor4f( COLOR_RECO );
-            else if( it->second == Common::identified )
+            else if( it->second == sword::identified )
                 glColor4f( COLOR_IDENTIFIED );
-            else if( it->second == Common::recorded )
+            else if( it->second == sword::recorded )
                 glColor4f( COLOR_RECORDED );
             else
                 glColor4f( COLOR_DETECTED );

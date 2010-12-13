@@ -13,7 +13,7 @@
 #include "clients_kernel/Logger_ABC.h"
 #include "protocol/Protocol.h"
 
-using namespace Common;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: Services constructor
@@ -39,7 +39,7 @@ Services::~Services()
 // Name: Services::Update
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-void Services::Update( const MsgsDispatcherToClient::MsgServicesDescription& message )
+void Services::Update( const sword::ServicesDescription& message )
 {
     services_.clear();
     for( int i = 0; i < message.services_size(); ++i )

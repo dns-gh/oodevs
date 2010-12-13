@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: PopulationFlow constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-PopulationFlow::PopulationFlow( const MsgsSimToClient::MsgCrowdFlowCreation& message, const CoordinateConverter_ABC& converter )
+PopulationFlow::PopulationFlow( const sword::CrowdFlowCreation& message, const CoordinateConverter_ABC& converter )
     : converter_ ( converter )
     , nID_       ( message.flow().id() )
     , itineraire_( )
@@ -67,7 +67,7 @@ unsigned long PopulationFlow::GetId() const
 // Name: PopulationFlow::DoUpdate
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate& message )
+void PopulationFlow::DoUpdate( const sword::CrowdFlowUpdate& message )
 {
     if( message.has_attitude()  )
         attitude_ = (E_PopulationAttitude)message.attitude();

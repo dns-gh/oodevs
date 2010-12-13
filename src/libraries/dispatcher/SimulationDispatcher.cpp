@@ -49,7 +49,7 @@ SimulationDispatcher::~SimulationDispatcher()
 // Name: SimulationDispatcher::IsDestruction
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool SimulationDispatcher::IsDestruction( const MsgsSimToClient::MsgSimToClient& wrapper ) const
+bool SimulationDispatcher::IsDestruction( const sword::SimToClient& wrapper ) const
 {
     if( wrapper.message().has_unit_knowledge_destruction() ||
         wrapper.message().has_object_destruction() ||
@@ -74,7 +74,7 @@ bool SimulationDispatcher::IsDestruction( const MsgsSimToClient::MsgSimToClient&
 // Name: SimulationDispatcher::Receive
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void SimulationDispatcher::Receive( const MsgsSimToClient::MsgSimToClient& asnMsg )
+void SimulationDispatcher::Receive( const sword::SimToClient& asnMsg )
 {
     if( !synching_ || IsDestruction( asnMsg )
         || ( asnMsg.message().has_control_begin_tick() && asnMsg.message().control_begin_tick().current_tick() == 0 )

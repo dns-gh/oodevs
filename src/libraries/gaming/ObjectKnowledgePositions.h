@@ -25,7 +25,7 @@ namespace kernel
 // Created: AGE 2006-05-18
 // =============================================================================
 class ObjectKnowledgePositions : public LocationPositions
-                               , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
+                               , public kernel::Updatable_ABC< sword::ObjectKnowledgeUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -48,7 +48,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& message );
     //@}
 
 private:

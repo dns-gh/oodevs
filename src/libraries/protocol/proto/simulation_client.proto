@@ -1,0 +1,2016 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+import "common.proto";
+
+package sword;
+
+/** @enum EnumLogSupplyHandlingStatus
+    @brief List of states a supply request can go through.
+    @todo move into LogSupplyHandlingUpdate, rename into ConvoyState
+*/
+enum EnumLogSupplyHandlingStatus {
+    /** @brief Convoy is waiting for trucks.
+        @todo translate into waiting_for_trucks
+    */
+    convoi_en_attente_camions                  = 1;
+    /** @brief Convoy is constituting.
+        @todo translate into constituting_convoy
+    */
+    convoi_constitution                        = 2;
+    /** @brief Convoy is moving to loading point.
+        @todo translate into moving_to_loading_point
+    */
+    convoi_deplacement_vers_point_chargement   = 3;
+    /** @brief Convoy is loading.
+        @todo translate into loading
+    */
+    convoi_chargement                          = 4;
+    /** @brief Convoy is moving to unloading point.
+        @todo translate into moving_to_unloading_point
+    */
+    convoi_deplacement_vers_point_dechargement = 5;
+    /** @brief Convoy is unloading.
+        @todo translate into unloading
+    */
+    convoi_dechargement                        = 6;
+    /** @brief Convoy is returning to starting point.
+        @todo translate into returning
+    */
+    convoi_deplacement_retour                  = 7;
+    /** @brief Convoying operation is done.
+        @todo translate into done
+    */
+    termine                                    = 8;
+}
+
+/** @struct OrderAck
+    @brief A container for order acknowledgement error message.
+*/
+message OrderAck {
+    /** @enum ErrorCode
+        @brief Enumeration indicating the success or failure (with reasons) of
+               order/mission assignment.
+    */
+    enum ErrorCode {
+        /** @brief Operation succeeded
+            @todo As error codes are optional, no_error should not exist
+        */
+        no_error                                = 0;
+        /** @brief Operation failed because of an invalid tasker.
+            When issuing an order, the client must provide a valid tasker,
+            that is an existing agent/automat/crowd identifier.
+            @todo rename into error_invalid_tasker
+        */
+        error_invalid_unit                      = 1;
+        /** @brief Operation failed because of an invalid limit.
+            When issuing an order, the client can provide limit parameters which 
+            are required for automat missions.
+            @deprecated should be handled using invalid_mission_parameters
+        */
+        error_invalid_limit                     = 2;
+        /** @brief Operation failed because of an invalid phase line.
+            When issuing an order, the client can provide phase line parameters which 
+            are required for some missions.
+            @deprecated should be handled using invalid_mission_parameters
+        */
+        error_invalid_lima                      = 3;
+        /** @brief Operation failed because of an invalid mission.
+            When issuing an order, the client must provide the identifier of the mission
+            to issue. This mission must be available for the specified tasker unit.
+        */
+        error_invalid_mission                   = 4;
+        /** @brief Operation failed because of an invalid parameter.
+            When issuing an order, the client must provide mission parameters as defined
+            in the file "Missions.xml".
+            @todo rename into error_invalid_parameter
+        */
+        error_invalid_mission_parameters        = 5;
+        /** @brief Operation failed because the unit is not in a state where it can 
+                   execute the order.
+            The tasker must be alive and if it is an agent, it must be disengaged.
+            @todo rename into error_tasker_unable_cannot_receive_order
+        */
+        error_unit_cannot_receive_order         = 6;
+        /** @brief Operation failed because of an invalid fragmentary order identifier.
+            When issuing an order, the client must provide the identifier of the fragmentary
+            order to be executed. This identifier can be found in the file "Missions.xml".
+            @todo rename into error_invalid_fragorder
+        */
+        error_invalid_order_conduite            = 7;
+        /** @brief Operation failed because of an invalid mission identifier.
+            When issuing an order, the client must provide the identifier of the mission
+            to be executed. This identifier can be found in the file "Missions.xml".
+        */
+        error_invalid_order_mission             = 8;
+        /** @deprecated never used
+        */
+        error_invalid_order_initial             = 9;
+        /** @deprecated never used
+        */
+        error_invalid_order_conduite_parameters = 10;
+        /** @brief Operation failed because the unit is not in a state where it can 
+                   execute the order.
+            The tasker must not be surrendered to be able to receive orders.
+            @todo rename into error_tasker_surrendered
+        */
+        error_unit_surrendered                  = 11;
+        /** @brief Operation failed because of an invalid phase line function.
+            When issuing an order, the client can provide phase line parameters which 
+            are required for some missions. Each phase line is assigned one or more
+            functions in the context of the mission.
+            @deprecated should be handled using invalid_mission_parameters
+        */
+        error_invalid_lima_function             = 12;
+    }
+}
+
+/** @struct UnitOrderAck
+    @brief An agent order execution request acknowledgement message.
+    
+    This message is sent when an agent order is issued in response to a client request (UnitOrder).
+    @todo rename into TaskCreationRequestAck, gather UnitOrder, AutomatOrder and CrowdOrder into one message
+*/
+message UnitOrderAck {
+    /** @property tasker
+        @brief Identifier of the agent on which the order was issued.
+        @see UnitId
+    */
+    required UnitId             tasker     = 1;
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               an agent order execution operation.
+        @see OrderAck.ErrorCode
+    */
+    required OrderAck.ErrorCode error_code = 2;
+}
+
+/** @struct AutomatOrderAck
+    @brief An automat order execution request acknowledgement message.
+    
+    This message is sent when an automat order is issued in response to a client request (AutomatOrder).
+    @todo rename into TaskCreationRequestAck, gather UnitOrder, AutomatOrder and CrowdOrder into one message
+*/
+message AutomatOrderAck {
+    /** @property tasker
+        @brief Identifier of the automat on which the order was issued.
+        @see AutomatId
+    */
+    required AutomatId          tasker     = 1;
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               an automat order execution operation.
+        @see OrderAck.ErrorCode
+    */
+    required OrderAck.ErrorCode error_code = 2;
+}
+
+/** @struct CrowdOrderAck
+    @brief A crowd order execution request acknowledgement message.
+    
+    This message is sent when an crowd order is issued in response to a client request (CrowdOrder).
+    @todo rename into TaskCreationRequestAck, gather UnitOrder, AutomatOrder and CrowdOrder into one message
+*/
+message CrowdOrderAck {
+    /** @property tasker
+        @brief Identifier of the crowd on which the order was issued.
+        @see CrowdId
+    */
+    required CrowdId            tasker     = 1;
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               an crowd order execution operation.
+        @see OrderAck.ErrorCode
+    */
+    required OrderAck.ErrorCode error_code = 2;
+}
+
+/** @struct FragOrderAck
+    @brief A fragmentary order execution request acknowledgement message.
+    
+    This message is sent when a fragmentary order is issued in response to a client request (FragOrder).
+    @todo gather with UnitOrder, AutomatOrder and CrowdOrder into one message ?
+*/
+message FragOrderAck {
+    /** @property tasker
+        @brief Identifier of the agent, automat or crowd on which the fragmentary order was issued.
+        @see Tasker
+    */
+    required Tasker             tasker     = 1;
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               a fragmentary order execution operation.
+        @see OrderAck.ErrorCode
+    */
+    required OrderAck.ErrorCode error_code = 2;
+}
+
+/** @struct SetAutomatModeAck
+    @brief An automat mode change request acknowledgement message.
+    
+    This message is sent when an automat mode change is executed in response to a 
+    client request (SetAutomatMode).
+    Automat mode can be:
+    @li Engaged: automated control of subordinate units is enabled
+    @li Disengaged: automated control of subordinate units is disabled
+*/
+message SetAutomatModeAck {
+    /** @enum ErrorCode
+        @brief Enumeration indicating the success or failure (with reasons) of
+               automat mode change.
+    */
+    enum ErrorCode {
+        /** @brief Operation succeeded
+        */
+        no_error           = 0;
+        /** @brief Operation failed because of an invalid automat.
+            When changing automat mode, the client must provide a valid automat,
+            for which to change mode.
+            @todo rename into error_invalid_automat
+        */
+        error_invalid_unit = 1;
+        /** @deprecated never used
+        */
+        error_not_allowed  = 2;
+    }
+    /** @property automate
+        @brief Identifier of the automat for which to change mode.
+        @see AutomatId
+        @todo rename into automat
+    */
+    required AutomatId automate   = 1;
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               the automat mode changing operation.
+        @see ErrorCode
+    */
+    required ErrorCode error_code = 2;
+}
+
+/** @struct UnitActionAck
+    @brief A container for agent action acknowledgement error message.
+    @todo rename into AgentActionAck
+*/
+message UnitActionAck {
+    /** @enum ErrorCode
+        @brief Enumeration indicating the success or failure (with reasons) of 
+               agent action operation.
+    */
+    enum ErrorCode {
+        /** @brief Operation succeeded
+        */
+        no_error                = 0;
+        /** @brief Operation failed because of an invalid agent.
+            When issuing an agent action, the client must provide a valid agent,
+            that is an existing agent identifier.
+            @todo rename into error_invalid_agent
+        */
+        error_invalid_unit      = 1;
+        /** @brief Operation failed because the target agent is currently controlled
+            by its parent automat.
+            @todo rename into error_automation_enabled
+        */
+        error_automate_embraye  = 2;
+        /** @brief Operation failed because the provided action parameters were invalid.
+            @todo rename into error_invalid_parameter
+        */
+        error_invalid_attribute = 3;
+        /** @brief Operation failed because the agent is not in a state where it can 
+                   execute the order.
+            The agent must not be surrendered to be able to receive orders.
+            @todo rename into error_agent_surrendered
+        */
+        error_unit_surrendered  = 4;
+    }
+}
+
+/** @struct UnitCreationRequestAck
+    @brief An agent creation request acknowledgement message.
+    
+    This message is sent when an agent creation is issued in response to a client request (UnitCreationRequest).
+    @todo rename into AgentCreationRequestAck
+*/
+message UnitCreationRequestAck {
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               the agent creation operation.
+        @see UnitActionAck.ErrorCode
+    */
+    required UnitActionAck.ErrorCode error = 1;
+}
+
+/** @struct UnitMagicActionAck
+    @brief An agent magic action execution request acknowledgement message.
+    
+    This message is sent when an agent magic action is issued in response to a client request (UnitMagicAction).
+    @todo rename into AgentMagicActionRequestAck
+*/
+message UnitMagicActionAck {
+    /** @property unit
+        @brief Identifier of the agent on which the magic action was requested to be executed.
+        @todo rename into agent
+    */
+    required UnitId                  unit       = 1;
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               the agent magic action execution operation.
+        @see UnitActionAck.ErrorCode
+    */
+    required UnitActionAck.ErrorCode error_code = 2;
+}
+
+/** @struct MagicActionAck
+    @brief A magic action execution request acknowledgement message.
+    
+    This message is sent when a magic action is issued in response to a client request (MagicAction).
+    @todo rename into MagicActionRequestAck
+*/
+message MagicActionAck {
+    /** @enum ErrorCode
+        @brief Enumeration indicating the success or failure (with reasons) of 
+               the magic action operation.
+    */
+    enum ErrorCode {
+        /** @brief Operation succeeded
+        */
+        no_error                = 0;
+        /** @brief Operation failed because the provided action parameters were invalid.
+            @todo rename into error_invalid_parameter
+        */
+        error_invalid_attribute = 1;
+    }
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               the magic action execution operation.
+        @see ErrorCode
+    */
+    required ErrorCode error_code = 1;
+}
+
+/** @struct ObjectMagicActionAck
+    @brief An object magic action execution request acknowledgement message.
+    
+    This message is sent when an object magic action is issued in response to a client request (ObjectMagicAction).
+    @todo rename into ObjectMagicActionRequestAck
+*/
+message ObjectMagicActionAck {
+    /** @enum ErrorCode
+        @brief Enumeration indicating the success or failure (with reasons) of 
+               the object magic action operation.
+    */
+    enum ErrorCode {
+        /** @brief Operation succeeded
+        */
+        no_error                          = 0;
+        /** @brief Operation failed because the provided object identifier was not valid.
+                   Provided object identifier must reference an existing object.
+            @todo rename into error_invalid_id
+        */
+        error_invalid_object              = 1;
+        /** @deprecated never used
+        */
+        error_invalid_id                  = 2;
+        /** @brief Operation failed because the provided party identifier was not valid.
+                   Provided party identifier must reference an existing party.
+            @todo rename into error_invalid_party
+        */
+        error_invalid_camp                = 3;
+        /** @brief Operation failed because the provided location was not valid.
+                   Provided location must meet the restriction defined for the object geometry.
+                   Restrictions are defined in file "Object.xml".
+            @todo rename into error_invalid_location
+        */
+        error_invalid_localisation        = 4;
+        /** @brief Operation failed because object specific attributes are missing.
+                   Provided object attributes must meet the requirements associated with the object type.
+        */
+        error_missing_specific_attributes = 5;
+        /** @brief Operation failed because object specific attributes are invalid.
+                   Provided object attributes must meet the requirements associated with the object type.
+        */
+        error_invalid_specific_attributes = 6;
+    }
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               the object magic action execution operation.
+        @see ErrorCode
+    */
+    required ErrorCode error_code = 1;
+}
+
+/** @struct CrowdMagicActionAck
+    @brief An crowd magic action execution request acknowledgement message.
+    
+    This message is sent when a crowd magic action is issued in response to a client request (CrowdMagicAction).
+    @todo rename into CrowdMagicActionRequestAck
+*/
+message CrowdMagicActionAck {
+    /** @enum ErrorCode
+        @brief Enumeration indicating the success or failure (with reasons) of 
+               the crowd magic action operation.
+    */
+    enum ErrorCode {
+        /** @brief Operation succeeded
+        */
+        no_error                = 0;
+        /** @brief Operation failed because the provided crowd identifier was not valid.
+                   Provided crowd identifier must reference an existing crowd.
+            @todo rename into error_invalid_crowd
+        */
+        error_invalid_unit      = 1;
+        /** @brief Operation failed because the provided action parameters were invalid.
+            @todo rename into error_invalid_parameter
+        */
+        error_invalid_attribute = 2;
+    }
+    /** @property crowd
+        @brief Identifier of the crowd on which the magic action was requested to be executed.
+    */
+    required CrowdId   crowd      = 1;
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               the crowd magic action execution operation.
+        @see ErrorCode
+    */
+    required ErrorCode error_code = 2;
+}
+
+/** @struct ChangeDiplomacyAck
+    @brief A diplomacy change request acknowledgement message.
+    
+    This message is sent when a diplomacy change is realized in response to a client request (ChangeDiplomacy).
+    @todo rename into DiplomacyChangeRequestAck
+*/
+message ChangeDiplomacyAck {
+    /** @enum EnumChangeDiplomacyErrorCode
+        @brief Enumeration indicating the success or failure (with reasons) of 
+               the diplomacy change operation.
+        @todo rename into ErrorCode
+    */
+    enum EnumChangeDiplomacyErrorCode {
+        /** @brief Operation succeeded
+            @todo rename into no_error
+        */
+        no_error_diplomacy           = 0;
+        /** @brief Operation failed because the provided diplomacy is invalid.
+            @todo rename into error_invalid_party_diplomacy
+        */
+        error_invalid_camp_diplomacy = 1;
+    }
+    /** @property party1
+        @brief Identifier of the party from which the diplomacy is defined.
+        @see PartyId
+    */
+    required PartyId                      party1     = 1;
+    /** @property party2
+        @brief Identifier of the party to which the diplomacy is defined.
+        @see PartyId
+    */
+    required PartyId                      party2     = 2;
+    /** @property diplomatie
+        @brief Definition of the diplomacy between specified parties.
+        @see EnumDiplomacy
+        @todo rename into diplomacy
+    */
+    required EnumDiplomacy                diplomatie = 3;
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               the diplomacy change operation.
+        @see EnumChangeDiplomacyErrorCode
+    */
+    required EnumChangeDiplomacyErrorCode error_code = 4;
+}
+
+/** @struct HierarchyModificationAck
+    @brief A container for hierarchy modification action acknowledgement error message.
+    @todo split into different types
+*/
+message HierarchyModificationAck {
+    /** @enum EnumChangeDiplomacyErrorCode
+        @brief Enumeration indicating the success or failure (with reasons) of 
+               a hierarchy modification operation.
+    */
+    enum ErrorCode {
+        /** @brief Operation succeeded
+            @todo rename into no_error
+        */
+        no_error_hierarchy                 = 0;
+        /** @brief Operation failed because of an invalid agent.
+            No existing agent with the provided identifier can be found.
+            @todo rename into error_invalid_agent
+        */
+        error_invalid_pion                 = 1;
+        /** @brief Operation failed because of an invalid automat.
+            No existing automat with the provided identifier can be found.
+            @todo rename into error_invalid_automat
+        */
+        error_invalid_automate             = 2;
+        /** @brief Operation failed because of an invalid formation.
+            No existing formation with the provided identifier can be found.
+            @todo rename into error_invalid_agent
+        */
+        error_invalid_formation            = 3;
+        /** @brief Operation failed because of an invalid logistics automat.
+            No existing logistics automat with the provided identifier can be found.
+            @todo rename into error_invalid_supply_automat
+        */
+        error_invalid_automate_tc2         = 4;
+        /** @deprecated never used
+        */
+        error_invalid_automate_maintenance = 5;
+        /** @deprecated never used
+        */
+        error_invalid_automate_sante       = 6;
+        /** @deprecated never used
+        */
+        error_invalid_automate_supply      = 7;
+        /** @brief Operation failed because the unit is not in a state where it can 
+                   execute the order.
+            The tasker must not be surrendered to be able to receive orders.
+            @todo rename into error_agent_surrendered
+        */
+        error_unit_surrendered_hierarchy   = 8;
+        /** @brief Operation failed because of an invalid party.
+            No existing party with the provided identifier can be found.
+            @todo rename into error_invalid_party
+        */
+        error_invalid_party_hierarchy      = 9;
+        /** @brief Operation failed because of an invalid knowledge group.
+            No existing knowledge group with the provided identifier can be found.
+            @todo rename into error_invalid_knowledge_group
+        */
+        error_invalid_knowledge_group      = 10;
+        /** @brief Operation failed because of a party mismatch.
+            An agent cannot be moved from a party to another.
+        */
+        error_parties_mismatched           = 11;
+    }
+}
+
+/** @struct AutomatChangeKnowledgeGroupAck
+    @brief An acknowledgement message to an automat's knowledge group change request.
+    
+    This message is sent when an automat's knowledge group change is realized in response to a client request 
+    (UnitMagicAction of type "change_knowledge_group").
+    @todo gather magic action acks
+*/
+message AutomatChangeKnowledgeGroupAck  {
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               the automat knowledge group change operation.
+        @see HierarchyModificationAck.ErrorCode
+    */
+    required HierarchyModificationAck.ErrorCode error_code = 1;
+}
+
+/** @struct ChangeLogisticLinksAck
+    @brief An acknowledgement message to an automat's logistic links change request.
+    
+    This message is sent when an automat's logistic links change is realized in response to a client request 
+    (UnitMagicAction of type UnitMagiAction.Type.change_logistic_links).
+    @todo gather magic action acks
+*/
+message ChangeLogisticLinksAck  {
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               the automat logistic links change operation.
+        @see HierarchyModificationAck.ErrorCode
+    */
+    required HierarchyModificationAck.ErrorCode error_code = 1;
+}
+
+/** @struct AutomatChangeSuperiorAck
+    @brief An acknowledgement message to an automat's superior change request.
+    
+    This message is sent when an automat's superior change is realized in response to a client request 
+    (UnitMagicAction of UnitMagiAction.Type.change_automat_superior).
+    @todo gather magic action acks
+*/
+message AutomatChangeSuperiorAck  {
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               the automat superior change operation.
+        @see HierarchyModificationAck.ErrorCode
+    */
+    required HierarchyModificationAck.ErrorCode error_code = 1;
+}
+
+/** @struct UnitChangeSuperiorAck
+    @brief An acknowledgement message to an agent's superior change request.
+    
+    This message is sent when an agent's superior change is realized in response to a client request 
+    (UnitMagicAction of UnitMagiAction.Type.unit_change_superior).
+    @todo gather magic action acks
+*/
+message UnitChangeSuperiorAck  {
+    /** @property error_code
+        @brief Enumeration indicating the success of failure (with reason) of
+               the agent superior change operation.
+        @see HierarchyModificationAck.ErrorCode
+    */
+    required HierarchyModificationAck.ErrorCode error_code = 1;
+}
+
+/** @struct LogSupplyPushFlowAck
+    @brief An acknowledgement message to a logistic pushed flow request.
+    
+    This message is sent when a logistic pushed flow is realized in response to a client request 
+    (UnitMagicAction of UnitMagiAction.Type.log_supply_push_flow).
+    @todo gather magic action acks
+*/
+message LogSupplyPushFlowAck  {
+    /** @enum EnumLogSupplyPushFlow
+        @brief Enumeration indicating the success or failure (with reasons) of 
+               the pushed flow creation.
+        @todo rename into ErrorCode
+    */
+    enum EnumLogSupplyPushFlow {
+        /** @brief Operation succeeded
+            @todo rename into no_error
+            @todo As error codes are optional, no_error should not exist
+        */
+        no_error_pushflow               = 0;
+        /** @brief Operation failed because of an invalid supplier.
+            No existing supplying automat with the provided identifier can be found.
+            @todo rename into error_invalid_supplier
+        */
+        error_invalid_donneur_pushflow  = 1;
+        /** @brief Operation failed because of an invalid receiver.
+            No existing receiving automat with the provided identifier can be found.
+            @todo rename into error_invalid_receiver
+        */
+        error_invalid_receveur_pushflow = 2;
+    }
+    /** @property ack
+        @brief Enumeration indicating the success of failure (with reason) of
+               the pushed flow.
+        @see EnumLogSupplyPushFlow
+        @todo rename into error_code
+    */
+    optional EnumLogSupplyPushFlow ack = 1;
+}
+
+/** @struct LogSupplyPullFlowAck
+    @brief An acknowledgement message to a logistic pulled flow request.
+    
+    This message is sent when a logistic pulled flow is realized in response to a client request 
+    (UnitMagicAction of UnitMagiAction.Type.log_supply_pull_flow).
+    @todo gather magic action acks
+*/
+message LogSupplyPullFlowAck  {
+    /** @enum EnumLogSupplyPullFlow
+        @brief Enumeration indicating the success or failure (with reasons) of 
+               the pulled flow creation.
+        @todo rename into ErrorCode
+    */
+    enum EnumLogSupplyPullFlow {
+        /** @brief Operation succeeded
+            @todo rename into no_error
+            @todo As error codes are optional, no_error should not exist
+        */
+        no_error_pullflow               = 0;
+        /** @brief Operation failed because of an invalid supplier.
+            No existing supplying automat with the provided identifier can be found.
+            @todo rename into error_invalid_supplier
+        */
+        error_invalid_provider_pullflow = 1;
+        /** @brief Operation failed because of an invalid receiver.
+            No existing receiving automat with the provided identifier can be found.
+            @todo rename into error_invalid_receiver
+        */
+        error_invalid_receiver_pullflow = 2;
+    }
+    /** @property ack
+        @brief Enumeration indicating the success of failure (with reason) of
+               the pulled flow.
+        @see EnumLogSupplyPushFlow
+        @todo rename into error_code
+    */
+    optional EnumLogSupplyPullFlow ack = 1;
+}
+
+/** @struct LogSupplyChangeQuotasAck
+    @brief An acknowledgement message to a quota allocation change request.
+    
+    This message is sent when a quota allocation is changed in response to a client request 
+    (UnitMagicAction of UnitMagiAction.Type.log_supply_change_quotas).
+    @todo gather magic action acks
+*/
+message LogSupplyChangeQuotasAck {
+    /** @enum LogSupplyChangeQuotas
+        @brief Enumeration indicating the success or failure (with reasons) of 
+               the quota allocation.
+        @todo rename into ErrorCode
+    */
+    enum LogSupplyChangeQuotas {
+        /** @brief Operation succeeded
+            @todo rename into no_error
+            @todo As error codes are optional, no_error should not exist
+        */
+        no_error_quotas               = 0;
+        /** @brief Operation failed because of an invalid supplier.
+            No existing supplying automat with the provided identifier can be found.
+            @todo rename into error_invalid_supplier
+        */
+        error_invalid_donneur_quotas  = 1;
+        /** @brief Operation failed because of an invalid receiver.
+            No existing receiving automat with the provided identifier can be found.
+            @todo rename into error_invalid_receiver
+        */
+        error_invalid_receveur_quotas = 2;
+    }
+    /** @property ack
+        @brief Enumeration indicating the success of failure (with reason) of
+               the pulled flow.
+        @see LogSupplyChangeQuotas
+        @todo rename into error_code
+    */
+    optional LogSupplyChangeQuotas ack = 1;
+}
+
+message ActionCreateFireOrderAck {
+    enum EnumActionCreateFireOrderErrorCode {
+        no_error                    = 0;
+        error_invalid_reporter      = 1;
+        error_invalid_target        = 2;
+        error_invalid_munition      = 3;
+        error_target_no_illuminated = 4;
+    }
+    required EnumActionCreateFireOrderErrorCode error_code = 2;
+}
+
+message ChangePopulationMagicActionAck {
+    enum ErrorCode {
+       no_error                 = 0;
+       error_invalid_population = 1;
+       error_invalid_adhesion   = 2; // unknown party for instance
+       error_invalid_number     = 3; // negative number of dead for instance?
+    }
+  required ErrorCode error_code = 1;
+}
+
+message UrbanMagicActionAck {
+    enum ErrorCode {
+       no_error                 = 0;
+       error_invalid_urbanblock = 1;
+       error_invalid_role       = 2;
+       error_invalid_threshold  = 3;
+    }
+  required ErrorCode error_code = 1;
+}
+
+message ControlInformation {
+   required int32               current_tick         = 1;
+   required MsgDateTime         initial_date_time    = 2;
+   required MsgDateTime         date_time            = 3;
+   required int32               tick_duration        = 4;
+   required int32               time_factor          = 5;
+   required int32               checkpoint_frequency = 6;
+   required EnumSimulationState status               = 7;
+   required bool                send_vision_cones    = 8;
+   required bool                profiling_enabled    = 9;
+}
+
+message ControlProfilingInformation {
+   required float perception = 1;
+   required float decision   = 2;
+   required float action     = 3;
+   required float main_loop  = 4;
+}
+
+message ControlBeginTick {
+   required int32       current_tick = 1;
+   required MsgDateTime date_time    = 2;
+}
+
+message ControlEndTick {
+   required int32 current_tick    = 1;
+   required int32 tick_duration   = 2;
+   required int32 long_pathfinds  = 3;
+   required int32 short_pathfinds = 4;
+   required int32 memory          = 5;
+   required int32 virtual_memory  = 6;
+}
+
+message ControlAck {
+    enum ErrorCode {
+       no_error                  = 0;
+       error_already_started     = 1;
+       error_not_started         = 2;
+       error_not_paused          = 3;
+       error_already_paused      = 4;
+       error_invalid_time_factor = 5;
+       error_invalid_date_time   = 6;
+    }
+}
+
+message ControlDatetimeChangeAck {
+    required ControlAck.ErrorCode error_code = 1;
+}
+
+message ControlChangeTimeFactorAck {
+   required int32                time_factor = 1;
+   required ControlAck.ErrorCode error_code  = 2;
+}
+
+message ControlStopAck {
+   required ControlAck.ErrorCode error_code = 1;
+}
+
+message ControlPauseAck {
+   required ControlAck.ErrorCode error_code = 1;
+}
+
+message ControlResumeAck {
+   required ControlAck.ErrorCode error_code = 1;
+}
+
+message PartyCreation {
+   required PartyId       party     = 1;
+   required string        name      = 2;
+   required EnumDiplomacy type      = 3;
+   optional Extension     extension = 4;
+   optional RgbColor      color     = 5;
+}
+
+message FormationCreation {
+    required FormationId       formation             = 1;
+    required PartyId           party                 = 2;
+    optional FormationId       parent                = 3;
+    required EnumNatureLevel   level                 = 4;
+    required string            name                  = 5;
+    optional Extension         extension             = 6;
+    required string            app6symbol            = 7;
+    required EnumLogisticLevel logistic_level        = 8;
+    optional RgbColor          color                 = 9;
+    optional ParentEntity      logistic_base_organic = 10;
+}
+
+message FormationDestruction {
+   required FormationId formation = 1;
+}
+
+message AutomatCreation {
+    required AutomatId         automat         = 1;
+    required AutomatType       type            = 2;
+    required string            nom             = 3;
+    required ParentEntity      parent          = 4;
+    required PartyId           party           = 5;
+    optional KnowledgeGroupId  knowledge_group = 6;
+    optional Extension         extension       = 7;
+    required string            app6symbol      = 8;
+    required EnumLogisticLevel logistic_level  = 9;
+    optional RgbColor          color           = 10;
+}
+
+message RulesOfEngagement {
+    enum Value {
+       none_roe        = 0;
+       tir_libre       = 1;
+       tir_sur_riposte = 2;
+       tir_interdit    = 3;
+    }
+}
+
+message ForceRatio {
+    enum Value {
+        none_force_ratio = 0;
+        neutre           = 1;
+        favorable        = 2;
+        defavorable      = 3;
+    }
+}
+
+message AutomatAttributes {
+   required AutomatId                   automat               = 1;
+   optional EnumAutomatMode             etat_automate         = 2;
+   optional ForceRatio.Value            rapport_de_force      = 3;
+   optional EnumMeetingEngagementStatus combat_de_rencontre   = 4;
+   optional EnumOperationalStatus       etat_operationnel     = 5;
+   optional RulesOfEngagement.Value     roe                   = 6;
+   optional AutomatId                   tc2_organic           = 7;
+   optional ParentEntity                logistic_base_organic = 8;
+}
+
+message AutomatDestruction {
+   required AutomatId automat = 1;
+}
+
+message UnitCreation {
+   required UnitId    unit    = 1;
+   required UnitType  type    = 2;
+   required string    nom     = 3;
+   required AutomatId automat = 4;
+   required bool      pc      = 5;
+   optional RgbColor  color   = 6;
+}
+
+message BorrowedEquipments {
+    message BorrowedEquipment {
+        required UnitId        owner  = 1;
+        required EquipmentType type   = 2;
+        required int32         nombre = 3;
+    }
+    repeated BorrowedEquipment elem = 1;
+}
+
+message LentEquipments {
+    message LentEquipment {
+        required UnitId        borrower = 1;
+        required EquipmentType type     = 2;
+        required int32         nombre    = 3;
+    }
+    repeated LentEquipment elem = 1;
+}
+
+message ResourceDotations {
+    message ResourceDotation {
+        required ResourceType type                = 1;
+        required int32        quantite_disponible = 2;
+    }
+    repeated ResourceDotation elem = 1;
+}
+
+message EquipmentDotations {
+    message EquipmentDotation {
+        required EquipmentType type                       = 1;
+        required int32         nb_disponibles             = 2;
+        required int32         nb_indisponibles           = 3;
+        required int32         nb_reparables              = 4;
+        required int32         nb_dans_chaine_maintenance = 5;
+        required int32         nb_prisonniers             = 6;
+    }
+    repeated EquipmentDotation elem = 1;
+}
+
+message HumanDotations {
+    message HumanDotation {
+        required EnumHumanRank rang                         = 1;
+        required int32         nb_total                     = 2;
+        required int32         nb_operationnels             = 3;
+        required int32         nb_morts                     = 4;
+        required int32         nb_blesses                   = 5;
+        required int32         nb_blesses_mentaux           = 6;
+        required int32         nb_contamines_nbc            = 7;
+        required int32         nb_dans_chaine_sante         = 8;
+        required int32         nb_utilises_pour_maintenance = 9;
+        required int32         nb_blesses_non_evacues       = 10;
+    }
+    repeated HumanDotation elem = 1;
+}
+
+message ContaminationState {
+   optional int32 percentage = 1;
+   optional float quantity   = 2;
+}
+
+message NBCAgents {
+    repeated NBCAgentType elem = 1;
+}
+
+message Communication {
+    optional bool              jammed          = 1;
+    optional KnowledgeGroupId  knowledge_group = 2;
+}
+
+message Extension {
+    message Entry {
+        required string name  = 1;
+        required string value = 2;
+    }
+    repeated Entry entries = 1;
+}
+
+message UnitAttributes {
+    enum Posture {
+        mouvement           = 0;
+        mouvement_discret   = 1;
+        arret               = 2;
+        poste_reflexe       = 3;
+        poste               = 4;
+        poste_amenage       = 5;
+        poste_prepare_genie = 6;
+    }
+    enum FireAvailability {
+        none_fire_available = 0;
+        pret_au_tir         = 1;
+        indisponible        = 2;
+    }
+    enum CrowdRoe {
+        none                                      = 0;
+        emploi_force_interdit                     = 1;
+        maintien_a_distance_par_moyens_non_letaux = 2;
+        dispersion_par_moyens_de_defense_actifs   = 3;
+        armes_letales_autorisees                  = 4;
+    }
+    required UnitId                      unit                          = 1;
+    optional HumanDotations              dotation_eff_personnel        = 2;
+    optional EquipmentDotations          dotation_eff_materiel         = 3;
+    optional ResourceDotations           dotation_eff_ressource        = 4;
+    optional LentEquipments              equipements_pretes            = 5;
+    optional BorrowedEquipments          equipements_empruntes         = 6;
+    optional MsgCoordLatLong             position                      = 7;
+    optional MsgHeading                  direction                     = 8;
+    optional int32                       hauteur                       = 9;
+    optional int32                       altitude                      = 10;
+    optional int32                       vitesse                       = 11;
+    optional int32                       etat_operationnel_brut        = 12;
+    optional UnitIdList                  reinforcements                = 13;
+    optional UnitId                      reinforced_unit               = 14;
+    optional bool                        mort                          = 15;
+    optional bool                        neutralise                    = 16;
+    optional bool                        mode_furtif_actif             = 17;
+    optional bool                        embarque                      = 18;
+    optional bool                        transporteurs_disponibles     = 19;
+    optional Posture                     posture_old                   = 20;
+    optional Posture                     posture_new                   = 21;
+    optional int32                       posture_pourcentage           = 22;
+    optional int32                       etat_installation             = 23;
+    optional bool                        en_tenue_de_protection_nbc    = 24;
+    optional NBCAgents                   contamine_par_agents_nbc      = 25;
+    optional ContaminationState          etat_contamination            = 26;
+    optional Communication               communications                = 27;
+    optional bool                        radio_emitter_disabled        = 28;
+    optional bool                        radio_receiver_disabled       = 29;
+    optional bool                        radar_actif                   = 30;
+    optional UnitIdList                  transported_units             = 31;
+    optional UnitId                      transporting_unit             = 32;
+    optional ForceRatio.Value            rapport_de_force              = 33;
+    optional EnumMeetingEngagementStatus combat_de_rencontre           = 34;
+    optional EnumOperationalStatus       etat_operationnel             = 35;
+    optional FireAvailability            disponibilite_au_tir_indirect = 36;
+    optional RulesOfEngagement.Value     roe                           = 37;
+    optional CrowdRoe                    roe_crowd                     = 38;
+    optional EnumUnitTiredness           fatigue                       = 39;
+    optional EnumUnitMorale              moral                         = 40;
+    optional EnumUnitExperience          experience                    = 41;
+    optional UnitId                      surrendered_unit              = 42;
+    optional bool                        prisonnier                    = 43;
+    optional bool                        refugie_pris_en_compte        = 44;
+    optional Extension                   extension                     = 45;
+}
+
+message UnitPathFind {
+   required UnitId  unit       = 1;
+   required MsgPath itineraire = 2;
+}
+
+message UnitDestruction  {
+    required UnitId unit = 1;
+}
+
+message UnitEnvironmentType {
+    required UnitId unit   = 1;
+    required int32  area   = 2;
+    required int32  left   = 3;
+    required int32  right  = 4;
+    required int32  linear = 5;
+}
+
+message UnitKnowledgeCreation {
+    required UnitKnowledgeId  knowledge       = 1;
+    required KnowledgeGroupId knowledge_group = 2;
+    required UnitId           unit            = 3;
+    required UnitType         type            = 4;
+}
+
+enum EnumUnitIdentificationLevel {
+    identifiee = 0;
+    reconnue   = 1;
+    detectee   = 2;
+    signale    = 3;
+}
+
+message AutomatPerception {
+    required AutomatId                   automat              = 1;
+    required EnumUnitIdentificationLevel identification_level = 2;
+}
+
+message SeqOfAutomatPerception {
+    repeated AutomatPerception elem = 1;
+}
+message UnitKnowledgeUpdate {
+    required UnitKnowledgeId             knowledge                = 1;
+    required KnowledgeGroupId            knowledge_group          = 2;
+    optional int32                       pertinence               = 3;
+    optional EnumUnitIdentificationLevel identification_level     = 4;
+    optional EnumUnitIdentificationLevel max_identification_level = 5;
+    optional int32                       etat_op                  = 6;
+    optional bool                        mort                     = 7;
+    optional MsgCoordLatLong             position                 = 8;
+    optional MsgHeading                  direction                = 9;
+    optional int32                       speed                    = 10;
+    optional PartyId                     party                    = 11;
+    optional bool                        nature_pc                = 12;
+    optional SeqOfAutomatPerception      perception_par_compagnie = 13;
+    optional UnitId                      surrendered_unit         = 14;
+    optional bool                        prisonnier               = 15;
+    optional bool                        refugie_pris_en_compte   = 16;
+}
+
+message UnitKnowledgeDestruction {
+   required UnitKnowledgeId  knowledge       = 1;
+   required KnowledgeGroupId knowledge_group = 2;
+}
+
+message UnitFireTarget {
+    optional UnitId          unit     = 1;
+    optional CrowdId         crowd    = 2;
+    optional MsgCoordLatLong position = 3;
+}
+message StartUnitFire {
+    required FireId         fire        = 1;
+    required UnitId         firing_unit = 2;
+    required UnitFireTarget target      = 3;
+    required UnitFireType   type        = 4;
+    optional ResourceType   ammunition  = 5;
+}
+
+message UnitHumanFireDamage {
+   required EnumHumanRank rank           = 1;
+   required int32         alive_nbr      = 2;
+   required int32         dead_nbr       = 3;
+   required int32         wounded_u1_nbr = 4;
+   required int32         wounded_u2_nbr = 5;
+   required int32         wounded_u3_nbr = 6;
+   required int32         wounded_ue_nbr = 7;
+}
+
+message SeqOfUnitHumanFireDamage {
+   repeated UnitHumanFireDamage elem = 1;
+}
+
+message UnitEquipmentFireDamage {
+   required EquipmentType equipement_type = 1;
+   required uint32        available_nbr   = 2;
+   required uint32        unavailable_nbr = 3;
+   required uint32        repairable_nbr  = 4;
+}
+
+message SeqOfUnitEquipmentFireDamage {
+   repeated UnitEquipmentFireDamage elem = 1;
+}
+
+message UnitFireDamages {
+    required UnitId                       target     = 1;
+    required SeqOfUnitHumanFireDamage     humans     = 2;
+    required SeqOfUnitEquipmentFireDamage equipments = 3;
+}
+
+message UnitsFireDamages {
+   repeated UnitFireDamages elem = 1;
+}
+
+message CrowdFireDamages {
+   required CrowdId target   = 1;
+   required int32   dead_nbr = 2;
+}
+
+message CrowdsFireDamages {
+   repeated CrowdFireDamages elem = 1;
+}
+
+message StopUnitFire {
+   required FireId            fire           = 1;
+   optional UnitsFireDamages  units_damages  = 2;
+   optional CrowdsFireDamages crowds_damages = 3;
+}
+
+message StartCrowdFire {
+   required FireId  fire         = 1;
+   required CrowdId firing_crowd = 2;
+}
+
+message StopCrowdFire {
+   required FireId           fire          = 1;
+   required UnitsFireDamages units_damages = 2;
+}
+
+message Explosion {
+   required ObjectId          object         = 1;
+   optional UnitsFireDamages  units_damages  = 2;
+   optional CrowdsFireDamages crowds_damages = 3;
+}
+
+message StartFireEffect {
+    required FireEffectId       fire_effect = 1;
+    required MsgLocation        location    = 2;
+    required EnumFireEffectType type        = 3;
+}
+
+message StopFireEffect  {
+    required FireEffectId fire_effect = 1;
+}
+
+enum EnumReportType {
+  information       = 0;
+  operational       = 1;
+  exceptional_event = 2;
+  warning           = 3;
+}
+
+message Report {
+    required ReportId             report     = 1;
+    required Tasker               source     = 2;
+    required ReportType           type       = 3;
+    required ReportCategory       category   = 4;
+    required MsgDateTime          time       = 5;
+    optional MsgMissionParameters parameters = 6;
+}
+
+message InvalidateReport {
+    required ReportId report = 1;
+    required Tasker   source = 2;
+}
+
+message Trace {
+   required Tasker source  = 1;
+   required string message = 2;
+}
+
+message DecisionalState {
+   required Tasker source = 1;
+   required string key    = 2;
+   required string value  = 3;
+}
+
+message DebugPoints {
+   required Tasker              source      = 1;
+   required MsgCoordLatLongList coordinates = 2;
+}
+
+message SeqOfHeading {
+   repeated MsgHeading elem = 1;
+}
+
+message MsgVisionCone {
+   required MsgCoordLatLong origin     = 1;
+   required int32           height     = 2;
+   required string          sensor     = 3;
+   required SeqOfHeading    directions = 4;
+}
+
+message SeqOfVisionCone {
+   repeated MsgVisionCone elem = 1;
+}
+
+message UnitVisionCones {
+   required UnitId          unit       = 1;
+   required SeqOfVisionCone cones      = 2;
+   required float           elongation = 3;
+}
+
+message UnitDetection {
+   required UnitId             observer           = 1;
+   required UnitId             detected_unit      = 2;
+   required EnumUnitVisibility current_visibility = 3;
+   required EnumUnitVisibility max_visibility     = 4;
+}
+
+message ObjectDetection {
+   required UnitId             observer        = 1;
+   required ObjectId           detected_object = 2;
+   required EnumUnitVisibility visibility      = 3;
+}
+
+message CrowdConcentrationDetection {
+   required UnitId               observer               = 1;
+   required CrowdId              detected_crowd         = 2;
+   required CrowdConcentrationId detected_concentration = 3;
+   required EnumUnitVisibility   visibility             = 4;
+}
+
+message CrowdFlowDetection {
+   required UnitId      observer       = 1;
+   required CrowdId     detected_crowd = 2;
+   required CrowdFlowId detected_flow  = 3;
+   required MsgPath     visible_flow   = 4;
+}
+
+message ObjectCreation {
+   required ObjectId         object     = 1;
+   required ObjectType       type       = 2;
+   required string           name       = 3;
+   required PartyId          party      = 4;
+   required MsgLocation      location   = 5;
+   required ObjectAttributes attributes = 6;
+}
+
+message ObjectDestruction  {
+    required ObjectId object = 1;
+}
+
+message ObjectUpdate {
+   required ObjectId         object     = 1;
+   optional MsgLocation      location   = 2;
+   required ObjectAttributes attributes = 3;
+}
+
+message ObjectKnowledgeCreation {
+   required ObjectKnowledgeId knowledge       = 1;
+   required PartyId           party           = 2;
+   required ObjectId          object          = 3;
+   required ObjectType        type            = 4;
+   required ObjectAttributes  attributes      = 5;
+   optional KnowledgeGroupId  knowledge_group = 6;
+}
+
+message ObjectKnowledgeUpdate {
+   required ObjectKnowledgeId knowledge           = 1;
+   required PartyId           party               = 2;
+   optional ObjectId          object              = 3;
+   optional int32             relevance           = 4;
+   optional MsgLocation       location            = 5;
+   optional ObjectAttributes  attributes          = 6;
+   optional bool              perceived           = 7;
+   optional AutomatIdList     perceiving_automats = 8;
+   optional KnowledgeGroupId  knowledge_group     = 9;
+}
+
+message ObjectKnowledgeDestruction {
+   required ObjectKnowledgeId knowledge = 1;
+   required PartyId           party     = 2;
+}
+
+message UrbanKnowledgeCreation {
+    required UrbanObjectKnowledgeId knowledge   = 1;
+    required PartyId                party       = 2;
+    required UrbanObjectId          urban_block = 3;
+}
+
+message UrbanKnowledgeUpdate {
+    required UrbanObjectKnowledgeId knowledge            = 1;
+    required PartyId                party                = 2;
+    required UrbanObjectId          urban_block          = 3;
+    optional int32                  progress             = 4;
+    optional int32                  maxProgress          = 5;
+    optional bool                   perceived            = 6;
+    optional AutomatIdList          automat_perceptions  = 7;
+}
+
+message UrbanKnowledgeDestruction {
+    required UrbanObjectKnowledgeId knowledge = 1;
+    required PartyId                party     = 2;
+}
+
+message LogMedicalHandlingCreation {
+   required MedicalRequestId request       = 1;
+   required UnitId           unit          = 2;
+   required int32            tick_creation = 3;
+   required EnumHumanRank    rang          = 4;
+   required EnumHumanWound   blessure      = 5;
+   optional bool             blesse_mental = 6;
+   optional bool             contamine_nbc = 7;
+}
+
+message LogMedicalHandlingUpdate {
+    required MedicalRequestId             request                = 1;
+    required UnitId                       unit                   = 2;
+    optional UnitId                       provider               = 3;
+    optional EnumHumanWound               blessure               = 4;
+    optional bool                         blesse_mental          = 5;
+    optional bool                         contamine_nbc          = 6;
+    optional EnumLogMedicalHandlingStatus etat                   = 7;
+    optional bool                         diagnostique_effectue  = 8;
+}
+
+message LogMedicalHandlingDestruction {
+   required MedicalRequestId request = 1;
+   required UnitId           unit    = 2;
+}
+
+message LogMedicalEquipmentAvailability{
+   required EquipmentType equipment_type = 1;
+   required int32         nbr_total       = 2;
+   required int32         nbr_disponibles = 3;
+   required int32         nbr_au_travail  = 4;
+   optional int32         nbr_pretes      = 5;
+   optional int32         nbr_au_repos    = 6;
+}
+
+message SeqOfLogMedicalEquipmentAvailability {
+   repeated LogMedicalEquipmentAvailability elem = 1;
+}
+
+message LogMedicalState {
+    required UnitId                               unit                                = 1;
+    optional bool                                 chaine_activee                      = 2;
+    optional LogMedicalPriorities                 priorites                           = 3;
+    optional AutomatIdList                        tactical_priorities                 = 4;
+    optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_releve    = 5;
+    optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_ramassage = 6;
+    optional SeqOfLogMedicalEquipmentAvailability disponibilites_medecins             = 7;
+}
+
+message LogMaintenanceHandlingCreation {
+   required MaintenanceRequestId request       = 1;
+   required UnitId               unit          = 2;
+   required int32                tick_creation = 3;
+   required EquipmentType        equipement    = 4;
+   required BreakdownType        breakdown     = 5;
+}
+
+message LogMaintenanceHandlingUpdate {
+   required MaintenanceRequestId             request               = 1;
+   required UnitId                           unit                  = 2;
+   required UnitId                           provider              = 3;
+   optional EnumLogMaintenanceHandlingStatus etat                  = 4;
+   optional bool                             diagnostique_effectue = 5;
+}
+
+message LogMaintenanceHandlingDestruction {
+   required MaintenanceRequestId request = 1;
+   required UnitId               unit    = 2;
+}
+
+message LogMaintenanceEquipmentAvailability {
+   required EquipmentType equipment_type  = 1;
+   required int32 nbr_total               = 2;
+   required int32 nbr_disponibles         = 3;
+   required int32 nbr_au_travail          = 4;
+   optional int32 nbr_pretes              = 5;
+   optional int32 nbr_au_repos            = 6;
+}
+
+message SeqOfLogMaintenanceEquipmentAvailability {
+   repeated LogMaintenanceEquipmentAvailability elem = 1;
+}
+
+message LogMaintenanceState {
+   required UnitId                                   unit                       = 1;
+   optional bool                                     chaine_activee             = 2;
+   optional EnumLogMaintenanceRegimeTravail          regime_travail             = 3;
+   optional LogMaintenancePriorities                 priorites                  = 4;
+   optional AutomatIdList                            priorites_tactiques        = 5;
+   optional SeqOfLogMaintenanceEquipmentAvailability disponibilites_remorqueurs = 6;
+   optional SeqOfLogMaintenanceEquipmentAvailability disponibilites_reparateurs = 7;
+}
+
+message LogSupplyHandlingCreation {
+   optional SupplyRequestId    request       = 1;
+   optional AutomatId          consumer      = 2;
+   optional int32              tick_creation = 3;
+   optional SeqOfDotationQuery dotations     = 4;
+}
+
+message MsgDotationQuery {
+   optional ResourceType resource            = 1;
+   optional int32        quantite_demandee   = 2;
+   optional int32        quantite_accordee   = 3;
+   optional int32        quantite_en_transit = 4;
+}
+
+message SeqOfDotationQuery {
+   repeated MsgDotationQuery elem = 1;
+}
+
+message LogSupplyHandlingUpdate {
+   optional SupplyRequestId             request         = 1;
+   optional AutomatId                   consumer        = 2;
+   optional ParentEntity                supplier        = 3;
+   optional ParentEntity                convoy_provider = 4;
+   optional UnitId                      convoying_unit  = 5;
+   optional EnumLogSupplyHandlingStatus etat            = 6;
+   optional SeqOfDotationQuery          dotations       = 7;
+}
+
+message LogSupplyHandlingDestruction {
+   required SupplyRequestId request  = 1;
+   required AutomatId       consumer = 2;
+}
+
+message LogSupplyEquimentAvailability {
+   optional EquipmentType equipment       = 1;
+   optional int32         nbr_total       = 2;
+   optional int32         nbr_disponibles = 3;
+   optional int32         nbr_au_travail  = 4;
+   optional int32         nbr_pretes      = 5;
+   optional int32         nbr_au_repos    = 6;
+}
+
+message SeqOfLogSupplyEquimentAvailability {
+   repeated LogSupplyEquimentAvailability elem = 1;
+}
+
+message LogSupplyState {
+    optional UnitId                              unit                                 = 1;
+    optional bool                                chaine_activee                       = 2;
+    optional SeqOfDotationStock                  stocks                               = 3;
+    optional SeqOfLogSupplyEquimentAvailability  disponibilites_transporteurs_convois = 4;
+}
+
+message LogSupplyQuotas {
+    required ParentEntity       supplied = 1;
+    required SeqOfDotationQuota quotas  = 2;
+}
+
+message CrowdCreation {
+   required CrowdId   crowd     = 1;
+   required CrowdType type      = 2;
+   optional string    nom       = 3;
+   required PartyId   party     = 4;
+   optional Extension extension = 5;
+}
+
+message CrowdUpdate {
+   required CrowdId crowd           = 1;
+   optional int32   etat_domination = 2;
+}
+
+message CrowdDestruction {
+   required CrowdId crowd = 1;
+}
+
+message CrowdConcentrationCreation {
+   required CrowdConcentrationId concentration = 1;
+   required CrowdId              crowd         = 2;
+   required MsgCoordLatLong      position      = 3;
+}
+
+message CrowdConcentrationDestruction {
+   required CrowdConcentrationId concentration = 1;
+   required CrowdId              crowd         = 2;
+}
+
+message CrowdConcentrationUpdate {
+   required CrowdConcentrationId concentration      = 1;
+   required CrowdId              crowd              = 2;
+   optional int32                nb_humains_vivants = 3;
+   optional int32                nb_humains_morts   = 4;
+   optional EnumCrowdAttitude    attitude           = 5;
+}
+
+message CrowdFlowCreation {
+   required CrowdFlowId flow  = 1;
+   required CrowdId     crowd = 2;
+}
+
+message CrowdFlowDestruction {
+   required CrowdFlowId flow  = 1;
+   required CrowdId     crowd = 2;
+}
+
+message CrowdFlowUpdate {
+   required CrowdFlowId       flow               = 1;
+   required CrowdId           crowd              = 2;
+   optional MsgPath           itineraire         = 3;
+   optional MsgPath           parts              = 4;
+   optional MsgHeading        direction          = 5;
+   optional int32             vitesse            = 6;
+   optional int32             nb_humains_vivants = 7;
+   optional int32             nb_humains_morts   = 8;
+   optional EnumCrowdAttitude attitude           = 9;
+}
+
+message CrowdKnowledgeCreation {
+   required CrowdKnowledgeId knowledge       = 1;
+   required KnowledgeGroupId knowledge_group = 2;
+   optional CrowdId          crowd           = 3;
+   optional PartyId          party           = 4;
+}
+
+message CrowdKnowledgeUpdate {
+   required CrowdKnowledgeId knowledge       = 1;
+   required KnowledgeGroupId knowledge_group = 2;
+   optional int32            etat_domination = 3;
+}
+
+message CrowdKnowledgeDestruction {
+   required CrowdKnowledgeId knowledge       = 1;
+   required KnowledgeGroupId knowledge_group = 2;
+}
+
+message CrowdConcentrationKnowledgeCreation {
+    required CrowdConcentrationKnowledgeId knowledge       = 1;
+    required CrowdKnowledgeId              crowd           = 2;
+    required KnowledgeGroupId              knowledge_group = 3;
+    required CrowdConcentrationId          concentration   = 4;
+    optional MsgCoordLatLong               position        = 5;
+}
+
+message CrowdConcentrationKnowledgeUpdate {
+    required CrowdConcentrationKnowledgeId knowledge          = 1;
+    required CrowdKnowledgeId              crowd              = 2;
+    required KnowledgeGroupId              knowledge_group    = 3;
+    optional CrowdConcentrationId          concentration      = 4;
+    optional int32                         nb_humains_vivants = 5;
+    optional int32                         nb_humains_morts   = 6;
+    optional EnumCrowdAttitude             attitude           = 7;
+    optional int32                         pertinence         = 8;
+    optional bool                          est_percu          = 9;
+}
+
+message CrowdConcentrationKnowledgeDestruction {
+    required CrowdConcentrationKnowledgeId knowledge       = 1;
+    required CrowdKnowledgeId              crowd           = 2;
+    required KnowledgeGroupId              knowledge_group = 3;
+}
+
+message CrowdFlowKnowledgeCreation {
+    required CrowdFlowKnowledgeId knowledge       = 1;
+    required CrowdKnowledgeId     crowd           = 2;
+    required KnowledgeGroupId     knowledge_group = 3;
+    required CrowdFlowId          flow            = 4;
+}
+
+message MsgFlowPart {
+   required MsgPath forme      = 1;
+   required int32   pertinence = 2;
+}
+
+message SeqOfFlowPart {
+   repeated MsgFlowPart elem = 1;
+}
+
+message CrowdFlowKnowledgeUpdate {
+    required CrowdFlowKnowledgeId knowledge          = 1;
+    required CrowdKnowledgeId     crowd              = 2;
+    required KnowledgeGroupId     knowledge_group    = 3;
+    optional CrowdFlowId          flow               = 4;
+    optional SeqOfFlowPart        portions_flux      = 5;
+    optional MsgHeading           direction          = 6;
+    optional int32                vitesse            = 7;
+    optional int32                nb_humains_vivants = 8;
+    optional int32                nb_humains_morts   = 9;
+    optional EnumCrowdAttitude    attitude           = 10;
+    optional bool                 est_percu          = 11;
+}
+
+message CrowdFlowKnowledgeDestruction {
+    required CrowdFlowKnowledgeId knowledge       = 1;
+    required CrowdKnowledgeId     crowd           = 2;
+    required KnowledgeGroupId     knowledge_group = 3;
+}
+
+// Folk
+message FolkCreation_profiles {
+   repeated string elem = 1;
+}
+
+message FolkCreation_activities {
+   repeated string elem = 1;
+}
+
+message FolkCreation {
+   required FolkCreation_profiles   profiles       = 1;
+   required FolkCreation_activities activities     = 2;
+   optional int32                   container_size = 3;
+   optional int32                   edge_number    = 4;
+}
+
+message FolkGraphEdgeUpdate {
+   required int32 folk             = 1;
+   required int32 shape_id         = 2;
+   repeated int32 crowd_occupation = 3;
+}
+
+message FolkGraphUpdate {
+   repeated FolkGraphEdgeUpdate elem = 1;
+}
+
+// Checkpoints
+message ControlCheckPointSetFrequencyAck {
+}
+
+message ControlCheckPointSaveNowAck {
+}
+
+message ControlCheckPointSaveBegin {
+}
+
+message ControlCheckPointSaveBeginAck {
+}
+
+message ControlCheckPointSaveEnd {
+    optional string name = 1;
+}
+
+message ControlCheckPointListAck {
+}
+
+message ControlCheckPointList {
+    repeated string checkpoint = 1;
+}
+
+message ControlCheckPointDeleteAck {
+}
+
+// Current State / Initialization
+message ControlSendCurrentStateBegin{
+}
+
+message ControlSendCurrentStateEnd {
+}
+
+message UrbanAttributes {
+    message Architecture {
+        required float  height            = 1;
+        required int32  floor_number      = 2;
+        required string roof_shape        = 3;
+        required string material          = 4;
+        required float  occupation        = 5;
+        required float  trafficability    = 6;
+        required bool   parking_available = 7 [default = false];
+    }
+    message Structure {
+        required uint32 state = 1;
+    }
+    message Infrastructures {
+        message Infrastructure {
+          required string type      = 1;
+          required bool   active    = 2;
+          required float  threshold = 3;
+        }
+        repeated ResourceNetwork resource_network = 1;
+        optional Infrastructure infrastructure = 2;
+    }
+    optional Architecture    architecture    = 1;
+    optional Structure       structure       = 2;
+    optional RgbaColor       color           = 3;
+    optional Infrastructures infrastructures = 4;
+    repeated UrbanUsage      usages          = 5;
+}
+
+message UrbanCreation {
+   required UrbanObjectId   urban_object = 1;
+   required string          name         = 2;
+   required MsgLocation     location     = 3;
+   optional UrbanAttributes attributes   = 4;
+   optional UrbanObjectId   parent       = 5;
+}
+
+message UrbanDetection {
+    required UnitId             observer     = 1;
+    required UrbanObjectId      urban_object = 2;
+    required EnumUnitVisibility visibility   = 3;
+}
+
+message UrbanUpdate {
+   required UrbanObjectId   urban_object = 1;
+   optional MsgLocation     location     = 2;
+   optional UrbanAttributes attributes   = 3;
+}
+
+// Knowledge groups
+message KnowledgeGroupCreation {
+   required KnowledgeGroupId knowledge_group = 1;
+   required PartyId          party           = 2;
+   optional KnowledgeGroupId parent          = 3;
+   required string           type            = 4;
+   optional bool             jam             = 5;
+}
+
+message KnowledgeGroupUpdate {
+   required KnowledgeGroupId knowledge_group = 1;
+   optional PartyId          party           = 2;
+   optional KnowledgeGroupId parent          = 3;
+   optional bool             enabled         = 4;
+   optional string           type            = 5;
+}
+
+message KnowledgeGroupAck {
+    enum ErrorCode {
+       no_error                     = 0;
+       error_invalid_unit           = 1;
+       error_invalid_superior       = 2;
+       error_invalid_camp           = 3;
+       error_invalid_knowledgegroup = 4;
+       error_invalid_type           = 5;
+    }
+}
+
+message KnowledgeGroupMagicActionAck {
+    required KnowledgeGroupId            knowledge_group = 1;
+    required KnowledgeGroupAck.ErrorCode error_code      = 2;
+}
+
+message KnowledgeGroupCreationAck {
+    required KnowledgeGroupId            knowledge_group = 1;
+    required KnowledgeGroupAck.ErrorCode error_code      = 2;
+}
+
+message KnowledgeGroupUpdateAck {
+    required KnowledgeGroupId            knowledge_group = 1;
+    required KnowledgeGroupAck.ErrorCode error_code      = 2;
+}
+
+message KnowledgeGroupDestruction {
+    required KnowledgeGroupId knowledge_group = 1;
+    required PartyId          party           = 2;
+}
+
+// Weather
+message ControlGlobalWeatherAck {
+}
+
+message ControlLocalWeatherAck {
+}
+
+message ControlGlobalWeather {
+    required WeatherId            weather    = 1;
+    required MsgWeatherAttributes attributes = 2;
+}
+
+message ControlLocalWeatherCreation {
+   required WeatherId            weather                 = 1;
+   optional MsgCoordLatLong      top_left_coordinate     = 2;
+   optional MsgCoordLatLong      bottom_right_coordinate = 3;
+   optional MsgWeatherAttributes attributes              = 4;
+
+}
+
+message ControlLocalWeatherDestruction {
+   required WeatherId weather = 1;
+}
+
+// Populations
+message PopulationCreation {
+    required PopulationId   id        = 1;
+    required PartyId        party     = 2;
+    required PopulationType type      = 3;
+    required string         name      = 4;
+    required string         text      = 5;
+    optional Extension      extension = 6;
+    repeated UrbanObjectId  blocks    = 7;
+}
+
+message PopulationUpdate {
+    message MotivationSatisfaction {
+        required MotivationType motivation = 1; // motivationType = "home", "office", ...
+        required float          value      = 2;
+    }
+    message ResourceSatisfaction {
+        required ResourceType resource = 1;
+        required float        value    = 2;
+    }
+    message Satisfaction {
+        repeated ResourceSatisfaction   resources   = 1;
+        repeated MotivationSatisfaction motivations = 2;
+        optional float                  lodging     = 3;
+        optional float                  health      = 4;
+        optional float                  safety      = 5;
+    }
+    message BlockOccupation {
+         required UrbanObjectId block = 1;
+         required int32         number = 2;
+     }
+    required PopulationId    id           = 1;
+    optional int32           healthy      = 2;
+    optional int32           wounded      = 3;
+    optional int32           dead         = 4;
+    repeated PartyAdhesion   adhesions    = 5;
+    optional Satisfaction    satisfaction = 6;
+    optional MotivationType  motivation   = 7;
+    repeated BlockOccupation occupations  = 8;
+}
+
+// Message container
+message SimToClient {
+    message Content {
+        optional UnitOrderAck                         unit_order_ack                              = 1;
+        optional AutomatOrderAck                      automat_order_ack                           = 2;
+        optional CrowdOrderAck                        crowd_order_ack                             = 3;
+        optional FragOrderAck                         frag_order_ack                              = 4;
+        optional SetAutomatModeAck                    set_automat_mode_ack                        = 5;
+        optional UnitCreationRequestAck               unit_creation_request_ack                   = 6;
+        optional MagicActionAck                       magic_action_ack                            = 7;
+        optional UnitMagicActionAck                   unit_magic_action_ack                       = 8;
+        optional ObjectMagicActionAck                 object_magic_action_ack                     = 9;
+        optional CrowdMagicActionAck                  crowd_magic_action_ack                      = 10;
+        optional ChangeDiplomacyAck                   change_diplomacy_ack                        = 11;
+        optional AutomatChangeKnowledgeGroupAck       automat_change_knowledge_group_ack          = 12;
+        optional ChangeLogisticLinksAck               automat_change_logistic_links_ack           = 13;
+        optional AutomatChangeSuperiorAck             automat_change_superior_ack                 = 14;
+        optional UnitChangeSuperiorAck                unit_change_superior_ack                    = 15;
+        optional LogSupplyPushFlowAck                 log_supply_push_flow_ack                    = 16;
+        optional LogSupplyChangeQuotasAck             log_supply_change_quotas_ack                = 17;
+        optional ControlInformation                   control_information                         = 18;
+        optional ControlProfilingInformation          control_profiling_information               = 19;
+        optional ControlBeginTick                     control_begin_tick                          = 20;
+        optional ControlEndTick                       control_end_tick                            = 21;
+        optional ControlStopAck                       control_stop_ack                            = 22;
+        optional ControlPauseAck                      control_pause_ack                           = 23;
+        optional ControlResumeAck                     control_resume_ack                          = 24;
+        optional ControlChangeTimeFactorAck           control_change_time_factor_ack              = 25;
+        optional ControlDatetimeChangeAck             control_date_time_change_ack                = 26;
+        optional ControlCheckPointSaveEnd             control_checkpoint_save_end                 = 27;
+        optional FormationCreation                    formation_creation                          = 28;
+        optional PartyCreation                        party_creation                              = 29;
+        optional AutomatCreation                      automat_creation                            = 30;
+        optional AutomatAttributes                    automat_attributes                          = 31;
+        optional UnitCreation                         unit_creation                               = 32;
+        optional UnitAttributes                       unit_attributes                             = 33;
+        optional UnitPathFind                         unit_pathfind                               = 34;
+        optional UnitDestruction                      unit_destruction                            = 35;
+        optional UnitEnvironmentType                  unit_environment_type                       = 36;
+        optional ChangeDiplomacy                      change_diplomacy                            = 37;
+        optional UnitChangeSuperior                   unit_change_superior                        = 38;
+        optional ChangeLogisticLinks                  automat_change_logistic_links               = 39;
+        optional AutomatChangeKnowledgeGroup          automat_change_knowledge_group              = 40;
+        optional AutomatChangeSuperior                automat_change_superior                     = 41;
+        optional UnitKnowledgeCreation                unit_knowledge_creation                     = 42;
+        optional UnitKnowledgeUpdate                  unit_knowledge_update                       = 43;
+        optional UnitKnowledgeDestruction             unit_knowledge_destruction                  = 44;
+        optional StartUnitFire                        start_unit_fire                             = 45;
+        optional StopUnitFire                         stop_unit_fire                              = 46;
+        optional StartCrowdFire                       start_crowd_fire                            = 47;
+        optional StopCrowdFire                        stop_crowd_fire                             = 48;
+        optional Explosion                            explosion                                   = 49;
+        optional StartFireEffect                      start_fire_effect                           = 50;
+        optional StopFireEffect                       stop_fire_effect                            = 51;
+        optional Report                               report                                      = 52;
+        optional InvalidateReport                     invalidate_report                           = 53;
+        optional Trace                                trace                                       = 54;
+        optional DecisionalState                      decisional_state                            = 55;
+        optional DebugPoints                          debug_points                                = 56;
+        optional UnitVisionCones                      unit_vision_cones                           = 57;
+        optional UnitDetection                        unit_detection                              = 58;
+        optional ObjectDetection                      object_detection                            = 59;
+        optional CrowdConcentrationDetection          crowd_concentration_detection               = 60;
+        optional CrowdFlowDetection                   crowd_flow_detection                        = 61;
+        optional UnitOrder                              unit_order                                = 62;
+        optional AutomatOrder                           automat_order                             = 63;
+        optional CrowdOrder                             crowd_order                               = 64;
+        optional ObjectCreation                         object_creation                           = 65;
+        optional ObjectDestruction                      object_destruction                        = 66;
+        optional ObjectUpdate                           object_update                             = 67;
+        optional ObjectKnowledgeCreation                object_knowledge_creation                 = 68;
+        optional ObjectKnowledgeUpdate                  object_knowledge_update                   = 69;
+        optional ObjectKnowledgeDestruction             object_knowledge_destruction              = 70;
+        optional LogMedicalHandlingCreation             log_medical_handling_creation             = 71;
+        optional LogMedicalHandlingUpdate               log_medical_handling_update               = 72;
+        optional LogMedicalHandlingDestruction          log_medical_handling_destruction          = 73;
+        optional LogMedicalState                        log_medical_state                         = 74;
+        optional LogMaintenanceHandlingCreation         log_maintenance_handling_creation         = 75;
+        optional LogMaintenanceHandlingUpdate           log_maintenance_handling_update           = 76;
+        optional LogMaintenanceHandlingDestruction      log_maintenance_handling_destruction      = 77;
+        optional LogMaintenanceState                    log_maintenance_state                     = 78;
+        optional LogSupplyHandlingCreation              log_supply_handling_creation              = 79;
+        optional LogSupplyHandlingUpdate                log_supply_handling_update                = 80;
+        optional LogSupplyHandlingDestruction           log_supply_handling_destruction           = 81;
+        optional LogSupplyState                         log_supply_state                          = 82;
+        optional LogSupplyQuotas                        log_supply_quotas                         = 83;
+        optional CrowdCreation                          crowd_creation                            = 84;
+        optional CrowdUpdate                            crowd_update                              = 85;
+        optional CrowdConcentrationCreation             crowd_concentration_creation              = 86;
+        optional CrowdConcentrationDestruction          crowd_concentration_destruction           = 87;
+        optional CrowdConcentrationUpdate               crowd_concentration_update                = 88;
+        optional CrowdFlowCreation                      crowd_flow_creation                       = 89;
+        optional CrowdFlowDestruction                   crowd_flow_destruction                    = 90;
+        optional CrowdFlowUpdate                        crowd_flow_update                         = 91;
+        optional CrowdKnowledgeCreation                 crowd_knowledge_creation                  = 92;
+        optional CrowdKnowledgeUpdate                   crowd_knowledge_update                    = 93;
+        optional CrowdKnowledgeDestruction              crowd_knowledge_destruction               = 94;
+        optional CrowdConcentrationKnowledgeCreation    crowd_concentration_knowledge_creation    = 95;
+        optional CrowdConcentrationKnowledgeDestruction crowd_concentration_knowledge_destruction = 96;
+        optional CrowdConcentrationKnowledgeUpdate      crowd_concentration_knowledge_update      = 97;
+        optional CrowdFlowKnowledgeCreation             crowd_flow_knowledge_creation             = 98;
+        optional CrowdFlowKnowledgeDestruction          crowd_flow_knowledge_destruction          = 99;
+        optional CrowdFlowKnowledgeUpdate               crowd_flow_knowledge_update               = 100;
+        optional FolkCreation                           folk_creation                             = 101;
+        optional FolkGraphUpdate                        folk_graph_update                         = 102;
+        optional ControlGlobalWeatherAck                control_global_weather_ack                = 103;
+        optional ControlLocalWeatherAck                 control_local_weather_ack                 = 104;
+        optional ControlCheckPointSaveBegin             control_checkpoint_save_begin             = 105;
+        optional ControlCheckPointSetFrequencyAck       control_checkpoint_set_frequency_ack      = 106;
+        optional ControlCheckPointSaveNowAck            control_checkpoint_save_now_ack           = 107;
+        optional ControlSendCurrentStateBegin           control_send_current_state_begin          = 108;
+        optional ControlSendCurrentStateEnd             control_send_current_state_end            = 109;
+        optional UrbanCreation                          urban_creation                            = 110;
+        optional UrbanUpdate                            urban_update                              = 111;
+        optional UrbanKnowledgeCreation                 urban_knowledge_creation                  = 112;
+        optional UrbanKnowledgeUpdate                   urban_knowledge_update                    = 113;
+        optional UrbanKnowledgeDestruction              urban_knowledge_destruction               = 114;
+        optional StockResource                          stock_resource                            = 115;
+        optional UrbanDetection                         urban_detection                           = 116;
+        optional KnowledgeGroupMagicActionAck           knowledge_group_magic_action_ack          = 117;
+        optional KnowledgeGroupCreation                 knowledge_group_creation                  = 118;
+        optional KnowledgeGroupUpdate                   knowledge_group_update                    = 119;
+        optional KnowledgeGroupCreationAck              knowledge_group_creation_ack              = 120;
+        optional KnowledgeGroupUpdateAck                knowledge_group_update_ack                = 121;
+        optional KnowledgeGroupDestruction              knowledge_group_destruction               = 122;
+        optional ActionCreateFireOrderAck               action_create_fire_order_ack              = 123;
+        optional ControlGlobalWeather                   control_global_weather                    = 124;
+        optional ControlLocalWeatherCreation            control_local_weather_creation            = 125;
+        optional ControlLocalWeatherDestruction         control_local_weather_destruction         = 126;
+        optional ControlCheckPointListAck               control_checkpoint_list_ack               = 127;
+        optional ControlCheckPointList                  control_checkpoint_list                   = 128;
+        optional ControlCheckPointDeleteAck             control_checkpoint_delete_ack             = 129;
+        optional LogSupplyPullFlowAck                   log_supply_pull_flow_ack                  = 130;
+        optional FormationDestruction                   formation_destruction                     = 131;
+        optional AutomatDestruction                     automat_destruction                       = 132;
+        optional CrowdDestruction                       crowd_destruction                         = 133;
+        optional PopulationCreation                     population_creation                       = 134;
+        optional PopulationUpdate                       population_update                         = 135;
+        optional ChangePopulationMagicActionAck         change_population_magic_action_ack        = 136;
+        optional UrbanMagicActionAck                    urban_magic_action_ack                    = 137;
+    }
+    optional int32   context = 1;
+    required Content message = 2;
+}

@@ -20,16 +20,16 @@ namespace actions
     class ParameterFactory_ABC;
 }
 
-namespace Common
+namespace sword
 {
-    class MsgAutomatOrder;
-    class MsgCrowdOrder;
-    class MsgUnitOrder;
+    class AutomatOrder;
+    class CrowdOrder;
+    class UnitOrder;
 }
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgFragOrder;
+    class FragOrder;
 }
 
 namespace dispatcher
@@ -77,10 +77,10 @@ public:
 
     //! @name Operations
     //@{
-    void Log( const Common::MsgUnitOrder& message );
-    void Log( const Common::MsgAutomatOrder& message );
-    void Log( const Common::MsgCrowdOrder& message );
-    void Log( const MsgsClientToSim::MsgFragOrder& message );
+    void Log( const sword::UnitOrder& message );
+    void Log( const sword::AutomatOrder& message );
+    void Log( const sword::CrowdOrder& message );
+    void Log( const sword::FragOrder& message );
     //@}
 
 private:

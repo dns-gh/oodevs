@@ -181,6 +181,7 @@ void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const MT_Ell
         // $$$$ JSR 2010-07-23: if material attribute is not present, just destroy object?
         object().Destroy();
 }
+
 // -----------------------------------------------------------------------------
 // Name: StructuralCapacity::ComputeComposanteState
 // Created: SLG 2010-07-01
@@ -233,7 +234,7 @@ void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PH
 // Name: StructuralCapacity::SendState
 // Created: SLG 2010-06-21
 // -----------------------------------------------------------------------------
-void StructuralCapacity::SendState( MsgsSimToClient::UrbanAttributes& message )
+void StructuralCapacity::SendState( sword::UrbanAttributes& message )
 {
     int diff = structuralState_ - lastStructuralState_;
     if( std::abs( diff ) > 5 )

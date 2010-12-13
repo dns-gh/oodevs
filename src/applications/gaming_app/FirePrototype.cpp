@@ -46,7 +46,7 @@ void FirePrototype::Commit()
     if( const kernel::FireClass* fire = fireClass_->GetValue() )
     {
         actions::parameters::ParameterList& list = attributesList_->AddList( "Fire" );
-        list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_fire );
+        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_fire );
         list.AddIdentifier( "ClassId", fire->GetId() );
         list.AddQuantity( "Heat", fire->GetDefaultHeat() );
     }

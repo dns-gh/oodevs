@@ -59,7 +59,7 @@ void Explosions::UpdateData( const T& message )
 // Name: Explosions::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::DoUpdate( const MsgsSimToClient::MsgExplosion& message )
+void Explosions::DoUpdate( const sword::Explosion& message )
 {
     UpdateData( message );
 }
@@ -68,7 +68,7 @@ void Explosions::DoUpdate( const MsgsSimToClient::MsgExplosion& message )
 // Name: Explosions::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message )
+void Explosions::DoUpdate( const sword::StopUnitFire& message )
 {
     UpdateData( message );
 }
@@ -77,7 +77,7 @@ void Explosions::DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message )
 // Name: Explosions::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::DoUpdate( const MsgsSimToClient::MsgStopCrowdFire& message )
+void Explosions::DoUpdate( const sword::StopCrowdFire& message )
 {
     for( int i = 0; i < message.units_damages().elem_size(); ++i )
         Update( message.units_damages().elem( i ) );
@@ -88,7 +88,7 @@ void Explosions::DoUpdate( const MsgsSimToClient::MsgStopCrowdFire& message )
 // Name: Explosions::Update
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::Update( const MsgsSimToClient::MsgUnitFireDamages& message )
+void Explosions::Update( const sword::UnitFireDamages& message )
 {
     agentExplosions_.push_back( factory_.CreateFireResult( message ) );
     if( agentExplosions_.size() > 20 )
@@ -102,7 +102,7 @@ void Explosions::Update( const MsgsSimToClient::MsgUnitFireDamages& message )
 // Name: Explosions::Update
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::Update( const MsgsSimToClient::MsgCrowdFireDamages& message )
+void Explosions::Update( const sword::CrowdFireDamages& message )
 {
     populationExplosions_.push_back( factory_.CreateFireResult( message ) );
     if( populationExplosions_.size() > 20 )

@@ -53,7 +53,7 @@ void HumanFactors::CreateDictionary( kernel::PropertiesDictionary& dictionary ) 
 // Name: HumanFactors::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void HumanFactors::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void HumanFactors::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_moral()  )
         morale_ = (E_UnitMorale)message.moral();

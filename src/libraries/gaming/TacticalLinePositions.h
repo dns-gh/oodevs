@@ -31,14 +31,14 @@ class TacticalLine_ABC;
 // =============================================================================
 class TacticalLinePositions : public kernel::Positions
                             , public kernel::Drawable_ABC
-                            , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimaUpdate >
-                            , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimitUpdate >
+                            , public kernel::Updatable_ABC< sword::LimaUpdate >
+                            , public kernel::Updatable_ABC< sword::LimitUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              TacticalLinePositions( const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner );
-             TacticalLinePositions( const Common::MsgLocation& message, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner );
+             TacticalLinePositions( const sword::MsgLocation& message, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner );
     virtual ~TacticalLinePositions();
     //@}
 
@@ -63,9 +63,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate&  message );
-    virtual void DoUpdate( const MsgsMessengerToClient::MsgLimitUpdate& message );
-    void Update( const Common::MsgTacticalLine& message );
+    virtual void DoUpdate( const sword::LimaUpdate&  message );
+    virtual void DoUpdate( const sword::LimitUpdate& message );
+    void Update( const sword::MsgTacticalLine& message );
     //@}
 
 private:

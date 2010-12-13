@@ -41,11 +41,11 @@ public:
 
     //! @name Operations
     //@{
-    bool HasValue( const MsgsSimToClient::MsgSimToClient& wrapper ) const
+    bool HasValue( const sword::SimToClient& wrapper ) const
     {
         return wrapper.message().has_stop_unit_fire();
     }
-    float Extract( const MsgsSimToClient::MsgSimToClient& wrapper ) const;
+    float Extract( const sword::SimToClient& wrapper ) const;
     //@}
 
 private:

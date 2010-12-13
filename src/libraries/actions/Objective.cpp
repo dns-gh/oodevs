@@ -53,7 +53,7 @@ Objective::Objective( const OrderParameter& parameter, xml::xistream& xis, const
 // Name: Objective constructor
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-Objective::Objective( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgMissionObjective& message )
+Objective::Objective( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::MsgMissionObjective& message )
     : Parameter< QString >( parameter )
 {
     AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Objective location" ).ascii(), "location", false ), converter, message.localisation() ) );
@@ -87,7 +87,7 @@ void Objective::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC
 // Name: Objective::CommitTo
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void Objective::CommitTo( Common::MsgMissionParameter& message ) const
+void Objective::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -97,7 +97,7 @@ void Objective::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: Objective::CommitTo
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void Objective::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void Objective::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
         CommitTo( *message.mutable_missionobjective() );
@@ -107,7 +107,7 @@ void Objective::CommitTo( Common::MsgMissionParameter_Value& message ) const
 // Name: Objective::CommitTo
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void Objective::CommitTo( Common::MsgMissionObjective& message ) const
+void Objective::CommitTo( sword::MsgMissionObjective& message ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {

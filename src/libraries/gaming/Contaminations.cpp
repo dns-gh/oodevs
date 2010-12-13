@@ -58,7 +58,7 @@ void Contaminations::CreateDictionary( PropertiesDictionary& dico ) const
 // Name: Contaminations::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Contaminations::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void Contaminations::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_etat_contamination()  )
     {

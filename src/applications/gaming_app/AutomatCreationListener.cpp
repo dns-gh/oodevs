@@ -52,11 +52,11 @@ AutomatCreationListener::~AutomatCreationListener()
 // Name: AutomatCreationListener::OnMessageReceived
 // Created: LDC 2010-10-11
 // -----------------------------------------------------------------------------
-bool AutomatCreationListener::OnMessageReceived( const MsgsSimToClient::MsgSimToClient& message )
+bool AutomatCreationListener::OnMessageReceived( const sword::SimToClient& message )
 {
     if( message.context() != context_ || !message.message().has_automat_creation() )
         return false;
-    const MsgsSimToClient::MsgAutomatCreation& creation = message.message().automat_creation();
+    const sword::AutomatCreation& creation = message.message().automat_creation();
     kernel::Automat_ABC* automat = automatResolver_.Find( creation.automat().id() );
     if( !automat )
         return false;

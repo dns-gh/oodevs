@@ -27,17 +27,17 @@ using namespace dispatcher;
 // Name: Side constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Side::Side( const Model_ABC& model, const MsgsSimToClient::MsgPartyCreation& msg )
+Side::Side( const Model_ABC& model, const sword::PartyCreation& msg )
     : Team_ABC( msg.party().id(), QString( msg.name().c_str() ) )
     , model_( model )
     , nType_( msg.type() )
 {
     switch( nType_ )
     {
-        case Common::unknown_diplo: karma_ = kernel::Karma::unknown_; break;
-        case Common::friend_diplo : karma_ = kernel::Karma::friend_; break;
-        case Common::enemy_diplo  : karma_ = kernel::Karma::enemy_; break;
-        case Common::neutral_diplo: karma_ = kernel::Karma::neutral_; break;
+        case sword::unknown_diplo: karma_ = kernel::Karma::unknown_; break;
+        case sword::friend_diplo : karma_ = kernel::Karma::friend_; break;
+        case sword::enemy_diplo  : karma_ = kernel::Karma::enemy_; break;
+        case sword::neutral_diplo: karma_ = kernel::Karma::neutral_; break;
     }
     RegisterSelf( *this );
 }
@@ -55,7 +55,7 @@ Side::~Side()
 // Name: Side::DoUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Side::DoUpdate( const Common::MsgChangeDiplomacy& asnMsg )
+void Side::DoUpdate( const sword::ChangeDiplomacy& asnMsg )
 {
     const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.party2().id() );
     diplomacies_[ &side ] = asnMsg.diplomatie();
@@ -65,7 +65,7 @@ void Side::DoUpdate( const Common::MsgChangeDiplomacy& asnMsg )
 // Name: Side::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Side::DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& asnMsg )
+void Side::DoUpdate( const sword::ChangeDiplomacyAck& asnMsg )
 {
     const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.party2().id() );
     diplomacies_[ &side ] = asnMsg.diplomatie();

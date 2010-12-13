@@ -10,7 +10,7 @@
 #ifndef __MIL_OrderTypeParameter_h_
 #define __MIL_OrderTypeParameter_h_
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameter;
 }
@@ -43,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    bool Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to ) const;
+    bool Copy( const MIL_MissionParameter_ABC& from, sword::MsgMissionParameter& to ) const;
     //@}
 
     //! @name Accessors

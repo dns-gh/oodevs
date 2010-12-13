@@ -358,20 +358,20 @@ enum E_LogSupplyHandlingStatus
     eNbrLogSupplyHandlingStatus
 };
 
-enum E_MsgLogSupplyChangeQuotasAck
+enum E_LogSupplyChangeQuotasAck
 {
-    eMsgLogSupplyChangeQuotasAck_NoError,
-    eMsgLogSupplyChangeQuotasAck_ErrorInvalidDonneur,
-    eMsgLogSupplyChangeQuotasAck_ErrorInvalidReceveur,
-    eNbrMsgLogSupplyChangeQuotasAck
+    eLogSupplyChangeQuotasAck_NoError,
+    eLogSupplyChangeQuotasAck_ErrorInvalidDonneur,
+    eLogSupplyChangeQuotasAck_ErrorInvalidReceveur,
+    eNbrLogSupplyChangeQuotasAck
 };
 
-enum E_MsgLogSupplyPushFlowAck
+enum E_LogSupplyPushFlowAck
 {
-    eMsgLogSupplyPushFlowAck_NoError,
-    eMsgLogSupplyPushFlowAck_ErrorInvalidDonneur,
-    eMsgLogSupplyPushFlowAck_ErrorInvalidReceveur,
-    eNbrMsgLogSupplyPushFlowAck
+    eLogSupplyPushFlowAck_NoError,
+    eLogSupplyPushFlowAck_ErrorInvalidDonneur,
+    eLogSupplyPushFlowAck_ErrorInvalidReceveur,
+    eNbrLogSupplyPushFlowAck
 };
 
 enum E_LogMedicalHandlingStatus

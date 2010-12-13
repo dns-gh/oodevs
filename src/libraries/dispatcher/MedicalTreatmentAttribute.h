@@ -30,8 +30,8 @@ private:
     {
         MedicalCapacity() : typeId_ ( -1 ), baseline_ ( 0 ), available_ ( 0 ), emergency_ ( 0 ) {}
 
-        void Update( const Common::MedicalTreatmentBedCapacity& capacity );
-        void Send( Common::MedicalTreatmentBedCapacity& capacity ) const;
+        void Update( const sword::MedicalTreatmentBedCapacity& capacity );
+        void Send( sword::MedicalTreatmentBedCapacity& capacity ) const;
 
         unsigned baseline_;
         unsigned available_;
@@ -42,27 +42,27 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MedicalTreatmentAttribute( const Common::ObjectAttributes& asnMsg );
+    explicit MedicalTreatmentAttribute( const sword::ObjectAttributes& asnMsg );
     virtual ~MedicalTreatmentAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::ObjectAttributes& asnMsg );
-    virtual void Send  ( Common::ObjectAttributes& asnMsg ) const;
+    virtual void Update( const sword::ObjectAttributes& asnMsg );
+    virtual void Send  ( sword::ObjectAttributes& asnMsg ) const;
     //@}
 
 private:
     //! @name 
     //@{
-    void Update( const Common::ObjectAttributeMedicalTreatment& message );
+    void Update( const sword::ObjectAttributeMedicalTreatment& message );
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::vector< MedicalCapacity >  T_TreatmentCapacityVector;
-    typedef Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus EnumMedicalTreatmentStatus;
+    typedef sword::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus EnumMedicalTreatmentStatus;
     //@}
 
 private:

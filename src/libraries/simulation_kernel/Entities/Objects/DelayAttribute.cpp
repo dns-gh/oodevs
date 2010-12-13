@@ -52,7 +52,7 @@ DelayAttribute::DelayAttribute( unsigned int nDelay )
 // Name: DelayAttribute constructor
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( const Common::MsgMissionParameter_Value& attributes )
+DelayAttribute::DelayAttribute( const sword::MsgMissionParameter_Value& attributes )
     : nDelay_( attributes.list( 1 ).quantity() )
 {
     // NOTHING
@@ -121,7 +121,7 @@ void DelayAttribute::WriteODB( xml::xostream& xos ) const
 // Name: DelayAttribute::SendFullState
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::SendFullState( Common::ObjectAttributes& asn ) const
+void DelayAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_effect_delay()->set_value( nDelay_ );
 }
@@ -130,7 +130,7 @@ void DelayAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // Name: DelayAttribute::SendUpdate
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
+void DelayAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {

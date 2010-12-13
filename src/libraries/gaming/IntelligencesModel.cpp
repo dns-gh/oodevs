@@ -46,7 +46,7 @@ void IntelligencesModel::Purge()
 // Name: IntelligencesModel::Create
 // Created: SBO 2007-10-18
 // -----------------------------------------------------------------------------
-void IntelligencesModel::Create( const MsgsMessengerToClient::MsgIntelligenceCreation& message )
+void IntelligencesModel::Create( const sword::IntelligenceCreation& message )
 {
     std::auto_ptr< Intelligence_ABC > intelligence( factory_.Create( message ) );
     Register( intelligence->GetId(), *intelligence );
@@ -57,7 +57,7 @@ void IntelligencesModel::Create( const MsgsMessengerToClient::MsgIntelligenceCre
 // Name: IntelligencesModel::Delete
 // Created: SBO 2007-10-18
 // -----------------------------------------------------------------------------
-void IntelligencesModel::Delete( const MsgsMessengerToClient::MsgIntelligenceDestruction& message )
+void IntelligencesModel::Delete( const sword::IntelligenceDestruction& message )
 {
     if( Intelligence_ABC* element = Find( message.id().id() ) )
     {

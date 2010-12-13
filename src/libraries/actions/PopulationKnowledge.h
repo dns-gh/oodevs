@@ -14,7 +14,7 @@
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "tools/Resolver_ABC.h"
 
-namespace Common
+namespace sword
 {
     class CrowdKnowledgeId;
 }
@@ -50,9 +50,9 @@ public:
     //! @name Operations
     //@{
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& asn ) const;
-    void CommitTo( Common::CrowdKnowledgeId& asn ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& asn ) const;
+    void CommitTo( sword::CrowdKnowledgeId& asn ) const;
     //@}
 
 private:

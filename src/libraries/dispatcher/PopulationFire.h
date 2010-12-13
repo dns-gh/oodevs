@@ -33,7 +33,7 @@ class PopulationFire : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFire( Model& model, const MsgsSimToClient::MsgStartCrowdFire& msg );
+             PopulationFire( Model& model, const sword::StartCrowdFire& msg );
     virtual ~PopulationFire();
     //@}
 
@@ -56,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MsgsSimToClient::MsgStartCrowdFire msg_;
+    sword::StartCrowdFire msg_;
     //@}
 };
 

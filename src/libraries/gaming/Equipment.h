@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& message );
+    void Update( const sword::EquipmentDotations_EquipmentDotation& message );
     QString GetName() const;
     unsigned Total() const;
     //@}

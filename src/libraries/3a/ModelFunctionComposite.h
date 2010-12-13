@@ -38,7 +38,7 @@ public:
     void Add( boost::shared_ptr< ModelFunction_ABC > function );
 
     virtual void BeginTick();
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive( const sword::SimToClient& message );
     virtual void EndTick();
     //@}
 

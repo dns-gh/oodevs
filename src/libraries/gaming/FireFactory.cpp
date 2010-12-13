@@ -40,7 +40,7 @@ FireFactory::~FireFactory()
 // Name: FireFactory::CreateFire
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-Fire_ABC* FireFactory::CreateFire( const MsgsSimToClient::MsgStartUnitFire& message )
+Fire_ABC* FireFactory::CreateFire( const sword::StartUnitFire& message )
 {
     if( message.target().has_unit() || message.target().has_crowd() )
         return new DirectFire( message, model_.agents_, model_.agents_ );
@@ -53,7 +53,7 @@ Fire_ABC* FireFactory::CreateFire( const MsgsSimToClient::MsgStartUnitFire& mess
 // Name: FireFactory::CreateFire
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-Fire_ABC* FireFactory::CreateFire( const MsgsSimToClient::MsgStartCrowdFire& message )
+Fire_ABC* FireFactory::CreateFire( const sword::StartCrowdFire& message )
 {
     return new PopulationFire( message, model_.agents_ );
 }

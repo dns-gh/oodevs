@@ -13,7 +13,7 @@
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/Types.h"
 
-namespace Common
+namespace sword
 {
     class MsgWeatherAttributes;
     class MsgMissionParameters;
@@ -53,8 +53,8 @@ public:
 
     //! @name Operations
     //@{
-    void Commit( Common::MsgWeatherAttributes& att ) const;
-    void Commit( Common::MsgMissionParameters& att ) const;
+    void Commit( sword::MsgWeatherAttributes& att ) const;
+    void Commit( sword::MsgMissionParameters& att ) const;
     void CreateParameters( actions::MagicAction& action, tools::Iterator< const kernel::OrderParameter& >& it );
     //@}
 

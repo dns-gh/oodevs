@@ -14,7 +14,7 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include <qlistbox.h>
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameter;
 }

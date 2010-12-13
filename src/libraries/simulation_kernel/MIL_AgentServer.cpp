@@ -390,7 +390,7 @@ void MIL_AgentServer::SendControlInformation() const
     NET_ASN_Tools::WriteGDH( nRealTime_, *message().mutable_date_time() );
     message().set_tick_duration( GetTimeStepDuration() );
     message().set_time_factor( nTimeFactor_ );
-    message().set_status( Common::EnumSimulationState( GetSimState() ) );
+    message().set_status( sword::EnumSimulationState( GetSimState() ) );
     message().set_checkpoint_frequency( GetCheckPointManager().GetCheckPointFrequency() );
     message().set_send_vision_cones( GetAgentServer().MustSendUnitVisionCones() );
     message().set_profiling_enabled( GetProfilerManager().IsProfilingEnabled() );
@@ -405,13 +405,13 @@ void MIL_AgentServer::Stop()
 {
     client::ControlStopAck msg;
     if( nSimState_ == eSimStopped )
-        msg().set_error_code( MsgsSimToClient::ControlAck::error_not_started );
+        msg().set_error_code( sword::ControlAck::error_not_started );
     else
     {
         nSimState_ = eSimStopped;
         MT_Timer_ABC::Stop();
         MT_LOG_INFO_MSG( "Simulation stopped" );
-        msg().set_error_code( MsgsSimToClient::ControlAck::no_error );
+        msg().set_error_code( sword::ControlAck::no_error );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -424,13 +424,13 @@ void MIL_AgentServer::Pause()
 {
     client::ControlPauseAck msg;
     if( nSimState_ != eSimRunning )
-        msg().set_error_code( MsgsSimToClient::ControlAck::error_already_paused );
+        msg().set_error_code( sword::ControlAck::error_already_paused );
     else
     {
         nSimState_ = eSimPaused;
         MT_Timer_ABC::Stop();
         MT_LOG_INFO_MSG( "Simulation paused" );
-        msg().set_error_code( MsgsSimToClient::ControlAck::no_error );
+        msg().set_error_code( sword::ControlAck::no_error );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -443,13 +443,13 @@ void MIL_AgentServer::Resume()
 {
     client::ControlResumeAck msg;
     if( nSimState_ != eSimPaused )
-        msg().set_error_code( MsgsSimToClient::ControlAck::error_not_paused );
+        msg().set_error_code( sword::ControlAck::error_not_paused );
     else
     {
         nSimState_ = eSimRunning;
         MT_Timer_ABC::Start( static_cast< int >( 1000 * nTimeStepDuration_ / nTimeFactor_ ) );
         MT_LOG_INFO_MSG( "Simulation resumed" );
-        msg().set_error_code( MsgsSimToClient::ControlAck::no_error );
+        msg().set_error_code( sword::ControlAck::no_error );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -462,7 +462,7 @@ void MIL_AgentServer::SetTimeFactor( unsigned int timeFactor )
 {
     client::ControlChangeTimeFactorAck msg;
     if( timeFactor == 0 )
-        msg().set_error_code( MsgsSimToClient::ControlAck::error_invalid_time_factor );
+        msg().set_error_code( sword::ControlAck::error_invalid_time_factor );
     else
     {
         nTimeFactor_ = timeFactor;
@@ -471,7 +471,7 @@ void MIL_AgentServer::SetTimeFactor( unsigned int timeFactor )
             MT_Timer_ABC::Start( static_cast< int >( 1000 * nTimeStepDuration_ / nTimeFactor_ ) );
             MT_LOG_INFO_MSG( MT_FormatString( "Time factor set to %d", nTimeFactor_ ).c_str() )
         }
-        msg().set_error_code( MsgsSimToClient::ControlAck::no_error );
+        msg().set_error_code( sword::ControlAck::no_error );
     }
     msg().set_time_factor( nTimeFactor_ );
     msg.Send( NET_Publisher_ABC::Publisher() );
@@ -484,16 +484,16 @@ void MIL_AgentServer::SetTimeFactor( unsigned int timeFactor )
 void MIL_AgentServer::SetRealTime( const std::string& realTime )
 {
     unsigned int secs = 0;
-    Common::MsgDateTime datetime;
+    sword::MsgDateTime datetime;
     datetime.set_data( realTime );
     NET_ASN_Tools::ReadGDH( datetime, secs );
     client::ControlDatetimeChangeAck ack;
     if( secs < nInitialRealTime_ )
-        ack().set_error_code( MsgsSimToClient::ControlAck::error_invalid_date_time );
+        ack().set_error_code( sword::ControlAck::error_invalid_date_time );
     else
     {
         nRealTime_ = secs;
-        ack().set_error_code( MsgsSimToClient::ControlAck::no_error );
+        ack().set_error_code( sword::ControlAck::no_error );
     }
     ack.Send( NET_Publisher_ABC::Publisher() );
 }

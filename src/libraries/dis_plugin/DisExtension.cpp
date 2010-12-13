@@ -82,7 +82,7 @@ namespace
 // Name: DisExtension::DoUpdate
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-void DisExtension::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& )
+void DisExtension::DoUpdate( const sword::UnitAttributes& )
 {
     forceId_ = ForceId( holder_ ); // $$$$ SBO 2009-12-11: doesn't need to be computed every time
     if( tic::TicExtension_ABC* extension = holder_.Retrieve< tic::TicExtension_ABC >() )

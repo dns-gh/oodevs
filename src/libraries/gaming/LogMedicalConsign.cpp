@@ -25,7 +25,7 @@ using namespace kernel;
 // Name: LogMedicalConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMedicalConsign::LogMedicalConsign( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, const MsgsSimToClient::MsgLogMedicalHandlingCreation& message )
+LogMedicalConsign::LogMedicalConsign( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, const sword::LogMedicalHandlingCreation& message )
     : controller_      ( controller )
     , resolver_        ( resolver )
     , nID_             ( message.request().id() )
@@ -55,7 +55,7 @@ LogMedicalConsign::~LogMedicalConsign()
 // Name: LogMedicalConsign::Update
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogMedicalConsign::Update( const MsgsSimToClient::MsgLogMedicalHandlingUpdate& message )
+void LogMedicalConsign::Update( const sword::LogMedicalHandlingUpdate& message )
 {
     if( message.has_provider() && ( !pPionLogHandling_ || message.provider().id() != int( pPionLogHandling_->GetId() ) ) )
     {

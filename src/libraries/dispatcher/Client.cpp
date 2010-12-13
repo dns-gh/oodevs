@@ -38,7 +38,7 @@ Client::~Client()
 // Name: Client::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& msg )
+void Client::Send( const sword::AuthenticationToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }
@@ -47,7 +47,7 @@ void Client::Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& 
 // Name: Client::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsSimToClient::MsgSimToClient& msg )
+void Client::Send( const sword::SimToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }
@@ -56,7 +56,7 @@ void Client::Send( const MsgsSimToClient::MsgSimToClient& msg )
 // Name: Client::Send
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsReplayToClient::MsgReplayToClient& msg )
+void Client::Send( const sword::ReplayToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }
@@ -65,7 +65,7 @@ void Client::Send( const MsgsReplayToClient::MsgReplayToClient& msg )
 // Name: Client::Send
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsAarToClient::MsgAarToClient& msg )
+void Client::Send( const sword::AarToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }
@@ -74,7 +74,7 @@ void Client::Send( const MsgsAarToClient::MsgAarToClient& msg )
 // Name: Client::Send
 // Created: RDS 2008-04-04
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsMessengerToClient::MsgMessengerToClient& msg )
+void Client::Send( const sword::MessengerToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }
@@ -83,7 +83,7 @@ void Client::Send( const MsgsMessengerToClient::MsgMessengerToClient& msg )
 // Name: Client::Send
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-void Client::Send( const MsgsDispatcherToClient::MsgDispatcherToClient& msg )
+void Client::Send( const sword::DispatcherToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }

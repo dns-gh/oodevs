@@ -15,15 +15,15 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitPathFind;
-    class MsgUnitAttributes;
+    class UnitPathFind;
+    class UnitAttributes;
 }
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgUnitMagicAction;
+    class UnitMagicAction;
 }
 
 namespace kernel
@@ -38,9 +38,9 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class Paths : public kernel::Extension_ABC
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitPathFind >
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
-            , public kernel::Updatable_ABC< MsgsClientToSim::MsgUnitMagicAction >
+            , public kernel::Updatable_ABC< sword::UnitPathFind >
+            , public kernel::Updatable_ABC< sword::UnitAttributes >
+            , public kernel::Updatable_ABC< sword::UnitMagicAction >
             , public kernel::Drawable_ABC
 {
 public:
@@ -64,9 +64,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitPathFind& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
-    virtual void DoUpdate( const MsgsClientToSim::MsgUnitMagicAction& message );
+    virtual void DoUpdate( const sword::UnitPathFind& message );
+    virtual void DoUpdate( const sword::UnitAttributes& message );
+    virtual void DoUpdate( const sword::UnitMagicAction& message );
     void UpdatePathfind();
     //@}
 

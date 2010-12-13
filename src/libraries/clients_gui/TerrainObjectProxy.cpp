@@ -68,7 +68,7 @@ bool TerrainObjectProxy::operator==( const TerrainObjectProxy& object ) const
 // Name: TerrainObjectProxy::Update
 // Created: SLG 2010-06-22
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& /*msg*/ )
+void TerrainObjectProxy::DoUpdate( const sword::UrbanUpdate& /*msg*/ )
 {
     Touch();
 }

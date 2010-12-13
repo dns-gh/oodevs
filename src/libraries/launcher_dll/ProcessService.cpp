@@ -11,7 +11,6 @@
 #include "ProcessService.h"
 #include "frontend/commands.h"
 #include "frontend/Config.h"
-#include "frontend/ConfigurationManipulator.h"
 #include "frontend/CreateSession.h"
 #include "frontend/ProcessWrapper.h"
 #include "frontend/Profile.h"
@@ -58,13 +57,13 @@ ProcessService::~ProcessService()
 // Name: ProcessService::SendExerciseList
 // Created: SBO 2010-09-30
 // -----------------------------------------------------------------------------
-void ProcessService::SendExerciseList( MsgsLauncherToAdmin::MsgExercicesListResponse& message )
+void ProcessService::SendExerciseList( sword::ExercicesListResponse& message )
 {
     const QStringList exercises = frontend::commands::ListExercises( config_ );
     for( QStringList::const_iterator it = exercises.begin(); it != exercises.end(); ++it )
     {
         const std::string name = (*it).ascii();
-        Common::MsgExercise& exercise = *message.mutable_exercise()->Add();
+        sword::MsgExercise& exercise = *message.mutable_exercise()->Add();
         exercise.set_name( name );
         exercise.set_running( IsRunning( name ) );
         if( exercise.running() )
@@ -76,17 +75,17 @@ void ProcessService::SendExerciseList( MsgsLauncherToAdmin::MsgExercicesListResp
 // Name: ProcessService::StartExercise
 // Created: SBO 2010-10-07
 // -----------------------------------------------------------------------------
-MsgsLauncherToAdmin::MsgControlStartAck::ErrorCode ProcessService::StartExercise( const MsgsAdminToLauncher::MsgControlStart& message )
+sword::ControlStartExerciseAck::ErrorCode ProcessService::StartExercise( const sword::ControlStartExercise& message )
 {
     const std::string session = "multiplayer"; // $$$$ SBO 2010-10-28: TODO: add session to message
     const std::string exercise = message.exercise().name();
     const std::string checkpoint = message.has_checkpoint() ? message.checkpoint() : "";
     if( ! frontend::commands::ExerciseExists( config_, exercise ) )
-        return MsgsLauncherToAdmin::MsgControlStartAck::bad_exercise_name;
+        return sword::ControlStartExerciseAck::bad_exercise_name;
     if( IsRunning( exercise ) )
-        return MsgsLauncherToAdmin::MsgControlStartAck::exercise_already_running;
+        return sword::ControlStartExerciseAck::exercise_already_running;
     if( message.has_checkpoint() && ! frontend::commands::CheckpointExists( config_, exercise, session, checkpoint ) )
-        return MsgsLauncherToAdmin::MsgControlStartAck::invalid_checkpoint;
+        return sword::ControlStartExerciseAck::invalid_checkpoint;
     {
         frontend::CreateSession action( config_, exercise, session );
         action.SetDefaultValues();
@@ -95,7 +94,7 @@ MsgsLauncherToAdmin::MsgControlStartAck::ErrorCode ProcessService::StartExercise
         action.Commit();
     }
     boost::shared_ptr< frontend::SpawnCommand > command;
-    if( message.mode() == MsgsAdminToLauncher::MsgControlStart::play )
+    if( message.mode() == sword::ControlStartExercise::play )
         command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), true ) );
     else
         command.reset( new frontend::StartReplay( config_, exercise.c_str(), session.c_str(), 10001, true ) );
@@ -105,14 +104,14 @@ MsgsLauncherToAdmin::MsgControlStartAck::ErrorCode ProcessService::StartExercise
         processes_[ exercise ] = wrapper;
     }
     wrapper->Start();
-    return MsgsLauncherToAdmin::MsgControlStartAck::success;
+    return sword::ControlStartExerciseAck::success;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProcessService::StopExercise
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-MsgsLauncherToAdmin::MsgControlStopAck::ErrorCode ProcessService::StopExercise( const MsgsAdminToLauncher::MsgControlStop& message )
+sword::ControlStopExerciseAck::ErrorCode ProcessService::StopExercise( const sword::ControlStopExercise& message )
 {
     const std::string name = message.exercise().name();
     std::map< std::string, boost::weak_ptr< frontend::ProcessWrapper > >::iterator it = processes_.find( name );
@@ -120,10 +119,10 @@ MsgsLauncherToAdmin::MsgControlStopAck::ErrorCode ProcessService::StopExercise( 
     {
         boost::shared_ptr< frontend::ProcessWrapper > process( it->second );
         process->Stop();
-        return MsgsLauncherToAdmin::MsgControlStopAck::success;
+        return sword::ControlStopExerciseAck::success;
     }
-    return frontend::commands::ExerciseExists( config_, name ) ? MsgsLauncherToAdmin::MsgControlStopAck::exercise_not_running 
-                                                               : MsgsLauncherToAdmin::MsgControlStopAck::bad_exercise_name;
+    return frontend::commands::ExerciseExists( config_, name ) ? sword::ControlStopExerciseAck::exercise_not_running 
+                                                               : sword::ControlStopExerciseAck::bad_exercise_name;
 }
 
 // -----------------------------------------------------------------------------
@@ -164,12 +163,14 @@ namespace
 {
     struct ProfileCollector : public frontend::ProfileVisitor_ABC
     {
-        explicit ProfileCollector( MsgsAuthenticationToClient::MsgProfileDescriptionList& message ) : message_( message ) {}
+        explicit ProfileCollector( sword::ProfileDescriptionList& message )
+            : message_( message )
+        {}
         virtual void Visit( const frontend::Profile& profile )
         {
             profile.Send( *message_.add_elem() );
         }
-        MsgsAuthenticationToClient::MsgProfileDescriptionList& message_;
+        sword::ProfileDescriptionList& message_;
     };
 }
 
@@ -179,7 +180,7 @@ namespace
 //        exercise name should be added to profile list request
 // Created: SBO 2010-11-19
 // -----------------------------------------------------------------------------
-void ProcessService::SendProfileList( MsgsAuthenticationToClient::MsgProfileDescriptionList& message )
+void ProcessService::SendProfileList( sword::ProfileDescriptionList& message )
 {
     boost::recursive_mutex::scoped_lock locker( mutex_ );
     for( std::map< std::string, boost::weak_ptr< frontend::ProcessWrapper > >::const_iterator it = processes_.begin(); it != processes_.end(); ++it )

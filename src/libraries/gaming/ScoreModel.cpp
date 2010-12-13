@@ -20,7 +20,7 @@
 #include "protocol/ReplaySenders.h"
 #include "protocol/AarSenders.h"
 
-using namespace Common;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: ScoreModel constructor
@@ -78,7 +78,7 @@ namespace
 // Name: ScoreModel::Update
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
-void ScoreModel::Update( const MsgsAarToClient::MsgIndicator& message )
+void ScoreModel::Update( const sword::Indicator& message )
 {
     if( !definitions_.Find( QString( message.name().c_str() ) ) )
         return;
@@ -98,7 +98,7 @@ void ScoreModel::Update( const MsgsAarToClient::MsgIndicator& message )
 // Name: ScoreModel::Update
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
-void ScoreModel::Update( const MsgsAarToClient::MsgPlotResult& message )
+void ScoreModel::Update( const sword::PlotResult& message )
 {
     requests_->Update( message );
 }

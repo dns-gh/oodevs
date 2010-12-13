@@ -57,7 +57,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive( const sword::SimToClient& message );
 
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
@@ -74,9 +74,9 @@ private:
     //@{
     void FormatMission( const char* name, int id, int mission );
     bool Initialize();
-    void LogUnitsFireDamages( const MsgsSimToClient::MsgUnitsFireDamages& unitsDamages );
-    void LogPopulationsFireDamages( const MsgsSimToClient::MsgCrowdsFireDamages& populationsDamages );
-    void LogDamagesOnTarget( const MsgsSimToClient::MsgUnitFireDamages& unitDamages, const kernel::Entity_ABC& target );
+    void LogUnitsFireDamages( const sword::UnitsFireDamages& unitsDamages );
+    void LogPopulationsFireDamages( const sword::CrowdsFireDamages& populationsDamages );
+    void LogDamagesOnTarget( const sword::UnitFireDamages& unitDamages, const kernel::Entity_ABC& target );
     //@}
 
 private:

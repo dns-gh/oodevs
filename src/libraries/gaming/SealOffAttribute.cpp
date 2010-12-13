@@ -70,7 +70,7 @@ void SealOffAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) cons
 // Name: SealOffAttribute::DoUpdate
 // Created: MGD 2010-08-24
 // -----------------------------------------------------------------------------
-void SealOffAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void SealOffAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -79,7 +79,7 @@ void SealOffAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate
 // Name: SealOffAttribute::DoUpdate
 // Created: MGD 2010-08-24
 // -----------------------------------------------------------------------------
-void SealOffAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void SealOffAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }

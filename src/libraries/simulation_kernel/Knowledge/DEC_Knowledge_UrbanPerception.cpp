@@ -118,7 +118,7 @@ void DEC_Knowledge_UrbanPerception::SendStateToNewClient()
     client::UrbanDetection message;
     message().mutable_observer()->set_id( perceiver_.GetID() );
     message().mutable_urban_object()->set_id( object_.GetId() );
-    message().set_visibility( Common::EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() ) );
+    message().set_visibility( sword::EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() ) );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 

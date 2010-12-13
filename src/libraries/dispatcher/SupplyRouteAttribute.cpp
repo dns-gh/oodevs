@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: SupplyRouteAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-SupplyRouteAttribute::SupplyRouteAttribute( const Common::ObjectAttributes& message )
+SupplyRouteAttribute::SupplyRouteAttribute( const sword::ObjectAttributes& message )
     : bEquipped_  ( false )
     , nMaxWeight_ ( 0 )
     , nWidth_     ( 0 )
@@ -40,7 +40,7 @@ SupplyRouteAttribute::~SupplyRouteAttribute()
 // Name: SupplyRouteAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::Update( const Common::ObjectAttributes& message )
+void SupplyRouteAttribute::Update( const sword::ObjectAttributes& message )
 {
     if( message.has_supply_route() )
     {
@@ -56,7 +56,7 @@ void SupplyRouteAttribute::Update( const Common::ObjectAttributes& message )
 // Name: SupplyRouteAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::Send( Common::ObjectAttributes& message ) const
+void SupplyRouteAttribute::Send( sword::ObjectAttributes& message ) const
 {
     message.mutable_supply_route()->set_equipped  ( bEquipped_ );
     message.mutable_supply_route()->set_max_weight( nMaxWeight_ );

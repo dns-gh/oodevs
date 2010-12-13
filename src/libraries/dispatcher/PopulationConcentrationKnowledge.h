@@ -13,16 +13,16 @@
 #include "SimpleEntity.h"
 #include "protocol/protocol.h"
 
-namespace Common
+namespace sword
 {
     class MsgCoordLatLong;
     enum EnumPopulationAttitude;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgCrowdConcentrationKnowledgeCreation;
-    class MsgCrowdConcentrationKnowledgeUpdate;
+    class CrowdConcentrationKnowledgeCreation;
+    class CrowdConcentrationKnowledgeUpdate;
 }
 
 namespace kernel
@@ -47,13 +47,13 @@ class PopulationConcentrationKnowledge : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-    PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation& msg );
+    PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const sword::CrowdConcentrationKnowledgeCreation& msg );
     virtual ~PopulationConcentrationKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& msg );
+    void Update( const sword::CrowdConcentrationKnowledgeUpdate& msg );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -85,10 +85,10 @@ private:
     //@{
     const kernel::PopulationKnowledge_ABC&     populationKnowledge_;
     unsigned int                               concentrationId_;
-    const Common::MsgCoordLatLong              position_;
+    const sword::MsgCoordLatLong              position_;
     unsigned long                              nNbrAliveHumans_;
     unsigned long                              nNbrDeadHumans_;
-    Common::EnumCrowdAttitude               nAttitude_;
+    sword::EnumCrowdAttitude               nAttitude_;
     unsigned int                               nRelevance_;
     bool                                       bPerceived_;
     T_Optionals                                optionals_;

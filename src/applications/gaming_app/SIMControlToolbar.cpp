@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-
 #include "SIMControlToolbar.h"
 #include "moc_SIMControlToolbar.cpp"
 #include "ConnectDialog.h"
@@ -20,11 +19,9 @@
 #include "clients_gui/resources.h"
 #include "gaming/statusicons.h"
 #include "protocol/ServerPublisher_ABC.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
-
-using namespace Common;
-
+using namespace sword;
 using namespace kernel;
 
 namespace

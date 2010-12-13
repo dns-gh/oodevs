@@ -41,7 +41,7 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // Name: EngineerConstruction constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, const Common::MsgPlannedWork& message, kernel::Controller& controller )
+EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const kernel::EntityResolver_ABC& entities, const sword::MsgPlannedWork& message, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
     , type_( types.Get( message.type() ) )
 {
@@ -54,7 +54,7 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // Name: EngineerConstruction::SetParameters
 // Created: LDC 2009-04-01
 // -----------------------------------------------------------------------------
-void EngineerConstruction::SetParameters( const Common::MsgPlannedWork& message, const kernel::EntityResolver_ABC& entities, kernel::Controller& controller )
+void EngineerConstruction::SetParameters( const sword::MsgPlannedWork& message, const kernel::EntityResolver_ABC& entities, kernel::Controller& controller )
 {
     if( message.tc2().id() != 0 )
     {
@@ -142,7 +142,7 @@ void EngineerConstruction::Serialize( xml::xostream& xos ) const
 // Name: EngineerConstruction::CommitTo
 // Created: JCR 2008-11-03
 // -----------------------------------------------------------------------------
-void EngineerConstruction::CommitTo( Common::MsgMissionParameter& message ) const
+void EngineerConstruction::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -152,7 +152,7 @@ void EngineerConstruction::CommitTo( Common::MsgMissionParameter& message ) cons
 // Name: EngineerConstruction::CommitTo
 // Created: JCR 2008-11-03
 // -----------------------------------------------------------------------------
-void EngineerConstruction::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void EngineerConstruction::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
         CommitTo( *message.mutable_plannedwork() );
@@ -162,7 +162,7 @@ void EngineerConstruction::CommitTo( Common::MsgMissionParameter_Value& message 
 // Name: EngineerConstruction::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void EngineerConstruction::CommitTo( Common::MsgPlannedWork& message ) const
+void EngineerConstruction::CommitTo( sword::MsgPlannedWork& message ) const
 {
     message.set_type( type_.GetType().c_str() );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
@@ -171,11 +171,11 @@ void EngineerConstruction::CommitTo( Common::MsgPlannedWork& message ) const
         if( type == "location" )
             static_cast< const Location* >( it->second )->CommitTo( *message.mutable_position() );
         else if( type == "obstacletype" )
-            static_cast< const ObstacleType* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_type_obstacle, boost::ref( message ), _1 ) );
+            static_cast< const ObstacleType* >( it->second )->CommitTo( boost::bind( &sword::MsgPlannedWork::set_type_obstacle, boost::ref( message ), _1 ) );
         else if( type == "density" )
-            static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_densite, boost::ref( message ), _1 ) );
+            static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &sword::MsgPlannedWork::set_densite, boost::ref( message ), _1 ) );
         else if( type == "tc2" || type == "automate" )
-            static_cast< const Automat* >( it->second )->CommitTo( boost::bind( &Common::AutomatId::set_id, boost::ref( *message.mutable_tc2() ), _1 ) );
+            static_cast< const Automat* >( it->second )->CommitTo( boost::bind( &sword::AutomatId::set_id, boost::ref( *message.mutable_tc2() ), _1 ) );
     }
 }
 
@@ -183,7 +183,7 @@ void EngineerConstruction::CommitTo( Common::MsgPlannedWork& message ) const
 // Name: EngineerConstruction::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void EngineerConstruction::Clean( Common::MsgPlannedWork& message ) const
+void EngineerConstruction::Clean( sword::MsgPlannedWork& message ) const
 {
     message.Clear();
 }

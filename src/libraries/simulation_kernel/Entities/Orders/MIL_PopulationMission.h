@@ -12,9 +12,9 @@
 
 #include "MIL_Mission_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgCrowdOrder;
+    class CrowdOrder;
 }
 
 class MIL_Population;
@@ -30,7 +30,7 @@ class MIL_PopulationMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const Common::MsgCrowdOrder& asn );
+             MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const sword::CrowdOrder& asn );
     virtual ~MIL_PopulationMission();
     //@}
 

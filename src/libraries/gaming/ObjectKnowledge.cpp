@@ -31,7 +31,7 @@ using namespace kernel;
 // Name: ObjectKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter,
+ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter,
                                  const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
     : EntityImplementation< ObjectKnowledge_ABC >( controller, message.knowledge().id(), "" )
     , converter_     ( converter )
@@ -67,7 +67,7 @@ ObjectKnowledge::~ObjectKnowledge()
 // Name: ObjectKnowledge::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     if( message.has_object()  )
         pRealObject_ = objectResolver_.Find( message.object().id() );

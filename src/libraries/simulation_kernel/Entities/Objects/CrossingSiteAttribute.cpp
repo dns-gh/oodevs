@@ -61,7 +61,7 @@ CrossingSiteAttribute::CrossingSiteAttribute()
 // Name: CrossingSiteAttribute constructor
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-CrossingSiteAttribute::CrossingSiteAttribute( const Common::MsgMissionParameter_Value& attributes )
+CrossingSiteAttribute::CrossingSiteAttribute( const sword::MsgMissionParameter_Value& attributes )
 {
     rWidth_         = attributes.list( 1 ).quantity();
     rDepth_         = attributes.list( 2 ).quantity();
@@ -129,7 +129,7 @@ void CrossingSiteAttribute::Register( MIL_Object_ABC& object ) const
 // Name: CrossingSiteAttribute::SendFullState
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::SendFullState( Common::ObjectAttributes& asn ) const
+void CrossingSiteAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_crossing_site()->set_width( int( rWidth_ ) );
     asn.mutable_crossing_site()->set_depth( int( rDepth_ ) );
@@ -141,7 +141,7 @@ void CrossingSiteAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // Name: CrossingSiteAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
+void CrossingSiteAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
@@ -154,7 +154,7 @@ void CrossingSiteAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 // Name: CrossingSiteAttribute::OnUpdate
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribute )
+void CrossingSiteAttribute::OnUpdate( const sword::MsgMissionParameter_Value& attribute )
 {
     if( attribute.list_size() > 4 )
     {

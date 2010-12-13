@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& asnMsg );
+    virtual void Receive( const sword::SimToClient& asnMsg );
     virtual void StartSynchronisation();
     virtual void EndSynchronisation();
     virtual bool IsSynching() const;
@@ -50,7 +50,7 @@ private:
 
     //! @name Helpers
     //@{
-    bool IsDestruction( const MsgsSimToClient::MsgSimToClient& asnMsg ) const;
+    bool IsDestruction( const sword::SimToClient& asnMsg ) const;
     //@}
 
 private:

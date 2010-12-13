@@ -17,7 +17,7 @@ using namespace kernel;
 // Name: AgentFireResult constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-AgentFireResult::AgentFireResult( const MsgsSimToClient::MsgUnitFireDamages& message, const tools::Resolver_ABC< Agent_ABC >& resolver,  const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver, const QDateTime& time )
+AgentFireResult::AgentFireResult( const sword::UnitFireDamages& message, const tools::Resolver_ABC< Agent_ABC >& resolver,  const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver, const QDateTime& time )
     : target_( resolver.Get( message.target().id() ) )
     , time_( time )
 {
@@ -35,12 +35,12 @@ AgentFireResult::AgentFireResult( const MsgsSimToClient::MsgUnitFireDamages& mes
 
     for( int i = 0; i < message.humans().elem_size(); ++i )
     {
-        const MsgsSimToClient::UnitHumanFireDamage& fire = message.humans().elem( i );
+        const sword::UnitHumanFireDamage& fire = message.humans().elem( i );
 
         int Casualties::* table = & Casualties::troopers_;
-        if( fire.rank() == Common::officier )
+        if( fire.rank() == sword::officier )
             table = & Casualties::officers_;
-        else if( fire.rank() == Common::sous_officer )
+        else if( fire.rank() == sword::sous_officer )
             table = & Casualties::subOfficers_;
 
         casualties_[ eHumanWound_BlesseUrgence1 ].*table        = fire.wounded_u1_nbr();

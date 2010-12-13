@@ -50,19 +50,19 @@ unsigned long ReportTemplate::GetId() const
 // Name: ReportTemplate::RenderMessage
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-QString ReportTemplate::RenderMessage( const MsgsSimToClient::MsgReport& message ) const
+QString ReportTemplate::RenderMessage( const sword::Report& message ) const
 {
     QString messageStr = message_;
     unsigned int enums = 0;
     if( message.has_parameters() )
     {
-        const Common::MsgMissionParameters& parameters = message.parameters();
+        const sword::MsgMissionParameters& parameters = message.parameters();
         for( int i = 0; i < parameters.elem_size(); ++i )
         {
-            const Common::MsgMissionParameter& parameter = parameters.elem( i );
+            const sword::MsgMissionParameter& parameter = parameters.elem( i );
             if( !parameter.null_value() && parameter.value_size() == 1 )//report doesn't manage list
             {
-                const Common::MsgMissionParameter_Value& param = *parameter.value().begin();
+                const sword::MsgMissionParameter_Value& param = *parameter.value().begin();
                 if( param.has_enumeration() )
                     messageStr = messageStr.arg( enumerations_[ enums++ ][ param.enumeration() ] );
                 else

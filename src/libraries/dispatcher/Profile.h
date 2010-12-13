@@ -13,26 +13,26 @@
 #include "Profile_ABC.h"
 #include <set>
 
-namespace MsgsAuthenticationToClient
+namespace sword
 {
-    class MsgProfile;
-    class MsgProfileDescription;
+    class Profile;
+    class ProfileDescription;
 }
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgClientToSim;
+    class ClientToSim;
 }
 
-namespace MsgsClientToAuthentication
+namespace sword
 {
-    class MsgProfileCreationRequest;
-    class MsgProfileUpdateRequest;
+    class ProfileCreationRequest;
+    class ProfileUpdateRequest;
 }
 
-namespace MsgsClientToReplay
+namespace sword
 {
-    class MsgClientToReplay;
+    class ClientToReplay;
 }
 
 namespace xml
@@ -65,17 +65,17 @@ public:
     //! @name Constructors/Destructor
     //@{
              Profile( const Model& model, ClientPublisher_ABC& clients, const std::string& strLogin, xml::xistream& xis );
-             Profile( const Model& model, ClientPublisher_ABC& clients, const MsgsClientToAuthentication::MsgProfileCreationRequest& message );
+             Profile( const Model& model, ClientPublisher_ABC& clients, const sword::ProfileCreationRequest& message );
     virtual ~Profile();
     //@}
 
     //! @name Main
     //@{
     bool CheckPassword( const std::string& strPassword ) const;
-    bool CheckRights( const MsgsClientToSim::MsgClientToSim& msg ) const;
-    bool CheckRights( const MsgsClientToAuthentication::MsgClientToAuthentication& msg ) const;
-    bool CheckRights( const MsgsClientToReplay::MsgClientToReplay& msg ) const;
-    bool CheckRights( const Common::MsgChatTarget& source, const Common::MsgChatTarget& target ) const;
+    bool CheckRights( const sword::ClientToSim& msg ) const;
+    bool CheckRights( const sword::ClientToAuthentication& msg ) const;
+    bool CheckRights( const sword::ClientToReplay& msg ) const;
+    bool CheckRights( const sword::MsgChatTarget& source, const sword::MsgChatTarget& target ) const;
     //@}
 
     //! @name Accessors
@@ -85,14 +85,14 @@ public:
 
     //! @name Network
     //@{
-    void Send( MsgsAuthenticationToClient::MsgProfile& asn ) const;
-    void Send( MsgsAuthenticationToClient::MsgProfileDescription& asn ) const;
+    void Send( sword::Profile& asn ) const;
+    void Send( sword::ProfileDescription& asn ) const;
     void SendCreation( ClientPublisher_ABC& publisher ) const;
     //@}
 
     //! @name Operations
     //@{
-    void Update( const MsgsClientToAuthentication::MsgProfileUpdateRequest& message );
+    void Update( const sword::ProfileUpdateRequest& message );
     void SetRight( const kernel::Automat_ABC& entity, bool readonly, bool readwrite );
     //@}
 
@@ -118,7 +118,7 @@ private:
     void ReadSideRights( xml::xistream& xis, T_SideSet& container );
     void ReadFormationRights( xml::xistream& xis, T_FormationSet& container );
     void ReadPopulationRights( xml::xistream& xis, T_PopulationSet& container );
-    void ReadRights( const MsgsAuthenticationToClient::MsgProfile& message );
+    void ReadRights( const sword::Profile& message );
     //@}
 
 private:

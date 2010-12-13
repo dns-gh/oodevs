@@ -14,15 +14,16 @@ namespace xml
 {
     class xistream;
 }
-namespace Common
+
+namespace sword
 {
     enum ObstacleType_DemolitionTargetType;
     class MsgMissionParameters;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    enum MsgObjectMagicActionAck_ErrorCode;
+    enum ObjectMagicActionAck_ErrorCode;
 }
 
 namespace urban
@@ -60,8 +61,8 @@ public:
     //! @name Operations
     //@{
     MIL_Object_ABC* BuildObject( xml::xistream& xis, MIL_Army_ABC& army );
-    MIL_Object_ABC* BuildObject( const Common::MsgMissionParameters& asn, MIL_Army_ABC& army, MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode& value );
-    MIL_Object_ABC* BuildObject( const std::string& name, const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, Common::ObstacleType_DemolitionTargetType obstacleType );
+    MIL_Object_ABC* BuildObject( const sword::MsgMissionParameters& asn, MIL_Army_ABC& army, sword::ObjectMagicActionAck_ErrorCode& value );
+    MIL_Object_ABC* BuildObject( const std::string& name, const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, sword::ObstacleType_DemolitionTargetType obstacleType );
     MIL_Object_ABC* BuildObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army );
     MIL_Object_ABC* BuildUrbanObject( const urban::TerrainObject_ABC& object );
     //@}

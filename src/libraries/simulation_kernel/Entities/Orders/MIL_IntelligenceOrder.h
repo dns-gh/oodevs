@@ -27,7 +27,7 @@ class MIL_IntelligenceOrder
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_IntelligenceOrder( const Common::MsgIntelligence& asn );
+    explicit MIL_IntelligenceOrder( const sword::Intelligence& asn );
     virtual ~MIL_IntelligenceOrder();
     //@}
 
@@ -41,8 +41,8 @@ public:
     bool IsEmbarked() const;
     bool IsEnemy() const;
     bool IsFriend() const;
-    Common::EnumNatureLevel GetLevel() const;
-    void Serialize( Common::MsgIntelligence& asn ) const;
+    sword::EnumNatureLevel GetLevel() const;
+    void Serialize( sword::Intelligence& asn ) const;
     //@}
 
 private:
@@ -56,10 +56,10 @@ private:
     //@{
     const std::string name_;
     const std::string nature_;
-    const Common::EnumNatureLevel level_;
+    const sword::EnumNatureLevel level_;
     const bool embarked_;
-    const Common::MsgCoordLatLong position_;
-    const Common::EnumDiplomacy diplomacy_;
+    const sword::MsgCoordLatLong position_;
+    const sword::EnumDiplomacy diplomacy_;
     const unsigned int formation_;
     //@}
 };

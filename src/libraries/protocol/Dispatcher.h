@@ -11,13 +11,8 @@
 #define __protocol_Dispatcher_h__
 
 #pragma warning( push, 0 )
-#pragma warning( disable : 4244 )
-
-#include "Definitions.h"
-#include "generated/Common.pb.h"
-#include "generated/DispatcherToClient.pb.h"
-#include "generated/DispatcherToSim.pb.h"
-
+#include "protocol/proto/dispatcher_client.pb.h"
+#include "protocol/proto/dispatcher_simulation.pb.h"
 #pragma warning( pop )
 
 #endif // __protocol_Dispatcher_h__

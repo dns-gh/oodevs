@@ -14,7 +14,7 @@
 
 #include "MT_Tools/MT_Stl.h"
 
-namespace Common
+namespace sword
 {
     enum EnumNatureLevel;
 }
@@ -39,7 +39,7 @@ public:
     //@{
     const std::string&            GetName () const;
           unsigned int            GetID   () const;
-          Common::EnumNatureLevel GetAsnID() const;
+          sword::EnumNatureLevel GetAsnID() const;
     //@}
 
 private:
@@ -68,13 +68,13 @@ private:
     //@}
 
 private:
-     PHY_NatureLevel( const std::string& strName, E_Type nType, Common::EnumNatureLevel nAsnID );
+     PHY_NatureLevel( const std::string& strName, E_Type nType, sword::EnumNatureLevel nAsnID );
     virtual ~PHY_NatureLevel();
 
 private:
     const std::string     strName_;
     const E_Type          nType_;
-    const Common::EnumNatureLevel nAsnID_;
+    const sword::EnumNatureLevel nAsnID_;
 
 private:
     static T_NatureLevelMap natureLevels_;

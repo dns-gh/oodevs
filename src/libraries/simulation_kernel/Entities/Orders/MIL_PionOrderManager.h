@@ -12,14 +12,14 @@
 
 #include "MIL_OrderManager_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgUnitOrder;
+    class UnitOrder;
 }
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgFragOrder;
+    class FragOrder;
 }
 
 class MIL_AgentPion;
@@ -36,8 +36,8 @@ public:
 
     // @name Events
     //@{
-    virtual void OnReceiveFragOrder( const MsgsClientToSim::MsgFragOrder& asn );
-            void OnReceiveMission  ( const Common::MsgUnitOrder& asn );
+    virtual void OnReceiveFragOrder( const sword::FragOrder& asn );
+            void OnReceiveMission  ( const sword::UnitOrder& asn );
             void OnReceiveMission  ( const MIL_MissionType_ABC& type );
     //@}
 

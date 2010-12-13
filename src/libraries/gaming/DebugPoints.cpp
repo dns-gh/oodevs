@@ -38,7 +38,7 @@ DebugPoints::~DebugPoints()
 // Name: DebugPoints::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void DebugPoints::DoUpdate( const MsgsSimToClient::MsgDebugPoints& message )
+void DebugPoints::DoUpdate( const sword::DebugPoints& message )
 {
     points_.resize( message.coordinates().elem_size() );
     for( int i = 0; i < message.coordinates().elem_size(); ++i )

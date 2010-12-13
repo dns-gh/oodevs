@@ -27,7 +27,7 @@ using namespace dispatcher;
 // Name: PopulationKnowledge constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( Model& model, const MsgsSimToClient::MsgCrowdKnowledgeCreation& msg )
+PopulationKnowledge::PopulationKnowledge( Model& model, const sword::CrowdKnowledgeCreation& msg )
     : SimpleEntity< kernel::PopulationKnowledge_ABC >( msg.knowledge().id() )
     , model_           ( model )
     , knowledgeGroup_  ( model.KnowledgeGroups().Get( msg.knowledge_group().id() ) )
@@ -51,7 +51,7 @@ PopulationKnowledge::~PopulationKnowledge()
 // Name: PopulationKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const MsgsSimToClient::MsgCrowdKnowledgeUpdate& msg )
+void PopulationKnowledge::Update( const sword::CrowdKnowledgeUpdate& msg )
 {
     if( msg.has_etat_domination()  )
         nDominationState_ = msg.etat_domination();
@@ -61,7 +61,7 @@ void PopulationKnowledge::Update( const MsgsSimToClient::MsgCrowdKnowledgeUpdate
 // Name: PopulationKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation& msg )
+void PopulationKnowledge::Update( const sword::CrowdConcentrationKnowledgeCreation& msg )
 {
     PopulationConcentrationKnowledge* element = concentrations_.Find( msg.knowledge().id() );
     if( !element )
@@ -77,7 +77,7 @@ void PopulationKnowledge::Update( const MsgsSimToClient::MsgCrowdConcentrationKn
 // Name: PopulationKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate&  msg )
+void PopulationKnowledge::Update( const sword::CrowdConcentrationKnowledgeUpdate&  msg )
 {
     concentrations_.Get( msg.knowledge().id() ).Update( msg );
 }
@@ -86,7 +86,7 @@ void PopulationKnowledge::Update( const MsgsSimToClient::MsgCrowdConcentrationKn
 // Name: PopulationKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction& msg )
+void PopulationKnowledge::Update( const sword::CrowdConcentrationKnowledgeDestruction& msg )
 {
     PopulationConcentrationKnowledge* knowledge = concentrations_.Find( msg.knowledge().id() );
     concentrations_.Remove( msg.knowledge().id() );
@@ -97,7 +97,7 @@ void PopulationKnowledge::Update( const MsgsSimToClient::MsgCrowdConcentrationKn
 // Name: PopulationKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& msg )
+void PopulationKnowledge::Update( const sword::CrowdFlowKnowledgeCreation& msg )
 {
     PopulationFlowKnowledge* element = flows_.Find( msg.knowledge().id() );
     if( !element )
@@ -113,7 +113,7 @@ void PopulationKnowledge::Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeCr
 // Name: PopulationKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& msg )
+void PopulationKnowledge::Update( const sword::CrowdFlowKnowledgeUpdate& msg )
 {
     flows_.Get( msg.knowledge().id() ).Update( msg );
 }
@@ -122,7 +122,7 @@ void PopulationKnowledge::Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeUp
 // Name: PopulationKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction& msg )
+void PopulationKnowledge::Update( const sword::CrowdFlowKnowledgeDestruction& msg )
 {
     PopulationFlowKnowledge* flow = flows_.Find( msg.knowledge().id() );
     flows_.Remove( msg.knowledge().id() );

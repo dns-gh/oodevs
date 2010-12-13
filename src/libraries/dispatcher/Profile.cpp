@@ -16,7 +16,7 @@
 #include "Population.h"
 #include "Side.h"
 #include "MT_Tools/MT_Logger.h"
-#include "protocol/authenticationsenders.h"
+#include "protocol/AuthenticationSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
@@ -58,7 +58,7 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
 // Name: Profile constructor
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const MsgsClientToAuthentication::MsgProfileCreationRequest& message )
+Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const sword::ProfileCreationRequest& message )
     : model_       ( model )
     , clients_     ( clients )
     , strLogin_    ( message.profile().login() )
@@ -150,7 +150,7 @@ namespace
 // Name: Profile::ReadRights
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-void Profile::ReadRights( const MsgsAuthenticationToClient::MsgProfile& message )
+void Profile::ReadRights( const sword::Profile& message )
 {
     if( message.has_read_only_automates() )
         SetRights( message.read_only_automates(), readOnlyAutomats_, model_.Automats() );
@@ -183,9 +183,9 @@ bool Profile::CheckPassword( const std::string& strPassword ) const
 // Name: Profile::CheckRights
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) const
+bool Profile::CheckRights( const sword::ClientToSim& wrapper ) const
 {
-    const ::MsgsClientToSim::MsgClientToSim_Content& message = wrapper.message();
+    const ::sword::ClientToSim_Content& message = wrapper.message();
     if( message.has_control_pause() )
         return bSupervision_;
     if( message.has_control_resume() )
@@ -216,16 +216,16 @@ bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) cons
         return true;
     if( message.has_unit_magic_action() )
     {
-        if( message.unit_magic_action().type()== MsgsClientToSim::MsgUnitMagicAction::create_fire_order )
+        if( message.unit_magic_action().type()== sword::UnitMagicAction::create_fire_order )
             return bSupervision_;
         return true;
     }
     if( message.has_magic_action() )
     {
-        if( message.magic_action().type()== MsgsClientToSim::MsgMagicAction::global_weather
-            || message.magic_action().type()== MsgsClientToSim::MsgMagicAction::local_weather
-            || message.magic_action().type()== MsgsClientToSim::MsgMagicAction::create_knowledge_group
-            || message.magic_action().type()== MsgsClientToSim::MsgMagicAction::change_resource_network_properties )
+        if( message.magic_action().type()== sword::MagicAction::global_weather
+            || message.magic_action().type()== sword::MagicAction::local_weather
+            || message.magic_action().type()== sword::MagicAction::create_knowledge_group
+            || message.magic_action().type()== sword::MagicAction::change_resource_network_properties )
             return bSupervision_;
         return true;
     }
@@ -241,7 +241,7 @@ bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) cons
 // Name: Profile::CheckRights
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-bool Profile::CheckRights( const MsgsClientToAuthentication::MsgClientToAuthentication& wrapper ) const
+bool Profile::CheckRights( const sword::ClientToAuthentication& wrapper ) const
 {
     if( wrapper.message().has_authentication_request() )
         return true;
@@ -259,7 +259,7 @@ bool Profile::CheckRights( const MsgsClientToAuthentication::MsgClientToAuthenti
 // Name: Profile::CheckRights
 // Created: AGE 2007-08-23
 // -----------------------------------------------------------------------------
-bool Profile::CheckRights( const MsgsClientToReplay::MsgClientToReplay& ) const
+bool Profile::CheckRights( const sword::ClientToReplay& ) const
 {
     return bSupervision_;
 }
@@ -268,7 +268,7 @@ bool Profile::CheckRights( const MsgsClientToReplay::MsgClientToReplay& ) const
 // Name: Profile::CheckRights
 // Created: AGE 2008-06-10
 // -----------------------------------------------------------------------------
-bool Profile::CheckRights( const Common::MsgChatTarget& source, const Common::MsgChatTarget& target ) const
+bool Profile::CheckRights( const sword::MsgChatTarget& source, const sword::MsgChatTarget& target ) const
 {
     const std::string t( target.profile() );
     const std::string s( source.profile() );
@@ -289,7 +289,7 @@ namespace
 // Name: Profile::Send
 // Created: NLD 2006-10-09
 // -----------------------------------------------------------------------------
-void Profile::Send( MsgsAuthenticationToClient::MsgProfile& message ) const
+void Profile::Send( sword::Profile& message ) const
 {
     message.set_login( strLogin_ );
     message.set_supervisor( bSupervision_ );
@@ -309,7 +309,7 @@ void Profile::Send( MsgsAuthenticationToClient::MsgProfile& message ) const
 // Name: Profile::Send
 // Created: SBO 2009-12-18
 // -----------------------------------------------------------------------------
-void Profile::Send( MsgsAuthenticationToClient::MsgProfileDescription& message ) const
+void Profile::Send( sword::ProfileDescription& message ) const
 {
     message.set_login( strLogin_ );
     message.set_password( !strPassword_.empty() );
@@ -334,7 +334,7 @@ void Profile::SendCreation( ClientPublisher_ABC& publisher ) const
 // Name: Profile::Update
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-void Profile::Update( const MsgsClientToAuthentication::MsgProfileUpdateRequest& message )
+void Profile::Update( const sword::ProfileUpdateRequest& message )
 {
     strLogin_ = message.profile().login();
     if( message.profile().has_password()  )

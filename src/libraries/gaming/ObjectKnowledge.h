@@ -37,13 +37,13 @@ namespace kernel
 // =============================================================================
 class ObjectKnowledge : public kernel::EntityImplementation< kernel::ObjectKnowledge_ABC >
                       , public kernel::Extension_ABC
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
+                      , public kernel::Updatable_ABC< sword::ObjectKnowledgeUpdate >
                       , public kernel::Displayable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledge( const kernel::Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message,
+             ObjectKnowledge( const kernel::Entity_ABC& owner, const sword::ObjectKnowledgeCreation& message,
                               kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                               const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver,
                               const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
@@ -72,7 +72,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& message );
     //@}
 
 private:

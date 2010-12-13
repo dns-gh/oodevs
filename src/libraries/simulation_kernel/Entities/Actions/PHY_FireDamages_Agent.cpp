@@ -73,7 +73,7 @@ void PHY_FireDamages_Agent::NotifyHumanWoundChanged( const Human_ABC& human, con
 // Name: PHY_FireDamages_Agent::Serialize
 // Created: JVT 04-03-29
 //-----------------------------------------------------------------------------
-void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, MsgsSimToClient::MsgUnitFireDamages& asn ) const
+void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, sword::UnitFireDamages& asn ) const
 {
     asn.mutable_target()->set_id( target.GetID() );
 
@@ -84,7 +84,7 @@ void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, MsgsSimToCli
         const PHY_ComposanteType_ABC& type   = *itResult->first;
         const T_ComposanteStates&      states =  itResult->second;
 
-        MsgsSimToClient::MsgUnitEquipmentFireDamage& asnEquipement = *asn.mutable_equipments()->add_elem();
+        sword::UnitEquipmentFireDamage& asnEquipement = *asn.mutable_equipments()->add_elem();
         asnEquipement.mutable_equipement_type()->set_id( type.GetMosID().id() );
         asnEquipement.set_available_nbr( states[ PHY_ComposanteState::undamaged_.GetID() ] );
         asnEquipement.set_repairable_nbr( states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] + states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] );
@@ -96,7 +96,7 @@ void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, MsgsSimToCli
     for( PHY_HumanRank::CIT_HumanRankMap it = PHY_HumanRank::GetHumanRanks().begin(); it != PHY_HumanRank::GetHumanRanks().end(); ++it )
     {
         const PHY_HumanRank& rank = *it->second;
-        MsgsSimToClient::UnitHumanFireDamage& personnel = *asn.mutable_humans()->add_elem();
+        sword::UnitHumanFireDamage& personnel = *asn.mutable_humans()->add_elem();
         const T_HumansPerWoundVector& wounds = humanResults_[ rank.GetID() ];
 
         personnel.set_rank           ( rank.GetAsnID() );

@@ -26,7 +26,7 @@ using namespace dispatcher;
 // Name: Formation constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Formation::Formation( const Model_ABC& model, const MsgsSimToClient::MsgFormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels )
+Formation::Formation( const Model_ABC& model, const sword::FormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels )
     : Formation_ABC( msg.formation().id(), QString( msg.name().c_str() ) )
     , model_ ( model )
     , name_  ( msg.name() )
@@ -118,16 +118,15 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
     client::FormationCreation message;
     message().mutable_formation()->set_id( GetId() );
     message().mutable_party()->set_id( team_.GetId() );
-    message().set_level( Common::EnumNatureLevel( level_.GetId() ) );
+    message().set_level( sword::EnumNatureLevel( level_.GetId() ) );
     message().set_name( name_ );
     message().set_app6symbol( symbol_ );
-    message().set_logistic_level( Common::EnumLogisticLevel( logisticEntity_.GetLogisticLevel().GetId() ) );
-    
+    message().set_logistic_level( sword::EnumLogisticLevel( logisticEntity_.GetLogisticLevel().GetId() ) );
     if( parent_ )
         message().mutable_parent()->set_id( parent_->GetId() );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
     {
-        MsgsSimToClient::Extension_Entry* entry = message().mutable_extension()->add_entries();
+        sword::Extension_Entry* entry = message().mutable_extension()->add_entries();
         entry->set_name( it->first );
         entry->set_value( it->second );
     }
@@ -269,7 +268,7 @@ const kernel::LogisticLevel& Formation::GetLogisticLevel() const
 // Name: Formation::DoUpdate
 // Created: AHC 2010-10-08
 // -----------------------------------------------------------------------------
-void Formation::DoUpdate( const Common::MsgChangeLogisticLinks& )
+void Formation::DoUpdate( const sword::ChangeLogisticLinks& )
 {
     // NOTHING
 }

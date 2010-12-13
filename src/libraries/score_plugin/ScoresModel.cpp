@@ -93,7 +93,7 @@ void ScoresModel::ReadIndicator( xml::xistream& xis )
 // Name: ScoresModel::Update
 // Created: SBO 2009-08-20
 // -----------------------------------------------------------------------------
-void ScoresModel::Update( const MsgsAarToClient::MsgIndicator& message )
+void ScoresModel::Update( const sword::Indicator& message )
 {
     T_Scores::const_iterator it = scores_.find( message.name() );
     if( it != scores_.end() )
@@ -104,7 +104,7 @@ void ScoresModel::Update( const MsgsAarToClient::MsgIndicator& message )
 // Name: ScoresModel::Update
 // Created: SBO 2009-08-21
 // -----------------------------------------------------------------------------
-void ScoresModel::Update( const MsgsSimToClient::MsgSimToClient& message )
+void ScoresModel::Update( const sword::SimToClient& message )
 {
     BOOST_FOREACH( const std::vector< boost::shared_ptr< Task > >::value_type& task, tasks_ )
         task->Receive( message );
@@ -114,7 +114,7 @@ void ScoresModel::Update( const MsgsSimToClient::MsgSimToClient& message )
 // Name: ScoresModel::RequestPlot
 // Created: SBO 2009-08-20
 // -----------------------------------------------------------------------------
-void ScoresModel::RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToAar::MsgPlotRequest& request )
+void ScoresModel::RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const sword::PlotRequest& request )
 {
     if( boost::starts_with( request.request(), "indicator://" ) )
     {

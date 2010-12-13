@@ -12,9 +12,9 @@
 
 
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgDecisionalState;
+    class DecisionalState;
 }
 
 namespace dispatcher
@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
     void Clear();
-    void Update( const MsgsSimToClient::MsgDecisionalState& asnMsg );
+    void Update( const sword::DecisionalState& asnMsg );
     void Send( unsigned id, ClientPublisher_ABC& publisher ) const;
     //@}
 

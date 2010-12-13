@@ -295,7 +295,7 @@ bool NodeElement::NeedUpdate() const
 // Name: NodeElement::Serialize
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void NodeElement::Serialize( Common::ResourceNetwork& msg ) const
+void NodeElement::Serialize( sword::ResourceNetwork& msg ) const
 {
     msg.mutable_resource()->set_name( resourceName_ );
     msg.set_enabled( isActivated_ );
@@ -317,7 +317,7 @@ void NodeElement::Serialize( Common::ResourceNetwork& msg ) const
 // Name: NodeElement::Update
 // Created: JSR 2010-08-26
 // -----------------------------------------------------------------------------
-void NodeElement::Update( const Common::MsgMissionParameter_Value& msg )
+void NodeElement::Update( const sword::MsgMissionParameter_Value& msg )
 {
     bool oldActivated = isActivated_;
     unsigned int oldProductionCapacity = productionCapacity_;
@@ -331,7 +331,7 @@ void NodeElement::Update( const Common::MsgMissionParameter_Value& msg )
     stockMaxCapacity_ = msg.list( 5 ).quantity();
     for( int i = 0; i < msg.list( 6 ).list_size(); ++ i )
     {
-        const Common::MsgMissionParameter_Value& link = msg.list( 6 ).list( i );
+        const sword::MsgMissionParameter_Value& link = msg.list( 6 ).list( i );
         unsigned int index = link.list( 0 ).identifier();
         if( index < links_.size() )
             links_[ index ]->SetCapacity( link.list( 1 ).quantity() );

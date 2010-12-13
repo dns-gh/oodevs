@@ -12,19 +12,15 @@
 
 #include "tools/Resolver.h"
 
-namespace Common
+namespace sword
 {
     class Tasker;
+    enum EnumSimulationState;
 }
 
 namespace kernel
 {
     class ModelVisitor_ABC;
-}
-
-namespace Common
-{
-    enum EnumSimulationState;
 }
 
 namespace dispatcher
@@ -77,7 +73,7 @@ public:
 
     virtual void Send( ClientPublisher_ABC& publisher ) const = 0;
     virtual void SendFirstTick( ClientPublisher_ABC& publisher ) const = 0;
-    virtual void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, Common::EnumSimulationState status, unsigned int factor ) const = 0;
+    virtual void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned int factor ) const = 0;
     //@}
 
     //! @name Accessors
@@ -103,7 +99,7 @@ public:
     virtual const tools::Resolver_ABC< FireEffect >&            FireEffects() const = 0;
     virtual const tools::Resolver_ABC< Report >&                Reports() const = 0;
 
-    virtual void SetToTasker( Common::Tasker& tasker, unsigned int id ) const = 0;
+    virtual void SetToTasker( sword::Tasker& tasker, unsigned int id ) const = 0;
     //@}
 };
 

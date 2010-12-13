@@ -29,8 +29,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( Common::ObjectAttributes& asn ) const;
-    virtual void SendFullState   ( Common::ObjectAttributes& asn ) const;
+    virtual void SendChangedState( sword::ObjectAttributes& asn ) const;
+    virtual void SendFullState   ( sword::ObjectAttributes& asn ) const;
     //@}
 
     //! @name Serialization
@@ -100,7 +100,7 @@ bool DEC_Knowledge_ObjectAttributeProxy_ABC< T >::UpdateAttributeFromSource( con
 // Created: NLD 2010-10-27
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_Knowledge_ObjectAttributeProxy_ABC< T >::SendChangedState( Common::ObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeProxy_ABC< T >::SendChangedState( sword::ObjectAttributes& asn ) const
 {
     const T* pData = GetAttribute();
     if( pData )
@@ -112,7 +112,7 @@ void DEC_Knowledge_ObjectAttributeProxy_ABC< T >::SendChangedState( Common::Obje
 // Created: NLD 2010-10-27
 // -----------------------------------------------------------------------------
 template< typename T > 
-void DEC_Knowledge_ObjectAttributeProxy_ABC< T >::SendFullState( Common::ObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeProxy_ABC< T >::SendFullState( sword::ObjectAttributes& asn ) const
 {
     const T* pData = GetAttribute();
     if( pData )

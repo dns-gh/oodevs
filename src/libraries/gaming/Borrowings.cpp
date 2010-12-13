@@ -40,7 +40,7 @@ Borrowings::~Borrowings()
 // Name: Borrowings::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Borrowings::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void Borrowings::DoUpdate( const sword::UnitAttributes& message )
 {
     if( ! message.has_equipements_pretes()  )
         return;
@@ -49,7 +49,7 @@ void Borrowings::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
     borrowings_.reserve( message.equipements_empruntes().elem_size() );
     for( int i = 0; i < message.equipements_empruntes().elem_size(); ++i )
     {
-        const MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& pret = message.equipements_empruntes().elem( i );
+        const sword::BorrowedEquipments_BorrowedEquipment& pret = message.equipements_empruntes().elem( i );
         borrowings_.push_back( Loan( equipmentResolver_.Get( pret.type().id() ),
                                      resolver_.Get( pret.owner().id() ),
                                      pret.nombre() ) );

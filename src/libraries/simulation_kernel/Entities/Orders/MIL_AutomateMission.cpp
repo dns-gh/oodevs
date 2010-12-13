@@ -25,7 +25,7 @@
 // Name: MIL_AutomateMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const Common::MsgAutomatOrder& asn )
+MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const sword::AutomatOrder& asn )
     : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parameters(), automate.GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , automate_                ( automate )
     , bDIAMrtBehaviorActivated_( false )

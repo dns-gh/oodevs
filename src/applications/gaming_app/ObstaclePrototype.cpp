@@ -41,7 +41,7 @@ void ObstaclePrototype::Commit()
     if( types_ )
     {
         actions::parameters::ParameterList& list = attributesList_->AddList( "Obstacle" );
-        list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_obstacle );
+        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_obstacle );
         list.AddIdentifier( "TargetType", types_->GetValue() );
         list.AddBool( "Activation", IsActivated() );
         list.AddQuantity( "ActivationTime", GetActivationTime() );

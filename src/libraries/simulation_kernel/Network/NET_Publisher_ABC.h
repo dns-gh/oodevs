@@ -10,9 +10,9 @@
 #ifndef __NET_Publisher_ABC_h_
 #define __NET_Publisher_ABC_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgSimToClient;
+    class SimToClient;
 }
 
 // =============================================================================
@@ -32,9 +32,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( MsgsSimToClient::MsgSimToClient& ) = 0;
+    virtual void Send( sword::SimToClient& ) = 0;
 
-    static void SendAsnMessage( MsgsSimToClient::MsgSimToClient& );
+    static void SendAsnMessage( sword::SimToClient& );
     static NET_Publisher_ABC& Publisher();
     //@}
 };

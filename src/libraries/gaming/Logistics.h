@@ -21,11 +21,11 @@ namespace kernel
     class PropertiesDictionary;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogMaintenanceState;
-    class MsgLogMedicalState;
-    class MsgLogSupplyState;
+    class LogMaintenanceState;
+    class LogMedicalState;
+    class LogSupplyState;
 }
 
 class Model;
@@ -39,9 +39,9 @@ class SupplyStates;
 // Created: AGE 2006-03-01
 // =============================================================================
 class Logistics : public kernel::Extension_ABC
-                , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogMaintenanceState >
-                , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogMedicalState >
-                , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyState >
+                , public kernel::Updatable_ABC< sword::LogMaintenanceState >
+                , public kernel::Updatable_ABC< sword::LogMedicalState >
+                , public kernel::Updatable_ABC< sword::LogSupplyState >
 {
 public:
     //! @name Constructors/Destructor
@@ -59,9 +59,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgLogMedicalState& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgLogMaintenanceState& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgLogSupplyState& message );
+    virtual void DoUpdate( const sword::LogMedicalState& message );
+    virtual void DoUpdate( const sword::LogMaintenanceState& message );
+    virtual void DoUpdate( const sword::LogSupplyState& message );
     //@}
 
 private:

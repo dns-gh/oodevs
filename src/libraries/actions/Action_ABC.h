@@ -18,7 +18,7 @@
 #pragma warning( pop )
 #pragma warning( pop )
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameters;
 }
@@ -97,8 +97,8 @@ public:
 protected:
     //! @name Helpers
     //@{
-    void CommitTo( Common::MsgMissionParameters& message ) const;
-    void Clean( Common::MsgMissionParameters& message ) const;
+    void CommitTo( sword::MsgMissionParameters& message ) const;
+    void Clean( sword::MsgMissionParameters& message ) const;
     //@}
 
 private:

@@ -21,7 +21,7 @@ using namespace dispatcher;
 // Name: LogConsignMaintenance constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-LogConsignMaintenance::LogConsignMaintenance( const Model& model, const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& msg )
+LogConsignMaintenance::LogConsignMaintenance( const Model& model, const sword::LogMaintenanceHandlingCreation& msg )
     : SimpleEntity< >   ( msg.request().id() )
     , model_            ( model )
     , agent_            ( model.Agents().Get( msg.unit().id() ) )
@@ -29,7 +29,7 @@ LogConsignMaintenance::LogConsignMaintenance( const Model& model, const MsgsSimT
     , nEquipmentType_   ( msg.equipement().id() )
     , nBreakdownType_   ( msg.breakdown().id() )
     , pTreatingAgent_   ( 0 )
-    , nState_           ( Common::attente_disponibilite_pieces )
+    , nState_           ( sword::attente_disponibilite_pieces )
     , bDiagnosed_       ( false )
 {
     // NOTHING
@@ -48,7 +48,7 @@ LogConsignMaintenance::~LogConsignMaintenance()
 // Name: LogConsignMaintenance::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void LogConsignMaintenance::Update( const MsgsSimToClient::MsgLogMaintenanceHandlingUpdate& msg )
+void LogConsignMaintenance::Update( const sword::LogMaintenanceHandlingUpdate& msg )
 {
     if( msg.has_diagnostique_effectue() )
         bDiagnosed_ = msg.diagnostique_effectue() != 0;

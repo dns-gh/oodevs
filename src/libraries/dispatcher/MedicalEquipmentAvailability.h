@@ -10,9 +10,9 @@
 #ifndef __MedicalEquipmentAvailability_h_
 #define __MedicalEquipmentAvailability_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogMedicalEquipmentAvailability;
+    class LogMedicalEquipmentAvailability;
 }
 
 namespace dispatcher
@@ -30,13 +30,13 @@ class MedicalEquipmentAvailability
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MedicalEquipmentAvailability( const MsgsSimToClient::MsgLogMedicalEquipmentAvailability& asn );
+    explicit MedicalEquipmentAvailability( const sword::LogMedicalEquipmentAvailability& asn );
     virtual ~MedicalEquipmentAvailability();
     //@}
 
     //! @name Operations
     //@{
-    void Send( MsgsSimToClient::MsgLogMedicalEquipmentAvailability& asn ) const;
+    void Send( sword::LogMedicalEquipmentAvailability& asn ) const;
     //@}
 
 private:

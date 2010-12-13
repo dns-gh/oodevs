@@ -173,7 +173,7 @@ namespace boost
             file << size;
             for(  PHY_RolePion_Composantes::CIT_ComposanteTypeMap it = map.begin(); it != map.end(); ++it )
             {
-                Common::EquipmentType id = it->first->GetMosID();
+                sword::EquipmentType id = it->first->GetMosID();
                 int equipment_type = id.id();
                 file << equipment_type;
                 file << it->second;
@@ -187,7 +187,7 @@ namespace boost
             file >> nNbr;
             while ( nNbr-- )
             {
-                Common::EquipmentType nID;
+                sword::EquipmentType nID;
                 int equipment_type;
                 file >> equipment_type;
                 nID.set_id( equipment_type );
@@ -1105,7 +1105,7 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
         {
             for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it )
             {
-                MsgsSimToClient::LentEquipments_LentEquipment& loan = *message().mutable_equipements_pretes()->add_elem();
+                sword::LentEquipments_LentEquipment& loan = *message().mutable_equipements_pretes()->add_elem();
                 loan.mutable_borrower()->set_id( it->first.first ->GetID() );
                 loan.mutable_type()->set_id( it->first.second->GetMosID().id() );
                 loan.set_nombre              ( it->second );
@@ -1127,7 +1127,7 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
         {
             for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it )
             {
-                MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& loan = *message().mutable_equipements_empruntes()->add_elem();
+                sword::BorrowedEquipments_BorrowedEquipment& loan = *message().mutable_equipements_empruntes()->add_elem();
                 loan.mutable_owner()->set_id(  it->first.first ->GetID() );
                 loan.mutable_type()->set_id(  it->first.second->GetMosID().id() );
                 loan.set_nombre           ( it->second );
@@ -1149,7 +1149,7 @@ void PHY_RolePion_Composantes::SendFullState( client::UnitAttributes& msg ) cons
             const PHY_ComposanteTypePion&    compType   = *itComposanteType->first;
             const T_ComposanteTypeProperties& properties =  itComposanteType->second;
 
-            MsgsSimToClient::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_dotation_eff_materiel()->add_elem();
+            sword::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_dotation_eff_materiel()->add_elem();
             value.mutable_type()->set_id(  compType.GetMosID().id() );
             value.set_nb_disponibles             ( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_ .GetID() ] );
             value.set_nb_indisponibles           ( properties.nbrsPerState_[ PHY_ComposanteState::dead_      .GetID() ] );
@@ -1183,7 +1183,7 @@ void PHY_RolePion_Composantes::SendChangedState( client::UnitAttributes& msg ) c
             if( !properties.bHasChanged_ )
                 continue;
 
-            MsgsSimToClient::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_dotation_eff_materiel()->add_elem();
+            sword::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_dotation_eff_materiel()->add_elem();
             value.mutable_type()->set_id( compType.GetMosID().id() );
             value.set_nb_disponibles            ( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_  .GetID() ] );
             value.set_nb_indisponibles          ( properties.nbrsPerState_[ PHY_ComposanteState::dead_       .GetID() ] );

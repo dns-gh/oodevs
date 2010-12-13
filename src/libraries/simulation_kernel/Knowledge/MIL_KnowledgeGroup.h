@@ -39,21 +39,21 @@ class MIL_Population;
 class KnowledgeGroupFactory_ABC;
 class MIL_KnowledgeGroup;
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameters;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgKnowledgeGroupCreation;
-    class MsgKnowledgeGroupUpdate;
+    class KnowledgeGroupCreation;
+    class KnowledgeGroupUpdate;
 }
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgKnowledgeGroupCreationRequest;
-    class MsgKnowledgeMagicAction;
+    class KnowledgeGroupCreationRequest;
+    class KnowledgeMagicAction;
 }
 // LTO end
 
@@ -119,8 +119,8 @@ public:
 
     //! @name Operations
     //@{
-    void OnReceiveMsgKnowledgeGroupCreation   ( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& message );
-    void OnReceiveMsgKnowledgeGroupUpdate     ( const MsgsClientToSim::MsgKnowledgeMagicAction& message, const tools::Resolver< MIL_Army_ABC >& armies );
+    void OnReceiveKnowledgeGroupCreation   ( const sword::KnowledgeGroupCreationRequest& message );
+    void OnReceiveKnowledgeGroupUpdate     ( const sword::KnowledgeMagicAction& message, const tools::Resolver< MIL_Army_ABC >& armies );
     void Destroy();
     //@}
 
@@ -172,9 +172,9 @@ public:
 private:
     //! @name Helpers
     //@{
-    bool OnReceiveMsgKnowledgeGroupEnable        ( const Common::MsgMissionParameters& message );
-    bool OnReceiveMsgKnowledgeGroupChangeSuperior( const Common::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent );
-    bool OnReceiveMsgKnowledgeGroupSetType       ( const Common::MsgMissionParameters& message );
+    bool OnReceiveKnowledgeGroupEnable        ( const sword::MsgMissionParameters& message );
+    bool OnReceiveKnowledgeGroupChangeSuperior( const sword::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent );
+    bool OnReceiveKnowledgeGroupSetType       ( const sword::MsgMissionParameters& message );
 
     void CreateKnowledgeFromAgentPerception( const DEC_Knowledge_Agent& agent );
     void CreateKnowledgeFromPopulationPerception( const DEC_Knowledge_Population& population );

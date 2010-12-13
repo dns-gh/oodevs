@@ -262,7 +262,7 @@ void MedicalCapacityUpdateDialog::Send( actions::parameters::ParameterList& attr
 // -----------------------------------------------------------------------------
 void MedicalCapacityUpdateDialog::FillAttributes( actions::parameters::ParameterList& attribute ) const
 {
-    attribute.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_medical_treatment );
+    attribute.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_medical_treatment );
     // attribute.AddQuantity( "Available Doctors", doctors_->value() ); 
     attribute.AddQuantity( "Doctors", doctors_->value() ); 
     // attribute.AddEnumeration( "FacilityStatus", status_->GetItemIndex( status_->GetValue() ); 

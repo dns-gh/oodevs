@@ -26,14 +26,14 @@ class FireAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FireAttribute( const Common::ObjectAttributes& asnMsg );
+    explicit FireAttribute( const sword::ObjectAttributes& asnMsg );
     virtual ~FireAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::ObjectAttributes& asnMsg );
-    virtual void Send  ( Common::ObjectAttributes& asnMsg ) const;
+    virtual void Update( const sword::ObjectAttributes& asnMsg );
+    virtual void Send  ( sword::ObjectAttributes& asnMsg ) const;
     //@}
 
 private:

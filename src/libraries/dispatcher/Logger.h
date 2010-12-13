@@ -45,7 +45,7 @@ private:
     //! @name Member data
     //@{
     ProcessMonitor monitor_;
-    int nextMemoryDump_;
+    int next_;
     //@}
 };
 }

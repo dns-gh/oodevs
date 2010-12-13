@@ -28,7 +28,7 @@ using namespace kernel;
 // Name: PopulationConcentrationKnowledge::PopulationConcentrationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& resolver, const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation& message )
+PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& resolver, const sword::CrowdConcentrationKnowledgeCreation& message )
     : controller_     ( controller )
     , resolver_       ( resolver )
     , nID_            ( message.knowledge().id() )
@@ -53,7 +53,7 @@ PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 // Name: PopulationConcentrationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate& message )
+void PopulationConcentrationKnowledge::DoUpdate( const sword::CrowdConcentrationKnowledgeUpdate& message )
 {
     static const float oneOnpi = 1.f / std::acos( -1.f );
     if( message.has_attitude()  )

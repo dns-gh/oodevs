@@ -14,7 +14,7 @@
 #include "actions/ActionsModel.h"
 #include "actions/ActionTiming.h"
 #include "clients_kernel/Controllers.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace kernel;
 

@@ -63,7 +63,7 @@ WeatherWidget::~WeatherWidget()
 // Name: WeatherWidget::Commit
 // Created: SLG 2010-03-25
 // -----------------------------------------------------------------------------
-void WeatherWidget::Commit( Common::MsgWeatherAttributes& att ) const
+void WeatherWidget::Commit( sword::MsgWeatherAttributes& att ) const
 {
     att.mutable_wind_direction()->set_heading( windDirection_->value() );
     att.set_wind_speed( windSpeed_->value() );
@@ -79,7 +79,7 @@ void WeatherWidget::Commit( Common::MsgWeatherAttributes& att ) const
 // Name: WeatherWidget::Commit
 // Created: JSR 2010-04-12
 // -----------------------------------------------------------------------------
-void WeatherWidget::Commit( Common::MsgMissionParameters& att ) const
+void WeatherWidget::Commit( sword::MsgMissionParameters& att ) const
 {
     att.add_elem()->mutable_value()->Add()->set_areal( 0 ); // Temperature
     att.add_elem()->mutable_value()->Add()->set_areal( ( float) windSpeed_->value() );

@@ -43,7 +43,7 @@ public:
     //! @name Operations
     //@{
     void Serialize( xml::xostream& xos, const std::string& fieldname ) const;
-    void Serialize( Common::MsgCoordLatLong& asn ) const;
+    void Serialize( sword::MsgCoordLatLong& asn ) const;
     unsigned short ComputeBearing( const Point& rhs ) const;
     //@}
 

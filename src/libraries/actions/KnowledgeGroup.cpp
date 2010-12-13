@@ -59,7 +59,7 @@ KnowledgeGroup::~KnowledgeGroup()
 // Name: KnowledgeGroup::CommitTo
 // Created: JSR 2010-04-19
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::CommitTo( Common::MsgMissionParameter& message ) const
+void KnowledgeGroup::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() && GetValue() ) // $$$$ _RC_ SBO 2010-09-03: what if not ?
@@ -69,7 +69,7 @@ void KnowledgeGroup::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: KnowledgeGroup::CommitTo
 // Created: JSR 2010-04-19
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void KnowledgeGroup::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() && GetValue() ) // $$$$ _RC_ SBO 2010-09-03: what if not ?
         message.mutable_knowledgegroup()->set_id( GetValue()->GetId() );

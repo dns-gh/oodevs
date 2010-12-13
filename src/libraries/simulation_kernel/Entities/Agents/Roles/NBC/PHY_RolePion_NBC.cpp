@@ -222,7 +222,7 @@ void PHY_RolePion_NBC::SendFullState( client::UnitAttributes& msg ) const
     if( !nbcAgentTypesContaminating_.empty() )
         for( CIT_NbcAgentTypeSet itNbcAgent = nbcAgentTypesContaminating_.begin(); itNbcAgent != nbcAgentTypesContaminating_.end(); ++itNbcAgent )
         {
-            Common::NBCAgentType& data = *msg().mutable_contamine_par_agents_nbc()->add_elem();
+            sword::NBCAgentType& data = *msg().mutable_contamine_par_agents_nbc()->add_elem();
             data.set_id( (**itNbcAgent).GetID() );
         }
     msg().set_en_tenue_de_protection_nbc( bNbcProtectionSuitWorn_ );

@@ -14,7 +14,7 @@
 
 #include "PHY_SupplyStockRequest.h"
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameter;
 }
@@ -33,7 +33,7 @@ class PHY_SupplyStockRequestContainer : private boost::noncopyable
 {
 public:
     explicit PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate );
-             PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const Common::MsgMissionParameter& asnStocks, bool pushedFlow=false );
+             PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const sword::MsgMissionParameter& asnStocks, bool pushedFlow=false );
     virtual  ~PHY_SupplyStockRequestContainer();
 
     //! @name Accessors

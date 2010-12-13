@@ -40,7 +40,7 @@ TeamHierarchies::~TeamHierarchies()
 // Name: TeamHierarchies::DoUpdate
 // Created: AGE 2006-10-09
 // -----------------------------------------------------------------------------
-void TeamHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& /*message*/ )
+void TeamHierarchies::DoUpdate( const sword::KnowledgeGroupUpdate& /*message*/ )
 {
     // NOTHING
 }

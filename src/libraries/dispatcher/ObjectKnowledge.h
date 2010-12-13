@@ -15,10 +15,10 @@
 #include "ObjectAttributeContainer.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgObjectKnowledgeCreation;
-    class MsgObjectKnowledgeUpdate;
+    class ObjectKnowledgeCreation;
+    class ObjectKnowledgeUpdate;
 }
 
 namespace kernel
@@ -42,20 +42,20 @@ namespace dispatcher
 // =============================================================================
 class ObjectKnowledge : public dispatcher::ObjectKnowledge_ABC
                       , public kernel::Extension_ABC
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeCreation >
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
+                      , public kernel::Updatable_ABC< sword::ObjectKnowledgeCreation >
+                      , public kernel::Updatable_ABC< sword::ObjectKnowledgeUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg );
+             ObjectKnowledge( const Model_ABC& model, const sword::ObjectKnowledgeCreation& asnMsg );
     virtual ~ObjectKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg );
+    virtual void DoUpdate( const sword::ObjectKnowledgeCreation& asnMsg );
+    virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& asnMsg );
     virtual void SendCreation( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;

@@ -30,17 +30,15 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Point.h"
-
 #include "gaming/StaticModel.h"
 #include "gaming/MagicOrders.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Attributes.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 #include <google/protobuf/Message.h>
 #include <google/protobuf/Descriptor.h>
 #include <boost/foreach.hpp>
 
-using namespace Common;
 using namespace kernel;
 using namespace gui;
 using namespace actions;
@@ -190,27 +188,27 @@ namespace
             QString name;
             switch( id_ )
             {
-            case MsgsClientToSim::MsgUnitMagicAction_Type_recover_all:
+            case sword::UnitMagicAction_Type_recover_all:
                 strType = "recover_all";
                 name = tools::translate( "MagicAction", "Recover - All" );
                 break;
-            case MsgsClientToSim::MsgUnitMagicAction_Type_recover_troops:
+            case sword::UnitMagicAction_Type_recover_troops:
                 strType = "recover_troops";
                 name = tools::translate( "MagicAction", "Recover - Troops" );
                 break;
-            case MsgsClientToSim::MsgUnitMagicAction_Type_recover_equipments:
+            case sword::UnitMagicAction_Type_recover_equipments:
                 strType = "recover_equipments";
                 name = tools::translate( "MagicAction", "Recover - Equipments" ); 
                 break;
-            case MsgsClientToSim::MsgUnitMagicAction_Type_recover_resources:
+            case sword::UnitMagicAction_Type_recover_resources:
                 strType = "recover_resources";
                 name = tools::translate( "MagicAction", "Recover - Resources" ); 
                 break;
-            case MsgsClientToSim::MsgUnitMagicAction_Type_destroy_all:
+            case sword::UnitMagicAction_Type_destroy_all:
                 strType = "destroy_all";
                 name = tools::translate( "MagicAction", "Destroy - All" ); 
                 break;
-            case MsgsClientToSim::MsgUnitMagicAction_Type_cancel_surrender:
+            case sword::UnitMagicAction_Type_cancel_surrender:
                 strType = "cancel_surrender";
                 name = tools::translate( "MagicAction", "Cancel - Surrender" ); 
                 break;
@@ -360,11 +358,11 @@ void UnitMagicOrdersInterface::ApplyOnHierarchy( const kernel::Entity_ABC& entit
 // -----------------------------------------------------------------------------
 void UnitMagicOrdersInterface::FillCommonOrders( QPopupMenu* magicMenu )
 {
-    AddMagic( tr( "Recover - All" ),        MsgsClientToSim::MsgUnitMagicAction_Type_recover_all,      magicMenu );
-    AddMagic( tr( "Recover - Troops" ),     MsgsClientToSim::MsgUnitMagicAction_Type_recover_troops,  magicMenu );
-    AddMagic( tr( "Recover - Equipments" ), MsgsClientToSim::MsgUnitMagicAction_Type_recover_equipments, magicMenu );
-    AddMagic( tr( "Recover - Resources" ),  MsgsClientToSim::MsgUnitMagicAction_Type_recover_resources, magicMenu );
-    AddMagic( tr( "Destroy - All" ),        MsgsClientToSim::MsgUnitMagicAction_Type_destroy_all,        magicMenu );
+    AddMagic( tr( "Recover - All" ),        sword::UnitMagicAction_Type_recover_all,      magicMenu );
+    AddMagic( tr( "Recover - Troops" ),     sword::UnitMagicAction_Type_recover_troops,  magicMenu );
+    AddMagic( tr( "Recover - Equipments" ), sword::UnitMagicAction_Type_recover_equipments, magicMenu );
+    AddMagic( tr( "Recover - Resources" ),  sword::UnitMagicAction_Type_recover_resources, magicMenu );
+    AddMagic( tr( "Destroy - All" ),        sword::UnitMagicAction_Type_destroy_all,        magicMenu );
 }
 
 // -----------------------------------------------------------------------------
@@ -407,7 +405,7 @@ namespace
 void UnitMagicOrdersInterface::AddSurrenderMenu( QPopupMenu* parent, const kernel::Entity_ABC& entity )
 {
     if( IsSurrendered( entity ) )
-        AddMagic( tr( "Cancel surrender" ), MsgsClientToSim::MsgUnitMagicAction_Type_cancel_surrender, parent );
+        AddMagic( tr( "Cancel surrender" ), sword::UnitMagicAction_Type_cancel_surrender, parent );
     else
     {
         const kernel::Entity_ABC& team = entity.Get< kernel::TacticalHierarchies >().GetTop();

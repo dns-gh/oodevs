@@ -21,7 +21,7 @@
 // Name: DEC_Gen_Object constructor
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-DEC_Gen_Object::DEC_Gen_Object( const Common::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager )
+DEC_Gen_Object::DEC_Gen_Object( const sword::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager )
     : type_              ( &entityManager.FindObjectType( asn.type() )? asn.type(): "" )
     , pObstacleType_     ( asn.type_obstacle() )
     , rDensity_          ( asn.densite() )
@@ -29,14 +29,14 @@ DEC_Gen_Object::DEC_Gen_Object( const Common::MsgPlannedWork& asn, const MIL_Ent
     , pTC2_              ( 0 )
 {
     if( type_.empty() )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission_parameters );
     if( !NET_ASN_Tools::ReadLocation( asn.position(), localisation_ ) )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission_parameters );
     if( asn.tc2().id() != 0 )
     {
         pTC2_ = entityManager.FindAutomate( asn.tc2().id() );
         if( !pTC2_ )
-            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission_parameters );
     }
 }
 
@@ -47,13 +47,13 @@ DEC_Gen_Object::DEC_Gen_Object( const Common::MsgPlannedWork& asn, const MIL_Ent
 DEC_Gen_Object::DEC_Gen_Object( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary )
     : type_              ( type )
     , localisation_      ( *location )
-    , pObstacleType_     ( preliminary ? Common::ObstacleType_DemolitionTargetType_preliminary : Common::ObstacleType_DemolitionTargetType_reserved )
+    , pObstacleType_     ( preliminary ? sword::ObstacleType_DemolitionTargetType_preliminary : sword::ObstacleType_DemolitionTargetType_reserved )
     , rDensity_          ( 0 )
     , nMinesActivityTime_( 0 )
     , pTC2_              ( 0 )
 {
     if( type_.empty() )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission_parameters );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ DEC_Gen_Object& DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
 // Name: DEC_Gen_Object::Serialize
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-void DEC_Gen_Object::Serialize( Common::MsgPlannedWork& asn ) const
+void DEC_Gen_Object::Serialize( sword::MsgPlannedWork& asn ) const
 {
     asn.set_type( type_.c_str() );
     asn.set_type_obstacle( pObstacleType_ );

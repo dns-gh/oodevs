@@ -10,19 +10,19 @@
 #ifndef __Object_h_
 #define __Object_h_
 
-#include <vector>
 #include "MIL_Object_ABC.h"
 #include "CapacityContainer_ABC.h"
-#include "tools/Extendable.h"
+#include <tools/Extendable.h>
+#include <vector>
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameter_Value;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    enum MsgObjectMagicActionAck_ErrorCode;
+    enum ObjectMagicActionAck_ErrorCode;
 }
 
 class ObjectAttribute_ABC;
@@ -107,7 +107,9 @@ public:
     //! @name Network
     //@{
     virtual void UpdateState();
-    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& attributes );
+
+    sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& attributes );
+
     void SendCreation() const;
     void SendDestruction() const;
     void SendFullState() const;

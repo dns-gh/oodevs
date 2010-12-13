@@ -49,9 +49,9 @@ PathPoint::~PathPoint()
 // Name: PathPoint::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void PathPoint::CommitTo( Common::MsgCoordLatLong& message ) const
+void PathPoint::CommitTo( sword::MsgCoordLatLong& message ) const
 {
-    Common::MsgLocation loc;
+    sword::MsgLocation loc;
     Location::CommitTo( loc );
     message = loc.coordinates().elem( 0 );
     Location::Clean( loc );

@@ -27,9 +27,9 @@ namespace kernel
     class PropertiesDictionary;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogMedicalState;
+    class LogMedicalState;
 }
 
 // =============================================================================
@@ -39,7 +39,7 @@ namespace MsgsSimToClient
 // Created: AGE 2006-02-14
 // =============================================================================
 class MedicalStates : public kernel::Extension_ABC
-                    , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogMedicalState >
+                    , public kernel::Updatable_ABC< sword::LogMedicalState >
 {
 public:
     //! @name Constructors/Destructor
@@ -51,7 +51,7 @@ public:
     //! @name Operations
     //@{
     void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void DoUpdate( const MsgsSimToClient::MsgLogMedicalState& message );
+    virtual void DoUpdate( const sword::LogMedicalState& message );
     //@}
 
 private:

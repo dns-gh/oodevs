@@ -60,7 +60,7 @@ NET_Publisher_ABC::~NET_Publisher_ABC()
 // Name: NET_Publisher_ABC::SendAsnMessage
 // Created: LDC 2010-01-04
 // -----------------------------------------------------------------------------
-void NET_Publisher_ABC::SendAsnMessage( MsgsSimToClient::MsgSimToClient& msg )
+void NET_Publisher_ABC::SendAsnMessage( sword::SimToClient& msg )
 {
     if( pPublisher_ )
         pPublisher_->Send( msg );

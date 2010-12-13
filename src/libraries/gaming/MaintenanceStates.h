@@ -25,9 +25,9 @@ namespace kernel
     class PropertiesDictionary;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogMaintenanceState;
+    class LogMaintenanceState;
 }
 // =============================================================================
 /** @class  MaintenanceStates
@@ -36,7 +36,7 @@ namespace MsgsSimToClient
 // Created: AGE 2006-02-14
 // =============================================================================
 class MaintenanceStates : public kernel::Extension_ABC
-                        , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogMaintenanceState >
+                        , public kernel::Updatable_ABC< sword::LogMaintenanceState >
 {
 public:
     //! @name Constructors/Destructor
@@ -48,7 +48,7 @@ public:
     //! @name Operations
     //@{
     void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void DoUpdate( const MsgsSimToClient::MsgLogMaintenanceState& message );
+    virtual void DoUpdate( const sword::LogMaintenanceState& message );
     //@}
 
 private:

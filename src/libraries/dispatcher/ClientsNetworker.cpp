@@ -19,7 +19,7 @@
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworkerc constructor
+// Name: ClientsNetworker constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
 ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin, const Services& services )
@@ -44,7 +44,7 @@ ClientsNetworker::~ClientsNetworker()
 // Name: ClientsNetworker::Receive
 // Created: AGE 2007-07-09
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
+void ClientsNetworker::Receive( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_control_send_current_state_begin() )
         DenyConnections();
@@ -96,7 +96,7 @@ void ClientsNetworker::ConnectionError( const std::string& link , const std::str
 // Name: ClientsNetworker::Send
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const MsgsSimToClient::MsgSimToClient& msg )
+void ClientsNetworker::Send( const sword::SimToClient& msg )
 {
     try
     {
@@ -113,7 +113,7 @@ void ClientsNetworker::Send( const MsgsSimToClient::MsgSimToClient& msg )
 // Name: ClientsNetworker::Send
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& msg )
+void ClientsNetworker::Send( const sword::AuthenticationToClient& msg )
 {
     try
     {
@@ -130,7 +130,7 @@ void ClientsNetworker::Send( const MsgsAuthenticationToClient::MsgAuthentication
 // Name: ClientsNetworker::Send
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const MsgsReplayToClient::MsgReplayToClient& msg )
+void ClientsNetworker::Send( const sword::ReplayToClient& msg )
 {
     try
     {
@@ -147,7 +147,7 @@ void ClientsNetworker::Send( const MsgsReplayToClient::MsgReplayToClient& msg )
 // Name: ClientsNetworker::Send
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const MsgsAarToClient::MsgAarToClient& msg )
+void ClientsNetworker::Send( const sword::AarToClient& msg )
 {
     try
     {
@@ -165,7 +165,7 @@ void ClientsNetworker::Send( const MsgsAarToClient::MsgAarToClient& msg )
 // Name: ClientsNetworker::Send
 // Created: RDS 2008-04-04
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const MsgsMessengerToClient::MsgMessengerToClient& msg )
+void ClientsNetworker::Send( const sword::MessengerToClient& msg )
 {
     try
     {
@@ -182,7 +182,7 @@ void ClientsNetworker::Send( const MsgsMessengerToClient::MsgMessengerToClient& 
 // Name: ClientsNetworker::Send
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const MsgsDispatcherToClient::MsgDispatcherToClient& msg )
+void ClientsNetworker::Send( const sword::DispatcherToClient& msg )
 {
     try
     {

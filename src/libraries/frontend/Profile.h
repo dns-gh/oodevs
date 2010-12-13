@@ -10,9 +10,9 @@
 #ifndef __frontend_Profile_h_
 #define __frontend_Profile_h_
 
-namespace MsgsAuthenticationToClient
+namespace sword
 {
-    class MsgProfileDescription;
+    class ProfileDescription;
 }
 
 namespace xml
@@ -61,7 +61,7 @@ public:
     //! @name Operations
     //@{
     static void VisitProfiles( const tools::GeneralConfig& config, const std::string& exercise, ProfileVisitor_ABC& visitor );
-    void Send( MsgsAuthenticationToClient::MsgProfileDescription& message ) const;
+    void Send( sword::ProfileDescription& message ) const;
     //@}
 
 private:

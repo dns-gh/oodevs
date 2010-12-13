@@ -11,15 +11,13 @@
 #define __protocol_DispatcherSenders_h_
 
 #include "dispatcher.h"
-#include "senders.h"
+#include "Senders.h"
 
 namespace dispatcher
 {
+    GENERATE_NOCTX_ASN_MSG_SENDER( MsgsDispatcherToSim::MsgDispatcherToSim, MsgsDispatcherToSim, CtrlClientAnnouncement, control_client_announcement );
 
-GENERATE_NOCTX_ASN_MSG_SENDER( DispatcherToSim   , MsgsDispatcherToSim   , CtrlClientAnnouncement, control_client_announcement );
-
-GENERATE_NOCTX_ASN_MSG_SENDER( DispatcherToClient, MsgsDispatcherToClient, ServicesDescription   , services_description        );
-
+    GENERATE_NOCTX_ASN_MSG_SENDER( sword::DispatcherToClient, sword, ServicesDescription, services_description );
 }
 
 #endif // __protocol_DispatcherSenders_h_

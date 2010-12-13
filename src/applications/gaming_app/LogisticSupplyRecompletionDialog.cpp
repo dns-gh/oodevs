@@ -206,9 +206,9 @@ void LogisticSupplyRecompletionDialog::InitializePersonal()
     if( const Troops* troops = selected_->Retrieve< Troops >() )
     {
         personalsTable_->setNumRows( 0 );
-        AddPersonal( Common::officier, tr( "officers" ), troops->humans_[ eTroopHealthStateTotal ].officers_ );
-        AddPersonal( Common::sous_officer, tr( "warrant-officers" ), troops->humans_[ eTroopHealthStateTotal ].subOfficers_ );
-        AddPersonal( Common::mdr, tr( "private" ), troops->humans_[ eTroopHealthStateTotal ].troopers_ );
+        AddPersonal( sword::officier, tr( "officers" ), troops->humans_[ eTroopHealthStateTotal ].officers_ );
+        AddPersonal( sword::sous_officer, tr( "warrant-officers" ), troops->humans_[ eTroopHealthStateTotal ].subOfficers_ );
+        AddPersonal( sword::mdr, tr( "private" ), troops->humans_[ eTroopHealthStateTotal ].troopers_ );
         personalsTable_->setMinimumHeight( personalsTable_->rowHeight( 0 ) * 5 );
     }
 }
@@ -257,10 +257,10 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
 void LogisticSupplyRecompletionDialog::InitializeAmmunitions()
 {
     munitionsFamilyTable_->setNumRows( 0 );
-    AddAmmunition( Common::obus, tr( "Shell" ) );          //eAmmunitionFamily_Obus
-    AddAmmunition( Common::missile_sol, tr( "Ground missile" ) ); //eAmmunitionFamily_MissileSol
-    AddAmmunition( Common::missile_air, tr( "Air missile" ) );    //eAmmunitionFamily_MissileAir
-    AddAmmunition( Common::mitraille, tr( "Bullet" ) );         //eAmmunitionFamily_Mitraille
+    AddAmmunition( sword::obus, tr( "Shell" ) );          //eAmmunitionFamily_Obus
+    AddAmmunition( sword::missile_sol, tr( "Ground missile" ) ); //eAmmunitionFamily_MissileSol
+    AddAmmunition( sword::missile_air, tr( "Air missile" ) );    //eAmmunitionFamily_MissileAir
+    AddAmmunition( sword::mitraille, tr( "Bullet" ) );         //eAmmunitionFamily_Mitraille
     munitionsFamilyTable_->setMinimumHeight( munitionsFamilyTable_->rowHeight( 0 ) * 5 );
 }
 

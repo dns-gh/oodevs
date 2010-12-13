@@ -50,7 +50,7 @@ void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // Name: SupplyStates::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void SupplyStates::DoUpdate( const MsgsSimToClient::MsgLogSupplyState& message )
+void SupplyStates::DoUpdate( const sword::LogSupplyState& message )
 {
     if( message.has_chaine_activee()  )
         bChainEnabled_ = message.chaine_activee() != 0;
@@ -67,7 +67,7 @@ void SupplyStates::DoUpdate( const MsgsSimToClient::MsgLogSupplyState& message )
         int nSize = message.stocks().elem_size();
         while( nSize > 0 )
         {
-            const Common::MsgDotationStock& value = message.stocks().elem( --nSize );
+            const sword::MsgDotationStock& value = message.stocks().elem( --nSize );
             DotationType& type = dotationResolver_.Get( value.ressource_id().id() );
             Dotation* dotation = Find( value.ressource_id().id() );
             if( dotation )

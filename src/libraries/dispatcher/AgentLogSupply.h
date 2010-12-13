@@ -14,10 +14,10 @@
 #include "EquipmentAvailability.h"
 #include "tools/Resolver.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogSupplyEquimentAvailability;
-    class MsgLogSupplyState;
+    class LogSupplyEquimentAvailability;
+    class LogSupplyState;
 }
 
 namespace kernel
@@ -41,13 +41,13 @@ class AgentLogSupply
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentLogSupply( const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogSupplyState& asnMsg );
+             AgentLogSupply( const kernel::Agent_ABC& agent, const sword::LogSupplyState& asnMsg );
     virtual ~AgentLogSupply();
     //@}
 
     //! @name Main
     //@{
-    void Update(  const MsgsSimToClient::MsgLogSupplyState& asnMsg );
+    void Update(  const sword::LogSupplyState& asnMsg );
     void Send  ( ClientPublisher_ABC& publisher ) const;
     //@}
 
@@ -60,7 +60,7 @@ private:
 
     //! @name Types
     //@{
-    typedef EquipmentAvailability< MsgsSimToClient::MsgLogSupplyEquimentAvailability > T_Availability;
+    typedef EquipmentAvailability< sword::LogSupplyEquimentAvailability > T_Availability;
     //@}
 
 private:

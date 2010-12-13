@@ -42,72 +42,72 @@ public:
     { throw; }
     virtual bool ToId( int& ) const
     { throw; }
-    virtual bool ToPoint( Common::MsgPoint& ) const
+    virtual bool ToPoint( sword::MsgPoint& ) const
     { throw; }
-    virtual bool ToPointList( Common::MsgPointList& ) const
+    virtual bool ToPointList( sword::MsgPointList& ) const
     { throw; }
-    virtual bool ToPolygon( Common::MsgPolygon& ) const
+    virtual bool ToPolygon( sword::MsgPolygon& ) const
     { throw; }
-    virtual bool ToPolygonList( Common::MsgPolygonList& ) const
+    virtual bool ToPolygonList( sword::MsgPolygonList& ) const
     { throw; }
-    virtual bool ToAgent( Common::UnitId& ) const
+    virtual bool ToAgent( sword::UnitId& ) const
     { throw; }
-    virtual bool ToAgentKnowledge( Common::UnitKnowledgeId& ) const
+    virtual bool ToAgentKnowledge( sword::UnitKnowledgeId& ) const
     { throw; }
-    virtual bool ToAgentKnowledgeList( Common::UnitKnowledgeIdList& ) const
+    virtual bool ToAgentKnowledgeList( sword::UnitKnowledgeIdList& ) const
     { throw; }
-    virtual bool ToAgentList( Common::UnitIdList& ) const
+    virtual bool ToAgentList( sword::UnitIdList& ) const
     { throw; }
-    virtual bool ToAutomat( Common::AutomatId& ) const
+    virtual bool ToAutomat( sword::AutomatId& ) const
     { throw; }
-    virtual bool ToAutomatList( Common::AutomatIdList& ) const
+    virtual bool ToAutomatList( sword::AutomatIdList& ) const
     { throw; }
-    virtual bool ToDirection( Common::MsgHeading& ) const
+    virtual bool ToDirection( sword::MsgHeading& ) const
     { throw; }
-    virtual bool ToDotationType( Common::ResourceType& ) const
+    virtual bool ToDotationType( sword::ResourceType& ) const
     { throw; }
-    virtual bool ToEquipmentType( Common::EquipmentType& ) const
+    virtual bool ToEquipmentType( sword::EquipmentType& ) const
     { throw; }
-    virtual bool ToGDH( Common::MsgDateTime& ) const
+    virtual bool ToGDH( sword::MsgDateTime& ) const
     { throw; }
-    virtual bool ToGenObject( Common::MsgPlannedWork& ) const
+    virtual bool ToGenObject( sword::MsgPlannedWork& ) const
     { throw; }
-    virtual bool ToGenObjectList( Common::MsgPlannedWorkList& ) const
+    virtual bool ToGenObjectList( sword::MsgPlannedWorkList& ) const
     { throw; }
-    virtual bool ToIndirectFire( Common::FireId& ) const
+    virtual bool ToIndirectFire( sword::FireId& ) const
     { throw; }
-    virtual bool ToLocation( Common::MsgLocation& ) const
+    virtual bool ToLocation( sword::MsgLocation& ) const
     { throw; }
-    virtual bool ToLocationList( Common::MsgLocationList& ) const
+    virtual bool ToLocationList( sword::MsgLocationList& ) const
     { throw; }
-    virtual bool ToMaintenancePriorities( Common::MsgLogMaintenancePriorities& ) const
+    virtual bool ToMaintenancePriorities( sword::LogMaintenancePriorities& ) const
     { throw; }
-    virtual bool ToMedicalPriorities( Common::MsgLogMedicalPriorities& ) const
+    virtual bool ToMedicalPriorities( sword::LogMedicalPriorities& ) const
     { throw; }
-    virtual bool ToNatureAtlas( Common::MsgAtlasNature& ) const
+    virtual bool ToNatureAtlas( sword::MsgAtlasNature& ) const
     { throw; }
     virtual bool ToNumeric( float& ) const
     { throw; }
-    virtual bool ToObjectiveList( Common::MsgMissionObjectiveList& ) const
+    virtual bool ToObjectiveList( sword::MsgMissionObjectiveList& ) const
     { throw; }
-    virtual bool ToObjectKnowledge( Common::ObjectKnowledgeId& ) const
+    virtual bool ToObjectKnowledge( sword::ObjectKnowledgeId& ) const
     { throw; }
-    virtual bool ToObjectKnowledgeList( Common::ObjectKnowledgeIdList& ) const
+    virtual bool ToObjectKnowledgeList( sword::ObjectKnowledgeIdList& ) const
     { throw; }
-    virtual bool ToPath( Common::MsgPath& ) const
+    virtual bool ToPath( sword::MsgPath& ) const
     { throw; }
-    virtual bool ToPathList( Common::MsgPathList& ) const
+    virtual bool ToPathList( sword::MsgPathList& ) const
     { throw; }
-    virtual bool ToPopulationKnowledge( Common::CrowdKnowledgeId& ) const
+    virtual bool ToPopulationKnowledge( sword::CrowdKnowledgeId& ) const
     { throw; }
     virtual bool ToString( std::string& result ) const
     {
         result = param_;
         return true;
     }
-    virtual bool ToLima( Common::MsgLimasOrder& ) const
+    virtual bool ToLima( sword::LimasOrder& ) const
     { throw; }
-    virtual bool ToLimaList( Common::MsgLimasOrder& ) const
+    virtual bool ToLimaList( sword::LimasOrder& ) const
     { throw; }
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const
     { throw; }
@@ -163,13 +163,13 @@ public:
     { throw; }
     virtual bool ToObjectiveList( std::vector< boost::shared_ptr< DEC_Objective > >& ) const
     { throw; }
-    virtual bool ToUrbanBlock( Common::UrbanObjectId& ) const
+    virtual bool ToUrbanBlock( sword::UrbanObjectId& ) const
     { throw; }
     virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const
     { throw; }
-    virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& ) const
+    virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >& ) const
     { throw; }
-    virtual bool ToElement( Common::MsgMissionParameter_Value& ) const
+    virtual bool ToElement( sword::MsgMissionParameter_Value& ) const
     { throw; }
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const
     { throw; }

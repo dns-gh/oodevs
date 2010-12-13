@@ -209,7 +209,7 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
 // Name: PHY_PerceptionSurfaceAgent::SendFullState
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-void PHY_PerceptionSurfaceAgent::SendFullState( MsgsSimToClient::MsgVisionCone& msg ) const
+void PHY_PerceptionSurfaceAgent::SendFullState( sword::MsgVisionCone& msg ) const
 {
     NET_ASN_Tools::WritePoint( vOrigin_, *msg.mutable_origin() );
     msg.set_height( static_cast< int >( rHeight_ ) );

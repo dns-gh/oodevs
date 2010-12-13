@@ -15,9 +15,9 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Positions.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitAttributes;
+    class UnitAttributes;
 }
 
 namespace kernel
@@ -33,7 +33,7 @@ namespace kernel
 // Created: AGE 2006-03-16
 // =============================================================================
 class AgentPositions : public kernel::Positions
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+                     , public kernel::Updatable_ABC< sword::UnitAttributes >
                      , public kernel::Drawable_ABC
                      , public kernel::Aggregatable_ABC
 {
@@ -66,7 +66,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
+    virtual void DoUpdate( const sword::UnitAttributes& message );
     virtual void Aggregate( const bool& );
     //@}
 

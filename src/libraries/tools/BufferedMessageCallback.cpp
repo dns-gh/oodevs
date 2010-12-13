@@ -84,12 +84,31 @@ void BufferedMessageCallback::Commit( MessageCallback_ABC& callback )
         boost::mutex::scoped_lock locker( mutex_ );
         std::swap( events_, events );
     }
-
     for( IT_Events it = events.begin(); it != events.end(); ++it )
     {
         if( ! it->error_.empty() )
             callback.OnError( it->endpoint_, it->error_ );
         else
-            callback.OnMessage( it->endpoint_, it->message_ );
+            Commit( callback, it->endpoint_, it->message_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: BufferedMessageCallback::Commit
+// Created: MCO 2010-12-07
+// -----------------------------------------------------------------------------
+void BufferedMessageCallback::Commit( MessageCallback_ABC& callback, const std::string& endpoint, Message& message ) const
+{
+    try
+    {
+        callback.OnMessage( endpoint, message );
+    }
+    catch( std::exception& e )
+    {
+        callback.OnError( endpoint, e.what() );
+    }
+    catch( ... )
+    {
+        callback.OnError( endpoint, "unknown exception" );
     }
 }

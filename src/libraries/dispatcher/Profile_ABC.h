@@ -10,24 +10,24 @@
 #ifndef __Profile_ABC_h_
 #define __Profile_ABC_h_
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgClientToSim;
+    class ClientToSim;
 }
 
-namespace MsgsClientToAuthentication
+namespace sword
 {
-    class MsgClientToAuthentication;
+    class ClientToAuthentication;
 }
 
-namespace Common
+namespace sword
 {
     class MsgChatTarget;
 }
 
-namespace MsgsClientToReplay
+namespace sword
 {
-    class MsgClientToReplay;
+    class ClientToReplay;
 }
 
 namespace dispatcher
@@ -50,10 +50,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool CheckRights( const MsgsClientToSim::MsgClientToSim& msg ) const = 0;
-    virtual bool CheckRights( const MsgsClientToAuthentication::MsgClientToAuthentication& msg ) const = 0;
-    virtual bool CheckRights( const MsgsClientToReplay::MsgClientToReplay& msg ) const = 0;
-    virtual bool CheckRights( const Common::MsgChatTarget& source, const Common::MsgChatTarget& target ) const = 0;
+    virtual bool CheckRights( const sword::ClientToSim& msg ) const = 0;
+    virtual bool CheckRights( const sword::ClientToAuthentication& msg ) const = 0;
+    virtual bool CheckRights( const sword::ClientToReplay& msg ) const = 0;
+    virtual bool CheckRights( const sword::MsgChatTarget& source, const sword::MsgChatTarget& target ) const = 0;
     //@}
 
     //! @name Accessors

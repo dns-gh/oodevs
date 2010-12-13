@@ -20,9 +20,9 @@ namespace xml
     class xistream;
 }
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgUnitMagicAction;
+    class UnitMagicAction;
 }
 
 class MIL_Army_ABC;

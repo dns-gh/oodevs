@@ -60,7 +60,7 @@ const weather::PHY_Lighting& MeteoModel::GetLighting() const
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
-void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalWeather& msg )
+void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg )
 {
     if( pGlobalMeteo_.get() )
         pGlobalMeteo_->Update( msg.attributes() );
@@ -73,7 +73,7 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
-void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalWeatherCreation& msg )
+void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeatherCreation& msg )
 {
     const geometry::Point2f topLeft = converter_.ConvertFromGeo(
         geometry::Point2d( float( msg.top_left_coordinate().longitude() ), float( msg.top_left_coordinate().latitude() ) ) );
@@ -113,7 +113,7 @@ const weather::PHY_Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point )
 // Name: MeteoModel::OnReceiveMsgGlobalMeteoDestruction
 // Created: HBD 2010-04-02
 // -----------------------------------------------------------------------------
-void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalWeatherDestruction& message )
+void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWeatherDestruction& message )
 {
     for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); ++it )
         if( (*it)->GetId() == message.weather().id() )

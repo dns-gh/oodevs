@@ -22,7 +22,7 @@ namespace xml
     class xistream;
 }
 
-namespace Common
+namespace sword
 {
     class ObjectAttributeMedicalTreatment;
     class MedicalTreatmentBedCapacity;
@@ -73,9 +73,9 @@ public:
 
         //! @name Operations
         //@{
-        void Update( const Common::MedicalTreatmentBedCapacity& capacity );
-        void Update( const Common::MsgMissionParameter_Value& capacity );
-        void Send( Common::MedicalTreatmentBedCapacity& capacity ) const;
+        void Update( const sword::MedicalTreatmentBedCapacity& capacity );
+        void Update( const sword::MsgMissionParameter_Value& capacity );
+        void Send( sword::MedicalTreatmentBedCapacity& capacity ) const;
         unsigned int Update( unsigned int doctors, float delay );
         bool operator==( const MedicalCapacity& rhs ) const
         {
@@ -111,7 +111,7 @@ public:
     //@{
              MedicalTreatmentAttribute();
     explicit MedicalTreatmentAttribute( xml::xistream& xis );
-    explicit MedicalTreatmentAttribute( const Common::MsgMissionParameter_Value& attributes );
+    explicit MedicalTreatmentAttribute( const sword::MsgMissionParameter_Value& attributes );
     virtual ~MedicalTreatmentAttribute();
     //@}
 
@@ -133,9 +133,9 @@ public:
     //@{
     void Instanciate( DEC_Knowledge_Object& object ) const;
     void Register( MIL_Object_ABC& object ) const;
-    void SendFullState( Common::ObjectAttributes& asn ) const;
-    void SendUpdate( Common::ObjectAttributes& asn ) const;
-    void OnUpdate( const Common::MsgMissionParameter_Value& attribute );
+    void SendFullState( sword::ObjectAttributes& asn ) const;
+    void SendUpdate( sword::ObjectAttributes& asn ) const;
+    void OnUpdate( const sword::MsgMissionParameter_Value& attribute );
     void WriteODB( xml::xostream& xos ) const;
     void RegisterPatients( unsigned int injuryID, unsigned int category, int n );
     bool CanTreatPatient( unsigned int injuryID ) const;
@@ -158,7 +158,7 @@ private:
     //! @name
     //@{
     void InitializeBedCapacity( xml::xistream& xis );
-    void Update( const Common::ObjectAttributeMedicalTreatment& asn );
+    void Update( const sword::ObjectAttributeMedicalTreatment& asn );
     //@}
 
 private:

@@ -16,9 +16,9 @@
 #include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitDetection;
+    class UnitDetection;
 }
 
 namespace kernel
@@ -35,7 +35,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class AgentDetections : public kernel::Extension_ABC
-                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitDetection >
+                      , public kernel::Updatable_ABC< sword::UnitDetection >
                       , public kernel::Drawable_ABC
 {
 public:
@@ -59,13 +59,13 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const kernel::Agent_ABC*, Common::EnumUnitVisibility > T_AgentDetections;
+    typedef std::map< const kernel::Agent_ABC*, sword::EnumUnitVisibility > T_AgentDetections;
     typedef T_AgentDetections::const_iterator                              CIT_AgentDetections;
     //@}
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitDetection& message );
+    virtual void DoUpdate( const sword::UnitDetection& message );
     bool IsSameTeam( const kernel::Entity_ABC& entity ) const;
     //@}
 

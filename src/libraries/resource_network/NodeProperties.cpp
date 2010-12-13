@@ -174,7 +174,7 @@ bool NodeProperties::NeedUpdate() const
 // Name: NodeProperties::Serialize
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void NodeProperties::Serialize( MsgsSimToClient::UrbanAttributes_Infrastructures& msg ) const
+void NodeProperties::Serialize( sword::UrbanAttributes_Infrastructures& msg ) const
 {
     // TODO sérialiser isFunctional_?
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
@@ -186,7 +186,7 @@ void NodeProperties::Serialize( MsgsSimToClient::UrbanAttributes_Infrastructures
 // Name: NodeProperties::Serialize
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void NodeProperties::Serialize( Common::ObjectAttributeResourceNetwork& msg ) const
+void NodeProperties::Serialize( sword::ObjectAttributeResourceNetwork& msg ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Serialize( *msg.add_network() );
@@ -197,11 +197,11 @@ void NodeProperties::Serialize( Common::ObjectAttributeResourceNetwork& msg ) co
 // Name: NodeProperties::Update
 // Created: JSR 2010-08-26
 // -----------------------------------------------------------------------------
-void NodeProperties::Update( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list  )
+void NodeProperties::Update( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& list )
 {
     for( int i = 0; i< list.size(); ++i )
     {
-        Common::MsgMissionParameter_Value node = list.Get( i );
+        sword::MsgMissionParameter_Value node = list.Get( i );
         unsigned int id = tools_->GetResourceId( node.list( 0 ).acharstr() );
         NodeElement* element = Find( id );
         if( element )

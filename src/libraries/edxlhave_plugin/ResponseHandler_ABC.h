@@ -19,7 +19,6 @@ namespace plugins
 {
 namespace edxl
 {
-
 // =============================================================================
 /** @class  ResponseHandler_ABC
     @brief  ResponseHandler_ABC

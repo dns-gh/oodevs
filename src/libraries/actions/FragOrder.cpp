@@ -17,11 +17,8 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace Common;
 using namespace kernel;
 using namespace actions;
-
-using namespace MsgsClientToSim;
 
 namespace
 {

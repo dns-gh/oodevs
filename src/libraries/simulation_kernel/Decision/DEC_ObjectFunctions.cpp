@@ -30,7 +30,7 @@ std::string DEC_ObjectFunctions::GetGenObjectType( const DEC_Gen_Object* object)
 // -----------------------------------------------------------------------------
 bool DEC_ObjectFunctions::GetGenObjectReservedObstacle( const DEC_Gen_Object* object )
 {
-    return object->GetObstacleType() == Common::ObstacleType_DemolitionTargetType_reserved;
+    return object->GetObstacleType() == sword::ObstacleType_DemolitionTargetType_reserved;
 }
 
 // -----------------------------------------------------------------------------

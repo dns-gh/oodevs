@@ -45,7 +45,7 @@ PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& l
     rDensiteCouvertureNuageuse_ = std::min( nVal, 100u ) / 100.;
 
     unsigned int nAngle;
-    Common::MsgHeading heading;
+    sword::MsgHeading heading;
     xis >> xml::start( "wind" )
             >> xml::attribute( "speed", wind_.rWindSpeed_ )
             >> xml::attribute( "speed", nAngle )
@@ -72,7 +72,7 @@ PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& l
 // Name: PHY_Meteo constructor
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-PHY_Meteo::PHY_Meteo( unsigned int id, const Common::MsgWeatherAttributes& asnMsg, MeteoManager_ABC* listener )
+PHY_Meteo::PHY_Meteo( unsigned int id, const sword::MsgWeatherAttributes& asnMsg, MeteoManager_ABC* listener )
     : pLighting_     ( &PHY_Lighting::jourSansNuage_ )
     , pPrecipitation_( &PHY_Precipitation::none_ )
     , nRefCount_     ( 0 )
@@ -87,7 +87,7 @@ PHY_Meteo::PHY_Meteo( unsigned int id, const Common::MsgWeatherAttributes& asnMs
 // Name: PHY_Meteo constructor
 // Created: JSR 2010-04-12
 // -----------------------------------------------------------------------------
-PHY_Meteo::PHY_Meteo( unsigned int id, const Common::MsgMissionParameters& asnMsg, MeteoManager_ABC* listener )
+PHY_Meteo::PHY_Meteo( unsigned int id, const sword::MsgMissionParameters& asnMsg, MeteoManager_ABC* listener )
     : pLighting_     ( &PHY_Lighting::jourSansNuage_ )
     , pPrecipitation_( &PHY_Precipitation::none_ )
     , nRefCount_     ( 0 )
@@ -128,7 +128,7 @@ PHY_Meteo::~PHY_Meteo()
 // Name: PHY_Meteo::Update
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-void PHY_Meteo::Update( const Common::MsgWeatherAttributes& msg )
+void PHY_Meteo::Update( const sword::MsgWeatherAttributes& msg )
 {
     // Plancher de couverture nuageuse
     nPlancherCouvertureNuageuse_ = msg.cloud_floor();
@@ -168,52 +168,52 @@ void PHY_Meteo::Update( const Common::MsgWeatherAttributes& msg )
 // Name: PHY_Meteo::Update
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-void PHY_Meteo::Update( const Common::MsgMissionParameters& msg )
+void PHY_Meteo::Update( const sword::MsgMissionParameters& msg )
 {
     isChanged_ = true;
 
     // Temperature
-    const Common::MsgMissionParameter& temperature = msg.elem( 0 );
+    const sword::MsgMissionParameter& temperature = msg.elem( 0 );
     if( temperature.null_value() || !temperature.value().Get(0).has_areal() )
         throw std::exception( "Meteo : bad attribute for temperature" );
     // TODO
     // temperature_ = parametre.value().areal();
 
     // Vitesse du vent
-    const Common::MsgMissionParameter& windSpeed = msg.elem( 1 );
+    const sword::MsgMissionParameter& windSpeed = msg.elem( 1 );
     if( windSpeed.null_value() || !windSpeed.value().Get(0).has_areal() )
         throw std::exception( "Meteo : bad attribute for windSpeed" );
     wind_.rWindSpeed_ = conversionFactor_ * windSpeed.value().Get(0).areal();
 
     // Direction du vent
-    const Common::MsgMissionParameter& windDirection = msg.elem( 2 );
+    const sword::MsgMissionParameter& windDirection = msg.elem( 2 );
     if( windDirection.null_value() || !windDirection.value().Get(0).has_heading() )
         throw std::exception( "Meteo : bad attribute for windDirection" );
     wind_.vWindDirection_ = weather::ReadDirection( windDirection.value().Get(0).heading() );
 
     // Plancher de couverture nuageuse
-    const Common::MsgMissionParameter& cloudFloor = msg.elem( 3 );
+    const sword::MsgMissionParameter& cloudFloor = msg.elem( 3 );
     if( cloudFloor.null_value() || !cloudFloor.value().Get(0).has_areal() )
         throw std::exception( "Meteo : bad attribute for cloudFloor" );
     nPlancherCouvertureNuageuse_ = (int) cloudFloor.value().Get(0).areal();
 
     // Plafond de couverture nuageuse
-    const Common::MsgMissionParameter& cloudCeiling = msg.elem( 4 );
+    const sword::MsgMissionParameter& cloudCeiling = msg.elem( 4 );
     if( cloudCeiling.null_value() || !cloudCeiling.value().Get(0).has_areal() )
         throw std::exception( "Meteo : bad attribute for cloudCeiling" );
     nPlafondCouvertureNuageuse_ = (int) cloudCeiling.value().Get(0).areal();
 
     // Densite moyenne de couverture nuageuse
-    const Common::MsgMissionParameter& cloudDensity = msg.elem( 5 );
+    const sword::MsgMissionParameter& cloudDensity = msg.elem( 5 );
     if( cloudDensity.null_value() || !cloudDensity.value().Get(0).has_areal() )
         throw std::exception( "Meteo : bad attribute for cloudDensity" );
     rDensiteCouvertureNuageuse_ = std::min( std::max( (int) cloudDensity.value().Get(0).areal(), 0 ), 100 ) / 100.;
 
      // Précipitation
-    const Common::MsgMissionParameter& precipitation = msg.elem( 6 );
+    const sword::MsgMissionParameter& precipitation = msg.elem( 6 );
     if( precipitation.null_value() || !precipitation.value().Get(0).has_enumeration() )
         throw std::exception( "Meteo : bad attribute for precipitation" );
-    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( (Common::EnumPrecipitationType ) precipitation.value().Get(0).enumeration() );
+    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( (sword::EnumPrecipitationType ) precipitation.value().Get(0).enumeration() );
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;
 
@@ -273,7 +273,7 @@ void PHY_Meteo::UpdateMeteoPatch( int /*date*/, PHY_RawVisionData_ABC& /*dataVis
 void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     client::ControlGlobalWeather msg;
-    Common::MsgWeatherAttributes* att = msg().mutable_attributes();
+    sword::MsgWeatherAttributes* att = msg().mutable_attributes();
     msg().mutable_weather()->set_id( id_ );
     att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
     att->mutable_wind_direction()->set_heading( 0 );

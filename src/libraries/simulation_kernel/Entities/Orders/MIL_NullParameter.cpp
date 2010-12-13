@@ -43,7 +43,7 @@ bool MIL_NullParameter::IsOfType( MIL_ParameterType_ABC::E_Type /*type*/ ) const
 // Name: MIL_NullParameter::ToElement
 // Created: LDC 2009-11-03
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToElement( Common::MsgMissionParameter_Value& ) const
+bool MIL_NullParameter::ToElement( sword::MsgMissionParameter_Value& ) const
 {
     return false;
 }
@@ -52,7 +52,7 @@ bool MIL_NullParameter::ToElement( Common::MsgMissionParameter_Value& ) const
 // Name: MIL_NullParameter::MIL_ListParameter::ToList
 // Created: LDC 2010-09-21
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToList( std::vector< Common::MsgMissionParameter_Value >& ) const
+bool MIL_NullParameter::ToList( std::vector< sword::MsgMissionParameter_Value >& ) const
 {
     return true;
 }

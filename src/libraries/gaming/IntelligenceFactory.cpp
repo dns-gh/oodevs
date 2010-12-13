@@ -20,7 +20,7 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/Tools.h"
-#include "protocol/messengersenders.h"
+#include "protocol/MessengerSenders.h"
 
 using namespace kernel;
 
@@ -51,7 +51,7 @@ IntelligenceFactory::~IntelligenceFactory()
 // Name: IntelligenceFactory::Create
 // Created: SBO 2007-10-18
 // -----------------------------------------------------------------------------
-Intelligence_ABC* IntelligenceFactory::Create( const MsgsMessengerToClient::MsgIntelligenceCreation& message ) const
+Intelligence_ABC* IntelligenceFactory::Create( const sword::IntelligenceCreation& message ) const
 {
     std::auto_ptr< Intelligence > element( new Intelligence( message, controllers_.controller_, model_.teams_, levels_, publisher_ ) );
     element->Attach< kernel::Positions >( *new IntelligencePositions( converter_, *element, publisher_ ) );
@@ -63,15 +63,15 @@ Intelligence_ABC* IntelligenceFactory::Create( const MsgsMessengerToClient::MsgI
 
 namespace
 {
-    Common::EnumDiplomacy ConvertToDiplomacy( const Karma& karma )
+    sword::EnumDiplomacy ConvertToDiplomacy( const Karma& karma )
     {
         if( karma == Karma::friend_ )
-            return Common::friend_diplo;
+            return sword::friend_diplo;
         if( karma == Karma::enemy_ )
-            return Common::enemy_diplo;
+            return sword::enemy_diplo;
         if( karma == Karma::neutral_ )
-            return Common::neutral_diplo;
-        return Common::unknown_diplo;
+            return sword::neutral_diplo;
+        return sword::unknown_diplo;
     }
 }
 
@@ -86,10 +86,10 @@ Intelligence_ABC* IntelligenceFactory::Create( Entity_ABC& superior, const std::
     const QString name = tools::translate( "Intelligence", "Intelligence [%1]" ).arg( ++counter );
     message().mutable_intelligence()->set_name( name.ascii() );
     *message().mutable_intelligence()->mutable_nature() = symbol.c_str();
-    message().mutable_intelligence()->set_level( (Common::EnumNatureLevel)level.GetId() );
+    message().mutable_intelligence()->set_level( (sword::EnumNatureLevel)level.GetId() );
     message().mutable_intelligence()->set_diplomacy( ConvertToDiplomacy( karma ) );
     message().mutable_intelligence()->set_embarked( mounted );
-    converter_.ConvertToGeo< Common::MsgCoordLatLong >( position, *message().mutable_intelligence()->mutable_location() );
+    converter_.ConvertToGeo< sword::MsgCoordLatLong >( position, *message().mutable_intelligence()->mutable_location() );
     message().mutable_intelligence()->mutable_formation()->set_id( superior.GetId() );
     message.Send( publisher_ );
     return 0;

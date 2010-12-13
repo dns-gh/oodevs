@@ -10,7 +10,7 @@
 #ifndef __crossbow_ObjectAttributeUpdater_h_
 #define __crossbow_ObjectAttributeUpdater_h_
 
-namespace Common
+namespace sword
 {
     class ObjectAttributes;
     class ObjectAttributeConstruction;
@@ -43,13 +43,13 @@ class ObjectAttributeUpdater
 public:
     //! @name Constructor / desctructor
     //@{
-    ObjectAttributeUpdater( Workspace_ABC& workspace, const WorkingSession_ABC& session, long objectId );
+     ObjectAttributeUpdater( Workspace_ABC& workspace, const WorkingSession_ABC& session, long objectId );
     ~ObjectAttributeUpdater();
     //@}
 
     //! @name Updater
     //@{
-    void Update( const Common::ObjectAttributes& msg );
+    void Update( const sword::ObjectAttributes& msg );
     //@}
 
 private:
@@ -61,21 +61,21 @@ private:
 
     //! @name Attribute updater
     //@{
-    void Update( const Common::ObjectAttributeConstruction& construction );
-    void Update( const Common::ObjectAttributeObstacle& obstacle );
-    void Update( const Common::ObjectAttributeMine& mine );
-    void Update( const Common::ObjectAttributeActivityTime& activity_time );
-    void Update( const Common::ObjectAttributeBypass& bypass );
-    void Update( const Common::ObjectAttributeLogistic& logistic );
-    void Update( const Common::ObjectAttributeNBC& nbc );
-    void Update( const Common::ObjectAttributeCrossingSite& crossing_site );
-    void Update( const Common::ObjectAttributeSupplyRoute& supply_route );
-    void Update( const Common::ObjectAttributeToxicCloud& toxic_cloud );
-    void Update( const Common::ObjectAttributeFire& fire );
-    void Update( const Common::ObjectAttributeMedicalTreatment& medical_treatment );
-    void Update( const Common::ObjectAttributeInteractionHeight& interaction_height );
-    void Update( const Common::ObjectAttributeNBCType& nbc_agent );
-    void Update( const Common::ObjectAttributeStock& stock );
+    void Update( const sword::ObjectAttributeConstruction& construction );
+    void Update( const sword::ObjectAttributeObstacle& obstacle );
+    void Update( const sword::ObjectAttributeMine& mine );
+    void Update( const sword::ObjectAttributeActivityTime& activity_time );
+    void Update( const sword::ObjectAttributeBypass& bypass );
+    void Update( const sword::ObjectAttributeLogistic& logistic );
+    void Update( const sword::ObjectAttributeNBC& nbc );
+    void Update( const sword::ObjectAttributeCrossingSite& crossing_site );
+    void Update( const sword::ObjectAttributeSupplyRoute& supply_route );
+    void Update( const sword::ObjectAttributeToxicCloud& toxic_cloud );
+    void Update( const sword::ObjectAttributeFire& fire );
+    void Update( const sword::ObjectAttributeMedicalTreatment& medical_treatment );
+    void Update( const sword::ObjectAttributeInteractionHeight& interaction_height );
+    void Update( const sword::ObjectAttributeNBCType& nbc_agent );
+    void Update( const sword::ObjectAttributeStock& stock );
     //@}
 
     //! @name

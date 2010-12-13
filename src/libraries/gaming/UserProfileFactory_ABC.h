@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual UserProfile* Create( const MsgsAuthenticationToClient::MsgProfileCreation& message ) const = 0;
+    virtual UserProfile* Create( const sword::ProfileCreation& message ) const = 0;
     virtual void Create() = 0;
     //@}
 };

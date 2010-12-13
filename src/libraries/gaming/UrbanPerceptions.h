@@ -20,9 +20,9 @@ namespace kernel
     class Controller;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUrbanKnowledgeUpdate;
+    class UrbanKnowledgeUpdate;
 }
 
 // =============================================================================
@@ -32,7 +32,7 @@ namespace MsgsSimToClient
 // Created: MGD 2009-12-09
 // =============================================================================
 class UrbanPerceptions : public kernel::Extension_ABC
-    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeUpdate >
+    , public kernel::Updatable_ABC< sword::UrbanKnowledgeUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -43,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::UrbanKnowledgeUpdate& message );
     //@}
 
 private:

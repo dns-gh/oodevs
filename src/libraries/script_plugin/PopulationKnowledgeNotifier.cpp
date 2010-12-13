@@ -57,7 +57,7 @@ MT_LOG_INFO_MSG( "PopulationKnowledgeNotifier::DoUpdate" )
 // Name: PopulationKnowledgeNotifier::DoUpdate
 // Created: DSO 2010-09-16
 // -----------------------------------------------------------------------------
-void PopulationKnowledgeNotifier::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& /*message*/ )
+void PopulationKnowledgeNotifier::DoUpdate( const sword::MsgPopulationConcentrationKnowledgeUpdate& /*message*/ )
 {
     if( !created_ )
     {

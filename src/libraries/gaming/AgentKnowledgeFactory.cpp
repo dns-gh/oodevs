@@ -48,7 +48,7 @@ AgentKnowledgeFactory::~AgentKnowledgeFactory()
 // Name: AgentKnowledgeFactory::CreateAgentKnowledge
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-AgentKnowledge_ABC* AgentKnowledgeFactory::CreateAgentKnowledge( const KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgUnitKnowledgeCreation& message )
+AgentKnowledge_ABC* AgentKnowledgeFactory::CreateAgentKnowledge( const KnowledgeGroup_ABC& group, const sword::UnitKnowledgeCreation& message )
 {
     AgentKnowledge* result = new AgentKnowledge( group, message, controllers_.controller_, converter_, model_.agents_, model_.teams_ );
     result->Attach( *new PerceptionMap( controllers_.controller_, model_.agents_ ) );
@@ -63,7 +63,7 @@ AgentKnowledge_ABC* AgentKnowledgeFactory::CreateAgentKnowledge( const Knowledge
 // Name: AgentKnowledgeFactory::CreatePopulationKnowledge
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-PopulationKnowledge_ABC* AgentKnowledgeFactory::CreatePopulationKnowledge( const KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgCrowdKnowledgeCreation& message )
+PopulationKnowledge_ABC* AgentKnowledgeFactory::CreatePopulationKnowledge( const KnowledgeGroup_ABC& group, const sword::CrowdKnowledgeCreation& message )
 {
     PopulationKnowledge* result = new PopulationKnowledge( group, controllers_.controller_, converter_, model_.agents_, message );
     result->Attach< Positions >( *new PopulationKnowledgePositions( *result ) );

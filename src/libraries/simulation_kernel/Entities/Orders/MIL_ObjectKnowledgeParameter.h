@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_ObjectKnowledgeParameter( boost::shared_ptr< DEC_Knowledge_Object > pObjectKnowledge );
-             MIL_ObjectKnowledgeParameter( const Common::ObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
+             MIL_ObjectKnowledgeParameter( const sword::ObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
     virtual ~MIL_ObjectKnowledgeParameter();
     //@}
 
@@ -39,7 +39,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToObjectKnowledge( boost::shared_ptr< DEC_Knowledge_Object >& ) const;
-    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

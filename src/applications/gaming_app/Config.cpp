@@ -11,11 +11,10 @@
 #include "Config.h"
 #include "gaming/Network.h"
 #include <xeumeuleu/xml.hpp>
-
-#pragma warning( push )
-#pragma warning( disable: 4127 4244 4511 4512 )
+#pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
+
 namespace po  = boost::program_options;
 
 // -----------------------------------------------------------------------------
@@ -27,10 +26,8 @@ Config::Config( int argc, char** argv )
     po::options_description desc( "Gaming options" );
     desc.add_options()
         ( "host",  po::value< std::string >( &host_ ), "specify host to join" )
-        ( "login", po::value< std::string >( &login_ ), "specify login" )
-    ;
+        ( "login", po::value< std::string >( &login_ ), "specify login" );
     AddOptions( desc );
-
     Parse( argc, argv );
     isLoginInCommandLine_ = IsSet( "login" );
     if( isLoginInCommandLine_ && login_ == "anonymous" )
@@ -67,16 +64,15 @@ void Config::LoadSession( Network& network ) const
     const std::string session = GetSessionFile();
     if( session.empty() )
         return;
-
     try
     {
         std::string host;
         xml::xifstream xis( session );
         xis >> xml::start( "session" )
-            >> xml::start( "config" )
-            >> xml::start( "gaming" )
-            >> xml::start( "network" )
-                >> xml::attribute( "server", host );
+                >> xml::start( "config" )
+                    >> xml::start( "gaming" )
+                        >> xml::start( "network" )
+                            >> xml::attribute( "server", host );
         network.Connect( host );
     }
     catch( ... )

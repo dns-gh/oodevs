@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: StructureAttribute constructor
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-StructureAttribute::StructureAttribute( const MsgsSimToClient::UrbanAttributes& message )
+StructureAttribute::StructureAttribute( const sword::UrbanAttributes& message )
     : structuralState_( 100 )
 {
     Update( message );
@@ -36,7 +36,7 @@ StructureAttribute::~StructureAttribute()
 // Name: StructureAttribute::Update
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-void StructureAttribute::Update( const MsgsSimToClient::UrbanAttributes& message )
+void StructureAttribute::Update( const sword::UrbanAttributes& message )
 {
     if( message.has_structure() && message.structure().has_state() )
         structuralState_ = message.structure().state();
@@ -46,7 +46,7 @@ void StructureAttribute::Update( const MsgsSimToClient::UrbanAttributes& message
 // Name: StructureAttribute::Send
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-void StructureAttribute::Send( MsgsSimToClient::UrbanAttributes& message ) const
+void StructureAttribute::Send( sword::UrbanAttributes& message ) const
 {
     message.mutable_structure()->set_state( structuralState_ );
 }

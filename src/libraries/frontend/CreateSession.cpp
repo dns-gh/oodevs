@@ -11,7 +11,6 @@
 #include "CreateSession.h"
 #include "CommandLineTools.h"
 #include "tools/GeneralConfig.h"
-
 #pragma warning( push )
 #pragma warning( disable: 4127 4244 4245 4511 4512 4702 )
 #include <boost/filesystem/operations.hpp>
@@ -19,7 +18,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
-
 #include <qsettings.h>
 
 namespace bfs = boost::filesystem;
@@ -32,7 +30,7 @@ using namespace frontend;
 // Created: SBO 2008-02-27
 // -----------------------------------------------------------------------------
 CreateSession::CreateSession( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
-    : setter_( new ConfigurationManipulator( config, exercise, session ) )
+    : setter_ ( new ConfigurationManipulator( config, exercise, session ) )
     , session_( session )
 {
     // NOTHING

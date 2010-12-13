@@ -11,13 +11,8 @@
 #define __protocol_Authentication_h__
 
 #pragma warning( push, 0 )
-#pragma warning( disable : 4244 )
-
-#include "Definitions.h"
-#include "generated/Common.pb.h"
-#include "generated/AuthenticationToClient.pb.h"
-#include "generated/ClientToAuthentication.pb.h"
-
+#include "protocol/proto/authentication_client.pb.h"
+#include "protocol/proto/client_authentication.pb.h"
 #pragma warning( pop )
 
 #endif // __protocol_Authentication_h__

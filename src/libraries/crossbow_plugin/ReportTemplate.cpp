@@ -13,7 +13,7 @@
 #include "ReportFactory.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace Common;
+using namespace sword;
 
 using namespace plugins;
 using namespace plugins::crossbow;

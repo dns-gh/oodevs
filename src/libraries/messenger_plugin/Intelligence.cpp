@@ -18,74 +18,74 @@ using namespace plugins::messenger;
 
 namespace
 {
-    Common::EnumNatureLevel ResolveLevel( const std::string& level )
+    sword::EnumNatureLevel ResolveLevel( const std::string& level )
     {
       if( level == "b" )
-          return Common::b ;
+          return sword::b ;
       if( level == "o" )
-          return Common::o ;
+          return sword::o ;
       if( level == "c" )
-          return Common::c ;
+          return sword::c ;
       if( level == "oo" )
-          return Common::oo ;
+          return sword::oo ;
       if( level == "ooo" )
-          return Common::ooo ;
+          return sword::ooo ;
       if( level == "i" )
-          return Common::i ;
+          return sword::i ;
       if( level == "ii" )
-          return Common::ii ;
+          return sword::ii ;
       if( level == "iii" )
-          return Common::iii ;
+          return sword::iii ;
       if( level == "x" )
-          return Common::x ;
+          return sword::x ;
       if( level == "xx" )
-          return Common::xx ;
+          return sword::xx ;
       if( level == "xxx" )
-          return Common::xxx ;
+          return sword::xxx ;
       if( level == "xxxx" )
-          return Common::xxxx ;
-      return Common::none_naturelevel;
+          return sword::xxxx ;
+      return sword::none_naturelevel;
     }
 
-    std::string ResolveLevel( Common::EnumNatureLevel level )
+    std::string ResolveLevel( sword::EnumNatureLevel level )
     {
         switch( level )
         {
-        case Common::b: return "b";
-        case Common::o: return "o";
-        case Common::c: return "c";
-        case Common::oo: return "oo";
-        case Common::ooo: return "ooo";
-        case Common::i: return "i";
-        case Common::ii: return "ii";
-        case Common::iii: return "iii";
-        case Common::x: return "x";
-        case Common::xx: return "xx";
-        case Common::xxx: return "xxx";
-        case Common::xxxx: return "xxxx";
+        case sword::b: return "b";
+        case sword::o: return "o";
+        case sword::c: return "c";
+        case sword::oo: return "oo";
+        case sword::ooo: return "ooo";
+        case sword::i: return "i";
+        case sword::ii: return "ii";
+        case sword::iii: return "iii";
+        case sword::x: return "x";
+        case sword::xx: return "xx";
+        case sword::xxx: return "xxx";
+        case sword::xxxx: return "xxxx";
         default: return "";
         }
     }
 
-    Common::EnumDiplomacy ResolveKarma( const std::string& karma )
+    sword::EnumDiplomacy ResolveKarma( const std::string& karma )
     {
         if( karma == "friend" )
-            return Common::friend_diplo;
+            return sword::friend_diplo;
         if( karma == "enemy" )
-            return Common::enemy_diplo;
+            return sword::enemy_diplo;
         if( karma == "neutral" )
-            return Common::neutral_diplo;
-        return Common::unknown_diplo;
+            return sword::neutral_diplo;
+        return sword::unknown_diplo;
     }
 
-    std::string ResolveKarma( Common::EnumDiplomacy karma )
+    std::string ResolveKarma( sword::EnumDiplomacy karma )
     {
         switch( karma )
         {
-        case Common::friend_diplo: return "friend";
-        case Common::enemy_diplo: return "enemy";
-        case Common::neutral_diplo: return "neutral";
-        case Common::unknown_diplo:
+        case sword::friend_diplo: return "friend";
+        case sword::enemy_diplo: return "enemy";
+        case sword::neutral_diplo: return "neutral";
+        case sword::unknown_diplo:
         default: return "unknown";
         }
     }
@@ -96,7 +96,7 @@ namespace
 // Name: Intelligence constructor
 // Created: SBO 2007-10-22
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( unsigned int id, const MsgsClientToMessenger::MsgIntelligenceCreationRequest& message )
+Intelligence::Intelligence( unsigned int id, const sword::IntelligenceCreationRequest& message )
     : id_       ( id )
     , formation_( message.intelligence().formation() )
     , name_     ( message.intelligence().name() )
@@ -113,7 +113,7 @@ Intelligence::Intelligence( unsigned int id, const MsgsClientToMessenger::MsgInt
 // Name: Intelligence constructor
 // Created: RDS 2008-04-08
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( unsigned int id, xml::xistream& xis, const Common::FormationId& formation, const kernel::CoordinateConverter_ABC& converter )
+Intelligence::Intelligence( unsigned int id, xml::xistream& xis, const sword::FormationId& formation, const kernel::CoordinateConverter_ABC& converter )
     : id_       ( id )
     , name_     ( xis.attribute< std::string >( "name" ) )
     , nature_   ( xis.attribute< std::string >( "nature" ) )
@@ -138,7 +138,7 @@ Intelligence::~Intelligence()
 // Name: Intelligence::Update
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Intelligence::Update( const MsgsClientToMessenger::MsgIntelligenceUpdateRequest& message )
+void Intelligence::Update( const sword::IntelligenceUpdateRequest& message )
 {
     if( message.has_name())
         name_ = message.name();

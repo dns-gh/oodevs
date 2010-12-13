@@ -58,7 +58,7 @@ FireAttribute::FireAttribute( xml::xistream& xis )
 // Name: FireAttribute constructor
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( const Common::MsgMissionParameter_Value& attributes )
+FireAttribute::FireAttribute( const sword::MsgMissionParameter_Value& attributes )
     : heat_        ( 0 )
     , pClass_    ( 0 )
     , width_    ( MIL_FireClass::GetWidth() )
@@ -164,7 +164,7 @@ void FireAttribute::Register( MIL_Object_ABC& object ) const
 // Name: FireAttribute::SendFullState
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void FireAttribute::SendFullState( Common::ObjectAttributes& asn ) const
+void FireAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
 //    asn.set_firePresent( 1 );
     asn.mutable_fire()->set_heat( heat_ );
@@ -175,7 +175,7 @@ void FireAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // Name: FireAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void FireAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
+void FireAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {

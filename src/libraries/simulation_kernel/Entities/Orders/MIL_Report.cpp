@@ -180,13 +180,13 @@ bool MIL_Report::DoSend( unsigned int nSenderId, E_Type nType, std::vector< boos
     message().mutable_type()->set_id( nID_ );
     // $$$$ _RC_ PHC 2010-07-07: Besoin de récuperer model...
     MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *message().mutable_source(), nSenderId );
-    message().mutable_category()->set_id( MsgsSimToClient::EnumReportType( nType ) );
+    message().mutable_category()->set_id( sword::EnumReportType( nType ) );
     NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *message().mutable_time() );
     for( unsigned int i = 0; i < parameters_.size(); ++i )
     {
         if( !params[ i ]->IsOfType( parameters_[i]->GetType() ) )
             return false;
-        Common::MsgMissionParameter& paramProtobuff = *message().mutable_parameters()->add_elem();
+        sword::MsgMissionParameter& paramProtobuff = *message().mutable_parameters()->add_elem();
         if( !params[ i ]->ToElement( *paramProtobuff.mutable_value()->Add() ) )
             return false;
     }

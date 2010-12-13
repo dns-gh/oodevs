@@ -20,14 +20,14 @@ using namespace dispatcher;
 // Name: PopulationConcentration constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-PopulationConcentration::PopulationConcentration( const Population& population, const MsgsSimToClient::MsgCrowdConcentrationCreation& msg )
+PopulationConcentration::PopulationConcentration( const Population& population, const sword::CrowdConcentrationCreation& msg )
     : dispatcher::PopulationConcentration_ABC( msg.concentration().id() )
     , population_     ( population )
     , nID_            ( msg.concentration().id() )
     , position_       ( msg.position() )
     , nNbrAliveHumans_( 0 )
     , nNbrDeadHumans_ ( 0 )
-    , nAttitude_      ( Common::agressive )
+    , nAttitude_      ( sword::agressive )
 {
     Register( *this );
 }
@@ -45,7 +45,7 @@ PopulationConcentration::~PopulationConcentration()
 // Name: PopulationConcentration::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationConcentration::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationUpdate& msg )
+void PopulationConcentration::DoUpdate( const sword::CrowdConcentrationUpdate& msg )
 {
     if( msg.has_attitude()  )
         nAttitude_ = msg.attitude();
@@ -144,7 +144,7 @@ QString PopulationConcentration::GetAttitude() const
 // Name: PopulationConcentration::GetPosition
 // Created: SBO 2010-06-10
 // -----------------------------------------------------------------------------
-const Common::MsgCoordLatLong& PopulationConcentration::GetPosition() const
+const sword::MsgCoordLatLong& PopulationConcentration::GetPosition() const
 {
     return position_;
 }

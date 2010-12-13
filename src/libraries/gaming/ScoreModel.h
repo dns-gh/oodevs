@@ -47,8 +47,8 @@ public:
     //! @name Operations
     //@{
     void Purge();
-    void Update( const MsgsAarToClient::MsgIndicator& message );
-    void Update( const MsgsAarToClient::MsgPlotResult& message );
+    void Update( const sword::Indicator& message );
+    void Update( const sword::PlotResult& message );
     IndicatorRequest& CreateRequest( Score& score );
     //@}
 

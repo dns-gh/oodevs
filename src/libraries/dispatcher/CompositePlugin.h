@@ -54,13 +54,13 @@ public:
         handlers_.push_back( boost::shared_ptr< MessageHandler_ABC >( handler ) );
     }
 
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message )
+    virtual void Receive( const sword::SimToClient& message )
     {
         for( CIT_Handlers it = handlers_.begin(); it != handlers_.end(); ++it )
             (*it)->Receive( message );
     }
 
-    virtual void Receive( const MsgsAarToClient::MsgAarToClient& message )
+    virtual void Receive( const sword::AarToClient& message )
     {
         for( CIT_Handlers it = handlers_.begin(); it != handlers_.end(); ++it )
             (*it)->Receive( message );

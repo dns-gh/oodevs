@@ -18,7 +18,6 @@
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "MT_Tools/MT_CrashHandler.h"
 #include "Decision/DEC_PopulationFunctions.h"
 #include "Decision/DEC_ActionFunctions.h"
 #include "Decision/DEC_MiscFunctions.h"

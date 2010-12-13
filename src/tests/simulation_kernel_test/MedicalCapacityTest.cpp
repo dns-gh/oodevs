@@ -1,16 +1,21 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
 #include "simulation_kernel_test_pch.h"
 #include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
 #include "simulation_kernel/Entities/Objects/MedicalCapacity.h"
 #include "simulation_kernel/Entities/Objects/MedicalTreatmentAttribute.h"
 #include "MockMIL_Object_ABC.h"
 #include "MockMIL_Injury_ABC.h"
-#include <xeumeuleu/xml.hpp>
-#pragma warning( push )
-#pragma warning( disable : 4244 )
-#include "protocol/generated/Common.pb.h"
-#pragma warning( pop )
 #include "MockMIL_Time_ABC.h"
-#include "tools/MIL_Config.h"
+#include "protocol/Protocol.h"
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: VerifyMedicalCapacity
@@ -47,7 +52,7 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
         MedicalTreatmentAttribute attribute( xis );
         MOCK_EXPECT( object, RegisterAttribute ).once();
         object.GetAttribute< MedicalTreatmentAttribute >() = attribute;
-        Common::ObjectAttributes asn;
+        sword::ObjectAttributes asn;
         object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asn );
         unsigned int woundNumber = 0;
         BOOST_CHECK_EQUAL( 2, asn.medical_treatment().bed_capacities().size() );
@@ -64,7 +69,7 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
             PHY_InjuredHuman injuredHuman;
             capacity.ReceivePatient( injuredHuman );
             capacity.Update( object, 1 );
-            Common::ObjectAttributes asnAfter;
+            sword::ObjectAttributes asnAfter;
             object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asnAfter );
             BOOST_CHECK_EQUAL( 1u, asn.medical_treatment().bed_capacities( woundNumber ).available_count() );
         }
@@ -76,7 +81,7 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
             PHY_InjuredHuman injuredHuman( abstractInjury );
             capacity.ReceivePatient( injuredHuman );
             capacity.Update( object, 1 );
-            Common::ObjectAttributes asnAfter;
+            sword::ObjectAttributes asnAfter;
             object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asnAfter );
             BOOST_CHECK_EQUAL( 0u, asnAfter.medical_treatment().bed_capacities( woundNumber ).available_count() );
         }
@@ -120,7 +125,7 @@ BOOST_AUTO_TEST_CASE( VerifyInitialization )
         xis >> xml::start( "medical-treatment" );
         MedicalTreatmentAttribute attribute( xis );
         object.GetAttribute< MedicalTreatmentAttribute >() = attribute;
-        Common::ObjectAttributes asn;
+        sword::ObjectAttributes asn;
         object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asn );
         BOOST_CHECK_EQUAL( 3u, asn.medical_treatment().doctors() );
         BOOST_CHECK( ! asn.medical_treatment().bed_capacities( 0 /*id Wound1*/ ).has_type_id() );
@@ -173,14 +178,14 @@ BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
         object.GetAttribute< MedicalTreatmentAttribute >() = attribute;
         
         // Update
-        Common::MsgMissionParameter_Value parameters;
+        sword::MsgMissionParameter_Value parameters;
         parameters.add_list(); // attributeId
         parameters.add_list(); // External ref
         parameters.add_list()->set_quantity( 5 ); // doctors
         parameters.add_list(); // eStatus
-        Common::MsgMissionParameter_Value& bed_capacities = *parameters.add_list();
+        sword::MsgMissionParameter_Value& bed_capacities = *parameters.add_list();
         {
-            Common::MsgMissionParameter_Value& bed = *bed_capacities.add_list();
+            sword::MsgMissionParameter_Value& bed = *bed_capacities.add_list();
             bed.add_list()->set_identifier( 0 );
             bed.add_list()->set_quantity( 3 ); // baseline
             bed.add_list()->set_quantity( 2 ); // available
@@ -188,7 +193,7 @@ BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
             // bed.add_list()->set_quantity( 3 );
         }
         {
-            Common::MsgMissionParameter_Value& bed = *bed_capacities.add_list();
+            sword::MsgMissionParameter_Value& bed = *bed_capacities.add_list();
             bed.add_list()->set_identifier( 1 );
             bed.add_list()->set_quantity( 5 );
             bed.add_list()->set_quantity( 3 );
@@ -199,7 +204,7 @@ BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
         object.GetAttribute< MedicalTreatmentAttribute >().OnUpdate( parameters );
 
         // Validate
-        Common::ObjectAttributes asn;
+        sword::ObjectAttributes asn;
         object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asn );
         BOOST_CHECK_EQUAL( 5u, asn.medical_treatment().doctors() );
         
@@ -256,16 +261,16 @@ BOOST_AUTO_TEST_CASE( VerifyAsnUpdate )
         object.GetAttribute< MedicalTreatmentAttribute >() = attribute;
         
         // Update
-        Common::ObjectAttributes asnUpdate;
+        sword::ObjectAttributes asnUpdate;
         asnUpdate.mutable_medical_treatment()->set_doctors( 5 );
         {
-            Common::MedicalTreatmentBedCapacity& capacity = *asnUpdate.mutable_medical_treatment()->add_bed_capacities();
+            sword::MedicalTreatmentBedCapacity& capacity = *asnUpdate.mutable_medical_treatment()->add_bed_capacities();
             capacity.set_type_id( 0 );
             capacity.set_available_count( 3 );
             capacity.set_baseline_count( 5 );
         }
         {
-            Common::MedicalTreatmentBedCapacity& capacity = *asnUpdate.mutable_medical_treatment()->add_bed_capacities();
+            sword::MedicalTreatmentBedCapacity& capacity = *asnUpdate.mutable_medical_treatment()->add_bed_capacities();
             capacity.set_type_id( 1 );
             capacity.set_available_count( 5 );
             capacity.set_baseline_count( 3 );
@@ -274,7 +279,7 @@ BOOST_AUTO_TEST_CASE( VerifyAsnUpdate )
         object.GetAttribute< MedicalTreatmentAttribute >().Update( asnUpdate );
 
         // Validate
-        Common::ObjectAttributes asn;
+        sword::ObjectAttributes asn;
         object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asn );
     }
     MIL_MedicalTreatmentType::Terminate();

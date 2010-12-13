@@ -14,13 +14,13 @@
 using namespace weather;
 
 PHY_Precipitation::T_PrecipitationMap PHY_Precipitation::precipitations_;
-PHY_Precipitation PHY_Precipitation::none_     ( "PasDePrecipitation", eWeatherType_None     , Common::pas_de_precipitation      );
-PHY_Precipitation PHY_Precipitation::sandStorm_( "TempeteDeSable"    , eWeatherType_SandStorm, Common::tempete_sable             );
-PHY_Precipitation PHY_Precipitation::fog_      ( "Brouillard"        , eWeatherType_Fog      , Common::brouillard                );
-PHY_Precipitation PHY_Precipitation::drizzle_  ( "Crachin"           , eWeatherType_Drizzle  , Common::crachin                   );
-PHY_Precipitation PHY_Precipitation::rain_     ( "Pluie"             , eWeatherType_Rain     , Common::pluie                     );
-PHY_Precipitation PHY_Precipitation::snow_     ( "Neige"             , eWeatherType_Snow     , Common::neige                     );
-PHY_Precipitation PHY_Precipitation::smoke_    ( "Fumigene"          , eWeatherType_Smoke    , (Common::EnumPrecipitationType)-1 );
+PHY_Precipitation PHY_Precipitation::none_     ( "PasDePrecipitation", eWeatherType_None     , sword::pas_de_precipitation      );
+PHY_Precipitation PHY_Precipitation::sandStorm_( "TempeteDeSable"    , eWeatherType_SandStorm, sword::tempete_sable             );
+PHY_Precipitation PHY_Precipitation::fog_      ( "Brouillard"        , eWeatherType_Fog      , sword::brouillard                );
+PHY_Precipitation PHY_Precipitation::drizzle_  ( "Crachin"           , eWeatherType_Drizzle  , sword::crachin                   );
+PHY_Precipitation PHY_Precipitation::rain_     ( "Pluie"             , eWeatherType_Rain     , sword::pluie                     );
+PHY_Precipitation PHY_Precipitation::snow_     ( "Neige"             , eWeatherType_Snow     , sword::neige                     );
+PHY_Precipitation PHY_Precipitation::smoke_    ( "Fumigene"          , eWeatherType_Smoke    , (sword::EnumPrecipitationType)-1 );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Precipitation::Initialize
@@ -51,7 +51,7 @@ void PHY_Precipitation::Terminate()
 // Name: PHY_Precipitation constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Precipitation::PHY_Precipitation( const std::string& strName, E_WeatherType nType, Common::EnumPrecipitationType nAsnID )
+PHY_Precipitation::PHY_Precipitation( const std::string& strName, E_WeatherType nType, sword::EnumPrecipitationType nAsnID )
     : strName_( strName )
     , nType_  ( nType   )
     , nAsnID_ ( nAsnID  )

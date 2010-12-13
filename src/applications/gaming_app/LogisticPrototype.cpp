@@ -45,7 +45,7 @@ void LogisticPrototype::Commit()
     if( CheckValidity() )
     {
         actions::parameters::ParameterList& list = attributesList_->AddList( "Logistic" );
-        list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_logistic );
+        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_logistic );
         list.AddIdentifier( "tc2", tc2s_->GetValue()->GetId() );
     }
 }

@@ -35,7 +35,7 @@ public:
     static void Terminate ();
 
     static const MIL_PopulationAttitude* Find        ( const std::string&           strName );
-    static const MIL_PopulationAttitude* Find        ( Common::EnumCrowdAttitude nAsnID  );
+    static const MIL_PopulationAttitude* Find        ( sword::EnumCrowdAttitude nAsnID  );
     static const MIL_PopulationAttitude* Find        ( unsigned int                         nID     );
     static const T_AttitudeMap&          GetAttitudes();
     //@}
@@ -44,7 +44,7 @@ public:
     //@{
     const std::string& GetName() const;
     unsigned int GetID() const;
-    Common::EnumCrowdAttitude GetAsnID() const;
+    sword::EnumCrowdAttitude GetAsnID() const;
     //@}
 
     //! @name Operators
@@ -72,7 +72,7 @@ private:
 private:
     //! @name Constructors/Destructor
     //@{
-     MIL_PopulationAttitude( const std::string& strName, E_Attitude nAttitude, Common::EnumCrowdAttitude nAsnID );
+     MIL_PopulationAttitude( const std::string& strName, E_Attitude nAttitude, sword::EnumCrowdAttitude nAsnID );
     ~MIL_PopulationAttitude();
     //@}
 
@@ -81,7 +81,7 @@ private:
     //@{
     const std::string                  strName_;
     const E_Attitude                   nAttitude_;
-    const Common::EnumCrowdAttitude nAsnID_;
+    const sword::EnumCrowdAttitude nAsnID_;
     //@}
 
 private:

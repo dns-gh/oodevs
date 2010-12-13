@@ -13,9 +13,9 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgAutomatOrder;
+    class AutomatOrder;
 }
 
 namespace kernel
@@ -39,7 +39,7 @@ namespace script
 // Created: SBO 2008-08-13
 // =============================================================================
 class AutomatNotifier : public kernel::Extension_ABC
-                      , public kernel::Updatable_ABC< Common::MsgAutomatOrder >
+                      , public kernel::Updatable_ABC< sword::AutomatOrder >
 {
 public:
     //! @name Constructors/Destructor
@@ -57,7 +57,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const Common::MsgAutomatOrder& message );
+    virtual void DoUpdate( const sword::AutomatOrder& message );
     //@}
 
 private:

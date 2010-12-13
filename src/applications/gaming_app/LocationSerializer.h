@@ -11,13 +11,13 @@
 #define __LocationSerializer_h_
 
 #include "clients_kernel/LocationVisitor_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
-namespace Common
+namespace sword
 {
-    //struct MsgCoordLatLong;
     class MsgLocation;
 }
+
 namespace kernel
 {
     class CoordinateConverter_ABC;
@@ -36,24 +36,24 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit LocationSerializer( const kernel::CoordinateConverter_ABC& converter );
-             LocationSerializer( const kernel::CoordinateConverter_ABC& converter, Common::MsgLocation& localisation );
+             LocationSerializer( const kernel::CoordinateConverter_ABC& converter, sword::MsgLocation& localisation );
     virtual ~LocationSerializer();
     //@}
 
     //! @name Operations
     //@{
     void Serialize( const kernel::Location_ABC& location );
-    void Serialize( const kernel::Location_ABC& location, Common::MsgLocation& localisation );
+    void Serialize( const kernel::Location_ABC& location, sword::MsgLocation& localisation );
     //@}
 
     //! @name Operations
     //@{
-    virtual void VisitLines     ( const T_PointVector& points );
-    virtual void VisitRectangle ( const T_PointVector& points );
-    virtual void VisitPolygon   ( const T_PointVector& points );
-    virtual void VisitCircle    ( const geometry::Point2f& center, float radius );
-    virtual void VisitPoint     ( const geometry::Point2f& point );
-    virtual void VisitPath      ( const geometry::Point2f& first, const T_PointVector& points );
+    virtual void VisitLines    ( const T_PointVector& points );
+    virtual void VisitRectangle( const T_PointVector& points );
+    virtual void VisitPolygon  ( const T_PointVector& points );
+    virtual void VisitCircle   ( const geometry::Point2f& center, float radius );
+    virtual void VisitPoint    ( const geometry::Point2f& point );
+    virtual void VisitPath     ( const geometry::Point2f& first, const T_PointVector& points );
     //@}
 
 private:
@@ -72,7 +72,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    Common::MsgLocation* location_;
+    sword::MsgLocation* location_;
     //@}
 };
 

@@ -43,8 +43,10 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanCreation& message );
+
+    virtual void DoUpdate( const sword::UrbanUpdate& message );
+    virtual void DoUpdate( const sword::UrbanCreation& message );
+
     template< typename T >
     void UpdateData( const T& message );
     //@}

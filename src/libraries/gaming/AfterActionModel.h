@@ -12,16 +12,17 @@
 
 #include "tools/Resolver.h"
 
-namespace MsgsAarToClient
+namespace sword
 {
-    class MsgAarInformation;
-    class MsgPlotResult;
+    class AarInformation;
+    class PlotResult;
 }
 
 namespace kernel
 {
     class Controller;
 }
+
 namespace xml
 {
     class xistream;
@@ -49,8 +50,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsAarToClient::MsgAarInformation& message );
-    void Update( const MsgsAarToClient::MsgPlotResult& message );
+    void Update( const sword::AarInformation& message );
+    void Update( const sword::PlotResult& message );
     void Purge();
     IndicatorRequest& CreateRequest( const AfterActionFunction& function );
     //@}

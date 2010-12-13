@@ -23,7 +23,7 @@ using namespace dispatcher;
 // Name: KnowledgeGroup constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const MsgsSimToClient::MsgKnowledgeGroupCreation& msg )
+KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const sword::KnowledgeGroupCreation& msg )
     : KnowledgeGroup_ABC( msg.knowledge_group().id() )
     , model_( model )
     , team_( model_.Sides().Get( msg.party().id() ) )
@@ -69,7 +69,7 @@ KnowledgeGroup::~KnowledgeGroup()
 // Name: KnowledgeGroup::DoUpdate
 // Created: SBO 2010-03-04
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
+void KnowledgeGroup::DoUpdate( const sword::KnowledgeGroupUpdate& message )
 {
     // LTO begin
     if( message.has_type() )
@@ -109,7 +109,6 @@ void KnowledgeGroup::ChangeSuperior( dispatcher::KnowledgeGroup_ABC* superior )
 void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::KnowledgeGroupCreation message;
-
     message().mutable_knowledge_group()->set_id( GetId() );
     message().mutable_party()->set_id( team_.GetId() );
     // LTO begin

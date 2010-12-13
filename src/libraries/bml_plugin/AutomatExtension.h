@@ -13,9 +13,9 @@
 #include "BmlExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgAutomatOrder;
+    class AutomatOrder;
 }
 
 namespace dispatcher
@@ -37,7 +37,7 @@ namespace bml
 // Created: SBO 2008-05-22
 // =============================================================================
 class AutomatExtension : public BmlExtension_ABC
-                       , public kernel::Updatable_ABC< Common::MsgAutomatOrder >
+                       , public kernel::Updatable_ABC< sword::AutomatOrder >
 {
 public:
     //! @name Constructors/Destructor
@@ -48,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const Common::MsgAutomatOrder& message );
+    virtual void DoUpdate( const sword::AutomatOrder& message );
     //@}
 
 private:

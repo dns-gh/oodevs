@@ -12,11 +12,11 @@
 
 #include "tools/Resolver.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogMaintenanceHandlingCreation;
-    class MsgLogMedicalHandlingCreation;
-    class MsgLogSupplyHandlingCreation;
+    class LogMaintenanceHandlingCreation;
+    class LogMedicalHandlingCreation;
+    class LogSupplyHandlingCreation;
 }
 
 class LogMaintenanceConsign;
@@ -45,15 +45,15 @@ public:
     //@{
     void Purge();
 
-    void CreateMaintenanceConsign( const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& message );
+    void CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message );
     LogMaintenanceConsign& GetMaintenanceConsign( unsigned long id );
     void DeleteMaintenanceConsign( unsigned long id );
 
-    void CreateMedicalConsign( const MsgsSimToClient::MsgLogMedicalHandlingCreation& message );
+    void CreateMedicalConsign( const sword::LogMedicalHandlingCreation& message );
     LogMedicalConsign& GetMedicalConsign( unsigned long id );
     void DeleteMedicalConsign( unsigned long id );
 
-    void CreateSupplyConsign( const MsgsSimToClient::MsgLogSupplyHandlingCreation& message );
+    void CreateSupplyConsign( const sword::LogSupplyHandlingCreation& message );
     LogSupplyConsign& GetSupplyConsign( unsigned long id );
     void DeleteSupplyConsign( unsigned long id );
     //@}

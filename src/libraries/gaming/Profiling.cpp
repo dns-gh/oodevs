@@ -40,7 +40,7 @@ Profiling::~Profiling()
 // Name: Profiling::Update
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
-void Profiling::Update( const MsgsSimToClient::MsgControlProfilingInformation& message )
+void Profiling::Update( const sword::ControlProfilingInformation& message )
 {
     perception_.push_back( message.perception() );
     decision_  .push_back( message.decision() );
@@ -52,7 +52,7 @@ void Profiling::Update( const MsgsSimToClient::MsgControlProfilingInformation& m
 // Name: Profiling::Update
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-void Profiling::Update( const MsgsSimToClient::MsgControlEndTick& message )
+void Profiling::Update( const sword::ControlEndTick& message )
 {
     memory_ = message.memory();
     virtualMemory_ = message.virtual_memory();

@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Intelligence.h"
 #include "Diplomacies.h"
+#include "Tools.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
@@ -20,23 +21,21 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Styles.h"
-#include "Tools.h"
 #include "protocol/MessengerSenders.h"
 
 using namespace kernel;
-using namespace Common;
 
 namespace
 {
-    const Karma& ConvertToKarma( const EnumDiplomacy& diplomacy )
+    const Karma& ConvertToKarma( const sword::EnumDiplomacy& diplomacy )
     {
         switch( diplomacy )
         {
-        case Common::friend_diplo:
+        case sword::friend_diplo:
             return Karma::friend_;
-        case Common::enemy_diplo:
+        case sword::enemy_diplo:
             return Karma::enemy_;
-        case Common::neutral_diplo:
+        case sword::neutral_diplo:
             return Karma::neutral_;
         default:
             return Karma::unknown_;
@@ -48,7 +47,7 @@ namespace
 // Name: Intelligence constructor
 // Created: SBO 2007-10-17
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( const MsgsMessengerToClient::MsgIntelligenceCreation& message, Controller& controller, const tools::Resolver_ABC< Formation_ABC >& formations, const tools::Resolver_ABC< HierarchyLevel_ABC >& levels, Publisher_ABC& publisher )
+Intelligence::Intelligence( const sword::IntelligenceCreation& message, Controller& controller, const tools::Resolver_ABC< Formation_ABC >& formations, const tools::Resolver_ABC< HierarchyLevel_ABC >& levels, Publisher_ABC& publisher )
     : EntityImplementation< Intelligence_ABC >( controller, message.id().id(), QString( message.intelligence().name().c_str() ) )
     , levels_   ( levels )
     , formation_( formations.Get( message.intelligence().formation().id() ) )
@@ -200,7 +199,7 @@ void Intelligence::Rename( const QString& name )
 // Name: Intelligence::DoUpdate
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Intelligence::DoUpdate( const MsgsMessengerToClient::MsgIntelligenceUpdate& message )
+void Intelligence::DoUpdate( const sword::IntelligenceUpdate& message )
 {
     if( message.has_name()  )
         name_ = message.name().c_str();

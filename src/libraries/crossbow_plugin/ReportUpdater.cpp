@@ -61,7 +61,7 @@ void ReportUpdater::Clean()
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void ReportUpdater::Update( const MsgsSimToClient::MsgReport& msg )
+void ReportUpdater::Update( const sword::Report& msg )
 {
     std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "flat" ).OpenTable( "Reports" ) );
 

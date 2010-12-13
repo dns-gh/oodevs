@@ -10,8 +10,7 @@
 #include "dispatcher_pch.h"
 #include "Logger.h"
 #include "MT_Tools/MT_Logger.h"
-#include <limits.h>
-#include <time.h>
+#include <ctime>
 
 using namespace dispatcher;
 
@@ -20,9 +19,9 @@ using namespace dispatcher;
 // Created: LDC 2009-09-09
 // -----------------------------------------------------------------------------
 Logger::Logger()
-    : nextMemoryDump_( 0 )
+    : next_( 0 )
 {
-    monitor_.MonitorProcess();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,16 +33,24 @@ Logger::~Logger()
     // NOTHING
 }
 
+namespace
+{
+    double ToMb( unsigned bytes )
+    {
+        return bytes / 1048576.;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Logger::Update
 // Created: LDC 2009-09-09
 // -----------------------------------------------------------------------------
 void Logger::Update()
 {
-    time_t currentTime = time( 0 );
-    if( currentTime > nextMemoryDump_ )
+    const time_t current = time( 0 );
+    if( current > next_ )
     {
-        nextMemoryDump_ = static_cast< int >( currentTime ) + 60;
-        //MT_LOG_INFO_MSG( "Memory: " << ( monitor_.GetMemory() / 1048576.) << " MB / " << ( monitor_.GetVirtualMemory() / 1048576.) << " MB (VM)" );
+        next_ = static_cast< int >( current ) + 60;
+        MT_LOG_INFO_MSG( "Memory: " << ToMb( monitor_.GetMemory() ) << " MB / " << ToMb( monitor_.GetVirtualMemory() ) << " MB (VM)" );
     }
 }

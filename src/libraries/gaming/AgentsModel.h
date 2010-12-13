@@ -13,16 +13,16 @@
 #include "protocol/Protocol.h"
 #include "tools/Resolver.h"
 
-namespace Common
+namespace sword
 {
-    class MsgCrowdCreation;
+    class CrowdCreation;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgAutomatCreation;
-    class MsgUnitCreation;
-    class MsgUnitDestruction;
+    class AutomatCreation;
+    class UnitCreation;
+    class UnitDestruction;
 }
 
 
@@ -57,24 +57,24 @@ public:
 
     //! @name Operations
     //@{
-    void CreateAutomat( const MsgsSimToClient::MsgAutomatCreation& message );
+    void CreateAutomat( const sword::AutomatCreation& message );
     kernel::Automat_ABC& GetAutomat( unsigned long id );
     kernel::Automat_ABC* FindAutomat( unsigned long id );
-    void DestroyAutomat( const MsgsSimToClient::MsgAutomatDestruction& message );
+    void DestroyAutomat( const sword::AutomatDestruction& message );
 
-    void CreateAgent( const MsgsSimToClient::MsgUnitCreation& message );
+    void CreateAgent( const sword::UnitCreation& message );
     kernel::Agent_ABC& GetAgent( unsigned long id ) const;
     kernel::Agent_ABC* FindAgent( unsigned long id ) const;
-    void DestroyAgent( const MsgsSimToClient::MsgUnitDestruction& message );
+    void DestroyAgent( const sword::UnitDestruction& message );
 
     kernel::Entity_ABC* FindAllAgent( unsigned long id ) const;
 
-    void CreatePopulation( const MsgsSimToClient::MsgCrowdCreation& message );
+    void CreatePopulation( const sword::CrowdCreation& message );
     kernel::Population_ABC& GetPopulation( unsigned long id );
     kernel::Population_ABC* FindPopulation( unsigned long id );
-    void DestroyCrowd( const MsgsSimToClient::MsgCrowdDestruction& message );
+    void DestroyCrowd( const sword::CrowdDestruction& message );
 
-    void CreateInhabitant( const MsgsSimToClient::MsgPopulationCreation& message );
+    void CreateInhabitant( const sword::PopulationCreation& message );
     kernel::Inhabitant_ABC& GetInhabitant( unsigned long id );
     kernel::Inhabitant_ABC* FindInhabitant( unsigned long id );
 

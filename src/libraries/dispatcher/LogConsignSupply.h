@@ -14,15 +14,16 @@
 #include "SimpleEntity.h"
 #include "tools/Resolver.h"
 
-namespace Common
+namespace sword
 {
-	class ParentEntity;
+    class ParentEntity;
 }
-namespace MsgsSimToClient
+
+namespace sword
 {
     enum EnumLogSupplyHandlingStatus;
-    class MsgLogSupplyHandlingCreation;
-    class MsgLogSupplyHandlingUpdate;
+    class LogSupplyHandlingCreation;
+    class LogSupplyHandlingUpdate;
 }
 
 namespace kernel
@@ -52,14 +53,14 @@ class LogConsignSupply : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{F
-             LogConsignSupply( const Model& model, const MsgsSimToClient::MsgLogSupplyHandlingCreation& msg );
+             LogConsignSupply( const Model& model, const sword::LogSupplyHandlingCreation& msg );
     virtual ~LogConsignSupply();
     //@}
 
     //! @name Operations
     //@{
     using kernel::Entity_ABC::Update;
-    void Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate& msg );
+    void Update( const sword::LogSupplyHandlingUpdate& msg );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -74,8 +75,8 @@ private:
     //@}
     //! @name Tools
 	//@{
-	kernel::Entity_ABC* FindLogEntity(const Common::ParentEntity& msg) const;
-	void FillLogEntityID(Common::ParentEntity& msg, const kernel::Entity_ABC* entity) const;
+	kernel::Entity_ABC* FindLogEntity(const sword::ParentEntity& msg) const;
+	void FillLogEntityID(sword::ParentEntity& msg, const kernel::Entity_ABC* entity) const;
 	//@}
 
 private:
@@ -86,7 +87,7 @@ private:
     const kernel::Entity_ABC*        pTreatingEntity_;
     const kernel::Entity_ABC*        pConvoyingEntity_;
     const kernel::Agent_ABC*          pConvoy_;
-    MsgsSimToClient::EnumLogSupplyHandlingStatus nState_;
+    sword::EnumLogSupplyHandlingStatus nState_;
     tools::Resolver< LogSupplyDotation > dotations_;
 };
 

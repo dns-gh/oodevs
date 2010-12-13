@@ -12,7 +12,7 @@
 #ifndef __PHY_AmmoDotationClass_h_
 #define __PHY_AmmoDotationClass_h_
 
-namespace Common
+namespace sword
 {
     enum EnumAmmunitionFamily;
 }
@@ -38,7 +38,7 @@ public:
     static void Initialize();
     static void Terminate ();
 
-    static const PHY_AmmoDotationClass* Find( Common::EnumAmmunitionFamily nAsnID );
+    static const PHY_AmmoDotationClass* Find( sword::EnumAmmunitionFamily nAsnID );
     static const PHY_AmmoDotationClass* Find( int nID );
     static const PHY_AmmoDotationClass* Find( const std::string& strName );
     //@}
@@ -46,7 +46,7 @@ public:
     //! @name Accessors
     //@{
           int          GetID  () const;
-    Common::EnumAmmunitionFamily GetAsnID() const;
+    sword::EnumAmmunitionFamily GetAsnID() const;
     const std::string& GetName() const;
     //@}
 
@@ -64,12 +64,12 @@ private:
     //@}
 
 private:
-     PHY_AmmoDotationClass( const std::string& strName, Common::EnumAmmunitionFamily nAsnID );
+     PHY_AmmoDotationClass( const std::string& strName, sword::EnumAmmunitionFamily nAsnID );
     virtual ~PHY_AmmoDotationClass();
 
 private:
     const std::string               strName_;
-    const Common::EnumAmmunitionFamily nAsnID_;
+    const sword::EnumAmmunitionFamily nAsnID_;
 
 private:
     static T_TypeMap types_;

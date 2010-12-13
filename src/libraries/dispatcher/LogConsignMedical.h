@@ -12,17 +12,17 @@
 
 #include "SimpleEntity.h"
 
-namespace Common
+namespace sword
 {
     enum EnumHumanRank;
     enum EnumHumanWound;
     enum EnumLogMedicalHandlingStatus;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogMedicalHandlingCreation;
-    class MsgLogMedicalHandlingUpdate;
+    class LogMedicalHandlingCreation;
+    class LogMedicalHandlingUpdate;
 }
 
 namespace kernel
@@ -47,14 +47,14 @@ class LogConsignMedical : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             LogConsignMedical( const Model& model, const MsgsSimToClient::MsgLogMedicalHandlingCreation& msg );
+             LogConsignMedical( const Model& model, const sword::LogMedicalHandlingCreation& msg );
     virtual ~LogConsignMedical();
     //@}
 
     //! @name Operations
     //@{
     using kernel::Entity_ABC::Update;
-    void Update( const MsgsSimToClient::MsgLogMedicalHandlingUpdate& msg );
+    void Update( const sword::LogMedicalHandlingUpdate& msg );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -75,11 +75,11 @@ private:
     const unsigned long      nTickCreation_;
 
     const kernel::Agent_ABC*         pTreatingAgent_;
-    Common::EnumHumanRank              nRank_;
-    Common::EnumHumanWound             nWound_;
+    sword::EnumHumanRank              nRank_;
+    sword::EnumHumanWound             nWound_;
     bool                             bMentalDiseased_;
     bool                             bContaminated_;
-    Common::EnumLogMedicalHandlingStatus nState_;
+    sword::EnumLogMedicalHandlingStatus nState_;
     bool                             bDiagnosed_;
 };
 

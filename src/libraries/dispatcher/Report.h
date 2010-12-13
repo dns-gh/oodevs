@@ -17,9 +17,9 @@ namespace kernel
     class ModelVisitor_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgReport;
+    class Report;
 }
 
 namespace dispatcher
@@ -38,7 +38,7 @@ class Report : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             Report( Model_ABC&, const MsgsSimToClient::MsgReport& report );
+             Report( Model_ABC&, const sword::Report& report );
     virtual ~Report();
     //@}
 
@@ -60,7 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< MsgsSimToClient::MsgReport > message_;
+    std::auto_ptr< sword::Report > message_;
     //@}
 };
 

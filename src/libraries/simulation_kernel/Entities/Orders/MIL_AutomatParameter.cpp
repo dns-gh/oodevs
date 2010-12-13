@@ -29,14 +29,14 @@ MIL_AutomatParameter::MIL_AutomatParameter( DEC_AutomateDecision* pDecision )
 // Name: MIL_AutomatParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AutomatParameter::MIL_AutomatParameter( const Common::AutomatId& asn, MIL_EntityManager_ABC& entityManager )
+MIL_AutomatParameter::MIL_AutomatParameter( const sword::AutomatId& asn, MIL_EntityManager_ABC& entityManager )
     : pDecision_( 0 )
 {
     MIL_Automate* pAutomate = entityManager.FindAutomate( asn.id() );
     if( pAutomate )
         pDecision_ = &pAutomate->GetDecision();
     if( !pDecision_ )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission_parameters );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ bool MIL_AutomatParameter::ToAutomat( DEC_Decision_ABC*& value ) const
 // Name: MIL_AutomatParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_AutomatParameter::ToElement( Common::MsgMissionParameter_Value& elem ) const
+bool MIL_AutomatParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
 {
     if( !pDecision_ )
         return false;

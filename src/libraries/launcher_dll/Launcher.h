@@ -13,13 +13,13 @@
 #include "Launcher_ABC.h"
 #include <memory>
 
-namespace MsgsAdminToLauncher
+namespace sword
 {
-    class MsgConnectionRequest;
-    class MsgControlStart;
-    class MsgControlStop;
-    class MsgExercicesListRequest;
-    class MsgProfilesListRequest;
+    class ConnectionRequest;
+    class ControlStartExercise;
+    class ControlStopExercise;
+    class ExercicesListRequest;
+    class ProfilesListRequest;
 }
 
 namespace kernel
@@ -52,7 +52,7 @@ public:
     //! @name Operations
     //@{
     virtual void Update();
-    virtual void HandleAdminToLauncher( const std::string& endpoint, const MsgsAdminToLauncher::MsgAdminToLauncher& message );
+    virtual void HandleAdminToLauncher( const std::string& endpoint, const sword::AdminToLauncher& message );
     //@}
 
 private:
@@ -64,11 +64,11 @@ private:
 
     //! @name Helpers
     //@{
-    void HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgConnectionRequest& message );
-    void HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgExercicesListRequest& message );
-    void HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgControlStart& message );
-    void HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgControlStop& message );
-    void HandleRequest( const std::string& endpoint, const MsgsAdminToLauncher::MsgProfilesListRequest& message );
+    void HandleRequest( const std::string& endpoint, const sword::ConnectionRequest& message );
+    void HandleRequest( const std::string& endpoint, const sword::ExercicesListRequest& message );
+    void HandleRequest( const std::string& endpoint, const sword::ControlStartExercise& message );
+    void HandleRequest( const std::string& endpoint, const sword::ControlStopExercise& message );
+    void HandleRequest( const std::string& endpoint, const sword::ProfilesListRequest& message );
     //@}
 
 private:

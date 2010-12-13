@@ -21,15 +21,15 @@ namespace xml
     class xistream;
 }
 
-namespace Common
+namespace sword
 {
-	class ParentEntity;
+    class ParentEntity;
     class MsgMissionParameters;
 }
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgUnitMagicAction;
+    class UnitMagicAction;
 }
 
 class MIL_Agent_ABC;
@@ -146,9 +146,9 @@ public:
     //@{
     virtual void SendFullState                    () const;
     virtual void WriteLogisticLinksODB            ( xml::xostream& xos ) const;
-    virtual void OnReceiveMsgChangeLogisticLinks  ( const MsgsClientToSim::MsgUnitMagicAction& msg );
-    virtual void OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionParameters& msg );
-            void FillParentEntity                 (Common::ParentEntity& msg);
+    virtual void OnReceiveChangeLogisticLinks  ( const sword::UnitMagicAction& msg );
+    virtual void OnReceiveLogSupplyChangeQuotas( const sword::MsgMissionParameters& msg );
+            void FillParentEntity                 (sword::ParentEntity& msg);
     //@}
 
 protected:

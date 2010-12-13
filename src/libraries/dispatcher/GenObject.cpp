@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: GenObject constructor
 // Created: NLD 2007-04-23
 // -----------------------------------------------------------------------------
-GenObject::GenObject( const Common::MsgPlannedWork& asn )
+GenObject::GenObject( const sword::MsgPlannedWork& asn )
     : type_              ( asn.type() )
     , location_          ( asn.position() )
     , typeObstacle_      ( asn.type_obstacle() )
@@ -35,7 +35,7 @@ GenObject::GenObject( const Common::MsgPlannedWork& asn )
 GenObject::GenObject()
     : type_              ( "" )
     , location_          ()
-    , typeObstacle_      ( Common::ObstacleType_DemolitionTargetType_preliminary )
+    , typeObstacle_      ( sword::ObstacleType_DemolitionTargetType_preliminary )
     , density_           ( 0. )
     , tc2_               ( 0 )
     , delaiActiviteMines_( 0 )
@@ -56,7 +56,7 @@ GenObject::~GenObject()
 // Name: GenObject::Send
 // Created: NLD 2007-04-23
 // -----------------------------------------------------------------------------
-void GenObject::Send( Common::MsgPlannedWork& message ) const
+void GenObject::Send( sword::MsgPlannedWork& message ) const
 {
     message.set_type( type_ );
     message.set_type_obstacle( typeObstacle_ );

@@ -81,7 +81,7 @@ kernel::Entity_ABC* LogisticLinks::GetSuperior() const
 // Name: LogisticLinks::DoUpdate
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void LogisticLinks::DoUpdate( const Common::MsgChangeLogisticLinks& message )
+void LogisticLinks::DoUpdate( const sword::ChangeLogisticLinks& message )
 {
     tc2_ = message.has_tc2()? automatResolver_.Find( message.tc2().id() ) : 0;
     superior_ = message.logistic_base().has_automat() ?

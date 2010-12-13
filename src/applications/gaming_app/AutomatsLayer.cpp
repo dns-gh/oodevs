@@ -30,7 +30,7 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_gui/ValuedDragObject.h"
 #include "gaming/AgentServerMsgMgr.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 #include <time.h>
 
 using namespace kernel;
@@ -149,7 +149,7 @@ void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kerne
     action->Attach( *new ActionTasker( selected_, false ) );
     action->Polish();
     int context = (int)clock();
-    boost::shared_ptr< MsgsSimToClient::Listener > listener( new AutomatCreationListener( point, type, context,
+    boost::shared_ptr< sword::Listener > listener( new AutomatCreationListener( point, type, context,
         agentsModel_, controllers_.controller_, static_.types_, static_.coordinateConverter_, actionsModel_, simulation_ ) );
     messageManager_.RegisterListener( listener );
     actionsModel_.Publish( *action, context );

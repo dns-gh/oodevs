@@ -12,7 +12,7 @@
 
 #include "Parameter.h"
 
-namespace Common
+namespace sword
 {
     class MsgMissionObjective;
 }
@@ -39,15 +39,15 @@ public:
     explicit Objective( const kernel::OrderParameter& parameter );
              Objective( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
              Objective( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
-             Objective( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgMissionObjective& message );
+             Objective( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::MsgMissionObjective& message );
     virtual ~Objective();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
-    void CommitTo( Common::MsgMissionObjective& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
+    void CommitTo( sword::MsgMissionObjective& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 

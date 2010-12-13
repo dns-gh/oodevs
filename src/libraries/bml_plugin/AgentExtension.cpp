@@ -53,7 +53,7 @@ AgentExtension::~AgentExtension()
 // Name: AgentExtension::DoUpdate
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-void AgentExtension::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& attributes )
+void AgentExtension::DoUpdate( const sword::UnitAttributes& attributes )
 {
     const bool reportPosition = ( attributes.has_position()  || attributes.has_hauteur()  ) && simulation_.MustReportPosition( lastUpdate_ );
     const bool reportStatus   = ( attributes.has_etat_operationnel()  || attributes.has_dotation_eff_materiel()  || attributes.has_dotation_eff_personnel()  ) && simulation_.MustReportStatus( lastUpdate_ );
@@ -73,7 +73,7 @@ void AgentExtension::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& attribu
 // Name: AgentExtension::DoUpdate
 // Created: SBO 2008-05-16
 // -----------------------------------------------------------------------------
-void AgentExtension::DoUpdate( const Common::MsgUnitOrder& message )
+void AgentExtension::DoUpdate( const sword::UnitOrder& message )
 {
     try
     {
@@ -90,7 +90,7 @@ void AgentExtension::DoUpdate( const Common::MsgUnitOrder& message )
 // Name: AgentExtension::DoUpdate
 // Created: SBO 2008-07-22
 // -----------------------------------------------------------------------------
-void AgentExtension::DoUpdate( const MsgsSimToClient::MsgUnitDetection& message )
+void AgentExtension::DoUpdate( const sword::UnitDetection& message )
 {
     try
     {

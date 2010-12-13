@@ -20,7 +20,7 @@ using namespace kernel;
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
 TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity_ABC& holder
-                                                 , const Common::MsgTacticalLine::Diffusion& message
+                                                 , const sword::MsgTacticalLine::Diffusion& message
                                                 , const tools::Resolver_ABC< Automat_ABC >& automats
                                                 , const tools::Resolver_ABC< Formation_ABC >& formations )
     : SimpleHierarchies< TacticalHierarchies >( holder, 0 )
@@ -60,7 +60,7 @@ TacticalLineHierarchies::~TacticalLineHierarchies()
 // Name: TacticalLineHierarchies::Update
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLineHierarchies::Update( const Common::MsgTacticalLine::Diffusion& message )
+void TacticalLineHierarchies::Update( const sword::MsgTacticalLine::Diffusion& message )
 {
     superiorIsAutomat_ = message.has_automat();
     if( superiorIsAutomat_ )
@@ -73,7 +73,7 @@ void TacticalLineHierarchies::Update( const Common::MsgTacticalLine::Diffusion& 
 // Name: TacticalLineHierarchies::DoUpdate
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLineHierarchies::DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate& message )
+void TacticalLineHierarchies::DoUpdate( const sword::LimaUpdate& message )
 {
     Update( message.tactical_line().diffusion() );
 }
@@ -82,7 +82,7 @@ void TacticalLineHierarchies::DoUpdate( const MsgsMessengerToClient::MsgLimaUpda
 // Name: TacticalLineHierarchies::DoUpdate
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLineHierarchies::DoUpdate( const MsgsMessengerToClient::MsgLimitUpdate& message )
+void TacticalLineHierarchies::DoUpdate( const sword::LimitUpdate& message )
 {
     Update( message.tactical_line().diffusion() );
 }
@@ -91,7 +91,7 @@ void TacticalLineHierarchies::DoUpdate( const MsgsMessengerToClient::MsgLimitUpd
 // Name: TacticalLineHierarchies::WriteTo
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLineHierarchies::WriteTo( Common::MsgTacticalLine::Diffusion& message ) const
+void TacticalLineHierarchies::WriteTo( sword::MsgTacticalLine::Diffusion& message ) const
 {
     if( !GetSuperior() )
         throw std::runtime_error( __FUNCTION__ );

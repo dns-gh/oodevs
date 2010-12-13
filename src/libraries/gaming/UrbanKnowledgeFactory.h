@@ -17,9 +17,9 @@ namespace kernel
     class UrbanKnowledge_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUrbanKnowledgeCreation;
+    class UrbanKnowledgeCreation;
 }
 
 class Model;
@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::UrbanKnowledge_ABC* Create( const kernel::Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message );
+    virtual kernel::UrbanKnowledge_ABC* Create( const kernel::Team_ABC& owner, const sword::UrbanKnowledgeCreation& message );
     //@}
 
 private:

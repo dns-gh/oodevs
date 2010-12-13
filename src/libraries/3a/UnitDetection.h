@@ -42,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    bool HasValue( const MsgsSimToClient::MsgSimToClient& wrapper ) const;
-    float Extract( const MsgsSimToClient::MsgSimToClient& wrapper ) const;
+    bool HasValue( const sword::SimToClient& wrapper ) const;
+    float Extract( const sword::SimToClient& wrapper ) const;
     //@}
 
 private:

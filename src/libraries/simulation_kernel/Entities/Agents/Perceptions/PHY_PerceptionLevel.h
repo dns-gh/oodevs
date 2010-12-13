@@ -13,7 +13,7 @@
 #define __PHY_PerceptionLevel_h_
 #include <map>
 
-namespace MsgsSimToClient
+namespace sword
 {
     enum EnumUnitIdentificationLevel;
 }
@@ -46,7 +46,7 @@ public:
 
     //! @name Operators
     //@{
-    void Serialize( MsgsSimToClient::EnumUnitIdentificationLevel& level ) const;
+    void Serialize( sword::EnumUnitIdentificationLevel& level ) const;
     bool operator ==( const PHY_PerceptionLevel& rhs ) const;
     bool operator !=( const PHY_PerceptionLevel& rhs ) const;
     bool operator < ( const PHY_PerceptionLevel& rhs ) const;
@@ -71,7 +71,7 @@ private:
     //@}
 
 private:
-     PHY_PerceptionLevel( const std::string& strName, E_Level nLevel, const MsgsSimToClient::EnumUnitIdentificationLevel& nAsnID );
+     PHY_PerceptionLevel( const std::string& strName, E_Level nLevel, const sword::EnumUnitIdentificationLevel& nAsnID );
     virtual ~PHY_PerceptionLevel();
 
 private:
@@ -84,7 +84,7 @@ private:
 private:
     const std::string                       strName_;
     const E_Level                           nLevel_;
-    const MsgsSimToClient::EnumUnitIdentificationLevel nAsnID_;
+    const sword::EnumUnitIdentificationLevel nAsnID_;
 
 private:
     static T_LevelMap levels_;

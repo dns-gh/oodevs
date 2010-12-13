@@ -35,7 +35,7 @@ public:
 
     //! @name Accessors
     //@{
-    Common::EquipmentType GetMosID     () const;
+    sword::EquipmentType GetMosID     () const;
     const PHY_Protection&      GetProtection() const;
     const PHY_Volume&          GetVolume    () const;
     const std::string&         GetName      () const;
@@ -52,7 +52,7 @@ private:
     const std::string          strName_;
     const PHY_Protection*      pProtection_;
     const PHY_Volume*          pVolume_;
-    Common::EquipmentType nMosID_;
+    sword::EquipmentType nMosID_;
 };
 
 #endif // __PHY_ComposanteType_ABC_h_

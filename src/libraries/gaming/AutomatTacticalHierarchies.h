@@ -13,9 +13,9 @@
 #include "clients_kernel/MergingTacticalHierarchies.h"
 #include "tools/Resolver_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgAutomatChangeSuperior;
+    class AutomatChangeSuperior;
 }
 
 namespace kernel
@@ -32,7 +32,7 @@ namespace kernel
 // Created: AGE 2006-10-19
 // =============================================================================
 class AutomatTacticalHierarchies : public kernel::MergingTacticalHierarchies
-                                 , public kernel::Updatable_ABC< Common::MsgAutomatChangeSuperior >
+                                 , public kernel::Updatable_ABC< sword::AutomatChangeSuperior >
 {
 public:
     //! @name Constructors/Destructor
@@ -59,7 +59,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const Common::MsgAutomatChangeSuperior& message );
+    virtual void DoUpdate( const sword::AutomatChangeSuperior& message );
     virtual void DoUpdate( const kernel::InstanciationComplete& message );
     virtual void MergeSymbol( const kernel::Entity_ABC& entity );
     static std::string Max( const std::string& lhs, const std::string& rhs );

@@ -19,7 +19,7 @@
 #include "MT_Tools/MT_Scipio_enum.h"
 #include "directia/brain/Brain.h"
 #include "protocol/protocol.h"
-#include "protocol/authenticationsenders.h"
+#include "protocol/AuthenticationSenders.h"
 
 using namespace dispatcher;
 
@@ -51,7 +51,7 @@ ProfileManager::~ProfileManager()
 // Name: ProfileManager::Receive
 // Created: AGE 2007-07-09
 // -----------------------------------------------------------------------------
-void ProfileManager::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
+void ProfileManager::Receive( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_control_send_current_state_end() )
         Reset();
@@ -138,7 +138,7 @@ void ProfileManager::Send( ClientPublisher_ABC& publisher ) const
 // Name: ProfileManager::Send
 // Created: SBO 2009-12-18
 // -----------------------------------------------------------------------------
-void ProfileManager::Send( MsgsAuthenticationToClient::MsgAuthenticationResponse& message ) const
+void ProfileManager::Send( sword::AuthenticationResponse& message ) const
 {
     for( CIT_ProfileMap it = profiles_.begin(); it != profiles_.end(); ++it )
         it->second->Send( *message.mutable_profiles()->add_elem() );
@@ -148,34 +148,34 @@ void ProfileManager::Send( MsgsAuthenticationToClient::MsgAuthenticationResponse
 // Name: ProfileManager::Create
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-MsgsAuthenticationToClient::MsgProfileCreationRequestAck_ErrorCode ProfileManager::Create( const MsgsClientToAuthentication::MsgProfileCreationRequest& message )
+sword::ProfileCreationRequestAck_ErrorCode ProfileManager::Create( const sword::ProfileCreationRequest& message )
 {
     const std::string login = message.has_profile() ? message.profile().login():"";
     if( login.empty() )
-        return MsgsAuthenticationToClient::MsgProfileCreationRequestAck_ErrorCode_invalid_login;
+        return sword::ProfileCreationRequestAck_ErrorCode_invalid_login;
     // $$$$ SBO 2007-01-22: check password if needed (maybe add a way to specify password constraints...)
     Profile*& pProfile = profiles_[ login ];
     if( pProfile )
-        return MsgsAuthenticationToClient::MsgProfileCreationRequestAck_ErrorCode_duplicate_login;
+        return sword::ProfileCreationRequestAck_ErrorCode_duplicate_login;
     MT_LOG_INFO_MSG( "New profile created : '" << login << "'" );
     pProfile = new Profile( model_, clients_, message );
-    return MsgsAuthenticationToClient::MsgProfileCreationRequestAck_ErrorCode_success;
+    return sword::ProfileCreationRequestAck_ErrorCode_success;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProfileManager::Update
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-MsgsAuthenticationToClient::MsgProfileUpdateRequestAck_ErrorCode ProfileManager::Update( const MsgsClientToAuthentication::MsgProfileUpdateRequest& message )
+sword::ProfileUpdateRequestAck_ErrorCode ProfileManager::Update( const sword::ProfileUpdateRequest& message )
 {
     Profile*& pProfile = profiles_[ message.login() ];
     if( !pProfile )
-        return MsgsAuthenticationToClient::MsgProfileUpdateRequestAck_ErrorCode_invalid_profile;
+        return sword::ProfileUpdateRequestAck_ErrorCode_invalid_profile;
     const std::string newLogin = message.profile().login();
     if( newLogin.empty() )
-        return MsgsAuthenticationToClient::MsgProfileUpdateRequestAck_ErrorCode_invalid_login;
+        return sword::ProfileUpdateRequestAck_ErrorCode_invalid_login;
     if( newLogin != message.login() && profiles_.find( newLogin ) != profiles_.end() )
-        return MsgsAuthenticationToClient::MsgProfileUpdateRequestAck_ErrorCode_duplicate_login;
+        return sword::ProfileUpdateRequestAck_ErrorCode_duplicate_login;
     // $$$$ SBO 2007-01-22: check password id needed
     pProfile->Update( message );
     if( newLogin != message.login() )
@@ -183,21 +183,21 @@ MsgsAuthenticationToClient::MsgProfileUpdateRequestAck_ErrorCode ProfileManager:
         profiles_[ newLogin ] = pProfile;
         profiles_.erase( message.login() );
     }
-    return MsgsAuthenticationToClient::MsgProfileUpdateRequestAck_ErrorCode_success;
+    return sword::ProfileUpdateRequestAck_ErrorCode_success;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProfileManager::Destroy
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-MsgsAuthenticationToClient::MsgProfileDestructionRequestAck_ErrorCode ProfileManager::Destroy( const MsgsClientToAuthentication::MsgProfileDestructionRequest& message )
+sword::ProfileDestructionRequestAck_ErrorCode ProfileManager::Destroy( const sword::ProfileDestructionRequest& message )
 {
     T_ProfileMap::iterator it = profiles_.find( message.login() );
     if( it == profiles_.end() )
-        return MsgsAuthenticationToClient::MsgProfileDestructionRequestAck_ErrorCode_invalid_profile;
+        return sword::ProfileDestructionRequestAck_ErrorCode_invalid_profile;
     delete it->second;
     profiles_.erase( it );
-    return MsgsAuthenticationToClient::MsgProfileDestructionRequestAck_ErrorCode_success;
+    return sword::ProfileDestructionRequestAck_ErrorCode_success;
 }
 
 namespace directia

@@ -8,13 +8,12 @@
 // *****************************************************************************
 
 #include "protocol_test_pch.h"
-#include "protocol_includes.h"
+#include "Protocol.h"
 #include "MessageHelpers.h"
 #include "tools/asio.h"
 #include "tools/MessageDecoder.h"
 #include "tools/MessageEncoder.h"
 #include "tools/MessageIdentifierFactory.h"
-#include <boost/date_time/posix_time/posix_time.hpp>
 
 namespace
 {
@@ -50,112 +49,83 @@ namespace
         return true;
     }
 
-    struct EncodingFixture
+    tools::Message& StripHeader( tools::Message& message )
     {
-        template< typename M >
-        void Verify( M& message, unsigned int count = 1 )
-        {
-            const unsigned long tag = tools::MessageIdentifierFactory::GetIdentifier< M >();
-            BOOST_REQUIRE( message.IsInitialized() );
-            const boost::posix_time::ptime start = boost::posix_time::microsec_clock::universal_time();
-            for( unsigned int i = 0; i < count; ++i )
-            {
-                std::auto_ptr< tools::MessageEncoder< M > > encoder;
-                BOOST_REQUIRE_NO_THROW( encoder.reset( new tools::MessageEncoder< M >( message ) ) );
-                const tools::Message& encodedMessage = *encoder;
-                CheckOutputBuffer( encodedMessage, tag );
-                tools::Message encodedCopy = encodedMessage;
-                std::auto_ptr< tools::MessageDecoder< M > > decoder;
-                BOOST_REQUIRE_NO_THROW( decoder.reset( new tools::MessageDecoder< M >( StripHeader( encodedCopy ) ) ) );
-                const M& decodedMessage = *decoder;
-                BOOST_CHECK( message == decodedMessage );
-                static const unsigned long headerSize = 2 * sizeof( unsigned long );
-                BOOST_CHECK_EQUAL( static_cast< unsigned long >( message.ByteSize() ), encodedMessage.Size() - headerSize );
-            }
-            BOOST_TEST_MESSAGE( "Encoded " << count << " '" << typeid( message ).name() << "' message(s) in " << boost::posix_time::microsec_clock::universal_time() - start );
-        }
-
-        tools::Message& StripHeader( tools::Message& message )
-        {
-            unsigned long size, tag;
-            message >> size >> tag;
-            return message;
-        }
-
-        void CheckOutputBuffer( const tools::Message& message, unsigned long tag )
-        {
-            std::vector< unsigned long > expected;
-            expected.push_back( message.Size() - sizeof( unsigned long ) );
-            expected.push_back( tag );
-            boost::asio::const_buffers_1 buffer = message.MakeOutputBuffer( tag );
-            std::vector< unsigned long >::const_iterator expectedIt = expected.begin();
-            for( boost::asio::const_buffers_1::const_iterator it = buffer.begin(); expectedIt != expected.end() && it != buffer.end(); ++it, ++expectedIt )
-                BOOST_CHECK_EQUAL( *expectedIt, ntohl( *boost::asio::buffer_cast< const unsigned long* >( *it ) ) );
-        }
-    };
+        unsigned long size, tag;
+        message >> size >> tag;
+        return message;
+    }
+    template< typename M >
+    void CheckOutputBuffer( const M& message )
+    {
+        std::vector< unsigned long > expected;
+        expected.push_back( message.Size() - sizeof( unsigned long ) );
+        const unsigned long tag = tools::MessageIdentifierFactory::GetIdentifier< M >();
+        expected.push_back( tag );
+        boost::asio::const_buffers_1 buffer = message.MakeOutputBuffer( tag );
+        std::vector< unsigned long >::const_iterator expectedIt = expected.begin();
+        for( boost::asio::const_buffers_1::const_iterator it = buffer.begin(); expectedIt != expected.end() && it != buffer.end(); ++it, ++expectedIt )
+            BOOST_CHECK_EQUAL( *expectedIt, ntohl( *boost::asio::buffer_cast< const unsigned long* >( *it ) ) );
+        // $$$$ MCO : what if one of the messages/buffers has more elements than the other ?
+    }
+    template< typename M >
+    void Verify( const M& message )
+    {
+        BOOST_REQUIRE( message.IsInitialized() );
+        const tools::MessageEncoder< M > encoder( message );
+        const tools::Message& encodedMessage = encoder;
+        CheckOutputBuffer( encodedMessage );
+        tools::Message encodedCopy = encodedMessage;
+        const tools::MessageDecoder< M > decoder( StripHeader( encodedCopy ) );
+        const M& decodedMessage = decoder;
+        BOOST_CHECK( message == decodedMessage );
+        static const unsigned long headerSize = 2 * sizeof( unsigned long );
+        BOOST_CHECK_EQUAL( static_cast< unsigned long >( message.ByteSize() ), encodedMessage.Size() - headerSize );
+    }
 }
 
-BOOST_FIXTURE_TEST_SUITE( EncodingTestSuite, EncodingFixture )
-
 // -----------------------------------------------------------------------------
-// Name: ProtobufTest_EncodeSimpleTest
+// Name: EncodingTest_EncodeSimpleTest
 // Created: SEB 2009-10-25
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( ProtobufTest_EncodeSimpleTest )
+BOOST_AUTO_TEST_CASE( EncodingTest_EncodeSimpleTest )
 {
     SimpleTest message;
     message.set_name( "My name" );
-    Verify( message, 10u );
-//    Verify( message, 100 );
-//    Verify( message, 1000 );
-//    Verify( message, 10000 );
-//    Verify( message, 100000 );
-//    Verify( message, 1000000 );
+    Verify( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProtobufTest_EncodeCompositeStringTest
+// Name: EncodingTest_EncodeCompositeStringTest
 // Created: SBO 2009-11-02
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( ProtobufTest_EncodeCompositeStringTest )
+BOOST_AUTO_TEST_CASE( EncodingTest_EncodeCompositeStringTest )
 {
     const unsigned int count = 1024;
     CompositeStringTest message;
     for( unsigned int i = 0; i < count; ++i )
         message.add_test()->set_name( "My name" );
-    Verify( message, 1u );
-//    Verify( message, 10 );
-//    Verify( message, 100 );
-//    Verify( message, 1000 );
-//    Verify( message, 10000 );
-//    Verify( message, 100000 );
-//    Verify( message, 1000000 );
+    Verify( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProtobufTest_EncodeCompositeIntegerTest
+// Name: EncodingTest_EncodeCompositeIntegerTest
 // Created: SBO 2009-11-02
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( ProtobufTest_EncodeCompositeIntegerTest )
+BOOST_AUTO_TEST_CASE( EncodingTest_EncodeCompositeIntegerTest )
 {
     const unsigned int count = 1024;
     CompositeIntegerTest message;
     for( unsigned int i = 0; i < count; ++i )
         message.add_test( 42 );
-    Verify( message, 1u );
-//    Verify( message, 10 );
-//    Verify( message, 100 );
-//    Verify( message, 1000 );
-//    Verify( message, 10000 );
-//    Verify( message, 100000 );
-//    Verify( message, 1000000 );
+    Verify( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProtobufTest_EncodeZeroField
+// Name: EncodingTest_EncodeZeroField
 // Created: SEB 2009-10-25
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( ProtobufTest_EncodeZeroField )
+BOOST_AUTO_TEST_CASE( EncodingTest_EncodeZeroField )
 {
     ZeroField message;
     Verify( message );
@@ -166,10 +136,10 @@ BOOST_AUTO_TEST_CASE( ProtobufTest_EncodeZeroField )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProtobufTest_EncodeComposite
+// Name: EncodingTest_EncodeComposite
 // Created: SEB 2009-10-25
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( ProtobufTest_EncodeComposite )
+BOOST_AUTO_TEST_CASE( EncodingTest_EncodeComposite )
 {
     Composite message;
     message.set_context( 0 );
@@ -184,10 +154,10 @@ BOOST_AUTO_TEST_CASE( ProtobufTest_EncodeComposite )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProtobufTest_EncodeExtendable
+// Name: EncodingTest_EncodeExtendable
 // Created: SEB 2009-10-25
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( ProtobufTest_EncodeExtendable )
+BOOST_AUTO_TEST_CASE( EncodingTest_EncodeExtendable )
 {
     Extendable message;
     Verify( message );
@@ -197,15 +167,12 @@ BOOST_AUTO_TEST_CASE( ProtobufTest_EncodeExtendable )
     Verify( message );
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-
 // -----------------------------------------------------------------------------
-// Name: ProtobufTest_ErrorChecking
+// Name: EncodingTest_ErrorChecking
 // Created: SEB 2009-10-25
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( ProtobufTest_ErrorChecking )
+BOOST_AUTO_TEST_CASE( EncodingTest_ErrorChecking )
 {
     Composite message;
-    std::auto_ptr< tools::MessageEncoder< Composite > > encoder;
-    BOOST_CHECK_THROW( encoder.reset( new tools::MessageEncoder< Composite >( message ) ), std::runtime_error );
+    BOOST_CHECK_THROW( tools::MessageEncoder< Composite > encoder( message ), std::runtime_error );
 }

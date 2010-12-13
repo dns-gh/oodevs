@@ -11,7 +11,6 @@
 #define __FireEffect_h_
 
 #include "SimpleEntity.h"
-
 #include "Localisation.h"
 
 namespace kernel
@@ -19,13 +18,14 @@ namespace kernel
     class ModelVisitor_ABC;
 }
 
-namespace Common
+namespace sword
 {
     enum EnumFireEffectType;
 }
-namespace MsgsSimToClient
+
+namespace sword
 {
-    class MsgStartFireEffect;
+    class StartFireEffect;
 }
 
 namespace dispatcher
@@ -43,7 +43,7 @@ class FireEffect : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             FireEffect( Model& model, const MsgsSimToClient::MsgStartFireEffect& message );
+             FireEffect( Model& model, const sword::StartFireEffect& message );
     virtual ~FireEffect();
     //@}
 
@@ -68,7 +68,7 @@ private:
     //@{
     unsigned id_;
     Localisation localisation_;
-    Common::EnumFireEffectType  type_;
+    sword::EnumFireEffectType  type_;
     //@}
 };
 

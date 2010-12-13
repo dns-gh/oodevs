@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message ); // LTO
+    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const sword::KnowledgeGroupCreation& message ); // LTO
     //@}
 
 private:

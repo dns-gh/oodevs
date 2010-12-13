@@ -11,7 +11,7 @@
 #define __DrawingsModel_h_
 
 #include "clients_gui/DrawerModel.h"
-#include "protocol/messengersenders.h"
+#include "protocol/MessengerSenders.h"
 
 class DrawingFactory;
 
@@ -32,9 +32,9 @@ public:
 
     //! @name Operations
     //@{
-    void Create( const MsgsMessengerToClient::MsgShapeCreation& message );
-    void Update( const MsgsMessengerToClient::MsgShapeUpdate& message );
-    void Delete( const MsgsMessengerToClient::MsgShapeDestruction& message );
+    void Create( const sword::ShapeCreation& message );
+    void Update( const sword::ShapeUpdate& message );
+    void Delete( const sword::ShapeDestruction& message );
     //@}
 
 private:

@@ -356,20 +356,20 @@ ENT_Tr::T_ConverterLogSupplyHandlingStatus ENT_Tr::LogSupplyHandlingStatusConver
     T_ConverterLogSupplyHandlingStatus( "", "", (E_LogSupplyHandlingStatus)-1 )
 };
 
-ENT_Tr::T_ConverterMsgLogSupplyChangeQuotasAck ENT_Tr::MsgLogSupplyChangeQuotasAckConverter_[] =
+ENT_Tr::T_ConverterLogSupplyChangeQuotasAck ENT_Tr::LogSupplyChangeQuotasAckConverter_[] =
 {
-    T_ConverterMsgLogSupplyChangeQuotasAck( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eMsgLogSupplyChangeQuotasAck_NoError ),
-    T_ConverterMsgLogSupplyChangeQuotasAck( "error invalid donneur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid donneur" ), eMsgLogSupplyChangeQuotasAck_ErrorInvalidDonneur ),
-    T_ConverterMsgLogSupplyChangeQuotasAck( "error invalid receveur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid receveur" ), eMsgLogSupplyChangeQuotasAck_ErrorInvalidReceveur ),
-    T_ConverterMsgLogSupplyChangeQuotasAck( "", "", (E_MsgLogSupplyChangeQuotasAck)-1 )
+    T_ConverterLogSupplyChangeQuotasAck( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eLogSupplyChangeQuotasAck_NoError ),
+    T_ConverterLogSupplyChangeQuotasAck( "error invalid donneur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid donneur" ), eLogSupplyChangeQuotasAck_ErrorInvalidDonneur ),
+    T_ConverterLogSupplyChangeQuotasAck( "error invalid receveur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid receveur" ), eLogSupplyChangeQuotasAck_ErrorInvalidReceveur ),
+    T_ConverterLogSupplyChangeQuotasAck( "", "", (E_LogSupplyChangeQuotasAck)-1 )
 };
 
-ENT_Tr::T_ConverterMsgLogSupplyPushFlowAck ENT_Tr::MsgLogSupplyPushFlowAckConverter_[] =
+ENT_Tr::T_ConverterLogSupplyPushFlowAck ENT_Tr::LogSupplyPushFlowAckConverter_[] =
 {
-    T_ConverterMsgLogSupplyPushFlowAck( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eMsgLogSupplyPushFlowAck_NoError ),
-    T_ConverterMsgLogSupplyPushFlowAck( "error invalid donneur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid donneur" ), eMsgLogSupplyPushFlowAck_ErrorInvalidDonneur ),
-    T_ConverterMsgLogSupplyPushFlowAck( "error invalid receveur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid receveur" ), eMsgLogSupplyPushFlowAck_ErrorInvalidReceveur ),
-    T_ConverterMsgLogSupplyPushFlowAck( "", "", (E_MsgLogSupplyPushFlowAck)-1 )
+    T_ConverterLogSupplyPushFlowAck( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eLogSupplyPushFlowAck_NoError ),
+    T_ConverterLogSupplyPushFlowAck( "error invalid donneur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid donneur" ), eLogSupplyPushFlowAck_ErrorInvalidDonneur ),
+    T_ConverterLogSupplyPushFlowAck( "error invalid receveur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid receveur" ), eLogSupplyPushFlowAck_ErrorInvalidReceveur ),
+    T_ConverterLogSupplyPushFlowAck( "", "", (E_LogSupplyPushFlowAck)-1 )
 };
 
 ENT_Tr::T_ConverterLogMedicalHandlingStatus ENT_Tr::LogMedicalHandlingStatusConverter_[] =
@@ -507,8 +507,8 @@ void ENT_Tr::InitTranslations()
     InitTr( LogMaintenanceRegimeTravailConverter_, "ENT_Tr" );
     InitTr( LogMaintenanceHandlingStatusConverter_, "ENT_Tr" );
     InitTr( LogSupplyHandlingStatusConverter_, "ENT_Tr" );
-    InitTr( MsgLogSupplyChangeQuotasAckConverter_, "ENT_Tr" );
-    InitTr( MsgLogSupplyPushFlowAckConverter_, "ENT_Tr" );
+    InitTr( LogSupplyChangeQuotasAckConverter_, "ENT_Tr" );
+    InitTr( LogSupplyPushFlowAckConverter_, "ENT_Tr" );
     InitTr( LogMedicalHandlingStatusConverter_, "ENT_Tr" );
     InitTr( DemolitionTargetTypeConverter_, "ENT_Tr" );
     InitTr( ObjectErrorCodeConverter_, "ENT_Tr" );
@@ -817,21 +817,21 @@ const std::string& ENT_Tr::ConvertFromLogSupplyHandlingStatus( E_LogSupplyHandli
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromMsgLogSupplyChangeQuotasAck
+// Name: ENT_Tr::ConvertFromLogSupplyChangeQuotasAck
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromMsgLogSupplyChangeQuotasAck( E_MsgLogSupplyChangeQuotasAck nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromLogSupplyChangeQuotasAck( E_LogSupplyChangeQuotasAck nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( MsgLogSupplyChangeQuotasAckConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( LogSupplyChangeQuotasAckConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromMsgLogSupplyPushFlowAck
+// Name: ENT_Tr::ConvertFromLogSupplyPushFlowAck
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromMsgLogSupplyPushFlowAck( E_MsgLogSupplyPushFlowAck nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromLogSupplyPushFlowAck( E_LogSupplyPushFlowAck nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( MsgLogSupplyPushFlowAckConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( LogSupplyPushFlowAckConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1195,21 +1195,21 @@ E_LogSupplyHandlingStatus ENT_Tr::ConvertToLogSupplyHandlingStatus( const std::s
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToMsgLogSupplyChangeQuotasAck
+// Name: ENT_Tr::ConvertToLogSupplyChangeQuotasAck
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_MsgLogSupplyChangeQuotasAck ENT_Tr::ConvertToMsgLogSupplyChangeQuotasAck( const std::string& strName )
+E_LogSupplyChangeQuotasAck ENT_Tr::ConvertToLogSupplyChangeQuotasAck( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( MsgLogSupplyChangeQuotasAckConverter_, strName );
+    return ENT_Tr::FindInConverter( LogSupplyChangeQuotasAckConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToMsgLogSupplyPushFlowAck
+// Name: ENT_Tr::ConvertToLogSupplyPushFlowAck
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_MsgLogSupplyPushFlowAck ENT_Tr::ConvertToMsgLogSupplyPushFlowAck( const std::string& strName )
+E_LogSupplyPushFlowAck ENT_Tr::ConvertToLogSupplyPushFlowAck( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( MsgLogSupplyPushFlowAckConverter_, strName );
+    return ENT_Tr::FindInConverter( LogSupplyPushFlowAckConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

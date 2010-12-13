@@ -577,7 +577,7 @@ void MIL_AgentPion::SendCreation() const
         msg().mutable_unit()->set_id( GetID() );
         for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
         {
-            MsgsSimToClient::Extension_Entry* entry = msg().mutable_extension()->add_entries();
+            sword::Extension_Entry* entry = msg().mutable_extension()->add_entries();
             entry->set_name( it->first );
             entry->set_value( it->second );
         }
@@ -606,29 +606,28 @@ void MIL_AgentPion::SendKnowledge() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgOrder
+// Name: MIL_AgentPion::OnReceiveOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgOrder( const Common::MsgUnitOrder& msg )
+void MIL_AgentPion::OnReceiveOrder( const sword::UnitOrder& msg )
 {
     orderManager_.OnReceiveMission( msg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgFragOrder
+// Name: MIL_AgentPion::OnReceiveFragOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-
-void MIL_AgentPion::OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder& msg )
+void MIL_AgentPion::OnReceiveFragOrder( const sword::FragOrder& msg )
 {
     orderManager_.OnReceiveFragOrder( msg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgDestroyComponent
+// Name: MIL_AgentPion::OnReceiveDestroyComponent
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgDestroyComponent()
+void MIL_AgentPion::OnReceiveDestroyComponent()
 {
     GetRole< PHY_RolePion_Composantes >().DestroyRandomComposante();
 }
@@ -647,33 +646,33 @@ void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgMagicActionMoveTo
+// Name: MIL_AgentPion::OnReceiveMagicActionMoveTo
 // Created: NLD 2005-08-18
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgMagicActionMoveTo( const MT_Vector2D& vPosition )
+void MIL_AgentPion::OnReceiveMagicActionMoveTo( const MT_Vector2D& vPosition )
 {
     MagicMove( vPosition );
     UpdatePhysicalState();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgMagicActionMoveTo
+// Name: MIL_AgentPion::OnReceiveMagicActionMoveTo
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn )
+void MIL_AgentPion::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& asn )
 {
-    if( asn.type() != MsgsClientToSim::MsgUnitMagicAction::move_to )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
+    if( asn.type() != sword::UnitMagicAction::move_to )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
     if( pAutomate_->IsEngaged() )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_automate_embraye );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_automate_embraye );
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1)
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
-    const Common::MsgMissionParameter& parametre = asn.parameters().elem( 0 );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+    const sword::MsgMissionParameter& parametre = asn.parameters().elem( 0 );
     if( !parametre.value_size() == 1 || !parametre.value().Get(0).has_point() )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
-    const Common::MsgPoint& point = parametre.value().Get(0).point();
-    if( point.location().type() != Common::MsgLocation::point  || point.location().coordinates().elem_size() != 1 )
-        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+    const sword::MsgPoint& point = parametre.value().Get(0).point();
+    if( point.location().type() != sword::MsgLocation::point  || point.location().coordinates().elem_size() != 1 )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
     MagicMove( vPosTmp );
@@ -681,51 +680,51 @@ void MIL_AgentPion::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUni
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgChangeHumanFactors
+// Name: MIL_AgentPion::OnReceiveChangeHumanFactors
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const Common::MsgMissionParameters& msg )
+void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MsgMissionParameters& msg )
 {
     if( msg.elem( 0 ).value_size() == 1 && msg.elem( 0 ).value().Get(0).has_enumeration() )
     {
-        Common::EnumUnitTiredness tiredness = static_cast< Common::EnumUnitTiredness >( msg.elem( 0 ).value().Get(0).enumeration() );
+        sword::EnumUnitTiredness tiredness = static_cast< sword::EnumUnitTiredness >( msg.elem( 0 ).value().Get(0).enumeration() );
         const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( tiredness );
         if( !pTiredness )
-            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness );
     }
     if( msg.elem( 1 ).value_size() == 1 && msg.elem( 1 ).value().Get(0).has_enumeration() )
     {
-        Common::EnumUnitMorale morale = static_cast< Common::EnumUnitMorale >( msg.elem( 1 ).value().Get(0).enumeration() );
+        sword::EnumUnitMorale morale = static_cast< sword::EnumUnitMorale >( msg.elem( 1 ).value().Get(0).enumeration() );
         const PHY_Morale* pMoral = PHY_Morale::Find( morale );
         if( !pMoral )
-            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetMorale( *pMoral );
     }
     if( msg.elem( 2 ).value_size() == 1 && msg.elem( 2 ).value().Get(0).has_enumeration() )
     {
-        Common::EnumUnitExperience experience = static_cast< Common::EnumUnitExperience >( msg.elem( 2 ).value().Get(0).enumeration() );
+        sword::EnumUnitExperience experience = static_cast< sword::EnumUnitExperience >( msg.elem( 2 ).value().Get(0).enumeration() );
         const PHY_Experience* pExperience = PHY_Experience::Find( experience );
         if( !pExperience )
-            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck::error_invalid_attribute );
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgResupplyHumans
+// Name: MIL_AgentPion::OnReceiveResupplyHumans
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgResupplyHumans()
+void MIL_AgentPion::OnReceiveResupplyHumans()
 {
     GetRole< human::PHY_RolePion_Humans >().HealAllHumans();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgResupplyResources
+// Name: MIL_AgentPion::OnReceiveResupplyResources
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgResupplyResources()
+void MIL_AgentPion::OnReceiveResupplyResources()
 {
     GetRole< dotation::PHY_RolePion_Dotations >().ResupplyDotations();
     PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
@@ -734,19 +733,19 @@ void MIL_AgentPion::OnReceiveMsgResupplyResources()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgResupplyEquipement
+// Name: MIL_AgentPion::OnReceiveResupplyEquipement
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgResupplyEquipement()
+void MIL_AgentPion::OnReceiveResupplyEquipement()
 {
     GetRole< PHY_RolePion_Composantes >().RepairAllComposantes();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgResupplyAll
+// Name: MIL_AgentPion::OnReceiveResupplyAll
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgResupplyAll()
+void MIL_AgentPion::OnReceiveResupplyAll()
 {
     GetRole< PHY_RolePion_Composantes >().RepairAllComposantes();
     GetRole< dotation::PHY_RolePion_Dotations >().ResupplyDotations();
@@ -758,17 +757,17 @@ void MIL_AgentPion::OnReceiveMsgResupplyAll()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgResupply
+// Name: MIL_AgentPion::OnReceiveResupply
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgResupply( const Common::MsgMissionParameters& msg )
+void MIL_AgentPion::OnReceiveResupply( const sword::MsgMissionParameters& msg )
 {
     if( msg.elem( 0 ).value_size() > 0 ) // Equipments
     {
         PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
         for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
         {
-            Common::EquipmentType type;
+            sword::EquipmentType type;
             type.set_id( msg.elem( 0 ).value().Get( i ).list( 0 ).identifier() );
             int number = msg.elem( 0 ).value().Get( i ).list( 1 ).quantity();
             const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
@@ -825,28 +824,28 @@ void MIL_AgentPion::OnReceiveMsgResupply( const Common::MsgMissionParameters& ms
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgDestroyAll
+// Name: MIL_AgentPion::OnReceiveDestroyAll
 // Created: NLD 2004-12-07
 // -----------------------------------------------------------------------------
-void  MIL_AgentPion::OnReceiveMsgDestroyAll()
+void  MIL_AgentPion::OnReceiveDestroyAll()
 {
     GetRole< PHY_RolePion_Composantes >().DestroyAllComposantes();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters
+// Name: MIL_AgentPion::OnReceiveRecoverHumansTransporters
 // Created: NLD 2005-12-27
 // -----------------------------------------------------------------------------
-void  MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters()
+void  MIL_AgentPion::OnReceiveRecoverHumansTransporters()
 {
     GetRole< transport::PHY_RoleInterface_Transported >().RecoverHumanTransporters();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgCreateWound
+// Name: MIL_AgentPion::OnReceiveCreateWound
 // Created: LDC 2010-07-02
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgCreateWound( const Common::MsgMissionParameters& msg )
+void MIL_AgentPion::OnReceiveCreateWound( const sword::MsgMissionParameters& msg )
 {
     if( msg.elem( 0 ).value_size() == 1 && msg.elem( 1 ).value_size() == 1 ) // injury_id && injury_type
     {
@@ -857,48 +856,48 @@ void MIL_AgentPion::OnReceiveMsgCreateWound( const Common::MsgMissionParameters&
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgUnitMagicAction
+// Name: MIL_AgentPion::OnReceiveUnitMagicAction
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies )
+void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies )
 {
     switch( msg.type() )
     {
-    case MsgsClientToSim::MsgUnitMagicAction::surrender_to:
-        pAutomate_->OnReceiveMsgUnitMagicAction( msg, armies );
+    case sword::UnitMagicAction::surrender_to:
+        pAutomate_->OnReceiveUnitMagicAction( msg, armies );
         return;
-    case MsgsClientToSim::MsgUnitMagicAction::cancel_surrender:
-        pAutomate_->OnReceiveMsgUnitMagicAction( msg, armies );
+    case sword::UnitMagicAction::cancel_surrender:
+        pAutomate_->OnReceiveUnitMagicAction( msg, armies );
         return;
-    case MsgsClientToSim::MsgUnitMagicAction::recover_transporters:
-        OnReceiveMsgRecoverHumansTransporters();
+    case sword::UnitMagicAction::recover_transporters:
+        OnReceiveRecoverHumansTransporters();
         break;
-    case MsgsClientToSim::MsgUnitMagicAction::destroy_component:
-        OnReceiveMsgDestroyComponent();
+    case sword::UnitMagicAction::destroy_component:
+        OnReceiveDestroyComponent();
         break;
-    case MsgsClientToSim::MsgUnitMagicAction::recover_all:
-        OnReceiveMsgResupplyAll();
+    case sword::UnitMagicAction::recover_all:
+        OnReceiveResupplyAll();
         break;
-    case MsgsClientToSim::MsgUnitMagicAction::recover_troops:
-        OnReceiveMsgResupplyHumans();
+    case sword::UnitMagicAction::recover_troops:
+        OnReceiveResupplyHumans();
         break;
-    case MsgsClientToSim::MsgUnitMagicAction::recover_equipments:
-        OnReceiveMsgResupplyEquipement();
+    case sword::UnitMagicAction::recover_equipments:
+        OnReceiveResupplyEquipement();
         break;
-    case MsgsClientToSim::MsgUnitMagicAction::recover_resources:
-        OnReceiveMsgResupplyResources();
+    case sword::UnitMagicAction::recover_resources:
+        OnReceiveResupplyResources();
         break;
-    case MsgsClientToSim::MsgUnitMagicAction::destroy_all:
-        OnReceiveMsgDestroyAll();
+    case sword::UnitMagicAction::destroy_all:
+        OnReceiveDestroyAll();
         break;
-    case MsgsClientToSim::MsgUnitMagicAction::change_human_factors:
-        OnReceiveMsgChangeHumanFactors( msg.parameters() );
+    case sword::UnitMagicAction::change_human_factors:
+        OnReceiveChangeHumanFactors( msg.parameters() );
         break;
-    case MsgsClientToSim::MsgUnitMagicAction::partial_recovery:
-        OnReceiveMsgResupply( msg.parameters() );
+    case sword::UnitMagicAction::partial_recovery:
+        OnReceiveResupply( msg.parameters() );
         break;
-    case MsgsClientToSim::MsgUnitMagicAction::create_wound:
-        OnReceiveMsgCreateWound( msg.parameters() );
+    case sword::UnitMagicAction::create_wound:
+        OnReceiveCreateWound( msg.parameters() );
         break;
     default:
         assert( false );
@@ -929,19 +928,19 @@ void MIL_AgentPion::OnReceiveMagicCancelSurrender()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgChangeSuperior
+// Name: MIL_AgentPion::OnReceiveChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgChangeSuperior( const MIL_EntityManager& manager, const MsgsClientToSim::MsgUnitMagicAction& msg )
+void MIL_AgentPion::OnReceiveChangeSuperior( const MIL_EntityManager& manager, const sword::UnitMagicAction& msg )
 {
     MIL_Automate* pNewAutomate = manager.FindAutomate( msg.parameters().elem( 0 ).value().Get(0).automat().id() );
     if( !pNewAutomate )
-        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck::ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_invalid_automate );
+        throw NET_AsnException< sword::HierarchyModificationAck::ErrorCode >( sword::HierarchyModificationAck::error_invalid_automate );
     if( pNewAutomate->GetArmy() != GetArmy() )
-        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck::ErrorCode >( MsgsSimToClient::HierarchyModificationAck::error_parties_mismatched );
+        throw NET_AsnException< sword::HierarchyModificationAck::ErrorCode >( sword::HierarchyModificationAck::error_parties_mismatched );
     pAutomate_->UnregisterPion( *this );
     pAutomate_ = pNewAutomate;
-    pAutomate_->RegisterPion  ( *this );
+    pAutomate_->RegisterPion( *this );
 }
 
 // -----------------------------------------------------------------------------

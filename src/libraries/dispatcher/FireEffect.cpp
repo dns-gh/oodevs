@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Name: FireEffect constructor
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
-FireEffect::FireEffect( Model& , const MsgsSimToClient::MsgStartFireEffect& message )
+FireEffect::FireEffect( Model& , const sword::StartFireEffect& message )
     : SimpleEntity< >( message.fire_effect().id() )
     , id_            ( message.fire_effect().id() )
     , localisation_  ( message.location() )

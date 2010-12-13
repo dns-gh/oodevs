@@ -16,9 +16,9 @@
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgDecisionalState;
+    class DecisionalState;
 }
 
 // =============================================================================
@@ -28,7 +28,7 @@ namespace MsgsSimToClient
 // Created: AGE 2007-05-31
 // =============================================================================
 class DecisionalStates : public kernel::Extension_ABC
-                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgDecisionalState >
+                       , public kernel::Updatable_ABC< sword::DecisionalState >
                        , public kernel::Drawable_ABC
                        , public kernel::Displayable_ABC
                        , public kernel::Aggregatable_ABC
@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgDecisionalState& message );
+    virtual void DoUpdate( const sword::DecisionalState& message );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     //@}

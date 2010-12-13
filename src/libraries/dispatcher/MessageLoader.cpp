@@ -368,7 +368,7 @@ void MessageLoader::LoadSimToClientMessage( char*& input, MessageHandler_ABC& ha
 {
     unsigned long messageSize = *reinterpret_cast< const unsigned long* >( input );
     input += sizeof( unsigned long );
-    MsgsSimToClient::MsgSimToClient message;
+    sword::SimToClient message;
     if( ! message.ParseFromArray( input, messageSize ) )
         throw std::runtime_error( __FUNCTION__ ": message deserialization failed." );
     // $$$$ JSR 2010-07-01: In synchronisation mode, we must not send order messages, as they were already sent,

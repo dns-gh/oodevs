@@ -26,14 +26,14 @@ class NBCTypeAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NBCTypeAttribute( const Common::ObjectAttributes& asnMsg );
+    explicit NBCTypeAttribute( const sword::ObjectAttributes& asnMsg );
     virtual ~NBCTypeAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::ObjectAttributes& asnMsg );
-    virtual void Send  ( Common::ObjectAttributes& asnMsg ) const;
+    virtual void Update( const sword::ObjectAttributes& asnMsg );
+    virtual void Send  ( sword::ObjectAttributes& asnMsg ) const;
     //@}
 
 private:

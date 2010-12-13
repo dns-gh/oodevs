@@ -18,6 +18,8 @@
 #include "protocol/LauncherSenders.h"
 #include <boost/lexical_cast.hpp>
 
+#pragma warning( disable: 4355 )
+
 using namespace frontend;
 
 // -----------------------------------------------------------------------------
@@ -25,12 +27,11 @@ using namespace frontend;
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
 LauncherClient::LauncherClient( kernel::Controller& controller )
-    : tools::ClientNetworker( "", false )
-    , controller_( controller )
-    , handler_( 0 )
-    , publisher_( new LauncherPublisher( *this ) )
+    : controller_     ( controller )
+    , handler_        ( 0 )
+    , publisher_      ( new LauncherPublisher( *this ) )
     , responseHandler_( new ResponseHandlerProxy() )
-    , connected_( false )
+    , connected_      ( false )
 {
     RegisterMessage( *this, &LauncherClient::HandleLauncherToAdmin );
 }
@@ -63,7 +64,7 @@ void LauncherClient::ConnectionSucceeded( const std::string& endpoint )
     publisher_->SetHost( endpoint );
     responseHandler_->SetMainHandler( boost::shared_ptr< ResponseHandler_ABC >( new RemoteHost( *publisher_, endpoint, controller_ ) ) );
     launcher::ConnectionRequest message;
-    message().mutable_client_version()->set_value( Version::ProtocolVersion().value() );
+    message().mutable_client_version()->set_value( sword::ProtocolVersion().value() );
     message.Send( *publisher_ );
 }
 
@@ -102,43 +103,43 @@ bool LauncherClient::Connected() const
 
 namespace
 {
-    QString MessageString( const MsgsLauncherToAdmin::MsgConnectionAck::ErrorCode& error )
+    QString MessageString( const sword::ConnectionAck::ErrorCode& error )
     {
         switch( error )
         {
-        case MsgsLauncherToAdmin::MsgConnectionAck::invalid_connection:
+        case sword::ConnectionAck::invalid_connection:
             return tools::translate( "LauncherClient", "invalid connection" );
-        case MsgsLauncherToAdmin::MsgConnectionAck::incompatible_protocol_version:
+        case sword::ConnectionAck::incompatible_protocol_version:
             return tools::translate( "LauncherClient", "incompatible protocol version" );
-        case MsgsLauncherToAdmin::MsgConnectionAck::exercise_already_running:
+        case sword::ConnectionAck::exercise_already_running:
             return tools::translate( "LauncherClient", "exercise already running" );
         default:
             return tools::translate( "LauncherClient", "unknown error" );
         }
     }
 
-    QString MessageString( const MsgsLauncherToAdmin::MsgControlStartAck::ErrorCode& error )
+    QString MessageString( const sword::ControlStartExerciseAck::ErrorCode& error )
     {
         switch( error )
         {
-        case MsgsLauncherToAdmin::MsgControlStartAck::bad_exercise_name:
+        case sword::ControlStartExerciseAck::bad_exercise_name:
             return tools::translate( "LauncherClient", "bad exercise name" );
-        case MsgsLauncherToAdmin::MsgControlStartAck::exercise_already_running:
+        case sword::ControlStartExerciseAck::exercise_already_running:
             return tools::translate( "LauncherClient", "exercise already running" );
-        case MsgsLauncherToAdmin::MsgControlStartAck::invalid_checkpoint:
+        case sword::ControlStartExerciseAck::invalid_checkpoint:
             return tools::translate( "LauncherClient", "invalid checkpoint" );
         default:
             return tools::translate( "LauncherClient", "unknown error" );
         }
     }
 
-    QString MessageString( const MsgsLauncherToAdmin::MsgControlStopAck::ErrorCode& error )
+    QString MessageString( const sword::ControlStopExerciseAck::ErrorCode& error )
     {
         switch( error )
         {
-        case MsgsLauncherToAdmin::MsgControlStopAck::bad_exercise_name:
+        case sword::ControlStopExerciseAck::bad_exercise_name:
             return tools::translate( "LauncherClient", "bad exercise name" );
-        case MsgsLauncherToAdmin::MsgControlStopAck::exercise_not_running:
+        case sword::ControlStopExerciseAck::exercise_not_running:
             return tools::translate( "LauncherClient", "exercise not running" );
         default:
             return tools::translate( "LauncherClient", "unknown error" );
@@ -150,11 +151,11 @@ namespace
 // Name: LauncherClient::HandleLauncherToAdmin
 // Created: SBO 2010-09-30
 // -----------------------------------------------------------------------------
-void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, const MsgsLauncherToAdmin::MsgLauncherToAdmin& message )
+void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, const sword::LauncherToAdmin& message )
 {
     if( message.message().has_connection_ack() )
     {
-        if( message.message().connection_ack().error_code() != MsgsLauncherToAdmin::MsgConnectionAck::success )
+        if( message.message().connection_ack().error_code() != sword::ConnectionAck::success )
         {
             if( handler_ )
                 handler_->OnConnectionFailed( tools::translate( "LauncherClient", "Failed to contact launcher service: %1." )
@@ -173,14 +174,14 @@ void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, con
         responseHandler_->Handle( message.message().profiles_description() );
     else if( message.message().has_control_start_ack() )
     {
-        if( message.message().control_start_ack().error_code() != MsgsLauncherToAdmin::MsgControlStartAck::success )
+        if( message.message().control_start_ack().error_code() != sword::ControlStartExerciseAck::success )
             handler_->OnError( tools::translate( "LauncherClient", "Failed to start exercise: %1." )
                                 .arg( MessageString( message.message().control_start_ack().error_code() ) ).ascii() );
         responseHandler_->Handle( message.message().control_start_ack() );
     }
     else if( message.message().has_control_stop_ack() )
     {
-        if( message.message().control_stop_ack().error_code() != MsgsLauncherToAdmin::MsgControlStopAck::success )
+        if( message.message().control_stop_ack().error_code() != sword::ControlStopExerciseAck::success )
             handler_->OnError( tools::translate( "LauncherClient", "Failed to stop exercise: %1." )
                                 .arg( MessageString( message.message().control_stop_ack().error_code() ) ).ascii() );
         responseHandler_->Handle( message.message().control_stop_ack() );

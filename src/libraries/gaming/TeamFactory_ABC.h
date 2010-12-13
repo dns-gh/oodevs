@@ -10,10 +10,10 @@
 #ifndef __TeamFactory_ABC_h_
 #define __TeamFactory_ABC_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgFormationCreation;
-    class MsgPartyCreation;
+    class FormationCreation;
+    class PartyCreation;
 }
 
 namespace kernel
@@ -40,8 +40,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Team_ABC*      CreateTeam     ( const MsgsSimToClient::MsgPartyCreation& message ) = 0;
-    virtual kernel::Formation_ABC* CreateFormation( const MsgsSimToClient::MsgFormationCreation& message ) = 0;
+    virtual kernel::Team_ABC*      CreateTeam     ( const sword::PartyCreation& message ) = 0;
+    virtual kernel::Formation_ABC* CreateFormation( const sword::FormationCreation& message ) = 0;
     //@}
 };
 

@@ -24,7 +24,7 @@ using namespace dispatcher;
 // Name: LogConsignSupply constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-LogConsignSupply::LogConsignSupply( const Model& model, const MsgsSimToClient::MsgLogSupplyHandlingCreation& msg )
+LogConsignSupply::LogConsignSupply( const Model& model, const sword::LogSupplyHandlingCreation& msg )
     : SimpleEntity< >   ( msg.request().id() )
     , model_            ( model )
     , automat_          ( model.Automats().Get( msg.consumer().id() ) )
@@ -32,7 +32,7 @@ LogConsignSupply::LogConsignSupply( const Model& model, const MsgsSimToClient::M
     , pTreatingEntity_  ( 0 )
     , pConvoyingEntity_ ( 0 )
     , pConvoy_          ( 0 )
-    , nState_           ( MsgsSimToClient::convoi_deplacement_vers_point_chargement )
+    , nState_           ( sword::convoi_deplacement_vers_point_chargement )
 {
     // NOTHING
 }
@@ -50,7 +50,7 @@ LogConsignSupply::~LogConsignSupply()
 // Name: LogConsignSupply::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void LogConsignSupply::Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate& msg )
+void LogConsignSupply::Update( const sword::LogSupplyHandlingUpdate& msg )
 {
     if( msg.has_supplier() )
     	pTreatingEntity_ = FindLogEntity( msg.supplier() );
@@ -151,7 +151,7 @@ void LogConsignSupply::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // Name: LogConsignSupply::FindLogEntity
 // Created: AHC 2010-10-13
 // -----------------------------------------------------------------------------
-kernel::Entity_ABC* LogConsignSupply::FindLogEntity(const Common::ParentEntity& msg) const
+kernel::Entity_ABC* LogConsignSupply::FindLogEntity(const sword::ParentEntity& msg) const
 {
 	kernel::Entity_ABC* retval = 0;
 	if( msg.has_automat() )
@@ -165,7 +165,7 @@ kernel::Entity_ABC* LogConsignSupply::FindLogEntity(const Common::ParentEntity& 
 // Name: LogConsignSupply::FillLogEntityID
 // Created: AHC 2010-10-13
 // -----------------------------------------------------------------------------
-void LogConsignSupply::FillLogEntityID(Common::ParentEntity& msg, const kernel::Entity_ABC* entity) const
+void LogConsignSupply::FillLogEntityID(sword::ParentEntity& msg, const kernel::Entity_ABC* entity) const
 {
 	if( entity == 0 )
 		msg.mutable_automat()->set_id( 0 );

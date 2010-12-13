@@ -12,9 +12,9 @@
 
 #include "Parameter.h"
 
-namespace Common
+namespace sword
 {
-    class MsgLogMedicalPriorities;
+    class LogMedicalPriorities;
 }
 
 namespace actions {
@@ -32,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MedicalPriorities( const kernel::OrderParameter& parameter );
-             MedicalPriorities( const kernel::OrderParameter& parameter, const Common::MsgLogMedicalPriorities& message );
+             MedicalPriorities( const kernel::OrderParameter& parameter, const sword::LogMedicalPriorities& message );
              MedicalPriorities( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~MedicalPriorities();
     //@}
@@ -40,8 +40,8 @@ public:
     //! @name Operations
     //@{
     void AddMedicalPriority( E_HumanWound value );
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
     virtual bool IsSet() const;
     //@}
 

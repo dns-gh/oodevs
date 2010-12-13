@@ -49,7 +49,7 @@ Decisions::~Decisions()
 // Name: Decisions::DoUpdate
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-void Decisions::DoUpdate( const Common::MsgUnitOrder& message )
+void Decisions::DoUpdate( const sword::UnitOrder& message )
 {
     const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     current_ = resolver.Find( message.type().id() );

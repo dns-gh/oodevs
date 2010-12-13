@@ -10,9 +10,9 @@
 #ifndef __MaintenanceEquipmentAvailability_h_
 #define __MaintenanceEquipmentAvailability_h_
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogMaintenanceEquipmentAvailability;
+    class LogMaintenanceEquipmentAvailability;
 }
 
 namespace dispatcher
@@ -30,13 +30,13 @@ class MaintenanceEquipmentAvailability
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MaintenanceEquipmentAvailability( const MsgsSimToClient::MsgLogMaintenanceEquipmentAvailability& asn );
+    explicit MaintenanceEquipmentAvailability( const sword::LogMaintenanceEquipmentAvailability& asn );
     virtual ~MaintenanceEquipmentAvailability();
     //@}
 
     //! @name Operations
     //@{
-    void Send( MsgsSimToClient::MsgLogMaintenanceEquipmentAvailability& asn ) const;
+    void Send( sword::LogMaintenanceEquipmentAvailability& asn ) const;
     //@}
 
 private:

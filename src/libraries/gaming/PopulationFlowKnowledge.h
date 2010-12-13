@@ -17,11 +17,11 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "PopulationPartKnowledge_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
     class MsgFlowPart;
-    class MsgCrowdFlowKnowledgeCreation;
-    class MsgCrowdFlowKnowledgeUpdate;
+    class CrowdFlowKnowledgeCreation;
+    class CrowdFlowKnowledgeUpdate;
 }
 
 namespace kernel
@@ -37,14 +37,14 @@ namespace kernel
 // =============================================================================
 class PopulationFlowKnowledge : public PopulationPartKnowledge_ABC
                               , public kernel::Drawable_ABC
-                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate >
+                              , public kernel::Updatable_ABC< sword::CrowdFlowKnowledgeUpdate >
 {
 public:
     //! @name Types
     //@{
     struct FlowPart
     {
-        FlowPart( const MsgsSimToClient::MsgFlowPart& message, const kernel::CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox );
+        FlowPart( const sword::MsgFlowPart& message, const kernel::CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox );
         T_PointVector flowPart_;
         unsigned short relevance_;
     };
@@ -56,7 +56,7 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationFlowKnowledge( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Population_ABC& popu, const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& message );
+             PopulationFlowKnowledge( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Population_ABC& popu, const sword::CrowdFlowKnowledgeCreation& message );
     virtual ~PopulationFlowKnowledge();
     //@}
 
@@ -69,7 +69,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::CrowdFlowKnowledgeUpdate& message );
     //@}
 
 private:

@@ -25,7 +25,7 @@ class MIL_LimaListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    MIL_LimaListParameter( const Common::MsgLimasOrder& message );
+             MIL_LimaListParameter( const sword::LimasOrder& message );
     virtual ~MIL_LimaListParameter();
     //@}
 
@@ -36,11 +36,11 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToLima( Common::MsgLimasOrder& message ) const;
-    virtual bool ToLimaList( Common::MsgLimasOrder& message ) const;
+    virtual bool ToLima( sword::LimasOrder& message ) const;
+    virtual bool ToLimaList( sword::LimasOrder& message ) const;
     virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const;
     virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
-    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

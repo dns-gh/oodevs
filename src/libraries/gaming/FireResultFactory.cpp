@@ -42,7 +42,7 @@ FireResultFactory::~FireResultFactory()
 // Name: FireResultFactory::CreateFireResult
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-AgentFireResult* FireResultFactory::CreateFireResult( const MsgsSimToClient::MsgUnitFireDamages& message )
+AgentFireResult* FireResultFactory::CreateFireResult( const sword::UnitFireDamages& message )
 {
     return new AgentFireResult( message, model_.agents_, model_.static_.objectTypes_, simulation_.GetDateTime() );
 }
@@ -51,7 +51,7 @@ AgentFireResult* FireResultFactory::CreateFireResult( const MsgsSimToClient::Msg
 // Name: FireResultFactory::CreateFireResult
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-PopulationFireResult* FireResultFactory::CreateFireResult( const MsgsSimToClient::MsgCrowdFireDamages& message )
+PopulationFireResult* FireResultFactory::CreateFireResult( const sword::CrowdFireDamages& message )
 {
     return new PopulationFireResult( message, model_.agents_, simulation_.GetDateTime() );
 }

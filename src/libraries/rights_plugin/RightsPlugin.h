@@ -14,13 +14,13 @@
 #include "dispatcher/LinkResolver_ABC.h"
 #include <map>
 
-namespace MsgsClientToAuthentication
+namespace sword
 {
-    class MsgClientToAuthentication;
-    class MsgAuthenticationRequest;
-    class MsgProfileUpdateRequest;
-    class MsgProfileDestructionRequest;
-    class MsgProfileCreationRequest;
+    class ClientToAuthentication;
+    class AuthenticationRequest;
+    class ProfileUpdateRequest;
+    class ProfileDestructionRequest;
+    class ProfileCreationRequest;
 }
 
 namespace tools
@@ -59,7 +59,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive( const sword::SimToClient& message );
 
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
@@ -79,11 +79,11 @@ private:
 
     //! @name Helpers
     //@{
-    void OnReceive( const std::string& link, const MsgsClientToAuthentication::MsgClientToAuthentication& message );
-    void OnReceiveMsgAuthenticationRequest( const std::string& link, const MsgsClientToAuthentication::MsgAuthenticationRequest& message );
-    void OnReceiveMsgProfileCreationRequest( dispatcher::ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileCreationRequest& message );
-    void OnReceiveMsgProfileUpdateRequest( dispatcher::ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileUpdateRequest& message );
-    void OnReceiveMsgProfileDestructionRequest( dispatcher::ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileDestructionRequest& message );
+    void OnReceive( const std::string& link, const sword::ClientToAuthentication& message );
+    void OnReceiveMsgAuthenticationRequest( const std::string& link, const sword::AuthenticationRequest& message );
+    void OnReceiveProfileCreationRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileCreationRequest& message );
+    void OnReceiveProfileUpdateRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileUpdateRequest& message );
+    void OnReceiveProfileDestructionRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileDestructionRequest& message );
 
     bool IsAuthenticated( const std::string& login ) const;
     //@}

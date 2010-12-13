@@ -26,7 +26,7 @@ class MIL_Inhabitant;
 class MIL_Population;
 class KnowledgeVisitor_ABC;
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameters;
 }
@@ -105,7 +105,7 @@ public:
     virtual void                UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup ) = 0;
 
     virtual void InitializeDiplomacy( xml::xistream& xis ) = 0;
-    virtual void OnReceiveMsgChangeDiplomacy( const Common::MsgMissionParameters& msg ) = 0;
+    virtual void OnReceiveChangeDiplomacy( const sword::MsgMissionParameters& msg ) = 0;
     virtual void ApplyOnKnowledgeGroup( KnowledgeVisitor_ABC& ) = 0;
     //@}
 

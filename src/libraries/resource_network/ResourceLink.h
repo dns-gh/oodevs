@@ -10,10 +10,10 @@
 #ifndef __ResourceLink_h_
 #define __ResourceLink_h_
 
-#include <vector>
 #include <boost/serialization/split_member.hpp>
+#include <vector>
 
-namespace Common
+namespace sword
 {
     class ResourceNetwork_Link;
 }
@@ -64,7 +64,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( Common::ResourceNetwork_Link& msg ) const;
+    void Serialize( sword::ResourceNetwork_Link& msg ) const;
     //@}
 
     //! @name CheckPoints

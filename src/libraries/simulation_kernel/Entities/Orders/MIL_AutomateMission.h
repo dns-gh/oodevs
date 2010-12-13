@@ -12,9 +12,9 @@
 
 #include "MIL_Mission_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgAutomatOrder;
+    class AutomatOrder;
 }
 
 class MIL_Automate;
@@ -30,7 +30,7 @@ class MIL_AutomateMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const Common::MsgAutomatOrder& asn );
+             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const sword::AutomatOrder& asn );
              MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const boost::shared_ptr< MIL_Mission_ABC > parent );
              MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate );
     virtual ~MIL_AutomateMission();

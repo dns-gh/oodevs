@@ -39,7 +39,7 @@ public:
     //! @name Operations
     //@{
     void Serialize( ::hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
-    void Update( const MsgsSimToClient::MsgUnitEnvironmentType& message );
+    void Update( const sword::UnitEnvironmentType& message );
     //@}
 
 private:
@@ -51,7 +51,7 @@ private:
 
     //! @name Helpers
     //@{
-    static bool IsOnRoad( const MsgsSimToClient::MsgUnitEnvironmentType& message );
+    static bool IsOnRoad( const sword::UnitEnvironmentType& message );
     void SerializeFormation( ::hla::UpdateFunctor_ABC& functor ) const;
     void SerializeDimension( ::hla::UpdateFunctor_ABC& functor ) const;
     //@}

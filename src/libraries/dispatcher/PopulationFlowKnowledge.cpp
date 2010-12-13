@@ -24,7 +24,7 @@ using namespace dispatcher;
 // Name: PopulationFlowKnowledge constructor
 // Created: NLD 2006-10-03
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& msg )
+PopulationFlowKnowledge::PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const sword::CrowdFlowKnowledgeCreation& msg )
     : SimpleEntity< >     ( msg.knowledge().id() )
     , populationKnowledge_( populationKnowledge )
     , pFlow_              ( msg.flow().id() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetFlow( msg.flow().id() ) )
@@ -32,7 +32,7 @@ PopulationFlowKnowledge::PopulationFlowKnowledge( const kernel::PopulationKnowle
     , nSpeed_             ( 0 )
     , nNbrAliveHumans_    ( 0 )
     , nNbrDeadHumans_     ( 0 )
-    , nAttitude_          ( Common::agressive )
+    , nAttitude_          ( sword::agressive )
     , bPerceived_         ( false )
 {
     optionals_.vitessePresent            = 0;
@@ -58,7 +58,7 @@ PopulationFlowKnowledge::~PopulationFlowKnowledge()
 // Name: PopulationFlowKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& msg )
+void PopulationFlowKnowledge::Update( const sword::CrowdFlowKnowledgeUpdate& msg )
 {
     if( msg.has_flow()  )
         pFlow_ = msg.flow().id() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetFlow( msg.flow().id() );

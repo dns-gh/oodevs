@@ -43,7 +43,7 @@ class Score : public IndicatorDefinition_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Score( const MsgsAarToClient::MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher );
+             Score( const sword::Indicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher );
     virtual ~Score();
     //@}
 
@@ -56,7 +56,7 @@ public:
     //! @name Operations
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    void Update( const MsgsAarToClient::MsgIndicator& message );
+    void Update( const sword::Indicator& message );
     void ConnectTo( IndicatorRequest& request );
     //@}
 
@@ -69,7 +69,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void UpdatePlots( const MsgsAarToClient::MsgIndicator& message );
+    virtual void UpdatePlots( const sword::Indicator& message );
     //@}
 
 private:

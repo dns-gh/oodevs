@@ -29,7 +29,7 @@ crossbow::Point::Point()
 // Name: Point constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Point::Point( const Common::MsgCoordLatLong& coord )
+crossbow::Point::Point( const sword::MsgCoordLatLong& coord )
     : x_( coord.longitude() )
     , y_( coord.latitude() )
 {
@@ -108,7 +108,7 @@ std::ostream& crossbow::Point::SerializeCoordinates( std::ostream& geometry, cha
 // Name: Point::Serialize
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Point::Serialize( Common::MsgCoordLatLong& message ) const
+void crossbow::Point::Serialize( sword::MsgCoordLatLong& message ) const
 {
     message.set_longitude( x_ );
     message.set_latitude( y_ );
@@ -118,9 +118,9 @@ void crossbow::Point::Serialize( Common::MsgCoordLatLong& message ) const
 // Name: Point::Serialize
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Point::Serialize( Common::MsgLocation& message ) const
+void crossbow::Point::Serialize( sword::MsgLocation& message ) const
 {
-    message.set_type( Common::MsgLocation_Geometry_point );
+    message.set_type( sword::MsgLocation_Geometry_point );
     message.mutable_coordinates()->mutable_elem( 0 )->set_latitude( y_ );
     message.mutable_coordinates()->mutable_elem( 0 )->set_longitude( x_ );
     Serialize( *message.mutable_coordinates()->mutable_elem( 0 ) );

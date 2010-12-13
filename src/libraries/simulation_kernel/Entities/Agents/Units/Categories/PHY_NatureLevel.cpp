@@ -21,20 +21,20 @@ PHY_NatureLevel::T_NatureLevelMap PHY_NatureLevel::natureLevels_;
 // -----------------------------------------------------------------------------
 void PHY_NatureLevel::Initialize()
 {
-    natureLevels_[ "none"  ] = new PHY_NatureLevel( "none" , eNatureLevel_none , Common::none_naturelevel  );
-    natureLevels_[ "b"     ] = new PHY_NatureLevel( "b"    , eNatureLevel_o    , Common::b     );
-    natureLevels_[ "o"     ] = new PHY_NatureLevel( "o"    , eNatureLevel_o    , Common::o     );
-    natureLevels_[ "c"     ] = new PHY_NatureLevel( "c"    , eNatureLevel_o    , Common::c     );
-    natureLevels_[ "oo"    ] = new PHY_NatureLevel( "oo"   , eNatureLevel_oo   , Common::oo    );
-    natureLevels_[ "ooo"   ] = new PHY_NatureLevel( "ooo"  , eNatureLevel_ooo  , Common::ooo   );
-    natureLevels_[ "i"     ] = new PHY_NatureLevel( "i"    , eNatureLevel_i    , Common::i     );
-    natureLevels_[ "ii"    ] = new PHY_NatureLevel( "ii"   , eNatureLevel_ii   , Common::ii    );
-    natureLevels_[ "iii"   ] = new PHY_NatureLevel( "iii"  , eNatureLevel_iii  , Common::iii   );
-    natureLevels_[ "x"     ] = new PHY_NatureLevel( "x"    , eNatureLevel_x    , Common::x     );
-    natureLevels_[ "xx"    ] = new PHY_NatureLevel( "xx"   , eNatureLevel_xx   , Common::xx    );
-    natureLevels_[ "xxx"   ] = new PHY_NatureLevel( "xxx"  , eNatureLevel_xxx  , Common::xxx   );
-    natureLevels_[ "xxxx"  ] = new PHY_NatureLevel( "xxxx" , eNatureLevel_xxxx , Common::xxxx  );
-    natureLevels_[ "xxxxx" ] = new PHY_NatureLevel( "xxxxx", eNatureLevel_xxxxx, Common::xxxxx );
+    natureLevels_[ "none"  ] = new PHY_NatureLevel( "none" , eNatureLevel_none , sword::none_naturelevel  );
+    natureLevels_[ "b"     ] = new PHY_NatureLevel( "b"    , eNatureLevel_o    , sword::b     );
+    natureLevels_[ "o"     ] = new PHY_NatureLevel( "o"    , eNatureLevel_o    , sword::o     );
+    natureLevels_[ "c"     ] = new PHY_NatureLevel( "c"    , eNatureLevel_o    , sword::c     );
+    natureLevels_[ "oo"    ] = new PHY_NatureLevel( "oo"   , eNatureLevel_oo   , sword::oo    );
+    natureLevels_[ "ooo"   ] = new PHY_NatureLevel( "ooo"  , eNatureLevel_ooo  , sword::ooo   );
+    natureLevels_[ "i"     ] = new PHY_NatureLevel( "i"    , eNatureLevel_i    , sword::i     );
+    natureLevels_[ "ii"    ] = new PHY_NatureLevel( "ii"   , eNatureLevel_ii   , sword::ii    );
+    natureLevels_[ "iii"   ] = new PHY_NatureLevel( "iii"  , eNatureLevel_iii  , sword::iii   );
+    natureLevels_[ "x"     ] = new PHY_NatureLevel( "x"    , eNatureLevel_x    , sword::x     );
+    natureLevels_[ "xx"    ] = new PHY_NatureLevel( "xx"   , eNatureLevel_xx   , sword::xx    );
+    natureLevels_[ "xxx"   ] = new PHY_NatureLevel( "xxx"  , eNatureLevel_xxx  , sword::xxx   );
+    natureLevels_[ "xxxx"  ] = new PHY_NatureLevel( "xxxx" , eNatureLevel_xxxx , sword::xxxx  );
+    natureLevels_[ "xxxxx" ] = new PHY_NatureLevel( "xxxxx", eNatureLevel_xxxxx, sword::xxxxx );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +50,7 @@ void PHY_NatureLevel::Terminate()
 // Name: PHY_NatureLevel constructor
 // Created: JVT 2004-12-09
 // -----------------------------------------------------------------------------
-PHY_NatureLevel::PHY_NatureLevel( const std::string& strName, E_Type nType, Common::EnumNatureLevel nAsnID )
+PHY_NatureLevel::PHY_NatureLevel( const std::string& strName, E_Type nType, sword::EnumNatureLevel nAsnID )
     : strName_ ( strName )
     , nType_   ( nType   )
     , nAsnID_  ( nAsnID  )
@@ -112,7 +112,7 @@ unsigned int PHY_NatureLevel::GetID() const
 // Name: PHY_NatureLevel::GetAsnID
 // Created: JVT 2004-12-09
 // -----------------------------------------------------------------------------
-Common::EnumNatureLevel PHY_NatureLevel::GetAsnID() const
+sword::EnumNatureLevel PHY_NatureLevel::GetAsnID() const
 {
     return nAsnID_;
 }

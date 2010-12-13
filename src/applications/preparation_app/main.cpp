@@ -42,9 +42,9 @@ int main( int argc, char** argv )
     {
         QMessageBox::critical( 0, tools::translate( "Application", "Error" ), e.what() );
     }
-    catch( std::runtime_error& e )
+    catch( ... )
     {
-        QMessageBox::critical( 0, tools::translate( "Application", "Unhandled error" ), e.what() );
+        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::translate( "Application", "Unhandled error" ) );
         throw;
     }
     return 0;

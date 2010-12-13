@@ -14,16 +14,16 @@
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "SimpleEntity.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgCrowdKnowledgeCreation;
-    class MsgCrowdKnowledgeUpdate;
-    class MsgCrowdConcentrationKnowledgeCreation;
-    class MsgCrowdConcentrationKnowledgeUpdate;
-    class MsgCrowdConcentrationKnowledgeDestruction;
-    class MsgCrowdFlowKnowledgeCreation;
-    class MsgCrowdFlowKnowledgeUpdate;
-    class MsgCrowdFlowKnowledgeDestruction;
+    class CrowdKnowledgeCreation;
+    class CrowdKnowledgeUpdate;
+    class CrowdConcentrationKnowledgeCreation;
+    class CrowdConcentrationKnowledgeUpdate;
+    class CrowdConcentrationKnowledgeDestruction;
+    class CrowdFlowKnowledgeCreation;
+    class CrowdFlowKnowledgeUpdate;
+    class CrowdFlowKnowledgeDestruction;
 }
 
 namespace kernel
@@ -52,20 +52,20 @@ class PopulationKnowledge : public SimpleEntity< kernel::PopulationKnowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationKnowledge( Model& model, const MsgsSimToClient::MsgCrowdKnowledgeCreation& msg );
+             PopulationKnowledge( Model& model, const sword::CrowdKnowledgeCreation& msg );
     virtual ~PopulationKnowledge();
     //@}
 
     //! @name Operations
     //@{
     using kernel::Entity_ABC::Update;
-    void Update( const MsgsSimToClient::MsgCrowdKnowledgeUpdate&                   msg );
-    void Update( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation&    msg );
-    void Update( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate&      msg );
-    void Update( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction& msg );
-    void Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation&             msg );
-    void Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate&               msg );
-    void Update( const MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction&          msg );
+    void Update( const sword::CrowdKnowledgeUpdate&                   msg );
+    void Update( const sword::CrowdConcentrationKnowledgeCreation&    msg );
+    void Update( const sword::CrowdConcentrationKnowledgeUpdate&      msg );
+    void Update( const sword::CrowdConcentrationKnowledgeDestruction& msg );
+    void Update( const sword::CrowdFlowKnowledgeCreation&             msg );
+    void Update( const sword::CrowdFlowKnowledgeUpdate&               msg );
+    void Update( const sword::CrowdFlowKnowledgeDestruction&          msg );
 
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;

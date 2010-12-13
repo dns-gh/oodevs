@@ -62,7 +62,7 @@ std::string KnowledgeGroup::GetType() const
 // Name: KnowledgeGroup::DoUpdate
 // Created: FHD 2009-12-21
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
+void KnowledgeGroup::DoUpdate( const sword::KnowledgeGroupUpdate& message )
 {
     if( message.type() != type_ )
     {

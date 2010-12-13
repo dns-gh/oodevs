@@ -75,7 +75,7 @@ unsigned int Simulation::GetTickDuration() const
 // Name: Simulation::Update
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-void Simulation::Update( const MsgsSimToClient::MsgControlInformation& message )
+void Simulation::Update( const sword::ControlInformation& message )
 {
     initial_ = MakeDate( message.initial_date_time().data() );
     current_ = MakeDate( message.date_time().data() );
@@ -86,7 +86,7 @@ void Simulation::Update( const MsgsSimToClient::MsgControlInformation& message )
 // Name: Simulation::Update
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-void Simulation::Update( const MsgsSimToClient::MsgControlBeginTick& message )
+void Simulation::Update( const sword::ControlBeginTick& message )
 {
     if( message.has_date_time() )
     {

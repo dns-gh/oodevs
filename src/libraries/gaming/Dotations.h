@@ -16,9 +16,9 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Dotations_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitAttributes;
+    class UnitAttributes;
 }
 
 namespace kernel
@@ -39,7 +39,7 @@ class Dotation;
 // =============================================================================
 class Dotations : public kernel::Dotations_ABC
                 , public HierarchicExtension_ABC
-                , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+                , public kernel::Updatable_ABC< sword::UnitAttributes >
                 , public tools::Resolver< Dotation >
                 , public kernel::Drawable_ABC
 {
@@ -66,7 +66,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
+    virtual void DoUpdate( const sword::UnitAttributes& message );
     virtual void SetSuperior( const kernel::Entity_ABC& superior );
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     void Update( const std::vector< Dotation >& differences );

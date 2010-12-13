@@ -15,7 +15,7 @@
 #include <geometry/Types.h>
 #include <boost/noncopyable.hpp>
 
-namespace Common
+namespace sword
 {
     class MsgWeatherAttributes;
     class MsgMissionParameters;
@@ -63,8 +63,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
-             PHY_Meteo( unsigned int id, const Common::MsgWeatherAttributes&, MeteoManager_ABC* listener );
-             PHY_Meteo( unsigned int id, const Common::MsgMissionParameters&, MeteoManager_ABC* listener );
+             PHY_Meteo( unsigned int id, const sword::MsgWeatherAttributes&, MeteoManager_ABC* listener );
+             PHY_Meteo( unsigned int id, const sword::MsgMissionParameters&, MeteoManager_ABC* listener );
              PHY_Meteo( const PHY_Lighting& light, PHY_Precipitation& precipitation );
     virtual ~PHY_Meteo();
     //@}
@@ -87,8 +87,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::MsgWeatherAttributes& asn );
-    virtual void Update( const Common::MsgMissionParameters& asn );
+    virtual void Update( const sword::MsgWeatherAttributes& asn );
+    virtual void Update( const sword::MsgMissionParameters& asn );
     virtual void Update( const PHY_Lighting& /*PHY_Ephemeride&*/ );
     virtual void Update( const PHY_Precipitation& precipitation);
     virtual void UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVision );

@@ -35,9 +35,9 @@ namespace script
 // Created: AGE 2008-06-13
 // =============================================================================
 class AgentNotifier : public kernel::Extension_ABC
-                    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitCreation >
-                    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
-                    , public kernel::Updatable_ABC< Common::MsgUnitOrder >
+                    , public kernel::Updatable_ABC< sword::UnitCreation >
+                    , public kernel::Updatable_ABC< sword::UnitAttributes >
+                    , public kernel::Updatable_ABC< sword::UnitOrder >
 {
 public:
     //! @name Constructors/Destructor
@@ -55,9 +55,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitCreation&   message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
-    virtual void DoUpdate( const Common::MsgUnitOrder&               message );
+    virtual void DoUpdate( const sword::UnitCreation&   message );
+    virtual void DoUpdate( const sword::UnitAttributes& message );
+    virtual void DoUpdate( const sword::UnitOrder&               message );
     //@}
 
 private:

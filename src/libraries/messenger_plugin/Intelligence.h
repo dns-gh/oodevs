@@ -45,20 +45,20 @@ class Intelligence : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Intelligence( unsigned int id, const MsgsClientToMessenger::MsgIntelligenceCreationRequest& message );
-             Intelligence( unsigned int id, xml::xistream&, const Common::FormationId& formation, const kernel::CoordinateConverter_ABC& converter );
+             Intelligence( unsigned int id, const sword::IntelligenceCreationRequest& message );
+             Intelligence( unsigned int id, xml::xistream&, const sword::FormationId& formation, const kernel::CoordinateConverter_ABC& converter );
     virtual ~Intelligence();
     //@}
 
     //! @name Accessors
     //@{
     unsigned int GetID() const  { return id_ ; } 
-    const Common::FormationId& GetFormation() const { return formation_ ; } 
+    const sword::FormationId& GetFormation() const { return formation_ ; } 
     //@}
 
     //! @name Network
     //@{
-    void Update( const MsgsClientToMessenger::MsgIntelligenceUpdateRequest& message );
+    void Update( const sword::IntelligenceUpdateRequest& message );
     virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const;
@@ -87,14 +87,14 @@ private:
 private:
     //! @name Member data
     //@{
-    Common::FormationId formation_;
+    sword::FormationId formation_;
     unsigned int id_;
     std::string name_;
     std::string nature_;
     bool embarked_;
-    Common::EnumNatureLevel level_;
-    Common::EnumDiplomacy diplomacy_;
-    Common::MsgCoordLatLong position_;
+    sword::EnumNatureLevel level_;
+    sword::EnumDiplomacy diplomacy_;
+    sword::MsgCoordLatLong position_;
     //@}
 };
 

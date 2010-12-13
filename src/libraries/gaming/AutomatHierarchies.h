@@ -14,14 +14,14 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgAutomatChangeKnowledgeGroup;
+    class AutomatChangeKnowledgeGroup;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgAutomatCreation;
+    class AutomatCreation;
 }
 
 
@@ -38,8 +38,8 @@ namespace kernel
 // Created: AGE 2006-10-06
 // =============================================================================
 class AutomatHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
-                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatCreation >
-                         , public kernel::Updatable_ABC< Common::MsgAutomatChangeKnowledgeGroup >
+                         , public kernel::Updatable_ABC< sword::AutomatCreation >
+                         , public kernel::Updatable_ABC< sword::AutomatChangeKnowledgeGroup >
 {
 public:
     //! @name Constructors/Destructor
@@ -61,8 +61,8 @@ private:
     //@{
     virtual bool CanCommunicate() const;
     virtual bool IsJammed() const;
-    virtual void DoUpdate( const MsgsSimToClient::MsgAutomatCreation& message );
-    virtual void DoUpdate( const Common::MsgAutomatChangeKnowledgeGroup& message );
+    virtual void DoUpdate( const sword::AutomatCreation& message );
+    virtual void DoUpdate( const sword::AutomatChangeKnowledgeGroup& message );
     virtual void AddSuperiorToDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC* const& superior ) const;
     //@}
 

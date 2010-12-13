@@ -22,7 +22,7 @@ namespace kernel
     class DotationType;
 }
 
-namespace Common
+namespace sword
 {
     class StockResource;
 }
@@ -33,7 +33,7 @@ namespace Common
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class StockAttribute : public kernel::StockAttribute_ABC                     
+class StockAttribute : public kernel::StockAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -63,11 +63,12 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
+    virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::ObjectUpdate& message );
+
     template< typename T >
     void UpdateData( const T& message );
-    void Update( const kernel::DotationType& type, const Common::StockResource& resource );
+    void Update( const kernel::DotationType& type, const sword::StockResource& resource );
     //@}
 
 public:

@@ -22,9 +22,9 @@ namespace kernel
     class Displayer_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogSupplyQuotas;
+    class LogSupplyQuotas;
 }
 
 // =============================================================================
@@ -34,7 +34,7 @@ namespace MsgsSimToClient
 // Created: AGE 2006-10-11
 // =============================================================================
 class Quotas : public kernel::Extension_ABC
-             , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyQuotas >
+             , public kernel::Updatable_ABC< sword::LogSupplyQuotas >
 {
 public:
     //! @name Constructors/Destructor
@@ -46,7 +46,7 @@ public:
     //! @name Operations
     //@{
     bool IsRelevant() const;
-    virtual void DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas& message );
+    virtual void DoUpdate( const sword::LogSupplyQuotas& message );
     //@}
 
 private:

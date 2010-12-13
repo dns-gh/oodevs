@@ -17,7 +17,7 @@
 // Name: MIL_IntelligenceOrder constructor
 // Created: SBO 2007-10-30
 // -----------------------------------------------------------------------------
-MIL_IntelligenceOrder::MIL_IntelligenceOrder( const Common::MsgIntelligence& asn )
+MIL_IntelligenceOrder::MIL_IntelligenceOrder( const sword::Intelligence& asn )
     : name_     ( asn.name() )
     , nature_   ( asn.nature() )
     , level_    ( asn.level() )
@@ -42,7 +42,7 @@ MIL_IntelligenceOrder::~MIL_IntelligenceOrder()
 // Name: MIL_IntelligenceOrder::Serialize
 // Created: SBO 2007-10-30
 // -----------------------------------------------------------------------------
-void MIL_IntelligenceOrder::Serialize( Common::MsgIntelligence& asn ) const
+void MIL_IntelligenceOrder::Serialize( sword::Intelligence& asn ) const
 {
     asn.set_name( name_ );
     asn.set_nature( nature_ );
@@ -101,7 +101,7 @@ bool MIL_IntelligenceOrder::IsEmbarked() const
 // -----------------------------------------------------------------------------
 bool MIL_IntelligenceOrder::IsEnemy() const
 {
-    return diplomacy_ == Common::enemy_diplo; // $$$$ SBO 2007-12-06: should depend upon caller
+    return diplomacy_ == sword::enemy_diplo; // $$$$ SBO 2007-12-06: should depend upon caller
 }
 
 // -----------------------------------------------------------------------------
@@ -110,14 +110,14 @@ bool MIL_IntelligenceOrder::IsEnemy() const
 // -----------------------------------------------------------------------------
 bool MIL_IntelligenceOrder::IsFriend() const
 {
-    return diplomacy_ == Common::friend_diplo; // $$$$ SBO 2007-12-06: should depend upon caller
+    return diplomacy_ == sword::friend_diplo; // $$$$ SBO 2007-12-06: should depend upon caller
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_IntelligenceOrder::GetLevel
 // Created: SBO 2007-11-13
 // -----------------------------------------------------------------------------
-Common::EnumNatureLevel MIL_IntelligenceOrder::GetLevel() const
+sword::EnumNatureLevel MIL_IntelligenceOrder::GetLevel() const
 {
     return level_;
 }

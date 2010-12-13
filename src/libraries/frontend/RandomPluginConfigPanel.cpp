@@ -38,7 +38,7 @@ namespace
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         for( int i = 0; i < RandomPluginConfigPanel::eContextsNbr; ++i )
-            distributions[ i ] = settings.readBoolEntry( QString( "/Common/RandomDistribution" ) + QString::number( i ), false );
+            distributions[ i ] = settings.readBoolEntry( QString( "/sword/RandomDistribution" ) + QString::number( i ), false );
     }
 
     void ReadDeviation( double* deviations )
@@ -46,7 +46,7 @@ namespace
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         for( int i = 0; i < RandomPluginConfigPanel::eContextsNbr; ++i )
-            deviations[ i ] = settings.readDoubleEntry( QString( "/Common/RandomDeviation" ) + QString::number( i ), 0.5 );
+            deviations[ i ] = settings.readDoubleEntry( QString( "/sword/RandomDeviation" ) + QString::number( i ), 0.5 );
     }
 
     void ReadMean( double* means )
@@ -54,21 +54,21 @@ namespace
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         for( int i = 0; i < RandomPluginConfigPanel::eContextsNbr; ++i )
-            means[ i ] = settings.readDoubleEntry( QString( "/Common/RandomMean" ) + QString::number( i ), 0.5 );
+            means[ i ] = settings.readDoubleEntry( QString( "/sword/RandomMean" ) + QString::number( i ), 0.5 );
     }
 
     bool ReadHasSeed()
     {
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readBoolEntry( "/Common/RandomHasSeed", false );
+        return settings.readBoolEntry( "/sword/RandomHasSeed", false );
     }
 
     int ReadSeed()
     {
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readNumEntry( "/Common/RandomSeed", 1 );
+        return settings.readNumEntry( "/sword/RandomSeed", 1 );
     }
 
     class Validator : public QDoubleValidator
@@ -290,10 +290,10 @@ void RandomPluginConfigPanel::OnDefaultClicked()
     settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
     for( int i = 0; i < eContextsNbr; ++i )
     {
-        settings.writeEntry( QString( "/Common/RandomDistribution" ) + QString::number( i ), bDistributions_[ i ] );
-        settings.writeEntry( QString( "/Common/RandomDeviation" ) + QString::number( i ), rDeviations_[ i ] );
-        settings.writeEntry( QString( "/Common/RandomMean" ) + QString::number( i ), rMeans_[ i ] );
+        settings.writeEntry( QString( "/sword/RandomDistribution" ) + QString::number( i ), bDistributions_[ i ] );
+        settings.writeEntry( QString( "/sword/RandomDeviation" ) + QString::number( i ), rDeviations_[ i ] );
+        settings.writeEntry( QString( "/sword/RandomMean" ) + QString::number( i ), rMeans_[ i ] );
     }
-    settings.writeEntry( "/Common/RandomHasSeed", hasSeed_->isChecked() );
-    settings.writeEntry( "/Common/RandomSeed", seed_->value() );
+    settings.writeEntry( "/sword/RandomHasSeed", hasSeed_->isChecked() );
+    settings.writeEntry( "/sword/RandomSeed", seed_->value() );
 }

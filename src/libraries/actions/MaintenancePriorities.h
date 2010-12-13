@@ -13,9 +13,9 @@
 #include "Parameter.h"
 #include "tools/Resolver_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgLogMaintenancePriorities;
+    class LogMaintenancePriorities;
 }
 
 namespace kernel
@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MaintenancePriorities( const kernel::OrderParameter& parameter );
-             MaintenancePriorities( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const Common::MsgLogMaintenancePriorities& message );
+             MaintenancePriorities( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const sword::LogMaintenancePriorities& message );
              MaintenancePriorities( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, xml::xistream& xis );
     virtual ~MaintenancePriorities();
     //@}
@@ -46,8 +46,8 @@ public:
     //! @name Operations
     //@{
     void AddPriority( const kernel::EquipmentType& value );
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
     virtual void CommitTo( std::string& content ) const;
     virtual bool IsSet() const;
     //@}

@@ -189,7 +189,7 @@ void ActionFactory::AddTiming( actions::Action_ABC& action, const Message& messa
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgUnitOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const sword::UnitOrder& message ) const
 {
     const kernel::MissionType& mission = missions_.Get( message.type().id() );
     const kernel::Entity_ABC& tasker = entities_.GetAgent( message.tasker().id() );
@@ -205,7 +205,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgUnitOrder& me
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgAutomatOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const sword::AutomatOrder& message ) const
 {
     const kernel::MissionType& mission = missions_.Get( message.type().id() );
     const kernel::Entity_ABC& tasker = entities_.GetAutomat( message.tasker().id() );
@@ -221,7 +221,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgAutomatOrder&
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgCrowdOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const sword::CrowdOrder& message ) const
 {
     const kernel::MissionType& mission = missions_.Get( message.type().id() );
     const kernel::Entity_ABC& tasker = entities_.GetPopulation( message.tasker().id() );
@@ -235,7 +235,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgCrowdOrder& m
 
 namespace
 {
-    const kernel::Entity_ABC& FindTasker( MsgsClientToSim::MsgFragOrder message, const kernel::EntityResolver_ABC& entities )
+    const kernel::Entity_ABC& FindTasker( sword::FragOrder message, const kernel::EntityResolver_ABC& entities )
     {
         if( message.tasker().has_automat() )
             try
@@ -258,7 +258,7 @@ namespace
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const MsgsClientToSim::MsgFragOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const sword::FragOrder& message ) const
 {
     const kernel::Entity_ABC& tasker = FindTasker( message, entities_ );
     const kernel::FragOrderType& order = fragOrders_.Get( message.frag_order().id() );
@@ -534,7 +534,7 @@ actions::Action_ABC* ActionFactory::CreateKnowledgeGroupMagicAction( xml::xistre
 // Name: ActionFactory::AddParameters
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-void ActionFactory::AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const Common::MsgMissionParameters& message ) const
+void ActionFactory::AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const sword::MsgMissionParameters& message ) const
 {
     tools::Iterator< const kernel::OrderParameter& > it = order.CreateIterator();
     int i = 0;

@@ -13,27 +13,28 @@
 #include "tools/ClientNetworker.h"
 #include <boost/noncopyable.hpp>
 
-namespace MsgsAarToClient            { class MsgAarToClient; }
-namespace MsgsAuthenticationToClient { class MsgAuthenticationToClient; }
-namespace MsgsClientToSim            { class MsgClientToSim; }
-namespace MsgsDispatcherToClient     { class MsgDispatcherToClient; }
-namespace MsgsMessengerToClient      { class MsgMessengerToClient; }
-namespace MsgsReplayToClient         { class MsgReplayToClient; }
-namespace MsgsSimToClient            { class MsgSimToClient; }
+namespace sword
+{
+    class AarToClient;
+    class AuthenticationToClient;
+    class ClientToSim;
+    class DispatcherToClient;
+    class MessengerToClient;
+    class ReplayToClient;
+    class SimToClient;
+}
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  SimulationMonitor
-    @brief  SimulationMonitor
+    @brief  Simulation monitor
 */
 // Created: SBO 2010-10-26
 // =============================================================================
 class SimulationMonitor : private boost::noncopyable
                         , public tools::ClientNetworker
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -57,12 +58,12 @@ private:
 
     //! @name Message handlers
     //@{
-    void HandleAarToClient( const std::string& endpoint, const MsgsAarToClient::MsgAarToClient& message );
-    void HandleAuthenticationToClient( const std::string& endpoint, const MsgsAuthenticationToClient::MsgAuthenticationToClient& message );
-    void HandleDispatcherToClient( const std::string& endpoint, const MsgsDispatcherToClient::MsgDispatcherToClient& message );
-    void HandleMessengerToClient( const std::string& endpoint, const MsgsMessengerToClient::MsgMessengerToClient& message );
-    void HandleReplayToClient( const std::string& endpoint, const MsgsReplayToClient::MsgReplayToClient& message );
-    void HandleSimToClient( const std::string& endpoint, const MsgsSimToClient::MsgSimToClient& message );
+    void HandleAarToClient( const std::string& endpoint, const sword::AarToClient& message );
+    void HandleAuthenticationToClient( const std::string& endpoint, const sword::AuthenticationToClient& message );
+    void HandleDispatcherToClient( const std::string& endpoint, const sword::DispatcherToClient& message );
+    void HandleMessengerToClient( const std::string& endpoint, const sword::MessengerToClient& message );
+    void HandleReplayToClient( const std::string& endpoint, const sword::ReplayToClient& message );
+    void HandleSimToClient( const std::string& endpoint, const sword::SimToClient& message );
     //@}
 
     //! @name Types

@@ -58,11 +58,11 @@ public:
     //@{
     void Reset();
 
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& asnMsg );
-    void Update( const MsgsSimToClient::MsgSimToClient& asnMsg );
+    virtual void Receive( const sword::SimToClient& asnMsg );
+    void Update( const sword::SimToClient& asnMsg );
     virtual void Send( ClientPublisher_ABC& publisher ) const;
 
-    virtual void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, Common::EnumSimulationState status, unsigned int factor ) const;
+    virtual void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned int factor ) const;
     virtual void SendFirstTick( ClientPublisher_ABC& publisher ) const;
     //@}
 
@@ -106,8 +106,8 @@ public:
     virtual const tools::Resolver_ABC< FireEffect >&            FireEffects() const { return fireEffects_; }
     virtual const tools::Resolver_ABC< Report >&                Reports() const { return reports_; }
 
-    virtual void SetToTasker( Common::Tasker& tasker, unsigned int id ) const;
-    unsigned int TaskerToId( const Common::Tasker& tasker ) const;
+    virtual void SetToTasker( sword::Tasker& tasker, unsigned int id ) const;
+    unsigned int TaskerToId( const sword::Tasker& tasker ) const;
     //@}
 
 private:

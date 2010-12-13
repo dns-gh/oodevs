@@ -42,10 +42,10 @@ public:
 
     //! @name Proxy
     //@{
-    virtual void Handle( const MsgsLauncherToAdmin::MsgExercicesListResponse& message );
-    virtual void Handle( const MsgsLauncherToAdmin::MsgControlStartAck& message );
-    virtual void Handle( const MsgsLauncherToAdmin::MsgControlStopAck& message );
-    virtual void Handle( const MsgsAuthenticationToClient::MsgProfileDescriptionList& message );
+    virtual void Handle( const sword::ExercicesListResponse& message );
+    virtual void Handle( const sword::ControlStartExerciseAck& message );
+    virtual void Handle( const sword::ControlStopExerciseAck& message );
+    virtual void Handle( const sword::ProfileDescriptionList& message );
     //@}
 
 private:

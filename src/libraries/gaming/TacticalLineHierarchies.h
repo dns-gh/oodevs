@@ -30,13 +30,13 @@ namespace kernel
 // Created: SBO 2006-11-14
 // =============================================================================
 class TacticalLineHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
-                              , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimaUpdate >
-                              , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimitUpdate >
+                              , public kernel::Updatable_ABC< sword::LimaUpdate >
+                              , public kernel::Updatable_ABC< sword::LimitUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const Common::MsgTacticalLine::Diffusion& message
+    TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const sword::MsgTacticalLine::Diffusion& message
                                     , const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations );
              TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Entity_ABC& superior
                                     , const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations );
@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    void WriteTo( Common::MsgTacticalLine::Diffusion& message ) const;
+    void WriteTo( sword::MsgTacticalLine::Diffusion& message ) const;
     //@}
 
 private:
@@ -57,9 +57,9 @@ private:
 
     //! @name Helpers
     //@{
-    void Update( const Common::MsgTacticalLine::Diffusion& message );
-    virtual void DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate& message );
-    virtual void DoUpdate( const MsgsMessengerToClient::MsgLimitUpdate& message );
+    void Update( const sword::MsgTacticalLine::Diffusion& message );
+    virtual void DoUpdate( const sword::LimaUpdate& message );
+    virtual void DoUpdate( const sword::LimitUpdate& message );
     //@}
 
 private:

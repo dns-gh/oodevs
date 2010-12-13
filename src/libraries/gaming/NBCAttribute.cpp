@@ -59,7 +59,7 @@ void NBCAttribute::UpdateData( const T& message )
 // Name: NBCAttribute::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void NBCAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void NBCAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -68,7 +68,7 @@ void NBCAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& me
 // Name: NBCAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void NBCAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void NBCAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }

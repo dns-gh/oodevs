@@ -13,9 +13,9 @@
 #include "dispatcher/Plugin_ABC.h"
 #include "protocol/protocol.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgSimToClient;
+    class SimToClient;
 }
 
 namespace dispatcher
@@ -62,7 +62,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive( const sword::SimToClient& message );
 
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
@@ -79,7 +79,7 @@ private:
 
     //! @name Network
     //@{
-    void OnReceiveClientToMessenger( const std::string&, const MsgsClientToMessenger::MsgClientToMessenger& );
+    void OnReceiveClientToMessenger( const std::string&, const sword::ClientToMessenger& );
     //@}
 
 private:

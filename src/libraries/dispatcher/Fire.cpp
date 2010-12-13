@@ -19,7 +19,7 @@ using namespace dispatcher;
 // Name: Fire constructor
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
-Fire::Fire( Model& , const MsgsSimToClient::MsgStartUnitFire& msg )
+Fire::Fire( Model& , const sword::StartUnitFire& msg )
     : SimpleEntity< >  ( msg.fire().id() )
     , type_            ( msg.type() )
     , oid_cible_       ( 0 )

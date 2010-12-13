@@ -12,7 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 
-namespace Common 
+namespace sword 
 {
     class StockResource;
 }
@@ -31,14 +31,14 @@ class StockAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit StockAttribute( const Common::ObjectAttributes& asnMsg );
+    explicit StockAttribute( const sword::ObjectAttributes& asnMsg );
     virtual ~StockAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::ObjectAttributes& asnMsg );
-    virtual void Send  ( Common::ObjectAttributes& asnMsg ) const;
+    virtual void Update( const sword::ObjectAttributes& asnMsg );
+    virtual void Send  ( sword::ObjectAttributes& asnMsg ) const;
     //@}
 
 private:
@@ -47,7 +47,7 @@ private:
     struct StockResource
     {
         StockResource();
-        StockResource( const Common::StockResource& msg );
+        StockResource( const sword::StockResource& msg );
 
         unsigned resource;
         unsigned int current;

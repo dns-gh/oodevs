@@ -154,12 +154,12 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC
 // Name: MIL_ObjectLoader::CreateObject
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const Common::MsgMissionParameters& message, MIL_Army_ABC& army, MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode& value ) const
+MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MsgMissionParameters& message, MIL_Army_ABC& army, sword::ObjectMagicActionAck_ErrorCode& value ) const
 {
     CIT_Prototypes it = prototypes_.find( message.elem( 0 ).value().Get(0).acharstr() );
     if( it == prototypes_.end() )
     {
-        value = MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_object;
+        value = sword::ObjectMagicActionAck_ErrorCode_error_invalid_object;
         return 0;
     }
     TER_Localisation location;
@@ -213,11 +213,11 @@ void MIL_ObjectLoader::ReadAttributes( const std::string& attribute, xml::xistre
 // Name: MIL_ObjectLoader::InitializeLocation
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectLoader::InitializeLocation( Object& object, const Common::MsgLocation& asn ) const
+sword::ObjectMagicActionAck_ErrorCode MIL_ObjectLoader::InitializeLocation( Object& object, const sword::MsgLocation& asn ) const
 {
     TER_Localisation location;
     if( ! NET_ASN_Tools::ReadLocation( asn, location ) )
-        return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
+        return sword::ObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
     object.Initialize( location );
-    return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
+    return sword::ObjectMagicActionAck_ErrorCode_no_error;
 }

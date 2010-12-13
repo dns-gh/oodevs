@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              BypassAttribute();
-    explicit BypassAttribute( const Common::MsgMissionParameter_Value& attributes );
+    explicit BypassAttribute( const sword::MsgMissionParameter_Value& attributes );
     virtual ~BypassAttribute();
     //@}
 
@@ -53,9 +53,9 @@ public:
     //@{
     virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     virtual void Register( MIL_Object_ABC& object ) const;
-    virtual void SendFullState( Common::ObjectAttributes& asn ) const;
-    virtual void SendUpdate( Common::ObjectAttributes& asn ) const;
-    virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute );
+    virtual void SendFullState( sword::ObjectAttributes& asn ) const;
+    virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
+    virtual void OnUpdate( const sword::MsgMissionParameter_Value& attribute );
     virtual void Serialize( HLA_UpdateFunctor& functor ) const;
     virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     //@}

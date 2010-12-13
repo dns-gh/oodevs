@@ -22,9 +22,9 @@ namespace kernel
     class EquipmentType;
     class WeaponSystemType;
 }
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitAttributes;
+    class UnitAttributes;
 }
 
 class Equipment;
@@ -37,7 +37,7 @@ class Equipment;
 // =============================================================================
 class Weapons : public kernel::Extension_ABC
               , public kernel::Drawable_ABC
-              , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+              , public kernel::Updatable_ABC< sword::UnitAttributes >
               , public tools::Resolver< Equipment >
               , public tools::Observer_ABC
               , public kernel::OptionsObserver_ABC
@@ -65,7 +65,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
+    virtual void DoUpdate( const sword::UnitAttributes& message );
     void UpdateRange();
     void AddEquipmentRange( const kernel::EquipmentType& type );
     //@}

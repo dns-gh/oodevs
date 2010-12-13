@@ -68,7 +68,7 @@ void DelayAttribute::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 // Name: DelayAttribute::DoUpdate
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void DelayAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -77,7 +77,7 @@ void DelayAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 // Name: DelayAttribute::DoUpdate
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void DelayAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -89,7 +89,7 @@ void DelayAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& 
 template< typename T >
 void DelayAttribute::UpdateData( const T& message )
 {
-    if( message.has_effect_delay()  )
+    if( message.has_effect_delay() )
     {
         delay_ = static_cast< unsigned int >( message.effect_delay().value() );
         controller_.Update( *(DelayAttribute_ABC*)this );

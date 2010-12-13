@@ -51,7 +51,7 @@ void ModelFunctionComposite::BeginTick()
 // Name: ModelFunctionComposite::Receive
 // Created: AGE 2007-08-30
 // -----------------------------------------------------------------------------
-void ModelFunctionComposite::Receive( const MsgsSimToClient::MsgSimToClient& message )
+void ModelFunctionComposite::Receive( const sword::SimToClient& message )
 {
     std::for_each( functions_.begin(), functions_.end(), boost::bind( &ModelFunction_ABC::Receive, _1, message ) );
 }

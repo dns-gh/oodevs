@@ -11,7 +11,7 @@
 #include "KnowledgeGroupsModel.h"
 #include "KnowledgeGroupFactory_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "protocol/simulationSenders.h"
+#include "protocol/SimulationSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupsModel constructor
@@ -36,7 +36,7 @@ KnowledgeGroupsModel::~KnowledgeGroupsModel()
 // Name: KnowledgeGroupsModel::Create
 // Created: HBD 2010-06-23
 // -----------------------------------------------------------------------------
-void KnowledgeGroupsModel::Create( const MsgsSimToClient::MsgKnowledgeGroupCreation& message )
+void KnowledgeGroupsModel::Create( const sword::KnowledgeGroupCreation& message )
 {
     std::auto_ptr< kernel::KnowledgeGroup_ABC > group( factory_.CreateKnowledgeGroup( message ) );
     Register( group->GetId(), *group );

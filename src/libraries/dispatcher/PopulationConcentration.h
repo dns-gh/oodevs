@@ -13,10 +13,10 @@
 #include "PopulationConcentration_ABC.h"
 #include "protocol/SimulationSenders.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgCrowdConcentrationCreation;
-    class MsgCrowdConcentrationUpdate;
+    class CrowdConcentrationCreation;
+    class CrowdConcentrationUpdate;
 }
 
 namespace dispatcher
@@ -31,18 +31,18 @@ namespace dispatcher
 // =============================================================================
 class PopulationConcentration : public dispatcher::PopulationConcentration_ABC
                               , public kernel::Extension_ABC
-                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdConcentrationUpdate >
+                              , public kernel::Updatable_ABC< sword::CrowdConcentrationUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationConcentration( const Population& population, const MsgsSimToClient::MsgCrowdConcentrationCreation& msg );
+             PopulationConcentration( const Population& population, const sword::CrowdConcentrationCreation& msg );
     virtual ~PopulationConcentration();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate       ( const MsgsSimToClient::MsgCrowdConcentrationUpdate& msg );
+    virtual void DoUpdate       ( const sword::CrowdConcentrationUpdate& msg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -53,7 +53,7 @@ public:
     virtual float        GetDensity() const;
     virtual QString      GetAttitude() const;
 
-    virtual const Common::MsgCoordLatLong& GetPosition() const;
+    virtual const sword::MsgCoordLatLong& GetPosition() const;
     //@}
 
 private:
@@ -68,11 +68,11 @@ private:
     //@{
     const Population&   population_;
     const unsigned long nID_;
-    const Common::MsgCoordLatLong position_;
+    const sword::MsgCoordLatLong position_;
 
     unsigned long             nNbrAliveHumans_;
     unsigned long             nNbrDeadHumans_;
-    Common::EnumCrowdAttitude nAttitude_;
+    sword::EnumCrowdAttitude nAttitude_;
     //@}
 };
 

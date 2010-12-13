@@ -11,7 +11,7 @@
 #include "SimulationModel.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "protocol/replaysenders.h"
+#include "protocol/ReplaySenders.h"
 
 using namespace dispatcher;
 
@@ -24,7 +24,7 @@ SimulationModel::SimulationModel()
     , nTickDuration_       ( 0 )
     , nTimeFactor_         ( 0 )
     , nCheckpointFrequency_( 0 )
-    , nSimState_           ( Common::stopped )
+    , nSimState_           ( sword::stopped )
     , bSendVisionCones_    ( false )
     , bProfilingEnabled_   ( false )
 {
@@ -53,7 +53,7 @@ void SimulationModel::Reset()
 // Name: SimulationModel::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SimulationModel::Update( const MsgsSimToClient::MsgControlInformation& msg )
+void SimulationModel::Update( const sword::ControlInformation& msg )
 {
     initialDate_          = msg.initial_date_time().data();
     date_                 = initialDate_;
@@ -70,39 +70,39 @@ void SimulationModel::Update( const MsgsSimToClient::MsgControlInformation& msg 
 // Name: SimulationModel::Update_Stop
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SimulationModel::Update_Stop( const MsgsSimToClient::MsgControlStopAck& msg )
+void SimulationModel::Update_Stop( const sword::ControlStopAck& msg )
 {
-    if( msg.error_code() == MsgsSimToClient::ControlAck_ErrorCode_no_error )
-        nSimState_ = Common::stopped;
+    if( msg.error_code() == sword::ControlAck_ErrorCode_no_error )
+        nSimState_ = sword::stopped;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SimulationModel::Update_Pause
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SimulationModel::Update_Pause( const MsgsSimToClient::MsgControlPauseAck& msg )
+void SimulationModel::Update_Pause( const sword::ControlPauseAck& msg )
 {
-    if( msg.error_code() == MsgsSimToClient::ControlAck_ErrorCode_no_error )
-        nSimState_ = Common::paused;
+    if( msg.error_code() == sword::ControlAck_ErrorCode_no_error )
+        nSimState_ = sword::paused;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SimulationModel::Update_Resume
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SimulationModel::Update_Resume( const MsgsSimToClient::MsgControlResumeAck& msg )
+void SimulationModel::Update_Resume( const sword::ControlResumeAck& msg )
 {
-    if( msg.error_code() == MsgsSimToClient::ControlAck_ErrorCode_no_error )
-        nSimState_ = Common::running;
+    if( msg.error_code() == sword::ControlAck_ErrorCode_no_error )
+        nSimState_ = sword::running;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SimulationModel::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SimulationModel::Update( const MsgsSimToClient::MsgControlChangeTimeFactorAck& msg )
+void SimulationModel::Update( const sword::ControlChangeTimeFactorAck& msg )
 {
-    if( msg.error_code() == MsgsSimToClient::ControlAck_ErrorCode_no_error )
+    if( msg.error_code() == sword::ControlAck_ErrorCode_no_error )
         nTimeFactor_ = msg.time_factor();
 }
 
@@ -110,7 +110,7 @@ void SimulationModel::Update( const MsgsSimToClient::MsgControlChangeTimeFactorA
 // Name: SimulationModel::Update
 // Created: NLD 2006-09-29
 // -----------------------------------------------------------------------------
-void SimulationModel::Update( const MsgsSimToClient::MsgControlBeginTick& msg )
+void SimulationModel::Update( const sword::ControlBeginTick& msg )
 {
     nCurrentTick_ = msg.current_tick();
     date_ = msg.date_time().data();
@@ -122,7 +122,7 @@ void SimulationModel::Update( const MsgsSimToClient::MsgControlBeginTick& msg )
 // Name: SimulationModel::Update
 // Created: NLD 2006-09-29
 // -----------------------------------------------------------------------------
-void SimulationModel::Update( const MsgsSimToClient::MsgControlEndTick& msg )
+void SimulationModel::Update( const sword::ControlEndTick& msg )
 {
     nCurrentTick_ = msg.current_tick();
     //$$$$
@@ -137,7 +137,7 @@ void SimulationModel::Update( const MsgsSimToClient::MsgControlEndTick& msg )
 // Name: SimulationModel::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-//void SimulationModel::Update( const MsgControlCheckPointSetFrequencyAck& msg )
+//void SimulationModel::Update( const ControlCheckPointSetFrequencyAck& msg )
 //{
 //    nCheckpointFrequency_ = msg;
 //}
@@ -165,7 +165,7 @@ void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 // Name: SimulationModel::SendReplayInfo
 // Created: AGE 2007-10-15
 // -----------------------------------------------------------------------------
-void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, Common::EnumSimulationState status, unsigned factor ) const
+void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned factor ) const
 {
     replay::ControlReplayInformation asn;
     asn().set_current_tick      ( nCurrentTick_ );

@@ -13,9 +13,9 @@
 #include "Entity.h"
 #include "clients_kernel/Intelligence_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgIntelligence;
+    class Intelligence;
 }
 
 namespace kernel
@@ -46,16 +46,16 @@ public:
                          , const kernel::FormationLevels& levels, kernel::Controller& controller );
              Intelligence( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter
                          , const kernel::EntityResolver_ABC& formations, const kernel::FormationLevels& levels
-                         , const Common::MsgIntelligence& message, kernel::Controller& controller );
+                         , const sword::Intelligence& message, kernel::Controller& controller );
     virtual ~Intelligence();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
-    void CommitTo( Common::MsgIntelligence& message ) const;
-    void Clean( Common::MsgIntelligence& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
+    void CommitTo( sword::Intelligence& message ) const;
+    void Clean( sword::Intelligence& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     void CommitToChildren();
     //@}

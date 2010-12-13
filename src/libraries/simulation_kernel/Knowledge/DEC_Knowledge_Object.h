@@ -21,9 +21,9 @@
 #include "tools/Extendable.h"
 #include "Tools/MIL_IDManager.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgObjectKnowledgeUpdate;
+    class ObjectKnowledgeUpdate;
 }
 
 class DEC_Knowledge_ObjectCollision;
@@ -154,12 +154,12 @@ private:
 
     //! @name Internal network senders
     //@{
-    void BuildMsgRealObject( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgPerceptionSources( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgRelevance( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgLocalisations( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgCurrentPerceptionLevel( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgAttributes( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgRealObject( sword::ObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgPerceptionSources( sword::ObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgRelevance( sword::ObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgLocalisations( sword::ObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgCurrentPerceptionLevel( sword::ObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgAttributes( sword::ObjectKnowledgeUpdate& asnMsg ) const;
     void SendMsgCreation() const;
     void SendMsgDestruction() const;
     //@}

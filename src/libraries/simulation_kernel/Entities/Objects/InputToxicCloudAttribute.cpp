@@ -227,13 +227,13 @@ void InputToxicCloudAttribute::Register( MIL_Object_ABC& object ) const
 // Name: InputToxicCloudAttribute::SendFullState
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::SendFullState( Common::ObjectAttributes& asn ) const
+void InputToxicCloudAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     if( bExport_ )
     {
         for( CIT_QuantityContainer it = export_.begin() ; it != export_.end(); ++it )
         {
-            Common::MsgLocatedQuantity* quantity = asn.mutable_toxic_cloud()->mutable_quantities()->add_elem();
+            sword::MsgLocatedQuantity* quantity = asn.mutable_toxic_cloud()->mutable_quantities()->add_elem();
             quantity->mutable_coordinate()->set_latitude( (*it).first.rX_ );
             quantity->mutable_coordinate()->set_longitude( (*it).first.rY_ );
             quantity->set_quantity( static_cast< float >( (*it).second ) );
@@ -245,7 +245,7 @@ void InputToxicCloudAttribute::SendFullState( Common::ObjectAttributes& asn ) co
 // Name: InputToxicCloudAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
+void InputToxicCloudAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( bExport_ && NeedUpdate( eOnUpdate ) )
     {

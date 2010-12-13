@@ -12,14 +12,13 @@
 
 #include <string>
 
-namespace MsgsAdminToLauncher
+namespace sword
 {
-    class MsgAdminToLauncher;
+    class AdminToLauncher;
 }
 
 namespace launcher
 {
-
 // =============================================================================
 /** @class  Launcher_ABC
     @brief  Launcher_ABC
@@ -28,7 +27,6 @@ namespace launcher
 // =============================================================================
 class Launcher_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -39,7 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual void Update() = 0;
-    virtual void HandleAdminToLauncher( const std::string& endpoint, const MsgsAdminToLauncher::MsgAdminToLauncher& message ) = 0;
+    virtual void HandleAdminToLauncher( const std::string& endpoint, const sword::AdminToLauncher& message ) = 0;
     //@}
 };
 

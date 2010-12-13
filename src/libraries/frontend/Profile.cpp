@@ -115,7 +115,7 @@ void Profile::VisitProfiles( const tools::GeneralConfig& config, const std::stri
 // Name: Profile::Send
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void Profile::Send( MsgsAuthenticationToClient::MsgProfileDescription& message ) const
+void Profile::Send( sword::ProfileDescription& message ) const
 {
     message.set_login( login_ );
     message.set_password( !password_.empty() );

@@ -37,7 +37,7 @@ PerceptionMap::~PerceptionMap()
 // Name: PerceptionMap::DoUpdate
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void PerceptionMap::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
+void PerceptionMap::DoUpdate( const sword::UnitKnowledgeUpdate& message )
 {
     if( message.has_perception_par_compagnie()  )
     {

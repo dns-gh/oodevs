@@ -41,7 +41,8 @@ std::string BOOST_RESOLVE( const std::string& filename )
     return data_directory + '/' + filename;
 }
 
-struct ProtobufConfig {
+struct ProtobufConfig
+{
     ProtobufConfig()
     {
         GOOGLE_PROTOBUF_VERIFY_VERSION;

@@ -32,8 +32,8 @@ namespace hla
 // Created: SBO 2008-02-18
 // =============================================================================
 class AgentExtension : public HlaExtension_ABC
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitEnvironmentType >
+                     , public kernel::Updatable_ABC< sword::UnitAttributes >
+                     , public kernel::Updatable_ABC< sword::UnitEnvironmentType >
 {
 public:
     //! @name Constructors/Destructor
@@ -45,8 +45,8 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& attributes );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitEnvironmentType& attributes );
+    virtual void DoUpdate( const sword::UnitAttributes& attributes );
+    virtual void DoUpdate( const sword::UnitEnvironmentType& attributes );
     //@}
 
 private:

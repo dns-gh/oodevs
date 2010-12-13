@@ -100,7 +100,7 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
 // Name: Attributes::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Attributes::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void Attributes::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_position()  )
         vPos_ = converter_.ConvertToXY( message.position() );

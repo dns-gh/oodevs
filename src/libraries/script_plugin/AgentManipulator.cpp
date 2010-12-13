@@ -110,13 +110,13 @@ unsigned int AgentManipulator::GetOperationalState() const
 
 namespace
 {
-    std::string ResolveForceRatio( const MsgsSimToClient::ForceRatio::Value& ratio )
+    std::string ResolveForceRatio( const sword::ForceRatio::Value& ratio )
     {
         switch( ratio )
         {
-        case MsgsSimToClient::ForceRatio::neutre:      return "neutral";
-        case MsgsSimToClient::ForceRatio::defavorable: return "low";
-        case MsgsSimToClient::ForceRatio::favorable:   return "high";
+        case sword::ForceRatio::neutre:      return "neutral";
+        case sword::ForceRatio::defavorable: return "low";
+        case sword::ForceRatio::favorable:   return "high";
         }
         return "none";
     }
@@ -149,12 +149,12 @@ void AgentManipulator::Teleport( const dispatcher::Position& position )
 {
     simulation::UnitMagicAction message;
     message().mutable_tasker()->mutable_unit()->set_id( agent_.GetId() );
-    message().set_type( MsgsClientToSim::MsgUnitMagicAction_Type_move_to );
-    Common::MsgPoint point;
-    Common::MsgMissionParameter& parameter = *message().mutable_parameters()->add_elem();
+    message().set_type( sword::UnitMagicAction_Type_move_to );
+    sword::MsgPoint point;
+    sword::MsgMissionParameter& parameter = *message().mutable_parameters()->add_elem();
     parameter.set_null_value( false );
-    Common::MsgLocation& location = *parameter.mutable_value()->Add()->mutable_point()->mutable_location();
-    location.set_type( Common::MsgLocation::point );
+    sword::MsgLocation& location = *parameter.mutable_value()->Add()->mutable_point()->mutable_location();
+    location.set_type( sword::MsgLocation::point );
     converter_.ConvertToGeo( ToPoint( position ), *location.mutable_coordinates()->add_elem() );
     message.Send( publisher_ );
 }
@@ -167,7 +167,7 @@ void AgentManipulator::RecoverAll()
 {
     simulation::UnitMagicAction message;
     message().mutable_tasker()->mutable_unit()->set_id( agent_.GetId() );
-    message().set_type( MsgsClientToSim::MsgUnitMagicAction_Type_recover_all );
+    message().set_type( sword::UnitMagicAction_Type_recover_all );
     message().mutable_parameters();
     message.Send( publisher_ );
 }
@@ -180,13 +180,13 @@ void AgentManipulator::Wound( int injury, int type )
 {
     simulation::UnitMagicAction message;
     message().mutable_tasker()->mutable_unit()->set_id( agent_.GetId() );
-    message().set_type( MsgsClientToSim::MsgUnitMagicAction_Type_create_wound );
+    message().set_type( sword::UnitMagicAction_Type_create_wound );
 
-    Common::MsgMissionParameter& paramInjury = *message().mutable_parameters()->add_elem();
+    sword::MsgMissionParameter& paramInjury = *message().mutable_parameters()->add_elem();
     paramInjury.set_null_value( false );
     paramInjury.mutable_value()->Add()->set_identifier( injury );
 
-    Common::MsgMissionParameter& paramType = *message().mutable_parameters()->add_elem();
+    sword::MsgMissionParameter& paramType = *message().mutable_parameters()->add_elem();
     paramType.set_null_value( false );
     paramType.mutable_value()->Add()->set_identifier( type );
     

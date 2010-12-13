@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: PopulationConcentration constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-PopulationConcentration::PopulationConcentration( const MsgsSimToClient::MsgCrowdConcentrationCreation& message, const CoordinateConverter_ABC& converter, float density )
+PopulationConcentration::PopulationConcentration( const sword::CrowdConcentrationCreation& message, const CoordinateConverter_ABC& converter, float density )
     : position_( converter.ConvertToXY( message.position() ) )
     , nID_( message.concentration().id() )
     , density_ ( density )
@@ -66,7 +66,7 @@ unsigned long PopulationConcentration::GetId() const
 // Name: PopulationConcentration::DoUpdate
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-void PopulationConcentration::DoUpdate( const MsgsSimToClient::MsgCrowdConcentrationUpdate& message )
+void PopulationConcentration::DoUpdate( const sword::CrowdConcentrationUpdate& message )
 {
     if( message.has_attitude()  )
         attitude_ = (E_PopulationAttitude)message.attitude();

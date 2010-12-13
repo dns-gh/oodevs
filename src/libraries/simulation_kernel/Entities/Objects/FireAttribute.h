@@ -36,7 +36,7 @@ public:
     //@{
              FireAttribute();
     explicit FireAttribute( xml::xistream& xis );
-    explicit FireAttribute( const Common::MsgMissionParameter_Value& attributes );
+    explicit FireAttribute( const sword::MsgMissionParameter_Value& attributes );
     virtual ~FireAttribute();
     //@}
 
@@ -52,8 +52,8 @@ public:
     //@{
     virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     virtual void Register( MIL_Object_ABC& object ) const;
-    virtual void SendFullState( Common::ObjectAttributes& asn ) const;
-    virtual void SendUpdate( Common::ObjectAttributes& asn ) const;
+    virtual void SendFullState( sword::ObjectAttributes& asn ) const;
+    virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 

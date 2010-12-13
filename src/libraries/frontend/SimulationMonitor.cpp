@@ -109,7 +109,7 @@ bool SimulationMonitor::TimedOut() const
 // Name: SimulationMonitor::HandleAarToClient
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void SimulationMonitor::HandleAarToClient( const std::string& /*endpoint*/, const MsgsAarToClient::MsgAarToClient& /*message*/ )
+void SimulationMonitor::HandleAarToClient( const std::string& /*endpoint*/, const sword::AarToClient& /*message*/ )
 {
     
 }
@@ -118,7 +118,7 @@ void SimulationMonitor::HandleAarToClient( const std::string& /*endpoint*/, cons
 // Name: SimulationMonitor::HandleAuthenticationToClient
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void SimulationMonitor::HandleAuthenticationToClient( const std::string& /*endpoint*/, const MsgsAuthenticationToClient::MsgAuthenticationToClient& /*message*/ )
+void SimulationMonitor::HandleAuthenticationToClient( const std::string& /*endpoint*/, const sword::AuthenticationToClient& /*message*/ )
 {
     connected_ = true;
 }
@@ -127,7 +127,7 @@ void SimulationMonitor::HandleAuthenticationToClient( const std::string& /*endpo
 // Name: SimulationMonitor::HandleDispatcherToClient
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void SimulationMonitor::HandleDispatcherToClient( const std::string& /*endpoint*/, const MsgsDispatcherToClient::MsgDispatcherToClient& /*message*/ )
+void SimulationMonitor::HandleDispatcherToClient( const std::string& /*endpoint*/, const sword::DispatcherToClient& /*message*/ )
 {
     connected_ = true;
 }
@@ -136,7 +136,7 @@ void SimulationMonitor::HandleDispatcherToClient( const std::string& /*endpoint*
 // Name: SimulationMonitor::HandleMessengerToClient
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void SimulationMonitor::HandleMessengerToClient( const std::string& /*endpoint*/, const MsgsMessengerToClient::MsgMessengerToClient& /*message*/ )
+void SimulationMonitor::HandleMessengerToClient( const std::string& /*endpoint*/, const sword::MessengerToClient& /*message*/ )
 {
 
 }
@@ -145,7 +145,7 @@ void SimulationMonitor::HandleMessengerToClient( const std::string& /*endpoint*/
 // Name: SimulationMonitor::HandleReplayToClient
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void SimulationMonitor::HandleReplayToClient( const std::string& /*endpoint*/, const MsgsReplayToClient::MsgReplayToClient& /*message*/ )
+void SimulationMonitor::HandleReplayToClient( const std::string& /*endpoint*/, const sword::ReplayToClient& /*message*/ )
 {
 
 }
@@ -154,7 +154,7 @@ void SimulationMonitor::HandleReplayToClient( const std::string& /*endpoint*/, c
 // Name: SimulationMonitor::HandleSimToClient
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void SimulationMonitor::HandleSimToClient( const std::string& /*endpoint*/, const MsgsSimToClient::MsgSimToClient& /*message*/ )
+void SimulationMonitor::HandleSimToClient( const std::string& /*endpoint*/, const sword::SimToClient& /*message*/ )
 {
 
 }

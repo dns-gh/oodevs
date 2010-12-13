@@ -49,7 +49,7 @@ void StructuralStateAttribute::CreateDictionary( kernel::PropertiesDictionary& d
 // Name: StructuralStateAttribute::DoUpdate
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
-void StructuralStateAttribute::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& message )
+void StructuralStateAttribute::DoUpdate( const sword::UrbanUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -58,7 +58,7 @@ void StructuralStateAttribute::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& 
 // Name: StructuralStateAttribute::DoUpdate
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
-void StructuralStateAttribute::DoUpdate( const MsgsSimToClient::MsgUrbanCreation& message )
+void StructuralStateAttribute::DoUpdate( const sword::UrbanCreation& message )
 {
     UpdateData( message.attributes() );
 }

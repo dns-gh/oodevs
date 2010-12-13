@@ -12,7 +12,7 @@
 
 #include "Location.h"
 
-namespace Common
+namespace sword
 {
     class MsgCoordLatLong;
 }
@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    void CommitTo( Common::MsgCoordLatLong& message ) const;
+    void CommitTo( sword::MsgCoordLatLong& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 

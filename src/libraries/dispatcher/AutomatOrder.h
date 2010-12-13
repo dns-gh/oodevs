@@ -12,9 +12,9 @@
 
 #include "Order_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgAutomatOrder;
+    class AutomatOrder;
 }
 
 namespace kernel
@@ -37,7 +37,7 @@ class AutomatOrder : public Order_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AutomatOrder( const Common::MsgAutomatOrder& message );
+    explicit AutomatOrder( const sword::AutomatOrder& message );
     virtual ~AutomatOrder();
     //@}
 
@@ -57,7 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Common::MsgAutomatOrder > message_;
+    std::auto_ptr< sword::AutomatOrder > message_;
     //@}
 };
 

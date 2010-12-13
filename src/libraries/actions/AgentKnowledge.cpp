@@ -90,27 +90,27 @@ void AgentKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
 // Name: AgentKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void AgentKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
+void AgentKnowledge::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        Entity< AgentKnowledge_ABC >::CommitTo( boost::bind ( &Common::UnitKnowledgeId::set_id, boost::ref(*message.mutable_value()->Add()->mutable_agentknowledge()), _1 ) );
+        Entity< AgentKnowledge_ABC >::CommitTo( boost::bind ( &sword::UnitKnowledgeId::set_id, boost::ref(*message.mutable_value()->Add()->mutable_agentknowledge()), _1 ) );
 }
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge::CommitTo
 // Created: MGD 2010-11-10
 // -----------------------------------------------------------------------------
-void AgentKnowledge::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void AgentKnowledge::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
-        Entity< AgentKnowledge_ABC >::CommitTo( boost::bind ( &Common::UnitKnowledgeId::set_id, boost::ref(*message.mutable_agentknowledge()), _1 ) );
+        Entity< AgentKnowledge_ABC >::CommitTo( boost::bind ( &sword::UnitKnowledgeId::set_id, boost::ref(*message.mutable_agentknowledge()), _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void AgentKnowledge::CommitTo( Common::UnitKnowledgeId& message ) const
+void AgentKnowledge::CommitTo( sword::UnitKnowledgeId& message ) const
 {
     Entity< AgentKnowledge_ABC >::CommitTo( message );
 }

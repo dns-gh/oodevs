@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: Humans constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Humans::Humans( const MsgsSimToClient::HumanDotations_HumanDotation& asnMsg )
+Humans::Humans( const sword::HumanDotations_HumanDotation& asnMsg )
     : nRank_                    ( asnMsg.rang() )
     , nNbrTotal_                ( asnMsg.nb_total() )
     , nNbrOperational_          ( asnMsg.nb_operationnels() )
@@ -44,7 +44,7 @@ Humans::~Humans()
 // Name: Humans::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Humans::Update( const MsgsSimToClient::HumanDotations_HumanDotation& message )
+void Humans::Update( const sword::HumanDotations_HumanDotation& message )
 {
     nNbrTotal_                = message.nb_total();
     nNbrOperational_          = message.nb_operationnels();
@@ -60,7 +60,7 @@ void Humans::Update( const MsgsSimToClient::HumanDotations_HumanDotation& messag
 // Name: Humans::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Humans::Send( MsgsSimToClient::HumanDotations_HumanDotation& message ) const
+void Humans::Send( sword::HumanDotations_HumanDotation& message ) const
 {
     message.set_rang                      ( nRank_ );
     message.set_nb_total                  ( nNbrTotal_ );

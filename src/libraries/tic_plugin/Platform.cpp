@@ -42,7 +42,7 @@ Platform::~Platform()
 // Name: Platform::Update
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void Platform::Update( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
+void Platform::Update( const sword::UnitAttributes& asnMsg )
 {
     if( asnMsg.has_altitude() )
         altitude_ = float( asnMsg.altitude() );
@@ -52,7 +52,7 @@ void Platform::Update( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
 // Name: Platform::Spread
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void Platform::Spread( MsgsSimToClient::EquipmentDotations_EquipmentDotation& updateMessage )
+void Platform::Spread( sword::EquipmentDotations_EquipmentDotation& updateMessage )
 {
     if( type_.GetId() == (unsigned)updateMessage.type().id() )
         Apply( updateMessage );
@@ -62,7 +62,7 @@ void Platform::Spread( MsgsSimToClient::EquipmentDotations_EquipmentDotation& up
 // Name: Platform::Apply
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void Platform::Apply( MsgsSimToClient::EquipmentDotations_EquipmentDotation& updateMessage )
+void Platform::Apply( sword::EquipmentDotations_EquipmentDotation& updateMessage )
 {
     int nVal = updateMessage.nb_dans_chaine_maintenance();
     if( nVal )

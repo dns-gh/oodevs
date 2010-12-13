@@ -13,7 +13,7 @@
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/FourStateOption.h"
 #include "Services.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace kernel;
 

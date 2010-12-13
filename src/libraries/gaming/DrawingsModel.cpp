@@ -36,7 +36,7 @@ DrawingsModel::~DrawingsModel()
 // Name: DrawingsModel::Create
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-void DrawingsModel::Create( const MsgsMessengerToClient::MsgShapeCreation& message )
+void DrawingsModel::Create( const sword::ShapeCreation& message )
 {
     factory_.CreateShape( message );
 }
@@ -45,7 +45,7 @@ void DrawingsModel::Create( const MsgsMessengerToClient::MsgShapeCreation& messa
 // Name: DrawingsModel::Update
 // Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-void DrawingsModel::Update( const MsgsMessengerToClient::MsgShapeUpdate& message )
+void DrawingsModel::Update( const sword::ShapeUpdate& message )
 {
     gui::Drawing_ABC* drawing = Find( message.id().id() );
     if( drawing )
@@ -56,7 +56,7 @@ void DrawingsModel::Update( const MsgsMessengerToClient::MsgShapeUpdate& message
 // Name: DrawingsModel::Delete
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-void DrawingsModel::Delete( const MsgsMessengerToClient::MsgShapeDestruction& message )
+void DrawingsModel::Delete( const sword::ShapeDestruction& message )
 {
     gui::DrawerModel::Delete( message.id().id() );
 }

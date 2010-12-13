@@ -12,11 +12,11 @@
 #include "tools/MessageSender_ABC.h"
 #include "MessageHandler_ABC.h"
 #include "protocol/SimulationSenders.h"
-#include "protocol/dispatchersenders.h"
+#include "protocol/DispatcherSenders.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgSimToClient;
+    class SimToClient;
 }
 namespace MsgsDispatcherToSim
 {
@@ -53,7 +53,7 @@ Simulation::~Simulation()
 // Name: Simulation::OnReceive
 // Created: NLD 2006-09-22
 // -----------------------------------------------------------------------------
-void Simulation::OnReceive( const MsgsSimToClient::MsgSimToClient& asnMsg )
+void Simulation::OnReceive( const sword::SimToClient& asnMsg )
 {
     handler_.Receive( asnMsg );
 }
@@ -71,7 +71,7 @@ void Simulation::Send( const MsgsDispatcherToSim::MsgDispatcherToSim& asnMsg )
 // Name: Simulation::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Simulation::Send( const MsgsClientToSim::MsgClientToSim& asnMsg )
+void Simulation::Send( const sword::ClientToSim& asnMsg )
 {
     messageService_.Send( endpoint_, asnMsg );
 }

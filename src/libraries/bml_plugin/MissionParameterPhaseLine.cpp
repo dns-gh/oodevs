@@ -20,7 +20,7 @@
 namespace bpt = boost::posix_time;
 using namespace plugins::bml;
 
-using namespace Common;
+using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterPhaseLine constructor
@@ -56,29 +56,29 @@ void MissionParameterPhaseLine::Serialize( MsgMissionParameter& ) const
 
 namespace
 {
-    MsgLimaOrder_Function ToPhaseLineType( const std::string& function )
+    LimaOrder_Function ToPhaseLineType( const std::string& function )
     {
         if( function == "LD" )
-            return MsgLimaOrder_Function_ligne_debouche;
+            return LimaOrder_Function_ligne_debouche;
         if( function == "LCA" )
-            return MsgLimaOrder_Function_ligne_changement_attitude;
+            return LimaOrder_Function_ligne_changement_attitude;
         if( function == "LC" )
-            return MsgLimaOrder_Function_ligne_coordination;
+            return LimaOrder_Function_ligne_coordination;
         if( function == "LI" )
-            return MsgLimaOrder_Function_ligne_interdire;
+            return LimaOrder_Function_ligne_interdire;
         if( function == "LO" )
-            return MsgLimaOrder_Function_ligne_objectif;
+            return LimaOrder_Function_ligne_objectif;
         if( function == "LCAR" )
-            return MsgLimaOrder_Function_ligne_coup_arret;
+            return LimaOrder_Function_ligne_coup_arret;
         if( function == "LR" )
-            return MsgLimaOrder_Function_ligne_recueil;
+            return LimaOrder_Function_ligne_recueil;
         if( function == "LDM" )
-            return MsgLimaOrder_Function_ligne_debut_mission;
+            return LimaOrder_Function_ligne_debut_mission;
         if( function == "LFM" )
-            return MsgLimaOrder_Function_ligne_fin_mission;
+            return LimaOrder_Function_ligne_fin_mission;
         if( function == "LIA" )
-            return MsgLimaOrder_Function_ligne_identification_accueil;
-        return MsgLimaOrder_Function( -1 );
+            return LimaOrder_Function_ligne_identification_accueil;
+        return LimaOrder_Function( -1 );
     }
 }
 
@@ -86,7 +86,7 @@ namespace
 // Name: MissionParameterPhaseLine::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPhaseLine::Serialize( MsgLimaOrder& message ) const
+void MissionParameterPhaseLine::Serialize( LimaOrder& message ) const
 {
     std::vector< std::string > functions;
     boost::algorithm::split( functions, functions_, boost::algorithm::is_any_of( "," ) );

@@ -108,16 +108,16 @@ void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::OnReceiveMsgMeteo( const MsgsClientToSim::MsgMagicAction& asnMsg )
+void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& asnMsg )
 {
-    if( asnMsg.type() == MsgsClientToSim::MsgMagicAction::global_weather )
+    if( asnMsg.type() == sword::MagicAction::global_weather )
     {
         assert( pGlobalMeteo_ );
         pGlobalMeteo_->Update( asnMsg.parameters() );
         client::ControlGlobalWeatherAck asnReplyMsg;
         asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
     }
-    else if( asnMsg.type() == MsgsClientToSim::MsgMagicAction::local_weather )
+    else if( asnMsg.type() == sword::MagicAction::local_weather )
     {
         weather::PHY_Meteo* meteo = new PHY_LocalMeteo( idManager_.GetFreeId(), asnMsg.parameters(), this );
         RegisterMeteo( *meteo );

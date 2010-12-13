@@ -28,7 +28,7 @@ namespace existences
 
         explicit Existence( const Extractor& extractor = Extractor() )
             : extractor_( extractor ) {}
-        void Receive( const MsgsSimToClient::MsgSimToClient& message )
+        void Receive( const sword::SimToClient& message )
         {
             if( extractor_.IsCreation( message ) )
                 Set( extractor_.Extract( message ) );

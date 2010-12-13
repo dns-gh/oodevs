@@ -57,9 +57,9 @@ void Chat::NotifyClientLeft( ClientPublisher_ABC& client )
 // Name: Chat::OnReceive
 // Created: AGE 2008-06-10
 // -----------------------------------------------------------------------------
-void Chat::OnReceive( const Common::MsgTextMessage& message )
+void Chat::OnReceive( const sword::TextMessage& message )
 {
-    MsgsMessengerToClient::MsgMessengerToClient answer;
+    sword::MessengerToClient answer;
     *answer.mutable_message()->mutable_text_message() = message;
 
     for( T_Clients::const_iterator it = clients_.begin(); it != clients_.end(); ++it )

@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: CrossingSiteAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-CrossingSiteAttribute::CrossingSiteAttribute( const Common::ObjectAttributes& asnMsg )
+CrossingSiteAttribute::CrossingSiteAttribute( const sword::ObjectAttributes& asnMsg )
     : nWidth_            ( 0 )
     , nDepth_            ( 0 )
     , nSpeed_            ( 0 )
@@ -40,7 +40,7 @@ CrossingSiteAttribute::~CrossingSiteAttribute()
 // Name: CrossingSiteAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::Update( const Common::ObjectAttributes& asnMsg )
+void CrossingSiteAttribute::Update( const sword::ObjectAttributes& asnMsg )
 {
     if( asnMsg.has_crossing_site() )
     {
@@ -55,7 +55,7 @@ void CrossingSiteAttribute::Update( const Common::ObjectAttributes& asnMsg )
 // Name: CrossingSiteAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::Send( Common::ObjectAttributes& asnMsg ) const
+void CrossingSiteAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
     asnMsg.mutable_crossing_site()->set_width                ( nWidth_ );
     asnMsg.mutable_crossing_site()->set_depth                ( nDepth_ );

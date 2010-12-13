@@ -30,7 +30,7 @@ crossbow::Line::Line()
 // Name: Line constructor
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Line::Line( const Common::MsgCoordLatLongList& message )
+crossbow::Line::Line( const sword::MsgCoordLatLongList& message )
     : PointCollection( message )
 {
     // NOTHING
@@ -113,8 +113,8 @@ void crossbow::Line::Serialize( std::ostream& geometry ) const
 // Name: Line::Serialize
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Line::Serialize( Common::MsgLocation& message ) const
+void crossbow::Line::Serialize( sword::MsgLocation& message ) const
 {
-    message.set_type( Common::MsgLocation_Geometry_line );
+    message.set_type( sword::MsgLocation_Geometry_line );
     PointCollection::Serialize( message );
 }

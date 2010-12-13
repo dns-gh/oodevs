@@ -60,14 +60,14 @@ void ClientConditions::RegisterIn( directia::brain::Brain& brain )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > ClientConditions::UserChose()
 {
-    struct UserChoice : public SimpleEventCondition< Common::MsgTextMessage >
+    struct UserChoice : public SimpleEventCondition< sword::TextMessage >
     {
         UserChoice( kernel::Controller& controller )
             : SimpleEventCondition( controller )
         {
             // NOTHING
         }
-        virtual void NotifyUpdated( const Common::MsgTextMessage& message )
+        virtual void NotifyUpdated( const sword::TextMessage& message )
         {
             CommandString command( message.message() );
             if( command.Command() == "choose" )
@@ -83,7 +83,7 @@ boost::shared_ptr< Condition_ABC > ClientConditions::UserChose()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > ClientConditions::MissionChosen()
 {
-    struct MissionChoice : public SimpleEventCondition< Common::MsgTextMessage >
+    struct MissionChoice : public SimpleEventCondition< sword::TextMessage >
     {
         MissionChoice( kernel::Controller& controller, const dispatcher::Model_ABC& model )
             : SimpleEventCondition( controller )
@@ -91,7 +91,7 @@ boost::shared_ptr< Condition_ABC > ClientConditions::MissionChosen()
         {
             // NOTHING
         }
-        virtual void NotifyUpdated( const Common::MsgTextMessage& message )
+        virtual void NotifyUpdated( const sword::TextMessage& message )
         {
             CommandString command( message.message() );
             if( command.Command() == "mission" )
@@ -118,14 +118,14 @@ boost::shared_ptr< Condition_ABC > ClientConditions::MissionChosen()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > ClientConditions::EntitySelected()
 {
-    struct EntitySelected : public SimpleEventCondition< Common::MsgTextMessage >
+    struct EntitySelected : public SimpleEventCondition< sword::TextMessage >
     {
         EntitySelected( kernel::Controller& controller, const dispatcher::Model_ABC& model )
             : SimpleEventCondition( controller ), resolver_( new ModelResolver( model ) )
         {
             // NOTHING
         }
-        virtual void NotifyUpdated( const Common::MsgTextMessage& message )
+        virtual void NotifyUpdated( const sword::TextMessage& message )
         {
             CommandString command( message.message() );
             if( command.Command() == "select" )

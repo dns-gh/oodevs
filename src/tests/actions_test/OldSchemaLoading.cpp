@@ -8,15 +8,13 @@
 // *****************************************************************************
 
 #include "actions_test_pch.h"
-
-#include <boost/tokenizer.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <xeuseuleu/xsl.hpp>
-#include <string>
+#include <boost/tokenizer.hpp>
 
 namespace xml
 {
-    inline std::string& remove_prolog( std::string& in )
+    std::string& remove_prolog( std::string& in )
     {
         const std::string::size_type position = in.find( "?>" );
         if( position != std::string::npos )
@@ -24,7 +22,7 @@ namespace xml
         return in;
     }
 
-    inline std::string& remove_crlf( std::string& in )
+    std::string& remove_crlf( std::string& in )
     {
         std::string::size_type position;
         while( (position = in.find_first_of( "\r\n" )) != std::string::npos )
@@ -32,14 +30,14 @@ namespace xml
         return in;
     }
 
-    inline bool is_inside_quotes( const std::string& in, std::string::size_type position )
+    bool is_inside_quotes( const std::string& in, std::string::size_type position )
     {
         if( in[position] == '\"' )
             return false;
         return std::count( in.begin(), in.begin() + position, '\'' ) % 2 == 1;
     }
 
-    inline std::string& replace( std::string& in, const std::string& from, const std::string& to )
+    std::string& replace( std::string& in, const std::string& from, const std::string& to )
     {
         std::string::size_type position = 0;
         while( (position = in.find( from, position )) != std::string::npos )
@@ -50,7 +48,7 @@ namespace xml
         return in;
     }
 
-    inline std::string format( const std::string& in )
+    std::string format( const std::string& in )
     {
         std::string result = in;
         remove_prolog( result );
@@ -88,7 +86,6 @@ void BOOST_CHECK_XML_EQUAL( const std::string& expected, const std::string& actu
     BOOST_CHECK( itExpected == expectedTokens.end() );
     BOOST_CHECK( itActual == actualTokens.end() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Transformat_old_to_new_schema
@@ -130,8 +127,7 @@ BOOST_AUTO_TEST_CASE( Transformat_old_to_new_schema )
                 "</parameter>"
             "</action>"
         "</actions>" );
-    const std::string expectedOutput(
-        "<?xml version='1.0' encoding='UTF-8' standalone='no' ?>"
+    const std::string expected(
         "<actions>"
             "<action id='1' name='TEST' target='1' time='2009-05-06T05:04:14' type='mission'>"
                 "<parameter name='Preparer terrain' type='Boolean' value='false'/>"
@@ -167,6 +163,5 @@ BOOST_AUTO_TEST_CASE( Transformat_old_to_new_schema )
     xml::xistringstream xis( input );
     xsl::xstringtransform xst( "resources/ordCompatibility.xsl" );
     xst << xis;
-    std::string updatedFile = xst.str();
-    BOOST_CHECK_XML_EQUAL( expectedOutput, updatedFile );
+    BOOST_CHECK_XML_EQUAL( expected, xst.str() );
 }

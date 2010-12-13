@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: DelayAttribute constructor
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( const Common::ObjectAttributes& asnMsg )
+DelayAttribute::DelayAttribute( const sword::ObjectAttributes& asnMsg )
     : nDelay_( 0 )
 {
     Update( asnMsg );
@@ -37,7 +37,7 @@ DelayAttribute::~DelayAttribute()
 // Name: DelayAttribute::Update
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::Update( const Common::ObjectAttributes& asnMsg )
+void DelayAttribute::Update( const sword::ObjectAttributes& asnMsg )
 {
     if( asnMsg.has_effect_delay()  )
         nDelay_ = asnMsg.effect_delay().value();
@@ -47,7 +47,7 @@ void DelayAttribute::Update( const Common::ObjectAttributes& asnMsg )
 // Name: DelayAttribute::Send
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::Send( Common::ObjectAttributes& asnMsg ) const
+void DelayAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
     asnMsg.mutable_effect_delay()->set_value( nDelay_ );
 }

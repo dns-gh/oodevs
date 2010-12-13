@@ -49,7 +49,7 @@ Quantity::~Quantity()
 // Name: Quantity::CommitTo
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
-void Quantity::CommitTo( Common::MsgMissionParameter& message ) const
+void Quantity::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -59,7 +59,7 @@ void Quantity::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: Quantity::CommitTo
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
-void Quantity::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void Quantity::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
         message.set_quantity( GetValue() );

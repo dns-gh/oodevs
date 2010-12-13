@@ -132,7 +132,7 @@ void FireCreationPanel::NotifyUpdated( const kernel::ModelLoaded& )
         const kernel::DotationType& type = it.NextElement();
         if( type.IsDType() )
         {
-            Common::ResourceType dot;
+            sword::ResourceType dot;
             dot.set_id( type.GetId() );
             ammunitionsBox_->AddItem( type.GetName(), dot.id() );
         }

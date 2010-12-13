@@ -149,16 +149,16 @@ void LocationPositions::Draw( const kernel::GlTools_ABC& tools ) const
 
 namespace
 {
-    std::auto_ptr< kernel::Location_ABC > BuildLocation( const kernel::CoordinateConverter_ABC& converter, const Common::MsgLocation& message )
+    std::auto_ptr< kernel::Location_ABC > BuildLocation( const kernel::CoordinateConverter_ABC& converter, const sword::MsgLocation& message )
     {
         std::auto_ptr< kernel::Location_ABC > location;
         switch( message.type() )
         {
-        case Common::MsgLocation_Geometry_point:   location.reset( new kernel::Point() ); break;
-        case Common::MsgLocation_Geometry_line:    location.reset( new kernel::Lines() ); break;
-        case Common::MsgLocation_Geometry_rectangle: location.reset( new kernel::Rectangle() ); break;
-        case Common::MsgLocation_Geometry_polygon: location.reset( new kernel::Polygon() ); break;
-        case Common::MsgLocation_Geometry_circle:  location.reset( new kernel::Circle() ); break;
+        case sword::MsgLocation_Geometry_point:   location.reset( new kernel::Point() ); break;
+        case sword::MsgLocation_Geometry_line:    location.reset( new kernel::Lines() ); break;
+        case sword::MsgLocation_Geometry_rectangle: location.reset( new kernel::Rectangle() ); break;
+        case sword::MsgLocation_Geometry_polygon: location.reset( new kernel::Polygon() ); break;
+        case sword::MsgLocation_Geometry_circle:  location.reset( new kernel::Circle() ); break;
         default: throw std::runtime_error( __FUNCTION__ " unsupported location type." ); break;
         }
         for( int i = 0; i < message.coordinates().elem_size(); ++i )
@@ -171,7 +171,7 @@ namespace
 // Name: LocationPositions::Update
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void LocationPositions::Update( const Common::MsgLocation& message )
+void LocationPositions::Update( const sword::MsgLocation& message )
 {
     points_.clear(); points_.reserve( message.coordinates().elem_size());
     center_ = geometry::Point2f( 0, 0 );
@@ -184,7 +184,7 @@ void LocationPositions::Update( const Common::MsgLocation& message )
 // Name: LocationPositions::Update
 // Created: SBO 2007-04-20
 // -----------------------------------------------------------------------------
-void LocationPositions::Update( const Common::MsgLocation& message, const geometry::Point2f& startPoint )
+void LocationPositions::Update( const sword::MsgLocation& message, const geometry::Point2f& startPoint )
 {
     points_.clear(); points_.reserve( message.coordinates().elem_size()+ 1 );
     center_ = geometry::Point2f( 0, 0 );
@@ -197,7 +197,7 @@ void LocationPositions::Update( const Common::MsgLocation& message, const geomet
 // Name: LocationPositions::AddLocation
 // Created: SBO 2007-04-20
 // -----------------------------------------------------------------------------
-void LocationPositions::AddLocation( const Common::MsgLocation& message )
+void LocationPositions::AddLocation( const sword::MsgLocation& message )
 {
     for( int i = 0; i < message.coordinates().elem_size(); ++i )
         AddPoint( converter_.ConvertToXY( message.coordinates().elem(i) ) );

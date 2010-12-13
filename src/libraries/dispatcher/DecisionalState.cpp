@@ -48,7 +48,7 @@ void DecisionalState::Clear()
 // Name: DecisionalState::Update
 // Created: ZEBRE 2007-06-21
 // -----------------------------------------------------------------------------
-void DecisionalState::Update( const MsgsSimToClient::MsgDecisionalState& message )
+void DecisionalState::Update( const sword::DecisionalState& message )
 {
     decisionalInfos_[ message.key() ] = message.value();
 }

@@ -14,10 +14,10 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitAttributes;
-    class MsgUnitKnowledgeUpdate;
+    class UnitAttributes;
+    class UnitKnowledgeUpdate;
 }
 
 namespace kernel
@@ -32,8 +32,8 @@ namespace kernel
 // Created: AGE 2006-04-10
 // =============================================================================
 class Lives : public kernel::Extension_ABC
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
-            , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeUpdate >
+            , public kernel::Updatable_ABC< sword::UnitAttributes >
+            , public kernel::Updatable_ABC< sword::UnitKnowledgeUpdate >
             , public kernel::Drawable_ABC
 {
 public:
@@ -46,8 +46,8 @@ public:
     //! @name Operations
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::UnitAttributes& message );
+    virtual void DoUpdate( const sword::UnitKnowledgeUpdate& message );
     float GetLife() const;
     //@}
 

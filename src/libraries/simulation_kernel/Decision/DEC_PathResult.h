@@ -13,7 +13,7 @@
 #include "Decision/DEC_Path_ABC.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 
-namespace Common
+namespace sword
 {
     class MsgPath;
 }
@@ -57,7 +57,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( Common::MsgPath& asn ) const;
+    void Serialize( sword::MsgPath& asn ) const;
     //@}
 
 private:

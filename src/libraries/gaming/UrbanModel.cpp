@@ -60,13 +60,13 @@ UrbanModel::~UrbanModel()
 
 namespace
 {
-    void AttachExtensions( urban::TerrainObject_ABC& object, const MsgsSimToClient::MsgUrbanCreation& message )
+    void AttachExtensions( urban::TerrainObject_ABC& object, const sword::UrbanCreation& message )
     {
         if( !message.has_attributes() )
             return;
         if( message.attributes().has_color() )
         {
-            const Common::RgbaColor& color = message.attributes().color();
+            const sword::RgbaColor& color = message.attributes().color();
             urban::ColorAttribute* colorAttribute = object.Retrieve< urban::ColorAttribute >();
             if( !colorAttribute )
             {
@@ -86,7 +86,7 @@ namespace
         }
         if( message.attributes().has_architecture() )
         {
-            const MsgsSimToClient::UrbanAttributes::Architecture& architecture = message.attributes().architecture();
+            const sword::UrbanAttributes::Architecture& architecture = message.attributes().architecture();
             urban::Architecture* attribute = object.Retrieve< urban::Architecture >();
             if( !attribute )
             {
@@ -107,7 +107,7 @@ namespace
 // Name: UrbanModel::Create
 // Created: SLG 2009-10-205
 // -----------------------------------------------------------------------------
-void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
+void UrbanModel::Create( const sword::UrbanCreation& message )
 {
     geometry::Polygon2f footPrint;
     std::string name( message.name() );
@@ -129,7 +129,7 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
 // Name: ResourceNetworkModel Update
 // Created: MGD 2010-11-29
 // -----------------------------------------------------------------------------
-void UrbanModel::Update( const MsgsSimToClient::MsgUrbanUpdate& message )
+void UrbanModel::Update( const sword::UrbanUpdate& message )
 {
     if( message.has_attributes() )
     {

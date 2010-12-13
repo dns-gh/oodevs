@@ -71,7 +71,7 @@ void ClientCommands::SendCommand( const std::string& client, const std::string& 
 // -----------------------------------------------------------------------------
 void ClientCommands::Send( const std::string& profile, const std::string& command, dispatcher::ClientPublisher_ABC& target )
 {
-    MsgsMessengerToClient::MsgMessengerToClient answer;
+    sword::MessengerToClient answer;
 
     answer.mutable_message()->mutable_text_message()->mutable_source()->set_profile("script");
     answer.mutable_message()->mutable_text_message()->mutable_target()->set_profile(profile.c_str());

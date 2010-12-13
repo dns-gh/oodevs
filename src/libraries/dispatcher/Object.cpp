@@ -36,7 +36,7 @@ using namespace dispatcher;
 // Name: Object constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Object::Object( Model_ABC& model, const MsgsSimToClient::MsgObjectCreation& msg, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types )
+Object::Object( Model_ABC& model, const sword::ObjectCreation& msg, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types )
     : dispatcher::Object_ABC( msg.object().id(), QString( msg.name().c_str() ) )
     , type_                 ( types.Get( msg.type().id() ) )
     , localisation_         ( msg.location() )
@@ -61,7 +61,7 @@ Object::~Object()
 // Name: Object::DoUpdate
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Object::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& msg )
+void Object::DoUpdate( const sword::ObjectUpdate& msg )
 {
     if( msg.has_location() )
     {

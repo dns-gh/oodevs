@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void OnError  ( const std::string& endpoint, const std::string& error );
+    virtual void OnError( const std::string& endpoint, const std::string& error );
     virtual void OnMessage( const std::string& endpoint, Message& message );
 
     void Commit( MessageCallback_ABC& callback );
@@ -47,6 +47,12 @@ private:
     BufferedMessageCallback& operator=( const BufferedMessageCallback& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void Commit( MessageCallback_ABC& callback, const std::string& endpoint, Message& message ) const;
+    //@}
+
+private:
     //! @name Types
     //@{
     struct Event

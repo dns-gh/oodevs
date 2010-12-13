@@ -14,24 +14,24 @@
 #include "Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgObjectKnowledgeUpdate;
-    class MsgObjectUpdate;
+    class ObjectKnowledgeUpdate;
+    class ObjectUpdate;
 }
 
 #define DECLARE_EXTENSION( extension )                                                      \
 class extension : public kernel::Extension_ABC                                              \
                 , public kernel::Displayable_ABC                                            \
-                , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate > \
-                , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >          \
+                , public kernel::Updatable_ABC< sword::ObjectKnowledgeUpdate > \
+                , public kernel::Updatable_ABC< sword::ObjectUpdate >          \
 {                                                                                           \
 public:                                                                                     \
              extension() {};                                                                \
     virtual ~extension() {};                                                                \
                                                                                             \
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& ) {}            \
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& ) {}                     \
+    virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& ) {}            \
+    virtual void DoUpdate( const sword::ObjectUpdate& ) {}                     \
 };
 
 namespace kernel

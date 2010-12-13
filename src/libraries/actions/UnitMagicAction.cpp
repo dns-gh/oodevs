@@ -83,8 +83,8 @@ void UnitMagicAction::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
 {
-    MsgsClientToSim::MsgUnitMagicAction_Type type =
-        ( MsgsClientToSim::MsgUnitMagicAction_Type ) GetType().GetId();
+    sword::UnitMagicAction_Type type =
+        ( sword::UnitMagicAction_Type ) GetType().GetId();
     simulation::UnitMagicAction message;
     const kernel::Entity_ABC& entity = GetEntity();
     if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
@@ -102,7 +102,7 @@ void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message.Send( publisher, context );
-    if( type == MsgsClientToSim::MsgUnitMagicAction_Type_move_to )
+    if( type == sword::UnitMagicAction_Type_move_to )
         const_cast< kernel::Entity_ABC& >( GetEntity() ).Update( message() );
     message().Clear();
 }

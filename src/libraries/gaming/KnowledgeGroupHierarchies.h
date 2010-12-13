@@ -13,7 +13,7 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/simulationSenders.h"
+#include "protocol/SimulationSenders.h"
 
 namespace kernel
 {
@@ -28,7 +28,7 @@ namespace kernel
 // Created: AGE 2006-09-20
 // =============================================================================
 class KnowledgeGroupHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
-                                , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupUpdate >
+                                , public kernel::Updatable_ABC< sword::KnowledgeGroupUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -42,7 +42,7 @@ public:
     //@{
     virtual bool CanCommunicate() const;
     virtual bool IsJammed() const;
-    virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& updateMessage );
+    virtual void DoUpdate( const sword::KnowledgeGroupUpdate& updateMessage );
     //@}
 
 private:

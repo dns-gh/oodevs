@@ -427,13 +427,13 @@ void PHY_RolePionLOG_Supply::Clean()
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
 static
-void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, MsgsSimToClient::SeqOfLogSupplyEquimentAvailability& asn )
+void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, sword::SeqOfLogSupplyEquimentAvailability& asn )
 {
     if( data.empty() )
         return;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
-        MsgsSimToClient::MsgLogSupplyEquimentAvailability& data = *asn.add_elem();
+        sword::LogSupplyEquimentAvailability& data = *asn.add_elem();
         data.mutable_equipment()->set_id( itData->first->GetMosID().id() );
         assert( itData->second.nNbrTotal_ );
 

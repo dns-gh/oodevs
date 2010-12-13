@@ -19,43 +19,42 @@
 #include "protocol/protocol.h"
 #include "MockClientPublisher.h"
 
-using namespace Common;
-using namespace MsgsSimToClient;
-using namespace MsgsMessengerToClient;
-using namespace MsgsDispatcherToClient;
-using namespace MsgsAuthenticationToClient;
-using namespace MsgsReplayToClient;
-using namespace MsgsAarToClient;
+using namespace sword;
+using namespace sword;
+using namespace sword;
+using namespace sword;
+using namespace sword;
+using namespace sword;
+using namespace sword;
 
 namespace
 {
-    MsgSimToClient OperationalState( unsigned opstate, unsigned long id )
+    SimToClient OperationalState( unsigned opstate, unsigned long id )
     {
-        MsgSimToClient result;
-        MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        SimToClient result;
+        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
         attributes.mutable_unit()->set_id( id );
         attributes.set_etat_operationnel_brut( opstate );
         return result;
     }
-    MsgSimToClient BeginTick()
+    SimToClient BeginTick()
     {
-        MsgSimToClient result;
-        MsgControlBeginTick beginTick;
+        SimToClient result;
+        ControlBeginTick beginTick;
         *result.mutable_message()->mutable_control_begin_tick() = beginTick ;
         return result;
     }
-    MsgSimToClient EndTick()
+    SimToClient EndTick()
     {
-        MsgSimToClient result;
-        MsgControlEndTick endTick;
+        SimToClient result;
+        ControlEndTick endTick;
         *result.mutable_message()->mutable_control_end_tick() = endTick ;
         return result;
-
     }
-    MsgSimToClient MakeUnitCreation( unsigned long id )
+    SimToClient MakeUnitCreation( unsigned long id )
     {
-        MsgSimToClient result;
-        MsgUnitCreation& message = *result.mutable_message()->mutable_unit_creation();
+        SimToClient result;
+        UnitCreation& message = *result.mutable_message()->mutable_unit_creation();
         message.mutable_unit()->set_id( id );
         message.mutable_type()->set_id( 42 );
         message.set_nom( "test" );
@@ -63,7 +62,7 @@ namespace
         message.set_pc( false );
         return result;
     }
-    bool CheckValue( const MsgAarToClient& expected, const MsgAarToClient& actual )
+    bool CheckValue( const AarToClient& expected, const AarToClient& actual )
     {
         BOOST_CHECK_EQUAL( expected.DebugString(), actual.DebugString() );
         return true;
@@ -71,9 +70,9 @@ namespace
     template< std::size_t N >
     void MakeExpectation( MockClientPublisher& mocker, double (&data)[N] )
     {
-        MsgAarToClient result;
+        AarToClient result;
         result.set_context( 0 );
-        MsgPlotResult& plot = *result.mutable_message()->mutable_plot_result();
+        PlotResult& plot = *result.mutable_message()->mutable_plot_result();
         plot.set_identifier( 42 );
         plot.set_error( "" );
         for( unsigned i = 0; i < N; ++i )
@@ -160,10 +159,10 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalStateNormalized, Fixture )
 
 namespace
 {
-    MsgSimToClient MakePosition( const char* position, unsigned long id )
+    SimToClient MakePosition( const char* position, unsigned long id )
     {
-        MsgSimToClient result;
-        MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        SimToClient result;
+        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
         attributes.mutable_unit()->set_id( id );
         geocoord::MGRS mgrs( position );
         geocoord::Geodetic geodetic( mgrs );
@@ -214,10 +213,10 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDistanceBetweenTwoUnits, Fixture )
 
 namespace
 {
-    MsgSimToClient MakeMounted( bool mounted, unsigned long id )
+    SimToClient MakeMounted( bool mounted, unsigned long id )
     {
-        MsgSimToClient result;
-        MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        SimToClient result;
+        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
         attributes.mutable_unit()->set_id( id );
         attributes.set_embarque( mounted );
         return result;
@@ -267,19 +266,19 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTypeInstanciationIsVerifiedAtRuntime, Fixtur
 
 namespace
 {
-    MsgSimToClient CreateConsign( unsigned long id, unsigned long unit_id = 0  )
+    SimToClient CreateConsign( unsigned long id, unsigned long unit_id = 0  )
     {
-        MsgSimToClient result;
-        MsgLogMaintenanceHandlingCreation& creation = *result.mutable_message()->mutable_log_maintenance_handling_creation();
+        SimToClient result;
+        LogMaintenanceHandlingCreation& creation = *result.mutable_message()->mutable_log_maintenance_handling_creation();
         creation.mutable_request()->set_id( id );
         creation.mutable_unit()->set_id( unit_id ) ;
         return result;
     }
 
-    MsgSimToClient DestroyConsign( unsigned long id )
+    SimToClient DestroyConsign( unsigned long id )
     {
-        MsgSimToClient result;
-        MsgLogMaintenanceHandlingDestruction& destruction = *result.mutable_message()->mutable_log_maintenance_handling_destruction();
+        SimToClient result;
+        LogMaintenanceHandlingDestruction& destruction = *result.mutable_message()->mutable_log_maintenance_handling_destruction();
         destruction.mutable_request()->set_id( id );
         return result;
     }
@@ -363,20 +362,20 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter, Fixture )
 
 namespace
 {
-    MsgSimToClient CreateDirectFire( unsigned fire_id, unsigned long firer )
+    SimToClient CreateDirectFire( unsigned fire_id, unsigned long firer )
     {
-        MsgSimToClient result;
-        MsgStartUnitFire& fire = *result.mutable_message()->mutable_start_unit_fire();
+        SimToClient result;
+        StartUnitFire& fire = *result.mutable_message()->mutable_start_unit_fire();
         fire.mutable_fire()->set_id( fire_id );
         fire.mutable_firing_unit()->set_id( firer );
         return result;
     }
-    MsgSimToClient StopFire( unsigned fire_id, unsigned long damage_count = 0 )
+    SimToClient StopFire( unsigned fire_id, unsigned long damage_count = 0 )
     {
-        MsgSimToClient result;
-        MsgStopUnitFire& fire = *result.mutable_message()->mutable_stop_unit_fire();
+        SimToClient result;
+        StopUnitFire& fire = *result.mutable_message()->mutable_stop_unit_fire();
         fire.mutable_fire()->set_id( fire_id );
-        MsgUnitFireDamages& damage = *fire.mutable_units_damages()->add_elem();
+        UnitFireDamages& damage = *fire.mutable_units_damages()->add_elem();
         damage.mutable_equipments()->add_elem()->set_unavailable_nbr( damage_count );
         return result;
     }
@@ -542,10 +541,10 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithC
 
 namespace
 {
-    MsgSimToClient MakeResourceVariation( int variation, unsigned long id, unsigned long resourceId = 42 )
+    SimToClient MakeResourceVariation( int variation, unsigned long id, unsigned long resourceId = 42 )
     {
-        MsgSimToClient result;
-        MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        SimToClient result;
+        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
         attributes.mutable_unit()->set_id( id );
         ResourceDotations_ResourceDotation& resource = *attributes.mutable_dotation_eff_ressource()->add_elem();
         resource.mutable_type()->set_id( resourceId );
@@ -675,10 +674,10 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter, Fixt
 
 namespace
 {
-    MsgSimToClient MakeEquipementVariation( int variation[5], unsigned long id, unsigned long equipmentId = 42 )
+    SimToClient MakeEquipementVariation( int variation[5], unsigned long id, unsigned long equipmentId = 42 )
     {
-        MsgSimToClient result;
-        MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        SimToClient result;
+        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
         attributes.mutable_unit()->set_id( id );
         EquipmentDotations_EquipmentDotation& equipment = *attributes.mutable_dotation_eff_materiel()->add_elem();
         equipment.mutable_type()->set_id( equipmentId );
@@ -733,13 +732,13 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestEquipments, Fixture )
 
 namespace
 {
-    MsgSimToClient MakeHumanVariation( int state[8], unsigned long id )
+    SimToClient MakeHumanVariation( int state[8], unsigned long id )
     {
-        MsgSimToClient result;
-        MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        SimToClient result;
+        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
         attributes.mutable_unit()->set_id( id );
         HumanDotations_HumanDotation& personnel = *attributes.mutable_dotation_eff_personnel()->add_elem();
-        personnel.set_rang( Common::officier );
+        personnel.set_rang( sword::officier );
         personnel.set_nb_total( state[0] );
         personnel.set_nb_operationnels( state[1] );
         personnel.set_nb_morts( state[2] );
@@ -850,10 +849,10 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestConflicts, Fixture )
 
 namespace
 {
-    MsgSimToClient CreateUnitDetection( unsigned int detector, unsigned int detected, Common::EnumUnitVisibility visibility )
+    SimToClient CreateUnitDetection( unsigned int detector, unsigned int detected, sword::EnumUnitVisibility visibility )
     {
-        MsgSimToClient result;
-        MsgsSimToClient::MsgUnitDetection& message = *result.mutable_message()->mutable_unit_detection();
+        SimToClient result;
+        sword::UnitDetection& message = *result.mutable_message()->mutable_unit_detection();
         message.mutable_observer()->set_id( detector );
         message.mutable_detected_unit()->set_id( detected );
         message.set_current_visibility( visibility );
@@ -876,17 +875,17 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnitDetection, Fixture )
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, Common::identified ) ); // ok
+    task->Receive( CreateUnitDetection( 42, 69, sword::identified ) ); // ok
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 51, Common::recognized ) ); // irrelevant detected unit
-    task->Receive( CreateUnitDetection( 51, 69, Common::detected ) ); // irrelevant detecting unit
+    task->Receive( CreateUnitDetection( 42, 51, sword::recognized ) ); // irrelevant detected unit
+    task->Receive( CreateUnitDetection( 51, 69, sword::detected ) ); // irrelevant detecting unit
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, Common::invisible ) ); // irrelevant detection level
+    task->Receive( CreateUnitDetection( 42, 69, sword::invisible ) ); // irrelevant detection level
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, Common::recognized ) ); // ok
+    task->Receive( CreateUnitDetection( 42, 69, sword::recognized ) ); // ok
     task->Receive( EndTick() );
     double expectedResult[] = { 1, 1, 0, 1 };//, 1, 1, 1, 1 };
     MakeExpectation( publisher, expectedResult );
@@ -909,22 +908,22 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnitDetectionWithThreshold, Fixture )
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 12, 69, Common::detected ) );
+    task->Receive( CreateUnitDetection( 12, 69, sword::detected ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, Common::identified ) );
+    task->Receive( CreateUnitDetection( 42, 69, sword::identified ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 51, Common::recognized ) );
-    task->Receive( CreateUnitDetection( 51, 69, Common::detected ) );
+    task->Receive( CreateUnitDetection( 42, 51, sword::recognized ) );
+    task->Receive( CreateUnitDetection( 51, 69, sword::detected ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, Common::invisible ) );
-    task->Receive( CreateUnitDetection( 51, 69, Common::recorded ) );
+    task->Receive( CreateUnitDetection( 42, 69, sword::invisible ) );
+    task->Receive( CreateUnitDetection( 51, 69, sword::recorded ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, Common::recognized ) );
-    task->Receive( CreateUnitDetection( 51, 69, Common::recognized ) );
+    task->Receive( CreateUnitDetection( 42, 69, sword::recognized ) );
+    task->Receive( CreateUnitDetection( 51, 69, sword::recognized ) );
     task->Receive( EndTick() );
     double expectedResult[] = { 0, 1, 1, 0, 1 };
     MakeExpectation( publisher, expectedResult );
@@ -978,7 +977,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction, F
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 100, 69 ) );
-    task->Receive( CreateUnitDetection( 42, 69, Common::detected ) );
+    task->Receive( CreateUnitDetection( 42, 69, sword::detected ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
     task->Receive( EndTick() );

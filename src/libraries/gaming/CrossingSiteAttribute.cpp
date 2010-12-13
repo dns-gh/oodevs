@@ -56,7 +56,7 @@ void CrossingSiteAttribute::UpdateData( const T& message )
 // Name: CrossingSiteAttribute::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void CrossingSiteAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -65,7 +65,7 @@ void CrossingSiteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeU
 // Name: CrossingSiteAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void CrossingSiteAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }

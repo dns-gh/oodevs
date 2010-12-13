@@ -87,8 +87,8 @@ private:
     //! @name Helpers
     //@{
     void DoContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
-    void SendAction( const kernel::Entity_ABC& entity, Common::EnumUnitTiredness, Common::EnumUnitMorale, Common::EnumUnitExperience );
-    void SendMessage( const kernel::Entity_ABC& entity, Common::EnumUnitTiredness, Common::EnumUnitMorale, Common::EnumUnitExperience );
+    void SendAction( const kernel::Entity_ABC& entity, sword::EnumUnitTiredness, sword::EnumUnitMorale, sword::EnumUnitExperience );
+    void SendMessage( const kernel::Entity_ABC& entity, sword::EnumUnitTiredness, sword::EnumUnitMorale, sword::EnumUnitExperience );
     virtual void Call( const E_UnitTiredness& fatigue );
     virtual void Call( const E_UnitMorale& morale );
     virtual void Call( const E_UnitExperience& experience );

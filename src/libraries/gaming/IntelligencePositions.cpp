@@ -117,7 +117,7 @@ void IntelligencePositions::Draw( const geometry::Point2f& where, const kernel::
 // Name: IntelligencePositions::DoUpdate
 // Created: SBO 2007-10-19
 // -----------------------------------------------------------------------------
-void IntelligencePositions::DoUpdate( const MsgsMessengerToClient::MsgIntelligenceCreation& message )
+void IntelligencePositions::DoUpdate( const sword::IntelligenceCreation& message )
 {
     position_ = converter_.ConvertToXY( message.intelligence().location() );
 }
@@ -126,7 +126,7 @@ void IntelligencePositions::DoUpdate( const MsgsMessengerToClient::MsgIntelligen
 // Name: IntelligencePositions::DoUpdate
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void IntelligencePositions::DoUpdate( const MsgsMessengerToClient::MsgIntelligenceUpdate& message )
+void IntelligencePositions::DoUpdate( const sword::IntelligenceUpdate& message )
 {
     if( message.has_location() )
         position_ = converter_.ConvertToXY( message.location() );

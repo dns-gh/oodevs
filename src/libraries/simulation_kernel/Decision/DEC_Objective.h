@@ -13,7 +13,7 @@
 #include "MIL.h"
 #include "simulation_terrain/TER_Localisation.h"
 
-namespace Common
+namespace sword
 {
     class MsgMissionObjective;
 }
@@ -29,7 +29,7 @@ class DEC_Objective
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_Objective( const Common::MsgMissionObjective& asn );
+    explicit DEC_Objective( const sword::MsgMissionObjective& asn );
     virtual ~DEC_Objective();
     //@}
 
@@ -43,7 +43,7 @@ public:
     //! @name Operations
     //@{
     void operator=( const DEC_Objective& rhs );
-    void Serialize( Common::MsgMissionObjective& asn ) const;
+    void Serialize( sword::MsgMissionObjective& asn ) const;
     void Flag     ( bool bValue );
 
     MT_Vector2D ComputerBarycenter() const;

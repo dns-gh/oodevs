@@ -11,14 +11,8 @@
 #define __protocol_Simulation_h__
 
 #pragma warning( push, 0 )
-#pragma warning( disable : 4244 )
-
-
-#include "Definitions.h"
-#include "generated/Common.pb.h"
-#include "generated/ClientToSim.pb.h"
-#include "generated/SimToClient.pb.h"
-
+#include "protocol/proto/client_simulation.pb.h"
+#include "protocol/proto/simulation_client.pb.h"
 #pragma warning( pop )
 
 #endif // __protocol_Simulation_h__

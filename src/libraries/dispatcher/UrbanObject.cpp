@@ -25,7 +25,7 @@ using namespace dispatcher;
 // Name: UrbanObject constructor
 // Created: SLG 2009-09-26
 // -----------------------------------------------------------------------------
-UrbanObject::UrbanObject( Model_ABC& /*model*/, const MsgsSimToClient::MsgUrbanCreation& msg )
+UrbanObject::UrbanObject( Model_ABC& /*model*/, const sword::UrbanCreation& msg )
     : dispatcher::UrbanObject_ABC( msg.urban_object().id(), msg.name().c_str() )
     , strName_                   ( msg.name()  )
     , localisation_              ( msg.location() )
@@ -55,7 +55,7 @@ UrbanObject::~UrbanObject()
 // Name: UrbanObject::Initialize
 // Created: SLG 2009-09-26
 // -----------------------------------------------------------------------------
-void UrbanObject::Initialize( const MsgsSimToClient::UrbanAttributes& attributes )
+void UrbanObject::Initialize( const sword::UrbanAttributes& attributes )
 {
     MSG_MSG_CREATION( color          , ColorAttribute );
     MSG_MSG_CREATION( architecture   , ArchitectureAttribute );
@@ -116,7 +116,7 @@ void UrbanObject::SendDestruction( ClientPublisher_ABC& /*publisher*/ ) const
 // Name: UrbanObject::DoUpdate
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void UrbanObject::DoUpdate( const MsgsSimToClient::MsgUrbanUpdate& msg )
+void UrbanObject::DoUpdate( const sword::UrbanUpdate& msg )
 {
     if( msg.has_location() )
     {

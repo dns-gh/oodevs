@@ -63,7 +63,7 @@ void Enumeration::Serialize( xml::xostream& xos ) const
 // Name: Enumeration::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Enumeration::CommitTo( Common::MsgMissionParameter& message ) const
+void Enumeration::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -73,7 +73,7 @@ void Enumeration::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: Enumeration::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Enumeration::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void Enumeration::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
         message.set_enumeration( value_.GetId() );

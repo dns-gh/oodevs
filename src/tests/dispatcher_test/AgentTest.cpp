@@ -77,9 +77,9 @@ BOOST_AUTO_TEST_CASE( Agent_IsCreatedUnderAnAutomat )
     MockModel model;
     MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
     {
-        MsgsSimToClient::MsgSimToClient expected;
+        sword::SimToClient expected;
         expected.set_context( 0 );
-        MsgsSimToClient::MsgUnitCreation& message = *expected.mutable_message()->mutable_unit_creation();
+        sword::UnitCreation& message = *expected.mutable_message()->mutable_unit_creation();
         message.mutable_unit()->set_id( 1 );
         message.mutable_type()->set_id( 42 );
         message.set_nom( "test" );
@@ -129,9 +129,9 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
     {
         std::auto_ptr< dispatcher::Agent_ABC > result;
         {
-            MsgsSimToClient::MsgSimToClient expected;
+            sword::SimToClient expected;
             expected.set_context( 0 );
-            MsgsSimToClient::MsgUnitCreation& message = *expected.mutable_message()->mutable_unit_creation();
+            sword::UnitCreation& message = *expected.mutable_message()->mutable_unit_creation();
             message.mutable_unit()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
             message.set_nom( "test" );
@@ -146,10 +146,10 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
         }
         {
             // attribute update
-            MsgsSimToClient::MsgSimToClient expectedAttributes;
+            sword::SimToClient expectedAttributes;
             expectedAttributes.set_context( 0 );
             {
-                MsgsSimToClient::MsgUnitAttributes& message = *expectedAttributes.mutable_message()->mutable_unit_attributes();
+                sword::UnitAttributes& message = *expectedAttributes.mutable_message()->mutable_unit_attributes();
                 message.mutable_unit()->set_id( 1 );
 //            message.mutable_dotation_eff_personnel();
 //            message.mutable_dotation_eff_materiel();
@@ -170,8 +170,8 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.set_mode_furtif_actif( true );
                 message.set_embarque( true );
                 message.set_transporteurs_disponibles( true );
-                message.set_posture_old( MsgsSimToClient::MsgUnitAttributes::mouvement );
-                message.set_posture_new( MsgsSimToClient::MsgUnitAttributes::poste_prepare_genie );
+                message.set_posture_old( sword::UnitAttributes::mouvement );
+                message.set_posture_new( sword::UnitAttributes::poste_prepare_genie );
                 message.set_posture_pourcentage( 51 );
                 message.set_etat_installation( 60 );
                 message.set_en_tenue_de_protection_nbc( true );
@@ -185,15 +185,15 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.set_radar_actif( true );
 //            message.mutable_pions_transportes();
                 message.mutable_transporting_unit()->set_id( 0 );
-                message.set_rapport_de_force( MsgsSimToClient::ForceRatio::favorable );
-                message.set_combat_de_rencontre( Common::etat_fixe );
-                message.set_etat_operationnel( Common::detruit_totalement );
-                message.set_disponibilite_au_tir_indirect( MsgsSimToClient::MsgUnitAttributes::pret_au_tir );
-                message.set_roe( MsgsSimToClient::RulesOfEngagement::tir_sur_riposte );
-                message.set_roe_crowd( MsgsSimToClient::MsgUnitAttributes::maintien_a_distance_par_moyens_non_letaux );
-                message.set_fatigue( Common::fatigue );
-                message.set_moral( Common::fanatique );
-                message.set_experience( Common::veteran );
+                message.set_rapport_de_force( sword::ForceRatio::favorable );
+                message.set_combat_de_rencontre( sword::etat_fixe );
+                message.set_etat_operationnel( sword::detruit_totalement );
+                message.set_disponibilite_au_tir_indirect( sword::UnitAttributes::pret_au_tir );
+                message.set_roe( sword::RulesOfEngagement::tir_sur_riposte );
+                message.set_roe_crowd( sword::UnitAttributes::maintien_a_distance_par_moyens_non_letaux );
+                message.set_fatigue( sword::fatigue );
+                message.set_moral( sword::fanatique );
+                message.set_experience( sword::veteran );
                 message.mutable_surrendered_unit()->set_id( 0 );
                 message.set_prisonnier( true );
                 message.set_refugie_pris_en_compte( true );
@@ -202,20 +202,20 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
             }
 
             // automat change superior
-            MsgsSimToClient::MsgSimToClient expectedChangeSuperior;
+            sword::SimToClient expectedChangeSuperior;
             expectedChangeSuperior.set_context( 0 );
             {
-                Common::MsgUnitChangeSuperior& message = *expectedChangeSuperior.mutable_message()->mutable_unit_change_superior();
+                sword::UnitChangeSuperior& message = *expectedChangeSuperior.mutable_message()->mutable_unit_change_superior();
                 message.mutable_unit()->set_id( 1 );
                 message.mutable_parent()->set_id( automat.GetId() );
                 BOOST_REQUIRE( message.IsInitialized() );
             }
 
             // order no mission
-            MsgsSimToClient::MsgSimToClient expectedNoMission;
+            sword::SimToClient expectedNoMission;
             expectedNoMission.set_context( 0 );
             {
-                Common::MsgUnitOrder& message = *expectedNoMission.mutable_message()->mutable_unit_order();
+                sword::UnitOrder& message = *expectedNoMission.mutable_message()->mutable_unit_order();
                 message.mutable_tasker()->set_id( result->GetId() );
                 message.mutable_type()->set_id( 0 );
                 BOOST_REQUIRE( message.IsInitialized() );

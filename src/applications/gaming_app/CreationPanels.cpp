@@ -18,7 +18,7 @@
 #include "clients_gui/UnitsPanel.h"
 #include "gaming/DrawingsModel.h"
 #include "gaming/Services.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 #include "FireCreationPanel.h"
 #include "ObjectCreationPanel.h"
 #include "WeatherCreationPanel.h"

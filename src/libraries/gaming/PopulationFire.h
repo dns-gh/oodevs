@@ -30,7 +30,7 @@ class PopulationFire : public Fire_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFire( const MsgsSimToClient::MsgStartCrowdFire& message, const tools::Resolver_ABC< kernel::Population_ABC >& resolver );
+             PopulationFire( const sword::StartCrowdFire& message, const tools::Resolver_ABC< kernel::Population_ABC >& resolver );
     virtual ~PopulationFire();
     //@}
 

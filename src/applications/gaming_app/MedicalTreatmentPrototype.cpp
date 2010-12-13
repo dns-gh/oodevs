@@ -14,7 +14,7 @@
 #include "tools/Iterator.h"
 #include "actions/ParameterList.h"
 
-using namespace Common;
+using namespace sword;
 using namespace kernel;
 using namespace gui;
 
@@ -45,7 +45,7 @@ MedicalTreatmentPrototype::~MedicalTreatmentPrototype()
 void MedicalTreatmentPrototype::Commit()
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "MedicalTreatment" );
-    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_medical_treatment );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_medical_treatment );
     list.AddString( "ExternalReferenceId", referenceID_->text().ascii() );
     list.AddQuantity( "Doctors", doctors_->value() );
     list.AddIdentifier( "Status", 0 ); // JCR TODO : Check status available ?

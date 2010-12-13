@@ -18,7 +18,7 @@ using namespace plugins::messenger;
 
 namespace
 {
-    bool operator==( const MsgsMessengerToClient::MsgMessengerToClient& lhs, const MsgsMessengerToClient::MsgMessengerToClient& rhs )
+    bool operator==( const sword::MessengerToClient& lhs, const sword::MessengerToClient& rhs )
     {
         BOOST_CHECK_EQUAL( lhs.DebugString(), rhs.DebugString() );
         return true;
@@ -31,19 +31,19 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ClientObject_CanBeCreated )
 {
-    MsgsMessengerToClient::MsgMessengerToClient expected;
+    sword::MessengerToClient expected;
     {
-        MsgsMessengerToClient::MsgClientObjectCreation& message = *expected.mutable_message()->mutable_client_object_creation();
+        sword::ClientObjectCreation& message = *expected.mutable_message()->mutable_client_object_creation();
         message.mutable_object()->set_id( 42 );
         message.set_name( "name" );
-        Common::ClientObjectProperty* prop = message.add_properties();
+        sword::ClientObjectProperty* prop = message.add_properties();
         prop->set_name( "param" );
         prop->mutable_value()->set_string_value( "string" );
     }
-    MsgsClientToMessenger::MsgClientObjectCreationRequest msg;
+    sword::ClientObjectCreationRequest msg;
     {
         msg.set_name( "name" );
-        Common::ClientObjectProperty* prop = msg.add_properties();
+        sword::ClientObjectProperty* prop = msg.add_properties();
         prop->set_name( "param" );
         prop->mutable_value()->set_string_value( "string" );
     }
@@ -64,31 +64,31 @@ BOOST_AUTO_TEST_CASE( ClientObject_CanBeCreatedByModel )
     IdManager idManager;
     MockClientPublisher publisher;
     ClientObjectsModel model( publisher, idManager);
-    MsgsMessengerToClient::MsgMessengerToClient expected;
+    sword::MessengerToClient expected;
     {
-        MsgsMessengerToClient::MsgClientObjectCreation& message = *expected.mutable_message()->mutable_client_object_creation();
+        sword::ClientObjectCreation& message = *expected.mutable_message()->mutable_client_object_creation();
         message.mutable_object()->set_id( 1 );
         message.set_name( "name" );
-        Common::ClientObjectProperty* prop1 = message.add_properties();
+        sword::ClientObjectProperty* prop1 = message.add_properties();
         prop1->set_name( "param1" );
         prop1->mutable_value()->set_string_value( "string" );
-        Common::ClientObjectProperty* prop2 = message.add_properties();
+        sword::ClientObjectProperty* prop2 = message.add_properties();
         prop2->set_name( "param2" );
         prop2->mutable_value()->set_integer_value( 5 );
     }
-    MsgsMessengerToClient::MsgMessengerToClient ack;
+    sword::MessengerToClient ack;
     {
-        MsgsMessengerToClient::MsgClientObjectCreationRequestAck& message = *ack.mutable_message()->mutable_client_object_creation_ack();
+        sword::ClientObjectCreationRequestAck& message = *ack.mutable_message()->mutable_client_object_creation_ack();
         message.set_name( "name" );
-        message.set_error_code( MsgsMessengerToClient::ClientObjectAck::success );
+        message.set_error_code( sword::ClientObjectAck::success );
     }
-    MsgsClientToMessenger::MsgClientObjectCreationRequest msg;
+    sword::ClientObjectCreationRequest msg;
     {
         msg.set_name( "name" );
-        Common::ClientObjectProperty* prop1 = msg.add_properties();
+        sword::ClientObjectProperty* prop1 = msg.add_properties();
         prop1->set_name( "param1" );
         prop1->mutable_value()->set_string_value( "string" );
-        Common::ClientObjectProperty* prop2 = msg.add_properties();
+        sword::ClientObjectProperty* prop2 = msg.add_properties();
         prop2->set_name( "param2" );
         prop2->mutable_value()->set_integer_value( 5 );
     }
@@ -107,19 +107,19 @@ BOOST_AUTO_TEST_CASE( ClientObject_ErrorDuplicate )
     IdManager idManager;
     MockClientPublisher publisher;
     ClientObjectsModel model( publisher, idManager);
-    MsgsMessengerToClient::MsgMessengerToClient ack;
+    sword::MessengerToClient ack;
     {
-        MsgsMessengerToClient::MsgClientObjectCreationRequestAck& message = *ack.mutable_message()->mutable_client_object_creation_ack();
+        sword::ClientObjectCreationRequestAck& message = *ack.mutable_message()->mutable_client_object_creation_ack();
         message.set_name( "name" );
-        message.set_error_code( MsgsMessengerToClient::ClientObjectAck::duplicate_attribute_name );
+        message.set_error_code( sword::ClientObjectAck::duplicate_attribute_name );
     }
-    MsgsClientToMessenger::MsgClientObjectCreationRequest msg;
+    sword::ClientObjectCreationRequest msg;
     {
         msg.set_name( "name" );
-        Common::ClientObjectProperty* prop = msg.add_properties();
+        sword::ClientObjectProperty* prop = msg.add_properties();
         prop->set_name( "param" );
         prop->mutable_value()->set_string_value( "string" );
-        Common::ClientObjectProperty* prop2 = msg.add_properties();
+        sword::ClientObjectProperty* prop2 = msg.add_properties();
         prop2->set_name( "param" );
         prop2->mutable_value()->set_string_value( "string" );
     }
@@ -137,33 +137,33 @@ BOOST_AUTO_TEST_CASE( ClientObject_CanBeUpdatedByModel )
     IdManager idManager;
     MockClientPublisher publisher;
     ClientObjectsModel model( publisher, idManager);
-    MsgsMessengerToClient::MsgMessengerToClient expected;
+    sword::MessengerToClient expected;
     {
-        MsgsMessengerToClient::MsgClientObjectUpdate& message = *expected.mutable_message()->mutable_client_object_update();
+        sword::ClientObjectUpdate& message = *expected.mutable_message()->mutable_client_object_update();
         message.mutable_object()->set_id( 1 );
         message.set_name( "new_name" );
-        Common::ClientObjectProperty* prop = message.add_properties();
+        sword::ClientObjectProperty* prop = message.add_properties();
         prop->set_name( "param" );
         prop->mutable_value()->set_string_value( "new_string" );
     }
-    MsgsMessengerToClient::MsgMessengerToClient ack;
+    sword::MessengerToClient ack;
     {
-        MsgsMessengerToClient::MsgClientObjectUpdateRequestAck& message = *ack.mutable_message()->mutable_client_object_update_ack();
+        sword::ClientObjectUpdateRequestAck& message = *ack.mutable_message()->mutable_client_object_update_ack();
         message.mutable_object()->set_id( 1 );
-        message.set_error_code( MsgsMessengerToClient::ClientObjectAck::success );
+        message.set_error_code( sword::ClientObjectAck::success );
     }
-    MsgsClientToMessenger::MsgClientObjectCreationRequest msgCreation;
+    sword::ClientObjectCreationRequest msgCreation;
     {
         msgCreation.set_name( "name" );
-        Common::ClientObjectProperty* prop = msgCreation.add_properties();
+        sword::ClientObjectProperty* prop = msgCreation.add_properties();
         prop->set_name( "param" );
         prop->mutable_value()->set_string_value( "string" );
     }
-    MsgsClientToMessenger::MsgClientObjectUpdateRequest msgUpdate;
+    sword::ClientObjectUpdateRequest msgUpdate;
     {
         msgUpdate.mutable_object()->set_id( 1 );
         msgUpdate.set_name( "new_name" );
-        Common::ClientObjectProperty* prop = msgUpdate.add_properties();
+        sword::ClientObjectProperty* prop = msgUpdate.add_properties();
         prop->set_name( "param" );
         prop->mutable_value()->set_string_value( "new_string" );
     }
@@ -186,25 +186,25 @@ BOOST_AUTO_TEST_CASE( ClientObject_CanBeDestroyedByModel )
     IdManager idManager;
     MockClientPublisher publisher;
     ClientObjectsModel model( publisher, idManager);
-    MsgsMessengerToClient::MsgMessengerToClient expected;
+    sword::MessengerToClient expected;
     {
-        MsgsMessengerToClient::MsgClientObjectDestruction& message = *expected.mutable_message()->mutable_client_object_destruction();
+        sword::ClientObjectDestruction& message = *expected.mutable_message()->mutable_client_object_destruction();
         message.mutable_object()->set_id( 1 );
     }
-    MsgsMessengerToClient::MsgMessengerToClient ack;
+    sword::MessengerToClient ack;
     {
-        MsgsMessengerToClient::MsgClientObjectDestructionRequestAck& message = *ack.mutable_message()->mutable_client_object_destruction_ack();
+        sword::ClientObjectDestructionRequestAck& message = *ack.mutable_message()->mutable_client_object_destruction_ack();
         message.mutable_object()->set_id( 1 );
-        message.set_error_code( MsgsMessengerToClient::ClientObjectAck::success );
+        message.set_error_code( sword::ClientObjectAck::success );
     }
-    MsgsClientToMessenger::MsgClientObjectCreationRequest msgCreation;
+    sword::ClientObjectCreationRequest msgCreation;
     {
         msgCreation.set_name( "name" );
-        Common::ClientObjectProperty* prop = msgCreation.add_properties();
+        sword::ClientObjectProperty* prop = msgCreation.add_properties();
         prop->set_name( "param" );
         prop->mutable_value()->set_string_value( "string" );
     }
-    MsgsClientToMessenger::MsgClientObjectDestructionRequest msgDestruction;
+    sword::ClientObjectDestructionRequest msgDestruction;
     {
         msgDestruction.mutable_object()->set_id( 1 );
     }

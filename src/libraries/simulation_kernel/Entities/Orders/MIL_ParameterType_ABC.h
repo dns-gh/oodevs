@@ -13,7 +13,7 @@
 #include "MT_Tools/MT_Stl.h"
 #include <boost/noncopyable.hpp>
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameter;
 }

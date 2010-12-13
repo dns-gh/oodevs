@@ -37,9 +37,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual LogMaintenanceConsign* CreateMaintenanceConsign( const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& message );
-    virtual LogSupplyConsign*      CreateSupplyConsign     ( const MsgsSimToClient::MsgLogSupplyHandlingCreation& message );
-    virtual LogMedicalConsign*     CreateMedicalConsign    ( const MsgsSimToClient::MsgLogMedicalHandlingCreation& message );
+    virtual LogMaintenanceConsign* CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message );
+    virtual LogSupplyConsign*      CreateSupplyConsign     ( const sword::LogSupplyHandlingCreation& message );
+    virtual LogMedicalConsign*     CreateMedicalConsign    ( const sword::LogMedicalHandlingCreation& message );
     //@}
 
 private:

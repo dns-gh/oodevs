@@ -33,12 +33,12 @@ namespace kernel
 // =============================================================================
 class Object : public kernel::EntityImplementation< kernel::Object_ABC >
              , public kernel::Extension_ABC
-             , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
+             , public kernel::Updatable_ABC< sword::ObjectUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Object( const MsgsSimToClient::MsgObjectCreation& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
+             Object( const sword::ObjectCreation& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                      const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
     virtual ~Object();
     //@}
@@ -66,7 +66,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
+    virtual void DoUpdate( const sword::ObjectUpdate& message );
     //@}
 
 private:
@@ -84,7 +84,7 @@ private:
 
     //! @name Member data
     //@{
-    Common::MsgLocation::Geometry nTypeLocalisation_;
+    sword::MsgLocation::Geometry nTypeLocalisation_;
     kernel::DotationType* construction_;
     kernel::DotationType* valorization_;
     kernel::OptionalValue< unsigned int > nDotationConstruction_;

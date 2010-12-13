@@ -15,9 +15,9 @@
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-namespace Common
+namespace sword
 {
-    class MsgChangeLogisticLinks;
+    class ChangeLogisticLinks;
 }
 
 namespace kernel
@@ -38,7 +38,7 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class LogisticLinks : public kernel::LogisticLinks_ABC
-                    , public kernel::Updatable_ABC< Common::MsgChangeLogisticLinks >
+                    , public kernel::Updatable_ABC< sword::ChangeLogisticLinks >
                     , public kernel::Drawable_ABC
 {
 public:
@@ -69,7 +69,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const Common::MsgChangeLogisticLinks& message );
+    virtual void DoUpdate( const sword::ChangeLogisticLinks& message );
     void DrawLink( const geometry::Point2f& from, kernel::Entity_ABC* to, const kernel::GlTools_ABC& tools, float curve, bool link, bool missing ) const;
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}

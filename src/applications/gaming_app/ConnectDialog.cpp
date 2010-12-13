@@ -99,7 +99,7 @@ void ConnectDialog::LoadDefaultConfig()
 
     QSettings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    settings.beginGroup( "/Common/Hosts" );
+    settings.beginGroup( "/sword/Hosts" );
     QStringList list = settings.readListEntry( "/hosts", ';' );
     int nIndex = settings.readNumEntry( "/index", 0 );
     settings.endGroup();
@@ -124,7 +124,7 @@ void ConnectDialog::SaveConfig()
 {
     QSettings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    settings.beginGroup( "/Common/Hosts" );
+    settings.beginGroup( "/sword/Hosts" );
 
     QStringList list;
     for( int n = 0; n < pHostNameComboBox_->count(); ++n )

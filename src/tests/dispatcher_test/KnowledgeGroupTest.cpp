@@ -32,9 +32,9 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_CanBeUnderATeam )
     MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
     std::auto_ptr< dispatcher::KnowledgeGroup_ABC > result;
     {
-        MsgsSimToClient::MsgSimToClient expected;
+        sword::SimToClient expected;
         expected.set_context( 0 );
-        MsgsSimToClient::MsgKnowledgeGroupCreation& message = *expected.mutable_message()->mutable_knowledge_group_creation();
+        sword::KnowledgeGroupCreation& message = *expected.mutable_message()->mutable_knowledge_group_creation();
         message.mutable_knowledge_group()->set_id( 1 );
         message.mutable_party()->set_id( side.GetId() );
         message.set_type( "Standard" );
@@ -77,9 +77,9 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
     std::auto_ptr< dispatcher::KnowledgeGroup_ABC > result;
     {
         {
-            MsgsSimToClient::MsgSimToClient expected;
+            sword::SimToClient expected;
             expected.set_context( 0 );
-            MsgsSimToClient::MsgKnowledgeGroupCreation& message = *expected.mutable_message()->mutable_knowledge_group_creation();
+            sword::KnowledgeGroupCreation& message = *expected.mutable_message()->mutable_knowledge_group_creation();
             message.mutable_knowledge_group()->set_id( 1 );
             message.mutable_party()->set_id( side.GetId() );
             message.set_type( "Standard" );
@@ -91,9 +91,9 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             result.reset( new dispatcher::KnowledgeGroup( model, message ) );
         }
         {
-            MsgsSimToClient::MsgSimToClient expected;
+            sword::SimToClient expected;
             expected.set_context( 0 );
-            MsgsSimToClient::MsgKnowledgeGroupUpdate& message = *expected.mutable_message()->mutable_knowledge_group_update();
+            sword::KnowledgeGroupUpdate& message = *expected.mutable_message()->mutable_knowledge_group_update();
             message.mutable_knowledge_group()->set_id( 1 );
             message.mutable_party()->set_id( side.GetId() );
             message.set_type( "GTIA" );
@@ -106,9 +106,9 @@ BOOST_AUTO_TEST_CASE( KnowledgeGroup_AttributesCanBeChanged )
             result->Update( message );
         }
         {
-            MsgsSimToClient::MsgSimToClient expected;
+            sword::SimToClient expected;
             expected.set_context( 0 );
-            MsgsSimToClient::MsgKnowledgeGroupCreation& message = *expected.mutable_message()->mutable_knowledge_group_creation();
+            sword::KnowledgeGroupCreation& message = *expected.mutable_message()->mutable_knowledge_group_creation();
             message.mutable_knowledge_group()->set_id( 1 );
             message.mutable_party()->set_id( side.GetId() );
             message.set_type( "GTIA" );

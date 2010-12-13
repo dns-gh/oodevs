@@ -13,7 +13,7 @@
 #include "protocol/Protocol.h"
 #include "actions/ParameterList.h"
 
-using namespace Common;
+using namespace sword;
 
 using namespace kernel;
 using namespace gui;
@@ -48,6 +48,6 @@ void ActivityTimePrototype::Commit()
                60 * activityTime_->time().minute() +
                activityTime_->time().second();
     actions::parameters::ParameterList& list = attributesList_->AddList( "ActivityTime" );
-    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_activity_time );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_activity_time );
     list.AddQuantity( "Time", time );
 }

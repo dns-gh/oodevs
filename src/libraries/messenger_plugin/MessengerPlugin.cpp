@@ -60,7 +60,7 @@ void MessengerPlugin::Register( dispatcher::Services& services )
 // Name: MessengerPlugin::Receive
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void MessengerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
+void MessengerPlugin::Receive( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_control_checkpoint_save_end() )
         model_->Save( wrapper.message().control_checkpoint_save_end().name() );
@@ -91,7 +91,7 @@ void MessengerPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& client 
 // Name: MessengerPlugin::OnReceiveClientToMessenger
 // Created: RDS 2008-04-03
 // -----------------------------------------------------------------------------
-void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, const MsgsClientToMessenger::MsgClientToMessenger& wrapper )
+void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, const sword::ClientToMessenger& wrapper )
 {
     dispatcher::ClientPublisher_ABC& publisher = links_.GetPublisher( client );
     // Limit

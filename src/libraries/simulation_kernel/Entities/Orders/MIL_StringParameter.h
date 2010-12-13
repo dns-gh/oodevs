@@ -35,7 +35,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToString( std::string& ) const;
-    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

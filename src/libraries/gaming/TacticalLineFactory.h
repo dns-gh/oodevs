@@ -19,10 +19,10 @@ namespace kernel
     class Entity_ABC;
 }
 
-namespace MsgsMessengerToClient
+namespace sword
 {
-    class MsgLimaCreation;
-    class MsgLimitCreation;
+    class LimaCreation;
+    class LimitCreation;
 }
 
 class TacticalLine_ABC;
@@ -46,8 +46,8 @@ public:
 
     //! @name Operations
     //@{
-    TacticalLine_ABC* Create( const MsgsMessengerToClient::MsgLimaCreation&  message );
-    TacticalLine_ABC* Create( const MsgsMessengerToClient::MsgLimitCreation& message );
+    TacticalLine_ABC* Create( const sword::LimaCreation&  message );
+    TacticalLine_ABC* Create( const sword::LimitCreation& message );
 
     void CreateLimit( const T_PointVector& points, const kernel::Entity_ABC& superior );
     void CreateLima ( const T_PointVector& points, const kernel::Entity_ABC& superior );

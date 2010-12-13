@@ -15,7 +15,7 @@
 #include "MIL.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
     class MsgFlowPart;
 }
@@ -56,7 +56,7 @@ public:
 
     //! @name Network operations
     //@{
-    void Serialize( MsgsSimToClient::MsgFlowPart& asn );
+    void Serialize( sword::MsgFlowPart& asn );
     //@}
 
 private:

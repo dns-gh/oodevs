@@ -209,12 +209,12 @@ void DEC_Knowledge_Urban::UpdateRelevance()
 // Name: DEC_Knowledge_Agent::WriteMsgPerceptionSources
 // Created: MGD 2009-12-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Urban::WriteMsgPerceptionSources( MsgsSimToClient::MsgUrbanKnowledgeUpdate& message ) const
+void DEC_Knowledge_Urban::WriteMsgPerceptionSources( sword::UrbanKnowledgeUpdate& message ) const
 {
     if( !perceivedByAutomate_.empty() )
         for( CIT_PerceptionSource it = perceivedByAutomate_.begin(); it != perceivedByAutomate_.end(); ++it )
         {
-            Common::AutomatId& data = *message.mutable_automat_perceptions()->add_elem();
+            sword::AutomatId& data = *message.mutable_automat_perceptions()->add_elem();
             data.set_id( (*it)->GetID() );
         }
 }

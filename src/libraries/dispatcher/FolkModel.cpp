@@ -41,7 +41,7 @@ FolkModel::~FolkModel()
 // Name: FolkModel::Update
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-void FolkModel::Update( const MsgsSimToClient::MsgFolkCreation& message )
+void FolkModel::Update( const sword::FolkCreation& message )
 {
     activities_.reserve( message.activities().elem_size() );
     for( int i = 0; i < message.activities().elem_size(); ++i )

@@ -35,7 +35,7 @@ Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
 // Name: Lima constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgLimaOrder& message )
+Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::LimaOrder& message )
     : Parameter< QString >( parameter )
 {
     QStringList functions;
@@ -135,11 +135,11 @@ void Lima::DisplayInToolTip( Displayer_ABC& displayer ) const
 // Name: Lima::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Lima::CommitTo( Common::MsgLimaOrder& message ) const
+void Lima::CommitTo( sword::LimaOrder& message ) const
 {
     QStringList functions = QStringList::split( ", ", GetValue() );
     for( unsigned int i = 0; i < functions.count(); ++i )
-        message.add_fonctions( Common::MsgLimaOrder::Function( tools::LimaTypeFromShortString( functions[i] ) ) );
+        message.add_fonctions( sword::LimaOrder::Function( tools::LimaTypeFromShortString( functions[i] ) ) );
 
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
@@ -155,7 +155,7 @@ void Lima::CommitTo( Common::MsgLimaOrder& message ) const
 // Name: Lima::CommitTo
 // Created: MGD 2010-10-27
 // -----------------------------------------------------------------------------
-void Lima::CommitTo( Common::MsgMissionParameter& message ) const
+void Lima::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -167,7 +167,7 @@ void Lima::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: Lima::CommitTo
 // Created: MGD 2010-10-27
 // -----------------------------------------------------------------------------
-void Lima::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void Lima::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
     {
@@ -179,7 +179,7 @@ void Lima::CommitTo( Common::MsgMissionParameter_Value& message ) const
 // Name: Lima::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Lima::Clean( Common::MsgLimaOrder& message ) const
+void Lima::Clean( sword::LimaOrder& message ) const
 {
     message.Clear();
 }

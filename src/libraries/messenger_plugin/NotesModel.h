@@ -23,10 +23,10 @@ namespace dispatcher
 
 namespace plugins
 {
-    namespace messenger
-    {
-        class IdManager;
-        class Note;
+namespace messenger
+{
+    class IdManager;
+    class Note;
 
 // =============================================================================
 /** @class  NotesModel
@@ -50,9 +50,10 @@ public:
 
     //! @name Requests
     //@{
-    void HandleRequest( const MsgsClientToMessenger::MsgMarkerCreationRequest&    message );
-    void HandleRequest( const MsgsClientToMessenger::MsgMarkerDestructionRequest& message );
-    void HandleRequest( const MsgsClientToMessenger::MsgMarkerUpdateRequest&      message );
+    void HandleRequest( const sword::MarkerCreationRequest&    message );
+    void HandleRequest( const sword::MarkerDestructionRequest& message );
+    void HandleRequest( const sword::MarkerUpdateRequest&      message );
+
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
 
     void Publish( const Note& note );
@@ -100,6 +101,6 @@ private:
 };
 
 }
-
 }
+
 #endif // __NotesModel_h_

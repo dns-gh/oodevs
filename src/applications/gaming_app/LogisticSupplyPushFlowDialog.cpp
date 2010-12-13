@@ -30,7 +30,7 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 #include <boost/bind.hpp>
 #include <boost/noncopyable.hpp>
 

@@ -8,14 +8,13 @@
 // *****************************************************************************
 
 #include "LoggerApplication.h"
-#include "protocol/authenticationsenders.h"
-#include "protocol/clientsenders.h"
-#include "protocol/simulationsenders.h"
-#include "protocol/simulation.h"
-#include "protocol/aarsenders.h"
-#include "protocol/replaysenders.h"
-#include "protocol/dispatchersenders.h"
-#include "protocol/messengersenders.h"
+#include "protocol/AuthenticationSenders.h"
+#include "protocol/ClientSenders.h"
+#include "protocol/SimulationSenders.h"
+#include "protocol/AarSenders.h"
+#include "protocol/ReplaySenders.h"
+#include "protocol/DispatcherSenders.h"
+#include "protocol/MessengerSenders.h"
 #include "protocol/ProtocolVersionChecker.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
@@ -32,7 +31,7 @@ LoggerApplication::LoggerApplication( const std::string& hostname, const std::st
     , bVerbose_       ( verbose )
 {
     file_.open( logFile.c_str(), std::ios::out | std::ios::trunc );
-    RegisterMessage( *this, &LoggerApplication::OnReceiveMsgSimToClient );
+    RegisterMessage( *this, &LoggerApplication::OnReceiveSimToClient );
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgAuthenticationToClient );
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgDispatcherToClient );
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgMessengerToClient );
@@ -116,13 +115,13 @@ void LoggerApplication::ConnectionError( const std::string& address, const std::
 }
 
 // -----------------------------------------------------------------------------
-// Name: LoggerApplication::OnReceiveMsgSimToClient
+// Name: LoggerApplication::OnReceiveSimToClient
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::OnReceiveMsgSimToClient( const std::string& /*from*/, const MsgsSimToClient::MsgSimToClient& wrapper )
+void LoggerApplication::OnReceiveSimToClient( const std::string& /*from*/, const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_control_begin_tick() )
-        OnReceiveMsgControlBeginTick( wrapper.message().control_begin_tick().current_tick() );
+        OnReceiveControlBeginTick( wrapper.message().control_begin_tick().current_tick() );
     else
         LogMessage( wrapper );
 }
@@ -131,7 +130,7 @@ void LoggerApplication::OnReceiveMsgSimToClient( const std::string& /*from*/, co
 // Name: LoggerApplication::OnReceiveMsgAuthenticationToClient
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::OnReceiveMsgAuthenticationToClient( const std::string& /*from*/, const MsgsAuthenticationToClient::MsgAuthenticationToClient& /*wrapper*/ )
+void LoggerApplication::OnReceiveMsgAuthenticationToClient( const std::string& /*from*/, const sword::AuthenticationToClient& /*wrapper*/ )
 {
     DumpTime();
     file_ << "Authentication received" << std::endl << std::flush;
@@ -141,7 +140,7 @@ void LoggerApplication::OnReceiveMsgAuthenticationToClient( const std::string& /
 // Name: LoggerApplication::OnReceiveMsgDispatcherToClient
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::OnReceiveMsgDispatcherToClient( const std::string& /*from*/, const MsgsDispatcherToClient::MsgDispatcherToClient& wrapper )
+void LoggerApplication::OnReceiveMsgDispatcherToClient( const std::string& /*from*/, const sword::DispatcherToClient& /*wrapper*/ )
 {
     DumpTime();
     file_ << "Dispatcher message received" << std::endl << std::flush;
@@ -151,7 +150,7 @@ void LoggerApplication::OnReceiveMsgDispatcherToClient( const std::string& /*fro
 // Name: LoggerApplication::OnReceiveMsgMessengerToClient
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::OnReceiveMsgMessengerToClient( const std::string& /*from*/, const MsgsMessengerToClient::MsgMessengerToClient& /*wrapper*/ )
+void LoggerApplication::OnReceiveMsgMessengerToClient( const std::string& /*from*/, const sword::MessengerToClient& /*wrapper*/ )
 {
     DumpTime();
     file_ << "Messenger message received" << std::endl << std::flush;
@@ -161,7 +160,7 @@ void LoggerApplication::OnReceiveMsgMessengerToClient( const std::string& /*from
 // Name: LoggerApplication::OnReceiveMsgReplayToClient
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::OnReceiveMsgReplayToClient( const std::string& /*from*/, const MsgsReplayToClient::MsgReplayToClient& /*wrapper*/ )
+void LoggerApplication::OnReceiveMsgReplayToClient( const std::string& /*from*/, const sword::ReplayToClient& /*wrapper*/ )
 {
     DumpTime();
     file_ << "Replay message received" << std::endl << std::flush;
@@ -171,17 +170,17 @@ void LoggerApplication::OnReceiveMsgReplayToClient( const std::string& /*from*/,
 // Name: LoggerApplication::OnReceiveMsgAarToClient
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::OnReceiveMsgAarToClient( const std::string& /*from*/, const MsgsAarToClient::MsgAarToClient& /*wrapper*/ )
+void LoggerApplication::OnReceiveMsgAarToClient( const std::string& /*from*/, const sword::AarToClient& /*wrapper*/ )
 {
     DumpTime();
     file_ << "Aar message received" << std::endl << std::flush;
 }
 
 // -----------------------------------------------------------------------------
-// Name: LoggerApplication::OnReceiveMsgControlBeginTick
+// Name: LoggerApplication::OnReceiveControlBeginTick
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::OnReceiveMsgControlBeginTick( int tick )
+void LoggerApplication::OnReceiveControlBeginTick( int tick )
 {
     DumpTime();
     file_ << "New tick " << tick << std::endl << std::flush;
@@ -191,7 +190,7 @@ void LoggerApplication::OnReceiveMsgControlBeginTick( int tick )
 // Name: LoggerApplication::LogMessage
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::LogMessage( const MsgsSimToClient::MsgSimToClient& wrapper )
+void LoggerApplication::LogMessage( const sword::SimToClient& wrapper )
 {
     if( bVerbose_ )
     {
@@ -222,7 +221,7 @@ void LoggerApplication::DumpTime()
 // Name: LoggerApplication::Send
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::Send( const MsgsClientToAuthentication::MsgClientToAuthentication& wrapper )
+void LoggerApplication::Send( const sword::ClientToAuthentication& wrapper )
 {
     MessageSender_ABC::Send( endpoint_, wrapper );
 }

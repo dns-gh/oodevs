@@ -77,14 +77,14 @@ namespace
 {
     struct GeometrySerializer : public kernel::LocationVisitor_ABC
     {
-        GeometrySerializer( Common::MsgLocation& loc, const kernel::CoordinateConverter_ABC& converter )
+        GeometrySerializer( sword::MsgLocation& loc, const kernel::CoordinateConverter_ABC& converter )
             : loc_( loc )
             , converter_( converter )
         {}
 
         virtual void VisitLines( const T_PointVector& points )
         {
-            loc_.set_type( Common::MsgLocation_Geometry_line );
+            loc_.set_type( sword::MsgLocation_Geometry_line );
             for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
                 converter_.ConvertToGeo( *it, *loc_.mutable_coordinates()->add_elem() );
         }
@@ -99,7 +99,7 @@ namespace
         GeometrySerializer& operator=( const GeometrySerializer& );
 
         const kernel::CoordinateConverter_ABC& converter_;
-        Common::MsgLocation& loc_;
+        sword::MsgLocation& loc_;
     };
 }
 
@@ -107,7 +107,7 @@ namespace
 // Name: TacticalLine_ABC::WriteGeometry
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::WriteGeometry( Common::MsgLocation& location ) const
+void TacticalLine_ABC::WriteGeometry( sword::MsgLocation& location ) const
 {
     GeometrySerializer serializer( location, converter_ );
     Get< kernel::Positions >().Accept( serializer );
@@ -117,7 +117,7 @@ void TacticalLine_ABC::WriteGeometry( Common::MsgLocation& location ) const
 // Name: TacticalLine_ABC::WriteDiffusion
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::WriteDiffusion( Common::MsgTacticalLine::Diffusion& diffusion ) const
+void TacticalLine_ABC::WriteDiffusion( sword::MsgTacticalLine::Diffusion& diffusion ) const
 {
     // $$$$ SBO 2006-11-06: visitor or something
     static_cast< const TacticalLineHierarchies& >( Get< kernel::TacticalHierarchies >() ).WriteTo( diffusion );
@@ -127,7 +127,7 @@ void TacticalLine_ABC::WriteDiffusion( Common::MsgTacticalLine::Diffusion& diffu
 // Name: TacticalLine_ABC::DoUpdate
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate& message )
+void TacticalLine_ABC::DoUpdate( const sword::LimaUpdate& message )
 {
     name_ = message.tactical_line().name().c_str();
 }
@@ -136,7 +136,7 @@ void TacticalLine_ABC::DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate& mes
 // Name: TacticalLine_ABC::DoUpdate
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::DoUpdate( const MsgsMessengerToClient::MsgLimitUpdate& message )
+void TacticalLine_ABC::DoUpdate( const sword::LimitUpdate& message )
 {
     name_ = message.tactical_line().name().c_str();
 }

@@ -18,14 +18,16 @@
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitCreation;
+    class UnitCreation;
 }
-namespace Common
+
+namespace sword
 {
-    class MsgUnitChangeSuperior;
+    class UnitChangeSuperior;
 }
+
 namespace kernel
 {
     class Controller;
@@ -41,8 +43,8 @@ namespace kernel
 // =============================================================================
 template< typename I >
 class AgentHierarchies : public kernel::EntityHierarchies< I  >
-                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitCreation >
-                       , public kernel::Updatable_ABC< Common::MsgUnitChangeSuperior >
+                       , public kernel::Updatable_ABC< sword::UnitCreation >
+                       , public kernel::Updatable_ABC< sword::UnitChangeSuperior >
 {
 public:
     //! @name Constructors/Destructor
@@ -57,8 +59,8 @@ public:
     virtual std::string GetSymbol() const;
     virtual std::string GetLevel() const;
 
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitCreation& message );
-    virtual void DoUpdate( const Common::MsgUnitChangeSuperior& message );
+    virtual void DoUpdate( const sword::UnitCreation& message );
+    virtual void DoUpdate( const sword::UnitChangeSuperior& message );
     //@}
     //! @name Helpers
     //@{
@@ -117,7 +119,7 @@ AgentHierarchies< I >::~AgentHierarchies()
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 template< typename I >
-void AgentHierarchies< I >::DoUpdate( const MsgsSimToClient::MsgUnitCreation& message )
+void AgentHierarchies< I >::DoUpdate( const sword::UnitCreation& message )
 {
     kernel::Automat_ABC& superior = automatResolver_.Get( message.automat().id() );
     const kernel::Diplomacies_ABC* diplo = superior.Get< I >().GetTop().Retrieve< kernel::Diplomacies_ABC >();
@@ -131,7 +133,7 @@ void AgentHierarchies< I >::DoUpdate( const MsgsSimToClient::MsgUnitCreation& me
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 template< typename I >
-void AgentHierarchies< I >::DoUpdate( const Common::MsgUnitChangeSuperior& message )
+void AgentHierarchies< I >::DoUpdate( const sword::UnitChangeSuperior& message )
 {
     UpdateSuperior( automatResolver_.Get( message.parent().id() ) );
 }

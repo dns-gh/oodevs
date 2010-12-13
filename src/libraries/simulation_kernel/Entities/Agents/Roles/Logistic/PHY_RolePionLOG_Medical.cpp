@@ -797,13 +797,13 @@ void PHY_RolePionLOG_Medical::StopUsingForLogistic( PHY_ComposantePion& composan
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
 static
-void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, MsgsSimToClient::SeqOfLogMedicalEquipmentAvailability& asn )
+void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, sword::SeqOfLogMedicalEquipmentAvailability& asn )
 {
     if( data.empty() )
         return;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
-        MsgsSimToClient::MsgLogMedicalEquipmentAvailability& data = *asn.add_elem();
+        sword::LogMedicalEquipmentAvailability& data = *asn.add_elem();
         data.mutable_equipment_type()->set_id( itData->first->GetMosID().id() );
         assert( itData->second.nNbrTotal_ );
 

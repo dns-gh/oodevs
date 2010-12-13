@@ -27,14 +27,14 @@ class ToxicCloudAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ToxicCloudAttribute( const Common::ObjectAttributes& message );
+    explicit ToxicCloudAttribute( const sword::ObjectAttributes& message );
     virtual ~ToxicCloudAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::ObjectAttributes& message );
-    virtual void Send  ( Common::ObjectAttributes& message ) const;
+    virtual void Update( const sword::ObjectAttributes& message );
+    virtual void Send  ( sword::ObjectAttributes& message ) const;
     //@}
 private:
     //! @name
@@ -45,7 +45,7 @@ private:
 private:
     //! @name Data member
     //@{
-    Common::MsgLocatedQuantityList quantities_;
+    sword::MsgLocatedQuantityList quantities_;
     //@}
 };
 

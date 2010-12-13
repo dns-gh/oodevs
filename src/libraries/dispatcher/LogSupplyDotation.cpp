@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Name: LogSupplyDotation constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-LogSupplyDotation::LogSupplyDotation( const Model& /*model*/, const MsgsSimToClient::MsgDotationQuery& asn )
+LogSupplyDotation::LogSupplyDotation( const Model& /*model*/, const sword::MsgDotationQuery& asn )
     : nDotationType_( asn.resource().id()       )
     , nNbrRequested_( asn.quantite_demandee()   )
     , nNbrGranted_  ( asn.quantite_accordee()   )
@@ -39,7 +39,7 @@ LogSupplyDotation::~LogSupplyDotation()
 // Name: LogSupplyDotation::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void LogSupplyDotation::Update( const MsgsSimToClient::MsgDotationQuery& asn )
+void LogSupplyDotation::Update( const sword::MsgDotationQuery& asn )
 {
     nNbrRequested_ = asn.quantite_demandee();
     nNbrGranted_   = asn.quantite_accordee();
@@ -50,7 +50,7 @@ void LogSupplyDotation::Update( const MsgsSimToClient::MsgDotationQuery& asn )
 // Name: LogSupplyDotation::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void LogSupplyDotation::Send( MsgsSimToClient::MsgDotationQuery& asn ) const
+void LogSupplyDotation::Send( sword::MsgDotationQuery& asn ) const
 {
     asn.mutable_resource()->set_id( nDotationType_ );
     asn.set_quantite_demandee( nNbrRequested_ );

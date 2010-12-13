@@ -77,8 +77,8 @@ void MagicAction::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MagicAction::Publish( Publisher_ABC& publisher, int ) const
 {
-    MsgsClientToSim::MsgMagicAction_Type type =
-        ( MsgsClientToSim::MsgMagicAction_Type ) GetType().GetId();
+    sword::MagicAction_Type type =
+        ( sword::MagicAction_Type ) GetType().GetId();
     simulation::MagicAction message;
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );

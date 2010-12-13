@@ -120,7 +120,7 @@ void QueryDatabaseUpdater::Clean()
 // Name: QueryDatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitCreation& msg )
+void QueryDatabaseUpdater::Update( const sword::UnitCreation& msg )
 {
     InsertQueryBuilder builder( database_.GetTableName( "UnitForces" ) );
 
@@ -149,7 +149,7 @@ namespace
 // Name: QueryDatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeCreation& msg )
+void QueryDatabaseUpdater::Update( const sword::UnitKnowledgeCreation& msg )
 {
     InsertQueryBuilder builder( database_.GetTableName( "KnowledgeUnits" ) );
 
@@ -175,7 +175,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeCreati
 // Name: QueryDatabaseUpdater::Update
 // Created: AME 2009-10-12
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& msg )
+void QueryDatabaseUpdater::Update( const sword::ObjectKnowledgeCreation& msg )
 {
     InsertQueryBuilder builder( database_.GetTableName( "KnowledgeObjects" ) );
 
@@ -202,7 +202,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCrea
         builder.SetField( "observer_affiliation", tools::app6::GetAffiliation( symbol ) );
     }
     else
-        tools::app6::SetAffiliation( symbol, (unsigned int) Common::unknown_diplo );
+        tools::app6::SetAffiliation( symbol, (unsigned int) sword::unknown_diplo );
 
     builder.SetField( "symbol_id", FormatSymbol( symbol ) );
     database_.Execute( builder );
@@ -212,7 +212,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCrea
 // Name: QueryDatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const MsgsMessengerToClient::MsgLimitCreation& msg )
+void QueryDatabaseUpdater::Update( const sword::LimitCreation& msg )
 {
     InsertQueryBuilder builder( database_.GetTableName( "BoundaryLimits" ) );
 
@@ -229,7 +229,7 @@ void QueryDatabaseUpdater::Update( const MsgsMessengerToClient::MsgLimitCreation
 // Name: QueryDatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const MsgsMessengerToClient::MsgLimaCreation& msg )
+void QueryDatabaseUpdater::Update( const sword::LimaCreation& msg )
 {
     InsertQueryBuilder builder( database_.GetTableName( "BoundaryLimits" ) );
 
@@ -243,24 +243,24 @@ void QueryDatabaseUpdater::Update( const MsgsMessengerToClient::MsgLimaCreation&
 
 namespace
 {
-    std::string GetObjectTable( const Common::MsgLocation& location )
+    std::string GetObjectTable( const sword::MsgLocation& location )
     {
         std::string className = "TacticalObject_Area";
         switch ( location.type() )
         {
-        case Common::MsgLocation_Geometry_point: className = "TacticalObject_Point"; break;
-        case Common::MsgLocation_Geometry_line:  className = "TacticalObject_Line"; break;
+        case sword::MsgLocation_Geometry_point: className = "TacticalObject_Point"; break;
+        case sword::MsgLocation_Geometry_line:  className = "TacticalObject_Line"; break;
         }
         return className;
     }
 
-    std::string GetObjectKnowledgeTable( const Common::MsgLocation& location )
+    std::string GetObjectKnowledgeTable( const sword::MsgLocation& location )
     {
         std::string className = "KnowledgeObjects_Area";
         switch ( location.type() )
         {
-        case Common::MsgLocation_Geometry_point: className = "KnowledgeObjects_Point"; break;
-        case Common::MsgLocation_Geometry_line:  className = "KnowledgeObjects_Line"; break;
+        case sword::MsgLocation_Geometry_point: className = "KnowledgeObjects_Point"; break;
+        case sword::MsgLocation_Geometry_line:  className = "KnowledgeObjects_Line"; break;
         }
         return className;
     }
@@ -270,13 +270,13 @@ namespace
 // Name: QueryDatabaseUpdater::UpdateGeometry
 // Created: JCR 2009-11-02
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::UpdateGeometry( QueryBuilder_ABC& builder, const Common::MsgLocation& location )
+void QueryDatabaseUpdater::UpdateGeometry( QueryBuilder_ABC& builder, const sword::MsgLocation& location )
 {
     switch ( location.type() )
     {
-    case Common::MsgLocation_Geometry_point:    builder.SetGeometry( Point( location.coordinates().elem( 0 ) ) ); break;
-    case Common::MsgLocation_Geometry_line:     builder.SetGeometry( Line( location.coordinates() ) ); break;
-    case Common::MsgLocation_Geometry_polygon:  builder.SetGeometry( Area( location.coordinates() ) ); break;
+    case sword::MsgLocation_Geometry_point:    builder.SetGeometry( Point( location.coordinates().elem( 0 ) ) ); break;
+    case sword::MsgLocation_Geometry_line:     builder.SetGeometry( Line( location.coordinates() ) ); break;
+    case sword::MsgLocation_Geometry_polygon:  builder.SetGeometry( Area( location.coordinates() ) ); break;
     default:    break;
     }
 }
@@ -285,7 +285,7 @@ void QueryDatabaseUpdater::UpdateGeometry( QueryBuilder_ABC& builder, const Comm
 // Created: SBO 2007-08-30
 // Modified: MPT 2009-09-30
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectCreation& msg )
+void QueryDatabaseUpdater::Update( const sword::ObjectCreation& msg )
 {
     InsertQueryBuilder builder( database_.GetTableName( GetObjectTable( msg.location() ) ) );
 
@@ -305,7 +305,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectCreation& msg
 // Created: SBO 2007-08-30
 // Modified: MPT 2009-09-30
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg )
+void QueryDatabaseUpdater::Update( const sword::ObjectKnowledgeUpdate& msg )
 {
     UpdateQueryBuilder builder( database_.GetTableName( "KnowledgeObjects" ) );
     std::stringstream query;
@@ -330,7 +330,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeUpda
         builder.SetField( "observer_affiliation", tools::app6::GetAffiliation( symbol ) );
     }
     else
-        tools::app6::SetAffiliation( symbol, (unsigned int) Common::unknown_diplo );
+        tools::app6::SetAffiliation( symbol, (unsigned int) sword::unknown_diplo );
 
     builder.SetField( "symbol_id", FormatSymbol( symbol ) );
     database_.Execute( builder );
@@ -344,7 +344,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeUpda
 // Name: QueryDatabaseUpdater::UpdateObjectKnowledgeGeometry
 // Created: JCR 2009-11-02
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::UpdateObjectKnowledgeGeometry( const std::string& tablename, const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg )
+void QueryDatabaseUpdater::UpdateObjectKnowledgeGeometry( const std::string& tablename, const sword::ObjectKnowledgeUpdate& msg )
 {
     std::auto_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
     std::stringstream query;
@@ -363,7 +363,7 @@ void QueryDatabaseUpdater::UpdateObjectKnowledgeGeometry( const std::string& tab
 
 
 // $$$$ _RC_ FDS 2010-01-21: To Remove ???
-/*void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectCreation& msg )
+/*void QueryDatabaseUpdater::Update( const sword::ObjectCreation& msg )
 {
     std::auto_ptr< Table_ABC > table( database_.OpenTable( GetObjectTable( msg.location ) ) );
     Row_ABC& row = table->CreateRow();
@@ -387,7 +387,7 @@ void QueryDatabaseUpdater::UpdateObjectKnowledgeGeometry( const std::string& tab
 
 namespace 
 {
-    long ExtractTasker( const ::Common::Tasker& source )
+    long ExtractTasker( const sword::Tasker& source )
     {
         if( source.has_automat() )
             return (long)source.automat().id();
@@ -405,7 +405,7 @@ namespace
 // Name: QueryDatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgReport& msg )
+void QueryDatabaseUpdater::Update( const sword::Report& msg )
 {
     InsertQueryBuilder builder( database_.GetTableName( "Reports" ) );
 
@@ -421,7 +421,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgReport& msg )
 // Name: QueryDatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgFormationCreation& message )
+void QueryDatabaseUpdater::Update( const sword::FormationCreation& message )
 {
     InsertQueryBuilder builder( database_.GetTableName( "Formations" ) );
 
@@ -443,7 +443,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgFormationCreation& 
 // Name: QueryDatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgAutomatCreation& message )
+void QueryDatabaseUpdater::Update( const sword::AutomatCreation& message )
 {
     InsertQueryBuilder builder( database_.GetTableName( "Formations" ) );
 
@@ -465,7 +465,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgAutomatCreation& me
 // Name: QueryDatabaseUpdater::Update
 // Created: JCR 2008-07-30
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgAutomatAttributes& msg )
+void QueryDatabaseUpdater::Update( const sword::AutomatAttributes& msg )
 {
     UpdateQueryBuilder builder( database_.GetTableName( "Formations" ) );
     std::stringstream query;
@@ -473,7 +473,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgAutomatAttributes& 
     query << "public_oid=" << msg.automat().id() << " AND session_id=" << session_.GetId();
     builder.SetClause( query.str() );
     if( msg.has_etat_automate() )
-        builder.SetField( "engaged", ( msg.etat_automate() == Common::embraye ) ? -1 : 0 );
+        builder.SetField( "engaged", ( msg.etat_automate() == sword::embraye ) ? -1 : 0 );
     database_.Execute( builder );
 }
 
@@ -492,7 +492,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgAutomatAttributes& 
 */
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitAttributes& msg )
+void QueryDatabaseUpdater::Update( const sword::UnitAttributes& msg )
 {
     UpdateQueryBuilder builder( database_.GetTableName( "UnitForces" ) );
     std::stringstream query;
@@ -514,7 +514,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitAttributes& msg
 // Name: QueryDatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& msg )
+void QueryDatabaseUpdater::Update( const sword::UnitKnowledgeUpdate& msg )
 {
     UpdateQueryBuilder builder( database_.GetTableName( "KnowledgeUnits" ) );
     std::stringstream query;
@@ -541,7 +541,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate
 // Name: QueryDatabaseUpdater::DestroyUnit
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::DestroyUnit( const MsgsSimToClient::MsgUnitDestruction& msg )
+void QueryDatabaseUpdater::DestroyUnit( const sword::UnitDestruction& msg )
 {
     std::stringstream query;
     query << "public_oid=" << msg.unit().id() << " AND session_id=" << session_.GetId();
@@ -554,7 +554,7 @@ void QueryDatabaseUpdater::DestroyUnit( const MsgsSimToClient::MsgUnitDestructio
 // Name: QueryDatabaseUpdater::DestroyObject
 // Created: SBO 2007-09-27
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::DestroyObject( const MsgsSimToClient::MsgObjectDestruction& msg )
+void QueryDatabaseUpdater::DestroyObject( const sword::ObjectDestruction& msg )
 {
     std::stringstream query;
     query << "public_oid=" << msg.object().id() << " AND session_id=" << session_.GetId();
@@ -579,7 +579,7 @@ void QueryDatabaseUpdater::DestroyObject( const MsgsSimToClient::MsgObjectDestru
 // Name: QueryDatabaseUpdater::DestroyObject
 // Created: SBO 2007-09-27
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::DestroyObjectKnowledge( const MsgsSimToClient::MsgObjectKnowledgeDestruction& msg )
+void QueryDatabaseUpdater::DestroyObjectKnowledge( const sword::ObjectKnowledgeDestruction& msg )
 {
     std::stringstream query;
 
@@ -593,7 +593,7 @@ void QueryDatabaseUpdater::DestroyObjectKnowledge( const MsgsSimToClient::MsgObj
 // Name: QueryDatabaseUpdater::DestroyUnitKnowledge
 // Created: AME 2009-10-12
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::DestroyUnitKnowledge( const MsgsSimToClient::MsgUnitKnowledgeDestruction& msg )
+void QueryDatabaseUpdater::DestroyUnitKnowledge( const sword::UnitKnowledgeDestruction& msg )
 {
      std::stringstream query;
 

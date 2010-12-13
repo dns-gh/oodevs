@@ -15,7 +15,7 @@
 class DEC_KnowledgeResolver_ABC;
 class DEC_Knowledge_Urban;
 
-namespace Common
+namespace sword
 {
     class UrbanObjectKnowledgeId;
 }
@@ -36,7 +36,7 @@ class MIL_UrbanBlockParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_UrbanBlockParameter( const Common::UrbanObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
+             MIL_UrbanBlockParameter( const sword::UrbanObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
     explicit MIL_UrbanBlockParameter( boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock );
     virtual ~MIL_UrbanBlockParameter();
     //@}
@@ -49,7 +49,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const;
-    virtual bool ToElement( Common::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
     //@}
 
 private:

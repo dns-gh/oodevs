@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::MsgControlEndTick& message );
+    void Update( const sword::ControlEndTick& message );
     //@}
 
     //! @name Accessors

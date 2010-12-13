@@ -116,7 +116,7 @@ namespace
         }
 
     private:
-        void CleanParameters( Common::MsgMissionParameters& parameters )
+        void CleanParameters( sword::MsgMissionParameters& parameters )
         {
             for( unsigned int i = 0; i < parameters.n; ++i )
                 serializer_.Clean( parameters.elem[i] );
@@ -273,7 +273,7 @@ const kernel::OrderType* OrderDispatcher::GetAutomatMission( const Row_ABC& row 
 // Name: OrderDispatcher::SetParameters
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::SetParameters( Common::MsgMissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type )
+void OrderDispatcher::SetParameters( sword::MsgMissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type )
 {
     std::auto_ptr< Table_ABC > params_( GetDatabase( workspace_ ).OpenTable( "OrderParameters" ) );
 
@@ -334,7 +334,7 @@ bool OrderDispatcher::IsValidOrder( unsigned long orderId, const kernel::OrderTy
 // Updated: JCR
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::SetParameter( Common::MsgMissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type )
+void OrderDispatcher::SetParameter( sword::MsgMissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type )
 {
     const std::string name( GetField< std::string >( row, "name" ) );
     try

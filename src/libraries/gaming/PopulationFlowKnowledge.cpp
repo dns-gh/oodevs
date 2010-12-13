@@ -33,7 +33,7 @@ using namespace kernel;
 // Name: PopulationFlowKnowledge::FlowPart::FlowPart
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::FlowPart::FlowPart( const MsgsSimToClient::MsgFlowPart& message, const CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox )
+PopulationFlowKnowledge::FlowPart::FlowPart( const sword::MsgFlowPart& message, const CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox )
      : relevance_ ( unsigned short( message.pertinence() ) )
 {
     for( int i = 0; i < message.forme().location().coordinates().elem_size(); ++i )
@@ -52,7 +52,7 @@ PopulationFlowKnowledge::FlowPart::FlowPart( const MsgsSimToClient::MsgFlowPart&
 // Name: PopulationFlowKnowledge::PopulationFlowKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& popu, const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation& message )
+PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& popu, const sword::CrowdFlowKnowledgeCreation& message )
     : controller_( controller )
     , converter_ ( converter )
     , popu_      ( popu )
@@ -76,7 +76,7 @@ PopulationFlowKnowledge::~PopulationFlowKnowledge()
 // Name: PopulationFlowKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::DoUpdate( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate& message )
+void PopulationFlowKnowledge::DoUpdate( const sword::CrowdFlowKnowledgeUpdate& message )
 {
     if( message.has_attitude()  )
         eAttitude_ = ( E_PopulationAttitude )message.attitude();

@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: Dotation constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Dotation::Dotation( const MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg )
+Dotation::Dotation( const sword::ResourceDotations_ResourceDotation& asnMsg )
    : nDotationType_( asnMsg.type().id() )
    , nNbr_         ( asnMsg.quantite_disponible() )
 {
@@ -28,7 +28,7 @@ Dotation::Dotation( const MsgsSimToClient::ResourceDotations_ResourceDotation& a
 // Name: Dotation constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-Dotation::Dotation( const Common::MsgDotationStock & asnMsg )
+Dotation::Dotation( const sword::MsgDotationStock & asnMsg )
    : nDotationType_( asnMsg.ressource_id().id() )
    , nNbr_         ( asnMsg.quantite_disponible() )
 {
@@ -48,7 +48,7 @@ Dotation::~Dotation()
 // Name: Dotation::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Dotation::Update( const MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg )
+void Dotation::Update( const sword::ResourceDotations_ResourceDotation& asnMsg )
 {
     nNbr_ = asnMsg.quantite_disponible();
 }
@@ -57,7 +57,7 @@ void Dotation::Update( const MsgsSimToClient::ResourceDotations_ResourceDotation
 // Name: Dotation::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Dotation::Update( const Common::MsgDotationStock& asnMsg )
+void Dotation::Update( const sword::MsgDotationStock& asnMsg )
 {
     nNbr_ = asnMsg.quantite_disponible();
 }
@@ -66,7 +66,7 @@ void Dotation::Update( const Common::MsgDotationStock& asnMsg )
 // Name: Dotation::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Dotation::Send( MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg ) const
+void Dotation::Send( sword::ResourceDotations_ResourceDotation& asnMsg ) const
 {
     asnMsg.mutable_type()->set_id( nDotationType_ );
     asnMsg.set_quantite_disponible( nNbr_ );
@@ -76,7 +76,7 @@ void Dotation::Send( MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg
 // Name: Dotation::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Dotation::Send( Common::MsgDotationStock& asnMsg ) const
+void Dotation::Send( sword::MsgDotationStock& asnMsg ) const
 {
     asnMsg.mutable_ressource_id()->set_id( nDotationType_ );
     asnMsg.set_quantite_disponible( nNbr_ );

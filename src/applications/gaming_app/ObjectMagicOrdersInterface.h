@@ -15,9 +15,9 @@
 #include "clients_kernel/SafePointer.h"
 #include "protocol/ServerPublisher_ABC.h"
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgMagicActionUpdateObject;
+    class MagicActionUpdateObject;
 }
 
 namespace actions

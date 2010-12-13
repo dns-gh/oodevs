@@ -25,7 +25,7 @@
 // Name: MIL_FragOrder constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MsgsClientToSim::MsgFragOrder& asn )
+MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::FragOrder& asn )
     : type_( type )
 {
     MIL_MissionParameterFactory::Copy( type, asn.parameters(), parameters_, knowledgeResolver );

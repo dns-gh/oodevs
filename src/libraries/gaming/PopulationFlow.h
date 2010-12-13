@@ -30,13 +30,13 @@ namespace kernel
 // =============================================================================
 class PopulationFlow : public kernel::PopulationFlow_ABC
                      , public kernel::Positions
-                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgCrowdFlowUpdate >
+                     , public kernel::Updatable_ABC< sword::CrowdFlowUpdate >
                      , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFlow( const MsgsSimToClient::MsgCrowdFlowCreation& message, const kernel::CoordinateConverter_ABC& converter );
+             PopulationFlow( const sword::CrowdFlowCreation& message, const kernel::CoordinateConverter_ABC& converter );
     virtual ~PopulationFlow();
     //@}
 
@@ -69,7 +69,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgCrowdFlowUpdate& message );
+    virtual void DoUpdate( const sword::CrowdFlowUpdate& message );
     //@}
 
 private:

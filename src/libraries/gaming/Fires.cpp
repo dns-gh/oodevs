@@ -73,7 +73,7 @@ void Fires::DestroyFire( const T& message )
 // Name: Fires::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fires::DoUpdate( const MsgsSimToClient::MsgStartUnitFire& message )
+void Fires::DoUpdate( const sword::StartUnitFire& message )
 {
     CreateFire( message );
 }
@@ -82,7 +82,7 @@ void Fires::DoUpdate( const MsgsSimToClient::MsgStartUnitFire& message )
 // Name: Fires::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fires::DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message )
+void Fires::DoUpdate( const sword::StopUnitFire& message )
 {
     DestroyFire( message );
 }
@@ -91,7 +91,7 @@ void Fires::DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message )
 // Name: Fires::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fires::DoUpdate( const MsgsSimToClient::MsgStartCrowdFire& message )
+void Fires::DoUpdate( const sword::StartCrowdFire& message )
 {
     CreateFire( message );
 }
@@ -100,7 +100,7 @@ void Fires::DoUpdate( const MsgsSimToClient::MsgStartCrowdFire& message )
 // Name: Fires::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fires::DoUpdate( const MsgsSimToClient::MsgStopCrowdFire& message )
+void Fires::DoUpdate( const sword::StopCrowdFire& message )
 {
     DestroyFire( message );
 }

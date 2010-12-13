@@ -59,6 +59,7 @@ private:
     SocketManager& manager_;
     ConnectionCallback_ABC& callback_;
     boost::asio::ip::tcp::resolver resolver_;
+    bool closed_;
     //@}
 };
 

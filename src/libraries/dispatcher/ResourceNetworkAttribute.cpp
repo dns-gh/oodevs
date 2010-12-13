@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( const MsgsSimToClient::UrbanAttributes& message )
+ResourceNetworkAttribute::ResourceNetworkAttribute( const sword::UrbanAttributes& message )
 {
     Update( message );
 }
@@ -26,7 +26,7 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( const MsgsSimToClient::Urban
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( const Common::ObjectAttributes& message )
+ResourceNetworkAttribute::ResourceNetworkAttribute( const sword::ObjectAttributes& message )
 {
     Update( message );
 }
@@ -44,7 +44,7 @@ ResourceNetworkAttribute::~ResourceNetworkAttribute()
 // Name: ResourceNetworkAttribute::Update
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Update( const MsgsSimToClient::UrbanAttributes& message )
+void ResourceNetworkAttribute::Update( const sword::UrbanAttributes& message )
 {
     if( !message.has_infrastructures() )
         return;
@@ -56,7 +56,7 @@ void ResourceNetworkAttribute::Update( const MsgsSimToClient::UrbanAttributes& m
 // Name: ResourceNetworkAttribute::Send
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Send( MsgsSimToClient::UrbanAttributes& message ) const
+void ResourceNetworkAttribute::Send( sword::UrbanAttributes& message ) const
 {
     for( std::map< std::string, ResourceNetwork >::const_iterator it = resourceMap_.begin(); it != resourceMap_.end(); ++it )
         Send( *message.mutable_infrastructures()->add_resource_network(), it->second );
@@ -66,7 +66,7 @@ void ResourceNetworkAttribute::Send( MsgsSimToClient::UrbanAttributes& message )
 // Name: ResourceNetworkAttribute::Update
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Update( const Common::ObjectAttributes& message )
+void ResourceNetworkAttribute::Update( const sword::ObjectAttributes& message )
 {
     if( !message.has_resource_networks() )
         return;
@@ -78,7 +78,7 @@ void ResourceNetworkAttribute::Update( const Common::ObjectAttributes& message )
 // Name: ResourceNetworkAttribute::Send
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Send( Common::ObjectAttributes& message ) const
+void ResourceNetworkAttribute::Send( sword::ObjectAttributes& message ) const
 {
     for( std::map< std::string, ResourceNetwork >::const_iterator it = resourceMap_.begin(); it != resourceMap_.end(); ++it )
         Send( *message.mutable_resource_networks()->add_network(), it->second );
@@ -88,7 +88,7 @@ void ResourceNetworkAttribute::Send( Common::ObjectAttributes& message ) const
 // Name: ResourceNetworkAttribute::Update
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Update( const Common::ResourceNetwork& from )
+void ResourceNetworkAttribute::Update( const sword::ResourceNetwork& from )
 {
     ResourceNetwork& to = resourceMap_[ from.resource().name() ];
     to.resource_ = from.resource().name();
@@ -100,7 +100,7 @@ void ResourceNetworkAttribute::Update( const Common::ResourceNetwork& from )
     to.critical_ = from.has_critical() ? from.critical() : false;
     for( int j = 0; j < from.link_size(); ++j )
     {
-        const Common::ResourceNetwork_Link& linkFrom = from.link( j );
+        const sword::ResourceNetwork_Link& linkFrom = from.link( j );
         std::vector< ResourceNetwork::Link >::iterator it = to.links_.begin();
         for( ; it != to.links_.end(); ++it )
             if( it->kind_ == linkFrom.kind() && it->target_ == linkFrom.target_id() )
@@ -118,7 +118,7 @@ void ResourceNetworkAttribute::Update( const Common::ResourceNetwork& from )
 // Name: ResourceNetworkAttribute::Send
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Send( Common::ResourceNetwork& message, const ResourceNetwork& network ) const
+void ResourceNetworkAttribute::Send( sword::ResourceNetwork& message, const ResourceNetwork& network ) const
 {
     message.mutable_resource()->set_name( network.resource_ );
     message.set_enabled( network.enabled_ );
@@ -135,8 +135,8 @@ void ResourceNetworkAttribute::Send( Common::ResourceNetwork& message, const Res
     }
     for( std::vector< ResourceNetwork::Link >::const_iterator it = network.links_.begin(); it != network.links_.end(); ++it )
     {
-        Common::ResourceNetwork_Link* link = message.add_link();
-        link->set_kind( static_cast< Common::ResourceNetwork_Link_TargetKind >( it->kind_ ) );
+        sword::ResourceNetwork_Link* link = message.add_link();
+        link->set_kind( static_cast< sword::ResourceNetwork_Link_TargetKind >( it->kind_ ) );
         link->set_target_id( it->target_ );
         link->set_capacity( it->capacity_ );
         link->set_flow( it->flow_ );

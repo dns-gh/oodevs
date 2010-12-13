@@ -103,7 +103,7 @@ void Model::Reset()
 // Name: Model::Receive
 // Created: AGE 2007-07-05
 // -----------------------------------------------------------------------------
-void Model::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
+void Model::Receive( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_control_send_current_state_begin() )
     {
@@ -119,7 +119,7 @@ void Model::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 // Name: Model::Update
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
+void Model::Update( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_unit_order_ack() ||
         wrapper.message().has_automat_order_ack() ||
@@ -494,7 +494,7 @@ void Model::SendFirstTick( ClientPublisher_ABC& publisher ) const
 // Name: Model::SendReplayInfo
 // Created: AGE 2007-10-15
 // -----------------------------------------------------------------------------
-void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, Common::EnumSimulationState status, unsigned int factor ) const
+void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned int factor ) const
 {
     simulation_->SendReplayInfo( publisher, totalTicks, status, factor );
 }
@@ -544,7 +544,7 @@ void Model::UnregisterFactory( Factory_ABC& factory )
 // Name: Model::SetToTasker
 // Created: PHC 2010-07-07
 // -----------------------------------------------------------------------------
-void Model::SetToTasker( Common::Tasker& tasker, unsigned int id ) const
+void Model::SetToTasker( sword::Tasker& tasker, unsigned int id ) const
 {
     if( automats_.Find( id ) )
         tasker.mutable_automat()->set_id( id );
@@ -562,7 +562,7 @@ void Model::SetToTasker( Common::Tasker& tasker, unsigned int id ) const
 // Name: Model::TaskerToId
 // Created: RPD 2010-07-09
 // -----------------------------------------------------------------------------
-unsigned int Model::TaskerToId( const Common::Tasker& tasker ) const
+unsigned int Model::TaskerToId( const sword::Tasker& tasker ) const
 {
     if( tasker.has_unit() )
         return tasker.unit().id();

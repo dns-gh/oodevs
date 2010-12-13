@@ -43,9 +43,9 @@ public:
     //@{
     void Purge();
 
-    void CreateTeam( const MsgsSimToClient::MsgPartyCreation& message );
-    void CreateFormation( const MsgsSimToClient::MsgFormationCreation& message );
-    void DestroyFormation( const MsgsSimToClient::MsgFormationDestruction& message );
+    void CreateTeam( const sword::PartyCreation& message );
+    void CreateFormation( const sword::FormationCreation& message );
+    void DestroyFormation( const sword::FormationDestruction& message );
 
     kernel::Team_ABC& GetTeam( unsigned long id );
     kernel::Team_ABC* FindTeam( const QString& team );

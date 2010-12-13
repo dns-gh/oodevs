@@ -14,7 +14,7 @@
 
 class OGRPolygon;
 
-namespace Common
+namespace sword
 {
     class MsgLocation;
     class MsgCoordLatLongList;
@@ -24,7 +24,6 @@ namespace plugins
 {
 namespace crossbow
 {
-
 // =============================================================================
 /** @class  Area
 */
@@ -36,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Area();
-    explicit Area( const Common::MsgCoordLatLongList& message );
+    explicit Area( const sword::MsgCoordLatLongList& message );
     explicit Area( const OGRPolygon& area );
     virtual ~Area();
     //@}
@@ -45,7 +44,7 @@ public:
     //@{
     void Serialize( std::ostream& geometry ) const;
     void SerializeWkt( std::ostream& geometry ) const;
-    void Serialize( Common::MsgLocation& message ) const;
+    void Serialize( sword::MsgLocation& message ) const;
     //@}
 
     //! @name

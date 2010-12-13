@@ -16,7 +16,7 @@
 #include <qstring.h>
 #pragma warning( pop )
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameter;
     class MsgMissionParameter_Value;
@@ -73,8 +73,8 @@ public:
 
     virtual void AddParameter( Parameter_ABC& parameter );
     virtual void CommitTo( std::string& content ) const;
-    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void CommitTo( Common::MsgMissionParameter_Value& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
+    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
 
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     void Set( bool isSet );

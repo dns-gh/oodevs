@@ -34,16 +34,16 @@ FireComponentDamages::FireComponentDamages( xml::xistream& xis )
 // Name: FireComponentDamages::Extract
 // Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
-float FireComponentDamages::Extract( const MsgsSimToClient::MsgSimToClient& wrapper ) const
+float FireComponentDamages::Extract( const sword::SimToClient& wrapper ) const
 {
-    const MsgsSimToClient::MsgStopUnitFire& stop = wrapper.message().stop_unit_fire();
+    const sword::StopUnitFire& stop = wrapper.message().stop_unit_fire();
     float result = 0;
     for( int u = 0; u < stop.units_damages().elem_size(); ++u )
     {
-        const MsgsSimToClient::MsgUnitFireDamages& damages = stop.units_damages().elem( u );
+        const sword::UnitFireDamages& damages = stop.units_damages().elem( u );
         for( int e = 0; e < damages.equipments().elem_size(); ++e )
         {
-            const MsgsSimToClient::MsgUnitEquipmentFireDamage& damage = damages.equipments().elem( e );
+            const sword::UnitEquipmentFireDamage& damage = damages.equipments().elem( e );
             if( filter_.IsAllowed( damage.equipement_type().id() ) )
                 result += damage.unavailable_nbr();
         }

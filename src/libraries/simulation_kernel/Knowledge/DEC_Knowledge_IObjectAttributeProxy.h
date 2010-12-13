@@ -10,7 +10,7 @@
 #ifndef __DEC_Knowledge_IObjectAttributeProxy_h_
 #define __DEC_Knowledge_IObjectAttributeProxy_h_
 
-namespace Common
+namespace sword
 {
     class ObjectAttributes;
 }
@@ -36,8 +36,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( Common::ObjectAttributes& asn ) const = 0;
-    virtual void SendFullState   ( Common::ObjectAttributes& asn ) const = 0;
+    virtual void SendChangedState( sword::ObjectAttributes& asn ) const = 0;
+    virtual void SendFullState   ( sword::ObjectAttributes& asn ) const = 0;
     //@}
     
     //! @name Serialization

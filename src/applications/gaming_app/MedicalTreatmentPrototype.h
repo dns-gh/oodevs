@@ -11,7 +11,7 @@
 #define __MedicalTreatmentPrototype_h_
 
 #include "clients_gui/MedicalTreatmentPrototype_ABC.h"
-#include "protocol/clientsenders.h"
+#include "protocol/ClientSenders.h"
 
 namespace actions
 {

@@ -172,9 +172,9 @@ void Parameter_ABC::CommitTo( std::string& content ) const
 // Name: Parameter_ABC::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Parameter_ABC::CommitTo( Common::MsgMissionParameter& message ) const
+void Parameter_ABC::CommitTo( sword::MsgMissionParameter& message ) const
 {
-    ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >* list =message.mutable_value();
+    ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >* list =message.mutable_value();
 
     message.set_null_value( elements_.size() == 0 );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
@@ -185,7 +185,7 @@ void Parameter_ABC::CommitTo( Common::MsgMissionParameter& message ) const
             message.set_null_value( true );
             return;
         }
-        Common::MsgMissionParameter_Value* elementValue = list->Add();
+        sword::MsgMissionParameter_Value* elementValue = list->Add();
         it->second->CommitTo( *elementValue );
     }
 }
@@ -222,7 +222,7 @@ bool Parameter_ABC::IsSet() const
 // Name: Parameter::CommitTo
 // Created: MGD 2010-11-10
 // -----------------------------------------------------------------------------
-void Parameter_ABC::CommitTo( Common::MsgMissionParameter_Value& /*message*/ ) const
+void Parameter_ABC::CommitTo( sword::MsgMissionParameter_Value& /*message*/ ) const
 {
     throw("No specific implementation avalaible");
 }

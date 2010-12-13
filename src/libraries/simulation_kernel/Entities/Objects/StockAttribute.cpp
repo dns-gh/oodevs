@@ -157,20 +157,19 @@ void StockAttribute::WriteODB( xml::xostream& xos ) const
     xos << xml::end;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: StockAttribute::Send
 // Created: JCR 2009-06-05
 // -----------------------------------------------------------------------------
-void StockAttribute::Send( Common::ObjectAttributeStock& attribute ) const
+void StockAttribute::Send( sword::ObjectAttributeStock& attribute ) const
 {
     int i = 0;
     for( CIT_DotationProgress it = stock_.begin(); it != stock_.end(); ++it, ++i )
     {
-        Common::StockResource* resource = attribute.add_resources();
+        sword::StockResource* resource = attribute.add_resources();
         resource->mutable_resource()->set_id( it->first->GetType().GetID() );
         resource->set_current( it->second.first );
-    resource->set_maximum( it->second.second );
+        resource->set_maximum( it->second.second );
     }
 }
 
@@ -178,7 +177,7 @@ void StockAttribute::Send( Common::ObjectAttributeStock& attribute ) const
 // Name: StockAttribute::SendFullState
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void StockAttribute::SendFullState( Common::ObjectAttributes& asn ) const
+void StockAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     if( stock_.size() > 0 )
         Send( *asn.mutable_stock() );
@@ -188,7 +187,7 @@ void StockAttribute::SendFullState( Common::ObjectAttributes& asn ) const
 // Name: StockAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void StockAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
+void StockAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate) )
     {
@@ -201,7 +200,7 @@ void StockAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
 // Name: StockAttribute::OnMagicActionUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void StockAttribute::OnUpdate( const Common::ObjectAttributes& asn )
+void StockAttribute::OnUpdate( const sword::ObjectAttributes& asn )
 {
     if( asn.has_stock() )
     {

@@ -26,11 +26,11 @@ namespace actions
     class ActionFactory_ABC;
 }
 
-namespace Common
+namespace sword
 {
-    class MsgUnitOrder;
-    class MsgAutomatOrder;
-    class MsgCrowdOrder;
+    class UnitOrder;
+    class AutomatOrder;
+    class CrowdOrder;
 }
 
 // =============================================================================
@@ -40,9 +40,9 @@ namespace Common
 // Created: SBO 2006-11-13
 // =============================================================================
 class MissionParameters : public kernel::Extension_ABC
-                        , public kernel::Updatable_ABC< Common::MsgUnitOrder >
-                        , public kernel::Updatable_ABC< Common::MsgAutomatOrder >
-                        , public kernel::Updatable_ABC< Common::MsgCrowdOrder >
+                        , public kernel::Updatable_ABC< sword::UnitOrder >
+                        , public kernel::Updatable_ABC< sword::AutomatOrder >
+                        , public kernel::Updatable_ABC< sword::CrowdOrder >
                         , public tools::Resolver< actions::Action_ABC >
                         , public kernel::Drawable_ABC
 {
@@ -68,9 +68,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const Common::MsgUnitOrder& message );
-    virtual void DoUpdate( const Common::MsgAutomatOrder& message );
-    virtual void DoUpdate( const Common::MsgCrowdOrder& message );
+    virtual void DoUpdate( const sword::UnitOrder& message );
+    virtual void DoUpdate( const sword::AutomatOrder& message );
+    virtual void DoUpdate( const sword::CrowdOrder& message );
     template< typename T >
     void UpdateMessage( const T& message );
     //@}

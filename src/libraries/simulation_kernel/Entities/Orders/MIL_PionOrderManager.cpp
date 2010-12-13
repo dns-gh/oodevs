@@ -47,17 +47,17 @@ MIL_PionOrderManager::~MIL_PionOrderManager()
 // Name: MIL_PionOrderManager::OnReceiveMission
 // Created: NLD 2003-01-10
 //-----------------------------------------------------------------------------
-void MIL_PionOrderManager::OnReceiveMission( const Common::MsgUnitOrder& asnMsg )
+void MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& asnMsg )
 {
     // Check if the agent can receive this order (automate must be debraye)
     if( pion_.GetAutomate().IsEngaged() || pion_.IsDead() )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_cannot_receive_order );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_unit_cannot_receive_order );
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_surrendered );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_unit_surrendered );
     // Instanciate and check the new mission
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::Find( asnMsg.type().id() );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission );
     boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_PionMission( *pMissionType, pion_, asnMsg ) );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
 }
@@ -76,17 +76,17 @@ void MIL_PionOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type )
 // Name: MIL_PionOrderManager::OnReceiveFragOrder
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_PionOrderManager::OnReceiveFragOrder( const MsgsClientToSim::MsgFragOrder& asn )
+void MIL_PionOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
 {
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_surrendered );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_unit_surrendered );
     if( pion_.GetAutomate().IsEngaged() )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_cannot_receive_order );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_unit_cannot_receive_order );
     const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.frag_order().id() );
     if( !pType )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_order_conduite );
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
-        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_order_conduite );
     DEC_Representations& representation = pion_.GetRole<DEC_Representations>();
     boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, pion_.GetKnowledge(), asn ) );
     representation.AddToOrdersCategory( pFragOrder );

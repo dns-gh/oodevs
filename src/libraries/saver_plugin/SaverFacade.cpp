@@ -111,16 +111,15 @@ namespace
                 model_.SendFirstTick( *that );
         }
 
-        virtual void Send( const MsgsSimToClient::MsgSimToClient& message )
+        virtual void Send( const sword::SimToClient& message )
         {
             Message( SerializeToString( message, buffer_ ) ).Serialize( *output_ );
         }
-
-        virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& ) {}
-        virtual void Send( const MsgsReplayToClient::MsgReplayToClient& ) {}
-        virtual void Send( const MsgsAarToClient::MsgAarToClient& ) {}
-        virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& ) {}
-        virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& ) {}
+        virtual void Send( const sword::AuthenticationToClient& ) {}
+        virtual void Send( const sword::ReplayToClient& ) {}
+        virtual void Send( const sword::AarToClient& ) {}
+        virtual void Send( const sword::MessengerToClient& ) {}
+        virtual void Send( const sword::DispatcherToClient& ) {}
 
         virtual std::string GetEndpoint() const
         {
@@ -139,7 +138,7 @@ namespace
 // Name: SaverFacade::Receive
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void SaverFacade::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
+void SaverFacade::Receive( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_control_begin_tick())
         StartFrame( wrapper );
@@ -172,7 +171,7 @@ void SaverFacade::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 // Name: SaverFacade::StartFrame
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-void SaverFacade::StartFrame( const MsgsSimToClient::MsgSimToClient& message )
+void SaverFacade::StartFrame( const sword::SimToClient& message )
 {
     if( firstTick_ && config_.HasCheckpoint() )
         firstTick_ = false;
@@ -197,7 +196,7 @@ void SaverFacade::StartFrame( const MsgsSimToClient::MsgSimToClient& message )
 // Name: SaverFacade::EndFrame
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-void SaverFacade::EndFrame( const MsgsSimToClient::MsgSimToClient& message )
+void SaverFacade::EndFrame( const sword::SimToClient& message )
 {
     saver_->EndFrame( Message( SerializeToString( message, encodingBuffer_ ) ) );
 }

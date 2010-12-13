@@ -15,11 +15,11 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "protocol/simulationsenders.h"
+#include "protocol/SimulationSenders.h"
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitCreation;
+    class UnitCreation;
 }
 
 namespace kernel
@@ -42,7 +42,7 @@ class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-            Agent( const MsgsSimToClient::MsgUnitCreation& message,
+            Agent( const sword::UnitCreation& message,
                     kernel::Controller& controller,
                     const tools::Resolver_ABC< kernel::AgentType >& resolver );
     virtual ~Agent();

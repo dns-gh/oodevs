@@ -14,25 +14,25 @@
 #include "DecisionalState.h"
 #include "LogisticEntity.h"
 
-namespace Common
+namespace sword
 {
     enum EnumAutomatMode;
     enum EnumMeetingEngagementStatus;
     enum EnumOperationalStatus;
-    class MsgChangeLogisticLinks;
-    class MsgAutomatChangeSuperior;
-    class MsgAutomatChangeKnowledgeGroup;
-    class MsgAutomatOrder;
+    class ChangeLogisticLinks;
+    class AutomatChangeSuperior;
+    class AutomatChangeKnowledgeGroup;
+    class AutomatOrder;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
     enum ForceRatio_Value;
     enum RulesOfEngagement_Value;
 
-    class MsgAutomatCreation;
-    class MsgDecisionalState;
-    class MsgAutomatAttributes;
+    class AutomatCreation;
+    class DecisionalState;
+    class AutomatAttributes;
 }
 
 namespace dispatcher
@@ -51,18 +51,18 @@ namespace dispatcher
 // =============================================================================
 class Automat : public Automat_ABC
               , public kernel::Extension_ABC
-              , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatCreation >
-              , public kernel::Updatable_ABC< MsgsSimToClient::MsgDecisionalState >
-              , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatAttributes >
-              , public kernel::Updatable_ABC< Common::MsgChangeLogisticLinks >
-              , public kernel::Updatable_ABC< Common::MsgAutomatChangeSuperior >
-              , public kernel::Updatable_ABC< Common::MsgAutomatChangeKnowledgeGroup >
-              , public kernel::Updatable_ABC< Common::MsgAutomatOrder >
+              , public kernel::Updatable_ABC< sword::AutomatCreation >
+              , public kernel::Updatable_ABC< sword::DecisionalState >
+              , public kernel::Updatable_ABC< sword::AutomatAttributes >
+              , public kernel::Updatable_ABC< sword::ChangeLogisticLinks >
+              , public kernel::Updatable_ABC< sword::AutomatChangeSuperior >
+              , public kernel::Updatable_ABC< sword::AutomatChangeKnowledgeGroup >
+              , public kernel::Updatable_ABC< sword::AutomatOrder >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& msg );
+             Automat( Model_ABC& model, const sword::AutomatCreation& msg );
     virtual ~Automat();
     //@}
 
@@ -76,13 +76,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgAutomatCreation&    msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgDecisionalState&    msg );
-    virtual void DoUpdate( const MsgsSimToClient::MsgAutomatAttributes&  msg );
-    virtual void DoUpdate( const Common::MsgChangeLogisticLinks&         msg );
-    virtual void DoUpdate( const Common::MsgAutomatChangeSuperior&       msg );
-    virtual void DoUpdate( const Common::MsgAutomatChangeKnowledgeGroup& msg );
-    virtual void DoUpdate( const Common::MsgAutomatOrder&                msg );
+    virtual void DoUpdate( const sword::AutomatCreation&    msg );
+    virtual void DoUpdate( const sword::DecisionalState&    msg );
+    virtual void DoUpdate( const sword::AutomatAttributes&  msg );
+    virtual void DoUpdate( const sword::ChangeLogisticLinks&         msg );
+    virtual void DoUpdate( const sword::AutomatChangeSuperior&       msg );
+    virtual void DoUpdate( const sword::AutomatChangeKnowledgeGroup& msg );
+    virtual void DoUpdate( const sword::AutomatOrder&                msg );
 
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
@@ -129,11 +129,11 @@ private:
     dispatcher::Formation_ABC* parentFormation_;
     dispatcher::Automat_ABC* parentAutomat_;
     dispatcher::KnowledgeGroup_ABC* knowledgeGroup_;
-    Common::EnumAutomatMode nAutomatState_;
-    MsgsSimToClient::ForceRatio_Value nForceRatioState_;
-    Common::EnumMeetingEngagementStatus nCloseCombatState_;
-    Common::EnumOperationalStatus nOperationalState_;
-    MsgsSimToClient::RulesOfEngagement_Value nRoe_;
+    sword::EnumAutomatMode nAutomatState_;
+    sword::ForceRatio_Value nForceRatioState_;
+    sword::EnumMeetingEngagementStatus nCloseCombatState_;
+    sword::EnumOperationalStatus nOperationalState_;
+    sword::RulesOfEngagement_Value nRoe_;
     kernel::Automat_ABC* pTC2_;
     LogisticEntity       logisticEntity_;
     std::auto_ptr< AutomatOrder > order_;

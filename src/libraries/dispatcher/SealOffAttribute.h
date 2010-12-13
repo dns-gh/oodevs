@@ -27,14 +27,14 @@ class SealOffAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SealOffAttribute( const Common::ObjectAttributes& asnMsg );
+    explicit SealOffAttribute( const sword::ObjectAttributes& asnMsg );
     virtual ~SealOffAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::ObjectAttributes& asnMsg );
-    virtual void Send  ( Common::ObjectAttributes& asnMsg ) const;
+    virtual void Update( const sword::ObjectAttributes& asnMsg );
+    virtual void Send  ( sword::ObjectAttributes& asnMsg ) const;
     //@}
 
 private:

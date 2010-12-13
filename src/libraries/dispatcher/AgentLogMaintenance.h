@@ -12,15 +12,15 @@
 
 #include "EquipmentAvailability.h"
 
-namespace Common
+namespace sword
 {
     class EquipmentType;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogMaintenanceState;
-    class MsgLogMaintenanceEquipmentAvailability;
+    class LogMaintenanceState;
+    class LogMaintenanceEquipmentAvailability;
 }
 
 namespace kernel
@@ -46,13 +46,13 @@ class AgentLogMaintenance
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentLogMaintenance( const Model_ABC& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMaintenanceState& asnMsg );
+             AgentLogMaintenance( const Model_ABC& model, const kernel::Agent_ABC& agent, const sword::LogMaintenanceState& asnMsg );
     virtual ~AgentLogMaintenance();
     //@}
 
     //! @name Main
     //@{
-    void Update(  const MsgsSimToClient::MsgLogMaintenanceState& asnMsg );
+    void Update(  const sword::LogMaintenanceState& asnMsg );
     void Send  ( ClientPublisher_ABC& publisher ) const;
     //@}
 
@@ -67,7 +67,7 @@ private:
     const Model_ABC&         model_;
     const kernel::Agent_ABC& agent_;
     bool                     bSystemEnabled_;
-    std::vector< Common::EquipmentType >        priorities_;
+    std::vector< sword::EquipmentType >        priorities_;
     std::vector< const kernel::Automat_ABC* > tacticalPriorities_;
 
     std::vector< MaintenanceEquipmentAvailability > haulersAvailability_;

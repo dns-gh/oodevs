@@ -81,7 +81,7 @@ void Weapons::OptionChanged( const std::string& name, const kernel::OptionVarian
 // Name: Weapons::DoUpdate
 // Created: SBO 2008-08-06
 // -----------------------------------------------------------------------------
-void Weapons::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+void Weapons::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_dotation_eff_materiel()  != 1 )
         return;
@@ -90,7 +90,7 @@ void Weapons::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
     efficientRange_ = 0;
     for( int i = 0; i < message.dotation_eff_materiel().elem_size(); ++i )
     {
-        const MsgsSimToClient::EquipmentDotations_EquipmentDotation& value = message.dotation_eff_materiel().elem( i );
+        const sword::EquipmentDotations_EquipmentDotation& value = message.dotation_eff_materiel().elem( i );
         Equipment* equipment = Find( value.type().id() );
         if( !equipment )
         {

@@ -16,9 +16,9 @@
 
 class DotationRequest;
 
-namespace Common
+namespace sword
 {
-	class ParentEntity;
+    class ParentEntity;
 }
 
 namespace kernel
@@ -32,10 +32,10 @@ namespace kernel
     class Formation_ABC;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgLogSupplyHandlingCreation;
-    class MsgLogSupplyHandlingUpdate;
+    class LogSupplyHandlingCreation;
+    class LogSupplyHandlingUpdate;
 }
 
 // =============================================================================
@@ -53,13 +53,13 @@ public:
     //@{
              LogSupplyConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver,
                                const tools::Resolver_ABC< kernel::Agent_ABC >&   agentResolver, const tools::Resolver_ABC< kernel::Formation_ABC >&   formationResolver,
-                               const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const MsgsSimToClient::MsgLogSupplyHandlingCreation& message );
+                               const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const sword::LogSupplyHandlingCreation& message );
     virtual ~LogSupplyConsign();
     //@}
 
     //! @name Accessors
     //@{
-    void Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate& message );
+    void Update( const sword::LogSupplyHandlingUpdate& message );
     void Display( kernel::Displayer_ABC& displayer, kernel::Displayer_ABC& itemDisplayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
@@ -73,8 +73,8 @@ private:
 
     //! @name Tools
     //@{
-    kernel::Entity_ABC* FindLogEntity(const Common::ParentEntity& msg);
-    unsigned int FindLogEntityID(const Common::ParentEntity& msg);
+    kernel::Entity_ABC* FindLogEntity(const sword::ParentEntity& msg);
+    unsigned int FindLogEntityID(const sword::ParentEntity& msg);
     //@}
 
 private:

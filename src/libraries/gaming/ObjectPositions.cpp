@@ -36,7 +36,7 @@ ObjectPositions::~ObjectPositions()
 // Name: ObjectPositions::DoUpdate
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-void ObjectPositions::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void ObjectPositions::DoUpdate( const sword::ObjectUpdate& message )
 {
     if( message.has_location()  )
         Update( message.location() );
@@ -46,7 +46,7 @@ void ObjectPositions::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message 
 // Name: ObjectPositions::DoUpdate
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-void ObjectPositions::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
+void ObjectPositions::DoUpdate( const sword::ObjectCreation& message )
 {
     Update( message.location() );
 }

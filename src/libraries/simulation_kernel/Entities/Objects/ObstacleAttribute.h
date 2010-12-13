@@ -20,7 +20,7 @@ namespace xml
     class xistream;
 }
 
-namespace Common
+namespace sword
 {
     enum ObstacleType_DemolitionTargetType;
 }
@@ -43,7 +43,7 @@ public:
              ObstacleAttribute();
     explicit ObstacleAttribute( bool reserved );
     explicit ObstacleAttribute( xml::xistream& xis );
-    explicit ObstacleAttribute( const Common::MsgMissionParameter_Value& attributes );
+    explicit ObstacleAttribute( const sword::MsgMissionParameter_Value& attributes );
     virtual ~ObstacleAttribute();
     //@}
 
@@ -55,11 +55,11 @@ public:
 
     //! @name Operations
     //@{
-    void SetType( Common::ObstacleType_DemolitionTargetType obstacleType );
+    void SetType( sword::ObstacleType_DemolitionTargetType obstacleType );
     virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     virtual void Register( MIL_Object_ABC& object ) const;
-    virtual void SendFullState( Common::ObjectAttributes& asn ) const;
-    virtual void SendUpdate( Common::ObjectAttributes& asn ) const;
+    virtual void SendFullState( sword::ObjectAttributes& asn ) const;
+    virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
@@ -73,7 +73,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute ); //<! Update from asn msg
+    virtual void OnUpdate( const sword::MsgMissionParameter_Value& attribute ); //<! Update from asn msg
     ObstacleAttribute& operator=( const ObstacleAttribute& ); //!< Assignment operator
     bool Update( const ObstacleAttribute& rhs );
     //@}
@@ -81,7 +81,7 @@ public:
 private:
     //! @name Member data
     //@{
-    Common::ObstacleType_DemolitionTargetType obstacle_;
+    sword::ObstacleType_DemolitionTargetType obstacle_;
     bool bActivated_;
     int activationTime_;
     //@}

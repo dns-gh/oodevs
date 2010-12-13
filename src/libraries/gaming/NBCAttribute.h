@@ -56,8 +56,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );    
+    virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const sword::ObjectUpdate& message );    
+
     template< typename T >
     void UpdateData( const T& message );
     //@}

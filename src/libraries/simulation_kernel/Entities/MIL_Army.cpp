@@ -637,7 +637,7 @@ void MIL_Army::SendCreation() const
     client::PartyCreation asn;
     asn().mutable_party()->set_id( nID_ );
     asn().set_name( strName_.c_str() );
-    asn().set_type( Common::EnumDiplomacy( nType_ ) );
+    asn().set_type( sword::EnumDiplomacy( nType_ ) );
     asn.Send( NET_Publisher_ABC::Publisher() );
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->SendCreation();
@@ -657,7 +657,7 @@ void MIL_Army::SendFullState() const
         client::ChangeDiplomacy asn;
         asn().mutable_party1()->set_id( nID_ );
         asn().mutable_party2()->set_id( it->first->GetID() );
-        asn().set_diplomatie( Common::EnumDiplomacy( it->second ) );
+        asn().set_diplomatie( sword::EnumDiplomacy( it->second ) );
         asn.Send( NET_Publisher_ABC::Publisher() );
     }
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
@@ -680,27 +680,27 @@ void MIL_Army::SendKnowledge() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Army::OnReceiveMsgChangeDiplomacy
+// Name: MIL_Army::OnReceiveChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Army::OnReceiveMsgChangeDiplomacy( const Common::MsgMissionParameters& asnMsg )
+void MIL_Army::OnReceiveChangeDiplomacy( const sword::MsgMissionParameters& asnMsg )
 {
     MIL_Army_ABC* pArmy2 = armyFactory_.Find( asnMsg.elem( 1 ).value().Get(0).identifier() );
     if( !pArmy2 || *pArmy2 == *this )
-        throw NET_AsnException< MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode >( MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_error_invalid_camp_diplomacy );
+        throw NET_AsnException< sword::ChangeDiplomacyAck_EnumChangeDiplomacyErrorCode >( sword::ChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_error_invalid_camp_diplomacy );
     E_Diplomacy nDiplomacy = eUnknown;
     switch( asnMsg.elem( 2 ).value().Get(0).enumeration() )
     {
-    case Common::unknown_diplo:
+    case sword::unknown_diplo:
         nDiplomacy = eUnknown;
         break;
-    case Common::friend_diplo:
+    case sword::friend_diplo:
         nDiplomacy = eFriend;
         break;
-    case Common::enemy_diplo:
+    case sword::enemy_diplo:
         nDiplomacy = eEnemy;
         break;
-    case Common::neutral_diplo:
+    case sword::neutral_diplo:
         nDiplomacy = eNeutral;
         break;
     default:

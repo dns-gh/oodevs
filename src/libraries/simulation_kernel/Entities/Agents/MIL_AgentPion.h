@@ -17,15 +17,15 @@
 #include "Entities/Orders/MIL_PionOrderManager.h"
 #include "tools/Resolver.h"
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameters;
-    class MsgUnitOrder;
+    class UnitOrder;
 }
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgUnitMagicAction;
+    class UnitMagicAction;
 }
 
 namespace xml
@@ -126,14 +126,14 @@ public:
     void SendFullState() const;
     void SendKnowledge() const;
 
-    void OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies );
-    void OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn );
-    void OnReceiveMsgOrder( const Common::MsgUnitOrder& msg );
-    void OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder& msg );
-    void OnReceiveMsgChangeSuperior( const MIL_EntityManager& manager, const MsgsClientToSim::MsgUnitMagicAction& msg );
+    void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies );
+    void OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& asn );
+    void OnReceiveOrder( const sword::UnitOrder& msg );
+    void OnReceiveFragOrder( const sword::FragOrder& msg );
+    void OnReceiveChangeSuperior( const MIL_EntityManager& manager, const sword::UnitMagicAction& msg );
     void OnReceiveMagicSurrender();
     void OnReceiveMagicCancelSurrender();
-    void OnReceiveMsgMagicActionMoveTo( const MT_Vector2D& vPosition ); // Magic move automate
+    void OnReceiveMagicActionMoveTo( const MT_Vector2D& vPosition ); // Magic move automate
     //@}
 
     //! @name HLA
@@ -160,16 +160,16 @@ private:
 
     //! @name Magic actions
     //@{
-    void OnReceiveMsgChangeHumanFactors( const Common::MsgMissionParameters& msg );
-    void OnReceiveMsgResupplyHumans();
-    void OnReceiveMsgResupplyResources();
-    void OnReceiveMsgResupplyEquipement();
-    void OnReceiveMsgResupplyAll();
-    void OnReceiveMsgResupply( const Common::MsgMissionParameters& msg );
-    void OnReceiveMsgDestroyAll();
-    void OnReceiveMsgDestroyComponent();
-    void OnReceiveMsgRecoverHumansTransporters();
-    void OnReceiveMsgCreateWound( const Common::MsgMissionParameters& asn );
+    void OnReceiveChangeHumanFactors( const sword::MsgMissionParameters& msg );
+    void OnReceiveResupplyHumans();
+    void OnReceiveResupplyResources();
+    void OnReceiveResupplyEquipement();
+    void OnReceiveResupplyAll();
+    void OnReceiveResupply( const sword::MsgMissionParameters& msg );
+    void OnReceiveDestroyAll();
+    void OnReceiveDestroyComponent();
+    void OnReceiveRecoverHumansTransporters();
+    void OnReceiveCreateWound( const sword::MsgMissionParameters& asn );
     //@}
 
     //! @name Serialization

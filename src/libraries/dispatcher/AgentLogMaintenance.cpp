@@ -23,7 +23,7 @@ using namespace dispatcher;
 // Name: AgentLogMaintenance constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogMaintenance::AgentLogMaintenance( const Model_ABC& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMaintenanceState& asnMsg )
+AgentLogMaintenance::AgentLogMaintenance( const Model_ABC& model, const kernel::Agent_ABC& agent, const sword::LogMaintenanceState& asnMsg )
     : model_         ( model )
     , agent_         ( agent )
     , bSystemEnabled_( false )
@@ -44,7 +44,7 @@ AgentLogMaintenance::~AgentLogMaintenance()
 // Name: AgentLogMaintenance::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void AgentLogMaintenance::Update( const MsgsSimToClient::MsgLogMaintenanceState& asnMsg )
+void AgentLogMaintenance::Update( const sword::LogMaintenanceState& asnMsg )
 {
     if( asnMsg.has_chaine_activee()  )
         bSystemEnabled_ = asnMsg.chaine_activee() != 0;
@@ -75,7 +75,7 @@ void AgentLogMaintenance::Update( const MsgsSimToClient::MsgLogMaintenanceState&
         priorities_.clear();
         for( int i = 0; i < asnMsg.priorites().elem_size(); ++i )
         {
-            Common::EquipmentType msg;
+            sword::EquipmentType msg;
             msg.set_id( asnMsg.priorites().elem( i ).id() );
             priorities_.push_back( msg );
         }
@@ -104,7 +104,7 @@ void AgentLogMaintenance::Send( ClientPublisher_ABC& publisher ) const
             asn().mutable_priorites_tactiques()->add_elem()->set_id( (*it)->GetId() );
     }
     {
-        for( std::vector< Common::EquipmentType >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
+        for( std::vector< sword::EquipmentType >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
             asn().mutable_priorites()->add_elem()->set_id( (*it).id() );
     }
     asn.Send( publisher );

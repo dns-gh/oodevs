@@ -14,7 +14,7 @@
 
 class MIL_ObjectBuilder_ABC;
 
-namespace MsgsSimToClient
+namespace sword
 {
     class UrbanAttributes;
 }
@@ -87,19 +87,22 @@ public:
     //@{
     virtual HLA_Object_ABC* GetHLAView() const;
     virtual void            SetHLAView( HLA_Object_ABC& view );
+
     virtual void    Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     virtual void    Serialize  ( HLA_UpdateFunctor& functor ) const;
     //@}
 
     //! @name Network
     //@{
-    virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& attributes );
+    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& attributes );
+
     virtual void SendCreation() const;
     virtual void SendDestruction() const;
     virtual void SendFullState() const;
     virtual void UpdateState();
+
     template < typename T >
-    void SendCapacity( MsgsSimToClient::UrbanAttributes& msg);
+    void SendCapacity( sword::UrbanAttributes& msg );
     //@}
 
     //! @name Accessors

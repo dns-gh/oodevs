@@ -61,9 +61,9 @@ std::string RemoteHost::CreateIdentifier( const std::string& exercise ) const
 // -----------------------------------------------------------------------------
 void RemoteHost::StartSimulation( const std::string& exercise, const std::string& /*session*/ ) const
 {
-    launcher::ControlStart message;
+    launcher::ControlStartExercise message;
     message().mutable_exercise()->set_name( exercise );
-    message().set_mode( MsgsAdminToLauncher::MsgControlStart::play );
+    message().set_mode( sword::ControlStartExercise::play );
     message().set_use_after_action_analysis( true );
     message().set_use_external_systems( true );
 //    message().set_checkpoint( checkpoint );
@@ -76,9 +76,9 @@ void RemoteHost::StartSimulation( const std::string& exercise, const std::string
 // -----------------------------------------------------------------------------
 void RemoteHost::StartReplay( const std::string& exercise, const std::string& /*session*/ ) const
 {
-    launcher::ControlStart message;
+    launcher::ControlStartExercise message;
     message().mutable_exercise()->set_name( exercise );
-    message().set_mode( MsgsAdminToLauncher::MsgControlStart::replay );
+    message().set_mode( sword::ControlStartExercise::replay );
     message().set_use_after_action_analysis( true );
     message().set_use_external_systems( true );
     message.Send( publisher_ );
@@ -90,7 +90,7 @@ void RemoteHost::StartReplay( const std::string& exercise, const std::string& /*
 // -----------------------------------------------------------------------------
 void RemoteHost::StopSession( const std::string& exercise, const std::string& /*session*/ ) const
 {
-    launcher::ControlStop message;
+    launcher::ControlStopExercise message;
     message().mutable_exercise()->set_name( exercise );
     message.Send( publisher_ );
 }
@@ -99,7 +99,7 @@ void RemoteHost::StopSession( const std::string& exercise, const std::string& /*
 // Name: RemoteHost::Handle
 // Created: SBO 2010-10-21
 // -----------------------------------------------------------------------------
-void RemoteHost::Handle( const MsgsLauncherToAdmin::MsgExercicesListResponse& message )
+void RemoteHost::Handle( const sword::ExercicesListResponse& message )
 {
     exercises_.clear();
     for( int i = 0; i < message.exercise().size(); ++i )
@@ -113,7 +113,7 @@ void RemoteHost::Handle( const MsgsLauncherToAdmin::MsgExercicesListResponse& me
 // Name: RemoteHost::Handle
 // Created: SBO 2010-10-25
 // -----------------------------------------------------------------------------
-void RemoteHost::Handle( const MsgsLauncherToAdmin::MsgControlStartAck& message )
+void RemoteHost::Handle( const sword::ControlStartExerciseAck& message )
 {
     boost::shared_ptr< Exercise_ABC > exercise( exercises_[ message.exercise().name() ] );
     if( !exercise.get() )
@@ -125,7 +125,7 @@ void RemoteHost::Handle( const MsgsLauncherToAdmin::MsgControlStartAck& message 
 // Name: RemoteHost::Handle
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void RemoteHost::Handle( const MsgsAuthenticationToClient::MsgProfileDescriptionList& message )
+void RemoteHost::Handle( const sword::ProfileDescriptionList& message )
 {
     // $$$$ SBO 2010-11-22: TODO, handle profile list
 }
@@ -134,7 +134,7 @@ void RemoteHost::Handle( const MsgsAuthenticationToClient::MsgProfileDescription
 // Name: RemoteHost::Handle
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void RemoteHost::Handle( const MsgsLauncherToAdmin::MsgControlStopAck& message )
+void RemoteHost::Handle( const sword::ControlStopExerciseAck& message )
 {
     std::map< std::string, boost::shared_ptr< Exercise_ABC > >::iterator it = exercises_.find( message.exercise().name() );
     if( it != exercises_.end() )

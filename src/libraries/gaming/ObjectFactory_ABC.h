@@ -28,14 +28,15 @@ class ObjectFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectFactory_ABC() {};
-    virtual ~ObjectFactory_ABC() {};
+             ObjectFactory_ABC() {}
+    virtual ~ObjectFactory_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::Object_ABC* Create            ( const MsgsSimToClient::MsgObjectCreation& message ) = 0;
-    virtual void                RegisterAttributes( kernel::Object_ABC& result, const Common::ObjectAttributes& attributes ) const = 0;
+    virtual kernel::Object_ABC* Create( const sword::ObjectCreation& message ) = 0;
+
+    virtual void RegisterAttributes( kernel::Object_ABC& result, const sword::ObjectAttributes& attributes ) const = 0;
     //@}
 
 private:

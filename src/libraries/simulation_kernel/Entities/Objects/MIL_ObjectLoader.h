@@ -13,15 +13,15 @@
 #include "MIL_ObjectTypeHandler_ABC.h"
 #include <boost/shared_ptr.hpp>
 
-namespace Common
+namespace sword
 {
     class MsgLocation;
     class MsgMissionParameters;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    enum MsgObjectMagicActionAck_ErrorCode;
+    enum ObjectMagicActionAck_ErrorCode;
 }
 
 namespace urban
@@ -62,7 +62,7 @@ public:
     //@{
     void Initialize( xml::xistream& xis );
     MIL_Object_ABC* CreateObject( xml::xistream& xis, MIL_Army_ABC& army ) const;
-    MIL_Object_ABC* CreateObject( const Common::MsgMissionParameters& asn, MIL_Army_ABC& army, MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode& value ) const;
+    MIL_Object_ABC* CreateObject( const sword::MsgMissionParameters& asn, MIL_Army_ABC& army, sword::ObjectMagicActionAck_ErrorCode& value ) const;
     MIL_Object_ABC* CreateObject( const std::string& name, const std::string& type, MIL_Army_ABC& army, const TER_Localisation& location, bool reserved ) const;
     MIL_Object_ABC* CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army ) const;
     MIL_Object_ABC* CreateUrbanObject( const urban::TerrainObject_ABC& object ) const;
@@ -97,7 +97,7 @@ private:
     void ReadObjectPrototype( xml::xistream& xis );
     void ReadCapacity( const std::string& capacity, xml::xistream& xis, ObjectPrototype& prototype );
     void ReadAttributes( const std::string& attribute, xml::xistream& xis, Object& object ) const;
-    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode InitializeLocation( Object& object, const Common::MsgLocation& asn ) const;
+    sword::ObjectMagicActionAck_ErrorCode InitializeLocation( Object& object, const sword::MsgLocation& asn ) const;
     //@}
 
 private:

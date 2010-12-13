@@ -10,10 +10,11 @@
 #ifndef __AvailableProfile_h_
 #define __AvailableProfile_h_
 
-namespace MsgsAuthenticationToClient
+namespace sword
 {
-    class MsgProfileDescription;
+    class ProfileDescription;
 }
+
 // =============================================================================
 /** @class  AvailableProfile
     @brief  AvailableProfile
@@ -26,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AvailableProfile();
-             explicit AvailableProfile( const MsgsAuthenticationToClient::MsgProfileDescription& profile );
+    explicit AvailableProfile( const sword::ProfileDescription& profile );
     virtual ~AvailableProfile();
     //@}
 

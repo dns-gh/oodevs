@@ -474,7 +474,7 @@ void DEC_PathWalker::Apply()
 // Name: DEC_PathWalker::SerializeEnvironmentType
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-void DEC_PathWalker::SerializeEnvironmentType( MsgsSimToClient::MsgUnitEnvironmentType& msg ) const
+void DEC_PathWalker::SerializeEnvironmentType( sword::UnitEnvironmentType& msg ) const
 {
     msg.set_area   ( environment_.Area() );
     msg.set_left   ( environment_.Left() );
@@ -486,7 +486,7 @@ void DEC_PathWalker::SerializeEnvironmentType( MsgsSimToClient::MsgUnitEnvironme
 // Name: DEC_PathWalker::SerializeCurrentPath
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-bool DEC_PathWalker::SerializeCurrentPath( Common::MsgPath& asn ) const
+bool DEC_PathWalker::SerializeCurrentPath( sword::MsgPath& asn ) const
 {
     if( !pCurrentPath_.get() )
         return false;

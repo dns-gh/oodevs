@@ -9,12 +9,10 @@
 
 #include "dispatcher_pch.h"
 #include "Config.h"
-
-#pragma warning( push )
-#pragma warning( disable: 4127 4244 4512 )
+#include <xeumeuleu/xml.hpp>
+#pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
-#include <xeumeuleu/xml.hpp>
 
 namespace po = boost::program_options;
 using namespace dispatcher;
@@ -25,13 +23,13 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Config::Config()
     : networkClientsParameters_( 0 )
+    , networkShieldParameters_ ( 0 )
     , keyFramesFrequency_      ( 100 )
     , replayFragmentsFrequency_( 150 )
 {
     po::options_description desc( "Dispatcher/replayer options" );
     desc.add_options()
-        ( "port" , po::value( &networkClientsParameters_ ), "specify the serving port" )
-    ;
+        ( "port" , po::value( &networkClientsParameters_ ), "specify the serving port" );
     AddOptions( desc );
 }
 
@@ -52,18 +50,21 @@ void Config::Parse( int argc, char** argv )
 {
     tools::SessionConfig::Parse( argc, argv );
     unsigned short port;
-    xml::xifstream xisGame( GetSessionFile() );
-    xisGame >> xml::start( "session" )
-                >> xml::start( "config" )
-                    >> xml::start( "dispatcher" )
-                        >> xml::start( "network" )
-                            >> xml::attribute( "client", networkSimulationParameters_ )
-                            >> xml::attribute( "server", port )
+    xml::xifstream xis( GetSessionFile() );
+    xis >> xml::start( "session" )
+            >> xml::start( "config" )
+                >> xml::start( "dispatcher" )
+                    >> xml::start( "network" )
+                        >> xml::attribute( "client", networkSimulationParameters_ )
+                        >> xml::attribute( "server", port )
+                    >> xml::end
+                    >> xml::start( "plugins" )
+                        >> xml::optional >>xml::start( "recorder" )
+                            >> xml::optional >> xml::attribute( "fragmentfreq", replayFragmentsFrequency_ )
+                            >> xml::optional >> xml::attribute( "keyframesfreq", keyFramesFrequency_ )
                         >> xml::end
-                        >> xml::start( "plugins" )
-                            >> xml::optional >>xml::start( "recorder" )
-                                >> xml::optional >> xml::attribute( "fragmentfreq", replayFragmentsFrequency_ )
-                                >> xml::optional >> xml::attribute( "keyframesfreq", keyFramesFrequency_ );
+                        >> xml::optional >>xml::start( "shield" )
+                            >> xml::attribute( "server", networkShieldParameters_ );
     if( ! networkClientsParameters_ )
         networkClientsParameters_ = port;
 }
@@ -76,6 +77,7 @@ const std::string& Config::GetNetworkSimulationParameters() const
 {
     return networkSimulationParameters_;
 }
+
 // -----------------------------------------------------------------------------
 // Name: Config::GetNetworkClientsParameters
 // Created: NLD 2007-05-09
@@ -86,6 +88,15 @@ unsigned short Config::GetNetworkClientsParameters() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Config::GetNetworkShieldParameters
+// Created: MCO 2011-11-29
+// -----------------------------------------------------------------------------
+unsigned short Config::GetNetworkShieldParameters() const
+{
+    return networkShieldParameters_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Config::GetKeyFramesFrequency
 // Created: JSR 2010-11-02
 // -----------------------------------------------------------------------------
@@ -93,7 +104,7 @@ unsigned int Config::GetKeyFramesFrequency() const
 {
     return keyFramesFrequency_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: Config::GetReplayFragmentsFrequency
 // Created: JSR 2010-11-02

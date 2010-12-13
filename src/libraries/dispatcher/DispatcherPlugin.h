@@ -11,7 +11,7 @@
 #define __DispatcherPlugin_h_
 
 #include "Plugin_ABC.h"
-#include <protocol/protocol.h>
+#include "protocol/protocol.h"
 
 namespace tools
 {
@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive( const sword::SimToClient& message );
 
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
     virtual void NotifyClientLeft( ClientPublisher_ABC& client );
@@ -58,7 +58,7 @@ private:
 
     //! @name Helpers
     //@{
-    void OnReceive( const std::string& link, const MsgsClientToSim::MsgClientToSim& asnMsg );
+    void OnReceive( const std::string& link, const sword::ClientToSim& asnMsg );
     //@}
 
 private:

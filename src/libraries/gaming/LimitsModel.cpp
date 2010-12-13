@@ -44,7 +44,7 @@ void LimitsModel::Purge()
 // Name: LimitsModel::Create
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void LimitsModel::Create( const MsgsMessengerToClient::MsgLimitCreation& message )
+void LimitsModel::Create( const sword::LimitCreation& message )
 {
     TacticalLine_ABC* line = factory_.Create( message );
     Register( message.id().id(), *line );
@@ -54,7 +54,7 @@ void LimitsModel::Create( const MsgsMessengerToClient::MsgLimitCreation& message
 // Name: LimitsModel::Create
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void LimitsModel::Create( const MsgsMessengerToClient::MsgLimaCreation& message )
+void LimitsModel::Create( const sword::LimaCreation& message )
 {
     TacticalLine_ABC* line = factory_.Create( message );
     Register( message.id().id(), *line );

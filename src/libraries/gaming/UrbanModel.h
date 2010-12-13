@@ -17,10 +17,10 @@ namespace gui
     class TerrainObjectProxy;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUrbanCreation;
-    class MsgUrbanUpdate;
+    class UrbanCreation;
+    class UrbanUpdate;
 }
 
 namespace urban
@@ -56,8 +56,8 @@ public:
 
     //! @name Operations
     //@{
-    void Create( const MsgsSimToClient::MsgUrbanCreation& message );
-    void Update( const MsgsSimToClient::MsgUrbanUpdate& message );
+    void Create( const sword::UrbanCreation& message );
+    void Update( const sword::UrbanUpdate& message );
     void Purge();
     const urban::Model& GetModel() const;
     const UrbanBlockDetectionMap& GetUrbanBlockMap() const;

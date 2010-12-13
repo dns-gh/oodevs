@@ -33,7 +33,7 @@ LimaList::LimaList( const OrderParameter& parameter )
 // Name: LimaList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-LimaList::LimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgLimasOrder& message )
+LimaList::LimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::LimasOrder& message )
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
@@ -72,12 +72,12 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( Common::MsgLimasOrder& message ) : message_( &message ) {}
+        explicit AsnSerializer( sword::LimasOrder& message ) : message_( &message ) {}
         virtual void Visit( const Lima& param )
         {
             param.CommitTo( *message_->add_elem() );
         }
-        Common::MsgLimasOrder* message_;
+        sword::LimasOrder* message_;
     };
 }
 
@@ -85,7 +85,7 @@ namespace
 // Name: LimaList::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void LimaList::CommitTo( Common::MsgMissionParameter& message ) const
+void LimaList::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -98,7 +98,7 @@ void LimaList::CommitTo( Common::MsgMissionParameter& message ) const
 // Name: LimaList::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void LimaList::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void LimaList::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
     {

@@ -30,7 +30,7 @@ MedicalPriorities::MedicalPriorities( const OrderParameter& parameter )
 // Name: MedicalPriorities constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-MedicalPriorities::MedicalPriorities( const OrderParameter& parameter, const Common::MsgLogMedicalPriorities& message )
+MedicalPriorities::MedicalPriorities( const OrderParameter& parameter, const sword::LogMedicalPriorities& message )
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
@@ -77,27 +77,27 @@ void MedicalPriorities::AddMedicalPriority( E_HumanWound value )
 // Name: MedicalPriorities::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MedicalPriorities::CommitTo( Common::MsgMissionParameter& message ) const
+void MedicalPriorities::CommitTo( sword::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
     {
-        Common::MsgLogMedicalPriorities* list =message.mutable_value()->Add()->mutable_logmedicalpriorities();
+        sword::LogMedicalPriorities* list =message.mutable_value()->Add()->mutable_logmedicalpriorities();
         for( unsigned int i = 0; i < priorities_.size(); ++i )
-            list->add_elem( Common::EnumHumanWound( priorities_.at( i ) ) );
+            list->add_elem( sword::EnumHumanWound( priorities_.at( i ) ) );
     }
 }
 // -----------------------------------------------------------------------------
 // Name: MedicalPriorities::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MedicalPriorities::CommitTo( Common::MsgMissionParameter_Value& message ) const
+void MedicalPriorities::CommitTo( sword::MsgMissionParameter_Value& message ) const
 {
     if( IsSet() )
     {
-        Common::MsgLogMedicalPriorities* list = message.mutable_logmedicalpriorities();
+        sword::LogMedicalPriorities* list = message.mutable_logmedicalpriorities();
         for( unsigned int i = 0; i < priorities_.size(); ++i )
-            list->add_elem( Common::EnumHumanWound( priorities_.at( i ) ) );
+            list->add_elem( sword::EnumHumanWound( priorities_.at( i ) ) );
     }
 }
 

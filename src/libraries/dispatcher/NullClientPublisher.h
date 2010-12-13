@@ -31,12 +31,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const MsgsSimToClient::MsgSimToClient& ) {}
-    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& ) {}
-    virtual void Send( const MsgsReplayToClient::MsgReplayToClient& ) {}
-    virtual void Send( const MsgsAarToClient::MsgAarToClient& ) {}
-    virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& ) {}
-    virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& ) {}
+    virtual void Send( const sword::SimToClient& ) {}
+    virtual void Send( const sword::AuthenticationToClient& ) {}
+    virtual void Send( const sword::ReplayToClient& ) {}
+    virtual void Send( const sword::AarToClient& ) {}
+    virtual void Send( const sword::MessengerToClient& ) {}
+    virtual void Send( const sword::DispatcherToClient& ) {}
     //@}
 
     //! @name Accesors

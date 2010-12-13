@@ -10,7 +10,7 @@
 #ifndef __OrderDispatcher_h_
 #define __OrderDispatcher_h_
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameters;
     class MsgMissionParameter;
@@ -84,8 +84,8 @@ private:
     //@{
     const kernel::OrderType* GetAgentMission( const Row_ABC& row ) const;
     const kernel::OrderType* GetAutomatMission( const Row_ABC& row ) const;
-    void SetParameters( Common::MsgMissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type );
-    void SetParameter( Common::MsgMissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type );
+    void SetParameters( sword::MsgMissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type );
+    void SetParameter( sword::MsgMissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type );
     bool IsValidOrder( unsigned long orderId, const kernel::OrderType& type ) const;
     //@}
 

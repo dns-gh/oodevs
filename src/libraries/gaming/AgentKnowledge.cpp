@@ -32,7 +32,7 @@ using namespace kernel;
 // Name: AgentKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< Team_ABC >& teamResolver )
+AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const sword::UnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< Team_ABC >& teamResolver )
     : EntityImplementation< AgentKnowledge_ABC >( controller, message.knowledge().id(), "" )
     , converter_   ( converter )
     , resolver_    ( resolver )
@@ -70,7 +70,7 @@ AgentKnowledge::~AgentKnowledge()
 // Name: AgentKnowledge::DoUpdate
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
+void AgentKnowledge::DoUpdate( const sword::UnitKnowledgeUpdate& message )
 {
     if( message.has_max_identification_level()  )
         nMaxPerceptionLevel_ = (E_PerceptionResult)( 3 - message.max_identification_level() );

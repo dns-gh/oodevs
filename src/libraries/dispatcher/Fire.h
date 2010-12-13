@@ -18,7 +18,7 @@ namespace kernel
     class ModelVisitor_ABC;
 }
 
-namespace Common
+namespace sword
 {
     class FireId;
     class UnitId;
@@ -26,9 +26,9 @@ namespace Common
     class MsgCoordLatLong;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgStartUnitFire;
+    class StartUnitFire;
 }
 
 namespace dispatcher
@@ -47,7 +47,7 @@ class Fire : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             Fire( Model& model, const MsgsSimToClient::MsgStartUnitFire& msg );
+             Fire( Model& model, const sword::StartUnitFire& msg );
     virtual ~Fire();
     //@}
 
@@ -69,15 +69,15 @@ private:
 private:
     //! @name Member data
     //@{
-    Common::FireId                oid_tir_;
-    Common::UnitId                tireur_;
-    Common::UnitFireType          type_;
+    sword::FireId                oid_tir_;
+    sword::UnitId                tireur_;
+    sword::UnitFireType          type_;
     bool                          munitionPresent_;
-    Common::ResourceType          munition_;
+    sword::ResourceType          munition_;
     int                           typeCible_;
     int                           oid_cible_;
     int                           population_cible_;
-    Common::MsgCoordLatLong       positionCible_;
+    sword::MsgCoordLatLong       positionCible_;
     //@}
 };
 

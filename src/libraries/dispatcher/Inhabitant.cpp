@@ -23,7 +23,7 @@ using namespace dispatcher;
 // Name: Inhabitant constructor
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( Model_ABC& model, const MsgsSimToClient::MsgPopulationCreation& msg )
+Inhabitant::Inhabitant( Model_ABC& model, const sword::PopulationCreation& msg )
     : dispatcher::Inhabitant_ABC( msg.id().id(), QString( msg.name().c_str() ) )
     , model_            ( model )
     , nType_            ( msg.type().id() )
@@ -58,13 +58,13 @@ Inhabitant::~Inhabitant()
 // Name: Inhabitant::DoUpdate
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
-void Inhabitant::DoUpdate( const MsgsSimToClient::MsgPopulationUpdate& msg )
+void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
 {
-    if( msg.has_healthy()  )
+    if( msg.has_healthy() )
         nNbrHealthyHumans_ = msg.healthy();
-    if( msg.has_dead()  )
+    if( msg.has_dead() )
         nNbrDeadHumans_ = msg.dead();
-    if( msg.has_wounded()  )
+    if( msg.has_wounded() )
         nNbrWoundedHumans_ = msg.wounded();
 }
 
@@ -82,14 +82,14 @@ void Inhabitant::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().set_name( strName_ );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
     {
-        MsgsSimToClient::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+        sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
         entry->set_name( it->first );
         entry->set_value( it->second );
     }
 
     for( std::vector< int >::const_iterator it = urbanObjectId_.begin(); it != urbanObjectId_.end(); ++it )
     {
-        Common::UrbanObjectId* blockId = asn().add_blocks();
+        sword::UrbanObjectId* blockId = asn().add_blocks();
         blockId->set_id( *it );
     }
 
@@ -114,7 +114,7 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // Name: Inhabitant::SendDestruction
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
-void Inhabitant::SendDestruction( ClientPublisher_ABC& publisher ) const
+void Inhabitant::SendDestruction( ClientPublisher_ABC& /*publisher*/ ) const
 {
     //NOTHING
 }
@@ -132,7 +132,7 @@ void Inhabitant::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // Name: Inhabitant::Draw
 // Created: SLG 2010-12-01
 // -----------------------------------------------------------------------------
-void Inhabitant::Draw( const kernel::GlTools_ABC& tools ) const
+void Inhabitant::Draw( const kernel::GlTools_ABC& /*tools*/ ) const
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

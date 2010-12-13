@@ -86,7 +86,7 @@ void ResourceNetworkCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& 
 // Name: ResourceNetworkCapacity::Update
 // Created: JSR 2010-08-26
 // -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::Update( const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list )
+void ResourceNetworkCapacity::Update( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& list )
 {
     nodeProperties_->Update( list );
 }
@@ -162,7 +162,7 @@ void ResourceNetworkCapacity::RegisterNode( unsigned int id, bool urban )
 // Name: ResourceNetworkCapacity::SendState
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::SendState( MsgsSimToClient::UrbanAttributes& message )
+void ResourceNetworkCapacity::SendState( sword::UrbanAttributes& message )
 {
     if( nodeProperties_ == 0 )
         throw std::exception( "RegisterResource : Node Properties not instanciated" );
@@ -174,7 +174,7 @@ void ResourceNetworkCapacity::SendState( MsgsSimToClient::UrbanAttributes& messa
 // Name: ResourceNetworkCapacity::SendState
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::SendState( Common::ObjectAttributes& asn ) const
+void ResourceNetworkCapacity::SendState( sword::ObjectAttributes& asn ) const
 {
     if( nodeProperties_ == 0 )
         throw std::exception( "RegisterResource : Node Properties not instanciated" );

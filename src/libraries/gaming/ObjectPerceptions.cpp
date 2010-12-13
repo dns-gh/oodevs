@@ -36,7 +36,7 @@ ObjectPerceptions::~ObjectPerceptions()
 // Name: ObjectPerceptions::DoUpdate
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-void ObjectPerceptions::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void ObjectPerceptions::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     if( message.has_perceiving_automats()  )
     {

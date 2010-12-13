@@ -377,14 +377,14 @@ void DEC_Knowledge_Agent::UpdateRelevance(int currentTimeStep)
 // Name: DEC_Knowledge_Agent::WriteMsgPerceptionSources
 // Created: NLD 2004-03-19
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Agent::WriteMsgPerceptionSources( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_Agent::WriteMsgPerceptionSources( sword::UnitKnowledgeUpdate& asnMsg ) const
 {
     if( !perceptionLevelPerAutomateMap_.empty() )
         for( CIT_PerceptionAutomateSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
         {
-            MsgsSimToClient::AutomatPerception& perception = *asnMsg.mutable_perception_par_compagnie()->add_elem();
+            sword::AutomatPerception& perception = *asnMsg.mutable_perception_par_compagnie()->add_elem();
             perception.mutable_automat()->set_id( it->first->GetID() );
-            MsgsSimToClient::EnumUnitIdentificationLevel level;
+            sword::EnumUnitIdentificationLevel level;
             it->second->Serialize( level );
             perception.set_identification_level( level );
         }
@@ -411,13 +411,13 @@ void DEC_Knowledge_Agent::SendChangedState()
     }
     if( bCurrentPerceptionLevelUpdated_ )
     {
-        MsgsSimToClient::EnumUnitIdentificationLevel level( asnMsg().identification_level() );
+        sword::EnumUnitIdentificationLevel level( asnMsg().identification_level() );
         pCurrentPerceptionLevel_->Serialize( level );
         asnMsg().set_identification_level( level );
     }
     if( bMaxPerceptionLevelUpdated_ )
     {
-        MsgsSimToClient::EnumUnitIdentificationLevel level( asnMsg().max_identification_level() );
+        sword::EnumUnitIdentificationLevel level( asnMsg().max_identification_level() );
         pMaxPerceptionLevel_->Serialize( level );
         asnMsg().set_max_identification_level( level );
     }
@@ -444,10 +444,10 @@ void DEC_Knowledge_Agent::SendFullState()
     asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
     asnMsg().set_pertinence( static_cast< int >( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
-    MsgsSimToClient::EnumUnitIdentificationLevel level( asnMsg().identification_level() );
+    sword::EnumUnitIdentificationLevel level( asnMsg().identification_level() );
     pCurrentPerceptionLevel_->Serialize( level );
     asnMsg().set_identification_level( level );
-    MsgsSimToClient::EnumUnitIdentificationLevel maxlevel( asnMsg().max_identification_level() );
+    sword::EnumUnitIdentificationLevel maxlevel( asnMsg().max_identification_level() );
     pMaxPerceptionLevel_->Serialize( maxlevel );
     asnMsg().set_max_identification_level( maxlevel );
     WriteMsgPerceptionSources( asnMsg() );

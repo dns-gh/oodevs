@@ -27,7 +27,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< Med
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute::MedicalTreatmentAttribute()
     : capacities_      ( MIL_MedicalTreatmentType::RegisteredCount() )
-    , status_          ( Common::ObjectAttributeMedicalTreatment::normal )
+    , status_          ( sword::ObjectAttributeMedicalTreatment::normal )
     , doctors_         ( 0 )
     , availableDoctors_( 0 )
     , initialDoctors_  ( 0 )
@@ -41,7 +41,7 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute()
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis )
     : capacities_( MIL_MedicalTreatmentType::RegisteredCount() )
-    , status_    ( Common::ObjectAttributeMedicalTreatment::normal )
+    , status_    ( sword::ObjectAttributeMedicalTreatment::normal )
 {
     xis >> xml::attribute( "doctors", doctors_ )
         >> xml::optional >> xml::attribute( "reference", referenceID_ )
@@ -72,18 +72,18 @@ void MedicalTreatmentAttribute::InitializeBedCapacity( xml::xistream& xis )
 // Name: MedicalTreatmentAttribute::MedicalTreatmentAttribute
 // Created: RFT 2008-06-05
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Common::MsgMissionParameter_Value& attributes )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( const sword::MsgMissionParameter_Value& attributes )
     : doctors_         ( attributes.list( eDoctors ).quantity() ) // Doctors
     , availableDoctors_( 0 )
     , initialDoctors_  ( 0 )
     , referenceID_     ( attributes.list( eExternalReferenceId ).acharstr() ) // ExternalReferenceId
     , capacities_      ( MIL_MedicalTreatmentType::RegisteredCount() )
-    , status_          ( Common::ObjectAttributeMedicalTreatment::normal )
+    , status_          ( sword::ObjectAttributeMedicalTreatment::normal )
 {
-    const Common::MsgMissionParameter_Value& capacities = attributes.list( eBedCapacities );
+    const sword::MsgMissionParameter_Value& capacities = attributes.list( eBedCapacities );
     for( int i = 0; i < capacities.list_size(); ++i )
     {
-        const Common::MsgMissionParameter_Value& value = capacities.list( i );
+        const sword::MsgMissionParameter_Value& value = capacities.list( i );
         const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( value.list( eTypeId ).identifier() );
         if( !pType )
             throw std::runtime_error( "Unknown Medical treatment type for medical treatment attribute" );
@@ -204,7 +204,7 @@ void MedicalTreatmentAttribute::MedicalCapacity::save( MIL_CheckPointOutArchive&
 // Name: MedicalTreatmentAttribute::Update
 // Created: JCR 2010-06-05
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::MedicalCapacity::Update( const Common::MedicalTreatmentBedCapacity& capacity )
+void MedicalTreatmentAttribute::MedicalCapacity::Update( const sword::MedicalTreatmentBedCapacity& capacity )
 {
     if( capacity.has_type_id() )
         type_ = MIL_MedicalTreatmentType::Find( capacity.type_id() );
@@ -223,7 +223,7 @@ void MedicalTreatmentAttribute::MedicalCapacity::Update( const Common::MedicalTr
 // Name: MedicalTreatmentAttribute::Update
 // Created: JCR 2010-10-08
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::MedicalCapacity::Update( const Common::MsgMissionParameter_Value& capacity )
+void MedicalTreatmentAttribute::MedicalCapacity::Update( const sword::MsgMissionParameter_Value& capacity )
 {
     if( capacity.list( eTypeId ).has_identifier() )
         type_ = MIL_MedicalTreatmentType::Find( capacity.list( eTypeId ).identifier()  );
@@ -242,7 +242,7 @@ void MedicalTreatmentAttribute::MedicalCapacity::Update( const Common::MsgMissio
 // Name: MedicalTreatmentAttribute::Send
 // Created: JCR 2010-06-05
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::MedicalCapacity::Send( Common::MedicalTreatmentBedCapacity& capacity ) const
+void MedicalTreatmentAttribute::MedicalCapacity::Send( sword::MedicalTreatmentBedCapacity& capacity ) const
 {
     if( type_ )
     {
@@ -257,7 +257,7 @@ void MedicalTreatmentAttribute::MedicalCapacity::Send( Common::MedicalTreatmentB
 // Name: MedicalTreatmentAttribute::OnUpdate
 // Created: JCR 2010-06-11
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::OnUpdate( const Common::MsgMissionParameter_Value& parameters )
+void MedicalTreatmentAttribute::OnUpdate( const sword::MsgMissionParameter_Value& parameters )
 {
     // JCR TODO : Check if value is available ?
     if( parameters.list( eDoctors ).has_quantity() )
@@ -267,10 +267,10 @@ void MedicalTreatmentAttribute::OnUpdate( const Common::MsgMissionParameter_Valu
     if( parameters.list( eStatus ).has_enumeration() )
         status_ = parameters.list( eStatus ).enumeration(); 
 
-    const Common::MsgMissionParameter_Value& capacities = parameters.list( eBedCapacities );
+    const sword::MsgMissionParameter_Value& capacities = parameters.list( eBedCapacities );
     for( int i = 0; i < capacities.list_size(); ++i )
     {
-        const Common::MsgMissionParameter_Value& value = capacities.list( i );
+        const sword::MsgMissionParameter_Value& value = capacities.list( i );
         if( value.list( eTypeId ).has_identifier() ) 
         {
             const unsigned int typeId = value.list( eTypeId ).identifier();
@@ -285,7 +285,7 @@ void MedicalTreatmentAttribute::OnUpdate( const Common::MsgMissionParameter_Valu
 // Name: MedicalTreatmentAttribute::Update
 // Created: JCR 2010-06-04
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::Update( const Common::ObjectAttributeMedicalTreatment& message )
+void MedicalTreatmentAttribute::Update( const sword::ObjectAttributeMedicalTreatment& message )
 {
     if( message.has_doctors() )
         doctors_ = message.doctors();
@@ -300,12 +300,12 @@ void MedicalTreatmentAttribute::Update( const Common::ObjectAttributeMedicalTrea
     if( message.bed_capacities_size() > static_cast< int >( capacities_.size() ) )
         capacities_.resize( message.bed_capacities_size() );
     for( int i = 0 ; i < message.bed_capacities_size(); ++i )
-	{
-        const Common::MedicalTreatmentBedCapacity& bed_capacity = message.bed_capacities( i );
+    {
+        const sword::MedicalTreatmentBedCapacity& bed_capacity = message.bed_capacities( i );
         if( bed_capacity.has_type_id() )
         {
-		    if( capacities_.size() <= static_cast< unsigned int >( bed_capacity.type_id() ) )
-	            throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( bed_capacity.type_id() ) );
+            if( capacities_.size() <= static_cast< unsigned int >( bed_capacity.type_id() ) )
+                throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( bed_capacity.type_id() ) );
             capacities_[ bed_capacity.type_id() ].Update( bed_capacity );
         }
     }
@@ -316,12 +316,12 @@ void MedicalTreatmentAttribute::Update( const Common::ObjectAttributeMedicalTrea
 // Name: MedicalTreatmentAttribute::SendFullState
 // Created: RFT 2008-06-18
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::SendFullState( Common::ObjectAttributes& message ) const
+void MedicalTreatmentAttribute::SendFullState( sword::ObjectAttributes& message ) const
 { 
     message.mutable_medical_treatment()->set_doctors( doctors_ );
     message.mutable_medical_treatment()->set_available_doctors( availableDoctors_ );
     message.mutable_medical_treatment()->set_external_reference_id( referenceID_ );
-    message.mutable_medical_treatment()->set_facility_status( static_cast< Common::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus >( status_ ) );
+    message.mutable_medical_treatment()->set_facility_status( static_cast< sword::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus >( status_ ) );
     if( capacities_.size() > 0 )
     {
         for( T_TreatmentCapacityVector::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
@@ -335,7 +335,7 @@ void MedicalTreatmentAttribute::SendFullState( Common::ObjectAttributes& message
 // Name: MedicalTreatmentAttribute::Send
 // Created: RFT 2008-06-09
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::SendUpdate( Common::ObjectAttributes& asn ) const
+void MedicalTreatmentAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {

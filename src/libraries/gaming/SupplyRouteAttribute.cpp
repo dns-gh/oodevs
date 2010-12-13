@@ -57,7 +57,7 @@ void SupplyRouteAttribute::UpdateData( const T& message )
 // Name: SupplyRouteAttribute::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
+void SupplyRouteAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     UpdateData( message.attributes() );
 }
@@ -66,7 +66,7 @@ void SupplyRouteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUp
 // Name: SupplyRouteAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
+void SupplyRouteAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     UpdateData( message.attributes() );
 }

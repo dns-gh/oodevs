@@ -74,7 +74,7 @@ void Point::Serialize( xml::xostream& xos, const std::string& fieldname ) const
 // Name: Point::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void Point::Serialize( Common::MsgCoordLatLong& asn ) const
+void Point::Serialize( sword::MsgCoordLatLong& asn ) const
 {
     asn.set_latitude( latitude_ );
     asn.set_longitude( longitude_ );

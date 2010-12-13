@@ -53,7 +53,7 @@ PHY_ComposanteType_ABC::~PHY_ComposanteType_ABC()
 // Name: PHY_ComposanteType_ABC::GetMosID
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-Common::EquipmentType PHY_ComposanteType_ABC::GetMosID() const
+sword::EquipmentType PHY_ComposanteType_ABC::GetMosID() const
 {
     return nMosID_;
 }

@@ -22,7 +22,7 @@ using namespace plugins::bml;
 // Name: OrderReport constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-OrderReport::OrderReport( const dispatcher::Agent_ABC& agent, const tools::Resolver_ABC< kernel::MissionType >& missions, const Common::MsgUnitOrder& asn )
+OrderReport::OrderReport( const dispatcher::Agent_ABC& agent, const tools::Resolver_ABC< kernel::MissionType >& missions, const sword::UnitOrder& asn )
     : who_( new Who( agent ) )
     , reportingData_( new ReportingData( agent ) )
     , activityCode_( GetCodeFromMissionId( missions, asn.type().id() ) )
@@ -34,7 +34,7 @@ OrderReport::OrderReport( const dispatcher::Agent_ABC& agent, const tools::Resol
 // Name: OrderReport constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-OrderReport::OrderReport( const dispatcher::Automat_ABC& automat, const tools::Resolver_ABC< kernel::MissionType >& missions, const Common::MsgAutomatOrder& asn )
+OrderReport::OrderReport( const dispatcher::Automat_ABC& automat, const tools::Resolver_ABC< kernel::MissionType >& missions, const sword::AutomatOrder& asn )
     : who_( new Who( automat ) )
     , reportingData_( new ReportingData( automat ) )
     , activityCode_( GetCodeFromMissionId( missions, asn.type().id() ) )

@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: ConstructionAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ConstructionAttribute::ConstructionAttribute( const Common::ObjectAttributes& asnMsg )
+ConstructionAttribute::ConstructionAttribute( const sword::ObjectAttributes& asnMsg )
     : dotation_ ( 0 )
     , nNbrDotationForConstruction_( 0 )
     , nPercentageConstruction_( 0 )
@@ -38,7 +38,7 @@ ConstructionAttribute::~ConstructionAttribute()
 // Name: ConstructionAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::Update( const Common::ObjectAttributes& asnMsg )
+void ConstructionAttribute::Update( const sword::ObjectAttributes& asnMsg )
 {
     if( asnMsg.has_construction()  )
     {
@@ -55,7 +55,7 @@ void ConstructionAttribute::Update( const Common::ObjectAttributes& asnMsg )
 // Name: ConstructionAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::Send( Common::ObjectAttributes& asnMsg ) const
+void ConstructionAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
     asnMsg.mutable_construction()->mutable_resource()->set_id( dotation_ );
     asnMsg.mutable_construction()->set_dotation_nbr( nNbrDotationForConstruction_ );

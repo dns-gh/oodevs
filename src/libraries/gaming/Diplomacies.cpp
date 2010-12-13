@@ -38,15 +38,15 @@ Diplomacies::~Diplomacies()
 
 namespace
 {
-    Karma ResolveDiplomacy( const Common::EnumDiplomacy& diplomacy )
+    Karma ResolveDiplomacy( const sword::EnumDiplomacy& diplomacy )
     {
         switch( diplomacy )
         {
-        case Common::friend_diplo:
+        case sword::friend_diplo:
             return Karma::friend_;
-        case Common::enemy_diplo:
+        case sword::enemy_diplo:
             return Karma::enemy_;
-        case Common::neutral_diplo:
+        case sword::neutral_diplo:
             return Karma::neutral_;
         default:
             return kernel::Karma::unknown_;
@@ -74,9 +74,9 @@ void Diplomacies::UpdateData( const T& message )
 // Name: Diplomacies::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Diplomacies::DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& message )
+void Diplomacies::DoUpdate( const sword::ChangeDiplomacyAck& message )
 {
-    if( message.error_code() == MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_no_error_diplomacy )
+    if( message.error_code() == sword::ChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_no_error_diplomacy )
         UpdateData( message );
 }
 
@@ -84,7 +84,7 @@ void Diplomacies::DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& messag
 // Name: Diplomacies::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Diplomacies::DoUpdate( const Common::MsgChangeDiplomacy& message )
+void Diplomacies::DoUpdate( const sword::ChangeDiplomacy& message )
 {
     UpdateData( message );
 }
@@ -108,17 +108,17 @@ const kernel::Karma& Diplomacies::GetDiplomacy( const kernel::Entity_ABC& rhs ) 
 // Name: Diplomacies::DoUpdate
 // Created: AGE 2006-10-25
 // -----------------------------------------------------------------------------
-void Diplomacies::DoUpdate( const MsgsSimToClient::MsgPartyCreation& message )
+void Diplomacies::DoUpdate( const sword::PartyCreation& message )
 {
     switch( message.type() )
     {
-    case Common::friend_diplo :
+    case sword::friend_diplo :
         karma_ = kernel::Karma::friend_;
         break;
-    case Common::enemy_diplo :
+    case sword::enemy_diplo :
         karma_ = kernel::Karma::enemy_;
         break;
-    case Common::neutral_diplo :
+    case sword::neutral_diplo :
         karma_ = kernel::Karma::neutral_;
         break;
     default:

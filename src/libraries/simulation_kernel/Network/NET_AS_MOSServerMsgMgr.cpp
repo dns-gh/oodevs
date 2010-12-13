@@ -58,7 +58,7 @@ void NET_AS_MOSServerMsgMgr::RemoveClient( const std::string& client )
 // Name: NET_AS_MOSServerMsgMgr::Send
 // Created: NLD 2003-02-24
 //-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::Send( MsgsSimToClient::MsgSimToClient& wrapper )
+void NET_AS_MOSServerMsgMgr::Send( sword::SimToClient& wrapper )
 {
     for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
         agentServer_.Send( *it, wrapper );
@@ -68,7 +68,7 @@ void NET_AS_MOSServerMsgMgr::Send( MsgsSimToClient::MsgSimToClient& wrapper )
 // Name: NET_AS_MOSServerMsgMgr::OnReceiveClient
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const MsgsClientToSim::MsgClientToSim& wrapper )
+void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const sword::ClientToSim& wrapper )
 {
     MIL_AgentServer& workspace = MIL_AgentServer::GetWorkspace();
     unsigned int nCtx = wrapper.context();
@@ -90,34 +90,34 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( wrapper.message().has_control_toggle_vision_cones() )
         agentServer_                        .SetMustSendUnitVisionCones                 ( wrapper.message().control_toggle_vision_cones().vision_cones());
     else if( wrapper.message().has_unit_order() )
-        workspace.GetEntityManager        ().OnReceiveMsgUnitOrder                      ( wrapper.message().unit_order()                         , nCtx );
+        workspace.GetEntityManager        ().OnReceiveUnitOrder                      ( wrapper.message().unit_order()                         , nCtx );
     else if( wrapper.message().has_automat_order() )
-        workspace.GetEntityManager        ().OnReceiveMsgAutomatOrder                   ( wrapper.message().automat_order()                      , nCtx );
+        workspace.GetEntityManager        ().OnReceiveAutomatOrder                   ( wrapper.message().automat_order()                      , nCtx );
     else if( wrapper.message().has_crowd_order() )
-        workspace.GetEntityManager        ().OnReceiveMsgCrowdOrder                ( wrapper.message().crowd_order()                   , nCtx );
+        workspace.GetEntityManager        ().OnReceiveCrowdOrder                ( wrapper.message().crowd_order()                   , nCtx );
     else if( wrapper.message().has_frag_order() )
-        workspace.GetEntityManager        ().OnReceiveMsgFragOrder                      ( wrapper.message().frag_order()                         , nCtx );
+        workspace.GetEntityManager        ().OnReceiveFragOrder                      ( wrapper.message().frag_order()                         , nCtx );
     else if( wrapper.message().has_set_automat_mode() )
-        workspace.GetEntityManager        ().OnReceiveMsgSetAutomateMode                ( wrapper.message().set_automat_mode()                   , nCtx );
+        workspace.GetEntityManager        ().OnReceiveSetAutomateMode                ( wrapper.message().set_automat_mode()                   , nCtx );
     else if( wrapper.message().has_unit_creation_request() )
-        workspace.GetEntityManager        ().OnReceiveMsgUnitCreationRequest            ( wrapper.message().unit_creation_request()              , nCtx );
+        workspace.GetEntityManager        ().OnReceiveUnitCreationRequest            ( wrapper.message().unit_creation_request()              , nCtx );
     else if( wrapper.message().has_knowledge_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveMsgKnowledgeMagicAction           ( wrapper.message().knowledge_magic_action()             , nCtx );
+        workspace.GetEntityManager        ().OnReceiveKnowledgeMagicAction           ( wrapper.message().knowledge_magic_action()             , nCtx );
     else if( wrapper.message().has_unit_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveMsgUnitMagicAction                ( wrapper.message().unit_magic_action()                  , nCtx );
+        workspace.GetEntityManager        ().OnReceiveUnitMagicAction                ( wrapper.message().unit_magic_action()                  , nCtx );
     else if( wrapper.message().has_object_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveMsgObjectMagicAction              ( wrapper.message().object_magic_action()                , nCtx );
+        workspace.GetEntityManager        ().OnReceiveObjectMagicAction              ( wrapper.message().object_magic_action()                , nCtx );
     else if( wrapper.message().has_magic_action() )
-        if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction::global_weather
-         || wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction::local_weather )
+        if( wrapper.message().magic_action().type() == sword::MagicAction::global_weather
+         || wrapper.message().magic_action().type() == sword::MagicAction::local_weather )
             workspace.GetMeteoDataManager     ().OnReceiveMsgMeteo                      ( wrapper.message().magic_action()                              );
-        else if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction::change_diplomacy )
-            workspace.GetEntityManager        ().OnReceiveMsgChangeDiplomacy            ( wrapper.message().magic_action()                       , nCtx );
-        else if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction::change_resource_network_properties )
-            workspace.GetEntityManager        ().OnReceiveMsgChangeResourceLinks        ( wrapper.message().magic_action()                       , nCtx );
+        else if( wrapper.message().magic_action().type() == sword::MagicAction::change_diplomacy )
+            workspace.GetEntityManager        ().OnReceiveChangeDiplomacy            ( wrapper.message().magic_action()                       , nCtx );
+        else if( wrapper.message().magic_action().type() == sword::MagicAction::change_resource_network_properties )
+            workspace.GetEntityManager        ().OnReceiveChangeResourceLinks        ( wrapper.message().magic_action()                       , nCtx );
     // LTO BEGIN
-        else if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction::create_knowledge_group )
-            workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupCreation     ( wrapper.message().magic_action()                       , nCtx );
+        else if( wrapper.message().magic_action().type() == sword::MagicAction::create_knowledge_group )
+            workspace.GetEntityManager        ().OnReceiveKnowledgeGroupCreation     ( wrapper.message().magic_action()                       , nCtx );
     // LTO END
 }
 
@@ -128,16 +128,16 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
 void NET_AS_MOSServerMsgMgr::OnReceiveMiddle( const std::string& from, const MsgsDispatcherToSim::MsgDispatcherToSim& wrapper )
 {
     if( wrapper.message().has_control_client_announcement() )
-        OnReceiveMsgCtrlClientAnnouncement( from );
+        OnReceiveCtrlClientAnnouncement( from );
     else
         assert( false );
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement
+// Name: NET_AS_MOSServerMsgMgr::OnReceiveCtrlClientAnnouncement
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement( const std::string& from )
+void NET_AS_MOSServerMsgMgr::OnReceiveCtrlClientAnnouncement( const std::string& from )
 {
     MT_LOG_INFO_MSG( "Announcement from client " << from );
     clients_.insert( from );

@@ -55,7 +55,7 @@ EdxlHavePlugin::~EdxlHavePlugin()
 // Name: EdxlHavePlugin::Receive
 // Created: JCR 2010-05-31
 // -----------------------------------------------------------------------------
-void EdxlHavePlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
+void EdxlHavePlugin::Receive( const sword::SimToClient& wrapper )
 {
     if ( wrapper.message().has_control_information() )
         simulation_->Receive( wrapper.message().control_information() );

@@ -224,7 +224,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindCrossr
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindSafetyPositionsWithinCircle
+// Name: TER_PathFinderThread::FindSafetyPositionsWithinCircle
 // Created: LDC 2010-10-28
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance )

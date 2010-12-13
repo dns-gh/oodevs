@@ -13,204 +13,179 @@
 #include "clients_kernel/Types.h"
 #include "protocol/ServerPublisher_ABC.h"
 
-namespace MsgsDispatcherToClient
+namespace sword
 {
-    class MsgDispatcherToClient;
-}
-
-namespace MsgsSimToClient
-{
-    class MsgSimToClient;
-
-    class MsgUnitVisionCones;
-    class MsgUnitDetection;
-    class MsgObjectDetection;
-    class MsgCrowdConcentrationDetection;
-    class MsgCrowdFlowDetection;
-    class MsgCrowdDestruction;
-    class MsgDebugPoints;
-    class MsgControlDatetimeChangeAck;
-    class MsgControlInformation;
-    class MsgControlProfilingInformation;
-    class MsgControlBeginTick;
-    class MsgControlEndTick;
-    class MsgControlSendCurrentStateEnd;
-    class MsgControlCheckPointSaveEnd;
-    class MsgAutomatCreation;
-    class MsgAutomatDestruction;
-    class MsgFormationCreation;
-    class MsgFormationDestruction;
-    class MsgUnitCreation;
-    class MsgUnitDestruction;
-    class MsgPartyCreation;
-    class MsgUnitAttributes;
-    class MsgUnitMagicActionAck;
-    class MsgUnitPathFind;
-    class MsgAutomatAttributes;
-    class MsgLogMaintenanceHandlingCreation;
-    class MsgLogMaintenanceHandlingDestruction;
-    class MsgLogMaintenanceHandlingUpdate;
-    class MsgLogMaintenanceState;
-    class MsgLogMedicalHandlingCreation;
-    class MsgLogMedicalHandlingDestruction;
-    class MsgLogMedicalHandlingUpdate;
-    class MsgLogMedicalState;
-    class MsgLogSupplyHandlingCreation;
-    class MsgLogSupplyHandlingDestruction;
-    class MsgLogSupplyHandlingUpdate;
-    class MsgLogSupplyState;
-    class MsgLogSupplyQuotas;
-    class MsgLogSupplyChangeQuotasAck;
-    class MsgLogSupplyPushFlowAck;
-    class MsgLogSupplyPullFlowAck;
-    class MsgObjectCreation;
-    class MsgObjectUpdate;
-    class MsgObjectDestruction;
-    class MsgObjectMagicActionAck;
-    class MsgMagicActionAck;
-    class MsgUnitKnowledgeCreation;
-    class MsgUnitKnowledgeUpdate;
-    class MsgUnitKnowledgeDestruction;
-    class MsgObjectKnowledgeCreation;
-    class MsgObjectKnowledgeUpdate;
-    class MsgObjectKnowledgeDestruction;
-    class MsgCrowdKnowledgeCreation;
-    class MsgCrowdKnowledgeUpdate;
-    class MsgCrowdKnowledgeDestruction;
-    class MsgCrowdConcentrationKnowledgeCreation;
-    class MsgCrowdConcentrationKnowledgeUpdate;
-    class MsgCrowdConcentrationKnowledgeDestruction;
-    class MsgCrowdFlowKnowledgeCreation;
-    class MsgCrowdFlowKnowledgeUpdate;
-    class MsgCrowdFlowKnowledgeDestruction;
-    class MsgAutomatOrderAck;
-    class MsgUnitOrderAck;
-    class MsgFragOrderAck;
-    class MsgUnitCreationRequestAck;
-    class MsgSetAutomatModeAck;
-    class MsgUnitChangeSuperiorAck;
-    class MsgChangeDiplomacyAck;
-    class MsgAutomatChangeSuperiorAck;
-    class MsgAutomatChangeKnowledgeGroupAck;
-    class MsgChangeLogisticLinksAck;
-    class MsgReport;
-    class MsgInvalidateReport;
-    class MsgTrace;
-    class MsgDecisionalState;
-    class MsgStartUnitFire;
-    class MsgStopUnitFire;
-    class MsgExplosion;
-    class MsgStartFireEffect;
-    class MsgStopFireEffect;
-    class MsgStartCrowdFire;
-    class MsgStopCrowdFire;
-    class MsgPopulationCreation;
-    class MsgPopulationUpdate;
-    class MsgCrowdCreation;
-    class MsgCrowdUpdate;
-    class MsgCrowdConcentrationCreation;
-    class MsgCrowdConcentrationDestruction;
-    class MsgCrowdConcentrationUpdate;
-    class MsgCrowdFlowCreation;
-    class MsgCrowdFlowDestruction;
-    class MsgCrowdFlowUpdate;
-    class MsgCrowdMagicActionAck;
-    class MsgCrowdOrderAck;
-    class MsgFolkCreation;
-    class MsgFolkGraphUpdate;
-    class MsgUrbanKnowledgeCreation;
-    class MsgUrbanKnowledgeUpdate;
-    class MsgUrbanKnowledgeDestruction;
-    class MsgKnowledgeGroupMagicActionAck;
-    class MsgKnowledgeGroupCreation;
-    class MsgKnowledgeGroupCreationAck;
-    class MsgKnowledgeGroupUpdate;
-    class MsgKnowledgeGroupUpdateAck;
-    class MsgKnowledgeGroupDestruction;
-    class MsgUrbanCreation;
-    class MsgUrbanUpdate;
-    class MsgUrbanDetection;
-    class MsgControlGlobalWeather;
-    class MsgControlLocalWeatherCreation;
-    class MsgControlLocalWeatherDestruction;
-    class MsgControlPauseAck;
-    class MsgControlResumeAck;
-    class MsgControlChangeTimeFactorAck;
-    class MsgActionCreateFireOrderAck;
+    class DispatcherToClient;
+    class SimToClient;
+    class UnitVisionCones;
+    class UnitDetection;
+    class ObjectDetection;
+    class CrowdConcentrationDetection;
+    class CrowdFlowDetection;
+    class CrowdDestruction;
+    class DebugPoints;
+    class ControlDatetimeChangeAck;
+    class ControlInformation;
+    class ControlProfilingInformation;
+    class ControlBeginTick;
+    class ControlEndTick;
+    class ControlSendCurrentStateEnd;
+    class ControlCheckPointSaveEnd;
+    class AutomatCreation;
+    class AutomatDestruction;
+    class FormationCreation;
+    class FormationDestruction;
+    class UnitCreation;
+    class UnitDestruction;
+    class PartyCreation;
+    class UnitAttributes;
+    class UnitMagicActionAck;
+    class UnitPathFind;
+    class AutomatAttributes;
+    class LogMaintenanceHandlingCreation;
+    class LogMaintenanceHandlingDestruction;
+    class LogMaintenanceHandlingUpdate;
+    class LogMaintenanceState;
+    class LogMedicalHandlingCreation;
+    class LogMedicalHandlingDestruction;
+    class LogMedicalHandlingUpdate;
+    class LogMedicalState;
+    class LogSupplyHandlingCreation;
+    class LogSupplyHandlingDestruction;
+    class LogSupplyHandlingUpdate;
+    class LogSupplyState;
+    class LogSupplyQuotas;
+    class LogSupplyChangeQuotasAck;
+    class LogSupplyPushFlowAck;
+    class LogSupplyPullFlowAck;
+    class ObjectCreation;
+    class ObjectUpdate;
+    class ObjectDestruction;
+    class ObjectMagicActionAck;
+    class MagicActionAck;
+    class UnitKnowledgeCreation;
+    class UnitKnowledgeUpdate;
+    class UnitKnowledgeDestruction;
+    class ObjectKnowledgeCreation;
+    class ObjectKnowledgeUpdate;
+    class ObjectKnowledgeDestruction;
+    class CrowdKnowledgeCreation;
+    class CrowdKnowledgeUpdate;
+    class CrowdKnowledgeDestruction;
+    class CrowdConcentrationKnowledgeCreation;
+    class CrowdConcentrationKnowledgeUpdate;
+    class CrowdConcentrationKnowledgeDestruction;
+    class CrowdFlowKnowledgeCreation;
+    class CrowdFlowKnowledgeUpdate;
+    class CrowdFlowKnowledgeDestruction;
+    class AutomatOrderAck;
+    class UnitOrderAck;
+    class FragOrderAck;
+    class UnitCreationRequestAck;
+    class SetAutomatModeAck;
+    class UnitChangeSuperiorAck;
+    class ChangeDiplomacyAck;
+    class AutomatChangeSuperiorAck;
+    class AutomatChangeKnowledgeGroupAck;
+    class ChangeLogisticLinksAck;
+    class Report;
+    class InvalidateReport;
+    class Trace;
+    class DecisionalState;
+    class StartUnitFire;
+    class StopUnitFire;
+    class Explosion;
+    class StartFireEffect;
+    class StopFireEffect;
+    class StartCrowdFire;
+    class StopCrowdFire;
+    class PopulationCreation;
+    class PopulationUpdate;
+    class CrowdCreation;
+    class CrowdUpdate;
+    class CrowdConcentrationCreation;
+    class CrowdConcentrationDestruction;
+    class CrowdConcentrationUpdate;
+    class CrowdFlowCreation;
+    class CrowdFlowDestruction;
+    class CrowdFlowUpdate;
+    class CrowdMagicActionAck;
+    class CrowdOrderAck;
+    class FolkCreation;
+    class FolkGraphUpdate;
+    class UrbanKnowledgeCreation;
+    class UrbanKnowledgeUpdate;
+    class UrbanKnowledgeDestruction;
+    class KnowledgeGroupMagicActionAck;
+    class KnowledgeGroupCreation;
+    class KnowledgeGroupCreationAck;
+    class KnowledgeGroupUpdate;
+    class KnowledgeGroupUpdateAck;
+    class KnowledgeGroupDestruction;
+    class UrbanCreation;
+    class UrbanUpdate;
+    class UrbanDetection;
+    class ControlGlobalWeather;
+    class ControlLocalWeatherCreation;
+    class ControlLocalWeatherDestruction;
+    class ControlPauseAck;
+    class ControlResumeAck;
+    class ControlChangeTimeFactorAck;
+    class ActionCreateFireOrderAck;
     class Listener;
-}
-
-namespace Common
-{
-    class MsgChangeDiplomacy;
-    class MsgAutomatOrder;
-    class MsgUnitOrder;
-    class MsgUnitChangeSuperior;
-    class MsgAutomatChangeSuperior;
-    class MsgAutomatChangeKnowledgeGroup;
-    class MsgChangeLogisticLinks;
-    class MsgCrowdOrder;
-    class MsgTextMessage;
-}
-
-namespace MsgsReplayToClient
-{
-    class MsgReplayToClient;
-    class MsgControlSkipToTickAck;
-    class MsgControlReplayInformation;
-}
-
-namespace MsgsAuthenticationToClient
-{
-    class MsgAuthenticationToClient;
-    class MsgAuthenticationResponse;
-    class MsgProfileCreation;
-    class MsgProfileCreationRequestAck;
-    class MsgProfileDestruction;
-    class MsgProfileDestructionRequestAck;
-    class MsgProfileUpdate;
-    class MsgProfileUpdateRequestAck;
-}
-
-namespace MsgsMessengerToClient
-{
-    class MsgMessengerToClient;
-    class MsgLimitCreationRequestAck;
-    class MsgLimitUpdateRequestAck;
-    class MsgLimitDestructionRequestAck;
-    class MsgLimaCreationRequestAck;
-    class MsgLimaUpdateRequestAck;
-    class MsgLimaDestructionRequestAck;
-    class MsgLimitCreation;
-    class MsgLimitUpdate;
-    class MsgLimitDestruction;
-    class MsgLimaCreation;
-    class MsgLimaUpdate;
-    class MsgLimaDestruction;
-    class MsgMessengerToClient;
-    class MsgIntelligenceCreation;
-    class MsgIntelligenceUpdate;
-    class MsgIntelligenceDestruction;
-    class MsgIntelligenceCreationRequestAck;
-    class MsgIntelligenceUpdateRequestAck;
-    class MsgIntelligenceDestructionRequestAck;
-    class MsgShapeCreation;
-    class MsgShapeUpdate;
-    class MsgShapeDestruction;
-    class MsgShapeCreationRequestAck;
-    class MsgShapeUpdateRequestAck;
-    class MsgShapeDestructionRequestAck;
-    class MsgMarkerCreation;
-    class MsgMarkerUpdate;
-    class MsgMarkerDestruction;
-}
-
-namespace MsgsAarToClient
-{
-    class MsgAarToClient;
-    class MsgAarInformation;
-    class MsgPlotResult;
-    class MsgIndicator;
+    class ChangeDiplomacy;
+    class AutomatOrder;
+    class UnitOrder;
+    class UnitChangeSuperior;
+    class AutomatChangeSuperior;
+    class AutomatChangeKnowledgeGroup;
+    class ChangeLogisticLinks;
+    class CrowdOrder;
+    class TextMessage;
+    class ReplayToClient;
+    class ControlSkipToTickAck;
+    class ControlReplayInformation;
+    class AuthenticationToClient;
+    class AuthenticationResponse;
+    class ProfileCreation;
+    class ProfileCreationRequestAck;
+    class ProfileDestruction;
+    class ProfileDestructionRequestAck;
+    class ProfileUpdate;
+    class ProfileUpdateRequestAck;
+    class MessengerToClient;
+    class LimitCreationRequestAck;
+    class LimitUpdateRequestAck;
+    class LimitDestructionRequestAck;
+    class LimaCreationRequestAck;
+    class LimaUpdateRequestAck;
+    class LimaDestructionRequestAck;
+    class LimitCreation;
+    class LimitUpdate;
+    class LimitDestruction;
+    class LimaCreation;
+    class LimaUpdate;
+    class LimaDestruction;
+    class MessengerToClient;
+    class IntelligenceCreation;
+    class IntelligenceUpdate;
+    class IntelligenceDestruction;
+    class IntelligenceCreationRequestAck;
+    class IntelligenceUpdateRequestAck;
+    class IntelligenceDestructionRequestAck;
+    class ShapeCreation;
+    class ShapeUpdate;
+    class ShapeDestruction;
+    class ShapeCreationRequestAck;
+    class ShapeUpdateRequestAck;
+    class ShapeDestructionRequestAck;
+    class MarkerCreation;
+    class MarkerUpdate;
+    class MarkerDestruction;
+    class AarToClient;
+    class AarInformation;
+    class PlotResult;
+    class Indicator;
 }
 
 namespace tools
@@ -240,7 +215,7 @@ public:
     //! @name Constructor/Destructor
     //@{
              AgentServerMsgMgr( tools::MessageDispatcher_ABC& dispatcher, tools::MessageSender_ABC& sender,
-             Services& services, Simulation& simu, kernel::Logger_ABC& logger, CommandHandler& commands );
+                                Services& services, Simulation& simu, kernel::Logger_ABC& logger, CommandHandler& commands );
     virtual ~AgentServerMsgMgr();
     //@}
 
@@ -249,18 +224,18 @@ public:
     void Connect( const std::string& host );
     void Disconnect();
 
-    virtual void Send( const MsgsClientToSim::MsgClientToSim&                       wrapper );
-    virtual void Send( const MsgsClientToAuthentication::MsgClientToAuthentication& wrapper );
-    virtual void Send( const MsgsClientToReplay::MsgClientToReplay&                 wrapper );
-    virtual void Send( const MsgsClientToAar::MsgClientToAar&                       wrapper );
-    virtual void Send( const MsgsClientToMessenger::MsgClientToMessenger&           wrapper ) ;
+    virtual void Send( const sword::ClientToSim& message );
+    virtual void Send( const sword::ClientToAuthentication& message );
+    virtual void Send( const sword::ClientToReplay& message );
+    virtual void Send( const sword::ClientToAar& message );
+    virtual void Send( const sword::ClientToMessenger& message ) ;
 
     void SetElements( Model& model, Profile& profile );
     //@}
 
     //! @name Callbacks/listeners
     //@{
-    void RegisterListener( boost::shared_ptr< MsgsSimToClient::Listener >& listener );
+    void RegisterListener( boost::shared_ptr< sword::Listener >& listener );
     //@}
 
     //! @name Statistics
@@ -272,245 +247,244 @@ public:
 private:
     //! @name Message callbacks
     //@{
-    void OnReceiveMsgSimToClient           ( const std::string& from, const MsgsSimToClient::MsgSimToClient&                        wrapper );
-    void OnReceiveMsgSimToClient2          ( const std::string& from, const MsgsSimToClient::MsgSimToClient&                        wrapper );
-    void OnReceiveMsgAuthenticationToClient( const std::string& from, const MsgsAuthenticationToClient::MsgAuthenticationToClient&  wrapper );
-    void OnReceiveMsgReplayToClient        ( const std::string& from, const MsgsReplayToClient::MsgReplayToClient&                  wrapper );
-    void OnReceiveMsgAarToClient           ( const std::string& from, const MsgsAarToClient::MsgAarToClient&                        wrapper );
-    void OnReceiveMsgMessengerToClient     ( const std::string& from, const MsgsMessengerToClient::MsgMessengerToClient&            wrapper );
-    void OnReceiveMsgDispatcherToClient    ( const std::string& from, const MsgsDispatcherToClient::MsgDispatcherToClient&          wrapper );
+    void OnReceiveSimToClient              ( const std::string& from, const sword::SimToClient& message );
+    void OnReceiveSimToClient2             ( const std::string& from, const sword::SimToClient& message );
+    void OnReceiveMsgAuthenticationToClient( const std::string& from, const sword::AuthenticationToClient& message );
+    void OnReceiveMsgReplayToClient        ( const std::string& from, const sword::ReplayToClient& message );
+    void OnReceiveMsgAarToClient           ( const std::string& from, const sword::AarToClient& message );
+    void OnReceiveMsgMessengerToClient     ( const std::string& from, const sword::MessengerToClient& message );
+    void OnReceiveMsgDispatcherToClient    ( const std::string& from, const sword::DispatcherToClient& message );
 
-    void OnReceiveMsgUnitVisionCones                       ( const MsgsSimToClient::MsgUnitVisionCones&                  message );
-    void OnReceiveMsgUnitInterVisibility                   ( const MsgsSimToClient::MsgUnitDetection&                    message );
-    void OnReceiveMsgObjectInterVisibility                 ( const MsgsSimToClient::MsgObjectDetection&                  message );
-    void OnReceiveMsgCrowdConcentrationInterVisibility( const MsgsSimToClient::MsgCrowdConcentrationDetection& message );
-    void OnReceiveMsgCrowdFlowInterVisibility         ( const MsgsSimToClient::MsgCrowdFlowDetection&          message );
-    void OnReceiveMsgDebugDrawPoints                       ( const MsgsSimToClient::MsgDebugPoints&                      message );
+    void OnReceiveUnitVisionCones                  ( const sword::UnitVisionCones&             message );
+    void OnReceiveUnitInterVisibility              ( const sword::UnitDetection&               message );
+    void OnReceiveObjectInterVisibility            ( const sword::ObjectDetection&             message );
+    void OnReceiveCrowdConcentrationInterVisibility( const sword::CrowdConcentrationDetection& message );
+    void OnReceiveCrowdFlowInterVisibility         ( const sword::CrowdFlowDetection&          message );
+    void OnReceiveMsgDebugDrawPoints               ( const sword::DebugPoints&                 message );
 
     // Control
-    void OnReceiveMsgControlPauseAck             ( const MsgsSimToClient::MsgControlPauseAck&                   message );
-    void OnReceiveMsgControlResumeAck            ( const MsgsSimToClient::MsgControlResumeAck&                  message );
-    void OnReceiveMsgControlChangeTimeFactorAck  ( const MsgsSimToClient::MsgControlChangeTimeFactorAck&        message );
-    void OnReceiveMsgControlDatetimeChangeAck    ( const MsgsSimToClient::MsgControlDatetimeChangeAck&          message );
-    void OnReceiveMsgControlSkipToTickAck        ( const MsgsReplayToClient::MsgControlSkipToTickAck&           message );
-    void OnReceiveMsgControlInformation          ( const MsgsSimToClient::MsgControlInformation&                message );
-    void OnReceiveMsgProfilingValues             ( const MsgsSimToClient::MsgControlProfilingInformation&       message );
-    void OnReceiveMsgCtrReplayInfo               ( const MsgsReplayToClient::MsgControlReplayInformation&       message );
-    void OnReceiveMsgControlMeteoGlobalAck       ();
-    void OnReceiveMsgControlMeteoLocalAck        ();
-    void OnReceiveMsgCheckPointSaveBegin         ();
-    void OnReceiveMsgCheckPointSaveEnd           ( const MsgsSimToClient::MsgControlCheckPointSaveEnd&          message );
-    void OnReceiveMsgCheckPointSetFrequencyAck   ();
-    void OnReceiveMsgCheckPointSaveNowAck        ();
-    void OnReceiveMsgControlBeginTick            ( const MsgsSimToClient::MsgControlBeginTick&                  message );
-    void OnReceiveMsgControlEndTick              ( const MsgsSimToClient::MsgControlEndTick&                    message );
-    void OnReceiveMsgAutomatCreation             ( const MsgsSimToClient::MsgAutomatCreation&                   message );
-    void OnReceiveMsgAutomatDestruction          ( const MsgsSimToClient::MsgAutomatDestruction&                message );
-    void OnReceiveMsgUnitCreation                ( const MsgsSimToClient::MsgUnitCreation&                      message );
-    void OnReceiveMsgUnitDestruction             ( const MsgsSimToClient::MsgUnitDestruction&                   message );
-    void OnReceiveMsgChangeDiplomacy             ( const Common::MsgChangeDiplomacy&                            message );
-    void OnReceiveMsgAuthenticationResponse      ( const MsgsAuthenticationToClient::MsgAuthenticationResponse& message );
-    void OnReceiveMsgControlMeteoGlobal          ( const MsgsSimToClient::MsgControlGlobalWeather&                message );
-    void OnReceiveMsgControlMeteoLocalCreation   ( const MsgsSimToClient::MsgControlLocalWeatherCreation&         message );
-    void OnReceiveMsgControlMeteoLocalDestruction( const MsgsSimToClient::MsgControlLocalWeatherDestruction&      message );
-    void OnReceiveMsgSendCurrentStateEnd         ( const MsgsSimToClient::MsgControlSendCurrentStateEnd&        message );
+    void OnReceiveControlPauseAck             ( const sword::ControlPauseAck&                   message );
+    void OnReceiveControlResumeAck            ( const sword::ControlResumeAck&                  message );
+    void OnReceiveControlChangeTimeFactorAck  ( const sword::ControlChangeTimeFactorAck&        message );
+    void OnReceiveControlDatetimeChangeAck    ( const sword::ControlDatetimeChangeAck&          message );
+    void OnReceiveControlSkipToTickAck        ( const sword::ControlSkipToTickAck&           message );
+    void OnReceiveControlInformation          ( const sword::ControlInformation&                message );
+    void OnReceiveMsgProfilingValues          ( const sword::ControlProfilingInformation&       message );
+    void OnReceiveMsgCtrReplayInfo            ( const sword::ControlReplayInformation&       message );
+    void OnReceiveControlMeteoGlobalAck       ();
+    void OnReceiveControlMeteoLocalAck        ();
+    void OnReceiveMsgCheckPointSaveBegin      ();
+    void OnReceiveMsgCheckPointSaveEnd        ( const sword::ControlCheckPointSaveEnd&          message );
+    void OnReceiveMsgCheckPointSetFrequencyAck();
+    void OnReceiveMsgCheckPointSaveNowAck     ();
+    void OnReceiveControlBeginTick            ( const sword::ControlBeginTick&                  message );
+    void OnReceiveControlEndTick              ( const sword::ControlEndTick&                    message );
+    void OnReceiveAutomatCreation             ( const sword::AutomatCreation&                   message );
+    void OnReceiveAutomatDestruction          ( const sword::AutomatDestruction&                message );
+    void OnReceiveUnitCreation                ( const sword::UnitCreation&                      message );
+    void OnReceiveUnitDestruction             ( const sword::UnitDestruction&                   message );
+    void OnReceiveChangeDiplomacy             ( const sword::ChangeDiplomacy&                     message );
+    void OnReceiveAuthenticationResponse      ( const sword::AuthenticationResponse& message );
+    void OnReceiveControlMeteoGlobal          ( const sword::ControlGlobalWeather&                message );
+    void OnReceiveControlMeteoLocalCreation   ( const sword::ControlLocalWeatherCreation&         message );
+    void OnReceiveControlMeteoLocalDestruction( const sword::ControlLocalWeatherDestruction&      message );
+    void OnReceiveMsgSendCurrentStateEnd      ( const sword::ControlSendCurrentStateEnd&          message );
 
     // Profiles
-    void OnReceiveMsgProfileCreation             ( const MsgsAuthenticationToClient::MsgProfileCreation&                message );
-    void OnReceiveMsgProfileCreationRequestAck   ( const MsgsAuthenticationToClient::MsgProfileCreationRequestAck&      message );
-    void OnReceiveMsgProfileDestruction          ( const MsgsAuthenticationToClient::MsgProfileDestruction&             message );
-    void OnReceiveMsgProfileDestructionRequestAck( const MsgsAuthenticationToClient::MsgProfileDestructionRequestAck&   message );
-    void OnReceiveMsgProfileUpdate               ( const MsgsAuthenticationToClient::MsgProfileUpdate&                  message );
-    void OnReceiveMsgProfileUpdateRequestAck     ( const MsgsAuthenticationToClient::MsgProfileUpdateRequestAck&        message );
+    void OnReceiveProfileCreation             ( const sword::ProfileCreation&                message );
+    void OnReceiveProfileCreationRequestAck   ( const sword::ProfileCreationRequestAck&      message );
+    void OnReceiveProfileDestruction          ( const sword::ProfileDestruction&             message );
+    void OnReceiveProfileDestructionRequestAck( const sword::ProfileDestructionRequestAck&   message );
+    void OnReceiveProfileUpdate               ( const sword::ProfileUpdate&                  message );
+    void OnReceiveProfileUpdateRequestAck     ( const sword::ProfileUpdateRequestAck&        message );
 
     // Side/Formation/Knowledge Group creation
-    void OnReceiveMsgKnowledgeGroupCreation   ( const MsgsSimToClient::MsgKnowledgeGroupCreation&    message );
-    void OnReceiveMsgKnowledgeGroupDestruction( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message );
-    void OnReceiveMsgPartyCreation            ( const MsgsSimToClient::MsgPartyCreation&             message );
-    void OnReceiveMsgFormationCreation        ( const MsgsSimToClient::MsgFormationCreation&         message );
-    void OnReceiveMsgFormationDestruction     ( const MsgsSimToClient::MsgFormationDestruction&      message );
+    void OnReceiveKnowledgeGroupCreation   ( const sword::KnowledgeGroupCreation&    message );
+    void OnReceiveKnowledgeGroupDestruction( const sword::KnowledgeGroupDestruction& message );
+    void OnReceiveMsgPartyCreation         ( const sword::PartyCreation&             message );
+    void OnReceiveFormationCreation        ( const sword::FormationCreation&         message );
+    void OnReceiveFormationDestruction     ( const sword::FormationDestruction&      message );
 
     // LTO begin
-    void OnReceiveMsgKnowledgeGroupMagicActionAck( const MsgsSimToClient::MsgKnowledgeGroupMagicActionAck&   message, unsigned long nCtx );
-    void OnReceiveMsgKnowledgeGroupUpdate        ( const MsgsSimToClient::MsgKnowledgeGroupUpdate&           message );
-    void OnReceiveMsgKnowledgeGroupUpdateAck     ( const MsgsSimToClient::MsgKnowledgeGroupUpdateAck&        message, unsigned long nCtx );
-    void OnReceiveMsgKnowledgeGroupCreationAck   ( const MsgsSimToClient::MsgKnowledgeGroupCreationAck&      message, unsigned long nCtx );
+    void OnReceiveKnowledgeGroupMagicActionAck( const sword::KnowledgeGroupMagicActionAck&   message, unsigned long nCtx );
+    void OnReceiveKnowledgeGroupUpdate        ( const sword::KnowledgeGroupUpdate&           message );
+    void OnReceiveKnowledgeGroupUpdateAck     ( const sword::KnowledgeGroupUpdateAck&        message, unsigned long nCtx );
+    void OnReceiveKnowledgeGroupCreationAck   ( const sword::KnowledgeGroupCreationAck&      message, unsigned long nCtx );
     // LTO end
 
     // Attributes
-    void OnReceiveMsgUnitAttributes     ( const MsgsSimToClient::MsgUnitAttributes&         message );
-    void OnReceiveMsgUnitMagicActionAck ( const MsgsSimToClient::MsgUnitMagicActionAck&     message, unsigned long nCtx );
-    void OnReceiveMsgUnitPathFind       ( const MsgsSimToClient::MsgUnitPathFind&           message );
-    void OnReceiveMsgAutomatAttributes  ( const MsgsSimToClient::MsgAutomatAttributes&      message );
+    void OnReceiveUnitAttributes     ( const sword::UnitAttributes&         message );
+    void OnReceiveUnitMagicActionAck ( const sword::UnitMagicActionAck&     message, unsigned long nCtx );
+    void OnReceiveUnitPathFind       ( const sword::UnitPathFind&           message );
+    void OnReceiveAutomatAttributes  ( const sword::AutomatAttributes&      message );
 
     // Log maintenance
-    void OnReceiveMsgLogMaintenanceHandlingCreation   ( const MsgsSimToClient::MsgLogMaintenanceHandlingCreation&       message );
-    void OnReceiveMsgLogMaintenanceHandlingDestruction( const MsgsSimToClient::MsgLogMaintenanceHandlingDestruction&    message );
-    void OnReceiveMsgLogMaintenanceHandlingUpdate     ( const MsgsSimToClient::MsgLogMaintenanceHandlingUpdate&         message );
-    void OnReceiveMsgLogMaintenanceState              ( const MsgsSimToClient::MsgLogMaintenanceState&                  message );
+    void OnReceiveLogMaintenanceHandlingCreation   ( const sword::LogMaintenanceHandlingCreation&       message );
+    void OnReceiveLogMaintenanceHandlingDestruction( const sword::LogMaintenanceHandlingDestruction&    message );
+    void OnReceiveLogMaintenanceHandlingUpdate     ( const sword::LogMaintenanceHandlingUpdate&         message );
+    void OnReceiveLogMaintenance              ( const sword::LogMaintenanceState&                  message );
 
     // Log sante
-    void OnReceiveMsgLogMedicalHandlingCreation   ( const MsgsSimToClient::MsgLogMedicalHandlingCreation&       message );
-    void OnReceiveMsgLogMedicalHandlingDestruction( const MsgsSimToClient::MsgLogMedicalHandlingDestruction&    message );
-    void OnReceiveMsgLogMedicalHandlingUpdate     ( const MsgsSimToClient::MsgLogMedicalHandlingUpdate&         message );
-    void OnReceiveMsgLogMedicalState              ( const MsgsSimToClient::MsgLogMedicalState&                  message );
+    void OnReceiveLogMedicalHandlingCreation   ( const sword::LogMedicalHandlingCreation&       message );
+    void OnReceiveLogMedicalHandlingDestruction( const sword::LogMedicalHandlingDestruction&    message );
+    void OnReceiveLogMedicalHandlingUpdate     ( const sword::LogMedicalHandlingUpdate&         message );
+    void OnReceiveLogMedicalState              ( const sword::LogMedicalState&                  message );
 
     // Log supply
-    void OnReceiveMsgLogSupplyHandlingCreation          ( const MsgsSimToClient::MsgLogSupplyHandlingCreation&      message );
-    void OnReceiveMsgLogSupplyHandlingDestruction       ( const MsgsSimToClient::MsgLogSupplyHandlingDestruction&   message );
-    void OnReceiveMsgLogSupplyHandlingUpdate            ( const MsgsSimToClient::MsgLogSupplyHandlingUpdate&        message );
-    void OnReceiveMsgLogSupplyState                     ( const MsgsSimToClient::MsgLogSupplyState&                 message );
-    void OnReceiveMsgLogSupplyQuotas                    ( const MsgsSimToClient::MsgLogSupplyQuotas&                message );
-    void OnReceiveMsgLogRavitaillementChangeQuotaAck    ( const MsgsSimToClient::MsgLogSupplyChangeQuotasAck&       message, unsigned long nCtx );
-    void OnReceiveMsgLogSupplyPushFlowAck               ( const MsgsSimToClient::MsgLogSupplyPushFlowAck&           message, unsigned long nCtx );
-    void OnReceiveMsgLogSupplyPullFlowAck               ( const MsgsSimToClient::MsgLogSupplyPullFlowAck&           message, unsigned long nCtx);
+    void OnReceiveLogSupplyHandlingCreation          ( const sword::LogSupplyHandlingCreation&      message );
+    void OnReceiveLogSupplyHandlingDestruction       ( const sword::LogSupplyHandlingDestruction&   message );
+    void OnReceiveLogSupplyHandlingUpdate            ( const sword::LogSupplyHandlingUpdate&        message );
+    void OnReceiveLogSupplyState                     ( const sword::LogSupplyState&                 message );
+    void OnReceiveLogSupplyQuotas                    ( const sword::LogSupplyQuotas&                message );
+    void OnReceiveMsgLogRavitaillementChangeQuotaAck ( const sword::LogSupplyChangeQuotasAck&       message, unsigned long nCtx );
+    void OnReceiveLogSupplyPushFlowAck               ( const sword::LogSupplyPushFlowAck&           message, unsigned long nCtx );
+    void OnReceiveLogSupplyPullFlowAck               ( const sword::LogSupplyPullFlowAck&           message, unsigned long nCtx);
 
     // Limas / Limits
-    void OnReceiveMsgLimitCreationRequestAck    ( const MsgsMessengerToClient::MsgLimitCreationRequestAck&    message);
-    void OnReceiveMsgLimitUpdateRequestAck      ( const MsgsMessengerToClient::MsgLimitUpdateRequestAck&      message);
-    void OnReceiveMsgLimitDestructionRequestAck ( const MsgsMessengerToClient::MsgLimitDestructionRequestAck& message);
-    void OnReceiveMsgLimaCreationRequestAck     ( const MsgsMessengerToClient::MsgLimaCreationRequestAck&     message);
-    void OnReceiveMsgLimaUpdateRequestAck       ( const MsgsMessengerToClient::MsgLimaUpdateRequestAck&       message);
-    void OnReceiveMsgLimaDestructionRequestAck  ( const MsgsMessengerToClient::MsgLimaDestructionRequestAck&  message);
-    void OnReceiveMsgLimitCreation              ( const MsgsMessengerToClient::MsgLimitCreation&              message );
-    void OnReceiveMsgLimitUpdate                ( const MsgsMessengerToClient::MsgLimitUpdate&                message );
-    void OnReceiveMsgLimitDestruction           ( const MsgsMessengerToClient::MsgLimitDestruction&           message );
-    void OnReceiveMsgLimaCreation               ( const MsgsMessengerToClient::MsgLimaCreation&               message );
-    void OnReceiveMsgLimaUpdate                 ( const MsgsMessengerToClient::MsgLimaUpdate&                 message );
-    void OnReceiveMsgLimaDestruction            ( const MsgsMessengerToClient::MsgLimaDestruction&            message );
+    void OnReceiveLimitCreationRequestAck    ( const sword::LimitCreationRequestAck&    message);
+    void OnReceiveLimitUpdateRequestAck      ( const sword::LimitUpdateRequestAck&      message);
+    void OnReceiveLimitDestructionRequestAck ( const sword::LimitDestructionRequestAck& message);
+    void OnReceiveLimaCreationRequestAck     ( const sword::LimaCreationRequestAck&     message);
+    void OnReceiveLimaUpdateRequestAck       ( const sword::LimaUpdateRequestAck&       message);
+    void OnReceiveLimaDestructionRequestAck  ( const sword::LimaDestructionRequestAck&  message);
+    void OnReceiveLimitCreation              ( const sword::LimitCreation&              message );
+    void OnReceiveLimitUpdate                ( const sword::LimitUpdate&                message );
+    void OnReceiveLimitDestruction           ( const sword::LimitDestruction&           message );
+    void OnReceiveLimaCreation               ( const sword::LimaCreation&               message );
+    void OnReceiveLimaUpdate                 ( const sword::LimaUpdate&                 message );
+    void OnReceiveLimaDestruction            ( const sword::LimaDestruction&            message );
 
     // Magic
-    void OnReceiveMsgMagicActionAck( const MsgsSimToClient::MsgMagicActionAck& message, unsigned long nCtx );
+    void OnReceiveMagicActionAck( const sword::MagicActionAck& message, unsigned long nCtx );
 
     // Object
-    void OnReceiveMsgObjectCreation      ( const MsgsSimToClient::MsgObjectCreation&       message );
-    void OnReceiveMsgObjectUpdate        ( const MsgsSimToClient::MsgObjectUpdate&         message );
-    void OnReceiveMsgObjectDestruction   ( const MsgsSimToClient::MsgObjectDestruction&    message );
-    void OnReceiveMsgObjectMagicActionAck( const MsgsSimToClient::MsgObjectMagicActionAck& message, unsigned long nCtx );
+    void OnReceiveObjectCreation      ( const sword::ObjectCreation&       message );
+    void OnReceiveObjectUpdate        ( const sword::ObjectUpdate&         message );
+    void OnReceiveObjectDestruction   ( const sword::ObjectDestruction&    message );
+    void OnReceiveObjectMagicActionAck( const sword::ObjectMagicActionAck& message, unsigned long nCtx );
 
     // Knowledge unit
-    void OnReceiveMsgUnitKnowledgeCreation   ( const MsgsSimToClient::MsgUnitKnowledgeCreation&    message );
-    void OnReceiveMsgUnitKnowledgeUpdate     ( const MsgsSimToClient::MsgUnitKnowledgeUpdate&      message );
-    void OnReceiveMsgUnitKnowledgeDestruction( const MsgsSimToClient::MsgUnitKnowledgeDestruction& message );
+    void OnReceiveUnitKnowledgeCreation   ( const sword::UnitKnowledgeCreation&    message );
+    void OnReceiveUnitKnowledgeUpdate     ( const sword::UnitKnowledgeUpdate&      message );
+    void OnReceiveUnitKnowledgeDestruction( const sword::UnitKnowledgeDestruction& message );
 
     // Knowledge object
-    void OnReceiveMsgObjectKnowledgeCreation   ( const MsgsSimToClient::MsgObjectKnowledgeCreation&    v );
-    void OnReceiveMsgObjectKnowledgeUpdate     ( const MsgsSimToClient::MsgObjectKnowledgeUpdate&      message );
-    void OnReceiveMsgObjectKnowledgeDestruction( const MsgsSimToClient::MsgObjectKnowledgeDestruction& message );
+    void OnReceiveObjectKnowledgeCreation   ( const sword::ObjectKnowledgeCreation&    v );
+    void OnReceiveObjectKnowledgeUpdate     ( const sword::ObjectKnowledgeUpdate&      message );
+    void OnReceiveObjectKnowledgeDestruction( const sword::ObjectKnowledgeDestruction& message );
 
     // Knowledge population
-    void OnReceiveMsgCrowdKnowledgeCreation                ( const MsgsSimToClient::MsgCrowdKnowledgeCreation&                 message );
-    void OnReceiveMsgCrowdKnowledgeUpdate                  ( const MsgsSimToClient::MsgCrowdKnowledgeUpdate&                   message );
-    void OnReceiveMsgCrowdKnowledgeDestruction             ( const MsgsSimToClient::MsgCrowdKnowledgeDestruction&              message );
-    void OnReceiveMsgCrowdConcentrationKnowledgeCreation   ( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeCreation&    message );
-    void OnReceiveMsgCrowdConcentrationKnowledgeUpdate     ( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeUpdate&      message );
-    void OnReceiveMsgCrowdConcentrationKnowledgeDestruction( const MsgsSimToClient::MsgCrowdConcentrationKnowledgeDestruction& message );
-    void OnReceiveMsgCrowdFlowKnowledgeCreation            ( const MsgsSimToClient::MsgCrowdFlowKnowledgeCreation&             message );
-    void OnReceiveMsgCrowdFlowKnowledgeUpdate              ( const MsgsSimToClient::MsgCrowdFlowKnowledgeUpdate&               message );
-    void OnReceiveMsgCrowdFlowKnowledgeDestruction         ( const MsgsSimToClient::MsgCrowdFlowKnowledgeDestruction&          message );
+    void OnReceiveCrowdKnowledgeCreation                ( const sword::CrowdKnowledgeCreation&                 message );
+    void OnReceiveCrowdKnowledgeUpdate                  ( const sword::CrowdKnowledgeUpdate&                   message );
+    void OnReceiveCrowdKnowledgeDestruction             ( const sword::CrowdKnowledgeDestruction&              message );
+    void OnReceiveCrowdConcentrationKnowledgeCreation   ( const sword::CrowdConcentrationKnowledgeCreation&    message );
+    void OnReceiveCrowdConcentrationKnowledgeUpdate     ( const sword::CrowdConcentrationKnowledgeUpdate&      message );
+    void OnReceiveCrowdConcentrationKnowledgeDestruction( const sword::CrowdConcentrationKnowledgeDestruction& message );
+    void OnReceiveCrowdFlowKnowledgeCreation            ( const sword::CrowdFlowKnowledgeCreation&             message );
+    void OnReceiveCrowdFlowKnowledgeUpdate              ( const sword::CrowdFlowKnowledgeUpdate&               message );
+    void OnReceiveCrowdFlowKnowledgeDestruction         ( const sword::CrowdFlowKnowledgeDestruction&          message );
 
     // Orders
-    void OnReceiveMsgAutomatOrder          ( const Common::MsgAutomatOrder&                    message );
-    void OnReceiveMsgAutomatOrderAck       ( const MsgsSimToClient::MsgAutomatOrderAck&        message, unsigned long nCtx );
-    void OnReceiveMsgUnitOrder             ( const Common::MsgUnitOrder&                       message );
-    void OnReceiveMsgUnitOrderAck          ( const MsgsSimToClient::MsgUnitOrderAck&           message, unsigned long nCtx );
-    void OnReceiveMsgFragOrderAck          ( const MsgsSimToClient::MsgFragOrderAck&           message, unsigned long nCtx );
-    void OnReceiveMsgUnitCreationRequestAck( const MsgsSimToClient::MsgUnitCreationRequestAck& message );
+    void OnReceiveAutomatOrder          ( const sword::AutomatOrder&                    message );
+    void OnReceiveAutomatOrderAck       ( const sword::AutomatOrderAck&        message, unsigned long nCtx );
+    void OnReceiveUnitOrder             ( const sword::UnitOrder&                       message );
+    void OnReceiveUnitOrderAck          ( const sword::UnitOrderAck&           message, unsigned long nCtx );
+    void OnReceiveFragOrderAck          ( const sword::FragOrderAck&           message, unsigned long nCtx );
+    void OnReceiveUnitCreationRequestAck( const sword::UnitCreationRequestAck& message );
 
     // Automate mode
-    void OnReceiveMsgSetAutomatModeAck( const MsgsSimToClient::MsgSetAutomatModeAck& message, unsigned long nCtx );
+    void OnReceiveSetAutomatModeAck( const sword::SetAutomatModeAck& message, unsigned long nCtx );
 
     // Hierachy changes
-    void OnReceiveMsgUnitChangeSuperiorAck          ( const MsgsSimToClient::MsgUnitChangeSuperiorAck&          message, unsigned long nCtx );
-    void OnReceiveMsgUnitChangeSuperior             ( const Common::MsgUnitChangeSuperior&                      message );
-    void OnReceiveMsgChangeDiplomacyAck             ( const MsgsSimToClient::MsgChangeDiplomacyAck&             message, unsigned long nCtx );
-    void OnReceiveMsgAutomatChangeSuperior          ( const Common::MsgAutomatChangeSuperior&                   message );
-    void OnReceiveMsgAutomatChangeSuperiorAck       ( const MsgsSimToClient::MsgAutomatChangeSuperiorAck&       message, unsigned long nCtx );
-    void OnReceiveMsgAutomatChangeKnowledgeGroup    ( const Common::MsgAutomatChangeKnowledgeGroup&             message );
-    void OnReceiveMsgAutomatChangeKnowledgeGroupAck ( const MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck& message, unsigned long nCtx );
-    void OnReceiveMsgAutomatChangeLogisticLinks     ( const Common::MsgChangeLogisticLinks&                     message );
-    void OnReceiveMsgAutomatChangeLogisticLinksAck  ( const MsgsSimToClient::MsgChangeLogisticLinksAck&         message, unsigned long nCtx );
+    void OnReceiveUnitChangeSuperiorAck          ( const sword::UnitChangeSuperiorAck&          message, unsigned long nCtx );
+    void OnReceiveUnitChangeSuperior             ( const sword::UnitChangeSuperior&                      message );
+    void OnReceiveChangeDiplomacyAck             ( const sword::ChangeDiplomacyAck&             message, unsigned long nCtx );
+    void OnReceiveAutomatChangeSuperior          ( const sword::AutomatChangeSuperior&                   message );
+    void OnReceiveAutomatChangeSuperiorAck       ( const sword::AutomatChangeSuperiorAck&       message, unsigned long nCtx );
+    void OnReceiveAutomatChangeKnowledgeGroup    ( const sword::AutomatChangeKnowledgeGroup&             message );
+    void OnReceiveAutomatChangeKnowledgeGroupAck ( const sword::AutomatChangeKnowledgeGroupAck& message, unsigned long nCtx );
+    void OnReceiveAutomatChangeLogisticLinks     ( const sword::ChangeLogisticLinks&                     message );
+    void OnReceiveAutomatChangeLogisticLinksAck  ( const sword::ChangeLogisticLinksAck&         message, unsigned long nCtx );
 
     // RC
-    void OnReceiveMsgCR              ( const MsgsSimToClient::MsgReport&           message );
-    void OnReceiveMsgInvalidateReport( const MsgsSimToClient::MsgInvalidateReport& message );
-    void OnReceiveMsgTrace           ( const MsgsSimToClient::MsgTrace&            message );
-    void OnReceiveMsgDecisionalState ( const MsgsSimToClient::MsgDecisionalState&  message );
+    void OnReceiveMsgCR              ( const sword::Report&           message );
+    void OnReceiveMsgInvalidateReport( const sword::InvalidateReport& message );
+    void OnReceiveTrace           ( const sword::Trace&            message );
+    void OnReceiveMsgDecisionalState ( const sword::DecisionalState&  message );
 
     // Tirs
-    void OnReceiveMsgStartUnitFire         ( const MsgsSimToClient::MsgStartUnitFire&       message );
-    void OnReceiveMsgStopUnitFire          ( const MsgsSimToClient::MsgStopUnitFire&        message );
-    void OnReceiveMsgExplosion             ( const MsgsSimToClient::MsgExplosion&           message );
-    void OnReceiveMsgStartFireEffect       ( const MsgsSimToClient::MsgStartFireEffect&     message );
-    void OnReceiveMsgStopFireEffect        ( const MsgsSimToClient::MsgStopFireEffect&      message );
-    void OnReceiveMsgStartCrowdFire   ( const MsgsSimToClient::MsgStartCrowdFire& message );
-    void OnReceiveMsgStopCrowdFire    ( const MsgsSimToClient::MsgStopCrowdFire&  message );
+    void OnReceiveStartUnitFire         ( const sword::StartUnitFire&       message );
+    void OnReceiveStopUnitFire          ( const sword::StopUnitFire&        message );
+    void OnReceiveExplosion             ( const sword::Explosion&           message );
+    void OnReceiveStartFireEffect       ( const sword::StartFireEffect&     message );
+    void OnReceiveStopFireEffect        ( const sword::StopFireEffect&      message );
+    void OnReceiveStartCrowdFire   ( const sword::StartCrowdFire& message );
+    void OnReceiveStopCrowdFire    ( const sword::StopCrowdFire&  message );
 
 
-    //Population
-    void OnMsgPopulationCreation           ( const MsgsSimToClient::MsgPopulationCreation&                 message );
-    void OnMsgPopulationUpdate             ( const MsgsSimToClient::MsgPopulationUpdate&                   message );
+    // Population
+    void OnPopulationCreation           ( const sword::PopulationCreation& message );
+    void OnPopulationUpdate             ( const sword::PopulationUpdate&   message );
 
     // Crowd
-    void OnMsgCrowdCreation                ( const MsgsSimToClient::MsgCrowdCreation&                 message );
-    void OnMsgCrowdDestruction             ( const MsgsSimToClient::MsgCrowdDestruction&              message );
-    void OnMsgCrowdUpdate                  ( const MsgsSimToClient::MsgCrowdUpdate&                   message );
-    void OnMsgCrowdConcentrationCreation   ( const MsgsSimToClient::MsgCrowdConcentrationCreation&    message );
-    void OnMsgCrowdConcentrationDestruction( const MsgsSimToClient::MsgCrowdConcentrationDestruction& message );
-    void OnMsgCrowdConcentrationUpdate     ( const MsgsSimToClient::MsgCrowdConcentrationUpdate&      message );
-    void OnMsgCrowdFlowCreation            ( const MsgsSimToClient::MsgCrowdFlowCreation&             message );
-    void OnMsgCrowdFlowDestruction         ( const MsgsSimToClient::MsgCrowdFlowDestruction&          message );
-    void OnMsgCrowdFlowUpdate              ( const MsgsSimToClient::MsgCrowdFlowUpdate&               message );
-    void OnReceiveMsgCrowdMagicActionAck   ( const MsgsSimToClient::MsgCrowdMagicActionAck&           message, unsigned long nCtx );
-    void OnReceiveMsgCrowdOrderAck         ( const MsgsSimToClient::MsgCrowdOrderAck&                 message, unsigned long nCtx );
-    void OnReceiveMsgCrowdOrder            ( const Common::MsgCrowdOrder&                             message );
+    void OnCrowdCreation                ( const sword::CrowdCreation&                 message );
+    void OnCrowdDestruction             ( const sword::CrowdDestruction&              message );
+    void OnCrowdUpdate                  ( const sword::CrowdUpdate&                   message );
+    void OnCrowdConcentrationCreation   ( const sword::CrowdConcentrationCreation&    message );
+    void OnCrowdConcentrationDestruction( const sword::CrowdConcentrationDestruction& message );
+    void OnCrowdConcentrationUpdate     ( const sword::CrowdConcentrationUpdate&      message );
+    void OnCrowdFlowCreation            ( const sword::CrowdFlowCreation&             message );
+    void OnCrowdFlowDestruction         ( const sword::CrowdFlowDestruction&          message );
+    void OnCrowdFlowUpdate              ( const sword::CrowdFlowUpdate&               message );
+    void OnReceiveCrowdMagicActionAck   ( const sword::CrowdMagicActionAck&           message, unsigned long nCtx );
+    void OnReceiveCrowdOrderAck         ( const sword::CrowdOrderAck&                 message, unsigned long nCtx );
+    void OnReceiveCrowdOrder            ( const sword::CrowdOrder&                      message );
 
     // Folk
-    void OnReceiveMsgFolkCreation               ( const MsgsSimToClient::MsgFolkCreation&    message );
-    void OnReceiveMsgFolkGraphUpdate            ( const MsgsSimToClient::MsgFolkGraphUpdate& message );
+    void OnReceiveFolkCreation               ( const sword::FolkCreation&    message );
+    void OnReceiveFolkGraphUpdate            ( const sword::FolkGraphUpdate& message );
 
     // Intelligence
-    void OnReceiveMsgIntelligenceCreation             ( const MsgsMessengerToClient::MsgIntelligenceCreation&              message );
-    void OnReceiveMsgIntelligenceUpdate               ( const MsgsMessengerToClient::MsgIntelligenceUpdate&                message );
-    void OnReceiveMsgIntelligenceDestruction          ( const MsgsMessengerToClient::MsgIntelligenceDestruction&           message );
-    void OnReceiveMsgIntelligenceCreationRequestAck   ( const MsgsMessengerToClient::MsgIntelligenceCreationRequestAck&    message );
-    void OnReceiveMsgIntelligenceUpdateRequestAck     ( const MsgsMessengerToClient::MsgIntelligenceUpdateRequestAck&      message );
-    void OnReceiveMsgIntelligenceDestructionRequestAck( const MsgsMessengerToClient::MsgIntelligenceDestructionRequestAck& message );
+    void OnReceiveIntelligenceCreation             ( const sword::IntelligenceCreation&              message );
+    void OnReceiveIntelligenceUpdate               ( const sword::IntelligenceUpdate&                message );
+    void OnReceiveIntelligenceDestruction          ( const sword::IntelligenceDestruction&           message );
+    void OnReceiveIntelligenceCreationRequestAck   ( const sword::IntelligenceCreationRequestAck&    message );
+    void OnReceiveIntelligenceUpdateRequestAck     ( const sword::IntelligenceUpdateRequestAck&      message );
+    void OnReceiveIntelligenceDestructionRequestAck( const sword::IntelligenceDestructionRequestAck& message );
 
     // Drawings
-    void OnReceiveMsgShapeCreation             ( const MsgsMessengerToClient::MsgShapeCreation&              message );
-    void OnReceiveMsgShapeUpdate               ( const MsgsMessengerToClient::MsgShapeUpdate&                message );
-    void OnReceiveMsgShapeDestruction          ( const MsgsMessengerToClient::MsgShapeDestruction&           message );
-    void OnReceiveMsgShapeCreationRequestAck   ( const MsgsMessengerToClient::MsgShapeCreationRequestAck&    message );
-    void OnReceiveMsgShapeUpdateRequestAck     ( const MsgsMessengerToClient::MsgShapeUpdateRequestAck&      message );
-    void OnReceiveMsgShapeDestructionRequestAck( const MsgsMessengerToClient::MsgShapeDestructionRequestAck& message );
+    void OnReceiveShapeCreation             ( const sword::ShapeCreation&              message );
+    void OnReceiveShapeUpdate               ( const sword::ShapeUpdate&                message );
+    void OnReceiveShapeDestruction          ( const sword::ShapeDestruction&           message );
+    void OnReceiveShapeCreationRequestAck   ( const sword::ShapeCreationRequestAck&    message );
+    void OnReceiveShapeUpdateRequestAck     ( const sword::ShapeUpdateRequestAck&      message );
+    void OnReceiveShapeDestructionRequestAck( const sword::ShapeDestructionRequestAck& message );
 
     // Notes
-    void OnReceiveMsgNoteCreation             ( const MsgsMessengerToClient::MsgMarkerCreation&              message );
-    void OnReceiveMsgNoteUpdate               ( const MsgsMessengerToClient::MsgMarkerUpdate&                message );
-    void OnReceiveMsgNoteDestruction          ( const MsgsMessengerToClient::MsgMarkerDestruction&           message );
-
+    void OnReceiveNoteCreation             ( const sword::MarkerCreation&              message );
+    void OnReceiveNoteUpdate               ( const sword::MarkerUpdate&                message );
+    void OnReceiveNoteDestruction          ( const sword::MarkerDestruction&           message );
 
     // Chat
-    void OnReceiveMsgTextMessage( const Common::MsgTextMessage& message );
+    void OnReceiveMsgTextMessage( const sword::TextMessage& message );
 
     // 3a
-    void OnReceiveMsgAarInformation( const MsgsAarToClient::MsgAarInformation& message );
-    void OnReceiveMsgAarResult     ( const MsgsAarToClient::MsgPlotResult&     message );
-    void OnReceiveMsgAarIndicator  ( const MsgsAarToClient::MsgIndicator&      message );
+    void OnReceiveMsgAarInformation( const sword::AarInformation& message );
+    void OnReceiveMsgAarResult     ( const sword::PlotResult&     message );
+    void OnReceiveMsgAarIndicator  ( const sword::Indicator&      message );
 
     // Urban
-    void OnReceiveMsgUrbanCreation            ( const MsgsSimToClient::MsgUrbanCreation&                    message );
-    void OnReceiveMsgUrbanUpdate              ( const MsgsSimToClient::MsgUrbanUpdate&                      message );
-    void OnReceiveMsgUrbanDetection           ( const MsgsSimToClient::MsgUrbanDetection&                   message );
-    void OnReceiveMsgUrbanKnowledgeCreation   ( const MsgsSimToClient::MsgUrbanKnowledgeCreation&           message );
-    void OnReceiveMsgUrbanKnowledgeUpdate     ( const MsgsSimToClient::MsgUrbanKnowledgeUpdate&             message );
-    void OnReceiveMsgUrbanKnowledgeDestruction( const MsgsSimToClient::MsgUrbanKnowledgeDestruction&        message );
+    void OnReceiveUrbanCreation            ( const sword::UrbanCreation&                    message );
+    void OnReceiveUrbanUpdate              ( const sword::UrbanUpdate&                      message );
+    void OnReceiveUrbanDetection           ( const sword::UrbanDetection&                   message );
+    void OnReceiveUrbanKnowledgeCreation   ( const sword::UrbanKnowledgeCreation&           message );
+    void OnReceiveUrbanKnowledgeUpdate     ( const sword::UrbanKnowledgeUpdate&             message );
+    void OnReceiveUrbanKnowledgeDestruction( const sword::UrbanKnowledgeDestruction&        message );
     //@}
 
     // LTO begin
     // CreateFireOrder
-    void OnReceiveMsgActionCreateFireOrderAck( const MsgsSimToClient::MsgActionCreateFireOrderAck& message, unsigned long nCtx );
+    void OnReceiveActionCreateFireOrderAck( const sword::ActionCreateFireOrderAck& message, unsigned long nCtx );
     // LTO end
 
     //! @name Helpers
@@ -528,7 +502,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< boost::shared_ptr< MsgsSimToClient::Listener > > T_Listeners;
+    typedef std::set< boost::shared_ptr< sword::Listener > > T_Listeners;
     //@}
 
     //! @name Member data

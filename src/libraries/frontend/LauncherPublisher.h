@@ -12,8 +12,8 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace MsgsAdminToLauncher { class MsgAdminToLauncher; }
-namespace MsgsLauncherToAdmin { class MsgLauncherToAdmin; }
+namespace sword { class AdminToLauncher; }
+namespace sword { class LauncherToAdmin; }
 
 namespace tools
 {
@@ -47,8 +47,8 @@ public:
 
     //! @name Operations
     //@{
-    void Send( const MsgsAdminToLauncher::MsgAdminToLauncher& message );
-    void Send( const MsgsLauncherToAdmin::MsgLauncherToAdmin& message );
+    void Send( const sword::AdminToLauncher& message );
+    void Send( const sword::LauncherToAdmin& message );
     //@}
 
 private:

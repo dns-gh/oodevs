@@ -14,7 +14,7 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 
-using namespace Common;
+using namespace sword;
 using namespace kernel;
 using namespace actions;
 

@@ -32,7 +32,7 @@ class AmmoEffect
 public:
     //! @name Constructors/Destructor
     //@{
-             AmmoEffect( const MsgsSimToClient::MsgStartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
+             AmmoEffect( const sword::StartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
     virtual ~AmmoEffect();
     //@}
 
@@ -55,7 +55,7 @@ private:
     //@{
     kernel::Controller& controller_;
     unsigned long id_;
-    Common::EnumFireEffectType type_;
+    sword::EnumFireEffectType type_;
     MSEllipse ellipse_;
     weather::PHY_Meteo meteo_;
     //@}

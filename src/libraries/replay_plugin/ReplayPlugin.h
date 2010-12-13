@@ -14,9 +14,9 @@
 #include "MT_Tools/MT_Timer_ABC.h"
 #include "MT_Tools/MT_TimerManager.h"
 
-namespace MsgsClientToReplay
+namespace sword
 {
-    class MsgClientToReplay;
+    class ClientToReplay;
 }
 
 namespace tools
@@ -55,7 +55,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive( const sword::SimToClient& message );
 
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
@@ -78,7 +78,7 @@ private:
 
     //! @name Helpers
     //@{
-    void OnReceive( const std::string& link, const MsgsClientToReplay::MsgClientToReplay& asnMsg );
+    void OnReceive( const std::string& link, const sword::ClientToReplay& asnMsg );
     void ChangeTimeFactor( unsigned factor );
     void Pause();
     void Resume();

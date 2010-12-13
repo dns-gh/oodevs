@@ -37,7 +37,7 @@ public:
     //@{
              SupplyRouteAttribute();
     explicit SupplyRouteAttribute( xml::xistream& xis );
-    explicit SupplyRouteAttribute( const Common::MsgMissionParameter_Value& attributes );
+    explicit SupplyRouteAttribute( const sword::MsgMissionParameter_Value& attributes );
     virtual ~SupplyRouteAttribute();
     //@}
 
@@ -60,8 +60,8 @@ public:
     //@{
     void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     void Serialize ( HLA_UpdateFunctor& functor ) const;
-    virtual void SendFullState( Common::ObjectAttributes& asn ) const;
-    virtual void SendUpdate( Common::ObjectAttributes& asn ) const;
+    virtual void SendFullState( sword::ObjectAttributes& asn ) const;
+    virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
     virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     //@}
 

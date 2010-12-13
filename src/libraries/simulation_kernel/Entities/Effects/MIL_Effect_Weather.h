@@ -36,8 +36,8 @@ public:
 private:
     //! @name Network
     //@{
-    void SendMsgStartEffect() const;
-    void SendMsgStopEffect () const;
+    void SendStartEffect() const;
+    void SendStopEffect () const;
     //@}
 
 private:

@@ -36,7 +36,7 @@ Quotas::~Quotas()
 // Name: Quotas::DoUpdate
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void Quotas::DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas& message )
+void Quotas::DoUpdate( const sword::LogSupplyQuotas& message )
 {
     quotas_.resize( message.quotas().elem_size() );
     for( int i = 0; i < message.quotas().elem_size(); ++i )

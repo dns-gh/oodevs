@@ -31,7 +31,7 @@ namespace kernel
 // Created: SBO 2007-10-18
 // =============================================================================
 class EntityIntelligences : public kernel::EntityHierarchies< kernel::IntelligenceHierarchies >
-                          , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgIntelligenceCreation >
+                          , public kernel::Updatable_ABC< sword::IntelligenceCreation >
 {
 public:
     //! @name Constructors/Destructor
@@ -55,7 +55,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsMessengerToClient::MsgIntelligenceCreation& message );
+    virtual void DoUpdate( const sword::IntelligenceCreation& message );
     virtual std::string GetSymbol() const;
     virtual std::string GetLevel() const;
     virtual void UpdateSymbol( bool up = true );

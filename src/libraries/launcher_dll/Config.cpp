@@ -13,7 +13,6 @@
 #include <shlobj.h>
 #include <qsettings.h>
 #include <qapplication.h>
-
 #pragma warning( push )
 #pragma warning( disable: 4127 4511 4512 )
 #include <boost/program_options.hpp>
@@ -24,13 +23,15 @@
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
 
+using namespace launcher;
+
 namespace
 {
     QString ReadDataDirectory()
     {
         QSettings settings;
         settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/DataDirectory", "" );
+        return settings.readEntry( "/sword/DataDirectory", "" );
     }
 
     std::string GetDefaultRoot( const std::string& appName )
@@ -43,8 +44,6 @@ namespace
         return ( bfs::path( myDocuments, bfs::native ) / appName ).native_file_string();
     }
 }
-
-using namespace launcher;
 
 // -----------------------------------------------------------------------------
 // Name: Config constructor

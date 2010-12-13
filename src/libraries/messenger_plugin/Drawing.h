@@ -45,7 +45,7 @@ class Drawing
 public:
     //! @name Constructors/Destructor
     //@{
-    Drawing( unsigned int id, const MsgsClientToMessenger::MsgShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter );
+    Drawing( unsigned int id, const sword::ShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter );
              Drawing( unsigned int id, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
              Drawing( unsigned int id, const Drawing& rhs );
     virtual ~Drawing();
@@ -54,7 +54,7 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    void Update( const MsgsClientToMessenger::MsgShapeUpdateRequest& asn );
+    void Update( const sword::ShapeUpdateRequest& asn );
     virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const;
@@ -73,12 +73,12 @@ private:
     //! @name Helpers
     //@{
     void ReadPoint( xml::xistream& xis );
-    void SerializePoint( const Common::MsgCoordLatLong& point, xml::xostream& xos ) const;
+    void SerializePoint( const sword::MsgCoordLatLong& point, xml::xostream& xos ) const;
     //@}
 
     //! @name Helpers
     //@{
-    typedef std::vector< Common::MsgCoordLatLong > T_Points;
+    typedef std::vector< sword::MsgCoordLatLong > T_Points;
     //@}
 
 public:

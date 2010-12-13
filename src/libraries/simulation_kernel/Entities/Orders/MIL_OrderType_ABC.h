@@ -10,7 +10,7 @@
 #ifndef __MIL_OrderType_ABC_h_
 #define __MIL_OrderType_ABC_h_
 
-namespace Common
+namespace sword
 {
     class MsgMissionParameters;
 }
@@ -61,7 +61,8 @@ public:
     //! @name Copy operations
     //@{
     void InitializeDefault( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters ) const;
-    bool Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, Common::MsgMissionParameters& to, const MIL_OrderContext& context ) const;
+
+    bool Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, sword::MsgMissionParameters& to, const MIL_OrderContext& context ) const;
     //@}
 
 protected:

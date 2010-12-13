@@ -63,12 +63,12 @@ Who::Who( const dispatcher::Agent_ABC& entity, int detectionLevel )
 namespace
 {
     // $$$$ SBO 2008-07-24: hack to force update of real entities
-    int ComputeLevel( const MsgsSimToClient::MsgUnitAttributes& attributes )
+    int ComputeLevel( const sword::UnitAttributes& attributes )
     {
         return attributes.has_etat_operationnel()
             || attributes.has_dotation_eff_materiel()
             || attributes.has_dotation_eff_personnel()
-            ? Common::identified : -1;
+            ? sword::identified : -1;
     }
 }
 
@@ -76,7 +76,7 @@ namespace
 // Name: Who constructor
 // Created: SBO 2008-07-22
 // -----------------------------------------------------------------------------
-Who::Who( const dispatcher::Agent_ABC& entity, const MsgsSimToClient::MsgUnitAttributes& attributes )
+Who::Who( const dispatcher::Agent_ABC& entity, const sword::UnitAttributes& attributes )
     : agent_( &entity )
     , automat_( 0 )
     , attributes_( &attributes )
@@ -210,14 +210,14 @@ namespace
             return "UNK";
     }
 
-    std::string OperationalState( const Common::EnumOperationalStatus& status )
+    std::string OperationalState( const sword::EnumOperationalStatus& status )
     {
         switch( status )
         {
-            case Common::detruit_tactiquement:
-            case Common::detruit_totalement:
+            case sword::detruit_tactiquement:
+            case sword::detruit_totalement:
                 return "NOP";
-            case Common::operationnel:
+            case sword::operationnel:
                 return "OPR";
             default:
                 break;
@@ -232,7 +232,7 @@ namespace
 // -----------------------------------------------------------------------------
 std::string Who::GetFilterHostility() const
 {
-    if( level_ > Common::detected )
+    if( level_ > sword::detected )
     {
         if( agent_ )
             return Hostility( agent_->GetSuperior() );
@@ -247,7 +247,7 @@ std::string Who::GetFilterHostility() const
 // -----------------------------------------------------------------------------
 std::string Who::GetFilterOperationalState() const
 {
-    if( agent_ && level_ > Common::recognized )
+    if( agent_ && level_ > sword::recognized )
         return OperationalState( agent_->GetOperationalState() );
     return "NKN";
 }

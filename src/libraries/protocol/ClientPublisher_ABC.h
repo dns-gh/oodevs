@@ -10,59 +10,20 @@
 #ifndef __ClientPublisher_ABC_h_
 #define __ClientPublisher_ABC_h_
 
-namespace MsgsAarToClient
-{
-    class MsgAarToClient;
-}
+#include <string>
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgSimToClient;
-}
-
-namespace MsgsAuthenticationToClient
-{
-    class MsgAuthenticationToClient;
-}
-
-namespace MsgsReplayToClient
-{
-    class MsgReplayToClient;
-}
-
-namespace MsgsMessengerToClient
-{
-    class MsgMessengerToClient;
-}
-
-namespace MsgsDispatcherToClient
-{
-    class MsgDispatcherToClient;
-}
-
-namespace MsgsReplayToClient
-{
-    class MsgReplayToClient;
-}
-
-namespace MsgsClientToAar
-{
-    class MsgClientToAar;
-}
-
-namespace MsgsClientToSim
-{
-    class MsgClientToSim;
-}
-
-namespace MsgsClientToReplay
-{
-    class MsgClientToReplay;
-}
-
-namespace MsgsClientToAuthentication
-{
-    class MsgClientToAuthentication;
+    class AarToClient;
+    class SimToClient;
+    class AuthenticationToClient;
+    class ReplayToClient;
+    class MessengerToClient;
+    class DispatcherToClient;
+    class ClientToAar;
+    class ClientToSim;
+    class ClientToReplay;
+    class ClientToAuthentication;
 }
 
 namespace dispatcher
@@ -84,12 +45,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const MsgsSimToClient::MsgSimToClient&                       message ) = 0;
-    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& message ) = 0;
-    virtual void Send( const MsgsReplayToClient::MsgReplayToClient&                 message ) = 0;
-    virtual void Send( const MsgsAarToClient::MsgAarToClient&                       message ) = 0;
-    virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient&           message ) = 0;
-    virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient&         message ) = 0;
+    virtual void Send( const sword::SimToClient&                      message ) = 0;
+    virtual void Send( const sword::AuthenticationToClient& message ) = 0;
+    virtual void Send( const sword::ReplayToClient&                message ) = 0;
+    virtual void Send( const sword::AarToClient&                       message ) = 0;
+    virtual void Send( const sword::MessengerToClient&          message ) = 0;
+    virtual void Send( const sword::DispatcherToClient&        message ) = 0;
     //@}
 
     //! @name Accessors

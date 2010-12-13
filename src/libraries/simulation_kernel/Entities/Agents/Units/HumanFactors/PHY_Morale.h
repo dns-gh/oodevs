@@ -14,7 +14,7 @@
 
 #include "MT_Tools/MT_Stl.h"
 
-namespace Common
+namespace sword
 {
     enum EnumUnitMorale;
 }
@@ -47,7 +47,7 @@ public:
     static       void        Initialize();
     static       void        Terminate ();
     static const PHY_Morale* Find      ( const std::string& strName );
-    static const PHY_Morale* Find      ( Common::EnumUnitMorale nAsnID );
+    static const PHY_Morale* Find      ( sword::EnumUnitMorale nAsnID );
     static const PHY_Morale* Find      ( unsigned int nID );
     //@}
 
@@ -56,7 +56,7 @@ public:
     const std::string&        GetName  () const;
           unsigned int                GetID    () const;
           double            GetWeight() const;
-          Common::EnumUnitMorale GetAsnID () const;
+          sword::EnumUnitMorale GetAsnID () const;
     //@}
 
     //! @name Operators
@@ -78,13 +78,13 @@ private:
     //@}
 
 private:
-     PHY_Morale( const std::string& strName, E_MoraleType nType, Common::EnumUnitMorale nAsnID, double rDIAWeight );
+     PHY_Morale( const std::string& strName, E_MoraleType nType, sword::EnumUnitMorale nAsnID, double rDIAWeight );
     ~PHY_Morale();
 
 private:
     const std::string          strName_;
     const E_MoraleType         nType_;
-    const Common::EnumUnitMorale nAsnID_;
+    const sword::EnumUnitMorale nAsnID_;
     const double             rDIAWeight_;
 
 private:

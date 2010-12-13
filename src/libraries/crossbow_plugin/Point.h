@@ -12,7 +12,7 @@
 
 #include "Shape_ABC.h"
 
-namespace Common
+namespace sword
 {
     class MsgLocation;
     class MsgCoordLatLong;
@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Point();
-    explicit Point( const Common::MsgCoordLatLong& coord );
+    explicit Point( const sword::MsgCoordLatLong& coord );
     explicit Point( const OGRPoint& point );
     virtual ~Point();
     //@}
@@ -45,8 +45,8 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( std::ostream& geometry ) const;
-    virtual void Serialize( Common::MsgLocation& message ) const;
-    virtual void Serialize( Common::MsgCoordLatLong& message ) const;
+    virtual void Serialize( sword::MsgLocation& message ) const;
+    virtual void Serialize( sword::MsgCoordLatLong& message ) const;
     //@}
 
     //! @name

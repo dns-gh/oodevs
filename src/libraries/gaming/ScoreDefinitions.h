@@ -43,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const MsgsAarToClient::MsgAarInformation& asnMsg );
+    void Update( const sword::AarInformation& asnMsg );
     void Purge();
     //@}
 

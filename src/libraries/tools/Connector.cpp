@@ -25,6 +25,7 @@ Connector::Connector( boost::asio::io_service& service, SocketManager& manager, 
     , manager_ ( manager )
     , callback_( callback )
     , resolver_( service )
+    , closed_  ( false )
 {
     // NOTHING
 }
@@ -67,6 +68,7 @@ void Connector::Connect( const std::string& endpoint )
 // -----------------------------------------------------------------------------
 void Connector::Close()
 {
+    closed_ = true;
     resolver_.cancel();
 }
 
@@ -76,6 +78,8 @@ void Connector::Close()
 // -----------------------------------------------------------------------------
 void Connector::OnResolve( const std::string& endpoint, const boost::system::error_code& error, boost::asio::ip::tcp::resolver::iterator it )
 {
+    if( closed_ )
+        return;
     if( ! error )
         DoConnect( *it );
     else
@@ -88,6 +92,8 @@ void Connector::OnResolve( const std::string& endpoint, const boost::system::err
 // -----------------------------------------------------------------------------
 void Connector::DoConnect( const boost::asio::ip::tcp::endpoint& endpoint )
 {
+    if( closed_ )
+        return;
     boost::shared_ptr< boost::asio::ip::tcp::socket > socket( new boost::asio::ip::tcp::socket( service_ ) );
     socket->async_connect( endpoint, boost::bind( &Connector::OnConnect, this, socket, endpoint, boost::asio::placeholders::error ) );
 }
@@ -98,6 +104,8 @@ void Connector::DoConnect( const boost::asio::ip::tcp::endpoint& endpoint )
 // -----------------------------------------------------------------------------
 void Connector::OnConnect( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket, const boost::asio::ip::tcp::endpoint& endpoint, const boost::system::error_code& error )
 {
+    if( closed_ )
+        return;
     if( ! error )
         manager_.Add( socket );
     else

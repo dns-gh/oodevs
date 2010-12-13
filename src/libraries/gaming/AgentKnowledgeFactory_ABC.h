@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::AgentKnowledge_ABC* CreateAgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgUnitKnowledgeCreation& message ) = 0;
+    virtual kernel::AgentKnowledge_ABC* CreateAgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const sword::UnitKnowledgeCreation& message ) = 0;
     //@}
 };
 

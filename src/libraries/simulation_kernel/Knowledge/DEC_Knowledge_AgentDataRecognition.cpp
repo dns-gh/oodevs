@@ -149,7 +149,7 @@ void DEC_Knowledge_AgentDataRecognition::Update( const DEC_Knowledge_AgentDataRe
 // Name: DEC_Knowledge_AgentDataRecognition::SendChangedState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataRecognition::SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_AgentDataRecognition::SendChangedState( sword::UnitKnowledgeUpdate& asnMsg ) const
 {
     if( bOperationalStateChanged_ )
         asnMsg.set_etat_op( std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) ));
@@ -166,7 +166,7 @@ void DEC_Knowledge_AgentDataRecognition::SendChangedState( MsgsSimToClient::MsgU
 // Name: DEC_Knowledge_AgentDataRecognition::SendFullState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataRecognition::SendFullState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_AgentDataRecognition::SendFullState( sword::UnitKnowledgeUpdate& asnMsg ) const
 {
     if( nTimeLastUpdate_ == 0 )
         return;

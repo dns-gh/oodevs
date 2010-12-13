@@ -22,10 +22,10 @@ namespace kernel
     class Workers;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgUnitVisionCones;
-    class MsgUnitAttributes;
+    class UnitVisionCones;
+    class UnitAttributes;
 }
 
 class Surface;
@@ -39,8 +39,8 @@ class VisionMap;
 // Created: AGE 2006-02-14
 // =============================================================================
 class VisionCones : public kernel::Extension_ABC
-                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitVisionCones >
-                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+                  , public kernel::Updatable_ABC< sword::UnitVisionCones >
+                  , public kernel::Updatable_ABC< sword::UnitAttributes >
                   , public kernel::Drawable_ABC
 {
 public:
@@ -72,8 +72,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitVisionCones& message );
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
+    virtual void DoUpdate( const sword::UnitVisionCones& message );
+    virtual void DoUpdate( const sword::UnitAttributes& message );
     void Invalidate();
     void Update() const;
     void CancelCurrent();
