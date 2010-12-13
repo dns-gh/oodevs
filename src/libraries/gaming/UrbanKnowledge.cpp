@@ -109,7 +109,15 @@ void UrbanKnowledge::DisplayInSummary( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 QString UrbanKnowledge::GetName() const
 {
-    return pRealUrban_ ? QString( pRealUrban_->GetName().ascii() ) : tools::translate( "Urban", "Unknown urban object" );
+    if( pRealUrban_ )
+    {
+        std::string name = pRealUrban_->GetName();
+        if ( name.empty() )
+            return QString( tools::translate( "Urban", "Urban block[%1]" ).arg( pRealUrban_->GetId() ) );
+        return QString( pRealUrban_->GetName().ascii() );
+    }
+    return tools::translate( "Urban", "Unknown urban object" );
+
 }
 
 // -----------------------------------------------------------------------------
