@@ -10,17 +10,17 @@
       <attrition destruction="0.5" protection="UnarmouredVehicle" repairable-with-evacuation="0.3" repairable-without-evacuation="0.2"/>
       <attrition destruction="0.7" protection="Combatant" repairable-with-evacuation="0.25" repairable-without-evacuation="0.05"/>
     </attritions>
-    <urbanModifiers>
-      <urbanModifier material-type="Wood" value="0.2"/>
-      <urbanModifier material-type="Concrete" value="0.3"/>
-      <urbanModifier material-type="Brick" value="0.4"/>
-      <urbanModifier material-type="Metal" value="0.5"/>
-      <urbanModifier material-type="Cob" value="0.6"/>
-      <urbanModifier material-type="Prefab" value="0.7"/>
-      <urbanModifier material-type="Vegetation" value="0.8"/>
-    </urbanModifiers>
-  </dotation>
-  <dotation category="14,5-mm Bullet" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="2" name="munition" nature="Solid" package-mass="0.035" package-size="200" package-volume="0.025" type="Mitraille">
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0.2"/>
+      <urban-modifier material-type="Concrete" value="0.3"/>
+      <urban-modifier material-type="Brick" value="0.4"/>
+      <urban-modifier material-type="Metal" value="0.5"/>
+      <urban-modifier material-type="Cob" value="0.6"/>
+      <urban-modifier material-type="Prefab" value="0.7"/>
+      <urban-modifier material-type="Vegetation" value="0.8"/>
+    </urban-modifiers>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="2" id-nature="3" name="14,5-mm Bullet" nature="Solid" package-mass="0.035" package-size="200" package-volume="0.025" type="Mitraille">
     <attritions>
       <attrition destruction="0.01" protection="HeavyTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.15"/>
       <attrition destruction="0.01" protection="MediumTank" repairable-with-evacuation="0.07" repairable-without-evacuation="0.2"/>
