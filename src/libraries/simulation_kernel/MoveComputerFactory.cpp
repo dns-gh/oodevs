@@ -12,6 +12,7 @@
 #include "simulation_kernel/DefaultMoveComputer.h"
 #include "simulation_kernel/DefaultSpeedComputer.h"
 #include "simulation_kernel/DefaultMaxSlopeComputer.h"
+#include "simulation_kernel/DefaultMagicMoveComputer.h"
 
 using namespace moving;
 
@@ -40,6 +41,16 @@ MoveComputerFactory::~MoveComputerFactory()
 std::auto_ptr< MoveComputer_ABC > MoveComputerFactory::CreateMoveComputer() const
 {
     std::auto_ptr< MoveComputer_ABC > pMoveComputer( new DefaultMoveComputer() );
+    return pMoveComputer;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MoveComputerFactory CreateMoveComputer
+// Created: MGD 2009-08-13
+// -----------------------------------------------------------------------------
+std::auto_ptr< MoveComputer_ABC > MoveComputerFactory::CreateMagicMoveComputer() const
+{
+    std::auto_ptr< MoveComputer_ABC > pMoveComputer( new DefaultMagicMoveComputer() );
     return pMoveComputer;
 }
 

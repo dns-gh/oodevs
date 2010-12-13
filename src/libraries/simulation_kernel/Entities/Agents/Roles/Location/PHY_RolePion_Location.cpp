@@ -263,7 +263,7 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 {
-    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
+    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMagicMoveComputer();
     pion_.Execute( *moveComputer );
 
     if( !moveComputer->CanMove() && !moveComputer->CanMoveOverride() )
