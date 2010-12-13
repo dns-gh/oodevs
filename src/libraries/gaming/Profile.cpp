@@ -29,6 +29,7 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 #include "protocol/ProtocolVersionChecker.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/AuthenticationSenders.h"
@@ -242,13 +243,7 @@ bool Profile::IsVisible( const Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool Profile::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
 {
-    if( const Entity_ABC* knownEntity = knowledge.GetEntity() )
-        if( IsInHierarchy( *knownEntity, readEntities_, false ) )
-            return true;
-    for( CIT_Entities it = readEntities_.begin(); it != readEntities_.end(); ++it )
-        if( IsKnowledgeVisibleByEntity( knowledge, **it ) )
-            return true;
-    return false;
+    return IsInHierarchy( knowledge.GetOwner(), readEntities_, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -292,39 +287,69 @@ bool Profile::CanDoMagic( const Entity_ABC& entity ) const
     return simulation_ && supervision_ && CanBeOrdered( entity );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFilter::IsChildOfCommunicationHierarchy
+// Created: SBO 2007-11-15
+// -----------------------------------------------------------------------------
+bool IsChildOfCommunicationHierarchy( const CommunicationHierarchies& target, const Entity_ABC& entity )
+{
+    const kernel::TacticalHierarchies* tacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
+    if( !tacticalHierarchies )
+        return false;
+
+    tools::Iterator< const Entity_ABC& > children = tacticalHierarchies->CreateSubordinateIterator();
+    while( children.HasMoreElements() )
+    {
+        const Entity_ABC& child = children.NextElement();
+        const CommunicationHierarchies* childCommunicationHierarchies = child.Retrieve< CommunicationHierarchies >();
+        if( childCommunicationHierarchies )
+        {
+            if( &child == &target.GetEntity() )
+                return true;
+            if( childCommunicationHierarchies->IsSubordinateOf( target.GetEntity() ) )
+                return true;
+            if( target.IsSubordinateOf( child ) )
+                return true;
+        }
+        return IsChildOfCommunicationHierarchy( target, child );
+    }
+    return false;
+}
+
 // -----------------------------------------------------------------------------
 // Name: Profile::IsInHierarchy
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-bool Profile::IsInHierarchy( const Entity_ABC& entity, const T_Entities& entities, bool childOnly )
+bool Profile::IsInHierarchy( const Entity_ABC& entityToTest, const T_Entities& entities, bool childOnly )
 {
-    if( entities.find( &entity ) != entities.end() )
+    //$$$$ NLD - 2010-11-10 - hum, compliqué :)
+    if( entities.find( &entityToTest ) != entities.end() )
         return true;
-    const TacticalHierarchies* tactical = entity.Retrieve< TacticalHierarchies >();
-    const CommunicationHierarchies* communication = entity.Retrieve< CommunicationHierarchies >();
-    const IntelligenceHierarchies* intelligence = entity.Retrieve< IntelligenceHierarchies >();
+    const TacticalHierarchies* tactical = entityToTest.Retrieve< TacticalHierarchies >();
+    const CommunicationHierarchies* communication = entityToTest.Retrieve< CommunicationHierarchies >();
+    const IntelligenceHierarchies* intelligence = entityToTest.Retrieve< IntelligenceHierarchies >();
     if( !tactical && !communication && !intelligence )
         return true;
-    if( ( IsInSpecificHierarchy( entity, tactical, entities, childOnly ) && !( communication && communication->IsJammed() ) ) ||
-        IsInSpecificHierarchy( entity, intelligence, entities, childOnly ) )
+    if( ( IsInSpecificHierarchy( entityToTest, tactical, entities, childOnly ) && !( communication && communication->IsJammed() ) ) ||
+        IsInSpecificHierarchy( entityToTest, intelligence, entities, childOnly ) )
         return true;
     if( childOnly )
-        return IsInSpecificHierarchy( entity, communication, entities, childOnly );
-    if( entity.GetTypeName() == KnowledgeGroup_ABC::typeName_ )
+        return IsInSpecificHierarchy( entityToTest, communication, entities, childOnly );
+
+    // Knowledges specific case
+    if( entityToTest.GetTypeName() == KnowledgeGroup_ABC::typeName_ )
     {
-        if( IsInSpecificHierarchy( entity, communication, entities, childOnly ) )
+        if( !communication )
+            return false;
+        if( IsInSpecificHierarchy( entityToTest, communication, entities, childOnly ) )
             return true;
-        if( communication )
-            for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
-            {
-                const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
-                if( !hierarchy )
-                {
-                    const TacticalHierarchies* tacticalHierarchies = ( *it )->Retrieve< kernel::TacticalHierarchies >();
-                    if( tacticalHierarchies && communication->IsSubordinateOf( tacticalHierarchies->GetTop() ) )
-                        return true;
-                }
-            }
+        for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
+        {
+            const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
+            if( !hierarchy ) // = (*it) est une formation ?
+                return IsChildOfCommunicationHierarchy( *communication, **it );
+        }
         return false;
     }
     for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
@@ -332,7 +357,9 @@ bool Profile::IsInHierarchy( const Entity_ABC& entity, const T_Entities& entitie
         const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
         if( hierarchy && tactical && hierarchy->GetSuperior() == 0 && tactical->IsSubordinateOf( **it ) )
             return true;
-        if( AreInSameKnowledgeGroup( entity, **it, true ) )
+        
+        bool isObject = ( entityToTest.GetTypeName() == Object_ABC::typeName_ );
+        if( AreInSameKnowledgeGroup( entityToTest, **it, isObject ) )
             return true;
     }
     return false;
