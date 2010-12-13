@@ -607,7 +607,7 @@
     </target>
 
     <target name="shield_test" depends="library.shield">
-        <build-test name="shield" depends="protobuf" excludes="**/*.h"
+        <build-test name="shield" depends="boost,protobuf" excludes="**/*.h"
             libs="lib${ant.project.name}_tools-${platform}-mt,lib${ant.project.name}_shield-${platform}-mt,lib${ant.project.name}_protocol-${platform}-mt"/>
     </target>
 
