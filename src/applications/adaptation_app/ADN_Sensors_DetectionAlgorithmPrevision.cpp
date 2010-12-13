@@ -148,6 +148,7 @@ ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision
     yAxis.ShowSubTicks( false );
     yAxis.ShowTicksValue( true );
     yAxis.SetValueToStringConvertor( &convertor );
+    yAxis.InitTickMultiplesForIntegers();
 
     GQ_PlotAxis& xAxis = pGraph->XAxis();
     xAxis.SetAxisCaption( tr( "Distance (m)" ) );
