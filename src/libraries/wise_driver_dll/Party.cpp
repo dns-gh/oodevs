@@ -9,7 +9,9 @@
 
 #include "wise_driver_dll_pch.h"
 #include "Party.h"
+#include "Model.h"
 #include "protocol/Simulation.h"
+#include <sstream>
 #pragma warning( push )
 #pragma warning( disable: 4100 4201 )
 #include <wise/iwisedriversink.h>
@@ -30,11 +32,11 @@ namespace
 // Name: Party constructor
 // Created: SEB 2010-10-13
 // -----------------------------------------------------------------------------
-Party::Party( const Model& /*model*/, const MsgsSimToClient::MsgPartyCreation& message )
-    : id_( message.party().id() )
+Party::Party( const Model& model, const MsgsSimToClient::MsgPartyCreation& message )
+    : WiseEntity( message.party().id(), L"party" )
+    , model_( model )
     , name_( message.name().begin(), message.name().end() )
     , alignment_( unsigned char( message.type() ) )
-    , handle_( WISE_INVALID_HANDLE )
 {
     // NOTHING
 }
@@ -49,21 +51,12 @@ Party::~Party()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Party::GetId
-// Created: SEB 2010-10-13
+// Name: Party::MakeIdentifier
+// Created: SEB 2010-12-13
 // -----------------------------------------------------------------------------
-unsigned long Party::GetId() const
+std::wstring Party::MakeIdentifier() const
 {
-    return id_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Party::GetHandle
-// Created: SEB 2010-10-13
-// -----------------------------------------------------------------------------
-WISE_HANDLE Party::GetHandle() const
-{
-    return handle_;
+    return name_;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,15 +70,15 @@ void Party::Create( CWISEDriver& driver, const WISE_HANDLE& database, const time
         handle_ = WISE_INVALID_HANDLE;
         std::map< std::wstring, WISE_HANDLE > attributes;
         CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, name_, L"Party", handle_, attributes ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Identifier" ], long( id_ ), currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Identifier" ], long( GetId() ), currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Name" ], name_, currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Alignment" ], alignment_, currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->AddObjectToDatabase( database, handle_ ) );
-        driver.NotifyInfoMessage( L"Party '" + name_ + L"' created." );
+        driver.NotifyInfoMessage( FormatMessage( L"Created." ) );
     }
     catch( WISE_RESULT& error )
     {
-        driver.NotifyErrorMessage( L"Failed to create party '" + name_ + L"'.", error );
+        driver.NotifyErrorMessage( FormatMessage( L"Creation failed." ), error );
     }
 }
 
@@ -95,17 +88,53 @@ void Party::Create( CWISEDriver& driver, const WISE_HANDLE& database, const time
 // -----------------------------------------------------------------------------
 void Party::Destroy( CWISEDriver& driver, const WISE_HANDLE& database ) const
 {
+    for( T_Diplomacies::const_iterator it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
+        
+    WiseEntity::Destroy( driver, database );
+}
+
+namespace
+{
+    std::wstring MakeIdentifier( const Model& model, const Common::MsgChangeDiplomacy& message )
+    {
+        if( const Party* party1 = model.ResolveParty( message.party1().id() ) )
+            if( const Party* party2 = model.ResolveParty( message.party2().id() ) )
+            {
+                std::wstringstream ss;
+                ss << L"PartyDiplomacy:" << party1->GetId() << L"->" << party2->GetId();
+                return ss.str();
+            }
+        return L"Unknown party diplomacy";
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Party::Update
+// Created: SEB 2010-12-13
+// -----------------------------------------------------------------------------
+void Party::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Common::MsgChangeDiplomacy& message )
+{
+    const std::wstring identifier = ::MakeIdentifier( model_, message );
     try
     {
-        if( handle_ != WISE_INVALID_HANDLE )
+        WiseReference*& diplomacy = diplomacies_[ message.party2().id() ];
+        if( !diplomacy )
         {
-            CHECK_WISE_RESULT_EX( driver.GetSink()->RemoveObjectFromDatabase( database, handle_ ) );
-            handle_ = WISE_INVALID_HANDLE;
+            CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, identifier, L"PartyDiplomacy", diplomacy->handle_, diplomacy->attributes_ ) );
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, diplomacy->handle_, diplomacy->attributes_[ L"PartyFrom" ], long( message.party1().id() ), currentTime ) );
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, diplomacy->handle_, diplomacy->attributes_[ L"PartyTo" ], long( message.party2().id() ), currentTime ) );
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, diplomacy->handle_, diplomacy->attributes_[ L"Diplomacy" ], unsigned char( message.diplomatie() ), currentTime ) );
+            CHECK_WISE_RESULT_EX( driver.GetSink()->AddObjectToDatabase( database, diplomacy->handle_ ) );
+            driver.NotifyInfoMessage( FormatMessage( identifier + L"' created." ) );
         }
-        driver.NotifyInfoMessage( L"Party '" + name_ + L"' destroyed." );
+        else
+        {
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, diplomacy->handle_, diplomacy->attributes_[ L"Diplomacy" ], unsigned char( message.diplomatie() ), currentTime ) );       
+            driver.NotifyInfoMessage( FormatMessage( identifier + L"' updated." ) );
+        }
     }
     catch( WISE_RESULT& error )
     {
-        driver.NotifyErrorMessage( L"Failed to destroy party '" + name_ + L"'.", error );
+        driver.NotifyWarningMessage( FormatMessage( identifier + L"' update failed." ), error );
     }
 }

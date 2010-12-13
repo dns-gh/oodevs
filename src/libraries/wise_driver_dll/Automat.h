@@ -10,7 +10,7 @@
 #ifndef __Automat_h_
 #define __Automat_h_
 
-#include "Entity_ABC.h"
+#include "WiseEntity.h"
 
 namespace MsgsSimToClient { class MsgAutomatCreation; }
 
@@ -22,7 +22,7 @@ class Model;
 */
 // Created: SEB 2010-10-13
 // =============================================================================
-class Automat : public Entity_ABC
+class Automat : public WiseEntity
 {
 
 public:
@@ -32,16 +32,9 @@ public:
     virtual ~Automat();
     //@}
 
-    //! @name Accessors
-    //@{
-    virtual unsigned long GetId() const;
-    virtual WISE_HANDLE GetHandle() const;
-    //@}
-
     //! @name Operations
     //@{
     virtual void Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime ) const;
-    virtual void Destroy( CWISEDriver& driver, const WISE_HANDLE& database ) const;
     //@}
 
 private:
@@ -53,18 +46,16 @@ private:
 
     //! @name Helpers
     //@{
-    std::wstring MakeIdentifier() const;
+    virtual std::wstring MakeIdentifier() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const unsigned long id_;
     const std::wstring name_;
     const unsigned long type_;
     const Entity_ABC* party_;
     const Entity_ABC* superior_;
-    mutable WISE_HANDLE handle_;
     //@}
 };
 

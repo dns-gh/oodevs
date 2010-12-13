@@ -10,9 +10,10 @@
 #ifndef __Party_h_
 #define __Party_h_
 
-#include "Entity_ABC.h"
+#include "WiseEntity.h"
 
 namespace MsgsSimToClient { class MsgPartyCreation; }
+namespace Common { class MsgChangeDiplomacy; }
 
 class Model;
 
@@ -22,7 +23,7 @@ class Model;
 */
 // Created: SEB 2010-10-13
 // =============================================================================
-class Party : public Entity_ABC
+class Party : public WiseEntity
 {
 
 public:
@@ -32,16 +33,11 @@ public:
     virtual ~Party();
     //@}
 
-    //! @name Accessors
-    //@{
-    virtual unsigned long GetId() const;
-    virtual WISE_HANDLE GetHandle() const;
-    //@}
-
     //! @name Operations
     //@{
     virtual void Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime ) const;
     virtual void Destroy( CWISEDriver& driver, const WISE_HANDLE& database ) const;
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Common::MsgChangeDiplomacy& message );
     //@}
 
 private:
@@ -53,15 +49,27 @@ private:
 
     //! @name Helpers
     //@{
+    virtual std::wstring MakeIdentifier() const;
+    //@}
+
+    //! @name Types
+    //@{
+    struct WiseReference
+    {
+        WiseReference() : handle_( WISE_INVALID_HANDLE ) {}
+        WISE_HANDLE handle_;
+        std::map< std::wstring, WISE_HANDLE > attributes_;
+    };
+    typedef std::map< unsigned long, WiseReference* > T_Diplomacies;
     //@}
 
 private:
     //! @name Member data
     //@{
-    unsigned long id_;
-    std::wstring name_;
-    unsigned char alignment_;
-    mutable WISE_HANDLE handle_;
+    const Model& model_;
+    const std::wstring name_;
+    const unsigned char alignment_;
+    T_Diplomacies diplomacies_;
     //@}
 };
 

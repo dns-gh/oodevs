@@ -38,11 +38,11 @@ void DetectionEvents::Trigger( CWISEDriver& driver, const WISE_HANDLE& database,
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetEventAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle, attributes[ L"CurrentPerceptionLevel" ], unsigned char( message.current_visibility() ) ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetEventAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle, attributes[ L"BestPerceptionLevel" ], unsigned char( message.max_visibility() ) ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SendEvent( database, handle ) );
-        driver.NotifyInfoMessage( L"Agent detection event created." );
+        driver.NotifyInfoMessage( L"[agent-detection-event] Created." );
     }
     catch( WISE_RESULT& error )
     {
-        driver.NotifyErrorMessage( L"Failed to create agent detection event.", error );
+        driver.NotifyErrorMessage( L"[agent-detection-event] Creation failed.", error );
     }
 }
 
@@ -64,10 +64,10 @@ void DetectionEvents::Trigger( CWISEDriver& driver, const WISE_HANDLE& database,
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetEventAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle, attributes[ L"Target" ], target ? target->GetHandle() : WISE_INVALID_HANDLE ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetEventAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle, attributes[ L"PerceptionLevel" ], unsigned char( message.visibility() ) ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SendEvent( database, handle ) );
-        driver.NotifyInfoMessage( L"Obstacle detection event created." );
+        driver.NotifyInfoMessage( L"[obstacle-detection-event] Created." );
     }
     catch( WISE_RESULT& error )
     {
-        driver.NotifyErrorMessage( L"Failed to create obstacle detection event.", error );
+        driver.NotifyErrorMessage( L"[obstacle-detection-event] Creation failed.", error );
     }
 }

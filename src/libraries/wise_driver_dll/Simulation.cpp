@@ -66,11 +66,11 @@ void Simulation::Create( CWISEDriver& driver, const WISE_HANDLE& database, const
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"InitialDateTime" ], DateToWString( message.initial_date_time() ), currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"AccelerationFactor" ], long( message.time_factor() ), currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->AddObjectToDatabase( database, handle_ ) );
-        driver.NotifyInfoMessage( L"Simulation object created." );
+        driver.NotifyInfoMessage( L"[simulation] Created." );
     }
     catch( WISE_RESULT& error )
     {
-        driver.NotifyErrorMessage( L"Failed to create simulation object.", error );
+        driver.NotifyErrorMessage( L"[simulation] Creation failed.", error );
     }
 }
 
@@ -84,7 +84,7 @@ void Simulation::Update( CWISEDriver& driver, const WISE_HANDLE& database, const
     {
         if( handle_ == WISE_INVALID_HANDLE )
         {
-            driver.NotifyWarningMessage( L"Simulation object is not initialised.", MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_W_NOT_INITIATED ) );
+            driver.NotifyWarningMessage( L"[simulation] Object is not initialised.", MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_W_NOT_INITIATED ) );
             return;
         }
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Tick" ], long( message.current_tick() ), currentTime ) );
@@ -92,7 +92,7 @@ void Simulation::Update( CWISEDriver& driver, const WISE_HANDLE& database, const
     }
     catch( WISE_RESULT& error )
     {
-        driver.NotifyErrorMessage( L"Failed to update simulation state.", error );
+        driver.NotifyErrorMessage( L"[simulation] State update failed.", error );
     }
 }
 
@@ -106,14 +106,14 @@ void Simulation::Update( CWISEDriver& driver, const WISE_HANDLE& database, const
     {
         if( handle_ == WISE_INVALID_HANDLE )
         {
-            driver.NotifyWarningMessage( L"Simulation object is not initialised.", MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_W_NOT_INITIATED ) );
+            driver.NotifyWarningMessage( L"[simulation] Object is not initialised.", MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_W_NOT_INITIATED ) );
             return;
         }
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"AccelerationFactor" ], long( message.time_factor() ), currentTime ) );
     }
     catch( WISE_RESULT& error )
     {
-        driver.NotifyErrorMessage( L"Failed to update simulation acceleration factor.", error );
+        driver.NotifyErrorMessage( L"[simulation] Acceleration factor update failed.", error );
     }
 }
 
@@ -130,11 +130,11 @@ void Simulation::Destroy( CWISEDriver& driver, const WISE_HANDLE& database )
             CHECK_WISE_RESULT_EX( driver.GetSink()->RemoveObjectFromDatabase( database, handle_ ) );
             handle_ = WISE_INVALID_HANDLE;
         }
-        driver.NotifyInfoMessage( L"Simulation object destroyed." );
+        driver.NotifyInfoMessage( L"[simulation] Destroyed." );
     }
     catch( WISE_RESULT& error )
     {
-        driver.NotifyErrorMessage( L"Failed to destroy simulation object.", error );
+        driver.NotifyErrorMessage( L"[simulation] Destruction failed.", error );
     }
 }
 
@@ -157,7 +157,7 @@ void Simulation::OnUpdateState( CWISEDriver& driver, const WISE_HANDLE& database
     }
     catch( WISE_RESULT& error )
     {
-        driver.NotifyErrorMessage( L"Failed to execute simulation state update.", error );
+        driver.NotifyErrorMessage( L"[simulation] Failed to update state.", error );
     }
 }
 
@@ -182,6 +182,6 @@ void Simulation::OnUpdateAccelerationFactor( CWISEDriver& driver, const WISE_HAN
     }
     catch( WISE_RESULT& error )
     {
-        driver.NotifyErrorMessage( L"Failed to execute simulation acceleration factor update.", error );
+        driver.NotifyErrorMessage( L"[simulation] Failed to update acceleration factor.", error );
     }
 }

@@ -27,11 +27,10 @@
 // Created: SEB 2010-10-13
 // -----------------------------------------------------------------------------
 Agent::Agent( const Model& model, const MsgsSimToClient::MsgUnitCreation& message )
-    : id_( message.unit().id() )
+    : WiseEntity( message.unit().id(), L"agent" )
     , name_( message.nom().begin(), message.nom().end() )
     , type_( message.type().id() )
     , superior_( model.ResolveAutomat( message.automat().id() ) )
-    , handle_( WISE_INVALID_HANDLE )
 {
     // NOTHING
 }
@@ -43,24 +42,6 @@ Agent::Agent( const Model& model, const MsgsSimToClient::MsgUnitCreation& messag
 Agent::~Agent()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::GetId
-// Created: SEB 2010-10-13
-// -----------------------------------------------------------------------------
-unsigned long Agent::GetId() const
-{
-    return id_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::GetHandle
-// Created: SEB 2010-10-13
-// -----------------------------------------------------------------------------
-WISE_HANDLE Agent::GetHandle() const
-{
-    return handle_;
 }
 
 // -----------------------------------------------------------------------------
@@ -85,38 +66,16 @@ void Agent::Create( CWISEDriver& driver, const WISE_HANDLE& database, const time
     {
         handle_ = WISE_INVALID_HANDLE;
         CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, identifier, L"Agent", handle_, attributes_ ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Identifier" ], long( id_ ), currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Identifier" ], long( GetId() ), currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Name" ], name_, currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Type" ], long( type_ ), currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Superior" ], superior_ ? superior_->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->AddObjectToDatabase( database, handle_ ) );
-        driver.NotifyInfoMessage( L"Agent '" + identifier + L"' created." );
+        driver.NotifyInfoMessage( FormatMessage( L"Created." ) );
     }
     catch( WISE_RESULT& error )
     {
-        driver.NotifyErrorMessage( L"Failed to create agent '" + identifier + L"'.", error );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::Destroy
-// Created: SEB 2010-10-13
-// -----------------------------------------------------------------------------
-void Agent::Destroy( CWISEDriver& driver, const WISE_HANDLE& database ) const
-{
-    const std::wstring identifier( MakeIdentifier() );
-    try
-    {
-        if( handle_ != WISE_INVALID_HANDLE )
-        {
-            CHECK_WISE_RESULT_EX( driver.GetSink()->RemoveObjectFromDatabase( database, handle_ ) );
-            handle_ = WISE_INVALID_HANDLE;
-        }
-        driver.NotifyInfoMessage( L"Agent '" + identifier + L"' destroyed." );
-    }
-    catch( WISE_RESULT& error )
-    {
-        driver.NotifyErrorMessage( L"Failed to destroy agent '" + identifier + L"'.", error );
+        driver.NotifyErrorMessage( FormatMessage( L"Creation failed." ), error );
     }
 }
 
@@ -155,11 +114,11 @@ void Agent::Update( CWISEDriver& driver, const WISE_HANDLE& database, const time
             UpdateComponents( driver, database, currentTime, message.dotation_eff_personnel(), personnel_, L"Personnel" );
         if( message.has_dotation_eff_ressource() )
             UpdateComponents( driver, database, currentTime, message.dotation_eff_ressource(), resources_, L"Resources" );
-        driver.NotifyDebugMessage( L"Agent '" + MakeIdentifier() + L"' updated.", MessageCategoryDebugLevel0 );
+        driver.NotifyDebugMessage( FormatMessage( L"Updated." ), MessageCategoryDebugLevel0 );
     }
     catch( WISE_RESULT& error )
     {
-        driver.NotifyWarningMessage( L"Failed to update agent '" + MakeIdentifier() + L"'.", error );
+        driver.NotifyWarningMessage( FormatMessage( L"Update failed." ), error );
     }
 }
 

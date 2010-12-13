@@ -19,18 +19,16 @@
 #include <wise/wisedriver.h>
 #pragma warning( pop )
 
-
 // -----------------------------------------------------------------------------
 // Name: Formation constructor
 // Created: SEB 2010-10-13
 // -----------------------------------------------------------------------------
 Formation::Formation( const Model& model, const MsgsSimToClient::MsgFormationCreation& message )
-    : id_( message.formation().id() )
+    : WiseEntity( message.formation().id(), L"formation" )
     , name_( message.name().begin(), message.name().end() )
     , echelon_( unsigned char( message.level() ) )
     , party_( model.ResolveParty( message.party().id() ) )
     , superior_( model.ResolveFormation( message.parent().id() ) )
-    , handle_( WISE_INVALID_HANDLE )
 {
     // NOTHING
 }
@@ -42,24 +40,6 @@ Formation::Formation( const Model& model, const MsgsSimToClient::MsgFormationCre
 Formation::~Formation()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::GetId
-// Created: SEB 2010-10-13
-// -----------------------------------------------------------------------------
-unsigned long Formation::GetId() const
-{
-    return id_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::GetHandle
-// Created: SEB 2010-10-13
-// -----------------------------------------------------------------------------
-WISE_HANDLE Formation::GetHandle() const
-{
-    return handle_;
 }
 
 // -----------------------------------------------------------------------------
@@ -79,44 +59,22 @@ std::wstring Formation::MakeIdentifier() const
 // -----------------------------------------------------------------------------
 void Formation::Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime ) const
 {
-    const std::wstring identifier( MakeIdentifier() );
     try
     {
+        const std::wstring identifier( MakeIdentifier() );
         handle_ = WISE_INVALID_HANDLE;
         std::map< std::wstring, WISE_HANDLE > attributes;
         CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, identifier, L"Formation", handle_, attributes ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Identifier" ], long( id_ ), currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Identifier" ], long( GetId() ), currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Name" ], name_, currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Echelon" ], echelon_, currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Superior" ], superior_ ? superior_->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Party" ], party_ ? party_->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->AddObjectToDatabase( database, handle_ ) );
-        driver.NotifyInfoMessage( L"Formation '" + identifier + L"' created." );
+        driver.NotifyInfoMessage( FormatMessage( L"Created." ) );
     }
     catch( WISE_RESULT& error )
     {
-        driver.NotifyErrorMessage( L"Failed to create formation '" + identifier + L"'.", error );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::Destroy
-// Created: SEB 2010-10-13
-// -----------------------------------------------------------------------------
-void Formation::Destroy( CWISEDriver& driver, const WISE_HANDLE& database ) const
-{
-    const std::wstring identifier( MakeIdentifier() );
-    try
-    {
-        if( handle_ != WISE_INVALID_HANDLE )
-        {
-            CHECK_WISE_RESULT_EX( driver.GetSink()->RemoveObjectFromDatabase( database, handle_ ) );
-            handle_ = WISE_INVALID_HANDLE;
-        }
-        driver.NotifyInfoMessage( L"Formation '" + identifier + L"' destroyed." );
-    }
-    catch( WISE_RESULT& error )
-    {
-        driver.NotifyErrorMessage( L"Failed to destroy formation '" + identifier + L"'.", error );
+        driver.NotifyErrorMessage( FormatMessage( L"Creation failed." ), error );
     }
 }
