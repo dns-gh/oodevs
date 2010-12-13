@@ -53,6 +53,7 @@ protected:
     virtual void NotifyDeleted( const TerrainObjectProxy& object );
     virtual void NotifySelected( const TerrainObjectProxy* object );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
+    virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     //@}
 
 private:
@@ -65,6 +66,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     const TerrainObjectProxy*   selectedObject_;
     //@}
 };

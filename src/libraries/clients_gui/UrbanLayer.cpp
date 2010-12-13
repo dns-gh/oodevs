@@ -21,6 +21,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
     : EntityLayer< TerrainObjectProxy >( controllers, tools, strategy, view, profile )
+    , controllers_( controllers )
     , selectedObject_( 0 )
 {
    // NOTHING;
@@ -122,3 +123,11 @@ bool UrbanLayer::ShouldDisplay( const kernel::Entity_ABC& )
     return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: UrbanLayer::ContextMenu
+// Created: SLG 2010-12-13
+// -----------------------------------------------------------------------------
+void UrbanLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point )
+{
+    controllers_.actions_.ContextMenu( static_cast< const TerrainObjectProxy& >( entity ), geoPoint, kernel::Nothing(), point );
+}
