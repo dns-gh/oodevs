@@ -88,6 +88,11 @@ protected:
 
     //! @name Network
     //@{
+    void FillParameters( int firstIndex, const Common::MsgMissionParameters& parameters );
+    //@}
+
+    //! @name Network
+    //@{
     void Serialize( Common::MsgMissionParameters& asn ) const;
     //@}
 

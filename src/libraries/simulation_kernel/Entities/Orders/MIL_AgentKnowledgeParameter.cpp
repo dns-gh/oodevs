@@ -12,6 +12,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/protocol.h"
+#include "Network/NET_AsnException.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentKnowledgeParameter constructor
@@ -30,7 +31,8 @@ MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( boost::shared_ptr< DEC
 MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( const Common::UnitKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
     : pKnowledgeAgent_( NET_ASN_Tools::ReadAgentKnowledge( asn, resolver ) )
 {
-    // NOTHING
+    if( !pKnowledgeAgent_ )
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
 }
 
 // -----------------------------------------------------------------------------

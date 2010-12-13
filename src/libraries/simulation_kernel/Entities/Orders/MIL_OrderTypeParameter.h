@@ -52,6 +52,7 @@ public:
     const std::string& GetDIAName() const;
     const MIL_ParameterType_ABC& GetType() const;
     bool IsList() const;
+    bool IsOptional() const { return bIsOptional_; }
     //@}
 
 private:

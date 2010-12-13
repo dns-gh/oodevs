@@ -30,7 +30,8 @@ MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( boost::shared_ptr< D
 MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( const Common::ObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
     : pKnowledgeObject_( resolver.ResolveKnowledgeObject( asn ) )
 {
-    // NOTHING
+    if( !pKnowledgeObject_ )
+        throw std::runtime_error( "Object Knowledge does not exist" );
 }
 
 // -----------------------------------------------------------------------------

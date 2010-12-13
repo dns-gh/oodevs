@@ -12,6 +12,7 @@
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Network/NET_ASN_Tools.h"
+#include "Network/NET_AsnException.h"
 #include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
@@ -34,6 +35,8 @@ MIL_AgentParameter::MIL_AgentParameter( const Common::UnitId& asn, MIL_EntityMan
     MIL_AgentPion* pPion = entityManager.FindAgentPion( asn.id() );
     if( pPion )
         pDecision_ = dynamic_cast< DEC_RolePion_Decision* >( &pPion->GetDecision() );
+    if( !pDecision_ )
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
 }
 
 // -----------------------------------------------------------------------------

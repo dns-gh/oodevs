@@ -35,6 +35,12 @@ class MIL_ParameterType_ABC;
 class MIL_OrderType_ABC : private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::vector< const MIL_OrderTypeParameter* > T_MissionParameterVector;
+    typedef T_MissionParameterVector::const_iterator     CIT_MissionParameterVector;
+    //@}
+public:
     //! @name Constructors/Destructor
     //@{
              MIL_OrderType_ABC( unsigned int nID, unsigned int contextLength, xml::xistream& xis );
@@ -43,12 +49,13 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string& GetName   () const;
-    const std::string& GetDIAType() const;
-          unsigned int GetID     () const;
-    const MIL_OrderTypeParameter& GetParameterType( unsigned int ) const;
-    const std::string&           GetParameterName( unsigned int ) const;
-    unsigned int                 GetParameterIndex( const std::string& name ) const;
+    const std::string&              GetName   () const;
+    const std::string&              GetDIAType() const;
+          unsigned int              GetID     () const;
+    const MIL_OrderTypeParameter&   GetParameterType( unsigned int index ) const;
+    const std::string&              GetParameterName( unsigned int ) const;
+          unsigned int              GetParameterIndex( const std::string& name ) const;
+    const T_MissionParameterVector& GetParameters() const { return parameters_; }
     //@}
 
     //! @name Copy operations
@@ -61,15 +68,9 @@ protected:
     MIL_OrderType_ABC();
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< const MIL_OrderTypeParameter* > T_MissionParameterVector;
-    typedef T_MissionParameterVector::const_iterator     CIT_MissionParameterVector;
-    //@}
-
     //! @name Helpers
     //@{
-    void MIL_OrderType_ABC::ReadParameter( xml::xistream& xis, unsigned int& index, unsigned int contextLength );
+    void ReadParameter( xml::xistream& xis, unsigned int& index, unsigned int contextLength );
     //@}
 
 private:

@@ -16,19 +16,10 @@
 #include "MIL_MissionParameterVisitor_ABC.h"
 #include "MIL_NullParameter.h"
 #include "MIL_OrderTypeParameter.h"
+#include "Network/NET_AsnException.h"
+#include "protocol/protocol.h"
 #include "simulation_kernel/Entities/Agents/MIL_AgentPion.h"
 #include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "protocol/protocol.h"
-
-namespace
-{
-    void FillParameters( const MIL_OrderType_ABC& orderType, int firstIndex, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters_, const Common::MsgMissionParameters& parameters, const DEC_KnowledgeResolver_ABC& resolver )
-    {
-        unsigned int indexWithoutContext = 0;
-        for( int i = firstIndex; i < parameters.elem_size(); ++i, ++indexWithoutContext )
-            parameters_.push_back( MIL_MissionParameterFactory::Create( orderType.GetParameterType( indexWithoutContext ), parameters.elem( i ), resolver ) );
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC constructor
@@ -51,7 +42,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
     , context_          ()
     , knowledgeResolver_( knowledgeResolver )
 {
-    FillParameters( type_, context_.Length(), parameters_, parameters, knowledgeResolver );
+    FillParameters( context_.Length(), parameters );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +54,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
     , context_          ( parameters, refPosition )
     , knowledgeResolver_( knowledgeResolver )
 {
-    FillParameters( type_, context_.Length(), parameters_, parameters, knowledgeResolver );
+    FillParameters( context_.Length(), parameters );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,6 +98,37 @@ MIL_Mission_ABC::~MIL_Mission_ABC()
 const std::string& MIL_Mission_ABC::GetName() const
 {
     return type_.GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC::Serialize
+// Created: NLD 2011-11-09
+// -----------------------------------------------------------------------------
+void MIL_Mission_ABC::FillParameters( int firstIndex, const Common::MsgMissionParameters& parameters )
+{
+    /*void FillParameters( const MIL_OrderType_ABC& orderType, int firstIndex, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters_, const Common::MsgMissionParameters& parameters, const DEC_KnowledgeResolver_ABC& resolver )
+    {
+        unsigned int indexWithoutContext = 0;
+        for( int i = firstIndex; i < parameters.elem_size(); ++i, ++indexWithoutContext )
+            parameters_.push_back( MIL_MissionParameterFactory::Create( orderType.GetParameterType( indexWithoutContext ), parameters.elem( i ), resolver ) );
+    }
+    */
+    const MIL_OrderType_ABC::T_MissionParameterVector& parameterTypes = type_.GetParameters();
+    int i = firstIndex;
+    for( MIL_OrderType_ABC::CIT_MissionParameterVector it = parameterTypes.begin(); it != parameterTypes.end(); ++it, ++i )
+    {
+        const MIL_OrderTypeParameter& parameterType = **it;
+        if( parameters.elem_size() < i )
+            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+    
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParameter = MIL_MissionParameterFactory::Create( parameterType, parameters.elem( i ), knowledgeResolver_ );
+        if( !missionParameter->IsOfType( parameterType.GetType().GetType() ) )
+            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+        if( !parameterType.IsOptional() && dynamic_cast<const MIL_NullParameter*>( &(*missionParameter) ) )
+            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+
+        parameters_.push_back( missionParameter );
+    }
 }
 
 // -----------------------------------------------------------------------------
