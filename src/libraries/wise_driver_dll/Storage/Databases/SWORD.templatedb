@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <templatedatabase>
 
-  <info author="Unknown" copyright="" description="Template Database for MASAGroup.SWORD." modified="2010-12-13T12:16:29.278Z" version="1.0.0.0"/>
+  <info author="Unknown" copyright="" description="Template Database for MASAGroup.SWORD." modified="2010-12-13T14:26:34.705Z" version="1.0.0.0"/>
 
   <datatypes>
     <integers>
@@ -183,7 +183,7 @@
     <object description="Communication group containing automats mutually sharing environment knowledge" sharingmode="publish" type="KnowledgeGroup">
       <attribute datatype="KnowledgeGroupIdentifier" defaultvalue="0" description="Identifies the knowledge group" name="Identifier" wisetype="long"/>
       <attribute defaultvalue="0" description="References parent knowledge group (if any)" name="Parent" wisetype="handle"/>
-      <attribute datatype="Boolean" defaultvalue="0" description="If true, the knowledge group is currently scrambled" name="Scrambled" wisetype="byte"/>
+      <attribute datatype="Boolean" defaultvalue="0" description="Whether the knowledge group is currently scrambled or not" name="Scrambled" wisetype="byte"/>
       <attribute defaultvalue="0" description="References belonging party" name="Superior" wisetype="handle"/>
       <attribute defaultvalue="" description="Identifies the type of knowledge group (from physical model)" name="Type" wisetype="string"/>
     </object>
