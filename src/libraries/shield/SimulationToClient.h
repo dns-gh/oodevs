@@ -12,7 +12,9 @@
 
 #include "Tools.h"
 #include "protocol/Protocol.h"
+#pragma warning( push, 0 )
 #include "proto/SimToClient.pb.h"
+#pragma warning( pop )
 
 namespace shield
 {

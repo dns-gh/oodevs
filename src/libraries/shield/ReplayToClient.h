@@ -11,7 +11,9 @@
 #define shield_ReplayToClient_h
 
 #include "protocol/Protocol.h"
+#pragma warning( push, 0 )
 #include "proto/ReplayToClient.pb.h"
+#pragma warning( pop )
 
 namespace shield
 {

@@ -215,7 +215,7 @@
     </target>
 
     <target name="library.shield" description="build shield static library" depends="library.protocol">
-        <build-lib name="shield" pattern="lib${ant.project.name}_shield-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="shield" excludes="**/*.h" pattern="lib${ant.project.name}_shield-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
     <target name="library.import" description="build import static library">

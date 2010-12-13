@@ -11,7 +11,9 @@
 #define shield_LauncherToAdmin_h
 
 #include "protocol/Protocol.h"
+#pragma warning( push, 0 )
 #include "proto/LauncherToAdmin.pb.h"
+#pragma warning( pop )
 
 namespace shield
 {
